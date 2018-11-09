@@ -1,0 +1,44 @@
+@import "../base";
+
+.usa-footer {
+  background-color: $color-primary-darkest;
+  color: $color-white;
+  width: 100%;
+
+  img {
+    height: auto;
+    width: 200px;
+  }
+
+  .usa-footer-links {
+
+    float: left;
+    padding-bottom: 20px;
+
+    a {
+      font-size: 1.4rem;
+      color: $color-white;
+
+      &:visited {
+        color: $color-white;
+        &:hover {
+          color: $color-white;
+        }
+      }
+    }
+
+    @include media($medium-screen) {
+      position: relative;
+      top: 30px;
+
+      ul {
+        float: right;
+
+        li {
+          display: inline;
+          padding-left: 3rem;
+        }
+      }
+    }
+  }
+}

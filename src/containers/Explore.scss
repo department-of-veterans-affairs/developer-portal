@@ -1,0 +1,257 @@
+@import '../base';
+
+.Explore {
+    #api-documentation {
+        margin-top: 0;
+    }
+
+    .usa-section {
+        padding-top: 0;
+
+        > div {
+            margin-bottom: 3rem;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .sticky {
+
+      display: none;
+
+      @include media($medium-screen) {
+
+        display:block;
+        position: sticky;
+        top: 20px;
+      }
+    }
+
+    .swagger-ui {
+        .info {
+            margin-top :0;
+
+            p {
+                font-family: $font-sans;
+                font-size: 1.7rem;
+            }
+
+            a {
+                color: #4C565C;
+            }
+
+            .title {
+                font-family: $font-sans;
+
+                small {
+                    background: #4C565C;
+                    line-height: 1em;
+
+                    pre {
+                        background: #4C565C;
+                        line-height: 1em;
+                    }
+                }
+
+                span small:last-child {
+                    background: #44615D !important;
+                    .version {
+                        background: #44615D !important;
+                    }
+                }
+            }
+        }
+        .opblock.opblock-post .opblock-summary-method {
+            background: #44615D;
+        }
+
+        .opblock .opblock-summary-description {
+            font-family: $font-sans;
+        }
+
+        .models h4 span {
+            color: #555555;
+        }
+
+        .servers-title {
+            display: block;
+            margin-bottom: 2em;
+        }
+
+        .scheme-container {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        button.authorize {
+            border-color: #4C565C;
+            color: #4C565C;
+
+        }
+
+        button.authorize:hover, button.authorize:focus {
+            background-color: #4C565C;
+            color: #ffffff;
+
+            svg {
+                fill: currentColor;
+            }
+        }
+
+        button.authorization__btn:hover, button.authorization__btn:focus {
+            background-color: rgba(0,0,0,0.8);
+
+            svg {
+                fill: #ffffff;
+            }
+        }
+
+        .opblock-tag:focus {
+            background: rgba(0,0,0,0.2);
+        }
+
+        button.expand-operation:hover, button.expand-operation:focus {
+            background: rgba(0,0,0,0.6);
+
+            svg {
+                fill: #ffffff;
+            }
+        }
+
+        .global-server-container {
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            margin-bottom: 2em;
+
+            .servers-title {
+                margin-bottom: 1em;
+            }
+        }
+
+        .wrapper {
+            padding: 0
+        }
+
+        table {
+            td {
+                border: none;
+            }
+        }
+    }
+
+    .api-link {
+        a {
+            box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
+            padding: 1em;
+            display: block;
+            color: $color-black;
+            text-decoration: none;
+
+            span {
+                font-weight: 600;
+                font-size: 1.5em;
+            }
+
+            p {
+                margin-bottom: 0;
+            }
+        }
+
+        a:hover {
+            background-color: rgba(0,0,0,0.125);
+        }
+    }
+
+    .Explore-main{
+        @extends .usa-grid;
+        margin-top: 3em;
+        margin-bottom: 2em;
+    }
+
+    .usa-sidenav-list {
+        > li {
+            border: none;
+            margin-bottom: 1em;
+
+            a {
+                padding-left: 1.1rem;
+            }
+
+            .usa-current {
+                border: none;
+                padding-left: 1.1rem;
+            }
+
+            > a.expand {
+                &:after {
+                    margin-left: .5em;
+                    margin-bottom: .125em;
+                    height: .5em;
+                    width: .5em;
+                    display: inline-block;
+                    content: '';
+                    mask: url($image-path + "/plus.svg") no-repeat 50% 50%;
+                    mask-size: cover;
+                    background-color: $color-black-light;
+                }
+
+                &:hover:after {
+                    background-color: $color-blue;
+                }
+
+                &.usa-current:after {
+                    margin-left: .5em;
+                    margin-bottom: .125em;
+                    height: .5em;
+                    width: .5em;
+                    display: inline-block;
+                    content: '';
+                    mask: url($image-path + "/minus.svg") no-repeat 50% 50%;
+                    mask-size: cover;
+                    background-color: $color-blue;
+                }
+            }
+
+            .usa-current + ul {
+                display: block;
+            }
+
+            a + ul {
+                display: none;
+            }
+
+            .usa-sidenav-sub_list {
+                a {
+                    padding-left: 1.1rem;
+                }
+
+                a:hover {
+                    padding-left: 1.1rem;
+                }
+            }
+        }
+    }
+
+    .usa-hero {
+        background-color: #4a4a4a;
+        background-image: url('../assets/home-page-banner.png');
+
+        .usa-hero-callout {
+            background: none;
+            color: $color-white;
+            max-width: 100%;
+            padding-left: 0;
+
+            h1 {
+                font-family: $font-sans;
+            }
+
+            p {
+                font-size: 1.25em;
+                max-width: 700px;
+            }
+        }
+    }
+}

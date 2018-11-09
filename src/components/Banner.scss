@@ -1,0 +1,46 @@
+@import "../base";
+@import "../crisis-line";
+@import "../modal";
+
+.usa-banner-inner {
+  position: relative;
+  padding: 0 !important;
+
+@media screen and (min-width: $large-screen) {
+    padding-right: 3rem !important;
+    padding-left: 3rem !important;
+  }
+}
+
+.usa-banner {
+  padding-bottom: 0 !important;
+
+  .usa-alert {
+    background-size: 2.8rem;
+    margin-top: 0;
+
+    .usa-alert-body {
+      padding-left: 1.8rem;
+    }
+
+    h3 {
+      font-size: 18px;
+      margin-top: -3px !important;
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
+.usa-banner-header {
+  padding-bottom: 0 !important;
+
+  img {
+    margin-top: -3px !important;
+    margin-left: 10px !important;
+
+@media screen and (min-width: $large-screen) {
+      margin-left: 0 !important;
+      margin-top: 1px !important;
+    }
+  }
+}

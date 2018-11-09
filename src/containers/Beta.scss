@@ -1,0 +1,27 @@
+@import '../base';
+
+.beta-application {
+
+  margin-bottom: 3rem;
+   
+    .usa-hero {
+        background-color: #4a4a4a;
+        background-image: url('../assets/home-page-banner.png');
+
+        .usa-hero-callout {
+            background: none;
+            color: $color-white;
+            max-width: 100%;
+            padding-left: 0;
+
+            h1 {
+                font-family: $font-sans;
+            }
+
+            p {
+                font-size: 1.25em;
+                max-width: 700px;
+            }
+        }
+    }
+}

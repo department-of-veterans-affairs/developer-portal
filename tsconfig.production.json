@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "outDir": "build/production/dist"
+  },
+  "extends": "./tsconfig.json"
+}

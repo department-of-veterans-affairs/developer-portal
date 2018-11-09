@@ -1,0 +1,93 @@
+
+// Variables
+$font-path: "~uswds/src/fonts";
+$image-path: "~uswds/src/img";
+$color-gray-cool-light:  #dce4ef;
+$color-primary-alt-light: #9bdaf1;
+$color-primary-alt-dark: #00a6d2;
+$color-primary-lightest: #e1f3f8;
+$color-primary-darkest: #1b2b3e;
+$color-white: #ffffff;
+$color-base: #212121;
+$color-gray-lighter: #d6d7d9;
+$color-gold: #fdb81e;
+$color-red: #cd2026;
+$medium-large-screen: 768px;
+$medium-screen: 640px;
+$large-screen: 951px;
+
+//  Imports
+@import "~uswds/src/stylesheets/uswds";
+
+// This section includes overrides to USWDS and mixins from Formation
+
+h1 {
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.3em;
+}
+
+h2 {
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 1.3em;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+h3 {
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3em;
+    margin-top: 2rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+h4 {
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 1.3em;
+}
+
+h5 {
+    font-family: $font-sans;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.3em;
+}
+
+.lead-paragraph {
+    font-family: $font-sans;
+    font-weight: 300;
+    font-size: 22px;
+    line-height: 1.5em;
+}
+
+.usa-font-lead {
+  font-family: $font-sans;
+  margin-bottom: 1.5rem !important;
+}
+
+p {
+    font-family: $font-sans;
+    font-weight: 400;
+    line-height: 1.5em;
+}
+
+
+// Stickyfill left hand nav styles
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+}

@@ -1,0 +1,22 @@
+@import '../base';
+
+.api-application {
+    padding: 40px 0;
+}
+
+.form-required-span {
+  color: $color-red;
+  &:before {
+    content: " (";
+  }
+  &:after {
+    content: "Required)";
+  }
+}
+
+.feature {
+  background: $color-primary-lightest;
+  padding: 1em 2em;
+  clear: both;
+  margin: 1.5em 0 1.5em 0;
+}
