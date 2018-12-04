@@ -50,7 +50,7 @@ const mapDispatchToProps = (dispatch : ApplicationDispatch) => {
 
 function Apply ({ apis, description, email, firstName, lastName, organization, ...props} : IApplyProps) {
   const readyToSubmit = !!email.value && !!firstName.value && !!lastName.value && !!organization.value && ( apis.verification || apis.health || apis.benefits || apis.facilities );
-  const requestedOtherThanHealth = apis.facilities || apis.verification || apis.benefits
+  const requestedMoreThanHealth = apis.health && (apis.facilities || apis.verification || apis.benefits)
 
   const healthNotice = (
     <div>
@@ -173,8 +173,8 @@ function Apply ({ apis, description, email, firstName, lastName, organization, .
           </div>
         </div>
       </div>
-      { props.token && requestedOtherThanHealth ? tokenNotice : null }
-      { props.token && !requestedOtherThanHealth && apis.health ? healthNotice : null }
+      { props.token && requestedMoreThanHealth ? tokenNotice : null }
+      { props.token && !requestedMoreThanHealth && apis.health ? healthNotice : null }
       { props.errorStatus ? errorNotice : null }
     </div>
   );
