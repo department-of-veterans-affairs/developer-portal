@@ -242,7 +242,7 @@ module.exports = {
               },
             ],
           },
-          // Load markdown file as HTML strings that can be injected with 'dangerouslySetInnerHTML'
+          // Load .mdx files as components
           {
             test: /\.mdx$/,
             include: paths.appSrc,
