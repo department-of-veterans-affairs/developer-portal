@@ -244,14 +244,12 @@ module.exports = {
           },
           // Load markdown file as HTML strings that can be injected with 'dangerouslySetInnerHTML'
           {
-            test: /\.md$/,
+            test: /\.mdx$/,
             include: paths.appSrc,
             use: [
+              'babel-loader',
               {
-                loader: "html-loader?exportAsEs6Default"
-              },
-              {
-                loader: require.resolve("markdown-loader")
+                loader: 'markdown-component-loader'
               }
             ]
           },
