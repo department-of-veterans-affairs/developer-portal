@@ -26,7 +26,7 @@ interface IApiCategory {
     readonly apis: IApiDescription[];
     readonly buttonText: string;
     readonly name: string;
-    readonly overview: JSX.Element;
+    readonly overview: React.StatelessComponent;
     readonly shortDescription: string;
 }
 
@@ -138,7 +138,7 @@ function ApiSection({ apiCategory, sectionRef } : { apiCategory : string, sectio
           <div>
             <div className="usa-grid">
               <div className="usa-width-one-whole">
-                {overview}
+                {overview({})}
               </div>
             </div>
           </div>
