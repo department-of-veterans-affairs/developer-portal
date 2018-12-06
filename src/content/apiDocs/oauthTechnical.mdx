@@ -25,15 +25,19 @@ We use separate authorization servers for our development and production environ
 
 Initiate the OpenID Connect authorization by directing Veterans using your application to `https://deptva-eval.okta.com/oauth2/default/v1/authorize` with the following query parameters:
 
-* client\_id - required - The client_id issued by the VA API Platform team
-* nonce - optional - Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations).
-* redirect_uri - required - the URL you supplied that the Veteran will be redirected to after authorizing your application
-* response_mode - optional - Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment.
-* response\_type - required - one or two of, id\_token, token, or code. Using `code` will require your application to complete the [Authorization Code Flow](#authorization-code-flow). Using `id_token` or `token` allows you to use the [Implicit flow](#implicit-flow). See [Token Types](#id-token) for further explanation.
-* scope - optional - Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space
-* state - optional - Ensures authorization flow integrity. See [security](#security-considerations).
+* `client_id` - required - The `client_id` issued by the VA API Platform team
+* `nonce` - optional - Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations).
+* `redirect_uri` - required - the URL you supplied that the Veteran will be redirected to after authorizing your application
+* `response_mode` - optional - Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment.
+* `response_type` - required - one or two of, `id_token`, `token`, or `code`. Using `code` will require your application to complete the [Authorization Code Flow](#authorization-code-flow). Using `id_token` or `token` allows you to use the [Implicit flow](#implicit-flow). See [Token Types](#id-token) for further explanation.
+* `scope` - optional - Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space.
+* `state` - optional - Ensures authorization flow integrity. See [security](#security-considerations).
 
-Example Authorization URL: `https://deptva-eval.okta.com/oauth2/default/v1/authorize?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=http://localhost:8080/implicit/callback&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read`
+Example Authorization URL:
+
+```
+https://deptva-eval.okta.com/oauth2/default/v1/authorize?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=http://localhost:8080/implicit/callback&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read
+```
 
 The Veteran will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
 
@@ -210,7 +214,7 @@ Existing Scopes are:
 These are subject to change while the VA API Platform OpenID Connect feature is under development.
 
 ## `id token`
-Unlike the token returned by an authorization_code grant or an implicit token grant, which is simply a random value, an `id_token` is a [JSON Web Token](https://jwt.io) or JWT. A JWT consists of a three parts, a header, a payload, and a signature. This provides an extremely brief overview of a JWT.
+Unlike the token returned by an authorization_code grant or an implicit token grant, which is simply a random value, an `id_token` is a [JSON Web Token](https://jwt.io) or JWT. A JWT consists of three parts: a header, a payload, and a signature. This provides an extremely brief overview of a JWT.
 
 ### Header
 
