@@ -3,17 +3,18 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink, Route } from 'react-router-dom';
 
-import { Markdown, PageHero } from '../components';
+import { PageHero } from '../components';
 import { IApiNameParam } from '../types';
 import Explore from './Explore';
 
-import { benefitsOverview,
-         healthOverview,
-         verificationOverview } from '../content/apiDocs';
+import { BenefitsOverview,
+         FacilitiesOverview,
+         HealthOverview,
+         VerificationOverview } from '../content/apiDocs';
 
 import './Explore.scss'
 
-import tos from '../content/termsOfService.md';
+import Tos from '../content/termsOfService.mdx';
 
 interface IApiDescription {
     readonly name: string;
@@ -25,7 +26,7 @@ interface IApiCategory {
     readonly apis: IApiDescription[];
     readonly buttonText: string;
     readonly name: string;
-    readonly overview: string;
+    readonly overview: JSX.Element;
     readonly shortDescription: string;
 }
 
@@ -49,7 +50,7 @@ const apiDefs : IApiCategories = {
         ],
         buttonText: "Get Your Key",
         name: 'Benefits',
-        overview: benefitsOverview,
+        overview: BenefitsOverview,
         shortDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
     },
     facilities: {
@@ -62,7 +63,7 @@ const apiDefs : IApiCategories = {
         ],
         buttonText: "Get Your Key",
         name: 'Facilities',
-        overview: '',
+        overview: FacilitiesOverview,
         shortDescription: "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction."
     },
     health: {
@@ -75,14 +76,14 @@ const apiDefs : IApiCategories = {
         ],
         buttonText: "Get Your Key",
         name: 'Health',
-        overview: healthOverview,
+        overview: HealthOverview,
         shortDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers."
     },
     verification: {
         apis: [],
         buttonText: "Stay Informed",
         name: "Veteran Verification",
-        overview: verificationOverview,
+        overview: VerificationOverview,
         shortDescription: "Coming soon! Empowering Veterans to take control of their data and put it to work.",
     },
 };
@@ -137,7 +138,7 @@ function ApiSection({ apiCategory, sectionRef } : { apiCategory : string, sectio
           <div>
             <div className="usa-grid">
               <div className="usa-width-one-whole">
-                <Markdown ariaLabelledby="overview" content={overview} />
+                {overview}
               </div>
             </div>
           </div>
@@ -182,7 +183,7 @@ class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {scrol
               {sections}
               <section className="usa-section" ref={this.sectionRefs['terms-of-service']}>
                 <div className="usa-grid">
-                  <Markdown content={tos} />
+                  <Tos />
                 </div>
               </section>
             </div>

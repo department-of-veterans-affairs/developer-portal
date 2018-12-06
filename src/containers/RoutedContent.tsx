@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
 
-import Markdown from '../components/Markdown';
-import goLive from '../content/goLive.md';
-import tos from '../content/termsOfService.md';
+import GoLive from '../content/goLive.mdx';
+import Tos from '../content/termsOfService.mdx';
 import { IRootState } from '../types';
 
 interface IRoutedContentProps extends RouteComponentProps<void> {
@@ -32,13 +31,13 @@ class RoutedContent extends React.Component<IRoutedContentProps, { }> {
 
     private goLivePage() {
         return (
-            <Markdown content={goLive} />
+            <GoLive />
         );
     }
 
     private tosPage() {
         return (
-            <Markdown content={tos} />
+            <Tos />
         );
     }
 }

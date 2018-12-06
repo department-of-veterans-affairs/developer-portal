@@ -5,8 +5,8 @@ import { RouteComponentProps } from 'react-router';
 import { ThunkDispatch } from 'redux-thunk';
 
 import * as actions from '../actions'
-import { Markdown, SwaggerDocs } from '../components';
-import explorePage from '../content/explorePage.md';
+import { SwaggerDocs } from '../components';
+import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
 export interface IExploreProps extends RouteComponentProps<IApiNameParam> {
@@ -91,7 +91,7 @@ class Explore extends React.Component<IExploreProps, { }> {
 
     private renderIndex() {
         return (
-            <Markdown content={explorePage} />
+            <ExplorePage />
         );
     }
 }
