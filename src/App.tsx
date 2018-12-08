@@ -4,7 +4,7 @@ import { RouteComponentProps } from 'react-router'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
-import { Banner, Footer, NavBar, PageContent } from './components';
+import { Footer, PageContent } from './components';
 import { Apply, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
 import { history } from './store';
 
@@ -21,8 +21,6 @@ class App extends React.Component {
       <div className="App">
         <ConnectedRouter history={history}>
           <div>
-            <Banner />
-            <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
             <div role="main">
               <Route path="/" render={this.focusedRoutes} />
             </div>
