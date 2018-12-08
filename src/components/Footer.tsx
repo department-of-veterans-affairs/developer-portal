@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import './Footer.scss';
 
-import logo from '../lighthouseVaLogo.png';
+import logo from '../assets/lighthouseVaLogo.png';
 
 export function Footer() {
     return (
