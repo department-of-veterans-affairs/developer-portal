@@ -32,7 +32,7 @@ The following basic information should be provided:
 
 ##### What happens after I am approved?
 
-You will receive an email from the VA API team notifying you of approval. You will then receive a new Client ID and Secret for your application. The base URI for the Health API endpoint is: https://api.va.gov/services/argonaut/v0/. Accordingly, the FHIR conformance statement can be retrieved from https://api.va.gov/services/argonaut/v0/metadata. 
+You will receive an email from the VA API team notifying you of approval. You will then receive a new Client ID and Secret for your application. The base URI for the Health API endpoint is: https://dev-api.va.gov/services/argonaut/v0/. Accordingly, the FHIR conformance statement can be retrieved from https://dev-api.va.gov/services/argonaut/v0/metadata. 
 
 You will also be provided with a set of test accounts to use that will allow you to access specific synthetic data patient records. 
 
