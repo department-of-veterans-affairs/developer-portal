@@ -8,11 +8,6 @@ import { Footer, PageContent } from './components';
 import { Apply, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
 import { history } from './store';
 
-let currentPath = history.location.pathname;
-history.listen(location => {
-  currentPath = location.pathname;
-});
-
 import './App.scss';
 
 class App extends React.Component {
