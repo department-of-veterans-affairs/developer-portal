@@ -34,7 +34,7 @@ const idMappings = {
     auth: "00Nt0000000bf2N",
     cell: "00Nt0000000bf2K",
     confirm: "00Nt0000000bf2L",
-    oid: "00Dr00000001Dz2",
+    oid: "00Dr00000001HcX",
   }
 }
 
