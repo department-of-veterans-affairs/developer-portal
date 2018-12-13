@@ -3,6 +3,7 @@ import { HashLink as Link } from 'react-router-hash-link';
 
 import Oauth from '../content/apiDocs/oauthTechnical.mdx';
 
+import 'highlight.js/styles/github.css'
 import './OAuth.scss';
 
 class OAuth extends React.Component {
