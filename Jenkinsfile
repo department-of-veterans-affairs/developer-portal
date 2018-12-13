@@ -87,7 +87,7 @@ node('vetsgov-general-purpose') {
       dir("developer-portal") {
         retry(3) {
           dockerImage.inside(args) {
-            sh "cd /application && npm audit"
+            sh "cd /application && npm config set audit-level high && npm audit"
           }
         }
       }

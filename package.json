@@ -71,7 +71,7 @@
     "source-map-loader": "^0.2.1",
     "stickyfill": "^1.1.1-strict",
     "style-loader": "0.23.0",
-    "swagger-ui": "^3.19.5",
+    "swagger-ui": "^3.20.2",
     "swagger-ui-themes": "^3.0.0",
     "terser-webpack-plugin": "1.1.0",
     "ts-jest": "^22.4.6",

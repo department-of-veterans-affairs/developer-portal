@@ -25,10 +25,10 @@ const idMappings = {
     oid: "00Dt00000004X38",
   },
   VICSIT: {
-    auth: "00N35000000vsO1",
-    cell: "00N35000000vsNz",
-    confirm: "00N35000000vsO0",
-    oid: "00D350000000sf8",
+    auth: "00Nt0000000bf2N",
+    cell: "00Nt0000000bf2K",
+    confirm: "00Nt0000000bf2L",
+    oid: "00Dr00000001HYK",
   },
   VICUAT: {
     auth: "00Nt0000000bf2N",
