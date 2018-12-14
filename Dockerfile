@@ -19,14 +19,6 @@ RUN npm install -g s3-cli
 
 WORKDIR /application
 
-# Create and use non-root user to satisfy chrome restrictions
-RUN groupadd -r pptruser && useradd -r -g pptruser -G audio,video pptruser \
-    && mkdir -p /home/pptruser/Downloads \
-    && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser .
-
-USER pptruser
-
 COPY package.json package-lock.json ./
 
 RUN npm install
