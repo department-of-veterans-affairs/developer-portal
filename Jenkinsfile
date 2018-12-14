@@ -97,6 +97,17 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  stage('Visual Regression Test') {
+    try {
+      dockerImage.inside {
+        sh 'npm run test:visual'
+      }
+    } catch (error) {
+      notify()
+      throw error
+    }
+  }
+
   // Perform a build for each build type
 
   stage('Build') {
