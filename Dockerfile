@@ -13,9 +13,16 @@ RUN apt-get update && apt-get install -y wget --no-install-recommends \
     && apt-get purge --auto-remove -y curl \
     && rm -rf /src/*.deb
 
-RUN npm install -g s3-cli
-
 WORKDIR /application
+
+# Match the jenkins uid/gid on the host (504)
+RUN groupadd --gid 504 jenkins \
+    && useradd --uid 504 --gid jenkins --shell /bin/bash --create-home jenkins
+    && chown jenkins:jenkins /application
+
+USER jenkins
+
+RUN npm install -g s3-cli
 
 COPY package.json package-lock.json ./
 
