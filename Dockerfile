@@ -19,7 +19,7 @@ WORKDIR /application
 RUN groupadd --gid 504 jenkins \
     && useradd --uid 504 --gid jenkins --shell /bin/bash --create-home jenkins \
     && chown jenkins:jenkins /application \
-    && chown -R jenkins:jenkins /usr/local/lib/node_modules
+    && usermod -aG staff jenkins
 
 USER jenkins
 
