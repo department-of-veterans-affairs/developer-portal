@@ -97,7 +97,8 @@
     "deploy": "gh-pages -d build",
     "test": "node scripts/test.js",
     "test:unit": "node scripts/test.js --projects=unit.jest.config.js",
-    "test:e2e": "node scripts/test.js --projects=e2e.jest.config.js"
+    "test:e2e": "node scripts/test.js --projects=e2e.jest.config.js",
+    "test:visual": "node scripts/test.js --projects=visual.jest.config.js"
   },
   "devDependencies": {
     "@types/node": "^10.1.3",
@@ -113,7 +114,8 @@
   "jest": {
     "projects": [
       "e2e.jest.config.js",
-      "unit.jest.config.js"
+      "unit.jest.config.js",
+      "visual.jest.config.js"
     ]
   },
   "babel": {
