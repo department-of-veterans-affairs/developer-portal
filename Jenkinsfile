@@ -70,12 +70,6 @@ node('vetsgov-general-purpose') {
       imageTag = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 
       dockerImage = docker.build("developer-portal:${imageTag}")
-      args = "-v ${pwd()}:/application"
-      retry(5) {
-        dockerImage.inside(args) {
-          sh "cd /application && npm install --production=false"
-        }
-      }
     } catch (error) {
       notify()
       throw error
@@ -85,10 +79,8 @@ node('vetsgov-general-purpose') {
   stage('Security') {
     try {
       dir("developer-portal") {
-        retry(3) {
-          dockerImage.inside(args) {
-            sh "cd /application && npm config set audit-level high && npm audit"
-          }
+        dockerImage.inside(args) {
+          sh "npm config set audit-level high && npm audit"
         }
       }
     } catch (error) {
