@@ -79,7 +79,7 @@ node('vetsgov-general-purpose') {
   stage('Security') {
     try {
       dir("developer-portal") {
-        dockerImage.inside(args) {
+        dockerImage.inside {
           sh "npm config set audit-level high && npm audit"
         }
       }
@@ -112,9 +112,9 @@ node('vetsgov-general-purpose') {
         def envName = envNames.get(i)
 
         builds[envName] = {
-          dockerImage.inside(args) {
-            sh "cd /application && BUILD_ENV=${envName} npm run-script build ${envName}"
-            sh "cd /application && echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
+          dockerImage.inside {
+            sh "NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
+            sh "echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
           }
         }
       }
@@ -132,7 +132,7 @@ node('vetsgov-general-purpose') {
     if (shouldBail()) { return }
 
     try {
-      dockerImage.inside(args) {
+      dockerImage.inside {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                           usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
           for (int i=0; i<envNames.size(); i++) {

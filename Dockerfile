@@ -2,8 +2,6 @@
 
 FROM node:8
 
-ENV NODE_ENV production
-
 # Install chromium dependencies
 RUN apt-get update && apt-get install -y wget --no-install-recommends \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
