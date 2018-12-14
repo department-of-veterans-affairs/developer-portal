@@ -18,7 +18,8 @@ WORKDIR /application
 # Match the jenkins uid/gid on the host (504)
 RUN groupadd --gid 504 jenkins \
     && useradd --uid 504 --gid jenkins --shell /bin/bash --create-home jenkins \
-    && chown jenkins:jenkins /application
+    && chown jenkins:jenkins /application \
+    && chown -R jenkins:jenkins /usr/local/lib/node_modules
 
 USER jenkins
 
