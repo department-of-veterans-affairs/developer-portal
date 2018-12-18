@@ -69,7 +69,7 @@ node('vetsgov-general-purpose') {
 
       imageTag = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 
-      dockerImage = docker.build("developer-portal:${imageTag}", '--build-arg NPM_INSTALL=false')
+      dockerImage = docker.build("developer-portal:${imageTag}", '--build-arg NPM_INSTALL=false .')
       dockerImage.inside {
         sh 'npm install'
       }
