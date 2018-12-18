@@ -1,13 +1,15 @@
-import benefitsOverview from './benefitsOverview.md';
-import benefitsStarted from './benefitsStarted.md';
-import healthOverview from './healthOverview.md';
-import healthStarted from './healthStarted.md';
-import verificationOverview from './verificationOverview.md';
-import verificationStarted from './verificationStarted.md';
+import BenefitsOverview from './benefitsOverview.mdx';
+import BenefitsStarted from './benefitsStarted.mdx';
+import FacilitiesOverview from './facilitiesOverview.mdx';
+import HealthOverview from './healthOverview.mdx';
+import HealthStarted from './healthStarted.mdx';
+import VerificationOverview from './verificationOverview.mdx';
+import VerificationStarted from './verificationStarted.mdx';
 
-export { benefitsOverview,
-         benefitsStarted,
-         healthOverview,
-         healthStarted,
-         verificationOverview,
-         verificationStarted }
+export { BenefitsOverview,
+         BenefitsStarted,
+         FacilitiesOverview,
+         HealthOverview,
+         HealthStarted,
+         VerificationOverview,
+         VerificationStarted }

@@ -296,16 +296,14 @@ module.exports = (envName) => {
                 },
               ],
             },
-
+            // Load .mdx files as components
             {
-              test: /\.md$/,
+              test: /\.mdx$/,
               include: paths.appSrc,
               use: [
+                'babel-loader',
                 {
-                  loader: "html-loader?exportAsEs6Default"
-                },
-                {
-                  loader: require.resolve("markdown-loader")
+                  loader: 'markdown-component-loader'
                 }
               ]
             },

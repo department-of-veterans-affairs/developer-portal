@@ -5,8 +5,8 @@ import { RouteComponentProps } from 'react-router';
 import { ThunkDispatch } from 'redux-thunk';
 
 import * as actions from '../actions'
-import { Markdown, SwaggerDocs } from '../components';
-import explorePage from '../content/explorePage.md';
+import { SwaggerDocs } from '../components';
+import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
 export interface IExploreProps extends RouteComponentProps<IApiNameParam> {
@@ -56,6 +56,11 @@ class Explore extends React.Component<IExploreProps, { }> {
                     <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`} />
                 );
                 break;
+            case 'claims':
+                docs = (
+                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`} />
+                );
+                break;
             case 'address_validation':
                 docs = (
                     <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v0/api`} />
@@ -91,7 +96,7 @@ class Explore extends React.Component<IExploreProps, { }> {
 
     private renderIndex() {
         return (
-            <Markdown content={explorePage} />
+            <ExplorePage />
         );
     }
 }

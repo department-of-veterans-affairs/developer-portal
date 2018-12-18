@@ -1,4 +1,4 @@
-declare module "*.md" {
-    const content: string;
-    export default content;
+declare module "*.mdx" {
+    const MarkdownComponent: React.StatelessComponent;
+    export default MarkdownComponent;
 }

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { HashLink as Link } from 'react-router-hash-link';
 
-import { Markdown } from '../components';
-
-import oauth from '../content/apiDocs/oauthTechnical.md';
+import Oauth from '../content/apiDocs/oauthTechnical.mdx';
 
 import './OAuth.scss';
 
@@ -23,7 +21,7 @@ class OAuth extends React.Component {
               </ul>
             </div>
             <div className="usa-width-two-thirds">
-              <Markdown content={oauth} />
+              <Oauth />
             </div>
           </div>
         );
