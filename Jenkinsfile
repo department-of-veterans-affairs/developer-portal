@@ -115,7 +115,6 @@ node('vetsgov-general-purpose') {
         builds[envName] = {
           dockerRun(dockerImage, "NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}")
           dockerRun(dockerImage, "echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt")
-          }
         }
       }
 
