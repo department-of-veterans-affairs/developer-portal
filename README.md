@@ -28,10 +28,30 @@ This will start the app on port 3001 as well as the webpack dev server to automa
 
 Swagger docs will not display without also running [vets-api](https://github.com/department-of-veterans-affairs/vets-api#base-setup) at localhost:3000
 
+## Testing
+
+This project uses `jest-image-snapshot` for visual regression testing. Screenshots of the app are checked into git, and regenerated whenever a change is made. If they don't match, Jenkins will report a test failure. To run these tests locally, you'll first need to build the docker image:
+```
+docker build -t developer_portal .
+```
+
+Then you can run them in the docker image with
+```
+docker run -itv "$PWD:/application" -v "node_modules:/application/node_modules" developer-portal npm run test:visual
+```
+If the tests don't pass, an image showing the diff will be generated in `src/__image_snapshots__/__diff_output__` 
+
+If you need to update your snapshots (after seeing a failing diff), run with the `-u` flag:
+```
+docker run -itv "$PWD:/application" -v "node_modules:/application/node_modules" developer-portal npm run test:visual -- -u
+```
+
+It's important to run these tests inside the docker container, or else the tests will report false negatives due to font differences.
+
 ## Deploying
 
 The Developer Portal is automatically deployed to both [dev](https://dev-developer.va.gov/) and [staging](https://staging-developer.va.gov/) whenever changes are made to the master branch.
 
-Deploys to production are done manually in Jenkins by starting a Release Developer Portal job.
+Deploys to production are done daily at 11:30AM EST.
 
 
