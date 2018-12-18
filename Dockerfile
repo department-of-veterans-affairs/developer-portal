@@ -27,6 +27,9 @@ RUN npm install -g s3-cli
 
 COPY package.json package-lock.json ./
 
-RUN npm install
+# Allow skipping npm install in image for jenkins
+ARG NPM_INSTALL=true
+
+RUN if $NPM_INSTALL; then npm install; fi
 
 COPY . .

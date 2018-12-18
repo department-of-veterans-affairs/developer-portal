@@ -55,8 +55,7 @@ def notify = { ->
 
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
-  def dockerImage, args, ref, imageTag
-  args = '-v /application/node_modules -w /application'
+  def dockerImage, ref, imageTag
 
   // Checkout source, create output directories, build container
 
@@ -70,7 +69,10 @@ node('vetsgov-general-purpose') {
 
       imageTag = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 
-      dockerImage = docker.build("developer-portal:${imageTag}")
+      dockerImage = docker.build("developer-portal:${imageTag}", '--build-arg NPM_INSTALL=false')
+      dockerImage.inside {
+        sh 'npm install'
+      }
     } catch (error) {
       notify()
       throw error
@@ -79,7 +81,7 @@ node('vetsgov-general-purpose') {
 
   stage('Security') {
     try {
-      dockerImage.inside(args) {
+      dockerImage.inside {
         sh "npm config set audit-level high && npm audit"
       }
     } catch (error) {
@@ -90,7 +92,7 @@ node('vetsgov-general-purpose') {
 
   stage('Visual Regression Test') {
     try {
-      dockerImage.inside(args) {
+      dockerImage.inside {
         sh 'npm run test:visual'
       }
     } catch (error) {
@@ -111,7 +113,7 @@ node('vetsgov-general-purpose') {
         def envName = envNames.get(i)
 
         builds[envName] = {
-          dockerImage.inside(args) {
+          dockerImage.inside {
             sh "NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
             sh "echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
           }
@@ -131,7 +133,7 @@ node('vetsgov-general-purpose') {
     if (shouldBail()) { return }
 
     try {
-      dockerImage.inside(args) {
+      dockerImage.inside {
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                           usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
           for (int i=0; i<envNames.size(); i++) {
