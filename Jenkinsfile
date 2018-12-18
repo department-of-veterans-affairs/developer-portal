@@ -56,7 +56,7 @@ def notify = { ->
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
   def dockerImage, args, ref, imageTag
-  args = '-v node_modules:/application/node_modules'
+  args = '-v /application/node_modules'
 
   // Checkout source, create output directories, build container
 
