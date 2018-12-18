@@ -54,7 +54,7 @@ def notify = { ->
 }
 
 def dockerRun(img, cmd, args='') {
-  sh "docker run --rm -t -v $(pwd):/application -v node_modules:/application/node_modules -u 504:504 ${args} ${img.imageName()} ${cmd}"
+  sh "docker run --rm -t -v \$(pwd):/application -v node_modules:/application/node_modules -u 504:504 ${args} ${img.imageName()} ${cmd}"
 }
 
 node('vetsgov-general-purpose') {
