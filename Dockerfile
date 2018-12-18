@@ -27,8 +27,6 @@ RUN npm install -g s3-cli
 
 COPY package.json package-lock.json ./
 
-RUN npm install && npm config set audit-level high
+RUN npm install
 
 COPY . .
-
-CMD /bin/bash -c

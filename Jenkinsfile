@@ -53,16 +53,10 @@ def notify = { ->
   }
 }
 
-def dockerRun(img, cmd, args='') {
-  sh "docker run --rm -t -v \$(pwd):/application -v node_modules:/application/node_modules -u 504:504 ${args} ${img.imageName()} ${cmd}"
-}
-
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
   def dockerImage, args, ref, imageTag
-  // Args for docker run: bind mount local dir, create named volume for node_modules so we don't use
-  // the host node_modules, match uid/gid args from Image.inside
-  args = '-t -v $(pwd):/application -v node_modules:/application/node_modules -u 504:504'
+  args = '-v node_modules:/application/node_modules'
 
   // Checkout source, create output directories, build container
 
@@ -85,7 +79,9 @@ node('vetsgov-general-purpose') {
 
   stage('Security') {
     try {
-      dockerRun(dockerImage, 'npm audit')
+      dockerImage.inside(args) {
+        sh "npm config set audit-level high && npm audit"
+      }
     } catch (error) {
       notify()
       throw error
@@ -94,7 +90,9 @@ node('vetsgov-general-purpose') {
 
   stage('Visual Regression Test') {
     try {
-      dockerRun(dockerImage, 'npm run test:visual')
+      dockerImage.inside(args) {
+        sh 'npm run test:visual'
+      }
     } catch (error) {
       notify()
       throw error
@@ -113,8 +111,10 @@ node('vetsgov-general-purpose') {
         def envName = envNames.get(i)
 
         builds[envName] = {
-          dockerRun(dockerImage, "NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}")
-          dockerRun(dockerImage, "echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt")
+          dockerImage.inside(args) {
+            sh "NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
+            sh "echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
+          }
         }
       }
 
@@ -131,11 +131,13 @@ node('vetsgov-general-purpose') {
     if (shouldBail()) { return }
 
     try {
-      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
-                        usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-        for (int i=0; i<envNames.size(); i++) {
-          dockerRun(dockerImage, "tar -C /application/build/${envNames.get(i)} -cf /application/build/${envNames.get(i)}.tar.bz2 .", "-e AWS_ACCESS_KEY", "-e AWS_SECRET_KEY")
-          dockerRun(dockerImage, "s3-cli put --acl-public --region us-gov-west-1 /application/build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2", "-e AWS_ACCESS_KEY", "-e AWS_SECRET_KEY")
+      dockerImage.inside(args) {
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
+                          usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
+          for (int i=0; i<envNames.size(); i++) {
+            sh "tar -C /application/build/${envNames.get(i)} -cf /application/build/${envNames.get(i)}.tar.bz2 ."
+            sh "s3-cli put --acl-public --region us-gov-west-1 /application/build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
+          }
         }
       }
     } catch (error) {
