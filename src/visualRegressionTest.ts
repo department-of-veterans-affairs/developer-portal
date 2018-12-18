@@ -19,10 +19,6 @@ const viewports = [
 ];
 
 describe('Visual regression test', async () => {
-  beforeAll(async () => {
-    const page = await browser.newPage();
-  });
-
   for (const path of paths) {
     it(`renders ${path} properly`, async () => {
       // Mock swagger requests on docs pages so those pages aren't blank
