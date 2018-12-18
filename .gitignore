@@ -23,3 +23,6 @@ src/**/*.css
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Visual regression diffs
+src/__image_snapshots__/__diff_output__
