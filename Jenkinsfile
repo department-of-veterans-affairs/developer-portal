@@ -81,8 +81,8 @@ node('vetsgov-general-purpose') {
 
   stage('Security') {
     try {
-      dockerImage.withRun(args) { c->
-        sh "npm audit"
+      dockerImage.withRun(args) { c ->
+        sh "docker exec ${c.id} npm audit"
       }
     } catch (error) {
       notify()
@@ -92,8 +92,8 @@ node('vetsgov-general-purpose') {
 
   stage('Visual Regression Test') {
     try {
-      dockerImage.withRun(args) { c->
-        sh 'npm run test:visual'
+      dockerImage.withRun(args) { c ->
+        sh "docker exec ${c.id} npm run test:visual"
       }
     } catch (error) {
       notify()
@@ -113,9 +113,9 @@ node('vetsgov-general-purpose') {
         def envName = envNames.get(i)
 
         builds[envName] = {
-          dockerImage.withRun(args) { c->
-            sh "NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
-            sh "echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
+          dockerImage.withRun(args) { c ->
+            sh "docker exec ${c.id} NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
+            sh "docker exec ${c.id} echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
           }
         }
       }
@@ -133,12 +133,12 @@ node('vetsgov-general-purpose') {
     if (shouldBail()) { return }
 
     try {
-      dockerImage.withRun(args) { c->
+      dockerImage.withRun(args) { c ->
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                           usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
           for (int i=0; i<envNames.size(); i++) {
-            sh "tar -C /application/build/${envNames.get(i)} -cf /application/build/${envNames.get(i)}.tar.bz2 ."
-            sh "s3-cli put --acl-public --region us-gov-west-1 /application/build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
+            sh "docker exec ${c.id} tar -C /application/build/${envNames.get(i)} -cf /application/build/${envNames.get(i)}.tar.bz2 ."
+            sh "docker exec ${c.id} s3-cli put --acl-public --region us-gov-west-1 /application/build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
           }
         }
       }
