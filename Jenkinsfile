@@ -56,7 +56,7 @@ def notify = { ->
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
   def dockerImage, args, ref, imageTag
-  args = '-v node_modules:/application/node_modules'
+  args = ''
 
   // Checkout source, create output directories, build container
 
@@ -71,6 +71,9 @@ node('vetsgov-general-purpose') {
       imageTag = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 
       dockerImage = docker.build("developer-portal:${imageTag}")
+      dockerImage.inside {
+        sh 'npm install'
+      }
     } catch (error) {
       notify()
       throw error
