@@ -78,10 +78,8 @@ node('vetsgov-general-purpose') {
 
   stage('Security') {
     try {
-      dir("developer-portal") {
-        dockerImage.inside {
-          sh "npm config set audit-level high && npm audit"
-        }
+      dockerImage.inside {
+        sh "npm config set audit-level high && npm audit"
       }
     } catch (error) {
       notify()
