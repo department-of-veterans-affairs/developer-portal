@@ -82,7 +82,7 @@ node('vetsgov-general-purpose') {
   stage('Security') {
     try {
       dockerImage.withRun(args) { c->
-        sh "npm config set audit-level high && npm audit"
+        sh "npm audit"
       }
     } catch (error) {
       notify()
