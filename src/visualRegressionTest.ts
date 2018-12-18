@@ -1,10 +1,14 @@
+import { Page } from 'puppeteer';
+
 import { mockSwagger } from './e2eHelpers';
 
+jest.setTimeout(100000);
+
 const paths = [
-  '/',
   '/apply',
   '/terms-of-service',
   '/go-live',
+  '/oauth',
   '/explore',
   '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
   '/explore/benefits/docs/appeals',
@@ -18,9 +22,21 @@ const viewports = [
   { width: 375, height: 800 },
 ];
 
+const checkScreenshots = async (page: Page) => {
+  for (const viewport of viewports) {
+    await page.setViewport(viewport);
+    const screenshot = await page.screenshot({
+      fullPage: true
+    });
+    expect(screenshot).toMatchImageSnapshot();
+  }
+}
+
 describe('Visual regression test', async () => {
   for (const path of paths) {
     it(`renders ${path} properly`, async () => {
+      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
+
       // Mock swagger requests on docs pages so those pages aren't blank
       if (/$\/explore\/[^\/]+\/docs/.test(path)) {
         await page.setRequestInterception(true);
@@ -28,21 +44,17 @@ describe('Visual regression test', async () => {
         page.on('request', mockSwagger);
       }
 
-      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
-
-      // Hack to make sure iframe content (such as youtube video on the homepage) is loaded before the screenshot
-      if (await page.$('iframe') !== null) {
-        await page.hover('iframe');
-        await page.waitFor(1000);
-      }
-      
-      for (const viewport of viewports) {
-        await page.setViewport(viewport)
-        const screenshot = await page.screenshot({
-          fullPage: true
-        });
-        expect(screenshot).toMatchImageSnapshot();
-      }
+      await checkScreenshots(page)
     });
   }
+
+  it('renders the homepage properly', async() => {
+    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
+
+    // Hack to make sure youtube video on homepage loads before the screenshot
+    await page.evaluate('window.scrollBy(0, document.body.scrollHeight);');
+    await page.waitFor(2000);
+
+    await checkScreenshots(page);
+  });
 });
