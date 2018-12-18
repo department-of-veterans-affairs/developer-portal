@@ -1,11 +1,15 @@
 module.exports = {
-  displayName: 'Visual Regression Tests',
-  name: 'visual',
-  preset: 'jest-puppeteer',
-  testURL: 'http://localhost:4444',
+  displayName: "Visual Regression Tests",
+  name: "visual",
+  preset: "jest-puppeteer",
+  testURL: "http://localhost:4444",
   testMatch: [
-    '<rootDir>/test/visual-regression.js'
+    "<rootDir>/src/visualRegressionTest.ts"
   ],
+  setupFiles: [
+    "<rootDir>/config/polyfills.js",
+  ],
+  setupTestFrameworkScriptFile: "<rootDir>/config/jest/imageSnapshot.ts",
   transform: {
     "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
     "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
