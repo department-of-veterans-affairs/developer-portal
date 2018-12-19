@@ -34,8 +34,7 @@ Initiate the OpenID Connect authorization by directing Veterans using your appli
 * `state` - optional - Ensures authorization flow integrity. See [security](#security-considerations).
 
 Example Authorization URL:
-
-```
+```plaintext
 https://deptva-eval.okta.com/oauth2/default/v1/authorize?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=http://localhost:8080/implicit/callback&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read
 ```
 
@@ -48,9 +47,9 @@ This flow works for applications that aren't able to keep a *client secret* prot
 The Veteran authorizing your application will be redirected to your application's `redirect_uri` and will receive tokens in the URL's query or fragment depending on the value of `response_mode` (default is fragment). If you requested an `id_token` it will be returned as a parameter called `id_token`. If you requested a `token`, it will be returned as a parameter called `access_token`.
 
 The Veteran's client will receive
-```
+```http
 HTTP/1.1 302 Found
-Location: {your redirect uri}#
+Location: http://example.com?
   scope=openid%20profile%20email
   &id_token=asdjkfa...
   &state=af0ifjsldkj
@@ -59,7 +58,7 @@ Location: {your redirect uri}#
 
 and your application will then receive
 
-```
+```http
 GET {your redirect uri path}#
   scope=openid%20profile%20email
   &id_token=asdjkfa...
@@ -77,7 +76,7 @@ This flow is used by applications that are able to safely store a *client secret
 The Veteran authorizing your application will be redirect to your application's `redirect_uri` and will receive a `code` parameter either in the URL's query or fragment depending on the value of `response_mode`, defaulting to fragment.
 
 The Veteran's client will receive
-```
+```http
 HTTP/1.1 302 Found
 Location: {your redirect uri}#
   response_type=code
@@ -89,7 +88,7 @@ Location: {your redirect uri}#
 
 and your application will then receive
 
-```
+```http
 GET {your redirect uri path}#
   response_type=code
   &scope=openid%20profile%20email
@@ -101,7 +100,7 @@ Host: {your redirect uri host}
 
 Your application then makes a request to the token endpoint at `https://deptva-eval.okta.com/oauth2/default/v1/token` using the returned code and your *client id* and *client secret* as HTTP Basic authorization. Your token request should look like:
 
-```
+```plaintext
 POST /oauth2/default/v1/token HTTP/1.1
 Host: deptva-eval.okta.com
 Content-Type: application/x-www-form-urlencoded
@@ -112,7 +111,7 @@ grant_type=authorization_code&code={your code}&redirect_uri={your redirect_uri}
 
 The token server will respond with:
 
-```
+```http
 HTTP/1.1 200 OK
 Content-Type: application/json
 Cache-Control: no-store
@@ -128,7 +127,7 @@ Pragma: no-cache
 
 or if an error occurs:
 
-```
+```http
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
 Cache-Control: no-store
@@ -143,7 +142,7 @@ The resulting `access_token` can used to authorize requests to the VA API Platfo
 
 The `refresh_token` can be used to obtain a new `access_token` after its expiry by sending the following request
 
-```
+```plaintext
 POST /oauth2/default/v1/token HTTP/1.1
 Host: deptva-eval.okta.com
 Content-Type: application/x-www-form-urlencoded
@@ -160,7 +159,7 @@ By specifying more than one value in the `response_type` when initiating your au
 
 If you request `response=code id_token`, the Veteran's client will be issued a redirect like
 
-```
+```http
 HTTP/1.1 302 Found
 Location: {your redirect uri}#
   response_type=code
@@ -174,7 +173,7 @@ Location: {your redirect uri}#
 
 and your application will receive
 
-```
+```http
 GET {your redirect uri path}#
   response_type=code
   &scope=openid%20profile%20email
