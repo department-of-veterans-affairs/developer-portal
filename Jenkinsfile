@@ -116,9 +116,9 @@ node('vetsgov-general-purpose') {
 
             # Assemble github comment with links to images
             URL="https://s3-us-gov-west-1.amazonaws.com/${BUCKET}/${REF}/"
-            MSG="Visual regression testing failed. Review these diffs and then update the snapshots. <br>"
+            MSG="Visual regression testing failed. Review these diffs and then update the snapshots. <br><br>"
             for FILE in *.png; do
-              MSG="${MSG}${URL}${FILE} <br>"
+              MSG="${MSG}${URL}${FILE} <br><br>"
             done
 
             # Get PR number
