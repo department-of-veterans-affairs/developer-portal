@@ -91,7 +91,39 @@ node('vetsgov-general-purpose') {
   stage('Visual Regression Test') {
     try {
       dockerImage.inside(args) {
-        sh 'cd /application && npm run test:visual'
+        withCredentials([
+          [$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY'],
+          [$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']
+        ]) {
+          sh '''
+            cd /application
+            npm run test:visual || true //Don't exit immediately on test failure
+
+            diff_dir='src/__image_snapshots__/__diff_output__'
+
+            if [ ! -d "$diff_dir" ]; then
+              // Tests passed, move on
+              exit 0
+            fi
+
+            // Push images to s3 bucket
+            cd "$diff_dir"
+            bucket='developer-portal-screenshots'
+            ref=$(git rev-parse HEAD)
+            rename 's/^visual-regression-test-ts-visual-regression-test-//' *.png
+            s3-cli sync --region us-gov-west-1 . s3://$bucket/$ref/
+
+            //Link images on PR
+            url="https://s3-us-gov-west-1.amazonaws.com/$bucket/$ref
+            msg="Visual regression testing failed. Review these diffs and then update the snapshots.\n\n"
+            for file in *.png; do
+              msg="$msg$url$file\n"
+            done
+
+            curl -u "${USERNAME}:S{TOKEN}" https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/$CHANGE_ID/comments --data "{\\"body\\":\\"$msg\\"}"
+            exit 1
+          '''
+        }
       }
     } catch (error) {
       notify()
