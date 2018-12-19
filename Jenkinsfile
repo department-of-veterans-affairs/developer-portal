@@ -100,32 +100,33 @@ node('vetsgov-general-purpose') {
             # Don't exit immediately on test failure
             npm run test:visual || true 
 
-            diff_dir='src/__image_snapshots__/__diff_output__'
+            DIFF_DIR='src/__image_snapshots__/__diff_output__'
 
-            if [ ! -d "$diff_dir" ]; then
+            if [ ! -d "$DIFF_DIR" ]; then
               # Tests passed, move on
               exit 0
             fi
 
             # Push images to s3 bucket
-            cd "$diff_dir"
-            bucket='developer-portal-screenshots'
-            ref=$(git rev-parse HEAD)
+            cd "$DIFF_DIR"
+            BUCKET='developer-portal-screenshots'
+            REF=$(git rev-parse HEAD)
             rename 's/^visual-regression-test-ts-visual-regression-test-//' *.png
-            s3-cli sync --region us-gov-west-1 . s3://$bucket/$ref/
+            s3-cli sync --region us-gov-west-1 . "s3://${BUCKET}/${REF}/"
 
             # Assemble github comment with links to images
-            url="https://s3-us-gov-west-1.amazonaws.com/$bucket/$ref/"
-            msg="Visual regression testing failed. Review these diffs and then update the snapshots.\n\n"
-            for file in *.png; do
-              msg="$msg$url$file\n"
+            URL="https://s3-us-gov-west-1.amazonaws.com/${BUCKET}/${REF}/"
+            MSG="Visual regression testing failed. Review these diffs and then update the snapshots.\n\n"
+            for FILE in *.png; do
+              MSG="${MSG}${URL}${FILE}\n"
             done
 
             # Get PR number
-            pr=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref=='$JOB_BASE_NAME') | .number")
+            BRANCH=$(perl -MURI::Escape -e 'print uri_unescape($ARGV[0])' $JOB_BASE_NAME)
+            PR=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref=='${BRANCH}') | .number")
 
             # Post comment on github
-            curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr}/comments" --data "{\\"body\\":\\"$msg\\"}"
+            curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${PR}/comments" --data "{\\"body\\":\\"${MSG}\\"}"
             exit 1
           '''
         }
