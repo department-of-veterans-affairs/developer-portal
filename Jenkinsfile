@@ -122,7 +122,7 @@ node('vetsgov-general-purpose') {
             done
 
             # Get PR number
-            BRANCH=$(perl -MURI::Escape -e 'print uri_unescape($ARGV[0])' $JOB_BASE_NAME)
+            BRANCH=$(python2 -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' $JOB_BASE_NAME)
             PR=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref=='${BRANCH}') | .number")
 
             # Post comment on github
