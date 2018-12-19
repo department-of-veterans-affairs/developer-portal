@@ -51,9 +51,8 @@ describe('Visual regression test', async () => {
   it('renders the homepage properly', async() => {
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
 
-    // Hack to make sure youtube video on homepage loads before the screenshot
-    await page.evaluate('window.scrollBy(0, document.body.scrollHeight);');
-    await page.waitFor(2000);
+    // Hide problematic video on homepage
+    await page.evaluate('document.querySelector("iframe").style="visibility: hidden;"');
 
     await checkScreenshots(page);
   });
