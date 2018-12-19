@@ -116,14 +116,14 @@ node('vetsgov-general-purpose') {
 
             # Assemble github comment with links to images
             URL="https://s3-us-gov-west-1.amazonaws.com/${BUCKET}/${REF}/"
-            MSG="Visual regression testing failed. Review these diffs and then update the snapshots.\n\n"
+            MSG="Visual regression testing failed. Review these diffs and then update the snapshots. <br>"
             for FILE in *.png; do
-              MSG="${MSG}${URL}${FILE}\n"
+              MSG="${MSG}${URL}${FILE} <br>"
             done
 
             # Get PR number
             BRANCH=$(python2 -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' $JOB_BASE_NAME)
-            PR=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\"${BRANCH}\") | .number")
+            PR=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${BRANCH}\\") | .number")
 
             # Post comment on github
             curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${PR}/comments" --data "{\\"body\\":\\"${MSG}\\"}"
