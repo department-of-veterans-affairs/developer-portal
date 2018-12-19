@@ -90,7 +90,7 @@ node('vetsgov-general-purpose') {
 
   stage('Visual Regression Test') {
     try {
-      dockerImage.inside(args) {
+      dockerImage.inside(args + '-e pr=') {
         withCredentials([
           [$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY'],
           [$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']
@@ -114,14 +114,18 @@ node('vetsgov-general-purpose') {
             rename 's/^visual-regression-test-ts-visual-regression-test-//' *.png
             s3-cli sync --region us-gov-west-1 . s3://$bucket/$ref/
 
-            # Link images on PR
+            # Assemble github comment with links to images
             url="https://s3-us-gov-west-1.amazonaws.com/$bucket/$ref/"
             msg="Visual regression testing failed. Review these diffs and then update the snapshots.\n\n"
             for file in *.png; do
               msg="$msg$url$file\n"
             done
 
-            curl -u "${USERNAME}:${TOKEN}" https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/$CHANGE_ID/comments --data "{\\"body\\":\\"$msg\\"}"
+            # Get PR number
+            pr=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref=='$JOB_BASE_NAME') | .number")
+
+            # Post comment on github
+            curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr}/comments" --data "{\\"body\\":\\"$msg\\"}"
             exit 1
           '''
         }

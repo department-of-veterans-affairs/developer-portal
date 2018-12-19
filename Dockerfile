@@ -12,6 +12,9 @@ RUN apt-get update && apt-get install -y wget --no-install-recommends \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /src/*.deb
 
+# Install jq for jenkins job
+RUN apt-get install -y jq
+
 WORKDIR /application
 
 # Match the jenkins uid/gid on the host (504)
