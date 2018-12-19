@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y wget --no-install-recommends \
     && rm -rf /src/*.deb
 
 # Install jq for jenkins job
-RUN apt-get install -y jq
+RUN apt-get update && apt-get install -y jq
 
 WORKDIR /application
 
