@@ -115,7 +115,7 @@ node('vetsgov-general-purpose') {
             s3-cli sync --region us-gov-west-1 . s3://$bucket/$ref/
 
             # Link images on PR
-            url="https://s3-us-gov-west-1.amazonaws.com/$bucket/$ref"
+            url="https://s3-us-gov-west-1.amazonaws.com/$bucket/$ref/"
             msg="Visual regression testing failed. Review these diffs and then update the snapshots.\n\n"
             for file in *.png; do
               msg="$msg$url$file\n"
