@@ -61,6 +61,7 @@ node('vetsgov-general-purpose') {
 
   stage('Setup') {
     try {
+      deleteDir()
       checkout scm
 
       ref = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
