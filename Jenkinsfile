@@ -91,45 +91,7 @@ node('vetsgov-general-purpose') {
   stage('Visual Regression Test') {
     try {
       dockerImage.inside(args) {
-        withCredentials([
-          [$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY'],
-          [$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']
-        ]) {
-          sh '''
-            cd /application
-            # Don't exit immediately on test failure
-            npm run test:visual || true 
-
-            DIFF_DIR='src/__image_snapshots__/__diff_output__'
-
-            if [ ! -d "$DIFF_DIR" ]; then
-              # Tests passed, move on
-              exit 0
-            fi
-
-            # Push images to s3 bucket
-            cd "$DIFF_DIR"
-            BUCKET='developer-portal-screenshots'
-            REF=$(git rev-parse HEAD)
-            rename 's/^visual-regression-test-ts-visual-regression-test-//' *.png
-            s3-cli sync --region us-gov-west-1 . "s3://${BUCKET}/${REF}/"
-
-            # Assemble github comment with links to images
-            URL="https://s3-us-gov-west-1.amazonaws.com/${BUCKET}/${REF}/"
-            MSG="Visual regression testing failed. Review these diffs and then update the snapshots. <br><br>"
-            for FILE in *.png; do
-              MSG="${MSG}${URL}${FILE} <br><br>"
-            done
-
-            # Get PR number
-            BRANCH=$(python2 -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' $JOB_BASE_NAME)
-            PR=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${BRANCH}\\") | .number")
-
-            # Post comment on github
-            curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${PR}/comments" --data "{\\"body\\":\\"${MSG}\\"}"
-            exit 1
-          '''
-        }
+        sh 'cd /application && npm run test:visual'
       }
     } catch (error) {
       notify()
