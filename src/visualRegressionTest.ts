@@ -35,15 +35,14 @@ const checkScreenshots = async (page: Page) => {
 describe('Visual regression test', async () => {
   for (const path of paths) {
     it(`renders ${path} properly`, async () => {
-      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
-
       // Mock swagger requests on docs pages so those pages aren't blank
-      if (/$\/explore\/[^\/]+\/docs/.test(path)) {
+      if (/^\/explore\/[^\/]+\/docs/.test(path)) {
         await page.setRequestInterception(true);
         page.removeAllListeners('request');
         page.on('request', mockSwagger);
       }
 
+      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
       await checkScreenshots(page)
     });
   }
