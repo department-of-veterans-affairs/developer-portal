@@ -117,7 +117,7 @@ node('vetsgov-general-purpose') {
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
             sh '''
               rename 's/^visual-regression-test-ts-visual-regression-test-//' *
-              aws --region us-gov-west-1 s3 sync . "s3://${bucket}/${ref}/"
+              aws --region us-gov-west-1 s3 sync --no-progress . "s3://${bucket}/${ref}/"
             '''
           }
 
@@ -167,21 +167,11 @@ node('vetsgov-general-purpose') {
     if (shouldBail()) { return }
 
     try {
-<<<<<<< HEAD
-      dockerImage.inside(args) {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
-                          usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-          for (int i=0; i<envNames.size(); i++) {
-            sh "tar -C /application/build/${envNames.get(i)} -cf /application/build/${envNames.get(i)}.tar.bz2 ."
-            sh "s3-cli put --acl-public --region us-gov-west-1 /application/build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
-          }
-=======
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                         usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
         for (int i=0; i<envNames.size(); i++) {
           sh "tar -C build/${envNames.get(i)} -cf build/${envNames.get(i)}.tar.bz2 ."
-          sh "aws --region us-gov-west-1 s3 cp --acl public-read build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
->>>>>>> 8d352cb... Fix aws s3 args
+          sh "aws --region us-gov-west-1 s3 cp --no-progress --acl public-read build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
         }
       }
     } catch (error) {
