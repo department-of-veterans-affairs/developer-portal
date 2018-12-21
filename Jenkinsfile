@@ -95,6 +95,33 @@ node('vetsgov-general-purpose') {
         sh 'cd /application && npm run test:visual'
       }
     } catch (error) {
+      dir('src/__image_snapshots__/__diff_output__') {
+        withEnv(["ref=${ref}",'bucket=developer-portal-screenshots']) {
+          // Upload diffs to S3
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
+            sh '''
+              rename 's/^visual-regression-test-ts-visual-regression-test-//' *
+              aws --region us-gov-west-1 s3 sync . "s3://${bucket}/${ref}/"
+            '''
+          }
+          // Post urls on PR
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
+            sh '''
+              # Assemble github comment with links to images
+              url_base="https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/"
+              msg="Visual regression testing failed. Review these diffs and then update the snapshots. <br><br>"
+              for file in *.png; do
+                msg="${msg} [${file}](${url_base}${file}) <br>"
+              done
+
+              branch=$(python2 -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
+              pr_num=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${branch}\\") | .number")
+              # Post comment on github
+              curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr}/comments" --data "{\\"body\\":\\"${msg}\\"}"
+            '''
+          }
+        }
+      }
       notify()
       throw error
     }
