@@ -122,7 +122,8 @@ node('vetsgov-general-purpose') {
           }
 
           // Create github comment
-          links = findFiles().collect {
+          files = sh(script: 'ls', returnStdout: true).tokenize()
+          links = files.collect {
             "[${it.name}](https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/${it.name})"
           }.join(' <br>')
 
