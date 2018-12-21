@@ -1,3 +1,4 @@
+// tslint:disable:no-console
 import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
@@ -30,6 +31,8 @@ export const axeCheck = () => {
 
 export const mockSwagger = (req : Request) => {
     if (req.url() in mocks) {
+        console.log(`mocking request to ${req.url()}`);
+        console.log(`mocked response: ${JSON.stringify(mocks[req.url()])}`);
         req.respond({
             body: JSON.stringify(mocks[req.url()]),
             contentType: 'application/json',
