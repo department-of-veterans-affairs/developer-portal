@@ -115,18 +115,13 @@ node('vetsgov-general-purpose') {
         withEnv(["ref=${ref}",'bucket=developer-portal-screenshots']) {
           // Upload diffs to S3
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-            sh '''
-              rename 's/^visual-regression-test-ts-visual-regression-test-//' *
-              aws --region us-gov-west-1 s3 sync --no-progress . "s3://${bucket}/${ref}/"
-            '''
+            sh 'aws --region us-gov-west-1 s3 sync --no-progress . "s3://${bucket}/${ref}/"'
           }
-
           // Create github comment
           files = sh(script: 'ls', returnStdout: true).tokenize()
           links = files.collect {
-            "[${it}](https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/${it})"
+            "[${it - 'visual-regression-test-ts-visual-regression-test-'}](https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/${it})"
           }.join(' <br>')
-
           comment = "Visual regression testing failed. Review these diffs and then update the snapshots. <br><br> ${links}"
           pullRequestComment(comment)
         }
