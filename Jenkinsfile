@@ -53,6 +53,22 @@ def notify = { ->
   }
 }
 
+// Post a comment on the current pull request
+def pullRequestComment(String comment) {
+  withEnv("comment=${comment}") {
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
+      sh '''
+        # URL decode branch name
+        branch=$(python2 -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
+        # Get PR number from branch name. May fail if there are multiple PRs from the same branch
+        pr_num=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${branch}\\") | .number")
+        # Post comment on github
+        curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr}/comments" --data "{\\"body\\":\\"${comment}\\"}"
+      '''
+    }
+  }
+}
+
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
   def dockerImage, args, ref, imageTag
@@ -104,22 +120,14 @@ node('vetsgov-general-purpose') {
               aws --region us-gov-west-1 s3 sync . "s3://${bucket}/${ref}/"
             '''
           }
-          // Post urls on PR
-          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
-            sh '''
-              # Assemble github comment with links to images
-              url_base="https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/"
-              msg="Visual regression testing failed. Review these diffs and then update the snapshots. <br><br>"
-              for file in *.png; do
-                msg="${msg} [${file}](${url_base}${file}) <br>"
-              done
 
-              branch=$(python2 -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
-              pr_num=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${branch}\\") | .number")
-              # Post comment on github
-              curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr}/comments" --data "{\\"body\\":\\"${msg}\\"}"
-            '''
-          }
+          // Create github comment
+          links = findFiles().collect {
+            "[${it.name}](https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/${it.name})"
+          }.join(' <br>')
+
+          comment = "Visual regression testing failed. Review these diffs and then update the snapshots. <br><br> ${links}"
+          pullRequestComment(comment)
         }
       }
       notify()
