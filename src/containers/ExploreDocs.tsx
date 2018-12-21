@@ -52,6 +52,11 @@ const apiDefs : IApiCategories = {
                 shortDescription: 'Track claims',
                 urlFragment: 'claims',
             },
+            {
+                name: 'Loan Guarantees',
+                shortDescription: 'Manage VA home loan guarantees',
+                urlFragment: 'loan_guarantees',
+            }
         ],
         buttonText: "Get Your Key",
         name: 'Benefits',

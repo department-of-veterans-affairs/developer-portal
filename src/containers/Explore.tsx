@@ -56,6 +56,11 @@ class Explore extends React.Component<IExploreProps, { }> {
                     <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`} />
                 );
                 break;
+            case 'loan_guarantees':
+                docs = (
+                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/loan_guarantees/docs/v0/api`} />
+                );
+                break;
             case 'claims':
                 docs = (
                     <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`} />
