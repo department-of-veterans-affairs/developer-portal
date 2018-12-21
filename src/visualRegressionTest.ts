@@ -1,18 +1,17 @@
-// tslint:disable:no-console
-import { Page, Request } from 'puppeteer';
+import { Page } from 'puppeteer';
 
 import { mockSwagger } from './e2eHelpers';
 
 jest.setTimeout(100000);
 
 const paths = [
-  // '/apply',
-  // '/terms-of-service',
-  // '/go-live',
-  // '/oauth',
-  // '/explore',
+  '/apply',
+  '/terms-of-service',
+  '/go-live',
+  '/oauth',
+  '/explore',
   '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
-  // '/explore/benefits/docs/appeals',
+  '/explore/benefits/docs/appeals',
 ];
 
 const puppeteerHost = 'http://localhost:4444'
@@ -40,10 +39,7 @@ describe('Visual regression test', async () => {
       if (/^\/explore\/[^\/]+\/docs/.test(path)) {
         await page.setRequestInterception(true);
         page.removeAllListeners('request');
-        page.on('request', (req: Request) => {
-          console.log(req.url());
-          mockSwagger(req);
-        });
+        page.on('request', mockSwagger);
       }
 
       await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
@@ -51,7 +47,7 @@ describe('Visual regression test', async () => {
     });
   }
 
-  xit('renders the homepage properly', async() => {
+  it('renders the homepage properly', async() => {
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
 
     // Hide problematic video on homepage
