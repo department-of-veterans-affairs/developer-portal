@@ -99,7 +99,7 @@
     "test": "node scripts/test.js",
     "test:unit": "node scripts/test.js --projects=unit.jest.config.js",
     "test:e2e": "node scripts/test.js --projects=e2e.jest.config.js",
-    "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand"
+    "test:visual": "REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3000 node scripts/test.js --projects=visual.jest.config.js --runInBand"
   },
   "devDependencies": {
     "@types/node": "^10.1.3",
