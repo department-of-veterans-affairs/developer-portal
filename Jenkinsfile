@@ -55,15 +55,15 @@ def notify = { ->
 
 // Post a comment on the current pull request
 def pullRequestComment(String comment) {
-  withEnv("comment=${comment}") {
+  withEnv(["comment=${comment}"]) {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
       sh '''
         # URL decode branch name
-        branch=$(python2 -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
+        branch=$(python -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
         # Get PR number from branch name. May fail if there are multiple PRs from the same branch
         pr_num=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${branch}\\") | .number")
         # Post comment on github
-        curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr}/comments" --data "{\\"body\\":\\"${comment}\\"}"
+        curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr_num}/comments" --data "{\\"body\\":\\"${comment}\\"}"
       '''
     }
   }
@@ -124,7 +124,7 @@ node('vetsgov-general-purpose') {
           // Create github comment
           files = sh(script: 'ls', returnStdout: true).tokenize()
           links = files.collect {
-            "[${it.name}](https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/${it.name})"
+            "[${it}](https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/${it})"
           }.join(' <br>')
 
           comment = "Visual regression testing failed. Review these diffs and then update the snapshots. <br><br> ${links}"
