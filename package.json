@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://developer.va.gov",
   "dependencies": {
-    "@department-of-veterans-affairs/formation": "^0.8.0",
+    "@department-of-veterans-affairs/formation": "^1.16.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
     "@fortawesome/free-brands-svg-icons": "^5.1.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
