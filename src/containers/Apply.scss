@@ -6,12 +6,6 @@
 
 .form-required-span {
   color: $color-red;
-  &:before {
-    content: " (";
-  }
-  &:after {
-    content: "Required)";
-  }
 }
 
 .feature {
