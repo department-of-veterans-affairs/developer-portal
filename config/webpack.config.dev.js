@@ -211,12 +211,7 @@ module.exports = {
             include: [paths.appSrc, paths.appNodeModules],
             use: [
               require.resolve('style-loader'),
-              {
-                loader: require.resolve('css-loader'),
-                options: {
-                  importLoaders: 1,
-                },
-              },
+              require.resolve('css-loader'),
               {
                 loader: require.resolve('postcss-loader'),
                 options: {

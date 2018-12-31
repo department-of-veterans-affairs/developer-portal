@@ -53,6 +53,22 @@ def notify = { ->
   }
 }
 
+// Post a comment on the current pull request
+def pullRequestComment(String comment) {
+  withEnv(["comment=${comment}"]) {
+    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
+      sh '''
+        # URL decode branch name
+        branch=$(python -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
+        # Get PR number from branch name. May fail if there are multiple PRs from the same branch
+        pr_num=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${branch}\\") | .number")
+        # Post comment on github
+        curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr_num}/comments" --data "{\\"body\\":\\"${comment}\\"}"
+      '''
+    }
+  }
+}
+
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
   def dockerImage, args, ref, imageTag
@@ -61,6 +77,7 @@ node('vetsgov-general-purpose') {
 
   stage('Setup') {
     try {
+      deleteDir()
       checkout scm
 
       ref = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
@@ -70,12 +87,7 @@ node('vetsgov-general-purpose') {
       imageTag = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 
       dockerImage = docker.build("developer-portal:${imageTag}")
-      args = "-v ${pwd()}:/application"
-      retry(5) {
-        dockerImage.inside(args) {
-          sh "cd /application && npm install --production=false"
-        }
-      }
+      args = "-v ${pwd()}:/application -v /application/node_modules"
     } catch (error) {
       notify()
       throw error
@@ -84,14 +96,36 @@ node('vetsgov-general-purpose') {
 
   stage('Security') {
     try {
-      dir("developer-portal") {
-        retry(3) {
-          dockerImage.inside(args) {
-            sh "cd /application && npm config set audit-level high && npm audit"
-          }
-        }
+      dockerImage.inside(args) {
+        sh "cd /application && npm config set audit-level high && npm audit"
       }
     } catch (error) {
+      notify()
+      throw error
+    }
+  }
+
+  stage('Visual Regression Test') {
+    try {
+      dockerImage.inside(args) {
+        sh 'cd /application && npm run test:visual'
+      }
+    } catch (error) {
+      dir('src/__image_snapshots__/__diff_output__') {
+        withEnv(["ref=${ref}",'bucket=developer-portal-screenshots']) {
+          // Upload diffs to S3
+          withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
+            sh 'aws --region us-gov-west-1 s3 sync --no-progress . "s3://${bucket}/${ref}/"'
+          }
+          // Create github comment
+          files = sh(script: 'ls', returnStdout: true).tokenize()
+          links = files.collect {
+            "[${it - 'visual-regression-test-ts-visual-regression-test-'}](https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/${it})"
+          }.join(' <br>')
+          comment = "Visual regression testing failed. Review these diffs and then update the snapshots. <br><br> ${links}"
+          pullRequestComment(comment)
+        }
+      }
       notify()
       throw error
     }
@@ -110,7 +144,7 @@ node('vetsgov-general-purpose') {
 
         builds[envName] = {
           dockerImage.inside(args) {
-            sh "cd /application && BUILD_ENV=${envName} npm run-script build ${envName}"
+            sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
             sh "cd /application && echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
           }
         }
@@ -129,13 +163,11 @@ node('vetsgov-general-purpose') {
     if (shouldBail()) { return }
 
     try {
-      dockerImage.inside(args) {
-        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
-                          usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-          for (int i=0; i<envNames.size(); i++) {
-            sh "tar -C /application/build/${envNames.get(i)} -cf /application/build/${envNames.get(i)}.tar.bz2 ."
-            sh "s3-cli put --acl-public --region us-gov-west-1 /application/build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
-          }
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
+                        usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
+        for (int i=0; i<envNames.size(); i++) {
+          sh "tar -C build/${envNames.get(i)} -cf build/${envNames.get(i)}.tar.bz2 ."
+          sh "aws --region us-gov-west-1 s3 cp --no-progress --acl public-read build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
         }
       }
     } catch (error) {

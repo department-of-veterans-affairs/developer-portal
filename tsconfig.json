@@ -27,8 +27,7 @@
     "jest",
     "src/setupTests.ts",
     "src/e2eHeleprs.ts",
-    "e2e.jest.config.js",
-    "unit.jest.config.js",
+    "*.jest.config.js",
     "jest-puppeteer.config.js"
   ]
 }

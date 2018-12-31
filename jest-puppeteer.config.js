@@ -4,4 +4,7 @@ module.exports = {
     "port": 4444,
     "launchTimeout": 60000,
   },
+  launch: {
+    args: ['--no-sandbox'],
+  },
 };
