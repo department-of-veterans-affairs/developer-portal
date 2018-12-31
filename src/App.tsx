@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { FlagsProvider } from 'flag';
 import { RouteComponentProps } from 'react-router'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
@@ -16,21 +17,45 @@ history.listen(location => {
 import 'highlight.js/styles/github.css'
 import './App.scss';
 
+function isHostedApiEnabled(shortName: string, defaultValue: boolean): boolean {
+  const envValue = process.env[`REACT_APP_${shortName.toUpperCase()}_API_ENABLED`];
+  if (envValue == null) {
+    return defaultValue;
+  } else {
+    return (envValue === 'true');
+  }
+}
+
+const flags = {
+  hosted_apis: {
+    appeals: isHostedApiEnabled('appeals', true),
+    argonaut: isHostedApiEnabled('argonaut', true),
+    benefits: isHostedApiEnabled('benefits', true),
+    claims: isHostedApiEnabled('claims', true),
+    facilities: isHostedApiEnabled('facilities', true),
+    loan_guarantees: isHostedApiEnabled('loan_guarantees', false)
+  }
+};
+
+export { flags };
+
 class App extends React.Component {
   public render() {
     return (
-      <div className="App">
-        <ConnectedRouter history={history}>
-          <div>
-            <Banner />
-            <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
-            <div role="main">
-              <Route path="/" render={this.focusedRoutes} />
+      <FlagsProvider flags={flags}>
+        <div className="App">
+          <ConnectedRouter history={history}>
+            <div>
+              <Banner />
+              <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
+              <div role="main">
+                <Route path="/" render={this.focusedRoutes} />
+              </div>
+              <Footer />
             </div>
-            <Footer />
-          </div>
-        </ConnectedRouter>
-      </div>
+          </ConnectedRouter>
+        </div>
+      </FlagsProvider>
     );
   }
 

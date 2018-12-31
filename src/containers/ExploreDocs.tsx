@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink, Route } from 'react-router-dom';
 
@@ -120,12 +121,14 @@ function ApiSection({ apiCategory, sectionRef } : { apiCategory : string, sectio
     if (apis.length > 0) {
         const links = apis.map(({ name, shortDescription, urlFragment }, idx) => {
             return (
-                <div key={idx} className="api-link">
-                  <Link to={`/explore/${apiCategory}/docs/${urlFragment}`}>
-                    <span>{name}</span>
-                    <p>{shortDescription}</p>
-                  </Link>
-                </div>
+                <Flag key={idx} name={`hosted_apis.${urlFragment}`}>
+                    <div key={idx} className="api-link">
+                      <Link to={`/explore/${apiCategory}/docs/${urlFragment}`}>
+                        <span>{name}</span>
+                        <p>{shortDescription}</p>
+                      </Link>
+                    </div>
+                </Flag>
             );
         });
         linkSection = (
@@ -278,12 +281,14 @@ export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>)
 
         const subNavLinks = apis.map(({ name, shortDescription, urlFragment }, subIdx) => {
             return (
-                <li key={subIdx}>
-                  <NavLink exact={true} to={`/explore/${apiCategory}/docs/${urlFragment}`} activeClassName="usa-current">
-                    {name}
-                  </NavLink>
-                  <br />
-                </li>
+                <Flag key={subIdx} name={`hosted_apis.${urlFragment}`}>
+                    <li key={subIdx}>
+                      <NavLink exact={true} to={`/explore/${apiCategory}/docs/${urlFragment}`} activeClassName="usa-current">
+                        {name}
+                      </NavLink>
+                      <br />
+                    </li>
+                </Flag>
             );
         });
         const topLinkPath = `/explore/${apiCategory}`;
