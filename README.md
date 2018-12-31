@@ -19,6 +19,13 @@ REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=https://dev-api.vets.gov
 REACT_APP_SALESFORCE_ENV=VICDEV
 ``` 
 
+The settings above assume you're running `vets-api` locally. That will let you develop the portal site against
+the in-development docs hosted by vets-api. If you want to develop the portal against API docs then
+change it to use a deployment environment such as dev:
+```
+REACT_APP_VETSGOV_SWAGGER_API=https://dev-api.vets.gov
+```
+
 ## Running Locally
 ```
 npm start
