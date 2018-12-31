@@ -37,8 +37,6 @@ const flags = {
   }
 };
 
-export { flags };
-
 class App extends React.Component {
   public render() {
     return (
