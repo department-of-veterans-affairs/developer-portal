@@ -15,7 +15,7 @@ Next, before running the app, create a `.env` file with the following contents:
 ```
 PORT=3001
 REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3000
-REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=https://dev-api.vets.gov
+REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=https://dev-api.va.gov
 REACT_APP_SALESFORCE_ENV=VICDEV
 ``` 
 
