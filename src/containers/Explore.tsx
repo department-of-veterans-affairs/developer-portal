@@ -3,9 +3,7 @@ import * as React from 'react';
 import { Flag } from 'flag';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { ThunkDispatch } from 'redux-thunk';
 
-import * as actions from '../actions'
 import { SwaggerDocs } from '../components';
 import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
@@ -15,16 +13,9 @@ export interface IExploreProps extends RouteComponentProps<IApiNameParam> {
     fetchArgonaut: () => void;
 }
 
-const mapStateToProps = ({ explore: { argonaut }, routing }: IRootState) => {
+const mapStateToProps = ({ routing }: IRootState) => {
     return {
-        argonaut,
         ...routing,
-    };
-};
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<IRootState, undefined, actions.FetchArgonautAction>) => {
-    return {
-        fetchArgonaut: () => { dispatch(actions.fetchArgonaut()) },
     };
 };
 
@@ -90,18 +81,6 @@ class Explore extends React.Component<IExploreProps, { }> {
         );
     }
 
-    public componentDidMount() {
-        if (this.props.match.params.apiName === 'argonaut' && !this.props.argonaut.fetched && !this.props.argonaut.loading) {
-            this.props.fetchArgonaut();
-        }
-    }
-
-    public componentDidUpdate() {
-        if (this.props.match.params.apiName === 'argonaut' && !this.props.argonaut.fetched && !this.props.argonaut.loading) {
-            this.props.fetchArgonaut();
-        }
-    }
-
     private renderIndex() {
         return (
             <ExplorePage />
@@ -109,5 +88,4 @@ class Explore extends React.Component<IExploreProps, { }> {
     }
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Explore);
+export default connect(mapStateToProps)(Explore);

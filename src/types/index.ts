@@ -38,12 +38,7 @@ export interface IApplication {
   token: string;
 }
 
-export interface IExplore {
-  argonaut: IExternalSwagger;
-}
-
 export interface IRootState {
   application: IApplication;
-  explore: IExplore;
   routing: RouterState;
 }
