@@ -71,7 +71,7 @@ class Explore extends React.Component<IExploreProps, { }> {
                 break;
             case 'address_validation':
                 docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v0/api`} />
+                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v1/api`} />
                 );
                 break;
             case 'argonaut':
