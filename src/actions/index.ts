@@ -81,24 +81,6 @@ export type SubmitFormAction = ISubmitForm | ISubmitFormSuccess | ISubmitFormErr
 
 export type SubmitFormThunk = ThunkAction<Promise<SubmitFormAction>, IRootState, undefined, SubmitFormAction>;
 
-export interface IFetchArgonaut extends Action {
-  type: constants.FETCH_ARGONAUT_BEGIN;
-}
-
-export interface IFetchArgonautSuccess extends Action {
-  swagger: object;
-  type: constants.FETCH_ARGONAUT_SUCCESS;
-}
-
-export interface IFetchArgonautError extends Action {
-  error: string;
-  type: constants.FETCH_ARGONAUT_ERROR;
-}
-
-export type FetchArgonautAction = IFetchArgonaut | IFetchArgonautSuccess | IFetchArgonautError;
-
-export type FetchArgonautThunk = ThunkAction<Promise<FetchArgonautAction>, IRootState, undefined, FetchArgonautAction>;
-
 const apisToList = (apis : IApiList) => {
   return Object.keys(apis).filter((key) => apis[key]).join(',');
 };
@@ -174,43 +156,6 @@ export const submitFormError : ActionCreator<ISubmitFormError> = (status : strin
   return {
     status,
     type: constants.SUBMIT_APPLICATION_ERROR,
-  };
-}
-
-export const fetchArgonaut : ActionCreator<FetchArgonautThunk> = () => {
-  return (dispatch) => {
-    dispatch(fetchArgonautBegin());
-
-    return fetch('https://vdgr16jtej.execute-api.us-east-1.amazonaws.com/prod/catalog')
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response;
-      })
-      .then((response) => response.json())
-      .then((json) => dispatch(fetchArgonautSuccess(json[1].apis[0].swagger)))
-      .catch((error) => dispatch(fetchArgonautError(error.message)));
-  };
-}
-
-export const fetchArgonautBegin : ActionCreator<IFetchArgonaut> = () => {
-  return {
-    type: constants.FETCH_ARGONAUT_BEGIN
-  };
-}
-
-export const fetchArgonautSuccess : ActionCreator<IFetchArgonautSuccess> = (swagger: object) => {
-  return {
-    swagger,
-    type: constants.FETCH_ARGONAUT_SUCCESS,
-  };
-}
-
-export const fetchArgonautError : ActionCreator<IFetchArgonautError> = (error: string) => {
-  return {
-    error,
-    type: constants.FETCH_ARGONAUT_ERROR,
   };
 }
 

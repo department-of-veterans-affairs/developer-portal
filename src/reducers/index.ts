@@ -1,6 +1,5 @@
-import { FetchArgonautAction, SubmitFormAction, UpdateApplicationAction } from '../actions';
-import { extraBackground } from '../content/apiDocs/healthExtra';
-import { IApplication, IExplore } from '../types';
+import { SubmitFormAction, UpdateApplicationAction } from '../actions';
+import { IApplication } from '../types';
 import * as constants from '../types/constants';
 
 const initialApplicationState : IApplication = {
@@ -35,21 +34,6 @@ const initialApplicationState : IApplication = {
     token: '',
 };
 
-const initialExploreState : IExplore = {
-    argonaut: {
-        fetched: false,
-        loading: false,
-        swagger: {},
-    },
-};
-
-function includeExtra(swagger : {info?: {description?: string}}) : {info?: {description?: string}} {
-    if (swagger.info && swagger.info.description) {
-        swagger.info.description = swagger.info.description + extraBackground;
-    }
-    return swagger;
-}
-
 export function application(state: IApplication = initialApplicationState, action: SubmitFormAction | UpdateApplicationAction) : IApplication {
     switch(action.type) {
         case constants.UPDATE_APPLICATION_DESCRIPTION:
@@ -83,18 +67,6 @@ export function application(state: IApplication = initialApplicationState, actio
             return { ...state, sending: false, token: action.token};
         case constants.SUBMIT_APPLICATION_ERROR:
             return { ...state, sending: false, errorStatus: action.status};
-    }
-    return state;
-}
-
-export function explore(state: IExplore = initialExploreState, action: FetchArgonautAction) : IExplore {
-    switch(action.type) {
-        case constants.FETCH_ARGONAUT_BEGIN:
-            return { ...state, argonaut: { swagger: { }, loading: true, fetched: false, } };
-        case constants.FETCH_ARGONAUT_SUCCESS:
-            return { ...state, argonaut: { swagger: includeExtra(action.swagger), loading: false, fetched: true, } };
-        case constants.FETCH_ARGONAUT_ERROR:
-            return { ...state, argonaut: { swagger: { }, loading: false, fetched: true, error: action.error } };
     }
     return state;
 }
