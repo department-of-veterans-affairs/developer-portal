@@ -5,5 +5,59 @@
       "config/**/*.js",
       "node_modules/**/*.ts"
     ]
+  },
+  "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+  "rules": {
+    "react-a11y-anchors": {
+      "severity": "warning"
+    },
+    "react-a11y-aria-unsupported-elements": {
+      "severity": "warning"
+    },
+    "react-a11y-event-has-role": {
+      "severity": "warning"
+    },
+    "react-a11y-image-button-has-alt": {
+      "severity": "warning"
+    },
+    "react-a11y-img-has-alt": {
+      "severity": "warning"
+    },
+    "react-a11y-input-elements": {
+      "severity": "warning"
+    },
+    "react-a11y-lang": {
+      "severity": "warning"
+    },
+    "react-a11y-meta": {
+      "severity": "warning"
+    },
+    "react-a11y-no-onchange": {
+      "severity": "warning"
+    },
+    "react-a11y-props": {
+      "severity": "warning"
+    },
+    "react-a11y-proptypes": {
+      "severity": "warning"
+    },
+    "react-a11y-required": {
+      "severity": "warning"
+    },
+    "react-a11y-role": {
+      "severity": "warning"
+    },
+    "react-a11y-role-has-required-aria-props": {
+      "severity": "warning"
+    },
+    "react-a11y-role-supports-aria-props": {
+      "severity": "warning"
+    },
+    "react-a11y-tabindex-no-positive": {
+      "severity": "warning"
+    },
+    "react-a11y-titles": {
+      "severity": "warning"
+    }
   }
 }
