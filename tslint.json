@@ -8,7 +8,13 @@
   },
   "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
   "rules": {
-    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+    "trailing-comma": {
+      "options": {
+        "multiline": "always", 
+        "singleline": "never"
+      },
+      "severity": "default"
+    },
     "react-a11y-anchors": {
       "severity": "warning"
     },
