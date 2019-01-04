@@ -14,12 +14,12 @@ const middleware = routerMiddleware(history);
 const store = createStore(
     combineReducers<IRootState>({
         application,
-        routing
+        routing,
     }),
     compose(
         applyMiddleware(middleware),
         applyMiddleware(thunk as ThunkMiddleware<IRootState>),
-    )
+    ),
 )
 
 export default store;

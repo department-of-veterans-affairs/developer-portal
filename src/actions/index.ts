@@ -115,10 +115,10 @@ export const submitForm : ActionCreator<SubmitFormThunk> = () => {
         body: JSON.stringify(applicationBody),
         headers: {
           'accept': 'application/json',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
         },
         method: 'POST',
-      }
+      },
     );
     return fetchWithRetry(() => fetch(request))
       .then((response) => {
@@ -141,7 +141,7 @@ export const submitForm : ActionCreator<SubmitFormThunk> = () => {
 
 export const submitFormBegin : ActionCreator<ISubmitForm> = () => {
   return {
-    type: constants.SUBMIT_APPLICATION_BEGIN
+    type: constants.SUBMIT_APPLICATION_BEGIN,
   };
 }
 

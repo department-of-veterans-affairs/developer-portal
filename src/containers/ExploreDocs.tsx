@@ -57,7 +57,7 @@ const apiDefs : IApiCategories = {
                 name: 'Loan Guarantees',
                 shortDescription: 'Manage VA home loan guarantees',
                 urlFragment: 'loan_guarantees',
-            }
+            },
         ],
         buttonText: "Get Your Key",
         name: 'Benefits',
@@ -69,39 +69,39 @@ const apiDefs : IApiCategories = {
             {
                 name: 'VA Facilities API',
                 shortDescription: "VA Facilities",
-                urlFragment: 'facilities'
+                urlFragment: 'facilities',
             },
         ],
         buttonText: "Get Your Key",
         name: 'Facilities',
         overview: FacilitiesOverview,
-        shortDescription: "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction."
+        shortDescription: "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
     },
     health: {
         apis: [
             {
                 name: 'Veterans Health API',
                 shortDescription: "VA's Argonaut resources",
-                urlFragment: 'argonaut'
+                urlFragment: 'argonaut',
             },
         ],
         buttonText: "Get Your Key",
         name: 'Health',
         overview: HealthOverview,
-        shortDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers."
+        shortDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.",
     },
     verification: {
         apis: [
             {
                 name: 'Disability Rating',
                 shortDescription: "Get a veteran's disability rating",
-                urlFragment: 'disability_rating'
+                urlFragment: 'disability_rating',
             },
             {
                 name: 'Service History',
                 shortDescription: "Get a veteran's service history",
-                urlFragment: 'service_history'
-            }
+                urlFragment: 'service_history',
+            },
         ],
         buttonText: "Stay Informed",
         name: "Veteran Verification",

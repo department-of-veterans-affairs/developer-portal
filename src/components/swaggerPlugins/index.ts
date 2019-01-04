@@ -8,6 +8,6 @@ export const SwaggerPlugins = {
         OperationTag,
         SchemesContainer,
         Servers,
-        ServersContainer
-    }
+        ServersContainer,
+    },
 };

@@ -27,7 +27,7 @@ interface IApplyProps extends IApplication {
 
 const mapStateToProps = (state : IRootState) => {
   return {
-    ...state.application
+    ...state.application,
   };
 };
 

@@ -35,7 +35,7 @@ const idMappings = {
     cell: "00Nt0000000bf2K",
     confirm: "00Nt0000000bf2L",
     oid: "00Dr00000001HcX",
-  }
+  },
 }
 
 const env = process.env.REACT_APP_SALESFORCE_ENV || 'VICDEV';
@@ -88,7 +88,7 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
         family: false,
         no: true,
         servicemember: false,
-        veteran: false
+        veteran: false,
       },
     }
   }

@@ -26,7 +26,7 @@ const checkScreenshots = async (page: Page) => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
     const screenshot = await page.screenshot({
-      fullPage: true
+      fullPage: true,
     });
     expect(screenshot).toMatchImageSnapshot();
   }

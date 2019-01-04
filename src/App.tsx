@@ -36,7 +36,7 @@ const flags = {
     facilities: isHostedApiEnabled('facilities', true),
     loan_guarantees: isHostedApiEnabled('loan_guarantees', false),
     service_history: isHostedApiEnabled('service_history', true),
-  }
+  },
 };
 
 class App extends React.Component {
