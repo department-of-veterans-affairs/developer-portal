@@ -166,6 +166,10 @@
         }
     }
 
+    .api-name-tag {
+      font-weight: 600;
+    }
+
     .Explore-main{
         @extends .usa-grid;
         margin-top: 3em;

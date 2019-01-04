@@ -68,6 +68,7 @@
     "redux-thunk": "^2.3.0",
     "resolve": "1.6.0",
     "sass-loader": "7.1.0",
+    "scroll-into-view-if-needed": "^2.2.20",
     "source-map-loader": "^0.2.1",
     "stickyfill": "^1.1.1-strict",
     "style-loader": "0.23.0",

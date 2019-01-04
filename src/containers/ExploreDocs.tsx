@@ -3,10 +3,12 @@ import * as React from 'react';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Link, NavLink, Route } from 'react-router-dom';
+import scrollIntoView from 'scroll-into-view-if-needed';
 
 import { PageHero } from '../components';
 import { IApiNameParam } from '../types';
 import Explore from './Explore';
+
 
 import { BenefitsOverview,
          FacilitiesOverview,
@@ -21,6 +23,7 @@ interface IApiDescription {
     readonly name: string;
     readonly urlFragment: string;
     readonly shortDescription: string;
+    readonly vaInternalOnly: boolean;
 }
 
 interface IApiCategory {
@@ -42,21 +45,25 @@ const apiDefs : IApiCategories = {
                 name: 'Benefits Intake',
                 shortDescription: 'Submit claims',
                 urlFragment: 'benefits',
+                vaInternalOnly: false,
             },
             {
                 name: 'Appeals Status',
                 shortDescription: 'Track appeals',
                 urlFragment: 'appeals',
+                vaInternalOnly: false,
             },
             {
                 name: 'Claims Status',
                 shortDescription: 'Track claims',
                 urlFragment: 'claims',
+                vaInternalOnly: false,
             },
             {
                 name: 'Loan Guarantees',
                 shortDescription: 'Manage VA home loan guarantees',
                 urlFragment: 'loan_guarantees',
+                vaInternalOnly: false,
             },
         ],
         buttonText: "Get Your Key",
@@ -70,6 +77,7 @@ const apiDefs : IApiCategories = {
                 name: 'VA Facilities API',
                 shortDescription: "VA Facilities",
                 urlFragment: 'facilities',
+                vaInternalOnly: false,
             },
         ],
         buttonText: "Get Your Key",
@@ -83,6 +91,7 @@ const apiDefs : IApiCategories = {
                 name: 'Veterans Health API',
                 shortDescription: "VA's Argonaut resources",
                 urlFragment: 'argonaut',
+                vaInternalOnly: false,
             },
         ],
         buttonText: "Get Your Key",
@@ -96,11 +105,19 @@ const apiDefs : IApiCategories = {
                 name: 'Disability Rating',
                 shortDescription: "Get a veteran's disability rating",
                 urlFragment: 'disability_rating',
+                vaInternalOnly: false,
             },
             {
                 name: 'Service History',
                 shortDescription: "Get a veteran's service history",
                 urlFragment: 'service_history',
+                vaInternalOnly: false,
+            },
+            {
+                name: 'Address Validation',
+                shortDescription: 'Provides methods to standardize and validate addresses.',
+                urlFragment: 'address_validation',
+                vaInternalOnly: true,
             },
         ],
         buttonText: "Stay Informed",
@@ -109,6 +126,13 @@ const apiDefs : IApiCategories = {
         shortDescription: "Empowering Veterans to take control of their data and put it to work.",
     },
 };
+
+const apiCategoryOrder: string[] = [
+    'benefits',
+    'facilities',
+    'health',
+    'verification',
+];
 
 export function ApiPageHero() {
     const href = (process.env.REACT_APP_SALESFORCE_APPLY === 'true') ?
@@ -125,17 +149,19 @@ export function ApiPageHero() {
     );
 }
 
-function ApiSection({ apiCategory, sectionRef } : { apiCategory : string, sectionRef? : React.RefObject<HTMLElement> } ) {
-    const { apis, name: categoryName, overview, shortDescription: introText } = apiDefs[apiCategory];
+function ApiSection({ apiCategoryKey, sectionRef } : { apiCategoryKey : string, sectionRef? : React.RefObject<HTMLElement> } ) {
+    const { apis, name: categoryName, overview, shortDescription: introText } = apiDefs[apiCategoryKey];
     let linkSection;
 
     if (apis.length > 0) {
-        const links = apis.map(({ name, shortDescription, urlFragment }, idx) => {
+        const links = apis.map((apiDesc: IApiDescription, idx) => {
+            const { name, shortDescription, urlFragment, vaInternalOnly } = apiDesc;
             return (
                 <Flag key={idx} name={`hosted_apis.${urlFragment}`}>
                     <div key={idx} className="api-link">
-                      <Link to={`/explore/${apiCategory}/docs/${urlFragment}`}>
+                      <Link to={`/explore/${apiCategoryKey}/docs/${urlFragment}`}>
                         <span>{name}</span>
+                        {(vaInternalOnly === true) ? <p className="api-name-tag">Internal VA use only.</p> : null}
                         <p>{shortDescription}</p>
                       </Link>
                     </div>
@@ -143,18 +169,18 @@ function ApiSection({ apiCategory, sectionRef } : { apiCategory : string, sectio
             );
         });
         linkSection = (
-            <div role="navigation" aria-labelledby={`${apiCategory}-overview-apis`} className="usa-grid">
-              <h2 id={`${apiCategory}-overview-apis`}>Available {categoryName} APIs</h2>
+            <div role="navigation" aria-labelledby={`${apiCategoryKey}-overview-apis`} className="usa-grid">
+              <h2 id={`${apiCategoryKey}-overview-apis`}>Available {categoryName} APIs</h2>
               {links}
             </div>
         );
     }
 
     return (
-        <section role="region" aria-labelledby={`${apiCategory}-overview`} className="usa-section" ref={sectionRef}>
+        <section role="region" aria-labelledby={`${apiCategoryKey}-overview`} className="usa-section" ref={sectionRef}>
           <div>
             <div className="usa-grid">
-              <h1 id={`${apiCategory}-overview`}>{categoryName}</h1>
+              <h1 id={`${apiCategoryKey}-overview`}>{categoryName}</h1>
               <p>{introText}</p>
             </div>
           </div>
@@ -171,10 +197,19 @@ function ApiSection({ apiCategory, sectionRef } : { apiCategory : string, sectio
     );
 }
 
-class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {scrolling: number, timeout?: number}> {
+class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
     private sectionRefs : { [key: string]: React.RefObject<HTMLElement> } = {}
+    // Our componentDidUpdate method will be called whenever any of these happen:
+    //   * NavLink clicked.
+    //   * The initial route is rendered.
+    //   * The after-scroll event changes the navigation stack and the page re-renders.
+    // The skipAutoScroll flag is set when the user is manually scrolling in order to avoid the
+    // navigation stack modifications from scrolling the viewport to the top of the newly-current
+    // section.
+    private skipAutoScroll: boolean;
 
     public componentDidMount() {
+        this.skipAutoScroll = false;
         window.addEventListener('scroll', this.handleScroll);
         this.scrollFocusSection();
     }
@@ -184,21 +219,19 @@ class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {scrol
     }
 
     public componentDidUpdate(prevProps : RouteComponentProps<IApiNameParam>) {
-        const { match: { params: { apiCategory } } } = this.props;
-        const { match: { params: { apiCategory: prevCategory } } } = prevProps;
-        if (apiCategory !== prevCategory && (!this.state || !this.state.scrolling)) {
-            this.scrollFocusSection();
-        }
+        // Since componentDidUpdate fires in response to a NavLink being clicked, we scroll the
+        // corresponding section to the top.
+        this.scrollFocusSection();
     }
 
     public render() {
-        const sections = Object.keys(apiDefs).map((apiCategory, index) => {
-            this.sectionRefs[apiCategory] = React.createRef();
+        const sections = apiCategoryOrder.map((apiCategoryKey: string, idx: number) => {
+            this.sectionRefs[apiCategoryKey] = React.createRef();
             return (
                 <ApiSection
-                    sectionRef={this.sectionRefs[apiCategory]}
-                    apiCategory={apiCategory}
-                    key={index} />
+                    sectionRef={this.sectionRefs[apiCategoryKey]}
+                    apiCategoryKey={apiCategoryKey}
+                    key={idx} />
             );
         });
         this.sectionRefs['terms-of-service'] = React.createRef();
@@ -215,106 +248,111 @@ class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {scrol
     }
 
     private scrollFocusSection() {
-        const { match: { params: { apiCategory } } } = this.props;
-        const section = this.sectionRefs[apiCategory];
+        const { match: { params: { apiCategoryKey } } } = this.props;
+        const section = this.sectionRefs[apiCategoryKey];
 
         if (section && section.current) {
             section.current.focus();
-            section.current.scrollIntoView();
+            if (this.skipAutoScroll === true) {
+                this.skipAutoScroll = false;
+            } else {
+                // The skipAutoScroll flag should ensure that this is only called in response to
+                // "true" navigation changes. I.e. NavLink clicks.
+                scrollIntoView(section.current, {
+                    block: 'start',
+                    scrollMode: 'if-needed',
+                });
+            }
         }
     }
 
     private handleScroll = () => {
-        let direction : string | undefined;
-        const { scrollY } = window;
-
-        if (this.state && this.state.timeout && this.state.scrolling > scrollY) {
-            direction = 'up';
-        } else if (this.state && this.state.timeout &&  this.state.scrolling < scrollY) {
-            direction = 'down';
+        if (window.scrollY !== 0) {
+            this.updatePathToReflectView();
         }
+    };
 
-        if (this.state && this.state.timeout) {
-            window.clearTimeout(this.state.timeout)
-        }
-        const timeout = window.setTimeout(() => {
-            this.setState({scrolling: 0, timeout: undefined})
-        }, 400)
-        this.setState({scrolling: scrollY, timeout})
+    // Determines which section is being viewed. Ensures that the window location is set to the URL
+    // for that section. The left nav rendering uses the window location to determine which nav item
+    // to visually focus.
+    private updatePathToReflectView() {
+        const distanceRecords: Array<[number, number, string]> = [];
 
-        if (window.scrollY !== 0 && direction) {
-            const topSectionKey = Object.keys(this.sectionRefs).sort((sectionKeyLeft, sectionKeyRight) => {
-                const left = this.sectionRefs[sectionKeyLeft];
-                const right = this.sectionRefs[sectionKeyRight];
+        Object.keys(this.sectionRefs).forEach((apiCategoryKey, idx) => {
+            const section = this.sectionRefs[apiCategoryKey];
+            if (section.current != null) {
+                const { top: sectionTop, height: sectionHeight } = section.current.getBoundingClientRect();
+                const sectionBottom: number = sectionTop + sectionHeight;
 
-                if (left.current !== null && right.current !== null) {
-                    const { top: leftTop } = left.current.getBoundingClientRect();
-                    const { top: rightTop } = right.current.getBoundingClientRect();
-                    if (leftTop > rightTop) {
-                        return direction && direction === 'down' ? 1 : -1;
-                    } else if (leftTop === rightTop) {
-                        return 0;
-                    } else {
-                        return direction && direction === 'down' ? -1 : 1;
-                    }
-                } else if (left.current === null) {
-                    return direction && direction === 'down' ? -1 : 1;
-                } else {
-                    return direction && direction === 'down' ? 1 : -1;
+                distanceRecords.push([Math.abs(sectionTop), idx, apiCategoryKey]);
+                if (sectionHeight > window.innerHeight) {
+                    // This pushes a second record into the list that marks one screen height above
+                    // the bottom of the section. This ensures that the viewport is showing two
+                    // sections, the left nav reflects the one filling more of the viewport.
+                    distanceRecords.push([Math.abs(sectionBottom - window.innerHeight), idx, apiCategoryKey]);
                 }
-            }).filter((sectionKey) => {
-                const section = this.sectionRefs[sectionKey]
-                if (section.current) {
-                    const { top, bottom } = section.current.getBoundingClientRect();
-                    if (direction && direction === 'down') {
-                        return top >= 0 && top <= window.innerHeight;
-                    } else if (direction && direction === 'up') {
-                        return bottom >= 0 && bottom <= window.innerHeight;
-                    }
-                    return true
-                }
-                return false;
-            })[0];
-            if (topSectionKey) {
-                const path = (`/explore/${topSectionKey}`);
-                const { history, location: { pathname } } = this.props;
-                if (pathname !== path) {
-                    history.push(path);
-                }
+            }
+        });
+        distanceRecords.sort((a, b) => {
+            const aDist: number = a[0];
+            const bDist: number = b[0];
+            return aDist - bDist;
+        });
+
+        const topSectionKey = distanceRecords[0][2];
+
+        if (topSectionKey) {
+            const path = (`/explore/${topSectionKey}`);
+            const { history, location: { pathname } } = this.props;
+            if (pathname !== path) {
+                this.skipAutoScroll = true;
+                history.push(path);
             }
         }
     }
 }
 
-export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>) {
-    const navLinks = Object.keys(apiDefs).map((apiCategory, idx) => {
-        const { name: apiTitle, apis } = apiDefs[apiCategory];
-
-        const subNavLinks = apis.map(({ name, shortDescription, urlFragment }, subIdx) => {
-            return (
-                <Flag key={subIdx} name={`hosted_apis.${urlFragment}`}>
-                    <li key={subIdx}>
-                      <NavLink exact={true} to={`/explore/${apiCategory}/docs/${urlFragment}`} activeClassName="usa-current">
-                        {name}
-                      </NavLink>
-                      <br />
-                    </li>
-                </Flag>
-            );
-        });
-        const topLinkPath = `/explore/${apiCategory}`;
-        const className = (subNavLinks.length > 0 ? "expand" : "") + " " + (url === topLinkPath ? "usa-current" : "")
-        return (
-            <li key={idx}>
-              <NavLink exact={true} to={topLinkPath} className={className}>
-                {apiTitle}
+function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription, subIdx: number) {
+    return (
+        <Flag key={subIdx} name={`hosted_apis.${api.urlFragment}`}>
+            <li key={subIdx}>
+              <NavLink exact={true} to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}`} activeClassName="usa-current">
+                {api.name}
               </NavLink>
-              <ul className="usa-sidenav-sub_list">
-                {subNavLinks}
-              </ul>
+              <br />
             </li>
-        );
+        </Flag>
+    );
+}
+
+function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory, idx: number) {
+    const subNavLinks = apiCategory.apis.map((api, subIdx) => {
+        return SideNavApiEntry(apiCategoryKey, api, subIdx);
     });
+    const topLinkPath = `/explore/${apiCategoryKey}`;
+    const className = ((subNavLinks.length > 0 ? "expand" : "")
+            + " "
+            + (currentUrl === topLinkPath ? "usa-current" : ""))
+
+    return (
+        <li key={idx}>
+          <NavLink exact={true} to={topLinkPath} className={className}>
+            {apiCategory.name}
+          </NavLink>
+          <ul className="usa-sidenav-sub_list">
+            {subNavLinks}
+          </ul>
+        </li>
+    );
+}
+
+export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>) {
+    let idx = 0;
+    const buildSideNavCategoryEntry = (key: string) => {
+        return SideNavCategoryEntry(url, key, apiDefs[key], idx++);
+    };
+
+    const navLinks = apiCategoryOrder.map(buildSideNavCategoryEntry);
 
     return (
         <ul role="navigation" aria-label="API Docs Side Nav" className="usa-sidenav-list">
@@ -331,14 +369,14 @@ export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>)
 export function ExploreDocs(routeProps : RouteComponentProps<IApiNameParam>) {
     return (
         <div className="Explore">
-          <Route exact={true} path="/explore/:apiCategory?" component={ApiPageHero} />
+        <Route exact={true} path="/explore/:apiCategoryKey?" component={ApiPageHero} />
           <section className="Explore-main usa-grid">
             <div className="usa-width-one-third sticky">
               <SideNav {...routeProps} />
             </div>
             <div className="usa-width-two-thirds">
-              <Route exact={true} path="/explore/:apiCategory?" component={ApiPage} />
-              <Route exact={true} path="/explore/:apiCategory/docs/:apiName" component={Explore} />
+              <Route exact={true} path="/explore/:apiCategoryKey?" component={ApiPage} />
+              <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" component={Explore} />
             </div>
           </section>
         </div>
