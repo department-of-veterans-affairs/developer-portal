@@ -112,14 +112,10 @@ node('vetsgov-general-purpose') {
       }
     } catch (error) {
       notify()
-      throw error
-    } finally {
       dir(pwd()) {
-        result = 'lint-results.xml'
-        if (fileExists(result)) {
-          step([$class: 'JUnitResultArchiver', testResults: result])
-        }
+        step([$class: 'JUnitResultArchiver', testResults: 'lint-results.xml'])
       }
+      throw error
     }
   }
 
