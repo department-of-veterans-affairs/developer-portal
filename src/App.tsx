@@ -35,7 +35,7 @@ const flags = {
     disability_rating: isHostedApiEnabled('disability_rating', true),
     facilities: isHostedApiEnabled('facilities', true),
     loan_guarantees: isHostedApiEnabled('loan_guarantees', false),
-    service_history: isHostedApiEnabled('service_history', true)
+    service_history: isHostedApiEnabled('service_history', true),
   }
 };
 
