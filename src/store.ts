@@ -6,7 +6,7 @@ import { IRootState } from './types';
 
 import createBrowserHistory from 'history/createBrowserHistory'
 
-import { application, explore } from './reducers';
+import { application } from './reducers';
 
 export const history = createBrowserHistory();
 const middleware = routerMiddleware(history);
@@ -14,7 +14,6 @@ const middleware = routerMiddleware(history);
 const store = createStore(
     combineReducers<IRootState>({
         application,
-        explore,
         routing
     }),
     compose(
