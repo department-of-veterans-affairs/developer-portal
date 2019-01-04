@@ -91,11 +91,22 @@ const apiDefs : IApiCategories = {
         shortDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers."
     },
     verification: {
-        apis: [],
+        apis: [
+            {
+                name: 'Disability Rating',
+                shortDescription: "Get a veteran's disability rating",
+                urlFragment: 'disability_rating'
+            },
+            {
+                name: 'Service History',
+                shortDescription: "Get a veteran's service history",
+                urlFragment: 'service_history'
+            }
+        ],
         buttonText: "Stay Informed",
         name: "Veteran Verification",
         overview: VerificationOverview,
-        shortDescription: "Coming soon! Empowering Veterans to take control of their data and put it to work.",
+        shortDescription: "Empowering Veterans to take control of their data and put it to work.",
     },
 };
 

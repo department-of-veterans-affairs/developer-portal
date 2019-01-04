@@ -57,7 +57,7 @@ class Home extends React.Component {
                     <Link className="usa-button usa-button-secondary" to="/explore/health">Learn more</Link>
                   </div>
                   <div className="usa-width-one-half">
-                   <h3>VA Veteran Verification API <span className="usa-label">Coming soon</span></h3>
+                   <h3>VA Veteran Verification API</h3>
                     <p>
                       Build tools to help Veterans verify their Veteran status electronically on job sites, e-commerce sites, and third-party benefit sites.
                     </p>
