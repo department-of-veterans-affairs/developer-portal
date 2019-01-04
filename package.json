@@ -96,6 +96,7 @@
     "build": "node scripts/build.js",
     "predeploy": "npm run-script build",
     "deploy": "gh-pages -d build",
+    "lint:ci": "./node_modules/.bin/tslint --config tslint.json --project tsconfig.json -t junit > lint-results.xml",
     "test": "node scripts/test.js",
     "test:unit": "node scripts/test.js --projects=unit.jest.config.js",
     "test:e2e": "node scripts/test.js --projects=e2e.jest.config.js",

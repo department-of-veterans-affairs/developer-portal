@@ -105,6 +105,21 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  stage('TSLint') {
+    try {
+      dockerImage.inside(args) {
+        sh 'cd /application && npm run-script lint:ci'
+      }
+    } catch (error) {
+      notify()
+      throw error
+    } finally {
+      dir(pwd()) {
+        step([$class: 'JUnitResultArchiver', testResults: 'lint-results.xml'])
+      }
+    }
+  }
+
   stage('Visual Regression Test') {
     try {
       dockerImage.inside(args) {

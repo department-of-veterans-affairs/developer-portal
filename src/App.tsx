@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import { FlagsProvider } from 'flag';
 import { RouteComponentProps } from 'react-router'
+import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 

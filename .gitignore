@@ -5,6 +5,7 @@ node_modules
 
 # testing
 coverage
+lint-results.xml
 
 # production
 build
