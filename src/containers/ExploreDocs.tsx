@@ -11,6 +11,7 @@ import Explore from './Explore';
 import { BenefitsOverview,
          FacilitiesOverview,
          HealthOverview,
+         VaInternalOnlyOverview,
          VerificationOverview } from '../content/apiDocs';
 
 import './Explore.scss'
@@ -89,6 +90,19 @@ const apiDefs : IApiCategories = {
         name: 'Health',
         overview: HealthOverview,
         shortDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.",
+    },
+    va_internal_only: {
+        apis: [
+            {
+                name: 'Address Validation',
+                shortDescription: 'Provides methods to standardize and validate addresses.',
+                urlFragment: 'address_validation'
+            }
+        ],
+        buttonText: 'Get Your Key',
+        name: 'VA Internal APIs',
+        overview: VaInternalOnlyOverview,
+        shortDescription: 'APIs restricted to VA teams'
     },
     verification: {
         apis: [
@@ -286,35 +300,51 @@ class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {scrol
     }
 }
 
-export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>) {
-    const navLinks = Object.keys(apiDefs).map((apiCategory, idx) => {
-        const { name: apiTitle, apis } = apiDefs[apiCategory];
-
-        const subNavLinks = apis.map(({ name, shortDescription, urlFragment }, subIdx) => {
-            return (
-                <Flag key={subIdx} name={`hosted_apis.${urlFragment}`}>
-                    <li key={subIdx}>
-                      <NavLink exact={true} to={`/explore/${apiCategory}/docs/${urlFragment}`} activeClassName="usa-current">
-                        {name}
-                      </NavLink>
-                      <br />
-                    </li>
-                </Flag>
-            );
-        });
-        const topLinkPath = `/explore/${apiCategory}`;
-        const className = (subNavLinks.length > 0 ? "expand" : "") + " " + (url === topLinkPath ? "usa-current" : "")
-        return (
-            <li key={idx}>
-              <NavLink exact={true} to={topLinkPath} className={className}>
-                {apiTitle}
+function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription, subIdx: number) {
+    return (
+        <Flag key={subIdx} name={`hosted_apis.${api.urlFragment}`}>
+            <li key={subIdx}>
+              <NavLink exact={true} to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}`} activeClassName="usa-current">
+                {api.name}
               </NavLink>
-              <ul className="usa-sidenav-sub_list">
-                {subNavLinks}
-              </ul>
+              <br />
             </li>
-        );
+        </Flag>
+    );
+}
+
+function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory, idx: number) {
+    const subNavLinks = apiCategory.apis.map((api, subIdx) => {
+        SideNavApiEntry(apiCategoryKey, api, subIdx);
     });
+    const topLinkPath = `/explore/${apiCategoryKey}`;
+    const className = (subNavLinks.length > 0 ? "expand" : "") + " " + (currentUrl === topLinkPath ? "usa-current" : "")
+
+    return (
+        <li key={idx}>
+          <NavLink exact={true} to={topLinkPath} activeClassName={className}>
+            {apiCategory.name}
+          </NavLink>
+          <ul className="usa-sidenav-sub_list">
+            {subNavLinks}
+          </ul>
+        </li>
+    );
+}
+
+export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>) {
+    let idx = 0;
+    const buildSideNavCategoryEntry = (key: string) => {
+        return SideNavCategoryEntry(url, key, apiDefs[key], idx++);
+    };
+
+    let navLinks = [
+        buildSideNavCategoryEntry('benefits'),
+        buildSideNavCategoryEntry('facilities'),
+        buildSideNavCategoryEntry('health'),
+        buildSideNavCategoryEntry('verification'),
+        buildSideNavCategoryEntry('va_internal_only'),
+    ];
 
     return (
         <ul role="navigation" aria-label="API Docs Side Nav" className="usa-sidenav-list">
