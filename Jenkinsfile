@@ -119,6 +119,20 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  stage('Unit test') {
+    try {
+      dockerImage.inside(args) {
+        sh 'cd /application && npm run-script test:unit:ci'
+      }
+    } catch (error) {
+      notify()
+      dir(pwd()) {
+        step([$class: 'JUnitResultArchiver', testResults: 'lint-results.xml'])
+      }
+      throw error
+    }
+  }
+
   stage('Visual Regression Test') {
     try {
       dockerImage.inside(args) {

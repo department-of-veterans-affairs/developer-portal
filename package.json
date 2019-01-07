@@ -100,6 +100,7 @@
     "lint:ci": "./node_modules/.bin/tslint --config tslint.json --project tsconfig.json -t junit > lint-results.xml",
     "test": "node scripts/test.js",
     "test:unit": "node scripts/test.js --projects=unit.jest.config.js",
+    "test:unit:ci": "node scripts/test.js --projects=unit.jest.config.js --ci --testResultsProcessor=\"./node_modules/jest-junit-reporter\"",
     "test:e2e": "node scripts/test.js --projects=e2e.jest.config.js",
     "test:visual": "REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3000 node scripts/test.js --projects=visual.jest.config.js --runInBand"
   },
@@ -117,6 +118,7 @@
     "gh-pages": "^1.1.0",
     "jest-fetch-mock": "^2.1.0",
     "jest-image-snapshot": "^2.7.0",
+    "jest-junit-reporter": "^1.1.0",
     "tslint-microsoft-contrib": "^6.0.0",
     "typescript": "^3.1.6",
     "webpack-dev-server": "^3.1.14"
