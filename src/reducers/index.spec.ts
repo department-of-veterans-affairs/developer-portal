@@ -1,5 +1,6 @@
 import 'jest';
 import * as constants from '../types/constants';
+import { IApplication } from '../types';
 import { application } from './index';
 
 const app : IApplication = {
