@@ -1,11 +1,13 @@
 module.exports = {
   name: 'unit',
+  automock: false,
   displayName: 'Unit Tests',
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}"
   ],
   setupFiles: [
-    "<rootDir>/config/polyfills.js"
+    "<rootDir>/config/polyfills.js",
+    "<rootDir>/setupJest.ts",
   ],
   testMatch: [
     "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",

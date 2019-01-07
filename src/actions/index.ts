@@ -87,13 +87,24 @@ const apisToList = (apis : IApiList) => {
 
 const MAX_RETRIES = 3;
 
-const fetchWithRetry = (fetchFn : () => Promise<Response>, retries = 0, status = '') : Promise<Response> => {
-  if (retries > MAX_RETRIES) {
-    throw new Error(`Max Retries Exceeded. Last Status: ${status}`);
+const fetchWithRetry = async (fetchFn : () => Promise<Response>) : Promise<Response> => {
+  let status;
+  let retries = 0;
+  while (retries < MAX_RETRIES) {
+    try {
+      const response = await fetchFn();
+      if (response.ok) {
+        return response;
+      } else {
+        status = response.statusText;
+        retries += 1;
+      }
+    } catch (err) {
+      status = err.message;
+      retries += 1;
+    }
   }
-  return fetchFn()
-    .then((response) => response.ok ? response : fetchWithRetry(fetchFn, retries + 1, response.statusText))
-    .catch((err) => fetchWithRetry(fetchFn, retries + 1, err.message));
+  throw new Error(`Max Retries Exceeded. Last Status: ${status}`);
 };
 
 export const submitForm : ActionCreator<SubmitFormThunk> = () => {
