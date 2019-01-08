@@ -117,10 +117,10 @@ const apiDefs : IApiCategories = {
 
 const apiCategoryOrder: string[] = [
     'benefits',
-    'internal',
     'facilities',
     'health',
     'verification',
+    'internal',
 ];
 
 export function ApiPageHero() {
