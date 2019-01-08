@@ -107,7 +107,18 @@ const apiDefs : IApiCategories = {
         shortDescription: 'APIs restricted to VA teams',
     },
     verification: {
-        apis: [],
+        apis: [
+            {
+                name: 'Disability Rating',
+                shortDescription: "Get a veteran's disability rating",
+                urlFragment: 'disability_rating',
+            },
+            {
+                name: 'Service History',
+                shortDescription: "Get a veteran's service history",
+                urlFragment: 'service_history',
+            },
+        ],
         buttonText: "Stay Informed",
         name: "Veteran Verification",
         overview: VerificationOverview,
