@@ -2,7 +2,7 @@ import { RouterState  } from 'react-router-redux'
 
 export interface IApiNameParam {
   apiName?: string;
-  apiCategory: string;
+  apiCategoryKey: string;
 }
 
 export interface IErrorableInput {

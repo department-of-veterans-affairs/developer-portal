@@ -69,7 +69,7 @@ class App extends React.Component {
         <Route path="/apply" component={Apply} />
         <Route path="/beta" component={BetaPage} />
         <Route path="/beta-success" component={BetaSuccess} />
-        <Route path="/explore/:apiCategory?" component={ExploreDocs} />
+        <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
         <Route path="/oauth" component={OAuth} />
       </PageContent>
     );
