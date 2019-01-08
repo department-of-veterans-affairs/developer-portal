@@ -122,7 +122,7 @@ const apiDefs : IApiCategories = {
         buttonText: "Stay Informed",
         name: "Veteran Verification",
         overview: VerificationOverview,
-        shortDescription: "Coming soon! Empowering Veterans to take control of their data and put it to work.",
+        shortDescription: "Empowering Veterans to take control of their data and put it to work.",
     },
 };
 
