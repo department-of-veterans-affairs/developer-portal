@@ -126,13 +126,20 @@ const apiDefs : IApiCategories = {
     },
 };
 
-const apiCategoryOrder: string[] = [
+const apiCategoryOrder: string[] = buildApiCategoryOrder([
     'benefits',
     'facilities',
     'health',
     'verification',
-    'internal',
-];
+]);
+
+function buildApiCategoryOrder(baseOrder: string[]): string[] {
+    if (process.env.REACT_APP_VA_INTERNAL_CATEGORY_ENABLED === 'true') {
+        return baseOrder.concat(['internal']);
+    }
+
+    return baseOrder;
+}
 
 export function ApiPageHero() {
     const href = (process.env.REACT_APP_SALESFORCE_APPLY === 'true') ?
