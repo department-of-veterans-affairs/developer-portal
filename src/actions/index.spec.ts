@@ -4,7 +4,7 @@ import * as constants from '../types/constants';
 import * as actions from './index';
 
 afterEach(() => {
-  fetch.resetMocks();
+  fetchMock.resetMocks();
 });
 
 const appState = {
@@ -24,7 +24,7 @@ const appState = {
 
 describe('submitForm', () => {
   it('dispatches correct events when fetch has a 200 response', async () => {
-    fetch.mockResponse(JSON.stringify({token: 'testtoken'}));
+    fetchMock.mockResponse(JSON.stringify({token: 'testtoken'}));
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
@@ -37,7 +37,7 @@ describe('submitForm', () => {
   });
 
   it('dispatches error events when the fetch errors', async () => {
-    fetch.mockReject(new Error('Network Failure'));
+    fetchMock.mockReject(new Error('Network Failure'));
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
@@ -50,16 +50,16 @@ describe('submitForm', () => {
   });
 
   it('retries the correct number of times when the fetch errors', async () => {
-    fetch.mockReject(new Error('Network Failure'));
+    fetchMock.mockReject(new Error('Network Failure'));
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
-    expect(fetch.mock.calls.length).toEqual(3);
+    expect(fetchMock.mock.calls.length).toEqual(3);
   });
 
   it('dispatches error events when fetch returns non-200', async () => {
-    fetch.mockResponses(
+    fetchMock.mockResponses(
       [
         JSON.stringify({ error: 'not found' }),
         { status: 404 },

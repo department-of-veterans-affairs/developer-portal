@@ -26,7 +26,7 @@
     "webpack",
     "jest",
     "src/setupTests.ts",
-    "src/e2eHeleprs.ts",
+    "src/e2eHelpers.ts",
     "*.jest.config.js",
     "jest-puppeteer.config.js"
   ]
