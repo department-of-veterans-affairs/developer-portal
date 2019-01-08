@@ -13,7 +13,7 @@
         "multiline": "always", 
         "singleline": "never"
       },
-      "severity": "warning"
+      "severity": "error"
     },
     "no-console": {
       "severity": "error"
