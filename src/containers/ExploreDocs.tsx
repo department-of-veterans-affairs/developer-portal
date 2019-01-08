@@ -372,7 +372,7 @@ export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>)
 export function ExploreDocs(routeProps : RouteComponentProps<IApiNameParam>) {
     return (
         <div className="Explore">
-        {/* <Route exact={true} path="/explore/:apiCategoryKey?" component={ApiPageHero} /> */}
+        <Route exact={true} path="/explore/:apiCategoryKey?" component={ApiPageHero} />
           <section className="Explore-main usa-grid">
             <div className="usa-width-one-third sticky">
               <SideNav {...routeProps} />
