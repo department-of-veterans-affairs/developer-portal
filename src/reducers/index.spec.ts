@@ -1,6 +1,7 @@
 import 'jest';
-import * as constants from '../types/constants';
+
 import { IApplication } from '../types';
+import * as constants from '../types/constants';
 import { application } from './index';
 
 const app : IApplication = {
@@ -42,12 +43,15 @@ describe('application', () => {
       value: 'test',
     };
     expect(
-      application(app, { newValue, type: constants.UPDATE_APPLICATION_DESCRIPTION })
+      application(app, {
+        newValue,
+        type: constants.UPDATE_APPLICATION_DESCRIPTION,
+      }),
     ).toEqual(expect.objectContaining({
       description: {
         dirty: true,
         value: 'test',
-      }
+      },
     }));
   });
 
@@ -57,12 +61,15 @@ describe('application', () => {
       value: 'test',
     };
     expect(
-      application(app, { newValue, type: constants.UPDATE_APPLICATION_FIRST_NAME })
+      application(app, {
+        newValue,
+        type: constants.UPDATE_APPLICATION_FIRST_NAME,
+      }),
     ).toEqual(expect.objectContaining({
       firstName: {
         dirty: true,
         value: 'test',
-      }
+      },
     }));
   });
 
@@ -72,12 +79,15 @@ describe('application', () => {
       value: 'test',
     };
     expect(
-      application(app, { newValue, type: constants.UPDATE_APPLICATION_LAST_NAME })
+      application(app, {
+        newValue,
+        type: constants.UPDATE_APPLICATION_LAST_NAME,
+      }),
     ).toEqual(expect.objectContaining({
       lastName: {
         dirty: true,
         value: 'test',
-      }
+      },
     }));
   });
 
@@ -87,12 +97,15 @@ describe('application', () => {
       value: 'test',
     };
     expect(
-      application(app, { newValue, type: constants.UPDATE_APPLICATION_ORGANIZATION })
+      application(app, {
+        newValue,
+        type: constants.UPDATE_APPLICATION_ORGANIZATION,
+      }),
     ).toEqual(expect.objectContaining({
       organization: {
         dirty: true,
         value: 'test',
-      }
+      },
     }));
   });
 
@@ -102,12 +115,15 @@ describe('application', () => {
       value: 'test',
     };
     expect(
-      application(app, { newValue, type: constants.UPDATE_APPLICATION_ORGANIZATION })
+      application(app, {
+        newValue,
+        type: constants.UPDATE_APPLICATION_ORGANIZATION,
+      }),
     ).toEqual(expect.objectContaining({
       organization: {
         dirty: true,
         value: 'test',
-      }
+      },
     }));
   });
 
@@ -117,12 +133,15 @@ describe('application', () => {
       value: 'test',
     };
     expect(
-      application(app, { newValue, type: constants.UPDATE_APPLICATION_EMAIL })
+      application(app, {
+        newValue,
+        type: constants.UPDATE_APPLICATION_EMAIL,
+      }),
     ).toEqual(expect.objectContaining({
       email: {
         dirty: true,
         value: 'test',
-      }
+      },
     }));
   });
 
@@ -131,14 +150,14 @@ describe('application', () => {
     expect(newApp)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          benefits: true
-        })
+          benefits: true,
+        }),
       }));
     expect(application(newApp, { type: constants.TOGGLE_BENEFITS_CHECKED }))
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          benefits: false
-        })
+          benefits: false,
+        }),
       }));
   });
 
@@ -147,14 +166,14 @@ describe('application', () => {
     expect(newApp)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          appeals: true
-        })
+          appeals: true,
+        }),
       }));
     expect(application(newApp, { type: constants.TOGGLE_APPEALS_CHECKED }))
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          appeals: false
-        })
+          appeals: false,
+        }),
       }));
   });
 
@@ -163,14 +182,14 @@ describe('application', () => {
     expect(newApp)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          health: true
-        })
+          health: true,
+        }),
       }));
     expect(application(newApp, { type: constants.TOGGLE_HEALTH_CHECKED }))
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          health: false
-        })
+          health: false,
+        }),
       }));
   });
 
@@ -179,14 +198,14 @@ describe('application', () => {
     expect(newApp)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          verification: true
-        })
+          verification: true,
+        }),
       }));
     expect(application(newApp, { type: constants.TOGGLE_VERIFICATION_CHECKED }))
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          verification: false
-        })
+          verification: false,
+        }),
       }));
   });
 
@@ -195,21 +214,21 @@ describe('application', () => {
     expect(newApp)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          facilities: true
-        })
+          facilities: true,
+        }),
       }));
     expect(application(newApp, { type: constants.TOGGLE_FACILITIES_CHECKED }))
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
-          facilities: false
-        })
+          facilities: false,
+        }),
       }));
   });
 
   it('should set state to sending when application send begins', () => {
     expect(application(app, { type: constants.SUBMIT_APPLICATION_BEGIN }))
       .toEqual(expect.objectContaining({
-        sending: true
+        sending: true,
       }));
   });
 
@@ -217,8 +236,8 @@ describe('application', () => {
     const newApp = application(app, { type: constants.SUBMIT_APPLICATION_BEGIN });
     expect(application(newApp, { status: 'Error happened', type: constants.SUBMIT_APPLICATION_ERROR }))
       .toEqual(expect.objectContaining({
-        sending: false,
         errorStatus: 'Error happened',
+        sending: false,
       }));
   });
 
@@ -230,5 +249,4 @@ describe('application', () => {
         token: 'test-token',
       }));
   });
-
 });
