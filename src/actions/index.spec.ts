@@ -37,20 +37,20 @@ describe('submitForm', () => {
   });
 
   it('dispatches error events when the fetch errors', async () => {
-    fetch.mockReject(new Error('Oops'));
+    fetch.mockReject(new Error('Network Failure'));
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     expect(dispatch).toBeCalledWith({type: constants.SUBMIT_APPLICATION_BEGIN});
     expect(dispatch).toBeCalledWith({
-      status: 'Max Retries Exceeded. Last Status: Oops',
+      status: 'Max Retries Exceeded. Last Status: Network Failure',
       type: constants.SUBMIT_APPLICATION_ERROR,
     });
   });
 
   it('retries the correct number of times when the fetch errors', async () => {
-    fetch.mockReject(new Error('Oops'));
+    fetch.mockReject(new Error('Network Failure'));
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
