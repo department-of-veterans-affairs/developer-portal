@@ -1,6 +1,6 @@
 import { Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-
+import { history } from '../store';
 import { IApiList, IErrorableInput, IRootState } from '../types';
 import * as constants from '../types/constants';
 
@@ -107,18 +107,23 @@ const fetchWithRetry = async (fetchFn : () => Promise<Response>) : Promise<Respo
   throw new Error(`Max Retries Exceeded. Last Status: ${status}`);
 };
 
+function buildApplicationBody(state: IRootState): object {
+  const { application } = state;
+  const applicationBody : any = {};
+  applicationBody.apis = apisToList(application.inputs.apis);
+  ['description', 'email', 'firstName', 'lastName', 'organization'].forEach((property) => {
+    if (application.inputs[property]) {
+      applicationBody[property] = application.inputs[property].value;
+    }
+  });
+  return applicationBody;
+}
+
 export const submitForm : ActionCreator<SubmitFormThunk> = () => {
   return (dispatch, state) => {
     dispatch(submitFormBegin());
 
-    const { application } = state();
-    const applicationBody : any = {};
-    applicationBody.apis = apisToList(application.apis);
-    ['description', 'email', 'firstName', 'lastName', 'organization'].forEach((property) => {
-      if (application[property]) {
-        applicationBody[property] = application[property].value;
-      }
-    });
+    const applicationBody = buildApplicationBody(state());
 
     const request = new Request(
       `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL}/services/meta/developer_application`,
@@ -141,7 +146,9 @@ export const submitForm : ActionCreator<SubmitFormThunk> = () => {
       .then((response) => response.json())
       .then((json) => {
         if (json.token) {
-          return dispatch(submitFormSuccess(json.token));
+          const result = dispatch(submitFormSuccess(json.token));
+          history.push('/applied');
+          return result;
         } else {
           return dispatch(submitFormError(json.errorMessage));
         }

@@ -5,32 +5,34 @@ import * as constants from '../types/constants';
 import { application } from './index';
 
 const app : IApplication = {
-  apis: {
-    appeals: false,
-    benefits: false,
-    facilities: false,
-    health: false,
-    verification: false,
-  },
-  description: {
-    dirty: false,
-    value: '',
-  },
-  email: {
-    dirty: false,
-    value: '',
-  },
-  firstName: {
-    dirty: false,
-    value: '',
-  },
-  lastName: {
-    dirty: false,
-    value: '',
-  },
-  organization: {
-    dirty: false,
-    value: '',
+  inputs: {
+    apis: {
+      appeals: false,
+      benefits: false,
+      facilities: false,
+      health: false,
+      verification: false,
+    },
+    description: {
+      dirty: false,
+      value: '',
+    },
+    email: {
+      dirty: false,
+      value: '',
+    },
+    firstName: {
+      dirty: false,
+      value: '',
+    },
+    lastName: {
+      dirty: false,
+      value: '',
+    },
+    organization: {
+      dirty: false,
+      value: '',
+    },
   },
   sending: false,
   token: '',

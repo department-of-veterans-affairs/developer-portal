@@ -1,4 +1,5 @@
-import Apply from './Apply';
+import ApplyForm from './ApplyForm';
+import ApplySuccess from './ApplySuccess';
 export * from './Beta';
 export * from './BetaSuccess';
 import Explore from './Explore';
@@ -7,4 +8,4 @@ import Home from './Home';
 import OAuth from './OAuth';
 import RoutedContent from './RoutedContent';
 
-export { Apply, Explore, Home, OAuth, RoutedContent }
+export { ApplyForm, ApplySuccess, Explore, Home, OAuth, RoutedContent }

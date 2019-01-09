@@ -3,14 +3,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
+import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation/ErrorableTextInput';
 import ProgressButton from '@department-of-veterans-affairs/formation/ProgressButton';
 
 import * as actions from '../actions'
 import { IApplication, IErrorableInput, IRootState } from '../types';
-
-import './Apply.scss';
 
 interface IApplyProps extends IApplication {
   submitForm: () => void;
@@ -24,12 +23,6 @@ interface IApplyProps extends IApplication {
   updateLastName: (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
 }
-
-const mapStateToProps = (state : IRootState) => {
-  return {
-    ...state.application,
-  };
-};
 
 type ApplicationDispatch = ThunkDispatch<IRootState, undefined, actions.SubmitFormAction | actions.UpdateApplicationAction>;
 
@@ -48,29 +41,24 @@ const mapDispatchToProps = (dispatch : ApplicationDispatch) => {
   };
 };
 
-function Apply ({ apis, description, email, firstName, lastName, organization, ...props} : IApplyProps) {
-  const readyToSubmit = !!email.value && !!firstName.value && !!lastName.value && !!organization.value && ( apis.verification || apis.health || apis.benefits || apis.facilities );
-  const requestedMoreThanHealth = apis.health && (apis.facilities || apis.verification || apis.benefits)
+const mapStateToProps = (state : IRootState) => {
+  return {
+    ...state.application,
+  };
+};
 
-  const healthNotice = (
-    <div>
-    <p className="usa-font-lead">Thank you for your interest in VA Health API. You should received an email message shortly for further instructions.</p>
-    <p>Need assistance? Email us at <a href="mailto:api@va.gov">api@va.gov</a></p>
-    </div>
+function ApplyForm(propsInput: IApplyProps) {
+  const { inputs: { apis, description, email, firstName, lastName, organization }, errorStatus, ...props } = propsInput;
+  const readyToSubmit = !!email.value && !!firstName.value && !!lastName.value && !!organization.value && ( apis.verification || apis.health || apis.benefits || apis.facilities );
+
+  const assistanceTrailer = (
+    <span>Need assistance? Email us at <a href="mailto:api@va.gov">api@va.gov</a></span>
   );
-  const tokenNotice = (
-    <div>
-    <p className="usa-font-lead"><strong>Your VA API token is:</strong> {props.token}</p>
-    <p>Please note that this token cannot be used for VA Health API.</p>
-    <p>Need assistance? Email us at <a href="mailto:api@va.gov">api@va.gov</a></p>
-    </div>
-  );
+
   const errorNotice = (
-    <div>
-    <p className="usa-font-lead">We encountered a server error while saving your form. Please try again later.</p>
-    <p>Need assistance? Email us at <a href="mailto:api@va.gov">api@va.gov</a></p>
-    </div>
+    <AlertBox status="error" headline={"We encountered a server error while saving your form. Please try again later."} content={ assistanceTrailer } />
   );
+
   return (
     <div role="region" aria-labelledby="apply-region" className="usa-grid api-application">
       <h1>Apply for VA API Key</h1>
@@ -164,6 +152,7 @@ function Apply ({ apis, description, email, firstName, lastName, organization, .
                 buttonClass="usa-button-primary" />
             </fieldset>
           </form>
+          { errorStatus ? errorNotice : null }
         </div>
         <div className="usa-width-one-third">
           <div className="feature">
@@ -173,11 +162,8 @@ function Apply ({ apis, description, email, firstName, lastName, organization, .
           </div>
         </div>
       </div>
-      { props.token && requestedMoreThanHealth ? tokenNotice : null }
-      { props.token && !requestedMoreThanHealth && apis.health ? healthNotice : null }
-      { props.errorStatus ? errorNotice : null }
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Apply)
+export default connect(mapStateToProps, mapDispatchToProps)(ApplyForm)

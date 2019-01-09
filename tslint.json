@@ -21,6 +21,9 @@
     "prefer-const": {
       "severity": "error"
     },
+    "no-console": {
+      "severity": "error"
+    },
     "react-a11y-anchors": {
       "severity": "warning"
     },

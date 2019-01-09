@@ -26,13 +26,17 @@ export interface IExternalSwagger {
   swagger: object;
 }
 
-export interface IApplication {
+export interface IApplicationInputs {
+  apis: IApiList;
   description: IErrorableInput;
   email: IErrorableInput;
   firstName: IErrorableInput;
   lastName: IErrorableInput;
   organization: IErrorableInput;
-  apis: IApiList;
+}
+
+export interface IApplication {
+  inputs: IApplicationInputs,
   sending: boolean;
   errorStatus?: string;
   token: string;

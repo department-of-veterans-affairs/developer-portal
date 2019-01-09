@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
 import { Banner, Footer, NavBar, PageContent } from './components';
-import { Apply, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
+import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
 import { history } from './store';
 
 let currentPath = history.location.pathname;
@@ -66,7 +66,8 @@ class App extends React.Component {
         <Route exact={true} path="/" component={Home} />
         <Route path="/go-live" component={RoutedContent} />
         <Route path="/terms-of-service" component={RoutedContent} />
-        <Route path="/apply" component={Apply} />
+        <Route path="/apply" component={ApplyForm} />
+        <Route path="/applied" component={ApplySuccess} />
         <Route path="/beta" component={BetaPage} />
         <Route path="/beta-success" component={BetaSuccess} />
         <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
