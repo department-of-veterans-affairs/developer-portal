@@ -312,12 +312,24 @@ class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
     }
 }
 
+function VaInternalTag() {
+    return (
+        <span><small>Internal VA use only.</small></span>
+    );
+}
+
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription, subIdx: number) {
+    const internalTag = (api.vaInternalOnly === true) ? VaInternalTag() : null;
+
     return (
         <Flag key={subIdx} name={`hosted_apis.${api.urlFragment}`}>
             <li key={subIdx}>
               <NavLink exact={true} to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}`} activeClassName="usa-current">
-                {api.name}
+                <div>
+                  {api.name}
+                  <br />
+                  {internalTag}
+                </div>
               </NavLink>
               <br />
             </li>
