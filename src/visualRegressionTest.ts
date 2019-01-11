@@ -1,20 +1,8 @@
 import { Page } from 'puppeteer';
 
-import { mockSwagger } from './e2eHelpers';
+import { mockSwagger, puppeteerHost, testPaths } from './e2eHelpers';
 
 jest.setTimeout(100000);
-
-const paths = [
-  '/apply',
-  '/terms-of-service',
-  '/go-live',
-  '/oauth',
-  '/explore',
-  '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
-  '/explore/benefits/docs/appeals',
-];
-
-const puppeteerHost = 'http://localhost:4444'
 
 const viewports = [
   { width: 1200, height: 800 },
@@ -31,6 +19,8 @@ const checkScreenshots = async (page: Page) => {
     expect(screenshot).toMatchImageSnapshot();
   }
 }
+
+const paths = testPaths.filter(path => path !== '/');
 
 describe('Visual regression test', async () => {
   for (const path of paths) {

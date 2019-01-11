@@ -133,6 +133,20 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  stage('Accessibility Test'){
+    try {
+      dockerImage.inside(args) {
+        sh 'cd /application && npm run-script test:accessibility:ci'
+      }
+    } catch (error) {
+      notify()
+      dir(pwd()) {
+        step([$class: 'JUnitResultArchiver', testResults: 'test-report.xml'])
+      }
+      throw error
+    }
+  }
+
   stage('Visual Regression Test') {
     try {
       dockerImage.inside(args) {
