@@ -15,10 +15,10 @@
       },
       "severity": "error"
     },
-    "prefer-const": {
+    "no-console": {
       "severity": "error"
     },
-    "no-console": {
+    "prefer-const": {
       "severity": "error"
     },
     "react-a11y-anchors": {
