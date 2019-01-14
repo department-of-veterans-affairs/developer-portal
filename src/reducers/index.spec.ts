@@ -48,7 +48,7 @@ describe('application', () => {
       application(app, {
         newValue,
         type: constants.UPDATE_APPLICATION_DESCRIPTION,
-      }),
+      }).inputs,
     ).toEqual(expect.objectContaining({
       description: {
         dirty: true,
@@ -66,7 +66,7 @@ describe('application', () => {
       application(app, {
         newValue,
         type: constants.UPDATE_APPLICATION_FIRST_NAME,
-      }),
+      }).inputs,
     ).toEqual(expect.objectContaining({
       firstName: {
         dirty: true,
@@ -84,7 +84,7 @@ describe('application', () => {
       application(app, {
         newValue,
         type: constants.UPDATE_APPLICATION_LAST_NAME,
-      }),
+      }).inputs,
     ).toEqual(expect.objectContaining({
       lastName: {
         dirty: true,
@@ -102,7 +102,7 @@ describe('application', () => {
       application(app, {
         newValue,
         type: constants.UPDATE_APPLICATION_ORGANIZATION,
-      }),
+      }).inputs,
     ).toEqual(expect.objectContaining({
       organization: {
         dirty: true,
@@ -120,7 +120,7 @@ describe('application', () => {
       application(app, {
         newValue,
         type: constants.UPDATE_APPLICATION_ORGANIZATION,
-      }),
+      }).inputs,
     ).toEqual(expect.objectContaining({
       organization: {
         dirty: true,
@@ -138,7 +138,7 @@ describe('application', () => {
       application(app, {
         newValue,
         type: constants.UPDATE_APPLICATION_EMAIL,
-      }),
+      }).inputs,
     ).toEqual(expect.objectContaining({
       email: {
         dirty: true,
@@ -149,13 +149,13 @@ describe('application', () => {
 
   it('should toggle benefits api', () => {
     const newApp = application(app, { type: constants.TOGGLE_BENEFITS_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           benefits: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_BENEFITS_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_BENEFITS_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           benefits: false,
@@ -165,13 +165,13 @@ describe('application', () => {
 
   it('should toggle appeals api', () => {
     const newApp = application(app, { type: constants.TOGGLE_APPEALS_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           appeals: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_APPEALS_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_APPEALS_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           appeals: false,
@@ -181,13 +181,13 @@ describe('application', () => {
 
   it('should toggle health api', () => {
     const newApp = application(app, { type: constants.TOGGLE_HEALTH_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           health: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_HEALTH_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_HEALTH_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           health: false,
@@ -197,13 +197,13 @@ describe('application', () => {
 
   it('should toggle verification api', () => {
     const newApp = application(app, { type: constants.TOGGLE_VERIFICATION_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           verification: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_VERIFICATION_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_VERIFICATION_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           verification: false,
@@ -213,13 +213,13 @@ describe('application', () => {
 
   it('should toggle facilities api', () => {
     const newApp = application(app, { type: constants.TOGGLE_FACILITIES_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           facilities: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_FACILITIES_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_FACILITIES_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           facilities: false,
