@@ -107,8 +107,7 @@ const fetchWithRetry = async (fetchFn : () => Promise<Response>) : Promise<Respo
   throw new Error(`Max Retries Exceeded. Last Status: ${status}`);
 };
 
-function buildApplicationBody(state: IRootState): object {
-  const { application } = state;
+function buildApplicationBody({ application }: IRootState) {
   const applicationBody : any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
   ['description', 'email', 'firstName', 'lastName', 'organization'].forEach((property) => {

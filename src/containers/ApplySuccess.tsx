@@ -8,10 +8,6 @@ import { ASSISTANCE_EMAIL_ADDRESS } from '../types/constants';
 
 import './Apply.scss';
 
-const mapDispatchToProps = (dispatch: any) => {
-  return {};
-};
-
 const mapStateToProps = (state : IRootState) => {
   return {
     ...state.application,
@@ -35,6 +31,7 @@ interface IApiKeyNoticeProps {
 }
 
 class ApiKeyNotice extends React.Component<IApiKeyNoticeProps, {}> {
+  // Proper names should be encoded into global API table once it's extracted from ExploreDocs.
   private apisToProperNames = {
     appeals: 'Appeals Status API',
     benefits: 'Benefits Intake API',
@@ -76,7 +73,12 @@ function selectedApiNames(apis: IApiList): string[] {
 function ApplySuccess(props: IApplication) {
   const { inputs: { apis, email }, token } = props;
   const selectedApis=selectedApiNames(apis);
-  const onlyOAuthSelected = ((selectedApis.length === 1) && (selectedApis[0] === "health"));
+  // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
+  const onlyOAuthSelected = (
+      (selectedApis.indexOf('benefits') === -1)
+      && (selectedApis.indexOf('facilities') === -1)
+      && (selectedApis.indexOf('appeals') === -1)
+    );
 
   const tokenNotice = onlyOAuthSelected
     ? null
@@ -84,7 +86,7 @@ function ApplySuccess(props: IApplication) {
 
   const oAuthNotice = (apis.health)
     ? <span>We will email you at {email.value} soon to setup OAuth credentials for the Health API.</span>
-    : <span>If you decide to develop an application with the Health API, email us at <AssistanceEmail /> to setup OAuth credentials.</span>;
+    : <span>If you decide to develop an application with the Health API or the Verification API, email us at <AssistanceEmail /> to setup OAuth credentials.</span>;
 
   return (
     <div role="region" aria-labelledby="apply-region" className="usa-grid api-application">
@@ -99,4 +101,4 @@ function ApplySuccess(props: IApplication) {
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApplySuccess);
+export default connect(mapStateToProps)(ApplySuccess);
