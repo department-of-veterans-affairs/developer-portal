@@ -17,7 +17,7 @@ PORT=3001
 REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3000
 REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=https://dev-api.va.gov
 REACT_APP_SALESFORCE_ENV=VICDEV
-``` 
+```
 
 The settings above assume you're running `vets-api` locally. That will let you develop the portal site against
 the in-development docs hosted by vets-api. If you want to develop the portal against API docs then
@@ -39,14 +39,14 @@ Swagger docs will not display without also running [vets-api](https://github.com
 
 This project uses `jest-image-snapshot` for visual regression testing. Screenshots of the app are checked into git, and regenerated whenever a change is made. If they don't match, Jenkins will report a test failure. To run these tests locally, you'll first need to build the docker image:
 ```
-docker build -t developer_portal .
+docker build -t developer-portal .
 ```
 
 Then you can run them in the docker image with
 ```
 docker run --rm -itv "$PWD:/application" -v "/application/node_modules" developer-portal npm run test:visual
 ```
-If the tests don't pass, an image showing the diff will be generated in `src/__image_snapshots__/__diff_output__` 
+If the tests don't pass, an image showing the diff will be generated in `src/__image_snapshots__/__diff_output__`
 
 If you need to update your snapshots (after seeing a failing diff), run with the `-u` flag:
 ```
