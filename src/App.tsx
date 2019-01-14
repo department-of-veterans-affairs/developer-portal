@@ -28,6 +28,7 @@ function isHostedApiEnabled(shortName: string, defaultValue: boolean): boolean {
 
 const flags = {
   hosted_apis: {
+    address_validation: isHostedApiEnabled('address_validation', false),
     appeals: isHostedApiEnabled('appeals', true),
     argonaut: isHostedApiEnabled('argonaut', true),
     benefits: isHostedApiEnabled('benefits', true),
@@ -68,7 +69,7 @@ class App extends React.Component {
         <Route path="/apply" component={Apply} />
         <Route path="/beta" component={BetaPage} />
         <Route path="/beta-success" component={BetaSuccess} />
-        <Route path="/explore/:apiCategory?" component={ExploreDocs} />
+        <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
         <Route path="/oauth" component={OAuth} />
       </PageContent>
     );
