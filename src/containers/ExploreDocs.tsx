@@ -115,7 +115,7 @@ const apiDefs : IApiCategories = {
             },
             {
                 name: 'Veteran Confirmation',
-                shortDescription: "Get a veteran's status",
+                shortDescription: "Get a confirmation of a veteran's status",
                 urlFragment: 'veteran_confirmation',
                 vaInternalOnly: false,
             },
