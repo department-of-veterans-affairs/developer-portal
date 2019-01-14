@@ -102,7 +102,7 @@
     "test:e2e": "node scripts/test.js --projects=e2e.jest.config.js",
     "test:accessibility": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)'",
     "test:accessibility:ci": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --ci --testResultsProcessor='./node_modules/jest-junit-reporter'",
-    "test:visual": "REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3000 node scripts/test.js --projects=visual.jest.config.js --runInBand"
+    "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.15",
