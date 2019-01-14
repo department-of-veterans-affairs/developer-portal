@@ -53,10 +53,9 @@ class ApiKeyNotice extends React.Component<IApiKeyNoticeProps, {}> {
 
         <p>
         You should receive an email at {email} with the same key. That key is for accessing the {apiListSnippet} in the development environment.
-        You can use it by including it as an HTTP request header in each request to the API:
+        You can use it by including it in each request as an HTTP request header named <span className="mono">apiKey</span>.
         </p>
 
-        <p>&nbsp;&nbsp;&nbsp;&nbsp;<pre style={{display: 'inline'}}>apiKey: {token}</pre></p>
       </div>
     );
   }
