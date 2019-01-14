@@ -4,6 +4,19 @@ import { Request } from 'puppeteer';
 
 import { mockSwagger as mocks } from './mockSwagger.js';
 
+// Paths to test in visual regression and accessibility tests
+export const testPaths = [
+    '/',
+    '/apply',
+    '/terms-of-service',
+    '/go-live',
+    '/oauth',
+    '/explore',
+    '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
+    '/explore/benefits/docs/appeals',
+];
+
+export const puppeteerHost = 'http://localhost:4444'
 
 declare global {
     interface Window { // tslint:disable-line
