@@ -1,6 +1,6 @@
 # based on https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
 
-FROM node:8
+FROM node:10
 
 # Install chromium dependencies
 RUN apt-get update && apt-get install -y wget --no-install-recommends \
