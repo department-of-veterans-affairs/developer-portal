@@ -17,7 +17,7 @@ PORT=3001
 REACT_APP_VETSGOV_SWAGGER_API=https://dev-api.vets.gov
 REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=https://dev-api.va.gov
 REACT_APP_SALESFORCE_ENV=VICDEV
-``` 
+```
 
 Now start the app:
 ```

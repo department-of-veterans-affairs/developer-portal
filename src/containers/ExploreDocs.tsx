@@ -114,6 +114,12 @@ const apiDefs : IApiCategories = {
                 vaInternalOnly: false,
             },
             {
+                name: 'Veteran Confirmation',
+                shortDescription: "Get confirmation of a veteran's status",
+                urlFragment: 'veteran_confirmation',
+                vaInternalOnly: false,
+            },
+            {
                 name: 'Address Validation',
                 shortDescription: 'Provides methods to standardize and validate addresses.',
                 urlFragment: 'address_validation',
