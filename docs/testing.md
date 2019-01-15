@@ -39,7 +39,7 @@ for accessibility issues. **NOTE: THESE ARE CURRENTLY NOT WORKING ON MASTER.**
 
 This project uses `jest-image-snapshot` for visual regression testing. Screenshots of the app are checked into git, and regenerated whenever a change is made. If they don't match, Jenkins will report a test failure. To run these tests locally, you'll first need to build the docker image:
 ```
-docker build -t developer_portal .
+docker build -t developer-portal .
 ```
 
 Then you can run them in the docker image with
