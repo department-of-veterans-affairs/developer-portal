@@ -4,7 +4,7 @@ The Developer Portal is the documentation and help portal for the VA API Platfor
 
 ## Getting Started
 
-The Developer Portal was bootstrapped with [create-react-app](https://github.com/facebook/create-react-app) and requires [Node v6+](https://nodejs.org/en/download/).
+The Developer Portal was bootstrapped with [create-react-app](https://github.com/facebook/create-react-app) and requires [Node v10+](https://nodejs.org/en/download/).
 
 First install the dependencies:
 ```

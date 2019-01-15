@@ -23,7 +23,14 @@ before submitting a pull request.
 ### Unit Tests
 
 General tests specific to a component or simple interactions between related components are handled by our
-unit test suite. This uses the [jest framekwork](https://jestjs.io/).
+unit test suite. This test suite uses the [jest framekwork](https://jestjs.io/). During development you can
+have the test runner provide you with immediate feedback by running this command:
+```
+npm run-script test:unit -- --watch
+```
+
+That will watch the files under version control and run the tests based on the files you modify. If you would
+like to run the same command that's run during the CI job, that is:
 ```
 npm run-script test:unit:ci
 ```
