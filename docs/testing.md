@@ -4,7 +4,7 @@
 
 When you make changes locally, testing those changes will often require overriding an environment variable.
 This is done by modifying your `.env` file (no environment-specific suffix). For example, assuming you
-follow-ed the setup instructions in the README.md file, the OpenAPI documentation displayed in the portal will
+followed the setup instructions in the README.md file, the OpenAPI documentation displayed in the portal will
 be coming from our dev environment.
 
 If you are working on OpenAPI documentation in vets-api, you will need to point the portal at your local
