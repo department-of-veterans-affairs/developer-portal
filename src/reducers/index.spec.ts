@@ -5,155 +5,72 @@ import * as constants from '../types/constants';
 import { application } from './index';
 
 const app : IApplication = {
-  apis: {
-    appeals: false,
-    benefits: false,
-    facilities: false,
-    health: false,
-    verification: false,
-  },
-  description: {
-    dirty: false,
-    value: '',
-  },
-  email: {
-    dirty: false,
-    value: '',
-  },
-  firstName: {
-    dirty: false,
-    value: '',
-  },
-  lastName: {
-    dirty: false,
-    value: '',
-  },
-  organization: {
-    dirty: false,
-    value: '',
+  inputs: {
+    apis: {
+      appeals: false,
+      benefits: false,
+      facilities: false,
+      health: false,
+      verification: false,
+    },
+    description: {
+      dirty: false,
+      value: '',
+    },
+    email: {
+      dirty: false,
+      value: '',
+    },
+    firstName: {
+      dirty: false,
+      value: '',
+    },
+    lastName: {
+      dirty: false,
+      value: '',
+    },
+    organization: {
+      dirty: false,
+      value: '',
+    },
   },
   sending: false,
   token: '',
 };
 
 describe('application', () => {
-  it('should update app description when change comes in', () => {
-    const newValue = {
-      dirty: true,
-      value: 'test',
-    };
-    expect(
-      application(app, {
-        newValue,
-        type: constants.UPDATE_APPLICATION_DESCRIPTION,
-      }),
-    ).toEqual(expect.objectContaining({
-      description: {
-        dirty: true,
-        value: 'test',
-      },
-    }));
-  });
+  it('should update application state when inputs are changed', () => {
+    const inputToActionMap: any[] = [
+      ['description', constants.UPDATE_APPLICATION_DESCRIPTION],
+      ['firstName', constants.UPDATE_APPLICATION_FIRST_NAME],
+      ['lastName', constants.UPDATE_APPLICATION_LAST_NAME],
+      ['email', constants.UPDATE_APPLICATION_EMAIL],
+      ['organization', constants.UPDATE_APPLICATION_ORGANIZATION],
+    ];
 
-  it('should update app first name when change comes in', () => {
-    const newValue = {
-      dirty: true,
-      value: 'test',
-    };
-    expect(
-      application(app, {
-        newValue,
-        type: constants.UPDATE_APPLICATION_FIRST_NAME,
-      }),
-    ).toEqual(expect.objectContaining({
-      firstName: {
+    inputToActionMap.forEach(([fieldName, actionName]) => {
+      const newValue = {
         dirty: true,
         value: 'test',
-      },
-    }));
-  });
+      };
 
-  it('should update app last name when change comes in', () => {
-    const newValue = {
-      dirty: true,
-      value: 'test',
-    };
-    expect(
-      application(app, {
-        newValue,
-        type: constants.UPDATE_APPLICATION_LAST_NAME,
-      }),
-    ).toEqual(expect.objectContaining({
-      lastName: {
-        dirty: true,
-        value: 'test',
-      },
-    }));
-  });
+      const inputs = application(app, {newValue, type: actionName}).inputs;
+     
+      const expectedSubObject = { [fieldName]: newValue } ;
 
-  it('should update app organization when change comes in', () => {
-    const newValue = {
-      dirty: true,
-      value: 'test',
-    };
-    expect(
-      application(app, {
-        newValue,
-        type: constants.UPDATE_APPLICATION_ORGANIZATION,
-      }),
-    ).toEqual(expect.objectContaining({
-      organization: {
-        dirty: true,
-        value: 'test',
-      },
-    }));
-  });
-
-  it('should update app organization when change comes in', () => {
-    const newValue = {
-      dirty: true,
-      value: 'test',
-    };
-    expect(
-      application(app, {
-        newValue,
-        type: constants.UPDATE_APPLICATION_ORGANIZATION,
-      }),
-    ).toEqual(expect.objectContaining({
-      organization: {
-        dirty: true,
-        value: 'test',
-      },
-    }));
-  });
-
-  it('should update app email when change comes in', () => {
-    const newValue = {
-      dirty: true,
-      value: 'test',
-    };
-    expect(
-      application(app, {
-        newValue,
-        type: constants.UPDATE_APPLICATION_EMAIL,
-      }),
-    ).toEqual(expect.objectContaining({
-      email: {
-        dirty: true,
-        value: 'test',
-      },
-    }));
+      expect(inputs).toEqual(expect.objectContaining(expectedSubObject));
+    });
   });
 
   it('should toggle benefits api', () => {
     const newApp = application(app, { type: constants.TOGGLE_BENEFITS_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           benefits: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_BENEFITS_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_BENEFITS_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           benefits: false,
@@ -163,13 +80,13 @@ describe('application', () => {
 
   it('should toggle appeals api', () => {
     const newApp = application(app, { type: constants.TOGGLE_APPEALS_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           appeals: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_APPEALS_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_APPEALS_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           appeals: false,
@@ -179,13 +96,13 @@ describe('application', () => {
 
   it('should toggle health api', () => {
     const newApp = application(app, { type: constants.TOGGLE_HEALTH_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           health: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_HEALTH_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_HEALTH_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           health: false,
@@ -195,13 +112,13 @@ describe('application', () => {
 
   it('should toggle verification api', () => {
     const newApp = application(app, { type: constants.TOGGLE_VERIFICATION_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           verification: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_VERIFICATION_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_VERIFICATION_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           verification: false,
@@ -211,13 +128,13 @@ describe('application', () => {
 
   it('should toggle facilities api', () => {
     const newApp = application(app, { type: constants.TOGGLE_FACILITIES_CHECKED });
-    expect(newApp)
+    expect(newApp.inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           facilities: true,
         }),
       }));
-    expect(application(newApp, { type: constants.TOGGLE_FACILITIES_CHECKED }))
+    expect(application(newApp, { type: constants.TOGGLE_FACILITIES_CHECKED }).inputs)
       .toEqual(expect.objectContaining({
         apis: expect.objectContaining({
           facilities: false,

@@ -9,16 +9,18 @@ afterEach(() => {
 
 const appState = {
   application: {
-    apis: {
-      benefits: true,
-      facilities: false,
-      health: true,
-      verification: false,
+    inputs: {
+      apis: {
+        benefits: true,
+        facilities: false,
+        health: true,
+        verification: false,
+      },
+      email: 'james@hotmail.co',
+      firstName: 'James',
+      lastName: 'Rodríguez',
+      organization: 'Fußball-Club Bayern München',
     },
-    email: 'james@hotmail.co',
-    firstName: 'James',
-    lastName: 'Rodríguez',
-    organization: 'Fußball-Club Bayern München',
   },
 };
 
