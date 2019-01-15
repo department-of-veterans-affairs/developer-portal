@@ -16,7 +16,7 @@ REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3000
 
 ## Automated Testing
 
-There's a variety of automated tests that will be run when you submit a pull request. In order to streamline
+There are a variety of automated tests that will be run when you submit a pull request. In order to streamline
 the process of reviewing changes, it would be best for you to ensure each of these test suites passes locally
 before submitting a pull request.
 
