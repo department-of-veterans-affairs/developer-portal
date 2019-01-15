@@ -3,7 +3,7 @@
 ## Manually Testing Local Changes
 
 When you make changes locally, testing those changes will often require overriding an environment variable.
-This is done by modifying your `.env` file (no envionment-specific suffix). For example, assuming you
+This is done by modifying your `.env` file (no environment-specific suffix). For example, assuming you
 follow-ed the setup instructions in the README.md file, the OpenAPI documentation displayed in the portal will
 be coming from our dev environment.
 
