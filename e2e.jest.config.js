@@ -11,7 +11,7 @@ module.exports = {
   testURL: "http://localhost:4444",
   transform: {
     "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-    "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
+    "^.+\\.tsx?$": "ts-jest",
     "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
     "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
   },
@@ -36,7 +36,7 @@ module.exports = {
   ],
   globals: {
     "ts-jest": {
-      "tsConfigFile": "tsconfig.test.json"
+      "tsConfig": "tsconfig.test.json"
     }
   }
 };

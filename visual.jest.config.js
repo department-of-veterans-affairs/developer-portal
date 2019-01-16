@@ -12,7 +12,7 @@ module.exports = {
   setupTestFrameworkScriptFile: "<rootDir>/config/jest/imageSnapshot.ts",
   transform: {
     "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-    "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
+    "^.+\\.tsx?$": "ts-jest",
     "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
     "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
   },
@@ -37,7 +37,7 @@ module.exports = {
   ],
   globals: {
     "ts-jest": {
-      "tsConfigFile": "tsconfig.test.json"
+      "tsConfig": "tsconfig.test.json"
     }
   }
 }
