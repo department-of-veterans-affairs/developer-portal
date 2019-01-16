@@ -23,7 +23,7 @@ We use separate authorization servers for our development and production environ
 
 ### Initiating Authorization
 
-Initiate the OpenID Connect authorization by directing Veterans using your application to `https://deptva-eval.okta.com/oauth2/default/v1/authorize` with the following query parameters:
+Initiate the OpenID Connect authorization by directing Veterans using your application to `https://dev-api.va.gov/oauth2/authorize` with the following query parameters:
 
 * `client_id` - required - The `client_id` issued by the VA API Platform team
 * `nonce` - optional - Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations).
@@ -35,7 +35,7 @@ Initiate the OpenID Connect authorization by directing Veterans using your appli
 
 Example Authorization URL:
 ```plaintext
-https://deptva-eval.okta.com/oauth2/default/v1/authorize?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=http://localhost:8080/implicit/callback&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read
+https://dev-api.va.gov/oauth2/authorize?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=http://localhost:8080/implicit/callback&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read
 ```
 
 The Veteran will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
@@ -98,11 +98,11 @@ GET {your redirect uri path}#
 Host: {your redirect uri host}
 ```
 
-Your application then makes a request to the token endpoint at `https://deptva-eval.okta.com/oauth2/default/v1/token` using the returned code and your *client id* and *client secret* as HTTP Basic authorization. Your token request should look like:
+Your application then makes a request to the token endpoint at `https://dev-api.va.gov/oauth2/token` using the returned code and your *client id* and *client secret* as HTTP Basic authorization. Your token request should look like:
 
 ```plaintext
-POST /oauth2/default/v1/token HTTP/1.1
-Host: deptva-eval.okta.com
+POST /oauth2/token HTTP/1.1
+Host: dev-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
@@ -143,8 +143,8 @@ The resulting `access_token` can used to authorize requests to the VA API Platfo
 The `refresh_token` can be used to obtain a new `access_token` after its expiry by sending the following request
 
 ```plaintext
-POST /oauth2/default/v1/token HTTP/1.1
-Host: deptva-eval.okta.com
+POST /oauth2/token HTTP/1.1
+Host: dev-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
@@ -217,7 +217,7 @@ Unlike the token returned by an authorization_code grant or an implicit token gr
 
 ### Header
 
-The JWT's header has two fields `alg` and `kid`. `alg` indicates the algorithm that was used the sign the JWT, and `kid` identifies the key that was used to sign the JWT. Signing keys and associated metadata are accessible from `https://deptva-eval.okta.com/oauth2/default/.well-known/oauth-authorization-server`.
+The JWT's header has two fields `alg` and `kid`. `alg` indicates the algorithm that was used the sign the JWT, and `kid` identifies the key that was used to sign the JWT. Signing keys and associated metadata are accessible from `https://dev-api.va.gov/oauth2/default/.well-known/oauth-authorization-server`.
 
 ### Payload
 
@@ -238,7 +238,7 @@ The signature is a cryptographically generated signature of the JWT's header and
 
 ## Test Users
 
-While developing and testing your application, you'll need to be able to login. Since most of the data provided from the VA API Platform comes from internal VA systems, you can't sign up for an account and find useful data in it. We will provide test accounts for you to use while developing your VA API Platform-based application.
+While developing and testing your application, you'll need to be able to login. Since most of the data provided from the VA API Platform comes from internal VA systems, you can't sign up for an account and find useful data in it. We provide [test accounts](https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts.md) for you to use while developing your VA API Platform-based application. 
 
 Test user data is reset regularly.
 
