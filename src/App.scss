@@ -78,3 +78,21 @@ span.mono {
   }
 }
 
+.App {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+
+  header {
+    flex-shrink: 0;
+  }
+
+  footer {
+    flex-shrink: 0;
+  }
+
+  .main {
+    flex-grow: 1;
+  }
+}
+

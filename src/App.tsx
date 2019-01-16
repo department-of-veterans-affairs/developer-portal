@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
-import { Banner, Footer, NavBar, PageContent } from './components';
+import { Footer, NavBar, PageContent } from './components';
 import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
 import { history } from './store';
 
@@ -45,18 +45,15 @@ class App extends React.Component {
   public render() {
     return (
       <FlagsProvider flags={flags}>
-        <div className="App">
-          <ConnectedRouter history={history}>
-            <div>
-              <Banner />
-              <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
-              <div role="main">
-                <Route path="/" render={this.focusedRoutes} />
-              </div>
-              <Footer />
+        <ConnectedRouter history={history}>
+          <div className="App">
+            <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
+            <div className="main" role="main">
+              <Route path="/" render={this.focusedRoutes} />
             </div>
-          </ConnectedRouter>
-        </div>
+            <Footer />
+          </div>
+        </ConnectedRouter>
       </FlagsProvider>
     );
   }

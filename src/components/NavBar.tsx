@@ -7,6 +7,7 @@ import closeButton from "../assets/close-white.svg";
 
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Banner } from './Banner';
 
 interface INavBarProps {
   hideLinks: boolean;
@@ -37,6 +38,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
     }
     return (
       <header className="usa-header usa-header-extended" role="banner">
+        <Banner />
         <div className="usa-navbar">
           <div className="usa-logo" id="extended-logo">
             <em className="usa-logo-text"><Link to="/" title="Digital VA home page">
