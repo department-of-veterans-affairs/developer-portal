@@ -35,7 +35,7 @@ const flags = {
     claims: isHostedApiEnabled('claims', true),
     disability_rating: isHostedApiEnabled('disability_rating', true),
     facilities: isHostedApiEnabled('facilities', true),
-    loan_guarantees: isHostedApiEnabled('loan_guarantees', false),
+    loan_guaranty: isHostedApiEnabled('loan_guaranty', false),
     service_history: isHostedApiEnabled('service_history', true),
     veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
   },

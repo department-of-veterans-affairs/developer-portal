@@ -62,7 +62,7 @@ const apiDefs : IApiCategories = {
             {
                 name: 'Loan Guarantees',
                 shortDescription: 'Manage VA home loan guarantees',
-                urlFragment: 'loan_guarantees',
+                urlFragment: 'loan_guaranty',
                 vaInternalOnly: false,
             },
         ],
