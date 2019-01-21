@@ -8,7 +8,9 @@ import createBrowserHistory from 'history/createBrowserHistory'
 
 import { application, initialApplicationState } from './reducers';
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({
+  basename: process.env.REACT_APP_URL_BASENAME || '/',
+});
 const middleware = routerMiddleware(history);
 
 function loadApplicationState(): { application: IApplication } {
