@@ -14,14 +14,7 @@ def isReviewable = {
 
 env.CONCURRENCY = 10
 
-def isDeployable = {
-  (env.BRANCH_NAME == devBranch ||
-   env.BRANCH_NAME == stagingBranch) &&
-    !env.CHANGE_TARGET &&
-    !currentBuild.nextBuild // if there's a later build on this job (branch), don't deploy
-}
-
-def shouldBail = {
+def supercededByConcurrentBuild = {
   // abort the job if we're not on deployable branch (usually master) and there's a newer build going now
   env.BRANCH_NAME != devBranch &&
     env.BRANCH_NAME != stagingBranch &&
@@ -82,12 +75,13 @@ def getPullRequestNumber() {
 
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
-  def dockerImage, args, ref, imageTag
+  def dockerImage, args, ref, imageTag, prNum
 
   // Checkout source, create output directories, build container
 
   stage('Setup') {
     try {
+      prNum = getPullRequestNumber()
       deleteDir()
       checkout scm
 
@@ -187,14 +181,12 @@ node('vetsgov-general-purpose') {
   // Perform a build for each build type
 
   stage('Build') {
-    if (shouldBail()) { return }
+    if (supercededByConcurrentBuild()) { return }
 
       try {
       def builds = [:]
 
-      for (int i=0; i<envNames.size(); i++) {
-        def envName = envNames.get(i)
-
+      envNames.each{ envName ->
         builds[envName] = {
           dockerImage.inside(args) {
             sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
@@ -213,14 +205,15 @@ node('vetsgov-general-purpose') {
   }
 
   stage('Archive') {
-    if (shouldBail()) { return }
+    if (supercededByConcurrentBuild()) { return }
+    if (prNum) { return }
 
     try {
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                         usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-        for (int i=0; i<envNames.size(); i++) {
-          sh "tar -C build/${envNames.get(i)} -cf build/${envNames.get(i)}.tar.bz2 ."
-          sh "aws --region us-gov-west-1 s3 cp --no-progress --acl public-read build/${envNames.get(i)}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envNames.get(i)}.tar.bz2"
+        envNames.each{ envName ->
+          sh "tar -C build/${envName} -cf build/${envName}.tar.bz2 ."
+          sh "aws --region us-gov-west-1 s3 cp --no-progress --acl public-read build/${envName}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envName}.tar.bz2"
         }
       }
     } catch (error) {
@@ -234,11 +227,10 @@ node('vetsgov-general-purpose') {
       script {
         commit = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
       }
-      // num = getPullRequestNumber()
-      // if (num) {
-      //   sh 'aws --region us-gov-west-1 s3 cp --no-progress --acl public-read '
-      // }
-      if (env.BRANCH_NAME == devBranch) {
+
+      if (prNum) {
+        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://review-developer.va.gov/${commit}/"
+      } else if (env.BRANCH_NAME == devBranch) {
         build job: 'deploys/developer-portal-dev', parameters: [
           booleanParam(name: 'notify_slack', value: true),
           stringParam(name: 'ref', value: commit),
