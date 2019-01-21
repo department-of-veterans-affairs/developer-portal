@@ -64,7 +64,7 @@ def pullRequestComment(String comment) {
 
 def getPullRequestNumber() {
   withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
-    prNum = sh(script: '''
+    return sh(script: '''
       # URL decode branch name
       branch=$(python -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
       # Get PR number from branch name. May fail if there are multiple PRs from the same branch
@@ -82,10 +82,17 @@ node('vetsgov-general-purpose') {
   stage('Setup') {
     try {
       prNum = getPullRequestNumber()
+      echo("prNum during setup: ${prNum}");
       deleteDir()
       checkout scm
 
       ref = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+
+      if (prNum) {
+        envNames.each{ envName ->
+          sh "echo REACT_APP_URL_BASENAME=/review-developer-va-gov/${ref}/${envName} >> ./.env.${envName}"
+        }
+      }
 
       sh "mkdir -p build"
 
@@ -228,8 +235,9 @@ node('vetsgov-general-purpose') {
         commit = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
       }
 
+      echo("prNum during deploy: ${prNum}");
       if (prNum) {
-        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://review-developer.va.gov/${commit}/"
+        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://review-developer-va-gov/${commit}/"
       } else if (env.BRANCH_NAME == devBranch) {
         build job: 'deploys/developer-portal-dev', parameters: [
           booleanParam(name: 'notify_slack', value: true),
