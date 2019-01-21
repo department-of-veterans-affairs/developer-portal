@@ -64,12 +64,12 @@ def pullRequestComment(String comment) {
 
 def getPullRequestNumber() {
   withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
-    prNum = sh('''
+    prNum = sh(script: '''
       # URL decode branch name
       branch=$(python -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
       # Get PR number from branch name. May fail if there are multiple PRs from the same branch
       curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${branch}\\") | .number"
-    ''', returnStdout: true)
+    ''', returnStdout: true).trim()
   }
 }
 
