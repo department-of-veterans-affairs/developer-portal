@@ -69,6 +69,17 @@ def pullRequestComment(String comment) {
   }
 }
 
+def getPullRequestNumber() {
+  withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
+    prNum = sh('''
+      # URL decode branch name
+      branch=$(python -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
+      # Get PR number from branch name. May fail if there are multiple PRs from the same branch
+      curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${branch}\\") | .number"
+    ''', returnStdout: true)
+  }
+}
+
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
   def dockerImage, args, ref, imageTag
@@ -218,14 +229,15 @@ node('vetsgov-general-purpose') {
     }
   }
 
-  stage('Deploy dev or staging') {
+  stage('Deploy') {
     try {
-      if (!isDeployable()) {
-        return
-      }
       script {
         commit = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
       }
+      // num = getPullRequestNumber()
+      // if (num) {
+      //   sh 'aws --region us-gov-west-1 s3 cp --no-progress --acl public-read '
+      // }
       if (env.BRANCH_NAME == devBranch) {
         build job: 'deploys/developer-portal-dev', parameters: [
           booleanParam(name: 'notify_slack', value: true),
