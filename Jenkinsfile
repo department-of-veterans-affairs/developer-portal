@@ -5,6 +5,8 @@ def envNames = ['dev', 'staging', 'production']
 def devBranch = 'master'
 def stagingBranch = 'master'
 def prodBranch = 'master'
+def source_repo = "developer-portal";
+def review_s3_bucket_name = "review-developer-va-gov";
 
 def isReviewable = {
   env.BRANCH_NAME != devBranch &&
@@ -51,12 +53,7 @@ def pullRequestComment(String comment) {
   withEnv(["comment=${comment}"]) {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
       sh '''
-        # URL decode branch name
-        branch=$(python -c 'import sys, urllib; print urllib.unquote(sys.argv[1])' ${JOB_BASE_NAME})
-        # Get PR number from branch name. May fail if there are multiple PRs from the same branch
-        pr_num=$(curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/pulls" | jq ".[] | select(.head.ref==\\"${branch}\\") | .number")
-        # Post comment on github
-        curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${pr_num}/comments" --data "{\\"body\\":\\"${comment}\\"}"
+        curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${prNum}/comments" --data "{\\"body\\":\\"${comment}\\"}"
       '''
     }
   }
@@ -72,6 +69,17 @@ def getPullRequestNumber() {
     ''', returnStdout: true).trim()
   }
 }
+
+def commentAfterDeploy() {
+  def linksSnippet = envNames.collect{ envName ->
+    "https://s3-us-gov-west-1.amazonaws.com/${review_s3_bucket_name}/${REF}/${envName}/index.html"
+  }.join(" <br> ")
+
+  pullRequestComment(
+    "These changes have been deployed to a S3 bucket. A build for each environment is available: <br><br> ${linksSnippet} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
+  )
+}
+
 
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
@@ -237,7 +245,9 @@ node('vetsgov-general-purpose') {
 
       echo("prNum during deploy: ${prNum}");
       if (prNum) {
-        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://review-developer-va-gov/${commit}/"
+        deploymentId = createDeployment();
+        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${review_s3_bucket_name}/${commit}/"
+        commentAfterDeploy()
       } else if (env.BRANCH_NAME == devBranch) {
         build job: 'deploys/developer-portal-dev', parameters: [
           booleanParam(name: 'notify_slack', value: true),
