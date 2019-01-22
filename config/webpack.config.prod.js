@@ -23,20 +23,18 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-// Webpack uses `publicPath` to determine where the app is being served from.
-// It requires a trailing slash, or the file assets will get an incorrect path.
+// Webpack uses `output.publicPath`, from it's options object, to determine
+// where the app is being served from. It requires a trailing slash, or the
+// file assets will get an incorrect path.
 const publicPath = paths.servedPath;
+const publicPathNoSlash = publicPath.replace(/[/]+$/, '');
+const env = getClientEnvironment(publicPathNoSlash);
+
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
 const shouldUseRelativeAssetPaths = publicPath === './';
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
-// `publicUrl` is just like `publicPath`, but we will provide it to our app
-// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
-// Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-const publicUrl = publicPath.slice(0, -1);
-// Get environment variables to inject into our app.
-const env = getClientEnvironment(publicUrl);
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -389,7 +387,7 @@ module.exports = (envName) => {
       skipWaiting: true,
       exclude: [/\.map$/, /asset-manifest\.json$/],
       importWorkboxFrom: 'cdn',
-      navigateFallback: publicUrl + '/index.html',
+      navigateFallback: publicPathNoSlash + '/index.html',
       navigateFallbackBlacklist: [
         // Exclude URLs starting with /_, as they're likely an API call
         new RegExp('^/_'),
