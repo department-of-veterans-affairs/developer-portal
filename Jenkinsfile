@@ -90,7 +90,7 @@ node('vetsgov-general-purpose') {
   stage('Setup') {
     try {
       prNum = getPullRequestNumber()
-      echo("prNum during setup: ${prNum}");
+      echo("The pull request number captured from the github API: ${prNum}");
       deleteDir()
       checkout scm
 
@@ -243,9 +243,7 @@ node('vetsgov-general-purpose') {
         commit = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
       }
 
-      echo("prNum during deploy: ${prNum}");
       if (prNum) {
-        deploymentId = createDeployment();
         sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${review_s3_bucket_name}/${commit}/"
         commentAfterDeploy()
       } else if (env.BRANCH_NAME == devBranch) {
