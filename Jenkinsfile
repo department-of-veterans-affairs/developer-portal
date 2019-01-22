@@ -90,7 +90,7 @@ node('vetsgov-general-purpose') {
 
       if (prNum) {
         envNames.each{ envName ->
-          sh "echo REACT_APP_URL_BASENAME=/review-developer-va-gov/${ref}/${envName} >> ./.env.${envName}"
+          sh "echo PUBLIC_URL=/review-developer-va-gov/${ref}/${envName} >> ./.env.${envName}"
         }
       }
 
