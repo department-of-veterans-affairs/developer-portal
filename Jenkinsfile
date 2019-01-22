@@ -1,5 +1,7 @@
 import org.kohsuke.github.GitHub
+import groovy.transform.Field
 
+@Field
 def envNames = ['dev', 'staging', 'production']
 
 def devBranch = 'master'
@@ -83,6 +85,7 @@ def commentAfterDeploy() {
 
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
+  @Field
   def dockerImage, args, ref, imageTag, prNum
 
   // Checkout source, create output directories, build container
