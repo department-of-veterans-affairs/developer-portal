@@ -19,7 +19,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 console.log(JSON.stringify(paths));
 const publicPath = paths.servedPath;
 const publicPathNoSlash = publicPath.replace(/[/]+$/, '');
-const env = getClientEnvironment(publicPath);
+const env = getClientEnvironment(publicPathNoSlash);
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
