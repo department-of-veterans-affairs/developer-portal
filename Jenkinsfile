@@ -2,6 +2,8 @@ import org.kohsuke.github.GitHub
 import groovy.transform.Field
 
 @Field
+def ref, prNum
+@Field
 def envNames = ['dev', 'staging', 'production']
 @Field
 def review_s3_bucket_name = 'review-developer-va-gov'
@@ -79,8 +81,7 @@ def commentAfterDeploy() {
 
 node('vetsgov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
-  @Field
-  def dockerImage, args, ref, imageTag, prNum
+  def dockerImage, args, imageTag
 
   // Checkout source, create output directories, build container
 
