@@ -70,12 +70,16 @@ def getPullRequestNumber() {
 
 def commentAfterDeploy() {
   def linksSnippet = envNames.collect{ envName ->
-    "https://s3-us-gov-west-1.amazonaws.com/${review_s3_bucket_name}/${shortRef}/${envName}/index.html"
+    "https://s3-us-gov-west-1.amazonaws.com/${reviewBucketPath()}/${envName}/index.html"
   }.join(" <br> ")
 
   pullRequestComment(
     "These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${linksSnippet} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
   )
+}
+
+def reviewBucketPath() {
+  return "${review_s3_bucket_name}/${shortRef}"
 }
 
 
@@ -97,7 +101,7 @@ node('vetsgov-general-purpose') {
 
       if (prNum) {
         envNames.each{ envName ->
-          sh "echo PUBLIC_URL=/review-developer-va-gov/${ref}/${envName} >> ./.env.${envName}"
+          sh "echo PUBLIC_URL=/${reviewBucketPath()}/${envName} >> ./.env.${envName}"
         }
       }
 
@@ -240,7 +244,7 @@ node('vetsgov-general-purpose') {
     try {
       if (prNum) {
         // Deploy to review bucket
-        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${review_s3_bucket_name}/${shortRef}/"
+        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${reviewBucketPath()}/"
         commentAfterDeploy()
       } else {
         if (env.BRANCH_NAME == devBranch) {
