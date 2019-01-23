@@ -2,7 +2,7 @@ import org.kohsuke.github.GitHub
 import groovy.transform.Field
 
 @Field
-def ref, prNum
+def ref, shortRef, prNum
 @Field
 def envNames = ['dev', 'staging', 'production']
 @Field
@@ -70,7 +70,7 @@ def getPullRequestNumber() {
 
 def commentAfterDeploy() {
   def linksSnippet = envNames.collect{ envName ->
-    "https://s3-us-gov-west-1.amazonaws.com/${review_s3_bucket_name}/${ref}/${envName}/index.html"
+    "https://s3-us-gov-west-1.amazonaws.com/${review_s3_bucket_name}/${shortRef}/${envName}/index.html"
   }.join(" <br> ")
 
   pullRequestComment(
@@ -93,6 +93,7 @@ node('vetsgov-general-purpose') {
       checkout scm
 
       ref = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
+      shortRef = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
 
       if (prNum) {
         envNames.each{ envName ->
@@ -239,7 +240,7 @@ node('vetsgov-general-purpose') {
     try {
       if (prNum) {
         // Deploy to review bucket
-        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${review_s3_bucket_name}/${ref}/"
+        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${review_s3_bucket_name}/${shortRef}/"
         commentAfterDeploy()
       } else {
         if (env.BRANCH_NAME == devBranch) {
