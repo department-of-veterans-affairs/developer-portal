@@ -171,6 +171,7 @@ node('vetsgov-general-purpose') {
   }
 
   stage('Visual Regression Test') {
+    if (supercededByConcurrentBuild()) { return }
     try {
       dockerImage.inside(args) {
         sh 'cd /application && npm run test:visual'
@@ -241,6 +242,7 @@ node('vetsgov-general-purpose') {
   }
 
   stage('Deploy') {
+    if (supercededByConcurrentBuild()) { return }
     try {
       if (prNum) {
         // Deploy to review bucket
