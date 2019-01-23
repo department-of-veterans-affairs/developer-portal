@@ -74,7 +74,7 @@ def commentAfterDeploy() {
   }.join(" <br> ")
 
   pullRequestComment(
-    "These changes have been deployed to a S3 bucket. A build for each environment is available: <br><br> ${linksSnippet} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
+    "These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${linksSnippet} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
   )
 }
 
