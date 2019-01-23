@@ -65,9 +65,7 @@ It's important to run these tests inside the docker container, or else the tests
 
 ## Build-Release-Deploy
 
-When you create a pull request, Jenkins will deploy a review instance of your changes. The review instance
-will be deployed at a URL like https://review-developer.va.gov/review-asdf1234/, linked to from the pull
-request. This review instance can be used to demo changes to stakeholders before merging to master.
+When you create a pull request, Jenkins will deploy your branch to an S3 bucket, and comment on the PR with a link. Your changes will be deployed at a URL like https://s3-us-gov-west-1.amazonaws.com/review-developer-va-gov/a1s2d3f4/production/index.html. This review instance can be used to demo changes to stakeholders before merging to master, but due to limitations with the current setup, you won't be able to link directly to pages other than index.html (navigation to those pages will work fine after visiting).
 
 The Developer Portal is automatically deployed to both [dev](https://dev-developer.va.gov/) and [staging](https://staging-developer.va.gov/) whenever changes are made to the master branch.
 
