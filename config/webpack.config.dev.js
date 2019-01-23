@@ -13,10 +13,9 @@ const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-// Webpack uses `output.publicPath`, from it's options object, to determine
+// Webpack uses `output.publicPath`, from its options object, to determine
 // where the app is being served from.  In development, we always serve from
 // the root. This makes config easier.
-console.log(JSON.stringify(paths));
 const publicPath = paths.servedPath;
 const publicPathNoSlash = publicPath.replace(/[/]+$/, '');
 const env = getClientEnvironment(publicPathNoSlash);

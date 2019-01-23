@@ -81,7 +81,7 @@ module.exports = function(proxy, allowedHost) {
       disableDotRule: true,
       // This rewrite is required when specifying PUBLIC_URL as something other
       // than `/` in local development. This is because the dev server always
-      // serves it's virtual build products from the root, regardless of the
+      // serves its virtual build products from the root, regardless of the
       // `publicPath` or `contentBase` settings. Without this rewrite, the
       // request for `favicon.ico` (or any other physical file) in the `public`
       // folder will receive the generated index.html contents.
