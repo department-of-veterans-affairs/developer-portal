@@ -3,18 +3,12 @@ import groovy.transform.Field
 
 @Field
 def envNames = ['dev', 'staging', 'production']
+@Field
+def review_s3_bucket_name = 'review-developer-va-gov'
 
 def devBranch = 'master'
 def stagingBranch = 'master'
 def prodBranch = 'master'
-def source_repo = "developer-portal";
-def review_s3_bucket_name = "review-developer-va-gov";
-
-def isReviewable = {
-  env.BRANCH_NAME != devBranch &&
-    env.BRANCH_NAME != stagingBranch &&
-    env.BRANCH_NAME != prodBranch
-}
 
 env.CONCURRENCY = 10
 
@@ -52,7 +46,7 @@ def notify = { ->
 
 // Post a comment on the current pull request
 def pullRequestComment(String comment) {
-  withEnv(["comment=${comment}"]) {
+  withEnv(["comment=${comment}", "prNum=${prNum}"]) {
     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'va-bot', usernameVariable: 'USERNAME', passwordVariable: 'TOKEN']]) {
       sh '''
         curl -u "${USERNAME}:${TOKEN}" "https://api.github.com/repos/department-of-veterans-affairs/developer-portal/issues/${prNum}/comments" --data "{\\"body\\":\\"${comment}\\"}"
@@ -74,7 +68,7 @@ def getPullRequestNumber() {
 
 def commentAfterDeploy() {
   def linksSnippet = envNames.collect{ envName ->
-    "https://s3-us-gov-west-1.amazonaws.com/${review_s3_bucket_name}/${REF}/${envName}/index.html"
+    "https://s3-us-gov-west-1.amazonaws.com/${review_s3_bucket_name}/${ref}/${envName}/index.html"
   }.join(" <br> ")
 
   pullRequestComment(
@@ -93,7 +87,7 @@ node('vetsgov-general-purpose') {
   stage('Setup') {
     try {
       prNum = getPullRequestNumber()
-      echo("The pull request number captured from the github API: ${prNum}");
+      echo("The pull request number captured from the github API: ${prNum}")
       deleteDir()
       checkout scm
 
@@ -242,24 +236,23 @@ node('vetsgov-general-purpose') {
 
   stage('Deploy') {
     try {
-      script {
-        commit = sh(returnStdout: true, script: "git rev-parse HEAD").trim()
-      }
-
       if (prNum) {
-        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${review_s3_bucket_name}/${commit}/"
+        // Deploy to review bucket
+        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${review_s3_bucket_name}/${ref}/"
         commentAfterDeploy()
-      } else if (env.BRANCH_NAME == devBranch) {
-        build job: 'deploys/developer-portal-dev', parameters: [
-          booleanParam(name: 'notify_slack', value: true),
-          stringParam(name: 'ref', value: commit),
-        ], wait: false
-      }
-      if (env.BRANCH_NAME == stagingBranch) {
-        build job: 'deploys/developer-portal-staging', parameters: [
-          booleanParam(name: 'notify_slack', value: true),
-          stringParam(name: 'ref', value: commit),
-        ], wait: false
+      } else {
+        if (env.BRANCH_NAME == devBranch) {
+          build job: 'deploys/developer-portal-dev', parameters: [
+            booleanParam(name: 'notify_slack', value: true),
+            stringParam(name: 'ref', value: ref),
+          ], wait: false
+        }
+        if (env.BRANCH_NAME == stagingBranch) {
+          build job: 'deploys/developer-portal-staging', parameters: [
+            booleanParam(name: 'notify_slack', value: true),
+            stringParam(name: 'ref', value: ref),
+          ], wait: false
+        }
       }
     } catch (error) {
       notify()
