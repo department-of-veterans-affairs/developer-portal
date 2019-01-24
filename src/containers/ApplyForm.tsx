@@ -140,7 +140,7 @@ function ApplyForm(propsInput: IApplyProps) {
 
               <ErrorableTextArea
                 errorMessage={null}
-                label="Briefly describe how your organization will use VA API's."
+                label="Briefly describe how your organization will use VA APIs."
                 onValueChange={props.updateDescription}
                 name="description"
                 field={description}/>
