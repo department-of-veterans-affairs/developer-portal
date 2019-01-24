@@ -61,7 +61,7 @@ class App extends React.Component {
   private focusedRoutes(props: RouteComponentProps<void>) {
     return (
       <PageContent {...props} >
-        <Route exact={true} path="/" component={Home} />
+        <Route exact={true} path={["/", "/index.html"]} component={Home} />
         <Route path="/go-live" component={RoutedContent} />
         <Route path="/terms-of-service" component={RoutedContent} />
         <Route path="/apply" component={ApplyForm} />

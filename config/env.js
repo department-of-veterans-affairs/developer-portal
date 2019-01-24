@@ -62,6 +62,9 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 // injected into the application via DefinePlugin in Webpack configuration.
 const REACT_APP = /^REACT_APP_/i;
 
+// `publicUrl` can be a URL or a path because it is used as a string prefix in
+// the public/index.html template. Either way it should not have a trailing
+// slash in order to align with the assumptions of the templates.
 function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .filter(key => REACT_APP.test(key))
