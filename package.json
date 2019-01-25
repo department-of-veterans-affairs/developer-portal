@@ -101,6 +101,7 @@
     "test:unit": "node scripts/test.js --projects=unit.jest.config.js",
     "test:unit:ci": "node scripts/test.js --projects=unit.jest.config.js --ci --testResultsProcessor=\"./node_modules/jest-junit-reporter\"",
     "test:e2e": "node scripts/test.js --projects=e2e.jest.config.js",
+    "test:e2e:ci": "node scripts/test.js --projects=e2e.jest.config.js --ci --testResultsProcessor=\"./node_modules/jest-junit-reporter\"",
     "test:accessibility": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)'",
     "test:accessibility:ci": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --ci --testResultsProcessor='./node_modules/jest-junit-reporter' --forceExit",
     "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand"
