@@ -3,8 +3,6 @@ import { BenefitsOverview,
          HealthOverview,
          VerificationOverview } from './content/apiDocs';
 
-import Tos from '../content/termsOfService.mdx';
-
 export interface IApiDescription {
   readonly name: string;
   readonly urlFragment: string;
