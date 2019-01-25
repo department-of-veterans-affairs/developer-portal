@@ -301,7 +301,12 @@ module.exports = (envName) => {
               use: [
                 'babel-loader',
                 {
-                  loader: 'markdown-component-loader'
+                  loader: 'markdown-component-loader',
+                  options: {
+                    markdownItPlugins: [
+                      require('markdown-it-anchor')
+                    ],
+                  },
                 }
               ]
             },
