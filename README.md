@@ -11,7 +11,7 @@ First install the dependencies:
 npm install
 ```
 
-Next, create a `.env` file with the following contents (don't worry about what these mean yet):
+Next, create a `.env.local` file with the following contents (don't worry about what these mean yet):
 ```
 PORT=3001
 REACT_APP_VETSGOV_SWAGGER_API=https://dev-api.vets.gov

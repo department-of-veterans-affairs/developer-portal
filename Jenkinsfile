@@ -14,13 +14,17 @@ def prodBranch = 'master'
 
 env.CONCURRENCY = 10
 
+def onDeployableBranch = {
+  (env.BRANCH_NAME == devBranch ||
+   env.BRANCH_NAME == stagingBranch ||
+   env.BRANCH_NAME == prodBranch)
+}
+
 def supercededByConcurrentBuild = {
   // abort the job if we're not on deployable branch (usually master) and there's a newer build going now
-  env.BRANCH_NAME != devBranch &&
-    env.BRANCH_NAME != stagingBranch &&
-    env.BRANCH_NAME != prodBranch &&
-    !env.CHANGE_TARGET &&
-    currentBuild.nextBuild
+  (!onDeployableBranch() &&
+   !env.CHANGE_TARGET &&
+   currentBuild.nextBuild)
 }
 
 def buildDetails = { vars ->
@@ -36,9 +40,7 @@ def buildDetails = { vars ->
 }
 
 def notify = { ->
-  if (env.BRANCH_NAME == devBranch ||
-      env.BRANCH_NAME == stagingBranch ||
-      env.BRANCH_NAME == prodBranch) {
+  if (onDeployableBranch()) {
     message = "developer-portal ${env.BRANCH_NAME} branch CI failed. |${env.RUN_DISPLAY_URL}".stripMargin()
     slackSend message: message,
       color: 'danger',
@@ -120,11 +122,19 @@ node('vetsgov-general-purpose') {
   stage('Security') {
     try {
       dockerImage.inside(args) {
-        sh "cd /application && npm config set audit-level critical && npm audit"
+        // sh "cd /application && npm config set audit-level critical && npm audit"
+        sh "exit 1"
       }
     } catch (error) {
-      notify()
-      throw error
+      if (!onDeployableBranch()) {
+        // Only PR branches should be blocked by npm audit failures. If a
+        // package we already rely on is newly discovered to be vulnerable
+        // deploys of master it not clear that the security problem is worse
+        // than the problem motivating the deploy. Hopefully we will learn
+        // about these new audit errors while preparing our next PR.
+        notify()
+        throw error
+      }
     }
   }
 
