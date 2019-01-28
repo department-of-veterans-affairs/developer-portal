@@ -28,6 +28,7 @@ class OAuth extends React.Component {
             <li><Link to="#test-users">Test Users</Link></li>
             <li><Link to="#security-considerations">Security Considerations</Link></li>
             <li><Link to="#support">Support</Link></li>
+            <li><Link to="#sample-application">Sample Application</Link></li>
           </ul>
         </div>
         <div className="usa-width-two-thirds">
