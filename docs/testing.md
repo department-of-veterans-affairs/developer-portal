@@ -51,6 +51,8 @@ docker build -t developer-portal .
 
 Then you can run them in the docker image with
 ```
+mkdir -p src/__image_snapshots__
+sudo chmod -R o+rwx src/__image_snapshots__
 docker run --rm -itv "$PWD:/application" -v "/application/node_modules" developer-portal npm run test:visual
 ```
 If the tests don't pass, an image showing the diff will be generated in `src/__image_snapshots__/__diff_output__` 
