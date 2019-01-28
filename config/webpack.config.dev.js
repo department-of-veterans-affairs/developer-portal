@@ -244,7 +244,7 @@ module.exports = {
                 loader: 'markdown-component-loader',
                 options: {
                   markdownItPlugins: [
-                    require('markdown-it-anchor')
+                    [require('markdown-it-anchor'), { level: 2 }],
                   ],
                 },
               }
