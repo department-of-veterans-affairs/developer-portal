@@ -24,7 +24,7 @@ var dotenvFiles = [
   // Don't include `.env.local` for `test` environment
   // since normally you expect tests to produce the same
   // results for everyone
-  (NODE_ENV !== 'test') && `${paths.dotenv}.local`,
+  NODE_ENV !== 'test' && `${paths.dotenv}.local`,
 
   // e.g. .env.test
   BUILD_ENV !== null && `${paths.dotenv}.${BUILD_ENV}`,
