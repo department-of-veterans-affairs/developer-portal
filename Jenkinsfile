@@ -156,6 +156,20 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  stage('e2e test') {
+    try {
+      dockerImage.inside(args) {
+        sh 'cd /application && npm run-script test:e2e:ci'
+      }
+    } catch (error) {
+      notify()
+      dir(pwd()) {
+        step([$class: 'JUnitResultArchiver', testResults: 'test-report.xml'])
+      }
+      throw error
+    }
+  }
+
   stage('Accessibility Test'){
     try {
       dockerImage.inside(args) {
