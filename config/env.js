@@ -16,7 +16,7 @@ if (!NODE_ENV) {
 }
 
 
-// This list replicates the priority order documented by rails-dotenv. It
+// This list replicates the priority order documented by the dotenv gem. It
 // relies on the dotenv behavior of not modifying a variable that was
 // previously set by another env file.
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
