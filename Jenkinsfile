@@ -132,7 +132,6 @@ node('vetsgov-general-purpose') {
         // deploys of master it not clear that the security problem is worse
         // than the problem motivating the deploy. Hopefully we will learn
         // about these new audit errors while preparing our next PR.
-        notify()
         throw error
       }
     }
