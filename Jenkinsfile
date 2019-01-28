@@ -122,8 +122,7 @@ node('vetsgov-general-purpose') {
   stage('Security') {
     try {
       dockerImage.inside(args) {
-        // sh "cd /application && npm config set audit-level critical && npm audit"
-        sh "exit 1"
+        sh "cd /application && npm config set audit-level critical && npm audit"
       }
     } catch (error) {
       if (!onDeployableBranch()) {
