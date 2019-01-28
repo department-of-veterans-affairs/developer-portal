@@ -329,7 +329,7 @@ Open up a file called `index.js` in your editor of choice and add the following:
 ```
 const { Issuer } = require('openid-client');
 
-const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration.json';
+const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration;
 const client_id = 'your_client_id';
 const client_secret = 'your_client_secret';
 
@@ -381,9 +381,7 @@ const configurePassport = (client) => {
         scope: 'openid profile veteran_status.read',
       },
     }, (tokenset, userinfo, done) => {
-      console.log('tokenset', tokenset);
-      console.log('userinfo', userinfo);
-      done(null, userinfo);
+      done(null, { userinfo, tokenset });
     }
   ));
 }
@@ -416,8 +414,8 @@ Finally let's add a little glue so we can get up and running. At the bottom of t
 (async () => {
   try {
     const oidcClient = await createClient();
-    configurePassport(client);
-    startApp(client);
+    configurePassport(oidcClient);
+    startApp(oidcClient);
   } catch (err) {
     console.error(err);
     process.exit(1);
@@ -455,20 +453,16 @@ Then above `startApp`:
 
 ```
 const verifyVeteranStatus = async (req, res, next) => {
-  if (!req.session || !req.session.user) {
-    res.redirect('/auth'); // Redirect the user to login if they are not
-    next();
-  } else {
-    const veteranStatus = await Promise.new((resolve, reject) => {
-      http.get(
+  if (req.session && req.session.passport && req.session.passport.user) {
+    const veteranStatus = await new Promise((resolve, reject) => {
+      https.get(
         'https://dev-api.va.gov/services/veteran_verification/v0/status',
-        { headers: {'Authorization': `Bearer ${req.session.user.access_token}`} },
+        { headers: {'Authorization': `Bearer ${req.session.passport.user.tokenset.access_token}`} },
         (res) => {
-          let rawData;
-          if (statusCode !== 200) {
+          let rawData = '';
+          if (res.statusCode !== 200) {
             reject(new Error('Request Failed'));
           }
-          
           res.setEncoding('utf-8');
           res.on('data', (chunk) => { rawData += chunk; });
           res.on('end', () => {
@@ -483,6 +477,9 @@ const verifyVeteranStatus = async (req, res, next) => {
       ).on('error', reject);
     });
     res.send(veteranStatus);
+    next();
+  } else {
+    res.redirect('/auth'); // Redirect the user to login if they are not
     next();
   }
 };
