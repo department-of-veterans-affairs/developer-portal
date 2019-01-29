@@ -247,7 +247,7 @@ node('vetsgov-general-purpose') {
 
   stage('Archive') {
     if (supercededByConcurrentBuild()) { return }
-    if (prNum) { return }
+    if (!onDeployableBranch()) { return }
 
     try {
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
