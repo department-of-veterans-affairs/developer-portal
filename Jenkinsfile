@@ -126,11 +126,10 @@ node('vetsgov-general-purpose') {
       }
     } catch (error) {
       if (!onDeployableBranch()) {
-        // Only PR branches should be blocked by npm audit failures. If a
-        // package we already rely on is newly discovered to be vulnerable
-        // deploys of master it not clear that the security problem is worse
-        // than the problem motivating the deploy. Hopefully we will learn
-        // about these new audit errors while preparing our next PR.
+        // Only PR branches should be blocked by npm audit failures. Packages
+        // that receive new vulnerability notices after master already depends
+        // on them should be handled separately from our post-merge
+        // auto-deploys.
         throw error
       }
     }
