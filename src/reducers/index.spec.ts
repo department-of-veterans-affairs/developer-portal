@@ -33,6 +33,7 @@ const app : IApplication = {
       dirty: false,
       value: '',
     },
+    termsOfService: false,
   },
   sending: false,
   token: '',
@@ -55,7 +56,7 @@ describe('application', () => {
       };
 
       const inputs = application(app, {newValue, type: actionName}).inputs;
-     
+      
       const expectedSubObject = { [fieldName]: newValue } ;
 
       expect(inputs).toEqual(expect.objectContaining(expectedSubObject));

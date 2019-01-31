@@ -33,6 +33,7 @@ export interface IApplicationInputs {
   firstName: IErrorableInput;
   lastName: IErrorableInput;
   organization: IErrorableInput;
+  termsOfService: boolean;
 }
 
 export interface IApplication {
