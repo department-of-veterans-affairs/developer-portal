@@ -56,7 +56,7 @@ describe('application', () => {
       };
 
       const inputs = application(app, {newValue, type: actionName}).inputs;
-      
+
       const expectedSubObject = { [fieldName]: newValue } ;
 
       expect(inputs).toEqual(expect.objectContaining(expectedSubObject));
@@ -165,6 +165,17 @@ describe('application', () => {
       .toEqual(expect.objectContaining({
         sending: false,
         token: 'test-token',
+      }));
+  });
+
+  it('should toggle termsOfService acceptance', () => {
+    const newApp = application(app, { type: constants.TOGGLE_ACCEPT_TOS });
+    expect(newApp.inputs).toEqual(expect.objectContaining({
+      termsOfService: true
+    }));
+    expect(application(newApp, { type: constants.TOGGLE_ACCEPT_TOS }).inputs)
+      .toEqual(expect.objectContaining({
+        termsOfService: false
       }));
   });
 });
