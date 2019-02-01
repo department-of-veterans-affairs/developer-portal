@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
-import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 
 import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
 import ErrorableCheckbox from '@department-of-veterans-affairs/formation/ErrorableCheckbox';
@@ -13,8 +13,6 @@ import ProgressButton from '@department-of-veterans-affairs/formation/ProgressBu
 
 import * as actions from '../actions'
 import { IApplication, IErrorableInput, IRootState } from '../types';
-
-import Tos from '../content/termsOfService.mdx';
 
 interface IApplyProps extends IApplication {
   submitForm: () => void;
@@ -54,10 +52,9 @@ const mapStateToProps = (state : IRootState) => {
   };
 };
 
-class ApplyForm extends React.Component<IApplyProps, { openTos: boolean }> {
+class ApplyForm extends React.Component<IApplyProps> {
   constructor(props: IApplyProps) {
     super(props);
-    this.state = { openTos: false };
   }
 
   public render() {
@@ -157,8 +154,8 @@ class ApplyForm extends React.Component<IApplyProps, { openTos: boolean }> {
                 <ErrorableCheckbox
                   checked={termsOfService}
                   label={(
-                      <span id="tos-checkbox">
-                        I agree to the <HashLink onClick={this.openTos} to="#terms-of-service">Terms of Service</HashLink>
+                      <span>
+                        I agree to the <Link target="_blank" to="/explore/terms-of-service">Terms of Service</Link>
                       </span>
                   )}
                   onValueChange={props.toggleAcceptTos}
@@ -172,7 +169,6 @@ class ApplyForm extends React.Component<IApplyProps, { openTos: boolean }> {
               </fieldset>
             </form>
             { this.renderError() }
-            { this.renderTos() }
           </div>
           <div className="usa-width-one-third">
             <div className="feature">
@@ -186,10 +182,6 @@ class ApplyForm extends React.Component<IApplyProps, { openTos: boolean }> {
     );
   }
 
-  private openTos = () => {
-    this.setState({ openTos: true });
-  }
-
   private renderError() {
     const assistanceTrailer = (
       <span>Need assistance? Email us at <a href="mailto:api@va.gov">api@va.gov</a></span>
@@ -201,20 +193,6 @@ class ApplyForm extends React.Component<IApplyProps, { openTos: boolean }> {
       );
     }
     return null;
-  }
-
-  private renderTos() {
-    const tosRendered = (
-      <div>
-        <Tos />
-        <p><HashLink to="#tos-checkbox">Return to Form</HashLink></p>
-      </div>
-    );
-    return (
-      <div id="terms-of-service">
-        { this.state.openTos ? tosRendered : null }
-      </div>
-    );
   }
 
   private readyToSubmit() {
