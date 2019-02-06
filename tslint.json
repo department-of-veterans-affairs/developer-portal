@@ -10,8 +10,9 @@
   "rules": {
     "trailing-comma": {
       "options": {
-        "multiline": "always", 
-        "singleline": "never"
+        "multiline": "always",
+        "singleline": "never",
+        "esSpecCompliant": true
       },
       "severity": "error"
     },

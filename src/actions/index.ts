@@ -51,6 +51,10 @@ export interface IToggleVerificationApi extends Action {
   type: constants.TOGGLE_VERIFICATION_CHECKED;
 }
 
+export interface IToggleAcceptTos extends Action {
+  type: constants.TOGGLE_ACCEPT_TOS;
+}
+
 export type UpdateApplicationAction =
   IUpdateApplicationDescription |
   IUpdateApplicationEmail |
@@ -61,7 +65,8 @@ export type UpdateApplicationAction =
   IToggleAppealsApi |
   IToggleVerificationApi |
   IToggleFacilitiesApi |
-  IToggleHealthApi;
+  IToggleHealthApi |
+  IToggleAcceptTos;
 
 export interface ISubmitForm extends Action {
   type: constants.SUBMIT_APPLICATION_BEGIN;
@@ -110,7 +115,7 @@ const fetchWithRetry = async (fetchFn : () => Promise<Response>) : Promise<Respo
 function buildApplicationBody({ application }: IRootState) {
   const applicationBody : any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
-  ['description', 'email', 'firstName', 'lastName', 'organization'].forEach((property) => {
+  ['description', 'email', 'firstName', 'lastName', 'organization', 'termsOfService'].forEach((property) => {
     if (application.inputs[property]) {
       applicationBody[property] = application.inputs[property].value;
     }
@@ -246,5 +251,11 @@ export const toggleVerificationApi : ActionCreator<IToggleVerificationApi> = () 
 export const toggleFacilitiesApi : ActionCreator<IToggleFacilitiesApi> = () => {
   return {
     type: constants.TOGGLE_FACILITIES_CHECKED,
+  }
+}
+
+export const toggleAcceptTos: ActionCreator<IToggleAcceptTos> = () => {
+  return {
+    type: constants.TOGGLE_ACCEPT_TOS,
   }
 }

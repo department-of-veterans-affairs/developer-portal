@@ -30,6 +30,7 @@ const initialApplicationInputs : IApplicationInputs = {
     dirty: false,
     value: '',
   },
+  termsOfService: true,
 };
 
 export const initialApplicationState : IApplication = {
@@ -65,6 +66,9 @@ export function applicationInput(inputs: IApplicationInputs = initialApplication
     case constants.TOGGLE_FACILITIES_CHECKED:
       const facilities = !inputs.apis.facilities;
       return { ...inputs, apis: { ...inputs.apis, facilities } };
+    case constants.TOGGLE_ACCEPT_TOS:
+      const termsOfService = !inputs.termsOfService;
+      return { ...inputs, termsOfService };
   }
   return inputs;
 }
