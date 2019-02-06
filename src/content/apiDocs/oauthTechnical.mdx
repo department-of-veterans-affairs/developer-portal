@@ -23,7 +23,7 @@ We use separate authorization servers for our development and production environ
 
 ### Initiating Authorization
 
-Initiate the OpenID Connect authorization by directing Veterans using your application to `https://dev-api.va.gov/oauth2/authorize` with the following query parameters:
+Initiate the OpenID Connect authorization by directing Veterans using your application to `https://dev-api.va.gov/oauth2/authorization` with the following query parameters:
 
 * `client_id` - required - The `client_id` issued by the VA API Platform team
 * `nonce` - optional - Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations).
@@ -35,7 +35,7 @@ Initiate the OpenID Connect authorization by directing Veterans using your appli
 
 Example Authorization URL:
 ```plaintext
-https://dev-api.va.gov/oauth2/authorize?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=http://localhost:8080/implicit/callback&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read
+https://dev-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=http://localhost:8080/implicit/callback&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read
 ```
 
 The Veteran will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
