@@ -12,6 +12,11 @@ export const SwaggerPlugins = {
         ServersContainer,
     },
     statePlugins: {
-        ...TryItOut.toggle(),
+        spec: {
+            ...TryItOut.toggleTryItOut(),
+        },
+    },
+    wrapComponents: {
+        ...TryItOut.toggleAuthorize(),
     },
 };
