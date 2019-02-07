@@ -23,8 +23,7 @@ export class TryItOut {
   }
 
   static check() {
-    const currAPI = window.location.pathname.split('/').pop().toUpperCase();
-    const envValue = process.env[`REACT_APP_${currAPI}_TRY_IT_OUT_ENABLED`];
+    const envValue = process.env[`REACT_APP_TRY_IT_OUT_ENABLED`];
     if (envValue === 'true') {
       return true;
     } else {
