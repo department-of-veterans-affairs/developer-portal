@@ -19,6 +19,7 @@ const appState = {
       email: 'james@hotmail.co',
       firstName: 'James',
       lastName: 'Rodríguez',
+      oAuthRedirectUrl: 'http://localhost:8080/oauth/cb',
       organization: 'Fußball-Club Bayern München',
     },
   },
@@ -136,3 +137,23 @@ describe('updateApplicationEmail', () => {
     });
   });
 });
+
+describe('validateOAuthRedirectUrl', () => {
+  it('should accept localhost urls with ports', () => {
+    const validatedInput = actions.validateOAuthRedirectUrl({dirty: true, value: 'http://localhost:8080/'})
+    expect(validatedInput).not.toEqual(expect.objectContaining({validation: expect.anything()}));
+  });
+
+  it('should reject URLs with query strings', () => {
+    const validatedInput = actions.validateOAuthRedirectUrl({dirty: true, value: 'https://example.com?a=b'})
+    expect(validatedInput).toEqual(expect.objectContaining({validation: expect.any(String)}));
+  });
+});
+
+describe('updateApplicationOAuthRedirectUrl', () => {
+  it('should enforce validation', () => {
+    const updateAction: actions.IUpdateApplicationOAuthRedirectUrl = actions.updateApplicationOAuthRedirectUrl({dirty: true, value: 'ftp://host:21'});
+    expect(updateAction.newValue).toEqual(expect.objectContaining({dirty: true, validation: expect.any(String)}));
+  });
+});
+

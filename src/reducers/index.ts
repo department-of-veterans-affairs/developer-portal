@@ -26,11 +26,15 @@ const initialApplicationInputs : IApplicationInputs = {
     dirty: false,
     value: '',
   },
+  oAuthRedirectUrl: {
+    dirty: false,
+    value: '',
+  },
   organization: {
     dirty: false,
     value: '',
   },
-  termsOfService: true,
+  termsOfService: false,
 };
 
 export const initialApplicationState : IApplication = {
@@ -49,6 +53,8 @@ export function applicationInput(inputs: IApplicationInputs = initialApplication
       return { ...inputs, firstName: action.newValue };
     case constants.UPDATE_APPLICATION_LAST_NAME:
       return { ...inputs, lastName: action.newValue };
+    case constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL:
+      return { ...inputs, oAuthRedirectUrl: action.newValue };
     case constants.UPDATE_APPLICATION_ORGANIZATION:
       return { ...inputs, organization: action.newValue };
     case constants.TOGGLE_BENEFITS_CHECKED:

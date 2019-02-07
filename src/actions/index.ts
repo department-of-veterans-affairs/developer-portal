@@ -31,6 +31,11 @@ export interface IUpdateApplicationDescription extends Action {
   type: constants.UPDATE_APPLICATION_DESCRIPTION;
 }
 
+export interface IUpdateApplicationOAuthRedirectUrl extends Action {
+  newValue: IErrorableInput;
+  type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL;
+}
+
 export interface IToggleBenefitsApi extends Action {
   type: constants.TOGGLE_BENEFITS_CHECKED;
 }
@@ -61,6 +66,7 @@ export type UpdateApplicationAction =
   IUpdateApplicationFirstName |
   IUpdateApplicationLastName |
   IUpdateApplicationOrganization |
+  IUpdateApplicationOAuthRedirectUrl |
   IToggleBenefitsApi |
   IToggleAppealsApi |
   IToggleVerificationApi |
@@ -115,7 +121,7 @@ const fetchWithRetry = async (fetchFn : () => Promise<Response>) : Promise<Respo
 function buildApplicationBody({ application }: IRootState) {
   const applicationBody : any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
-  ['description', 'email', 'firstName', 'lastName', 'organization', 'termsOfService'].forEach((property) => {
+  ['description', 'email', 'firstName', 'lastName', 'oAuthRedirectUrl', 'organization', 'termsOfService'].forEach((property) => {
     if (application.inputs[property]) {
       applicationBody[property] = application.inputs[property].value;
     }
@@ -181,11 +187,21 @@ export const submitFormError : ActionCreator<ISubmitFormError> = (status : strin
   };
 }
 
-export const validateEmail = (newValue: IErrorableInput) => {
-  const invalid = !newValue.value.match(EMAIL_REGEX);
+export const validateByPattern = (newValue: IErrorableInput, pattern: RegExp, failMsg: string) => {
+  const invalid = (newValue.value == null) || !newValue.value.match(pattern);
   if (invalid) {
-    newValue.validation = "Must be a valid email address."
+    newValue.validation = failMsg;
   }
+}
+
+export const validateEmail = (newValue: IErrorableInput) => {
+  validateByPattern(newValue, EMAIL_REGEX, "Must be a valid email address.");
+  return newValue;
+}
+
+export const validateOAuthRedirectUrl = (newValue: IErrorableInput) => {
+  const partialUrlPattern = /^http[s]?:[/][/][^/:?]+(:[0-9]+)?([/][^?#]*)?$/;
+  validateByPattern(newValue, partialUrlPattern, "Must be an http or https URL.");
   return newValue;
 }
 
@@ -214,6 +230,13 @@ export const updateApplicationLastName : ActionCreator<IUpdateApplicationLastNam
   return {
     newValue,
     type: constants.UPDATE_APPLICATION_LAST_NAME,
+  }
+}
+
+export const updateApplicationOAuthRedirectUrl : ActionCreator<IUpdateApplicationOAuthRedirectUrl> = (newValue: IErrorableInput) => {
+  return {
+    newValue: validateOAuthRedirectUrl(newValue),
+    type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL,
   }
 }
 

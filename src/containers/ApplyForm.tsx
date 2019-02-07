@@ -25,6 +25,7 @@ interface IApplyProps extends IApplication {
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
   updateLastName: (value: IErrorableInput) => void;
+  updateOAuthRedirectUrl: (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
 }
 
@@ -42,6 +43,7 @@ const mapDispatchToProps = (dispatch : ApplicationDispatch) => {
     updateEmail: (value: IErrorableInput) => { dispatch(actions.updateApplicationEmail(value)) },
     updateFirstName: (value: IErrorableInput) => { dispatch(actions.updateApplicationFirstName(value)) },
     updateLastName: (value: IErrorableInput) => { dispatch(actions.updateApplicationLastName(value)) },
+    updateOAuthRedirectUrl: (value: IErrorableInput) => { dispatch(actions.updateApplicationOAuthRedirectUrl(value)) },
     updateOrganization: (value: IErrorableInput) => { dispatch(actions.updateApplicationOrganization(value)) },
   };
 };
@@ -104,6 +106,10 @@ class ApplyForm extends React.Component<IApplyProps> {
                   required={true} />
 
                 <label>Please select all of the APIs you'd like access to:</label>
+
+
+                <h4>Standard APIs:</h4>
+
                 <div className="form-checkbox">
                   <input
                     type="checkbox"
@@ -113,6 +119,18 @@ class ApplyForm extends React.Component<IApplyProps> {
                     onChange={props.toggleBenefits} />
                   <label htmlFor="benefits">VA Benefits API</label>
                 </div>
+
+                <div className="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="facilities"
+                    name="facilities"
+                    checked={apis.facilities}
+                    onChange={props.toggleFacilities} />
+                  <label htmlFor="facilities">VA Facilities API</label>
+                </div>
+
+                <h4> OAuth APIs:</h4>
 
                 <div className="form-checkbox">
                   <input
@@ -127,22 +145,14 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <div className="form-checkbox">
                   <input
                     type="checkbox"
-                    id="facilities"
-                    name="facilities"
-                    checked={apis.facilities}
-                    onChange={props.toggleFacilities} />
-                  <label htmlFor="facilities">VA Facilities API</label>
-                </div>
-
-                <div className="form-checkbox">
-                  <input
-                    type="checkbox"
                     id="verification"
                     name="verification"
                     checked={apis.verification}
                     onChange={props.toggleVerification} />
                   <label htmlFor="verification">VA Veteran Verification API</label>
                 </div>
+
+                { this.renderOAuthFields() }
 
                 <ErrorableTextArea
                   errorMessage={null}
@@ -182,6 +192,22 @@ class ApplyForm extends React.Component<IApplyProps> {
     );
   }
 
+  private renderOAuthFields() {
+    if (this.props.inputs.apis.health || this.props.inputs.apis.verification) {
+      const oAuthRedirectUrl = this.props.inputs.oAuthRedirectUrl;
+      return (
+          <ErrorableTextInput
+            errorMessage={null}
+            label="OAuth Redirect URL"
+            field={oAuthRedirectUrl}
+            onValueChange={this.props.updateOAuthRedirectUrl}
+            required={true} />
+          );
+    }
+
+    return null;
+  }
+
   private renderError() {
     const assistanceTrailer = (
       <span>Need assistance? Email us at <a href="mailto:api@va.gov">api@va.gov</a></span>
@@ -195,11 +221,29 @@ class ApplyForm extends React.Component<IApplyProps> {
     return null;
   }
 
+  private anyOAuthApisSelected() {
+    const apis = this.props.inputs.apis;
+    return (apis.health === true || apis.verification === true);
+  }
+
+  private anyApiSelected() {
+    const apis = this.props.inputs.apis;
+    const numSelected = Object.keys(apis).filter((apiName) => apis[apiName]).length;
+    return numSelected > 0;
+  }
+
+  private allBioFieldsComplete() {
+    const bioFieldNames = ['email', 'firstName', 'lastName', 'organization'];
+    const incompleteFields = bioFieldNames.filter((fieldName) => {
+      return !this.props.inputs[fieldName].value;
+    });
+    return incompleteFields.length === 0;
+  }
+
   private readyToSubmit() {
-    const { inputs: { apis, email, firstName, lastName, organization, termsOfService } } = this.props;
-    return !!email.value && !!firstName.value && !!lastName.value && !!organization.value &&
-           ( apis.verification || apis.health || apis.benefits || apis.facilities ) &&
-           termsOfService;
+    const { inputs: { oAuthRedirectUrl, termsOfService } } = this.props;
+    const redirectUrlComplete = (!this.anyOAuthApisSelected() || !!oAuthRedirectUrl.value);
+    return (this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && redirectUrlComplete);
   }
 }
 
