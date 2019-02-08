@@ -1,6 +1,6 @@
 import React from "react";
 
-export class TryItOut {
+export class DisableTryItOut {
 
   static toggleTryItOut() {
     return {
@@ -23,11 +23,6 @@ export class TryItOut {
   }
 
   static check() {
-    const envValue = process.env[`REACT_APP_TRY_IT_OUT_ENABLED`];
-    if (envValue === 'true') {
-      return true;
-    } else {
-      return false;
-    }
+    return process.env[`REACT_APP_TRY_IT_OUT_ENABLED`] === 'true';
   }
 }
