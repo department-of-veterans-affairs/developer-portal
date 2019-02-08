@@ -130,7 +130,7 @@ class ApplyForm extends React.Component<IApplyProps> {
                   <label htmlFor="facilities">VA Facilities API</label>
                 </div>
 
-                <h4> OAuth APIs:</h4>
+                <h4>OAuth APIs:</h4>
 
                 <div className="form-checkbox">
                   <input
