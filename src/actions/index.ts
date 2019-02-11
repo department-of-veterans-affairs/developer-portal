@@ -31,7 +31,7 @@ export interface IUpdateApplicationDescription extends Action {
   type: constants.UPDATE_APPLICATION_DESCRIPTION;
 }
 
-export interface IUpdateApplicationOAuthRedirectUrl extends Action {
+export interface IUpdateApplicationOAuthRedirectURI extends Action {
   newValue: IErrorableInput;
   type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL;
 }
@@ -66,7 +66,7 @@ export type UpdateApplicationAction =
   IUpdateApplicationFirstName |
   IUpdateApplicationLastName |
   IUpdateApplicationOrganization |
-  IUpdateApplicationOAuthRedirectUrl |
+  IUpdateApplicationOAuthRedirectURI |
   IToggleBenefitsApi |
   IToggleAppealsApi |
   IToggleVerificationApi |
@@ -121,7 +121,7 @@ const fetchWithRetry = async (fetchFn : () => Promise<Response>) : Promise<Respo
 function buildApplicationBody({ application }: IRootState) {
   const applicationBody : any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
-  ['description', 'email', 'firstName', 'lastName', 'oAuthRedirectUrl', 'organization', 'termsOfService'].forEach((property) => {
+  ['description', 'email', 'firstName', 'lastName', 'oAuthRedirectURI', 'organization', 'termsOfService'].forEach((property) => {
     if (application.inputs[property]) {
       applicationBody[property] = application.inputs[property].value;
     }
@@ -199,7 +199,7 @@ export const validateEmail = (newValue: IErrorableInput) => {
   return newValue;
 }
 
-export const validateOAuthRedirectUrl = (newValue: IErrorableInput) => {
+export const validateOAuthRedirectURI = (newValue: IErrorableInput) => {
   const partialUrlPattern = /^http[s]?:[/][/][^/:?]+(:[0-9]+)?([/][^?#]*)?$/;
   validateByPattern(newValue, partialUrlPattern, "Must be an http or https URL.");
   return newValue;
@@ -233,9 +233,9 @@ export const updateApplicationLastName : ActionCreator<IUpdateApplicationLastNam
   }
 }
 
-export const updateApplicationOAuthRedirectUrl : ActionCreator<IUpdateApplicationOAuthRedirectUrl> = (newValue: IErrorableInput) => {
+export const updateApplicationOAuthRedirectURI : ActionCreator<IUpdateApplicationOAuthRedirectURI> = (newValue: IErrorableInput) => {
   return {
-    newValue: validateOAuthRedirectUrl(newValue),
+    newValue: validateOAuthRedirectURI(newValue),
     type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL,
   }
 }

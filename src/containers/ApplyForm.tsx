@@ -25,7 +25,7 @@ interface IApplyProps extends IApplication {
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
   updateLastName: (value: IErrorableInput) => void;
-  updateOAuthRedirectUrl: (value: IErrorableInput) => void;
+  updateOAuthRedirectURI: (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
 }
 
@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch : ApplicationDispatch) => {
     updateEmail: (value: IErrorableInput) => { dispatch(actions.updateApplicationEmail(value)) },
     updateFirstName: (value: IErrorableInput) => { dispatch(actions.updateApplicationFirstName(value)) },
     updateLastName: (value: IErrorableInput) => { dispatch(actions.updateApplicationLastName(value)) },
-    updateOAuthRedirectUrl: (value: IErrorableInput) => { dispatch(actions.updateApplicationOAuthRedirectUrl(value)) },
+    updateOAuthRedirectURI: (value: IErrorableInput) => { dispatch(actions.updateApplicationOAuthRedirectURI(value)) },
     updateOrganization: (value: IErrorableInput) => { dispatch(actions.updateApplicationOrganization(value)) },
   };
 };
@@ -194,13 +194,13 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private renderOAuthFields() {
     if (this.props.inputs.apis.health || this.props.inputs.apis.verification) {
-      const oAuthRedirectUrl = this.props.inputs.oAuthRedirectUrl;
+      const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
           <ErrorableTextInput
             errorMessage={null}
             label="OAuth Redirect URL"
-            field={oAuthRedirectUrl}
-            onValueChange={this.props.updateOAuthRedirectUrl}
+            field={oAuthRedirectURI}
+            onValueChange={this.props.updateOAuthRedirectURI}
             required={true} />
           );
     }
@@ -241,9 +241,9 @@ class ApplyForm extends React.Component<IApplyProps> {
   }
 
   private readyToSubmit() {
-    const { inputs: { oAuthRedirectUrl, termsOfService } } = this.props;
-    const redirectUrlComplete = (!this.anyOAuthApisSelected() || !!oAuthRedirectUrl.value);
-    return (this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && redirectUrlComplete);
+    const { inputs: { oAuthRedirectURI, termsOfService } } = this.props;
+    const redirectURIComplete = (!this.anyOAuthApisSelected() || !!oAuthRedirectURI.value);
+    return (this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && redirectURIComplete);
   }
 }
 

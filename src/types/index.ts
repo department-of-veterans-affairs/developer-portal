@@ -32,7 +32,7 @@ export interface IApplicationInputs {
   email: IErrorableInput;
   firstName: IErrorableInput;
   lastName: IErrorableInput;
-  oAuthRedirectUrl: IErrorableInput;
+  oAuthRedirectURI: IErrorableInput;
   organization: IErrorableInput;
   termsOfService: boolean;
 }
