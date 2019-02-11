@@ -197,7 +197,7 @@ class ApplyForm extends React.Component<IApplyProps> {
       const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
           <ErrorableTextInput
-            errorMessage={null}
+            errorMessage={this.props.inputs.oAuthRedirectURI.validation}
             label="OAuth Redirect URL"
             field={oAuthRedirectURI}
             onValueChange={this.props.updateOAuthRedirectURI}
@@ -242,7 +242,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private readyToSubmit() {
     const { inputs: { oAuthRedirectURI, termsOfService } } = this.props;
-    const redirectURIComplete = (!this.anyOAuthApisSelected() || !!oAuthRedirectURI.value);
+    const redirectURIComplete = (!this.anyOAuthApisSelected() || !oAuthRedirectURI.validation);
     return (this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && redirectURIComplete);
   }
 }

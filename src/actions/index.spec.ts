@@ -148,6 +148,11 @@ describe('validateOAuthRedirectURI', () => {
     const validatedInput = actions.validateOAuthRedirectURI({dirty: true, value: 'https://example.com?a=b'})
     expect(validatedInput).toEqual(expect.objectContaining({validation: expect.any(String)}));
   });
+
+  it('should reject URLs with fragments', () => {
+    const validatedInput = actions.validateOAuthRedirectURI({dirty: true, value: 'https://example.com/#frag'})
+    expect(validatedInput).toEqual(expect.objectContaining({validation: expect.any(String)}));
+  });
 });
 
 describe('updateApplicationOAuthRedirectURI', () => {

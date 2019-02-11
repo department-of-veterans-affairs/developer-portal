@@ -200,7 +200,7 @@ export const validateEmail = (newValue: IErrorableInput) => {
 }
 
 export const validateOAuthRedirectURI = (newValue: IErrorableInput) => {
-  const partialUrlPattern = /^http[s]?:[/][/][^/:?]+(:[0-9]+)?([/][^?#]*)?$/;
+  const partialUrlPattern = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
   validateByPattern(newValue, partialUrlPattern, "Must be an http or https URL.");
   return newValue;
 }
