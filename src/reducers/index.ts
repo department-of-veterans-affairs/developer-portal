@@ -38,6 +38,8 @@ const initialApplicationInputs : IApplicationInputs = {
 };
 
 export const initialApplicationState : IApplication = {
+  clientID: '',
+  clientSecret: '',
   inputs: initialApplicationInputs,
   sending: false,
   token: '',
@@ -84,7 +86,13 @@ export function application(state: IApplication = initialApplicationState, actio
     case constants.SUBMIT_APPLICATION_BEGIN:
       return { ...state, sending: true, errorStatus: undefined };
     case constants.SUBMIT_APPLICATION_SUCCESS:
-      return { ...state, sending: false, token: action.token };
+      return {
+        ...state,
+        sending: false,
+        token: action.token,
+        clientID: action.clientID,
+        clientSecret: action.clientSecret,
+      };
     case constants.SUBMIT_APPLICATION_ERROR:
       return { ...state, sending: false, errorStatus: action.status};
     default:

@@ -11,7 +11,9 @@ export interface IApiDescription {
 }
 
 export interface IApiCategory {
+  readonly apiKey: boolean;
   readonly apis: IApiDescription[];
+  readonly properName: string;
   readonly buttonText: string;
   readonly name: string;
   readonly overview: React.StatelessComponent;
@@ -24,6 +26,7 @@ export interface IApiCategories {
 
 export const apiDefs : IApiCategories = {
   benefits: {
+    apiKey: true,
     apis: [
       {
         name: 'Benefits Intake',
@@ -53,9 +56,11 @@ export const apiDefs : IApiCategories = {
     buttonText: "Get Your Key",
     name: 'Benefits',
     overview: BenefitsOverview,
+    properName: 'Benefits Intake API',
     shortDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
   },
   facilities: {
+    apiKey: true,
     apis: [
       {
         name: 'VA Facilities API',
@@ -67,9 +72,11 @@ export const apiDefs : IApiCategories = {
     buttonText: "Get Your Key",
     name: 'Facilities',
     overview: FacilitiesOverview,
+    properName: 'VA Facilities API',
     shortDescription: "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
   },
   health: {
+    apiKey: false,
     apis: [
       {
         name: 'Veterans Health API',
@@ -81,9 +88,11 @@ export const apiDefs : IApiCategories = {
     buttonText: "Get Your Key",
     name: 'Health',
     overview: HealthOverview,
+    properName: 'Health API',
     shortDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.",
   },
   verification: {
+    apiKey: false,
     apis: [
       {
         name: 'Disability Rating',
@@ -112,6 +121,7 @@ export const apiDefs : IApiCategories = {
     ],
     buttonText: "Stay Informed",
     name: "Veteran Verification",
+    properName: 'Veteran Verification API',
     overview: VerificationOverview,
     shortDescription: "Empowering Veterans to take control of their data and put it to work.",
   },

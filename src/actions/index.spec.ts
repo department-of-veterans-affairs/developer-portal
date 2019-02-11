@@ -27,13 +27,15 @@ const appState = {
 
 describe('submitForm', () => {
   it('dispatches correct events when fetch has a 200 response', async () => {
-    fetchMock.mockResponse(JSON.stringify({token: 'testtoken'}));
+    fetchMock.mockResponse(JSON.stringify({token: 'testtoken', client_id: 'testid', client_secret: 'test_secret'}));
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     expect(dispatch).toBeCalledWith({type: constants.SUBMIT_APPLICATION_BEGIN});
     expect(dispatch).toBeCalledWith({
+      clientID: 'testid',
+      clientSecret: 'test_secret',
       token: 'testtoken',
       type: constants.SUBMIT_APPLICATION_SUCCESS,
     });

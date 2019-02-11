@@ -42,6 +42,8 @@ export interface IApplication {
   sending: boolean;
   errorStatus?: string;
   token: string;
+  clientID: string;
+  clientSecret: string;
 }
 
 export interface IRootState {

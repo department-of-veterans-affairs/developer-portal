@@ -79,6 +79,8 @@ export interface ISubmitForm extends Action {
 }
 
 export interface ISubmitFormSuccess extends Action {
+  clientID: string;
+  clientSecret: string;
   type: constants.SUBMIT_APPLICATION_SUCCESS;
   token: string;
 }
@@ -156,7 +158,11 @@ export const submitForm : ActionCreator<SubmitFormThunk> = () => {
       .then((response) => response.json())
       .then((json) => {
         if (json.token) {
-          const result = dispatch(submitFormSuccess(json.token));
+          const result = dispatch(submitFormSuccess(
+            json.token,
+            json.client_id,
+            json.client_secret,
+          ));
           history.push('/applied');
           return result;
         } else {
@@ -173,8 +179,10 @@ export const submitFormBegin : ActionCreator<ISubmitForm> = () => {
   };
 }
 
-export const submitFormSuccess : ActionCreator<ISubmitFormSuccess> = (token : string) => {
+export const submitFormSuccess : ActionCreator<ISubmitFormSuccess> = (token : string, clientID: string, clientSecret: string) => {
   return {
+    clientID,
+    clientSecret,
     token,
     type: constants.SUBMIT_APPLICATION_SUCCESS,
   };
