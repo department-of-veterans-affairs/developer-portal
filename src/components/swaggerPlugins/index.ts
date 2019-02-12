@@ -1,3 +1,4 @@
+import { DisableTryItOut } from './DisableTryItOut'
 import { OperationTag } from './OperationTag'
 import { SchemesContainer } from './SchemesContainer'
 import { Servers } from './Servers'
@@ -9,5 +10,13 @@ export const SwaggerPlugins = {
         SchemesContainer,
         Servers,
         ServersContainer,
+    },
+    statePlugins: {
+        spec: {
+            ...DisableTryItOut.toggleTryItOut(),
+        },
+    },
+    wrapComponents: {
+        ...DisableTryItOut.toggleAuthorize(),
     },
 };
