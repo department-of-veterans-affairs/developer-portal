@@ -123,11 +123,12 @@ const fetchWithRetry = async (fetchFn : () => Promise<Response>) : Promise<Respo
 function buildApplicationBody({ application }: IRootState) {
   const applicationBody : any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
-  ['description', 'email', 'firstName', 'lastName', 'oAuthRedirectURI', 'organization', 'termsOfService'].forEach((property) => {
+  ['description', 'email', 'firstName', 'lastName', 'oAuthRedirectURI', 'organization'].forEach((property) => {
     if (application.inputs[property]) {
       applicationBody[property] = application.inputs[property].value;
     }
   });
+  applicationBody.termsOfService = application.inputs.termsOfService;
   return applicationBody;
 }
 
