@@ -51,7 +51,7 @@ function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } 
   return (
     <div>
       <p className="usa-font-lead"><strong>Your VA API OAuth Client ID:</strong> {clientID}</p>
-      <p className="usa-font-lead"><strong>Your VA API OAuth Client Secret:</strong> {clientID}</p>
+      <p className="usa-font-lead"><strong>Your VA API OAuth Client Secret:</strong> {clientSecret}</p>
 
       <p>
         You should receive an email at {email} with the same credentials. Those credentials are for accessing the {apiListSnippet} in the development environment.
@@ -98,7 +98,7 @@ function ApplySuccess(props: IApplication) {
                     ? null
                     : <ApiKeyNotice email={email} token={token} selectedApis={selectedApiNames(apis)} />;
 
-  const oAuthNotice = (apis.health || apis.verification)
+  const oAuthNotice = ((apis.health || apis.verification) && clientID && clientSecret)
                     ? <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />
                     : <span>If you decide to develop an application with the Health API or the Verification API, email us at <AssistanceEmail /> to setup OAuth credentials.</span>;
 

@@ -160,8 +160,8 @@ export const submitForm : ActionCreator<SubmitFormThunk> = () => {
         if (json.token) {
           const result = dispatch(submitFormSuccess(
             json.token,
-            json.client_id,
-            json.client_secret,
+            json.clientID,
+            json.clientSecret,
           ));
           history.push('/applied');
           return result;

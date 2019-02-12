@@ -121,8 +121,8 @@ export const apiDefs : IApiCategories = {
     ],
     buttonText: "Stay Informed",
     name: "Veteran Verification",
-    properName: 'Veteran Verification API',
     overview: VerificationOverview,
+    properName: 'Veteran Verification API',
     shortDescription: "Empowering Veterans to take control of their data and put it to work.",
   },
 };

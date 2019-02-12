@@ -88,10 +88,10 @@ export function application(state: IApplication = initialApplicationState, actio
     case constants.SUBMIT_APPLICATION_SUCCESS:
       return {
         ...state,
-        sending: false,
-        token: action.token,
         clientID: action.clientID,
         clientSecret: action.clientSecret,
+        sending: false,
+        token: action.token,
       };
     case constants.SUBMIT_APPLICATION_ERROR:
       return { ...state, sending: false, errorStatus: action.status};
