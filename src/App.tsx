@@ -62,7 +62,8 @@ class App extends React.Component {
   private focusedRoutes(props: RouteComponentProps<void>) {
     return (
       <PageContent {...props} >
-        <Route exact={true} path={["/", "/index.html"]} component={Home} />
+        <Route exact={true} path="/" component={Home} />
+        <Route exact={true} path="/index.html" component={Home} />
 
         {/* Legacy routes that we want to maintain: */}
         <Route path="/explore/terms-of-service" render={props1 => <Redirect to="/terms-of-service" />} />
