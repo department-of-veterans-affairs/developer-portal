@@ -27,7 +27,7 @@ const appState = {
 
 describe('submitForm', () => {
   it('dispatches correct events when fetch has a 200 response', async () => {
-    fetchMock.mockResponse(JSON.stringify({token: 'testtoken', client_id: 'testid', client_secret: 'test_secret'}));
+    fetchMock.mockResponse(JSON.stringify({token: 'testtoken', clientID: 'testid', clientSecret: 'test_secret'}));
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
