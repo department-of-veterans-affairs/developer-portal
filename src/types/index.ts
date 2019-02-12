@@ -32,6 +32,7 @@ export interface IApplicationInputs {
   email: IErrorableInput;
   firstName: IErrorableInput;
   lastName: IErrorableInput;
+  oAuthRedirectURI: IErrorableInput;
   organization: IErrorableInput;
   termsOfService: boolean;
 }
@@ -41,6 +42,8 @@ export interface IApplication {
   sending: boolean;
   errorStatus?: string;
   token: string;
+  clientID: string;
+  clientSecret: string;
 }
 
 export interface IRootState {

@@ -5,6 +5,8 @@ import * as constants from '../types/constants';
 import { application } from './index';
 
 const app : IApplication = {
+  clientID: '',
+  clientSecret: '',
   inputs: {
     apis: {
       appeals: false,
@@ -29,6 +31,10 @@ const app : IApplication = {
       dirty: false,
       value: '',
     },
+    oAuthRedirectURI: {
+      dirty: false,
+      value: '',
+    },
     organization: {
       dirty: false,
       value: '',
@@ -46,6 +52,7 @@ describe('application', () => {
       ['firstName', constants.UPDATE_APPLICATION_FIRST_NAME],
       ['lastName', constants.UPDATE_APPLICATION_LAST_NAME],
       ['email', constants.UPDATE_APPLICATION_EMAIL],
+      ['oAuthRedirectURI', constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL],
       ['organization', constants.UPDATE_APPLICATION_ORGANIZATION],
     ];
 
@@ -161,8 +168,15 @@ describe('application', () => {
 
   it('should set token on application send errors', () => {
     const newApp = application(app, { type: constants.SUBMIT_APPLICATION_BEGIN });
-    expect(application(newApp, { token: 'test-token', type: constants.SUBMIT_APPLICATION_SUCCESS }))
+    expect(application(newApp, {
+      clientID: 'clientID',
+      clientSecret: 'clientSecret',
+      token: 'test-token',
+      type: constants.SUBMIT_APPLICATION_SUCCESS,
+    }))
       .toEqual(expect.objectContaining({
+        clientID: 'clientID',
+        clientSecret: 'clientSecret',
         sending: false,
         token: 'test-token',
       }));

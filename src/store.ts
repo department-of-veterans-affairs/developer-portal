@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import { routerMiddleware, routerReducer as routing } from 'react-router-redux'
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import thunk, { ThunkMiddleware } from 'redux-thunk';
@@ -29,7 +30,12 @@ function loadApplicationState(): { application: IApplication } {
 
 function saveApplicationState(state: IRootState) {
   try {
-    const serializedState = JSON.stringify({application: state.application})
+    const stateToSerialize = {
+      application: {
+        inputs: state.application.inputs,
+      },
+    };
+    const serializedState = JSON.stringify(stateToSerialize);
     sessionStorage.setItem('state', serializedState);
   } catch (err) {
     // swallow the error.
@@ -51,9 +57,9 @@ const store = createStore(
     ),
 )
 
-store.subscribe(() => {
+store.subscribe(debounce(() => {
   saveApplicationState(store.getState());
-});
+}));
 
 export default store;
 

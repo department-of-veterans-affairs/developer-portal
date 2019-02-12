@@ -31,6 +31,11 @@ export interface IUpdateApplicationDescription extends Action {
   type: constants.UPDATE_APPLICATION_DESCRIPTION;
 }
 
+export interface IUpdateApplicationOAuthRedirectURI extends Action {
+  newValue: IErrorableInput;
+  type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL;
+}
+
 export interface IToggleBenefitsApi extends Action {
   type: constants.TOGGLE_BENEFITS_CHECKED;
 }
@@ -61,6 +66,7 @@ export type UpdateApplicationAction =
   IUpdateApplicationFirstName |
   IUpdateApplicationLastName |
   IUpdateApplicationOrganization |
+  IUpdateApplicationOAuthRedirectURI |
   IToggleBenefitsApi |
   IToggleAppealsApi |
   IToggleVerificationApi |
@@ -73,6 +79,8 @@ export interface ISubmitForm extends Action {
 }
 
 export interface ISubmitFormSuccess extends Action {
+  clientID: string;
+  clientSecret: string;
   type: constants.SUBMIT_APPLICATION_SUCCESS;
   token: string;
 }
@@ -115,11 +123,12 @@ const fetchWithRetry = async (fetchFn : () => Promise<Response>) : Promise<Respo
 function buildApplicationBody({ application }: IRootState) {
   const applicationBody : any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
-  ['description', 'email', 'firstName', 'lastName', 'organization', 'termsOfService'].forEach((property) => {
+  ['description', 'email', 'firstName', 'lastName', 'oAuthRedirectURI', 'organization'].forEach((property) => {
     if (application.inputs[property]) {
       applicationBody[property] = application.inputs[property].value;
     }
   });
+  applicationBody.termsOfService = application.inputs.termsOfService;
   return applicationBody;
 }
 
@@ -149,8 +158,12 @@ export const submitForm : ActionCreator<SubmitFormThunk> = () => {
       })
       .then((response) => response.json())
       .then((json) => {
-        if (json.token) {
-          const result = dispatch(submitFormSuccess(json.token));
+        if (json.token || json.clientID) {
+          const result = dispatch(submitFormSuccess(
+            json.token,
+            json.clientID,
+            json.clientSecret,
+          ));
           history.push('/applied');
           return result;
         } else {
@@ -167,8 +180,10 @@ export const submitFormBegin : ActionCreator<ISubmitForm> = () => {
   };
 }
 
-export const submitFormSuccess : ActionCreator<ISubmitFormSuccess> = (token : string) => {
+export const submitFormSuccess : ActionCreator<ISubmitFormSuccess> = (token : string, clientID: string, clientSecret: string) => {
   return {
+    clientID,
+    clientSecret,
     token,
     type: constants.SUBMIT_APPLICATION_SUCCESS,
   };
@@ -181,11 +196,21 @@ export const submitFormError : ActionCreator<ISubmitFormError> = (status : strin
   };
 }
 
-export const validateEmail = (newValue: IErrorableInput) => {
-  const invalid = !newValue.value.match(EMAIL_REGEX);
+export const validateByPattern = (newValue: IErrorableInput, pattern: RegExp, failMsg: string) => {
+  const invalid = (newValue.value == null) || !newValue.value.match(pattern);
   if (invalid) {
-    newValue.validation = "Must be a valid email address."
+    newValue.validation = failMsg;
   }
+}
+
+export const validateEmail = (newValue: IErrorableInput) => {
+  validateByPattern(newValue, EMAIL_REGEX, "Must be a valid email address.");
+  return newValue;
+}
+
+export const validateOAuthRedirectURI = (newValue: IErrorableInput) => {
+  const partialUrlPattern = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
+  validateByPattern(newValue, partialUrlPattern, "Must be an http or https URL.");
   return newValue;
 }
 
@@ -214,6 +239,13 @@ export const updateApplicationLastName : ActionCreator<IUpdateApplicationLastNam
   return {
     newValue,
     type: constants.UPDATE_APPLICATION_LAST_NAME,
+  }
+}
+
+export const updateApplicationOAuthRedirectURI : ActionCreator<IUpdateApplicationOAuthRedirectURI> = (newValue: IErrorableInput) => {
+  return {
+    newValue: validateOAuthRedirectURI(newValue),
+    type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL,
   }
 }
 

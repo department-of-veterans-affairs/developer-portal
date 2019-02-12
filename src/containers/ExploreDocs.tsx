@@ -85,11 +85,6 @@ function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>) {
   return (
     <ul role="navigation" aria-label="API Docs Side Nav" className="usa-sidenav-list">
       {navLinks}
-      <li>
-        <NavLink exact={true} to="/explore/terms-of-service" className={url === "/explore/terms-of-service" ? "usa-current" : ""}>
-          Terms of Service
-        </NavLink>
-      </li>
     </ul>
   );
 }

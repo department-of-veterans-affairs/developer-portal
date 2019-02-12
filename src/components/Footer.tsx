@@ -16,6 +16,9 @@ export function Footer() {
             <div className="usa-footer-links usa-width-two-thirds">
                 <ul className="usa-unstyled-list">
                   <li>
+                    <a href="/terms-of-service">Terms of Service</a>
+                  </li>
+                  <li>
                     <a href="https://github.com/department-of-veterans-affairs/VA-Micropurchase-Repo">Micro-consulting</a>
                   </li>
                   <li>

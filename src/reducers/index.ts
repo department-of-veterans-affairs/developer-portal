@@ -26,14 +26,20 @@ const initialApplicationInputs : IApplicationInputs = {
     dirty: false,
     value: '',
   },
+  oAuthRedirectURI: {
+    dirty: false,
+    value: '',
+  },
   organization: {
     dirty: false,
     value: '',
   },
-  termsOfService: true,
+  termsOfService: false,
 };
 
 export const initialApplicationState : IApplication = {
+  clientID: '',
+  clientSecret: '',
   inputs: initialApplicationInputs,
   sending: false,
   token: '',
@@ -49,6 +55,8 @@ export function applicationInput(inputs: IApplicationInputs = initialApplication
       return { ...inputs, firstName: action.newValue };
     case constants.UPDATE_APPLICATION_LAST_NAME:
       return { ...inputs, lastName: action.newValue };
+    case constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL:
+      return { ...inputs, oAuthRedirectURI: action.newValue };
     case constants.UPDATE_APPLICATION_ORGANIZATION:
       return { ...inputs, organization: action.newValue };
     case constants.TOGGLE_BENEFITS_CHECKED:
@@ -78,7 +86,13 @@ export function application(state: IApplication = initialApplicationState, actio
     case constants.SUBMIT_APPLICATION_BEGIN:
       return { ...state, sending: true, errorStatus: undefined };
     case constants.SUBMIT_APPLICATION_SUCCESS:
-      return { ...state, sending: false, token: action.token };
+      return {
+        ...state,
+        clientID: action.clientID,
+        clientSecret: action.clientSecret,
+        sending: false,
+        token: action.token,
+      };
     case constants.SUBMIT_APPLICATION_ERROR:
       return { ...state, sending: false, errorStatus: action.status};
     default:

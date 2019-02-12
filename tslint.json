@@ -72,6 +72,9 @@
     },
     "react-a11y-titles": {
       "severity": "warning"
+    },
+    "jsx-no-lambda": {
+      "severity": "off"
     }
   }
 }

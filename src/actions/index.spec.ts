@@ -19,6 +19,7 @@ const appState = {
       email: 'james@hotmail.co',
       firstName: 'James',
       lastName: 'Rodríguez',
+      oAuthRedirectURI: 'http://localhost:8080/oauth/cb',
       organization: 'Fußball-Club Bayern München',
     },
   },
@@ -26,13 +27,15 @@ const appState = {
 
 describe('submitForm', () => {
   it('dispatches correct events when fetch has a 200 response', async () => {
-    fetchMock.mockResponse(JSON.stringify({token: 'testtoken'}));
+    fetchMock.mockResponse(JSON.stringify({token: 'testtoken', clientID: 'testid', clientSecret: 'test_secret'}));
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     expect(dispatch).toBeCalledWith({type: constants.SUBMIT_APPLICATION_BEGIN});
     expect(dispatch).toBeCalledWith({
+      clientID: 'testid',
+      clientSecret: 'test_secret',
       token: 'testtoken',
       type: constants.SUBMIT_APPLICATION_SUCCESS,
     });
@@ -136,3 +139,28 @@ describe('updateApplicationEmail', () => {
     });
   });
 });
+
+describe('validateOAuthRedirectURI', () => {
+  it('should accept localhost urls with ports', () => {
+    const validatedInput = actions.validateOAuthRedirectURI({dirty: true, value: 'http://localhost:8080/'})
+    expect(validatedInput).not.toEqual(expect.objectContaining({validation: expect.anything()}));
+  });
+
+  it('should reject URLs with query strings', () => {
+    const validatedInput = actions.validateOAuthRedirectURI({dirty: true, value: 'https://example.com?a=b'})
+    expect(validatedInput).toEqual(expect.objectContaining({validation: expect.any(String)}));
+  });
+
+  it('should reject URLs with fragments', () => {
+    const validatedInput = actions.validateOAuthRedirectURI({dirty: true, value: 'https://example.com/#frag'})
+    expect(validatedInput).toEqual(expect.objectContaining({validation: expect.any(String)}));
+  });
+});
+
+describe('updateApplicationOAuthRedirectURI', () => {
+  it('should enforce validation', () => {
+    const updateAction: actions.IUpdateApplicationOAuthRedirectURI = actions.updateApplicationOAuthRedirectURI({dirty: true, value: 'ftp://host:21'});
+    expect(updateAction.newValue).toEqual(expect.objectContaining({dirty: true, validation: expect.any(String)}));
+  });
+});
+
