@@ -2,8 +2,9 @@ import * as React from 'react';
 
 import { FlagsProvider } from 'flag';
 import { RouteComponentProps } from 'react-router'
-import { Route } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
+
 
 import { Footer, NavBar, PageContent } from './components';
 import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
@@ -62,6 +63,11 @@ class App extends React.Component {
     return (
       <PageContent {...props} >
         <Route exact={true} path={["/", "/index.html"]} component={Home} />
+
+        {/* Legacy routes that we want to maintain: */}
+        <Route path="/explore/terms-of-service" render={props1 => <Redirect to="/terms-of-service" />} />
+
+        {/* Current routes: */}
         <Route path="/go-live" component={RoutedContent} />
         <Route path="/terms-of-service" component={RoutedContent} />
         <Route path="/apply" component={ApplyForm} />

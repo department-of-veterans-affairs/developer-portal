@@ -8,8 +8,6 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import { apiCategoryOrder, apiDefs, IApiDescription } from '../apiDefs';
 import { IApiNameParam } from '../types';
 
-import Tos from '../content/termsOfService.mdx';
-
 function ApiSection({ apiCategoryKey, sectionRef } : { apiCategoryKey : string, sectionRef? : React.RefObject<HTMLElement> } ) {
     const { apis, name: categoryName, overview, shortDescription: introText } = apiDefs[apiCategoryKey];
     let linkSection;
@@ -95,15 +93,9 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
                     key={idx} />
             );
         });
-        this.sectionRefs['terms-of-service'] = React.createRef();
         return (
             <div>
               {sections}
-              <section className="usa-section" ref={this.sectionRefs['terms-of-service']}>
-                <div className="usa-grid">
-                  <Tos />
-                </div>
-              </section>
             </div>
         );
     }
