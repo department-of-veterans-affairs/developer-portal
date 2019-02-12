@@ -158,7 +158,7 @@ export const submitForm : ActionCreator<SubmitFormThunk> = () => {
       })
       .then((response) => response.json())
       .then((json) => {
-        if (json.token) {
+        if (json.token || json.clientID) {
           const result = dispatch(submitFormSuccess(
             json.token,
             json.clientID,
