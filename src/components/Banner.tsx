@@ -1,73 +1,121 @@
 import * as React from 'react';
 
 import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
+import { VeteransCrisisLine } from './VeteransCrisisLine';
 
 import './Banner.scss';
 
-import closeButton from '../../node_modules/uswds/src/img/close.svg';
 import flagIcon from '../../node_modules/uswds/src/img/favicons/favicon-40.png';
+import rightArrow from '../assets/arrow-right-white.svg';
+import dotGovIcon from '../assets/icon-dot-gov.svg';
+import httpsIcon from '../assets/icon-https.svg';
 
-interface IContactState {
+interface IBannerState {
     menuVisible: boolean;
+    accordionVisible: boolean;
 }
 
-export class Banner extends React.Component<{}, IContactState> {
+export class Banner extends React.Component<{}, IBannerState> {
 
   constructor(props: {}) {
       super(props);
-      this.state = { menuVisible: false }
+      this.state = { 
+        accordionVisible: false,
+        menuVisible: false,
+      };
   }
 
   public render() {
+    const dotGovGuidanceText = `Federal government websites often end in .gov or .mil. Before sharing sensitive 
+                                information, make sure you're on a federal government site.`;
+    const httpsGuidanceText = (
+      <span>
+        The <strong>https://</strong> ensures that you're connecting to the official website 
+        and that any information you provide is encrypted and sent securely.
+      </span>
+    );
+
     return (
       <section className="usa-banner site-banner">
         <AlertBox status="info"
               headline={"This site is currently under development."}
               isVisible={true} />
-        <header className="usa-banner-header">
-          <div className="usa-grid usa-banner-inner">
-            <img src={flagIcon} />
-            <p>An official website of the United States government.</p>
-            <div className="va-crisis-line">
-              <div className="va-flex">
-                <button data-show="#modal-crisisline" onClick={this.toggleVisible} className="va-crisis-line-button va-overlay-trigger">
-                  <span className="va-flex">
-                    <span className="vcl" />
-                    Get help from Veterans Crisis Line
-                  </span>
-                </button>
+        <div className="site-guidance usa-accordion">
+          <header className="usa-banner-header">
+            <div className="usa-grid usa-banner-inner">
+              <div className="official-site-notice">
+                <div><img src={flagIcon} /></div>
+                <div className="site-notice-text">
+                  <div>An official website of the United States government.</div>
+                  <button className="usa-accordion-button usa-banner-button" onClick={this.toggleAccordionVisible}
+                        aria-expanded={this.state.accordionVisible ? "true" : "false"}>
+                    <span className="usa-banner-button-text">
+                      Here's how you know
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div className="va-crisis-line">
+                <div className="va-flex">
+                  <button data-show="#modal-crisisline" onClick={this.toggleMenuVisible} className="va-crisis-line-button va-overlay-trigger">
+                    <span className="va-flex">
+                      <span className="vcl-container">
+                        <span className="vcl" />
+                      </span>
+                      <span className="vcl-text">
+                        Talk to the&nbsp;<strong>Veterans Crisis Line</strong>&nbsp;now
+                      </span>
+                      <img src={rightArrow} className="vcl-right-arrow" />
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </header>
-        <div id="modal-crisisline"
-            className={this.state.menuVisible ? "va-overlay-open va-modal va-modal-large" : "va-overlay va-modal va-modal-large"}
-            role="alertdialog">
-          <div className="va-crisis-panel va-modal-inner">
-
-            <h3>Get help from Veterans Crisis Line</h3>
-
-            <button className="va-modal-close va-overlay-close" onClick={this.toggleVisible} type="button" aria-label="Close this modal">
-              <img src={closeButton} />
-            </button>
-
-            <div className="va-overlay-body va-crisis-panel-body">
-              <ul>
-                <li><a href="tel:18002738255">Call <strong>1-800-273-8255 (Press 1)</strong></a></li>
-                <li><a href="sms:838255">Text to <b>838255</b></a></li>
-                <li><a href="https://www.veteranscrisisline.net/ChatTermsOfService.aspx?account=Veterans%20Chat">Chat <b>confidentially now</b></a></li>
-              </ul>
-
-              <p>If you are in crisis or having thoughts of suicide,
-      visit <a href="https://www.veteranscrisisline.net/">VeteransCrisisLine.net</a> for more resources.</p>
-            </div>
+          </header>
+          <div className="usa-banner-content usa-accordion-content" aria-hidden={this.state.accordionVisible ? "false" : "true"}>
+            {this.renderSiteGuidance(
+                "banner-guidance-gov", 
+                dotGovIcon, 
+                "The .gov means it's official", 
+                dotGovGuidanceText)}
+            {this.renderSiteGuidance(
+                "banner-guidance-ssl",
+                httpsIcon,
+                "The site is secure.",
+                httpsGuidanceText)}
           </div>
         </div>
+        <VeteransCrisisLine visible={this.state.menuVisible} closeHandler={this.toggleMenuVisible} />
       </section>
     );
   }
 
-  private toggleVisible = () => {
-    this.setState({menuVisible: !this.state.menuVisible});
+  private toggleMenuVisible = () => {
+    this.setState(state => {
+      return {menuVisible: !state.menuVisible};
+    });
   };
+
+  private toggleAccordionVisible = () => {
+    this.setState(state => {
+      return {accordionVisible: !state.accordionVisible};
+    });
+  };
+
+  private renderSiteGuidance(className: string, iconContent: string, titleText: {}, bodyText: {}) {
+    return (
+      <div className={className}>
+        <img className="usa-banner-icon usa-media_block-img" src={iconContent} 
+              alt="Dot Gov" />
+        <div className="guidance-content usa-media_block-body">
+          <div className="guidance-title">
+            <strong>{titleText}</strong>
+          </div>
+          <div className="guidance-detail">
+            {bodyText}
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
