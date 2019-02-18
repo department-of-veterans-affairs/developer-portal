@@ -4,6 +4,8 @@
   "private": true,
   "homepage": "https://developer.va.gov/",
   "dependencies": {
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
     "@department-of-veterans-affairs/formation": "^1.16.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
     "@fortawesome/free-brands-svg-icons": "^5.1.0",
@@ -67,6 +69,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-hash-link": "^1.2.0",
     "react-router-redux": "5.0.0-alpha.9",
+    "react-router-sitemap": "^1.2.0",
     "redux": "4.0.0",
     "redux-thunk": "^2.3.0",
     "resolve": "1.6.0",
