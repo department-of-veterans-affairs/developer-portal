@@ -8,6 +8,7 @@
   },
   "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
   "rules": {
+    "indent": [true, "spaces", 2],
     "trailing-comma": {
       "options": {
         "multiline": "always",

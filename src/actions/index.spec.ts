@@ -27,12 +27,20 @@ const appState = {
 
 describe('submitForm', () => {
   it('dispatches correct events when fetch has a 200 response', async () => {
-    fetchMock.mockResponse(JSON.stringify({token: 'testtoken', clientID: 'testid', clientSecret: 'test_secret'}));
+    fetchMock.mockResponse(
+      JSON.stringify({
+        token: 'testtoken',
+        clientID: 'testid',
+        clientSecret: 'test_secret',
+      })
+    );
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
-    expect(dispatch).toBeCalledWith({type: constants.SUBMIT_APPLICATION_BEGIN});
+    expect(dispatch).toBeCalledWith({
+      type: constants.SUBMIT_APPLICATION_BEGIN,
+    });
     expect(dispatch).toBeCalledWith({
       clientID: 'testid',
       clientSecret: 'test_secret',
@@ -47,7 +55,9 @@ describe('submitForm', () => {
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
-    expect(dispatch).toBeCalledWith({type: constants.SUBMIT_APPLICATION_BEGIN});
+    expect(dispatch).toBeCalledWith({
+      type: constants.SUBMIT_APPLICATION_BEGIN,
+    });
     expect(dispatch).toBeCalledWith({
       status: 'Max Retries Exceeded. Last Status: Network Failure',
       type: constants.SUBMIT_APPLICATION_ERROR,
@@ -65,24 +75,17 @@ describe('submitForm', () => {
 
   it('dispatches error events when fetch returns non-200', async () => {
     fetchMock.mockResponses(
-      [
-        JSON.stringify({ error: 'not found' }),
-        { status: 404 },
-      ],
-      [
-        JSON.stringify({ error: 'not found' }),
-        { status: 404 },
-      ],
-      [
-        JSON.stringify({ error: 'not found' }),
-        { status: 404 },
-      ],
+      [JSON.stringify({ error: 'not found' }), { status: 404 }],
+      [JSON.stringify({ error: 'not found' }), { status: 404 }],
+      [JSON.stringify({ error: 'not found' }), { status: 404 }]
     );
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
-    expect(dispatch).toBeCalledWith({type: constants.SUBMIT_APPLICATION_BEGIN});
+    expect(dispatch).toBeCalledWith({
+      type: constants.SUBMIT_APPLICATION_BEGIN,
+    });
     expect(dispatch).toBeCalledWith({
       status: 'Max Retries Exceeded. Last Status: Not Found',
       type: constants.SUBMIT_APPLICATION_ERROR,
@@ -96,22 +99,22 @@ describe('validateEmail', () => {
       actions.validateEmail({
         dirty: true,
         value: 'bademail(at)example.com',
-      }),
-    ).toEqual(expect.objectContaining(
-      { validation: 'Must be a valid email address.' },
-    ));
-  })
+      })
+    ).toEqual(expect.objectContaining({ validation: 'Must be a valid email address.' }));
+  });
 
   it('should not add validation if the email is valid', () => {
     expect(
       actions.validateEmail({
         dirty: true,
         value: 'goodemail@example.com',
-      }),
-    ).toEqual(expect.not.objectContaining(
-      { validation: 'Must be a valid email address.' },
-    ));
-  })
+      })
+    ).toEqual(
+      expect.not.objectContaining({
+        validation: 'Must be a valid email address.',
+      })
+    );
+  });
 });
 
 describe('updateApplicationEmail', () => {
@@ -121,7 +124,8 @@ describe('updateApplicationEmail', () => {
       value: 'goodemail@example.com',
     };
     expect(actions.updateApplicationEmail(newValue)).toEqual({
-      newValue, type: constants.UPDATE_APPLICATION_EMAIL,
+      newValue,
+      type: constants.UPDATE_APPLICATION_EMAIL,
     });
   });
 
@@ -142,25 +146,37 @@ describe('updateApplicationEmail', () => {
 
 describe('validateOAuthRedirectURI', () => {
   it('should accept localhost urls with ports', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({dirty: true, value: 'http://localhost:8080/'})
-    expect(validatedInput).not.toEqual(expect.objectContaining({validation: expect.anything()}));
+    const validatedInput = actions.validateOAuthRedirectURI({
+      dirty: true,
+      value: 'http://localhost:8080/',
+    });
+    expect(validatedInput).not.toEqual(expect.objectContaining({ validation: expect.anything() }));
   });
 
   it('should reject URLs with query strings', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({dirty: true, value: 'https://example.com?a=b'})
-    expect(validatedInput).toEqual(expect.objectContaining({validation: expect.any(String)}));
+    const validatedInput = actions.validateOAuthRedirectURI({
+      dirty: true,
+      value: 'https://example.com?a=b',
+    });
+    expect(validatedInput).toEqual(expect.objectContaining({ validation: expect.any(String) }));
   });
 
   it('should reject URLs with fragments', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({dirty: true, value: 'https://example.com/#frag'})
-    expect(validatedInput).toEqual(expect.objectContaining({validation: expect.any(String)}));
+    const validatedInput = actions.validateOAuthRedirectURI({
+      dirty: true,
+      value: 'https://example.com/#frag',
+    });
+    expect(validatedInput).toEqual(expect.objectContaining({ validation: expect.any(String) }));
   });
 });
 
 describe('updateApplicationOAuthRedirectURI', () => {
   it('should enforce validation', () => {
-    const updateAction: actions.IUpdateApplicationOAuthRedirectURI = actions.updateApplicationOAuthRedirectURI({dirty: true, value: 'ftp://host:21'});
-    expect(updateAction.newValue).toEqual(expect.objectContaining({dirty: true, validation: expect.any(String)}));
+    const updateAction: actions.IUpdateApplicationOAuthRedirectURI = actions.updateApplicationOAuthRedirectURI(
+      { dirty: true, value: 'ftp://host:21' }
+    );
+    expect(updateAction.newValue).toEqual(
+      expect.objectContaining({ dirty: true, validation: expect.any(String) })
+    );
   });
 });
-
