@@ -87,6 +87,7 @@ module.exports = function(proxy, allowedHost) {
       // folder will receive the generated index.html contents.
       rewrites: [
         { from: /favicon.ico/, to: '/favicon.ico' },
+        { from: /google6289781a233ec55f.html/, to: '/google6289781a233ec55f.html' },
       ]
     },
     public: allowedHost,
