@@ -22,6 +22,7 @@ const paramsConfig = {
 
 const sitemap = (
     new Sitemap(router)
+        .filterPaths({ isValid: false, rules: [/index.html/] })
         .applyParams(paramsConfig)
         .build(paths.publicUrl)
         .save("./sitemap.xml")
