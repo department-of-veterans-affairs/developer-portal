@@ -47,7 +47,7 @@ export const initialApplicationState: IApplication = {
 
 export function applicationInput(
   inputs: IApplicationInputs = initialApplicationInputs,
-  action: UpdateApplicationAction
+  action: UpdateApplicationAction,
 ): IApplicationInputs {
   switch (action.type) {
     case constants.UPDATE_APPLICATION_DESCRIPTION:
@@ -86,7 +86,7 @@ export function applicationInput(
 
 export function application(
   state: IApplication = initialApplicationState,
-  action: SubmitFormAction | UpdateApplicationAction
+  action: SubmitFormAction | UpdateApplicationAction,
 ): IApplication {
   switch (action.type) {
     case constants.SUBMIT_APPLICATION_BEGIN:

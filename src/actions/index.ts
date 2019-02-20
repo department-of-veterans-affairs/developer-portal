@@ -135,7 +135,7 @@ function buildApplicationBody({ application }: IRootState) {
       if (application.inputs[property]) {
         applicationBody[property] = application.inputs[property].value;
       }
-    }
+    },
   );
   applicationBody.termsOfService = application.inputs.termsOfService;
   return applicationBody;
@@ -158,7 +158,7 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => {
           'content-type': 'application/json',
         },
         method: 'POST',
-      }
+      },
     );
     return fetchWithRetry(() => fetch(request))
       .then(response => {
@@ -190,7 +190,7 @@ export const submitFormBegin: ActionCreator<ISubmitForm> = () => {
 export const submitFormSuccess: ActionCreator<ISubmitFormSuccess> = (
   token: string,
   clientID: string,
-  clientSecret: string
+  clientSecret: string,
 ) => {
   return {
     clientID,
@@ -226,7 +226,7 @@ export const validateOAuthRedirectURI = (newValue: IErrorableInput) => {
 };
 
 export const updateApplicationEmail: ActionCreator<IUpdateApplicationEmail> = (
-  newValue: IErrorableInput
+  newValue: IErrorableInput,
 ) => {
   return {
     newValue: validateEmail(newValue),
@@ -235,7 +235,7 @@ export const updateApplicationEmail: ActionCreator<IUpdateApplicationEmail> = (
 };
 
 export const updateApplicationDescription: ActionCreator<IUpdateApplicationDescription> = (
-  newValue: IErrorableInput
+  newValue: IErrorableInput,
 ) => {
   return {
     newValue,
@@ -244,7 +244,7 @@ export const updateApplicationDescription: ActionCreator<IUpdateApplicationDescr
 };
 
 export const updateApplicationFirstName: ActionCreator<IUpdateApplicationFirstName> = (
-  newValue: IErrorableInput
+  newValue: IErrorableInput,
 ) => {
   return {
     newValue,
@@ -253,7 +253,7 @@ export const updateApplicationFirstName: ActionCreator<IUpdateApplicationFirstNa
 };
 
 export const updateApplicationLastName: ActionCreator<IUpdateApplicationLastName> = (
-  newValue: IErrorableInput
+  newValue: IErrorableInput,
 ) => {
   return {
     newValue,
@@ -271,7 +271,7 @@ export const updateApplicationOAuthRedirectURI: ActionCreator<
 };
 
 export const updateApplicationOrganization: ActionCreator<IUpdateApplicationOrganization> = (
-  newValue: IErrorableInput
+  newValue: IErrorableInput,
 ) => {
   return {
     newValue,

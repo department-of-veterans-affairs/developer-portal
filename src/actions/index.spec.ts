@@ -29,10 +29,10 @@ describe('submitForm', () => {
   it('dispatches correct events when fetch has a 200 response', async () => {
     fetchMock.mockResponse(
       JSON.stringify({
-        token: 'testtoken',
         clientID: 'testid',
         clientSecret: 'test_secret',
-      })
+        token: 'testtoken',
+      }),
     );
     const dispatch = jest.fn();
     const getState = jest.fn();
@@ -77,7 +77,7 @@ describe('submitForm', () => {
     fetchMock.mockResponses(
       [JSON.stringify({ error: 'not found' }), { status: 404 }],
       [JSON.stringify({ error: 'not found' }), { status: 404 }],
-      [JSON.stringify({ error: 'not found' }), { status: 404 }]
+      [JSON.stringify({ error: 'not found' }), { status: 404 }],
     );
     const dispatch = jest.fn();
     const getState = jest.fn();
@@ -99,7 +99,7 @@ describe('validateEmail', () => {
       actions.validateEmail({
         dirty: true,
         value: 'bademail(at)example.com',
-      })
+      }),
     ).toEqual(expect.objectContaining({ validation: 'Must be a valid email address.' }));
   });
 
@@ -108,11 +108,11 @@ describe('validateEmail', () => {
       actions.validateEmail({
         dirty: true,
         value: 'goodemail@example.com',
-      })
+      }),
     ).toEqual(
       expect.not.objectContaining({
         validation: 'Must be a valid email address.',
-      })
+      }),
     );
   });
 });
@@ -173,10 +173,10 @@ describe('validateOAuthRedirectURI', () => {
 describe('updateApplicationOAuthRedirectURI', () => {
   it('should enforce validation', () => {
     const updateAction: actions.IUpdateApplicationOAuthRedirectURI = actions.updateApplicationOAuthRedirectURI(
-      { dirty: true, value: 'ftp://host:21' }
+      { dirty: true, value: 'ftp://host:21' },
     );
     expect(updateAction.newValue).toEqual(
-      expect.objectContaining({ dirty: true, validation: expect.any(String) })
+      expect.objectContaining({ dirty: true, validation: expect.any(String) }),
     );
   });
 });

@@ -79,14 +79,14 @@ describe('application', () => {
         apis: expect.objectContaining({
           benefits: true,
         }),
-      })
+      }),
     );
     expect(application(newApp, { type: constants.TOGGLE_BENEFITS_CHECKED }).inputs).toEqual(
       expect.objectContaining({
         apis: expect.objectContaining({
           benefits: false,
         }),
-      })
+      }),
     );
   });
 
@@ -97,14 +97,14 @@ describe('application', () => {
         apis: expect.objectContaining({
           appeals: true,
         }),
-      })
+      }),
     );
     expect(application(newApp, { type: constants.TOGGLE_APPEALS_CHECKED }).inputs).toEqual(
       expect.objectContaining({
         apis: expect.objectContaining({
           appeals: false,
         }),
-      })
+      }),
     );
   });
 
@@ -115,14 +115,14 @@ describe('application', () => {
         apis: expect.objectContaining({
           health: true,
         }),
-      })
+      }),
     );
     expect(application(newApp, { type: constants.TOGGLE_HEALTH_CHECKED }).inputs).toEqual(
       expect.objectContaining({
         apis: expect.objectContaining({
           health: false,
         }),
-      })
+      }),
     );
   });
 
@@ -135,14 +135,14 @@ describe('application', () => {
         apis: expect.objectContaining({
           verification: true,
         }),
-      })
+      }),
     );
     expect(application(newApp, { type: constants.TOGGLE_VERIFICATION_CHECKED }).inputs).toEqual(
       expect.objectContaining({
         apis: expect.objectContaining({
           verification: false,
         }),
-      })
+      }),
     );
   });
 
@@ -155,14 +155,14 @@ describe('application', () => {
         apis: expect.objectContaining({
           facilities: true,
         }),
-      })
+      }),
     );
     expect(application(newApp, { type: constants.TOGGLE_FACILITIES_CHECKED }).inputs).toEqual(
       expect.objectContaining({
         apis: expect.objectContaining({
           facilities: false,
         }),
-      })
+      }),
     );
   });
 
@@ -170,7 +170,7 @@ describe('application', () => {
     expect(application(app, { type: constants.SUBMIT_APPLICATION_BEGIN })).toEqual(
       expect.objectContaining({
         sending: true,
-      })
+      }),
     );
   });
 
@@ -182,12 +182,12 @@ describe('application', () => {
       application(newApp, {
         status: 'Error happened',
         type: constants.SUBMIT_APPLICATION_ERROR,
-      })
+      }),
     ).toEqual(
       expect.objectContaining({
         errorStatus: 'Error happened',
         sending: false,
-      })
+      }),
     );
   });
 
@@ -201,14 +201,14 @@ describe('application', () => {
         clientSecret: 'clientSecret',
         token: 'test-token',
         type: constants.SUBMIT_APPLICATION_SUCCESS,
-      })
+      }),
     ).toEqual(
       expect.objectContaining({
         clientID: 'clientID',
         clientSecret: 'clientSecret',
         sending: false,
         token: 'test-token',
-      })
+      }),
     );
   });
 
@@ -217,12 +217,12 @@ describe('application', () => {
     expect(newApp.inputs).toEqual(
       expect.objectContaining({
         termsOfService: true,
-      })
+      }),
     );
     expect(application(newApp, { type: constants.TOGGLE_ACCEPT_TOS }).inputs).toEqual(
       expect.objectContaining({
         termsOfService: false,
-      })
+      }),
     );
   });
 });
