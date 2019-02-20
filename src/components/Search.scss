@@ -1,0 +1,32 @@
+.vadp-search-form {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+
+  label {
+    margin-top: 0;
+  }
+
+  input.usagov-search-autocomplete,
+  button.vadp-search-submit {
+    margin: 0;
+
+    &:focus {
+      outline-width: 0;
+    }
+  }
+
+  input.usagov-search-autocomplete {
+    font-size: 16px;
+    width: 240px;
+    padding: 8px;
+  }
+
+  button.vadp-search-submit {
+    border-radius: 0 5px 5px 0;
+    width: 40px;
+    height: 44px;
+    padding: 10px;
+  }
+}
