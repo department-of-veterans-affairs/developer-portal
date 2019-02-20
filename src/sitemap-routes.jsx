@@ -17,7 +17,7 @@ export default (
         <Route path="/applied" />
         <Route path="/beta" />
         <Route path="/beta-success" />
-        <Route path="/explore/:apiCategoryKey?" />
+        <Route path="/explore/:apiCategoryKey" />
         <Route path="/oauth" />
     </Route>
 );
