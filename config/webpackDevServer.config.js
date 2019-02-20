@@ -88,6 +88,7 @@ module.exports = function(proxy, allowedHost) {
       rewrites: [
         { from: /favicon.ico/, to: '/favicon.ico' },
         { from: /robots.txt/, to: '/robots.txt' },
+        { from: /sitemap.xml/, to: '/sitemap.xml' },
       ]
     },
     public: allowedHost,

@@ -8,6 +8,7 @@ require('@babel/register')({
     presets: [ '@babel/env', '@babel/react' ],
 });
 
+const path = require('path');
 const paths = require('./config/paths');
 const router = require('./src/sitemap-routes.jsx').default;
 const Sitemap = require('react-router-sitemap').default;
@@ -25,5 +26,5 @@ const sitemap = (
         .filterPaths({ isValid: false, rules: [/index.html/] })
         .applyParams(paramsConfig)
         .build(paths.publicUrl)
-        .save("./sitemap.xml")
+        .save(path.join(paths.appPublic, 'sitemap.xml'))
 );
