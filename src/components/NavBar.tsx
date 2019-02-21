@@ -34,7 +34,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
       );
     } else {
       apply = (
-        <Link to ="/apply" className="usa-button">Get Started</Link>
+        <Link to="/apply" className="usa-button">Get Started</Link>
       );
     }
     return (
@@ -55,28 +55,28 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             </button>
             <ul className="usa-nav-primary usa-accordion">
               <li>
-                <Link to ="/" className="usa-nav-link">
+                <Link to="/" className="usa-nav-link">
                   <FontAwesomeIcon icon={faHome} />
                   Home
                 </Link>
               </li>
               <li>
-                <Link to ="/explore" className="usa-nav-link">Documentation</Link>
+                <Link to="/explore" className="usa-nav-link">Documentation</Link>
               </li>
               <li>
-                <Link to ="/explore/benefits" className="usa-nav-link">Benefits</Link>
+                <Link to="/explore/benefits" className="usa-nav-link">Benefits</Link>
               </li>
               <li>
-                <Link to ="/explore/facilities" className="usa-nav-link">Facilities</Link>
+                <Link to="/explore/facilities" className="usa-nav-link">Facilities</Link>
               </li>
               <li>
-                <Link to ="/explore/health" className="usa-nav-link">Health</Link>
+                <Link to="/explore/health" className="usa-nav-link">Health</Link>
               </li>
               <li>
-                <Link to ="/oauth" className="usa-nav-link">OAuth</Link>
+                <Link to="/oauth" className="usa-nav-link">OAuth</Link>
               </li>
               <li>
-                <Link to ="/explore/verification" className="usa-nav-link">Verification</Link>
+                <Link to="/explore/verification" className="usa-nav-link">Verification</Link>
               </li>
             </ul>
             <div className="usa-nav-secondary">
@@ -96,7 +96,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
   }
 
   private toggleVisible = () => {
-    this.setState({menuVisible: !this.state.menuVisible});
+    this.setState({ menuVisible: !this.state.menuVisible });
   };
 
   private setNavClass = () => {
