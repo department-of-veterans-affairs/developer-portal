@@ -8,6 +8,7 @@ import closeButton from "../assets/close-white.svg";
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Banner } from './Banner';
+import { Search } from './Search';
 
 interface INavBarProps {
   hideLinks: boolean;
@@ -79,7 +80,14 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
               </li>
             </ul>
             <div className="usa-nav-secondary">
-              {apply}
+              <ul className="usa-unstyled-list">
+                <li>
+                  {apply}
+                </li>
+                <li>
+                  <Search />
+                </li>
+              </ul>
             </div>
           </div>
         </nav>
