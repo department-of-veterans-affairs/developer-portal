@@ -14,6 +14,11 @@ const prodURL = require(paths.appPackageJson).homepage;
 const router = require('./src/sitemap-routes.jsx').default;
 const Sitemap = require('react-router-sitemap').default;
 
+const pathFilter = {
+    isValid: false, 
+    rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success/],
+};
+
 // building paths from dynamic routes
 // will need to import apiDefs.ts to further build out dynamic paths
 const paramsConfig = {
@@ -24,7 +29,7 @@ const paramsConfig = {
 
 const sitemap = (
     new Sitemap(router)
-        .filterPaths({ isValid: false, rules: [/index.html/] })
+        .filterPaths(pathFilter)
         .applyParams(paramsConfig)
         .build(prodURL)
         .save(path.join(paths.appPublic, 'sitemap.xml'))
