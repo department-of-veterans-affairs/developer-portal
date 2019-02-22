@@ -26,6 +26,8 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
   public render() {
     let apply;
+    let search;
+
     if (process.env.REACT_APP_SALESFORCE_APPLY === 'true') {
       apply = (
         <a className="usa-button" href="https://vacommunity.secure.force.com/survey/ExAM__AMAndAnswerCreationPage?paId=a2ft0000000VVnJ">
@@ -35,6 +37,12 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
     } else {
       apply = (
         <Link to="/apply" className="usa-button">Get Started</Link>
+      );
+    }
+
+    if (process.env.REACT_APP_SEARCH_ENABLED === 'true') {
+      search = (
+        <Search />
       );
     }
     return (
@@ -84,8 +92,8 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                 <li>
                   {apply}
                 </li>
-                <li>
-                  <Search />
+                <li >
+                  {search}
                 </li>
               </ul>
             </div>
