@@ -41,5 +41,22 @@
       To begin the development, run `npm start`
       To create a production bundle, use `npm run build`
     -->
+    
+    <!--
+      search.usa.gov tag 
+      enables type-ahead search in the search box and 
+      powers trending URLs data on the Site Overview page in the Admin Center
+    -->
+    <script type="text/javascript">
+      //<![CDATA[
+            var usasearch_config = { siteHandle:"developer.va.gov" };
+      
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "//search.usa.gov/javascripts/remote.loader.js";
+            document.getElementsByTagName("head")[0].appendChild(script);
+      
+      //]]>
+      </script>
   </body>
 </html>
