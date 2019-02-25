@@ -19,5 +19,7 @@ export default (
         <Route path="/beta-success" />
         <Route path="/explore/:apiCategoryKey" />
         <Route path="/oauth" />
+        {/* From ExploreDocs.tsx */}
+        <Route path="/explore/:apiCategoryKey/docs/:apiName" />
     </Route>
 );

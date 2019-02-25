@@ -10,4 +10,20 @@
 <url> <loc>https://developer.va.gov/explore/health</loc> </url>
 <url> <loc>https://developer.va.gov/explore/verification</loc> </url>
 <url> <loc>https://developer.va.gov/oauth</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits/docs/benefits</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits/docs/appeals</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits/docs/claims</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits/docs/loan_guaranty</loc> </url>
+<url> <loc>https://developer.va.gov/explore/facilities/docs/benefits</loc> </url>
+<url> <loc>https://developer.va.gov/explore/facilities/docs/appeals</loc> </url>
+<url> <loc>https://developer.va.gov/explore/facilities/docs/claims</loc> </url>
+<url> <loc>https://developer.va.gov/explore/facilities/docs/loan_guaranty</loc> </url>
+<url> <loc>https://developer.va.gov/explore/health/docs/benefits</loc> </url>
+<url> <loc>https://developer.va.gov/explore/health/docs/appeals</loc> </url>
+<url> <loc>https://developer.va.gov/explore/health/docs/claims</loc> </url>
+<url> <loc>https://developer.va.gov/explore/health/docs/loan_guaranty</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification/docs/benefits</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification/docs/appeals</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification/docs/claims</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification/docs/loan_guaranty</loc> </url>
 </urlset>

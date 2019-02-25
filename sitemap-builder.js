@@ -15,16 +15,51 @@ const router = require('./src/sitemap-routes.jsx').default;
 const Sitemap = require('react-router-sitemap').default;
 
 const pathFilter = {
-    isValid: false, 
+    isValid: false,
     rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success/],
 };
 
 // building paths from dynamic routes
-// will need to import apiDefs.ts to further build out dynamic paths
+// todo import apiDefs.ts
+const apiCategoryOrder = [ 'benefits', 'facilities', 'health', 'verification' ];
+const apiDefs = {
+    benefits: {
+        apis: [
+            { urlFragment: 'benefits', },
+            { urlFragment: 'appeals', },
+            { urlFragment: 'claims', },
+            { urlFragment: 'loan_guaranty', },
+        ],
+    },
+    facilities: {
+        apis: [
+            { urlFragment: 'facilities', },
+        ],
+    },
+    health: {
+        apis: [
+            { urlFragment: 'argonaut', },
+        ],
+    },
+    verification: {
+        apis: [
+            { urlFragment: 'disability_rating', },
+            { urlFragment: 'service_history', },
+            { urlFragment: 'veteran_confirmation', },
+            { urlFragment: 'address_validation', },
+        ],
+    },
+};
 const paramsConfig = {
-    '/explore/:apiCategoryKey': [
-        { apiCategoryKey: ['benefits', 'facilities', 'health', 'verification' ] },
-      ]
+    '/explore/:apiCategoryKey': apiCategoryOrder.map(apiCategory => {
+        return { apiCategoryKey: apiCategory };
+    }),
+    '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => {
+        return {
+            apiCategoryKey: apiCategory,
+            apiName: apiDefs.benefits.apis.map((api) => api.urlFragment),
+        };
+    }),
 };
 
 const sitemap = (
