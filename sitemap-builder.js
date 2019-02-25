@@ -57,7 +57,7 @@ const paramsConfig = {
     '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => {
         return {
             apiCategoryKey: apiCategory,
-            apiName: apiDefs.benefits.apis.map((api) => api.urlFragment),
+            apiName: apiDefs[apiCategory].apis.map((api) => api.urlFragment),
         };
     }),
 };
