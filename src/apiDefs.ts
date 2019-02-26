@@ -36,7 +36,7 @@ export const apiDefs : IApiCategories = {
       },
       {
         name: 'Benefits Intake',
-        shortDescription: 'Submit claims',
+        shortDescription: 'Submit PDF claims',
         urlFragment: 'benefits',
         vaInternalOnly: false,
       },
