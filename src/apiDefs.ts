@@ -29,9 +29,9 @@ export const apiDefs : IApiCategories = {
     apiKey: true,
     apis: [
       {
-        name: 'Benefits Intake',
-        shortDescription: 'Submit claims',
-        urlFragment: 'benefits',
+        name: 'Claims',
+        shortDescription: 'Submit and Track claims',
+        urlFragment: 'claims',
         vaInternalOnly: false,
       },
       {
@@ -41,9 +41,9 @@ export const apiDefs : IApiCategories = {
         vaInternalOnly: false,
       },
       {
-        name: 'Claims Status',
-        shortDescription: 'Track claims',
-        urlFragment: 'claims',
+        name: 'Benefits Intake',
+        shortDescription: 'Submit claims',
+        urlFragment: 'benefits',
         vaInternalOnly: false,
       },
       {
