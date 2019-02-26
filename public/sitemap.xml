@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>https://developer.va.gov/</loc> </url>
+<url> <loc>https://developer.va.gov/go-live</loc> </url>
+<url> <loc>https://developer.va.gov/terms-of-service</loc> </url>
+<url> <loc>https://developer.va.gov/apply</loc> </url>
+<url> <loc>https://developer.va.gov/beta</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits</loc> </url>
+<url> <loc>https://developer.va.gov/explore/facilities</loc> </url>
+<url> <loc>https://developer.va.gov/explore/health</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification</loc> </url>
+<url> <loc>https://developer.va.gov/oauth</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits/docs/benefits</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits/docs/appeals</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits/docs/claims</loc> </url>
+<url> <loc>https://developer.va.gov/explore/benefits/docs/loan_guaranty</loc> </url>
+<url> <loc>https://developer.va.gov/explore/facilities/docs/facilities</loc> </url>
+<url> <loc>https://developer.va.gov/explore/health/docs/argonaut</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification/docs/disability_rating</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification/docs/service_history</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification/docs/veteran_confirmation</loc> </url>
+<url> <loc>https://developer.va.gov/explore/verification/docs/address_validation</loc> </url>
+</urlset>
