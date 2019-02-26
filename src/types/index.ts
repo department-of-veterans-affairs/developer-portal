@@ -1,4 +1,4 @@
-import { RouterState  } from 'react-router-redux'
+import { RouterState } from 'react-router-redux';
 
 export interface IApiNameParam {
   apiName?: string;
@@ -38,7 +38,7 @@ export interface IApplicationInputs {
 }
 
 export interface IApplication {
-  inputs: IApplicationInputs,
+  inputs: IApplicationInputs;
   sending: boolean;
   errorStatus?: string;
   token: string;

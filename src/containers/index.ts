@@ -8,4 +8,4 @@ import Home from './Home';
 import OAuth from './OAuth';
 import RoutedContent from './RoutedContent';
 
-export { ApplyForm, ApplySuccess, Explore, Home, OAuth, RoutedContent }
+export { ApplyForm, ApplySuccess, Explore, Home, OAuth, RoutedContent };

@@ -8,6 +8,7 @@ import closeButton from "../assets/close-white.svg";
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Banner } from './Banner';
+import { Search } from './Search';
 
 interface INavBarProps {
   hideLinks: boolean;
@@ -25,6 +26,8 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
   public render() {
     let apply;
+    let search;
+
     if (process.env.REACT_APP_SALESFORCE_APPLY === 'true') {
       apply = (
         <a className="usa-button" href="https://vacommunity.secure.force.com/survey/ExAM__AMAndAnswerCreationPage?paId=a2ft0000000VVnJ">
@@ -33,7 +36,13 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
       );
     } else {
       apply = (
-        <Link to ="/apply" className="usa-button">Get Started</Link>
+        <Link to="/apply" className="usa-button">Get Started</Link>
+      );
+    }
+
+    if (process.env.REACT_APP_SEARCH_ENABLED === 'true') {
+      search = (
+        <Search />
       );
     }
     return (
@@ -54,32 +63,39 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             </button>
             <ul className="usa-nav-primary usa-accordion">
               <li>
-                <Link to ="/" className="usa-nav-link">
+                <Link to="/" className="usa-nav-link">
                   <FontAwesomeIcon icon={faHome} />
                   Home
                 </Link>
               </li>
               <li>
-                <Link to ="/explore" className="usa-nav-link">Documentation</Link>
+                <Link to="/explore" className="usa-nav-link">Documentation</Link>
               </li>
               <li>
-                <Link to ="/explore/benefits" className="usa-nav-link">Benefits</Link>
+                <Link to="/explore/benefits" className="usa-nav-link">Benefits</Link>
               </li>
               <li>
-                <Link to ="/explore/facilities" className="usa-nav-link">Facilities</Link>
+                <Link to="/explore/facilities" className="usa-nav-link">Facilities</Link>
               </li>
               <li>
-                <Link to ="/explore/health" className="usa-nav-link">Health</Link>
+                <Link to="/explore/health" className="usa-nav-link">Health</Link>
               </li>
               <li>
-                <Link to ="/oauth" className="usa-nav-link">OAuth</Link>
+                <Link to="/oauth" className="usa-nav-link">OAuth</Link>
               </li>
               <li>
-                <Link to ="/explore/verification" className="usa-nav-link">Verification</Link>
+                <Link to="/explore/verification" className="usa-nav-link">Verification</Link>
               </li>
             </ul>
             <div className="usa-nav-secondary">
-              {apply}
+              <ul className="usa-unstyled-list">
+                <li>
+                  {apply}
+                </li>
+                <li >
+                  {search}
+                </li>
+              </ul>
             </div>
           </div>
         </nav>
@@ -88,7 +104,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
   }
 
   private toggleVisible = () => {
-    this.setState({menuVisible: !this.state.menuVisible});
+    this.setState({ menuVisible: !this.state.menuVisible });
   };
 
   private setNavClass = () => {

@@ -2,7 +2,7 @@ import { SubmitFormAction, UpdateApplicationAction } from '../actions';
 import { IApplication, IApplicationInputs } from '../types';
 import * as constants from '../types/constants';
 
-const initialApplicationInputs : IApplicationInputs = {
+const initialApplicationInputs: IApplicationInputs = {
   apis: {
     appeals: false,
     benefits: false,
@@ -37,7 +37,7 @@ const initialApplicationInputs : IApplicationInputs = {
   termsOfService: false,
 };
 
-export const initialApplicationState : IApplication = {
+export const initialApplicationState: IApplication = {
   clientID: '',
   clientSecret: '',
   inputs: initialApplicationInputs,
@@ -45,10 +45,13 @@ export const initialApplicationState : IApplication = {
   token: '',
 };
 
-export function applicationInput(inputs: IApplicationInputs = initialApplicationInputs, action: UpdateApplicationAction) : IApplicationInputs {
+export function applicationInput(
+  inputs: IApplicationInputs = initialApplicationInputs,
+  action: UpdateApplicationAction,
+): IApplicationInputs {
   switch (action.type) {
     case constants.UPDATE_APPLICATION_DESCRIPTION:
-      return { ...inputs, description: action.newValue};
+      return { ...inputs, description: action.newValue };
     case constants.UPDATE_APPLICATION_EMAIL:
       return { ...inputs, email: action.newValue };
     case constants.UPDATE_APPLICATION_FIRST_NAME:
@@ -81,8 +84,11 @@ export function applicationInput(inputs: IApplicationInputs = initialApplication
   return inputs;
 }
 
-export function application(state: IApplication = initialApplicationState, action: SubmitFormAction | UpdateApplicationAction) : IApplication {
-  switch(action.type) {
+export function application(
+  state: IApplication = initialApplicationState,
+  action: SubmitFormAction | UpdateApplicationAction,
+): IApplication {
+  switch (action.type) {
     case constants.SUBMIT_APPLICATION_BEGIN:
       return { ...state, sending: true, errorStatus: undefined };
     case constants.SUBMIT_APPLICATION_SUCCESS:
@@ -94,10 +100,9 @@ export function application(state: IApplication = initialApplicationState, actio
         token: action.token,
       };
     case constants.SUBMIT_APPLICATION_ERROR:
-      return { ...state, sending: false, errorStatus: action.status};
+      return { ...state, sending: false, errorStatus: action.status };
     default:
       return { ...state, inputs: applicationInput(state.inputs, action) };
   }
   return state;
 }
-
