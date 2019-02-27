@@ -55,6 +55,18 @@ export class Banner extends React.Component<{}, IBannerState> {
                   </button>
                 </div>
               </div>
+              <div className="usa-banner-content usa-accordion-content" aria-hidden={this.state.accordionVisible ? "false" : "true"}>
+                {this.renderSiteGuidance(
+                    "banner-guidance-gov", 
+                    dotGovIcon, 
+                    "The .gov means it's official", 
+                    dotGovGuidanceText)}
+                {this.renderSiteGuidance(
+                    "banner-guidance-ssl",
+                    httpsIcon,
+                    "The site is secure.",
+                    httpsGuidanceText)}
+              </div>
               <div className="va-crisis-line">
                 <div className="va-flex">
                   <button data-show="#modal-crisisline" onClick={this.toggleMenuVisible} className="va-crisis-line-button va-overlay-trigger">
@@ -72,18 +84,6 @@ export class Banner extends React.Component<{}, IBannerState> {
               </div>
             </div>
           </header>
-          <div className="usa-banner-content usa-accordion-content" aria-hidden={this.state.accordionVisible ? "false" : "true"}>
-            {this.renderSiteGuidance(
-                "banner-guidance-gov", 
-                dotGovIcon, 
-                "The .gov means it's official", 
-                dotGovGuidanceText)}
-            {this.renderSiteGuidance(
-                "banner-guidance-ssl",
-                httpsIcon,
-                "The site is secure.",
-                httpsGuidanceText)}
-          </div>
         </div>
         <VeteransCrisisLine visible={this.state.menuVisible} closeHandler={this.toggleMenuVisible} />
       </section>
