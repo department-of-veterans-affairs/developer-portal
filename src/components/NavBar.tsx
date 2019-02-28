@@ -43,7 +43,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
   public render() {
     let apply;
-    let search;
 
     if (process.env.REACT_APP_SALESFORCE_APPLY === 'true') {
       apply = (
@@ -54,12 +53,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
     } else {
       apply = (
         <Link to="/apply" className="usa-button">Get Started</Link>
-      );
-    }
-
-    if (process.env.REACT_APP_SEARCH_ENABLED === 'true') {
-      search = (
-        <Search />
       );
     }
 
@@ -94,7 +87,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                 </li>
                 <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
                   <li className="secondary-nav-item">
-                    {search}
+                    <Search />
                   </li>
                 </MediaQuery>
               </ul>
@@ -127,7 +120,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
           </div>
         </nav>
         <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
-          {search}
+          <Search />
         </MediaQuery>
       </header>
     );
