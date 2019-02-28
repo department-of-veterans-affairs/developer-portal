@@ -1,8 +1,16 @@
+@import "../base";
+
 .vadp-search-form {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: $large-screen - 1) {
+    background-color: #FFFFFF;
+    padding-top: 3.0rem;
+    padding-bottom: 3.0rem;
+  }
 
   label {
     margin-top: 0;
