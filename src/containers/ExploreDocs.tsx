@@ -11,7 +11,7 @@ import Explore from './Explore';
 
 import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
 
-import './Explore.scss'
+import './Explore.scss';
 
 export function ApiPageHero() {
     const href = (process.env.REACT_APP_SALESFORCE_APPLY === 'true') ?
@@ -34,37 +34,33 @@ function VaInternalTag() {
     );
 }
 
-function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription, subIdx: number) {
+function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
     const internalTag = (api.vaInternalOnly === true) ? VaInternalTag() : null;
 
     return (
-        <Flag key={subIdx} name={`hosted_apis.${api.urlFragment}`}>
-            <li key={subIdx}>
-              <NavLink exact={true} to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}`} activeClassName="usa-current">
+        <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
+            <li key={api.urlFragment}>
+              <NavLink exact={true} to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}`} 
+                  className="side-nav-api-link" activeClassName="usa-current">
                 <div>
                   {api.name}
                   <br />
                   {internalTag}
                 </div>
               </NavLink>
-              <br />
             </li>
         </Flag>
     );
 }
 
-function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory, idx: number) {
-    const subNavLinks = apiCategory.apis.map((api, subIdx) => {
-        return SideNavApiEntry(apiCategoryKey, api, subIdx);
+function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory) {
+    const subNavLinks = apiCategory.apis.map(api => {
+        return SideNavApiEntry(apiCategoryKey, api);
     });
-    const topLinkPath = `/explore/${apiCategoryKey}`;
-    const className = ((subNavLinks.length > 0 ? "expand" : "")
-            + " "
-            + (currentUrl === topLinkPath ? "usa-current" : ""))
 
     return (
-        <li key={idx}>
-          <NavLink exact={true} to={topLinkPath} className={className}>
+        <li key={apiCategoryKey}>
+          <NavLink to={`/explore/${apiCategoryKey}`} className="side-nav-category-link" activeClassName="usa-current">
             {apiCategory.name}
           </NavLink>
           <ul className="usa-sidenav-sub_list">
@@ -74,16 +70,16 @@ function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCat
     );
 }
 
-function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>) {
-  let idx = 0;
-  const buildSideNavCategoryEntry = (key: string) => {
-    return SideNavCategoryEntry(url, key, apiDefs[key], idx++);
-  };
-
-  const navLinks = apiCategoryOrder.map(buildSideNavCategoryEntry);
+export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>) {
+  const navLinks = apiCategoryOrder.map((key: string) => SideNavCategoryEntry(url, key, apiDefs[key]));
 
   return (
     <ul role="navigation" aria-label="API Docs Side Nav" className="usa-sidenav-list">
+      <li key="all">
+        <NavLink exact={true} to="/explore" className="side-nav-category-link" activeClassName="usa-current">
+          Overview
+        </NavLink>
+      </li>
       {navLinks}
     </ul>
   );

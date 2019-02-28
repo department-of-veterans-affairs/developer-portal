@@ -1,0 +1,96 @@
+@import '../base';
+
+@mixin no-sr-content {
+  &:after {
+    content: none;
+  }
+}
+
+.va-crisis-panel {
+//  color: $color-primary-darkest;
+  list-style: none;
+  margin: 0;
+  padding: 2.4rem;
+  position: relative;
+  z-index: 1;
+
+  &.va-modal-inner {
+    transform: translateY(-50%);
+    top: 50%;
+  }
+
+  @include media($medium-large-screen) {
+    margin: auto;
+    max-width: 50%;
+  }
+}
+
+.va-modal-large {
+  .va-crisis-panel.va-modal-inner {
+    width: 90%;
+
+    @include media($medium-large-screen) {
+      width: 100%;
+    }
+  }
+}
+
+.va-crisis-panel-body {
+  background: $color-white;
+  font-size: 1.6rem;
+  height: auto;
+  list-style: inherit;
+  margin: 0;
+  max-height: 100%;
+  padding: 0;
+}
+
+.va-crisis-panel-title {
+  display: flex;
+  align-items: flex-start;
+}
+
+.vcl-logo {
+  height: 2rem;
+  margin-top: 7px;
+  margin-right: 10px;
+}
+
+ul.va-crisis-panel-list {
+  // font-size: 1.7rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  border-top: 1px solid $color-gray-lighter;
+
+  li {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border-bottom: 1px solid $color-gray-lighter;
+    
+    .va-crisis-panel-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: 16px;
+    }
+
+    a {
+      @include no-sr-content;
+
+      background-image: none;
+      color: $color-base;
+      display: block;
+      padding: 1.5rem 0.5rem;
+
+      &:active,
+      &:focus {
+        outline-offset: -2px;
+        outline: 2px solid #FDB81E;
+      }
+    }
+  }
+}
+
+

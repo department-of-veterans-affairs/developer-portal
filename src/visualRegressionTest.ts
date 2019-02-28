@@ -13,6 +13,7 @@ const viewports = [
 const checkScreenshots = async (page: Page) => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
+    await new Promise((resolve, reject) => setTimeout(resolve, 500));
     const screenshot = await page.screenshot({
       fullPage: true,
     });
