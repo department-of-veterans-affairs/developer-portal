@@ -35,15 +35,15 @@ export const apiDefs : IApiCategories = {
         vaInternalOnly: false,
       },
       {
-        name: 'Benefits Claims',
-        shortDescription: 'Submit and track claims',
-        urlFragment: 'claims',
-        vaInternalOnly: false,
-      },
-      {
         name: 'Appeals Status',
         shortDescription: 'Track appeals',
         urlFragment: 'appeals',
+        vaInternalOnly: false,
+      },
+      {
+        name: 'Benefits Claims',
+        shortDescription: 'Submit and track claims',
+        urlFragment: 'claims',
         vaInternalOnly: false,
       },
       {
