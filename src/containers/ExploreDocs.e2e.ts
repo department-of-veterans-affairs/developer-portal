@@ -8,7 +8,7 @@ describe('position sticky', () => {
     const originalDistanceFromTop = await page.evaluate(() => {
       return document.querySelectorAll('.sticky')[0].getBoundingClientRect().top;
     });
-    await page.evaluate(() => window.scrollBy(0, 500)); // scroll 500px
+    await page.evaluate(() => window.scrollBy(0, 585)); // scroll 585px
     const distanceFromTop = await page.evaluate(() => {
       return document.querySelectorAll('.sticky')[0].getBoundingClientRect().top;
     });
