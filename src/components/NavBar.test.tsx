@@ -1,13 +1,15 @@
-import { shallow } from 'enzyme';
-import 'jest';
 import * as React from 'react';
+
+import 'jest';
+
+import { shallow } from 'enzyme';
 
 import { NavBar } from './NavBar';
 
 describe('NavBar', () => {
   it('should render the navbar', () => {
-    const documentation = shallow(<NavBar hideLinks={false} />).contains('Documentation');
-    expect(documentation).toBeTruthy();
+    const home = shallow(<NavBar hideLinks={false} />).contains('Home');
+    expect(home).toBeTruthy();
   });
 
   it('should use "is-hidden" when hidelinks is passed', () => {
