@@ -1,6 +1,24 @@
 @import '../base';
 
 .Explore {
+  h1, 
+  h2, 
+  h3 {
+    font-family: $font-bitter;
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 4rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 2rem !important;
+  }
+
   #api-documentation {
     margin-top: 0;
   }
@@ -29,7 +47,7 @@
 
   .swagger-ui {
     .info {
-      margin-top :0;
+      margin-top: 0;
 
       p {
         font-family: $font-sans;
@@ -168,14 +186,15 @@
     font-weight: 600;
   }
 
-  .Explore-main{
+  .Explore-main.usa-grid {
+    max-width: 1200px;
     margin-top: 3em;
     margin-bottom: 2em;
+    margin-left: 0;
   }
 
-  .Explore-main,
-  .usa-grid {
-    margin-left: 3rem;
+  .vadp-side-nav {
+    padding-right: 3rem;
   }
 
   .usa-sidenav-list {
@@ -226,24 +245,8 @@
     }
   }
 
-  .usa-hero {
-    background-color: #4a4a4a;
-    background-image: url('../assets/home-page-banner.png');
-
-    .usa-hero-callout {
-      background: none;
-      color: $color-white;
-      max-width: 100%;
-      padding-left: 0;
-
-      h1 {
-        font-family: $font-sans;
-      }
-
-      p {
-        font-size: 1.25em;
-        max-width: 700px;
-      }
-    }
+  .va-api-container {
+    display: flex;
+    flex-flow: row wrap;
   }
 }
