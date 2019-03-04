@@ -32,6 +32,11 @@
     font-size: 16px;
     max-width: 80%;
     padding: 8px;
+
+    @include media($large-screen) {
+      width: 240px;
+      max-width: inherit;
+    }
   }
 
   button.vadp-search-submit {
