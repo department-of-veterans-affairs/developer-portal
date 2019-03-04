@@ -36,7 +36,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
     return (
       <section role="region" aria-labelledby={`${apiCategoryKey}-overview`} className="usa-section">
         <h1 id={`${apiCategoryKey}-overview`}>{categoryName}</h1>
-        <p>{introText}</p>
+        <h2>{introText}</h2>
         {cardSection}
         <div className="usa-width-one-whole">
           {overview({})}

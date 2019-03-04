@@ -248,5 +248,11 @@
   .va-api-container {
     display: flex;
     flex-flow: row wrap;
+
+    a.va-api-card {
+      @media screen and (max-width: 767px) {
+        width: 100%;
+      }
+    }
   }
 }
