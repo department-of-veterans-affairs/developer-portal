@@ -5,11 +5,14 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  background-color: #FFFFFF;
+  padding-top: 3.0rem;
+  padding-bottom: 3.0rem;
 
-  @media screen and (max-width: $large-screen - 1) {
-    background-color: #FFFFFF;
-    padding-top: 3.0rem;
-    padding-bottom: 3.0rem;
+  @include media($large-screen) {
+    background-color: inherit;
+    padding-top: inherit;
+    padding-bottom: inherit;
   }
 
   label {
