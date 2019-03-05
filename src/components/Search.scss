@@ -10,9 +10,9 @@
   padding-bottom: 3.0rem;
 
   @include media($large-screen) {
-    background-color: inherit;
-    padding-top: inherit;
-    padding-bottom: inherit;
+    background-color: $color-primary-darkest;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   label {
