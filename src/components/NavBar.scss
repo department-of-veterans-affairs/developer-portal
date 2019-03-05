@@ -10,7 +10,7 @@
 
   @include media($large-screen) {
     .usa-nav-secondary {
-      top: -7.0rem;
+      top: -8.5rem;
     }
   }
 
@@ -52,7 +52,6 @@
       display: flex;
       flex-flow: row nowrap;
       align-items: center;
-      margin-top: 0.3rem;
 
       li.secondary-nav-item {
         margin-right: 2rem;
