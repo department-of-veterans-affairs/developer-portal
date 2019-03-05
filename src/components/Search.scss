@@ -31,7 +31,8 @@
   input.usagov-search-autocomplete {
     font-size: 16px;
     height: 42px;
-    max-width: 80%;
+    width: 80%;
+    max-width: none;
     padding: 8px;
 
     @include media($large-screen) {
