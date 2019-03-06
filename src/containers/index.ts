@@ -1,3 +1,4 @@
+import ApiKeyAuth from './ApiKeyAuth';
 import ApplyForm from './ApplyForm';
 import ApplySuccess from './ApplySuccess';
 export * from './Beta';
@@ -8,4 +9,4 @@ import Home from './Home';
 import OAuth from './OAuth';
 import RoutedContent from './RoutedContent';
 
-export { ApplyForm, ApplySuccess, Explore, Home, OAuth, RoutedContent };
+export { ApiKeyAuth, ApplyForm, ApplySuccess, Explore, Home, OAuth, RoutedContent };

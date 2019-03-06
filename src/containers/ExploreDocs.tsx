@@ -1,13 +1,15 @@
 import * as React from 'react';
+import { NavHashLink } from 'react-router-hash-link';
 
 import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
-import { NavLink, Route } from 'react-router-dom';
+import { NavLink, Route, Switch } from 'react-router-dom';
 import * as Stickyfill from 'stickyfilljs';
 
 import { ApiPage } from '../components';
 import { IApiNameParam } from '../types';
+import { AuthorizationDocs } from './AuthorizationDocs';
 import DocumentationOverview from './DocumentationOverview';
 import Explore from './Explore';
 
@@ -40,17 +42,57 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   );
 }
 
+function LocalNavHashLink(props: any): JSX.Element {
+  const activeCheck = (match: any, location: any): boolean => {
+    return props.to === location.hash;
+  };
+  const toWithoutHash = props.to.replace(/^#/, '');
+  let id = `hash-link`;
+  if (props.idSlug != null) {
+    id = `${id}-${props.idSlug}`;
+  }
+  id = `${id}-${toWithoutHash}`;
+  return (
+    <NavHashLink activeClassName="usa-current" id={id} isActive={activeCheck} to={props.to}>
+      {props.children}
+    </NavHashLink>
+  );
+};
+
+function OAuthSideNavEntry(apiCategoryKey: string, apiCategory: IApiCategory) {
+  return (
+      <li>
+        <NavLink exact={true} to={`/explore/${apiCategoryKey}/docs/authorization`} 
+            className="side-nav-api-link" id={`side-nav-authorization-link-${apiCategoryKey}`} activeClassName="usa-current">
+            Authorization
+        </NavLink>
+        <ul className="usa-sidenav-sub_list">
+          <li><LocalNavHashLink className="side-nav-api-link" idSlug={apiCategoryKey} to="#getting-started">Getting Started</LocalNavHashLink></li>
+          <li><LocalNavHashLink idSlug={apiCategoryKey} to="#scopes">Scopes</LocalNavHashLink></li>
+          <li><LocalNavHashLink idSlug={apiCategoryKey} to="#id-token">ID Token</LocalNavHashLink></li>
+          <li><LocalNavHashLink idSlug={apiCategoryKey} to="#test-users">Test Users</LocalNavHashLink></li>
+          <li><LocalNavHashLink idSlug={apiCategoryKey} to="#security-considerations">Security Considerations</LocalNavHashLink></li>
+          <li><LocalNavHashLink idSlug={apiCategoryKey} to="#support">Support</LocalNavHashLink></li>
+          <li><LocalNavHashLink idSlug={apiCategoryKey} to="#sample-application">Sample Application</LocalNavHashLink></li>
+        </ul>
+      </li>
+    );
+}
+
 function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory) {
   const subNavLinks = apiCategory.apis.map(api => {
     return SideNavApiEntry(apiCategoryKey, api);
   });
 
+  const authorizationEntry = apiCategory.apiKey ? null : OAuthSideNavEntry(apiCategoryKey, apiCategory);
+
   return (
     <li key={apiCategoryKey}>
-      <NavLink to={`/explore/${apiCategoryKey}`} className="side-nav-category-link" activeClassName="usa-current">
+      <NavLink to={`/explore/${apiCategoryKey}`} id={`side-nav-category-link-${apiCategoryKey}`} className="side-nav-category-link" activeClassName="usa-current">
         {apiCategory.name}
       </NavLink>
       <ul className="usa-sidenav-sub_list">
+        {authorizationEntry}
         {subNavLinks}
       </ul>
     </li>
@@ -91,7 +133,10 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
           <div className="usa-width-two-thirds">
             <Route exact={true} path="/explore/" component={DocumentationOverview} />
             <Route exact={true} path="/explore/:apiCategoryKey" component={ApiPage} />
-            <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" component={Explore} />
+            <Switch>
+              <Route exact={true} path="/explore/:apiCategoryKey/docs/authorization" component={AuthorizationDocs} />
+              <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" component={Explore} />
+            </Switch>
           </div>
         </section>
       </div>

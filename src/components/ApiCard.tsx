@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 import './ApiCard.scss';
 
-interface IApiCardProps {
+export interface IApiCardProps {
   name: string;
   description: string;
   vaInternalOnly: boolean;
   url: string;
 }
 
-export default class ApiCard extends React.Component<IApiCardProps, {}> {
+export class ApiCard extends React.Component<IApiCardProps, {}> {
   protected static defaultProps = {
     vaInternalOnly: false,
   };
@@ -35,3 +35,5 @@ export default class ApiCard extends React.Component<IApiCardProps, {}> {
     );
   }
 }
+
+export default ApiCard;
