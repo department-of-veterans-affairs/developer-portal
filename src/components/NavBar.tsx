@@ -117,6 +117,13 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                 {this.state.visibleSubNavs.documentation && this.renderDocumentationSubNav()}
               </li>
               <li className="main-nav-item">
+                <NavLink to="/updates" className="usa-nav-link"
+                    onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                    onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                  Updates
+                </NavLink>  
+              </li>
+              <li className="main-nav-item">
                 <a href="mailto:api@va.gov" className="usa-nav-link"
                     onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
                     onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
