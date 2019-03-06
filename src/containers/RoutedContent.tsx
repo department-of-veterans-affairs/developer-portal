@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
 
 import GoLive from '../content/goLive.mdx';
+import ReleaseNotes from '../content/release-notes/03-12-2019-release-notes.mdx';
 import Tos from '../content/termsOfService.mdx';
 import { IRootState } from '../types';
 
@@ -24,6 +25,7 @@ class RoutedContent extends React.Component<IRoutedContentProps, { }> {
               <div className="usa-grid">
                 <Route exact={true} path="/terms-of-service" render={this.tosPage} />
                 <Route exact={true} path="/go-live" render={this.goLivePage} />
+                <Route exact={true} path="/updates" render={this.updatesPage} />
               </div>
             </section>
         );
@@ -38,6 +40,12 @@ class RoutedContent extends React.Component<IRoutedContentProps, { }> {
     private tosPage() {
         return (
             <Tos />
+        );
+    }
+
+    private updatesPage() {
+        return (
+            <ReleaseNotes />
         );
     }
 }
