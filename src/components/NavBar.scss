@@ -3,19 +3,29 @@
 .usa-header.usa-header-extended {
   background: $color-primary-darkest;
 
-  .usa-logo a {
-    color: #FFFFFF;
-    font-weight: 300;
+  .usa-logo { 
+    @include media($large-screen) {
+      margin-top: 4rem;
+    }
+
+    a {
+      color: #FFFFFF;
+      font-weight: 300;
+    }
   }
 
   @include media($large-screen) {
     .usa-nav-secondary {
-      top: -7.0rem;
+      top: -8.5rem;
     }
   }
-
+  
   .usa-navbar {
     max-width: none;
+
+    @include media($large-screen) {
+      height: 120px;
+    }
   }
 
   .usa-nav {
