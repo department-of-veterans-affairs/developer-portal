@@ -1,10 +1,18 @@
 @import '../base';
 
 .Explore {
+  background-color: #E5E5E5;
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+
   h1, 
   h2, 
-  h3 {
-    font-family: $font-bitter;
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: $font-sans;
+    color: #323A45;
   }
 
   h1 {
@@ -14,9 +22,13 @@
   }
 
   h2 {
-    font-size: 2rem;
+    font-size: 3rem;
     font-weight: 400;
     margin-bottom: 2rem !important;
+  }
+
+  h3 {
+    font-size: 2rem;
   }
 
   #api-documentation {
@@ -46,6 +58,29 @@
   }
 
   .swagger-ui {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #323A45;
+    }
+
+    h2 {
+      font-size: 3rem;
+    }
+
+    h3 {
+      font-size: 2rem;
+    }
+
+    p,
+    select,
+    label {
+      color: #222;
+    }
+
     .info {
       margin-top: 0;
 
@@ -60,6 +95,7 @@
 
       .title {
         font-family: $font-sans;
+        color: #323A45;
 
         small {
           background: #4C565C;
@@ -188,9 +224,8 @@
 
   .Explore-main.usa-grid {
     max-width: 1200px;
-    margin-top: 3em;
-    margin-bottom: 2em;
     margin-left: 0;
+    color: #222;
   }
 
   .vadp-side-nav {
@@ -198,7 +233,7 @@
   }
 
   .usa-sidenav-list {
-    border: 1px solid #DBDBDD;
+    border: 1px solid #323A45;
 
     > li {
       a.side-nav-category-link {
@@ -229,7 +264,7 @@
 
   .usa-sidenav-list > li,
   .usa-sidenav-sub_list > li {
-    border-top: 1px solid #DBDBDD;
+    border-top: 1px solid #323A45;
 
     a {
       padding-top: 1.2rem;

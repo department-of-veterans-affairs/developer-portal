@@ -4,7 +4,6 @@ a.va-api-card {
   margin: 10px 30px 10px 0;
   border-top: 5px solid #C4C4C4;
   text-decoration: none;
-  color: #323A45;
 
   &:hover {
     border-top: 5px solid #FDB81E;
@@ -31,4 +30,8 @@ h3.va-api-name {
     background-color: #DBDBDD;
     border-radius: 2px;
   }
+}
+
+.va-api-description {
+  color: #222;
 }
