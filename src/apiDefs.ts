@@ -18,6 +18,7 @@ export interface IApiCategory {
   readonly name: string;
   readonly overview: React.StatelessComponent;
   readonly shortDescription: string;
+  readonly longDescription: string;
 }
 
 export interface IApiCategories {
@@ -54,6 +55,7 @@ export const apiDefs : IApiCategories = {
       },
     ],
     buttonText: "Get Your Key",
+    longDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
     name: 'Benefits',
     overview: BenefitsOverview,
     properName: 'Benefits Intake API',
@@ -70,10 +72,11 @@ export const apiDefs : IApiCategories = {
       },
     ],
     buttonText: "Get Your Key",
+    longDescription: "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
     name: 'Facilities',
     overview: FacilitiesOverview,
     properName: 'VA Facilities API',
-    shortDescription: "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
+    shortDescription: 'Use the VA Facility API to find relevant information about a specific VA facility.',
   },
   health: {
     apiKey: false,
@@ -86,10 +89,11 @@ export const apiDefs : IApiCategories = {
       },
     ],
     buttonText: "Get Your Key",
+    longDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.",
     name: 'Health',
     overview: HealthOverview,
     properName: 'Health API',
-    shortDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.",
+    shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
   },
   verification: {
     apiKey: false,
@@ -120,10 +124,11 @@ export const apiDefs : IApiCategories = {
       },
     ],
     buttonText: "Stay Informed",
+    longDescription: 'Empowering Veterans to take control of their data and put it to work.',
     name: "Veteran Verification",
     overview: VerificationOverview,
     properName: 'Veteran Verification API',
-    shortDescription: "Empowering Veterans to take control of their data and put it to work.",
+    shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
   },
 };
 
