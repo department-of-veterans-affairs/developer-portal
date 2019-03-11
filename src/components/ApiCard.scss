@@ -1,3 +1,5 @@
+@import '../base';
+
 a.va-api-card {
   width: 200px;
   min-height: 100px;
@@ -6,17 +8,17 @@ a.va-api-card {
   text-decoration: none;
 
   &:hover {
-    border-top: 5px solid #FDB81E;
+    border-top: 5px solid $color-gold;
   }
 
   &:visited {
     color: #323A45;
   }
-}
 
-h3.va-api-name {
-  margin: 15px 0 !important;
-  font-size: 2rem;
+  h3.va-api-name {
+    margin: 15px 0 !important;
+    font-size: 2rem;
+  }
 }
 
 .va-internal-tag {
@@ -27,7 +29,8 @@ h3.va-api-name {
 
   span {
     padding: 3px 5px;
-    background-color: #DBDBDD;
+    color: #000000;
+    background-color: $color-gold;
     border-radius: 2px;
   }
 }

@@ -1,9 +1,15 @@
 @import '../base';
 
 .Explore {
-  background-color: #E5E5E5;
   padding-top: 5rem;
   padding-bottom: 3rem;
+
+  h1,
+  h2,
+  h3 {
+    font-family: $font-bitter;
+    color: $color-gray-dark;
+  }
 
   h1 {
     margin-top: 0;
@@ -11,7 +17,19 @@
   }
 
   h2 {
-    font-weight: 400;
+    font-size: 4rem;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem !important;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
     margin-bottom: 2rem !important;
   }
 
@@ -120,7 +138,6 @@
     .scheme-container {
       -webkit-box-shadow: none;
       box-shadow: none;
-      background-color: #E5E5E5;
     }
 
     button.authorize {
@@ -225,14 +242,21 @@
         padding-left: 1.1rem;
       }
 
+      a.side-nav-api-link {
+        padding-left: 3.3rem;
+      }
+
       a.side-nav-category-link.usa-current {
         border: none;
         border-left: 5px solid #2F70B5;
-        padding-left: 1.1rem;
       }
 
       a.usa-current + ul.usa-sidenav-sub_list {
         display: block;
+
+        ul.usa-sidenav-sub_list > li > a {
+          padding-left: 5rem;
+        }
       }
 
       a + ul.usa-sidenav-sub_list {
@@ -242,6 +266,8 @@
   }
 
   .usa-sidenav-sub_list {
+    padding-left: 0;
+
     a.side-nav-api-link {
       padding-left: 3rem;
     }

@@ -5,6 +5,7 @@ import { BenefitsOverview,
 
 export interface IApiDescription {
   readonly name: string;
+  readonly openApiDocUrl: string;
   readonly urlFragment: string;
   readonly shortDescription: string;
   readonly vaInternalOnly: boolean;
@@ -31,24 +32,28 @@ export const apiDefs : IApiCategories = {
     apis: [
       {
         name: 'Benefits Intake',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/vba_documents/docs/v0/api`,
         shortDescription: 'Submit PDF claims',
         urlFragment: 'benefits',
         vaInternalOnly: false,
       },
       {
         name: 'Appeals Status',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`,
         shortDescription: 'Track appeals',
         urlFragment: 'appeals',
         vaInternalOnly: false,
       },
       {
         name: 'Benefits Claims',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
         shortDescription: 'Submit and track claims',
         urlFragment: 'claims',
         vaInternalOnly: false,
       },
       {
         name: 'Loan Guaranty',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/loan_guaranty/docs/v1/api`,
         shortDescription: 'Manage VA Home Loans',
         urlFragment: 'loan_guaranty',
         vaInternalOnly: false,
@@ -66,6 +71,7 @@ export const apiDefs : IApiCategories = {
     apis: [
       {
         name: 'VA Facilities API',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/va_facilities/docs/v0/api`,
         shortDescription: "VA Facilities",
         urlFragment: 'facilities',
         vaInternalOnly: false,
@@ -83,6 +89,7 @@ export const apiDefs : IApiCategories = {
     apis: [
       {
         name: 'Veterans Health API',
+        openApiDocUrl: "https://staging-api.va.gov/services/argonaut/v0/openapi.json",
         shortDescription: "VA's Argonaut resources",
         urlFragment: 'argonaut',
         vaInternalOnly: false,
@@ -100,24 +107,28 @@ export const apiDefs : IApiCategories = {
     apis: [
       {
         name: 'Disability Rating',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/disability_rating`,
         shortDescription: "Get a Veteran's disability rating",
         urlFragment: 'disability_rating',
         vaInternalOnly: false,
       },
       {
         name: 'Service History',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/service_history`,
         shortDescription: "Get a Veteran's service history",
         urlFragment: 'service_history',
         vaInternalOnly: false,
       },
       {
         name: 'Veteran Confirmation',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/status`,
         shortDescription: "Get confirmation of a Veteran's status",
         urlFragment: 'veteran_confirmation',
         vaInternalOnly: false,
       },
       {
         name: 'Address Validation',
+        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v1/api`,
         shortDescription: 'Provides methods to standardize and validate addresses.',
         urlFragment: 'address_validation',
         vaInternalOnly: true,
@@ -138,3 +149,33 @@ export const apiCategoryOrder: string[] = [
   'health',
   'verification',
 ];
+
+// If an API with the given URL fragment exists, the given `fn` callback
+// function will be called with the full IApiDescription. The return value is
+// either the return value of the callback function or `null` if no such API
+// exists.
+export function withApiDescription(urlFragment: string, fn: (apiDesc: IApiDescription) => any): any {
+  const api = lookupApi(urlFragment);
+  if (api == null) {
+    return null;
+  }
+
+  return fn(api);
+}
+
+export function lookupApi(urlFragment: string): IApiDescription | null {
+  for (const cat of Object.values(apiDefs)) {
+    for (const api of cat.apis) {
+      if (api.urlFragment === urlFragment) {
+        return api;
+      }
+    }
+  }
+
+  return null;
+}
+
+export function lookupApiCategory(categoryKey: string): IApiCategory | null {
+  return apiDefs[categoryKey];
+}
+
