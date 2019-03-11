@@ -242,15 +242,21 @@
         padding-left: 1.1rem;
       }
 
+      a.side-nav-api-link {
+        padding-left: 3.3rem;
+      }
+
       a.side-nav-category-link.usa-current {
         border: none;
         border-left: 5px solid #2F70B5;
-        padding-left: 1.1rem;
       }
 
       a.usa-current + ul.usa-sidenav-sub_list {
         display: block;
-        padding-left: 1.1rem;
+
+        ul.usa-sidenav-sub_list > li > a {
+          padding-left: 5rem;
+        }
       }
 
       a + ul.usa-sidenav-sub_list {
@@ -260,6 +266,8 @@
   }
 
   .usa-sidenav-sub_list {
+    padding-left: 0;
+
     a.side-nav-api-link {
       padding-left: 3rem;
     }

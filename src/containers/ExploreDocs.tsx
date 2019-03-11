@@ -42,6 +42,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   );
 }
 
+// Constructs a NavHashLink that matches only the fragment part of the current URL.
 function LocalNavHashLink(props: any): JSX.Element {
   const activeCheck = (match: any, location: any): boolean => {
     return props.to === location.hash;
@@ -67,7 +68,7 @@ function OAuthSideNavEntry(apiCategoryKey: string, apiCategory: IApiCategory) {
             Authorization
         </NavLink>
         <ul className="usa-sidenav-sub_list">
-          <li><LocalNavHashLink className="side-nav-api-link" idSlug={apiCategoryKey} to="#getting-started">Getting Started</LocalNavHashLink></li>
+          <li><LocalNavHashLink idSlug={apiCategoryKey} to="#getting-started">Getting Started</LocalNavHashLink></li>
           <li><LocalNavHashLink idSlug={apiCategoryKey} to="#scopes">Scopes</LocalNavHashLink></li>
           <li><LocalNavHashLink idSlug={apiCategoryKey} to="#id-token">ID Token</LocalNavHashLink></li>
           <li><LocalNavHashLink idSlug={apiCategoryKey} to="#test-users">Test Users</LocalNavHashLink></li>
