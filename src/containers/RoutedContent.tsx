@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
 
 import GoLive from '../content/goLive.mdx';
-import ReleaseNotes from '../content/release-notes/03-12-2019-release-notes.mdx';
+import ReleaseNotes from '../content/release-notes/release-notes.mdx';
 import Tos from '../content/termsOfService.mdx';
 import { IRootState } from '../types';
 
