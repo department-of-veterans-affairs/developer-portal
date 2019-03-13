@@ -1,0 +1,15 @@
+{
+  "extends": ["./tslint.json"],
+  "rules": {
+    "no-unused-variable": {
+      "severity": "error"
+    },
+    "no-console": {
+      "severity": "error"
+    },
+    "prefer-const": {
+      "severity": "error"
+    }
+  }
+}
+
