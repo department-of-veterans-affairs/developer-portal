@@ -5,7 +5,7 @@ import { Redirect, Route } from 'react-router-dom';
 
 import { apiCategoryOrder, apiDefs } from './apiDefs';
 import { PageContent } from './components/PageContent';
-import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, Explore, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
+import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
 
 export function focusedRoutes(props: RouteComponentProps<void>) {
     return (
@@ -24,7 +24,7 @@ export function focusedRoutes(props: RouteComponentProps<void>) {
         <Route path="/beta" component={BetaPage} />
         <Route path="/beta-success" component={BetaSuccess} />
         <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
-        <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" component={Explore} />
+        <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
         <Route path="/oauth" component={OAuth} />
       </PageContent>
     );
