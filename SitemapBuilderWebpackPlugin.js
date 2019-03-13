@@ -96,14 +96,14 @@ class SitemapBuilderPlugin {
     };
 
     const paramsConfig = {
-      '/explore/:apiCategoryKey': sitemapData.apiCategoryOrder.map(apiCategory => {
-        return { apiCategoryKey: apiCategory };
-      }),
       '/explore/:apiCategoryKey/docs/:apiName': sitemapData.apiCategoryOrder.map(apiCategory => {
         return {
           apiCategoryKey: apiCategory,
           apiName: sitemapData.apiDefs[apiCategory].apis.map((api) => api.urlFragment),
         };
+      }),
+      '/explore/:apiCategoryKey?': [''].concat(sitemapData.apiCategoryOrder).map(apiCategory => {
+        return { 'apiCategoryKey?': apiCategory };
       }),
     };
 
@@ -113,7 +113,7 @@ class SitemapBuilderPlugin {
         .applyParams(paramsConfig)
         .build(prodURL)
         .save(path.join(paths.appBuild, 'sitemap.xml'))
-    ).sitemaps[0].cache;
+    ).sitemaps[0].cache.replace(/\?<\/loc>/g, '</loc>');
 
     fs.unlinkSync(path.join(paths.appBuild, 'sitemap.xml'));
 

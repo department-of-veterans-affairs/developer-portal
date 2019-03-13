@@ -23,7 +23,7 @@ export function focusedRoutes(props: RouteComponentProps<void>) {
         <Route path="/applied" component={ApplySuccess} />
         <Route path="/beta" component={BetaPage} />
         <Route path="/beta-success" component={BetaSuccess} />
-        <Route path="/explore/:apiCategoryKey" component={ExploreDocs} />
+        <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
         <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" component={Explore} />
         <Route path="/oauth" component={OAuth} />
       </PageContent>
