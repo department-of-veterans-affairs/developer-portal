@@ -9,7 +9,7 @@ export function UpdatesPageHero() {
     return (
         <PageHero
             title="Updates"
-            content="What’s New, News, Articles, and API Release Notes"
+            content="Announcements, News, and API Release Notes"
             button="Request Access" />
     );
 }
