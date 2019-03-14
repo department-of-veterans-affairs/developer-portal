@@ -1,4 +1,26 @@
 /* tslint:disable no-console */
+
+/*  This webpack plugin uses the existing React routes and JSON API definitions 
+*   included in the app to create a sitemap at build using react-router-sitemap
+*   (as opposed to having to maintain a separate map of the app that uses 
+*   Node.js-friendly code or building the sitemap by hand). 
+*   This is complicated by the fact that the app's routes and API definitions 
+*   include dependencies on the components that they render, leading to dependencies 
+*   on not just tsx files but also scss and mdx files.
+*   The processing necessary to transform these dependencies into Node.js-friendly code 
+*   taps into the existing webpack configuration to avoid a reimplementation 
+*   of this workflow that also is run at build.
+*
+*   The basic flow of this plugin is:
+*     1. Copy the webpack.config.prod.js and change the entry point to Routes.tsx
+*     2. Compile Routes.tsx and its dependencies
+*     3. Save the compiled bundle into memory and execute the script 
+*        using a Node.js virtual machine with implementations of web standards (notably DOM and Window)
+*     4. use the resulting exported function `getSitemapData` to build a sitemap with react-router-sitemap
+*     5. add `sitemap.xml` to the original webpack compilation's assets so that it is output like any other file in the build bundle
+*   You can pass this plugin the option verbose: true to receive messages as it moves through this flow.
+*/
+
 const webpack = require('webpack');
 const MemoryFileSystem = require('memory-fs')
 const util = require('util');
