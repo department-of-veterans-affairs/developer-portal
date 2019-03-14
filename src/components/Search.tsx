@@ -7,7 +7,7 @@ export class Search extends React.Component {
         <input name="utf8" type="hidden" value="&#x2713;" />
         <input type="hidden" name="affiliate" id="affiliate" value="developer.va.gov" />
         <label htmlFor="query">Enter Search Term(s):</label>
-        <input type="text" name="query" id="query" autoComplete="off" className="usagov-search-autocomplete" />
+        <input type="text" name="query" id="query" autoComplete="off" className="usagov-search-autocomplete" placeholder="Search developer.va.gov..." />
         <input type="submit" name="commit" value="Search" />
       </form>
     );

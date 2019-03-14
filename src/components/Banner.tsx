@@ -44,7 +44,7 @@ export class Banner extends React.Component<{}, IBannerState> {
           <header className="usa-banner-header">
             <div className="usa-grid usa-banner-inner">
               <div className="official-site-notice">
-                <div><img src={flagIcon} /></div>
+                <div><img src={flagIcon} alt="US flag" /></div>
                 <div className="site-notice-text">
                   <div>An official website of the United States government.</div>
                   <button className="usa-accordion-button usa-banner-button" onClick={this.toggleAccordionVisible}
@@ -77,7 +77,7 @@ export class Banner extends React.Component<{}, IBannerState> {
                       <span className="vcl-text">
                         Talk to the&nbsp;<strong>Veterans Crisis Line</strong>&nbsp;now
                       </span>
-                      <img src={rightArrow} className="vcl-right-arrow" />
+                      <img src={rightArrow} className="vcl-right-arrow" alt="" role="presentation" />
                     </span>
                   </button>
                 </div>

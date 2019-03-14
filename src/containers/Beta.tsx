@@ -126,11 +126,11 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
         <div className="usa-grid form-container">
           <h1 className="underlined-header">Tell us about yourself. <small className="small-header-text">(All responses required unless noted.)</small></h1>
           <form className="usa-width-one-whole" action={env === 'VICPROD' ? "https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" : "https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"} method="POST">
-            <input hidden={true} name="oid" defaultValue={idMappings[env].oid} />
-            <input hidden={true} name="retURL" defaultValue={process.env.REACT_APP_SALESFORCE_RETURN_URL} />
-            <input id="company" maxLength={40} name="company" hidden={true} defaultValue="Intake Form" />
-            <input id="lead_source" maxLength={40} name="lead_source" hidden={true} defaultValue="Intake Form" />
-            <input hidden={true} name="recordType" id="recordType" defaultValue="0123500000012eiAAA" />
+            <input hidden={true} name="oid" defaultValue={idMappings[env].oid} /> {/* tslint:disable-line:react-a11y-input-elements */}
+            <input hidden={true} name="retURL" defaultValue={process.env.REACT_APP_SALESFORCE_RETURN_URL} /> {/* tslint:disable-line:react-a11y-input-elements */}
+            <input id="company" maxLength={40} name="company" hidden={true} defaultValue="Intake Form" /> {/* tslint:disable-line:react-a11y-input-elements */}
+            <input id="lead_source" maxLength={40} name="lead_source" hidden={true} defaultValue="Intake Form" /> {/* tslint:disable-line:react-a11y-input-elements */}
+            <input hidden={true} name="recordType" id="recordType" defaultValue="0123500000012eiAAA" /> {/* tslint:disable-line:react-a11y-input-elements */}
             <input type="text" hidden={true} name={idMappings[env].confirm} id={idMappings[env].confirm} value={this.formatIVetConfirm(this.state.vetConfirm)} readOnly={true} />
 
             <div className="usa-width-one-whole">
@@ -179,8 +179,11 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
                 <input
                   id="vet-checkbox"
                   type="checkbox"
+                  role="checkbox"
                   checked={this.state.vetConfirm.veteran}
+                  aria-checked={this.state.vetConfirm.veteran ? 'true' : 'false'} 
                   onChange={this.updateIVetConfirm('veteran')}
+                  placeholder="Select Veteran"
                 />
                 <label htmlFor="vet-checkbox">Veteran</label>
               </div>
@@ -188,24 +191,33 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
                 <input
                   id="vet-family-checkbox"
                   type="checkbox"
+                  role="checkbox"
                   checked={this.state.vetConfirm.family}
-                  onChange={this.updateIVetConfirm('family')} />
+                  aria-checked={this.state.vetConfirm.family ? 'true' : 'false'}
+                  onChange={this.updateIVetConfirm('family')}
+                  placeholder="Select Veteran's family member" />
                 <label htmlFor="vet-family-checkbox">Veteran's family member</label>
               </div>
               <div className="form-checkbox">
                 <input
                   id="vet-caretaker-checkbox"
                   type="checkbox"
+                  role="checkbox"
                   checked={this.state.vetConfirm.caretaker}
-                  onChange={this.updateIVetConfirm('caretaker')} />
+                  aria-checked={this.state.vetConfirm.caretaker ? 'true' : 'false'}
+                  onChange={this.updateIVetConfirm('caretaker')}
+                  placeholder="Select Veteran's caretaker" />
                 <label htmlFor="vet-caretaker-checkbox">Veteran's caretaker</label>
               </div>
               <div className="form-checkbox">
                 <input
                   id="servicemember-checkbox"
                   type="checkbox"
+                  role="checkbox"
                   checked={this.state.vetConfirm.servicemember}
-                  onChange={this.updateIVetConfirm('servicemember')} />
+                  aria-checked={this.state.vetConfirm.servicemember ? 'true' : 'false'}
+                  onChange={this.updateIVetConfirm('servicemember')}
+                  placeholder="Select Servicemember" />
                 <label htmlFor="servicemember-checkbox">Servicemember</label>
               </div>
             </div>
@@ -219,7 +231,9 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
                       id={`${idMappings[env].cell}-1`}
                       name={idMappings[env].cell}
                       checked={this.state.iPhone}
+                      aria-checked={this.state.iPhone ? 'true' : 'false'}
                       type="checkbox"
+                      role="checkbox"
                       value="iPhone"
                       onChange={this.toggleChecked('iPhone')}
                     />
@@ -230,7 +244,9 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
                       id={`${idMappings[env].cell}-2`}
                       name={idMappings[env].cell}
                       checked={this.state.computer}
+                      aria-checked={this.state.computer ? 'true' : 'false'}
                       type="checkbox"
+                      role="checkbox"
                       onChange={this.toggleChecked('computer')}
                       value="Computer, tablet or other smartphone"
                     />
@@ -245,7 +261,9 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
                       id={`${idMappings[env].auth}-2`}
                       name={idMappings[env].auth}
                       type="checkbox"
+                      role="checkbox"
                       checked={this.state.ds}
+                      aria-checked={this.state.ds ? 'true' : 'false'}
                       onChange={this.toggleChecked('ds')}
                       value="DS" />
                     <label htmlFor={`${idMappings[env].auth}-2`}>Access VA on-line services with <img alt="DSLogon Icon" src={ds} />DS Logon</label>
@@ -255,7 +273,9 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
                       id={`${idMappings[env].auth}-1`}
                       name={idMappings[env].auth}
                       type="checkbox"
+                      role="checkbox"
                       checked={this.state.idme}
+                      aria-checked={this.state.idme ? 'true' : 'false'}
                       onChange={this.toggleChecked('idme')}
                       value="ID.Me" />
                     <label htmlFor={`${idMappings[env].auth}-1`}>Access VA on-line services with <img alt="DSLogon Icon" src={idme} /></label>
@@ -265,7 +285,9 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
                       id={`${idMappings[env].auth}-3`}
                       name={idMappings[env].auth}
                       type="checkbox"
+                      role="checkbox"
                       checked={this.state.mhv}
+                      aria-checked={this.state.mhv ? 'true' : 'false'}
                       onChange={this.toggleChecked('mhv')}
                       value="HealtheVet" />
                     <label htmlFor={`${idMappings[env].auth}-3`}>

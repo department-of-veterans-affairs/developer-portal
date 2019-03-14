@@ -27,55 +27,55 @@
       "severity": "off"
     },
     "react-a11y-anchors": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-aria-unsupported-elements": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-event-has-role": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-image-button-has-alt": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-img-has-alt": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-input-elements": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-lang": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-meta": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-no-onchange": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-props": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-proptypes": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-required": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-role": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-role-has-required-aria-props": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-role-supports-aria-props": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-tabindex-no-positive": {
-      "severity": "warning"
+      "severity": "error"
     },
     "react-a11y-titles": {
-      "severity": "warning"
+      "severity": "error"
     },
     "jsx-no-lambda": {
       "severity": "off"
