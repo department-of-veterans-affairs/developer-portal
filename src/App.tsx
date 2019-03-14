@@ -7,7 +7,7 @@ import { ConnectedRouter } from 'react-router-redux'
 
 
 import { Footer, NavBar, PageContent } from './components';
-import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
+import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent, Updates } from './containers';
 import { history } from './store';
 
 let currentPath = history.location.pathname;
@@ -77,7 +77,7 @@ class App extends React.Component {
         <Route path="/beta-success" component={BetaSuccess} />
         <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
         <Route path="/oauth" component={OAuth} />
-        <Route path="/updates" component={RoutedContent} />
+        <Route path="/updates" component={Updates} />
       </PageContent>
     );
   }

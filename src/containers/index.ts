@@ -7,5 +7,6 @@ export * from './ExploreDocs';
 import Home from './Home';
 import OAuth from './OAuth';
 import RoutedContent from './RoutedContent';
+import Updates from './Updates';
 
-export { ApplyForm, ApplySuccess, Explore, Home, OAuth, RoutedContent };
+export { ApplyForm, ApplySuccess, Explore, Home, OAuth, RoutedContent, Updates };
