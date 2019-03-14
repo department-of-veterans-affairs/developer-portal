@@ -19,7 +19,16 @@ export class Updates extends React.Component {
         return (
             <div className="Explore">
                 <Route exact={true} path="/updates" component={UpdatesPageHero} />
-                <ReleaseNotesPage />
+                <section className="usa-section">
+                    <div className="usa-grid">
+                        <div className="usa-width-one-third sticky">
+                            Space for SideNav
+                        </div>
+                        <div className="usa-width-two-thirds">
+                            <ReleaseNotesPage />
+                        </div>
+                    </div>
+                </section>
             </div>
         );
     }
