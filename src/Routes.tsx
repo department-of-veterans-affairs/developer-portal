@@ -7,7 +7,7 @@ import { apiCategoryOrder, apiDefs } from './apiDefs';
 import { PageContent } from './components/PageContent';
 import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
 
-export function focusedRoutes(props: RouteComponentProps<void>) {
+export function topLevelRoutes(props: RouteComponentProps<void>) {
     return (
       <PageContent {...props} >
         <Route exact={true} path="/" component={Home} />
@@ -34,6 +34,6 @@ export function focusedRoutes(props: RouteComponentProps<void>) {
     return {
       apiCategoryOrder,
       apiDefs,
-      focusedRoutes,
+      topLevelRoutes,
     };
   }

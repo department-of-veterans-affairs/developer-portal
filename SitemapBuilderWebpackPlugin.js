@@ -87,7 +87,7 @@ class SitemapBuilderPlugin {
     const path = require('path');
     const paths = require('./config/paths');
     const prodURL = require(paths.appPackageJson).homepage;
-    const routes = sitemapData.focusedRoutes();
+    const routes = sitemapData.topLevelRoutes();
     const Sitemap = require('react-router-sitemap').default;
 
     const pathFilter = {

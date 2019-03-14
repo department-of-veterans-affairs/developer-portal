@@ -6,7 +6,7 @@ import { ConnectedRouter } from 'react-router-redux';
 
 
 import { Footer, NavBar } from './components';
-import { focusedRoutes } from './Routes';
+import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
 let currentPath = history.location.pathname;
@@ -49,7 +49,7 @@ class App extends React.Component {
           <div className="App">
             <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
             <div className="main" role="main">
-              <Route path="/" render={focusedRoutes} />
+              <Route path="/" render={topLevelRoutes} />
             </div>
             <Footer />
           </div>
