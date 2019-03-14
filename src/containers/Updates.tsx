@@ -21,7 +21,7 @@ export class Updates extends React.Component {
                 <Route exact={true} path="/updates" component={UpdatesPageHero} />
                 <section className="usa-section">
                     <div className="usa-grid">
-                        <div className="usa-width-one-third sticky">
+                        <div className="usa-width-one-third sticky" style={{color: 'white'}}>
                             Space for SideNav
                         </div>
                         <div className="usa-width-two-thirds">
