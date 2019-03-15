@@ -23,7 +23,7 @@ RUN groupadd --gid 504 jenkins \
 
 USER jenkins
 
-RUN npm install -g s3-cli
+RUN npm install -g npm s3-cli
 
 COPY package.json package-lock.json ./
 
