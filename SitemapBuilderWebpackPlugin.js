@@ -124,9 +124,7 @@ class SitemapBuilderPlugin {
           apiName: sitemapData.apiDefs[apiCategory].apis.map((api) => api.urlFragment),
         };
       }),
-      '/explore/:apiCategoryKey?': [''].concat(sitemapData.apiCategoryOrder).map(apiCategory => {
-        return { 'apiCategoryKey?': apiCategory };
-      }),
+      '/explore/:apiCategoryKey?': [ { 'apiCategoryKey?': sitemapData.apiCategoryOrder } ],
     };
 
     const sitemap = (
@@ -135,7 +133,7 @@ class SitemapBuilderPlugin {
         .applyParams(paramsConfig)
         .build(prodURL)
         .save(path.join(paths.appBuild, 'sitemap.xml'))
-    ).sitemaps[0].cache.replace(/\?<\/loc>/g, '</loc>');
+    ).sitemaps[0].cache;
 
     fs.unlinkSync(path.join(paths.appBuild, 'sitemap.xml'));
 
