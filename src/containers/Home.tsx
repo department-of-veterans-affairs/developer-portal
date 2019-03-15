@@ -87,7 +87,7 @@ class Home extends React.Component {
                   <ol>
                     {request}
                     <li><a href="https://github.com/department-of-veterans-affairs/vets-api-clients/">Build your app</a></li>
-                    <li><a href="https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/Path-to-Production.md#production-api-access">Request production access</a></li>
+                    <li><Link to="/go-live">Request production access</Link></li>
                   </ol>
                   <p>You can also <Link to ="/explore">check out our documentation for more information.</Link></p>
                 </div>
