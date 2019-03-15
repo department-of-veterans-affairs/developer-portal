@@ -3,13 +3,13 @@ import * as React from 'react';
 import { Route } from 'react-router-dom';
 
 import { PageHero } from '../components';
-import ReleaseNotesPage from '../content/release-notes/release-notes.mdx';
+import ReleaseNotesPage from '../content/updates/updates.mdx';
 
 export function UpdatesPageHero() {
     return (
         <PageHero
             title="Updates"
-            content="Announcements, News, and API Release Notes"
+            content="Press Releases, News, Media, and Release Notes"
             button="Request Access" />
     );
 }
