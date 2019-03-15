@@ -124,6 +124,12 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
     }
   }
 
+  public componentDidUpdate(prevProps : RouteComponentProps<IApiNameParam>) {
+    if (this.props.location.pathname !== prevProps.location.pathname) {
+      window.scrollTo(0, 0);
+    }
+  }
+
   public render() {
     return (
       <div className="Explore">
