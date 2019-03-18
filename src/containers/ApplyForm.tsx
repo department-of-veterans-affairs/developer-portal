@@ -113,26 +113,20 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <div className="form-checkbox">
                   <input
                     type="checkbox"
-                    role="checkbox"
                     id="benefits"
                     name="benefits"
                     checked={apis.benefits}
-                    aria-checked={apis.benefits ? 'true' : 'false'}
-                    onChange={props.toggleBenefits}
-                    placeholder="Checkbox for VA Benefits API" />
+                    onChange={props.toggleBenefits} />
                   <label htmlFor="benefits">VA Benefits API</label>
                 </div>
 
                 <div className="form-checkbox">
                   <input
                     type="checkbox"
-                    role="checkbox"
                     id="facilities"
                     name="facilities"
                     checked={apis.facilities}
-                    aria-checked={apis.facilities ? 'true' : 'false'}
-                    onChange={props.toggleFacilities}
-                    placeholder="Checkbox for VA Facilities API" />
+                    onChange={props.toggleFacilities} />
                   <label htmlFor="facilities">VA Facilities API</label>
                 </div>
 
@@ -141,26 +135,20 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <div className="form-checkbox">
                   <input
                     type="checkbox"
-                    role="checkbox"
                     id="health"
                     name="health"
                     checked={apis.health}
-                    aria-checked={apis.health ? 'true' : 'false'}
-                    onChange={props.toggleHealth}
-                    placeholder="Checkbox for VA Health API" />
+                    onChange={props.toggleHealth} />
                   <label htmlFor="health">VA Health API</label>
                 </div>
 
                 <div className="form-checkbox">
                   <input
                     type="checkbox"
-                    role="checkbox"
                     id="verification"
                     name="verification"
                     checked={apis.verification}
-                    aria-checked={apis.verification ? 'true' : 'false'}
-                    onChange={props.toggleVerification}
-                    placeholder="Checkbox for VA Veteran Verification API" />
+                    onChange={props.toggleVerification} />
                   <label htmlFor="verification">VA Veteran Verification API</label>
                 </div>
 
