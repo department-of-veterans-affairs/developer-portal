@@ -1,13 +1,12 @@
 import * as React from 'react';
 
 import { FlagsProvider } from 'flag';
-import { RouteComponentProps } from 'react-router'
-import { Redirect, Route } from 'react-router-dom'
-import { ConnectedRouter } from 'react-router-redux'
+import { Route } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
 
 
-import { Footer, NavBar, PageContent } from './components';
-import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
+import { Footer, NavBar } from './components';
+import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
 let currentPath = history.location.pathname;
@@ -50,34 +49,12 @@ class App extends React.Component {
           <div className="App">
             <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
             <div className="main" role="main">
-              <Route path="/" render={this.focusedRoutes} />
+              <Route path="/" render={topLevelRoutes} />
             </div>
             <Footer />
           </div>
         </ConnectedRouter>
       </FlagsProvider>
-    );
-  }
-
-  private focusedRoutes(props: RouteComponentProps<void>) {
-    return (
-      <PageContent {...props} >
-        <Route exact={true} path="/" component={Home} />
-        <Route exact={true} path="/index.html" component={Home} />
-
-        {/* Legacy routes that we want to maintain: */}
-        <Route path="/explore/terms-of-service" render={props1 => <Redirect to="/terms-of-service" />} />
-
-        {/* Current routes: */}
-        <Route path="/go-live" component={RoutedContent} />
-        <Route path="/terms-of-service" component={RoutedContent} />
-        <Route path="/apply" component={ApplyForm} />
-        <Route path="/applied" component={ApplySuccess} />
-        <Route path="/beta" component={BetaPage} />
-        <Route path="/beta-success" component={BetaSuccess} />
-        <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
-        <Route path="/oauth" component={OAuth} />
-      </PageContent>
     );
   }
 }

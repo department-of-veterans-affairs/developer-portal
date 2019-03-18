@@ -1,0 +1,50 @@
+@import "../base";
+
+.vadp-search-form {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #FFFFFF;
+  padding-top: 3.0rem;
+  padding-bottom: 3.0rem;
+
+  @include media($large-screen) {
+    background-color: $color-primary-darkest;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  label {
+    margin-top: 0;
+  }
+
+  input.usagov-search-autocomplete,
+  button.vadp-search-submit {
+    margin: 0;
+
+    &:focus {
+      outline-width: 0;
+    }
+  }
+
+  input.usagov-search-autocomplete {
+    font-size: 16px;
+    height: 42px;
+    width: 80%;
+    max-width: none;
+    padding: 8px;
+
+    @include media($large-screen) {
+      width: 240px;
+      max-width: inherit;
+    }
+  }
+
+  button.vadp-search-submit {
+    border-radius: 0 5px 5px 0;
+    width: 40px;
+    height: 42px;
+    padding: 10px;
+  }
+}
