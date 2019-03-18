@@ -1,7 +1,7 @@
 @import "../base";
 
 .usa-header.usa-header-extended {
-  background: $color-dark-blue;
+  background: $color-blue-darkest;
 
   .usa-logo { 
     @include media($large-screen) {

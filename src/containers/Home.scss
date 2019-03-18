@@ -36,6 +36,14 @@
       &.getting-started {
         margin-top: 3rem;
         background-color: $color-primary-lightest;
+
+        a {
+          color: $color-blue-darkest;
+
+          &:visited {
+            color: $color-purple;
+          }
+        }
       }
     }
 
