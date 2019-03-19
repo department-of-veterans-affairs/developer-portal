@@ -1,0 +1,47 @@
+@import '../base';
+
+.Updates {
+  .usa-hero {
+    background-color: #4a4a4a;
+    background-image: url('../assets/home-page-banner.png');
+
+    .usa-hero-callout {
+      background: none;
+      color: $color-white;
+      max-width: 100%;
+      padding-left: 0;
+
+      h1 {
+        font-family: $font-sans;
+        color: $color-white;
+      }
+
+      p {
+        font-size: 1.25em;
+        max-width: 700px;
+      }
+    }
+  }
+
+  .usa-section {
+    padding-top: 0;
+
+    > div {
+      margin-bottom: 3rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .Updates-main.usa-grid {
+    max-width: 1200px;
+    margin-left: 0;
+  }
+
+  .vadp-side-nav {
+    padding-right: 3rem;
+  }
+}
+
