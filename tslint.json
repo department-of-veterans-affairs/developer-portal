@@ -17,11 +17,14 @@
       },
       "severity": "error"
     },
+    "no-unused-variable": {
+      "severity": "off"
+    },
     "no-console": {
-      "severity": "error"
+      "severity": "off"
     },
     "prefer-const": {
-      "severity": "error"
+      "severity": "off"
     },
     "react-a11y-anchors": {
       "severity": "warning"

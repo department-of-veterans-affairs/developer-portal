@@ -32,7 +32,7 @@ interface INavBarState {
 export class NavBar extends React.Component<INavBarProps, INavBarState> {
   constructor(props: INavBarProps) {
     super(props);
-    this.state = { 
+    this.state = {
       menuVisible: false,
       useDefaultNavLink: true,
       visibleSubNavs: {
@@ -43,7 +43,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
   public render() {
     let apply;
-    let search;
 
     if (process.env.REACT_APP_SALESFORCE_APPLY === 'true') {
       apply = (
@@ -54,12 +53,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
     } else {
       apply = (
         <Link to="/apply" className="usa-button">Get Started</Link>
-      );
-    }
-
-    if (process.env.REACT_APP_SEARCH_ENABLED === 'true') {
-      search = (
-        <Search />
       );
     }
 
@@ -94,7 +87,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                 </li>
                 <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
                   <li className="secondary-nav-item">
-                    {search}
+                    <Search />
                   </li>
                 </MediaQuery>
               </ul>
@@ -102,18 +95,18 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             <ul className="usa-nav-primary usa-accordion">
               <li className="main-nav-item">
                 <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
-                  <NavLink to="/explore" className="usa-nav-link" activeClassName="default-nav-link" 
-                      isActive={this.checkActiveNavLink}>
+                  <NavLink to="/explore" className="usa-nav-link" activeClassName="default-nav-link"
+                    isActive={this.checkActiveNavLink}>
                     Documentation
-                  </NavLink>  
+                  </NavLink>
                 </MediaQuery>
                 <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
                   <button className="usa-nav-link" onClick={this.toggleDocumentationSubMenu}>
                     <span>Documentation</span>
-                    <img src={this.state.visibleSubNavs.documentation ? minusIcon : plusIcon} 
-                        alt="Expand Documentation" aria-label="Expand Documentation" className="nav-item-button" />
+                    <img src={this.state.visibleSubNavs.documentation ? minusIcon : plusIcon}
+                      alt="Expand Documentation" aria-label="Expand Documentation" className="nav-item-button" />
                   </button>
-                </MediaQuery> 
+                </MediaQuery>
                 {this.state.visibleSubNavs.documentation && this.renderDocumentationSubNav()}
               </li>
               <li className="main-nav-item">
@@ -126,14 +119,17 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
               </li>
               <li className="main-nav-item">
                 <a href="mailto:api@va.gov" className="usa-nav-link"
-                    onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
-                    onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
                   Support
                 </a>
               </li>
             </ul>
           </div>
         </nav>
+        <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+          <Search />
+        </MediaQuery>
       </header>
     );
   }
@@ -167,8 +163,8 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
 
   private toggleDocumentationSubMenu = () => {
     this.setState((state: INavBarState) => {
-      return { 
-        visibleSubNavs: { 
+      return {
+        visibleSubNavs: {
           documentation: !state.visibleSubNavs.documentation,
         },
       };

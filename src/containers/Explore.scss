@@ -1,6 +1,37 @@
 @import '../base';
 
 .Explore {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+
+  h1,
+  h2,
+  h3 {
+    color: $color-gray-dark;
+  }
+
+  h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem !important;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 2rem !important;
+  }
+
   #api-documentation {
     margin-top: 0;
   }
@@ -28,8 +59,31 @@
   }
 
   .swagger-ui {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #323A45;
+    }
+
+    h2 {
+      font-size: 3rem;
+    }
+
+    h3 {
+      font-size: 2rem;
+    }
+
+    p,
+    select,
+    label {
+      color: #222;
+    }
+
     .info {
-      margin-top :0;
+      margin-top: 0;
 
       p {
         font-family: $font-sans;
@@ -42,6 +96,7 @@
 
       .title {
         font-family: $font-sans;
+        color: #323A45;
 
         small {
           background: #4C565C;
@@ -168,32 +223,39 @@
     font-weight: 600;
   }
 
-  .Explore-main{
-    margin-top: 3em;
-    margin-bottom: 2em;
+  .Explore-main.usa-grid {
+    max-width: 1200px;
+    margin-left: 0;
   }
 
-  .Explore-main,
-  .usa-grid {
-    margin-left: 3rem;
+  .vadp-side-nav {
+    padding-right: 3rem;
   }
 
   .usa-sidenav-list {
-    border: 1px solid #DBDBDD;
+    border: 2px solid #DBDBDD;
+    background-color: $color-white;
 
     > li {
       a.side-nav-category-link {
         padding-left: 1.1rem;
       }
 
+      a.side-nav-api-link {
+        padding-left: 3.3rem;
+      }
+
       a.side-nav-category-link.usa-current {
         border: none;
         border-left: 5px solid #2F70B5;
-        padding-left: 1.1rem;
       }
 
       a.usa-current + ul.usa-sidenav-sub_list {
         display: block;
+
+        ul.usa-sidenav-sub_list > li > a {
+          padding-left: 5rem;
+        }
       }
 
       a + ul.usa-sidenav-sub_list {
@@ -203,6 +265,8 @@
   }
 
   .usa-sidenav-sub_list {
+    padding-left: 0;
+
     a.side-nav-api-link {
       padding-left: 3rem;
     }
@@ -210,11 +274,15 @@
 
   .usa-sidenav-list > li,
   .usa-sidenav-sub_list > li {
-    border-top: 1px solid #DBDBDD;
+    border-top: 2px solid #DBDBDD;
 
     a {
       padding-top: 1.2rem;
       padding-bottom: 1.2rem;
+    }
+
+    a {
+      color: #222;
     }
 
     a.usa-current {
@@ -226,23 +294,13 @@
     }
   }
 
-  .usa-hero {
-    background-color: #4a4a4a;
-    background-image: url('../assets/home-page-banner.png');
+  .va-api-container {
+    display: flex;
+    flex-flow: row wrap;
 
-    .usa-hero-callout {
-      background: none;
-      color: $color-white;
-      max-width: 100%;
-      padding-left: 0;
-
-      h1 {
-        font-family: $font-sans;
-      }
-
-      p {
-        font-size: 1.25em;
-        max-width: 700px;
+    a.va-api-card {
+      @media screen and (max-width: 767px) {
+        width: 100%;
       }
     }
   }

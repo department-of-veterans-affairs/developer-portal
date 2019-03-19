@@ -248,6 +248,10 @@ node('vetsgov-general-purpose') {
     if (supercededByConcurrentBuild()) { return }
     if (!onDeployableBranch()) { return }
 
+    // This could only happen in the rare case that a PR is opened from master -> another branch,
+    // which is unlikely, but potentially disastrous.
+    if (prNum) { return } 
+
     try {
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                         usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {

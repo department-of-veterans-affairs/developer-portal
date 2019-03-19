@@ -1,21 +1,31 @@
 @import "../base";
 
 .usa-header.usa-header-extended {
-  background: $color-primary-darkest;
+  background: $color-dark-blue;
 
-  .usa-logo a {
-    color: #FFFFFF;
-    font-weight: 300;
+  .usa-logo { 
+    @include media($large-screen) {
+      margin-top: 4rem;
+    }
+
+    a {
+      color: #FFFFFF;
+      font-weight: 300;
+    }
   }
 
   @include media($large-screen) {
     .usa-nav-secondary {
-      top: -7.0rem;
+      top: -8.5rem;
     }
   }
-
+  
   .usa-navbar {
     max-width: none;
+
+    @include media($large-screen) {
+      height: 120px;
+    }
   }
 
   .usa-nav {
@@ -129,9 +139,15 @@
 
       @include media($large-screen) {
         padding-left: 1.5rem;
+        margin-bottom: 3px;
+
+        &.default-nav-link {
+          margin-bottom: 0;
+        }
 
         &:hover {
           border-bottom: 3px solid #FDB81E;
+          margin-bottom: 0;
         }
       }
     }
