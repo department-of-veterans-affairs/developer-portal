@@ -61,10 +61,10 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
           </div>
           <button className="usa-menu-btn" onClick={this.toggleMenuVisible}>Menu</button>
         </div>
-        <nav className={navClasses} role="navigation">
+        <nav className={navClasses}>
           <div className="usa-nav-inner">
             <button className="usa-nav-close" onClick={this.toggleMenuVisible}>
-              <img src={closeButton} />
+              <img src={closeButton} alt="Close button" />
             </button>
             <div className="usa-nav-secondary">
               <ul className="usa-unstyled-list">

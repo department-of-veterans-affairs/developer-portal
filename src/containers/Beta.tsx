@@ -126,11 +126,11 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
         <div className="usa-grid form-container">
           <h1 className="underlined-header">Tell us about yourself. <small className="small-header-text">(All responses required unless noted.)</small></h1>
           <form className="usa-width-one-whole" action={env === 'VICPROD' ? "https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" : "https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"} method="POST">
-            <input hidden={true} name="oid" defaultValue={idMappings[env].oid} />
-            <input hidden={true} name="retURL" defaultValue={process.env.REACT_APP_SALESFORCE_RETURN_URL} />
-            <input id="company" maxLength={40} name="company" hidden={true} defaultValue="Intake Form" />
-            <input id="lead_source" maxLength={40} name="lead_source" hidden={true} defaultValue="Intake Form" />
-            <input hidden={true} name="recordType" id="recordType" defaultValue="0123500000012eiAAA" />
+            <input hidden={true} name="oid" value={idMappings[env].oid} />
+            <input hidden={true} name="retURL" value={process.env.REACT_APP_SALESFORCE_RETURN_URL} />
+            <input id="company" maxLength={40} name="company" hidden={true} value="Intake Form" />
+            <input id="lead_source" maxLength={40} name="lead_source" hidden={true} value="Intake Form" />
+            <input hidden={true} name="recordType" id="recordType" value="0123500000012eiAAA" />
             <input type="text" hidden={true} name={idMappings[env].confirm} id={idMappings[env].confirm} value={this.formatIVetConfirm(this.state.vetConfirm)} readOnly={true} />
 
             <div className="usa-width-one-whole">

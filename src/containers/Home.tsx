@@ -70,9 +70,9 @@ class Home extends React.Component {
                   </div>
                 </div>
               </section>
-              <section className="usa-section getting-started" role="region" aria-labelledby="to-get-started">
+              <section className="usa-section getting-started" role="region" aria-labelledby="get-started">
                 <div className="usa-grid">
-                  <h2>Ready to Get Started?</h2>
+                  <h2 id="get-started">Ready to Get Started?</h2>
                   <p>Below is a list of steps below to help you get started with the VA API Platform Management:</p>
                   <ol>
                     <li><Link to="/apply">Request an API Key</Link></li>
