@@ -42,20 +42,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
   }
 
   public render() {
-    let apply;
-
-    if (process.env.REACT_APP_SALESFORCE_APPLY === 'true') {
-      apply = (
-        <a className="usa-button" href="https://vacommunity.secure.force.com/survey/ExAM__AMAndAnswerCreationPage?paId=a2ft0000000VVnJ">
-          Sign Up
-        </a>
-      );
-    } else {
-      apply = (
-        <Link to="/apply" className="usa-button">Get Started</Link>
-      );
-    }
-
     const navClasses = classNames({
       'is-hidden': this.props.hideLinks,
       'is-visible': !this.props.hideLinks && this.state.menuVisible,
@@ -83,7 +69,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             <div className="usa-nav-secondary">
               <ul className="usa-unstyled-list">
                 <li className="secondary-nav-item">
-                  {apply}
+                  <Link to="/apply" className="usa-button">Get Started</Link>
                 </li>
                 <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
                   <li className="secondary-nav-item">
