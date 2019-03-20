@@ -208,7 +208,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private renderError() {
     const assistanceTrailer = (
-      <span>Need assistance? Email us at <a href="mailto:api@va.gov">api@va.gov</a></span>
+      <span>Need assistance? Create an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">Github page</a></span>
     );
 
     if (this.props.errorStatus) {
