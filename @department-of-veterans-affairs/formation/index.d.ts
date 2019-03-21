@@ -1,4 +1,3 @@
-declare module '@department-of-veterans-affairs/formation/AlertBox';
 declare module '@department-of-veterans-affairs/formation/ErrorableCheckbox';
 declare module '@department-of-veterans-affairs/formation/ErrorableTextArea';
 declare module '@department-of-veterans-affairs/formation/ErrorableTextInput';
