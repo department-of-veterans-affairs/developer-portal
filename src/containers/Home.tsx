@@ -10,7 +10,7 @@ class Home extends React.Component {
         return (
             <div className="Home">
               <div className="site-disclaimer">
-                <strong>This is beta site.</strong> We are always looking to make improvements. <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
+                <strong>This is a beta site.</strong> We are always looking to make improvements. <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
                   <strong>Send us your feedback</strong>
                 </a>
               </div>
