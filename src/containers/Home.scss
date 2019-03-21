@@ -1,6 +1,12 @@
 @import '../base';
 
 .Home {
+   .site-disclaimer {
+     background-color: $color-gold;
+     padding-top: 16px;
+     padding-bottom: 16px;
+     padding-left: 20px;
+   }
     .usa-hero {
         background-color: #4a4a4a;
         background-image: url('../assets/home-page-banner.png');

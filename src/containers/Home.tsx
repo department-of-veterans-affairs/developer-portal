@@ -9,6 +9,11 @@ class Home extends React.Component {
     public render() {
         return (
             <div className="Home">
+              <div className="site-disclaimer">
+                <strong>This is beta site.</strong> We are always looking to make improvements. <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
+                  <strong>Send us your feedback</strong>
+                </a>
+              </div>
               <PageHero
                   title="Put VA Data to Work"
                   content="Empowering our partners to build innovative, Veteran-centered solutions."
