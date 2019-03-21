@@ -114,7 +114,7 @@ class SitemapBuilderPlugin {
 
     const pathFilter = {
       isValid: false,
-      rules: [/index.html|\/terms-of-service|\/applied|\/beta-success/],
+      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success/],
     };
 
     const paramsConfig = {
