@@ -164,7 +164,7 @@ class ApplyForm extends React.Component<IApplyProps> {
                 checked={termsOfService}
                 label={(
                     <span>
-                      I agree to the <Link target="_blank" to="/explore/terms-of-service">Terms of Service</Link>
+                      I agree to the <Link target="_blank" to="/terms-of-service">Terms of Service</Link>
                     </span>
                 )}
                 onValueChange={props.toggleAcceptTos}
