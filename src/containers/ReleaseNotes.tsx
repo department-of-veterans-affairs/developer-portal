@@ -1,24 +1,53 @@
 import * as React from 'react';
 import { NavHashLink } from 'react-router-hash-link';
 
-
+import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 
-import ReleaseNotesPage from '../content/release-notes/release-notes.mdx';
+import { ApiPageReleaseNotes } from '../components';
 import { IApiNameParam } from '../types';
+import ReleaseNotesOverview from './ReleaseNotesOverview';
 
-import { apiCategoryOrder, apiDefs, IApiCategory } from '../apiDefs';
+import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
+
+import './Explore.scss';
+
+function VaInternalTag() {
+  return (
+    <span><small>Internal VA use only.</small></span>
+  );
+}
+
+function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
+  const internalTag = (api.vaInternalOnly === true) ? VaInternalTag() : null;
+
+  return (
+    <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
+      <li key={api.urlFragment}>
+        <NavHashLink className="side-nav-api-link" activeClassName="usa-current" id={`hash-link-${apiCategoryKey}-${api.urlFragment}`} /*isActive={activeCheck}*/ to={`#${api.urlFragment}`}>
+          {api.name}
+          <br />
+          {internalTag}
+        </NavHashLink>
+      </li>
+    </Flag>
+  );
+}
 
 function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory) {
-  // const activeCheck = (match: any, location: any): boolean => {
-  //   return ('#' + apiCategoryKey) === location.hash;
-  // };
+  const subNavLinks = apiCategory.apis.map(api => {
+    return SideNavApiEntry(apiCategoryKey, api);
+  });
+
   return (
     <li key={`hash-link-${apiCategoryKey}`}>
-      <NavHashLink className="side-nav-category-link" activeClassName="usa-current" id={`hash-link-${apiCategoryKey}`} /*isActive={activeCheck}*/ to={`#${apiCategoryKey}`}>
+      <NavLink to={`/release-notes/${apiCategoryKey}`} id={`side-nav-category-link-${apiCategoryKey}`} className="side-nav-category-link" activeClassName="usa-current">
         {apiCategory.name}
-      </NavHashLink>
+      </NavLink>
+      <ul className="usa-sidenav-sub_list">
+        {subNavLinks}
+      </ul>
     </li>
   );
 }
@@ -38,8 +67,18 @@ export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>)
   );
 }
 
+function renderOveriew(routeProps: any, props: any) {
+  return <ReleaseNotesOverview {...routeProps} {...props} description={props.description} halo={props.halo} header={props.header} parent={props.parent} />
+}
+
 export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   private navRef = React.createRef<HTMLDivElement>();
+  private overviewProps = {
+    description: 'This paragraph would explain that the program is continuously deployed and that the versions are connected to Github messages and other pertinent details related to introducing our release notes.', 
+    halo: 'Release Notes',
+    header: 'Overview', 
+    parent: 'release-notes',
+  };
 
   public render() {
     return (
@@ -50,7 +89,8 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
               <SideNav {...this.props} />
             </div>
             <div className="usa-width-two-thirds">
-              <ReleaseNotesPage />
+              <Route exact={true} path="/release-notes/" render={(routeProps) => renderOveriew(routeProps, this.overviewProps)} />
+              <Route exact={true} path="/release-notes/:apiCategoryKey" component={ApiPageReleaseNotes} />
             </div>
           </div>
         </section>
