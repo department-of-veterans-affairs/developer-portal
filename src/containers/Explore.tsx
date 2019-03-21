@@ -4,6 +4,7 @@ import { Flag } from 'flag';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
+import { lookupApi } from '../apiDefs';
 import { SwaggerDocs } from '../components';
 import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
@@ -21,68 +22,26 @@ const mapStateToProps = ({ routing }: IRootState) => {
 
 class Explore extends React.Component<IExploreProps, { }> {
     public render() {
-        let docs : JSX.Element ;
-        switch (this.props.match.params.apiName) {
-            case 'service_history':
-                docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/service_history`} />
-                );
-                break;
-            case 'disability_rating':
-                docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/disability_rating`} />
-                );
-                break;
-            case 'veteran_confirmation':
-                docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/status`} />
-                );
-                break;
-            case 'benefits':
-                docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/vba_documents/docs/v0/api`} />
-                );
-                break;
-            case 'facilities':
-                docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/va_facilities/docs/v0/api`} />
-                );
-                break;
-            case 'appeals':
-                docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`} />
-                );
-                break;
-            case 'loan_guaranty':
-                docs = (
-                    <Flag name="hosted_apis.loan_guaranty">
-                        <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/loan_guaranty/docs/v1/api`} />
-                    </Flag>
-                );
-                break;
-            case 'claims':
-                docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`} />
-                );
-                break;
-            case 'address_validation':
-                docs = (
-                    <SwaggerDocs url={`${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v1/api`} />
-                );
-                break;
-            case 'argonaut':
-                docs = (
-                    <SwaggerDocs url="https://staging-api.va.gov/services/argonaut/v0/openapi.json" />
-                );
-                break;
-            default:
-                docs = this.renderIndex();
+      let docsDom: JSX.Element | null = null;
+      if (this.props.match.params.apiName != null) {
+        const api = lookupApi(this.props.match.params.apiName);
+        if (api != null) {
+          docsDom = (
+                <Flag name={`hosted_apis.${api.urlFragment}`}>
+                  <SwaggerDocs url={api.openApiDocUrl} />
+                </Flag>
+              );
         }
-        return (
-            <div role="region" aria-labelledby="api-documentation">
-              <h1 id="api-documentation">API Documentation</h1>
-              {docs}
-            </div>
+      }
+
+      if (docsDom == null) {
+        docsDom = this.renderIndex();
+      }
+      return (
+          <div role="region" aria-labelledby="api-documentation">
+            <h1 id="api-documentation">API Documentation</h1>
+            {docsDom}
+          </div>
         );
     }
 

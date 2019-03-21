@@ -7,16 +7,6 @@ import './Home.scss';
 
 class Home extends React.Component {
     public render() {
-        let request;
-        if (process.env.REACT_APP_SALESFORCE_APPLY === 'true') {
-            request = (
-                    <li><a href="https://vacommunity.secure.force.com/survey/ExAM__AMAndAnswerCreationPage?paId=a2ft0000000VVnJ">Request an API Key</a></li>
-            );
-        } else {
-            request = (
-                    <li><Link to="/apply">Request an API Key</Link></li>
-            );
-        }
         return (
             <div className="Home">
               <PageHero
@@ -80,12 +70,12 @@ class Home extends React.Component {
                   </div>
                 </div>
               </section>
-              <section className="usa-section getting-started" role="region" aria-labelledby="to-get-started">
+              <section className="usa-section getting-started" role="region" aria-labelledby="get-started">
                 <div className="usa-grid">
-                  <h2>Ready to Get Started?</h2>
+                  <h2 id="get-started">Ready to Get Started?</h2>
                   <p>Below is a list of steps below to help you get started with the VA API Platform Management:</p>
                   <ol>
-                    {request}
+                    <li><Link to="/apply">Request an API Key</Link></li>
                     <li><a href="https://github.com/department-of-veterans-affairs/vets-api-clients/">Build your app</a></li>
                     <li><Link to="/go-live">Request production access</Link></li>
                   </ol>

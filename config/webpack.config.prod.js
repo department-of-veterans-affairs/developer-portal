@@ -22,6 +22,7 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const SitemapBuilderPlugin = require('../SitemapBuilderWebpackPlugin');
 
 // Webpack uses `output.publicPath`, from it's options object, to determine
 // where the app is being served from. It requires a trailing slash, or the
@@ -438,6 +439,9 @@ module.exports = (envName) => {
         watch: paths.appSrc,
         silent: true,
       }),
+        new SitemapBuilderPlugin({
+          routesFile: path.join(paths.appSrc, 'Routes.tsx'),
+        }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.

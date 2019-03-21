@@ -13,6 +13,7 @@
 
             h1 {
                 font-family: $font-sans;
+                color: $color-white;
             }
 
             p {
@@ -35,6 +36,14 @@
       &.getting-started {
         margin-top: 3rem;
         background-color: $color-primary-lightest;
+
+        a {
+          color: $color-blue-darkest;
+
+          &:visited {
+            color: $color-purple;
+          }
+        }
       }
     }
 
