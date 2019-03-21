@@ -14,7 +14,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route exact={true} path="/index.html" component={Home} />
 
         {/* Legacy routes that we want to maintain: */}
-        <Route path="/explore/terms-of-service" render={props1 => <Redirect to="/terms-of-service" />} />
+        <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
 
         {/* Current routes: */}
         <Route path="/go-live" component={RoutedContent} />

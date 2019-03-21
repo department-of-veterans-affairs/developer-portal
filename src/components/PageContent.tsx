@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps, Switch } from 'react-router'
 
 interface IPageContentProps extends RouteComponentProps<void> {
     children: JSX.Element[];
@@ -23,7 +23,9 @@ export class PageContent extends React.Component<IPageContentProps, {}> {
         return (
             <div className="PageContent">
               <div className="content-main" ref={(loader) => (this.loader = loader)} tabIndex={-1}>
-                {this.props.children}
+                <Switch>
+                  {this.props.children}
+                </Switch>
               </div>
             </div>
         );
