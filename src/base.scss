@@ -15,6 +15,11 @@ $medium-large-screen: 768px;
 $medium-screen: 640px;
 $large-screen: 951px;
 
+.usa-grid {
+  max-width: 1200px !important;
+  margin-left: 0 !important;
+}
+
 //  Imports
 @import '~uswds/src/stylesheets/core/variables-vendor';
 @import '~uswds/src/stylesheets/lib/bourbon';
