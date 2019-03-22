@@ -11,7 +11,7 @@ import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
 
-import './Explore.scss';
+import './ReleaseNotes.scss';
 
 function VaInternalTag() {
   return (
@@ -39,11 +39,11 @@ function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCat
   const subNavLinks = () => {
     return apiCategory.apis.map(api => {
       if (apiCategory.apis.length > 1) {
-    return SideNavApiEntry(apiCategoryKey, api);
+        return SideNavApiEntry(apiCategoryKey, api);
       } else {
         return null;
       }
-  });
+    });
   };
 
   return (
@@ -88,7 +88,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
 
   public render() {
     return (
-      <div className="Explore">
+      <div className="ReleaseNotes">
         <section className="usa-section">
           <div className="Explore-main usa-grid">
             <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef}>

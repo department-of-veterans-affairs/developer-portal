@@ -42,9 +42,10 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
     }
 
     return (
+      <section role="region" aria-labelledby={`${apiCategoryKey}-release-notes`} className="usa-section">
         <PageHeader halo={headerProps.halo} header={headerProps.header} />
         {cardSection}
-        <div className="usa-width-one-whole">
+        <div className="usa-width-one-whole api-release-notes">
           {releaseNotes({})}
         </div>
         <hr />
