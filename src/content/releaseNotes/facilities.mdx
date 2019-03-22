@@ -2,9 +2,15 @@
 
 ## VA Facilities API
 
-**January 2019 | v0.0.1**
-Both a list of IDs and a lat/long can now be passed in the same request.
+**January 16, 2019** | **v0.0.0.287** 
 
-**August 2018 | v0.0.1**
-Launched v0.0.1 of the VA Facilities API.
+Fix facilities api bugs [#2735](https://github.com/department-of-veterans-affairs/vets-api/pull/2735)
+
+Allows users to pass both a list of IDs and a lat/long in the same request.
+Fixes typo in the existing rake task, [view specific change](https://github.com/department-of-veterans-affairs/vets-api/pull/2735/files#diff-a0253f0a6c07463fb11a513df82f21d2).
+
+**August 13, 2018** | **v0.0.0.188**
+
+Launch of the VA Facilities API.
+VA_Facilities API endpoint for external API consumers. Supports json/[geojson](http://geojson.org/) results and a bulk "get all" endpoint in geojson and csv format.
 
