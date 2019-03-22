@@ -1,4 +1,3 @@
-import { captureException } from '@sentry/core';
 import * as React from 'react';
 
 import { FlagsProvider } from 'flag';
@@ -43,10 +42,6 @@ const flags = {
 };
 
 class App extends React.Component {
-  public componentDidCatch(error: Error) {
-    captureException(error);
-  }
-
   public render() {
     return (
       <FlagsProvider flags={flags}>

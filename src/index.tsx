@@ -16,11 +16,16 @@ if (process.env.REACT_APP_SENTRY_DSN) {
     dsn: process.env.REACT_APP_SENTRY_DSN,
   });
 }
-
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root') as HTMLElement,
-);
-registerServiceWorker();
+try {
+  ReactDOM.render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById('root') as HTMLElement,
+  );
+  registerServiceWorker();
+} catch (err) {
+  if (process.env.REACT_APP_SENTRY_DSN) {
+    Sentry.captureException(err)
+  }
+}
