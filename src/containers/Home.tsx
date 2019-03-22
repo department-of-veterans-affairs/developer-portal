@@ -16,10 +16,10 @@ class Home extends React.Component {
                 </div>
               </div>
 
-              <section role="region" aria-labelledby="page hero" className="usa-hero">
+              <section role="region" aria-label="Page Hero" className="usa-hero">
                 <div className="usa-grid">
                   <div className="usa-hero-callout">
-                    <h1>Put VA Data to Work</h1>
+                    <h1 className="">Put VA Data to Work</h1>
                     <p>Empowering our partners to build innovative, Veteran-centered solutions.</p>
                   </div>
                 </div>
@@ -84,9 +84,9 @@ class Home extends React.Component {
               <div className="usa-grid">
                 <div className="ruled-stars">{null}</div>
               </div>
-              <section className="usa-section get-started" role="region" aria-labelledby="get-started">
+              <section className="usa-section getting-started" role="region" aria-labelledby="get-started">
                 <div className="usa-grid">
-                  <h2>Ready to Get Started?</h2>
+                  <h2 id="get-started">Ready to Get Started?</h2>
                   <p>Below is a list of steps below to help you get started with the VA API Platform Management:</p>
                   <ol>
                     <li><Link to="/apply">Request an API Key</Link></li>
