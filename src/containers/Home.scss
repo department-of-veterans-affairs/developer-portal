@@ -38,6 +38,10 @@
     .usa-section {
       padding-top: 3rem;
       padding-bottom: 3rem;
+
+      &.discover-apis {
+        padding-bottom: 6rem;
+      }
     }
 
     .video-wrapper {
