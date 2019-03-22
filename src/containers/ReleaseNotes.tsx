@@ -36,9 +36,15 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
 }
 
 function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory) {
-  const subNavLinks = apiCategory.apis.map(api => {
+  const subNavLinks = () => {
+    return apiCategory.apis.map(api => {
+      if (apiCategory.apis.length > 1) {
     return SideNavApiEntry(apiCategoryKey, api);
+      } else {
+        return null;
+      }
   });
+  };
 
   return (
     <li key={`hash-link-${apiCategoryKey}`}>
@@ -46,7 +52,7 @@ function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCat
         {apiCategory.name}
       </NavLink>
       <ul className="usa-sidenav-sub_list">
-        {subNavLinks}
+        {subNavLinks()}
       </ul>
     </li>
   );

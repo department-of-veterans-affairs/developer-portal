@@ -15,14 +15,13 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
     const { apis, releaseNotes } = apiDefs[apiCategoryKey];
 
     const headerProps = {
-      description: 'Release Notes are available for the following APIs', 
       halo: 'Release Notes',
-      header: apiDefs[apiCategoryKey].name, 
+      header: apiDefs[apiCategoryKey].properName, 
     };
 
     let cardSection;
 
-    if (apis.length > 0) {
+    if (apis.length > 1) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { name, shortDescription, urlFragment, vaInternalOnly } = apiDesc;
         return (
@@ -43,8 +42,7 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
     }
 
     return (
-      <section role="region" aria-labelledby={`${apiCategoryKey}-overview`} className="usa-section">
-        <PageHeader description={headerProps.description} halo={headerProps.halo} header={headerProps.header} />
+        <PageHeader halo={headerProps.halo} header={headerProps.header} />
         {cardSection}
         <div className="usa-width-one-whole">
           {releaseNotes({})}
