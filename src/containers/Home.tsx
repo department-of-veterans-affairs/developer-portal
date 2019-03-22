@@ -9,11 +9,11 @@ class Home extends React.Component {
             <div className="Home">
 
               <div className="site-disclaimer">
-                <div className="usa-grid">
-                  <strong>This is a beta site.</strong> We are always looking to make improvements. <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
-                    <strong>Send us your feedback</strong>
-                  </a>
-                </div>
+                <strong>This is a beta site.</strong>
+                &nbsp;We are always looking to make improvements.&nbsp;
+                <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
+                  <strong>Send us your feedback</strong>
+                </a>
               </div>
 
               <section role="region" aria-label="Page Hero" className="usa-hero">
