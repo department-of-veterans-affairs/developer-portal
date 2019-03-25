@@ -65,7 +65,11 @@
     }
 
     a.va-api-card {
-      width: 250px;
+      width: 100%;
+
+      @include media($medium-screen) {
+        width: 250px;;
+      }
     }
 
     .ruled-stars {
