@@ -19,6 +19,10 @@ a.va-api-card {
     margin: 15px 0 !important;
     font-size: 2rem;
   }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
 }
 
 .va-internal-tag {
@@ -37,4 +41,9 @@ a.va-api-card {
 
 .va-api-description {
   color: #222;
+}
+
+.va-api-container {
+  display: flex;
+  flex-flow: row wrap;
 }
