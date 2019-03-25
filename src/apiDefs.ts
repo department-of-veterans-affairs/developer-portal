@@ -3,10 +3,11 @@ import { BenefitsOverview,
          HealthOverview,
          VerificationOverview } from './content/apiDocs';
 
-import { BenefitsReleaseNotes, 
+import { // BenefitsReleaseNotes, 
          FacilitiesReleaseNotes, 
-         HealthReleaseNotes, 
-         VerificationReleaseNotes } from './content/releaseNotes';
+         // HealthReleaseNotes, 
+         // VerificationReleaseNotes 
+        } from './content/releaseNotes';
 
 export interface IApiDescription {
   readonly name: string;
@@ -25,7 +26,7 @@ export interface IApiCategory {
   readonly overview: React.StatelessComponent;
   readonly shortDescription: string;
   readonly longDescription: string;
-  readonly releaseNotes: React.StatelessComponent;
+  readonly releaseNotes?: React.StatelessComponent;
 }
 
 export interface IApiCategories {
@@ -70,7 +71,7 @@ export const apiDefs : IApiCategories = {
     name: 'Benefits',
     overview: BenefitsOverview,
     properName: 'Benefits Intake API',
-    releaseNotes: BenefitsReleaseNotes,
+    // releaseNotes: BenefitsReleaseNotes,
     shortDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
   },
   facilities: {
@@ -108,7 +109,7 @@ export const apiDefs : IApiCategories = {
     name: 'Health',
     overview: HealthOverview,
     properName: 'Health API',
-    releaseNotes: HealthReleaseNotes,
+    // releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
   },
   verification: {
@@ -148,7 +149,7 @@ export const apiDefs : IApiCategories = {
     name: "Veteran Verification",
     overview: VerificationOverview,
     properName: 'Veteran Verification API',
-    releaseNotes: VerificationReleaseNotes,
+    // releaseNotes: VerificationReleaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
   },
 };

@@ -59,7 +59,7 @@ function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCat
 }
 
 export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>) {
-  const navLinks = apiCategoryOrder.map((key: string) => SideNavCategoryEntry(url, key, apiDefs[key]));
+  const navLinks = apiCategoryOrder.map((key: string) => apiDefs[key].releaseNotes ? SideNavCategoryEntry(url, key, apiDefs[key]) : null);
 
   return (
     <ul role="navigation" aria-label="Release Notes Side Nav" className="usa-sidenav-list">

@@ -46,7 +46,7 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
         <PageHeader halo={headerProps.halo} header={headerProps.header} />
         {cardSection}
         <div className="usa-width-one-whole api-release-notes">
-          {releaseNotes({})}
+          {releaseNotes ? releaseNotes({}) : null}
         </div>
         <hr />
       </section>

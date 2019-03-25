@@ -14,10 +14,14 @@ export default class Overview extends React.Component<RouteComponentProps & any,
           {apiCategoryOrder.map((apiCategoryKey: string) => {
             const { name, shortDescription } = apiDefs[apiCategoryKey];
             const cardUrl = this.props.parent + '/' + apiCategoryKey;
-            return (
-              <ApiCard name={name} description={shortDescription} key={apiCategoryKey} vaInternalOnly={false}
-                url={cardUrl} />
-            );
+            let apiCard;
+            if (apiDefs[apiCategoryKey].releaseNotes) {
+              apiCard = (
+                <ApiCard name={name} description={shortDescription} key={apiCategoryKey} vaInternalOnly={false}
+                  url={cardUrl} />
+              );
+            }
+            return apiCard;
           })}
         </div>
       </div>
