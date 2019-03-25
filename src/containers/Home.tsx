@@ -7,6 +7,7 @@ class Home extends React.Component {
     public render() {
         return (
             <div className="Home">
+
               <div className="site-disclaimer">
                 <strong>This is a beta site.</strong>
                 &nbsp;We are always looking to make improvements.&nbsp;
@@ -14,7 +15,8 @@ class Home extends React.Component {
                   <strong>Send us your feedback</strong>
                 </a>
               </div>
-              <section role="region" aria-label="API Top-Level List" className="usa-section api-section">
+
+              <section role="region" aria-label="Page Hero" className="usa-hero">
                 <div className="usa-grid">
                   <div className="usa-hero-callout">
                     <h1 className="">Put VA Data to Work</h1>
