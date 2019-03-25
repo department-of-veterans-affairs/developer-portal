@@ -19,7 +19,7 @@ class Home extends React.Component {
               <section role="region" aria-label="Page Hero" className="usa-hero">
                 <div className="usa-grid">
                   <div className="usa-hero-callout">
-                    <h1 className="">Put VA Data to Work</h1>
+                    <h1>Put VA Data to Work</h1>
                     <p>Empowering our partners to build innovative, Veteran-centered solutions.</p>
                   </div>
                 </div>
