@@ -14,12 +14,6 @@ class Home extends React.Component {
                   <strong>Send us your feedback</strong>
                 </a>
               </div>
-              <PageHero
-                  title="Put VA Data to Work"
-                  content="Empowering our partners to build innovative, Veteran-centered solutions."
-                  button="Learn more about VA APIs"
-                  buttonLink="/explore"
-                  />
               <section role="region" aria-label="API Top-Level List" className="usa-section api-section">
                 <div className="usa-grid">
                   <div className="usa-hero-callout">
