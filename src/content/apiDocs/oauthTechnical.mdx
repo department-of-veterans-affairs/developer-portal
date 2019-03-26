@@ -33,7 +33,7 @@ Example Authorization URL:
 ```plaintext
 https://dev-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=<yourRedirectURL>/implicit/callback&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read
 ```
-(⚠️Be sure to use the redirect URL that you registered with)
+(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 The Veteran will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
 
@@ -49,25 +49,26 @@ Location: https://dev-api.va.gov/oauth2/authorize?
   client_id=s6BhdRkqt3
   &response_type=id_token
   &response_mode=fragment
-  &redirect_uri=<yourRedirectURL>%2Fcb
+  &redirect_uri=<yourRedirectURL>
   &scope=openid%20profile%20email
 ```
-(⚠️Be sure to use the redirect URL that you registered with)
+(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 In the request above the `response_mode` value determines how the token is provided when the Veteran's browser is redirected back to your application. It can be either `fragment` (the default) or `query`.
 
 After the Veteran confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
 ```http
-GET {your redirect uri path}#
+GET <yourRedirectURIPath>#
   id_token=SlAV32hkKG
   &access_token=SlAV32hkKG
   &token_type=Bearer
   &expires_in=3600
   &scope=openid%20profile%20email
   &state=af0ifjsldkj
-Host: {your redirect uri host}
+Host: <yourRedirectHost>
 ```
+(⚠️Be sure to replace `<yourRedirectURIPath>` with the redirect URI path that you provided during registration, and `<yourRedirectHost>` with your host name)
 
 If you requested an `id_token` it will be returned as a parameter called `id_token`. If you requested a `token`, it will be returned as a parameter called `access_token`.
 
@@ -86,18 +87,19 @@ Location: https://dev-api.va.gov/oauth2/authorize?
   &scope=openid%20profile%20email%20offline_access
   &client_id=s6BhdRkqt3
   &state=af0ifjsldkj
-  &redirect_uri=<yourRedirectURL>%2Fcb
+  &redirect_uri=<yourRedirectURL>
 ```
-(⚠️Be sure to use the redirect URL that you registered with)
+(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 After the Veteran confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
 ```http
-GET {your redirect uri path}#
+GET <yourRedirectURIPath>#
   code=z92dapo5
   &state=af0ifjsldkj
-Host: {your redirect uri host}
+Host: <yourRedirectHost>
 ```
+(⚠️Be sure to replace `<yourRedirectURIPath>` with the redirect URI path that you provided during registration, and `<yourRedirectHost>` with your host name)
 
 Your application then makes a request to our authorization service using the returned `code` and `state` parameters. The request should use HTTP Basic authorization with your *client id* as the username and your *client secret* as the password. Your request should look like:
 
@@ -107,7 +109,7 @@ Host: dev-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
-grant_type=authorization_code&code=z92dapo5&state=af0ifjsldkj&redirect_uri={your redirect_uri}
+grant_type=authorization_code&code=z92dapo5&state=af0ifjsldkj&redirect_uri=<yourRedirectURL>
 ```
 
 The authorization server will response with an access token. If you requested the `offline_access` scope, you will also receive a `refresh_token`. The response will look like this:
@@ -232,7 +234,7 @@ Additionally, the VA API Platform team requires your application to use secure c
 
 ### state
 
-Specifying a `state` param helps protect against some classes of Cross Site Request Forgery (CSRF) attacks, and applications should include it. The `state` param will be passed back from the authorization server to your redirect uri unchanged, and your application should verify that it has the expected value. This helps assure that the client receiving the authorization response is the same as the client that initiated the authorization process.
+Specifying a `state` param helps protect against some classes of Cross Site Request Forgery (CSRF) attacks, and applications should include it. The `state` param will be passed back from the authorization server to your redirect URL unchanged, and your application should verify that it has the expected value. This helps assure that the client receiving the authorization response is the same as the client that initiated the authorization process.
 
 ### nonce
 
@@ -258,7 +260,7 @@ We provide a sample [Node.JS](https://nodejs.org/en/) application for demonstrat
 
 ### Requirements
 
-This walk-through assumes you have already installed Node.JS and [NPM](https://www.npmjs.com/get-npm), and that you have obtained an OAuth application client\_id and client\_secret with `<yourRedirectURL>` (⚠️Be sure to use the redirect URL that you registered with) as a white-listed redirect_uri. 
+This walk-through assumes you have already installed Node.JS and [NPM](https://www.npmjs.com/get-npm), and that you have obtained an OAuth application client\_id and client\_secret with `<yourRedirectURL>` (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration) as a white-listed redirect_uri. 
 
 ### Init and Install Dependencies
 
@@ -318,13 +320,13 @@ const createClient = async () => {
       client_id,
       client_secret,
       redirect_uris: [
-        '<yourRedirectURL>%2Fauth%2Fcb'
+        '<yourRedirectURL>'
       ],
     });
   });
 }
 ```
-(⚠️Be sure to use the redirect URL that you registered with)
+(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 Congratulations you should be able to run `node index.js` in your terminal and have it exit with no errors. All of the configuration required for OpenID Connect can be handled by the client reading metadata supplied by the VA OAuth authorization server. 
 
@@ -402,7 +404,7 @@ Finally let's add a little glue so we can get up and running. At the bottom of t
 })();
 ```
 
-This anonymous function asynchronously retrieves the client information then starts the express server. Now you should be able to run `node index.js` and navigate to `<yourRedirectURL>` in your browser (⚠️Be sure to use the redirect URL that you registered with). You should see 'Hello World!' on your screen. 
+This anonymous function asynchronously retrieves the client information then starts the express server. Now you should be able to run `node index.js` and navigate to `<yourRedirectURL>` in your browser (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration). You should see 'Hello World!' on your screen. 
 
 ### Add OpenID authorization
 
@@ -418,7 +420,7 @@ Now, we'll add routes to handle the OpenID authorization. Again in `index.js` in
   );
 ```
 
-And that's all you'll need to do to add VA OAuth to a node application. After starting the app up again with `node index.js` navigate to `<yourRedirectURL>/auth` in your browser (⚠️Be sure to use the redirect URL that you registered with). Your browser should then take you through the login flow and return you to a page displaying 'Hello World!'. 
+And that's all you'll need to do to add VA OAuth to a node application. After starting the app up again with `node index.js` navigate to `<yourRedirectURL>/auth` in your browser (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration). Your browser should then take you through the login flow and return you to a page displaying 'Hello World!'. 
 
 ### Add the Veteran Status API Call
 
@@ -471,7 +473,7 @@ Finally let's add a new route to the application in `startApp`:
   app.get('/status', verifyVeteranStatus);
 ```
 
-Now, after restarting `node index.js` you can first navigate to `<yourRedirectURL>/auth` in your browser (⚠️Be sure to use the redirect URL that you registered with) to login, then navigate to `<yourRedirectURL>/status` to see your Veteran Status. 
+Now, after restarting `node index.js` you can first navigate to `<yourRedirectURL>/auth` in your browser (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration) to login, then navigate to `<yourRedirectURL>/status` to see your Veteran Status. 
 
 ### Get all the code
 
