@@ -7,9 +7,11 @@ export default class Overview extends React.Component<RouteComponentProps & any,
   public render() { 
     return (
       <div className="header">
-        <div className="header-halo">
-          {this.props.halo}
-        </div>
+        {this.props.halo &&
+          <div className="header-halo">
+            {this.props.halo}
+          </div>
+        }
         <h1>
           {this.props.header}
         </h1>
