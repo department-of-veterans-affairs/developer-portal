@@ -9,17 +9,17 @@ import WhatsNewPage from '../content/whats-new.mdx';
 
 const sections = [
   {
-    description: 'Lorem of the Ipsum variety describing news from the Veterans Adminstration',
+    description: 'Press Releases from the Department of Veterans Affairs',
     id: 'va-press-releases',
     name: 'VA Press Releases',
   },
   {
-    description: 'Lorem of the Ipsum variety that relates to news and interesting articles that relate to developers and APIs generally',
+    description: 'News and articles related to developers, APIs, the Developer Portal, and Veterans',
     id: 'news',
     name: 'News',
   },
   {
-    description: 'Lorem of the Ipsum variety that describes that media related stuff like videos and other cool stuff goes here',
+    description: 'Media related to developers, APIs, Veterans, and the Department of Veterans Affairs',
     id: 'media',
     name: 'Media',
   },
@@ -64,7 +64,7 @@ export class WhatsNew extends React.Component {
 
   public render() {
     const headerProps = {
-      description: "This paragraph would explain that this page is where you find stuff that’s related to the API program and interesting to developers in general",
+      description: "This page is where you’ll find interesting press releases, news, or media that relates to the API program and the Developer Portal",
       header: "What's New?",
     };
 
