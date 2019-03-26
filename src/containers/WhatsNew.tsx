@@ -3,9 +3,10 @@ import { NavHashLink } from 'react-router-hash-link';
 
 import { NavLink } from 'react-router-dom';
 
-// import ApiCard from '../components/ApiCard';
 import PageHeader from '../components/PageHeader';
 import WhatsNewPage from '../content/whats-new.mdx';
+
+import './WhatsNew.scss';
 
 const sections = [
   {
@@ -25,23 +26,44 @@ const sections = [
   },
 ];
 
+function LocalNavHashLink(props: any): JSX.Element {
+  const activeCheck = (match: any, location: any): boolean => {
+    return props.to === location.hash;
+  };
+  const toWithoutHash = props.to.replace(/^#/, '');
+  let id = `hash-link`;
+  if (props.idSlug != null) {
+    id = `${id}-${props.idSlug}`;
+  }
+  id = `${id}-${toWithoutHash}`;
+  return (
+    <NavHashLink className="side-nav-category-link" activeClassName="usa-current" id={id} isActive={activeCheck} to={props.to}>
+      {props.children}
+    </NavHashLink>
+  );
+};
+
 export function SideNav() {
+  const activeCheck = (match: any, location: any): boolean => {
+    return '' === location.hash;
+  };
+
   const navSections = sections.map((section) => {
     return (
-      <NavHashLink key={section.id} className="side-nav-category-link" activeClassName="usa-current" id={`hash-link-${section.id}`} to={`#${section.id}`}>
-        {section.name}
-      </NavHashLink>
+      <li key={section.id}>
+        <LocalNavHashLink idSlug={section.id} to={`#${section.id}`}>{section.name}</LocalNavHashLink>
+      </li>
     );
   });
 
   return (
     <ul role="navigation" aria-label="Release Notes Side Nav" className="usa-sidenav-list">
       <li key="all">
-        <NavLink exact={true} to="/whats-new" className="side-nav-category-link" activeClassName="usa-current">
+        <NavLink exact={true} to="/whats-new" className="side-nav-category-link" activeClassName="usa-current" isActive={activeCheck}>
           Overview
         </NavLink>
-        {navSections}
       </li>
+      {navSections}
     </ul>
   );
 }
@@ -69,7 +91,7 @@ export class WhatsNew extends React.Component {
     };
 
     return (
-      <div className="Explore">
+      <div className="WhatsNew">
         <section className="usa-section">
           <div className="Explore-main usa-grid">
             <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef}>
