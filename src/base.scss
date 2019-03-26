@@ -11,10 +11,14 @@ $color-base: #212121;
 $color-gray-lighter: #d6d7d9;
 $color-gold: #fdb81e;
 $color-red: #cd2026;
-$color-dark-blue: #112e51;
 $medium-large-screen: 768px;
 $medium-screen: 640px;
 $large-screen: 951px;
+
+.usa-grid {
+  max-width: 1200px !important;
+  margin-left: 0 !important;
+}
 
 //  Imports
 @import '~uswds/src/stylesheets/core/variables-vendor';

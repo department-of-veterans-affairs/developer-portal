@@ -3,7 +3,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router'
 
 interface IPageContentProps extends RouteComponentProps<void> {
-    children: JSX.Element[];
+    children: JSX.Element[] | JSX.Element;
 }
 
 export class PageContent extends React.Component<IPageContentProps, {}> {
