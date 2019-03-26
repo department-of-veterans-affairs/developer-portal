@@ -11,6 +11,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.1.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",
     "@fortawesome/react-fontawesome": "^0.1.0",
+    "@sentry/browser": "^4.6.4",
     "@types/classnames": "^2.2.7",
     "@types/history": "^4.6.2",
     "@types/jest-axe": "^2.2.1",
@@ -136,7 +137,7 @@
     "jest-junit-reporter": "^1.1.0",
     "prettier": "^1.16.4",
     "ts-jest": "^23.10.5",
-    "tslint-microsoft-contrib": "^6.0.0",
+    "tslint-microsoft-contrib": "^6.1.0",
     "typescript": "^3.1.6",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14"

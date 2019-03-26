@@ -68,115 +68,113 @@ class ApplyForm extends React.Component<IApplyProps> {
     } = this.props;
 
     return (
-      <div role="region" aria-labelledby="apply-region" className="usa-grid api-application">
-        <h1>Apply for VA API Key</h1>
+      <div role="region" aria-labelledby="apply-header" className="usa-grid api-application">
+        <h1 id="apply-header">Apply for VA API Key</h1>
         <p className="usa-font-lead">Please submit the form below and you'll receive an email with your API key(s) and further instructions. Thank you for being a part of our platform.</p>
-        <div className="usa-grid-full">
+        <div className="usa-grid">
           <div className="usa-width-two-thirds">
             <form className="usa-form">
-              <fieldset>
-                <legend>Application</legend>
+              <h2>Application</h2>
 
-                <ErrorableTextInput
-                  errorMessage={null}
-                  label="First name"
-                  field={firstName}
-                  onValueChange={props.updateFirstName}
-                  required={true} />
+              <ErrorableTextInput
+                errorMessage={null}
+                label="First name"
+                field={firstName}
+                onValueChange={props.updateFirstName}
+                required={true} />
 
-                <ErrorableTextInput
-                  errorMessage={null}
-                  label="Last name"
-                  field={lastName}
-                  onValueChange={props.updateLastName}
-                  required={true} />
+              <ErrorableTextInput
+                errorMessage={null}
+                label="Last name"
+                field={lastName}
+                onValueChange={props.updateLastName}
+                required={true} />
 
-                <ErrorableTextInput
-                  errorMessage={email.validation}
-                  label="Email"
-                  field={email}
-                  onValueChange={props.updateEmail}
-                  required={true} />
+              <ErrorableTextInput
+                errorMessage={email.validation}
+                label="Email"
+                field={email}
+                onValueChange={props.updateEmail}
+                required={true} />
 
-                <ErrorableTextInput
-                  errorMessage={null}
-                  label="Organization"
-                  field={organization}
-                  onValueChange={props.updateOrganization}
-                  required={true} />
+              <ErrorableTextInput
+                errorMessage={null}
+                label="Organization"
+                field={organization}
+                onValueChange={props.updateOrganization}
+                required={true} />
 
-                <label>Please select all of the APIs you'd like access to:</label>
+              <label>Please select all of the APIs you'd like access to:</label>
 
 
-                <h4>Standard APIs:</h4>
+              <h3>Standard APIs:</h3>
 
-                <div className="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="benefits"
-                    name="benefits"
-                    checked={apis.benefits}
-                    onChange={props.toggleBenefits} />
-                  <label htmlFor="benefits">VA Benefits API</label>
-                </div>
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="benefits"
+                  name="benefits"
+                  checked={apis.benefits}
+                  onChange={props.toggleBenefits} />
+                <label htmlFor="benefits">VA Benefits API</label>
+              </div>
 
-                <div className="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="facilities"
-                    name="facilities"
-                    checked={apis.facilities}
-                    onChange={props.toggleFacilities} />
-                  <label htmlFor="facilities">VA Facilities API</label>
-                </div>
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="facilities"
+                  name="facilities"
+                  checked={apis.facilities}
+                  onChange={props.toggleFacilities} />
+                <label htmlFor="facilities">VA Facilities API</label>
+              </div>
 
-                <h4>OAuth APIs:</h4>
+              <h3>OAuth APIs:</h3>
 
-                <div className="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="health"
-                    name="health"
-                    checked={apis.health}
-                    onChange={props.toggleHealth} />
-                  <label htmlFor="health">VA Health API</label>
-                </div>
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="health"
+                  name="health"
+                  checked={apis.health}
+                  onChange={props.toggleHealth} />
+                <label htmlFor="health">VA Health API</label>
+              </div>
 
-                <div className="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="verification"
-                    name="verification"
-                    checked={apis.verification}
-                    onChange={props.toggleVerification} />
-                  <label htmlFor="verification">VA Veteran Verification API</label>
-                </div>
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="verification"
+                  name="verification"
+                  checked={apis.verification}
+                  onChange={props.toggleVerification} />
+                <label htmlFor="verification">VA Veteran Verification API</label>
+              </div>
 
-                { this.renderOAuthFields() }
+              { this.renderOAuthFields() }
 
-                <ErrorableTextArea
-                  errorMessage={null}
-                  label="Briefly describe how your organization will use VA APIs."
-                  onValueChange={props.updateDescription}
-                  name="description"
-                  field={description} />
+              <ErrorableTextArea
+                errorMessage={null}
+                label="Briefly describe how your organization will use VA APIs."
+                onValueChange={props.updateDescription}
+                name="description"
+                field={description} />
 
-                <ErrorableCheckbox
-                  checked={termsOfService}
-                  label={(
-                      <span>
-                        I agree to the <Link target="_blank" to="/explore/terms-of-service">Terms of Service</Link>
-                      </span>
-                  )}
-                  onValueChange={props.toggleAcceptTos}
-                  required={true} />
+              <ErrorableCheckbox
+                checked={termsOfService}
+                label={(
+                    <span>
+                      I agree to the <Link target="_blank" to="/terms-of-service">Terms of Service</Link>
+                    </span>
+                )}
+                onValueChange={props.toggleAcceptTos}
+                required={true} />
 
-                <ProgressButton
-                  buttonText={ props.sending ? "Sending..." : "Submit"}
-                  disabled={!this.readyToSubmit() || props.sending}
-                  onButtonClick={props.submitForm}
-                  buttonClass="usa-button-primary" />
-              </fieldset>
+              <ProgressButton
+                buttonText={ props.sending ? "Sending..." : "Submit"}
+                disabled={!this.readyToSubmit() || props.sending}
+                onButtonClick={props.submitForm}
+                buttonClass="usa-button-primary" />
             </form>
             { this.renderError() }
           </div>

@@ -4,7 +4,11 @@ describe('Accessibility tests', async () => {
   for (const path of testPaths) {
     // Disabled until we can actually fix these failures. Some are caused by swagger-ui,
     // so unlikely to be fixable before then
-    xit(`has no axe violations at ${path}`, async () => {
+    if (path === "/apply") {
+      continue;
+    }
+
+    it(`has no axe violations at ${path}`, async () => {
       // Mock swagger requests on docs pages so those pages aren't blank
       if (/^\/explore\/[^\/]+\/docs/.test(path)) {
         await page.setRequestInterception(true);

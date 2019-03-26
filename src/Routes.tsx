@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps, Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { apiCategoryOrder, apiDefs } from './apiDefs';
@@ -8,13 +8,14 @@ import { PageContent } from './components/PageContent';
 import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, ReleaseNotes, RoutedContent } from './containers';
 
 export function topLevelRoutes(props: RouteComponentProps<void>) {
-    return (
-      <PageContent {...props} >
+  return (
+    <PageContent {...props} >
+      <Switch>
         <Route exact={true} path="/" component={Home} />
         <Route exact={true} path="/index.html" component={Home} />
 
         {/* Legacy routes that we want to maintain: */}
-        <Route path="/explore/terms-of-service" render={props1 => <Redirect to="/terms-of-service" />} />
+        <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
 
         {/* Current routes: */}
         <Route path="/go-live" component={RoutedContent} />
@@ -27,14 +28,15 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
         <Route path="/oauth" component={OAuth} />
         <Route path="/release-notes" component={ReleaseNotes} />
-      </PageContent>
-    );
-  }
+      </Switch>
+    </PageContent>
+  );
+}
 
-  export function getSitemapData() {
-    return {
-      apiCategoryOrder,
-      apiDefs,
-      topLevelRoutes,
-    };
-  }
+export function getSitemapData() {
+  return {
+    apiCategoryOrder,
+    apiDefs,
+    topLevelRoutes,
+  };
+}

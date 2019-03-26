@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
 import { VeteransCrisisLine } from './VeteransCrisisLine';
 
 import './Banner.scss';
@@ -19,32 +18,29 @@ export class Banner extends React.Component<{}, IBannerState> {
 
   constructor(props: {}) {
       super(props);
-      this.state = { 
+      this.state = {
         accordionVisible: false,
         menuVisible: false,
       };
   }
 
   public render() {
-    const dotGovGuidanceText = `Federal government websites often end in .gov or .mil. Before sharing sensitive 
+    const dotGovGuidanceText = `Federal government websites often end in .gov or .mil. Before sharing sensitive
                                 information, make sure you're on a federal government site.`;
     const httpsGuidanceText = (
       <span>
-        The <strong>https://</strong> ensures that you're connecting to the official website 
+        The <strong>https://</strong> ensures that you're connecting to the official website
         and that any information you provide is encrypted and sent securely.
       </span>
     );
 
     return (
       <section className="usa-banner site-banner">
-        <AlertBox status="info"
-              headline={"This site is currently under development."}
-              isVisible={true} />
         <div className="site-guidance usa-accordion">
           <header className="usa-banner-header">
             <div className="usa-grid usa-banner-inner">
               <div className="official-site-notice">
-                <div><img src={flagIcon} /></div>
+                <div><img src={flagIcon} alt="US flag" /></div>
                 <div className="site-notice-text">
                   <div>An official website of the United States government.</div>
                   <button className="usa-accordion-button usa-banner-button" onClick={this.toggleAccordionVisible}
@@ -57,9 +53,9 @@ export class Banner extends React.Component<{}, IBannerState> {
               </div>
               <div className="usa-banner-content usa-accordion-content" aria-hidden={this.state.accordionVisible ? "false" : "true"}>
                 {this.renderSiteGuidance(
-                    "banner-guidance-gov", 
-                    dotGovIcon, 
-                    "The .gov means it's official", 
+                    "banner-guidance-gov",
+                    dotGovIcon,
+                    "The .gov means it's official",
                     dotGovGuidanceText)}
                 {this.renderSiteGuidance(
                     "banner-guidance-ssl",
@@ -77,7 +73,7 @@ export class Banner extends React.Component<{}, IBannerState> {
                       <span className="vcl-text">
                         Talk to the&nbsp;<strong>Veterans Crisis Line</strong>&nbsp;now
                       </span>
-                      <img src={rightArrow} className="vcl-right-arrow" />
+                      <img src={rightArrow} className="vcl-right-arrow" alt="" role="presentation" />
                     </span>
                   </button>
                 </div>
@@ -105,7 +101,7 @@ export class Banner extends React.Component<{}, IBannerState> {
   private renderSiteGuidance(className: string, iconContent: string, titleText: {}, bodyText: {}) {
     return (
       <div className={className}>
-        <img className="usa-banner-icon usa-media_block-img" src={iconContent} 
+        <img className="usa-banner-icon usa-media_block-img" src={iconContent}
               alt="Dot Gov" />
         <div className="guidance-content usa-media_block-body">
           <div className="guidance-title">
