@@ -223,11 +223,6 @@
     font-weight: 600;
   }
 
-  .Explore-main.usa-grid {
-    max-width: 1200px;
-    margin-left: 0;
-  }
-
   .vadp-side-nav {
     padding-right: 3rem;
   }
@@ -291,17 +286,6 @@
 
     a:hover {
       background-color: #DBDBDD;
-    }
-  }
-
-  .va-api-container {
-    display: flex;
-    flex-flow: row wrap;
-
-    a.va-api-card {
-      @media screen and (max-width: 767px) {
-        width: 100%;
-      }
     }
   }
 }

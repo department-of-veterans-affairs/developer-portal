@@ -104,7 +104,7 @@ export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>)
   const navLinks = apiCategoryOrder.map((key: string) => SideNavCategoryEntry(url, key, apiDefs[key]));
 
   return (
-    <ul role="navigation" aria-label="API Docs Side Nav" className="usa-sidenav-list">
+    <ul className="usa-sidenav-list">
       <li key="all">
         <NavLink exact={true} to="/explore" className="side-nav-category-link" activeClassName="usa-current">
           Overview
@@ -131,10 +131,11 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
   }
 
   public render() {
+    const sideNavClasses = classNames("vadp-side-nav", "usa-width-one-third", "sticky");
     return (
       <div className="Explore">
         <section className="Explore-main usa-grid">
-          <div className={classNames("vadp-side-nav", "usa-width-one-third", "sticky")} ref={this.navRef}>
+          <div className={sideNavClasses} ref={this.navRef} role="navigation" aria-label="API Docs Side Nav">
             <SideNav {...this.props} />
           </div>
           <div className="usa-width-two-thirds">

@@ -1,9 +1,9 @@
 @import "../base";
 
 .usa-header.usa-header-extended {
-  background: $color-dark-blue;
+  background: $color-blue-darkest;
 
-  .usa-logo { 
+  .usa-logo {
     @include media($large-screen) {
       margin-top: 4rem;
     }
@@ -16,15 +16,15 @@
 
   @include media($large-screen) {
     .usa-nav-secondary {
-      top: -8.5rem;
+      top: -7.25rem;
     }
   }
-  
+
   .usa-navbar {
     max-width: none;
 
     @include media($large-screen) {
-      height: 120px;
+      height: 110px;
     }
   }
 
@@ -90,7 +90,7 @@
       }
     }
 
-    li.main-nav-item, 
+    li.main-nav-item,
     li.main-nav-secondary-item {
       margin-bottom: 0;
       padding-top: 8px;
