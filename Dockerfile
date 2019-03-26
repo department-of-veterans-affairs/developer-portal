@@ -27,6 +27,6 @@ RUN npm install -g npm
 
 COPY package.json package-lock.json ./
 
-RUN npm --loglevel silly install
+RUN npm install
 
 COPY . .
