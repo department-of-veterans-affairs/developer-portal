@@ -71,7 +71,7 @@ class ApplyForm extends React.Component<IApplyProps> {
       <div role="region" aria-labelledby="apply-header" className="usa-grid api-application">
         <h1 id="apply-header">Apply for VA API Key</h1>
         <p className="usa-font-lead">Please submit the form below and you'll receive an email with your API key(s) and further instructions. Thank you for being a part of our platform.</p>
-        <div className="usa-grid-full">
+        <div className="usa-grid">
           <div className="usa-width-two-thirds">
             <form className="usa-form">
               <h2>Application</h2>

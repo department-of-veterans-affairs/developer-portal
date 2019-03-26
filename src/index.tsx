@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
@@ -9,10 +10,22 @@ import store from './store';
 
 import './index.scss';
 
-ReactDOM.render(
+
+if (process.env.REACT_APP_SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.REACT_APP_SENTRY_DSN,
+  });
+}
+try {
+  ReactDOM.render(
     <Provider store={store}>
-        <App />
+      <App />
     </Provider>,
     document.getElementById('root') as HTMLElement,
-);
-registerServiceWorker();
+  );
+  registerServiceWorker();
+} catch (err) {
+  if (process.env.REACT_APP_SENTRY_DSN) {
+    Sentry.captureException(err)
+  }
+}
