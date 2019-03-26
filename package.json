@@ -74,7 +74,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-hash-link": "^1.2.1",
     "react-router-redux": "5.0.0-alpha.9",
-    "react-router-sitemap": "github:nfasulo/react-router-sitemap#master",
+    "react-router-sitemap": "git+https://github.com/nfasulo/react-router-sitemap.git#master",
     "redux": "4.0.0",
     "redux-thunk": "^2.3.0",
     "resolve": "1.6.0",
