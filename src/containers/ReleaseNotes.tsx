@@ -80,7 +80,7 @@ function renderOveriew(routeProps: any, props: any) {
 export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   private navRef = React.createRef<HTMLDivElement>();
   private overviewProps = {
-    description: 'This paragraph would explain that the program is continuously deployed and that the versions are connected to Github messages and other pertinent details related to introducing our release notes.', 
+    description: 'The goal of the Release Notes section is to inform developers of updates and changes to the VA APIs. This section of the developer portal is new and will expand as release notes for new APIs become available.', 
     halo: 'Release Notes',
     header: 'Overview', 
     parent: 'release-notes',
