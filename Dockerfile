@@ -23,10 +23,10 @@ RUN groupadd --gid 504 jenkins \
 
 USER jenkins
 
-RUN npm --loglevel verbose install -g npm s3-cli
+RUN npm --loglevel silly install -g npm s3-cli
 
 COPY package.json package-lock.json ./
 
-RUN npm --loglevel verbose install
+RUN npm --loglevel silly install
 
 COPY . .
