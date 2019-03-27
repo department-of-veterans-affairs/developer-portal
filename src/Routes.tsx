@@ -33,11 +33,43 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
     );
   }
 
-  export function getSitemapData() {
-    return {
-      apiCategoryOrder,
-      apiDefs,
-      flags,
-      topLevelRoutes,
-    };
+/*  When a route is added to or removed from `topLevelRoutes` the sitemap will be automatically updated during the next build. 
+*   There are situations when the config for react-router-sitemap needs to be updated for the sitemap to reflect the desired paths:
+*     - a route is included in `topLevelRoutes` that should not be included in the sitemap needs to be added to `pathFilter`
+*     - a route with dynamic subroutes (e.g. `/route/:param`) is added an array of the available params needs to be added to `paramsConfig`
+*/
+
+export function sitemapConfig() {
+  function getApiRouteParams(route: string, apiCategory: string): string[] {
+    let routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api) => {
+      if (flags.hosted_apis.hasOwnProperty(api.urlFragment) && flags.hosted_apis[api.urlFragment]) {
+        result.push(api.urlFragment);
+      }
+      return result;
+    }, []);
+  
+    if (route === '/explore/:apiCategoryKey/docs/:apiName' && !apiDefs[apiCategory].apiKey) {
+      routeParams.push('authorization');
+    }
+  
+    return routeParams;
   }
+  
+  return {
+    paramsConfig: {
+      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => {
+        return {
+          apiCategoryKey: apiCategory,
+          apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
+        };
+      }),
+      '/explore/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
+      '/release-notes/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
+    },
+    pathFilter: {
+      isValid: false,
+      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success|\/oauth/],
+    },
+    topLevelRoutes,
+  }
+}

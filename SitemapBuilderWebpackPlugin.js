@@ -19,12 +19,6 @@
 *     4. use the resulting exported function `getSitemapData` to build a sitemap with react-router-sitemap
 *     5. add `sitemap.xml` to the original webpack compilation's assets so that it is output like any other file in the build bundle
 *   You can pass this plugin the option verbose: true to receive messages as it moves through this flow.
-*
-*   Modifying the sitemap
-*     When a route is added to or removed from Routes.tsx this plugin will automatically modify the sitemap. 
-*     There are situations when the config for react-router-sitemap needs to be updated for the sitemap to reflect the desired paths:
-*       - When a route is included in Routes.tsx that should not be included in the sitemap, it needs to be added to `pathFilter`
-*       - When a route with dynamic subroutes is added to Routes.tsx you need to pass an array of the available params to `paramsConfig`
 */
 
 const webpack = require('webpack');
@@ -65,7 +59,7 @@ class SitemapBuilderPlugin {
 
         this.compileRoutes(config)
           .then((mfs) => this.executeRoutes(mfs))
-          .then((sitemapData) => this.buildSitemap(sitemapData, compilation))
+          .then((sitemapConfig) => this.buildSitemap(sitemapConfig, compilation))
           .then(() => this.finish(callback))
           .catch(err => this.finishWithError(err, compilation, callback));
       }
@@ -103,57 +97,24 @@ class SitemapBuilderPlugin {
       const jsdom = require('jsdom');
       const { JSDOM } = jsdom;
       const dom = new JSDOM(``, { runScripts: 'outside-only' });
-      const sitemapData = dom.runVMScript(script).getSitemapData();
-      resolve(sitemapData);
+      const sitemapConfig = dom.runVMScript(script).sitemapConfig();
+      resolve(sitemapConfig);
     })
   }
 
-  buildSitemap(sitemapData, compilation) {
+  buildSitemap(sitemapConfig, compilation) {
     if (this.verbose) {
       console.log('buildSitemap start');
     }
     const path = require('path');
     const paths = require('./config/paths');
     const prodURL = require(paths.appPackageJson).homepage;
-    const apiFlags = sitemapData.flags.hosted_apis;
-    const routes = sitemapData.topLevelRoutes();
     const Sitemap = require('react-router-sitemap').default;
 
-    const pathFilter = {
-      isValid: false,
-      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success|\/oauth/],
-    };
-
-    function getApiRouteParams(route, apiCategory) {
-      let routeParams = sitemapData.apiDefs[apiCategory].apis.reduce((result, api) => {
-        if (apiFlags.hasOwnProperty(api.urlFragment) && apiFlags[api.urlFragment]) {
-          result.push(api.urlFragment);
-        }
-        return result;
-      }, []);
-
-      if (route === '/explore/:apiCategoryKey/docs/:apiName' && !sitemapData.apiDefs[apiCategory].apiKey) {
-        routeParams.push('authorization');
-      }
-
-      return routeParams;
-    }
-
-    const paramsConfig = {
-      '/explore/:apiCategoryKey/docs/:apiName': sitemapData.apiCategoryOrder.map(apiCategory => {
-        return {
-          apiCategoryKey: apiCategory,
-          apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
-        };
-      }),
-      '/explore/:apiCategoryKey?': [ { 'apiCategoryKey?': sitemapData.apiCategoryOrder } ],
-      '/release-notes/:apiCategoryKey?': [ { 'apiCategoryKey?': sitemapData.apiCategoryOrder } ],
-    };
-
     const sitemap = (
-      new Sitemap(routes)
-        .filterPaths(pathFilter)
-        .applyParams(paramsConfig)
+      new Sitemap(sitemapConfig.topLevelRoutes())
+        .filterPaths(sitemapConfig.pathFilter)
+        .applyParams(sitemapConfig.paramsConfig)
         .build(prodURL)
         .save(path.join(paths.appBuild, 'sitemap.xml'))
     ).sitemaps[0].cache;
