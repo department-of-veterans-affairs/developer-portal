@@ -27,7 +27,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
         <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
         <Route path="/oauth" component={OAuth} />
-        <Route path="/release-notes" component={ReleaseNotes} />
+        <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
       </Switch>
     </PageContent>
   );
