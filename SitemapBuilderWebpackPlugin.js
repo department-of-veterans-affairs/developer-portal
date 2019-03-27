@@ -19,6 +19,12 @@
 *     4. use the resulting exported function `getSitemapData` to build a sitemap with react-router-sitemap
 *     5. add `sitemap.xml` to the original webpack compilation's assets so that it is output like any other file in the build bundle
 *   You can pass this plugin the option verbose: true to receive messages as it moves through this flow.
+*
+*   Modifying the sitemap
+*     When a route is added to or removed from Routes.tsx this plugin will automatically modify the sitemap. 
+*     There are situations when the config for react-router-sitemap needs to be updated for the sitemap to reflect the desired paths:
+*       - When a route is included in Routes.tsx that should not be included in the sitemap, it needs to be added to `pathFilter`
+*       - When a route with dynamic subroutes is added to Routes.tsx you need to pass an array of the available params to `paramsConfig`
 */
 
 const webpack = require('webpack');
@@ -125,6 +131,7 @@ class SitemapBuilderPlugin {
         };
       }),
       '/explore/:apiCategoryKey?': [ { 'apiCategoryKey?': sitemapData.apiCategoryOrder } ],
+      '/release-notes/:apiCategoryKey?': [ { 'apiCategoryKey?': sitemapData.apiCategoryOrder } ],
     };
 
     const sitemap = (
