@@ -26,7 +26,7 @@ function isHostedApiEnabled(shortName: string, defaultValue: boolean): boolean {
   }
 }
 
-const flags = {
+export const flags = {
   hosted_apis: {
     address_validation: isHostedApiEnabled('address_validation', false),
     appeals: isHostedApiEnabled('appeals', true),

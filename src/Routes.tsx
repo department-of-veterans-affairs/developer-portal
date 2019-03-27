@@ -4,6 +4,7 @@ import { RouteComponentProps, Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { apiCategoryOrder, apiDefs } from './apiDefs';
+import { flags } from './App';
 import { PageContent } from './components/PageContent';
 import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
 
@@ -36,6 +37,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
     return {
       apiCategoryOrder,
       apiDefs,
+      flags,
       topLevelRoutes,
     };
   }

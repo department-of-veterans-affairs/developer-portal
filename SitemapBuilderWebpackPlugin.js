@@ -115,6 +115,7 @@ class SitemapBuilderPlugin {
     const path = require('path');
     const paths = require('./config/paths');
     const prodURL = require(paths.appPackageJson).homepage;
+    const apiFlags = sitemapData.flags.hosted_apis;
     const routes = sitemapData.topLevelRoutes();
     const Sitemap = require('react-router-sitemap').default;
 
@@ -125,7 +126,10 @@ class SitemapBuilderPlugin {
 
     function getApiRouteParams(route, apiCategory) {
       let routeParams = sitemapData.apiDefs[apiCategory].apis.reduce((result, api) => {
+        if (apiFlags.hasOwnProperty(api.urlFragment) && apiFlags[api.urlFragment]) {
           result.push(api.urlFragment);
+        }
+        return result;
       }, []);
 
       if (route === '/explore/:apiCategoryKey/docs/:apiName' && !sitemapData.apiDefs[apiCategory].apiKey) {
