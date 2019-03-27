@@ -120,14 +120,26 @@ class SitemapBuilderPlugin {
 
     const pathFilter = {
       isValid: false,
-      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success/],
+      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success|\/oauth/],
     };
+
+    function getApiRouteParams(route, apiCategory) {
+      let routeParams = sitemapData.apiDefs[apiCategory].apis.reduce((result, api) => {
+          result.push(api.urlFragment);
+      }, []);
+
+      if (route === '/explore/:apiCategoryKey/docs/:apiName' && !sitemapData.apiDefs[apiCategory].apiKey) {
+        routeParams.push('authorization');
+      }
+
+      return routeParams;
+    }
 
     const paramsConfig = {
       '/explore/:apiCategoryKey/docs/:apiName': sitemapData.apiCategoryOrder.map(apiCategory => {
         return {
           apiCategoryKey: apiCategory,
-          apiName: sitemapData.apiDefs[apiCategory].apis.map((api) => api.urlFragment),
+          apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
         };
       }),
       '/explore/:apiCategoryKey?': [ { 'apiCategoryKey?': sitemapData.apiCategoryOrder } ],
