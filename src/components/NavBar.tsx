@@ -82,7 +82,9 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
               <li className="main-nav-item">
                 <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
                   <NavLink to="/explore" className="usa-nav-link" activeClassName="default-nav-link"
-                    isActive={this.checkActiveNavLink}>
+                    isActive={this.checkActiveNavLink}
+                    onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                    onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
                     Documentation
                   </NavLink>
                 </MediaQuery>
