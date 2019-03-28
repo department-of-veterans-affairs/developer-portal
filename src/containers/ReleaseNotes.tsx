@@ -11,7 +11,7 @@ import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
 
-import './ReleaseNotes.scss';
+import './Explore.scss';
 
 function VaInternalTag() {
   return (
