@@ -14,7 +14,7 @@ describe('PageHeader', () => {
   });
 
   it('doesn\'t render the halo if the halo prop is falsy', () => {
-    let pageHeader = shallow(
+    const pageHeader = shallow(
       <PageHeader header="Big Idea" description="A great idea" />,
     );
     expect(pageHeader.find('div.header-halo').length).toBe(0);
@@ -37,7 +37,7 @@ describe('PageHeader', () => {
   });
 
   it('doesn\'t render the description if the description prop is falsy', () => {
-    let pageHeader = shallow(
+    const pageHeader = shallow(
       <PageHeader header="Big Idea" />,
     );
     expect(pageHeader.find('h2').length).toBe(0);
