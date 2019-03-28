@@ -73,7 +73,7 @@ export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>)
   );
 }
 
-function renderOveriew(routeProps: any, props: any) {
+function renderOverview(routeProps: any, props: any) {
   return <ReleaseNotesOverview {...routeProps} {...props} description={props.description} halo={props.halo} header={props.header} parent={props.parent} />
 }
 
@@ -88,14 +88,14 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
 
   public render() {
     return (
-      <div className="ReleaseNotes">
+      <div className="Explore">
         <section className="usa-section">
           <div className="Explore-main usa-grid">
             <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef}>
               <SideNav {...this.props} />
             </div>
             <div className="usa-width-two-thirds">
-              <Route exact={true} path="/release-notes/" render={(routeProps) => renderOveriew(routeProps, this.overviewProps)} />
+              <Route exact={true} path="/release-notes/" render={(routeProps) => renderOverview(routeProps, this.overviewProps)} />
               <Route exact={true} path="/release-notes/:apiCategoryKey" component={ApiPageReleaseNotes} />
             </div>
           </div>
