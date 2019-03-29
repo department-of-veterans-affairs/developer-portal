@@ -6,7 +6,8 @@ import { NavLink } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
 import WhatsNewPage from '../content/whats-new.mdx';
 
-import './WhatsNew.scss';
+import '../components/ApiCard';
+import './Explore.scss';
 
 const sections = [
   {
@@ -91,7 +92,7 @@ export class WhatsNew extends React.Component {
     };
 
     return (
-      <div className="WhatsNew">
+      <div className="Explore">
         <section className="usa-section">
           <div className="Explore-main usa-grid">
             <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef}>
