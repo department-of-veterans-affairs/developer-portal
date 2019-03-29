@@ -3,15 +3,13 @@ import { RouteComponentProps } from 'react-router';
 
 import { apiCategoryOrder, apiDefs } from '../apiDefs';
 import ApiCard from '../components/ApiCard';
+import PageHeader from '../components/PageHeader';
 
 export default class DocumentationOverview extends React.Component<RouteComponentProps, {}> {
   public render() {
     return (
       <div className="doc-overview">
-        <h1>Documentation</h1>
-        <h2>
-          Explore usage policies and technical details about VA's API offerings.
-        </h2>
+        <PageHeader header="Documentation" description="Explore usage policies and technical details about VA's API offerings."/>
         <div className="va-api-container">
           {apiCategoryOrder.map((apiCategoryKey: string) => {
             const { name, shortDescription } = apiDefs[apiCategoryKey];

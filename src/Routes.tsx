@@ -5,7 +5,7 @@ import { Redirect, Route } from 'react-router-dom';
 
 import { apiCategoryOrder, apiDefs } from './apiDefs';
 import { PageContent } from './components/PageContent';
-import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent, WhatsNew } from './containers';
+import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, ReleaseNotes, RoutedContent, WhatsNew } from './containers';
 
 export function topLevelRoutes(props: RouteComponentProps<void>) {
   return (
@@ -27,6 +27,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
         <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
         <Route path="/oauth" component={OAuth} />
+        <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
         <Route path="/whats-new" component={WhatsNew} />
       </Switch>
     </PageContent>

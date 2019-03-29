@@ -3,19 +3,23 @@ import { RouteComponentProps } from 'react-router';
 
 import './PageHeader.scss';
 
-export default class Overview extends React.Component<RouteComponentProps & any, {}> {
+export default class PageHeader extends React.Component<RouteComponentProps & any, {}> {
   public render() { 
     return (
       <div className="header">
-        <div className="header-halo">
-          {this.props.halo}
-        </div>
+        {this.props.halo &&
+          <div className="header-halo">
+            {this.props.halo}
+          </div>
+        }
         <h1>
           {this.props.header}
         </h1>
-        <h2>
-          {this.props.description}
-        </h2>
+        {this.props.description &&
+          <h2>
+            {this.props.description}
+          </h2>
+        }
       </div>
     );
   }

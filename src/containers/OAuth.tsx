@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import * as Stickyfill from 'stickyfilljs';
 
+import PageHeader from '../components/PageHeader';
 import Oauth from '../content/apiDocs/oauthTechnical.mdx';
 
 import './OAuth.scss';
@@ -21,19 +22,9 @@ export class OAuth extends React.Component<IOAuthProps, {}> {
   }
 
   public render() {
-    let headerHalo = null;
-    if (this.props.categoryName) {
-      headerHalo = (
-        <div className="header-halo">
-          {this.props.categoryName}
-        </div>
-      );
-    }
-
     return (
       <div id="oauth" className="usa-grid">
-        {headerHalo}
-        <h1>Authorization</h1>
+        <PageHeader halo={this.props.categoryName} header="Authorization" />
         <Oauth />
       </div>
     );
