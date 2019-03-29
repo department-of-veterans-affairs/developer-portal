@@ -87,7 +87,7 @@ export class WhatsNew extends React.Component {
   public render() {
     const headerProps = {
       description: "This page is where you’ll find interesting press releases, news, or media that relates to the API program and the Developer Portal",
-      header: "What's New?",
+      header: "What\u2019s New?",
     };
 
     return (

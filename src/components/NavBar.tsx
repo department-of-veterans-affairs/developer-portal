@@ -102,7 +102,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                   isActive={this.checkActiveNavLink}
                   onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
                   onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
-                  What's New
+                  What&rsquo;s New
                 </NavLink>
               </li>
               <li className="main-nav-item">
