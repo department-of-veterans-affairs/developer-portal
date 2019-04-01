@@ -62,7 +62,7 @@ export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>)
   const navLinks = apiCategoryOrder.map((key: string) => apiDefs[key].releaseNotes ? SideNavCategoryEntry(url, key, apiDefs[key]) : null);
 
   return (
-    <ul role="navigation" aria-label="Release Notes Side Nav" className="usa-sidenav-list">
+    <ul className="usa-sidenav-list">
       <li key="all">
         <NavLink exact={true} to="/release-notes" className="side-nav-category-link" activeClassName="usa-current">
           Overview
@@ -91,7 +91,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
       <div className="Explore">
         <section className="usa-section">
           <div className="Explore-main usa-grid">
-            <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef}>
+            <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="Release Notes Side Nav">
               <SideNav {...this.props} />
             </div>
             <div className="usa-width-two-thirds">

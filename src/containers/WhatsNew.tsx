@@ -58,7 +58,7 @@ export function SideNav() {
   });
 
   return (
-    <ul role="navigation" aria-label="Release Notes Side Nav" className="usa-sidenav-list">
+    <ul className="usa-sidenav-list">
       <li key="all">
         <NavLink exact={true} to="/whats-new" className="side-nav-category-link" activeClassName="usa-current" isActive={activeCheck}>
           Overview
@@ -95,11 +95,11 @@ export class WhatsNew extends React.Component {
       <div className="Explore">
         <section className="usa-section">
           <div className="Explore-main usa-grid">
-            <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef}>
+            <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="What's New Side Nav">
               <SideNav />
             </div>
             <div className="usa-width-two-thirds">
-              <section role="region" aria-labelledby="whats-new" className="usa-section">
+              <section role="region" aria-label="What's New" className="usa-section">
                 <PageHeader description={headerProps.description} header={headerProps.header} />
                 <div className="va-api-container">
                   {this.cardsSections}
