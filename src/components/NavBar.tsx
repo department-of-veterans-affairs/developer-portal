@@ -82,7 +82,9 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
               <li className="main-nav-item">
                 <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
                   <NavLink to="/explore" className="usa-nav-link" activeClassName="default-nav-link"
-                    isActive={this.checkActiveNavLink}>
+                    isActive={this.checkActiveNavLink}
+                    onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                    onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
                     Documentation
                   </NavLink>
                 </MediaQuery>
@@ -94,6 +96,22 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                   </button>
                 </MediaQuery>
                 {this.state.visibleSubNavs.documentation && this.renderDocumentationSubNav()}
+              </li>
+              <li className="main-nav-item">
+                <NavLink to="/whats-new" className="usa-nav-link" activeClassName="default-nav-link"
+                  isActive={this.checkActiveNavLink}
+                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                  What&rsquo;s New
+                </NavLink>
+              </li>
+              <li className="main-nav-item">
+                <NavLink to="/release-notes" className="usa-nav-link" activeClassName="default-nav-link"
+                  isActive={this.checkActiveNavLink}
+                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                  Release Notes
+                </NavLink>
               </li>
               <li className="main-nav-item">
                 <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose" className="usa-nav-link"

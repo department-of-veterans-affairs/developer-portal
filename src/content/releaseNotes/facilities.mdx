@@ -1,0 +1,44 @@
+## February 13, 2019
+
+**Standardize closed days to "Closed" in Facilities API [#2802](https://github.com/department-of-veterans-affairs/vets-api/pull/2802)**
+- Changes any casing of "closed" and "-" to "Closed" for a consistent convention in the Facilities API
+
+---
+
+## January 16, 2019
+
+**Fix facilities api bugs [#2735](https://github.com/department-of-veterans-affairs/vets-api/pull/2735)**
+- Allows users to pass both a list of IDs and a lat/long in the same request.
+- Populate missing location data in NCA, VBA, and VC facilities, [view specific change](https://github.com/department-of-veterans-affairs/vets-api/pull/2735/files#diff-a0253f0a6c07463fb11a513df82f21d2).
+
+---
+
+## December 26, 2018
+
+**Remove community care providers from all facilities search [#2582](https://github.com/department-of-veterans-affairs/vets-api/pull/2582)**
+- Reverts back to the old functionality, removing community care providers from the all facility search
+- Community care providers can now only be searched by passing `type=cc_provider` into the search endpoint
+
+---
+
+## November 20, 2018
+
+**Add facilities distances [#2687](https://github.com/department-of-veterans-affairs/vets-api/pull/2687)** 
+- Adds distance to meta property of lat/long inquiries to the Facilities API and adds documentation for the meta property
+- Facility distances from lat/long point are returned in responses
+
+---
+
+## November 12, 2018
+
+**Community care provider searches [#2405](https://github.com/department-of-veterans-affairs/vets-api/pull/2405)**
+- This enhances the facilities search endpoint to include community care providers in the search by default
+- Additionally, it supports searching for just community care  providers by passing `type=cc_provider` into the search endpoint
+
+---
+
+## August 13, 2018
+
+**Launch of the VA Facilities API**
+- VA_Facilities API endpoint for external API consumers. Supports json/[geojson](http://geojson.org/) results and a bulk "get all" endpoint in geojson and csv format.
+

@@ -6,32 +6,34 @@ import { Redirect, Route } from 'react-router-dom';
 import { apiCategoryOrder, apiDefs } from './apiDefs';
 import { flags } from './App';
 import { PageContent } from './components/PageContent';
-import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, RoutedContent } from './containers';
+import { ApplyForm, ApplySuccess, BetaPage, BetaSuccess, ExploreDocs, Home, OAuth, ReleaseNotes, RoutedContent, WhatsNew } from './containers';
 
 export function topLevelRoutes(props: RouteComponentProps<void>) {
-    return (
-      <PageContent {...props} >
-        <Switch>
-          <Route exact={true} path="/" component={Home} />
-          <Route exact={true} path="/index.html" component={Home} />
+  return (
+    <PageContent {...props} >
+      <Switch>
+        <Route exact={true} path="/" component={Home} />
+        <Route exact={true} path="/index.html" component={Home} />
 
-          {/* Legacy routes that we want to maintain: */}
-          <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
+        {/* Legacy routes that we want to maintain: */}
+        <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
 
-          {/* Current routes: */}
-          <Route path="/go-live" component={RoutedContent} />
-          <Route path="/terms-of-service" component={RoutedContent} />
-          <Route path="/apply" component={ApplyForm} />
-          <Route path="/applied" component={ApplySuccess} />
-          <Route path="/beta" component={BetaPage} />
-          <Route path="/beta-success" component={BetaSuccess} />
-          <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
-          <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
-          <Route path="/oauth" component={OAuth} />
-        </Switch>
-      </PageContent>
-    );
-  }
+        {/* Current routes: */}
+        <Route path="/go-live" component={RoutedContent} />
+        <Route path="/terms-of-service" component={RoutedContent} />
+        <Route path="/apply" component={ApplyForm} />
+        <Route path="/applied" component={ApplySuccess} />
+        <Route path="/beta" component={BetaPage} />
+        <Route path="/beta-success" component={BetaSuccess} />
+        <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
+        <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
+        <Route path="/oauth" component={OAuth} />
+        <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
+        <Route path="/whats-new" component={WhatsNew} />
+      </Switch>
+    </PageContent>
+  );
+}
 
 /*  When a route is added to or removed from `topLevelRoutes` the sitemap will be automatically updated during the next build. 
 *   There are situations when the config for react-router-sitemap needs to be updated for the sitemap to reflect the desired paths:

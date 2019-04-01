@@ -7,6 +7,8 @@ import Explore from './Explore';
 export * from './ExploreDocs';
 import Home from './Home';
 import OAuth from './OAuth';
+import ReleaseNotes from './ReleaseNotes';
 import RoutedContent from './RoutedContent';
+import WhatsNew from './WhatsNew';
 
-export { ApiKeyAuth, ApplyForm, ApplySuccess, Explore, Home, OAuth, RoutedContent };
+export { ApiKeyAuth, ApplyForm, ApplySuccess, Explore, Home, OAuth, ReleaseNotes, RoutedContent, WhatsNew };
