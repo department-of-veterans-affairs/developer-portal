@@ -14,6 +14,8 @@ export const testPaths = [
     '/explore',
     '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
     '/explore/benefits/docs/appeals',
+    '/release-notes',
+    '/whats-new',
 ];
 
 export const puppeteerHost = 'http://localhost:4444'
