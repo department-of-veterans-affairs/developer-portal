@@ -3,7 +3,7 @@
 .header {
   div.header-halo {
     text-transform: uppercase;
-    color: $color-gray-light;
+    color: darken( $color-gray-light, 36% );
   }
 }
 
