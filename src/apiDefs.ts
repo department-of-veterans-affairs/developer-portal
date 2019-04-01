@@ -6,7 +6,7 @@ import { BenefitsOverview,
 import { // BenefitsReleaseNotes, 
          FacilitiesReleaseNotes, 
          // HealthReleaseNotes, 
-         // VerificationReleaseNotes 
+         VerificationReleaseNotes, 
         } from './content/releaseNotes';
 
 export interface IApiDescription {
@@ -149,7 +149,7 @@ export const apiDefs : IApiCategories = {
     name: "Veteran Verification",
     overview: VerificationOverview,
     properName: 'Veteran Verification API',
-    // releaseNotes: VerificationReleaseNotes,
+    releaseNotes: VerificationReleaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
   },
 };
