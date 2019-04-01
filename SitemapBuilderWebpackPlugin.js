@@ -59,7 +59,7 @@ class SitemapBuilderPlugin {
 
         this.compileRoutes(config)
           .then((mfs) => this.executeRoutes(mfs))
-          .then((sitemapData) => this.buildSitemap(sitemapData, compilation))
+          .then((sitemapConfig) => this.buildSitemap(sitemapConfig, compilation))
           .then(() => this.finish(callback))
           .catch(err => this.finishWithError(err, compilation, callback));
       }
@@ -97,40 +97,24 @@ class SitemapBuilderPlugin {
       const jsdom = require('jsdom');
       const { JSDOM } = jsdom;
       const dom = new JSDOM(``, { runScripts: 'outside-only' });
-      const sitemapData = dom.runVMScript(script).getSitemapData();
-      resolve(sitemapData);
+      const sitemapConfig = dom.runVMScript(script).sitemapConfig();
+      resolve(sitemapConfig);
     })
   }
 
-  buildSitemap(sitemapData, compilation) {
+  buildSitemap(sitemapConfig, compilation) {
     if (this.verbose) {
       console.log('buildSitemap start');
     }
     const path = require('path');
     const paths = require('./config/paths');
     const prodURL = require(paths.appPackageJson).homepage;
-    const routes = sitemapData.topLevelRoutes();
     const Sitemap = require('react-router-sitemap').default;
 
-    const pathFilter = {
-      isValid: false,
-      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success/],
-    };
-
-    const paramsConfig = {
-      '/explore/:apiCategoryKey/docs/:apiName': sitemapData.apiCategoryOrder.map(apiCategory => {
-        return {
-          apiCategoryKey: apiCategory,
-          apiName: sitemapData.apiDefs[apiCategory].apis.map((api) => api.urlFragment),
-        };
-      }),
-      '/explore/:apiCategoryKey?': [ { 'apiCategoryKey?': sitemapData.apiCategoryOrder } ],
-    };
-
     const sitemap = (
-      new Sitemap(routes)
-        .filterPaths(pathFilter)
-        .applyParams(paramsConfig)
+      new Sitemap(sitemapConfig.topLevelRoutes())
+        .filterPaths(sitemapConfig.pathFilter)
+        .applyParams(sitemapConfig.paramsConfig)
         .build(prodURL)
         .save(path.join(paths.appBuild, 'sitemap.xml'))
     ).sitemaps[0].cache;
