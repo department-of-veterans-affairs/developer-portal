@@ -39,7 +39,9 @@ npm run-script test:unit:ci
 ### End-to-End Tests
 
 We also use jest, combined with [Puppeteer](https://github.com/GoogleChrome/puppeteer), to run end-to-end tests
-for accessibility issues. **NOTE: THESE ARE CURRENTLY NOT WORKING ON MASTER.**
+for accessibility issues.
+
+New routes need to be added to the `testPaths` array in `e2ehelpers.ts` so that they can be covered by both the accessibility tests and visual regression tests.
 
 
 ### Visual Regression Testing
