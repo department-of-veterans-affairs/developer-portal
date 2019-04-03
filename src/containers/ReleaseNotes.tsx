@@ -21,11 +21,12 @@ function VaInternalTag() {
 
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   const internalTag = (api.vaInternalOnly === true) ? VaInternalTag() : null;
+  const dashUrlFragment = api.urlFragment.replace('_', '-')
 
   return (
     <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
       <li key={api.urlFragment}>
-        <NavHashLink className="side-nav-api-link" activeClassName="usa-current" id={`hash-link-${apiCategoryKey}-${api.urlFragment}`} /*isActive={activeCheck}*/ to={`#${api.urlFragment}`}>
+        <NavHashLink className="side-nav-api-link" activeClassName="usa-current" id={`hash-link-${apiCategoryKey}-${api.urlFragment}`} /*isActive={activeCheck}*/ to={`#${dashUrlFragment}`}>
           {api.name}
           <br />
           {internalTag}
