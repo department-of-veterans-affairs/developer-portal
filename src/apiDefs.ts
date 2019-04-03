@@ -56,6 +56,7 @@ export const apiDefs : IApiCategories = {
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
         shortDescription: 'Submit and track claims',
         urlFragment: 'claims',
+
         vaInternalOnly: true,
       },
       {
