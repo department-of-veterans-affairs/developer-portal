@@ -1,34 +1,38 @@
-<div id="disability_rating" />
+<div id="disability-rating" />
 
-## Disability Rating
+# Disability Rating
 
-**November 2018 | v0.0.1**
-Launched v0.0.1 of the Disability Rating API.
+## November 8, 2018
 
-<br />
+**Launched the Disability Rating API**
+- Disability Rating API endpoint for external API consumers. Retrieves disability rating of an authorized Veteran.
 
-<div id="service_history" />
+---
 
-## Service History
+<div id="service-history" />
 
-**November 2018 | v0.0.1**
-Launched v0.0.1 of the Service History API.
+# Service History
+ 
+## June 11, 2018 
+**Expose Service History via API gateway as POC [#172](https://github.com/department-of-veterans-affairs/vets-contrib/issues/172)**
+- Given an authenticated user, this created an API endpoint that returns their service history resolved from eMISe
 
-<br />
+---
 
-<div id="veteran_confirmation" />
+<div id="veteran-confirmation" />
 
-## Veteran Confirmation
+# Veteran Confirmation
 
-**November 2018 | v0.0.1**
-Launched v0.0.1 of the Veteran Confirmation API.
+## November 8, 2018
+**Launched the Veteran Confirmation API**
+- Allows third-parties to request confirmation from the VA of an individual's Veteran status after receiving authorization to do so using an Open ID Connect flow.
 
-<br />
+---
 
-<div id="address_validation" />
+<div id="address-validation" />
 
-## Address Validation
+# Address Validation
 
-**November 2018 | v1**
-Launched v1 of the Address Validation API.
-
+## September 26, 2018
+**Create Address Validation API [#336](https://github.com/department-of-veterans-affairs/vets-contrib/commit/646a1c45df3c58f361ea523afc9e772dfa07999a)**
+- The ‘validate’ API accepts a structured JSON address object (broken down by street/city/state/zip/etc), and returns a result indicating whether the address is valid, and if so includes a canonicalized address and geocoding information (lat/long) for the address.
