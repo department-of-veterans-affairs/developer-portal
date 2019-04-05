@@ -3,7 +3,7 @@ import { BenefitsOverview,
          HealthOverview,
          VerificationOverview } from './content/apiDocs';
 
-import { // BenefitsReleaseNotes, 
+import { BenefitsReleaseNotes, 
          FacilitiesReleaseNotes, 
          // HealthReleaseNotes, 
          VerificationReleaseNotes, 
@@ -71,7 +71,7 @@ export const apiDefs : IApiCategories = {
     name: 'Benefits',
     overview: BenefitsOverview,
     properName: 'Benefits Intake API',
-    // releaseNotes: BenefitsReleaseNotes,
+    releaseNotes: BenefitsReleaseNotes,
     shortDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
   },
   facilities: {
