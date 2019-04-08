@@ -5,7 +5,7 @@ import { BenefitsOverview,
 
 import { // BenefitsReleaseNotes, 
          FacilitiesReleaseNotes, 
-         // HealthReleaseNotes, 
+         HealthReleaseNotes, 
          VerificationReleaseNotes, 
         } from './content/releaseNotes';
 
@@ -109,7 +109,7 @@ export const apiDefs : IApiCategories = {
     name: 'Health',
     overview: HealthOverview,
     properName: 'Health API',
-    // releaseNotes: HealthReleaseNotes,
+    releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
   },
   verification: {
