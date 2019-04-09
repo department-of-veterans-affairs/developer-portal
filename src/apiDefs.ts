@@ -5,7 +5,7 @@ import { BenefitsOverview,
 
 import { BenefitsReleaseNotes, 
          FacilitiesReleaseNotes, 
-         // HealthReleaseNotes, 
+         HealthReleaseNotes, 
          VerificationReleaseNotes, 
         } from './content/releaseNotes';
 
@@ -49,14 +49,14 @@ export const apiDefs : IApiCategories = {
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`,
         shortDescription: 'Track appeals',
         urlFragment: 'appeals',
-        vaInternalOnly: false,
+        vaInternalOnly: true,
       },
       {
         name: 'Benefits Claims',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
         shortDescription: 'Submit and track claims',
         urlFragment: 'claims',
-        vaInternalOnly: false,
+        vaInternalOnly: true,
       },
       {
         name: 'Loan Guaranty',
@@ -109,7 +109,7 @@ export const apiDefs : IApiCategories = {
     name: 'Health',
     overview: HealthOverview,
     properName: 'Health API',
-    // releaseNotes: HealthReleaseNotes,
+    releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
   },
   verification: {
