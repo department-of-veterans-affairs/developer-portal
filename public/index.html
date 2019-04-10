@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Due to historical compatibility issues, IE11 defaults to compatibility
+         mode for *.va.gov on VA machines. This tells IE11 compatibility mode
+         to use the IE11 engine. We want this because it supports ES5 instead
+         of ES3, making it webpack-compatible. -->
+    <meta http-equiv="X-UA-Compatible" content="IE=11" />
+
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
