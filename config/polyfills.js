@@ -1,6 +1,8 @@
 'use strict';
 
-// We rely on this for a few functions like Object.values.
+// We rely on this for a few functions like Object.values right now but in
+// general it is what allows us to confidently add `es2017` to
+// `compilerOptions.lib` in our typescript config.
 import '@babel/polyfill';
 
 if (typeof Promise === 'undefined') {
