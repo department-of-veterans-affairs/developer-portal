@@ -3,9 +3,9 @@ import { BenefitsOverview,
          HealthOverview,
          VerificationOverview } from './content/apiDocs';
 
-import { // BenefitsReleaseNotes, 
+import { BenefitsReleaseNotes, 
          FacilitiesReleaseNotes, 
-         // HealthReleaseNotes, 
+         HealthReleaseNotes, 
          VerificationReleaseNotes, 
         } from './content/releaseNotes';
 
@@ -71,7 +71,7 @@ export const apiDefs : IApiCategories = {
     name: 'Benefits',
     overview: BenefitsOverview,
     properName: 'Benefits Intake API',
-    // releaseNotes: BenefitsReleaseNotes,
+    releaseNotes: BenefitsReleaseNotes,
     shortDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
   },
   facilities: {
@@ -109,7 +109,7 @@ export const apiDefs : IApiCategories = {
     name: 'Health',
     overview: HealthOverview,
     properName: 'Health API',
-    // releaseNotes: HealthReleaseNotes,
+    releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
   },
   verification: {

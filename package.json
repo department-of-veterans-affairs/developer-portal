@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://developer.va.gov/",
   "dependencies": {
-    "@babel/preset-env": "^7.3.1",
+    "@babel/polyfill": "^7.4.3",
     "@babel/register": "^7.0.0",
     "@department-of-veterans-affairs/formation": "^1.16.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
@@ -118,6 +118,9 @@
     "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
     "@types/enzyme": "^3.1.15",
     "@types/enzyme-adapter-react-16": "^1.0.3",
     "@types/jest": "^23.3.12",
@@ -150,8 +153,36 @@
     ]
   },
   "babel": {
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ],
     "presets": [
-      "react-app"
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "entry",
+          "forceAllTransforms": true,
+          "loose": true,
+          "corejs": 2,
+          "modules": false,
+          "exclude": [
+            "transform-typeof-symbol"
+          ],
+          "targets": {
+            "ie": "11",
+            "chrome": "54",
+            "firefox": "46",
+            "node": "current"
+          }
+        }
+      ],
+      [
+        "react-app",
+        {
+          "flow": false,
+          "typescript": true
+        }
+      ]
     ]
   },
   "eslintConfig": {
