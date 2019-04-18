@@ -4,6 +4,20 @@
   padding-top: 5rem;
   padding-bottom: 3rem;
 
+  // Stickyfill left hand nav styles
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+
+    &:before,
+    &:after {
+      content: '';
+      display: table;
+    }
+  }
+
+
   h1,
   h2,
   h3 {

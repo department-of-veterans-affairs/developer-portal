@@ -1,6 +1,11 @@
 // Variables
+// ==========
+
+// Asset reference
 $font-path: "~uswds/src/fonts";
 $image-path: "~uswds/src/img";
+
+// Colors
 $color-gray-cool-light:  #dce4ef;
 $color-primary-alt-light: #9bdaf1;
 $color-primary-alt-dark: #00a6d2;
@@ -11,18 +16,110 @@ $color-base: #212121;
 $color-gray-lighter: #d6d7d9;
 $color-gold: #fdb81e;
 $color-red: #cd2026;
+
+// Responsive
 $medium-large-screen: 768px;
 $medium-screen: 640px;
 $large-screen: 951px;
+
+// Imports
+// =======
+@import "~uswds/src/stylesheets/uswds";
+
+// USWDS Overrides 🚗
+// ==================
+
+// Layout
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  color: #222;
+}
 
 .usa-grid {
   max-width: 1200px !important;
   margin-left: 0 !important;
 }
 
-//  Imports
-@import '~uswds/src/stylesheets/core/variables-vendor';
-@import '~uswds/src/stylesheets/lib/bourbon';
-@import '~uswds/src/stylesheets/lib/neat';
-@import '~uswds/src/stylesheets/core/variables';
-@import '~uswds/src/stylesheets/core/utilities';
+header {
+  flex-shrink: 0;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
+.main {
+  flex-grow: 1;
+  background-color: #F9F9F9;
+}
+
+// Typography
+
+h1 {
+  font-family: $font-sans;
+  font-weight: 700;
+  font-size: 4rem;
+  line-height: 1.3em;
+  color: #323A45;
+}
+
+h2 {
+  font-family: $font-sans;
+  font-weight: 700;
+  font-size: 3rem;
+  line-height: 1.3em;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+  color: #323A45;
+}
+
+h3 {
+  font-family: $font-sans;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.3em;
+  margin-top: 2rem !important;
+  margin-bottom: 1.5rem !important;
+  color: #323A45;
+}
+
+h4 {
+  font-family: $font-sans;
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.3em;
+  color: #323A45;
+}
+
+h5 {
+  font-family: $font-sans;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3em;
+  color: #323A45;
+}
+
+p {
+  font-family: $font-sans;
+  font-weight: 400;
+  line-height: 1.5em;
+}
+
+.lead-paragraph {
+  font-family: $font-sans;
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.5em;
+}
+
+.usa-font-lead {
+  font-family: $font-sans;
+  margin-bottom: 1.5rem !important;
+}
+
+span.mono {
+  font-family: monospace;
+}
