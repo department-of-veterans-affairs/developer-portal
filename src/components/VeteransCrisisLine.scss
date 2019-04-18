@@ -6,6 +6,100 @@
   }
 }
 
+.va-flex {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.va-crisis-line {
+  margin-top: 5px;
+  background-color: #A62D1B;
+
+  @include media($medium-large-screen) {
+    margin-top: 0;
+    position: absolute;
+    right: 7rem;
+    top: 0;
+  }
+
+  @include media($large-screen) {
+    right: 3rem;
+  }
+}
+
+button.va-crisis-line-button {
+  background-color: #A62D1B;
+  border-radius: 0;
+  color: $color-white;
+  margin: auto;
+  padding: 0.4em 0 0.3em 0;
+  font-size: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease-in-out;
+
+  @include media($medium-large-screen) {
+    display: block;
+    width: auto;
+    border-radius: 0 0 0.2em 0.2em;
+    box-shadow: 0 2px 5px $color-base;
+    padding: 0;
+    text-align: left;
+
+    .vcl-container {
+       background-color: #7F2011;
+    }
+  }
+
+  &:hover {
+    background-color: #7F2011;
+
+    @include media($medium-large-screen) {
+      .vcl-container {
+        background-color: #A62D1B;
+      }
+    }
+  }
+
+  &:focus,
+  &:active {
+    outline-offset: -2px;
+    outline: 2px solid #FDB81E;
+  }
+
+  .vcl-container {
+    margin-right: 5px;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .vcl {
+    content: "";
+    background: url('../assets/VCL-icon-white.svg') no-repeat right 29%;
+    background-size: 100%;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    margin: 0.3em 0.5em -0.3em 0.5em;
+  }
+
+  .vcl-text {
+    margin-right: 10px;
+  }
+
+  .vcl-right-arrow {
+    width: 1.2rem;
+    margin-right: 10px;
+  }
+
+  > .va-flex {
+    align-items: center;
+    pointer-events: none;
+  }
+}
+
 .va-crisis-panel {
 //  color: $color-primary-darkest;
   list-style: none;
@@ -69,7 +163,7 @@ ul.va-crisis-panel-list {
     flex-flow: row nowrap;
     align-items: center;
     border-bottom: 1px solid $color-gray-lighter;
-    
+
     .va-crisis-panel-icon {
       width: 24px;
       height: 24px;
@@ -93,4 +187,81 @@ ul.va-crisis-panel-list {
   }
 }
 
+// Note: Styles are from Formation.
+.va-overlay {
+  opacity: 0;
+  transition: opacity 0.5s, visibility 0s 0.5s;
+  visibility: hidden;
+  &-open {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.5s;
+  }
+}
 
+.va-modal {
+  background: rgba(50, 58, 69, 0.8);
+  content: " ";
+  display: block;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 6;
+
+  @media screen and (max-width: 481px) {
+    overflow-y: scroll;
+
+  }
+}
+
+.va-modal-inner {
+  background: $color-white;
+  margin: auto;
+  max-width: 40rem;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  cursor: auto;
+
+  @media screen and (max-width: 481px) {
+    transform: none;
+    top: 0;
+  }
+
+  .va-modal-large & {
+    max-width: 75rem;
+    width: 75vw;
+
+    .va-model-body {
+      max-height: 95vh;
+      overflow-y: auto;
+    }
+  }
+}
+
+.va-modal-body {
+  overflow-wrap: break-word;
+  padding: 2rem;
+  word-break: break-word;
+  word-wrap: break-word;
+}
+
+button.va-modal-close {
+  background-color: transparent;
+  color: rgba(33, 33, 33, 0.8);
+  font-size: 2.5rem;
+  padding: 0.5rem 1rem;
+  position: absolute;
+  margin: 0.25rem;
+  right: 0;
+  top: 0;
+  width: auto;
+  z-index: 9;
+  &:hover {
+    background-color: inherit;
+    color: #212121;
+  }
+}

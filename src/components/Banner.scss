@@ -1,6 +1,4 @@
 @import "../base";
-@import "../crisis-line";
-@import "../modal";
 
 .usa-banner {
   padding-bottom: 0 !important;
@@ -140,10 +138,10 @@
 .banner-guidance-gov,
 .banner-guidance-ssl {
   line-height: 24px;
-  
+
   @include media($medium-screen) {
     width: 50%;
-    padding: 0 12px; 
+    padding: 0 12px;
     margin-bottom: 0;
   }
 
