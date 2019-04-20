@@ -28,7 +28,6 @@
     }
 
     @include media($medium-screen) {
-      padding-bottom: 8px;
       position: relative;
       top: 30px;
 
@@ -37,7 +36,7 @@
 
         li {
           display: inline;
-          padding-left: 2rem;
+          padding-left: 3rem;
         }
       }
     }
