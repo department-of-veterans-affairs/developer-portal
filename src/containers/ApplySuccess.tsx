@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { apiDefs } from '../apiDefs';
 import sentenceJoin from '../sentenceJoin';
 import { IApiList, IApplication, IRootState } from '../types';
-import { ASSISTANCE_EMAIL_ADDRESS } from '../types/constants';
 
 import './Apply.scss';
 
@@ -15,10 +14,6 @@ const mapStateToProps = (state : IRootState) => {
     ...state.application,
   };
 };
-
-function AssistanceEmail() {
-  return <a href={`mailto:${ASSISTANCE_EMAIL_ADDRESS}`}>{`${ASSISTANCE_EMAIL_ADDRESS}`}</a>;
-}
 
 function AssistanceTrailer() {
   return (
@@ -99,7 +94,7 @@ function ApplySuccess(props: IApplication) {
 
   const oAuthNotice = ((apis.health || apis.verification) && clientID && clientSecret)
                     ? <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />
-                    : <span>If you decide to develop an application with the Health API or the Verification API, email us at <AssistanceEmail /> to setup OAuth credentials.</span>;
+                    : <span>If you decide to develop an application with the Health API or the Verification API, please open an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">GitHub page</a> to setup OAuth credentials.</span>;
 
   return (
     <div role="region" aria-labelledby="apply-region" className="usa-grid api-application">
