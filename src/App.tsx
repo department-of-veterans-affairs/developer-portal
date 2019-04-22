@@ -15,7 +15,6 @@ history.listen(location => {
 });
 
 import 'highlight.js/styles/github.css'
-import './App.scss';
 
 function isHostedApiEnabled(shortName: string, defaultValue: boolean): boolean {
   const envValue = process.env[`REACT_APP_${shortName.toUpperCase()}_API_ENABLED`];
