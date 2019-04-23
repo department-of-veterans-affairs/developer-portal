@@ -6,5 +6,8 @@ module.exports = {
   },
   launch: {
     args: ['--no-sandbox'],
+    // Uncomment the following line to open a browser window with devtools open
+    // when you run puppeteer tests, which can be useful for debugging.
+    // devtools: true,
   },
 };
