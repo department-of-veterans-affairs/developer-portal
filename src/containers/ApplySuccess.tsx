@@ -17,7 +17,8 @@ const mapStateToProps = (state : IRootState) => {
 
 function AssistanceTrailer() {
   return (
-    <p>If you would like to report a bug or make a feature request, please open an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">GitHub page</a>.</p>  );
+    <p>If you would like to report a bug or make a feature request, please open an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">GitHub page</a>.</p>
+  );
 }
 
 interface IApiKeyNoticeProps {
