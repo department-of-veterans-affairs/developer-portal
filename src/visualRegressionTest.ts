@@ -24,6 +24,15 @@ const checkScreenshots = async (page: Page) => {
 const paths = testPaths.filter(path => path !== '/');
 
 describe('Visual regression test', async () => {
+  it('renders the homepage properly', async() => {
+    // Set unlimited timeout on first request, since it may timeout while webpack is compiling.
+    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
+
+    // Hide problematic video on homepage
+    await page.evaluate('document.querySelector("iframe").style="visibility: hidden;"');
+
+    await checkScreenshots(page);
+  });
   for (const path of paths) {
     it(`renders ${path} properly`, async () => {
       // Mock swagger requests on docs pages so those pages aren't blank
@@ -37,13 +46,4 @@ describe('Visual regression test', async () => {
       await checkScreenshots(page)
     });
   }
-
-  it('renders the homepage properly', async() => {
-    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
-
-    // Hide problematic video on homepage
-    await page.evaluate('document.querySelector("iframe").style="visibility: hidden;"');
-
-    await checkScreenshots(page);
-  });
 });
