@@ -93,7 +93,9 @@ function ApplySuccess(props: IApplication) {
                     ? null
                     : <ApiKeyNotice email={email} token={token} selectedApis={selectedApiNames(apis)} />;
 
-  const oAuthNotice = <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />;
+  const oAuthNotice = ((apis.health || apis.verification) && clientID && clientSecret)
+                    ? <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />
+                    : null;
 
   return (
     <div role="region" aria-labelledby="apply-region" className="usa-grid api-application">
