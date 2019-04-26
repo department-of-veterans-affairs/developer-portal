@@ -93,9 +93,7 @@ function ApplySuccess(props: IApplication) {
                     ? null
                     : <ApiKeyNotice email={email} token={token} selectedApis={selectedApiNames(apis)} />;
 
-  const oAuthNotice = ((apis.health || apis.verification) && clientID && clientSecret)
-                    ? <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />
-                    : <span>If you decide to develop an application with the Health API or the Verification API, please open an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">GitHub page</a> to setup OAuth credentials.</span>;
+  const oAuthNotice = <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />;
 
   return (
     <div role="region" aria-labelledby="apply-region" className="usa-grid api-application">
