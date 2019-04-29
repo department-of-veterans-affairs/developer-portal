@@ -6,8 +6,7 @@ import { BenefitsOverview,
 import { BenefitsReleaseNotes, 
          FacilitiesReleaseNotes, 
          HealthReleaseNotes, 
-         VerificationReleaseNotes, 
-        } from './content/releaseNotes';
+         VerificationReleaseNotes } from './content/releaseNotes';
 
 export interface IApiDescription {
   readonly name: string;
