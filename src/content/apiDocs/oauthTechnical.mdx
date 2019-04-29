@@ -310,7 +310,7 @@ Open up a file called `index.js` in your editor of choice and add the following:
 ```
 const { Issuer } = require('openid-client');
 
-const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration;
+const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration';
 const client_id = 'your_client_id';
 const client_secret = 'your_client_secret';
 
@@ -428,7 +428,7 @@ And that's all you'll need to do to add VA OAuth to a node application. After st
 Finally, let's add a real call to the Veteran Status API. In the `index.js` file lets add another require statement:
 
 ```
-const http = require('http');
+const https = require('https');
 ```
 
 Then above `startApp`:
