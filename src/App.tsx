@@ -9,6 +9,8 @@ import { Footer, NavBar } from './components';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
+import './App.scss'
+
 let currentPath = history.location.pathname;
 history.listen(location => {
   currentPath = location.pathname;
