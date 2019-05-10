@@ -47,12 +47,14 @@ class App extends React.Component {
     return (
       <FlagsProvider flags={flags}>
         <ConnectedRouter history={history}>
-          <div className="App">
-            <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
-            <div className="main" role="main">
-              <Route path="/" render={topLevelRoutes} />
+          <div className="app-container">
+            <div className="App">
+              <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
+                <div className="main" role="main">
+                  <Route path="/" render={topLevelRoutes} />
+                </div>
+              <Footer />
             </div>
-            <Footer />
           </div>
         </ConnectedRouter>
       </FlagsProvider>
