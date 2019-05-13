@@ -136,6 +136,7 @@
     "fork-ts-checker-webpack-plugin": "^0.4.14",
     "gh-pages": "^1.1.0",
     "jest": "^23.6.0",
+    "jest-environment-puppeteer": "^4.1.1",
     "jest-fetch-mock": "^2.1.0",
     "jest-image-snapshot": "^2.7.0",
     "jest-junit-reporter": "^1.1.0",
