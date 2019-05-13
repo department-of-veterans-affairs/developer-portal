@@ -8,7 +8,6 @@ describe('terms of service', () => {
   it('is displayed in the footer', async () => {
 
     for (const path of ['/', '/apply', '/explore']) {
-
       await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
       const tosLinkCount = await page.evaluate(() => {
         const pathExpr = "//footer//a[contains(., 'Terms of Service')]";
