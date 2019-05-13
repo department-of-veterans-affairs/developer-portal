@@ -43,6 +43,7 @@ for accessibility issues.
 
 New routes need to be added to the `testPaths` array in `e2ehelpers.ts` so that they can be covered by both the accessibility tests and visual regression tests.
 
+Set `TEST_HOST` to the url to use in the end to end testing. If not set a server will be spun up for the duration of the tests. Server setup can be found in `jest-puppeteer.conifg.js`.
 
 ### Visual Regression Testing
 
@@ -66,6 +67,7 @@ docker run --rm -itv "$PWD:/application" -v "/application/node_modules" develope
 
 It's important to run these tests inside the docker container, or else the tests will report false negatives due to font differences.
 
+`TEST_HOST` can be set for visual regression testing in the same way as the end to end tests.
 
 ## Build-Release-Deploy
 

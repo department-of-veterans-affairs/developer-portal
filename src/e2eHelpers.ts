@@ -18,7 +18,7 @@ export const testPaths = [
     '/whats-new',
 ];
 
-export const puppeteerHost = 'http://localhost:4444'
+export const puppeteerHost = process.env.TEST_HOST || 'http://localhost:4444'
 
 declare global {
     interface Window { // tslint:disable-line
