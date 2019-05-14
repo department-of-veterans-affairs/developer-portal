@@ -1,3 +1,10 @@
+/*
+  This test is used in CI as part of end to end testing for the developer-portal.
+  It is also periodicaly ran against the live site by our monitoring system to
+  ensure we are properly rendering the site at a high level. There is probably a
+  better way to ensure the site is rendering correctly, so we may add a monitoring
+  specific test in the future.
+*/
 import 'jest';
 
 import { puppeteerHost } from './e2eHelpers';

@@ -67,7 +67,7 @@ docker run --rm -itv "$PWD:/application" -v "/application/node_modules" develope
 
 It's important to run these tests inside the docker container, or else the tests will report false negatives due to font differences.
 
-`TEST_HOST` can be set for visual regression testing in the same way as the end to end tests.
+`TEST_HOST` can be set for visual regression testing in the same way as the end to end tests. However running visual regression tests against a live site isn't useful yet, as most tests will not pass.
 
 ## Build-Release-Deploy
 
