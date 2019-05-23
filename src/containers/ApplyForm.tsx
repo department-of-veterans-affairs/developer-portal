@@ -5,6 +5,8 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { Link } from 'react-router-dom';
 
+import { Flag } from 'flag';
+
 import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
 import ErrorableCheckbox from '@department-of-veterans-affairs/formation/ErrorableCheckbox';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation/ErrorableTextArea';
@@ -21,6 +23,7 @@ interface IApplyProps extends IApplication {
   toggleHealth: () => void;
   toggleFacilities: () => void;
   toggleVerification: () => void;
+  toggleCommunityCare: () => void;
   updateDescription: (value: IErrorableInput) => void;
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
@@ -36,6 +39,7 @@ const mapDispatchToProps = (dispatch : ApplicationDispatch) => {
     submitForm: () => { dispatch(actions.submitForm()) },
     toggleAcceptTos: () => { dispatch(actions.toggleAcceptTos()) },
     toggleBenefits: () => { dispatch(actions.toggleBenefitsApi()) },
+    toggleCommunityCare: () => { dispatch(actions.toggleCommunityCareApi()) },
     toggleFacilities: () => { dispatch(actions.toggleFacilitiesApi()) },
     toggleHealth: () => { dispatch(actions.toggleHealthApi()) },
     toggleVerification: () => { dispatch(actions.toggleVerificationApi()) },
@@ -140,6 +144,18 @@ class ApplyForm extends React.Component<IApplyProps> {
                   onChange={props.toggleHealth} />
                 <label htmlFor="health">VA Health API</label>
               </div>
+
+              <Flag key='community_care' name='hosted_apis.community_care'>
+                <div className="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="community_care"
+                    name="community_care"
+                    checked={apis.communityCare}
+                    onChange={props.toggleCommunityCare} />
+                  <label htmlFor="community_care">Community Care Eligibility API</label>
+                </div>
+              </Flag>
 
               <div className="form-checkbox">
                 <input

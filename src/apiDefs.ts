@@ -102,6 +102,13 @@ export const apiDefs : IApiCategories = {
         urlFragment: 'argonaut',
         vaInternalOnly: false,
       },
+      {
+        name: 'Community Care Eligibility API',
+        openApiDocUrl: "",
+        shortDescription: "",
+        urlFragment: 'community_care',
+        vaInternalOnly: false,
+      },
     ],
     buttonText: "Get Your Key",
     longDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.",

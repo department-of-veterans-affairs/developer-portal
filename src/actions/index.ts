@@ -48,6 +48,10 @@ export interface IToggleHealthApi extends Action {
   type: constants.TOGGLE_HEALTH_CHECKED;
 }
 
+export interface IToggleCommunityCareApi extends Action {
+  type: constants.TOGGLE_COMMUNITY_CARE_CHECKED;
+}
+
 export interface IToggleFacilitiesApi extends Action {
   type: constants.TOGGLE_FACILITIES_CHECKED;
 }
@@ -72,7 +76,8 @@ export type UpdateApplicationAction =
   | IToggleVerificationApi
   | IToggleFacilitiesApi
   | IToggleHealthApi
-  | IToggleAcceptTos;
+  | IToggleAcceptTos
+  | IToggleCommunityCareApi;
 
 export interface ISubmitForm extends Action {
   type: constants.SUBMIT_APPLICATION_BEGIN;
@@ -294,6 +299,12 @@ export const toggleAppealsApi: ActionCreator<IToggleAppealsApi> = () => {
 export const toggleHealthApi: ActionCreator<IToggleHealthApi> = () => {
   return {
     type: constants.TOGGLE_HEALTH_CHECKED,
+  };
+};
+
+export const toggleCommunityCareApi: ActionCreator<IToggleCommunityCareApi> = () => {
+  return {
+    type: constants.TOGGLE_COMMUNITY_CARE_CHECKED,
   };
 };
 

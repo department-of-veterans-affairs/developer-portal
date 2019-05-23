@@ -34,6 +34,7 @@ export const flags = {
     argonaut: isHostedApiEnabled('argonaut', true),
     benefits: isHostedApiEnabled('benefits', true),
     claims: isHostedApiEnabled('claims', true),
+    community_care: isHostedApiEnabled('community_care', false),
     disability_rating: isHostedApiEnabled('disability_rating', true),
     facilities: isHostedApiEnabled('facilities', true),
     loan_guaranty: isHostedApiEnabled('loan_guaranty', false),
