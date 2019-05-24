@@ -81,7 +81,7 @@ function OAuthSideNavEntry(apiCategoryKey: string, apiCategory: IApiCategory) {
 }
 
 function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory) {
-  const subNavLinks = apiCategory.apis.map(api => {
+  const subNavLinks = Object.values(apiCategory.apis).map(api => {
     return SideNavApiEntry(apiCategoryKey, api);
   });
 

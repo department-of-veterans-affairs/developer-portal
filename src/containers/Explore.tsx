@@ -4,7 +4,7 @@ import { Flag } from 'flag';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 
-import { lookupApi } from '../apiDefs';
+import { lookupApiByFragment } from '../apiDefs';
 import { SwaggerDocs } from '../components';
 import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
@@ -24,7 +24,7 @@ class Explore extends React.Component<IExploreProps, { }> {
     public render() {
       let docsDom: JSX.Element | null = null;
       if (this.props.match.params.apiName != null) {
-        const api = lookupApi(this.props.match.params.apiName);
+        const api = lookupApiByFragment(this.props.match.params.apiName);
         if (api != null) {
           docsDom = (
                 <Flag name={`hosted_apis.${api.urlFragment}`}>
