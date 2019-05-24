@@ -13,7 +13,8 @@ import ErrorableTextArea from '@department-of-veterans-affairs/formation/Errorab
 import ErrorableTextInput from '@department-of-veterans-affairs/formation/ErrorableTextInput';
 import ProgressButton from '@department-of-veterans-affairs/formation/ProgressButton';
 
-import * as actions from '../actions'
+import * as actions from '../actions';
+import { isOauthApi } from '../apiDefs';
 import { IApplication, IErrorableInput, IRootState } from '../types';
 
 interface IApplyProps extends IApplication {
@@ -207,7 +208,7 @@ class ApplyForm extends React.Component<IApplyProps> {
   }
 
   private renderOAuthFields() {
-    if (this.props.inputs.apis.health || this.props.inputs.apis.verification) {
+    if (this.anyOAuthApisSelected()) {
       const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
           <ErrorableTextInput
@@ -235,14 +236,17 @@ class ApplyForm extends React.Component<IApplyProps> {
     return null;
   }
 
-  private anyOAuthApisSelected() {
+  private selectedApis () {
     const apis = this.props.inputs.apis;
-    return (apis.health === true || apis.verification === true);
+    return Object.keys(apis).filter((apiName) => apis[apiName]);
+  }
+
+  private anyOAuthApisSelected() {
+    return this.selectedApis().some(isOauthApi);
   }
 
   private anyApiSelected() {
-    const apis = this.props.inputs.apis;
-    const numSelected = Object.keys(apis).filter((apiName) => apis[apiName]).length;
+    const numSelected = this.selectedApis().length;
     return numSelected > 0;
   }
 
