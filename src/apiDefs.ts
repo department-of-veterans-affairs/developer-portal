@@ -141,7 +141,8 @@ export const apiDefs : IApiCategories = {
         urlFragment: 'service_history',
         vaInternalOnly: false,
       },
-      veteranConfirmation: {
+      // TODO: change this to veteranConfirmation
+      verification: {
         name: 'Veteran Confirmation',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/status`,
         shortDescription: "Get confirmation of a Veteran's status",
