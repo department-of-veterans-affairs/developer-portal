@@ -10,10 +10,11 @@ import { IApiNameParam } from '../types';
 
 function ApiSection({ apiCategoryKey, sectionRef } : { apiCategoryKey : string, sectionRef? : React.RefObject<HTMLElement> } ) {
     const { apis, name: categoryName, overview, longDescription: introText } = apiDefs[apiCategoryKey];
+    const apiDescriptions = Object.values(apis);
     let linkSection;
 
-    if (apis.length > 0) {
-        const links = apis.map((apiDesc: IApiDescription, idx) => {
+    if (apiDescriptions.length > 0) {
+        const links = apiDescriptions.map((apiDesc: IApiDescription, idx) => {
             const { name, shortDescription, urlFragment, vaInternalOnly } = apiDesc;
             return (
                 <Flag key={idx} name={`hosted_apis.${urlFragment}`}>
