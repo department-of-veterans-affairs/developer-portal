@@ -100,7 +100,8 @@ export const apiDefs : IApiCategories = {
   health: {
     apiKey: false,
     apis: {
-      argonaut: {
+      // TODO: change this to argonaut
+      health: {
         name: 'Veterans Health API',
         openApiDocUrl: "https://staging-api.va.gov/services/argonaut/v0/openapi.json",
         shortDescription: "VA's Argonaut resources",
