@@ -150,7 +150,7 @@ class ApplyForm extends React.Component<IApplyProps> {
                   <input
                     type="checkbox"
                     id="community_care"
-                    name="community_care"
+                    name="communityCare"
                     checked={apis.communityCare}
                     onChange={props.toggleCommunityCare} />
                   <label htmlFor="community_care">Community Care Eligibility API</label>
