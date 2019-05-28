@@ -21,7 +21,7 @@ class Home extends React.Component {
                   <div className="usa-alert usa-alert-warning">
                     <div className="usa-alert-body">
                       <h3 className="usa-alert-heading">You may have trouble accessing some of our APIs</h3>
-                      <div className="usa-alert-text">Due to a datacenter outage as of Tuesday evening, May 28, the Address Validation and Appeals Status APIs may not be responding properly. We apologize for the inconvenience and are working to resolve the issue as quickly as possible. Please check back here for updates.</div>
+                      <div className="usa-alert-text">As of Tuesday evening, May 28, the Address Validation and Appeals Status APIs may not be responding properly. We apologize for the inconvenience and are working to resolve the issue as quickly as possible. Please check back here for updates.</div>
                     </div>
                   </div>
                   <br />
