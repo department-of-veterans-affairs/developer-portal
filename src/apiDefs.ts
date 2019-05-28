@@ -16,13 +16,9 @@ export interface IApiDescription {
   readonly vaInternalOnly: boolean;
 }
 
-export interface IApiDescriptions {
-  [key: string]: IApiDescription;
-}
-
 export interface IApiCategory {
   readonly apiKey: boolean;
-  readonly apis: IApiDescriptions;
+  readonly apis: IApiDescription[];
   readonly properName: string;
   readonly buttonText: string;
   readonly name: string;
@@ -36,40 +32,39 @@ export interface IApiCategories {
   [key: string]: IApiCategory;
 }
 
-// tslint:disable:object-literal-sort-keys
 export const apiDefs : IApiCategories = {
   benefits: {
     apiKey: true,
-    apis: {
-      benefits: {
+    apis: [
+      {
         name: 'Benefits Intake',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/vba_documents/docs/v0/api`,
         shortDescription: 'Submit PDF claims',
         urlFragment: 'benefits',
         vaInternalOnly: false,
       },
-      appeals: {
+      {
         name: 'Appeals Status',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`,
         shortDescription: 'Track appeals',
         urlFragment: 'appeals',
         vaInternalOnly: true,
       },
-      claims: {
+      {
         name: 'Benefits Claims',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
         shortDescription: 'Submit and track claims',
         urlFragment: 'claims',
         vaInternalOnly: true,
       },
-      loanGuaranty: {
+      {
         name: 'Loan Guaranty',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/loan_guaranty/docs/v1/api`,
         shortDescription: 'Manage VA Home Loans',
         urlFragment: 'loan_guaranty',
         vaInternalOnly: false,
       },
-    },
+    ],
     buttonText: "Get Your Key",
     longDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
     name: 'Benefits',
@@ -80,15 +75,15 @@ export const apiDefs : IApiCategories = {
   },
   facilities: {
     apiKey: true,
-    apis: {
-      facilities: {
+    apis: [
+      {
         name: 'VA Facilities API',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/va_facilities/docs/v0/api`,
         shortDescription: "VA Facilities",
         urlFragment: 'facilities',
         vaInternalOnly: false,
       },
-    },
+    ],
     buttonText: "Get Your Key",
     longDescription: "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
     name: 'Facilities',
@@ -99,23 +94,22 @@ export const apiDefs : IApiCategories = {
   },
   health: {
     apiKey: false,
-    apis: {
-      // TODO: change this to argonaut
-      health: {
+    apis: [
+      {
         name: 'Veterans Health API',
         openApiDocUrl: "https://staging-api.va.gov/services/argonaut/v0/openapi.json",
         shortDescription: "VA's Argonaut resources",
         urlFragment: 'argonaut',
         vaInternalOnly: false,
       },
-      communityCare: {
+      {
         name: 'Community Care Eligibility API',
         openApiDocUrl: "",
         shortDescription: "",
         urlFragment: 'community_care',
         vaInternalOnly: false,
       },
-    },
+    ],
     buttonText: "Get Your Key",
     longDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.",
     name: 'Health',
@@ -126,37 +120,36 @@ export const apiDefs : IApiCategories = {
   },
   verification: {
     apiKey: false,
-    apis: {
-      disabilityRating: {
+    apis: [
+      {
         name: 'Disability Rating',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/disability_rating`,
         shortDescription: "Get a Veteran's disability rating",
         urlFragment: 'disability_rating',
         vaInternalOnly: false,
       },
-      serviceHistory: {
+      {
         name: 'Service History',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/service_history`,
         shortDescription: "Get a Veteran's service history",
         urlFragment: 'service_history',
         vaInternalOnly: false,
       },
-      // TODO: change this to veteranConfirmation
-      verification: {
+      {
         name: 'Veteran Confirmation',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/status`,
         shortDescription: "Get confirmation of a Veteran's status",
         urlFragment: 'veteran_confirmation',
         vaInternalOnly: false,
       },
-      addressValidation: {
+      {
         name: 'Address Validation',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v1/api`,
         shortDescription: 'Provides methods to standardize and validate addresses.',
         urlFragment: 'address_validation',
         vaInternalOnly: true,
       },
-    },
+    ],
     buttonText: "Stay Informed",
     longDescription: 'Empowering Veterans to take control of their data and put it to work.',
     name: "Veteran Verification",
@@ -166,7 +159,6 @@ export const apiDefs : IApiCategories = {
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
   },
 };
-// tslint:enable:object-literal-sort-keys
 
 export const apiCategoryOrder: string[] = [
   'benefits',
@@ -190,7 +182,7 @@ export function withApiDescription(urlFragment: string, fn: (apiDesc: IApiDescri
 
 export function lookupApiByFragment(urlFragment: string): IApiDescription | null {
   for (const cat of Object.values(apiDefs)) {
-    for (const api of Object.values(cat.apis)) {
+    for (const api of cat.apis) {
       if (api.urlFragment === urlFragment) {
         return api;
       }

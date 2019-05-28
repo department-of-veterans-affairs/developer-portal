@@ -13,7 +13,6 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
   public render() {
     const { apiCategoryKey } = this.props.match.params;
     const { apis, releaseNotes } = apiDefs[apiCategoryKey];
-    const apiDescriptions = Object.values(apis);
 
     const headerProps = {
       halo: 'Release Notes',
@@ -22,8 +21,8 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
 
     let cardSection;
 
-    if (apiDescriptions.length > 1) {
-      const apiCards = apiDescriptions.map((apiDesc: IApiDescription) => {
+    if (apis.length > 1) {
+      const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { name, shortDescription, urlFragment, vaInternalOnly } = apiDesc;
         const dashUrlFragment = urlFragment.replace('_', '-')
 

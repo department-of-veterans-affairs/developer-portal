@@ -43,7 +43,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
 
 export function sitemapConfig() {
   function getApiRouteParams(route: string, apiCategory: string): string[] {
-    const routeParams = Object.values(apiDefs[apiCategory].apis).reduce((result: string[], api) => {
+    const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api) => {
       if (flags.hosted_apis.hasOwnProperty(api.urlFragment) && flags.hosted_apis[api.urlFragment]) {
         result.push(api.urlFragment);
       }
