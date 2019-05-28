@@ -242,7 +242,14 @@ class ApplyForm extends React.Component<IApplyProps> {
   }
 
   private anyOAuthApisSelected() {
-    return this.selectedApis().some(isOauthApi);
+    let apiUrlFragments = this.selectedApiCheckboxes().flatMap((formField) => ourNewMapping[formField]);
+    let selectedCategories = categoriesFor(apiUrlFragments);
+    for (const cat in selectedCategories) {
+      if (cat.apiKey === false) {
+        return true;
+      }
+    }
+    return false;
   }
 
   private anyApiSelected() {

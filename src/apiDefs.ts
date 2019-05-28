@@ -206,3 +206,15 @@ export function isOauthApi(apiName: string): boolean {
   }
   return false;
 }
+
+function categoriesFor(apiList: string[]): boolean {
+  let accum = [];
+  for (const cat of Object.values(apiDefs)) {
+    for (const api of cat.apis) {
+      if (apiList.indexOf(api.urlFragment) >= 0) {
+        accum.push(cat);
+      }
+    }
+  }
+  return accum.uniq();
+}
