@@ -16,6 +16,18 @@ class Home extends React.Component {
                 </a>
               </div>
 
+              <div className="columns small-12">
+                <div className="form-warning-banner">
+                  <div className="usa-alert usa-alert-warning">
+                    <div className="usa-alert-body">
+                      <h3 className="usa-alert-heading">You may have trouble accessing some of our APIs</h3>
+                      <div className="usa-alert-text">We’re sorry. We’re working to fix a problem that affects some parts of our site. If you have trouble signing in or using any tools or services, please check back soon.</div>
+                    </div>
+                  </div>
+                  <br />
+                </div>
+              </div>
+
               <section role="region" aria-label="Page Hero" className="usa-hero">
                 <div className="usa-grid">
                   <div className="usa-hero-callout">
