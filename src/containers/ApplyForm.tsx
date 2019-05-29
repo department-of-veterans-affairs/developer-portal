@@ -14,7 +14,7 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation/Errora
 import ProgressButton from '@department-of-veterans-affairs/formation/ProgressButton';
 
 import * as actions from '../actions';
-import { isOauthApi } from '../apiDefs';
+import { includesOauthAPI } from '../apiDefs';
 import { IApplication, IErrorableInput, IRootState } from '../types';
 
 interface IApplyProps extends IApplication {
@@ -58,6 +58,15 @@ const mapStateToProps = (state : IRootState) => {
     ...state.application,
   };
 };
+
+// Mapping from the options on the form to url fragments for APIs
+const formFieldsToFragments = {
+  appeals: 'appeals',
+  benefits: ['benefits', 'claims'],
+  communityCare: 'community_care',
+  health: 'argonaut',
+  verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
+}
 
 class ApplyForm extends React.Component<IApplyProps> {
   constructor(props: IApplyProps) {
@@ -150,11 +159,11 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <div className="form-checkbox">
                   <input
                     type="checkbox"
-                    id="community_care"
+                    id="communityCare"
                     name="communityCare"
                     checked={apis.communityCare}
                     onChange={props.toggleCommunityCare} />
-                  <label htmlFor="community_care">Community Care Eligibility API</label>
+                  <label htmlFor="communityCare">Community Care Eligibility API</label>
                 </div>
               </Flag>
 
@@ -236,20 +245,14 @@ class ApplyForm extends React.Component<IApplyProps> {
     return null;
   }
 
-  private selectedApis () {
+  private selectedApis() {
     const apis = this.props.inputs.apis;
     return Object.keys(apis).filter((apiName) => apis[apiName]);
   }
 
   private anyOAuthApisSelected() {
-    let apiUrlFragments = this.selectedApiCheckboxes().flatMap((formField) => ourNewMapping[formField]);
-    let selectedCategories = categoriesFor(apiUrlFragments);
-    for (const cat in selectedCategories) {
-      if (cat.apiKey === false) {
-        return true;
-      }
-    }
-    return false;
+    let apiUrlFragments = this.selectedApis().flatMap((formField) => formFieldsToFragments[formField]);
+    return includesOauthAPI(apiUrlFragments);
   }
 
   private anyApiSelected() {

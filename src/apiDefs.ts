@@ -196,25 +196,18 @@ export function lookupApiCategory(categoryKey: string): IApiCategory | null {
   return apiDefs[categoryKey];
 }
 
-export function isOauthApi(apiName: string): boolean {
-  for (const cat of Object.values(apiDefs)) {
-    for (const name of Object.keys(cat.apis)) {
-      if (name === apiName) {
-        return !cat.apiKey;
-      }
-    }
-  }
-  return false;
-}
-
-function categoriesFor(apiList: string[]): boolean {
-  let accum = [];
+function categoriesFor(apiList: string[]): IApiCategory[] {
+  let categories = [];
   for (const cat of Object.values(apiDefs)) {
     for (const api of cat.apis) {
-      if (apiList.indexOf(api.urlFragment) >= 0) {
-        accum.push(cat);
+      if (apiList.includes(api.urlFragment)) {
+        categories.push(cat);
       }
     }
   }
-  return accum.uniq();
+  return Array.from(new Set(categories));
+}
+
+export function includesOauthAPI(apiList: string[]): boolean {
+  return categoriesFor(apiList).some(category => !category.apiKey)
 }
