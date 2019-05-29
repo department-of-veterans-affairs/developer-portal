@@ -16,16 +16,14 @@ class Home extends React.Component {
                 </a>
               </div>
 
-              <div className="columns small-12">
-                <div className="form-warning-banner">
-                  <div className="usa-alert usa-alert-warning">
-                    <div className="usa-alert-body">
-                      <h3 className="usa-alert-heading">You may have trouble accessing some of our APIs</h3>
-                      <div className="usa-alert-text">As of Tuesday evening, May 28, the <strong>Address Validation</strong>, <strong>Appeals Status</strong>, and <strong>Health</strong> APIs may not be responding properly. We apologize for the inconvenience and are working to resolve the issue as quickly as possible. Please check back here for updates.</div>
-                    </div>
+              <section aria-live="polite" role="alert" className="usa-alert usa-alert-warning">
+                <div className="usa-alert-body">
+                  <h3 className="usa-alert-heading">You may have trouble accessing some of our APIs</h3>
+                  <div className="usa-alert-text">
+                    As of Tuesday evening, May 28, the <strong>Address Validation</strong>, <strong>Appeals Status</strong>, and <strong>Health</strong> APIs may not be responding properly. We apologize for the inconvenience and are working to resolve the issue as quickly as possible. Please check back here for updates.
                   </div>
                 </div>
-              </div>
+              </section>
 
               <section role="region" aria-label="Page Hero" className="usa-hero">
                 <div className="usa-grid">

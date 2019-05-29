@@ -123,3 +123,19 @@ p {
 span.mono {
   font-family: monospace;
 }
+
+.usa-alert {
+  background-size: 3rem;
+  background-position: 4rem 3.5rem;
+  margin-top: 0;
+  padding: 3.2rem 6.4rem 3.2rem 2.4rem;
+  position: relative;
+
+  h3 {
+    margin-top: 0 !important;
+  }
+
+  &::before {
+    background-color: transparent;
+  }
+}
