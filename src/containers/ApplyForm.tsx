@@ -251,7 +251,7 @@ class ApplyForm extends React.Component<IApplyProps> {
   }
 
   private anyOAuthApisSelected() {
-    let apiUrlFragments = this.selectedApis().flatMap((formField) => formFieldsToFragments[formField]);
+    const apiUrlFragments = this.selectedApis().flatMap((formField) => formFieldsToFragments[formField]);
     return includesOauthAPI(apiUrlFragments);
   }
 

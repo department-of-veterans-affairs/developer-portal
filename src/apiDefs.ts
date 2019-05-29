@@ -197,7 +197,7 @@ export function lookupApiCategory(categoryKey: string): IApiCategory | null {
 }
 
 function categoriesFor(apiList: string[]): IApiCategory[] {
-  let categories = [];
+  const categories = [];
   for (const cat of Object.values(apiDefs)) {
     for (const api of cat.apis) {
       if (apiList.includes(api.urlFragment)) {
