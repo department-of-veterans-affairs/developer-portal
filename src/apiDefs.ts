@@ -197,15 +197,15 @@ export function lookupApiCategory(categoryKey: string): IApiCategory | null {
 }
 
 function categoriesFor(apiList: string[]): IApiCategory[] {
-  const categories = [];
+  const categories = new Set();
   for (const cat of Object.values(apiDefs)) {
     for (const api of cat.apis) {
       if (apiList.includes(api.urlFragment)) {
-        categories.push(cat);
+        categories.add(cat);
       }
     }
   }
-  return Array.from(new Set(categories));
+  return Array.from(categories);
 }
 
 export function includesOauthAPI(apiList: string[]): boolean {
