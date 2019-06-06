@@ -70,13 +70,7 @@ function registerValidSW(swUrl: string) {
                 // the fresh content will have been added to the cache.
                 // It's the perfect time to display a 'New content is
                 // available; please refresh.' message in your web app.
-                if(window.confirm('New content is available, press okay to refresh.')) {
-                  navigator.serviceWorker.addEventListener('controllerchange', (event) => {
-                    window.location.reload();
-                  });
-
-                  installingWorker.postMessage({ type: 'SKIP_WAITING', meta: 'test' });
-                }
+                console.log('New content is available; please refresh.');
               } else {
                 // At this point, everything has been precached.
                 // It's the perfect time to display a
