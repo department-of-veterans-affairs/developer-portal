@@ -41,6 +41,7 @@ export const flags = {
     service_history: isHostedApiEnabled('service_history', true),
     veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
   },
+  signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
 };
 
 class App extends React.Component {
