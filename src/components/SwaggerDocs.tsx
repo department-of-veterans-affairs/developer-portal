@@ -10,7 +10,28 @@ export interface ISwaggerDocsProps {
     url?: string;
 }
 
-class SwaggerDocs extends React.Component<ISwaggerDocsProps, { }> {
+class SwaggerDocs extends React.Component<ISwaggerDocsProps, { json: object, url: string}> {
+    public static defaultProps = {
+        json: {},
+        url: '',
+    }
+
+    public constructor(props: ISwaggerDocsProps) {
+        super(props);
+        this.state = {
+            json: props.json!,
+            url: props.url!,
+        }
+    }
+
+    public handleUrlChange(newUrl: string) {
+      this.setState({
+        ...this.state,
+        url: newUrl,
+      })
+    }
+
+
     public componentDidUpdate() {
         this.renderSwaggerUI();
     }
@@ -26,17 +47,18 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, { }> {
     }
 
     private renderSwaggerUI() {
-        if (this.props.url) {
+        if (this.state.url.length !== 0) {
             SwaggerUI({
                 dom_id: '#swagger-ui',
-                plugins: [ SwaggerPlugins ],
-                url: this.props.url,
+                layout: 'ExtendedLayout',
+                plugins: [ SwaggerPlugins(this.handleUrlChange.bind(this)) ],
+                url: this.state.url,
             });
-        } else if (this.props.json) {
+        } else if (Object.keys(this.state.json).length !== 0) {
             SwaggerUI({
                 dom_id: '#swagger-ui',
-                plugins: [ SwaggerPlugins ],
-                spec: this.props.json,
+                plugins: [ SwaggerPlugins(this.handleUrlChange.bind(this)) ],
+                spec: this.state.json,
             });
         }
     }
