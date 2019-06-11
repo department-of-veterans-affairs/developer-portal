@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export function DisabledApplyForm() {
+export default function DisabledApplyForm() {
   return (
     <section className="usa-grid usa-section">
       <h1>New API key signups have been temporarily disabled</h1>

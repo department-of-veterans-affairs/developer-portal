@@ -12,6 +12,7 @@ import {
   ApplySuccess,
   BetaPage,
   BetaSuccess,
+  DisabledApplyForm,
   ExploreDocs,
   Home,
   OAuth,
@@ -19,7 +20,6 @@ import {
   RoutedContent,
   WhatsNew,
 } from './containers';
-import { DisabledApplyForm } from './containers/DisabledApplyForm';
 
 export function topLevelRoutes(props: RouteComponentProps<void>) {
   return (
