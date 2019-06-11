@@ -1,3 +1,4 @@
+import { curlify } from './curlify'
 import { DisableTryItOut } from './DisableTryItOut'
 import { OperationTag } from './OperationTag'
 import { SchemesContainer } from './SchemesContainer'
@@ -10,6 +11,9 @@ export const SwaggerPlugins = {
         SchemesContainer,
         Servers,
         ServersContainer,
+    },
+    fn: {
+      curlify,
     },
     statePlugins: {
         spec: {
