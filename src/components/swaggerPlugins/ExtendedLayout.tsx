@@ -1,7 +1,16 @@
 import * as React from 'react';
-import { VersionSelector } from './VersionSelector'
+import { connect } from 'react-redux'
+import { RouteComponentProps } from 'react-router';
+import { IApiNameParam, IRootState } from '../../types';
+import { VersionSelectBox } from './VersionSelectBox'
 
-export interface IExtendedLayoutProps {
+const mapStateToProps = ({ routing }: IRootState) => {
+    return {
+        ...routing,
+    };
+};
+
+export interface IExtendedLayoutProps extends RouteComponentProps<IApiNameParam> {
   getSystem: any;
   getComponent: any;
 }
@@ -11,16 +20,6 @@ export class ExtendedLayout extends React.Component <IExtendedLayoutProps, {vers
   public constructor(props: IExtendedLayoutProps) {
     super(props);
   }
-  public componentDidMount() {
-    // const { getSystem } = this.props
-
-    // getSystem().versionActions.updateVersion('lol')
-  }
-
-  public onVersionChange(event:any, system:any) {
-    console.log(this)
-    console.log(event.target.value);
-  }
 
   public render() {
 
@@ -29,13 +28,16 @@ export class ExtendedLayout extends React.Component <IExtendedLayoutProps, {vers
       getSystem,
     } = this.props
 
+    const apiName = getSystem().versionSelectors.apiName();
 
     const BaseLayout = getComponent('BaseLayout', true)!
     return (
       <div>
-        <VersionSelector system={getSystem()} />
+        <VersionSelectBox getSystem={getSystem} apiName={apiName}/>
         <BaseLayout />
       </div>
     )
   }
 }
+
+export default connect(mapStateToProps)(ExtendedLayout);

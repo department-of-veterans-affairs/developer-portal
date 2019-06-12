@@ -1,10 +1,12 @@
 import { DisableTryItOut } from './DisableTryItOut'
 import { ExtendedLayout } from './ExtendedLayout'
-import { HandleVersionChange } from './HandleVersionChange'
 import { OperationTag } from './OperationTag'
 import { SchemesContainer } from './SchemesContainer'
 import { Servers } from './Servers'
 import { ServersContainer } from './ServersContainer'
+import { VersionActions } from './VersionActions'
+import { VersionReducers } from './VersionReducers'
+import { VersionSelector } from './VersionSelector'
 
 export function SwaggerPlugins(versionHandler:any) {
   return {
@@ -20,7 +22,9 @@ export function SwaggerPlugins(versionHandler:any) {
             ...DisableTryItOut.toggleTryItOut(),
         },
         version: {
-          ...HandleVersionChange(versionHandler),
+          ...VersionActions(versionHandler),
+          ...VersionReducers,
+          ...VersionSelector,
         },
     },
     wrapComponents: {

@@ -28,7 +28,7 @@ class Explore extends React.Component<IExploreProps, { }> {
         if (api != null) {
           docsDom = (
                 <Flag name={`hosted_apis.${api.urlFragment}`}>
-                  <SwaggerDocs url={api.openApiDocUrl} />
+                  <SwaggerDocs url={api.openApiDocUrl} apiName={this.props.match.params.apiName} />
                 </Flag>
               );
         }
