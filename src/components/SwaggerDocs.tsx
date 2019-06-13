@@ -58,7 +58,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, { json: object, url
               this.renderSwaggerUI(json);
           });
         } else {
-          this.renderSwaggerUI({})
+          this.renderSwaggerUI()
         }
     }
 
@@ -90,7 +90,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, { json: object, url
         );
     }
 
-    private renderSwaggerUI(metadata: object) {
+    private renderSwaggerUI(metadata?: object) {
         if (this.state.url.length !== 0) {
             let plugins = SwaggerPlugins(this.handleUrlChange.bind(this));
             let ui = SwaggerUI({
