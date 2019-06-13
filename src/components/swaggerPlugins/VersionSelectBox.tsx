@@ -10,7 +10,7 @@ export class VersionSelectBox extends React.Component<
   {}
 > {
   public handleChange(value: any) {
-    let versionMetadata = this.props.apiMetadata.meta.find(
+    const versionMetadata = this.props.apiMetadata.meta.find(
       (metaObject: any) => {
         return metaObject.version === value;
       },
@@ -28,7 +28,7 @@ export class VersionSelectBox extends React.Component<
   }
 
   public buildDisplay(metaObject: any) {
-    let { version, status, internal_only } = metaObject;
+    const { version, status, internal_only } = metaObject;
     return `${version} - ${status} ${internal_only ? "(Internal Only)" : ""}`;
   }
 

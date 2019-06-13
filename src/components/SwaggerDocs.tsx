@@ -41,7 +41,7 @@ class SwaggerDocs extends React.Component<
   }
 
   public loadMetaDataAndRender() {
-    let apiDef = lookupApiByFragment(this.props.apiName);
+    const apiDef = lookupApiByFragment(this.props.apiName);
 
     if (apiDef && apiDef.metadataUrl) {
       const request = new Request(`${apiDef.metadataUrl}`, {
@@ -91,8 +91,8 @@ class SwaggerDocs extends React.Component<
 
   private renderSwaggerUI(metadata?: object) {
     if (this.state.url.length !== 0) {
-      let plugins = SwaggerPlugins(this.handleUrlChange.bind(this));
-      let ui = SwaggerUI({
+      const plugins = SwaggerPlugins(this.handleUrlChange.bind(this));
+      const ui = SwaggerUI({
         dom_id: "#swagger-ui",
         layout: "ExtendedLayout",
         plugins: [plugins],
