@@ -6,10 +6,6 @@ export interface IVersionSelectBoxProps  {
 }
 
 export class VersionSelectBox extends React.Component <IVersionSelectBoxProps, {}> {
-  constructor(props:IVersionSelectBoxProps) {
-    super(props)
-  }
-
   public handleChange (value:any) {
     let versionMetadata = this.props.apiMetadata.meta.find((metaObject:any) => {
       return metaObject.version === value;
