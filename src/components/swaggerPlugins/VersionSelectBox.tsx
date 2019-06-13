@@ -36,6 +36,7 @@ export class VersionSelectBox extends React.Component<
     return (
       <select
         id="version-selector"
+        aria-label="Version Selection"
         value={this.props.getSystem().versionSelectors.apiVersion()}
         onChange={e => this.handleChange(e.target.value)}
         onBlur={e => this.handleChange(e.target.value)}
