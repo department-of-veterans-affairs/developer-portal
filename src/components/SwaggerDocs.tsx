@@ -32,20 +32,17 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, { json: object, url
     public handleUrlChange(url: string, version: string) {
       this.setState({
         ...this.state,
-        url
+        url,
         version,
       })
     }
 
     public loadMetaDataAndRender() {
         let apiDef = lookupApiByFragment(this.props.apiName);
-        let metadataUrl = null;
+
         if(apiDef && apiDef.metadataUrl) {
-          metadataUrl = apiDef.metadataUrl
-        }
-        if(metadataUrl) {
           const request = new Request(
-            `${metadataUrl}`,
+            `${apiDef.metadataUrl}`,
             {
               method: 'GET',
             },
