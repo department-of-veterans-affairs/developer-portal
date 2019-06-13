@@ -47,6 +47,10 @@
       "REASON": "RULE REQUIRES aria-* ATTRIBUTES ON ELEMENTS WITH IMPLICIT ROLES. BROKEN AS OF 6.1.0."
     },
     "react-a11y-role-supports-aria-props": {},
+    "react-a11y-no-onchange": {
+      "severity": "off",
+      "REASON": "According to the docs https://github.com/reactjs/react-a11y/blob/master/docs/rules/no-onchange.md it should pass when onchange and onblur are present, but it still fails"
+    },
     "react-a11y-tabindex-no-positive": {},
     "react-a11y-titles": {},
     "jsx-no-lambda": {
