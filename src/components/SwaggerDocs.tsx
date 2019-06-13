@@ -67,7 +67,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, { json: object, url
       if(prevProps.apiName !== this.props.apiName && this.props.url) {
         this.setState({
           ...this.state,
-          metadata: {},
+          metadata: null,
           url: this.props.url,
         })
         this.loadMetaDataAndRender()
