@@ -1,16 +1,7 @@
 import * as React from 'react';
-import { connect } from 'react-redux'
-import { RouteComponentProps } from 'react-router';
-import { IApiNameParam, IRootState } from '../../types';
 import { VersionSelectBox } from './VersionSelectBox'
 
-const mapStateToProps = ({ routing }: IRootState) => {
-    return {
-        ...routing,
-    };
-};
-
-export interface IExtendedLayoutProps extends RouteComponentProps<IApiNameParam> {
+export interface IExtendedLayoutProps {
   getSystem: any;
   getComponent: any;
 }
@@ -42,4 +33,4 @@ export class ExtendedLayout extends React.Component <IExtendedLayoutProps, {vers
   }
 }
 
-export default connect(mapStateToProps)(ExtendedLayout);
+export default ExtendedLayout;
