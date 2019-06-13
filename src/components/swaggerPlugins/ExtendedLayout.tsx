@@ -28,12 +28,14 @@ export class ExtendedLayout extends React.Component <IExtendedLayoutProps, {vers
       getSystem,
     } = this.props
 
-    const apiName = getSystem().versionSelectors.apiName();
+    const apiMetadata = getSystem().versionSelectors.apiMetadata();
 
     const BaseLayout = getComponent('BaseLayout', true)!
     return (
       <div>
-        <VersionSelectBox getSystem={getSystem} apiName={apiName}/>
+        { apiMetadata && Object.keys(apiMetadata).length !== 0 &&
+          <VersionSelectBox getSystem={getSystem} apiMetadata={apiMetadata}/>
+        }
         <BaseLayout />
       </div>
     )

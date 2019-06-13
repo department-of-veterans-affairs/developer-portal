@@ -1,14 +1,20 @@
 export const VersionActions = (handler:any) => {
   return {
     actions: {
-      setApiName: (name:string) => {
+      setApiMetadata: (metadata: object) => {
         return {
-          payload: name,
-          type: 'API_NAME_SET',
+          payload: metadata,
+          type: 'API_METADATA_SET',
         }
       },
-      updateVersion: (version:string) => {
-        handler(version)
+      setApiVersion: (version:string) => {
+        return {
+          payload: version,
+          type: 'API_VERSION_SET',
+        }
+      },
+      updateVersion: (url:string, version:string) => {
+        handler(url, version)
         return {
           type: 'VERSION_SWITCHED',
         }
