@@ -13,13 +13,13 @@ export class VersionSelectBox extends React.Component<
     let versionMetadata = this.props.apiMetadata.meta.find(
       (metaObject: any) => {
         return metaObject.version === value;
-      }
+      },
     );
     this.props
       .getSystem()
       .versionActions.updateVersion(
         this.buirlUrlFromMeta(versionMetadata),
-        value
+        value,
       );
   }
 
