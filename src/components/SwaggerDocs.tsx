@@ -76,7 +76,7 @@ class SwaggerDocs extends React.Component<
   }
 
   public getCurrentVersion(metadata: any) {
-    return metadata.meta.find(
+    return metadata.meta.versions.find(
       (metaObject: any) => metaObject.status === "Current Version",
     ).version;
   }

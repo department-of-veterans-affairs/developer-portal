@@ -10,7 +10,7 @@ export class VersionSelectBox extends React.Component<
   {}
 > {
   public handleChange(value: any) {
-    const versionMetadata = this.props.apiMetadata.meta.find(
+    const versionMetadata = this.props.apiMetadata.meta.versions.find(
       (metaObject: any) => {
         return metaObject.version === value;
       },
@@ -40,13 +40,15 @@ export class VersionSelectBox extends React.Component<
         onChange={e => this.handleChange(e.target.value)}
         onBlur={e => this.handleChange(e.target.value)}
       >
-        {this.props.apiMetadata.meta.map((metaObject: any, index: number) => {
-          return (
-            <option value={metaObject.version} key={index}>
-              {this.buildDisplay(metaObject)}
-            </option>
-          );
-        })}
+        {this.props.apiMetadata.meta.versions.map(
+          (metaObject: any, index: number) => {
+            return (
+              <option value={metaObject.version} key={index}>
+                {this.buildDisplay(metaObject)}
+              </option>
+            );
+          },
+        )}
       </select>
     );
   }
