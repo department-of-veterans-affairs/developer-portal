@@ -29,10 +29,10 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, { json: object, url
         }
     }
 
-    public handleUrlChange(newUrl: string, version: string) {
+    public handleUrlChange(url: string, version: string) {
       this.setState({
         ...this.state,
-        url: newUrl,
+        url
         version,
       })
     }
