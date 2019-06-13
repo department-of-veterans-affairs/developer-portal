@@ -19,7 +19,6 @@ describe("Accessibility tests", async () => {
       await page.goto(`${puppeteerHost}${path}`, { waitUntil: "networkidle0" });
       await page.addScriptTag({ path: require.resolve("axe-core") });
       const result = await page.evaluate(axeCheck);
-      console.log(result);
       expect(result).toHaveNoViolations();
     });
   }
