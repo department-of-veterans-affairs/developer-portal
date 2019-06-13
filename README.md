@@ -31,4 +31,10 @@ To learn how to make meaningful changes to the portal, please review the [Develo
 
 Before submitting a pull request, please review the [Testing Guide](docs/testing.md).
 
+## Service Worker
 
+A service worker was used at one point for file caching. This caching was causing problems when
+updates to the site were made. It took multiple visits to the site for the update to be applied.
+This causes an issue when a time sensitive update needs to be shown on the site, say when we want
+to display an incident banner on the developer portal. Most users will never see the banner
+because of the service worker. To prevent this issue in the future the service worker was removed.

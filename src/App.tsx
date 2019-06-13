@@ -4,26 +4,25 @@ import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
-
 import { Footer, NavBar } from './components';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
-import './App.scss'
+import './App.scss';
 
 let currentPath = history.location.pathname;
 history.listen(location => {
   currentPath = location.pathname;
 });
 
-import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/github.css';
 
 function isHostedApiEnabled(shortName: string, defaultValue: boolean): boolean {
   const envValue = process.env[`REACT_APP_${shortName.toUpperCase()}_API_ENABLED`];
   if (envValue == null) {
     return defaultValue;
   } else {
-    return (envValue === 'true');
+    return envValue === 'true';
   }
 }
 
@@ -41,6 +40,7 @@ export const flags = {
     service_history: isHostedApiEnabled('service_history', true),
     veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
   },
+  signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
 };
 
 class App extends React.Component {
@@ -51,9 +51,9 @@ class App extends React.Component {
           <div className="app-container">
             <div className="App">
               <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
-                <div className="main" role="main">
-                  <Route path="/" render={topLevelRoutes} />
-                </div>
+              <div className="main" role="main">
+                <Route path="/" render={topLevelRoutes} />
+              </div>
               <Footer />
             </div>
           </div>
