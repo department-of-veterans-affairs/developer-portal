@@ -14,9 +14,7 @@ export class VersionSelectBox extends React.Component <IVersionSelectBoxProps, {
   }
 
   public buirlUrlFromMeta(metaObject:any) {
-    return `
-      ${process.env.REACT_APP_VETSGOV_SWAGGER_API}${metaObject.path}
-    `
+    return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${metaObject.path}`
   }
 
   public buildDisplay(metaObject:any) {
