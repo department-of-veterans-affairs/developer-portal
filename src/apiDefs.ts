@@ -10,9 +10,10 @@ import { BenefitsReleaseNotes,
 
 export interface IApiDescription {
   readonly name: string;
-  readonly openApiDocUrl: string;
+  readonly openApiDocUrl: string | string[];
   readonly urlFragment: string;
   readonly shortDescription: string;
+  readonly tabLabels?: string[];
   readonly vaInternalOnly: boolean;
 }
 
@@ -97,8 +98,17 @@ export const apiDefs : IApiCategories = {
     apis: [
       {
         name: 'Veterans Health API',
-        openApiDocUrl: "https://staging-api.va.gov/services/argonaut/v0/openapi.json",
+        openApiDocUrl: [
+          'https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/openapi.json',
+          'https://dev-api.va.gov/services/fhir/v0/r4/openapi.json',
+          'https://dev-api.va.gov/services/fhir/v0/dstu2/openapi.json',
+        ],
         shortDescription: "VA's Argonaut resources",
+        tabLabels: [
+          'Argonaut',
+          'R4',
+          'DSTU2',
+        ],
         urlFragment: 'argonaut',
         vaInternalOnly: false,
       },
