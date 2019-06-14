@@ -85,7 +85,7 @@ def reviewBucketPath() {
 }
 
 
-node('vetsgov-general-purpose') {
+node('vagov-general-purpose') {
   properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
   def dockerImage, args, imageTag
 
