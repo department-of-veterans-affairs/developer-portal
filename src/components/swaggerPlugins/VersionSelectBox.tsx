@@ -18,12 +18,12 @@ export class VersionSelectBox extends React.Component<
     this.props
       .getSystem()
       .versionActions.updateVersion(
-        this.buirlUrlFromMeta(versionMetadata),
+        this.buirdUrlFromMeta(versionMetadata),
         value,
       );
   }
 
-  public buirlUrlFromMeta(metaObject: any) {
+  public buirdUrlFromMeta(metaObject: any) {
     return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${metaObject.path}`;
   }
 
