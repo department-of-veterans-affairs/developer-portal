@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { VersionSelectBox } from './VersionSelectBox';
+import { VersionSelect } from './VersionSelect';
 
 // These two props are handed in via swagger-ui
 // getSystem allows access to the swagger-ui state
@@ -24,7 +24,7 @@ export class ExtendedLayout extends React.Component<IExtendedLayoutProps, { vers
     return (
       <div>
         {apiMetadata && Object.keys(apiMetadata).length !== 0 && (
-          <VersionSelectBox getSystem={getSystem} apiMetadata={apiMetadata} />
+          <VersionSelect getSystem={getSystem} apiMetadata={apiMetadata} />
         )}
         <BaseLayout />
       </div>

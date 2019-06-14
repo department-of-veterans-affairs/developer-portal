@@ -1,0 +1,10 @@
+#version-select {
+  select {
+    display: inline-block;
+  }
+
+  button {
+    display: inline-block;
+    margin-left: 25px;
+  }
+}

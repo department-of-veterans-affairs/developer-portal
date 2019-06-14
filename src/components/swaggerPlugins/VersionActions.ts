@@ -13,10 +13,16 @@ export const VersionActions = (handler: any) => {
           type: 'API_VERSION_SET',
         };
       },
-      updateVersion: (url: string, version: string) => {
+      updateUrl: (url: string, version: string) => {
         handler(url, version);
         return {
-          type: 'VERSION_SWITCHED',
+          type: 'API_URL_UPDATED',
+        };
+      },
+      updateVersion: (version: string) => {
+        return {
+          payload: version,
+          type: 'API_VERSION_UPDATED',
         };
       },
     },
