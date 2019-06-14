@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
 import App from './App';
 import { unregister } from './registerServiceWorker';
@@ -27,6 +27,6 @@ try {
   unregister();
 } catch (err) {
   if (process.env.REACT_APP_SENTRY_DSN) {
-    Sentry.captureException(err)
+    Sentry.captureException(err);
   }
 }

@@ -19,7 +19,7 @@ const checkScreenshots = async (page: Page) => {
     });
     expect(screenshot).toMatchImageSnapshot();
   }
-}
+};
 
 const paths = testPaths.filter(path => path !== '/');
 
@@ -34,11 +34,11 @@ describe('Visual regression test', async () => {
       }
 
       await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
-      await checkScreenshots(page)
+      await checkScreenshots(page);
     });
   }
 
-  it('renders the homepage properly', async() => {
+  it('renders the homepage properly', async () => {
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
 
     // Hide problematic video on homepage

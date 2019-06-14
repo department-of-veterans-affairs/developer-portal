@@ -6,24 +6,25 @@ import { mockSwagger as mocks } from './mockSwagger.js';
 
 // Paths to test in visual regression and accessibility tests
 export const testPaths = [
-    '/',
-    '/apply',
-    '/terms-of-service',
-    '/go-live',
-    '/oauth',
-    '/explore',
-    '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
-    '/explore/benefits/docs/appeals',
-    '/release-notes',
-    '/whats-new',
+  '/',
+  '/apply',
+  '/terms-of-service',
+  '/go-live',
+  '/oauth',
+  '/explore',
+  '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
+  '/explore/benefits/docs/appeals',
+  '/release-notes',
+  '/whats-new',
 ];
 
-export const puppeteerHost = process.env.TEST_HOST || 'http://localhost:4444'
+export const puppeteerHost = process.env.TEST_HOST || 'http://localhost:4444';
 
 declare global {
-    interface Window { // tslint:disable-line
-        axe: typeof axe;
-    }
+  interface Window {
+    // tslint:disable-line
+    axe: typeof axe;
+  }
 }
 
 jest.setTimeout(100000);
@@ -31,26 +32,24 @@ jest.setTimeout(100000);
 expect.extend(toHaveNoViolations);
 
 export const axeCheck = () => {
-    return new Promise(resolve => {
-        window.axe.run(
-            { exclude: [['iframe']]},
-            (err, results) => {
-                if (err) {
-                    throw err;
-                }
-                resolve(results);
-            });
+  return new Promise(resolve => {
+    window.axe.run({ exclude: [['iframe']] }, (err, results) => {
+      if (err) {
+        throw err;
+      }
+      resolve(results);
     });
-}
+  });
+};
 
-export const mockSwagger = (req : Request) => {
-    if (req.url() in mocks) {
-        req.respond({
-            body: JSON.stringify(mocks[req.url()]),
-            contentType: 'application/json',
-            headers: {"Access-Control-Allow-Origin": "*"},
-        });
-    } else {
-        req.continue();
-    }
+export const mockSwagger = (req: Request) => {
+  if (req.url() in mocks) {
+    req.respond({
+      body: JSON.stringify(mocks[req.url()]),
+      contentType: 'application/json',
+      headers: { 'Access-Control-Allow-Origin': '*' },
+    });
+  } else {
+    req.continue();
+  }
 };
