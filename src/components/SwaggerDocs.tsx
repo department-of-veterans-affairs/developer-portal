@@ -1,11 +1,11 @@
-import * as React from "react";
-import SwaggerUI from "swagger-ui";
+import * as React from 'react';
+import SwaggerUI from 'swagger-ui';
 
-import { SwaggerPlugins } from "./swaggerPlugins";
+import { SwaggerPlugins } from './swaggerPlugins';
 
-import "swagger-ui-themes/themes/3.x/theme-muted.css";
+import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 
-import { lookupApiByFragment } from "../apiDefs";
+import { lookupApiByFragment } from '../apiDefs';
 
 export interface ISwaggerDocsProps {
   json?: object;
@@ -19,7 +19,7 @@ class SwaggerDocs extends React.Component<
 > {
   public static defaultProps = {
     json: {},
-    url: "",
+    url: '',
   };
 
   public constructor(props: ISwaggerDocsProps) {
@@ -28,7 +28,7 @@ class SwaggerDocs extends React.Component<
       json: props.json!,
       metadata: {},
       url: props.url!,
-      version: "",
+      version: '',
     };
   }
 
@@ -45,7 +45,7 @@ class SwaggerDocs extends React.Component<
 
     if (apiDef && apiDef.metadataUrl) {
       const request = new Request(`${apiDef.metadataUrl}`, {
-        method: "GET",
+        method: 'GET',
       });
       fetch(request)
         .then(response => response.json())
@@ -76,9 +76,8 @@ class SwaggerDocs extends React.Component<
   }
 
   public getCurrentVersion(metadata: any) {
-    return metadata.meta.versions.find(
-      (metaObject: any) => metaObject.status === "Current Version",
-    ).version;
+    return metadata.meta.versions.find((metaObject: any) => metaObject.status === 'Current Version')
+      .version;
   }
 
   public componentDidMount() {
@@ -93,8 +92,8 @@ class SwaggerDocs extends React.Component<
     if (this.state.url.length !== 0) {
       const plugins = SwaggerPlugins(this.handleUrlChange.bind(this));
       const ui = SwaggerUI({
-        dom_id: "#swagger-ui",
-        layout: "ExtendedLayout",
+        dom_id: '#swagger-ui',
+        layout: 'ExtendedLayout',
         plugins: [plugins],
         url: this.state.url,
       });
@@ -103,7 +102,7 @@ class SwaggerDocs extends React.Component<
       return ui;
     } else if (Object.keys(this.state.json).length !== 0) {
       SwaggerUI({
-        dom_id: "#swagger-ui",
+        dom_id: '#swagger-ui',
         plugins: [SwaggerPlugins(this.handleUrlChange.bind(this))],
         spec: this.state.json,
       });

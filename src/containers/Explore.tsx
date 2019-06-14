@@ -1,13 +1,13 @@
-import * as React from "react";
+import * as React from 'react';
 
-import { Flag } from "flag";
-import { connect } from "react-redux";
-import { RouteComponentProps } from "react-router";
+import { Flag } from 'flag';
+import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 
-import { lookupApiByFragment } from "../apiDefs";
-import { SwaggerDocs } from "../components";
-import ExplorePage from "../content/explorePage.mdx";
-import { IApiNameParam, IExternalSwagger, IRootState } from "../types";
+import { lookupApiByFragment } from '../apiDefs';
+import { SwaggerDocs } from '../components';
+import ExplorePage from '../content/explorePage.mdx';
+import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
 export interface IExploreProps extends RouteComponentProps<IApiNameParam> {
   argonaut: IExternalSwagger;
@@ -28,10 +28,7 @@ class Explore extends React.Component<IExploreProps, {}> {
       if (api != null) {
         docsDom = (
           <Flag name={`hosted_apis.${api.urlFragment}`}>
-            <SwaggerDocs
-              url={api.openApiDocUrl}
-              apiName={this.props.match.params.apiName}
-            />
+            <SwaggerDocs url={api.openApiDocUrl} apiName={this.props.match.params.apiName} />
           </Flag>
         );
       }
