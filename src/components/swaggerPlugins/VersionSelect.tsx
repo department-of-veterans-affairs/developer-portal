@@ -19,10 +19,10 @@ export class VersionSelect extends React.Component<IVersionSelectBoxProps, {}> {
     });
     this.props
       .getSystem()
-      .versionActions.updateUrl(this.buirdUrlFromMeta(versionMetadata), currentVersion);
+      .versionActions.updateUrl(this.buildUrlFromMeta(versionMetadata), currentVersion);
   }
 
-  public buirdUrlFromMeta(metaObject: any) {
+  public buildUrlFromMeta(metaObject: any) {
     return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${metaObject.path}`;
   }
 
