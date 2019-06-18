@@ -13,6 +13,7 @@ import {
 } from './content/releaseNotes';
 
 export interface IApiDescription {
+  readonly metadataUrl?: string;
   readonly name: string;
   readonly openApiDocUrl: string;
   readonly urlFragment: string;
@@ -41,6 +42,7 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: [
       {
+        metadataUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/vba_documents/metadata`,
         name: 'Benefits Intake',
         openApiDocUrl: `${
           process.env.REACT_APP_VETSGOV_SWAGGER_API
@@ -57,6 +59,7 @@ export const apiDefs: IApiCategories = {
         vaInternalOnly: true,
       },
       {
+        metadataUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/metadata`,
         name: 'Benefits Claims',
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
         shortDescription: 'Submit and track claims',
@@ -87,6 +90,7 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: [
       {
+        metadataUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/va_facilities/metadata`,
         name: 'VA Facilities API',
         openApiDocUrl: `${
           process.env.REACT_APP_VETSGOV_SWAGGER_API

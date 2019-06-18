@@ -2,6 +2,7 @@ import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
 
+import { mockMetadata as metadataMocks } from './mockMetadata';
 import { mockSwagger as mocks } from './mockSwagger.js';
 
 // Paths to test in visual regression and accessibility tests
@@ -17,6 +18,8 @@ export const testPaths = [
   '/release-notes',
   '/whats-new',
 ];
+
+export const metadataTestPaths = [''];
 
 export const puppeteerHost = process.env.TEST_HOST || 'http://localhost:4444';
 
@@ -43,13 +46,17 @@ export const axeCheck = () => {
 };
 
 export const mockSwagger = (req: Request) => {
+  const response = {
+    body: '',
+    contentType: 'application/json',
+    headers: { 'Access-Control-Allow-Origin': '*' },
+  };
+
   if (req.url() in mocks) {
-    req.respond({
-      body: JSON.stringify(mocks[req.url()]),
-      contentType: 'application/json',
-      headers: { 'Access-Control-Allow-Origin': '*' },
-    });
-  } else {
-    req.continue();
+    response.body = JSON.stringify(mocks[req.url()]);
+  } else if (req.url() in metadataMocks) {
+    response.body = JSON.stringify(metadataMocks[req.url()]);
   }
+
+  response.body ? req.respond(response) : req.continue();
 };
