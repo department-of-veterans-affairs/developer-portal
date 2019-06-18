@@ -24,7 +24,7 @@ export class ExtendedLayout extends React.Component<IExtendedLayoutProps, {}> {
     return (
       <div>
         {apiMetadata && Object.keys(apiMetadata).length !== 0 && (
-          <VersionSelect getSystem={getSystem} apiMetadata={apiMetadata} />
+          <VersionSelect getSystem={getSystem} />
         )}
         <BaseLayout />
       </div>

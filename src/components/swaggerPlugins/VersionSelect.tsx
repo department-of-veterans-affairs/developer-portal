@@ -4,7 +4,6 @@ import './VersionSelect.scss';
 
 export interface IVersionSelectBoxProps {
   getSystem: any;
-  apiMetadata: any;
 }
 
 export class VersionSelect extends React.Component<IVersionSelectBoxProps, {}> {
@@ -14,9 +13,12 @@ export class VersionSelect extends React.Component<IVersionSelectBoxProps, {}> {
 
   public handleButtonClick() {
     const currentVersion = this.props.getSystem().versionSelectors.apiVersion();
-    const versionMetadata = this.props.apiMetadata.meta.versions.find((metaObject: any) => {
-      return metaObject.version === currentVersion;
-    });
+    const versionMetadata = this.props
+      .getSystem()
+      .versionSelectors.apiMetadata()
+      .meta.versions.find((metaObject: any) => {
+        return metaObject.version === currentVersion;
+      });
     this.props
       .getSystem()
       .versionActions.updateUrl(this.buildUrlFromMeta(versionMetadata), currentVersion);
@@ -39,13 +41,16 @@ export class VersionSelect extends React.Component<IVersionSelectBoxProps, {}> {
           value={this.props.getSystem().versionSelectors.apiVersion()}
           onChange={e => this.handleSelectChange(e.target.value)}
         >
-          {this.props.apiMetadata.meta.versions.map((metaObject: any, index: number) => {
-            return (
-              <option value={metaObject.version} key={index}>
-                {this.buildDisplay(metaObject)}
-              </option>
-            );
-          })}
+          {this.props
+            .getSystem()
+            .versionSelectors.apiMetadata()
+            .meta.versions.map((metaObject: any, index: number) => {
+              return (
+                <option value={metaObject.version} key={index}>
+                  {this.buildDisplay(metaObject)}
+                </option>
+              );
+            })}
         </select>
         <button onClick={e => this.handleButtonClick()}>Select</button>
       </div>
