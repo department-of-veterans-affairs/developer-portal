@@ -1,4 +1,4 @@
-export const VersionActions = (handler: any) => {
+export const VersionActions = (updateUrlHandler: any) => {
   return {
     actions: {
       setApiMetadata: (metadata: object) => {
@@ -14,7 +14,7 @@ export const VersionActions = (handler: any) => {
         };
       },
       updateUrl: (url: string, version: string) => {
-        handler(url, version);
+        updateUrlHandler(url, version);
         return {
           type: 'API_URL_UPDATED',
         };
