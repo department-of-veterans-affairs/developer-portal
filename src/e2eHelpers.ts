@@ -58,9 +58,5 @@ export const mockSwagger = (req: Request) => {
     response.body = JSON.stringify(metadataMocks[req.url()]);
   }
 
-  if (response.body) {
-    req.respond(response);
-  } else {
-    req.continue();
-  }
+  response.body ? req.respond(response) : req.continue();
 };
