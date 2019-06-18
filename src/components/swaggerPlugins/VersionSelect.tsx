@@ -24,25 +24,12 @@ export class VersionSelect extends React.Component<IVersionSelectProps, IVersion
       .version;
   }
 
-  public handleSelectChange(value: any) {
-    this.setState({ version: value });
+  public handleSelectChange(version: string) {
+    this.setState({ version });
   }
 
   public handleButtonClick() {
-    const currentVersion = this.state.version;
-    const versionMetadata = this.props
-      .getSystem()
-      .versionSelectors.apiMetadata()
-      .meta.versions.find((metaObject: any) => {
-        return metaObject.version === currentVersion;
-      });
-    this.props
-      .getSystem()
-      .versionActions.updateUrl(this.buildUrlFromMeta(versionMetadata), currentVersion);
-  }
-
-  public buildUrlFromMeta(metaObject: any) {
-    return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${metaObject.path}`;
+    this.props.getSystem().versionActions.updateVersion(this.state.version);
   }
 
   public buildDisplay(metaObject: any) {

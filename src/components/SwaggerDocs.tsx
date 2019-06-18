@@ -36,8 +36,14 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
     };
   }
 
-  public handleUrlChange(url: string, version: string) {
-    this.setState({ url, version });
+  public handlVersionChange(version: string) {
+    const versionMetadata = this.state.metadata.meta.versions.find((metaObject: any) => {
+      return metaObject.version === version;
+    });
+    this.setState({
+      url: this.buildUrlFromMeta(versionMetadata),
+      version,
+    });
   }
 
   public loadMetaDataAndRender() {
@@ -87,9 +93,13 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
     return <div id="swagger-ui" />;
   }
 
+  public buildUrlFromMeta(metaObject: any) {
+    return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${metaObject.path}`;
+  }
+
   private renderSwaggerUI(metadata?: object) {
     if (this.state.url.length !== 0) {
-      const plugins = SwaggerPlugins(this.handleUrlChange.bind(this));
+      const plugins = SwaggerPlugins(this.handlVersionChange.bind(this));
       const ui = SwaggerUI({
         dom_id: '#swagger-ui',
         layout: 'ExtendedLayout',
@@ -101,7 +111,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
     } else if (Object.keys(this.state.json).length !== 0) {
       SwaggerUI({
         dom_id: '#swagger-ui',
-        plugins: [SwaggerPlugins(this.handleUrlChange.bind(this))],
+        plugins: [SwaggerPlugins(this.handlVersionChange.bind(this))],
         spec: this.state.json,
       });
     }
