@@ -56,7 +56,8 @@ class SwaggerDocs extends React.Component<
             version: this.getCurrentVersion(json),
           });
           this.renderSwaggerUI(json);
-        });
+        })
+        .catch(error => this.renderSwaggerUI());
     } else {
       this.renderSwaggerUI();
     }
