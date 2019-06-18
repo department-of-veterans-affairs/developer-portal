@@ -10,7 +10,7 @@ export interface IExtendedLayoutProps {
   getComponent: any;
 }
 
-export class ExtendedLayout extends React.Component<IExtendedLayoutProps, { version: string }> {
+export class ExtendedLayout extends React.Component<IExtendedLayoutProps, {}> {
   public constructor(props: IExtendedLayoutProps) {
     super(props);
   }
