@@ -19,12 +19,6 @@ export const VersionActions = (updateUrlHandler: any) => {
           type: 'API_URL_UPDATED',
         };
       },
-      updateVersion: (version: string) => {
-        return {
-          payload: version,
-          type: 'API_VERSION_UPDATED',
-        };
-      },
     },
   };
 };
