@@ -34,11 +34,10 @@ export class VersionSelect extends React.Component<IVersionSelectBoxProps, {}> {
   public render() {
     return (
       <div id="version-select">
-        <select
+        <select // tslint:disable-next-line:react-a11y-no-onchange
           aria-label="Version Selection"
           value={this.props.getSystem().versionSelectors.apiVersion()}
           onChange={e => this.handleSelectChange(e.target.value)}
-          onBlur={e => this.handleSelectChange(e.target.value)}
         >
           {this.props.apiMetadata.meta.versions.map((metaObject: any, index: number) => {
             return (
