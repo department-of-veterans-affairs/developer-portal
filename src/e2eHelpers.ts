@@ -46,7 +46,7 @@ export const axeCheck = () => {
 };
 
 export const mockSwagger = (req: Request) => {
-  let response = {
+  const response = {
     body: '',
     contentType: 'application/json',
     headers: { 'Access-Control-Allow-Origin': '*' },
