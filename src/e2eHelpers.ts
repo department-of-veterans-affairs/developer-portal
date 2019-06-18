@@ -1,30 +1,31 @@
-import * as axe from "axe-core";
-import { toHaveNoViolations } from "jest-axe";
-import { Request } from "puppeteer";
+import * as axe from 'axe-core';
+import { toHaveNoViolations } from 'jest-axe';
+import { Request } from 'puppeteer';
 
-import { mockMetadata as metadataMocks } from "./mockMetadata";
-import { mockSwagger as mocks } from "./mockSwagger.js";
+import { mockMetadata as metadataMocks } from './mockMetadata';
+import { mockSwagger as mocks } from './mockSwagger.js';
 
 // Paths to test in visual regression and accessibility tests
 export const testPaths = [
-  "/",
-  "/apply",
-  "/terms-of-service",
-  "/go-live",
-  "/oauth",
-  "/explore",
-  "/explore/benefits/docs/benefits", // Only include a few swagger pages since they're all pretty similar
-  "/explore/benefits/docs/appeals",
-  "/release-notes",
-  "/whats-new",
+  '/',
+  '/apply',
+  '/terms-of-service',
+  '/go-live',
+  '/oauth',
+  '/explore',
+  '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
+  '/explore/benefits/docs/appeals',
+  '/release-notes',
+  '/whats-new',
 ];
 
-export const metadataTestPaths = [""];
+export const metadataTestPaths = [''];
 
-export const puppeteerHost = process.env.TEST_HOST || "http://localhost:4444";
+export const puppeteerHost = process.env.TEST_HOST || 'http://localhost:4444';
 
 declare global {
-  interface Window { // tslint:disable-line
+  // tslint:disable-next-line
+  interface Window {
     axe: typeof axe;
   }
 }
@@ -35,7 +36,7 @@ expect.extend(toHaveNoViolations);
 
 export const axeCheck = () => {
   return new Promise(resolve => {
-    window.axe.run({ exclude: [["iframe"]] }, (err, results) => {
+    window.axe.run({ exclude: [['iframe']] }, (err, results) => {
       if (err) {
         throw err;
       }
@@ -45,18 +46,20 @@ export const axeCheck = () => {
 };
 
 export const mockSwagger = (req: Request) => {
+  let response = {
+    body: '',
+    contentType: 'application/json',
+    headers: { 'Access-Control-Allow-Origin': '*' },
+  };
+
   if (req.url() in mocks) {
-    req.respond({
-      body: JSON.stringify(mocks[req.url()]),
-      contentType: "application/json",
-      headers: { "Access-Control-Allow-Origin": "*" },
-    });
-  } else if(req.url() in metadataMocks) {
-    req.respond({
-      body: JSON.stringify(metadataMocks[req.url()]),
-      contentType: "application/json",
-      headers: { "Access-Control-Allow-Origin": "*" },
-    });
+    response.body = JSON.stringify(mocks[req.url()]);
+  } else if (req.url() in metadataMocks) {
+    response.body = JSON.stringify(metadataMocks[req.url()]);
+  }
+
+  if (response.body) {
+    req.respond(response);
   } else {
     req.continue();
   }
