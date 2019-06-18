@@ -5,13 +5,16 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import { Link } from 'react-router-dom';
 
+import { Flag } from 'flag';
+
 import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
 import ErrorableCheckbox from '@department-of-veterans-affairs/formation/ErrorableCheckbox';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation/ErrorableTextInput';
 import ProgressButton from '@department-of-veterans-affairs/formation/ProgressButton';
 
-import * as actions from '../actions'
+import * as actions from '../actions';
+import { includesOauthAPI } from '../apiDefs';
 import { IApplication, IErrorableInput, IRootState } from '../types';
 
 interface IApplyProps extends IApplication {
@@ -21,6 +24,7 @@ interface IApplyProps extends IApplication {
   toggleHealth: () => void;
   toggleFacilities: () => void;
   toggleVerification: () => void;
+  toggleCommunityCare: () => void;
   updateDescription: (value: IErrorableInput) => void;
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
@@ -36,6 +40,7 @@ const mapDispatchToProps = (dispatch : ApplicationDispatch) => {
     submitForm: () => { dispatch(actions.submitForm()) },
     toggleAcceptTos: () => { dispatch(actions.toggleAcceptTos()) },
     toggleBenefits: () => { dispatch(actions.toggleBenefitsApi()) },
+    toggleCommunityCare: () => { dispatch(actions.toggleCommunityCareApi()) },
     toggleFacilities: () => { dispatch(actions.toggleFacilitiesApi()) },
     toggleHealth: () => { dispatch(actions.toggleHealthApi()) },
     toggleVerification: () => { dispatch(actions.toggleVerificationApi()) },
@@ -53,6 +58,15 @@ const mapStateToProps = (state : IRootState) => {
     ...state.application,
   };
 };
+
+// Mapping from the options on the form to url fragments for APIs
+const formFieldsToFragments = {
+  appeals: 'appeals',
+  benefits: ['benefits', 'claims'],
+  communityCare: 'community_care',
+  health: 'argonaut',
+  verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
+}
 
 class ApplyForm extends React.Component<IApplyProps> {
   constructor(props: IApplyProps) {
@@ -141,6 +155,18 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <label htmlFor="health">VA Health API</label>
               </div>
 
+              <Flag key='community_care' name='hosted_apis.community_care'>
+                <div className="form-checkbox">
+                  <input
+                    type="checkbox"
+                    id="communityCare"
+                    name="communityCare"
+                    checked={apis.communityCare}
+                    onChange={props.toggleCommunityCare} />
+                  <label htmlFor="communityCare">Community Care Eligibility API</label>
+                </div>
+              </Flag>
+
               <div className="form-checkbox">
                 <input
                   type="checkbox"
@@ -191,7 +217,7 @@ class ApplyForm extends React.Component<IApplyProps> {
   }
 
   private renderOAuthFields() {
-    if (this.props.inputs.apis.health || this.props.inputs.apis.verification) {
+    if (this.anyOAuthApisSelected()) {
       const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
           <ErrorableTextInput
@@ -219,14 +245,18 @@ class ApplyForm extends React.Component<IApplyProps> {
     return null;
   }
 
-  private anyOAuthApisSelected() {
+  private selectedApis() {
     const apis = this.props.inputs.apis;
-    return (apis.health === true || apis.verification === true);
+    return Object.keys(apis).filter((apiName) => apis[apiName]);
+  }
+
+  private anyOAuthApisSelected() {
+    const apiUrlFragments = this.selectedApis().flatMap((formField) => formFieldsToFragments[formField]);
+    return includesOauthAPI(apiUrlFragments);
   }
 
   private anyApiSelected() {
-    const apis = this.props.inputs.apis;
-    const numSelected = Object.keys(apis).filter((apiName) => apis[apiName]).length;
+    const numSelected = this.selectedApis().length;
     return numSelected > 0;
   }
 

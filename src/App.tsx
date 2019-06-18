@@ -4,24 +4,25 @@ import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
-
 import { Footer, NavBar } from './components';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
+
+import './App.scss';
 
 let currentPath = history.location.pathname;
 history.listen(location => {
   currentPath = location.pathname;
 });
 
-import 'highlight.js/styles/github.css'
+import 'highlight.js/styles/github.css';
 
 function isHostedApiEnabled(shortName: string, defaultValue: boolean): boolean {
   const envValue = process.env[`REACT_APP_${shortName.toUpperCase()}_API_ENABLED`];
   if (envValue == null) {
     return defaultValue;
   } else {
-    return (envValue === 'true');
+    return envValue === 'true';
   }
 }
 
@@ -32,12 +33,14 @@ export const flags = {
     argonaut: isHostedApiEnabled('argonaut', true),
     benefits: isHostedApiEnabled('benefits', true),
     claims: isHostedApiEnabled('claims', true),
+    community_care: isHostedApiEnabled('community_care', false),
     disability_rating: isHostedApiEnabled('disability_rating', true),
     facilities: isHostedApiEnabled('facilities', true),
     loan_guaranty: isHostedApiEnabled('loan_guaranty', false),
     service_history: isHostedApiEnabled('service_history', true),
     veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
   },
+  signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
 };
 
 class App extends React.Component {
@@ -45,12 +48,14 @@ class App extends React.Component {
     return (
       <FlagsProvider flags={flags}>
         <ConnectedRouter history={history}>
-          <div className="App">
-            <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
-            <div className="main" role="main">
-              <Route path="/" render={topLevelRoutes} />
+          <div className="app-container">
+            <div className="App">
+              <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
+              <div className="main" role="main">
+                <Route path="/" render={topLevelRoutes} />
+              </div>
+              <Footer />
             </div>
-            <Footer />
           </div>
         </ConnectedRouter>
       </FlagsProvider>

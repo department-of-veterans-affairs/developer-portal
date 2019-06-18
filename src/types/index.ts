@@ -17,6 +17,7 @@ export interface IApiList {
   facilities: boolean;
   health: boolean;
   verification: boolean;
+  communityCare: boolean;
 }
 
 export interface IExternalSwagger {

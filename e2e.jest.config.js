@@ -8,7 +8,7 @@ module.exports = {
   setupFiles: [
     "<rootDir>/config/polyfills.js",
   ],
-  testURL: "http://localhost:4444",
+  testURL: process.env.TEST_HOST || "http://localhost:4444",
   transform: {
     "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
     "^.+\\.tsx?$": "ts-jest",

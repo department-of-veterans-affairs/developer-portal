@@ -123,7 +123,7 @@ Pragma: no-cache
 
 {
   "access_token": "SlAV32hkKG",
-  "expires_at": 1553270937
+  "expires_at": 1553270937,
   "refresh_token": "8xLOxBtZp8",
   "scope": "openid profile email offline_access",
   "state": "af0ifjsldkj",
@@ -180,6 +180,8 @@ Existing Scopes are:
   * `patient/Patient.read`
   * `patient/AllergyIntolerance.read`
   * `patient/Condition.read`
+  * `patient/CoverageEligibilityResponse.read`
+  * `patient/CommunityCareEligibility.read`
   * `patient/DiagnosticReport.read`
   * `patient/Immunization.read`
   * `patient/Medication.read`
@@ -257,7 +259,7 @@ If you have any questions please feel free to reach out to the VA API Platform t
 
 ## Sample Application
 
-We provide a sample [Node.JS](https://nodejs.org/en/) application for demonstrating how to get up and running with our OAuth system. You can find the complete source code for it on our [GitHub](https://github.com/department-of-veterans-affairs/vets-api-clients/tree/master/oauth/node). The following walk-through will show step-by-step how to setup a Node.JS application to use VA OAuth using [express](https://expressjs.com/), [passport](http://www.passportjs.org/), and [node-openid-client](https://github.com/panva/node-openid-client). 
+We provide a sample [Node.JS](https://nodejs.org/en/) application for demonstrating how to get up and running with our OAuth system. You can find the complete source code for it on our [GitHub](https://github.com/department-of-veterans-affairs/vets-api-clients/tree/master/samples/oauth_node). The following walk-through will show step-by-step how to setup a Node.JS application to use VA OAuth using [express](https://expressjs.com/), [passport](http://www.passportjs.org/), and [node-openid-client](https://github.com/panva/node-openid-client). 
 
 ### Requirements
 
@@ -310,7 +312,7 @@ Open up a file called `index.js` in your editor of choice and add the following:
 ```
 const { Issuer } = require('openid-client');
 
-const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration;
+const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration';
 const client_id = 'your_client_id';
 const client_secret = 'your_client_secret';
 
@@ -428,7 +430,7 @@ And that's all you'll need to do to add VA OAuth to a node application. After st
 Finally, let's add a real call to the Veteran Status API. In the `index.js` file lets add another require statement:
 
 ```
-const http = require('http');
+const https = require('https');
 ```
 
 Then above `startApp`:

@@ -6,6 +6,7 @@ const initialApplicationInputs: IApplicationInputs = {
   apis: {
     appeals: false,
     benefits: false,
+    communityCare: false,
     facilities: false,
     health: false,
     verification: false,
@@ -71,6 +72,9 @@ export function applicationInput(
     case constants.TOGGLE_HEALTH_CHECKED:
       const health = !inputs.apis.health;
       return { ...inputs, apis: { ...inputs.apis, health } };
+    case constants.TOGGLE_COMMUNITY_CARE_CHECKED:
+      const communityCare = !inputs.apis.communityCare;
+      return { ...inputs, apis: { ...inputs.apis, communityCare } };
     case constants.TOGGLE_VERIFICATION_CHECKED:
       const verification = !inputs.apis.verification;
       return { ...inputs, apis: { ...inputs.apis, verification } };

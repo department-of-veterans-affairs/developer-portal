@@ -19,7 +19,7 @@ const checkScreenshots = async (page: Page) => {
     });
     expect(screenshot).toMatchImageSnapshot();
   }
-}
+};
 
 const paths = testPaths.filter(path => path !== '/');
 
@@ -43,7 +43,7 @@ describe('Visual regression test', async () => {
       }
 
       await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
-      await checkScreenshots(page)
+      await checkScreenshots(page);
     });
   }
 });

@@ -2,7 +2,7 @@ module.exports = {
   displayName: "Visual Regression Tests",
   name: "visual",
   preset: "jest-puppeteer",
-  testURL: "http://localhost:4444",
+  testURL: process.env.TEST_HOST || "http://localhost:4444",
   testMatch: [
     "<rootDir>/src/visualRegressionTest.ts"
   ],

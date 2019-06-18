@@ -14,7 +14,7 @@ module.exports = {
     "<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)"
   ],
   testEnvironment: "jsdom",
-  testURL: "http://localhost:4444",
+  testURL: process.env.TEST_HOST || "http://localhost:4444",
   transform: {
     "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
     "^.+\\.tsx?$": "ts-jest",
