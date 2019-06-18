@@ -37,10 +37,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
   }
 
   public handleUrlChange(url: string, version: string) {
-    this.setState({
-      url,
-      version,
-    });
+    this.setState({ url, version });
   }
 
   public loadMetaDataAndRender() {

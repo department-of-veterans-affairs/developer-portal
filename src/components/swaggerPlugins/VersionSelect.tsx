@@ -2,17 +2,34 @@ import * as React from 'react';
 
 import './VersionSelect.scss';
 
-export interface IVersionSelectBoxProps {
+export interface IVersionSelectProps {
   getSystem: any;
 }
 
-export class VersionSelect extends React.Component<IVersionSelectBoxProps, {}> {
+export interface IVersionSelectState {
+  version: string;
+}
+
+export class VersionSelect extends React.Component<IVersionSelectProps, IVersionSelectState> {
+  public constructor(props: IVersionSelectProps) {
+    super(props);
+    const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();
+    const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
+    this.state = { version: initialVersion };
+  }
+
+  public getCurrentVersion() {
+    const metadata = this.props.getSystem().versionSelectors.apiMetadata();
+    return metadata.meta.versions.find((metaObject: any) => metaObject.status === 'Current Version')
+      .version;
+  }
+
   public handleSelectChange(value: any) {
-    this.props.getSystem().versionActions.updateVersion(value);
+    this.setState({ version: value });
   }
 
   public handleButtonClick() {
-    const currentVersion = this.props.getSystem().versionSelectors.apiVersion();
+    const currentVersion = this.state.version;
     const versionMetadata = this.props
       .getSystem()
       .versionSelectors.apiMetadata()
@@ -38,7 +55,7 @@ export class VersionSelect extends React.Component<IVersionSelectBoxProps, {}> {
       <div id="version-select">
         <select // tslint:disable-next-line:react-a11y-no-onchange
           aria-label="Version Selection"
-          value={this.props.getSystem().versionSelectors.apiVersion()}
+          value={this.state.version}
           onChange={e => this.handleSelectChange(e.target.value)}
         >
           {this.props
