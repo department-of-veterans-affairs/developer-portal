@@ -65,7 +65,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
     }
   }
 
-  public componentDidUpdate(prevProps: ISwaggerDocsProps, prevState: object) {
+  public componentDidUpdate(prevProps: ISwaggerDocsProps, prevState: ISwaggerDocsState) {
     if (prevProps.apiName !== this.props.apiName && this.props.url) {
       this.setState({
         metadata: null,
