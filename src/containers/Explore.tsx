@@ -1,14 +1,14 @@
 import * as React from 'react';
 
 import { Flag } from 'flag';
-import { range } from 'lodash';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import { IApiDescription, lookupApiByFragment } from '../apiDefs';
+import { IApiDescription, IApiDocSource, lookupApiByFragment } from '../apiDefs';
 import { SwaggerDocs } from '../components';
 import ExplorePage from '../content/explorePage.mdx';
+import { history } from '../store';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
 import '../../node_modules/react-tabs/style/react-tabs.scss';
@@ -18,24 +18,40 @@ export interface IExploreProps extends RouteComponentProps<IApiNameParam> {
   fetchArgonaut: () => void;
 }
 
+interface IExploreState {
+  tabIndex: number;
+}
+
 const mapStateToProps = ({ routing }: IRootState) => {
   return {
     ...routing,
   };
 };
 
-class Explore extends React.Component<IExploreProps, { }> {
+class Explore extends React.Component<IExploreProps, IExploreState> {
+  public constructor(props : IExploreProps) {
+    super(props);
+    this.state = {
+      tabIndex: 0,
+    };
+  }
+
+  public componentDidMount() {
+    this.setTabIndexFromHash(history.location.hash);
+    history.listen(location => {
+      this.setTabIndexFromHash(location.hash);
+    });
+  }
+
   public render() {
     let docsDom: JSX.Element | null = null;
-    if (this.props.match.params.apiName != null) {
-      const api = lookupApiByFragment(this.props.match.params.apiName);
-      if (api != null) {
-        docsDom = this.renderApiDocs(api);
-      }
+    const api = this.getApi();
+    if (api != null) {
+      docsDom = this.renderApiDocs(api);
     }
 
     if (docsDom == null) {
-      docsDom = this.renderIndex();
+      docsDom = <ExplorePage />;
     }
 
     return (
@@ -46,33 +62,26 @@ class Explore extends React.Component<IExploreProps, { }> {
     );
   }
 
-  private renderIndex() {
-    return (
-      <ExplorePage />
-    );
-  }
-
   private renderApiDocs(apiDefinition: IApiDescription) {
     let docs: JSX.Element | null = null;
-    if (typeof apiDefinition.openApiDocUrl === 'string') {
-      docs = <SwaggerDocs url={apiDefinition.openApiDocUrl} />;
-    } else if (Array.isArray(apiDefinition.openApiDocUrl)) {
-      const tabLabels = apiDefinition.tabLabels || [];
+    if (apiDefinition.docSources.length === 1) {
+      docs = <SwaggerDocs url={apiDefinition.docSources[0].openApiUrl} />;
+    } else {
       docs = (
-        <Tabs>
+        <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
           <TabList>
-            {range(apiDefinition.openApiDocUrl.length).map(index => {
+            {apiDefinition.docSources.map(apiDocSource => {
               return (
-                <Tab key={apiDefinition.openApiDocUrl[index]}>
-                  {tabLabels[index] || index}
+                <Tab key={apiDocSource.label}>
+                  {apiDocSource.label}
                 </Tab>
               );
             })}
           </TabList>
-          {apiDefinition.openApiDocUrl.map(docUrl => {
+          {apiDefinition.docSources.map(apiDocSource => {
             return (
-              <TabPanel key={docUrl}>
-                <SwaggerDocs url={docUrl} />
+              <TabPanel key={apiDocSource.label}>
+                <SwaggerDocs url={apiDocSource.openApiUrl} />
               </TabPanel>
             );
           })}
@@ -85,6 +94,33 @@ class Explore extends React.Component<IExploreProps, { }> {
         {docs}
       </Flag>
     )
+  }
+
+  private getApi() : IApiDescription | null {
+    if (!this.props.match.params.apiName) {
+      return null;
+    }
+
+    return lookupApiByFragment(this.props.match.params.apiName);
+  }
+
+  private setTabIndexFromHash(hashFragment : string) : void {
+    const api = this.getApi();
+      if (api !== null) {
+        const newTabIndex = this.getTabIndexFromHash(location.hash, api.docSources);
+        this.setState({ tabIndex: newTabIndex });
+      }
+  }
+
+  private getTabIndexFromHash(hashFragment : string, apiDocSources : IApiDocSource[]) : number {
+    if (hashFragment) {
+      const tabKeys = apiDocSources.map(source => (source.key || '').toLowerCase());
+      hashFragment = hashFragment.slice(1).toLowerCase();
+      const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === hashFragment);
+      return tabIndex === -1 ? this.state.tabIndex : tabIndex;
+    }
+
+    return this.state.tabIndex;
   }
 }
 

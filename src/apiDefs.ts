@@ -8,12 +8,17 @@ import { BenefitsReleaseNotes,
          HealthReleaseNotes, 
          VerificationReleaseNotes } from './content/releaseNotes';
 
+export interface IApiDocSource {
+  readonly key?: string;
+  readonly label?: string;
+  readonly openApiUrl: string;
+}
+
 export interface IApiDescription {
   readonly name: string;
-  readonly openApiDocUrl: string | string[];
+  readonly docSources: IApiDocSource[];
   readonly urlFragment: string;
   readonly shortDescription: string;
-  readonly tabLabels?: string[];
   readonly vaInternalOnly: boolean;
 }
 
@@ -38,29 +43,45 @@ export const apiDefs : IApiCategories = {
     apiKey: true,
     apis: [
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/vba_documents/docs/v0/api`,
+          },
+        ],
         name: 'Benefits Intake',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/vba_documents/docs/v0/api`,
         shortDescription: 'Submit PDF claims',
         urlFragment: 'benefits',
         vaInternalOnly: false,
       },
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`,
+          },
+        ],
         name: 'Appeals Status',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`,
         shortDescription: 'Track appeals',
         urlFragment: 'appeals',
         vaInternalOnly: true,
       },
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
+          },
+        ],
         name: 'Benefits Claims',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
         shortDescription: 'Submit and track claims',
         urlFragment: 'claims',
         vaInternalOnly: true,
       },
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/loan_guaranty/docs/v1/api`,
+          },
+        ],
         name: 'Loan Guaranty',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/loan_guaranty/docs/v1/api`,
         shortDescription: 'Manage VA Home Loans',
         urlFragment: 'loan_guaranty',
         vaInternalOnly: false,
@@ -78,8 +99,12 @@ export const apiDefs : IApiCategories = {
     apiKey: true,
     apis: [
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/va_facilities/docs/v0/api`,
+          },
+        ],
         name: 'VA Facilities API',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/va_facilities/docs/v0/api`,
         shortDescription: "VA Facilities",
         urlFragment: 'facilities',
         vaInternalOnly: false,
@@ -97,24 +122,35 @@ export const apiDefs : IApiCategories = {
     apiKey: false,
     apis: [
       {
+        docSources: [
+          {
+            key: 'argonaut',
+            label: 'Argonaut',
+            openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/openapi.json',
+          },
+          {
+            key: 'r4',
+            label: 'R4',
+            openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/r4/openapi.json',
+          },
+          {
+            key: 'dstu2',
+            label: 'DSTU2',
+            openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/dstu2/openapi.json',
+          },
+        ],
         name: 'Veterans Health API',
-        openApiDocUrl: [
-          'https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/openapi.json',
-          'https://dev-api.va.gov/services/fhir/v0/r4/openapi.json',
-          'https://dev-api.va.gov/services/fhir/v0/dstu2/openapi.json',
-        ],
         shortDescription: "VA's Argonaut resources",
-        tabLabels: [
-          'Argonaut',
-          'R4',
-          'DSTU2',
-        ],
         urlFragment: 'argonaut',
         vaInternalOnly: false,
       },
       {
+        docSources: [
+          {
+            openApiUrl: '',
+          },
+        ],
         name: 'Community Care Eligibility API',
-        openApiDocUrl: "",
         shortDescription: "",
         urlFragment: 'community_care',
         vaInternalOnly: false,
@@ -132,29 +168,45 @@ export const apiDefs : IApiCategories = {
     apiKey: false,
     apis: [
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/disability_rating`,
+          },
+        ],
         name: 'Disability Rating',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/disability_rating`,
         shortDescription: "Get a Veteran's disability rating",
         urlFragment: 'disability_rating',
         vaInternalOnly: false,
       },
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/service_history`,
+          },
+        ],
         name: 'Service History',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/service_history`,
         shortDescription: "Get a Veteran's service history",
         urlFragment: 'service_history',
         vaInternalOnly: false,
       },
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/status`,
+          },
+        ],
         name: 'Veteran Confirmation',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/status`,
         shortDescription: "Get confirmation of a Veteran's status",
         urlFragment: 'veteran_confirmation',
         vaInternalOnly: false,
       },
       {
+        docSources: [
+          {
+            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v1/api`,
+          },
+        ],
         name: 'Address Validation',
-        openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v1/api`,
         shortDescription: 'Provides methods to standardize and validate addresses.',
         urlFragment: 'address_validation',
         vaInternalOnly: true,
