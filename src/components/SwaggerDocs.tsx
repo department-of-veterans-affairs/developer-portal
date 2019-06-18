@@ -38,7 +38,6 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
 
   public handleUrlChange(url: string, version: string) {
     this.setState({
-      ...this.state,
       url,
       version,
     });
@@ -55,7 +54,6 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
         .then(response => response.json())
         .then(json => {
           this.setState({
-            ...this.state,
             metadata: json,
             version: this.getCurrentVersion(json),
           });
@@ -70,7 +68,6 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
   public componentDidUpdate(prevProps: ISwaggerDocsProps, prevState: object) {
     if (prevProps.apiName !== this.props.apiName && this.props.url) {
       this.setState({
-        ...this.state,
         metadata: null,
         url: this.props.url,
       });
