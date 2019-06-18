@@ -44,9 +44,9 @@ export class VersionSelect extends React.Component<IVersionSelectBoxProps, {}> {
           {this.props
             .getSystem()
             .versionSelectors.apiMetadata()
-            .meta.versions.map((metaObject: any, index: number) => {
+            .meta.versions.map((metaObject: any) => {
               return (
-                <option value={metaObject.version} key={index}>
+                <option value={metaObject.version} key={metaObject.version}>
                   {this.buildDisplay(metaObject)}
                 </option>
               );
