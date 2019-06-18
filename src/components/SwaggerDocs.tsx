@@ -13,10 +13,14 @@ export interface ISwaggerDocsProps {
   apiName: string;
 }
 
-class SwaggerDocs extends React.Component<
-  ISwaggerDocsProps,
-  { json: object; url: string; version: string; metadata: any }
-> {
+export interface ISwaggerDocsState {
+  json: object;
+  url: string;
+  version: string;
+  metadata: any;
+}
+
+class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> {
   public static defaultProps = {
     json: {},
     url: '',
