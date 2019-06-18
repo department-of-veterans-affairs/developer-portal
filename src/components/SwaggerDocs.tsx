@@ -101,7 +101,6 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
       });
       ui.versionActions.setApiMetadata(metadata);
       ui.versionActions.setApiVersion(this.state.version);
-      return ui;
     } else if (Object.keys(this.state.json).length !== 0) {
       SwaggerUI({
         dom_id: '#swagger-ui',
