@@ -209,7 +209,8 @@ node('vetsgov-general-purpose') {
           links = files.collect {
             "[${it - 'visual-regression-test-ts-visual-regression-test-'}](https://s3-us-gov-west-1.amazonaws.com/${bucket}/${ref}/${it})"
           }.join(' <br>')
-          comment = "Visual regression testing failed. Review these diffs and then update the snapshots. <br><br> ${links}"
+          docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
+          comment = "Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
           pullRequestComment(comment)
         }
       }
