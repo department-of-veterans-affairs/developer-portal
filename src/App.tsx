@@ -36,6 +36,7 @@ export const flags = {
     community_care: isHostedApiEnabled('community_care', false),
     disability_rating: isHostedApiEnabled('disability_rating', true),
     facilities: isHostedApiEnabled('facilities', true),
+    fhir: isHostedApiEnabled('fhir', false),
     loan_guaranty: isHostedApiEnabled('loan_guaranty', false),
     service_history: isHostedApiEnabled('service_history', true),
     veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),

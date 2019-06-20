@@ -44,6 +44,13 @@ export interface IApiCategories {
 }
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
+const getLegacyHealthApiName = () => {
+  if (process.env.REACT_APP_FHIR_API_ENABLED === 'true') {
+    return 'Legacy Veterans Health API';
+  }
+  return 'Veterans Health API';
+}
+
 export const apiDefs: IApiCategories = {
   benefits: {
     apiKey: true,
@@ -153,6 +160,17 @@ export const apiDefs: IApiCategories = {
           },
         ],
         name: 'Veterans Health API',
+        shortDescription: "VA's Argonaut resources",
+        urlFragment: 'fhir',
+        vaInternalOnly: false,
+      },
+      {
+        docSources: [
+          {
+            openApiUrl: 'https://api.va.gov/services/argonaut/v0/openapi.json',
+          },
+        ],
+        name: getLegacyHealthApiName(),
         shortDescription: "VA's Argonaut resources",
         urlFragment: 'argonaut',
         vaInternalOnly: false,
