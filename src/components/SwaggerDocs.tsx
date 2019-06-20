@@ -1,119 +1,113 @@
 import * as React from 'react';
 import SwaggerUI from 'swagger-ui';
 
+import { IApiDocSource } from '../apiDefs';
 import { SwaggerPlugins } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 
-import { lookupApiByFragment } from '../apiDefs';
-
 export interface ISwaggerDocsProps {
-  json?: object;
-  url?: string;
   apiName: string;
+  docSource: IApiDocSource
 }
 
 export interface ISwaggerDocsState {
-  json: object;
-  url: string;
-  version: string;
+  docUrl: string;
   metadata: any;
+  version: string;
+}
+
+export interface IVersionInfo {
+  version: string;
+  status: string;
+  path: string;
+  healthcheck: string;
+  internal_only: boolean;
 }
 
 class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> {
-  public static defaultProps = {
-    json: {},
-    url: '',
-  };
-
   public constructor(props: ISwaggerDocsProps) {
     super(props);
     this.state = {
-      json: props.json!,
+      docUrl: props.docSource.openApiUrl,
       metadata: {},
-      url: props.url!,
       version: '',
     };
   }
 
-  public handlVersionChange(version: string) {
-    const versionMetadata = this.state.metadata.meta.versions.find((metaObject: any) => {
-      return metaObject.version === version;
+  public handleVersionChange(version: string) {
+    const versionMetadata = this.state.metadata.meta.versions.find((versionInfo: IVersionInfo) => {
+      return versionInfo.version === version;
     });
     this.setState({
-      url: this.buildUrlFromMeta(versionMetadata),
+      docUrl: this.buildUrlFromVersionInfo(versionMetadata),
       version,
     });
   }
-
-  public loadMetaDataAndRender() {
-    const apiDef = lookupApiByFragment(this.props.apiName);
-
-    if (apiDef && apiDef.docSources[0].metadataUrl) {
-      const request = new Request(`${apiDef.docSources[0].metadataUrl}`, {
-        method: 'GET',
-      });
-      fetch(request)
-        .then(response => response.json())
-        .then(json => {
-          this.setState({
-            metadata: json,
-            version: this.getCurrentVersion(json),
-          });
-          this.renderSwaggerUI(json);
-        })
-        .catch(error => this.renderSwaggerUI());
-    } else {
-      this.renderSwaggerUI();
-    }
+  
+  public componentDidMount() {
+    this.loadMetaDataAndRender();
   }
-
+  
   public componentDidUpdate(prevProps: ISwaggerDocsProps, prevState: ISwaggerDocsState) {
-    if (prevProps.apiName !== this.props.apiName && this.props.url) {
+    if (prevProps.apiName !== this.props.apiName) {
       this.setState({
+        docUrl: this.props.docSource.openApiUrl,
         metadata: null,
-        url: this.props.url,
+        version: '',
       });
       this.loadMetaDataAndRender();
     } else {
       this.renderSwaggerUI(this.state.metadata);
     }
   }
-
-  public getCurrentVersion(metadata: any) {
-    return metadata.meta.versions.find((metaObject: any) => metaObject.status === 'Current Version')
-      .version;
-  }
-
-  public componentDidMount() {
-    this.loadMetaDataAndRender();
-  }
-
+  
   public render() {
     return <div id="swagger-ui" />;
   }
-
-  public buildUrlFromMeta(metaObject: any) {
-    return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${metaObject.path}`;
+  
+  private loadMetaDataAndRender() {
+    const { metadataUrl } = this.props.docSource;
+    if (metadataUrl) {
+      const request = new Request(`${metadataUrl}`, {
+        method: 'GET',
+      });
+      fetch(request)
+      .then(response => response.json())
+      .then(json => {
+        this.setState({
+          metadata: json,
+          version: this.getCurrentVersion(json),
+        });
+        this.renderSwaggerUI(json);
+      })
+      // fall back to openApiUrl as default if metadata request fails
+      .catch(error => this.renderSwaggerUI());
+    } else {
+      this.renderSwaggerUI();
+    }
   }
-
+  
+  private buildUrlFromVersionInfo(versionInfo: IVersionInfo) {
+    return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${versionInfo.path}`;
+  }
+  
+  private getCurrentVersion(metadata: any) {
+    const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === 'Current Version';
+    return metadata.meta.versions.find(selectCurrentVersion).version;
+  }
+  
   private renderSwaggerUI(metadata?: object) {
-    if (this.state.url.length !== 0) {
-      const plugins = SwaggerPlugins(this.handlVersionChange.bind(this));
+    if (this.state.docUrl.length !== 0) {
+      const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
       const ui = SwaggerUI({
         dom_id: '#swagger-ui',
         layout: 'ExtendedLayout',
         plugins: [plugins],
-        url: this.state.url,
+        url: this.state.docUrl,
       });
       ui.versionActions.setApiMetadata(metadata);
       ui.versionActions.setApiVersion(this.state.version);
-    } else if (Object.keys(this.state.json).length !== 0) {
-      SwaggerUI({
-        dom_id: '#swagger-ui',
-        plugins: [SwaggerPlugins(this.handlVersionChange.bind(this))],
-        spec: this.state.json,
-      });
     }
   }
 }

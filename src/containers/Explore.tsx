@@ -77,10 +77,10 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
 
   private renderApiDocs(apiDefinition: IApiDescription) {
     let docs: JSX.Element | null = null;
-    // because this is downstream from a getApi() call, apiName is defined
+    // because this is downstream from a getApi() call, we can assert that apiName is defined
     const apiName : string = this.props.match.params.apiName!;
     if (apiDefinition.docSources.length === 1) {
-      docs = <SwaggerDocs url={apiDefinition.docSources[0].openApiUrl} apiName={apiName} />;
+      docs = <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiName} />;
     } else {
       docs = (
         <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
@@ -96,7 +96,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
           {apiDefinition.docSources.map(apiDocSource => {
             return (
               <TabPanel key={apiDocSource.label}>
-                <SwaggerDocs url={apiDocSource.openApiUrl} apiName={apiName} />
+                <SwaggerDocs docSource={apiDocSource} apiName={apiName} />
               </TabPanel>
             );
           })}
