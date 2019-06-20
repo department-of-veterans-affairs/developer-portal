@@ -1,17 +1,22 @@
-import { BenefitsOverview,
-         FacilitiesOverview,
-         HealthOverview,
-         VerificationOverview } from './content/apiDocs';
+import {
+  BenefitsOverview,
+  FacilitiesOverview,
+  HealthOverview,
+  VerificationOverview,
+} from './content/apiDocs';
 
-import { BenefitsReleaseNotes, 
-         FacilitiesReleaseNotes, 
-         HealthReleaseNotes, 
-         VerificationReleaseNotes } from './content/releaseNotes';
+import {
+  BenefitsReleaseNotes,
+  FacilitiesReleaseNotes,
+  HealthReleaseNotes,
+  VerificationReleaseNotes,
+} from './content/releaseNotes';
 
 export interface IApiDocSource {
+  readonly metadataUrl?: string;
+  readonly openApiUrl: string;
   readonly key?: string;
   readonly label?: string;
-  readonly openApiUrl: string;
 }
 
 export interface IApiDescription {
@@ -38,14 +43,16 @@ export interface IApiCategories {
   [key: string]: IApiCategory;
 }
 
-export const apiDefs : IApiCategories = {
+const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
+export const apiDefs: IApiCategories = {
   benefits: {
     apiKey: true,
     apis: [
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/vba_documents/docs/v0/api`,
+            metadataUrl: `${swaggerHost}/services/vba_documents/metadata`,
+            openApiUrl: `${swaggerHost}/services/vba_documents/docs/v0/api`,
           },
         ],
         name: 'Benefits Intake',
@@ -56,7 +63,7 @@ export const apiDefs : IApiCategories = {
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/appeals/docs/v0/api`,
+            openApiUrl: `${swaggerHost}/services/appeals/docs/v0/api`,
           },
         ],
         name: 'Appeals Status',
@@ -67,7 +74,8 @@ export const apiDefs : IApiCategories = {
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
+            metadataUrl: `${swaggerHost}/services/claims/metadata`,
+            openApiUrl: `${swaggerHost}/services/claims/docs/v0/api`,
           },
         ],
         name: 'Benefits Claims',
@@ -78,7 +86,7 @@ export const apiDefs : IApiCategories = {
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/loan_guaranty/docs/v1/api`,
+            openApiUrl: `${swaggerHost}/services/loan_guaranty/docs/v1/api`,
           },
         ],
         name: 'Loan Guaranty',
@@ -87,13 +95,15 @@ export const apiDefs : IApiCategories = {
         vaInternalOnly: false,
       },
     ],
-    buttonText: "Get Your Key",
-    longDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
+    buttonText: 'Get Your Key',
+    longDescription:
+      'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
     name: 'Benefits',
     overview: BenefitsOverview,
     properName: 'Benefits Intake API',
     releaseNotes: BenefitsReleaseNotes,
-    shortDescription: 'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
+    shortDescription:
+      'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
   },
   facilities: {
     apiKey: true,
@@ -101,7 +111,8 @@ export const apiDefs : IApiCategories = {
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/va_facilities/docs/v0/api`,
+            metadataUrl: `${swaggerHost}/services/va_facilities/metadata`,
+            openApiUrl: `${swaggerHost}/services/va_facilities/docs/v0/api`,
           },
         ],
         name: 'VA Facilities API',
@@ -110,13 +121,15 @@ export const apiDefs : IApiCategories = {
         vaInternalOnly: false,
       },
     ],
-    buttonText: "Get Your Key",
-    longDescription: "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
+    buttonText: 'Get Your Key',
+    longDescription:
+      "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
     name: 'Facilities',
     overview: FacilitiesOverview,
     properName: 'VA Facilities API',
     releaseNotes: FacilitiesReleaseNotes,
-    shortDescription: 'Use the VA Facility API to find relevant information about a specific VA facility.',
+    shortDescription:
+      'Use the VA Facility API to find relevant information about a specific VA facility.',
   },
   health: {
     apiKey: false,
@@ -151,13 +164,14 @@ export const apiDefs : IApiCategories = {
           },
         ],
         name: 'Community Care Eligibility API',
-        shortDescription: "",
+        shortDescription: '',
         urlFragment: 'community_care',
         vaInternalOnly: false,
       },
     ],
-    buttonText: "Get Your Key",
-    longDescription: "Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.",
+    buttonText: 'Get Your Key',
+    longDescription:
+      'Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.',
     name: 'Health',
     overview: HealthOverview,
     properName: 'Health API',
@@ -170,7 +184,7 @@ export const apiDefs : IApiCategories = {
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/disability_rating`,
+            openApiUrl: `${swaggerHost}/services/veteran_verification/docs/v0/disability_rating`,
           },
         ],
         name: 'Disability Rating',
@@ -181,7 +195,7 @@ export const apiDefs : IApiCategories = {
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/service_history`,
+            openApiUrl: `${swaggerHost}/services/veteran_verification/docs/v0/service_history`,
           },
         ],
         name: 'Service History',
@@ -192,7 +206,7 @@ export const apiDefs : IApiCategories = {
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/veteran_verification/docs/v0/status`,
+            openApiUrl: `${swaggerHost}/services/veteran_verification/docs/v0/status`,
           },
         ],
         name: 'Veteran Confirmation',
@@ -203,7 +217,7 @@ export const apiDefs : IApiCategories = {
       {
         docSources: [
           {
-            openApiUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/address_validation/docs/v1/api`,
+            openApiUrl: `${swaggerHost}/services/address_validation/docs/v1/api`,
           },
         ],
         name: 'Address Validation',
@@ -212,9 +226,9 @@ export const apiDefs : IApiCategories = {
         vaInternalOnly: true,
       },
     ],
-    buttonText: "Stay Informed",
+    buttonText: 'Stay Informed',
     longDescription: 'Empowering Veterans to take control of their data and put it to work.',
-    name: "Veteran Verification",
+    name: 'Veteran Verification',
     overview: VerificationOverview,
     properName: 'Veteran Verification API',
     releaseNotes: VerificationReleaseNotes,
@@ -222,18 +236,16 @@ export const apiDefs : IApiCategories = {
   },
 };
 
-export const apiCategoryOrder: string[] = [
-  'benefits',
-  'facilities',
-  'health',
-  'verification',
-];
+export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
 
 // If an API with the given URL fragment exists, the given `fn` callback
 // function will be called with the full IApiDescription. The return value is
 // either the return value of the callback function or `null` if no such API
 // exists.
-export function withApiDescription(urlFragment: string, fn: (apiDesc: IApiDescription) => any): any {
+export function withApiDescription(
+  urlFragment: string,
+  fn: (apiDesc: IApiDescription) => any,
+): any {
   const api = lookupApiByFragment(urlFragment);
   if (api == null) {
     return null;
@@ -271,5 +283,5 @@ function categoriesFor(apiList: string[]): IApiCategory[] {
 }
 
 export function includesOauthAPI(apiList: string[]): boolean {
-  return categoriesFor(apiList).some(category => !category.apiKey)
+  return categoriesFor(apiList).some(category => !category.apiKey);
 }
