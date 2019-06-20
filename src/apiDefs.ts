@@ -115,7 +115,7 @@ export const apiDefs: IApiCategories = {
     apis: [
       {
         name: 'Veterans Health API',
-        openApiDocUrl: 'https://staging-api.va.gov/services/argonaut/v0/openapi.json',
+        openApiDocUrl: 'https://api.va.gov/services/argonaut/v0/openapi.json',
         shortDescription: "VA's Argonaut resources",
         urlFragment: 'argonaut',
         vaInternalOnly: false,
