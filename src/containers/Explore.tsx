@@ -8,7 +8,6 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { IApiDescription, IApiDocSource, lookupApiByFragment } from '../apiDefs';
 import { SwaggerDocs } from '../components';
 import ExplorePage from '../content/explorePage.mdx';
-import { history } from '../store';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
 import '../../node_modules/react-tabs/style/react-tabs.scss';
@@ -29,30 +28,19 @@ const mapStateToProps = ({ routing }: IRootState) => {
 };
 
 class Explore extends React.Component<IExploreProps, IExploreState> {
-  private unlisten : (() => void) | null = null;
-
   public constructor(props : IExploreProps) {
     super(props);
     this.state = { tabIndex: 0 };
   }
 
   public componentDidMount() {
-    this.setTabIndexFromHash(history.location.hash);
-    this.unlisten = history.listen(location => {
-      this.setTabIndexFromHash(location.hash);
-    });
+    this.setTabIndexFromHash();
   }
 
   public componentDidUpdate(prevProps: IExploreProps, prevState: IExploreState) {
-    if (this.props.location.pathname !== prevProps.location.pathname && this.unlisten) {
-      this.unlisten();
-      this.unlisten = null;
-    }
-  }
-
-  public componentWillUnmount() {
-    if (this.unlisten) {
-      this.unlisten();
+    const { location } = this.props;
+    if (location.pathname !== prevProps.location.pathname || location.hash !== prevProps.location.hash) {
+      this.setTabIndexFromHash();
     }
   }
 
@@ -119,19 +107,19 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     return lookupApiByFragment(this.props.match.params.apiName);
   }
 
-  private setTabIndexFromHash(hashFragment : string) : void {
+  private setTabIndexFromHash() : void {
     const api = this.getApi();
-      if (api !== null && api.docSources.length > 1) {
-        const newTabIndex = this.getTabIndexFromHash(hashFragment, api.docSources);
-        this.setState({ tabIndex: newTabIndex });
-      }
+    if (api !== null && api.docSources.length > 1) {
+      const newTabIndex = this.getTabIndexFromHash(api.docSources);
+      this.setState({ tabIndex: newTabIndex });
+    }
   }
 
-  private getTabIndexFromHash(hashFragment : string, apiDocSources : IApiDocSource[]) : number {
-    if (hashFragment) {
+  private getTabIndexFromHash(apiDocSources : IApiDocSource[]) : number {
+    if (this.props.location.hash) {
       const hasKey = (source : IApiDocSource) => !!source.key;
       const tabKeys = apiDocSources.filter(hasKey).map(source => source.key!.toLowerCase());
-      hashFragment = hashFragment.slice(1).toLowerCase();
+      const hashFragment = this.props.location.hash.slice(1).toLowerCase();
       const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === hashFragment);
       return tabIndex === -1 ? this.state.tabIndex : tabIndex;
     }
