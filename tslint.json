@@ -1,14 +1,24 @@
 {
-  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
   "linterOptions": {
     "exclude": [
       "config/**/*.js",
       "node_modules/**/*.ts"
     ]
   },
-  "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
+  "rulesDirectory": [
+    "node_modules/tslint-microsoft-contrib"
+  ],
   "rules": {
-    "indent": [true, "spaces", 2],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
     "trailing-comma": {
       "options": {
         "multiline": "always",

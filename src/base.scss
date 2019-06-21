@@ -2,11 +2,11 @@
 // ==========
 
 // Asset reference
-$font-path: "~uswds/src/fonts";
-$image-path: "~uswds/src/img";
+$font-path: '~uswds/src/fonts';
+$image-path: '~uswds/src/img';
 
 // Colors
-$color-gray-cool-light:  #dce4ef;
+$color-gray-cool-light: #dce4ef;
 $color-primary-alt-light: #9bdaf1;
 $color-primary-alt-dark: #00a6d2;
 $color-primary-lightest: #e1f3f8;
@@ -24,7 +24,7 @@ $large-screen: 951px;
 
 // Imports
 // =======
-@import "~uswds/src/stylesheets/uswds";
+@import '~uswds/src/stylesheets/uswds';
 
 // USWDS Overrides 🚗
 // ==================
@@ -53,7 +53,7 @@ footer {
 
 .main {
   flex-grow: 1;
-  background-color: #F9F9F9;
+  background-color: #f9f9f9;
 }
 
 // Typography
@@ -63,7 +63,7 @@ h1 {
   font-weight: 700;
   font-size: 4rem;
   line-height: 1.3em;
-  color: #323A45;
+  color: #323a45;
 }
 
 h2 {
@@ -73,7 +73,7 @@ h2 {
   line-height: 1.3em;
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem !important;
-  color: #323A45;
+  color: #323a45;
 }
 
 h3 {
@@ -83,7 +83,7 @@ h3 {
   line-height: 1.3em;
   margin-top: 2rem !important;
   margin-bottom: 1.5rem !important;
-  color: #323A45;
+  color: #323a45;
 }
 
 h4 {
@@ -91,7 +91,7 @@ h4 {
   font-weight: 700;
   font-size: 19px;
   line-height: 1.3em;
-  color: #323A45;
+  color: #323a45;
 }
 
 h5 {
@@ -99,7 +99,7 @@ h5 {
   font-weight: 700;
   font-size: 15px;
   line-height: 1.3em;
-  color: #323A45;
+  color: #323a45;
 }
 
 p {
