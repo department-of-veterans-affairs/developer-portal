@@ -8,6 +8,7 @@ import { ServersContainer } from './ServersContainer';
 import { VersionActions } from './VersionActions';
 import { VersionReducers } from './VersionReducers';
 import { VersionSelector } from './VersionSelector';
+import { WrapParameters } from './WrapParameters';
 
 export function SwaggerPlugins(versionHandler: any) {
   return {
@@ -33,6 +34,7 @@ export function SwaggerPlugins(versionHandler: any) {
     },
     wrapComponents: {
       ...DisableTryItOut.toggleAuthorize(),
+      ...WrapParameters,
     },
   };
 }
