@@ -7,25 +7,35 @@ export interface ICurlFormProps {
   operation: any;
 }
 
-export class CurlForm extends React.Component<ICurlFormProps, {}> {
+export interface ICurlFormState {
+  apiKey: string;
+  params: object[];
+}
+
+export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   public constructor(props: ICurlFormProps) {
     super(props);
 
-    let state = {};
-    this.props.operation.parameters.map((parameter: any) => {
-      state[parameter.name] = parameter.name;
-    });
+    let state = {
+      apiKey: '',
+      params: this.props.operation.parameters,
+    };
+    if (state.params) {
+      state.params.map((parameter: any) => {
+        state[parameter.name] = parameter.example;
+      });
+    }
     this.state = state;
   }
 
   public handleInputChange(parameterName: string, value: string) {
-    this.setState({ [parameterName]: value });
+    this.setState({ ...this.state, [parameterName]: value });
   }
 
   public buildInputs() {
     return (
       <div>
-        {this.props.operation.parameters.map((parameter: any) => {
+        {this.state.params.map((parameter: any) => {
           return (
             <div key={parameter.name}>
               <label htmlFor={parameter.name}>{parameter.name}</label>
@@ -33,6 +43,7 @@ export class CurlForm extends React.Component<ICurlFormProps, {}> {
                 type="text"
                 id={parameter.name}
                 placeholder={this.state[parameter.name]}
+                value={this.state[parameter.name]}
                 onChange={e => this.handleInputChange(parameter.name, e.target.value)}
               />
             </div>
@@ -43,26 +54,64 @@ export class CurlForm extends React.Component<ICurlFormProps, {}> {
   }
   public buildCurl() {
     const spec = this.props.system.spec().toJS().json;
+    spec.host = `dev-${spec.host}`;
     const options = {
       operationId: this.props.operation.operationId,
       parameters: this.state,
+      securities: {
+        authorized: {
+          apikey: this.state.apiKey,
+        },
+      },
       spec,
     };
     return this.props.system.fn.curlify(options);
   }
 
-  public render() {
-    return (
-      <div className="curl-form">
-        <select>
-          <option>Test User 1</option>
-        </select>
-        {this.buildInputs()}
+  public parameterContainer() {
+    if (this.state.params) {
+      return (
         <div>
-          <p>{this.buildCurl()}</p>
+          <h3> Parameters: </h3>
+          {this.buildInputs()}
         </div>
-      </div>
-    );
+      );
+    } else {
+      return null;
+    }
+  }
+
+  public render() {
+    if (Object.keys(this.props.operation.security[0]).includes('apikey')) {
+      return (
+        <div className="curl-form">
+          <h2>Example Curl</h2>
+          <select>
+            <option>Test User 1</option>
+          </select>
+          <h3> API Key: </h3>
+          <div>
+            <input
+              value={this.state.apiKey}
+              onChange={e => {
+                this.handleInputChange('apiKey', e.target.value);
+              }}
+            />
+            <small>
+              Don't have an API Key? <a href="/apply"> Get One </a>
+            </small>
+          </div>
+          {this.parameterContainer()}
+          <br />
+          <h3>Generated Curl</h3>
+          <div className="opblock-body">
+            <pre className="highlight-code">{this.buildCurl()}</pre>
+          </div>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 }
 
@@ -70,8 +119,8 @@ export const WrapParameters = {
   parameters: (Original: any, system: any) => (props: any) => {
     return (
       <div>
-        <CurlForm system={system} operation={props.operation.toJS()} />
         <Original {...props} />
+        <CurlForm system={system} operation={props.operation.toJS()} />
       </div>
     );
   },
