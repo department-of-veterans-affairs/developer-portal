@@ -91,6 +91,26 @@ describe('application', () => {
     );
   });
 
+  it('should toggle claims api', () => {
+    const newApp = application(app, {
+      type: constants.TOGGLE_CLAIMS_CHECKED,
+    });
+    expect(newApp.inputs).toEqual(
+      expect.objectContaining({
+        apis: expect.objectContaining({
+          claims: true,
+        }),
+      }),
+    );
+    expect(application(newApp, { type: constants.TOGGLE_CLAIMS_CHECKED }).inputs).toEqual(
+      expect.objectContaining({
+        apis: expect.objectContaining({
+          claims: false,
+        }),
+      }),
+    );
+  });
+
   it('should toggle appeals api', () => {
     const newApp = application(app, { type: constants.TOGGLE_APPEALS_CHECKED });
     expect(newApp.inputs).toEqual(
