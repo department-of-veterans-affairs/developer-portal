@@ -139,16 +139,6 @@ class ApplyForm extends React.Component<IApplyProps> {
               <div className="form-checkbox">
                 <input
                   type="checkbox"
-                  id="claims"
-                  name="claims"
-                  checked={apis.claims}
-                  onChange={props.toggleClaims} />
-                <label htmlFor="benefits">VA Claims API</label>
-              </div>
-
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
                   id="facilities"
                   name="facilities"
                   checked={apis.facilities}
@@ -157,6 +147,16 @@ class ApplyForm extends React.Component<IApplyProps> {
               </div>
 
               <h3>OAuth APIs:</h3>
+
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="claims"
+                  name="claims"
+                  checked={apis.claims}
+                  onChange={props.toggleClaims} />
+                <label htmlFor="benefits">VA Claims API</label>
+              </div>
 
               <div className="form-checkbox">
                 <input
