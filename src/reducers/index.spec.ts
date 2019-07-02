@@ -11,6 +11,7 @@ const app: IApplication = {
     apis: {
       appeals: false,
       benefits: false,
+      claims: false,
       communityCare: false,
       facilities: false,
       health: false,

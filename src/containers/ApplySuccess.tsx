@@ -93,7 +93,7 @@ function ApplySuccess(props: IApplication) {
                     ? null
                     : <ApiKeyNotice email={email} token={token} selectedApis={selectedApiNames(apis)} />;
 
-  const oAuthNotice = ((apis.health || apis.verification) && clientID && clientSecret)
+  const oAuthNotice = ((apis.health || apis.verification || apis.claims) && clientID && clientSecret)
                     ? <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />
                     : null;
 
