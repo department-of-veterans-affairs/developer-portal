@@ -56,9 +56,11 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
       fetch(request)
         .then(response => response.json())
         .then(json => {
+          const currentMeta = this.getCurrentVersion(json);
           this.setState({
             metadata: json,
-            version: this.getCurrentVersion(json),
+            url: this.buildUrlFromMeta(currentMeta),
+            version: currentMeta.version,
           });
           this.renderSwaggerUI(json);
         })
@@ -81,8 +83,9 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
   }
 
   public getCurrentVersion(metadata: any) {
-    return metadata.meta.versions.find((metaObject: any) => metaObject.status === 'Current Version')
-      .version;
+    return metadata.meta.versions.find(
+      (metaObject: any) => metaObject.status === 'Current Version',
+    );
   }
 
   public componentDidMount() {
