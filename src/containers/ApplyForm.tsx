@@ -21,7 +21,6 @@ interface IApplyProps extends IApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
   toggleBenefits: () => void;
-  toggleClaims: () => void;
   toggleHealth: () => void;
   toggleFacilities: () => void;
   toggleVerification: () => void;
@@ -41,7 +40,6 @@ const mapDispatchToProps = (dispatch : ApplicationDispatch) => {
     submitForm: () => { dispatch(actions.submitForm()) },
     toggleAcceptTos: () => { dispatch(actions.toggleAcceptTos()) },
     toggleBenefits: () => { dispatch(actions.toggleBenefitsApi()) },
-    toggleClaims: () => { dispatch(actions.toggleClaimsApi()) },
     toggleCommunityCare: () => { dispatch(actions.toggleCommunityCareApi()) },
     toggleFacilities: () => { dispatch(actions.toggleFacilitiesApi()) },
     toggleHealth: () => { dispatch(actions.toggleHealthApi()) },
@@ -64,8 +62,7 @@ const mapStateToProps = (state : IRootState) => {
 // Mapping from the options on the form to url fragments for APIs
 const formFieldsToFragments = {
   appeals: 'appeals',
-  benefits: 'benefits',
-  claims: 'claims',
+  benefits: ['benefits', 'claims'],
   communityCare: 'community_care',
   health: 'argonaut',
   verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
@@ -147,16 +144,6 @@ class ApplyForm extends React.Component<IApplyProps> {
               </div>
 
               <h3>OAuth APIs:</h3>
-
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="claims"
-                  name="claims"
-                  checked={apis.claims}
-                  onChange={props.toggleClaims} />
-                <label htmlFor="benefits">VA Claims API</label>
-              </div>
 
               <div className="form-checkbox">
                 <input

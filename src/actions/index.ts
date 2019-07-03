@@ -40,10 +40,6 @@ export interface IToggleBenefitsApi extends Action {
   type: constants.TOGGLE_BENEFITS_CHECKED;
 }
 
-export interface IToggleClaimsApi extends Action {
-  type: constants.TOGGLE_CLAIMS_CHECKED;
-}
-
 export interface IToggleAppealsApi extends Action {
   type: constants.TOGGLE_APPEALS_CHECKED;
 }
@@ -76,7 +72,6 @@ export type UpdateApplicationAction =
   | IUpdateApplicationOrganization
   | IUpdateApplicationOAuthRedirectURI
   | IToggleBenefitsApi
-  | IToggleClaimsApi
   | IToggleAppealsApi
   | IToggleVerificationApi
   | IToggleFacilitiesApi
@@ -292,12 +287,6 @@ export const updateApplicationOrganization: ActionCreator<IUpdateApplicationOrga
 export const toggleBenefitsApi: ActionCreator<IToggleBenefitsApi> = () => {
   return {
     type: constants.TOGGLE_BENEFITS_CHECKED,
-  };
-};
-
-export const toggleClaimsApi: ActionCreator<IToggleClaimsApi> = () => {
-  return {
-    type: constants.TOGGLE_CLAIMS_CHECKED,
   };
 };
 

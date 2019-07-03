@@ -84,7 +84,7 @@
     "stickyfill": "^1.1.1-strict",
     "stickyfilljs": "^2.1.0",
     "style-loader": "0.23.0",
-    "swagger-ui": "^3.23.0",
+    "swagger-ui": "^3.20.4",
     "swagger-ui-themes": "^3.0.0",
     "terser-webpack-plugin": "1.1.0",
     "ts-loader": "^5.3.0",
