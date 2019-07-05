@@ -75,9 +75,11 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
       fetch(request)
       .then(response => response.json())
       .then(json => {
+        const currentVersionInfo = this.getCurrentVersionInfo(json);
         this.setState({
+          docUrl: this.buildUrlFromVersionInfo(currentVersionInfo),
           metadata: json,
-          version: this.getCurrentVersion(json),
+          version: currentVersionInfo.version,
         });
         this.renderSwaggerUI(json);
       })
@@ -92,9 +94,9 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
     return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${versionInfo.path}`;
   }
   
-  private getCurrentVersion(metadata: any) {
+  private getCurrentVersionInfo(metadata: any) : IVersionInfo {
     const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === 'Current Version';
-    return metadata.meta.versions.find(selectCurrentVersion).version;
+    return metadata.meta.versions.find(selectCurrentVersion);
   }
   
   private renderSwaggerUI(metadata?: object) {
