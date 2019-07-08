@@ -39,6 +39,7 @@ export const flags = {
     fhir: isHostedApiEnabled('fhir', false),
     loan_guaranty: isHostedApiEnabled('loan_guaranty', false),
     service_history: isHostedApiEnabled('service_history', true),
+    urgent_care: isHostedApiEnabled('fhir', false),
     veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
   },
   signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',

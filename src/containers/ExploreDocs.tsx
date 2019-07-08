@@ -3,17 +3,16 @@ import { NavHashLink } from 'react-router-hash-link';
 
 import classNames from 'classnames';
 import { Flag } from 'flag';
-import { RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import * as Stickyfill from 'stickyfilljs';
 
+import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
 import { ApiPage } from '../components';
 import { IApiNameParam } from '../types';
 import { AuthorizationDocs } from './AuthorizationDocs';
 import DocumentationOverview from './DocumentationOverview';
 import Explore from './Explore';
-
-import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
 
 import './Explore.scss';
 
@@ -142,6 +141,7 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
             <Route exact={true} path="/explore/" component={DocumentationOverview} />
             <Route exact={true} path="/explore/:apiCategoryKey" component={ApiPage} />
             <Switch>
+              <Redirect exact={true} from="/explore/health/docs/urgent_care" to="/explore/health/docs/fhir#r4" />
               <Route exact={true} path="/explore/:apiCategoryKey/docs/authorization" component={AuthorizationDocs} />
               <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" component={Explore} />
             </Switch>

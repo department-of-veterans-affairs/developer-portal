@@ -39,7 +39,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
 function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory) {
   const subNavLinks = () => {
     return apiCategory.apis.map(api => {
-      if (apiCategory.apis.length > 1) {
+      if (apiCategory.apis.length > 1 && !api.isViewOnly) {
         return SideNavApiEntry(apiCategoryKey, api);
       } else {
         return null;
