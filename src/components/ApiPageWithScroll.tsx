@@ -14,14 +14,14 @@ function ApiSection({ apiCategoryKey, sectionRef } : { apiCategoryKey : string, 
 
     if (apis.length > 0) {
         const links = apis.map((apiDesc: IApiDescription, idx) => {
-            const { name, shortDescription, urlFragment, vaInternalOnly } = apiDesc;
+            const { description, name, urlFragment, vaInternalOnly } = apiDesc;
             return (
                 <Flag key={idx} name={`hosted_apis.${urlFragment}`}>
                     <div key={idx} className="api-link">
                       <Link to={`/explore/${apiCategoryKey}/docs/${urlFragment}`}>
                         <span>{name}</span>
                         {(vaInternalOnly === true) ? <p className="api-name-tag">Internal VA use only.</p> : null}
-                        <p>{shortDescription}</p>
+                        <p>{description}</p>
                       </Link>
                     </div>
                 </Flag>

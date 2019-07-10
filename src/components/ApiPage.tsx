@@ -16,10 +16,10 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
 
     if (apis.length > 0) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
-        const { name, shortDescription, urlFragment, vaInternalOnly } = apiDesc;
+        const { description, name, urlFragment, vaInternalOnly } = apiDesc;
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
-            <ApiCard name={name} description={shortDescription} vaInternalOnly={vaInternalOnly}
+            <ApiCard name={name} description={description} vaInternalOnly={vaInternalOnly}
                 url={`/explore/${apiCategoryKey}/docs/${urlFragment}`} />
           </Flag>
         );
