@@ -19,6 +19,7 @@ export interface IApiDescription {
   readonly urlFragment: string;
   readonly shortDescription: string;
   readonly vaInternalOnly: boolean;
+  readonly oAuth?: boolean;
 }
 
 export interface IApiCategory {
@@ -31,6 +32,7 @@ export interface IApiCategory {
   readonly shortDescription: string;
   readonly longDescription: string;
   readonly releaseNotes?: React.StatelessComponent;
+  readonly oAuth?: boolean;
 }
 
 export interface IApiCategories {
@@ -60,11 +62,12 @@ export const apiDefs: IApiCategories = {
       },
       {
         metadataUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/metadata`,
-        name: 'Benefits Claims',
+        name: 'Claims',
+        oAuth: true,
         openApiDocUrl: `${process.env.REACT_APP_VETSGOV_SWAGGER_API}/services/claims/docs/v0/api`,
         shortDescription: 'Submit and track claims',
         urlFragment: 'claims',
-        vaInternalOnly: true,
+        vaInternalOnly: false,
       },
       {
         name: 'Loan Guaranty',
@@ -233,6 +236,18 @@ function categoriesFor(apiList: string[]): IApiCategory[] {
   return Array.from(categories);
 }
 
+function apisFor(apiList: string[]): IApiCategory[] {
+  const apis = new Set();
+  for (const cat of Object.values(apiDefs)) {
+    for (const api of cat.apis) {
+      if (apiList.includes(api.urlFragment)) {
+        apis.add(api);
+      }
+    }
+  }
+  return Array.from(apis);
+}
+
 export function includesOauthAPI(apiList: string[]): boolean {
-  return categoriesFor(apiList).some(category => !category.apiKey);
+  return categoriesFor(apiList).some(category => !category.apiKey) || apisFor(apiList).some(api => api.oAuth || false);
 }
