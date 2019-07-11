@@ -57,7 +57,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
 
     return (
       <div role="region" aria-labelledby="api-documentation">
-        <h1 id="api-documentation">API Documentation</h1>
+        <h1 id="api-documentation">{api!.pageTitle || api!.name}</h1>
         {docsDom}
       </div>
     );

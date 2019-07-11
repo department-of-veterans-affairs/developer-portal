@@ -14,6 +14,13 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
+    description: '',
+    docSources: [],
+    name: 'Urgent Care Eligibility API (FHIR)',
+    urlFragment: 'urgent_care',
+    vaInternalOnly: false,
+  },
+  {
     description: 'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
     docSources: [
       {

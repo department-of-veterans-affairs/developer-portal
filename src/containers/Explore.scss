@@ -94,26 +94,9 @@
         color: #4C565C;
       }
 
-      .title {
-        font-family: $font-sans;
-        color: #323A45;
-
-        small {
-          background: #4C565C;
-          line-height: 1em;
-
-          pre {
-            background: #4C565C;
-            line-height: 1em;
-          }
-        }
-
-        span small:last-child {
-          background: #44615D !important;
-          .version {
-            background: #44615D !important;
-          }
-        }
+      h2.title {
+        // never show Swagger UI's title feature
+        display: none;
       }
     }
 
