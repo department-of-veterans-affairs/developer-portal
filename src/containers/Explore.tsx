@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import { IApiDescription, IApiDocSource, lookupApiByFragment } from '../apiDefs';
+import { IApiCategory, IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../apiDefs';
 import { SwaggerDocs } from '../components';
 import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
@@ -47,6 +47,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
   public render() {
     let docsDom: JSX.Element | null = null;
     const api = this.getApi();
+    const category = this.getCategory();
     if (api != null) {
       docsDom = this.renderApiDocs(api);
     }
@@ -57,7 +58,8 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
 
     return (
       <div role="region" aria-labelledby="api-documentation">
-        <h1 id="api-documentation">{api!.pageTitle || api!.name}</h1>
+        {category && category.showProperNameAboveTitle && category.properName}
+        <h1 id="api-documentation">{api!.name}</h1>
         {docsDom}
       </div>
     );
@@ -67,28 +69,32 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     let docs: JSX.Element | null = null;
     // because this is downstream from a getApi() call, we can assert that apiName is defined
     const apiName : string = this.props.match.params.apiName!;
+    const category = this.getCategory();
     if (apiDefinition.docSources.length === 1) {
       docs = <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiName} />;
     } else {
       docs = (
-        <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
-          <TabList>
+        <React.Fragment>
+          {category!.tabBlurb}
+          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
+            <TabList>
+              {apiDefinition.docSources.map(apiDocSource => {
+                return (
+                  <Tab key={apiDocSource.label}>
+                    {apiDocSource.label}
+                  </Tab>
+                );
+              })}
+            </TabList>
             {apiDefinition.docSources.map(apiDocSource => {
               return (
-                <Tab key={apiDocSource.label}>
-                  {apiDocSource.label}
-                </Tab>
+                <TabPanel key={apiDocSource.label}>
+                  <SwaggerDocs docSource={apiDocSource} apiName={apiName} />
+                </TabPanel>
               );
             })}
-          </TabList>
-          {apiDefinition.docSources.map(apiDocSource => {
-            return (
-              <TabPanel key={apiDocSource.label}>
-                <SwaggerDocs docSource={apiDocSource} apiName={apiName} />
-              </TabPanel>
-            );
-          })}
-        </Tabs>
+          </Tabs>
+        </React.Fragment>
       )
     }
 
@@ -105,6 +111,15 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     }
 
     return lookupApiByFragment(this.props.match.params.apiName);
+  }
+
+  private getCategory() : IApiCategory | null {
+    const { apiCategoryKey } = this.props.match.params;
+    if (!apiCategoryKey) {
+      return null;
+    }
+
+    return lookupApiCategory(apiCategoryKey);
   }
 
   private setTabIndexFromHash() : void {

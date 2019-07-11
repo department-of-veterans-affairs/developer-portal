@@ -1,4 +1,11 @@
 import { IApiDescription } from ".";
+import {
+  CommunityCareApiIntro,
+  FhirArgonautApiIntro,
+  FhirDSTU2ApiIntro,
+  FhirR4ApiIntro,
+  UrgentCareApiIntro,
+} from "../content/apiDocs";
 
 const isNewFhirApiEnabled =  process.env.REACT_APP_FHIR_API_ENABLED === 'true';
 const healthApis : IApiDescription[] = [
@@ -6,6 +13,7 @@ const healthApis : IApiDescription[] = [
     description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
       {
+        apiIntro: CommunityCareApiIntro,
         openApiUrl: '',
       },
     ],
@@ -15,7 +23,12 @@ const healthApis : IApiDescription[] = [
   },
   {
     description: '',
-    docSources: [],
+    docSources: [
+      {
+        apiIntro: UrgentCareApiIntro,
+        openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/r4/openapi.json',
+      },
+    ],
     name: 'Urgent Care Eligibility API (FHIR)',
     urlFragment: 'urgent_care',
     vaInternalOnly: false,
@@ -24,16 +37,19 @@ const healthApis : IApiDescription[] = [
     description: 'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
     docSources: [
       {
+        apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
         openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/openapi.json',
       },
       {
+        apiIntro: FhirR4ApiIntro,
         key: 'r4',
         label: 'R4',
         openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/r4/openapi.json',
       },
       {
+        apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
         openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/dstu2/openapi.json',

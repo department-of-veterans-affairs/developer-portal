@@ -63,7 +63,13 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
   }
   
   public render() {
-    return <div id="swagger-ui" />;
+    const { apiIntro } = this.props.docSource;
+    return (
+      <React.Fragment>
+        {apiIntro && apiIntro({})}
+        <div id="swagger-ui" />
+      </React.Fragment>
+    );
   }
   
   private loadMetaDataAndRender() {
