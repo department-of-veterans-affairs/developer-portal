@@ -48,7 +48,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
   public componentDidMount() {
     this.loadMetaDataAndRender();
   }
-  
+
   public componentDidUpdate(prevProps: ISwaggerDocsProps, prevState: ISwaggerDocsState) {
     if (prevProps.apiName !== this.props.apiName) {
       this.setState({
@@ -95,16 +95,16 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
       this.renderSwaggerUI();
     }
   }
-  
+
   private buildUrlFromVersionInfo(versionInfo: IVersionInfo) {
     return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${versionInfo.path}`;
   }
-  
+
   private getCurrentVersionInfo(metadata: any) : IVersionInfo {
     const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === 'Current Version';
     return metadata.meta.versions.find(selectCurrentVersion);
   }
-  
+
   private renderSwaggerUI(metadata?: object) {
     if (this.state.docUrl.length !== 0) {
       const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
