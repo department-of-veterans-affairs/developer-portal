@@ -22,7 +22,7 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
-    description: '',
+    description: "The VA's Health Urgent Care Eligibility API supports industry standars (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
     docSources: [
       {
         apiIntro: UrgentCareApiIntro,
