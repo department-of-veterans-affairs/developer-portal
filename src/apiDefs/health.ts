@@ -60,7 +60,7 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
-    description: 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.',
+    description: isNewFhirApiEnabled ? 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.' : "VA's Argonaut resources",
     docSources: [
       {
         openApiUrl: 'https://api.va.gov/services/argonaut/v0/openapi.json',
