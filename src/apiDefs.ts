@@ -32,7 +32,6 @@ export interface IApiCategory {
   readonly shortDescription: string;
   readonly longDescription: string;
   readonly releaseNotes?: React.StatelessComponent;
-  readonly oAuth?: boolean;
 }
 
 export interface IApiCategories {
@@ -236,7 +235,7 @@ function categoriesFor(apiList: string[]): IApiCategory[] {
   return Array.from(categories);
 }
 
-function apisFor(apiList: string[]): IApiCategory[] {
+function apisFor(apiList: string[]): IApiDescription[] {
   const apis = new Set();
   for (const cat of Object.values(apiDefs)) {
     for (const api of cat.apis) {
