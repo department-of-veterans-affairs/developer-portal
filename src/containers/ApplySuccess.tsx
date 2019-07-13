@@ -36,12 +36,12 @@ interface IOAuthCredentialsNoticeProps {
 
 const apisToEnglishList = (apis: string[]): string => {
   return sentenceJoin(apis.map((k) => {
-    return apiDefs[k].properName;
+    return (apiDefs[k] ? apiDefs[k].properName : k.charAt(0).toUpperCase() + k.slice(1));
   }));
 }
 
 function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } : IOAuthCredentialsNoticeProps) {
-  const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => !apiDefs[k].apiKey));
+  const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => !(apiDefs[k] ? apiDefs[k] : false)));
 
   return (
     <div>
