@@ -64,7 +64,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     }
 
     if (category) {
-      header = <PageHeader halo={category.name} header={api!.name} />
+      header = <PageHeader id="api-documentation" halo={category.name} header={api!.name} />
     }
 
     return (
