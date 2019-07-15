@@ -83,7 +83,7 @@ export const apiDefs: IApiCategories = {
     apis: healthApis,
     buttonText: 'Get Your Key',
     longDescription:
-      'Use our APIs to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers.',
+      'Use our Health API to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers. The APIs also provide a Veteran the ability to view their eligibility information regarding Urgent Care visits and functionality to determine care visit wait times and facility closeness.',
     name: 'Health',
     overview: HealthOverview,
     properName: 'Health API',
