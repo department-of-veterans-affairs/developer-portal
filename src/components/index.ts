@@ -7,6 +7,7 @@ export * from './PageHero';
 export * from './ApiPage';
 export * from './ApiPageReleaseNotes';
 export * from './PageHeader';
+export * from './Quickstart';
 import SwaggerDocs from './SwaggerDocs';
 
 export { SwaggerDocs };

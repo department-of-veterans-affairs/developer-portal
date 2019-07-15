@@ -9,7 +9,8 @@ import FhirDSTU2ApiIntro from './fhirDSTU2ApiIntro.mdx'
 import FhirR4ApiIntro from './fhirR4ApiIntro.mdx';
 import HealthIntro from './healthIntro.mdx';
 import HealthOverview from './healthOverview.mdx';
-import HealthStarted from './healthStarted.mdx'; 
+import HealthQuickstart from './healthQuickstart.mdx';
+import HealthStarted from './healthStarted.mdx';
 import UrgentCareApiIntro from './urgentCareApiIntro.mdx';
 import VerificationIntro from './verificationIntro.mdx';
 import VerificationOverview from './verificationOverview.mdx';
@@ -27,6 +28,7 @@ export { BenefitsIntro,
          HealthIntro,
          HealthOverview,
          HealthStarted,
+         HealthQuickstart,
          UrgentCareApiIntro,
          VerificationIntro,
          VerificationOverview,

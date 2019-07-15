@@ -5,6 +5,7 @@ import {
   FacilitiesOverview,
   HealthIntro,
   HealthOverview,
+  HealthQuickstart,
   VerificationIntro,
   VerificationOverview,
 } from '../content/apiDocs';
@@ -50,6 +51,7 @@ export interface IApiCategory {
   readonly shortDescription: string;
   readonly intro: React.StatelessComponent;
   readonly releaseNotes?: React.StatelessComponent;
+  readonly quickstart?: React.StatelessComponent;
   readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
 }
@@ -91,6 +93,7 @@ export const apiDefs: IApiCategories = {
     name: 'Health API',
     overview: HealthOverview,
     properName: 'Health API',
+    quickstart: HealthQuickstart,
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
     showProperNameAboveTitle: true,

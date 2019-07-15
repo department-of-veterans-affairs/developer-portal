@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { NavLink, Route, Switch } from 'react-router-dom';
 import * as Stickyfill from 'stickyfilljs';
 
-import { ApiPage } from '../components';
+import { ApiPage, Quickstart } from '../components';
 import { IApiNameParam } from '../types';
 import { AuthorizationDocs } from './AuthorizationDocs';
 import DocumentationOverview from './DocumentationOverview';
@@ -80,12 +80,24 @@ function OAuthSideNavEntry(apiCategoryKey: string, apiCategory: IApiCategory) {
     );
 }
 
+function QuickstartNavEntry(apiCategoryKey: string) {
+  return (
+    <li>
+      <NavLink exact={true} to={`/explore/${apiCategoryKey}/docs/quickstart`}
+        className="side-nav-api-link" id={`side-nav-quickstart-link-${apiCategoryKey}`} activeClassName="usa-current">
+        Quickstart
+      </NavLink>
+    </li>
+  );
+}
+
 function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCategory: IApiCategory) {
   const subNavLinks = apiCategory.apis.map(api => {
     return SideNavApiEntry(apiCategoryKey, api);
   });
 
   const authorizationEntry = apiCategory.apiKey ? null : OAuthSideNavEntry(apiCategoryKey, apiCategory);
+  const quickstart = apiCategory.quickstart ? QuickstartNavEntry(apiCategoryKey) : null;
 
   return (
     <li key={apiCategoryKey}>
@@ -93,6 +105,7 @@ function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCat
         {apiCategory.name}
       </NavLink>
       <ul className="usa-sidenav-sub_list">
+        {quickstart}
         {authorizationEntry}
         {subNavLinks}
       </ul>
@@ -143,6 +156,7 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
             <Route exact={true} path="/explore/:apiCategoryKey" component={ApiPage} />
             <Switch>
               <Route exact={true} path="/explore/:apiCategoryKey/docs/authorization" component={AuthorizationDocs} />
+              <Route exact={true} path="/explore/:apiCategoryKey/docs/quickstart" component={Quickstart} />
               <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" component={Explore} />
             </Switch>
           </div>
