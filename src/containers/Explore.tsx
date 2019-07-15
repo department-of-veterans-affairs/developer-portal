@@ -46,10 +46,15 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
 
   public render() {
     let docsDom: JSX.Element | null = null;
+    let depreacted: JSX.Element | null = null;
+
     const api = this.getApi();
     const category = this.getCategory();
     if (api != null) {
       docsDom = this.renderApiDocs(api);
+      if (api.depreacted) {
+        depreacted = this.renderDeprecationWarning(api);
+      }
     }
 
     if (docsDom == null) {
@@ -60,7 +65,23 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
       <div role="region" aria-labelledby="api-documentation">
         {category && category.showProperNameAboveTitle && category.properName}
         <h1 id="api-documentation">{api!.name}</h1>
+        {depreacted}
         {docsDom}
+      </div>
+    );
+  }
+
+  private renderDeprecationWarning(apiDefinition: IApiDescription) {
+    const { deprecationMessage, deprecationDeadlineMessage } = apiDefinition;
+    return (
+      <div className="usa-alert usa-alert-info">
+        <div className="usa-alert-body">
+          <h3 className="usa-alert-heading">Deprecation Notice</h3>
+          { deprecationMessage }
+          <br/>
+          <br/>
+          { deprecationDeadlineMessage }
+        </div>
       </div>
     );
   }

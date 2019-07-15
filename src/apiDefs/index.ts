@@ -35,6 +35,9 @@ export interface IApiDescription {
   readonly urlFragment: string;
   readonly description: string;
   readonly vaInternalOnly: boolean;
+  readonly depreacted?: boolean;
+  readonly deprecationDeadlineMessage?: string;
+  readonly deprecationMessage?: string;
 }
 
 export interface IApiCategory {

@@ -60,6 +60,9 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
+    depreacted: isNewFhirApiEnabled,
+    deprecationDeadlineMessage: 'Both the legacy API endpoints and this legacy documentation page will no longer be accessible beginning Oct 1, 2019',
+    deprecationMessage: 'Consumers currently using the https://api.va.gov/services/argonaut/v0 (and https://dev-api.va.gov/services/argonaut/v0) endpoint, please migrate your applications to use the new Veteran Health API (FHIR) endpoints: https://api.va.gov/services/fhir/v0/argonaut/data-query/ and https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/',
     description: isNewFhirApiEnabled ? 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.' : "VA's Argonaut resources",
     docSources: [
       {
