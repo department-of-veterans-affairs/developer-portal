@@ -8,6 +8,8 @@ import {
 } from "../content/apiDocs";
 
 const isNewFhirApiEnabled =  process.env.REACT_APP_FHIR_API_ENABLED === 'true';
+const argonautDepractedDescription = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
+const argonautDescription = "VA's Argonaut resources";
 const healthApis : IApiDescription[] = [
   {
     description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
@@ -63,7 +65,7 @@ const healthApis : IApiDescription[] = [
     depreacted: isNewFhirApiEnabled,
     deprecationDeadlineMessage: 'Both the legacy API endpoints and this legacy documentation page will no longer be accessible beginning Oct 1, 2019',
     deprecationMessage: 'Consumers currently using the https://api.va.gov/services/argonaut/v0 (and https://dev-api.va.gov/services/argonaut/v0) endpoint, please migrate your applications to use the new Veteran Health API (FHIR) endpoints: https://api.va.gov/services/fhir/v0/argonaut/data-query/ and https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/',
-    description: isNewFhirApiEnabled ? 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.' : "VA's Argonaut resources",
+    description: isNewFhirApiEnabled ? argonautDepractedDescription : argonautDescription,
     docSources: [
       {
         openApiUrl: 'https://api.va.gov/services/argonaut/v0/openapi.json',

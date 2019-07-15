@@ -7,6 +7,7 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 import { IApiCategory, IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../apiDefs';
 import { SwaggerDocs } from '../components';
+import PageHeader from '../components/PageHeader';
 import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
@@ -47,6 +48,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
   public render() {
     let docsDom: JSX.Element | null = null;
     let depreacted: JSX.Element | null = null;
+    let header: JSX.Element | null = null;
 
     const api = this.getApi();
     const category = this.getCategory();
@@ -61,10 +63,13 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
       docsDom = <ExplorePage />;
     }
 
+    if (category) {
+      header = <PageHeader halo={category.name} header={api!.name} />
+    }
+
     return (
       <div role="region" aria-labelledby="api-documentation">
-        {category && category.showProperNameAboveTitle && category.properName}
-        <h1 id="api-documentation">{api!.name}</h1>
+        {header}
         {depreacted}
         {docsDom}
       </div>
@@ -136,10 +141,6 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
 
   private getCategory() : IApiCategory | null {
     const { apiCategoryKey } = this.props.match.params;
-    if (!apiCategoryKey) {
-      return null;
-    }
-
     return lookupApiCategory(apiCategoryKey);
   }
 
