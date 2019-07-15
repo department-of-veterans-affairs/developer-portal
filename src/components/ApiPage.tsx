@@ -11,7 +11,7 @@ import AuthorizationCard from './AuthorizationCard';
 export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
-    const { apiKey, apis, name: categoryName, overview, longDescription: introText } = apiDefs[apiCategoryKey];
+    const { apiKey, apis, name: categoryName, overview, intro } = apiDefs[apiCategoryKey];
     let cardSection;
 
     if (apis.length > 0) {
@@ -40,7 +40,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
     return (
       <section role="region" aria-labelledby={`${apiCategoryKey}-overview`} className="usa-section">
         <h1 id={`${apiCategoryKey}-overview`}>{categoryName}</h1>
-        <h2>{introText}</h2>
+        {intro({})}
         {cardSection}
         <div className="usa-width-one-whole">
           {overview({})}
