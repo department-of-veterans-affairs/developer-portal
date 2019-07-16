@@ -51,7 +51,7 @@ export interface IApiCategory {
   readonly shortDescription: string;
   readonly intro: React.StatelessComponent;
   readonly releaseNotes?: React.StatelessComponent;
-  readonly quickstart?: React.StatelessComponent | null;
+  readonly quickstartContent?: React.StatelessComponent;
   readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
 }
@@ -60,7 +60,7 @@ export interface IApiCategories {
   [key: string]: IApiCategory;
 }
 
-const isNewFhirApiEnabled =  process.env.REACT_APP_FHIR_API_ENABLED === 'true';
+const isNewFhirApiEnabled = process.env.REACT_APP_FHIR_API_ENABLED === 'true';
 
 export const apiDefs: IApiCategories = {
   benefits: {
@@ -97,7 +97,7 @@ export const apiDefs: IApiCategories = {
     properName: 'Health API',
     // TODO: health quickstart no longer needs this check after the legacy agronaut API is deprecated, scheduled for
     // October 1rst, 2019
-    quickstart: isNewFhirApiEnabled ? HealthQuickstart : null,
+    quickstartContent: isNewFhirApiEnabled ? HealthQuickstart : undefined,
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
     showProperNameAboveTitle: true,
