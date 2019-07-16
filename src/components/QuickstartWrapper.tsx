@@ -2,8 +2,8 @@ import * as React from 'react';
 import PageHeader from './PageHeader';
 
 interface IQuickstartWrapperProps {
-  halo: string,
-  quickstartContent: React.StatelessComponent
+  halo: string;
+  quickstartContent: React.StatelessComponent;
 }
 
 export default class Quickstart extends React.Component<IQuickstartWrapperProps> {
