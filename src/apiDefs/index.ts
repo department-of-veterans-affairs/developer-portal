@@ -1,13 +1,8 @@
 import {
-  BenefitsIntro,
-  BenefitsOverview,
-  FacilitiesIntro,
-  FacilitiesOverview,
-  HealthIntro,
-  HealthOverview,
-  HealthQuickstart,
-  VerificationIntro,
-  VerificationOverview,
+  benefitsContent,
+  facilitiesContent,
+  healthContent,
+  verificationContent,
 } from '../content/apiDocs';
 
 import {
@@ -42,9 +37,7 @@ export interface IApiDescription {
   readonly urlFragment: string;
   readonly description: string;
   readonly vaInternalOnly: boolean;
-  readonly depreacted?: boolean;
-  readonly deprecationDeadlineMessage?: string;
-  readonly deprecationMessage?: string;
+  readonly deprecationContent?: React.StatelessComponent;
 }
 export interface IApiCategory {
   readonly apiKey: boolean;
@@ -56,7 +49,7 @@ export interface IApiCategory {
   readonly releaseNotes?: React.StatelessComponent;
   readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
-  readonly content: IApiCategoryContent
+  readonly content: IApiCategoryContent;
 }
 
 export interface IApiCategories {
@@ -70,10 +63,7 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: benefitsApis,
     buttonText: 'Get Your Key',
-    content: {
-      intro: BenefitsIntro,
-      overview: BenefitsOverview,
-    },
+    content: benefitsContent,
     name: 'Benefits API',
     properName: 'Benefits Intake API',
     releaseNotes: BenefitsReleaseNotes,
@@ -84,10 +74,7 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: facilitiesApis,
     buttonText: 'Get Your Key',
-    content: {
-      intro: FacilitiesIntro,
-      overview: FacilitiesOverview,
-    },
+    content: facilitiesContent,
     name: 'Facilities API',
     properName: 'VA Facilities API',
     releaseNotes: FacilitiesReleaseNotes,
@@ -98,15 +85,9 @@ export const apiDefs: IApiCategories = {
     apiKey: false,
     apis: healthApis,
     buttonText: 'Get Your Key',
-    content: {
-      intro: HealthIntro,
-      overview: HealthOverview,
-      quickstart: isNewFhirApiEnabled ? HealthQuickstart : undefined,
-    },
+    content: healthContent,
     name: 'Health API',
     properName: 'Health API',
-    // TODO: health quickstart no longer needs this check after the legacy agronaut API is deprecated, scheduled for
-    // October 1rst, 2019
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
     showProperNameAboveTitle: true,
@@ -116,10 +97,7 @@ export const apiDefs: IApiCategories = {
     apiKey: false,
     apis: verificationApis,
     buttonText: 'Stay Informed',
-    content: {
-      intro: VerificationIntro,
-      overview: VerificationOverview,
-    },
+    content: verificationContent,
     name: 'Veteran Verification API',
     properName: 'Veteran Verification API',
     releaseNotes: VerificationReleaseNotes,
