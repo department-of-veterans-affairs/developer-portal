@@ -23,7 +23,7 @@ export class OAuth extends React.Component<IOAuthProps, {}> {
   }
 
   public render() {
-    const { apiCategoryKey } = this.props
+    const { apiCategoryKey } = this.props;
     const category = apiDefs[apiCategoryKey];
     let name = null;
 

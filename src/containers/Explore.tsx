@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import { IApiCategory, IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../apiDefs';
+import { IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../apiDefs';
 import { SwaggerDocs } from '../components';
 import PageHeader from '../components/PageHeader';
 import ExplorePage from '../content/explorePage.mdx';
@@ -47,16 +47,14 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
 
   public render() {
     let docsDom: JSX.Element | null = null;
-    let depreacted: JSX.Element | null = null;
+    let deprecated: JSX.Element | null = null;
     let header: JSX.Element | null = null;
 
     const api = this.getApi();
-    const category = this.getCategory();
+    const category = lookupApiCategory(this.props.match.params.apiCategoryKey);
     if (api != null) {
       docsDom = this.renderApiDocs(api);
-      if (api.depreacted) {
-        depreacted = this.renderDeprecationWarning(api);
-      }
+      deprecated = this.renderDeprecationWarning(api);
     }
 
     if (docsDom == null) {
@@ -70,22 +68,23 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     return (
       <div role="region" aria-labelledby="api-documentation">
         {header}
-        {depreacted}
+        {deprecated}
         {docsDom}
       </div>
     );
   }
 
   private renderDeprecationWarning(apiDefinition: IApiDescription) {
-    const { deprecationMessage, deprecationDeadlineMessage } = apiDefinition;
+    const { deprecationContent } = apiDefinition;
+
+    if (!deprecationContent) {
+      return null;
+    }
+
     return (
       <div className="usa-alert usa-alert-info">
         <div className="usa-alert-body">
-          <h3 className="usa-alert-heading">Deprecation Notice</h3>
-          { deprecationMessage }
-          <br/>
-          <br/>
-          { deprecationDeadlineMessage }
+          {deprecationContent({})}
         </div>
       </div>
     );
@@ -95,7 +94,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     let docs: JSX.Element | null = null;
     // because this is downstream from a getApi() call, we can assert that apiName is defined
     const apiName : string = this.props.match.params.apiName!;
-    const category = this.getCategory();
+    const category = lookupApiCategory(this.props.match.params.apiCategoryKey);
     if (apiDefinition.docSources.length === 1) {
       docs = <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiName} />;
     } else {
@@ -137,11 +136,6 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     }
 
     return lookupApiByFragment(this.props.match.params.apiName);
-  }
-
-  private getCategory() : IApiCategory | null {
-    const { apiCategoryKey } = this.props.match.params;
-    return lookupApiCategory(apiCategoryKey);
   }
 
   private setTabIndexFromHash() : void {
