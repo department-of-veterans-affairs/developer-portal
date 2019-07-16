@@ -34,14 +34,22 @@ interface IOAuthCredentialsNoticeProps {
   selectedApis: string[];
 }
 
+// Mapping from the options on the form to Proper Names for APIs
+const apisToEnglishOauthList: any = {
+  claims: 'Benefits Claims API',
+  community_care: 'Community Care API',
+  health: 'VA Health API',
+  verification: 'Veteran Verfication API',
+}
+
 const apisToEnglishList = (apis: string[]): string => {
   return sentenceJoin(apis.map((k) => {
-    return (apiDefs[k] ? apiDefs[k].properName : k.charAt(0).toUpperCase() + k.slice(1));
+    return apiDefs[k].properName;
   }));
 }
 
 function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } : IOAuthCredentialsNoticeProps) {
-  const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => !(apiDefs[k] ? apiDefs[k] : false)));
+  const apiListSnippet = selectedApis.filter((k) => apisToEnglishOauthList[k] );
 
   return (
     <div>
