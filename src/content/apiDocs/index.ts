@@ -8,7 +8,7 @@ import FhirDSTU2ApiIntro from './health/fhirDSTU2ApiIntro.mdx'
 import FhirR4ApiIntro from './health/fhirR4ApiIntro.mdx';
 import HealthIntro from './health/healthIntro.mdx';
 import HealthOverview from './health/healthOverview.mdx';
-import HealthQuickstart from './healthQuickstart.mdx';
+import HealthQuickstart from './health/healthQuickstart.mdx';
 import UrgentCareApiIntro from './urgentCare/urgentCareApiIntro.mdx';
 import VerificationIntro from './verification/verificationIntro.mdx';
 import VerificationOverview from './verification/verificationOverview.mdx';

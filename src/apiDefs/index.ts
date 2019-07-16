@@ -25,6 +25,7 @@ import verificationApis from './verification';
 export interface IApiCategoryContent {
   readonly intro: React.StatelessComponent;
   readonly overview: React.StatelessComponent;
+  readonly quickstart?: React.StatelessComponent;
 }
 
 export interface IApiDocSource {
@@ -53,7 +54,6 @@ export interface IApiCategory {
   readonly name: string;
   readonly shortDescription: string;
   readonly releaseNotes?: React.StatelessComponent;
-  readonly quickstartContent?: React.StatelessComponent;
   readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
   readonly content: IApiCategoryContent
@@ -101,12 +101,12 @@ export const apiDefs: IApiCategories = {
     content: {
       intro: HealthIntro,
       overview: HealthOverview,
+      quickstart: isNewFhirApiEnabled ? HealthQuickstart : undefined,
     },
     name: 'Health API',
     properName: 'Health API',
     // TODO: health quickstart no longer needs this check after the legacy agronaut API is deprecated, scheduled for
     // October 1rst, 2019
-    quickstartContent: isNewFhirApiEnabled ? HealthQuickstart : undefined,
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
     showProperNameAboveTitle: true,

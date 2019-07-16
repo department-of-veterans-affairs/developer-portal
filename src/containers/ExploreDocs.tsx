@@ -98,7 +98,7 @@ function SideNavCategoryEntry(currentUrl: string, apiCategoryKey: string, apiCat
   });
 
   const authorizationEntry = apiCategory.apiKey ? null : OAuthSideNavEntry(apiCategoryKey, apiCategory);
-  const quickstartEntry = apiCategory.quickstartContent ? QuickstartNavEntry(apiCategoryKey) : null;
+  const quickstartEntry = apiCategory.content.quickstart ? QuickstartNavEntry(apiCategoryKey) : null;
 
   return (
     <li key={apiCategoryKey}>

@@ -9,7 +9,8 @@ import { IApiNameParam } from '../types';
 export default class QuickstartPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
-    const { quickstartContent, properName } = apiDefs[apiCategoryKey];
+    const { content, properName } = apiDefs[apiCategoryKey];
+    const { quickstart: quickstartContent } = content;
 
     if (quickstartContent) {
       return <QuickstartWrapper halo={properName} quickstartContent={quickstartContent} />;
