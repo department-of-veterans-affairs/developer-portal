@@ -1,3 +1,4 @@
+import { IApiCategoryContent } from '../../apiDefs/index';
 import BenefitsIntro from './benefits/benefitsIntro.mdx';
 import BenefitsOverview from './benefits/benefitsOverview.mdx';
 import FacilitiesIntro from './facilities/facilitiesIntro.mdx';
@@ -17,26 +18,26 @@ import VerificationOverview from './verification/verificationOverview.mdx';
 
 const isNewFhirApiEnabled = process.env.REACT_APP_FHIR_API_ENABLED === 'true';
 
-const benefitsContent = {
+const benefitsContent: IApiCategoryContent = {
   intro: BenefitsIntro,
   overview: BenefitsOverview,
-}
+};
 
-const facilitiesContent = {
+const facilitiesContent: IApiCategoryContent = {
   intro: FacilitiesIntro,
   overview: FacilitiesOverview,
-}
+};
 
-const healthContent = {
+const healthContent: IApiCategoryContent = {
   intro: isNewFhirApiEnabled ? HealthIntro : LegacyHealthIntro,
   overview: HealthOverview,
   quickstart: isNewFhirApiEnabled ? HealthQuickstart : undefined,
-}
+};
 
-const verificationContent = {
+const verificationContent: IApiCategoryContent = {
   intro: VerificationIntro,
   overview: VerificationOverview,
-}
+};
 
 export {
   benefitsContent,
@@ -48,4 +49,4 @@ export {
   FhirDSTU2ApiIntro,
   FhirR4ApiIntro,
   HealthArgonautDeprecation,
-  UrgentCareApiIntro }
+  UrgentCareApiIntro };
