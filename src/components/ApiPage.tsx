@@ -11,7 +11,8 @@ import AuthorizationCard from './AuthorizationCard';
 export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
-    const { apiKey, apis, name: categoryName, overview, intro } = apiDefs[apiCategoryKey];
+    const { apiKey, apis, name: categoryName, content } = apiDefs[apiCategoryKey];
+    const { overview, intro } = content;
     let cardSection;
 
     if (apis.length > 0) {
