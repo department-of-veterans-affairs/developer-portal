@@ -21,6 +21,11 @@ import facilitiesApis from './facilities';
 import healthApis from './health';
 import verificationApis from './verification';
 
+export interface IApiCategoryContent {
+  readonly intro: React.StatelessComponent;
+  readonly overview: React.StatelessComponent;
+}
+
 export interface IApiDocSource {
   readonly metadataUrl?: string;
   readonly openApiUrl: string;
@@ -36,19 +41,17 @@ export interface IApiDescription {
   readonly description: string;
   readonly vaInternalOnly: boolean;
 }
-
 export interface IApiCategory {
   readonly apiKey: boolean;
   readonly apis: IApiDescription[];
   readonly properName: string;
   readonly buttonText: string;
   readonly name: string;
-  readonly overview: React.StatelessComponent;
   readonly shortDescription: string;
-  readonly intro: React.StatelessComponent;
   readonly releaseNotes?: React.StatelessComponent;
   readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
+  readonly content: IApiCategoryContent
 }
 
 export interface IApiCategories {
@@ -60,9 +63,11 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: benefitsApis,
     buttonText: 'Get Your Key',
-    intro: BenefitsIntro,
+    content: {
+      intro: BenefitsIntro,
+      overview: BenefitsOverview,
+    },
     name: 'Benefits',
-    overview: BenefitsOverview,
     properName: 'Benefits Intake API',
     releaseNotes: BenefitsReleaseNotes,
     shortDescription:
@@ -72,9 +77,11 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: facilitiesApis,
     buttonText: 'Get Your Key',
-    intro: FacilitiesIntro,
+    content: {
+      intro: FacilitiesIntro,
+      overview: FacilitiesOverview,
+    },
     name: 'Facilities',
-    overview: FacilitiesOverview,
     properName: 'VA Facilities API',
     releaseNotes: FacilitiesReleaseNotes,
     shortDescription:
@@ -84,9 +91,11 @@ export const apiDefs: IApiCategories = {
     apiKey: false,
     apis: healthApis,
     buttonText: 'Get Your Key',
-    intro: HealthIntro,
+    content: {
+      intro: HealthIntro,
+      overview: HealthOverview,
+    },
     name: 'Health',
-    overview: HealthOverview,
     properName: 'Health API',
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
@@ -97,9 +106,11 @@ export const apiDefs: IApiCategories = {
     apiKey: false,
     apis: verificationApis,
     buttonText: 'Stay Informed',
-    intro: VerificationIntro,
+    content: {
+      intro: VerificationIntro,
+      overview: VerificationOverview,
+    },
     name: 'Veteran Verification',
-    overview: VerificationOverview,
     properName: 'Veteran Verification API',
     releaseNotes: VerificationReleaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
