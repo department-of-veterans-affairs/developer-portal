@@ -1,12 +1,8 @@
 import {
-  BenefitsIntro,
-  BenefitsOverview,
-  FacilitiesIntro,
-  FacilitiesOverview,
-  HealthIntro,
-  HealthOverview,
-  VerificationIntro,
-  VerificationOverview,
+  benefitsContent,
+  facilitiesContent,
+  healthContent,
+  verificationContent,
 } from '../content/apiDocs';
 
 import {
@@ -51,7 +47,7 @@ export interface IApiCategory {
   readonly releaseNotes?: React.StatelessComponent;
   readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
-  readonly content: IApiCategoryContent
+  readonly content: IApiCategoryContent;
 }
 
 export interface IApiCategories {
@@ -63,10 +59,7 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: benefitsApis,
     buttonText: 'Get Your Key',
-    content: {
-      intro: BenefitsIntro,
-      overview: BenefitsOverview,
-    },
+    content: benefitsContent,
     name: 'Benefits',
     properName: 'Benefits Intake API',
     releaseNotes: BenefitsReleaseNotes,
@@ -77,10 +70,7 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: facilitiesApis,
     buttonText: 'Get Your Key',
-    content: {
-      intro: FacilitiesIntro,
-      overview: FacilitiesOverview,
-    },
+    content: facilitiesContent,
     name: 'Facilities',
     properName: 'VA Facilities API',
     releaseNotes: FacilitiesReleaseNotes,
@@ -91,10 +81,7 @@ export const apiDefs: IApiCategories = {
     apiKey: false,
     apis: healthApis,
     buttonText: 'Get Your Key',
-    content: {
-      intro: HealthIntro,
-      overview: HealthOverview,
-    },
+    content: healthContent,
     name: 'Health',
     properName: 'Health API',
     releaseNotes: HealthReleaseNotes,
@@ -106,10 +93,7 @@ export const apiDefs: IApiCategories = {
     apiKey: false,
     apis: verificationApis,
     buttonText: 'Stay Informed',
-    content: {
-      intro: VerificationIntro,
-      overview: VerificationOverview,
-    },
+    content: verificationContent,
     name: 'Veteran Verification',
     properName: 'Veteran Verification API',
     releaseNotes: VerificationReleaseNotes,
