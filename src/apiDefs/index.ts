@@ -38,6 +38,7 @@ export interface IApiDescription {
   readonly vaInternalOnly: boolean;
   readonly deprecationContent?: React.StatelessComponent;
 }
+
 export interface IApiCategory {
   readonly apiKey: boolean;
   readonly apis: IApiDescription[];

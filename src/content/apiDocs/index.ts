@@ -1,3 +1,4 @@
+import { IApiCategoryContent } from '../../apiDefs/index';
 import BenefitsIntro from './benefits/benefitsIntro.mdx';
 import BenefitsOverview from './benefits/benefitsOverview.mdx';
 import FacilitiesIntro from './facilities/facilitiesIntro.mdx';
@@ -13,25 +14,25 @@ import UrgentCareApiIntro from './health/urgentCareApiIntro.mdx';
 import VerificationIntro from './verification/verificationIntro.mdx';
 import VerificationOverview from './verification/verificationOverview.mdx';
 
-const benefitsContent = {
+const benefitsContent: IApiCategoryContent = {
   intro: BenefitsIntro,
   overview: BenefitsOverview,
-}
+};
 
-const facilitiesContent = {
+const facilitiesContent: IApiCategoryContent = {
   intro: FacilitiesIntro,
   overview: FacilitiesOverview,
-}
+};
 
-const healthContent = {
+const healthContent: IApiCategoryContent = {
   intro: HealthIntro,
   overview: HealthOverview,
-}
+};
 
-const verificationContent = {
+const verificationContent: IApiCategoryContent = {
   intro: VerificationIntro,
   overview: VerificationOverview,
-}
+};
 
 export {
   benefitsContent,
@@ -43,4 +44,4 @@ export {
   FhirDSTU2ApiIntro,
   FhirR4ApiIntro,
   HealthArgonautDeprecation,
-  UrgentCareApiIntro }
+  UrgentCareApiIntro };
