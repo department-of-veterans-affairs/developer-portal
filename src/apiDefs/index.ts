@@ -1,8 +1,8 @@
 import {
-  BenefitsOverview,
-  FacilitiesOverview,
-  HealthOverview,
-  VerificationOverview,
+  benefitsContent,
+  facilitiesContent,
+  healthContent,
+  verificationContent,
 } from '../content/apiDocs';
 
 import {
@@ -47,7 +47,7 @@ export interface IApiCategory {
   readonly releaseNotes?: React.StatelessComponent;
   readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
-  readonly content: IApiCategoryContent
+  readonly content: IApiCategoryContent;
 }
 
 export interface IApiCategories {
@@ -59,9 +59,7 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: benefitsApis,
     buttonText: 'Get Your Key',
-    content: {
-      overview: BenefitsOverview,
-    },
+    content: benefitsContent,
     longDescription:
       'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
     name: 'Benefits',
@@ -74,9 +72,7 @@ export const apiDefs: IApiCategories = {
     apiKey: true,
     apis: facilitiesApis,
     buttonText: 'Get Your Key',
-    content: {
-      overview: FacilitiesOverview,
-    },
+    content: facilitiesContent,
     longDescription:
       "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
     name: 'Facilities',
@@ -89,9 +85,7 @@ export const apiDefs: IApiCategories = {
     apiKey: false,
     apis: healthApis,
     buttonText: 'Get Your Key',
-    content: {
-      overview: HealthOverview,
-    },
+    content: healthContent,
     longDescription:
       'Use our Health API to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers. The APIs also provide a Veteran the ability to view their eligibility information regarding Urgent Care visits and functionality to determine care visit wait times and facility closeness.',
     name: 'Health',
@@ -105,9 +99,7 @@ export const apiDefs: IApiCategories = {
     apiKey: false,
     apis: verificationApis,
     buttonText: 'Stay Informed',
-    content: {
-      overview: VerificationOverview,
-    },
+    content: verificationContent,
     longDescription: 'Empowering Veterans to take control of their data and put it to work.',
     name: 'Veteran Verification',
     properName: 'Veteran Verification API',
