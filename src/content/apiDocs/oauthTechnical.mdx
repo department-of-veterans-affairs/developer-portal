@@ -1,8 +1,8 @@
 ## Getting Started
 
-The VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf.
+The VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf. The platform also supports some Veteran Service Officers (VSO) to access data for Veteran's they've already been approved to access, a VSO can be a Veteran or a Non-Veteran.
 
-While we test our OpenID Connect flow to ensure the best experience for Veterans and developers, we're approving teams to work with our OpenID Connect and associated APIs on a case-by-case basis. If you would like to help us build these services out, please submit an [application](/apply) to request access.
+While we test our OpenID Connect flow to ensure the best experience for Veterans, VSO's and developers, we're approving teams to work with our OpenID Connect and associated APIs on a case-by-case basis. If you would like to help us build these services out, please submit an [application](/apply) to request access.
 
 In order to get approval of your application, you'll need to supply the following information:
 
@@ -19,11 +19,11 @@ We use separate authorization servers for our development and production environ
 
 ### Initiating Authorization
 
-Initiate the OpenID Connect authorization by directing Veterans using your application to `https://dev-api.va.gov/oauth2/authorization` with the following query parameters:
+Initiate the OpenID Connect authorization by directing Veterans or VSO's using your application to `https://dev-api.va.gov/oauth2/authorization` with the following query parameters:
 
 * `client_id` - required - The `client_id` issued by the VA API Platform team
 * `nonce` - optional - Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations).
-* `redirect_uri` - required - the URL you supplied that the Veteran will be redirected to after authorizing your application
+* `redirect_uri` - required - the URL you supplied that the Veteran or VSO will be redirected to after authorizing your application
 * `response_mode` - optional - Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment.
 * `response_type` - required - one or two of, `id_token`, `token`, or `code`. Using `code` will require your application to complete the [Authorization Code Flow](#authorization-code-flow). Using `id_token` or `token` allows you to use the [Implicit flow](#implicit-flow). See [Token Types](#id-token) for further explanation.
 * `scope` - optional - Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space.
@@ -31,17 +31,17 @@ Initiate the OpenID Connect authorization by directing Veterans using your appli
 
 Example Authorization URL:
 ```plaintext
-https://dev-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=<yourRedirectURL>&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid profile email veteran_status.read
+https://dev-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=<yourRedirectURL>&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid offline_access profile email veteran_status.read
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
-The Veteran will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
+The User will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
 
 ### Implicit Flow
 
 This flow works for applications that aren't able to keep a *client secret* protected &mdash; such as single-page webapps or mobile applications. This flow is selected by using either the `id_token` or `token` value for the `response_type` parameter.
 
-Your application will need to redirect the Veteran's browser to our OpenID authorization server with a request like this:
+Your application will need to redirect the User's browser to our OpenID authorization server with a request like this:
 
 ```http
 HTTP/1.1 302 Found
@@ -54,9 +54,9 @@ Location: https://dev-api.va.gov/oauth2/authorize?
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
-In the request above the `response_mode` value determines how the token is provided when the Veteran's browser is redirected back to your application. It can be either `fragment` (the default) or `query`.
+In the request above the `response_mode` value determines how the token is provided when the User's browser is redirected back to your application. It can be either `fragment` (the default) or `query`.
 
-After the Veteran confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
+After the Veteran or VSO confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
 ```http
 GET <yourRedirectURL>#
@@ -78,7 +78,7 @@ The `access_token` can be used to authorize requests to the VA API Platform by i
 
 This flow is used by applications that are able to safely store a *client secret* such as a server-based applications and is selected by specifying the `response_type` as `code`.
 
-Your application will need to redirect the Veteran's browser to our OpenID authorization server with a request like this:
+Your application will need to redirect the User's browser to our OpenID authorization server with a request like this:
 
 ```http
 HTTP/1.1 302 Found
@@ -91,7 +91,7 @@ Location: https://dev-api.va.gov/oauth2/authorize?
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
-After the Veteran confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
+After the Veteran or VSO confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
 ```http
 GET <yourRedirectURL>#
@@ -163,20 +163,20 @@ You will receive the same kind of response as above and be able to use your new 
 
 The hybrid flow is less common than either the authorization code flow or the implicit flow. It is used by applications that need a separate token for the front end and the backend of the application. During the hybrid flow, your application is essentially doing both an implicit flow and authorization code flow at the same time.
 
-You can initiate the hybrid flow by specifying more than one value in the `response_type` parameter when redirecting the Veteran's browser to our authorization server. For example, you can receive both an authorization code and an ID token by specifying `response_type=code%20id_token`.
+You can initiate the hybrid flow by specifying more than one value in the `response_type` parameter when redirecting the User's browser to our authorization server. For example, you can receive both an authorization code and an ID token by specifying `response_type=code%20id_token`.
 
-The parameters provided when the Veteran's browser is redirected back to your app have the same meaning as documented the [implicit flow](#implicit-flow) section and the [authorization code flow](#authorization-code-flow) section.
+The parameters provided when the User's browser is redirected back to your app have the same meaning as documented the [implicit flow](#implicit-flow) section and the [authorization code flow](#authorization-code-flow) section.
 
 ## Scopes
 
-Scopes define the API endpoint your application is allowed to access. The VA API Platform team will define a maximum set of scopes your application is allowed to request. You can always begin an authorization flow by requesting fewer permissions that your application is allowed to access, which may result in more pleasant experience for Veterans unsure if they should grant your application access to their data. You can then always request additional access to additional data when your application needs additional data for a Veteran using your application.
+Scopes define the API endpoint your application is allowed to access. The VA API Platform team will define a maximum set of scopes your application is allowed to request. You can always begin an authorization flow by requesting fewer permissions that your application is allowed to access, which may result in more pleasant experience for Users unsure if they should grant your application access to their data. You can then always request additional access to additional data when your application needs additional data for a Veteran or VSO using your application.
 
 Existing Scopes are:
 
-* `profile` - granted by default allows access to a Veteran's first and last name and email.
+* `profile` - granted by default allows access to a User's first and last name and email.
 * `offline_access` - this scope causes the authorization server to provide a refresh token when the access token is requested.
 * `launch/patient` - a permission setting to obtain the patient's identifier in the token response when the app is launched from an EHR.
-* `patient/*` - view a Veteran's VA Health records and patient information, see specific read only scopes below.
+* `patient/*` - view a User's VA Health records and patient information, see specific read only scopes below.
   * `patient/Patient.read`
   * `patient/AllergyIntolerance.read`
   * `patient/Condition.read`
@@ -213,7 +213,7 @@ There are a couple claims in the JWT that are important for your application to 
 
 The payload also contains claims about the user. Our JWTs will have the following fields:
 
-* `uid` - A unique identifier for the Veteran in UUIDv4 format.
+* `uid` - A unique identifier for the User in UUIDv4 format.
 
 ### Signature
 
@@ -231,7 +231,7 @@ While some security concerns have been noted in this document, there are a few t
 
 ### HTTPS
 
-Outside of local development environments, all authorization callbacks must use the `https` protocol for communication. The `https` protocol provides a secure encrypted connection between the Veteran's client, your application, and the VA API Platform and authorization servers. This mitigates the risk of some types of man-in-the-middle attacks and prevents third-parties from intercepting Veteran's authorization credentials.
+Outside of local development environments, all authorization callbacks must use the `https` protocol for communication. The `https` protocol provides a secure encrypted connection between the User's client, your application, and the VA API Platform and authorization servers. This mitigates the risk of some types of man-in-the-middle attacks and prevents third-parties from intercepting User's authorization credentials.
 
 Additionally, the VA API Platform team requires your application to use secure ciphers and versions of the underlying SSL/TLS protocol.
 
