@@ -9,7 +9,8 @@ import { apiCategoryOrder, apiDefs, IApiDescription } from '../apiDefs';
 import { IApiNameParam } from '../types';
 
 function ApiSection({ apiCategoryKey, sectionRef } : { apiCategoryKey : string, sectionRef? : React.RefObject<HTMLElement> } ) {
-    const { apis, name: categoryName, overview, longDescription: introText } = apiDefs[apiCategoryKey];
+    const { apis, name: categoryName, content, longDescription: introText } = apiDefs[apiCategoryKey];
+    const { overview } = content;
     let linkSection;
 
     if (apis.length > 0) {
