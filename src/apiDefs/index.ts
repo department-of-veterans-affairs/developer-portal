@@ -36,6 +36,7 @@ export interface IApiDescription {
   readonly description: string;
   readonly vaInternalOnly: boolean;
 }
+
 export interface IApiCategory {
   readonly apiKey: boolean;
   readonly apis: IApiDescription[];
