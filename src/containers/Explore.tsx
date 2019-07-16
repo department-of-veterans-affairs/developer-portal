@@ -156,8 +156,8 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     if (this.props.location.hash) {
       const hasKey = (source : IApiDocSource) => !!source.key;
       const tabKeys = apiDocSources.filter(hasKey).map(source => source.key!.toLowerCase());
-      const hashFragment = this.props.location.hash.slice(1).toLowerCase();
-      const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === hashFragment);
+      const fromFragment = this.props.location.hash.slice(1).toLowerCase();
+      const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === fromFragment);
       return tabIndex === -1 ? this.state.tabIndex : tabIndex;
     }
 
