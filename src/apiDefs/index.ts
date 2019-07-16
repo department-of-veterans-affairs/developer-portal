@@ -56,8 +56,6 @@ export interface IApiCategories {
   [key: string]: IApiCategory;
 }
 
-const isNewFhirApiEnabled = process.env.REACT_APP_FHIR_API_ENABLED === 'true';
-
 export const apiDefs: IApiCategories = {
   benefits: {
     apiKey: true,

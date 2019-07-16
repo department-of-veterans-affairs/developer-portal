@@ -17,23 +17,23 @@ import VerificationOverview from './verification/verificationOverview.mdx';
 const benefitsContent = {
   intro: BenefitsIntro,
   overview: BenefitsOverview,
-}
+};
 
 const facilitiesContent = {
   intro: FacilitiesIntro,
   overview: FacilitiesOverview,
-}
+};
 
 const healthContent = {
   intro: HealthIntro,
   overview: HealthOverview,
   quickstart: HealthQuickstart,
-}
+};
 
 const verificationContent = {
   intro: VerificationIntro,
   overview: VerificationOverview,
-}
+};
 
 export {
   benefitsContent,
