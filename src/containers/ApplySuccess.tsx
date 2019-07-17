@@ -34,6 +34,14 @@ interface IOAuthCredentialsNoticeProps {
   selectedApis: string[];
 }
 
+// Mapping from the options on the form to Proper Names for APIs
+const apisToEnglishOauthList: any = {
+  claims: 'Benefits Claims API',
+  community_care: 'Community Care API',
+  health: 'VA Health API',
+  verification: 'Veteran Verfication API',
+}
+
 const apisToEnglishList = (apis: string[]): string => {
   return sentenceJoin(apis.map((k) => {
     return apiDefs[k].properName;
@@ -41,7 +49,7 @@ const apisToEnglishList = (apis: string[]): string => {
 }
 
 function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } : IOAuthCredentialsNoticeProps) {
-  const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => !apiDefs[k].apiKey));
+  const apiListSnippet = selectedApis.filter((k) => apisToEnglishOauthList[k] );
 
   return (
     <div>
@@ -93,7 +101,7 @@ function ApplySuccess(props: IApplication) {
                     ? null
                     : <ApiKeyNotice email={email} token={token} selectedApis={selectedApiNames(apis)} />;
 
-  const oAuthNotice = ((apis.health || apis.verification) && clientID && clientSecret)
+  const oAuthNotice = ((apis.health || apis.verification || apis.claims) && clientID && clientSecret)
                     ? <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />
                     : null;
 
