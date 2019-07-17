@@ -1,8 +1,8 @@
 ## Getting Started
 
-The VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf. The platform also supports some Veteran Service Officers (VSO) to access data for Veteran's they've already been approved to access, a VSO can be a Veteran or a Non-Veteran.
+The VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf. The platform also allows some users, such as officers working at Veteran Service Organizations (VSO), to access data on behalf of a Veteran who has granted them approval.
 
-While we test our OpenID Connect flow to ensure the best experience for Veterans, VSO's and developers, we're approving teams to work with our OpenID Connect and associated APIs on a case-by-case basis. If you would like to help us build these services out, please submit an [application](/apply) to request access.
+While we test our OpenID Connect flow to ensure the best experience for Veterans, developers, and other users, we're approving teams to work with our OpenID Connect and associated APIs on a case-by-case basis. If you would like to help us build these services out, please submit an [application](/apply) to request access.
 
 In order to get approval of your application, you'll need to supply the following information:
 
@@ -19,11 +19,11 @@ We use separate authorization servers for our development and production environ
 
 ### Initiating Authorization
 
-Initiate the OpenID Connect authorization by directing Veterans or VSO's using your application to `https://dev-api.va.gov/oauth2/authorization` with the following query parameters:
+Initiate the OpenID Connect authorization by directing your application's users to `https://dev-api.va.gov/oauth2/authorization` with the following query parameters:
 
 * `client_id` - required - The `client_id` issued by the VA API Platform team
 * `nonce` - optional - Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations).
-* `redirect_uri` - required - the URL you supplied that the Veteran or VSO will be redirected to after authorizing your application
+* `redirect_uri` - required - The URL you supplied. The user will be redirected to this URL after authorizing your application.
 * `response_mode` - optional - Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment.
 * `response_type` - required - one or two of, `id_token`, `token`, or `code`. Using `code` will require your application to complete the [Authorization Code Flow](#authorization-code-flow). Using `id_token` or `token` allows you to use the [Implicit flow](#implicit-flow). See [Token Types](#id-token) for further explanation.
 * `scope` - optional - Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space.
@@ -56,7 +56,7 @@ Location: https://dev-api.va.gov/oauth2/authorize?
 
 In the request above the `response_mode` value determines how the token is provided when the User's browser is redirected back to your application. It can be either `fragment` (the default) or `query`.
 
-After the Veteran or VSO confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
+After the user confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
 ```http
 GET <yourRedirectURL>#
@@ -91,7 +91,7 @@ Location: https://dev-api.va.gov/oauth2/authorize?
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
-After the Veteran or VSO confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
+After the user confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
 ```http
 GET <yourRedirectURL>#
