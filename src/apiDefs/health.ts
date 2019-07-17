@@ -17,7 +17,7 @@ const healthApis : IApiDescription[] = [
     docSources: [
       {
         apiIntro: CommunityCareApiIntro,
-        openApiUrl: '',
+        openApiUrl: 'https://dev-api.va.gov/services/community-care/v0/eligibility/openapi.json',
       },
     ],
     name: 'Community Care Eligibility API',
