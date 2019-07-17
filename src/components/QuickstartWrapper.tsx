@@ -6,15 +6,13 @@ interface IQuickstartWrapperProps {
   quickstartContent: React.StatelessComponent;
 }
 
-export default class Quickstart extends React.Component<IQuickstartWrapperProps> {
-  public render() {
-    const { halo, quickstartContent } = this.props;
+export default function Quickstart(props: IQuickstartWrapperProps) {
+  const { halo, quickstartContent } = props;
 
-    return (
-      <div role="region" aria-labelledby="api-documentation">
-        <PageHeader halo={halo} header="Quickstart" />
-        {quickstartContent({})}
-      </div>
-    );
-  }
+  return (
+    <div role="region" aria-labelledby="api-documentation">
+      <PageHeader halo={halo} header="Quickstart" />
+      {quickstartContent({})}
+    </div>
+  );
 }
