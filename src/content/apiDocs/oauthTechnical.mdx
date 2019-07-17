@@ -35,13 +35,13 @@ https://dev-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&redir
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
-The User will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
+The user will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
 
 ### Implicit Flow
 
 This flow works for applications that aren't able to keep a *client secret* protected &mdash; such as single-page webapps or mobile applications. This flow is selected by using either the `id_token` or `token` value for the `response_type` parameter.
 
-Your application will need to redirect the User's browser to our OpenID authorization server with a request like this:
+Your application will need to redirect the user's browser to our OpenID authorization server with a request like this:
 
 ```http
 HTTP/1.1 302 Found
@@ -54,7 +54,7 @@ Location: https://dev-api.va.gov/oauth2/authorize?
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
-In the request above the `response_mode` value determines how the token is provided when the User's browser is redirected back to your application. It can be either `fragment` (the default) or `query`.
+In the request above the `response_mode` value determines how the token is provided when the user's browser is redirected back to your application. It can be either `fragment` (the default) or `query`.
 
 After the user confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
@@ -78,7 +78,7 @@ The `access_token` can be used to authorize requests to the VA API Platform by i
 
 This flow is used by applications that are able to safely store a *client secret* such as a server-based applications and is selected by specifying the `response_type` as `code`.
 
-Your application will need to redirect the User's browser to our OpenID authorization server with a request like this:
+Your application will need to redirect the user's browser to our OpenID authorization server with a request like this:
 
 ```http
 HTTP/1.1 302 Found
@@ -163,20 +163,20 @@ You will receive the same kind of response as above and be able to use your new 
 
 The hybrid flow is less common than either the authorization code flow or the implicit flow. It is used by applications that need a separate token for the front end and the backend of the application. During the hybrid flow, your application is essentially doing both an implicit flow and authorization code flow at the same time.
 
-You can initiate the hybrid flow by specifying more than one value in the `response_type` parameter when redirecting the User's browser to our authorization server. For example, you can receive both an authorization code and an ID token by specifying `response_type=code%20id_token`.
+You can initiate the hybrid flow by specifying more than one value in the `response_type` parameter when redirecting the user's browser to our authorization server. For example, you can receive both an authorization code and an ID token by specifying `response_type=code%20id_token`.
 
-The parameters provided when the User's browser is redirected back to your app have the same meaning as documented the [implicit flow](#implicit-flow) section and the [authorization code flow](#authorization-code-flow) section.
+The parameters provided when the user's browser is redirected back to your app have the same meaning as documented the [implicit flow](#implicit-flow) section and the [authorization code flow](#authorization-code-flow) section.
 
 ## Scopes
 
-Scopes define the API endpoint your application is allowed to access. The VA API Platform team will define a maximum set of scopes your application is allowed to request. You can always begin an authorization flow by requesting fewer permissions that your application is allowed to access, which may result in more pleasant experience for Users unsure if they should grant your application access to their data. You can then always request additional access to additional data when your application needs additional data for a Veteran or VSO using your application.
+Scopes define the API endpoint your application is allowed to access. The VA API Platform team will define a maximum set of scopes your application is allowed to request. You can always begin an authorization flow by requesting fewer permissions that your application is allowed to access, which may result in more pleasant experience for users unsure if they should grant your application access to their data. You can then always request additional access to additional data when your application needs additional data for a Veteran or VSO using your application.
 
 Existing Scopes are:
 
-* `profile` - granted by default allows access to a User's first and last name and email.
+* `profile` - granted by default allows access to a user's first and last name and email.
 * `offline_access` - this scope causes the authorization server to provide a refresh token when the access token is requested.
 * `launch/patient` - a permission setting to obtain the patient's identifier in the token response when the app is launched from an EHR.
-* `patient/*` - view a User's VA Health records and patient information, see specific read only scopes below.
+* `patient/*` - view a user's VA Health records and patient information, see specific read only scopes below.
   * `patient/Patient.read`
   * `patient/AllergyIntolerance.read`
   * `patient/Condition.read`
@@ -213,7 +213,7 @@ There are a couple claims in the JWT that are important for your application to 
 
 The payload also contains claims about the user. Our JWTs will have the following fields:
 
-* `uid` - A unique identifier for the User in UUIDv4 format.
+* `uid` - A unique identifier for the user in UUIDv4 format.
 
 ### Signature
 
@@ -231,7 +231,7 @@ While some security concerns have been noted in this document, there are a few t
 
 ### HTTPS
 
-Outside of local development environments, all authorization callbacks must use the `https` protocol for communication. The `https` protocol provides a secure encrypted connection between the User's client, your application, and the VA API Platform and authorization servers. This mitigates the risk of some types of man-in-the-middle attacks and prevents third-parties from intercepting User's authorization credentials.
+Outside of local development environments, all authorization callbacks must use the `https` protocol for communication. The `https` protocol provides a secure encrypted connection between the user's client, your application, and the VA API Platform and authorization servers. This mitigates the risk of some types of man-in-the-middle attacks and prevents third-parties from intercepting user's authorization credentials.
 
 Additionally, the VA API Platform team requires your application to use secure ciphers and versions of the underlying SSL/TLS protocol.
 
