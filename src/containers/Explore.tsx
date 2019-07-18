@@ -35,13 +35,13 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
   }
 
   public componentDidMount() {
-    this.setTabIndexFromHash();
+    this.setTabIndexFromFragment();
   }
 
   public componentDidUpdate(prevProps: IExploreProps, prevState: IExploreState) {
     const { location } = this.props;
     if (location.pathname !== prevProps.location.pathname || location.hash !== prevProps.location.hash) {
-      this.setTabIndexFromHash();
+      this.setTabIndexFromFragment();
     }
   }
 
@@ -138,15 +138,15 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     return lookupApiByFragment(this.props.match.params.apiName);
   }
 
-  private setTabIndexFromHash() : void {
+  private setTabIndexFromFragment() : void {
     const api = this.getApi();
     if (api !== null && api.docSources.length > 1) {
-      const newTabIndex = this.getTabIndexFromHash(api.docSources);
+      const newTabIndex = this.getabIndexFromFragment(api.docSources);
       this.setState({ tabIndex: newTabIndex });
     }
   }
 
-  private getTabIndexFromHash(apiDocSources : IApiDocSource[]) : number {
+  private getabIndexFromFragment(apiDocSources : IApiDocSource[]) : number {
     if (this.props.location.hash) {
       const hasKey = (source : IApiDocSource) => !!source.key;
       const tabKeys = apiDocSources.filter(hasKey).map(source => source.key!.toLowerCase());

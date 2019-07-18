@@ -49,7 +49,6 @@ export interface IApiCategory {
   readonly name: string;
   readonly shortDescription: string;
   readonly releaseNotes?: React.StatelessComponent;
-  readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
   readonly content: IApiCategoryContent;
 }
@@ -90,7 +89,6 @@ export const apiDefs: IApiCategories = {
     properName: 'Health API',
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
-    showProperNameAboveTitle: true,
     tabBlurb: "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
   },
   verification: {
