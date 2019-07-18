@@ -37,6 +37,7 @@ export interface IApiDescription {
   readonly urlFragment: string;
   readonly description: string;
   readonly vaInternalOnly: boolean;
+  readonly oAuth?: boolean;
   readonly deprecationContent?: React.StatelessComponent;
 }
 
@@ -150,6 +151,18 @@ function categoriesFor(apiList: string[]): IApiCategory[] {
   return Array.from(categories);
 }
 
+function apisFor(apiList: string[]): IApiDescription[] {
+  const apis = new Set();
+  for (const cat of Object.values(apiDefs)) {
+    for (const api of cat.apis) {
+      if (apiList.includes(api.urlFragment)) {
+        apis.add(api);
+      }
+    }
+  }
+  return Array.from(apis);
+}
+
 export function includesOauthAPI(apiList: string[]): boolean {
-  return categoriesFor(apiList).some(category => !category.apiKey);
+  return categoriesFor(apiList).some(category => !category.apiKey)|| apisFor(apiList).some(api => api.oAuth || false);
 }

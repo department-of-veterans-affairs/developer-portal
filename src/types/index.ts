@@ -14,6 +14,7 @@ export interface IErrorableInput {
 export interface IApiList {
   appeals: boolean;
   benefits: boolean;
+  claims: boolean;
   facilities: boolean;
   health: boolean;
   verification: boolean;

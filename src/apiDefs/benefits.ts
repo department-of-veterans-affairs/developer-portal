@@ -33,9 +33,10 @@ const benefitsApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/claims/docs/v0/api`,
       },
     ],
-    name: 'Benefits Claims',
+    name: 'Claims',
+    oAuth: true,
     urlFragment: 'claims',
-    vaInternalOnly: true,
+    vaInternalOnly: false,
   },
   {
     description: 'Manage VA Home Loans',
