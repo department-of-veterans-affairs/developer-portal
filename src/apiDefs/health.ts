@@ -17,7 +17,7 @@ const healthApis : IApiDescription[] = [
     docSources: [
       {
         apiIntro: CommunityCareApiIntro,
-        openApiUrl: 'https://dev-api.va.gov/services/community-care/v0/eligibility/openapi.json',
+        openApiUrl: 'https://api.va.gov/services/community-care/v0/eligibility/openapi.json',
       },
     ],
     name: 'Community Care Eligibility API',
@@ -29,7 +29,7 @@ const healthApis : IApiDescription[] = [
     docSources: [
       {
         apiIntro: UrgentCareApiIntro,
-        openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/r4/openapi.json',
+        openApiUrl: 'https://api.va.gov/services/fhir/v0/r4/openapi.json',
       },
     ],
     name: 'Urgent Care Eligibility API (FHIR)',
@@ -43,19 +43,19 @@ const healthApis : IApiDescription[] = [
         apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
-        openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/openapi.json',
+        openApiUrl: 'https://api.va.gov/services/fhir/v0/argonaut/data-query/openapi.json',
       },
       {
         apiIntro: FhirR4ApiIntro,
         key: 'r4',
         label: 'R4',
-        openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/r4/openapi.json',
+        openApiUrl: 'https://api.va.gov/services/fhir/v0/r4/openapi.json',
       },
       {
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
-        openApiUrl: 'https://dev-api.va.gov/services/fhir/v0/dstu2/openapi.json',
+        openApiUrl: 'https://api.va.gov/services/fhir/v0/dstu2/openapi.json',
       },
     ],
     name: 'Veterans Health API (FHIR)',
