@@ -18,7 +18,9 @@ import healthApis from './health';
 import verificationApis from './verification';
 
 export interface IApiCategoryContent {
+  readonly intro: React.StatelessComponent;
   readonly overview: React.StatelessComponent;
+  readonly quickstart?: React.StatelessComponent;
 }
 
 export interface IApiDocSource {
@@ -35,6 +37,7 @@ export interface IApiDescription {
   readonly urlFragment: string;
   readonly description: string;
   readonly vaInternalOnly: boolean;
+  readonly deprecationContent?: React.StatelessComponent;
 }
 
 export interface IApiCategory {
@@ -44,7 +47,6 @@ export interface IApiCategory {
   readonly buttonText: string;
   readonly name: string;
   readonly shortDescription: string;
-  readonly longDescription: string;
   readonly releaseNotes?: React.StatelessComponent;
   readonly showProperNameAboveTitle?: boolean,
   readonly tabBlurb?: string;
@@ -61,9 +63,7 @@ export const apiDefs: IApiCategories = {
     apis: benefitsApis,
     buttonText: 'Get Your Key',
     content: benefitsContent,
-    longDescription:
-      'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
-    name: 'Benefits',
+    name: 'Benefits API',
     properName: 'Benefits Intake API',
     releaseNotes: BenefitsReleaseNotes,
     shortDescription:
@@ -74,9 +74,7 @@ export const apiDefs: IApiCategories = {
     apis: facilitiesApis,
     buttonText: 'Get Your Key',
     content: facilitiesContent,
-    longDescription:
-      "Use the VA Facility API to find relevant information about a specific VA facility. For each VA facility, you'll find contact information, location, hours of operation and available services. For medical facilities only, we provide data on appointment wait times and patient satisfaction.",
-    name: 'Facilities',
+    name: 'Facilities API',
     properName: 'VA Facilities API',
     releaseNotes: FacilitiesReleaseNotes,
     shortDescription:
@@ -87,22 +85,19 @@ export const apiDefs: IApiCategories = {
     apis: healthApis,
     buttonText: 'Get Your Key',
     content: healthContent,
-    longDescription:
-      'Use our Health API to build tools that help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and share their information with caregivers and providers. The APIs also provide a Veteran the ability to view their eligibility information regarding Urgent Care visits and functionality to determine care visit wait times and facility closeness.',
-    name: 'Health',
+    name: 'Health API',
     properName: 'Health API',
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
     showProperNameAboveTitle: true,
-    tabBlurb: "VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
+    tabBlurb: "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
   },
   verification: {
     apiKey: false,
     apis: verificationApis,
     buttonText: 'Stay Informed',
     content: verificationContent,
-    longDescription: 'Empowering Veterans to take control of their data and put it to work.',
-    name: 'Veteran Verification',
+    name: 'Veteran Verification API',
     properName: 'Veteran Verification API',
     releaseNotes: VerificationReleaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',

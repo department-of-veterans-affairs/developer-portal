@@ -8,7 +8,7 @@ import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 
 export interface ISwaggerDocsProps {
   apiName: string;
-  docSource: IApiDocSource
+  docSource: IApiDocSource;
 }
 
 export interface ISwaggerDocsState {

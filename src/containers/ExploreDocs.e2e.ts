@@ -59,11 +59,11 @@ describe('position sticky', () => {
 
     await page.setViewport({width: 1200, height: 800});
     await page.goto(`${puppeteerHost}/explore`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-    await clickCard('Health');
+    await clickCard('Health API');
     await clickCard('Authorization');
     const haloText = await page.$eval('.header-halo', (elem) => {
       return elem.textContent;
     });
-    expect(haloText).toEqual('Health');
+    expect(haloText).toEqual('Health API');
   });
 });

@@ -12,7 +12,7 @@ export default class PageHeader extends React.Component<RouteComponentProps & an
             {this.props.halo}
           </div>
         }
-        <h1>
+        <h1 id={this.props.id}>
           {this.props.header}
         </h1>
         {this.props.description &&
