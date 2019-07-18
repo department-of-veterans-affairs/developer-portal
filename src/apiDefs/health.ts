@@ -1,3 +1,10 @@
+/*
+  Note the use of `api.va.gov` instead of `${swaggerHost}` for openApiUrl. Health APIs do not have a staging
+  environment setup, as such we can only use `dev-api.va.gov` or `api.va.gov` for the openApiUrl host. Using
+  `${swaggerHost} would break staging. The swagger url is shown in the UI. In order to avoid the confusion of
+  having a `dev-api.va.gov` url shown in production `dev.va.gov` is used in all developer portal environments.
+*/
+
 import { IApiDescription } from ".";
 import {
   CommunityCareApiIntro,
