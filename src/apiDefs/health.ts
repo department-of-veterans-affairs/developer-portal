@@ -4,17 +4,20 @@ import {
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
   FhirR4ApiIntro,
+  HealthArgonautDeprecation,
   UrgentCareApiIntro,
 } from "../content/apiDocs";
 
 const isNewFhirApiEnabled =  process.env.REACT_APP_FHIR_API_ENABLED === 'true';
+const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
+const argonautDesc = "VA's Argonaut resources";
 const healthApis : IApiDescription[] = [
   {
     description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
       {
         apiIntro: CommunityCareApiIntro,
-        openApiUrl: '',
+        openApiUrl: 'https://dev-api.va.gov/services/community-care/v0/eligibility/openapi.json',
       },
     ],
     name: 'Community Care Eligibility API',
@@ -60,7 +63,8 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
-    description: isNewFhirApiEnabled ? 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.' : "VA's Argonaut resources",
+    deprecationContent: isNewFhirApiEnabled ? HealthArgonautDeprecation : undefined,
+    description: isNewFhirApiEnabled ? argonautDeprecatedDesc : argonautDesc,
     docSources: [
       {
         openApiUrl: 'https://api.va.gov/services/argonaut/v0/openapi.json',

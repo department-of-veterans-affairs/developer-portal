@@ -2,13 +2,14 @@ import * as React from 'react';
 
 import * as Stickyfill from 'stickyfilljs';
 
+import { apiDefs } from '../apiDefs';
 import PageHeader from '../components/PageHeader';
 import Oauth from '../content/apiDocs/oauthTechnical.mdx';
 
 import './OAuth.scss';
 
 export interface IOAuthProps {
-  categoryName?: string;
+  apiCategoryKey: string;
 };
 
 
@@ -22,9 +23,17 @@ export class OAuth extends React.Component<IOAuthProps, {}> {
   }
 
   public render() {
+    const { apiCategoryKey } = this.props;
+    const category = apiDefs[apiCategoryKey];
+    let name = null;
+
+    if (category) {
+      name = category.name;
+    }
+
     return (
-      <div id="oauth" className="usa-grid">
-        <PageHeader halo={this.props.categoryName} header="Authorization" />
+      <div id="oauth">
+        <PageHeader halo={name} header="Authorization" />
         <Oauth />
       </div>
     );

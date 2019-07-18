@@ -20,6 +20,7 @@ import verificationApis from './verification';
 export interface IApiCategoryContent {
   readonly intro: React.StatelessComponent;
   readonly overview: React.StatelessComponent;
+  readonly quickstart?: React.StatelessComponent;
 }
 
 export interface IApiDocSource {
@@ -36,6 +37,7 @@ export interface IApiDescription {
   readonly urlFragment: string;
   readonly description: string;
   readonly vaInternalOnly: boolean;
+  readonly deprecationContent?: React.StatelessComponent;
 }
 
 export interface IApiCategory {
@@ -61,7 +63,7 @@ export const apiDefs: IApiCategories = {
     apis: benefitsApis,
     buttonText: 'Get Your Key',
     content: benefitsContent,
-    name: 'Benefits',
+    name: 'Benefits API',
     properName: 'Benefits Intake API',
     releaseNotes: BenefitsReleaseNotes,
     shortDescription:
@@ -72,7 +74,7 @@ export const apiDefs: IApiCategories = {
     apis: facilitiesApis,
     buttonText: 'Get Your Key',
     content: facilitiesContent,
-    name: 'Facilities',
+    name: 'Facilities API',
     properName: 'VA Facilities API',
     releaseNotes: FacilitiesReleaseNotes,
     shortDescription:
@@ -83,7 +85,7 @@ export const apiDefs: IApiCategories = {
     apis: healthApis,
     buttonText: 'Get Your Key',
     content: healthContent,
-    name: 'Health',
+    name: 'Health API',
     properName: 'Health API',
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
@@ -95,7 +97,7 @@ export const apiDefs: IApiCategories = {
     apis: verificationApis,
     buttonText: 'Stay Informed',
     content: verificationContent,
-    name: 'Veteran Verification',
+    name: 'Veteran Verification API',
     properName: 'Veteran Verification API',
     releaseNotes: VerificationReleaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',

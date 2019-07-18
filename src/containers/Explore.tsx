@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import { IApiCategory, IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../apiDefs';
+import { IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../apiDefs';
 import { SwaggerDocs } from '../components';
+import PageHeader from '../components/PageHeader';
 import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
@@ -46,21 +47,45 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
 
   public render() {
     let docsDom: JSX.Element | null = null;
+    let deprecated: JSX.Element | null = null;
+    let header: JSX.Element | null = null;
+
     const api = this.getApi();
-    const category = this.getCategory();
+    const category = lookupApiCategory(this.props.match.params.apiCategoryKey);
     if (api != null) {
       docsDom = this.renderApiDocs(api);
+      deprecated = this.renderDeprecationWarning(api);
     }
 
     if (docsDom == null) {
       docsDom = <ExplorePage />;
     }
 
+    if (category) {
+      header = <PageHeader id="api-documentation" halo={category.name} header={api!.name} />
+    }
+
     return (
       <div role="region" aria-labelledby="api-documentation">
-        {category && category.showProperNameAboveTitle && category.properName}
-        <h1 id="api-documentation">{api!.name}</h1>
+        {header}
+        {deprecated}
         {docsDom}
+      </div>
+    );
+  }
+
+  private renderDeprecationWarning(apiDefinition: IApiDescription) {
+    const { deprecationContent } = apiDefinition;
+
+    if (!deprecationContent) {
+      return null;
+    }
+
+    return (
+      <div className="usa-alert usa-alert-info">
+        <div className="usa-alert-body">
+          {deprecationContent({})}
+        </div>
       </div>
     );
   }
@@ -69,7 +94,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     let docs: JSX.Element | null = null;
     // because this is downstream from a getApi() call, we can assert that apiName is defined
     const apiName : string = this.props.match.params.apiName!;
-    const category = this.getCategory();
+    const category = lookupApiCategory(this.props.match.params.apiCategoryKey);
     if (apiDefinition.docSources.length === 1) {
       docs = <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiName} />;
     } else {
@@ -111,15 +136,6 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     }
 
     return lookupApiByFragment(this.props.match.params.apiName);
-  }
-
-  private getCategory() : IApiCategory | null {
-    const { apiCategoryKey } = this.props.match.params;
-    if (!apiCategoryKey) {
-      return null;
-    }
-
-    return lookupApiCategory(apiCategoryKey);
   }
 
   private setTabIndexFromHash() : void {
