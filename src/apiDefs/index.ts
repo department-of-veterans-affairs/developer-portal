@@ -20,6 +20,7 @@ import verificationApis from './verification';
 export interface IApiCategoryContent {
   readonly intro: React.StatelessComponent;
   readonly overview: React.StatelessComponent;
+  readonly quickstart?: React.StatelessComponent;
 }
 
 export interface IApiDocSource {

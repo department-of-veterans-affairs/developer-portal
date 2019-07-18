@@ -10,9 +10,13 @@ import FhirDSTU2ApiIntro from './health/fhirDSTU2ApiIntro.mdx'
 import FhirR4ApiIntro from './health/fhirR4ApiIntro.mdx';
 import HealthIntro from './health/healthIntro.mdx';
 import HealthOverview from './health/healthOverview.mdx';
+import HealthQuickstart from './health/healthQuickstart.mdx';
+import LegacyHealthIntro from './health/legacyHealthIntro.mdx';
 import UrgentCareApiIntro from './health/urgentCareApiIntro.mdx';
 import VerificationIntro from './verification/verificationIntro.mdx';
 import VerificationOverview from './verification/verificationOverview.mdx';
+
+const isNewFhirApiEnabled = process.env.REACT_APP_FHIR_API_ENABLED === 'true';
 
 const benefitsContent: IApiCategoryContent = {
   intro: BenefitsIntro,
@@ -25,8 +29,9 @@ const facilitiesContent: IApiCategoryContent = {
 };
 
 const healthContent: IApiCategoryContent = {
-  intro: HealthIntro,
+  intro: isNewFhirApiEnabled ? HealthIntro : LegacyHealthIntro,
   overview: HealthOverview,
+  quickstart: isNewFhirApiEnabled ? HealthQuickstart : undefined,
 };
 
 const verificationContent: IApiCategoryContent = {
