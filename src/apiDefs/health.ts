@@ -1,8 +1,10 @@
 /*
-  Note the use of `api.va.gov` instead of `${swaggerHost}` for openApiUrl. Health APIs do not have a staging
-  environment setup, as such we can only use `dev-api.va.gov` or `api.va.gov` for the openApiUrl host. Using
-  `${swaggerHost} would break staging. The swagger url is shown in the UI. In order to avoid the confusion of
-  having a `dev-api.va.gov` url shown in production `dev.va.gov` is used in all developer portal environments.
+  Note the use of the secondary swagger api instead of the primary for openApiUrl. Health APIs do not have a
+  staging environment setup, as such we can only use `dev-api.va.gov` or `api.va.gov` for the openApiUrl host.
+  The primary swagger api is tied to the environment. The secondary swagger api always points to production.
+  Using the primary swagger api would break staging. The swagger url is shown in the UI. In order to avoid the
+  confusion of having a `dev-api.va.gov` url shown in production `api.va.gov` (the secondary swagger api) is
+  used in all developer portal environments for health documentation.
 */
 
 import { IApiDescription } from ".";
@@ -15,6 +17,7 @@ import {
   UrgentCareApiIntro,
 } from "../content/apiDocs";
 
+const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
 const isNewFhirApiEnabled =  process.env.REACT_APP_FHIR_API_ENABLED === 'true';
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
 const argonautDesc = "VA's Argonaut resources";
@@ -24,7 +27,7 @@ const healthApis : IApiDescription[] = [
     docSources: [
       {
         apiIntro: CommunityCareApiIntro,
-        openApiUrl: 'https://api.va.gov/services/community-care/v0/eligibility/openapi.json',
+        openApiUrl: `${swaggerHost}/services/community-care/v0/eligibility/openapi.json`,
       },
     ],
     name: 'Community Care Eligibility API',
@@ -36,7 +39,7 @@ const healthApis : IApiDescription[] = [
     docSources: [
       {
         apiIntro: UrgentCareApiIntro,
-        openApiUrl: 'https://api.va.gov/services/fhir/v0/r4/openapi.json',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
       },
     ],
     name: 'Urgent Care Eligibility API (FHIR)',
@@ -50,19 +53,19 @@ const healthApis : IApiDescription[] = [
         apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
-        openApiUrl: 'https://api.va.gov/services/fhir/v0/argonaut/data-query/openapi.json',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/argonaut/data-query/openapi.json`,
       },
       {
         apiIntro: FhirR4ApiIntro,
         key: 'r4',
         label: 'R4',
-        openApiUrl: 'https://api.va.gov/services/fhir/v0/r4/openapi.json',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
       },
       {
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
-        openApiUrl: 'https://api.va.gov/services/fhir/v0/dstu2/openapi.json',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
       },
     ],
     name: 'Veterans Health API (FHIR)',
@@ -74,7 +77,7 @@ const healthApis : IApiDescription[] = [
     description: isNewFhirApiEnabled ? argonautDeprecatedDesc : argonautDesc,
     docSources: [
       {
-        openApiUrl: 'https://api.va.gov/services/argonaut/v0/openapi.json',
+        openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
       },
     ],
     name: `Veterans Health API${isNewFhirApiEnabled ? ' (Legacy)' : ''}`,
