@@ -10,6 +10,7 @@ import Home from './Home';
 import OAuth from './OAuth';
 import ReleaseNotes from './ReleaseNotes';
 import RoutedContent from './RoutedContent';
+import Support from './Support';
 import WhatsNew from './WhatsNew';
 
 export {
@@ -22,5 +23,6 @@ export {
   OAuth,
   ReleaseNotes,
   RoutedContent,
+  Support,
   WhatsNew,
 };
