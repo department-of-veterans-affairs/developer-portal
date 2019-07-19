@@ -11,7 +11,7 @@ import PageHeader from '../components/PageHeader';
 import ExplorePage from '../content/explorePage.mdx';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
-import '../../node_modules/react-tabs/style/react-tabs.scss';
+import './ReactTabs.scss';
 
 export interface IExploreProps extends RouteComponentProps<IApiNameParam> {
   argonaut: IExternalSwagger;

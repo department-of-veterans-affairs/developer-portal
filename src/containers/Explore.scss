@@ -278,30 +278,4 @@
       background-color: #DBDBDD;
     }
   }
-
-  .react-tabs {
-    margin-top: 40px;
-
-    > ul {
-      border-color: #DBDBDD;
-      margin: 0;
-
-      > li {
-        margin-bottom: 0;
-      }
-
-      [aria-selected=true] {
-        border-color: #DBDBDD;
-      }
-    }
-
-    [role=tabpanel] {
-      background-color: $color-white;
-      border-right: 1px solid #DBDBDD;
-      border-bottom: 1px solid #DBDBDD;
-      border-left: 1px solid #DBDBDD;
-      padding: 1.5rem 2rem;
-
-    }
-  }
 }
