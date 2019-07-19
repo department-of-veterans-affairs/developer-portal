@@ -304,4 +304,8 @@
 
     }
   }
+
+  .react-tabs__tab:focus:after {
+    display: none
+  }
 }
