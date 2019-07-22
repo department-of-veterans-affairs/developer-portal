@@ -29,20 +29,41 @@ const mapStateToProps = ({ routing }: IRootState) => {
 };
 
 class Explore extends React.Component<IExploreProps, IExploreState> {
+  public static getDerivedStateFromProps(props: any, state: any) {
+    const api = lookupApiByFragment(props.match.params.apiName)
+
+    if (api) {
+      const docSources = api.docSources;
+      if (docSources.length > 1) {
+        return {
+          tabIndex: Explore.getTabIndexFromFragment(api, props),
+        }
+      }
+
+    }
+    return {}
+  }
+
+  private static getTabIndexFromFragment(api: IApiDescription, props: RouteComponentProps<IApiNameParam>) : number {
+    const apiDocSources = api.docSources;
+    const hasKey = (source : IApiDocSource) => !!source.key;
+    const tabKeys = apiDocSources.filter(hasKey).map(source => source.key!.toLowerCase());
+    const fromFragment = props.location.hash.slice(1).toLowerCase();
+    const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === fromFragment);
+    return tabIndex === -1 ? 0 : tabIndex;
+  }
+
   public constructor(props : IExploreProps) {
     super(props);
     this.state = { tabIndex: 0 };
   }
 
   public componentDidMount() {
-    this.setTabIndexFromFragment();
+    this.setDefaultFragment();
   }
 
-  public componentDidUpdate(prevProps: IExploreProps, prevState: IExploreState) {
-    const { location } = this.props;
-    if (location.pathname !== prevProps.location.pathname || location.hash !== prevProps.location.hash) {
-      this.setTabIndexFromFragment();
-    }
+  public componentDidUpdate() {
+    this.setDefaultFragment();
   }
 
   public render() {
@@ -95,15 +116,16 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     // because this is downstream from a getApi() call, we can assert that apiName is defined
     const apiName : string = this.props.match.params.apiName!;
     const category = lookupApiCategory(this.props.match.params.apiCategoryKey);
-    if (apiDefinition.docSources.length === 1) {
-      docs = <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiName} />;
+    const { docSources, urlFragment } = apiDefinition;
+    if (docSources.length === 1) {
+      docs = <SwaggerDocs docSource={docSources[0]} apiName={apiName} />;
     } else {
       docs = (
         <React.Fragment>
           {category!.tabBlurb}
-          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
+          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setFragmentFromTabIndex(tabIndex, docSources) }>
             <TabList>
-              {apiDefinition.docSources.map(apiDocSource => {
+              {docSources.map(apiDocSource => {
                 return (
                   <Tab key={apiDocSource.label}>
                     {apiDocSource.label}
@@ -111,7 +133,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
                 );
               })}
             </TabList>
-            {apiDefinition.docSources.map(apiDocSource => {
+            {docSources.map(apiDocSource => {
               return (
                 <TabPanel key={apiDocSource.label}>
                   <SwaggerDocs docSource={apiDocSource} apiName={apiName} />
@@ -124,10 +146,17 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     }
 
     return (
-      <Flag name={`hosted_apis.${apiDefinition.urlFragment}`}>
+      <Flag name={`hosted_apis.${urlFragment}`}>
         {docs}
       </Flag>
     )
+  }
+
+  private setFragmentFromTabIndex(index: number, docSources: IApiDocSource[]) : void {
+    const fragment = docSources[index].label;
+    if (fragment) {
+      this.props.history.push(`#${fragment.toLowerCase()}`);
+    }
   }
 
   private getApi() : IApiDescription | null {
@@ -138,24 +167,12 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     return lookupApiByFragment(this.props.match.params.apiName);
   }
 
-  private setTabIndexFromFragment() : void {
+  private setDefaultFragment() {
+    const { location } = this.props;
     const api = this.getApi();
-    if (api !== null && api.docSources.length > 1) {
-      const newTabIndex = this.getabIndexFromFragment(api.docSources);
-      this.setState({ tabIndex: newTabIndex });
+    if (!location.hash && api && api.docSources.length > 1) {
+      this.setFragmentFromTabIndex(0, api.docSources);
     }
-  }
-
-  private getabIndexFromFragment(apiDocSources : IApiDocSource[]) : number {
-    if (this.props.location.hash) {
-      const hasKey = (source : IApiDocSource) => !!source.key;
-      const tabKeys = apiDocSources.filter(hasKey).map(source => source.key!.toLowerCase());
-      const fromFragment = this.props.location.hash.slice(1).toLowerCase();
-      const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === fromFragment);
-      return tabIndex === -1 ? this.state.tabIndex : tabIndex;
-    }
-
-    return this.state.tabIndex;
   }
 }
 
