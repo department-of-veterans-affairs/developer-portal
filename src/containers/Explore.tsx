@@ -9,6 +9,7 @@ import { IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory 
 import { SwaggerDocs } from '../components';
 import PageHeader from '../components/PageHeader';
 import ExplorePage from '../content/explorePage.mdx';
+import { history } from '../store';
 import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
 
 import '../../node_modules/react-tabs/style/react-tabs.scss';
@@ -95,13 +96,14 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     // because this is downstream from a getApi() call, we can assert that apiName is defined
     const apiName : string = this.props.match.params.apiName!;
     const category = lookupApiCategory(this.props.match.params.apiCategoryKey);
+    const tabChangeHandler = this.onTabSelect.bind(this);
     if (apiDefinition.docSources.length === 1) {
       docs = <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiName} />;
     } else {
       docs = (
         <React.Fragment>
           {category!.tabBlurb}
-          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}>
+          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabChangeHandler}>
             <TabList>
               {apiDefinition.docSources.map(apiDocSource => {
                 return (
@@ -120,7 +122,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
             })}
           </Tabs>
         </React.Fragment>
-      )
+      );
     }
 
     return (
@@ -156,6 +158,14 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     }
 
     return this.state.tabIndex;
+  }
+
+  private onTabSelect(tabIndex: number) {
+    const path = this.props.location.pathname;
+    const api = this.getApi()!;
+    history.push(`${path}#${api.docSources[tabIndex].key}`);
+    
+    this.setState({ tabIndex });
   }
 }
 
