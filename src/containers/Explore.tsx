@@ -30,7 +30,7 @@ const mapStateToProps = ({ routing }: IRootState) => {
 
 class Explore extends React.Component<IExploreProps, IExploreState> {
   public static getDerivedStateFromProps(props: any, state: any) {
-    const api = lookupApiByFragment(props.match.params.apiName)
+    const api = lookupApiByFragment(props.match.params.apiName);
 
     if (api) {
       const docSources = api.docSources;
@@ -41,7 +41,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
       }
 
     }
-    return {}
+    return {};
   }
 
   private static getTabIndexFromFragment(api: IApiDescription, props: RouteComponentProps<IApiNameParam>) : number {
