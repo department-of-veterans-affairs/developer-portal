@@ -71,6 +71,19 @@ const formFieldsToFragments = {
   verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
 }
 
+const OauthHowTo = (props: any) => {
+  return (
+    props.show ? 
+    <div className="feature">
+      <b>Note:</b> You will need to provide your <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">OAuth Redirect URI</a>, which 
+      is where the authorization server will return the user to your application after generating an authenticated token. These APIs 
+      require authorization via the <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>. 
+      <br/><a href="https://developer.va.gov/explore/health/docs/authorization ">Read more</a>
+    </div> 
+    : null
+  );
+}
+
 class ApplyForm extends React.Component<IApplyProps> {
   constructor(props: IApplyProps) {
     super(props);
@@ -86,8 +99,8 @@ class ApplyForm extends React.Component<IApplyProps> {
 
     return (
       <div role="region" aria-labelledby="apply-header" className="usa-grid api-application">
-        <h1 id="apply-header">Apply for VA API Key</h1>
-        <p className="usa-font-lead">Please submit the form below and you'll receive an email with your API key(s) and further instructions. Thank you for being a part of our platform.</p>
+        <h1 id="apply-header">Apply for VA Lighthouse Developer Access</h1>
+        <p className="usa-font-lead">This page is the first step towards developing with VA Lighthouse APIs. The keys and/or credentials you will receive are for sandbox development only. When your app is ready to go live, you may <a href="https://developer.va.gov/go-live">request production access</a>. Please submit the form below and you'll receive an email with your API key(s) and/or OAuth credentials, as well as further instructions. Thank you for being a part of our platform.</p>
         <div className="usa-grid">
           <div className="usa-width-two-thirds">
             <form className="usa-form">
@@ -190,11 +203,13 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <label htmlFor="verification">VA Veteran Verification API</label>
               </div>
 
+              <OauthHowTo show={this.anyOAuthApisSelected()}/>
+              
               { this.renderOAuthFields() }
 
               <ErrorableTextArea
                 errorMessage={null}
-                label="Briefly describe how your organization will use VA APIs."
+                label="Briefly describe how your organization will use VA APIs:"
                 onValueChange={props.updateDescription}
                 name="description"
                 field={description} />
@@ -235,7 +250,7 @@ class ApplyForm extends React.Component<IApplyProps> {
       return (
           <ErrorableTextInput
             errorMessage={this.props.inputs.oAuthRedirectURI.validation}
-            label="OAuth Redirect URL"
+            label="OAuth Redirect URI"
             field={oAuthRedirectURI}
             onValueChange={this.props.updateOAuthRedirectURI}
             required={true} />
