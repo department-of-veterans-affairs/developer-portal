@@ -71,14 +71,18 @@ const formFieldsToFragments = {
   verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
 }
 
-const OAuthHowTo = (props: {show: boolean, [key:string]: any}) => {
+const OAuthHowTo = (props: {show: boolean}) => {
   return (
     props.show ? 
-    <div className="feature">
-      <b>Note:</b> You will need to provide your <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">OAuth Redirect URI</a>, which 
-      is where the authorization server will return the user to your application after generating an authenticated token. These APIs 
-      require authorization via the <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>. 
-      <br/><Link to="/explore/health/docs/authorization">Read more</Link>
+    <div className="feature oauth-how-to">
+      <div className="description">
+        <strong>Note:</strong> You will need to provide your <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">OAuth Redirect URI</a>, which 
+        is where the authorization server will return the user to your application after generating an authenticated token. These APIs 
+        require authorization via the <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>. 
+      </div>
+      <div className="more-info">
+        <Link to="/explore/health/docs/authorization">Read more</Link>
+      </div>
     </div> 
     : null
   );
