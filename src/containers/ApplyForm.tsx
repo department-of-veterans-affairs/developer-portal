@@ -71,7 +71,7 @@ const formFieldsToFragments = {
   verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
 }
 
-const OauthHowTo = (props: any) => {
+const OauthHowTo = (props: {show: boolean, [key:string]: any}) => {
   return (
     props.show ? 
     <div className="feature">
