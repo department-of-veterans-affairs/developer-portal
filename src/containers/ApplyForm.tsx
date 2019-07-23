@@ -78,7 +78,7 @@ const OauthHowTo = (props: {show: boolean, [key:string]: any}) => {
       <b>Note:</b> You will need to provide your <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">OAuth Redirect URI</a>, which 
       is where the authorization server will return the user to your application after generating an authenticated token. These APIs 
       require authorization via the <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>. 
-      <br/><a href="https://developer.va.gov/explore/health/docs/authorization ">Read more</a>
+      <br/><a href="https://developer.va.gov/explore/health/docs/authorization">Read more</a>
     </div> 
     : null
   );
