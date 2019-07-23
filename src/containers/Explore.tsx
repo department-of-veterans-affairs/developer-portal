@@ -143,12 +143,12 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
   private setTabIndexFromFragment() : void {
     const api = this.getApi();
     if (api !== null && api.docSources.length > 1) {
-      const newTabIndex = this.getabIndexFromFragment(api.docSources);
+      const newTabIndex = this.getTabIndexFromFragment(api.docSources);
       this.setState({ tabIndex: newTabIndex });
     }
   }
 
-  private getabIndexFromFragment(apiDocSources : IApiDocSource[]) : number {
+  private getTabIndexFromFragment(apiDocSources : IApiDocSource[]) : number {
     if (this.props.location.hash) {
       const hasKey = (source : IApiDocSource) => !!source.key;
       const tabKeys = apiDocSources.filter(hasKey).map(source => source.key!.toLowerCase());
