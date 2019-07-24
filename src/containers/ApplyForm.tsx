@@ -104,7 +104,11 @@ class ApplyForm extends React.Component<IApplyProps> {
     return (
       <div role="region" aria-labelledby="apply-header" className="usa-grid api-application">
         <h1 id="apply-header">Apply for VA Lighthouse Developer Access</h1>
-        <p className="usa-font-lead">This page is the first step towards developing with VA Lighthouse APIs. The keys and/or credentials you will receive are for sandbox development only. When your app is ready to go live, you may <Link to="/go-live">request production access</Link>. Please submit the form below and you'll receive an email with your API key(s) and/or OAuth credentials, as well as further instructions. Thank you for being a part of our platform.</p>
+        <p className="usa-font-lead">This page is the first step towards developing with VA Lighthouse APIs. 
+        The keys and/or credentials you will receive are for sandbox development only. When your app is ready 
+        to go live, you may <Link to="/go-live">request production access</Link>. Please submit the form below 
+        and you'll receive an email with your API key(s) and/or OAuth credentials, as well as further instructions. 
+        Thank you for being a part of our platform.</p>
         <div className="usa-grid">
           <div className="usa-width-two-thirds">
             <form className="usa-form">
