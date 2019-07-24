@@ -5,13 +5,13 @@ import './GroupedAccordions.scss';
 
 declare const window: { VetsGov: object };
 
-export interface IQuestion {
-  answer: any,
-  question: string
+export interface IPanelContent {
+  body: string | JSX.Element,
+  title: string
 }
 
 interface IGroupedAccordionsProps {
-  questions: IQuestion[],
+  panelContents: IPanelContent[],
   title: string
 }
 
@@ -59,9 +59,9 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
   }
 
   private createPanels(): any {
-    return this.props.questions.map((q: IQuestion, index: number) => {
-      return <CollapsiblePanel ref={(n: any) => this.panelRefs.push(n)} panelName={q.question} startOpen={!this.state.allCollapsed} key={index}>
-        {q.answer}
+    return this.props.panelContents.map((c: IPanelContent, index: number) => {
+      return <CollapsiblePanel ref={(n: any) => this.panelRefs.push(n)} panelName={c.title} startOpen={!this.state.allCollapsed} key={index}>
+        {c.body}
       </CollapsiblePanel>
     });
   }

@@ -4,24 +4,24 @@ import * as React from 'react';
 
 import GroupedAccordions from './GroupedAccordions';
 
-const questions = [
+const contents = [
   {
-    answer: 'The answer',
-    question: 'The question?',
+    body: 'The answer',
+    title: 'The question?',
   },
 ]
 
-const event = { preventDefault: () => {} };
+const event = { preventDefault: jest.fn() };
 
 describe('GroupedAccordions', () => {
   it('should render the accordions all closed', () => {
-    const wrapper = mount(<GroupedAccordions title="title" questions={questions}/>);
+    const wrapper = mount(<GroupedAccordions title="title" panelContents={contents}/>);
     expect(wrapper.find('.form-review-panel').length).toEqual(1);
     expect(wrapper.find('.usa-accordion-content').length).toEqual(0);
   });
 
   it('should toggle panels when  expand all / collapse all clicked', () => {
-    const wrapper = mount(<GroupedAccordions title="title" questions={questions}/>);
+    const wrapper = mount(<GroupedAccordions title="title" panelContents={contents}/>);
     const toggeLink = wrapper.find('.toggle-panels');
 
     toggeLink.simulate('click', event);

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import GroupedAccordions, { IQuestion } from '../components/GroupedAccordions';
+import GroupedAccordions, { IPanelContent } from '../components/GroupedAccordions';
 import PageHeader from '../components/PageHeader';
 
-const generalQuestions: IQuestion[] = [
+const generalQuestions: ISupportQuestion[] = [
   {
     answer: (
       <p>
@@ -26,7 +26,7 @@ const generalQuestions: IQuestion[] = [
   },
 ]
 
-const developmentQuestions: IQuestion[] = [
+const developmentQuestions: ISupportQuestion[] = [
   {
     answer: (
       <p>
@@ -77,7 +77,7 @@ const developmentQuestions: IQuestion[] = [
   },
 ]
 
-const supportQuestions: IQuestion[] = [
+const supportQuestions: ISupportQuestion[] = [
   {
     answer: (
       <p>
@@ -96,6 +96,29 @@ const headerProps = {
   header: "FAQ",
 };
 
+interface ISupportQuestions {
+  title: string,
+  questions: ISupportQuestion[],
+}
+
+interface ISupportQuestion {
+  answer: string | JSX.Element,
+  question: string,
+}
+
+const SupportQuestions = (props: ISupportQuestions) => {
+  const content: IPanelContent[] = props.questions.map((q: ISupportQuestion) => {
+    return {
+      body: q.answer,
+      title: q.question,
+    }
+  });
+
+  return (
+    <GroupedAccordions panelContents={content} title={props.title} />
+  )
+}
+
 export default class SupportFAQ extends React.Component {
 
   public render() {
@@ -103,9 +126,9 @@ export default class SupportFAQ extends React.Component {
       <section role="region" aria-label="Support FAQ" className="usa-section">
         <PageHeader {...headerProps} />
         <div className="va-api-container">
-          <GroupedAccordions questions={generalQuestions} title="General" />
-          <GroupedAccordions questions={developmentQuestions} title="Development" />
-          <GroupedAccordions questions={supportQuestions} title="Troubleshooting/Support" />
+          <SupportQuestions title="General" questions={generalQuestions}/>
+          <SupportQuestions title="Development" questions={developmentQuestions}/>
+          <SupportQuestions title="Troubleshooting/Support" questions={supportQuestions}/>
         </div>
       </section>
     )
