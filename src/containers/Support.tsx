@@ -4,7 +4,14 @@ import { NavLink } from 'react-router-dom';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
 
-const sections = [
+export interface ISection {
+  component: any;
+  description: string;
+  id: string;
+  name: string;
+}
+
+const sections: ISection[] = [
   {
     component: (props: any) => <SupportFAQ {...props} />,
     description: 'Answers to frequently asked questions about the VA API progam and the APIs themselves.',
@@ -58,7 +65,7 @@ export default class Support extends React.Component {
               <SideNav />
             </div>
             <div className="usa-width-two-thirds">
-              <Route exact={true} path="/support/" render={(props) => <SupportOverview {...props} sections={sections} />} />
+              <Route exact={true} path="/support/" render={(props: any) => <SupportOverview {...props} sections={sections}/>} />
               {this.subRoutes}
             </div>
           </div>
@@ -70,7 +77,7 @@ export default class Support extends React.Component {
   private createSubRoutes() {
     return sections.map((section, i) => {
       return (
-        <Route key={i} exact={true} path={`/support/${section.id}`} render={(props) => section.component(props)} />
+        <Route key={i} exact={true} path={`/support/${section.id}`} render={(props: any) => section.component(props)} />
       )
     })
   }

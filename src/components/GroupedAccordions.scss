@@ -1,0 +1,12 @@
+@import "../base";
+
+.va-grouped-accordion {
+    margin-bottom: 20px;
+    width: 100%;
+
+    .va-grouped-accordion-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
