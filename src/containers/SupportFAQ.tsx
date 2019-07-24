@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import GroupedAccordions from '../components/GroupedAccordions';
 import PageHeader from '../components/PageHeader';
 
@@ -22,14 +23,14 @@ const generalQuestions = [
 
 const developmentQuestions = [
     {
-        answer: (<p>Click to <a href="https://developer.va.gov/apply">Get Started</a> by applying for 
-            an API key. Note that you will need to provide your <a href="https://developer.va.gov/oauth">OAuth</a> Redirect 
+        answer: (<p>Click to <Link to="/apply">Get Started</Link> by applying for 
+            an API key. Note that you will need to provide your <Link to="/oauth">OAuth</Link> Redirect 
             URL if you are applying for a key to the Health, Claims, or Veteran Verification APIs. 
-            You are also required to agree to the <a href="https://developer.va.gov/terms-of-service">VA API Terms of Service</a> in order to obtain a key.</p>),
+            You are also required to agree to the <Link to="/terms-of-service">VA API Terms of Service</Link> in order to obtain a key.</p>),
         question: 'Where do I apply for dev access?',
     },
     {
-        answer: (<p>Visit the <a href="https://developer.va.gov/go-live">Path to Production</a> page for
+        answer: (<p>Visit the <Link to="/go-live">Path to Production</Link> page for
             instructions on "going live.” Schedule a demo presentation of your app by using the Contact Us, 
             or by submitting a request via the GitHub links.</p>),
         question: 'How do we move forward with production API access once dev is complete?',
@@ -40,7 +41,7 @@ const developmentQuestions = [
     },
     {
         answer: (<p>Yes! You will receive your API key immediately after sign up. That is all you
-             need to proceed - all relevant information should be contained in the <a href="https://developer.va.gov/explore">API documentation</a>.</p>),
+             need to proceed - all relevant information should be contained in the <Link to="/explore">API documentation</Link>.</p>),
         question: 'Can I start using the API as soon as I sign up?',
     },
     {
@@ -48,9 +49,9 @@ const developmentQuestions = [
         question: 'Are there any rate limits on the APIs?',
     },
     {
-        answer: (<p>Please visit the <a href="https://developer.va.gov/explore">API documentation</a> for 
+        answer: (<p>Please visit the <Link to="/explore">API documentation</Link> for 
                 more information and example use cases. There are also some real-world examples in the articles and 
-                press releases linked on our <a href="https://developer.va.gov/whats-new">News</a> page.</p>),
+                press releases linked on our <Link to="/whats-new">News</Link> page.</p>),
         question: 'What kind of data can I get from the APIs? Do you have any example scenarios for Health, Benefits, Facilities or Veteran Verification?',
     },
 ]
@@ -58,7 +59,7 @@ const developmentQuestions = [
 const supportQuestions = [
     {
         answer: (<p>Submit a support request, bug report, documentation or feature request via Github on 
-                our <a href="http://developer.va.gov/support">support portal</a>, or use the Contact Us form 
+                our <Link to="/support">support portal</Link>, or use the Contact Us form 
                 to send an email. We strive to reply with a solution or next steps within one business day.</p>),
         question: 'How do I contact support with any questions or if I need help?',
     },
