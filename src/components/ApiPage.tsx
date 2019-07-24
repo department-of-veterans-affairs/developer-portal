@@ -11,15 +11,24 @@ import AuthorizationCard from './AuthorizationCard';
 export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
-    const { apiKey, apis, name: categoryName, overview, longDescription: introText } = apiDefs[apiCategoryKey];
+    const {
+      apiKey,
+      apis,
+      name: categoryName,
+      content: {
+        intro,
+        overview,
+      },
+    } = apiDefs[apiCategoryKey];
+
     let cardSection;
 
     if (apis.length > 0) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
-        const { name, shortDescription, urlFragment, vaInternalOnly } = apiDesc;
+        const { description, name, urlFragment, vaInternalOnly } = apiDesc;
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
-            <ApiCard name={name} description={shortDescription} vaInternalOnly={vaInternalOnly}
+            <ApiCard name={name} description={description} vaInternalOnly={vaInternalOnly}
                 url={`/explore/${apiCategoryKey}/docs/${urlFragment}`} />
           </Flag>
         );
@@ -40,7 +49,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
     return (
       <section role="region" aria-labelledby={`${apiCategoryKey}-overview`} className="usa-section">
         <h1 id={`${apiCategoryKey}-overview`}>{categoryName}</h1>
-        <h2>{introText}</h2>
+        {intro({})}
         {cardSection}
         <div className="usa-width-one-whole">
           {overview({})}
