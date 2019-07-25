@@ -33,7 +33,7 @@ const benefitsApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/claims/docs/v0/api`,
       },
     ],
-    name: 'Claims',
+    name: 'Benefits Claims',
     oAuth: true,
     urlFragment: 'claims',
     vaInternalOnly: false,
