@@ -1,3 +1,4 @@
+import * as classNames from 'classnames';
 import * as React from 'react'
 import { Route } from "react-router";
 import { NavLink } from 'react-router-dom';
@@ -5,7 +6,7 @@ import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
 
 export interface ISection {
-  component: React.ComponentType<{}>
+  component: React.ComponentType
   description: string;
   id: string;
   name: string;
@@ -19,7 +20,7 @@ const sections: ISection[] = [
     name: 'FAQ',
   },
   // {
-  //   component: () => <SupportFAQ />,
+  //   component: SupportFAQ,
   //   description: 'Submit a support request via Github or send us a message using the Contact Us form.',
   //   id: 'contact-us',
   //   name: 'Contact Us',
@@ -48,25 +49,18 @@ export function SideNav() {
 }
 
 export default class Support extends React.Component {
-  private navRef = React.createRef<HTMLDivElement>();
-  private subRoutes: JSX.Element[];
-
-  constructor(props: any) {
-    super(props);
-    this.subRoutes = this.createSubRoutes();
-  }
 
   public render() {
     return (
       <div className="Explore">
         <section className="usa-section">
           <div className="Explore-main usa-grid">
-            <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="What's New Side Nav">
+            <div className={classNames("vadp-side-nav", "usa-width-one-third", "sticky")} role="navigation" aria-label="Support Side Nav">
               <SideNav />
             </div>
             <div className="usa-width-two-thirds">
               <Route exact={true} path="/support/" render={() => <SupportOverview sections={sections}/>} />
-              {this.subRoutes}
+              {this.createSubRoutes()}
             </div>
           </div>
         </section>
