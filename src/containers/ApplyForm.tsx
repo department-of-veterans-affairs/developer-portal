@@ -243,7 +243,7 @@ class ApplyForm extends React.Component<IApplyProps> {
             <div className="feature">
               <h3>Stay In Touch</h3>
               <p>Want to get news and updates about VA API Program? Sign up to receive email updates.</p>
-              <a className="usa-button" href="https://vacommunity.secure.force.com/survey/ExAM__AMAndAnswerCreationPage?paId=a2ft0000000VVnJ">Sign Up</a>
+              <a className="usa-button" href="https://public.govdelivery.com/accounts/USVAOIT/subscriber/new?topic_id=USVAOIT_20">Sign Up</a>
             </div>
           </div>
         </div>
