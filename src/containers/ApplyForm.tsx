@@ -17,6 +17,10 @@ import * as actions from '../actions';
 import { includesOauthAPI } from '../apiDefs';
 import { IApplication, IErrorableInput, IRootState } from '../types';
 
+import ApplyHeader from '../content/applyHeader.mdx';
+
+import './Apply.scss';
+
 interface IApplyProps extends IApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
@@ -71,6 +75,23 @@ const formFieldsToFragments = {
   verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
 }
 
+const OAuthHowTo = (props: {show: boolean}) => {
+  return (
+    props.show ? 
+    <div className="feature oauth-how-to">
+      <div className="description">
+        <strong>Note:</strong> You will need to provide your <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">OAuth Redirect URI</a>, which 
+        is where the authorization server will return the user to your application after generating an authenticated token. These APIs 
+        require authorization via the <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>. 
+      </div>
+      <div className="more-info">
+        <Link to="/explore/health/docs/authorization">Read more</Link>
+      </div>
+    </div> 
+    : null
+  );
+}
+
 class ApplyForm extends React.Component<IApplyProps> {
   constructor(props: IApplyProps) {
     super(props);
@@ -86,8 +107,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
     return (
       <div role="region" aria-labelledby="apply-header" className="usa-grid api-application">
-        <h1 id="apply-header">Apply for VA API Key</h1>
-        <p className="usa-font-lead">Please submit the form below and you'll receive an email with your API key(s) and further instructions. Thank you for being a part of our platform.</p>
+        <ApplyHeader className="va-apply-header" />
         <div className="usa-grid">
           <div className="usa-width-two-thirds">
             <form className="usa-form">
@@ -190,11 +210,13 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <label htmlFor="verification">VA Veteran Verification API</label>
               </div>
 
+              <OAuthHowTo show={this.anyOAuthApisSelected()}/>
+              
               { this.renderOAuthFields() }
 
               <ErrorableTextArea
                 errorMessage={null}
-                label="Briefly describe how your organization will use VA APIs."
+                label="Briefly describe how your organization will use VA APIs:"
                 onValueChange={props.updateDescription}
                 name="description"
                 field={description} />
@@ -203,7 +225,7 @@ class ApplyForm extends React.Component<IApplyProps> {
                 checked={termsOfService}
                 label={(
                     <span>
-                      I agree to the <Link target="_blank" to="/terms-of-service">Terms of Service</Link>
+                      I agree to the <Link to="/terms-of-service">Terms of Service</Link>
                     </span>
                 )}
                 onValueChange={props.toggleAcceptTos}
@@ -235,7 +257,7 @@ class ApplyForm extends React.Component<IApplyProps> {
       return (
           <ErrorableTextInput
             errorMessage={this.props.inputs.oAuthRedirectURI.validation}
-            label="OAuth Redirect URL"
+            label="OAuth Redirect URI"
             field={oAuthRedirectURI}
             onValueChange={this.props.updateOAuthRedirectURI}
             required={true} />
