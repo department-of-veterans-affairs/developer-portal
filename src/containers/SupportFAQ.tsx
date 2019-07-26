@@ -96,7 +96,7 @@ const headerProps = {
   header: "FAQ",
 };
 
-interface ISupportQuestions {
+interface ISupportQuestionsProps {
   title: string,
   questions: ISupportQuestion[],
 }
@@ -106,7 +106,7 @@ interface ISupportQuestion {
   question: string,
 }
 
-const SupportQuestions = (props: ISupportQuestions) => {
+const SupportQuestions = (props: ISupportQuestionsProps) => {
   const content: IPanelContent[] = props.questions.map((q: ISupportQuestion) => {
     return {
       body: q.answer,
