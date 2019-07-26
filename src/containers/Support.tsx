@@ -69,9 +69,9 @@ export default class Support extends React.Component {
   }
 
   private createSubRoutes() {
-    return sections.map((section, i) => {
+    return sections.map((section) => {
       return (
-        <Route key={i} exact={true} path={`/support/${section.id}`} component={section.component} />
+        <Route key={section.id} exact={true} path={`/support/${section.id}`} component={section.component} />
       )
     })
   }
