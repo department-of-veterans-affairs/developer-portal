@@ -9,14 +9,18 @@ const contents = [
     body: 'The answer',
     title: 'The question?',
   },
-]
+  {
+    body: 'The answer 2',
+    title: 'The question 2?',
+  }
+];
 
 const event = { preventDefault: jest.fn() };
 
 describe('GroupedAccordions', () => {
   it('should render the accordions all closed', () => {
     const wrapper = mount(<GroupedAccordions title="title" panelContents={contents}/>);
-    expect(wrapper.find('.form-review-panel').length).toEqual(1);
+    expect(wrapper.find('.form-review-panel').length).toEqual(2);
     expect(wrapper.find('.usa-accordion-content').length).toEqual(0);
   });
 
@@ -25,7 +29,7 @@ describe('GroupedAccordions', () => {
     const toggeLink = wrapper.find('.toggle-panels');
 
     toggeLink.simulate('click', event);
-    expect(wrapper.find('.usa-accordion-content').length).toEqual(1);
+    expect(wrapper.find('.usa-accordion-content').length).toEqual(2);
 
     toggeLink.simulate('click', event);
     expect(wrapper.find('.usa-accordion-content').length).toEqual(0);

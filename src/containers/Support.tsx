@@ -6,11 +6,11 @@ import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
 
 export interface ISection {
-  component: React.ComponentType
-  description: string;
-  id: string;
-  name: string;
-}
+  readonly component: React.ComponentType
+  readonly description: string;
+  readonly id: string;
+  readonly name: string;
+};
 
 const sections: ISection[] = [
   {
