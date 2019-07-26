@@ -97,13 +97,13 @@ const headerProps = {
 };
 
 interface ISupportQuestionsProps {
-  title: string,
-  questions: ISupportQuestion[],
+  readonly title: string;
+  readonly questions: ISupportQuestion[];
 }
 
 interface ISupportQuestion {
-  answer: string | JSX.Element,
-  question: string,
+  readonly answer: string | JSX.Element;
+  readonly question: string;
 }
 
 const SupportQuestions = (props: ISupportQuestionsProps) => {

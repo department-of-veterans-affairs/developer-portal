@@ -9,7 +9,7 @@ const headerProps = {
 };
 
 interface ISupportOverviewProps {
-  sections: ISection[];
+  readonly sections: ISection[];
 }
 
 export default class SupportOverview extends React.Component<ISupportOverviewProps> {

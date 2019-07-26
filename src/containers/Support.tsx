@@ -6,7 +6,7 @@ import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
 
 export interface ISection {
-  readonly component: React.ComponentType
+  readonly component: React.ComponentType;
   readonly description: string;
   readonly id: string;
   readonly name: string;
@@ -54,7 +54,7 @@ export default class Support extends React.Component {
     return (
       <div className="Explore">
         <section className="usa-section">
-          <div className="Explore-main usa-grid">
+          <div className={classNames("Explore-main", "usa-grid")}>
             <div className={classNames("vadp-side-nav", "usa-width-one-third", "sticky")} role="navigation" aria-label="Support Side Nav">
               <SideNav />
             </div>

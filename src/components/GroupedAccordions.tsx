@@ -6,17 +6,17 @@ import './GroupedAccordions.scss';
 declare const window: { VetsGov: object };
 
 export interface IPanelContent {
-  body: string | JSX.Element,
-  title: string
+  readonly body: string | JSX.Element;
+  readonly title: string;
 }
 
 interface IGroupedAccordionsProps {
-  panelContents: IPanelContent[],
-  title: string
+  readonly panelContents: IPanelContent[];
+  readonly title: string;
 }
 
 interface IGroupedAccordionsStates {
-  allCollapsed: boolean,
+  allCollapsed: boolean;
 }
 
 export default class GroupedAccordions extends React.Component<IGroupedAccordionsProps, IGroupedAccordionsStates> {
@@ -45,14 +45,14 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
       <section className="va-grouped-accordion">
         <div className="va-grouped-accordion-header">
           <h2>{this.props.title}</h2>
-          <a className="toggle-panels" href='javascript:void(0)' onClick={(event) => this.handleExpandCollapse(event)}>{this.checkState()}</a>
+          <a className="toggle-panels" href='javascript:void(0)' onClick={(event) => this.handleExpandCollapse(event)}>{this.determineLabelFromState()}</a>
         </div>
         {this.createPanels()}
       </section>
     );
   }
 
-  private checkState() {
+  private determineLabelFromState() {
     return this.state.allCollapsed ? 'Expand all' : 'Collapse all';
   }
 
