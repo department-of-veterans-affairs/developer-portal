@@ -12,7 +12,7 @@ const contents = [
   {
     body: 'The answer 2',
     title: 'The question 2?',
-  }
+  },
 ];
 
 const event = { preventDefault: jest.fn() };
