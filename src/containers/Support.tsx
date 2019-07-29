@@ -49,7 +49,6 @@ export function SideNav() {
 }
 
 export default class Support extends React.Component {
-
   public render() {
     return (
       <div className="Explore">

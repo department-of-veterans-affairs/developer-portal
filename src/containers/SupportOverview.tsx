@@ -13,15 +13,12 @@ interface ISupportOverviewProps {
 }
 
 export default class SupportOverview extends React.Component<ISupportOverviewProps> {
-  
   public render() {
-
     const cardsSections = this.props.sections.map((section: ISection) => {
       return (
         <ApiCard name={section.name} description={section.description} url={`/support/${section.id}`} vaInternalOnly={false} key={section.id} />
       );
     });
-
     return (
       <section role="region" aria-label="Support Overview" className="usa-section">
         <PageHeader {...headerProps} />

@@ -1,4 +1,5 @@
 import CollapsiblePanel from '@department-of-veterans-affairs/formation/CollapsiblePanel';
+import * as classNames from 'classnames';
 import * as React from 'react'
 
 import './GroupedAccordions.scss';
@@ -19,9 +20,13 @@ interface IGroupedAccordionsStates {
   allCollapsed: boolean;
 }
 
+interface ICollapsiblePanelStates {
+  open: boolean;
+}
+
 export default class GroupedAccordions extends React.Component<IGroupedAccordionsProps, IGroupedAccordionsStates> {
 
-  private panelRefs: any[];
+  private panelRefs: Array<React.RefObject<React.Component<{}, ICollapsiblePanelStates>>>;
 
   constructor(props: IGroupedAccordionsProps) {
     super(props);
@@ -45,7 +50,7 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
       <section className="va-grouped-accordion">
         <div className="va-grouped-accordion-header">
           <h2>{this.props.title}</h2>
-          <button className="toggle-panels btn-link" onClick={(event) => this.handleExpandCollapse(event)}>{this.determineLabelFromState()}</button>
+          <button className={classNames("toggle-panels", "btn-link")} onClick={(event) => this.handleExpandCollapse(event)}>{this.determineLabelFromState()}</button>
         </div>
         {this.createPanels()}
       </section>
@@ -58,8 +63,10 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
 
   private createPanels() {
     return this.props.panelContents.map((c: IPanelContent, index: number) => {
+      const panelRef = React.createRef<React.Component<{}, ICollapsiblePanelStates>>();
+      this.panelRefs.push(panelRef);
       return (
-        <CollapsiblePanel ref={(n: any) => this.panelRefs.push(n)} panelName={c.title} startOpen={!this.state.allCollapsed} key={index}>
+        <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={!this.state.allCollapsed} key={index}>
           {c.body}
         </CollapsiblePanel>
       )
@@ -69,8 +76,10 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
   private handleExpandCollapse(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault();
     this.setState((prevState: IGroupedAccordionsStates) => ({ allCollapsed: !prevState.allCollapsed }), () => {
-      this.panelRefs.filter(r => r && (r.state.open === this.state.allCollapsed)).map(r => {
-        r.setState({ open: !this.state.allCollapsed })
+      this.panelRefs.filter(r => r.current && (r.current.state.open === this.state.allCollapsed)).forEach(r => {
+        if (r.current) {
+          r.current.setState({ open: !this.state.allCollapsed })
+        }
       });
     });
   }

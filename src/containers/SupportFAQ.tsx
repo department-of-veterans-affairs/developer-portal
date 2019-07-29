@@ -120,7 +120,6 @@ const SupportQuestions = (props: ISupportQuestionsProps) => {
 }
 
 export default class SupportFAQ extends React.Component {
-
   public render() {
     return (
       <section role="region" aria-label="Support FAQ" className="usa-section">
