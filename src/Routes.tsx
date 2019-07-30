@@ -18,6 +18,7 @@ import {
   OAuth,
   ReleaseNotes,
   RoutedContent,
+  Support,
   WhatsNew,
 } from './containers';
 
@@ -55,6 +56,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/oauth" component={OAuth} />
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
         <Route path="/whats-new" component={WhatsNew} />
+        <Route path="/support" component={Support} />
       </Switch>
     </PageContent>
   );

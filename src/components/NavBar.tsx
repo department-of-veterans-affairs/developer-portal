@@ -15,6 +15,8 @@ import { Search } from './Search';
 import { apiCategoryOrder, apiDefs } from '../apiDefs';
 import { OVER_LARGE_SCREEN_QUERY, UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
 
+const newSupportEnabled = process.env.REACT_APP_NEW_SUPPORT_ENABLED === "true";
+
 interface INavBarProps {
   hideLinks: boolean;
 }
@@ -114,11 +116,18 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                 </NavLink>
               </li>
               <li className="main-nav-item">
-                <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose" className="usa-nav-link"
-                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
-                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
-                  Support
-                </a>
+                {newSupportEnabled ?
+                  <NavLink to="/support" className="usa-nav-link" activeClassName="default-nav-link"
+                    isActive={this.checkActiveNavLink}
+                    onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                    onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                    Support
+                  </NavLink>
+                :
+                  <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose" className="usa-nav-link">
+                    Support
+                  </a>
+                }
               </li>
             </ul>
           </div>
