@@ -188,17 +188,15 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <label htmlFor="health">VA Health API</label>
               </div>
 
-              <Flag key='community_care' name='hosted_apis.community_care'>
-                <div className="form-checkbox">
-                  <input
-                    type="checkbox"
-                    id="communityCare"
-                    name="communityCare"
-                    checked={apis.communityCare}
-                    onChange={props.toggleCommunityCare} />
-                  <label htmlFor="communityCare">Community Care Eligibility API</label>
-                </div>
-              </Flag>
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="communityCare"
+                  name="communityCare"
+                  checked={apis.communityCare}
+                  onChange={props.toggleCommunityCare} />
+                <label htmlFor="communityCare">Community Care Eligibility API</label>
+              </div>
 
               <div className="form-checkbox">
                 <input
