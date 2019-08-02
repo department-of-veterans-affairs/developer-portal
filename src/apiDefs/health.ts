@@ -8,6 +8,7 @@
 */
 
 import { IApiDescription } from ".";
+import { isHostedApiEnabled } from '../App';
 import {
   CommunityCareApiIntro,
   FhirArgonautApiIntro,
@@ -18,7 +19,7 @@ import {
 } from "../content/apiDocs";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
-const isNewFhirApiEnabled =  process.env.REACT_APP_FHIR_API_ENABLED === 'true';
+const isNewFhirApiEnabled =  isHostedApiEnabled('fhir', true);
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
 const argonautDesc = "VA's Argonaut resources";
 const healthApis : IApiDescription[] = [
