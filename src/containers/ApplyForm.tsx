@@ -1,11 +1,7 @@
 import * as React from 'react';
-
 import { connect } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-
 import { Link } from 'react-router-dom';
-
-import { Flag } from 'flag';
+import { ThunkDispatch } from 'redux-thunk';
 
 import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
 import ErrorableCheckbox from '@department-of-veterans-affairs/formation/ErrorableCheckbox';
