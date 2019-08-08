@@ -5,9 +5,10 @@
   Using the primary swagger api would break staging. The swagger url is shown in the UI. In order to avoid the
   confusion of having a `dev-api.va.gov` url shown in production `api.va.gov` (the secondary swagger api) is
   used in all developer portal environments for health documentation.
-*/
-
+  */
+ 
 import { IApiDescription } from ".";
+import { isHostedApiEnabled } from '../apiDefs/env';
 import {
   CommunityCareApiIntro,
   FhirArgonautApiIntro,
@@ -15,10 +16,10 @@ import {
   FhirR4ApiIntro,
   HealthArgonautDeprecation,
   UrgentCareApiIntro,
-} from "../content/apiDocs";
+} from '../content/apiDocs';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
-const isNewFhirApiEnabled =  process.env.REACT_APP_FHIR_API_ENABLED === 'false' || true;
+const isNewFhirApiEnabled =  isHostedApiEnabled('fhir', true);
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
 const argonautDesc = "VA's Argonaut resources";
 const healthApis : IApiDescription[] = [

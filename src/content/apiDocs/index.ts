@@ -1,4 +1,5 @@
-import { IApiCategoryContent } from '../../apiDefs/index';
+import { IApiCategoryContent } from '../../apiDefs';
+import { isHostedApiEnabled } from '../../apiDefs/env';
 import BenefitsIntro from './benefits/benefitsIntro.mdx';
 import BenefitsOverview from './benefits/benefitsOverview.mdx';
 import FacilitiesIntro from './facilities/facilitiesIntro.mdx';
@@ -16,7 +17,7 @@ import UrgentCareApiIntro from './health/urgentCareApiIntro.mdx';
 import VerificationIntro from './verification/verificationIntro.mdx';
 import VerificationOverview from './verification/verificationOverview.mdx';
 
-const isNewFhirApiEnabled = process.env.REACT_APP_FHIR_API_ENABLED === 'false' || true;
+const isNewFhirApiEnabled = isHostedApiEnabled('fhir', true);
 
 const benefitsContent: IApiCategoryContent = {
   intro: BenefitsIntro,
