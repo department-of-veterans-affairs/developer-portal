@@ -4,7 +4,8 @@ import { RouteComponentProps, Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
-import { apiCategoryOrder, apiDefs, apiEnvFlags } from './apiDefs';
+import { apiCategoryOrder, apiDefs } from './apiDefs';
+import { apiEnvFlags } from './apiDefs/env';
 import { PageContent } from './components/PageContent';
 import {
   ApplyForm,

@@ -4,7 +4,7 @@ import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
-import { apiEnvFlags } from './apiDefs';
+import { apiEnvFlags } from './apiDefs/env';
 import { Footer, NavBar } from './components';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
