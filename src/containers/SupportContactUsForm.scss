@@ -1,0 +1,33 @@
+.va-contact-us-form {
+
+  legend {
+    font-size: 2rem;
+  }
+  
+  .usa-grid {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .va-api-checkboxes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    label {
+      margin-top: 0;
+    }
+  }
+
+  .va-description {
+    margin-bottom: 5px;
+    
+    label {
+      max-width: 100%;
+    }
+
+    textarea {
+      max-width: 100%;
+    }
+  }
+}

@@ -19,6 +19,7 @@ export const testPaths = [
   '/whats-new',
   '/support',
   '/support/faq',
+  '/support/contact-us',
 ];
 
 export const metadataTestPaths = [''];
