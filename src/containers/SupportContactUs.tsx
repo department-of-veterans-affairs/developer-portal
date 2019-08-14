@@ -47,7 +47,7 @@ export default class SupportContactUs extends React.Component<{}, ISupportContac
 
   private formSubmission(formData: ISupportContactUsFormState) {
     this.setState({ sending: true }, () => {
-      console.log('Form data', formData);
+      // TODO: call lambda function
       this.setState({ sending: false });
     })
   }
