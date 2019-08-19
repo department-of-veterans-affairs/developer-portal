@@ -15,12 +15,6 @@
     }
   }
 
-  @include media($large-screen) {
-    .usa-nav-secondary {
-      top: -7.25rem;
-    }
-  }
-
   .usa-navbar {
     max-width: none;
 

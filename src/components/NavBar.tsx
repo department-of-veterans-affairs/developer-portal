@@ -53,13 +53,20 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
     return (
       <header className="usa-header usa-header-extended" role="banner">
         <Banner />
-        <div className="usa-navbar">
+        <div className="usa-navbar vads-u-display--flex vads-u-flex-align-items--center">
           <div className="usa-logo" id="extended-logo">
             <em className="usa-logo-text">
               <Link to="/" title="Digital VA home page">
                 <strong>VA</strong> | Developer Portal
               </Link>
             </em>
+          </div>
+          <div className="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-left--auto">
+            <a className="vads-u-margin-left--auto vads-u-color--white" href="https://valighthouse.statuspage.io">API Status</a>
+            <div className="vads-u-display--flex">
+              <Link to="/apply" className="usa-button">Get Started</Link>
+              <Search />
+            </div>
           </div>
           <button className="usa-menu-btn" onClick={this.toggleMenuVisible}>Menu</button>
         </div>
@@ -68,18 +75,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             <button className="usa-nav-close" onClick={this.toggleMenuVisible}>
               <img src={closeButton} alt="Close button" />
             </button>
-            <div className="usa-nav-secondary">
-              <ul className="usa-unstyled-list">
-                <li className="secondary-nav-item">
-                  <Link to="/apply" className="usa-button">Get Started</Link>
-                </li>
-                <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
-                  <li className="secondary-nav-item">
-                    <Search />
-                  </li>
-                </MediaQuery>
-              </ul>
-            </div>
             <ul className="usa-nav-primary usa-accordion">
               <li className="main-nav-item">
                 <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
