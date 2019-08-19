@@ -5,7 +5,8 @@
 
   .usa-logo {
     @include media($large-screen) {
-      margin-top: 4rem;
+      margin-top: 0;
+      margin-bottom: 0;
     }
 
     a {
