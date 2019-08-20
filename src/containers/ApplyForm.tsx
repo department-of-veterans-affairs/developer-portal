@@ -103,7 +103,9 @@ class ApplyForm extends React.Component<IApplyProps> {
 
     return (
       <div role="region" aria-labelledby="apply-header" className="usa-grid api-application">
-        <ApplyHeader className="va-apply-header" />
+        <div id="apply-header">
+          <ApplyHeader className="va-apply-header" />
+        </div>
         <div className="usa-grid">
           <div className="usa-width-two-thirds">
             <form className="usa-form">
