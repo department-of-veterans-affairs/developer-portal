@@ -100,14 +100,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                 {this.state.visibleSubNavs.documentation && this.renderDocumentationSubNav()}
               </li>
               <li className="main-nav-item">
-                <NavLink to="/whats-new" className="usa-nav-link" activeClassName="default-nav-link"
-                  isActive={this.checkActiveNavLink}
-                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
-                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
-                  What&rsquo;s New
-                </NavLink>
-              </li>
-              <li className="main-nav-item">
                 <NavLink to="/release-notes" className="usa-nav-link" activeClassName="default-nav-link"
                   isActive={this.checkActiveNavLink}
                   onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
@@ -128,6 +120,14 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                     Support
                   </a>
                 }
+              </li>
+              <li className="main-nav-item">
+                <NavLink to="/whats-new" className="usa-nav-link" activeClassName="default-nav-link"
+                  isActive={this.checkActiveNavLink}
+                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                  News
+                </NavLink>
               </li>
             </ul>
           </div>

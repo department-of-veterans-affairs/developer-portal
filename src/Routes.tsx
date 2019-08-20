@@ -15,11 +15,11 @@ import {
   DisabledApplyForm,
   ExploreDocs,
   Home,
+  News,
   OAuth,
   ReleaseNotes,
   RoutedContent,
   Support,
-  WhatsNew,
 } from './containers';
 
 export function topLevelRoutes(props: RouteComponentProps<void>) {
@@ -55,7 +55,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
         <Route path="/oauth" component={OAuth} />
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-        <Route path="/whats-new" component={WhatsNew} />
+        <Route path="/whats-new" component={News} />
         <Route path="/support" component={Support} />
       </Switch>
     </PageContent>

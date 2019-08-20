@@ -4,7 +4,7 @@ import { NavHashLink } from 'react-router-hash-link';
 import { NavLink } from 'react-router-dom';
 
 import PageHeader from '../components/PageHeader';
-import WhatsNewPage from '../content/whats-new.mdx';
+import NewsContent from '../content/news.mdx';
 
 import '../components/ApiCard';
 import './Explore.scss';
@@ -69,7 +69,7 @@ export function SideNav() {
   );
 }
 
-export class WhatsNew extends React.Component {
+export class News extends React.Component {
   private navRef = React.createRef<HTMLDivElement>();
 
   private cardsSections = sections.map((section) => {
@@ -88,23 +88,23 @@ export class WhatsNew extends React.Component {
   public render() {
     const headerProps = {
       description: "This page is where you’ll find interesting press releases, news, or media that relates to the API program and the Developer Portal",
-      header: "What\u2019s New?",
+      header: "News",
     };
 
     return (
       <div className="Explore">
         <section className="usa-section">
           <div className="Explore-main usa-grid">
-            <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="What's New Side Nav">
+            <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="News Side Nav">
               <SideNav />
             </div>
             <div className="usa-width-two-thirds">
-              <section role="region" aria-label="What's New" className="usa-section">
+              <section role="region" aria-label="News" className="usa-section">
                 <PageHeader description={headerProps.description} header={headerProps.header} />
                 <div className="va-api-container">
                   {this.cardsSections}
                 </div>
-                <WhatsNewPage />
+                <NewsContent />
               </section>
             </div>
           </div>
@@ -114,5 +114,5 @@ export class WhatsNew extends React.Component {
   }
 }
 
-export default WhatsNew;
+export default News;
 
