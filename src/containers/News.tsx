@@ -11,19 +11,19 @@ import './Explore.scss';
 
 const sections = [
   {
-    description: 'Press Releases from the Department of Veterans Affairs',
-    id: 'va-press-releases',
-    name: 'VA Press Releases',
+    description: 'Press releases from the Department of Veterans Affairs related to Lighthouse.',
+    id: 'news-releases',
+    name: 'News releases',
   },
   {
-    description: 'News and articles related to developers, APIs, the Developer Portal, and Veterans',
-    id: 'news',
-    name: 'News',
+    description: 'Articles related to developers, APIs, the Developer Portal and Veterans.',
+    id: 'articles',
+    name: 'Articles',
   },
   {
-    description: 'Media related to developers, APIs, Veterans, and the Department of Veterans Affairs',
-    id: 'media',
-    name: 'Media',
+    description: 'Audio and video related to developers, APIs, Veterans, and the Department of Veterans Affairs.',
+    id: 'digital-media',
+    name: 'Digital media',
   },
 ];
 
