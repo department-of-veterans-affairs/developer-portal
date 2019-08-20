@@ -6,7 +6,8 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
     "@babel/register": "^7.0.0",
-    "@department-of-veterans-affairs/formation": "^1.18.0",
+    "@department-of-veterans-affairs/formation": "6.7.1",
+    "@department-of-veterans-affairs/formation-react": "4.9.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
     "@fortawesome/free-brands-svg-icons": "^5.1.0",
     "@fortawesome/free-solid-svg-icons": "^5.1.0",

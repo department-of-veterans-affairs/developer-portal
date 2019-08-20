@@ -1,4 +1,4 @@
-import CollapsiblePanel from '@department-of-veterans-affairs/formation/CollapsiblePanel';
+import CollapsiblePanel from '@department-of-veterans-affairs/formation-react/CollapsiblePanel';
 import * as classNames from 'classnames';
 import * as React from 'react'
 

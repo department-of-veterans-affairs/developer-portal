@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import ErrorableTextInput from '@department-of-veterans-affairs/formation/ErrorableTextInput';
+import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 
 import { validateEmail } from '../actions';
 import { IErrorableInput } from '../types';
