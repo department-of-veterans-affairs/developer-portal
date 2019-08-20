@@ -13,7 +13,7 @@ import * as actions from '../actions';
 import { includesOauthAPI } from '../apiDefs';
 import { IApplication, IErrorableInput, IRootState } from '../types';
 
-import ApplyHeader from '../content/applyHeader.mdx';
+import ApplyHeader from './ApplyHeader';
 
 import './Apply.scss';
 
@@ -103,9 +103,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
     return (
       <div role="region" aria-labelledby="apply-header" className="usa-grid api-application">
-        <div id="apply-header">
-          <ApplyHeader className="va-apply-header" />
-        </div>
+        <ApplyHeader />
         <div className="usa-grid">
           <div className="usa-width-two-thirds">
             <form className="usa-form">
