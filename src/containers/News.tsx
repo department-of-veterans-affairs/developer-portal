@@ -87,7 +87,7 @@ export class News extends React.Component {
 
   public render() {
     const headerProps = {
-      description: "This page is where you’ll find interesting press releases, articles, or media that relates to the VA Lighthouse program and the Developer Portal",
+      description: "This page is where you’ll find interesting press releases, articles, or media that relate to the VA Lighthouse program and the Developer Portal.",
       header: "News",
     };
 
