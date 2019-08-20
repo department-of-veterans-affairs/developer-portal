@@ -4,28 +4,12 @@ import { NavHashLink } from 'react-router-hash-link';
 import { NavLink } from 'react-router-dom';
 
 import PageHeader from '../components/PageHeader';
-import NewsContent from '../content/news.mdx';
+import NewsData from '../content/news.yml';
 
 import '../components/ApiCard';
 import './Explore.scss';
 
-const sections = [
-  {
-    description: 'Press releases from the Department of Veterans Affairs related to Lighthouse.',
-    id: 'news-releases',
-    name: 'News releases',
-  },
-  {
-    description: 'Articles related to developers, APIs, the Developer Portal and Veterans.',
-    id: 'articles',
-    name: 'Articles',
-  },
-  {
-    description: 'Audio and video related to developers, APIs, Veterans, and the Department of Veterans Affairs.',
-    id: 'digital-media',
-    name: 'Digital media',
-  },
-];
+const sections = NewsData.sections.map((section: any) => ({ ...section, id: section.title.replace(/\s+/g, '-').toLowerCase()}));
 
 function LocalNavHashLink(props: any): JSX.Element {
   const activeCheck = (match: any, location: any): boolean => {
@@ -49,10 +33,10 @@ export function SideNav() {
     return '' === location.hash;
   };
 
-  const navSections = sections.map((section) => {
+  const navSections = sections.map((section: any) => {
     return (
       <li key={section.id}>
-        <LocalNavHashLink idSlug={section.id} to={`#${section.id}`}>{section.name}</LocalNavHashLink>
+        <LocalNavHashLink idSlug={section.id} to={`#${section.id}`}>{section.title}</LocalNavHashLink>
       </li>
     );
   });
@@ -72,11 +56,11 @@ export function SideNav() {
 export class News extends React.Component {
   private navRef = React.createRef<HTMLDivElement>();
 
-  private cardsSections = sections.map((section) => {
+  private cardsSections = sections.map((section: any) => {
     return (
       <NavHashLink key={section.id} to={`#${section.id}`} className="va-api-card">
         <h3 className="va-api-name">
-          {section.name}
+          {section.title}
         </h3>
         <div className="va-api-description">
           {section.description}
@@ -91,6 +75,24 @@ export class News extends React.Component {
       header: "News",
     };
 
+
+    const newsContent = sections.map((section: any) => {
+      return (
+        <section key={section.id} id={section.id}>
+          <h2>{section.title}</h2>
+          {section.items.map((item: any) => {
+            return (
+              <p key={item.url}>
+                <strong>{item.date}{item.source ? ` | ${item.source}` : null}</strong>
+                <br />
+                <a href={item.url}>{item.title}</a>
+              </p>
+            )
+          })}
+        </section>
+      )
+    })
+
     return (
       <div className="Explore">
         <section className="usa-section">
@@ -104,7 +106,7 @@ export class News extends React.Component {
                 <div className="va-api-container">
                   {this.cardsSections}
                 </div>
-                <NewsContent />
+                {newsContent}
               </section>
             </div>
           </div>
