@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 
-import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
-import ErrorableCheckbox from '@department-of-veterans-affairs/formation/ErrorableCheckbox';
-import ErrorableTextArea from '@department-of-veterans-affairs/formation/ErrorableTextArea';
-import ErrorableTextInput from '@department-of-veterans-affairs/formation/ErrorableTextInput';
-import ProgressButton from '@department-of-veterans-affairs/formation/ProgressButton';
+import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
+import ErrorableCheckbox from '@department-of-veterans-affairs/formation-react/ErrorableCheckbox';
+import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
+import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
+import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 
 import * as actions from '../actions';
 import { includesOauthAPI } from '../apiDefs';
