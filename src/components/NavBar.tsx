@@ -53,7 +53,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
     return (
       <header className="usa-header usa-header-extended" role="banner">
         <Banner />
-        <div className="usa-navbar vads-u-display--flex vads-u-flex-align-items--center">
+        <div className="header-content">
           <div className="usa-logo" id="extended-logo">
             <em className="usa-logo-text">
               <Link to="/" title="Digital VA home page">
@@ -61,12 +61,14 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
               </Link>
             </em>
           </div>
-          <div className="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-left--auto">
-            <a className="vads-u-margin-left--auto vads-u-color--white" href="https://valighthouse.statuspage.io">API Status</a>
-            <div className="vads-u-display--flex">
-              <Link to="/apply" className="usa-button">Get Started</Link>
+          <div className="header-right-container">
+          <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
+            <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
+            <div className="header-right-content">
+              <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
               <Search />
             </div>
+          </MediaQuery>
           </div>
           <button className="usa-menu-btn" onClick={this.toggleMenuVisible}>Menu</button>
         </div>
@@ -75,6 +77,15 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             <button className="usa-nav-close" onClick={this.toggleMenuVisible}>
               <img src={closeButton} alt="Close button" />
             </button>
+            <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+              <div className="usa-nav-secondary">
+                <ul className="usa-unstyled-list">
+                  <li className="secondary-nav-item">
+                    <Link to="/apply" className="usa-button">Get Started</Link>
+                  </li>
+                </ul>
+              </div>
+            </MediaQuery>
             <ul className="usa-nav-primary usa-accordion">
               <li className="main-nav-item">
                 <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>

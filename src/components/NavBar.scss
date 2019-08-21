@@ -1,5 +1,40 @@
 @import "../base";
 
+.header-content {
+  max-width: none;
+
+  @include media($large-screen) {
+    padding-right: 3rem;
+    padding-left: 3rem;
+    height: 110px;
+  }
+
+  display: flex;
+  align-items: center;
+
+  a, a:visited {
+    color: $color-white;
+  }
+
+  .api-status-link {
+    margin-left: auto;
+  }
+}
+
+.header-right-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+}
+
+.header-right-content {
+  display: flex;
+}
+
+#get-started-button {
+  margin-right: 2rem;
+}
+
 .usa-header.usa-header-extended {
   background: $color-blue-darkest;
 
@@ -12,14 +47,6 @@
     a {
       color: #FFFFFF;
       font-weight: 300;
-    }
-  }
-
-  .usa-navbar {
-    max-width: none;
-
-    @include media($large-screen) {
-      height: 110px;
     }
   }
 
