@@ -33,6 +33,21 @@ describe('Visual regression test', async () => {
 
     await checkScreenshots(page);
   });
+
+  it('renders the header properly', async() => {
+    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
+
+    for (const viewport of viewports) {
+      await page.setViewport(viewport);
+      await new Promise((resolve, reject) => setTimeout(resolve, 500));
+      const header = await page.$('header');
+      if(header) {
+        const screenshot = await header.screenshot();
+        expect(screenshot).toMatchImageSnapshot();
+      }
+    }
+  });
+
   for (const path of paths) {
     it(`renders ${path} properly`, async () => {
       // Mock swagger requests on docs pages so those pages aren't blank
