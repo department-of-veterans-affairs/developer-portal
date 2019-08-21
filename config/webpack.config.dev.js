@@ -183,6 +183,7 @@ module.exports = {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  sourceMap: true,
                 },
               },
               {
@@ -217,7 +218,12 @@ module.exports = {
             include: [paths.appSrc, paths.appNodeModules],
             use: [
               require.resolve('style-loader'),
-              require.resolve('css-loader'),
+              {
+                loader: require.resolve('css-loader'),
+                options: {
+                  sourceMap: true,
+                },
+              },
               {
                 loader: require.resolve('postcss-loader'),
                 options: {
@@ -236,10 +242,14 @@ module.exports = {
                       flexbox: 'no-2009',
                     }),
                   ],
+                  sourceMap: true,
                 },
               },
               {
-                loader: require.resolve('sass-loader')
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: true,
+                },
               },
             ],
           },
