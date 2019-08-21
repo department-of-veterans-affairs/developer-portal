@@ -5,6 +5,9 @@
 $font-path: '~uswds/src/fonts';
 $image-path: '~uswds/src/img';
 
+$formation-image-path: "~@department-of-veterans-affairs/formation/assets/img";
+$formation-font-path: "~@department-of-veterans-affairs/formation/assets/fonts";
+
 // Colors
 $color-gray-cool-light: #dce4ef;
 $color-primary-alt-light: #9bdaf1;
@@ -25,6 +28,7 @@ $large-screen: 951px;
 // Imports
 // =======
 @import '~uswds/src/stylesheets/uswds';
+@import '~@department-of-veterans-affairs/formation/sass/full';
 
 // USWDS Overrides 🚗
 // ==================
