@@ -6,29 +6,13 @@ import { NavLink } from 'react-router-dom';
 import toHtmlId from '../toHtmlId';
 
 import PageHeader from '../components/PageHeader';
+import { LocalNavHashLink } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 
 import '../components/ApiCard';
 import './Explore.scss';
 
 const sections = NewsData.sections.map((section: any) => ({ ...section, id: toHtmlId(section.title) }));
-
-function LocalNavHashLink(props: any): JSX.Element {
-  const activeCheck = (match: any, location: any): boolean => {
-    return props.to === location.hash;
-  };
-  const toWithoutHash = props.to.replace(/^#/, '');
-  let id = `hash-link`;
-  if (props.idSlug != null) {
-    id = `${id}-${props.idSlug}`;
-  }
-  id = `${id}-${toWithoutHash}`;
-  return (
-    <NavHashLink className="side-nav-category-link" activeClassName="usa-current" id={id} isActive={activeCheck} to={props.to}>
-      {props.children}
-    </NavHashLink>
-  );
-};
 
 export function SideNav() {
   const activeCheck = (match: any, location: any): boolean => {
