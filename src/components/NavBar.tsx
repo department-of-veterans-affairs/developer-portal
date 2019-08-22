@@ -62,13 +62,13 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
             </em>
           </div>
           <div className="header-right-container">
-          <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
-            <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
-            <div className="header-right-content">
-              <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
-              <Search />
-            </div>
-          </MediaQuery>
+            <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
+              <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
+              <div className="header-right-content">
+                <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
+                <Search />
+              </div>
+            </MediaQuery>
           </div>
           <button className="usa-menu-btn" onClick={this.toggleMenuVisible}>Menu</button>
         </div>

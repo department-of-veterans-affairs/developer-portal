@@ -10,14 +10,17 @@ const viewports = [
   { width: 375, height: 800 },
 ];
 
-const checkScreenshots = async (page: Page) => {
+const checkScreenshots = async (page: Page, selector: string) => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
     await new Promise((resolve, reject) => setTimeout(resolve, 500));
-    const screenshot = await page.screenshot({
-      fullPage: true,
-    });
-    expect(screenshot).toMatchImageSnapshot();
+    const content = await page.$(selector)
+    if(content) {
+      const screenshot = await content.screenshot({});
+      expect(screenshot).toMatchImageSnapshot();
+    } else {
+      fail(`Selector ${selector} not found on the page.`);
+    }
   }
 };
 
@@ -31,22 +34,18 @@ describe('Visual regression test', async () => {
     // Hide problematic video on homepage
     await page.evaluate('document.querySelector("iframe").style="visibility: hidden;"');
 
-    await checkScreenshots(page);
+    await checkScreenshots(page, '.main');
   });
 
   it('renders the header properly', async() => {
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
-
-    for (const viewport of viewports) {
-      await page.setViewport(viewport);
-      await new Promise((resolve, reject) => setTimeout(resolve, 500));
-      const header = await page.$('header');
-      if(header) {
-        const screenshot = await header.screenshot();
-        expect(screenshot).toMatchImageSnapshot();
-      }
-    }
+    await checkScreenshots(page, 'header');
   });
+
+  it('renders the footer properly', async() => {
+    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
+    await checkScreenshots(page, 'footer');
+  })
 
   for (const path of paths) {
     it(`renders ${path} properly`, async () => {
@@ -58,7 +57,7 @@ describe('Visual regression test', async () => {
       }
 
       await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
-      await checkScreenshots(page);
+      await checkScreenshots(page, '.main');
     });
   }
 });
