@@ -3,13 +3,15 @@ import { NavHashLink } from 'react-router-hash-link';
 
 import { NavLink } from 'react-router-dom';
 
+import toHtmlId from '../toHtmlId';
+
 import PageHeader from '../components/PageHeader';
 import NewsData from '../content/news.yml';
 
 import '../components/ApiCard';
 import './Explore.scss';
 
-const sections = NewsData.sections.map((section: any) => ({ ...section, id: section.title.replace(/\s+/g, '-').toLowerCase()}));
+const sections = NewsData.sections.map((section: any) => ({ ...section, id: toHtmlId(section.title) }));
 
 function LocalNavHashLink(props: any): JSX.Element {
   const activeCheck = (match: any, location: any): boolean => {
