@@ -1,21 +1,20 @@
-// @import '../base';
-// @import './Explore';
-// @import '../components/ApiCard';
+// These styles are lifted from src/containers/Explore.scss and should be
+// extracted since we want them on all pages except the homepage
+.News {
+  &.usa-section {
+    padding-top: 5rem;
+    padding-bottom: 3rem;
+  }
 
-// .News {
-//    .Explore-main.usa-grid {
-//     max-width: 1200px;
-//     margin-left: 0;
-//   }
+  .usa-section {
+    padding-top: 0;
 
-//   // .va-api-container {
-//   //   display: flex;
-//   //   flex-flow: row wrap;
+    > div {
+      margin-bottom: 3rem;
 
-//   //   a.va-api-card {
-//   //     @media screen and (max-width: 767px) {
-//   //       width: 100%;
-//   //     }
-//   //   }
-//   // }
-// }
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

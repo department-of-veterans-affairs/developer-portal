@@ -10,7 +10,9 @@ import { LocalNavHashLink } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 
 import '../components/ApiCard';
-import './Explore.scss';
+// Temporarily import the sidenav styles until we extract it into a component
+import '../components/SideNav.scss'
+import './News.scss'
 
 const sections = NewsData.sections.map((section: any) => ({ ...section, id: toHtmlId(section.title) }));
 
@@ -80,23 +82,21 @@ export class News extends React.Component {
     })
 
     return (
-      <div className="Explore">
-        <section className="usa-section">
-          <div className="Explore-main usa-grid">
-            <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="News Side Nav">
-              <SideNav />
-            </div>
-            <div className="usa-width-two-thirds">
-              <section role="region" aria-label="News" className="usa-section">
-                <PageHeader description={headerProps.description} header={headerProps.header} />
-                <div className="va-api-container">
-                  {this.cardsSections}
-                </div>
-                {newsContent}
-              </section>
-            </div>
+      <div className="News usa-section">
+        <div className="usa-grid">
+          <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="News Side Nav">
+            <SideNav />
           </div>
-        </section>
+          <div className="usa-width-two-thirds">
+            <section role="region" aria-label="News" className="usa-section">
+              <PageHeader description={headerProps.description} header={headerProps.header} />
+              <div className="va-api-container">
+                {this.cardsSections}
+              </div>
+              {newsContent}
+            </section>
+          </div>
+        </div>
       </div>
     );
   }

@@ -10,3 +10,69 @@
     display: table;
   }
 }
+
+.vadp-side-nav {
+  padding-right: 3rem;
+
+  .usa-sidenav-list {
+    border: 2px solid #dbdbdd;
+    background-color: white;
+
+    > li {
+      a.side-nav-category-link {
+        padding-left: 1.1rem;
+      }
+
+      a.side-nav-api-link {
+        padding-left: 3.3rem;
+      }
+
+      a.side-nav-category-link.usa-current {
+        border: none;
+        border-left: 5px solid #2f70b5;
+      }
+
+      a.usa-current + ul.usa-sidenav-sub_list {
+        display: block;
+
+        ul.usa-sidenav-sub_list > li > a {
+          padding-left: 5rem;
+        }
+      }
+
+      a + ul.usa-sidenav-sub_list {
+        display: none;
+      }
+    }
+  }
+
+  .usa-sidenav-sub_list {
+    padding-left: 0;
+
+    a.side-nav-api-link {
+      padding-left: 3rem;
+    }
+  }
+
+  .usa-sidenav-list > li,
+  .usa-sidenav-sub_list > li {
+    border-top: 2px solid #dbdbdd;
+
+    a {
+      padding-top: 1.2rem;
+      padding-bottom: 1.2rem;
+    }
+
+    a {
+      color: #222;
+    }
+
+    a.usa-current {
+      color: #383838;
+    }
+
+    a:hover {
+      background-color: #dbdbdd;
+    }
+  }
+}
