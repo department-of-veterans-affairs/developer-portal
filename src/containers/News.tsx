@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import toHtmlId from '../toHtmlId';
 
 import PageHeader from '../components/PageHeader';
-import NewsData from '../content/news.yml';
+import * as NewsData from '../content/news.yml';
 
 import '../components/ApiCard';
 import './Explore.scss';

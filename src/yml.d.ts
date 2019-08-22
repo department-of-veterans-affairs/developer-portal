@@ -1,1 +1,1 @@
-declare module "*.yml";
+declare module '*.yml';
