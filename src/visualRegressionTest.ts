@@ -38,12 +38,12 @@ describe('Visual regression test', async () => {
   });
 
   it('renders the header properly', async() => {
-    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
+    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
     await checkScreenshots(page, 'header');
   });
 
   it('renders the footer properly', async() => {
-    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
+    await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
     await checkScreenshots(page, 'footer');
   })
 
