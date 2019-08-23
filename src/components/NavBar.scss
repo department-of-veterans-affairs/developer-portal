@@ -46,15 +46,12 @@
     @include media($large-screen) {
       margin-top: 0;
       margin-bottom: 0;
+      font-size: 4.2rem;
     }
 
     a {
       color: #FFFFFF;
       font-weight: 300;
-    }
-
-    .usa-logo-text {
-      font-size: 4.2rem;
     }
   }
 
