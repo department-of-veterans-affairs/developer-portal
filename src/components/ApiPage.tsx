@@ -37,7 +37,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
       const authCard = apiKey ? null : <AuthorizationCard categoryKey={apiCategoryKey} />;
 
       cardSection = (
-        <div role="navigation" aria-labelledby={`${apiCategoryKey}-overview-apis`}>
+        <div role="navigation" aria-label={`${apiCategoryKey} APIs`}>
           <div className="va-api-container">
             {authCard}
             {apiCards}
