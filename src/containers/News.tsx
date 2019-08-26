@@ -7,21 +7,21 @@ import toHtmlId from '../toHtmlId';
 
 import PageHeader from '../components/PageHeader';
 import { LocalNavHashLink } from '../components/SideNav';
-import NewsData from '../content/news.yml';
+import * as NewsData from '../content/news.yml';
 
 import '../components/ApiCard';
 // Temporarily import the sidenav styles until we extract it into a component
 import '../components/SideNav.scss'
 import './News.scss'
 
-const sections = NewsData.sections.map((section) => ({ ...section, id: toHtmlId(section.title) }));
+const sections = NewsData.sections.map((section: any) => ({ ...section, id: toHtmlId(section.title) }));
 
 export function SideNav() {
   const activeCheck = (match: any, location: any): boolean => {
     return '' === location.hash;
   };
 
-  const navSections = sections.map((section) => {
+  const navSections = sections.map((section: any) => {
     return (
       <li key={section.id}>
         <LocalNavHashLink idSlug={section.id} to={`#${section.id}`}>{section.title}</LocalNavHashLink>
@@ -44,7 +44,7 @@ export function SideNav() {
 export class News extends React.Component {
   private navRef = React.createRef<HTMLDivElement>();
 
-  private cardsSections = sections.map((section) => {
+  private cardsSections = sections.map((section: any) => {
     return (
       <NavHashLink key={section.id} to={`#${section.id}`} className="va-api-card">
         <h3 className="va-api-name">
