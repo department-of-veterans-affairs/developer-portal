@@ -12,6 +12,10 @@ export const testPaths = [
   '/terms-of-service',
   '/go-live',
   '/explore',
+  '/explore/health',
+  '/explore/benefits',
+  '/explore/health/docs/authorization',
+  '/explore/health/docs/quickstart',
   '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
   '/explore/benefits/docs/appeals',
   '/release-notes',
