@@ -66,7 +66,7 @@ export class News extends React.Component {
 
     const newsContent = sections.map((section: any) => {
       return (
-        <section key={section.id} id={section.id}>
+        <section key={section.id} id={section.id} className="news-section">
           <h2>{section.title}</h2>
           {section.items.map((item: any) => {
             return (
