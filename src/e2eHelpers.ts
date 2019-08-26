@@ -11,7 +11,6 @@ export const testPaths = [
   '/apply',
   '/terms-of-service',
   '/go-live',
-  '/oauth',
   '/explore',
   '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
   '/explore/benefits/docs/appeals',
