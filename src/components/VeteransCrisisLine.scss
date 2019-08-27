@@ -64,12 +64,6 @@ button.va-crisis-line-button {
     }
   }
 
-  &:focus,
-  &:active {
-    outline-offset: -2px;
-    outline: 2px solid #FDB81E;
-  }
-
   .vcl-container {
     margin-right: 5px;
     transition: background-color 0.3s ease-in-out;

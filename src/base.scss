@@ -123,3 +123,18 @@ p {
 span.mono {
   font-family: monospace;
 }
+
+button:not(.usa-banner-button), input, textarea, .usa-button, select {
+  &:active,
+  &:focus {
+    outline-offset: -2px;
+    outline: 3px solid #FDB81E;
+  }
+}
+
+a, .usa-banner-button {
+  &:active,
+  &:focus {
+    outline: 3px solid #FDB81E;
+  }
+}
