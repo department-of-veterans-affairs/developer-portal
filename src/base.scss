@@ -124,19 +124,21 @@ span.mono {
   font-family: monospace;
 }
 
-button:not(.usa-banner-button), input, textarea, .usa-button, select {
-  &:active,
-  &:focus {
-    outline-offset: -2px;
-    outline: 3px solid #FDB81E;
-  }
+@mixin focus-outline {
+  outline: 2px solid $color-gold;
+  outline-offset: 2px;
 }
 
-a, .usa-banner-button {
-  &:active,
-  &:focus {
-    outline: 3px solid #FDB81E;
-  }
+*:focus,
+a:focus,
+.usa-focus,
+[type=checkbox]:focus + label::before {
+  @include focus-outline;
+}
+
+.react-tabs__tab:focus {
+  @include focus-outline;
+  box-shadow: none;
 }
 
 // The site disclaimer has a yellow background so switch outline back to default
