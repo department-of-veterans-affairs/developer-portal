@@ -138,3 +138,12 @@ a, .usa-banner-button {
     outline: 3px solid #FDB81E;
   }
 }
+
+// The site disclaimer has a yellow background so switch outline back to default
+// so it can be seen
+.site-disclaimer a {
+  &:active,
+  &:focus {
+    outline: 2px dotted #aeb0b5
+  }
+}
