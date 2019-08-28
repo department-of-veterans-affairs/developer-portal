@@ -11,7 +11,7 @@ export class PageContent extends React.Component<IPageContentProps, {}> {
 
     public componentDidUpdate(prevProps: IPageContentProps) {
         const { location } = this.props;
-        if (prevProps.location.pathname === location.pathname) {
+        if (prevProps.location.pathname === location.pathname && location.hash) {
           return;
         }
         if (!location.pathname.match(/^\/explore\/[a-z\-]+\/?$/)) {
