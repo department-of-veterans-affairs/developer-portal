@@ -1,7 +1,7 @@
-import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
-import ErrorableTextArea from '@department-of-veterans-affairs/formation/ErrorableTextArea';
-import ErrorableTextInput from '@department-of-veterans-affairs/formation/ErrorableTextInput';
-import ProgressButton from '@department-of-veterans-affairs/formation/ProgressButton';
+import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
+import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
+import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
+import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 import * as classNames from 'classnames';
 import * as React from "react";
 import { validateEmail } from '../actions';
