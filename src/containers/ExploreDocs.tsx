@@ -131,7 +131,7 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
     const sideNavClasses = classNames("vadp-side-nav", "usa-width-one-third", "sticky");
     return (
       <div className="explore">
-        <section className="explore-main usa-grid">
+        <section className="usa-grid">
           <div className={sideNavClasses} ref={this.navRef} role="navigation" aria-label="API Docs Side Nav">
             <SideNav {...this.props} />
           </div>

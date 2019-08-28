@@ -91,7 +91,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
     return (
       <div className="explore">
         <section className="usa-section">
-          <div className="explore-main usa-grid">
+          <div className="usa-grid">
             <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="Release Notes Side Nav">
               <SideNav {...this.props} />
             </div>

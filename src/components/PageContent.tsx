@@ -24,10 +24,8 @@ export class PageContent extends React.Component<IPageContentProps, {}> {
 
     public render() {
         return (
-            <div className="PageContent">
-              <div className="content-main" ref={(loader) => (this.loader = loader)} tabIndex={-1}>
-                {this.props.children}
-              </div>
+            <div className="content-main" ref={(loader) => (this.loader = loader)} tabIndex={-1}>
+              {this.props.children}
             </div>
         );
     }

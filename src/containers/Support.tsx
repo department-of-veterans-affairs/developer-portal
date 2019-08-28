@@ -53,7 +53,7 @@ export default class Support extends React.Component {
     return (
       <div className="explore">
         <section className="usa-section">
-          <div className={classNames("explore-main", "usa-grid")}>
+          <div className="usa-grid">
             <div className={classNames("vadp-side-nav", "usa-width-one-third", "sticky")} role="navigation" aria-label="Support Side Nav">
               <SideNav />
             </div>
