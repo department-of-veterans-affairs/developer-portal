@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
@@ -47,7 +48,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
     }
 
     return (
-      <section role="region" aria-labelledby={`${apiCategoryKey}-overview`} className="usa-section api-overview">
+      <section role="region" aria-labelledby={`${apiCategoryKey}-overview`} className={classNames('usa-section','api-overview')} >
         <h1 id={`${apiCategoryKey}-overview`}>{categoryName}</h1>
         {intro({})}
         {cardSection}

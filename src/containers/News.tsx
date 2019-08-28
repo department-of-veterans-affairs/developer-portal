@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { NavHashLink } from 'react-router-hash-link';
 
+import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
 import toHtmlId from '../toHtmlId';
@@ -82,9 +83,9 @@ export class News extends React.Component {
     })
 
     return (
-      <div className="News usa-section">
+      <div className={classNames('News', 'usa-section')}>
         <div className="usa-grid">
-          <div className="vadp-side-nav usa-width-one-third sticky" ref={this.navRef} role="navigation" aria-label="News Side Nav">
+          <div className={classNames('vadp-side-nav', 'usa-width-one-third', 'sticky')} ref={this.navRef} role="navigation" aria-label="News Side Nav">
             <SideNav />
           </div>
           <div className="usa-width-two-thirds">
