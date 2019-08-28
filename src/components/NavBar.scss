@@ -1,30 +1,57 @@
 @import "../base";
 
+.header-content {
+  max-width: none;
+
+  @include media($large-screen) {
+    padding-right: 3rem;
+    padding-left: 3rem;
+    height: 127px;
+  }
+
+  display: flex;
+  align-items: center;
+
+  a, a:visited {
+    color: $color-white;
+  }
+
+  .api-status-link {
+    margin-left: auto;
+    font-size: 1.7rem;
+    margin-top: 2rem;
+    margin-bottom: 0.3rem;
+  }
+}
+
+.header-right-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+}
+
+.header-right-content {
+  display: flex;
+}
+
+// a temporary patch until we adopt VA design system more fully
+#get-started-button {
+  margin-right: 2rem;
+}
+
 .usa-header.usa-header-extended {
   background: $color-blue-darkest;
 
   .usa-logo {
     @include media($large-screen) {
-      margin-top: 4rem;
+      margin-top: 0;
+      margin-bottom: 0;
+      font-size: 4.2rem;
     }
 
     a {
       color: #FFFFFF;
       font-weight: 300;
-    }
-  }
-
-  @include media($large-screen) {
-    .usa-nav-secondary {
-      top: -7.25rem;
-    }
-  }
-
-  .usa-navbar {
-    max-width: none;
-
-    @include media($large-screen) {
-      height: 110px;
     }
   }
 
