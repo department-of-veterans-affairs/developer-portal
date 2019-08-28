@@ -70,7 +70,7 @@ const developmentQuestions: ISupportQuestion[] = [
       <p>
         Please visit the <Link to="/explore">API documentation</Link> for
         more information and example use cases. There are also some real-world examples in the articles and
-        press releases linked on our <Link to="/whats-new">News</Link> page.
+        press releases linked on our <Link to="/news">News</Link> page.
       </p>
     ),
     question: 'What kind of data can I get from the APIs? Do you have any example scenarios for Health, Benefits, Facilities or Veteran Verification?',

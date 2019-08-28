@@ -32,7 +32,7 @@ export function SideNav() {
   return (
     <ul className="usa-sidenav-list">
       <li key="all">
-        <NavLink exact={true} to="/whats-new" className="side-nav-category-link" activeClassName="usa-current" isActive={activeCheck}>
+        <NavLink exact={true} to="/news" className="side-nav-category-link" activeClassName="usa-current" isActive={activeCheck}>
           Overview
         </NavLink>
       </li>
