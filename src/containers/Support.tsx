@@ -6,6 +6,8 @@ import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
 
+import SupportConfirmation from '../content/supportConfirmation.mdx';
+
 export interface ISection {
   readonly component: React.ComponentType;
   readonly description: string;
@@ -60,6 +62,7 @@ export default class Support extends React.Component {
             </div>
             <div className="usa-width-two-thirds">
               <Route exact={true} path="/support/" render={() => <SupportOverview sections={sections}/>} />
+              <Route exact={true} path="/support/confirmation" component={SupportConfirmation}/>
               {this.createSubRoutes()}
             </div>
           </div>

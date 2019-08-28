@@ -1,3 +1,4 @@
+import AlertBox from '@department-of-veterans-affairs/formation/AlertBox';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation/ErrorableTextInput';
 import ProgressButton from '@department-of-veterans-affairs/formation/ProgressButton';
@@ -29,6 +30,24 @@ interface IAPIValue {
 interface ISupportContactUsFormProp {
   onSubmit: (formData: ISupportContactUsFormState) => void;
   sending: boolean;
+  error: boolean;
+}
+
+interface ISubmissionErrorProp {
+  error: boolean;
+}
+
+const SubmissionError = (props: ISubmissionErrorProp) => {
+  const assistanceTrailer = (
+    <span>Need assistance? Create an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">Github page</a></span>
+  );
+
+  if (props.error) {
+    return (
+      <AlertBox status="error" headline={"We encountered a server error while saving your form. Please try again later."} content={ assistanceTrailer } />
+    );
+  }
+  return null;
 }
 
 export default class SupportContactUsForm extends React.Component<ISupportContactUsFormProp, ISupportContactUsFormState> {
@@ -69,140 +88,143 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
   public render() {
     return (
-      <form className="va-contact-us-form">
-        <fieldset>
-          <legend>Contact Us</legend>
-          <p>
-            Have a question? Use the form below to send us an email and we'll do the best to answer your question and get you headed in the right direction
-          </p>
+      <div>
+        <form className="va-contact-us-form">
+          <fieldset>
+            <legend>Contact Us</legend>
+            <p>
+              Have a question? Use the form below to send us an email and we'll do the best to answer your question and get you headed in the right direction
+            </p>
 
-          <div className="usa-grid">
-            <div className="usa-width-one-half">
-              <ErrorableTextInput
-                errorMessage={null}
-                label="First name"
-                field={this.state.firstName}
-                onValueChange={(field: IErrorableInput) => this.setState({ firstName: field })}
-                required={true} />
+            <div className="usa-grid">
+              <div className="usa-width-one-half">
+                <ErrorableTextInput
+                  errorMessage={null}
+                  label="First name"
+                  field={this.state.firstName}
+                  onValueChange={(field: IErrorableInput) => this.setState({ firstName: field })}
+                  required={true} />
+              </div>
+              <div className="usa-width-one-half">
+                <ErrorableTextInput
+                  errorMessage={null}
+                  label="Last name"
+                  name="lastName"
+                  field={this.state.lastName}
+                  onValueChange={(field: IErrorableInput) => this.setState({ lastName: field })}
+                  required={true} />
+              </div>
             </div>
-            <div className="usa-width-one-half">
-              <ErrorableTextInput
-                errorMessage={null}
-                label="Last name"
-                name="lastName"
-                field={this.state.lastName}
-                onValueChange={(field: IErrorableInput) => this.setState({ lastName: field })}
-                required={true} />
+
+            <div className="usa-grid">
+              <div className="usa-width-one-half">
+                <ErrorableTextInput
+                  errorMessage={this.state.email.validation}
+                  label="Email"
+                  name="email"
+                  field={this.state.email}
+                  onValueChange={(field: IErrorableInput) => this.setState({ email: validateEmail(field) })}
+                  required={true} />
+              </div>
+              <div className="usa-width-one-half">
+                <ErrorableTextInput
+                  errorMessage={null}
+                  label="Organization"
+                  name="organization"
+                  field={this.state.organization}
+                  onValueChange={(field: IErrorableInput) => this.setState({ organization: field })}
+                  required={false} />
+              </div>
             </div>
-          </div>
 
-          <div className="usa-grid">
-            <div className="usa-width-one-half">
-              <ErrorableTextInput
-                errorMessage={this.state.email.validation}
-                label="Email"
-                name="email"
-                field={this.state.email}
-                onValueChange={(field: IErrorableInput) => this.setState({ email: validateEmail(field) })}
-                required={true} />
+            <p>If applicable, please select any of the APIs pertaining to your issue.</p>
+
+            <h3>Standard APIs:</h3>
+
+            <div className="form-checkbox">
+              <input
+                type="checkbox"
+                id="benefits"
+                name="benefits"
+                checked={this.state.apis.benefits}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
+              <label htmlFor="benefits">VA Benefits API</label>
             </div>
-            <div className="usa-width-one-half">
-              <ErrorableTextInput
-                errorMessage={null}
-                label="Organization"
-                name="organization"
-                field={this.state.organization}
-                onValueChange={(field: IErrorableInput) => this.setState({ organization: field })}
-                required={false} />
+
+            <div className="form-checkbox">
+              <input
+                type="checkbox"
+                id="facilities"
+                name="facilities"
+                checked={this.state.apis.facilities}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
+              <label htmlFor="facilities">VA Facilities API</label>
             </div>
-          </div>
 
-          <p>If applicable, please select any of the APIs pertaining to your issue.</p>
+            <h3>OAuth APIs:</h3>
 
-          <h3>Standard APIs:</h3>
-
-          <div className="form-checkbox">
-            <input
-              type="checkbox"
-              id="benefits"
-              name="benefits"
-              checked={this.state.apis.benefits}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-            <label htmlFor="benefits">VA Benefits API</label>
-          </div>
-
-          <div className="form-checkbox">
-            <input
-              type="checkbox"
-              id="facilities"
-              name="facilities"
-              checked={this.state.apis.facilities}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-            <label htmlFor="facilities">VA Facilities API</label>
-          </div>
-
-          <h3>OAuth APIs:</h3>
-
-          <div className="form-checkbox">
-            <input
-              type="checkbox"
-              id="claims"
-              name="claims"
-              checked={this.state.apis.claims}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-            <label htmlFor="claims">VA Claims API</label>
-          </div>
-
-          <div className="form-checkbox">
-            <input
-              type="checkbox"
-              id="health"
-              name="health"
-              checked={this.state.apis.health}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-            <label htmlFor="health">VA Health API</label>
-          </div>
-
-          <div className="form-checkbox">
-            <input
-              type="checkbox"
-              id="communityCare"
-              name="communityCare"
-              checked={this.state.apis.communityCare}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-            <label htmlFor="communityCare">Community Care Eligibility API</label>
-          </div>
-
-          <div className="form-checkbox">
-            <input
-              type="checkbox"
-              id="verification"
-              name="verification"
-              checked={this.state.apis.verification}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-            <label htmlFor="verification">VA Veteran Verification API</label>
-          </div>
-
-          <div className={classNames("usa-grid", "va-description")}>
-            <div className="usa-width-one-whole">
-              <ErrorableTextArea
-                errorMessage={null}
-                label="Pleae describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
-                onValueChange={(field: any) => this.setState({ description: field })}
-                name="description"
-                field={this.state.description}
-                required={true} />
+            <div className="form-checkbox">
+              <input
+                type="checkbox"
+                id="claims"
+                name="claims"
+                checked={this.state.apis.claims}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
+              <label htmlFor="claims">VA Claims API</label>
             </div>
-          </div>
 
-          <ProgressButton
-            buttonText={this.props.sending ? "Sending..." : "Submit"}
-            disabled={this.disableSubmission()}
-            onButtonClick={this.submitForm}
-            buttonClass="usa-button-primary" />
+            <div className="form-checkbox">
+              <input
+                type="checkbox"
+                id="health"
+                name="health"
+                checked={this.state.apis.health}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
+              <label htmlFor="health">VA Health API</label>
+            </div>
 
-        </fieldset>
-      </form>
+            <div className="form-checkbox">
+              <input
+                type="checkbox"
+                id="communityCare"
+                name="communityCare"
+                checked={this.state.apis.communityCare}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
+              <label htmlFor="communityCare">Community Care Eligibility API</label>
+            </div>
+
+            <div className="form-checkbox">
+              <input
+                type="checkbox"
+                id="verification"
+                name="verification"
+                checked={this.state.apis.verification}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
+              <label htmlFor="verification">VA Veteran Verification API</label>
+            </div>
+
+            <div className={classNames("usa-grid", "va-description")}>
+              <div className="usa-width-one-whole">
+                <ErrorableTextArea
+                  errorMessage={null}
+                  label="Pleae describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
+                  onValueChange={(field: any) => this.setState({ description: field })}
+                  name="description"
+                  field={this.state.description}
+                  required={true} />
+              </div>
+            </div>
+
+            <ProgressButton
+              buttonText={this.props.sending ? "Sending..." : "Submit"}
+              disabled={this.disableSubmission()}
+              onButtonClick={this.submitForm}
+              buttonClass="usa-button-primary" />
+
+          </fieldset>
+        </form>
+        <SubmissionError error={this.props.error}/>
+      </div>
     )
   }
 

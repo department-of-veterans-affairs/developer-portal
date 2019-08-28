@@ -1,11 +1,13 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
+import { RouteComponentProps } from 'react-router';
 import PageHeader from "../components/PageHeader";
 
 import SupportContactUsForm, { ISupportContactUsFormState } from './SupportContactUsForm';
 
 interface ISupportContactUsState {
+  error: boolean;
   sending: boolean;
 }
 
@@ -18,11 +20,12 @@ const GithubSnippet = () => {
   );
 }
 
-export default class SupportContactUs extends React.Component<{}, ISupportContactUsState> {
+export default class SupportContactUs extends React.Component<RouteComponentProps, ISupportContactUsState> {
 
-  constructor(props = {}) {
+  constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
+      error: false,
       sending: false,
     }
 
@@ -40,15 +43,38 @@ export default class SupportContactUs extends React.Component<{}, ISupportContac
       <section role="region" aria-label="Support Overview" className="usa-section usa-grid">
         <PageHeader {...headerProps} />
         <GithubSnippet />
-        <SupportContactUsForm onSubmit={this.formSubmission} sending={this.state.sending} />
+        <SupportContactUsForm onSubmit={this.formSubmission} sending={this.state.sending} error={this.state.error}/>
       </section>
     );
   }
 
   private formSubmission(formData: ISupportContactUsFormState) {
-    this.setState({ sending: true }, () => {
-      // TODO: call lambda function
-      this.setState({ sending: false });
+    this.setState({ sending: true }, async () => {
+      const request = new Request(
+        `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL}/services/meta/contact-us`,
+        {
+          body: JSON.stringify(formData),
+          headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+          },
+          method: 'POST',
+        },
+      );
+
+      try {
+        const response = await fetch(request);
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        
+        this.setState({ sending: false });
+        this.props.history.push('/support/confirmation');
+      } catch(e) {
+        this.setState({ sending: false });
+        this.setState({ error: true });
+      }
+      
     })
   }
 }
