@@ -80,7 +80,7 @@ export class News extends React.Component {
     })
 
     return (
-      <div className={classNames('News', 'usa-section')}>
+      <div className={classNames('news', 'usa-section')}>
         <div className="usa-grid">
           <div className={classNames('vadp-side-nav', 'usa-width-one-third', 'sticky')} role="navigation" aria-label="News Side Nav">
             <SideNav />
