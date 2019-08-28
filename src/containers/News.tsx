@@ -43,8 +43,6 @@ export function SideNav() {
 }
 
 export class News extends React.Component {
-  private navRef = React.createRef<HTMLDivElement>();
-
   private cardsSections = sections.map((section: any) => {
     return (
       <NavHashLink key={section.id} to={`#${section.id}`} className="va-api-card">
@@ -63,7 +61,6 @@ export class News extends React.Component {
       description: "This page is where you’ll find interesting press releases, articles, or media that relate to the VA Lighthouse program and the Developer Portal.",
       header: "News",
     };
-
 
     const newsContent = sections.map((section: any) => {
       return (
@@ -85,7 +82,7 @@ export class News extends React.Component {
     return (
       <div className={classNames('News', 'usa-section')}>
         <div className="usa-grid">
-          <div className={classNames('vadp-side-nav', 'usa-width-one-third', 'sticky')} ref={this.navRef} role="navigation" aria-label="News Side Nav">
+          <div className={classNames('vadp-side-nav', 'usa-width-one-third', 'sticky')} role="navigation" aria-label="News Side Nav">
             <SideNav />
           </div>
           <div className="usa-width-two-thirds">
