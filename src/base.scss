@@ -141,11 +141,11 @@ a:focus,
   box-shadow: none;
 }
 
-// The site disclaimer has a yellow background so switch outline back to default
-// so it can be seen
+// The site disclaimer has a yellow background so change outline color
+// to the color of the link text so it can be seen
 .site-disclaimer a {
   &:active,
   &:focus {
-    outline: 2px dotted #aeb0b5
+    outline: 2px solid #004795
   }
 }
