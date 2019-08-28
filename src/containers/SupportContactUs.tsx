@@ -67,6 +67,11 @@ export default class SupportContactUs extends React.Component<RouteComponentProp
         if (!response.ok) {
           throw Error(response.statusText);
         }
+
+        const json = await response.json();
+        if (json && json.statusCode !== 200) {
+          throw Error(json.body);
+        }
         
         this.setState({ sending: false });
         this.props.history.push('/support/confirmation');
