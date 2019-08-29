@@ -1,16 +1,15 @@
 import * as React from 'react';
-import { NavHashLink } from 'react-router-hash-link';
 
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
 import toHtmlId from '../toHtmlId';
 
+import CardLink from '../components/CardLink';
 import PageHeader from '../components/PageHeader';
 import { LocalNavHashLink } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 
-import '../components/ApiCard';
 // Temporarily import the sidenav styles until we extract it into a component
 import '../components/SideNav.scss'
 import './News.scss'
@@ -45,14 +44,12 @@ export function SideNav() {
 export class News extends React.Component {
   private cardsSections = sections.map((section: any) => {
     return (
-      <NavHashLink key={section.id} to={`#${section.id}`} className="va-api-card">
-        <h3 className="va-api-name">
-          {section.title}
-        </h3>
-        <div className="va-api-description">
-          {section.description}
-        </div>
-      </NavHashLink>
+      <CardLink
+        key={section.id}
+        url={`#${section.id}`}
+        description={section.description}
+        name={section.title}
+      />
     );
   });
 
