@@ -14,8 +14,12 @@ export default class DocumentationOverview extends React.Component<RouteComponen
           {apiCategoryOrder.map((apiCategoryKey: string) => {
             const { name, shortDescription } = apiDefs[apiCategoryKey];
             return (
-              <CardLink name={name} description={shortDescription} key={apiCategoryKey} vaInternalOnly={false}
-                  url={`/explore/${apiCategoryKey}`} />
+              <CardLink
+                name={name}
+                description={shortDescription}
+                key={apiCategoryKey}
+                url={`/explore/${apiCategoryKey}`}
+              />
             );
           })}
         </div>

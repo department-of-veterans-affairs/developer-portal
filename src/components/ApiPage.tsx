@@ -8,6 +8,7 @@ import { apiDefs, IApiDescription } from '../apiDefs';
 import { IApiNameParam } from '../types';
 import AuthorizationCard from './AuthorizationCard';
 import CardLink from './CardLink';
+import { VAInternalOnlyTag } from './VAInternalOnlyTag';
 
 export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
@@ -29,8 +30,13 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
         const { description, name, urlFragment, vaInternalOnly } = apiDesc;
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
-            <CardLink name={name} description={description} vaInternalOnly={vaInternalOnly}
-                url={`/explore/${apiCategoryKey}/docs/${urlFragment}`} />
+            <CardLink
+              name={name}
+              description={description}
+              url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
+            >
+              {vaInternalOnly && <VAInternalOnlyTag />}
+            </CardLink>
           </Flag>
         );
       });

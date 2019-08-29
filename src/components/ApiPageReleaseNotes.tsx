@@ -7,6 +7,7 @@ import { apiDefs, IApiDescription } from '../apiDefs';
 import PageHeader from '../components/PageHeader';
 import { IApiNameParam } from '../types';
 import CardLink from './CardLink';
+import { VAInternalOnlyTag } from './VAInternalOnlyTag';
 
 export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
 
@@ -28,8 +29,13 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
 
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
-            <CardLink name={name} description={description} vaInternalOnly={vaInternalOnly}
-                url={`/release-notes/${apiCategoryKey}#${dashUrlFragment}`} />
+            <CardLink
+              name={name}
+              description={description}
+              url={`/release-notes/${apiCategoryKey}#${dashUrlFragment}`}
+            >
+              {vaInternalOnly && <VAInternalOnlyTag />}
+            </CardLink>
           </Flag>
         );
       });

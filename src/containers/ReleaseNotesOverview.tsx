@@ -12,8 +12,12 @@ function cards(parent: string): any {
     let apiCard;
     if (apiDefs[apiCategoryKey].releaseNotes) {
       apiCard = (
-        <CardLink name={name} description={shortDescription} key={apiCategoryKey} vaInternalOnly={false}
-          url={cardUrl} />
+        <CardLink
+          name={name}
+          description={shortDescription}
+          key={apiCategoryKey}
+          url={cardUrl}
+        />
       );
     }
     return apiCard;
