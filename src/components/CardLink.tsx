@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { HashLink } from 'react-router-hash-link'
+import { NavHashLink } from 'react-router-hash-link'
 
-import './ApiCard.scss';
+import './CardLink.scss';
 
 export interface IApiCardProps {
   name: string;
@@ -10,14 +10,14 @@ export interface IApiCardProps {
   url: string;
 }
 
-export class ApiCard extends React.Component<IApiCardProps, {}> {
+export class CardLink extends React.Component<IApiCardProps, {}> {
   protected static defaultProps = {
     vaInternalOnly: false,
   };
 
   public render() {
     return (
-      <HashLink to={this.props.url} className="va-api-card">
+      <NavHashLink to={this.props.url} className="va-api-card">
         <h3 className="va-api-name">
           {this.props.name}
         </h3>
@@ -31,9 +31,9 @@ export class ApiCard extends React.Component<IApiCardProps, {}> {
         <div className="va-api-description">
           {this.props.description}
         </div>
-      </HashLink>
+      </NavHashLink>
     );
   }
 }
 
-export default ApiCard;
+export default CardLink;

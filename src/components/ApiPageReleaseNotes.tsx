@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import { apiDefs, IApiDescription } from '../apiDefs';
 import PageHeader from '../components/PageHeader';
 import { IApiNameParam } from '../types';
-import ApiCard from './ApiCard';
+import CardLink from './CardLink';
 
 export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
 
@@ -28,7 +28,7 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
 
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
-            <ApiCard name={name} description={description} vaInternalOnly={vaInternalOnly}
+            <CardLink name={name} description={description} vaInternalOnly={vaInternalOnly}
                 url={`/release-notes/${apiCategoryKey}#${dashUrlFragment}`} />
           </Flag>
         );

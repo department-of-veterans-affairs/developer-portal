@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ApiCard from '../components/ApiCard';
+import CardLink from '../components/CardLink';
 import PageHeader from '../components/PageHeader';
 import { ISection } from './Support';
 
@@ -16,7 +16,7 @@ export default class SupportOverview extends React.Component<ISupportOverviewPro
   public render() {
     const cardsSections = this.props.sections.map((section: ISection) => {
       return (
-        <ApiCard name={section.name} description={section.description} url={`/support/${section.id}`} vaInternalOnly={false} key={section.id} />
+        <CardLink name={section.name} description={section.description} url={`/support/${section.id}`} vaInternalOnly={false} key={section.id} />
       );
     });
     return (

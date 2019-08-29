@@ -6,8 +6,8 @@ import { RouteComponentProps } from 'react-router';
 
 import { apiDefs, IApiDescription } from '../apiDefs';
 import { IApiNameParam } from '../types';
-import ApiCard from './ApiCard';
 import AuthorizationCard from './AuthorizationCard';
+import CardLink from './CardLink';
 
 export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
@@ -29,7 +29,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
         const { description, name, urlFragment, vaInternalOnly } = apiDesc;
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
-            <ApiCard name={name} description={description} vaInternalOnly={vaInternalOnly}
+            <CardLink name={name} description={description} vaInternalOnly={vaInternalOnly}
                 url={`/explore/${apiCategoryKey}/docs/${urlFragment}`} />
           </Flag>
         );

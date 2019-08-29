@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ApiCard } from './ApiCard';
+import { CardLink } from './CardLink';
 
 interface IAuthorizationCardProps {
   categoryKey: string;
@@ -9,7 +9,7 @@ export default class AuthorizationCard extends React.Component<IAuthorizationCar
 
   public render() {
     return (
-        <ApiCard
+        <CardLink
           name="Authorization"
           description="Use the OpenID Connect standard to allow Veterans to authorize third-party application to access data on their behalf."
           vaInternalOnly={false}

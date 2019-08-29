@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import { apiCategoryOrder, apiDefs } from '../apiDefs';
-import ApiCard from '../components/ApiCard';
+import CardLink from '../components/CardLink';
 import PageHeader from '../components/PageHeader';
 
 export default class DocumentationOverview extends React.Component<RouteComponentProps, {}> {
@@ -14,7 +14,7 @@ export default class DocumentationOverview extends React.Component<RouteComponen
           {apiCategoryOrder.map((apiCategoryKey: string) => {
             const { name, shortDescription } = apiDefs[apiCategoryKey];
             return (
-              <ApiCard name={name} description={shortDescription} key={apiCategoryKey} vaInternalOnly={false}
+              <CardLink name={name} description={shortDescription} key={apiCategoryKey} vaInternalOnly={false}
                   url={`/explore/${apiCategoryKey}`} />
             );
           })}
