@@ -12,8 +12,6 @@ def devBranch = 'master'
 def stagingBranch = 'master'
 def prodBranch = 'master'
 
-def sentryRelease = "${envName} - ${env.BUILD_NUMBER}"
-def onMaster = env.BRANCH_NAME == 'master'
 env.CONCURRENCY = 10
 
 def onDeployableBranch = {
@@ -228,19 +226,20 @@ node('vetsgov-general-purpose') {
 
       try {
       def builds = [:]
-      withCredentials([string(credentialsId: 'sentry_auth_token', variable: 'SENTRY_AUTH_TOKEN')]) {
-        envNames.each{ envName ->
-          builds[envName] = {
-            dockerImage.inside(args) {
-              if(onMaster) {
+      envNames.each{ envName ->
+        builds[envName] = {
+          dockerImage.inside(args) {
+            if(onDeployableBranch()) {
+              def sentryRelease = "${envName} - ${env.BUILD_NUMBER}"
+              withCredentials([string(credentialsId: 'sentry_auth_token', variable: 'SENTRY_AUTH_TOKEN')]) {
                 def sourceDir = "build/${envName}/static/js"
                 sh "cd /application && SENTRY_RELEASE=${sentryRelease} NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
                 sh "cd /application/scripts && SENTRY_RELEASE=${sentryRelease} SOURCE_DIR=${sourceDir} SENTRY_URL=http://sentry.vfs.va.gov/ SENTRY_AUTH_TOKEN=$TOKEN SENTRY_ORG=vets-gov SENTRY_PROJECT=developer-portal-backend-${envName} ./upload_source_map.sh"
-              } else {
-                sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
               }
-              sh "cd /application && echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
+            } else {
+              sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
             }
+            sh "cd /application && echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
           }
         }
       }
