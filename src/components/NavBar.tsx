@@ -16,7 +16,6 @@ import { apiCategoryOrder, apiDefs } from '../apiDefs';
 import { OVER_LARGE_SCREEN_QUERY, UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
 
 const newSupportEnabled = process.env.REACT_APP_NEW_SUPPORT_ENABLED === "true";
-const showStatuspageLink = process.env.REACT_APP_SHOW_STATUSPAGE_LINK === "true";
 
 interface INavBarProps {
   hideLinks: boolean;
@@ -64,9 +63,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
           </div>
           <div className="header-right-container">
             <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
-              {showStatuspageLink &&
-                <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
-              }
+              <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
                 <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
                 <Search />
@@ -109,14 +106,6 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                 {this.state.visibleSubNavs.documentation && this.renderDocumentationSubNav()}
               </li>
               <li className="main-nav-item">
-                <NavLink to="/whats-new" className="usa-nav-link" activeClassName="default-nav-link"
-                  isActive={this.checkActiveNavLink}
-                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
-                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
-                  What&rsquo;s New
-                </NavLink>
-              </li>
-              <li className="main-nav-item">
                 <NavLink to="/release-notes" className="usa-nav-link" activeClassName="default-nav-link"
                   isActive={this.checkActiveNavLink}
                   onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
@@ -137,6 +126,14 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
                     Support
                   </a>
                 }
+              </li>
+              <li className="main-nav-item">
+                <NavLink to="/news" className="usa-nav-link" activeClassName="default-nav-link"
+                  isActive={this.checkActiveNavLink}
+                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
+                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                  News
+                </NavLink>
               </li>
             </ul>
           </div>

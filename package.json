@@ -49,6 +49,7 @@
     "immutable": "^3.8.2",
     "jest-axe": "^3.0.0",
     "jest-puppeteer": "^4.1.1",
+    "js-yaml-loader": "^1.2.2",
     "lodash.debounce": "^4.0.8",
     "markdown-component-loader": "^1.1.0",
     "markdown-it-anchor": "^5.0.2",

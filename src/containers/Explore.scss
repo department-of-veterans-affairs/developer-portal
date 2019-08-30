@@ -1,30 +1,29 @@
 @import '../base';
 
-.Explore {
+.explore {
   padding-top: 5rem;
   padding-bottom: 3rem;
 
-  h1,
-  h2,
-  h3 {
-    color: $color-gray-dark;
-  }
+  // These styles are the same as those for the PageHeader component,
+  // but are used for the header in the ApiPage component, which creates similar markup
+  // from markdown rather than the PageHeader component.
+  .api-overview {
+    h1 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+    }
 
-  h1 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-  }
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2rem !important;
+    }
 
-  h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 2rem !important;
-  }
-
-  h3 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    margin-bottom: 2rem !important;
+    h3 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 2rem !important;
+    }
   }
 
   #api-documentation {
@@ -211,72 +210,6 @@
 
   .api-name-tag {
     font-weight: 600;
-  }
-
-  .vadp-side-nav {
-    padding-right: 3rem;
-  }
-
-  .usa-sidenav-list {
-    border: 2px solid #DBDBDD;
-    background-color: $color-white;
-
-    > li {
-      a.side-nav-category-link {
-        padding-left: 1.1rem;
-      }
-
-      a.side-nav-api-link {
-        padding-left: 3.3rem;
-      }
-
-      a.side-nav-category-link.usa-current {
-        border: none;
-        border-left: 5px solid #2F70B5;
-      }
-
-      a.usa-current + ul.usa-sidenav-sub_list {
-        display: block;
-
-        ul.usa-sidenav-sub_list > li > a {
-          padding-left: 5rem;
-        }
-      }
-
-      a + ul.usa-sidenav-sub_list {
-        display: none;
-      }
-    }
-  }
-
-  .usa-sidenav-sub_list {
-    padding-left: 0;
-
-    a.side-nav-api-link {
-      padding-left: 3rem;
-    }
-  }
-
-  .usa-sidenav-list > li,
-  .usa-sidenav-sub_list > li {
-    border-top: 2px solid #DBDBDD;
-
-    a {
-      padding-top: 1.2rem;
-      padding-bottom: 1.2rem;
-    }
-
-    a {
-      color: #222;
-    }
-
-    a.usa-current {
-      color: #383838;
-    }
-
-    a:hover {
-      background-color: #DBDBDD;
-    }
   }
 
   .react-tabs {
