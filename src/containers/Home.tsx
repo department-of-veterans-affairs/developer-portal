@@ -6,7 +6,7 @@ import './Home.scss';
 class Home extends React.Component {
   public render() {
     return (
-      <div className="Home">
+      <div className="home">
 
         <div className="site-disclaimer">
           <strong>This is a beta site.</strong>

@@ -9,8 +9,11 @@ interface IPageContentProps extends RouteComponentProps<void> {
 export class PageContent extends React.Component<IPageContentProps, {}> {
     private loader: HTMLDivElement | null;
 
-    public componentDidUpdate() {
+    public componentDidUpdate(prevProps: IPageContentProps) {
         const { location } = this.props;
+        if (prevProps.location.pathname === location.pathname && location.hash) {
+          return;
+        }
         if (!location.pathname.match(/^\/explore\/[a-z\-]+\/?$/)) {
             if (this.loader) {
                 this.loader.focus();
@@ -21,10 +24,8 @@ export class PageContent extends React.Component<IPageContentProps, {}> {
 
     public render() {
         return (
-            <div className="PageContent">
-              <div className="content-main" ref={(loader) => (this.loader = loader)} tabIndex={-1}>
-                {this.props.children}
-              </div>
+            <div className="content-main" ref={(loader) => (this.loader = loader)} tabIndex={-1}>
+              {this.props.children}
             </div>
         );
     }

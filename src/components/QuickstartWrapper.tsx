@@ -11,7 +11,7 @@ export default function Quickstart(props: IQuickstartWrapperProps) {
 
   return (
     <div role="region" aria-labelledby="api-documentation">
-      <PageHeader halo={halo} header="Quickstart" />
+      <PageHeader id="api-documentation" halo={halo} header="Quickstart" />
       {quickstartContent({})}
     </div>
   );

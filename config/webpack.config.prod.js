@@ -321,6 +321,11 @@ module.exports = (envName) => {
                 }
               ]
             },
+            {
+              test: /\.ya?ml$/,
+              include: paths.appSrc,
+              use: 'js-yaml-loader',
+            },
             // "file" loader makes sure assets end up in the `build` folder.
             // When you `import` an asset, you get its filename.
             // This loader doesn't use a "test" so it will catch all modules
