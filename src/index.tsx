@@ -11,6 +11,7 @@ import store from './store';
 if (process.env.REACT_APP_SENTRY_DSN) {
   Sentry.init({
     dsn: process.env.REACT_APP_SENTRY_DSN,
+    release: process.env.REACT_APP_SENTRY_RELEASE,
   });
 }
 try {
