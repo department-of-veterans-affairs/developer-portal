@@ -29,7 +29,7 @@ class App extends React.Component {
       <FlagsProvider flags={flags}>
         <ConnectedRouter history={history}>
           <div className="app-container">
-            <div className="App">
+            <div className="app">
               <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
               <div className="main" role="main">
                 <Route path="/" render={topLevelRoutes} />

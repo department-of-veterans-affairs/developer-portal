@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
@@ -22,7 +23,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
     } = apiDefs[apiCategoryKey];
 
     let cardSection;
-
+    const headerId = `${apiCategoryKey}-overview`;
     if (apis.length > 0) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { description, name, urlFragment, vaInternalOnly } = apiDesc;
@@ -37,7 +38,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
       const authCard = apiKey ? null : <AuthorizationCard categoryKey={apiCategoryKey} />;
 
       cardSection = (
-        <div role="navigation" aria-labelledby={`${apiCategoryKey}-overview-apis`}>
+        <div role="navigation" aria-labelledby={headerId}>
           <div className="va-api-container">
             {authCard}
             {apiCards}
@@ -47,8 +48,8 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
     }
 
     return (
-      <section role="region" aria-labelledby={`${apiCategoryKey}-overview`} className="usa-section">
-        <h1 id={`${apiCategoryKey}-overview`}>{categoryName}</h1>
+      <section role="region" aria-labelledby={headerId} className={classNames('usa-section','api-overview')} >
+        <h1 id={headerId}>{categoryName}</h1>
         {intro({})}
         {cardSection}
         <div className="usa-width-one-whole">

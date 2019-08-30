@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { NavHashLink } from 'react-router-hash-link';
 
 import classNames from 'classnames';
 import { Flag } from 'flag';
@@ -8,6 +7,7 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 import * as Stickyfill from 'stickyfilljs';
 
 import { ApiPage } from '../components';
+import { LocalNavHashLink } from '../components/SideNav';
 import { QuickstartPage } from '../containers';
 import { IApiNameParam } from '../types';
 import { AuthorizationDocs } from './AuthorizationDocs';
@@ -43,23 +43,6 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   );
 }
 
-// Constructs a NavHashLink that matches only the fragment part of the current URL.
-function LocalNavHashLink(props: any): JSX.Element {
-  const activeCheck = (match: any, location: any): boolean => {
-    return props.to === location.hash;
-  };
-  const toWithoutHash = props.to.replace(/^#/, '');
-  let id = `hash-link`;
-  if (props.idSlug != null) {
-    id = `${id}-${props.idSlug}`;
-  }
-  id = `${id}-${toWithoutHash}`;
-  return (
-    <NavHashLink activeClassName="usa-current" id={id} isActive={activeCheck} to={props.to}>
-      {props.children}
-    </NavHashLink>
-  );
-};
 
 function OAuthSideNavEntry(apiCategoryKey: string, apiCategory: IApiCategory) {
   return (
@@ -147,8 +130,8 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
   public render() {
     const sideNavClasses = classNames("vadp-side-nav", "usa-width-one-third", "sticky");
     return (
-      <div className="Explore">
-        <section className="Explore-main usa-grid">
+      <div className="explore">
+        <section className="usa-grid">
           <div className={sideNavClasses} ref={this.navRef} role="navigation" aria-label="API Docs Side Nav">
             <SideNav {...this.props} />
           </div>
