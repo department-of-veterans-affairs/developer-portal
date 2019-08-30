@@ -2,43 +2,32 @@ import * as React from 'react';
 import { NavHashLink } from 'react-router-hash-link';
 
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
 
 import toHtmlId from '../toHtmlId';
 
 import PageHeader from '../components/PageHeader';
-import { LocalNavHashLink } from '../components/SideNav';
+import { SideNav, SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 
-import '../components/ApiCard';
-// Temporarily import the sidenav styles until we extract it into a component
-import '../components/SideNav.scss';
 import './News.scss';
 
 const sections = NewsData.sections.map((section: any) => ({ ...section, id: toHtmlId(section.title) }));
 
-export function SideNav() {
-  const activeCheck = (match: any, location: any): boolean => {
-    return '' === location.hash;
-  };
-
+function NewsSideNav() {
   const navSections = sections.map((section: any) => {
-    return (
-      <li key={section.id}>
-        <LocalNavHashLink idSlug={section.id} to={`#${section.id}`}>{section.title}</LocalNavHashLink>
-      </li>
-    );
+    return <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />;
   });
 
   return (
-    <ul className="usa-sidenav-list">
-      <li key="all">
-        <NavLink exact={true} to="/news" className="side-nav-category-link" activeClassName="usa-current" isActive={activeCheck}>
-          Overview
-        </NavLink>
-      </li>
+    <SideNav ariaLabel="News Side Nav">
+      <SideNavEntry
+        key="all"
+        exact={true}
+        to="/news"
+        name="Overview"
+      />
       {navSections}
-    </ul>
+    </SideNav>
   );
 }
 
@@ -82,9 +71,7 @@ export class News extends React.Component {
     return (
       <div className={classNames('news', 'usa-section')}>
         <div className="usa-grid">
-          <div className={classNames('vadp-side-nav', 'usa-width-one-third', 'sticky')} role="navigation" aria-label="News Side Nav">
-            <SideNav />
-          </div>
+          <NewsSideNav />
           <div className="usa-width-two-thirds">
             <section role="region" aria-label="News" className="usa-section">
               <PageHeader description={headerProps.description} header={headerProps.header} />
