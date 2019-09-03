@@ -8,13 +8,13 @@ describe('SupportContactUsForm', () => {
 
   it('should not be able to submit when required fields are not filled', () => {
     const onSubmit = jest.fn();
-    const component = mount(<SupportContactUsForm sending={false} error={false} onSubmit={onSubmit}></SupportContactUsForm>);
+    const component = mount(<SupportContactUsForm sending={false} error={false} onSubmit={onSubmit}/>);
     expect(component.find('.usa-button-primary').hasClass('usa-button-disabled')).toBe(true);
   })
 
   it('should not be disabled when required fields are filled', () => {
     const onSubmit = jest.fn();
-    const component = mount(<SupportContactUsForm sending={false} error={false} onSubmit={onSubmit}></SupportContactUsForm>);
+    const component = mount(<SupportContactUsForm sending={false} error={false} onSubmit={onSubmit}/>);
     
     const inputs = component.find('input[type="text"]');
     expect(inputs.length).toEqual(4);
