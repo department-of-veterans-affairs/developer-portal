@@ -45,10 +45,12 @@ describe('SupportContactUsForm', () => {
     submitButton.simulate('click');
 
     const formData = onSubmit.mock.calls[0][0];
-    expect(formData.description.value).toEqual('description');
-    expect(formData.email.value).toEqual('email@gmail.com');
-    expect(formData.firstName.value).toEqual('firstName');
-    expect(formData.lastName.value).toEqual('lastName');
+    expect(formData.description).toEqual('description');
+    expect(formData.email).toEqual('email@gmail.com');
+    expect(formData.firstName).toEqual('firstName');
+    expect(formData.lastName).toEqual('lastName');
+    expect(formData.organizaiton).toEqual('');
+    expect(formData.apis).toEqual([]);
 
   });
 

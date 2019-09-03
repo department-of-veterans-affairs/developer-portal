@@ -4,7 +4,7 @@ import * as React from "react";
 import { RouteComponentProps } from 'react-router';
 import PageHeader from "../components/PageHeader";
 
-import SupportContactUsForm, { ISupportContactUsFormState } from './SupportContactUsForm';
+import SupportContactUsForm from './SupportContactUsForm';
 
 interface ISupportContactUsState {
   error: boolean;
@@ -48,7 +48,7 @@ export default class SupportContactUs extends React.Component<RouteComponentProp
     );
   }
 
-  private formSubmission(formData: ISupportContactUsFormState) {
+  private formSubmission(formData: any) {
     this.setState({ sending: true }, async () => {
       const request = new Request(
         `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL}/services/meta/contact-us`,

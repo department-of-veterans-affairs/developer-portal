@@ -9,7 +9,7 @@ import { IErrorableInput } from '../types';
 
 import './SupportContactUsForm.scss';
 
-export interface ISupportContactUsFormState {
+interface ISupportContactUsFormState {
   apis: IAPIValue;
   description: IErrorableInput;
   email: IErrorableInput;
@@ -28,7 +28,7 @@ interface IAPIValue {
 }
 
 interface ISupportContactUsFormProp {
-  onSubmit: (formData: ISupportContactUsFormState) => void;
+  onSubmit: (formData: any) => void;
   sending: boolean;
   error: boolean;
 }
@@ -245,6 +245,14 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   }
 
   private submitForm = () => {
-    this.props.onSubmit(this.state);
+    const data = {
+      apis: Object.keys(this.state.apis).filter(k => !!this.state.apis[k]),
+      description: this.state.description.value,
+      email: this.state.email.value,
+      firstName: this.state.firstName.value,
+      lastName: this.state.lastName.value,
+      organizaiton: this.state.organization.value,
+    }
+    this.props.onSubmit(data);
   }
 }
