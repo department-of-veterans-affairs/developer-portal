@@ -51,4 +51,21 @@ describe('SupportContactUsForm', () => {
     expect(formData.lastName.value).toEqual('lastName');
 
   });
+
+  it('should have an error when entering a non-email', () => {
+    const onSubmit = jest.fn();
+    const component = mount(<SupportContactUsForm sending={false} error={false} onSubmit={onSubmit}/>);
+    
+    const inputs = component.find('input[type="text"]');
+
+    const emailInput = inputs.at(2);
+    expect(emailInput.length).toEqual(1);
+    emailInput.simulate('change', {target: {value: 'email'}});
+    
+    expect(component.find('.usa-input-error-message').length).toEqual(1);
+    
+    const submitButton = component.find('.usa-button-primary');
+    expect(submitButton.length).toEqual(1);
+    expect(submitButton.hasClass('usa-button-disabled')).toBe(true);
+  });
 })
