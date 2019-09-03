@@ -63,6 +63,8 @@
     border-bottom: 1px solid #DBDBDD;
 
     &.is-visible {
+      z-index: 2;
+
       .usa-menu-button {
         background-color: $color-primary-alt-dark;
       }
