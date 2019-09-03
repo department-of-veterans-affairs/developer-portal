@@ -230,8 +230,8 @@ node('vetsgov-general-purpose') {
         builds[envName] = {
           dockerImage.inside(args) {
             if(onDeployableBranch()) {
-              def sentryRelease = "${envName} - ${env.BUILD_NUMBER}"
               withCredentials([string(credentialsId: 'sentry_auth_token', variable: 'SENTRY_AUTH_TOKEN')]) {
+                def sentryRelease = "${envName} - ${env.BUILD_NUMBER}"
                 def sourceDir = "build/${envName}/static/js"
                 sh "cd /application && SENTRY_RELEASE=${sentryRelease} NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
                 sh "cd /application/scripts && SENTRY_RELEASE=${sentryRelease} SOURCE_DIR=${sourceDir} SENTRY_URL=http://sentry.vfs.va.gov/ SENTRY_AUTH_TOKEN=$TOKEN SENTRY_ORG=vets-gov SENTRY_PROJECT=developer-portal-backend-${envName} ./upload_source_map.sh"
