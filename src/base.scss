@@ -123,3 +123,29 @@ p {
 span.mono {
   font-family: monospace;
 }
+
+@mixin focus-outline {
+  outline: 2px solid $color-gold;
+  outline-offset: 2px;
+}
+
+*:focus,
+a:focus,
+.usa-focus,
+[type=checkbox]:focus + label::before {
+  @include focus-outline;
+}
+
+.react-tabs__tab:focus {
+  @include focus-outline;
+  box-shadow: none;
+}
+
+// The site disclaimer has a yellow background so change outline color
+// to the color of the link text so it can be seen
+.site-disclaimer a {
+  &:active,
+  &:focus {
+    outline-color: #004795;
+  }
+}
