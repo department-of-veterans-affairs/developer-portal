@@ -14,7 +14,7 @@ interface ISupportContactUsState {
 const GithubSnippet = () => {
   return (
     <div className="va-github-snippet">
-      <h2>Submit an Issue via Github</h2>
+      <h3>Submit an Issue via Github</h3>
       <a className="usa-button" href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose"><FontAwesomeIcon icon={faGithub} /> Submit an Issue</a>
     </div>
   );

@@ -49,7 +49,7 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
     return (
       <section className="va-grouped-accordion">
         <div className="va-grouped-accordion-header">
-          <h2>{this.props.title}</h2>
+          <h3>{this.props.title}</h3>
           <button className={classNames("toggle-panels", "btn-link")} onClick={(event) => this.handleExpandCollapse(event)}>{this.determineLabelFromState()}</button>
         </div>
         {this.createPanels()}

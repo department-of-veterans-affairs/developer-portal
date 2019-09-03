@@ -139,7 +139,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
             <p>If applicable, please select any of the APIs pertaining to your issue.</p>
 
-            <h3>Standard APIs:</h3>
+            <h4>Standard APIs:</h4>
 
             <div className="form-checkbox">
               <input
@@ -161,7 +161,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
               <label htmlFor="facilities">VA Facilities API</label>
             </div>
 
-            <h3>OAuth APIs:</h3>
+            <h4>OAuth APIs:</h4>
 
             <div className="form-checkbox">
               <input
