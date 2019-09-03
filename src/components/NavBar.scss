@@ -18,6 +18,7 @@
 
   .api-status-link {
     margin-left: auto;
+    z-index: 2;
     font-size: 1.7rem;
     margin-top: 2rem;
     margin-bottom: 0.3rem;
@@ -63,6 +64,8 @@
     border-bottom: 1px solid #DBDBDD;
 
     &.is-visible {
+      z-index: 2;
+
       .usa-menu-button {
         background-color: $color-primary-alt-dark;
       }
