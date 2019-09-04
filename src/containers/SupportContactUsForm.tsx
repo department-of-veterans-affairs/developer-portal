@@ -1,16 +1,15 @@
-import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
-import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
-import * as classNames from 'classnames';
 import * as React from "react";
-import { validateEmail } from '../actions';
+import { validateByPattern, validateEmail } from '../actions';
+import ApiSelection from "../components/ApiSelection";
+import Form from "../components/Form";
 import { IErrorableInput } from '../types';
 
 import './SupportContactUsForm.scss';
 
 interface ISupportContactUsFormState {
-  apis: IAPIValue;
+  apis: {[x: string]: boolean };
   description: IErrorableInput;
   email: IErrorableInput;
   firstName: IErrorableInput;
@@ -18,241 +17,152 @@ interface ISupportContactUsFormState {
   organization: IErrorableInput;
 }
 
-interface IAPIValue {
-  benefits: boolean;
-  claims: boolean;
-  communityCare: boolean;
-  facilities: boolean;
-  health: boolean;
-  verification: boolean;
+interface ISupportContactUsFormProps {
+  onSuccess: () => void;
 }
 
-interface ISupportContactUsFormProp {
-  onSubmit: (formData: any) => void;
-  sending: boolean;
-  error: boolean;
-}
+export default class SupportContactUsForm extends React.Component<ISupportContactUsFormProps, ISupportContactUsFormState> {
 
-interface ISubmissionErrorProp {
-  error: boolean;
-}
-
-const SubmissionError = (props: ISubmissionErrorProp) => {
-  const assistanceTrailer = (
-    <span>Need assistance? Create an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">Github page</a></span>
-  );
-
-  if (props.error) {
-    return (
-      <AlertBox status="error" headline={"We encountered a server error while saving your form. Please try again later."} content={ assistanceTrailer } />
-    );
-  }
-  return null;
-}
-
-export default class SupportContactUsForm extends React.Component<ISupportContactUsFormProp, ISupportContactUsFormState> {
-
-  constructor(props: ISupportContactUsFormProp) {
+  constructor(props: ISupportContactUsFormProps) {
     super(props);
     this.state = {
-      apis: {
-        benefits: false,
-        claims: false,
-        communityCare: false,
-        facilities: false,
-        health: false,
-        verification: false,
-      },
-      description: {
-        dirty: false,
-        value: '',
-      },
-      email: {
-        dirty: false,
-        value: '',
-      },
-      firstName: {
-        dirty: false,
-        value: '',
-      },
-      lastName: {
-        dirty: false,
-        value: '',
-      },
-      organization: {
-        dirty: false,
-        value: '',
-      },
-    }
+      apis: {},
+      description: this.defaultErrorableField,
+      email: this.defaultErrorableField,
+      firstName: this.defaultErrorableField,
+      lastName: this.defaultErrorableField,
+      organization: this.defaultErrorableField,
+    };
+
+    this.formSubmission = this.formSubmission.bind(this);
   }
 
   public render() {
     return (
-      <div>
-        <form className="va-contact-us-form">
-          <fieldset>
-            <legend>Contact Us</legend>
-            <p>
-              Have a question? Use the form below to send us an email and we'll do the best to answer your question and get you headed in the right direction
-            </p>
-
+      <Form onSubmit={this.formSubmission} disabled={this.disabled} className="va-api-contact-us-form">
+        <h3>Contact Us</h3>
+        <p>
+          Have a question? Use the form below to send us an email and we'll do the best to answer your question and get you headed in the right direction.
+        </p>
+        <fieldset>
+          <legend>Personal Information</legend>
             <div className="usa-grid">
               <div className="usa-width-one-half">
                 <ErrorableTextInput
-                  errorMessage={null}
+                  errorMessage={this.state.firstName.validation}
                   label="First name"
                   field={this.state.firstName}
-                  onValueChange={(field: IErrorableInput) => this.setState({ firstName: field })}
+                  onValueChange={(field: IErrorableInput) => this.setState({ firstName: this.validatePresence(field, 'First Name') })}
                   required={true} />
               </div>
               <div className="usa-width-one-half">
-                <ErrorableTextInput
-                  errorMessage={null}
-                  label="Last name"
-                  name="lastName"
-                  field={this.state.lastName}
-                  onValueChange={(field: IErrorableInput) => this.setState({ lastName: field })}
-                  required={true} />
-              </div>
+              <ErrorableTextInput
+                errorMessage={this.state.lastName.validation}
+                label="Last name"
+                name="lastName"
+                field={this.state.lastName}
+                onValueChange={(field: IErrorableInput) => this.setState({ lastName: this.validatePresence(field, 'Last Name') })}
+                required={true} />
             </div>
+          </div>
+          <div className="usa-grid">
+            <div className="usa-width-one-half">
+                <ErrorableTextInput
+                errorMessage={this.state.email.validation}
+                label="Email"
+                name="email"
+                field={this.state.email}
+                onValueChange={(field: IErrorableInput) => this.setState({ email: validateEmail(field) })}
+                required={true} />
+            </div>
+            <div className="usa-width-one-half">
+              <ErrorableTextInput
+                errorMessage={null}
+                label="Organization"
+                name="organization"
+                field={this.state.organization}
+                onValueChange={(field: IErrorableInput) => this.setState({ organization: field })}
+                required={false} />
+            </div>
+          </div>
+        </fieldset>
 
+        <p>If applicable, please select any of the APIs pertaining to your issue.</p>
+        <ApiSelection onSelection={(apis) => this.setState({apis})}/>
+
+        <fieldset>
+          <legend>Support Description</legend>
             <div className="usa-grid">
-              <div className="usa-width-one-half">
-                <ErrorableTextInput
-                  errorMessage={this.state.email.validation}
-                  label="Email"
-                  name="email"
-                  field={this.state.email}
-                  onValueChange={(field: IErrorableInput) => this.setState({ email: validateEmail(field) })}
-                  required={true} />
-              </div>
-              <div className="usa-width-one-half">
-                <ErrorableTextInput
-                  errorMessage={null}
-                  label="Organization"
-                  name="organization"
-                  field={this.state.organization}
-                  onValueChange={(field: IErrorableInput) => this.setState({ organization: field })}
-                  required={false} />
-              </div>
-            </div>
-
-            <p>If applicable, please select any of the APIs pertaining to your issue.</p>
-
-            <h4>Standard APIs:</h4>
-
-            <div className="form-checkbox">
-              <input
-                type="checkbox"
-                id="benefits"
-                name="benefits"
-                checked={this.state.apis.benefits}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-              <label htmlFor="benefits">VA Benefits API</label>
-            </div>
-
-            <div className="form-checkbox">
-              <input
-                type="checkbox"
-                id="facilities"
-                name="facilities"
-                checked={this.state.apis.facilities}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-              <label htmlFor="facilities">VA Facilities API</label>
-            </div>
-
-            <h4>OAuth APIs:</h4>
-
-            <div className="form-checkbox">
-              <input
-                type="checkbox"
-                id="claims"
-                name="claims"
-                checked={this.state.apis.claims}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-              <label htmlFor="claims">VA Claims API</label>
-            </div>
-
-            <div className="form-checkbox">
-              <input
-                type="checkbox"
-                id="health"
-                name="health"
-                checked={this.state.apis.health}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-              <label htmlFor="health">VA Health API</label>
-            </div>
-
-            <div className="form-checkbox">
-              <input
-                type="checkbox"
-                id="communityCare"
-                name="communityCare"
-                checked={this.state.apis.communityCare}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-              <label htmlFor="communityCare">Community Care Eligibility API</label>
-            </div>
-
-            <div className="form-checkbox">
-              <input
-                type="checkbox"
-                id="verification"
-                name="verification"
-                checked={this.state.apis.verification}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => this.toggleApis(event)} />
-              <label htmlFor="verification">VA Veteran Verification API</label>
-            </div>
-
-            <div className={classNames("usa-grid", "va-description")}>
-              <div className="usa-width-one-whole">
-                <ErrorableTextArea
-                  errorMessage={null}
-                  label="Pleae describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
-                  onValueChange={(field: any) => this.setState({ description: field })}
+               <div className="usa-width-one-whole">
+                 <ErrorableTextArea
+                  errorMessage={this.state.description.validation}
+                  label="Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
+                  onValueChange={(field: IErrorableInput) => this.setState({ description: this.validatePresence(field, 'Description') })}
                   name="description"
                   field={this.state.description}
                   required={true} />
               </div>
             </div>
-
-            <ProgressButton
-              buttonText={this.props.sending ? "Sending..." : "Submit"}
-              disabled={this.disableSubmission()}
-              onButtonClick={this.submitForm}
-              buttonClass="usa-button-primary" />
-
-          </fieldset>
-        </form>
-        <SubmissionError error={this.props.error}/>
-      </div>
+        </fieldset>
+      </Form>
     )
   }
 
-  private toggleApis(event: React.ChangeEvent<HTMLInputElement>) {
-    const name = event.target.name
-    const value = event.target.checked
-    const apis = this.state.apis;
-    apis[name] = value
-    this.setState({ apis })
+  private get defaultErrorableField(): IErrorableInput {
+    return {
+      dirty: false,
+      value: '',
+    };
   }
 
-  private disableSubmission() {
-    return (!this.state.email.value
-      || this.state.email.validation
-      || !this.state.firstName.value
-      || !this.state.lastName.value
-      || !this.state.description.value)
-  }
-
-  private submitForm = () => {
-    const data = {
-      apis: Object.keys(this.state.apis).filter(k => !!this.state.apis[k]),
+  private get processedData(): any {
+    return {
+      apis: Object.keys(this.state.apis).filter(k => this.state.apis[k]),
       description: this.state.description.value,
       email: this.state.email.value,
       firstName: this.state.firstName.value,
       lastName: this.state.lastName.value,
-      organizaiton: this.state.organization.value,
+      organization: this.state.organization.value,
+    };
+  }
+
+  private get disabled(): boolean {
+    return !((!this.state.firstName.validation && this.state.firstName.value)
+            && (!this.state.lastName.validation && this.state.lastName.value)
+            && (!this.state.email.validation && this.state.email.value)
+            && (!this.state.description.validation && this.state.description.value));
+  }
+
+  private validatePresence(newValue: IErrorableInput, fieldName: string): IErrorableInput {
+    validateByPattern(newValue, /^(?!\s*$).+/, `${fieldName} must not be blank`);
+    return newValue;
+  }
+
+  private async formSubmission() {
+    const request = new Request(
+      `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL}/services/meta/contact-us`,
+      {
+        body: JSON.stringify(this.processedData),
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+      },
+    );
+
+    const response = await fetch(request);
+    if (!response.ok) {
+      throw Error(response.statusText);
     }
-    this.props.onSubmit(data);
+
+    const json = await response.json();
+    if (json && json.statusCode !== 200) {
+      throw Error(json.body);
+    }
+    
+    if (this.props.onSuccess) {
+      this.props.onSuccess();
+    }
   }
 }

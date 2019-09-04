@@ -1,35 +1,33 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import * as React from "react";
-import { RouteComponentProps } from 'react-router';
 import PageHeader from "../components/PageHeader";
+import SupportConfirmation from '../content/supportConfirmation.mdx';
 
 import SupportContactUsForm from './SupportContactUsForm';
 
-interface ISupportContactUsState {
-  error: boolean;
-  sending: boolean;
-}
-
 const GithubSnippet = () => {
   return (
-    <div className="va-github-snippet">
+    <div className="va-api-github-snippet">
       <h3>Submit an Issue via Github</h3>
       <a className="usa-button" href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose"><FontAwesomeIcon icon={faGithub} /> Submit an Issue</a>
     </div>
   );
 }
 
-export default class SupportContactUs extends React.Component<RouteComponentProps, ISupportContactUsState> {
+interface ISupportContactUsState {
+  sent: boolean;
+}
 
-  constructor(props: RouteComponentProps) {
+export default class SupportContactUs extends React.Component<{}, ISupportContactUsState> {
+
+  constructor(props: {}) {
     super(props);
     this.state = {
-      error: false,
-      sending: false,
-    }
+      sent: false,
+    };
 
-    this.formSubmission = this.formSubmission.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
   }
 
   public render() {
@@ -39,47 +37,20 @@ export default class SupportContactUs extends React.Component<RouteComponentProp
       header: "Contact Us",
     };
 
-    return (
-      <section role="region" aria-label="Support Overview" className="usa-section usa-grid">
-        <PageHeader {...headerProps} />
-        <GithubSnippet />
-        <SupportContactUsForm onSubmit={this.formSubmission} sending={this.state.sending} error={this.state.error}/>
-      </section>
-    );
+    if (this.state.sent) {
+      return <SupportConfirmation/>
+    } else {
+      return (
+        <section role="region" aria-label="Support Overview" className="usa-section usa-grid">
+          <PageHeader {...headerProps} />
+          <GithubSnippet />
+          <SupportContactUsForm onSuccess={this.onSuccess}/>
+        </section>
+      );
+    }
   }
 
-  private formSubmission(formData: any) {
-    this.setState({ sending: true }, async () => {
-      const request = new Request(
-        `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL}/services/meta/contact-us`,
-        {
-          body: JSON.stringify(formData),
-          headers: {
-            accept: 'application/json',
-            'content-type': 'application/json',
-          },
-          method: 'POST',
-        },
-      );
-
-      try {
-        const response = await fetch(request);
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-
-        const json = await response.json();
-        if (json && json.statusCode !== 200) {
-          throw Error(json.body);
-        }
-        
-        this.setState({ sending: false });
-        this.props.history.push('/support/confirmation');
-      } catch(e) {
-        this.setState({ sending: false });
-        this.setState({ error: true });
-      }
-      
-    })
+  private onSuccess(): void {
+    this.setState({sent: true});
   }
 }
