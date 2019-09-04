@@ -229,26 +229,24 @@ node('vetsgov-general-purpose') {
       envNames.each{ envName ->
         builds[envName] = {
           dockerImage.inside(args) {
-            dir('/application') {
-              if(onDeployableBranch()) {
-                withCredentials([string(credentialsId: 'sentry_auth_token', variable: 'SENTRY_AUTH_TOKEN')]) {
-                  def sentryRelease = "developer-portal-${envName}@${env.BUILD_NUMBER}"
-                  def sourceDir = "build/${envName}/static/js"
-                  withEnv(["SENTRY_RELEASE=${sentryRelease}",
-                           "SENTRY_URL=http://sentry.vfs.va.gov/",
-                           "SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN",
-                           "SENTRY_ORG=vets-gov",
-                           "SENTRY_PROJECT=developer-portal-backend-${envName}",
-                           ]) {
-                    sh "NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
-                    sh "scripts/upload_source_map.sh"
-                  }
+            if(onDeployableBranch()) {
+              withCredentials([string(credentialsId: 'sentry_auth_token', variable: 'SENTRY_AUTH_TOKEN')]) {
+                def sentryRelease = "developer-portal-${envName}@${ref}"
+                def sourceDir = "build/${envName}/static/js"
+                withEnv(["SENTRY_RELEASE=${sentryRelease}",
+                          "SENTRY_URL=http://sentry.vfs.va.gov/",
+                          "SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN",
+                          "SENTRY_ORG=vets-gov",
+                          "SENTRY_PROJECT=developer-portal-backend-${envName}",
+                          ]) {
+                  sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
+                  sh "cd /application/scripts && ./upload_source_map.sh"
                 }
-              } else {
-                sh "NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
               }
-              sh "echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
+            } else {
+              sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
             }
+            sh "cd /application && echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
           }
         }
       }
