@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import GroupedAccordions, { IPanelContent } from '../components/GroupedAccordions';
-import PageHeader from '../components/PageHeader';
+import GroupedAccordions, { IPanelContent } from '../../components/GroupedAccordions';
+import PageHeader from '../../components/PageHeader';
 
 const generalQuestions: ISupportQuestion[] = [
   {

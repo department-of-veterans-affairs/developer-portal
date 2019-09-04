@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ApiCard from '../components/ApiCard';
-import PageHeader from '../components/PageHeader';
+import ApiCard from '../../components/ApiCard';
+import PageHeader from '../../components/PageHeader';
 import { ISection } from './Support';
 
 const headerProps = {

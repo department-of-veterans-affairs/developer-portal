@@ -1,10 +1,10 @@
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import * as React from "react";
-import { validateByPattern, validateEmail } from '../actions';
-import ApiSelection from "../components/ApiSelection";
-import Form from "../components/Form";
-import { IErrorableInput } from '../types';
+import { validateByPattern, validateEmail } from '../../actions';
+import ApiSelection from "../../components/ApiSelection";
+import Form from "../../components/Form";
+import { IErrorableInput } from '../../types';
 
 import './SupportContactUsForm.scss';
 
