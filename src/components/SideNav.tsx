@@ -33,7 +33,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
       const to = withoutTrailingSlash(this.props.to);
 
       // Match on just the hash for anchor links with no path
-      let onlyHashMatches = to === location.hash
+      const onlyHashMatches = to === location.hash
       if (this.props.exact) {
         return onlyHashMatches || to === `${currentPath}${location.hash}`
       } else {
