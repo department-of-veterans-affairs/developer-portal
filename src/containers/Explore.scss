@@ -52,16 +52,6 @@
     padding-left: 60px;
   }
 
-  .sticky {
-    top: 20px;
-    display: none;
-
-    @include media($medium-screen) {
-      display: block;
-      position: sticky;
-    }
-  }
-
   .swagger-ui {
     margin-top: 20px;
 

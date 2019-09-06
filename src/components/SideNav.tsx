@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { Location } from 'history';
 import { match } from 'react-router';
 import { NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
+import * as Stickyfill from 'stickyfilljs';
 
 import '../components/SideNav.scss'
 
@@ -64,12 +65,27 @@ interface ISideNavProps {
 
 // tslint:disable-next-line: max-classes-per-file
 export class SideNav extends React.Component<ISideNavProps> {
+  private navRef = React.createRef<HTMLDivElement>();
+
+  public componentDidMount() {
+    if (this.navRef.current) {
+      Stickyfill.addOne(this.navRef.current);
+    }
+  }
+
   public render() {
     return (
-      <nav className={classNames('vadp-side-nav', 'usa-width-one-third', 'sticky', this.props.className)} aria-label={this.props.ariaLabel}>
-        <ul className="usa-sidenav-list">
-          {this.props.children}
-        </ul>
+      <nav
+        className={classNames(
+          'vadp-side-nav',
+          'usa-width-one-third',
+          'sticky',
+          this.props.className,
+        )}
+        aria-label={this.props.ariaLabel}
+        ref={this.navRef}
+      >
+        <ul className="usa-sidenav-list">{this.props.children}</ul>
       </nav>
     );
   }

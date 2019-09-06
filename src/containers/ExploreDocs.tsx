@@ -3,7 +3,6 @@ import * as React from 'react';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-import * as Stickyfill from 'stickyfilljs';
 
 import { ApiPage } from '../components';
 import { SideNav, SideNavEntry } from '../components/SideNav';
@@ -96,14 +95,6 @@ function ExploreSideNav() {
 }
 
 export class ExploreDocs extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
-  private navRef = React.createRef<HTMLDivElement>();
-
-  public componentDidMount() {
-    if (this.navRef.current) {
-      Stickyfill.addOne(this.navRef.current);
-    }
-  }
-
   public componentDidUpdate(prevProps : RouteComponentProps<IApiNameParam>) {
     if (this.props.location.pathname !== prevProps.location.pathname) {
       window.scrollTo(0, 0);
@@ -114,9 +105,7 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
     return (
       <div className="explore">
         <section className="usa-grid">
-          <div ref={this.navRef}>
-            <ExploreSideNav />
-          </div>
+          <ExploreSideNav />
           <div className="usa-width-two-thirds">
             <Route exact={true} path="/explore/" component={DocumentationOverview} />
             <Route exact={true} path="/explore/:apiCategoryKey" component={ApiPage} />
