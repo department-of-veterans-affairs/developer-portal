@@ -41,7 +41,7 @@ export default class SupportContactUs extends React.Component<{}, ISupportContac
       return <SupportConfirmation/>;
     } else {
       return (
-        <section role="region" aria-label="Support Overview" className="usa-section usa-grid">
+        <section role="region" aria-label="Support Overview" className="usa-section">
           <PageHeader {...headerProps} />
           <GithubSnippet />
           <SupportContactUsForm onSuccess={this.onSuccess}/>
