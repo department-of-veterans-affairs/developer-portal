@@ -24,7 +24,7 @@ const generalQuestions: ISupportQuestion[] = [
     answer: 'Access to all VA APIs is free of charge, with the goal of making access to federal government data easier for veterans.',
     question: 'What is the cost of using VA APIs?',
   },
-]
+];
 
 const developmentQuestions: ISupportQuestion[] = [
   {
@@ -75,7 +75,7 @@ const developmentQuestions: ISupportQuestion[] = [
     ),
     question: 'What kind of data can I get from the APIs? Do you have any example scenarios for Health, Benefits, Facilities or Veteran Verification?',
   },
-]
+];
 
 const supportQuestions: ISupportQuestion[] = [
   {
@@ -88,7 +88,7 @@ const supportQuestions: ISupportQuestion[] = [
     ),
     question: 'How do I contact support with any questions or if I need help?',
   },
-]
+];
 
 const headerProps = {
   description: "We've compiled a list of FAQs for the VA API program; our goal is to get your question answered as soon as possible. If you need further help\u2014or have comments or feedback\u2014please contact us via Github or use our short 'Contact Us' form. Our customer support team will be happy to help.",
@@ -111,13 +111,13 @@ const SupportQuestions = (props: ISupportQuestionsProps) => {
     return {
       body: q.answer,
       title: q.question,
-    }
+    };
   });
 
   return (
     <GroupedAccordions panelContents={content} title={props.title} />
-  )
-}
+  );
+};
 
 export default class SupportFAQ extends React.Component {
   public render() {
@@ -130,6 +130,6 @@ export default class SupportFAQ extends React.Component {
           <SupportQuestions title="Troubleshooting/Support" questions={supportQuestions}/>
         </div>
       </section>
-    )
+    );
   }
 }

@@ -1,10 +1,11 @@
+import ErrorableCheckboxGroup from '@department-of-veterans-affairs/formation-react/ErrorableCheckboxGroup';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import * as React from "react";
-import { validateByPattern, validateEmail } from '../../actions';
-import ApiSelection from "../../components/ApiSelection";
+import { apiDefs } from '../../apiDefs';
 import Form from "../../components/Form";
 import { IErrorableInput } from '../../types';
+import { validateEmail, validatePresence } from '../../utils/validators';
 
 import './SupportContactUsForm.scss';
 
@@ -26,7 +27,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   constructor(props: ISupportContactUsFormProps) {
     super(props);
     this.state = {
-      apis: {},
+      apis: this.initialApiState,
       description: this.defaultErrorableField,
       email: this.defaultErrorableField,
       firstName: this.defaultErrorableField,
@@ -35,24 +36,27 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
     };
 
     this.formSubmission = this.formSubmission.bind(this);
+    this.toggleApis = this.toggleApis.bind(this);
   }
 
   public render() {
     return (
-      <Form onSubmit={this.formSubmission} disabled={this.disabled} className="va-api-contact-us-form">
-        <h3>Contact Us</h3>
-        <p>
-          Have a question? Use the form below to send us an email and we'll do the best to answer your question and get you headed in the right direction.
-        </p>
+      <Form onSubmit={this.formSubmission} onSuccess={this.props.onSuccess} disabled={this.disabled} className="va-api-contact-us-form">
         <fieldset>
-          <legend>Personal Information</legend>
-            <div className="usa-grid">
+          <legend>
+            Contact Us
+            <p className='va-api-contact-us-legend-description'>
+            Have a question? Use the form below to send us an email and we'll do the best to answer your question and get you headed in the right direction.
+            </p>
+          </legend>
+
+          <div className="usa-grid">
               <div className="usa-width-one-half">
                 <ErrorableTextInput
                   errorMessage={this.state.firstName.validation}
                   label="First name"
                   field={this.state.firstName}
-                  onValueChange={(field: IErrorableInput) => this.setState({ firstName: this.validatePresence(field, 'First Name') })}
+                  onValueChange={(field: IErrorableInput) => this.setState({ firstName: validatePresence(field, 'First Name') })}
                   required={true} />
               </div>
               <div className="usa-width-one-half">
@@ -61,7 +65,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
                 label="Last name"
                 name="lastName"
                 field={this.state.lastName}
-                onValueChange={(field: IErrorableInput) => this.setState({ lastName: this.validatePresence(field, 'Last Name') })}
+                onValueChange={(field: IErrorableInput) => this.setState({ lastName: validatePresence(field, 'Last Name') })}
                 required={true} />
             </div>
           </div>
@@ -85,27 +89,45 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
                 required={false} />
             </div>
           </div>
-        </fieldset>
 
-        <p>If applicable, please select any of the APIs pertaining to your issue.</p>
-        <ApiSelection onSelection={(apis) => this.setState({apis})}/>
+          <ErrorableCheckboxGroup
+            additionalFieldsetClass='va-api-checkboxes'
+            additionalLegendClass='va-api-contact-us-legend-description'
+            label='If applicable, please select any of the APIs pertaining to your issue.'
+            onValueChange={this.toggleApis}
+            id='default'
+            required={false}
+            options={this.apiOptions}
+            values={{ key: 'value' }}
+          />
 
-        <fieldset>
-          <legend>Support Description</legend>
-            <div className="usa-grid">
-               <div className="usa-width-one-whole">
-                 <ErrorableTextArea
-                  errorMessage={this.state.description.validation}
-                  label="Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
-                  onValueChange={(field: IErrorableInput) => this.setState({ description: this.validatePresence(field, 'Description') })}
-                  name="description"
-                  field={this.state.description}
-                  required={true} />
-              </div>
-            </div>
+          <ErrorableTextArea
+            errorMessage={this.state.description.validation}
+            label="Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
+            onValueChange={(field: IErrorableInput) => this.setState({ description: validatePresence(field, 'Description') })}
+            name="description"
+            field={this.state.description}
+            required={true} />
+          
         </fieldset>
       </Form>
-    )
+    );
+  }
+
+  private get apiOptions(): object[] {
+    return Object.keys(apiDefs).map(api => {
+      return {
+        label: apiDefs[api].name,
+        value: api,
+      };
+    });
+  }
+
+  private get initialApiState() {
+    return Object.keys(apiDefs).reduce((accumulator, currentValue) => {
+      accumulator[currentValue] = false;
+      return accumulator;
+    }, {});
   }
 
   private get defaultErrorableField(): IErrorableInput {
@@ -133,9 +155,11 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
             && (!this.state.description.validation && this.state.description.value));
   }
 
-  private validatePresence(newValue: IErrorableInput, fieldName: string): IErrorableInput {
-    validateByPattern(newValue, /^(?!\s*$).+/, `${fieldName} must not be blank`);
-    return newValue;
+  private toggleApis(input: IErrorableInput, checked: boolean) {
+    const name = input.value;
+    const apis = this.state.apis;
+    apis[name] = checked;
+    this.setState({apis});
   }
 
   private async formSubmission() {
@@ -159,10 +183,6 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
     const json = await response.json();
     if (json && json.statusCode !== 200) {
       throw Error(json.body);
-    }
-    
-    if (this.props.onSuccess) {
-      this.props.onSuccess();
     }
   }
 }

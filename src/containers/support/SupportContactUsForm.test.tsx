@@ -10,7 +10,7 @@ describe('SupportContactUsForm', () => {
     const onSuccessMock = jest.fn();
     const component = mount(<SupportContactUsForm onSuccess={onSuccessMock}/>);
     expect(component.find('.usa-button-primary').hasClass('usa-button-disabled')).toBe(true);
-  })
+  });
 
   it('should not be disabled when required fields are filled', (done) => {
     const onSuccessMock = jest.fn();
@@ -48,7 +48,7 @@ describe('SupportContactUsForm', () => {
     expect(submitButton.hasClass('usa-button-disabled')).toBe(false);
   
     submitButton.simulate('click');
-
+    
     process.nextTick(() => {
       expect(onSuccessMock.mock.calls.length).toEqual(1);
       global.fetch.mockClear(); 
@@ -88,4 +88,4 @@ describe('SupportContactUsForm', () => {
     expect(component.state('firstName')).toMatchObject({value: 'firstName'});
     expect(component.state('email')).toMatchObject({value: 'email@gmail.com'});
   });
-})
+});

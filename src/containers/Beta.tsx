@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 
-import { validateEmail } from '../actions';
 import { IErrorableInput } from '../types';
+import { validateEmail } from '../utils/validators';
 
 import ds from '../assets/dslogon-icon.svg';
 import idme from '../assets/idme-icon-dark.svg';

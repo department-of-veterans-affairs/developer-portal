@@ -1,6 +1,7 @@
 import 'jest';
 
 import * as constants from '../types/constants';
+import { validateEmail, validateOAuthRedirectURI } from '../utils/validators';
 import * as actions from './index';
 
 afterEach(() => {
@@ -96,7 +97,7 @@ describe('submitForm', () => {
 describe('validateEmail', () => {
   it('should add validation filed to newValue when email is not valid', () => {
     expect(
-      actions.validateEmail({
+      validateEmail({
         dirty: true,
         value: 'bademail(at)example.com',
       }),
@@ -105,7 +106,7 @@ describe('validateEmail', () => {
 
   it('should not add validation if the email is valid', () => {
     expect(
-      actions.validateEmail({
+      validateEmail({
         dirty: true,
         value: 'goodemail@example.com',
       }),
@@ -146,7 +147,7 @@ describe('updateApplicationEmail', () => {
 
 describe('validateOAuthRedirectURI', () => {
   it('should accept localhost urls with ports', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({
+    const validatedInput = validateOAuthRedirectURI({
       dirty: true,
       value: 'http://localhost:8080/',
     });
@@ -154,7 +155,7 @@ describe('validateOAuthRedirectURI', () => {
   });
 
   it('should reject URLs with query strings', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({
+    const validatedInput = validateOAuthRedirectURI({
       dirty: true,
       value: 'https://example.com?a=b',
     });
@@ -162,7 +163,7 @@ describe('validateOAuthRedirectURI', () => {
   });
 
   it('should reject URLs with fragments', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({
+    const validatedInput = validateOAuthRedirectURI({
       dirty: true,
       value: 'https://example.com/#frag',
     });

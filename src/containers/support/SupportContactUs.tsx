@@ -13,7 +13,7 @@ const GithubSnippet = () => {
       <a className="usa-button" href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose"><FontAwesomeIcon icon={faGithub} /> Submit an Issue</a>
     </div>
   );
-}
+};
 
 interface ISupportContactUsState {
   sent: boolean;
@@ -38,7 +38,7 @@ export default class SupportContactUs extends React.Component<{}, ISupportContac
     };
 
     if (this.state.sent) {
-      return <SupportConfirmation/>
+      return <SupportConfirmation/>;
     } else {
       return (
         <section role="region" aria-label="Support Overview" className="usa-section usa-grid">

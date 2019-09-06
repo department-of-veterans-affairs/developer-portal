@@ -6,6 +6,7 @@ export interface IFormProps {
   disabled?: boolean;
   className?: string;
   onSubmit: () => void;
+  onSuccess: () => void;
 }
 
 interface IFormState {
@@ -42,14 +43,14 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               buttonClass="usa-button-primary" />
         {alert}
       </form>
-    )
-    
+    );
   }
 
   private submittingForm(): void {
     this.setState({sending: true}, async () => {
       try {
         await this.props.onSubmit();
+        this.setState({sending: false}, () => this.props.onSuccess());
       } catch(e) {
         this.setState({sending: false, error: true});
       }

@@ -26,6 +26,6 @@ export default class SupportOverview extends React.Component<ISupportOverviewPro
           {cardsSections}
         </div>
       </section>
-    )
+    );
   }
 }
