@@ -8,8 +8,8 @@ import { ApiPageReleaseNotes } from '../components';
 import { IApiNameParam } from '../types';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
-import { SideNav, SideNavEntry } from 'src/components/SideNav';
 import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
+import { SideNav, SideNavEntry } from '../components/SideNav';
 
 import './Explore.scss';
 
