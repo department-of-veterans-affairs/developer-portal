@@ -230,15 +230,16 @@ node('vetsgov-general-purpose') {
         builds[envName] = {
           dockerImage.inside(args) {
             if(onDeployableBranch()) {
-              withCredentials([string(credentialsId: 'sentry_auth_token', variable: 'SENTRY_AUTH_TOKEN')]) {
+              withCredentials([string(credentialsId: 'sentry-releases-auth-token', variable: 'SENTRY_AUTH_TOKEN')]) {
                 def sentryRelease = "developer-portal-${envName}@${ref}"
                 def sourceDir = "build/${envName}/static/js"
                 withEnv(["SENTRY_RELEASE=${sentryRelease}",
-                          "SENTRY_URL=http://sentry.vfs.va.gov/",
-                          "SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN",
-                          "SENTRY_ORG=vets-gov",
-                          "SENTRY_PROJECT=developer-portal-backend-${envName}",
-                          ]) {
+                         "SENTRY_URL=http://sentry.vfs.va.gov/",
+                         "SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN",
+                         "SENTRY_ORG=vets-gov",
+                         "SENTRY_PROJECT=developer-portal-${envName}",
+                         "SOURCE_DIR=${sourceDir}",
+                        ]) {
                   sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
                   sh "cd /application/scripts && ./upload_source_map.sh"
                 }
