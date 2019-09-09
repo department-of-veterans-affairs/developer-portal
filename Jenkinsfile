@@ -232,7 +232,7 @@ node('vetsgov-general-purpose') {
             if(onDeployableBranch()) {
               withCredentials([string(credentialsId: 'sentry-releases-auth-token', variable: 'SENTRY_AUTH_TOKEN')]) {
                 // Sentry releases have to be unique across the whole organization which is why the release begins with
-                // 'developer-portal-${env}Name'
+                // 'developer-portal-${envName}'
                 def sentryRelease = "developer-portal-${envName}@${ref}"
                 def sourceDir = "build/${envName}/static/js"
                 withEnv(["SENTRY_RELEASE=${sentryRelease}",
