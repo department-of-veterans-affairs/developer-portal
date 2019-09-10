@@ -1,92 +1,92 @@
 @import '../base';
+@import '../colors';
 
 .beta-application {
-
   margin-bottom: 3rem;
 
-    .usa-hero {
-        background-color: #4a4a4a;
-        background-image: url('../assets/home-page-banner.png');
-        margin-bottom: 60px;
+  .usa-hero {
+    background-color: #4a4a4a;
+    background-image: url('../assets/home-page-banner.png');
+    margin-bottom: 60px;
 
-        .usa-hero-callout {
-            background: none;
-            color: $color-white;
-            max-width: 100%;
-            padding-left: 0;
+    .usa-hero-callout {
+      background: none;
+      color: $color-white;
+      max-width: 100%;
+      padding-left: 0;
 
-            h1 {
-                font-family: $font-sans;
-            }
+      h1 {
+        font-family: $font-sans;
+      }
 
-            p {
-                font-size: 1.25em;
-                max-width: 800px;
-            }
+      p {
+        font-size: 1.25em;
+        max-width: 800px;
+      }
 
-            .usa-hero-disclaimer-text {
-                font-size: 0.75em;
-                width: 100%;
-                max-width: none;
-            }
-        }
-    }
-
-    .underlined-header {
-        border-bottom: 1px solid black;
-    }
-
-    .small-header-text {
-        font-size: 14px;
-        color: grey;
-    }
-
-    .name-input {
-        display: inline-block;
-        width: 100%
-    }
-
-    .form-container {
+      .usa-hero-disclaimer-text {
+        font-size: 0.75em;
         width: 100%;
-    }
-
-    .checkbox-label {
-        font-weight: bold;
         max-width: none;
+      }
+    }
+  }
+
+  .underlined-header {
+    border-bottom: 1px solid black;
+  }
+
+  .small-header-text {
+    font-size: 14px;
+    color: grey;
+  }
+
+  .name-input {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .form-container {
+    width: 100%;
+  }
+
+  .checkbox-label {
+    font-weight: bold;
+    max-width: none;
+  }
+
+  .small-checkbox-label {
+    color: grey;
+    font-weight: normal;
+  }
+
+  .no-pad {
+    padding: 0;
+  }
+
+  .bold-text {
+    font-weight: bold
+  }
+
+  .right-box {
+    border: 1px solid white;
+    padding-left: 2em;
+    padding-right: 2em;
+
+    @media screen and (min-width: $large-screen) {
+      float: right;
     }
 
-    .small-checkbox-label {
-        color: grey;
-        font-weight: normal;
+    @media screen and (max-width: $small-screen) {
+      float: left;
     }
+  }
 
-    .no-pad {
-       padding: 0;
-    }
+  .question-area {
+    margin-top: 60px;
+  }
 
-    .bold-text {
-        font-weight: bold
-    }
-
-    .right-box {
-        border: 1px solid white;
-        padding-left: 2em;
-        padding-right: 2em;
-
-        @media screen and (min-width: $large-screen) {
-            float: right;
-        }
-
-        @media screen and (max-width: $small-screen) {
-            float: left;
-        }
-    }
-
-    .question-area {
-        margin-top: 60px;
-    }
-
-    .internet-checkbox-group {
-        margin-top: 30px;
-    }
+  .internet-checkbox-group {
+    margin-top: 30px;
+  }
 }
