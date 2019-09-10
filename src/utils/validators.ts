@@ -21,6 +21,7 @@ export const validateOAuthRedirectURI = (newValue: IErrorableInput) => {
 };
 
 export const validatePresence = (newValue: IErrorableInput, fieldName: string) => {
-  validateByPattern(newValue, /^(?!\s*$).+/, `${fieldName} must not be blank`);
+  const presencePattern = /^(?!\s*$).+/;
+  validateByPattern(newValue, presencePattern, `${fieldName} must not be blank.`);
   return newValue;
 }

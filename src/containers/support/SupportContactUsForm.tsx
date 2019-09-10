@@ -27,12 +27,12 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   constructor(props: ISupportContactUsFormProps) {
     super(props);
     this.state = {
-      apis: this.initialApiState,
-      description: this.defaultErrorableField,
-      email: this.defaultErrorableField,
-      firstName: this.defaultErrorableField,
-      lastName: this.defaultErrorableField,
-      organization: this.defaultErrorableField,
+      apis: SupportContactUsForm.initialApiState,
+      description: SupportContactUsForm.defaultErrorableField,
+      email: SupportContactUsForm.defaultErrorableField,
+      firstName: SupportContactUsForm.defaultErrorableField,
+      lastName: SupportContactUsForm.defaultErrorableField,
+      organization: SupportContactUsForm.defaultErrorableField,
     };
 
     this.formSubmission = this.formSubmission.bind(this);
@@ -97,7 +97,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
             onValueChange={this.toggleApis}
             id='default'
             required={false}
-            options={this.apiOptions}
+            options={SupportContactUsForm.apiOptions}
             values={{ key: 'value' }}
           />
 
@@ -114,7 +114,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
     );
   }
 
-  private get apiOptions(): object[] {
+  private static get apiOptions(): object[] {
     return Object.keys(apiDefs).map(api => {
       return {
         label: apiDefs[api].name,
@@ -123,14 +123,14 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
     });
   }
 
-  private get initialApiState() {
-    return Object.keys(apiDefs).reduce((accumulator, currentValue) => {
-      accumulator[currentValue] = false;
+  private static get initialApiState() {
+    return Object.keys(apiDefs).reduce((accumulator, api) => {
+      accumulator[api] = false;
       return accumulator;
     }, {});
   }
 
-  private get defaultErrorableField(): IErrorableInput {
+  private static get defaultErrorableField(): IErrorableInput {
     return {
       dirty: false,
       value: '',

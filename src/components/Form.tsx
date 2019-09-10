@@ -31,8 +31,6 @@ export default class Form extends React.Component<IFormProps, IFormState> {
       <span>Need assistance? Create an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">Github page</a></span>
     );
 
-    const alert = this.state.error ? <AlertBox status="error" headline={"We encountered a server error while saving your form. Please try again later."} content={ assistanceTrailer } /> : null;
-
     return (
       <form className={this.props.className ? this.props.className : 'va-api-developer-form'}>
         {this.props.children}
@@ -41,7 +39,12 @@ export default class Form extends React.Component<IFormProps, IFormState> {
               disabled={this.props.disabled}
               onButtonClick={this.submittingForm}
               buttonClass="usa-button-primary" />
-        {alert}
+        {this.state.error &&
+          <AlertBox 
+            status="error" 
+            headline={"We encountered a server error while saving your form. Please try again later."} 
+            content={ assistanceTrailer } />
+        }
       </form>
     );
   }
