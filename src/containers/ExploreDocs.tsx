@@ -17,13 +17,11 @@ import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../api
 import './Explore.scss';
 
 function VaInternalTag() {
-  return (
-    <span><small>Internal VA use only.</small></span>
-  );
+  return <small className="vadp-internal-tag">Internal VA use only.</small>;
 }
 
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
-  const internalTag = (api.vaInternalOnly === true) ? VaInternalTag() : null;
+  const internalTag = api.vaInternalOnly === true ? VaInternalTag() : null;
 
   return (
     <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
@@ -34,7 +32,6 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
         name={
           <React.Fragment>
             {api.name}
-            <br />
             {internalTag}
           </React.Fragment>
         }
@@ -43,10 +40,13 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   );
 }
 
-
 function OAuthSideNavEntry(apiCategoryKey: string) {
   return (
-    <SideNavEntry to={`/explore/${apiCategoryKey}/docs/authorization`} id={`side-nav-authorization-link-${apiCategoryKey}`} name="Authorization">
+    <SideNavEntry
+      to={`/explore/${apiCategoryKey}/docs/authorization`}
+      id={`side-nav-authorization-link-${apiCategoryKey}`}
+      name="Authorization"
+    >
       <SideNavEntry to="#getting-started" name="Getting Started" />
       <SideNavEntry to="#scopes" name="Scopes" />
       <SideNavEntry to="#id-token" name="ID Token" />
@@ -55,12 +55,6 @@ function OAuthSideNavEntry(apiCategoryKey: string) {
       <SideNavEntry to="#support" name="Support" />
       <SideNavEntry to="#sample-application" name="Sample Application" />
     </SideNavEntry>
-    );
-}
-
-function QuickstartNavEntry(apiCategoryKey: string) {
-  return (
-    <SideNavEntry exact={true} to={`/explore/${apiCategoryKey}/docs/quickstart`} name="Quickstart" />
   );
 }
 
@@ -70,10 +64,22 @@ function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory)
   });
 
   const authorizationEntry = apiCategory.apiKey ? null : OAuthSideNavEntry(apiCategoryKey);
-  const quickstartEntry = apiCategory.content.quickstart ? QuickstartNavEntry(apiCategoryKey) : null;
+  const quickstartEntry = apiCategory.content.quickstart ? (
+    <SideNavEntry
+      exact={true}
+      to={`/explore/${apiCategoryKey}/docs/quickstart`}
+      name="Quickstart"
+    />
+  ) : null;
 
   return (
-    <SideNavEntry key={apiCategoryKey} to={`/explore/${apiCategoryKey}`} id={`side-nav-category-link-${apiCategoryKey}`} className="side-nav-category-link" name={apiCategory.name}>
+    <SideNavEntry
+      key={apiCategoryKey}
+      to={`/explore/${apiCategoryKey}`}
+      id={`side-nav-category-link-${apiCategoryKey}`}
+      className="side-nav-category-link"
+      name={apiCategory.name}
+    >
       {quickstartEntry}
       {authorizationEntry}
       {subNavLinks}
@@ -93,12 +99,6 @@ function ExploreSideNav() {
 }
 
 export class ExploreDocs extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
-  public componentDidUpdate(prevProps : RouteComponentProps<IApiNameParam>) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0);
-    }
-  }
-
   public render() {
     return (
       <div className="explore">
@@ -108,9 +108,21 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
             <Route exact={true} path="/explore/" component={DocumentationOverview} />
             <Route exact={true} path="/explore/:apiCategoryKey" component={ApiPage} />
             <Switch>
-              <Route exact={true} path="/explore/:apiCategoryKey/docs/authorization" component={AuthorizationDocs} />
-              <Route exact={true} path="/explore/:apiCategoryKey/docs/quickstart" component={QuickstartPage} />
-              <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" component={Explore} />
+              <Route
+                exact={true}
+                path="/explore/:apiCategoryKey/docs/authorization"
+                component={AuthorizationDocs}
+              />
+              <Route
+                exact={true}
+                path="/explore/:apiCategoryKey/docs/quickstart"
+                component={QuickstartPage}
+              />
+              <Route
+                exact={true}
+                path="/explore/:apiCategoryKey/docs/:apiName"
+                component={Explore}
+              />
             </Switch>
           </div>
         </section>

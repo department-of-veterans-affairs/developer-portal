@@ -4,6 +4,10 @@
   padding-top: 5rem;
   padding-bottom: 3rem;
 
+  .vadp-internal-tag {
+    display: block;
+  }
+
   // These styles are the same as those for the PageHeader component,
   // but are used for the header in the ApiPage component, which creates similar markup
   // from markdown rather than the PageHeader component.
@@ -61,7 +65,7 @@
     h4,
     h5,
     h6 {
-      color: #323A45;
+      color: #323a45;
     }
 
     h2 {
@@ -87,7 +91,7 @@
       }
 
       a {
-        color: #4C565C;
+        color: #4c565c;
         transition: none;
       }
 
@@ -98,7 +102,7 @@
     }
 
     .opblock.opblock-post .opblock-summary-method {
-      background: #44615D;
+      background: #44615d;
     }
 
     .opblock .opblock-summary-description {
@@ -120,12 +124,13 @@
     }
 
     button.authorize {
-      border-color: #4C565C;
-      color: #4C565C;
+      border-color: #4c565c;
+      color: #4c565c;
     }
 
-    button.authorize:hover, button.authorize:focus {
-      background-color: #4C565C;
+    button.authorize:hover,
+    button.authorize:focus {
+      background-color: #4c565c;
       color: #ffffff;
 
       svg {
@@ -133,8 +138,9 @@
       }
     }
 
-    button.authorization__btn:hover, button.authorization__btn:focus {
-      background-color: rgba(0,0,0,0.8);
+    button.authorization__btn:hover,
+    button.authorization__btn:focus {
+      background-color: rgba(0, 0, 0, 0.8);
 
       svg {
         fill: #ffffff;
@@ -142,11 +148,12 @@
     }
 
     .opblock-tag:focus {
-      background: rgba(0,0,0,0.2);
+      background: rgba(0, 0, 0, 0.2);
     }
 
-    button.expand-operation:hover, button.expand-operation:focus {
-      background: rgba(0,0,0,0.6);
+    button.expand-operation:hover,
+    button.expand-operation:focus {
+      background: rgba(0, 0, 0, 0.6);
 
       svg {
         fill: #ffffff;
@@ -164,7 +171,7 @@
     }
 
     .wrapper {
-      padding: 0
+      padding: 0;
     }
 
     table {
@@ -177,26 +184,26 @@
   .api-link {
     width: 50%;
     margin-bottom: 2em;
-      a {
-          box-shadow: 0px 4px 4px 0px rgba(0,0,0,0.25);
-          padding: 1em;
-          display: block;
-          color: $color-black;
-          text-decoration: none;
+    a {
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      padding: 1em;
+      display: block;
+      color: $color-black;
+      text-decoration: none;
 
-          span {
-              font-weight: 600;
-              font-size: 1.5em;
-          }
-
-          p {
-              margin-bottom: 0;
-          }
+      span {
+        font-weight: 600;
+        font-size: 1.5em;
       }
 
-      a:hover {
-          background-color: rgba(0,0,0,0.125);
+      p {
+        margin-bottom: 0;
       }
+    }
+
+    a:hover {
+      background-color: rgba(0, 0, 0, 0.125);
+    }
   }
 
   .api-name-tag {
@@ -207,29 +214,28 @@
     margin-top: 40px;
 
     > ul {
-      border-color: #DBDBDD;
+      border-color: #dbdbdd;
       margin: 0;
 
       > li {
         margin-bottom: 0;
       }
 
-      [aria-selected=true] {
-        border-color: #DBDBDD;
+      [aria-selected='true'] {
+        border-color: #dbdbdd;
       }
     }
 
-    [role=tabpanel] {
+    [role='tabpanel'] {
       background-color: $color-white;
-      border-right: 1px solid #DBDBDD;
-      border-bottom: 1px solid #DBDBDD;
-      border-left: 1px solid #DBDBDD;
+      border-right: 1px solid #dbdbdd;
+      border-bottom: 1px solid #dbdbdd;
+      border-left: 1px solid #dbdbdd;
       padding: 1.5rem 2rem;
-
     }
   }
 
   .react-tabs__tab:focus:after {
-    display: none
+    display: none;
   }
 }
