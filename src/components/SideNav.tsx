@@ -6,7 +6,7 @@ import { match } from 'react-router';
 import { NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
 import * as Stickyfill from 'stickyfilljs';
 
-import '../components/SideNav.scss'
+import '../components/SideNav.scss';
 
 interface ISideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
@@ -33,31 +33,28 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
       const to = withoutTrailingSlash(this.props.to);
 
       // Match on just the hash for anchor links with no path
-      const onlyHashMatches = to === location.hash
+      const onlyHashMatches = to === location.hash;
       if (this.props.exact) {
-        return onlyHashMatches || to === `${currentPath}${location.hash}`
+        return onlyHashMatches || to === `${currentPath}${location.hash}`;
       } else {
-        return onlyHashMatches || currentPath.startsWith(to)
+        return onlyHashMatches || currentPath.startsWith(to);
       }
     };
 
     // Omit unneeded parent props from NavLink
-    const {name, ...NavLinkProps} = this.props;
+    const { name, ...navLinkProps } = this.props;
 
     return (
       <li>
-        <NavHashLink activeClassName="usa-current" isActive={hashMatch} {...NavLinkProps}>
+        <NavHashLink activeClassName="usa-current" isActive={hashMatch} {...navLinkProps}>
           {this.props.name}
         </NavHashLink>
-        {this.props.children && (
-          <ul className="usa-sidenav-sub_list">{this.props.children}</ul>
-        )}
+        {this.props.children && <ul className="usa-sidenav-sub_list">{this.props.children}</ul>}
       </li>
     );
   }
-};
+}
 
-// tslint:disable-next-line: no-empty-interface
 interface ISideNavProps {
   className?: string;
   ariaLabel: string;
