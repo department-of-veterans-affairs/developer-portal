@@ -33,11 +33,9 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
         to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}`}
         name={
           <React.Fragment>
-            <div>
-              {api.name}
-              <br />
-              {internalTag}
-            </div>
+            {api.name}
+            <br />
+            {internalTag}
           </React.Fragment>
         }
       />
