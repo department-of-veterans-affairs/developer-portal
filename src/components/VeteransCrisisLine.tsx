@@ -9,8 +9,8 @@ import classNames from 'classnames';
 import vclLogo from '../assets/vcl-logo.png';
 
 interface IVeteransCrisisLineProps {
-  visible: boolean,
-  closeHandler: (event?: {}) => void 
+  visible: boolean;
+  closeHandler: (event?: {}) => void; 
 }
 
 export class VeteransCrisisLine extends React.Component<IVeteransCrisisLineProps, {}> {
@@ -95,5 +95,5 @@ export class VeteransCrisisLine extends React.Component<IVeteransCrisisLineProps
     if (event.key === 'Escape' && this.props.visible) {
       this.props.closeHandler();
     }
-  };
+  }
 }

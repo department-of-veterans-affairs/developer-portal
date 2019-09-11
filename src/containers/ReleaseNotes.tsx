@@ -21,7 +21,7 @@ function VaInternalTag() {
 
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   const internalTag = (api.vaInternalOnly === true) ? VaInternalTag() : null;
-  const dashUrlFragment = api.urlFragment.replace('_', '-')
+  const dashUrlFragment = api.urlFragment.replace('_', '-');
 
   return (
     <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
@@ -75,7 +75,7 @@ export function SideNav({ match: { url } } : RouteComponentProps<IApiNameParam>)
 }
 
 function renderOverview(routeProps: any, props: any) {
-  return <ReleaseNotesOverview {...routeProps} {...props} description={props.description} halo={props.halo} header={props.header} parent={props.parent} />
+  return <ReleaseNotesOverview {...routeProps} {...props} description={props.description} halo={props.halo} header={props.header} parent={props.parent} />;
 }
 
 export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNameParam>, {}> {

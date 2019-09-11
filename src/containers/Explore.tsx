@@ -63,7 +63,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     }
 
     if (category) {
-      header = <PageHeader id="api-documentation" halo={category.name} header={api!.name} />
+      header = <PageHeader id="api-documentation" halo={category.name} header={api!.name} />;
     }
 
     return (
@@ -129,7 +129,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
       <Flag name={`hosted_apis.${apiDefinition.urlFragment}`}>
         {docs}
       </Flag>
-    )
+    );
   }
 
   private getApi() : IApiDescription | null {

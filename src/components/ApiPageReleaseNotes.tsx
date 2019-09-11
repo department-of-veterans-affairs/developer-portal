@@ -25,7 +25,7 @@ export class ApiPageReleaseNotes extends React.Component<RouteComponentProps<IAp
     if (apis.length > 1) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { description, name, urlFragment, vaInternalOnly } = apiDesc;
-        const dashUrlFragment = urlFragment.replace('_', '-')
+        const dashUrlFragment = urlFragment.replace('_', '-');
 
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>

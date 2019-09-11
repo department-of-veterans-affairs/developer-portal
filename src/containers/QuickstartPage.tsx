@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 
 import { apiDefs } from '../apiDefs';
-import QuickstartWrapper from '../components/QuickstartWrapper'
+import QuickstartWrapper from '../components/QuickstartWrapper';
 import { IApiNameParam } from '../types';
 
 export default class QuickstartPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {

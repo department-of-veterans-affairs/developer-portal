@@ -3,8 +3,7 @@ import { ThunkAction } from 'redux-thunk';
 import { history } from '../store';
 import { IApiList, IErrorableInput, IRootState } from '../types';
 import * as constants from '../types/constants';
-
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import { validateEmail, validateOAuthRedirectURI } from '../utils/validators';
 
 export interface IUpdateApplicationFirstName extends Action {
   newValue: IErrorableInput;
@@ -215,24 +214,6 @@ export const submitFormError: ActionCreator<ISubmitFormError> = (status: string)
     status,
     type: constants.SUBMIT_APPLICATION_ERROR,
   };
-};
-
-export const validateByPattern = (newValue: IErrorableInput, pattern: RegExp, failMsg: string) => {
-  const invalid = newValue.value == null || !newValue.value.match(pattern);
-  if (invalid) {
-    newValue.validation = failMsg;
-  }
-};
-
-export const validateEmail = (newValue: IErrorableInput) => {
-  validateByPattern(newValue, EMAIL_REGEX, 'Must be a valid email address.');
-  return newValue;
-};
-
-export const validateOAuthRedirectURI = (newValue: IErrorableInput) => {
-  const partialUrlPattern = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
-  validateByPattern(newValue, partialUrlPattern, 'Must be an http or https URI.');
-  return newValue;
 };
 
 export const updateApplicationEmail: ActionCreator<IUpdateApplicationEmail> = (
