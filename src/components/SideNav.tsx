@@ -10,7 +10,6 @@ import '../components/SideNav.scss';
 
 interface ISideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
-  // flagName?: string
   to: string; // Only allow the string form of the `to` prop
 }
 
@@ -66,6 +65,8 @@ export class SideNav extends React.Component<ISideNavProps> {
 
   public componentDidMount() {
     if (this.navRef.current) {
+      // Stickyfill lets us use `position: sticky` in browsers that may not
+      // support it. The library requires a dom reference to work, hence the ref.
       Stickyfill.addOne(this.navRef.current);
     }
   }
