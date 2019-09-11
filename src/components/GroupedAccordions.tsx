@@ -1,6 +1,6 @@
 import CollapsiblePanel from '@department-of-veterans-affairs/formation-react/CollapsiblePanel';
 import * as classNames from 'classnames';
-import * as React from 'react'
+import * as React from 'react';
 
 import './GroupedAccordions.scss';
 
@@ -30,14 +30,14 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
 
   constructor(props: IGroupedAccordionsProps) {
     super(props);
-    this.state = { allCollapsed: true }
+    this.state = { allCollapsed: true };
     this.panelRefs = [];
   }
 
   public componentDidMount() {
     // CollapsiblePanel expects a VetsGov object on the global window
     if (!window.VetsGov) {
-      window.VetsGov = { scroll: null }
+      window.VetsGov = { scroll: null };
     }
   }
 
@@ -49,7 +49,7 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
     return (
       <section className="va-grouped-accordion">
         <div className="va-grouped-accordion-header">
-          <h2>{this.props.title}</h2>
+          <h3>{this.props.title}</h3>
           <button className={classNames("toggle-panels", "btn-link")} onClick={(event) => this.handleExpandCollapse(event)}>{this.determineLabelFromState()}</button>
         </div>
         {this.createPanels()}
@@ -69,7 +69,7 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
         <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={!this.state.allCollapsed} key={index}>
           {c.body}
         </CollapsiblePanel>
-      )
+      );
     });
   }
 
@@ -78,7 +78,7 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
     this.setState((prevState: IGroupedAccordionsStates) => ({ allCollapsed: !prevState.allCollapsed }), () => {
       this.panelRefs.filter(r => r.current && (r.current.state.open === this.state.allCollapsed)).forEach(r => {
         if (r.current) {
-          r.current.setState({ open: !this.state.allCollapsed })
+          r.current.setState({ open: !this.state.allCollapsed });
         }
       });
     });

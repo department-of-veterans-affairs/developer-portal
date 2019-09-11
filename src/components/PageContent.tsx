@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RouteComponentProps } from 'react-router'
+import { RouteComponentProps } from 'react-router';
 
 interface IPageContentProps extends RouteComponentProps<void> {
     children: JSX.Element[] | JSX.Element;

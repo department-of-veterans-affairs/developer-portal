@@ -7,7 +7,7 @@ import FacilitiesOverview from './facilities/facilitiesOverview.mdx';
 import HealthArgonautDeprecation from './health/argonautDeprecationNotice.mdx';
 import CommunityCareApiIntro from './health/communityCareApiIntro.mdx';
 import FhirArgonautApiIntro from './health/fhirArgonautApiIntro.mdx';
-import FhirDSTU2ApiIntro from './health/fhirDSTU2ApiIntro.mdx'
+import FhirDSTU2ApiIntro from './health/fhirDSTU2ApiIntro.mdx';
 import FhirR4ApiIntro from './health/fhirR4ApiIntro.mdx';
 import HealthIntro from './health/healthIntro.mdx';
 import HealthOverview from './health/healthOverview.mdx';

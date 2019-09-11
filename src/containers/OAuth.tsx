@@ -10,7 +10,7 @@ import './OAuth.scss';
 
 export interface IOAuthProps {
   apiCategoryKey: string;
-};
+}
 
 
 export class OAuth extends React.Component<IOAuthProps, {}> {

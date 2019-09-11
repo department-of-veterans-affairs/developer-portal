@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 
 import { lookupApiCategory } from '../apiDefs';
 import { OAuth } from '../containers';
@@ -18,7 +18,7 @@ export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiN
         return (<OAuth apiCategoryKey={apiCategoryKey} />);
       }
     } else {
-      return <Redirect to='/explore/bogus' />
+      return <Redirect to='/explore/bogus' />;
     }
   }
 }
