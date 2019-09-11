@@ -17,10 +17,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
       apiKey,
       apis,
       name: categoryName,
-      content: {
-        intro,
-        overview,
-      },
+      content: { intro, overview },
     } = apiDefs[apiCategoryKey];
 
     let cardSection;
@@ -32,10 +29,10 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
             <CardLink
               name={name}
-              description={description}
+              subhead={vaInternalOnly ? VAInternalOnlyTag() : undefined}
               url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
             >
-              {vaInternalOnly && <VAInternalOnlyTag />}
+              {description}
             </CardLink>
           </Flag>
         );
@@ -54,13 +51,15 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
     }
 
     return (
-      <section role="region" aria-labelledby={headerId} className={classNames('usa-section','api-overview')} >
+      <section
+        role="region"
+        aria-labelledby={headerId}
+        className={classNames('usa-section', 'api-overview')}
+      >
         <h1 id={headerId}>{categoryName}</h1>
         {intro({})}
         {cardSection}
-        <div className="usa-width-one-whole">
-          {overview({})}
-        </div>
+        <div className="usa-width-one-whole">{overview({})}</div>
         <hr />
       </section>
     );

@@ -12,12 +12,9 @@ function cards(parent: string): any {
     let apiCard;
     if (apiDefs[apiCategoryKey].releaseNotes) {
       apiCard = (
-        <CardLink
-          name={name}
-          description={shortDescription}
-          key={apiCategoryKey}
-          url={cardUrl}
-        />
+        <CardLink name={name} key={apiCategoryKey} url={cardUrl}>
+          {shortDescription}
+        </CardLink>
       );
     }
     return apiCard;
@@ -28,10 +25,12 @@ export default class Overview extends React.Component<RouteComponentProps & any,
   public render() {
     return (
       <div className="overview">
-        <PageHeader halo={this.props.halo} header={this.props.header} description={this.props.description} />
-        <div className="va-api-container">
-          {cards(this.props.parent)}
-        </div>
+        <PageHeader
+          halo={this.props.halo}
+          header={this.props.header}
+          description={this.props.description}
+        />
+        <div className="va-api-container">{cards(this.props.parent)}</div>
       </div>
     );
   }

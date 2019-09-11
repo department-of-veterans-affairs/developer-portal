@@ -17,12 +17,9 @@ export default class SupportOverview extends React.Component<ISupportOverviewPro
   public render() {
     const cardsSections = this.props.sections.map((section: ISection) => {
       return (
-        <CardLink
-          name={section.name}
-          description={section.description}
-          url={`/support/${section.id}`}
-          key={section.id}
-        />
+        <CardLink name={section.name} url={`/support/${section.id}`} key={section.id}>
+          {section.description}
+        </CardLink>
       );
     });
     return (

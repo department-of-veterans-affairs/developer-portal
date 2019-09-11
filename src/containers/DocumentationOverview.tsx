@@ -9,17 +9,17 @@ export default class DocumentationOverview extends React.Component<RouteComponen
   public render() {
     return (
       <div className="doc-overview">
-        <PageHeader header="Documentation" description="Explore usage policies and technical details about VA's API offerings."/>
+        <PageHeader
+          header="Documentation"
+          description="Explore usage policies and technical details about VA's API offerings."
+        />
         <div className="va-api-container">
           {apiCategoryOrder.map((apiCategoryKey: string) => {
             const { name, shortDescription } = apiDefs[apiCategoryKey];
             return (
-              <CardLink
-                name={name}
-                description={shortDescription}
-                key={apiCategoryKey}
-                url={`/explore/${apiCategoryKey}`}
-              />
+              <CardLink name={name} key={apiCategoryKey} url={`/explore/${apiCategoryKey}`}>
+                {shortDescription}
+              </CardLink>
             );
           })}
         </div>
