@@ -243,7 +243,7 @@ node('vetsgov-general-purpose') {
                          "SOURCE_DIR=${sourceDir}",
                         ]) {
                   sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
-                  sh "cd /application/scripts && ./upload_source_map.sh"
+                  sh "cd /application && ./scripts/upload_source_map.sh"
                 }
               }
             } else {
