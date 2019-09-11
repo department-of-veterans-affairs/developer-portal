@@ -1,4 +1,4 @@
-@import "../base";
+@import '../base';
 
 .vadp-side-nav {
   padding-right: 3rem;
@@ -25,17 +25,33 @@
     border: 2px solid #dbdbdd;
     background-color: white;
 
+    a {
+      padding-left: 1.1rem;
+      padding-top: 1.2rem;
+      padding-bottom: 1.2rem;
+    }
+
+    li {
+      border-top: 2px solid #dbdbdd;
+    }
+
     > li {
-      a.side-nav-category-link {
-        padding-left: 1.1rem;
+      a {
+        color: #222;
       }
 
-      a.side-nav-category-link.usa-current {
-        border: none;
+      a.usa-current {
+        color: #383838;
         border-left: 5px solid #2f70b5;
       }
 
+      a:hover {
+        background-color: #dbdbdd;
+      }
+
       a.usa-current + ul.usa-sidenav-sub_list {
+        // Show the subnav when its parent (represented as a sibling in the DOM)
+        // is the selected nav item
         display: block;
 
         ul.usa-sidenav-sub_list > li > a {
@@ -44,6 +60,7 @@
       }
 
       a + ul.usa-sidenav-sub_list {
+        // Hide subnav by default
         display: none;
       }
     }
@@ -51,27 +68,13 @@
 
   .usa-sidenav-sub_list {
     padding-left: 0;
-  }
 
-  .usa-sidenav-list > li,
-  .usa-sidenav-sub_list > li {
-    border-top: 2px solid #dbdbdd;
+    > li a {
+      padding-left: 3.3rem;
 
-    a {
-      padding-top: 1.2rem;
-      padding-bottom: 1.2rem;
-    }
-
-    a {
-      color: #222;
-    }
-
-    a.usa-current {
-      color: #383838;
-    }
-
-    a:hover {
-      background-color: #dbdbdd;
+      &.usa-current {
+        border: none;
+      }
     }
   }
 }
