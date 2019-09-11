@@ -24,4 +24,4 @@ export const validatePresence = (newValue: IErrorableInput, fieldName: string) =
   const presencePattern = /^(?!\s*$).+/;
   validateByPattern(newValue, presencePattern, `${fieldName} must not be blank.`);
   return newValue;
-}
+};

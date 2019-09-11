@@ -12,8 +12,8 @@ import * as NewsData from '../content/news.yml';
 
 import '../components/ApiCard';
 // Temporarily import the sidenav styles until we extract it into a component
-import '../components/SideNav.scss'
-import './News.scss'
+import '../components/SideNav.scss';
+import './News.scss';
 
 const sections = NewsData.sections.map((section: any) => ({ ...section, id: toHtmlId(section.title) }));
 
@@ -73,11 +73,11 @@ export class News extends React.Component {
                 <br />
                 <a href={item.url}>{item.title}</a>
               </p>
-            )
+            );
           })}
         </section>
-      )
-    })
+      );
+    });
 
     return (
       <div className={classNames('news', 'usa-section')}>
