@@ -22,7 +22,7 @@ const sections: ISection[] = [
   },
   {
     component: SupportContactUs,
-    description: 'Submit a support request via Github or send us a message using the Contact Us form.',
+    description: 'Submit a support request via GitHub or send us a message using the Contact Us form.',
     id: 'contact-us',
     name: 'Contact Us',
   },
