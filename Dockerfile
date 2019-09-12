@@ -24,6 +24,7 @@ RUN groupadd --gid 504 jenkins \
 USER jenkins
 
 RUN npm install -g npm
+RUN npm install -g @sentry/cli
 
 COPY package.json package-lock.json ./
 
