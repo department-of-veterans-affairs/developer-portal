@@ -1,7 +1,8 @@
 import * as classNames from 'classnames';
-import * as React from 'react'
+import * as React from 'react';
 import { Route } from "react-router";
 import { NavLink } from 'react-router-dom';
+import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
 
@@ -10,7 +11,7 @@ export interface ISection {
   readonly description: string;
   readonly id: string;
   readonly name: string;
-};
+}
 
 const sections: ISection[] = [
   {
@@ -19,12 +20,12 @@ const sections: ISection[] = [
     id: 'faq',
     name: 'FAQ',
   },
-  // {
-  //   component: SupportFAQ,
-  //   description: 'Submit a support request via Github or send us a message using the Contact Us form.',
-  //   id: 'contact-us',
-  //   name: 'Contact Us',
-  // },
+  {
+    component: SupportContactUs,
+    description: 'Submit a support request via Github or send us a message using the Contact Us form.',
+    id: 'contact-us',
+    name: 'Contact Us',
+  },
 ];
 
 export function SideNav() {
@@ -64,14 +65,14 @@ export default class Support extends React.Component {
           </div>
         </section>
       </div>
-    )
+    );
   }
 
   private createSubRoutes() {
     return sections.map((section) => {
       return (
         <Route key={section.id} exact={true} path={`/support/${section.id}`} component={section.component} />
-      )
-    })
+      );
+    });
   }
 }

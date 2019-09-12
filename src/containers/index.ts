@@ -12,7 +12,7 @@ import OAuth from './OAuth';
 import QuickstartPage from './QuickstartPage';
 import ReleaseNotes from './ReleaseNotes';
 import RoutedContent from './RoutedContent';
-import Support from './Support';
+import Support from './support/Support';
 
 export {
   ApiKeyAuth,

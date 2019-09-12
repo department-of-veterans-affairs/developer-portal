@@ -6,8 +6,9 @@ import { RouteComponentProps } from 'react-router';
 
 import { apiDefs, IApiDescription } from '../apiDefs';
 import { IApiNameParam } from '../types';
-import ApiCard from './ApiCard';
 import AuthorizationCard from './AuthorizationCard';
+import CardLink from './CardLink';
+import { VAInternalOnlyTag } from './VAInternalOnlyTag';
 
 export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
@@ -16,10 +17,7 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
       apiKey,
       apis,
       name: categoryName,
-      content: {
-        intro,
-        overview,
-      },
+      content: { intro, overview },
     } = apiDefs[apiCategoryKey];
 
     let cardSection;
@@ -29,8 +27,13 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
         const { description, name, urlFragment, vaInternalOnly } = apiDesc;
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
-            <ApiCard name={name} description={description} vaInternalOnly={vaInternalOnly}
-                url={`/explore/${apiCategoryKey}/docs/${urlFragment}`} />
+            <CardLink
+              name={name}
+              subhead={vaInternalOnly ? VAInternalOnlyTag() : undefined}
+              url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
+            >
+              {description}
+            </CardLink>
           </Flag>
         );
       });
@@ -48,13 +51,15 @@ export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>,
     }
 
     return (
-      <section role="region" aria-labelledby={headerId} className={classNames('usa-section','api-overview')} >
+      <section
+        role="region"
+        aria-labelledby={headerId}
+        className={classNames('usa-section', 'api-overview')}
+      >
         <h1 id={headerId}>{categoryName}</h1>
         {intro({})}
         {cardSection}
-        <div className="usa-width-one-whole">
-          {overview({})}
-        </div>
+        <div className="usa-width-one-whole">{overview({})}</div>
         <hr />
       </section>
     );
