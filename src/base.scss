@@ -1,14 +1,8 @@
 // Variables
 // ==========
 
-// Asset reference
-$font-path: '~uswds/src/fonts';
-$image-path: '~uswds/src/img';
-
-// Responsive
-$medium-large-screen: 768px;
-$medium-screen: 640px;
-$large-screen: 951px;
+// Asset reference - must import before USWDS
+@import './styles/assets';
 
 // Imports
 // =======

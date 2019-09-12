@@ -1,5 +1,4 @@
-@import '../base';
-@import '../colors';
+@import '../styles/variables';
 
 @mixin no-sr-content {
   &:after {
