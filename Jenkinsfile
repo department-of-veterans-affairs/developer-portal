@@ -236,7 +236,7 @@ node('vetsgov-general-purpose') {
                 def sentryRelease = "developer-portal-review-instance-${envName}@${ref}"
                 def sourceDir = "build/${envName}/static/js"
                 withEnv(["SENTRY_RELEASE=${sentryRelease}",
-                         "SENTRY_URL=http://sentry.vfs.va.gov/",
+                         "SENTRY_URL=http://internal-dsva-vagov-utility-sentry-elb-265785167.us-gov-west-1.elb.amazonaws.com/",
                          "SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN",
                          "SENTRY_ORG=vets-gov",
                          "SENTRY_PROJECT=developer-portal-${envName}",
