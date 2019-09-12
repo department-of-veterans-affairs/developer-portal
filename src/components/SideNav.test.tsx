@@ -25,9 +25,11 @@ describe('hashMatch', () => {
   it('matches a path with a hash', () => {
     const entry = sideNavEntryInstance({ name: '', to: '#bar' });
     const hashOnlyLocation = createLocation({ hash: '#bar' });
+    const nonMatchingHashLocation = createLocation({ hash: '#foo' });
     const pathAndHashLocation = createLocation({ pathname: '/foo', hash: '#bar' });
     expect(entry.hashMatch(dummyMatch, hashOnlyLocation)).toBe(true);
     expect(entry.hashMatch(dummyMatch, pathAndHashLocation)).toBe(true);
+    expect(entry.hashMatch(dummyMatch, nonMatchingHashLocation)).toBe(false);
   });
 
   it('handles trailing slashes', () => {
