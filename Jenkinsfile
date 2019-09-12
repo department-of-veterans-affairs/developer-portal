@@ -229,11 +229,11 @@ node('vetsgov-general-purpose') {
       envNames.each{ envName ->
         builds[envName] = {
           dockerImage.inside(args) {
-            // if(onDeployableBranch()) {
+            if(onDeployableBranch()) {
               withCredentials([string(credentialsId: 'sentry-releases-auth-token', variable: 'SENTRY_AUTH_TOKEN')]) {
                 // Sentry releases have to be unique across the whole organization which is why the release begins with
                 // 'developer-portal-${envName}'
-                def sentryRelease = "developer-portal-review-instance-${envName}@${ref}"
+                def sentryRelease = "developer-portal-${envName}@${ref}"
                 def sourceDir = "build/${envName}/static/js"
                 withEnv(["SENTRY_RELEASE=${sentryRelease}",
                          "SENTRY_URL=http://internal-dsva-vagov-utility-sentry-elb-265785167.us-gov-west-1.elb.amazonaws.com/",
@@ -246,9 +246,9 @@ node('vetsgov-general-purpose') {
                   sh "cd /application && ./scripts/upload_source_map.sh"
                 }
               }
-            // } else {
-            //   sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
-            // }
+            } else {
+              sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
+            }
             sh "cd /application && echo \"${buildDetails('buildtype': envName, 'ref': ref)}\" > build/${envName}/BUILD.txt"
           }
         }
