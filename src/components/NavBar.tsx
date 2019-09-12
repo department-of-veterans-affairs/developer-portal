@@ -170,7 +170,7 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
     this.setState((state: INavBarState) => {
       return { menuVisible: !state.menuVisible };
     });
-  };
+  }
 
   private toggleDocumentationSubMenu = () => {
     this.setState((state: INavBarState) => {
@@ -180,16 +180,16 @@ export class NavBar extends React.Component<INavBarProps, INavBarState> {
         },
       };
     });
-  };
+  }
 
   private toggleDefaultNavLink = (useDefault: boolean) => {
     this.setState({ useDefaultNavLink: useDefault });
-  };
+  }
 
   private checkActiveNavLink = (match: {}, location: {}) => {
     if (!match) {
       return false;
     }
     return this.state.useDefaultNavLink;
-  };
+  }
 }

@@ -17,4 +17,4 @@ export function LocalNavHashLink(props: any): JSX.Element {
       {props.children}
     </NavHashLink>
   );
-};
+}

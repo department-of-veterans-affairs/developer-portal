@@ -14,7 +14,7 @@ const checkScreenshots = async (page: Page, selector: string) => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
     await new Promise((resolve, reject) => setTimeout(resolve, 500));
-    const content = await page.$(selector)
+    const content = await page.$(selector);
     if(content) {
       const screenshot = await content.screenshot({});
       expect(screenshot).toMatchImageSnapshot();
@@ -45,7 +45,7 @@ describe('Visual regression test', async () => {
   it('renders the footer properly', async() => {
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
     await checkScreenshots(page, 'footer');
-  })
+  });
 
   for (const path of paths) {
     it(`renders ${path} properly`, async () => {
