@@ -2,6 +2,8 @@ import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 import * as React from "react";
 
+import { Link } from 'react-router-dom';
+
 export interface IFormProps {
   disabled?: boolean;
   className?: string;
@@ -28,7 +30,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 
   public render() {
     const assistanceTrailer = (
-      <span>Need assistance? Create an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">Github page</a></span>
+      <span>Need assistance? Create an issue through our <Link to="/support">Support page</Link></span>
     );
 
     return (
