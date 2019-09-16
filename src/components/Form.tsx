@@ -28,7 +28,9 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 
   public render() {
     const assistanceTrailer = (
-      <span>Need assistance? Create an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">Github page</a></span>
+      // Specific to the Contact Us form only
+      // This points to GitHub instead of Support in order to avoid looping the user back to an apparently broken Contact Us form
+      <span>Need assistance? Create an issue through our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">GitHub page</a></span>
     );
 
     return (

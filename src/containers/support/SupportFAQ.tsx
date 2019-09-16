@@ -81,7 +81,7 @@ const supportQuestions: ISupportQuestion[] = [
   {
     answer: (
       <p>
-        Submit a support request, bug report, documentation or feature request via Github on
+        Submit a support request, bug report, documentation or feature request via GitHub on
         our <Link to="/support">support portal</Link>, or use the Contact Us form
         to send an email. We strive to reply with a solution or next steps within one business day.
       </p>
@@ -91,7 +91,7 @@ const supportQuestions: ISupportQuestion[] = [
 ];
 
 const headerProps = {
-  description: "We've compiled a list of FAQs for the VA API program; our goal is to get your question answered as soon as possible. If you need further help\u2014or have comments or feedback\u2014please contact us via Github or use our short 'Contact Us' form. Our customer support team will be happy to help.",
+  description: "We've compiled a list of FAQs for the VA API program; our goal is to get your question answered as soon as possible. If you need further help\u2014or have comments or feedback\u2014please contact us via GitHub or use our short 'Contact Us' form. Our customer support team will be happy to help.",
   halo: "Support",
   header: "FAQ",
 };

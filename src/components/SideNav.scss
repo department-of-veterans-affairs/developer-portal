@@ -77,4 +77,9 @@
       }
     }
   }
+
+  .usa-sidenav-list > li:first-child {
+    border-top-style: none;
+    border-top-width: 0;
+  }
 }
