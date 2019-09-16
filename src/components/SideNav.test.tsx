@@ -1,59 +1,124 @@
-import { shallow } from 'enzyme';
-import { createLocation } from 'history';
+import { render } from 'enzyme';
 import 'jest';
 import * as React from 'react';
 
-import { match } from 'react-router';
-import { ISideNavEntryProps, SideNavEntry } from './SideNav';
+import { MemoryRouter } from 'react-router';
+import { SideNavEntry } from './SideNav';
 
-function sideNavEntryInstance(props: ISideNavEntryProps) {
-  const wrapper = shallow(<SideNavEntry {...props} />);
-  return wrapper.instance() as SideNavEntry;
-}
-
-describe('hashMatch', () => {
-  const dummyMatch = {} as match;
+describe('SideNavEntry hash matching', () => {
+  const activeClassSelector = '.usa-current';
 
   it('matches a path with no hash', () => {
-    const entry = sideNavEntryInstance({ name: '', to: '/foo' });
-    const matchingLocation = createLocation('/foo');
-    const nonMatchingPathLocation = createLocation('/bar');
-    expect(entry.hashIsActive(dummyMatch, matchingLocation)).toBe(true);
-    expect(entry.hashIsActive(dummyMatch, nonMatchingPathLocation)).toBe(false);
+    const matchingWrapper = render(
+      <MemoryRouter initialEntries={['/foo']}>
+        <SideNavEntry name="" to="/foo" />
+      </MemoryRouter>,
+    );
+    expect(matchingWrapper.find(activeClassSelector).length).toBe(1);
+
+    const nonMatchingWrapper = render(
+      <MemoryRouter initialEntries={['/bar']}>
+        <SideNavEntry name="" to="/foo" />
+      </MemoryRouter>,
+    );
+    expect(nonMatchingWrapper.find(activeClassSelector).length).toBe(0);
   });
+
+  it('handles partial matches in the same way as a NavLink', () => {
+    const partialMatchingWrapper = render(
+      <MemoryRouter initialEntries={['/foo/l']}>
+        <SideNavEntry name="" to="/foo" />
+      </MemoryRouter>,
+    );
+    expect(partialMatchingWrapper.find(activeClassSelector).length).toBe(1);
+
+    const partialNonMatchingWrapper = render(
+      <MemoryRouter initialEntries={['/fool']}>
+        <SideNavEntry name="" to="/foo" />
+      </MemoryRouter>,
+    );
+    expect(partialNonMatchingWrapper.find(activeClassSelector).length).toBe(0);
   });
 
   it('matches a path with a hash', () => {
-    const entry = sideNavEntryInstance({ name: '', to: '#bar' });
-    const hashOnlyLocation = createLocation({ hash: '#bar' });
-    const nonMatchingHashLocation = createLocation({ hash: '#foo' });
-    const pathAndHashLocation = createLocation({ pathname: '/foo', hash: '#bar' });
-    expect(entry.hashIsActive(dummyMatch, hashOnlyLocation)).toBe(true);
-    expect(entry.hashIsActive(dummyMatch, pathAndHashLocation)).toBe(true);
-    expect(entry.hashIsActive(dummyMatch, nonMatchingHashLocation)).toBe(false);
+    const hashOnlyMatchingWrapper = render(
+      <MemoryRouter initialEntries={['#bar']}>
+        <SideNavEntry name="" to="#bar" />
+      </MemoryRouter>,
+    );
+    expect(hashOnlyMatchingWrapper.find(activeClassSelector).length).toBe(1);
+
+    const hashOnlyNonMatchingWrapper = render(
+      <MemoryRouter initialEntries={['#foo']}>
+        <SideNavEntry name="" to="#bar" />
+      </MemoryRouter>,
+    );
+    expect(hashOnlyNonMatchingWrapper.find(activeClassSelector).length).toBe(0);
+
+    const pathAndHashWrapper = render(
+      <MemoryRouter initialEntries={[{ pathname: '/foo', hash: '#bar' }]}>
+        <SideNavEntry name="" to="#bar" />
+      </MemoryRouter>,
+    );
+    expect(pathAndHashWrapper.find(activeClassSelector).length).toBe(1);
   });
 
-  it('handles trailing slashes', () => {
-    const entry = sideNavEntryInstance({ name: '', to: '/foo' });
-    const hashEntry = sideNavEntryInstance({ name: '', to: '/foo#bar' });
-    const trailingSlashEntry = sideNavEntryInstance({ name: '', to: '/foo/' });
-    const trailingSlashHashEntry = sideNavEntryInstance({ name: '', to: '/foo/#bar' });
-    const location = createLocation('/foo');
-    const hashLocation = createLocation({ pathname: '/foo', hash: '#bar' });
-    const trailingSlashHashLocation = createLocation({ pathname: '/foo/', hash: '#bar' });
-    const trailingSlashLocation = createLocation('/foo/');
+  it('ignores trailing slashes', () => {
+    const trailingSlashLocationWrapper = render(
+      <MemoryRouter initialEntries={['/foo/']}>
+        <React.Fragment>
+          <SideNavEntry name="" to="/foo" />
+          <SideNavEntry name="" to="/foo/" />
+        </React.Fragment>
+      </MemoryRouter>,
+    );
+    expect(trailingSlashLocationWrapper.find(activeClassSelector)).toHaveLength(2);
 
-    expect(entry.hashIsActive(dummyMatch, trailingSlashLocation)).toBe(true);
-    expect(trailingSlashEntry.hashIsActive(dummyMatch, location)).toBe(true);
-    expect(hashEntry.hashIsActive(dummyMatch, trailingSlashHashLocation)).toBe(true);
-    expect(trailingSlashHashEntry.hashIsActive(dummyMatch, hashLocation)).toBe(true);
+    const noTrailingSlashLocationWrapper = render(
+      <MemoryRouter initialEntries={['/foo']}>
+        <React.Fragment>
+          <SideNavEntry name="" to="/foo" />
+          <SideNavEntry name="" to="/foo/" />
+        </React.Fragment>
+      </MemoryRouter>,
+    );
+    expect(noTrailingSlashLocationWrapper.find(activeClassSelector)).toHaveLength(2);
+
+    const trailingSlashHashLocationWrapper = render(
+      <MemoryRouter initialEntries={[{ pathname: '/foo/', hash: '#bar' }]}>
+        <React.Fragment>
+          <SideNavEntry name="" to="/foo#bar" />
+          <SideNavEntry name="" to="/foo/#bar" />
+          <SideNavEntry name="" to="#bar" />
+        </React.Fragment>
+      </MemoryRouter>,
+    );
+    expect(trailingSlashHashLocationWrapper.find(activeClassSelector)).toHaveLength(3);
+
+    const noTrailingSlashHashLocationWrapper = render(
+      <MemoryRouter initialEntries={[{ pathname: '/foo', hash: '#bar' }]}>
+        <React.Fragment>
+          <SideNavEntry name="" to="/foo#bar" />
+          <SideNavEntry name="" to="/foo/#bar" />
+        </React.Fragment>
+      </MemoryRouter>,
+    );
+    expect(noTrailingSlashHashLocationWrapper.find(activeClassSelector)).toHaveLength(2);
   });
 
-  it('strictly matches the hash only when `exact` is true', () => {
-    const exactEntry = sideNavEntryInstance({ name: '', to: '/foo', exact: true });
-    const entry = sideNavEntryInstance({ name: '', to: '/foo' });
-    const location = createLocation({ pathname: '/foo', hash: '#bar' });
-    expect(exactEntry.hashIsActive(dummyMatch, location)).toBe(false);
-    expect(entry.hashIsActive(dummyMatch, location)).toBe(true);
+  it('always takes into account the hash when exact == true', () => {
+    const exactWrapper = render(
+      <MemoryRouter initialEntries={[{ pathname: '/foo', hash: '#bar' }]}>
+        <SideNavEntry name="" to="/foo" exact={true} />
+      </MemoryRouter>,
+    );
+    expect(exactWrapper.find(activeClassSelector)).toHaveLength(0);
+
+    const inexactWrapper = render(
+      <MemoryRouter initialEntries={[{ pathname: '/foo', hash: '#bar' }]}>
+        <SideNavEntry name="" to="/foo" />
+      </MemoryRouter>,
+    );
+    expect(inexactWrapper.find(activeClassSelector)).toHaveLength(1);
   });
 });
