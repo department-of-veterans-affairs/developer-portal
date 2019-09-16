@@ -18,8 +18,9 @@ describe('hashMatch', () => {
     const entry = sideNavEntryInstance({ name: '', to: '/foo' });
     const matchingLocation = createLocation('/foo');
     const nonMatchingPathLocation = createLocation('/bar');
-    expect(entry.hashMatch(dummyMatch, matchingLocation)).toBe(true);
-    expect(entry.hashMatch(dummyMatch, nonMatchingPathLocation)).toBe(false);
+    expect(entry.hashIsActive(dummyMatch, matchingLocation)).toBe(true);
+    expect(entry.hashIsActive(dummyMatch, nonMatchingPathLocation)).toBe(false);
+  });
   });
 
   it('matches a path with a hash', () => {
@@ -27,9 +28,9 @@ describe('hashMatch', () => {
     const hashOnlyLocation = createLocation({ hash: '#bar' });
     const nonMatchingHashLocation = createLocation({ hash: '#foo' });
     const pathAndHashLocation = createLocation({ pathname: '/foo', hash: '#bar' });
-    expect(entry.hashMatch(dummyMatch, hashOnlyLocation)).toBe(true);
-    expect(entry.hashMatch(dummyMatch, pathAndHashLocation)).toBe(true);
-    expect(entry.hashMatch(dummyMatch, nonMatchingHashLocation)).toBe(false);
+    expect(entry.hashIsActive(dummyMatch, hashOnlyLocation)).toBe(true);
+    expect(entry.hashIsActive(dummyMatch, pathAndHashLocation)).toBe(true);
+    expect(entry.hashIsActive(dummyMatch, nonMatchingHashLocation)).toBe(false);
   });
 
   it('handles trailing slashes', () => {
@@ -42,17 +43,17 @@ describe('hashMatch', () => {
     const trailingSlashHashLocation = createLocation({ pathname: '/foo/', hash: '#bar' });
     const trailingSlashLocation = createLocation('/foo/');
 
-    expect(entry.hashMatch(dummyMatch, trailingSlashLocation)).toBe(true);
-    expect(trailingSlashEntry.hashMatch(dummyMatch, location)).toBe(true);
-    expect(hashEntry.hashMatch(dummyMatch, trailingSlashHashLocation)).toBe(true);
-    expect(trailingSlashHashEntry.hashMatch(dummyMatch, hashLocation)).toBe(true);
+    expect(entry.hashIsActive(dummyMatch, trailingSlashLocation)).toBe(true);
+    expect(trailingSlashEntry.hashIsActive(dummyMatch, location)).toBe(true);
+    expect(hashEntry.hashIsActive(dummyMatch, trailingSlashHashLocation)).toBe(true);
+    expect(trailingSlashHashEntry.hashIsActive(dummyMatch, hashLocation)).toBe(true);
   });
 
   it('strictly matches the hash only when `exact` is true', () => {
     const exactEntry = sideNavEntryInstance({ name: '', to: '/foo', exact: true });
     const entry = sideNavEntryInstance({ name: '', to: '/foo' });
     const location = createLocation({ pathname: '/foo', hash: '#bar' });
-    expect(exactEntry.hashMatch(dummyMatch, location)).toBe(false);
-    expect(entry.hashMatch(dummyMatch, location)).toBe(true);
+    expect(exactEntry.hashIsActive(dummyMatch, location)).toBe(false);
+    expect(entry.hashIsActive(dummyMatch, location)).toBe(true);
   });
 });

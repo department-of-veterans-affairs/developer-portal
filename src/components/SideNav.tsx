@@ -17,7 +17,7 @@ export interface ISideNavEntryProps extends NavHashLinkProps {
 // hash when determining if it's active
 export class SideNavEntry extends React.Component<ISideNavEntryProps> {
   // Override the default activeCheck to also match on hash
-  public hashMatch = (_: match, location: Location): boolean => {
+  public hashIsActive = (pathMatch: match, location: Location): boolean => {
     // Because we're not using the builtin check, we need our own logic
     // to handle trailing slashes
     const withoutTrailingSlash = (path: string) => {
@@ -45,7 +45,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
 
     return (
       <li>
-        <NavHashLink activeClassName="usa-current" isActive={this.hashMatch} {...navLinkProps}>
+        <NavHashLink activeClassName="usa-current" isActive={this.hashIsActive} {...navLinkProps}>
           {this.props.name}
         </NavHashLink>
         {this.props.children && <ul className="usa-sidenav-sub_list">{this.props.children}</ul>}
