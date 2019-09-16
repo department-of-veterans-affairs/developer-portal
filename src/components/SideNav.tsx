@@ -35,7 +35,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
     if (this.props.exact) {
       return onlyHashMatches || to === `${currentPath}${location.hash}`;
     } else {
-      return onlyHashMatches || currentPath.startsWith(to);
+      return onlyHashMatches || !!pathMatch;
     }
   }; // tslint:disable-line: semicolon
 
