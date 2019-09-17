@@ -10,33 +10,46 @@ import '../components/SideNav.scss';
 
 export interface ISideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
-  to: string; // Only allow the string form of the `to` prop
 }
 
 // Constructs a NavHashLink in the sidebar that also takes into account the
 // hash when determining if it's active
 export class SideNavEntry extends React.Component<ISideNavEntryProps> {
   // Override the default activeCheck to also match on hash
-  public hashIsActive = (pathMatch: match, location: Location): boolean => {
-    // Because we're not using the builtin check, we need our own logic
-    // to handle trailing slashes
+  public navHashLinkIsActive = (pathMatch: match, location: Location): boolean => {
     const withoutTrailingSlash = (path: string) => {
-      if (path.length === 1) {
-        return path;
-      }
       return path.replace(/\/$/, '');
     };
 
-    const currentPath = withoutTrailingSlash(location.pathname);
-    const to = withoutTrailingSlash(this.props.to);
-
-    // Match on just the hash for anchor links with no path
-    const onlyHashMatches = location.hash && to.endsWith(location.hash);
-    if (this.props.exact) {
-      return onlyHashMatches || to === `${currentPath}${location.hash}`;
+    let pathname: string;
+    let hash: string;
+    if (typeof this.props.to === 'string') {
+      const url = new URL(this.props.to, 'http://example.com');
+      pathname = url.pathname;
+      hash = url.hash;
     } else {
-      return onlyHashMatches || !!pathMatch;
+      pathname = this.props.to.pathname || '';
+      hash = this.props.to.hash || '';
     }
+    const to = withoutTrailingSlash(pathname) + hash;
+    const currentPath = withoutTrailingSlash(location.pathname);
+
+    // If the location with hash exactly matches our navlink's `to` then
+    // we can return true, regardless of the `exact` prop
+    if (to === `${currentPath}${location.hash}`) {
+      return true;
+    }
+
+    // Handle two cases: a path match where the hashes match, or when the hashes
+    // match and `to` doesn't have a path
+    if ((pathMatch || to.startsWith('#')) && location.hash && hash === location.hash) {
+      return true;
+    }
+    // Fall back to the native implementation which does partial matching
+    if (!this.props.exact) {
+      return !!pathMatch;
+    }
+    return false;
   }; // tslint:disable-line: semicolon
 
   public render() {
@@ -45,7 +58,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
 
     return (
       <li>
-        <NavHashLink activeClassName="usa-current" isActive={this.hashIsActive} {...navLinkProps}>
+        <NavHashLink activeClassName="usa-current" isActive={this.navHashLinkIsActive} {...navLinkProps}>
           {this.props.name}
         </NavHashLink>
         {this.props.children && <ul className="usa-sidenav-sub_list">{this.props.children}</ul>}
