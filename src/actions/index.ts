@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import { Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { history } from '../store';
@@ -164,7 +165,13 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => {
           return dispatch(submitFormError(json.errorMessage));
         }
       })
-      .catch(error => dispatch(submitFormError(error.message)));
+      .catch(error => {
+        Sentry.withScope(scope => {
+          scope.setLevel(Sentry.Severity.fromString('warning'));
+          Sentry.captureException(error);
+        });
+        return dispatch(submitFormError(error.message));
+      });
   };
 };
 
