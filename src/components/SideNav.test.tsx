@@ -68,6 +68,9 @@ describe('SideNavEntry isActive matching', () => {
     it('is not active when only the destination has a hash', () => {
       testActive({ location: '/foo', to: '#bar', expectation: false });
     });
+    it('is not active for a partial path match where the hashes match', () => {
+      testActive({ location: '/foo/bar#local', to: '/foo#local', expectation: false });
+    });
   });
 
   describe('paths with trailing slashes', () => {

@@ -65,7 +65,11 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
 
     return (
       <li>
-        <NavHashLink activeClassName="usa-current" isActive={this.navHashLinkIsActive} {...navLinkProps}>
+        <NavHashLink
+          activeClassName="usa-current"
+          isActive={this.navHashLinkIsActive}
+          {...navLinkProps}
+        >
           {this.props.name}
         </NavHashLink>
         {this.props.children && <ul className="usa-sidenav-sub_list">{this.props.children}</ul>}
