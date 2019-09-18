@@ -15,7 +15,14 @@ export interface ISideNavEntryProps extends NavHashLinkProps {
 // Constructs a NavHashLink in the sidebar that also takes into account the
 // hash when determining if it's active
 export class SideNavEntry extends React.Component<ISideNavEntryProps> {
-  // Override the default activeCheck to also match on hash
+  // The isActive prop receives two arguments: a `match` object representing
+  // the original determination, and the current location. The match algorithm
+  // used by react-router only takes into account the path, and by default will
+  // include partial matches according to the https://github.com/pillarjs/path-to-regexp
+  // implementation.
+  // `navHashLinkIsActive` is both more and less strict than the default implementation:
+  // there are cases where the original would return false and this function returns true,
+  // and vice versa.
   public navHashLinkIsActive = (pathMatch: match, location: Location): boolean => {
     const withoutTrailingSlash = (path: string) => {
       return path.replace(/\/$/, '');
