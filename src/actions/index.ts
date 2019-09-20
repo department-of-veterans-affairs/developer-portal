@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import { Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { history } from '../store';
@@ -114,28 +115,6 @@ const apisToList = (apis: IApiList) => {
     .join(',');
 };
 
-const MAX_RETRIES = 3;
-
-const fetchWithRetry = async (fetchFn: () => Promise<Response>): Promise<Response> => {
-  let status;
-  let retries = 0;
-  while (retries < MAX_RETRIES) {
-    try {
-      const response = await fetchFn();
-      if (response.ok) {
-        return response;
-      } else {
-        status = response.statusText;
-        retries += 1;
-      }
-    } catch (err) {
-      status = err.message;
-      retries += 1;
-    }
-  }
-  throw new Error(`Max Retries Exceeded. Last Status: ${status}`);
-};
-
 function buildApplicationBody({ application }: IRootState) {
   const applicationBody: any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
@@ -169,7 +148,7 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => {
         method: 'POST',
       },
     );
-    return fetchWithRetry(() => fetch(request))
+    return fetch(request)
       .then(response => {
         if (!response.ok) {
           throw Error(response.statusText);
@@ -186,7 +165,13 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => {
           return dispatch(submitFormError(json.errorMessage));
         }
       })
-      .catch(error => dispatch(submitFormError(error.message)));
+      .catch(error => {
+        Sentry.withScope(scope => {
+          scope.setLevel(Sentry.Severity.fromString('warning'));
+          Sentry.captureException(error);
+        });
+        return dispatch(submitFormError(error.message));
+      });
   };
 };
 

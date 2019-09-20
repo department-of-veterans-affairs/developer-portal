@@ -1,7 +1,6 @@
-import * as classNames from 'classnames';
 import * as React from 'react';
-import { Route } from "react-router";
-import { NavLink } from 'react-router-dom';
+import { Route } from 'react-router';
+import { SideNav, SideNavEntry } from '../../components/SideNav';
 import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
@@ -16,50 +15,46 @@ export interface ISection {
 const sections: ISection[] = [
   {
     component: SupportFAQ,
-    description: 'Answers to frequently asked questions about the VA API progam and the APIs themselves.',
+    description:
+      'Answers to frequently asked questions about the VA API progam and the APIs themselves.',
     id: 'faq',
     name: 'FAQ',
   },
   {
     component: SupportContactUs,
-    description: 'Submit a support request via GitHub or send us a message using the Contact Us form.',
+    description:
+      'Submit a support request via GitHub or send us a message using the Contact Us form.',
     id: 'contact-us',
     name: 'Contact Us',
   },
 ];
 
-export function SideNav() {
-  const navSections = sections.map((section) => {
-    return (
-      <li key={section.id}>
-        <NavLink to={`/support/${section.id}`} activeClassName="usa-current">{section.name}</NavLink>
-      </li>
-    );
+function SupportSideNav() {
+  const navSections = sections.map(section => {
+    return <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />;
   });
 
   return (
-    <ul className="usa-sidenav-list">
-      <li key="all">
-        <NavLink exact={true} to="/support" className="side-nav-category-link" activeClassName="usa-current">
-          Overview
-        </NavLink>
-      </li>
+    <SideNav ariaLabel="Support page side nav">
+      <SideNavEntry key="all" exact={true} to="/support" name="Overview" />
       {navSections}
-    </ul>
+    </SideNav>
   );
 }
 
 export default class Support extends React.Component {
   public render() {
     return (
-      <div className="explore">
+      <div className="support">
         <section className="usa-section">
           <div className="usa-grid">
-            <div className={classNames("vadp-side-nav", "usa-width-one-third", "sticky")} role="navigation" aria-label="Support Side Nav">
-              <SideNav />
-            </div>
+            <SupportSideNav />
             <div className="usa-width-two-thirds">
-              <Route exact={true} path="/support/" render={() => <SupportOverview sections={sections}/>} />
+              <Route
+                exact={true}
+                path="/support/"
+                render={() => <SupportOverview sections={sections} />}
+              />
               {this.createSubRoutes()}
             </div>
           </div>
@@ -69,9 +64,14 @@ export default class Support extends React.Component {
   }
 
   private createSubRoutes() {
-    return sections.map((section) => {
+    return sections.map(section => {
       return (
-        <Route key={section.id} exact={true} path={`/support/${section.id}`} component={section.component} />
+        <Route
+          key={section.id}
+          exact={true}
+          path={`/support/${section.id}`}
+          component={section.component}
+        />
       );
     });
   }

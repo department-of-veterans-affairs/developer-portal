@@ -19,7 +19,7 @@ describe('position sticky', () => {
   it('provides 3-level navigation via the sidenav', async () => {
     const waitScrollClick = async (selector: string) => {
       await page.waitForSelector(selector, { visible: true });
-      await page.evaluate((sel) => {
+      await page.evaluate(sel => {
         const elem = document.querySelector(sel);
         if (elem) {
           elem.scrollIntoView();
@@ -28,8 +28,10 @@ describe('position sticky', () => {
       await page.click(selector);
     };
 
-    await page.setViewport({width: 1200, height: 800});
-    await page.goto(`${puppeteerHost}/explore`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    await page.setViewport({ width: 1200, height: 800 });
+    await page.goto(`${puppeteerHost}/explore`, {
+      waitUntil: ['domcontentloaded', 'networkidle0'],
+    });
 
     const selSideNav = 'ul.usa-sidenav-list';
     const selHealthLink = `${selSideNav} a#side-nav-category-link-health`;
@@ -38,17 +40,17 @@ describe('position sticky', () => {
     const selAuthLink = `${selSideNav} a#side-nav-authorization-link-health`;
     await waitScrollClick(selAuthLink);
 
-    const selSampleAppLink = `${selSideNav} a#hash-link-health-sample-application`;
+    const selSampleAppLink = `${selSideNav} a[href$="#sample-application"]`;
     await waitScrollClick(selSampleAppLink);
   });
 
   it('provides step-wise navigation via in-page cards', async () => {
     const clickCard = async (caption: string) => {
-      await page.evaluate((cap) => {
+      await page.evaluate(cap => {
         const elems = Array.from(document.querySelectorAll('a.va-api-card'));
         for (const el of elems) {
           const hdr = el.querySelector('.va-api-name');
-          if (hdr && (hdr.textContent === cap)) {
+          if (hdr && hdr.textContent === cap) {
             el.scrollIntoView();
             (el as HTMLElement).click();
             return;
@@ -57,11 +59,13 @@ describe('position sticky', () => {
       }, caption);
     };
 
-    await page.setViewport({width: 1200, height: 800});
-    await page.goto(`${puppeteerHost}/explore`, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+    await page.setViewport({ width: 1200, height: 800 });
+    await page.goto(`${puppeteerHost}/explore`, {
+      waitUntil: ['domcontentloaded', 'networkidle0'],
+    });
     await clickCard('Health API');
     await clickCard('Authorization');
-    const haloText = await page.$eval('.header-halo', (elem) => {
+    const haloText = await page.$eval('.header-halo', elem => {
       return elem.textContent;
     });
     expect(haloText).toEqual('Health API');

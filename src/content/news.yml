@@ -20,6 +20,14 @@ sections:
   - title: Articles
     description: Articles related to developers, APIs, the Developer Portal, and Veterans.
     items:
+      - date: September 2019
+        source: Nextgov
+        title: Feds Look to Application Programming Interfaces as Gateways to Modernization
+        url: https://www.nextgov.com/it-modernization/2019/09/feds-look-application-programming-interfaces-gateways-modernization/159837/
+      - date: September 2019
+        source: FCW
+        title: Doing digital differently at VA
+        url: https://fcw.com/articles/2019/09/12/comment-doing-digital-differently-at-va-gfrerer.aspx
       - date: August 2019
         source: FedHealthIT
         title: VA’s System of Systems – Getting from There to Here and Beyond
