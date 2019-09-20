@@ -381,7 +381,7 @@ module.exports = (envName) => {
     }),
     new OptimizeCSSAssetsPlugin({
       cssProcessorOptions: {
-        map: true,
+        map: shouldUseSourceMap,
       },
     }),
     // Generate a manifest file which contains a mapping of all asset filenames
