@@ -453,5 +453,13 @@ module.exports = (envName) => {
       tls: 'empty',
       child_process: 'empty',
     },
+    performance: {
+      hints: 'error',
+      maxAssetSize: 300000,
+      assetFilter: function(assetFilename) {
+        // only check CSS bundle size, as our JS bundle is currently over 2M
+        return assetFilename.endsWith('.css');
+      },
+    },
   };
 };
