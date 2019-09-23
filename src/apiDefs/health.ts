@@ -5,9 +5,10 @@
   Using the primary swagger api would break staging. The swagger url is shown in the UI. In order to avoid the
   confusion of having a `dev-api.va.gov` url shown in production `api.va.gov` (the secondary swagger api) is
   used in all developer portal environments for health documentation.
-  */
- 
-import { IApiDescription } from ".";
+*/
+
+import * as moment from 'moment';
+
 import { isHostedApiEnabled } from '../apiDefs/env';
 import {
   CommunityCareApiIntro,
@@ -17,6 +18,7 @@ import {
   HealthArgonautDeprecation,
   UrgentCareApiIntro,
 } from '../content/apiDocs';
+import { IApiDescription } from "./schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
 const isNewFhirApiEnabled =  isHostedApiEnabled('fhir', true);
@@ -74,6 +76,8 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
+    // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
+    deprecated: moment('01 Oct 2019 00:00 EDT'),
     deprecationContent: isNewFhirApiEnabled ? HealthArgonautDeprecation : undefined,
     description: isNewFhirApiEnabled ? argonautDeprecatedDesc : argonautDesc,
     docSources: [

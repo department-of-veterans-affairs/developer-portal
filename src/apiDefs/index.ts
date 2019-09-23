@@ -12,50 +12,26 @@ import {
   VerificationReleaseNotes,
 } from '../content/releaseNotes';
 
+import {
+  IApiCategories,
+  IApiCategory,
+  IApiCategoryContent,
+  IApiDescription,
+  IApiDocSource,
+} from './schema';
+
 import benefitsApis from './benefits';
 import facilitiesApis from './facilities';
 import healthApis from './health';
 import verificationApis from './verification';
 
-export interface IApiCategoryContent {
-  readonly intro: React.StatelessComponent;
-  readonly overview: React.StatelessComponent;
-  readonly quickstart?: React.StatelessComponent;
-}
-
-export interface IApiDocSource {
-  readonly metadataUrl?: string;
-  readonly openApiUrl: string;
-  readonly key?: string;
-  readonly label?: string;
-  readonly apiIntro?: React.StatelessComponent;
-}
-
-export interface IApiDescription {
-  readonly name: string;
-  readonly docSources: IApiDocSource[];
-  readonly urlFragment: string;
-  readonly description: string;
-  readonly vaInternalOnly: boolean;
-  readonly oAuth?: boolean;
-  readonly deprecationContent?: React.StatelessComponent;
-}
-
-export interface IApiCategory {
-  readonly apiKey: boolean;
-  readonly apis: IApiDescription[];
-  readonly properName: string;
-  readonly buttonText: string;
-  readonly name: string;
-  readonly shortDescription: string;
-  readonly releaseNotes?: React.StatelessComponent;
-  readonly tabBlurb?: string;
-  readonly content: IApiCategoryContent;
-}
-
-export interface IApiCategories {
-  [key: string]: IApiCategory;
-}
+export { 
+  IApiCategories,
+  IApiCategory,
+  IApiCategoryContent,
+  IApiDescription,
+  IApiDocSource,
+};
 
 export const apiDefs: IApiCategories = {
   benefits: {
