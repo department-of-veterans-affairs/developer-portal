@@ -59,24 +59,13 @@ describe('submitForm', () => {
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
     expect(dispatch).toBeCalledWith({
-      status: 'Max Retries Exceeded. Last Status: Network Failure',
+      status: 'Network Failure',
       type: constants.SUBMIT_APPLICATION_ERROR,
     });
   });
 
-  it('retries the correct number of times when the fetch errors', async () => {
-    fetchMock.mockReject(new Error('Network Failure'));
-    const dispatch = jest.fn();
-    const getState = jest.fn();
-    getState.mockReturnValueOnce(appState);
-    await actions.submitForm()(dispatch, getState, undefined);
-    expect(fetchMock.mock.calls.length).toEqual(3);
-  });
-
   it('dispatches error events when fetch returns non-200', async () => {
     fetchMock.mockResponses(
-      [JSON.stringify({ error: 'not found' }), { status: 404 }],
-      [JSON.stringify({ error: 'not found' }), { status: 404 }],
       [JSON.stringify({ error: 'not found' }), { status: 404 }],
     );
     const dispatch = jest.fn();
@@ -87,7 +76,7 @@ describe('submitForm', () => {
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
     expect(dispatch).toBeCalledWith({
-      status: 'Max Retries Exceeded. Last Status: Not Found',
+      status: 'Not Found',
       type: constants.SUBMIT_APPLICATION_ERROR,
     });
   });
