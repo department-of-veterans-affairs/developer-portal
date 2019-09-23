@@ -3,6 +3,8 @@ import ApplyForm from './ApplyForm';
 import ApplySuccess from './ApplySuccess';
 export * from './Beta';
 export * from './BetaSuccess';
+export * from './CategoryPage';
+export * from './CategoryReleaseNotesPage';
 import DisabledApplyForm from './DisabledApplyForm';
 import Explore from './Explore';
 export * from './ExploreDocs';
@@ -13,6 +15,7 @@ import QuickstartPage from './QuickstartPage';
 import ReleaseNotes from './ReleaseNotes';
 import RoutedContent from './RoutedContent';
 import Support from './support/Support';
+import SwaggerDocs from './SwaggerDocs';
 
 export {
   ApiKeyAuth,
@@ -21,10 +24,11 @@ export {
   DisabledApplyForm,
   Explore,
   Home,
+  News,
   OAuth,
   QuickstartPage,
   ReleaseNotes,
   RoutedContent,
   Support,
-  News,
+  SwaggerDocs,
 };

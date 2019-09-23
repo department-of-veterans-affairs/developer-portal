@@ -5,12 +5,12 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
 import { apiDefs, IApiDescription } from '../apiDefs';
+import AuthorizationCard from '../components/AuthorizationCard';
+import CardLink from '../components/CardLink';
+import { VAInternalOnlyTag } from '../components/VAInternalOnlyTag';
 import { IApiNameParam } from '../types';
-import AuthorizationCard from './AuthorizationCard';
-import CardLink from './CardLink';
-import { VAInternalOnlyTag } from './VAInternalOnlyTag';
 
-export class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
+export default class CategoryPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
     const {

@@ -17,11 +17,11 @@ import {
   HealthArgonautDeprecation,
   UrgentCareApiIntro,
 } from '../content/apiDocs';
-import { IApiDescription } from "./schema";
+import { IApiDefinition } from "./schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
-const healthApis : IApiDescription[] = [
+const healthApis : IApiDefinition[] = [
   {
     description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [

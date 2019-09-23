@@ -20,7 +20,7 @@ export interface IApiDocSource {
   readonly apiIntro?: React.StatelessComponent;
 }
 
-export interface IApiDescription {
+export interface IApiDefinition {
   readonly name: string;
   readonly docSources: IApiDocSource[];
   readonly urlFragment: string;
@@ -33,7 +33,7 @@ export interface IApiDescription {
 
 export interface IApiCategory {
   readonly apiKey: boolean;
-  readonly apis: IApiDescription[];
+  readonly apis: IApiDefinition[];
   readonly properName: string;
   readonly buttonText: string;
   readonly name: string;

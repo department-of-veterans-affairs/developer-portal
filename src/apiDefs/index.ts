@@ -16,7 +16,7 @@ import {
   IApiCategories,
   IApiCategory,
   IApiCategoryContent,
-  IApiDescription,
+  IApiDefinition,
   IApiDocSource,
 } from './schema';
 
@@ -29,7 +29,7 @@ export {
   IApiCategories,
   IApiCategory,
   IApiCategoryContent,
-  IApiDescription,
+  IApiDefinition as IApiDescription,
   IApiDocSource,
 };
 
@@ -87,7 +87,7 @@ export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', '
 // exists.
 export function withApiDescription(
   urlFragment: string,
-  fn: (apiDesc: IApiDescription) => any,
+  fn: (apiDesc: IApiDefinition) => any,
 ): any {
   const api = lookupApiByFragment(urlFragment);
   if (api == null) {
@@ -97,7 +97,7 @@ export function withApiDescription(
   return fn(api);
 }
 
-export function lookupApiByFragment(urlFragment: string): IApiDescription | null {
+export function lookupApiByFragment(urlFragment: string): IApiDefinition | null {
   for (const cat of Object.values(apiDefs)) {
     for (const api of cat.apis) {
       if (api.urlFragment === urlFragment) {
@@ -125,7 +125,7 @@ function categoriesFor(apiList: string[]): IApiCategory[] {
   return Array.from(categories);
 }
 
-function apisFor(apiList: string[]): IApiDescription[] {
+function apisFor(apiList: string[]): IApiDefinition[] {
   const apis = new Set();
   for (const cat of Object.values(apiDefs)) {
     for (const api of cat.apis) {

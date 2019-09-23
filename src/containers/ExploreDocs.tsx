@@ -4,11 +4,11 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
-import { ApiPage } from '../components';
 import { SideNav, SideNavEntry } from '../components/SideNav';
 import { QuickstartPage } from '../containers';
 import { IApiNameParam } from '../types';
 import { AuthorizationDocs } from './AuthorizationDocs';
+import CategoryPage from './CategoryPage';
 import DocumentationOverview from './DocumentationOverview';
 import Explore from './Explore';
 
@@ -106,7 +106,7 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
           <ExploreSideNav />
           <div className="usa-width-two-thirds">
             <Route exact={true} path="/explore/" component={DocumentationOverview} />
-            <Route exact={true} path="/explore/:apiCategoryKey" component={ApiPage} />
+            <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
             <Switch>
               <Route
                 exact={true}
