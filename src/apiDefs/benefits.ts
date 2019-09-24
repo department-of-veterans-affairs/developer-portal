@@ -1,7 +1,7 @@
-import { IApiDefinition } from './schema';
+import { IApiDescription } from './schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
-const benefitsApis : IApiDefinition[] = [
+const benefitsApis : IApiDescription[] = [
   {
     description: 'Submit PDF claims',
     docSources: [

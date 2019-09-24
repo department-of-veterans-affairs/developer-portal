@@ -97,7 +97,7 @@ function ExploreSideNav() {
   );
 }
 
-export default class DocumentationPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
+export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     return (
       <div className="explore">

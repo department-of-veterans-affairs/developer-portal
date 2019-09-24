@@ -12,7 +12,7 @@ import ApplySuccess from './containers/ApplySuccess';
 import BetaPage from './containers/Beta';
 import BetaSuccess from './containers/BetaSuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
-import DocumentationPage from './containers/documentation/DocumentationPage';
+import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import OAuth from './containers/documentation/OAuth';
 import Home from './containers/Home';
 import News from './containers/News';
@@ -53,7 +53,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/applied" component={ApplySuccess} />
         <Route path="/beta" component={BetaPage} />
         <Route path="/beta-success" component={BetaSuccess} />
-        <Route path="/explore/:apiCategoryKey?" component={DocumentationPage} />
+        <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
         <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
         <Route path="/oauth" component={OAuth} />
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
