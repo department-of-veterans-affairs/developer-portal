@@ -1,7 +1,9 @@
 /*
   This file contains all of the interfaces that currently make up the API definition schema.
   Any future additions to this schema should be defined here as well. In the future, we will 
-  likely move this data to a non-Typescript location, i.e. a database.
+  likely move this data to a non-Typescript location, i.e. a database. As a result, we should
+  also not add any more React components to these schema definitions, as that will add to the 
+  work that we need to do to convert this schema to a database-based systeem.
 */
 
 import * as moment from 'moment';
@@ -20,7 +22,7 @@ export interface IApiDocSource {
   readonly apiIntro?: React.StatelessComponent;
 }
 
-export interface IApiDefinition {
+export interface IApiDescription {
   readonly name: string;
   readonly docSources: IApiDocSource[];
   readonly urlFragment: string;
@@ -33,7 +35,7 @@ export interface IApiDefinition {
 
 export interface IApiCategory {
   readonly apiKey: boolean;
-  readonly apis: IApiDefinition[];
+  readonly apis: IApiDescription[];
   readonly properName: string;
   readonly buttonText: string;
   readonly name: string;

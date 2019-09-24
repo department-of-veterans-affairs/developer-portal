@@ -1,7 +1,7 @@
-import { IApiDefinition } from './schema';
+import { IApiDescription } from './schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
-const verificationApis : IApiDefinition[] = [
+const verificationApis : IApiDescription[] = [
   {
     description: "Get a Veteran's disability rating",
     docSources: [

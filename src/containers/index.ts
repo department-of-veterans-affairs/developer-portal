@@ -9,7 +9,6 @@ export * from './documentation/CategoryPage';
 import DisabledApplyForm from './DisabledApplyForm';
 import ApiKeyAuth from './documentation/ApiKeyAuth';
 import ApiPage from './documentation/ApiPage';
-export * from './documentation/DocumentationPage';
 import OAuth from './documentation/OAuth';
 import QuickstartPage from './documentation/QuickstartPage';
 import SwaggerDocs from './documentation/SwaggerDocs';
