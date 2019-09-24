@@ -6,21 +6,19 @@ import { Redirect, Route } from 'react-router-dom';
 import { Flag } from 'flag';
 import { apiCategoryOrder, apiDefs } from './apiDefs';
 import { apiEnvFlags } from './apiDefs/env';
-import { PageContent } from './components/PageContent';
-import {
-  ApplyForm,
-  ApplySuccess,
-  BetaPage,
-  BetaSuccess,
-  DisabledApplyForm,
-  DocumentationPage,
-  Home,
-  News,
-  OAuth,
-  ReleaseNotes,
-  RoutedContent,
-  Support,
-} from './containers';
+import PageContent from './components/PageContent';
+import ApplyForm from './containers/ApplyForm';
+import ApplySuccess from './containers/ApplySuccess';
+import BetaPage from './containers/Beta';
+import BetaSuccess from './containers/BetaSuccess';
+import DisabledApplyForm from './containers/DisabledApplyForm';
+import DocumentationPage from './containers/documentation/DocumentationPage';
+import OAuth from './containers/documentation/OAuth';
+import Home from './containers/Home';
+import News from './containers/News';
+import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
+import RoutedContent from './containers/RoutedContent';
+import Support from './containers/support/Support';
 
 export function topLevelRoutes(props: RouteComponentProps<void>) {
   return (

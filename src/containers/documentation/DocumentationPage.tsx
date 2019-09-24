@@ -5,13 +5,13 @@ import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
 import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../../apiDefs';
-import { SideNav, SideNavEntry } from '../../components/SideNav';
-import { QuickstartPage } from '../../containers';
+import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
 import CategoryPage from './CategoryPage';
 import DocumentationOverview from './DocumentationOverview';
+import QuickstartPage from './QuickstartPage';
 
 import '../Documentation.scss';
 
@@ -97,7 +97,7 @@ function ExploreSideNav() {
   );
 }
 
-export class DocumentationPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
+export default class DocumentationPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     return (
       <div className="explore">

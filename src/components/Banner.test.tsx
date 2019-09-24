@@ -3,7 +3,7 @@ import * as React from 'react';
 import 'jest';
 
 import { shallow } from 'enzyme';
-import { Banner } from './Banner';
+import Banner from './Banner';
 
 describe('Banner', () => {
   it('should render the official site notice', () => {

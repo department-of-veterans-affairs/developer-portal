@@ -4,12 +4,11 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
 
+import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../../apiDefs';
+import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
 import CategoryReleaseNotesPage from './CategoryReleaseNotesPage';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
-
-import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../../apiDefs';
-import { SideNav, SideNavEntry } from '../../components/SideNav';
 
 import '../Documentation.scss';
 

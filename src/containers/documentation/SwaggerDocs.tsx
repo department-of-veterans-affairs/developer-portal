@@ -25,7 +25,7 @@ export interface IVersionInfo {
   internal_only: boolean;
 }
 
-class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> {
+export default class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> {
   public constructor(props: ISwaggerDocsProps) {
     super(props);
     this.state = {
@@ -119,5 +119,3 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
     }
   }
 }
-
-export default SwaggerDocs;

@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import { apiDefs, IApiDescription } from '../../apiDefs';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
-import { VAInternalOnlyTag } from '../../components/VAInternalOnlyTag';
+import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
 import { IApiNameParam } from '../../types';
 
 export default class CategoryReleaseNotesPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {

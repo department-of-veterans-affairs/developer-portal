@@ -11,7 +11,7 @@ export interface IVersionSelectState {
   version: string;
 }
 
-export class VersionSelect extends React.Component<IVersionSelectProps, IVersionSelectState> {
+export default class VersionSelect extends React.Component<IVersionSelectProps, IVersionSelectState> {
   public constructor(props: IVersionSelectProps) {
     super(props);
     const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();

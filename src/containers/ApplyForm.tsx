@@ -12,7 +12,6 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 import * as actions from '../actions';
 import { includesOauthAPI } from '../apiDefs';
 import { IApplication, IErrorableInput, IRootState } from '../types';
-
 import ApplyHeader from './ApplyHeader';
 
 import './Apply.scss';

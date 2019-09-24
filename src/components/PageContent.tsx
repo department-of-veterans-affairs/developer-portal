@@ -6,7 +6,7 @@ interface IPageContentProps extends RouteComponentProps<void> {
     children: JSX.Element[] | JSX.Element;
 }
 
-export class PageContent extends React.Component<IPageContentProps, {}> {
+export default class PageContent extends React.Component<IPageContentProps, {}> {
     private loader: HTMLDivElement | null;
 
     public componentDidUpdate(prevProps: IPageContentProps) {
