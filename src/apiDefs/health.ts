@@ -8,7 +8,6 @@
   */
  
 import { IApiDescription } from ".";
-import { isHostedApiEnabled } from '../apiDefs/env';
 import {
   CommunityCareApiIntro,
   FhirArgonautApiIntro,
@@ -19,7 +18,6 @@ import {
 } from '../content/apiDocs';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
-const isNewFhirApiEnabled =  isHostedApiEnabled('fhir', true);
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
 const argonautDesc = "VA's Argonaut resources";
 const healthApis : IApiDescription[] = [
@@ -74,14 +72,14 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
-    deprecationContent: isNewFhirApiEnabled ? HealthArgonautDeprecation : undefined,
-    description: isNewFhirApiEnabled ? argonautDeprecatedDesc : argonautDesc,
+    deprecationContent: HealthArgonautDeprecation,
+    description: argonautDeprecatedDesc,
     docSources: [
       {
         openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
       },
     ],
-    name: `Veterans Health API${isNewFhirApiEnabled ? ' (Legacy)' : ''}`,
+    name: 'Veterans Health API (Legacy)',
     urlFragment: 'argonaut',
     vaInternalOnly: false,
   },
