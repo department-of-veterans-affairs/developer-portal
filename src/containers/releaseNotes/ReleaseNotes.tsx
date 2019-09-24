@@ -4,14 +4,14 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
 
-import { IApiNameParam } from '../types';
+import { IApiNameParam } from '../../types';
 import CategoryReleaseNotesPage from './CategoryReleaseNotesPage';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
-import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
-import { SideNav, SideNavEntry } from '../components/SideNav';
+import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../../apiDefs';
+import { SideNav, SideNavEntry } from '../../components/SideNav';
 
-import './Explore.scss';
+import '../Documentation.scss';
 
 function VaInternalTag() {
   return (

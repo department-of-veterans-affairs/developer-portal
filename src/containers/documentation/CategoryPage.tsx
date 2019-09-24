@@ -4,11 +4,11 @@ import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
-import { apiDefs, IApiDescription } from '../apiDefs';
-import AuthorizationCard from '../components/AuthorizationCard';
-import CardLink from '../components/CardLink';
-import { VAInternalOnlyTag } from '../components/VAInternalOnlyTag';
-import { IApiNameParam } from '../types';
+import { apiDefs, IApiDescription } from '../../apiDefs';
+import AuthorizationCard from '../../components/AuthorizationCard';
+import CardLink from '../../components/CardLink';
+import { VAInternalOnlyTag } from '../../components/VAInternalOnlyTag';
+import { IApiNameParam } from '../../types';
 
 export default class CategoryPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {

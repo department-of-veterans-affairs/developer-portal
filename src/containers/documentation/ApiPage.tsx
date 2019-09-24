@@ -5,21 +5,21 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import { IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../apiDefs';
-import { SwaggerDocs } from '../components';
-import PageHeader from '../components/PageHeader';
-import ExplorePage from '../content/explorePage.mdx';
-import { history } from '../store';
-import { IApiNameParam, IExternalSwagger, IRootState } from '../types';
+import { IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../../apiDefs';
+import PageHeader from '../../components/PageHeader';
+import ExplorePage from '../../content/explorePage.mdx';
+import { history } from '../../store';
+import { IApiNameParam, IExternalSwagger, IRootState } from '../../types';
+import SwaggerDocs from './SwaggerDocs';
 
-import '../../node_modules/react-tabs/style/react-tabs.scss';
+import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
-export interface IExploreProps extends RouteComponentProps<IApiNameParam> {
+export interface IApiPageProps extends RouteComponentProps<IApiNameParam> {
   argonaut: IExternalSwagger;
   fetchArgonaut: () => void;
 }
 
-interface IExploreState {
+interface IApiPageState {
   tabIndex: number;
 }
 
@@ -29,8 +29,8 @@ const mapStateToProps = ({ routing }: IRootState) => {
   };
 };
 
-class Explore extends React.Component<IExploreProps, IExploreState> {
-  public constructor(props : IExploreProps) {
+class ApiPage extends React.Component<IApiPageProps, IApiPageState> {
+  public constructor(props : IApiPageProps) {
     super(props);
     this.state = { tabIndex: 0 };
   }
@@ -39,7 +39,7 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
     this.setTabIndexFromFragment();
   }
 
-  public componentDidUpdate(prevProps: IExploreProps, prevState: IExploreState) {
+  public componentDidUpdate(prevProps: IApiPageProps, prevState: IApiPageState) {
     const { location } = this.props;
     if (location.pathname !== prevProps.location.pathname || location.hash !== prevProps.location.hash) {
       this.setTabIndexFromFragment();
@@ -169,4 +169,4 @@ class Explore extends React.Component<IExploreProps, IExploreState> {
   }
 }
 
-export default connect(mapStateToProps)(Explore);
+export default connect(mapStateToProps)(ApiPage);

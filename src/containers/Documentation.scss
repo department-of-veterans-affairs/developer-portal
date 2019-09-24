@@ -1,3 +1,8 @@
+/*
+  This file is shared between documentation/Documentation.tsx and releaseNotes/ReleaseNotes.tsx.
+  This is an indication that it should probably be refactored and that possibly its consuming 
+  components might be as well.
+*/ 
 @import '../styles/variables';
 
 .explore {

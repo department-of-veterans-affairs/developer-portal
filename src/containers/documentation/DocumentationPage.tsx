@@ -4,17 +4,16 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
-import { SideNav, SideNavEntry } from '../components/SideNav';
-import { QuickstartPage } from '../containers';
-import { IApiNameParam } from '../types';
+import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../../apiDefs';
+import { SideNav, SideNavEntry } from '../../components/SideNav';
+import { QuickstartPage } from '../../containers';
+import { IApiNameParam } from '../../types';
+import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
 import CategoryPage from './CategoryPage';
 import DocumentationOverview from './DocumentationOverview';
-import Explore from './Explore';
 
-import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../apiDefs';
-
-import './Explore.scss';
+import '../Documentation.scss';
 
 function VaInternalTag() {
   return <small className="vadp-internal-tag">Internal VA use only.</small>;
@@ -98,7 +97,7 @@ function ExploreSideNav() {
   );
 }
 
-export class ExploreDocs extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
+export class DocumentationPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     return (
       <div className="explore">
@@ -121,7 +120,7 @@ export class ExploreDocs extends React.Component<RouteComponentProps<IApiNamePar
               <Route
                 exact={true}
                 path="/explore/:apiCategoryKey/docs/:apiName"
-                component={Explore}
+                component={ApiPage}
               />
             </Switch>
           </div>

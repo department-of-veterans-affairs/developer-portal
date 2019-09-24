@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import * as Stickyfill from 'stickyfilljs';
 
-import { apiDefs } from '../apiDefs';
-import PageHeader from '../components/PageHeader';
-import Oauth from '../content/apiDocs/oauthTechnical.mdx';
+import { apiDefs } from '../../apiDefs';
+import PageHeader from '../../components/PageHeader';
+import Oauth from '../../content/apiDocs/oauthTechnical.mdx';
 
 import './OAuth.scss';
 

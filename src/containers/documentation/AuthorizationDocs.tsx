@@ -2,10 +2,10 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
-import { lookupApiCategory } from '../apiDefs';
-import { OAuth } from '../containers';
-import { ApiKeyAuth } from '../containers/ApiKeyAuth';
-import { IApiNameParam } from '../types';
+import { lookupApiCategory } from '../../apiDefs';
+import { IApiNameParam } from '../../types';
+import ApiKeyAuth from './ApiKeyAuth';
+import OAuth from './OAuth';
 
 export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {

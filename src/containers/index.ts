@@ -1,28 +1,28 @@
-import ApiKeyAuth from './ApiKeyAuth';
 import ApplyForm from './ApplyForm';
 import ApplySuccess from './ApplySuccess';
 export * from './Beta';
 export * from './BetaSuccess';
-export * from './CategoryPage';
-export * from './CategoryReleaseNotesPage';
-import DisabledApplyForm from './DisabledApplyForm';
-import Explore from './Explore';
-export * from './ExploreDocs';
 import Home from './Home';
 import News from './News';
-import OAuth from './OAuth';
-import QuickstartPage from './QuickstartPage';
-import ReleaseNotes from './ReleaseNotes';
 import RoutedContent from './RoutedContent';
+export * from './documentation/CategoryPage';
+import DisabledApplyForm from './DisabledApplyForm';
+import ApiKeyAuth from './documentation/ApiKeyAuth';
+import ApiPage from './documentation/ApiPage';
+export * from './documentation/DocumentationPage';
+import OAuth from './documentation/OAuth';
+import QuickstartPage from './documentation/QuickstartPage';
+import SwaggerDocs from './documentation/SwaggerDocs';
+export * from './releaseNotes/CategoryReleaseNotesPage';
+import ReleaseNotes from './releaseNotes/ReleaseNotes';
 import Support from './support/Support';
-import SwaggerDocs from './SwaggerDocs';
 
 export {
+  ApiPage,
   ApiKeyAuth,
   ApplyForm,
   ApplySuccess,
   DisabledApplyForm,
-  Explore,
   Home,
   News,
   OAuth,

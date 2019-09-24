@@ -1,6 +1,6 @@
 import 'jest';
 
-import { puppeteerHost } from '../e2eHelpers';
+import { puppeteerHost } from '../../e2eHelpers';
 
 describe('position sticky', () => {
   it('should keep nav element in place after scroll', async () => {
