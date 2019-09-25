@@ -15,9 +15,6 @@
       },
       "severity": "error"
     },
-    "no-unused-variable": {
-      "severity": "off"
-    },
     "no-console": {
       "severity": "off"
     },

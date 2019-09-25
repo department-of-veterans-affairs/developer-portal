@@ -9,7 +9,6 @@
 
 import * as moment from 'moment';
 
-import { isHostedApiEnabled } from '../apiDefs/env';
 import {
   CommunityCareApiIntro,
   FhirArgonautApiIntro,
@@ -21,9 +20,7 @@ import {
 import { IApiDescription } from "./schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
-const isNewFhirApiEnabled =  isHostedApiEnabled('fhir', true);
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
-const argonautDesc = "VA's Argonaut resources";
 const healthApis : IApiDescription[] = [
   {
     description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
@@ -78,14 +75,14 @@ const healthApis : IApiDescription[] = [
   {
     // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
     deprecated: moment('01 Oct 2019 00:00 EDT'),
-    deprecationContent: isNewFhirApiEnabled ? HealthArgonautDeprecation : undefined,
-    description: isNewFhirApiEnabled ? argonautDeprecatedDesc : argonautDesc,
+    deprecationContent: HealthArgonautDeprecation,
+    description: argonautDeprecatedDesc,
     docSources: [
       {
         openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
       },
     ],
-    name: `Veterans Health API${isNewFhirApiEnabled ? ' (Legacy)' : ''}`,
+    name: 'Veterans Health API (Legacy)',
     urlFragment: 'argonaut',
     vaInternalOnly: false,
   },
