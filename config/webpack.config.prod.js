@@ -1,3 +1,6 @@
+// If you are looking to add an additional file hosted at the root of the project see the readme
+// section `Revproxy Routing
+
 'use strict';
 
 const fs = require('fs');
@@ -98,6 +101,15 @@ if (env.stringified['process.env'].NODE_ENV !== '"production"') {
 
 // Note: defined here because it will be used more than once.
 const cssFilename = 'static/css/[name].[contenthash:8].css';
+
+// ExtractTextPlugin expects the build output to be flat.
+// (See https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/27)
+// However, our output is structured with css, js and media folders.
+// To have this structure working with relative paths, we have to use custom options.
+const extractTextPluginOptions = shouldUseRelativeAssetPaths
+      ? // Making sure that the publicPath goes back to to build folder.
+      { publicPath: Array(cssFilename.split('/').length).join('../') }
+      : {};
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
@@ -379,11 +391,6 @@ module.exports = (envName) => {
       filename: 'static/css/[name].[contenthash:8].css',
       chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
     }),
-    new OptimizeCSSAssetsPlugin({
-      cssProcessorOptions: {
-        map: shouldUseSourceMap,
-      },
-    }),
     // Generate a manifest file which contains a mapping of all asset filenames
     // to their corresponding output file so that tools can pick it up without
     // having to parse `index.html`.
@@ -452,14 +459,6 @@ module.exports = (envName) => {
       net: 'empty',
       tls: 'empty',
       child_process: 'empty',
-    },
-    performance: {
-      hints: 'error',
-      maxAssetSize: 300000,
-      assetFilter: function(assetFilename) {
-        // only check CSS bundle size, as our JS bundle is currently over 2M
-        return assetFilename.endsWith('.css');
-      },
     },
   };
 };
