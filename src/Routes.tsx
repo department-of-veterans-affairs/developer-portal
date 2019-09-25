@@ -15,6 +15,7 @@ import {
   DisabledApplyForm,
   Home,
   News,
+  NotFound,
   OAuth,
   ReleaseNotes,
   RoutedContent,
@@ -61,6 +62,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
         <Route path="/news" component={News} />
         <Route path="/support" component={Support} />
+        <Route component={NotFound} />
       </Switch>
     </PageContent>
   );
