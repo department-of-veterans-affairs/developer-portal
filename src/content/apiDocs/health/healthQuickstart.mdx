@@ -1,0 +1,53 @@
+VA’s Health APIs allow a user/application to make queries that will return health records in FHIR format, without interacting with or understanding the inner workings of VA systems.
+
+The database that powers the development environment is populated with synthetic Veteran data provided by MITRE Corporation. The data contains sample Veteran health records (both living and deceased) that mimic real Veteran demographics. The associated clinical resources include data generated from disease models covering up to a dozen of the most common Veteran afflictions.
+
+The Urgent Care and Community Care Eligibility APIs also allow a user/application to retrieve an array of different Veteran eligibilities from a synthetic dataset.
+
+## Development API access
+
+The VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf. Some Health APIs also use the [SMART on FHIR](http://docs.smarthealthit.org/) profile. Both OpenID Connect and SMART on FHIR are built on OAuth 2.
+
+To learn more about how authorization works on the Health API, check out our [Authorization documentation](/explore/health/docs/authorization).
+
+### What is the criteria to be considered for Development API access?
+
+The following basic information should be provided:
+
+ * Your name
+ * Email address
+ * Organization name
+ * OAuth Redirect URI
+
+### What happens after I am approved?
+
+You will receive an email from the VA API team notifying you of your approval, and it will include a new Client ID and Secret for your application. The base URI for the Health API endpoints are:
+
+ * `{{ process.env.REACT_APP_API_URL }}/services/fhir/v0/argonaut/data-query/`
+ * `{{ process.env.REACT_APP_API_URL }}/services/fhir/v0/dstu2/`
+ * `{{ process.env.REACT_APP_API_URL }}/services/fhir/v0/r4/`
+ * `{{ process.env.REACT_APP_API_URL }}/services/community-care/v0/eligibility`
+
+Accordingly, the FHIR conformance statements can be retrieved from:
+
+ * `{{ process.env.REACT_APP_API_URL }}/services/fhir/v0/argonaut/data-query/metadata`
+ * `{{ process.env.REACT_APP_API_URL }}/services/fhir/v0/dstu2/metadata`
+ * `{{ process.env.REACT_APP_API_URL }}/services/fhir/v0/r4/metadata`
+
+You will also be provided with a set of test accounts to use that will allow you to access specific synthetic data patient records.
+
+## Developer Guidelines
+
+Below are guidelines you should follow to be successful in your VA API integration.
+
+### Authorization
+
+The Health API requires you to leverage our authentication protocol. We have a specific guide for authorization [go to our Authorization documentation](/explore/health/docs/authorization).
+
+### Data Refresh
+
+The APIs accessed via the Development environment are using the same underlying logic as VA’s production APIs; only the underlying data store is different. The synthetic data store is static and is not refreshed at the same intervals as production.
+
+### Usage
+
+API usage is not restricted within the Development environment.

@@ -5,7 +5,7 @@ import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
 import { apiCategoryOrder, apiDefs } from './apiDefs';
-import { flags } from './App';
+import { apiEnvFlags } from './apiDefs/env';
 import { PageContent } from './components/PageContent';
 import {
   ApplyForm,
@@ -18,6 +18,7 @@ import {
   OAuth,
   ReleaseNotes,
   RoutedContent,
+  Support,
   WhatsNew,
 } from './containers';
 
@@ -55,6 +56,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/oauth" component={OAuth} />
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
         <Route path="/whats-new" component={WhatsNew} />
+        <Route path="/support" component={Support} />
       </Switch>
     </PageContent>
   );
@@ -69,7 +71,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
 export function sitemapConfig() {
   function getApiRouteParams(route: string, apiCategory: string): string[] {
     const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api) => {
-      if (flags.hosted_apis.hasOwnProperty(api.urlFragment) && flags.hosted_apis[api.urlFragment]) {
+      if (apiEnvFlags.hasOwnProperty(api.urlFragment) && apiEnvFlags[api.urlFragment]) {
         result.push(api.urlFragment);
       }
       return result;

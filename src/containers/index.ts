@@ -8,8 +8,10 @@ import Explore from './Explore';
 export * from './ExploreDocs';
 import Home from './Home';
 import OAuth from './OAuth';
+import QuickstartPage from './QuickstartPage';
 import ReleaseNotes from './ReleaseNotes';
 import RoutedContent from './RoutedContent';
+import Support from './Support';
 import WhatsNew from './WhatsNew';
 
 export {
@@ -20,7 +22,9 @@ export {
   Explore,
   Home,
   OAuth,
+  QuickstartPage,
   ReleaseNotes,
   RoutedContent,
+  Support,
   WhatsNew,
 };

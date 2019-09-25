@@ -11,6 +11,7 @@ const app: IApplication = {
     apis: {
       appeals: false,
       benefits: false,
+      claims: false,
       communityCare: false,
       facilities: false,
       health: false,
@@ -86,6 +87,26 @@ describe('application', () => {
       expect.objectContaining({
         apis: expect.objectContaining({
           benefits: false,
+        }),
+      }),
+    );
+  });
+
+  it('should toggle claims api', () => {
+    const newApp = application(app, {
+      type: constants.TOGGLE_CLAIMS_CHECKED,
+    });
+    expect(newApp.inputs).toEqual(
+      expect.objectContaining({
+        apis: expect.objectContaining({
+          claims: true,
+        }),
+      }),
+    );
+    expect(application(newApp, { type: constants.TOGGLE_CLAIMS_CHECKED }).inputs).toEqual(
+      expect.objectContaining({
+        apis: expect.objectContaining({
+          claims: false,
         }),
       }),
     );

@@ -15,7 +15,7 @@ export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiN
       if (category.apiKey === true) {
         return (<ApiKeyAuth apiCategoryKey={apiCategoryKey} />);
       } else {
-        return (<OAuth categoryName={category.name} />);
+        return (<OAuth apiCategoryKey={apiCategoryKey} />);
       }
     } else {
       return <Redirect to='/explore/bogus' />

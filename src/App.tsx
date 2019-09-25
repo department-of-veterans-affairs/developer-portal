@@ -4,6 +4,7 @@ import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
+import { apiEnvFlags } from './apiDefs/env';
 import { Footer, NavBar } from './components';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
@@ -17,29 +18,8 @@ history.listen(location => {
 
 import 'highlight.js/styles/github.css';
 
-function isHostedApiEnabled(shortName: string, defaultValue: boolean): boolean {
-  const envValue = process.env[`REACT_APP_${shortName.toUpperCase()}_API_ENABLED`];
-  if (envValue == null) {
-    return defaultValue;
-  } else {
-    return envValue === 'true';
-  }
-}
-
-export const flags = {
-  hosted_apis: {
-    address_validation: isHostedApiEnabled('address_validation', true),
-    appeals: isHostedApiEnabled('appeals', true),
-    argonaut: isHostedApiEnabled('argonaut', true),
-    benefits: isHostedApiEnabled('benefits', true),
-    claims: isHostedApiEnabled('claims', true),
-    community_care: isHostedApiEnabled('community_care', false),
-    disability_rating: isHostedApiEnabled('disability_rating', true),
-    facilities: isHostedApiEnabled('facilities', true),
-    loan_guaranty: isHostedApiEnabled('loan_guaranty', false),
-    service_history: isHostedApiEnabled('service_history', true),
-    veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
-  },
+const flags = {
+  hosted_apis: apiEnvFlags,
   signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
 };
 

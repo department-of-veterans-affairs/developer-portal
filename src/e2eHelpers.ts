@@ -17,6 +17,8 @@ export const testPaths = [
   '/explore/benefits/docs/appeals',
   '/release-notes',
   '/whats-new',
+  '/support',
+  '/support/faq',
 ];
 
 export const metadataTestPaths = [''];
