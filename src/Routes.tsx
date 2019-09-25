@@ -6,7 +6,6 @@ import { Redirect, Route } from 'react-router-dom';
 import { Flag } from 'flag';
 import { apiCategoryOrder, apiDefs } from './apiDefs';
 import { apiEnvFlags } from './apiDefs/env';
-<<<<<<< HEAD
 import PageContent from './components/PageContent';
 import ApplyForm from './containers/ApplyForm';
 import ApplySuccess from './containers/ApplySuccess';
@@ -20,23 +19,6 @@ import News from './containers/News';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import RoutedContent from './containers/RoutedContent';
 import Support from './containers/support/Support';
-=======
-import { PageContent } from './components/PageContent';
-import {
-  ApplyForm,
-  ApplySuccess,
-  BetaPage,
-  BetaSuccess,
-  DisabledApplyForm,
-  Home,
-  News,
-  OAuth,
-  ReleaseNotes,
-  RoutedContent,
-  Support,
-} from './containers';
-import DocumentationRoot from './containers/documentation/DocumentationRoot';
->>>>>>> origin/master
 
 export function topLevelRoutes(props: RouteComponentProps<void>) {
   return (

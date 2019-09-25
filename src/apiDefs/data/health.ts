@@ -16,8 +16,8 @@ import {
   FhirR4ApiIntro,
   HealthArgonautDeprecation,
   UrgentCareApiIntro,
-} from '../content/apiDocs';
-import { IApiDescription } from "./schema";
+} from '../../content/apiDocs';
+import { IApiDescription } from "../schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';

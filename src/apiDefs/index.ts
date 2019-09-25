@@ -1,17 +1,19 @@
-import {
-  benefitsContent,
-  facilitiesContent,
-  healthContent,
-  verificationContent,
-} from '../content/apiDocs';
+/*
+  This file contains the core functionality for interacting with our API definitions. We intend to
+  move our API definitions to a database in the future so we do not have to maintain them in 
+  Typescript as the program scales (see schema.ts for more info). In preparation for this change,
+  developers should not write new code that relies directly on the Typescript objects exported from other
+  files in this directory. Instead, they should rely on the functions exported from this file and the other
+  modules listed below to abstract away the form of data storage.
 
-import {
-  BenefitsReleaseNotes,
-  FacilitiesReleaseNotes,
-  HealthReleaseNotes,
-  VerificationReleaseNotes,
-} from '../content/releaseNotes';
+  The following modules supplement the core data access functions defined here. They can be safely consumed 
+  by React components, Redux lifecycle hooks, and other parts of the application outside src/apiDefs.
+  - deprecated.ts
+  - env.ts 
+  - schema.ts
+*/
 
+import apiDefs from './data/categories';
 import {
   IApiCategories,
   IApiCategory,
@@ -20,72 +22,13 @@ import {
   IApiDocSource,
 } from './schema';
 
-import benefitsApis from './benefits';
-import facilitiesApis from './facilities';
-import healthApis from './health';
-import verificationApis from './verification';
-
-export { 
-  IApiCategories,
-  IApiCategory,
-  IApiCategoryContent,
-  IApiDescription,
-  IApiDocSource,
-};
-
-export const apiDefs: IApiCategories = {
-  benefits: {
-    apiKey: true,
-    apis: benefitsApis,
-    buttonText: 'Get Your Key',
-    content: benefitsContent,
-    name: 'Benefits API',
-    properName: 'Benefits Intake API',
-    releaseNotes: BenefitsReleaseNotes,
-    shortDescription:
-      'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
-  },
-  facilities: {
-    apiKey: true,
-    apis: facilitiesApis,
-    buttonText: 'Get Your Key',
-    content: facilitiesContent,
-    name: 'Facilities API',
-    properName: 'VA Facilities API',
-    releaseNotes: FacilitiesReleaseNotes,
-    shortDescription:
-      'Use the VA Facility API to find relevant information about a specific VA facility.',
-  },
-  health: {
-    apiKey: false,
-    apis: healthApis,
-    buttonText: 'Get Your Key',
-    content: healthContent,
-    name: 'Health API',
-    properName: 'Health API',
-    releaseNotes: HealthReleaseNotes,
-    shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
-    tabBlurb: "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
-  },
-  verification: {
-    apiKey: false,
-    apis: verificationApis,
-    buttonText: 'Stay Informed',
-    content: verificationContent,
-    name: 'Veteran Verification API',
-    properName: 'Veteran Verification API',
-    releaseNotes: VerificationReleaseNotes,
-    shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
-  },
-};
-
-export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
+const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
 
 // If an API with the given URL fragment exists, the given `fn` callback
 // function will be called with the full IApiDescription. The return value is
 // either the return value of the callback function or `null` if no such API
 // exists.
-export function withApiDescription(
+function withApiDescription(
   urlFragment: string,
   fn: (apiDesc: IApiDescription) => any,
 ): any {
@@ -93,11 +36,11 @@ export function withApiDescription(
   if (api == null) {
     return null;
   }
-
+  
   return fn(api);
 }
-
-export function lookupApiByFragment(urlFragment: string): IApiDescription | null {
+  
+function lookupApiByFragment(urlFragment: string): IApiDescription | null {
   for (const cat of Object.values(apiDefs)) {
     for (const api of cat.apis) {
       if (api.urlFragment === urlFragment) {
@@ -105,11 +48,11 @@ export function lookupApiByFragment(urlFragment: string): IApiDescription | null
       }
     }
   }
-
+  
   return null;
 }
-
-export function lookupApiCategory(categoryKey: string): IApiCategory | null {
+  
+function lookupApiCategory(categoryKey: string): IApiCategory | null {
   return apiDefs[categoryKey];
 }
 
@@ -136,7 +79,27 @@ function apisFor(apiList: string[]): IApiDescription[] {
   }
   return Array.from(apis);
 }
-
-export function includesOauthAPI(apiList: string[]): boolean {
-  return categoriesFor(apiList).some(category => !category.apiKey)|| apisFor(apiList).some(api => api.oAuth || false);
+  
+function includesOauthAPI(apiList: string[]): boolean {
+  const includesOauthCategory = categoriesFor(apiList).some(category => !category.apiKey);
+  const includesOauthOverride = apisFor(apiList).some(api => api.oAuth || false);
+  return includesOauthCategory || includesOauthOverride;
 }
+
+export { 
+  IApiCategories,
+  IApiCategory,
+  IApiCategoryContent,
+  IApiDescription,
+  IApiDocSource,
+};
+
+export {
+  apiCategoryOrder,
+  apiDefs,
+  includesOauthAPI,
+  lookupApiByFragment,
+  lookupApiCategory,
+  withApiDescription,
+};
+  
