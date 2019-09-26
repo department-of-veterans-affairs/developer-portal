@@ -21,13 +21,6 @@ export interface IApiList {
   communityCare: boolean;
 }
 
-export interface IExternalSwagger {
-  fetched: boolean;
-  loading: boolean;
-  error?: string;
-  swagger: object;
-}
-
 export interface IApplicationInputs {
   apis: IApiList;
   description: IErrorableInput;

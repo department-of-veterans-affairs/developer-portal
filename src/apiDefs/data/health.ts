@@ -74,7 +74,7 @@ const healthApis : IApiDescription[] = [
   },
   {
     // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
-    deprecated: moment('01 Oct 2019 00:00 EDT'),
+    deprecated: moment('01 Sep 2019 00:00 EDT'),
     deprecationContent: HealthArgonautDeprecation,
     description: argonautDeprecatedDesc,
     docSources: [
