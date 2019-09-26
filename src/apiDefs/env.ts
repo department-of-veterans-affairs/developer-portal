@@ -21,4 +21,5 @@ export const apiEnvFlags = {
   service_history: isHostedApiEnabled('service_history', true),
   urgent_care: isHostedApiEnabled('fhir', true),
   veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
+  decision_reviews: isHostedApiEnabled('decision_reviews', false),
 };
