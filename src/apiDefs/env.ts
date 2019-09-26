@@ -14,6 +14,7 @@ export const apiEnvFlags = {
   benefits: isHostedApiEnabled('benefits', true),
   claims: isHostedApiEnabled('claims', true),
   community_care: isHostedApiEnabled('community_care', true),
+  decision_reviews: isHostedApiEnabled('decision_reviews', false),
   disability_rating: isHostedApiEnabled('disability_rating', true),
   facilities: isHostedApiEnabled('facilities', true),
   fhir: isHostedApiEnabled('fhir', true),
@@ -21,5 +22,4 @@ export const apiEnvFlags = {
   service_history: isHostedApiEnabled('service_history', true),
   urgent_care: isHostedApiEnabled('fhir', true),
   veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
-  decision_reviews: isHostedApiEnabled('decision_reviews', false),
 };
