@@ -1,30 +1,44 @@
 import * as React from 'react';
-
-import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
-import { IApiDescription, lookupApiByFragment } from '../../apiDefs';
+import { IApiDescription, lookupApiByFragment, lookupApiCategory } from '../../apiDefs';
 import { isApiDeprecated } from '../../apiDefs/deprecated';
+import PageHeader from '../../components/PageHeader';
 import ExplorePage from '../../content/explorePage.mdx';
 import { IApiNameParam } from '../../types';
 import ApiDocumentation from './ApiDocumentation';
-import DeprecatedApi from './DeprecatedApi';
+
+const DeprecationMessage = ({ api } : { api: IApiDescription }) => {
+  return api.deprecationContent ?(
+    <div className="usa-alert usa-alert-info">
+      <div className="usa-alert-body">
+        {api.deprecationContent({})}
+      </div>
+    </div>
+    ) : null;
+};
 
 export default class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>> {
   public render() {
+    const { params } = this.props.match;
     const api = this.getApi();
     if (api === null) {
       return <ExplorePage />;
     }
 
-    if (isApiDeprecated(api)) {
-      return <DeprecatedApi apiDefinition={api} categoryKey={this.props.match.params.apiCategoryKey} />;
-    }
-
+    const isDeprecated = isApiDeprecated(api);
+    const category = lookupApiCategory(this.props.match.params.apiCategoryKey)!;
     return (
-      <Flag name={`hosted_apis.${api.urlFragment}`}>
-        <ApiDocumentation apiDefinition={api} categoryKey={this.props.match.params.apiCategoryKey} location={this.props.location} />
-      </Flag>
+      <div role="region" aria-labelledby="api-documentation">
+        <PageHeader id="api-documentation" halo={category.name} header={api.name} />
+        <DeprecationMessage api={api} />
+        {!isDeprecated && 
+          <ApiDocumentation 
+            apiDefinition={api} 
+            categoryKey={params.apiCategoryKey} 
+            location={this.props.location} />
+        }
+      </div>
     );
   }
 

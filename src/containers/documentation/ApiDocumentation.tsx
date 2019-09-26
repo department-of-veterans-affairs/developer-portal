@@ -6,7 +6,6 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 import { lookupApiCategory } from '../../apiDefs';
 import { IApiDescription, IApiDocSource } from '../../apiDefs/schema';
-import PageHeader from '../../components/PageHeader';
 import { history } from '../../store';
 import SwaggerDocs from './SwaggerDocs';
 
@@ -38,76 +37,46 @@ export default class ApiDocumentation extends React.Component<IApiDocumentationP
       this.setTabIndexFromFragment();
     }
   }
-  
+
   public render() {
     const {
       apiDefinition,
       categoryKey,
     } = this.props;
-    const category = lookupApiCategory(categoryKey);
 
-    return (
-      <div role="region" aria-labelledby="api-documentation">
-        <PageHeader id="api-documentation" halo={category!.name} header={apiDefinition.name} />
-        {this.renderDeprecationWarning(apiDefinition)}
-        {this.renderApiDocs(apiDefinition)}
-      </div>
-    );
-  }
-
-  private renderApiDocs(apiDefinition: IApiDescription) {
-    let docs: JSX.Element | null = null;
-    // because this is downstream from a getApi() call, we can assert that apiName is defined
-    const category = lookupApiCategory(this.props.categoryKey);
+    // because this is only rendered with a valid API, we can assert that the category is non-null
+    const category = lookupApiCategory(categoryKey)!;
     const tabChangeHandler = this.onTabSelect.bind(this);
-    if (apiDefinition.docSources.length === 1) {
-      docs = <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} />;
-    } else {
-      docs = (
-        <React.Fragment>
-          {category!.tabBlurb}
-          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabChangeHandler}>
-            <TabList>
-              {apiDefinition.docSources.map(apiDocSource => {
-                return (
-                  <Tab key={apiDocSource.label}>
-                    {apiDocSource.label}
-                  </Tab>
-                );
-              })}
-            </TabList>
-            {apiDefinition.docSources.map(apiDocSource => {
-              return (
-                <TabPanel key={apiDocSource.label}>
-                  <SwaggerDocs docSource={apiDocSource} apiName={apiDefinition.urlFragment} />
-                </TabPanel>
-              );
-            })}
-          </Tabs>
-        </React.Fragment>
-      );
-    }
 
     return (
       <Flag name={`hosted_apis.${apiDefinition.urlFragment}`}>
-        {docs}
+        {apiDefinition.docSources.length === 1 
+          ? <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} />
+          : (
+            <React.Fragment>
+              {category!.tabBlurb}
+              <Tabs selectedIndex={this.state.tabIndex} onSelect={tabChangeHandler}>
+                <TabList>
+                  {apiDefinition.docSources.map(apiDocSource => {
+                    return (
+                      <Tab key={apiDocSource.label}>
+                        {apiDocSource.label}
+                      </Tab>
+                    );
+                  })}
+                </TabList>
+                {apiDefinition.docSources.map(apiDocSource => {
+                  return (
+                    <TabPanel key={apiDocSource.label}>
+                      <SwaggerDocs docSource={apiDocSource} apiName={apiDefinition.urlFragment} />
+                    </TabPanel>
+                  );
+                })}
+              </Tabs>
+            </React.Fragment>
+          )
+        }
       </Flag>
-    );
-  }
-
-  private renderDeprecationWarning(apiDefinition: IApiDescription) {
-    const { deprecationContent } = apiDefinition;
-
-    if (!deprecationContent) {
-      return null;
-    }
-
-    return (
-      <div className="usa-alert usa-alert-info">
-        <div className="usa-alert-body">
-          {deprecationContent({})}
-        </div>
-      </div>
     );
   }
 
