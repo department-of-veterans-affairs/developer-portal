@@ -18,7 +18,7 @@ export default class ApiPage extends React.Component<RouteComponentProps<IApiNam
     }
 
     if (isApiDeprecated(api)) {
-      return <DeprecatedApi apiDefinition={api} />;
+      return <DeprecatedApi apiDefinition={api} categoryKey={this.props.match.params.apiCategoryKey} />;
     }
 
     return (
