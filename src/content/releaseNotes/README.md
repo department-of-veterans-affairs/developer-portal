@@ -1,6 +1,6 @@
-Release Notes Instructions.
+# Release Notes Instructions.
 
-Release notes should match the following format:
+#### Release notes should match the following format:
 
 ## FORMAT SAMPLE
 `# Name of API`
