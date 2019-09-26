@@ -2,14 +2,15 @@ Release Notes Instructions.
 
 Release notes should match the following format:
 
-## FORMAT
-`#Name of API`
+## FORMAT SAMPLE
+`# Name of API`
 
 `## API versionname(s) | Month 00, Year`
 
 `### <bold> Plain english description of benefit of the change </bold>`
+`### • brief details on changes made with link to Github Issue  [#1111](https://github.com)
 
-## SAMPLE
+## TEXT SAMPLE
 `#`Benefits Intake
 
 `##` v0 & v1 | August 19, 2019
@@ -17,3 +18,6 @@ Release notes should match the following format:
 `###`**Prevents problematic non-standard sizes from being uploaded**
 
 `###` • Validation on document page size [#3212](https://github.com/department-of-veterans-affairs/vets-api/pull/3213)
+
+## IMAGE SAMPLE
+![Image description](releaseNotesFormat.png)
