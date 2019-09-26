@@ -1,3 +1,6 @@
+// If you are looking to add an additional file hosted at the root of the project see the readme
+// section `Revproxy Routing` (https://github.com/department-of-veterans-affairs/developer-portal/blob/master/README.md#revproxy-routing)
+
 'use strict';
 
 const fs = require('fs');

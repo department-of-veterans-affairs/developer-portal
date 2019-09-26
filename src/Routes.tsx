@@ -16,6 +16,7 @@ import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import OAuth from './containers/documentation/OAuth';
 import Home from './containers/Home';
 import News from './containers/News';
+import NotFound from './containers/NotFound';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import RoutedContent from './containers/RoutedContent';
 import Support from './containers/support/Support';
@@ -59,6 +60,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
         <Route path="/news" component={News} />
         <Route path="/support" component={Support} />
+        <Route component={NotFound} />
       </Switch>
     </PageContent>
   );

@@ -38,3 +38,7 @@ updates to the site were made. It took multiple visits to the site for the updat
 This causes an issue when a time sensitive update needs to be shown on the site, say when we want
 to display an incident banner on the developer portal. Most users will never see the banner
 because of the service worker. To prevent this issue in the future the service worker was removed.
+
+## Revproxy Routing
+
+The developer portal sits behind an Nginx reverse proxy. Nginx is configured to route all requests to `/static` through to `/static`. All other paths are routed to `index.html`. This allows react to be in control of `404`ing any bad paths. However there are a group of paths at the root that need to be routed to (favicon.ico, google analytics, etc...). Ngnix is configured to explicitly route to these files. If you need to add an additional file hosted at the root of the developer portal do so [here](https://github.com/department-of-veterans-affairs/devops/blob/master/ansible/deployment/config/revproxy-vagov/vars/developer_portal_root_routes.yml). The vars in that file are used where the developer-portal [is configured](https://github.com/department-of-veterans-affairs/devops/blob/master/ansible/deployment/config/revproxy-vagov/templates/nginx_revproxy.conf.j2#L668) in the revproxy (search for `developer_portal_root_routes`)

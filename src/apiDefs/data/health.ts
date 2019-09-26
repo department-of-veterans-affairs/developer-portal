@@ -14,13 +14,17 @@ import {
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
   FhirR4ApiIntro,
-  HealthArgonautDeprecation,
+  HealthArgonautPostDeprecation,
+  HealthArgonautPreDeprecation,
   UrgentCareApiIntro,
 } from '../../content/apiDocs';
 import { IApiDescription } from "../schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
+const argonautDeprecationDate = moment('01 Sep 2019 00:00 EDT');
+const isArgonautDeprecated = moment().isAfter(argonautDeprecationDate);
+
 const healthApis : IApiDescription[] = [
   {
     description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
@@ -74,9 +78,9 @@ const healthApis : IApiDescription[] = [
   },
   {
     // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
-    deprecated: moment('01 Sep 2019 00:00 EDT'),
-    deprecationContent: HealthArgonautDeprecation,
-    description: argonautDeprecatedDesc,
+    deprecated: argonautDeprecationDate,
+    deprecationContent: isArgonautDeprecated ? HealthArgonautPostDeprecation : HealthArgonautPreDeprecation,
+    description: isArgonautDeprecated ? '' : argonautDeprecatedDesc,
     docSources: [
       {
         openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,

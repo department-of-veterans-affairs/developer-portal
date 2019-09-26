@@ -4,6 +4,7 @@ export * from './Beta';
 export * from './BetaSuccess';
 import Home from './Home';
 import News from './News';
+import NotFound from './NotFound';
 import RoutedContent from './RoutedContent';
 export * from './documentation/CategoryPage';
 import DisabledApplyForm from './DisabledApplyForm';
@@ -24,6 +25,7 @@ export {
   DisabledApplyForm,
   Home,
   News,
+  NotFound,
   OAuth,
   QuickstartPage,
   ReleaseNotes,
