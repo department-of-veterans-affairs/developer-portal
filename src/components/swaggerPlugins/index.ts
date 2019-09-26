@@ -5,6 +5,7 @@ import { OperationTag } from './OperationTag';
 import { SchemesContainer } from './SchemesContainer';
 import { Servers } from './Servers';
 import { ServersContainer } from './ServersContainer';
+import './StyleOverride.scss';
 import { VersionActions } from './VersionActions';
 import { VersionReducers } from './VersionReducers';
 import { VersionSelector } from './VersionSelector';

@@ -119,8 +119,8 @@ export const WrapParameters = {
   parameters: (Original: any, system: any) => (props: any) => {
     return (
       <div>
-        <Original {...props} />
         <CurlForm system={system} operation={props.operation.toJS()} />
+        <Original {...props} />
       </div>
     );
   },
