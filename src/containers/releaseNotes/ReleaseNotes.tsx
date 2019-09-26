@@ -4,7 +4,8 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
 
-import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../../apiDefs';
+import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
+import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
 import CategoryReleaseNotesPage from './CategoryReleaseNotesPage';
@@ -62,8 +63,8 @@ function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory)
 }
 
 export function ReleaseNotesSideNav() {
-  const navLinks = apiCategoryOrder.map((key: string) => apiDefs[key].releaseNotes ? SideNavCategoryEntry(key, apiDefs[key]) : null);
-
+  const categoryOrder = getApiCategoryOrder();
+  const apiDefs = getApiDefinitions();
   return (
     <SideNav ariaLabel="Release Notes Side Nav">
       <SideNavEntry
@@ -72,7 +73,7 @@ export function ReleaseNotesSideNav() {
         to="/release-notes"
         name="Overview"
       />
-      {navLinks}
+      {categoryOrder.map((key: string) => apiDefs[key].releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
     </SideNav>
   );
 }

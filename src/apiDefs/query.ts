@@ -13,33 +13,15 @@
   - schema.ts
 */
 
-import apiDefs from './data/categories';
+import apiDefs, { apiCategoryOrder } from './data/categories';
 import {
-  IApiCategories,
   IApiCategory,
-  IApiCategoryContent,
   IApiDescription,
-  IApiDocSource,
 } from './schema';
 
-const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
+const getApiDefinitions = () => apiDefs;
+const getApiCategoryOrder = () => apiCategoryOrder;
 
-// If an API with the given URL fragment exists, the given `fn` callback
-// function will be called with the full IApiDescription. The return value is
-// either the return value of the callback function or `null` if no such API
-// exists.
-function withApiDescription(
-  urlFragment: string,
-  fn: (apiDesc: IApiDescription) => any,
-): any {
-  const api = lookupApiByFragment(urlFragment);
-  if (api == null) {
-    return null;
-  }
-  
-  return fn(api);
-}
-  
 function lookupApiByFragment(urlFragment: string): IApiDescription | null {
   for (const cat of Object.values(apiDefs)) {
     for (const api of cat.apis) {
@@ -79,27 +61,34 @@ function apisFor(apiList: string[]): IApiDescription[] {
   }
   return Array.from(apis);
 }
-  
+
 function includesOauthAPI(apiList: string[]): boolean {
   const includesOauthCategory = categoriesFor(apiList).some(category => !category.apiKey);
   const includesOauthOverride = apisFor(apiList).some(api => api.oAuth || false);
   return includesOauthCategory || includesOauthOverride;
 }
 
-export { 
-  IApiCategories,
-  IApiCategory,
-  IApiCategoryContent,
-  IApiDescription,
-  IApiDocSource,
-};
+// If an API with the given URL fragment exists, the given `fn` callback
+// function will be called with the full IApiDescription. The return value is
+// either the return value of the callback function or `null` if no such API
+// exists.
+function withApiDescription(
+  urlFragment: string,
+  fn: (apiDesc: IApiDescription) => any,
+): any {
+  const api = lookupApiByFragment(urlFragment);
+  if (api == null) {
+    return null;
+  }
+  
+  return fn(api);
+}
 
 export {
-  apiCategoryOrder,
-  apiDefs,
-  includesOauthAPI,
+  getApiCategoryOrder,
+  getApiDefinitions,
   lookupApiByFragment,
   lookupApiCategory,
+  includesOauthAPI,
   withApiDescription,
 };
-  

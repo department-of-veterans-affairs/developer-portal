@@ -12,7 +12,7 @@ import plusIcon from '../../node_modules/uswds/src/img/plus.png';
 import Banner from './Banner';
 import Search from './Search';
 
-import { apiCategoryOrder, apiDefs } from '../apiDefs';
+import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 import { OVER_LARGE_SCREEN_QUERY, UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
 
 interface INavBarProps {
@@ -138,22 +138,23 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
   }
 
   private renderDocumentationSubNav() {
-    const subNavLinks = apiCategoryOrder.map(apiKey => {
-      return (
-        <li className="main-nav-secondary-item" key={apiKey}>
-          <NavLink to={`/explore/${apiKey}`} className="sub-nav-link">
-            {apiDefs[apiKey].name}
-          </NavLink>
-        </li>
-      );
-    });
+    const apiDefs = getApiDefinitions();
+    const apiCategoryOrder = getApiCategoryOrder();
 
     return (
       <ul className="sub-nav-documentation">
         <li className="main-nav-secondary-item" key="all">
           <NavLink exact={true} to="/explore" className="sub-nav-link">Overview</NavLink>
         </li>
-        {subNavLinks}
+        {apiCategoryOrder.map(apiKey => {
+          return (
+            <li className="main-nav-secondary-item" key={apiKey}>
+              <NavLink to={`/explore/${apiKey}`} className="sub-nav-link">
+                {apiDefs[apiKey].name}
+              </NavLink>
+            </li>
+          );
+        })}
       </ul>
     );
   }

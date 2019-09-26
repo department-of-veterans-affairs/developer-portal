@@ -4,8 +4,9 @@ import { RouteComponentProps, Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
-import { apiCategoryOrder, apiDefs } from './apiDefs';
 import { apiEnvFlags } from './apiDefs/env';
+import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
+import { IApiDescription } from './apiDefs/schema';
 import PageContent from './components/PageContent';
 import ApplyForm from './containers/ApplyForm';
 import ApplySuccess from './containers/ApplySuccess';
@@ -74,7 +75,8 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
 
 export function sitemapConfig() {
   function getApiRouteParams(route: string, apiCategory: string): string[] {
-    const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api) => {
+    const apiDefs = getApiDefinitions();
+    const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api: IApiDescription) => {
       if (apiEnvFlags.hasOwnProperty(api.urlFragment) && apiEnvFlags[api.urlFragment]) {
         result.push(api.urlFragment);
       }
@@ -88,6 +90,7 @@ export function sitemapConfig() {
     return routeParams;
   }
 
+  const apiCategoryOrder = getApiCategoryOrder();
   return {
     paramsConfig: {
       '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => {

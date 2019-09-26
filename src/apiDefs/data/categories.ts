@@ -64,4 +64,5 @@ const apiDefinitions : IApiCategories = {
   },
 };
 
+export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
 export default apiDefinitions;

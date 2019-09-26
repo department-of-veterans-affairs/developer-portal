@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as Stickyfill from 'stickyfilljs';
 
-import { apiDefs } from '../../apiDefs';
+import { getApiDefinitions } from '../../apiDefs/query';
 import PageHeader from '../../components/PageHeader';
 import Oauth from '../../content/apiDocs/oauthTechnical.mdx';
 
@@ -24,7 +24,7 @@ export class OAuth extends React.Component<IOAuthProps, {}> {
 
   public render() {
     const { apiCategoryKey } = this.props;
-    const category = apiDefs[apiCategoryKey] || {};
+    const category = getApiDefinitions[apiCategoryKey] || {};
 
     return (
       <div id="oauth">

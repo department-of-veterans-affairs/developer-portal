@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
-import { IApiDescription, lookupApiByFragment, lookupApiCategory } from '../../apiDefs';
 import { isApiDeprecated } from '../../apiDefs/deprecated';
+import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
+import { IApiDescription } from '../../apiDefs/schema';
 import PageHeader from '../../components/PageHeader';
 import ExplorePage from '../../content/explorePage.mdx';
 import { IApiNameParam } from '../../types';

@@ -10,7 +10,7 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 
 import * as actions from '../actions';
-import { includesOauthAPI } from '../apiDefs';
+import { includesOauthAPI } from '../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../types';
 import ApplyHeader from './ApplyHeader';
 

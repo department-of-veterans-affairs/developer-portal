@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
-import { lookupApiCategory } from '../../apiDefs';
+import { lookupApiCategory } from '../../apiDefs/query';
 import { IApiNameParam } from '../../types';
 import ApiKeyAuth from './ApiKeyAuth';
 import OAuth from './OAuth';

@@ -1,4 +1,4 @@
-import { IApiCategoryContent } from '../../apiDefs';
+import { IApiCategoryContent } from '../../apiDefs/schema';
 import BenefitsIntro from './benefits/benefitsIntro.mdx';
 import BenefitsOverview from './benefits/benefitsOverview.mdx';
 import FacilitiesIntro from './facilities/facilitiesIntro.mdx';

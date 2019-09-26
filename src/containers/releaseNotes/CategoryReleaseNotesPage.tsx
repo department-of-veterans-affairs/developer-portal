@@ -3,7 +3,8 @@ import * as React from 'react';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
-import { apiDefs, IApiDescription } from '../../apiDefs';
+import { getApiDefinitions } from '../../apiDefs/query';
+import { IApiDescription } from '../../apiDefs/schema';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
@@ -11,6 +12,7 @@ import { IApiNameParam } from '../../types';
 
 export default class CategoryReleaseNotesPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
+    const apiDefs = getApiDefinitions();
     const { apiCategoryKey } = this.props.match.params;
     const { apis, releaseNotes } = apiDefs[apiCategoryKey];
 

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { apiDefs } from '../apiDefs';
+import { getApiDefinitions } from '../apiDefs/query';
 import sentenceJoin from '../sentenceJoin';
 import { IApiList, IApplication, IRootState } from '../types';
 
@@ -43,6 +43,7 @@ const apisToEnglishOauthList: any = {
 };
 
 const apisToEnglishList = (apis: string[]): string => {
+  const apiDefs = getApiDefinitions();
   return sentenceJoin(apis.map((k) => {
     return apiDefs[k].properName;
   }));
@@ -66,17 +67,16 @@ function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } 
 }
 
 function ApiKeyNotice({ token, email, selectedApis } : IApiKeyNoticeProps) {
+  const apiDefs = getApiDefinitions();
   const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => apiDefs[k].apiKey));
 
   return (
     <div>
       <p className="usa-font-lead"><strong>Your VA API key is:</strong> {token}</p>
-
       <p>
         You should receive an email at {email} with the same key. That key is for accessing the {apiListSnippet} in the development environment.
         You can use it by including it in each request as an HTTP request header named <span className="mono">apiKey</span>.
       </p>
-
     </div>
   );
 }

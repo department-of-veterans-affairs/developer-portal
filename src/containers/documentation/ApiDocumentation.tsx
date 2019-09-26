@@ -4,7 +4,7 @@ import { Flag } from 'flag';
 import { Location } from 'history';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import { lookupApiCategory } from '../../apiDefs';
+import { lookupApiCategory } from '../../apiDefs/query';
 import { IApiDescription, IApiDocSource } from '../../apiDefs/schema';
 import { history } from '../../store';
 import SwaggerDocs from './SwaggerDocs';
