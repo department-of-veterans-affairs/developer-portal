@@ -1,4 +1,5 @@
 import {
+  // appealsContent, //TODO uncomment
   benefitsContent,
   facilitiesContent,
   healthContent,
@@ -77,6 +78,7 @@ export const apiDefs: IApiCategories = {
     releaseNotes: VerificationReleaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
   },
+  // TODO add in blurb for appeals
 };
 
 export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];

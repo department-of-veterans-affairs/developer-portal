@@ -1,4 +1,6 @@
 import { IApiCategoryContent } from '../../apiDefs';
+import AppealsIntro from './appeals/appealsIntro.mdx';
+import AppealsOverview from './appeals/appealsOverview.mdx';
 import BenefitsIntro from './benefits/benefitsIntro.mdx';
 import BenefitsOverview from './benefits/benefitsOverview.mdx';
 import FacilitiesIntro from './facilities/facilitiesIntro.mdx';
@@ -14,6 +16,11 @@ import HealthQuickstart from './health/healthQuickstart.mdx';
 import UrgentCareApiIntro from './health/urgentCareApiIntro.mdx';
 import VerificationIntro from './verification/verificationIntro.mdx';
 import VerificationOverview from './verification/verificationOverview.mdx';
+
+const appealsContent: IApiCategoryContent = {
+  intro: AppealsIntro,
+  overview: AppealsOverview,
+};
 
 const benefitsContent: IApiCategoryContent = {
   intro: BenefitsIntro,
@@ -37,6 +44,7 @@ const verificationContent: IApiCategoryContent = {
 };
 
 export {
+  appealsContent,
   benefitsContent,
   facilitiesContent,
   healthContent,
