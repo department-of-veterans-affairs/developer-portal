@@ -1,5 +1,5 @@
 import {
-  // appealsContent, //TODO uncomment
+  appealsContent,
   benefitsContent,
   facilitiesContent,
   healthContent,
@@ -7,7 +7,7 @@ import {
 } from '../content/apiDocs';
 
 import {
-  // AppealsReleaseNotes, //TODO uncomment
+  AppealsReleaseNotes,
   BenefitsReleaseNotes,
   FacilitiesReleaseNotes,
   HealthReleaseNotes,
@@ -22,13 +22,13 @@ import {
   IApiDocSource,
 } from './schema';
 
-// import appealsApis from './appeals'; //TODO uncomment
+import appealsApis from './appeals';
 import benefitsApis from './benefits';
 import facilitiesApis from './facilities';
 import healthApis from './health';
 import verificationApis from './verification';
 
-export { 
+export {
   IApiCategories,
   IApiCategory,
   IApiCategoryContent,
@@ -37,17 +37,17 @@ export {
 };
 
 export const apiDefs: IApiCategories = {
-  // appeals: {
-  //   apiKey: true,
-  //   apis: appealsApis,
-  //   buttonText: 'Get Your Key',
-  //   content: appealsContent,
-  //   name: 'Appeals API',
-  //   properName: 'Appeals API',
-  //   releaseNotes: AppealsReleaseNotes,
-  //   shortDescription:
-  //     'Enables managing benefit decision appeals on behalf of a Veteran.',
-  // }, //TODO uncomment
+  appeals: {
+    apiKey: true,
+    apis: appealsApis,
+    buttonText: 'Get Your Key',
+    content: appealsContent,
+    name: 'Appeals API',
+    properName: 'Appeals API',
+    releaseNotes: AppealsReleaseNotes,
+    shortDescription:
+      'Enables managing benefit decision appeals on behalf of a Veteran.',
+  },
   benefits: {
     apiKey: true,
     apis: benefitsApis,
@@ -93,7 +93,7 @@ export const apiDefs: IApiCategories = {
   },
 };
 
-export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
+export const apiCategoryOrder: string[] = ['appeals', 'benefits', 'facilities', 'health', 'verification'];
 
 // If an API with the given URL fragment exists, the given `fn` callback
 // function will be called with the full IApiDescription. The return value is
