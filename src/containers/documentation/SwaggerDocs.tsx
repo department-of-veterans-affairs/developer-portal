@@ -1,7 +1,7 @@
 import * as React from 'react';
 import SwaggerUI from 'swagger-ui';
 
-import { IApiDocSource } from '../../apiDefs';
+import { IApiDocSource } from '../../apiDefs/schema';
 import { SwaggerPlugins } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';

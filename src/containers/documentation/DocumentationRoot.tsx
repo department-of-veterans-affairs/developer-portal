@@ -4,7 +4,8 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
-import { apiCategoryOrder, apiDefs, IApiCategory, IApiDescription } from '../../apiDefs';
+import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
+import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
 import ApiPage from './ApiPage';
@@ -15,13 +16,7 @@ import QuickstartPage from './QuickstartPage';
 
 import '../Documentation.scss';
 
-function VaInternalTag() {
-  return <small className="vadp-internal-tag">Internal VA use only.</small>;
-}
-
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
-  const internalTag = api.vaInternalOnly === true ? VaInternalTag() : null;
-
   return (
     <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
       <SideNavEntry
@@ -31,7 +26,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
         name={
           <React.Fragment>
             {api.name}
-            {internalTag}
+            {api.vaInternalOnly && <small className="vadp-internal-tag">Internal VA use only.</small>}
           </React.Fragment>
         }
       />
@@ -57,42 +52,35 @@ function OAuthSideNavEntry(apiCategoryKey: string) {
   );
 }
 
-function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory) {
-  const subNavLinks = apiCategory.apis.map(api => {
-    return SideNavApiEntry(apiCategoryKey, api);
-  });
-
-  const authorizationEntry = apiCategory.apiKey ? null : OAuthSideNavEntry(apiCategoryKey);
-  const quickstartEntry = apiCategory.content.quickstart ? (
-    <SideNavEntry
-      exact={true}
-      to={`/explore/${apiCategoryKey}/docs/quickstart`}
-      name="Quickstart"
-    />
-  ) : null;
-
-  return (
-    <SideNavEntry
-      key={apiCategoryKey}
-      to={`/explore/${apiCategoryKey}`}
-      id={`side-nav-category-link-${apiCategoryKey}`}
-      className="side-nav-category-link"
-      name={apiCategory.name}
-    >
-      {quickstartEntry}
-      {authorizationEntry}
-      {subNavLinks}
-    </SideNavEntry>
-  );
-}
-
 function ExploreSideNav() {
-  const navLinks = apiCategoryOrder.map((key: string) => SideNavCategoryEntry(key, apiDefs[key]));
+  const apiCategoryOrder = getApiCategoryOrder();
+  const apiDefinitions = getApiDefinitions();
 
   return (
     <SideNav ariaLabel="API Docs Side Nav">
       <SideNavEntry key="all" exact={true} to="/explore" name="Overview" />
-      {navLinks}
+      {apiCategoryOrder.map((categoryKey: string) => {
+        const apiCategory: IApiCategory = apiDefinitions[categoryKey];
+        return (
+          <SideNavEntry
+            key={categoryKey}
+            to={`/explore/${categoryKey}`}
+            id={`side-nav-category-link-${categoryKey}`}
+            className="side-nav-category-link"
+            name={apiCategory.name}
+          >
+            {apiCategory.content.quickstart &&
+              <SideNavEntry
+                exact={true}
+                to={`/explore/${categoryKey}/docs/quickstart`}
+                name="Quickstart"
+              />
+            }
+            {!apiCategory.apiKey && OAuthSideNavEntry(categoryKey)}
+            {apiCategory.apis.map((api: IApiDescription) => SideNavApiEntry(categoryKey, api))}
+          </SideNavEntry>
+        );
+      })}
     </SideNav>
   );
 }

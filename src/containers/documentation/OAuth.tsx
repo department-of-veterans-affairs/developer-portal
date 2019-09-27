@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import * as Stickyfill from 'stickyfilljs';
 
-import { apiDefs } from '../../apiDefs';
+import { lookupApiCategory } from '../../apiDefs/query';
 import PageHeader from '../../components/PageHeader';
 import Oauth from '../../content/apiDocs/oauthTechnical.mdx';
 
@@ -11,7 +11,6 @@ import './OAuth.scss';
 export interface IOAuthProps {
   apiCategoryKey: string;
 }
-
 
 export class OAuth extends React.Component<IOAuthProps, {}> {
   private navRef = React.createRef<HTMLDivElement>();
@@ -24,7 +23,7 @@ export class OAuth extends React.Component<IOAuthProps, {}> {
 
   public render() {
     const { apiCategoryKey } = this.props;
-    const category = apiDefs[apiCategoryKey] || {};
+    const category = lookupApiCategory(apiCategoryKey)!;
 
     return (
       <div id="oauth">

@@ -4,8 +4,10 @@ import { RouteComponentProps, Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
-import { apiCategoryOrder, apiDefs } from './apiDefs';
-import { apiEnvFlags } from './apiDefs/env';
+import { getDeprecatedFlags } from './apiDefs/deprecated';
+import { getEnvFlags } from './apiDefs/env';
+import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
+import { IApiDescription } from './apiDefs/schema';
 import PageContent from './components/PageContent';
 import ApplyForm from './containers/ApplyForm';
 import ApplySuccess from './containers/ApplySuccess';
@@ -73,9 +75,13 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
  */
 
 export function sitemapConfig() {
+  const apiDefs = getApiDefinitions();
+  const deprecatedFlags = getDeprecatedFlags();
+  const envFlags = getEnvFlags();
+  
   function getApiRouteParams(route: string, apiCategory: string): string[] {
-    const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api) => {
-      if (apiEnvFlags.hasOwnProperty(api.urlFragment) && apiEnvFlags[api.urlFragment]) {
+    const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api: IApiDescription) => {
+      if (envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment]) {
         result.push(api.urlFragment);
       }
       return result;
@@ -88,6 +94,7 @@ export function sitemapConfig() {
     return routeParams;
   }
 
+  const apiCategoryOrder = getApiCategoryOrder();
   return {
     paramsConfig: {
       '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => {

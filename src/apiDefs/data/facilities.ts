@@ -10,6 +10,7 @@ const facilitiesApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/va_facilities/docs/v0/api`,
       },
     ],
+    enabledByDefault: true,
     name: 'VA Facilities API',
     urlFragment: 'facilities',
     vaInternalOnly: false,
