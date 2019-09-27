@@ -1,5 +1,5 @@
 import 'jest';
-import { getApiEnvFlags, isHostedApiEnabled } from './env';
+import { getEnvFlags, isHostedApiEnabled } from './env';
 
 describe('env module', () => {
   const DEFAULT_ENV = process.env;
@@ -31,7 +31,7 @@ describe('env module', () => {
 
   describe('getApiEnvFlags', () => {
     it('sets each flag to the result of isHostedApiEnabled', () => {
-      const envFlags = getApiEnvFlags();
+      const envFlags = getEnvFlags();
       expect(envFlags.loan_guaranty).toBe(false);
       expect(envFlags.fhir).toBe(true);
     });

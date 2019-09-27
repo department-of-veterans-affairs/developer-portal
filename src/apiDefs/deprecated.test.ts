@@ -3,12 +3,8 @@ import * as moment from 'moment';
 import { IApiDescription } from './schema';
 
 jest.mock('./query');
-const query = require('./query'); // tslint:disable-line:no-var-requires
-const {
-  getAllApis,
-  lookupApiByFragment,
-} = query;
-getAllApis.mockReturnValue([]);
+// tslint:disable-next-line:no-var-requires
+const lookupApiByFragment = require('./query').lookupApiByFragment; 
 
 import { isApiDeprecated } from './deprecated';
 

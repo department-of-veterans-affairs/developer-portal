@@ -23,4 +23,4 @@ const apiEnvFlags = {
   veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
 };
 
-export const getApiEnvFlags = () => apiEnvFlags;
+export const getEnvFlags = () => apiEnvFlags;

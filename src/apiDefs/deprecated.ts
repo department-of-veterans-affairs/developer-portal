@@ -25,11 +25,9 @@ export const isApiDeprecated = (api: IApiDescription | string) : boolean => {
   return api.deprecated;
 };
 
-const deprecatedFlags = getAllApis().reduce((flags: {}, api: IApiDescription) => {
-  return {
-    ... flags,
-    [api.urlFragment]: isApiDeprecated(api),
-  };
-}, {});
-
-export const getDeprecatedFlags = () => deprecatedFlags;
+export const getDeprecatedFlags = () => {
+  return getAllApis().reduce((flags: {}, api: IApiDescription) => {
+    flags[api.urlFragment] = isApiDeprecated(api);
+    return flags;
+  }, {});
+};

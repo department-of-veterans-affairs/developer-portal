@@ -4,7 +4,7 @@ import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
-import getApiFlags from './apiDefs/flags';
+import { getAllApis } from './apiDefs/query';
 import Footer from './components/Footer';
 import NavBar from './components/NavBar';
 import { topLevelRoutes } from './Routes';
@@ -18,17 +18,14 @@ history.listen(location => {
 });
 
 import 'highlight.js/styles/github.css';
-
-const flags = {
-  ... getApiFlags(),
-  signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
-};
-
+import { getDeprecatedFlags } from './apiDefs/deprecated';
+import { getEnvFlags } from './apiDefs/env';
+import { IApiDescription } from './apiDefs/schema';
 
 class App extends React.Component {
   public render() {
     return (
-      <FlagsProvider flags={flags}>
+      <FlagsProvider flags={this.getFlags()}>
         <ConnectedRouter history={history}>
           <div className="app-container">
             <div className="app">
@@ -42,6 +39,21 @@ class App extends React.Component {
         </ConnectedRouter>
       </FlagsProvider>
     );
+  }
+
+  private getFlags() {
+    const deprecatedFlags = getDeprecatedFlags();
+    const envFlags = getEnvFlags();
+    const apiFlags = getAllApis().reduce((result: {}, api: IApiDescription): {[key: string]: boolean} => {
+      const isApiAvailable = envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment];
+      result[api.urlFragment] = isApiAvailable;
+      return result;
+    }, {});
+    
+    return {
+      ... apiFlags,
+      signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
+    }
   }
 }
 
