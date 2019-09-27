@@ -4,7 +4,8 @@ import { RouteComponentProps, Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
-import getApiFlags from './apiDefs/flags';
+import { getDeprecatedFlags } from './apiDefs/deprecated';
+import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
 import PageContent from './components/PageContent';
@@ -74,11 +75,13 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
  */
 
 export function sitemapConfig() {
+  const apiDefs = getApiDefinitions();
+  const deprecatedFlags = getDeprecatedFlags();
+  const envFlags = getEnvFlags();
+  
   function getApiRouteParams(route: string, apiCategory: string): string[] {
-    const apiDefs = getApiDefinitions();
-    const apiFlags = getApiFlags();
     const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api: IApiDescription) => {
-      if (apiFlags.hasOwnProperty(api.urlFragment) && apiFlags[api.urlFragment]) {
+      if (envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment]) {
         result.push(api.urlFragment);
       }
       return result;

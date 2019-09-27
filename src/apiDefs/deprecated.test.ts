@@ -3,12 +3,8 @@ import * as moment from 'moment';
 import { IApiDescription } from './schema';
 
 jest.mock('./query');
-const query = require('./query'); // tslint:disable-line:no-var-requires
-const {
-  getAllApis,
-  lookupApiByFragment,
-} = query;
-getAllApis.mockReturnValue([]);
+// tslint:disable-next-line:no-var-requires
+const lookupApiByFragment = require('./query').lookupApiByFragment; 
 
 import { isApiDeprecated } from './deprecated';
 
@@ -17,6 +13,7 @@ describe('deprecated API module', () => {
     const apiValues: IApiDescription = {
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
+      enabledByDefault: true,
       name: 'My API',
       urlFragment: 'my_api',
       vaInternalOnly: false,
