@@ -37,6 +37,17 @@ export {
 };
 
 export const apiDefs: IApiCategories = {
+  // appeals: {
+  //   apiKey: true,
+  //   apis: appealsApis,
+  //   buttonText: 'Get Your Key',
+  //   content: appealsContent,
+  //   name: 'Appeals API',
+  //   properName: 'Appeals API',
+  //   releaseNotes: AppealsReleaseNotes,
+  //   shortDescription:
+  //     'Enables managing benefit decision appeals on behalf of a Veteran.',
+  // }, //TODO uncomment
   benefits: {
     apiKey: true,
     apis: benefitsApis,
@@ -80,7 +91,6 @@ export const apiDefs: IApiCategories = {
     releaseNotes: VerificationReleaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
   },
-  // TODO add in blurb for appeals
 };
 
 export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
