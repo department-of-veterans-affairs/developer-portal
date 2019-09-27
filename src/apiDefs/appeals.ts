@@ -13,7 +13,8 @@ const appealsApis : IApiDescription[] = [
       },
     ],
     name: 'Decision Reviews API',
-    urlFragment: 'decision_review',
+    // urlFragment: 'benefits',
+    urlFragment: 'decision_reviews', // TODO why does this value produce no content?
     vaInternalOnly: true,
   },
 ];

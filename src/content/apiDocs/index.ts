@@ -1,6 +1,7 @@
 import { IApiCategoryContent } from '../../apiDefs';
 import AppealsIntro from './appeals/appealsIntro.mdx';
 import AppealsOverview from './appeals/appealsOverview.mdx';
+import AppealsQuickstart from './appeals/appealsQuickstart.mdx';
 import BenefitsIntro from './benefits/benefitsIntro.mdx';
 import BenefitsOverview from './benefits/benefitsOverview.mdx';
 import FacilitiesIntro from './facilities/facilitiesIntro.mdx';
@@ -20,6 +21,7 @@ import VerificationOverview from './verification/verificationOverview.mdx';
 const appealsContent: IApiCategoryContent = {
   intro: AppealsIntro,
   overview: AppealsOverview,
+  quickstart: AppealsQuickstart,
 };
 
 const benefitsContent: IApiCategoryContent = {
