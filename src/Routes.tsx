@@ -75,10 +75,11 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
  */
 
 export function sitemapConfig() {
+  const apiDefs = getApiDefinitions();
+  const deprecatedFlags = getDeprecatedFlags();
+  const envFlags = getEnvFlags();
+  
   function getApiRouteParams(route: string, apiCategory: string): string[] {
-    const apiDefs = getApiDefinitions();
-    const deprecatedFlags = getDeprecatedFlags();
-    const envFlags = getEnvFlags();
     const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api: IApiDescription) => {
       if (envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment]) {
         result.push(api.urlFragment);
