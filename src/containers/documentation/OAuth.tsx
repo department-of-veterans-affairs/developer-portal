@@ -12,7 +12,6 @@ export interface IOAuthProps {
   apiCategoryKey: string;
 }
 
-
 export class OAuth extends React.Component<IOAuthProps, {}> {
   private navRef = React.createRef<HTMLDivElement>();
 
@@ -24,7 +23,7 @@ export class OAuth extends React.Component<IOAuthProps, {}> {
 
   public render() {
     const { apiCategoryKey } = this.props;
-    const category = getApiDefinitions[apiCategoryKey] || {};
+    const category = getApiDefinitions()[apiCategoryKey] || {};
 
     return (
       <div id="oauth">
