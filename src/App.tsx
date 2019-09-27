@@ -4,7 +4,10 @@ import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
+import { getDeprecatedFlags } from './apiDefs/deprecated';
+import { getEnvFlags } from './apiDefs/env';
 import { getAllApis } from './apiDefs/query';
+import { IApiDescription } from './apiDefs/schema';
 import Footer from './components/Footer';
 import NavBar from './components/NavBar';
 import { topLevelRoutes } from './Routes';
@@ -18,9 +21,6 @@ history.listen(location => {
 });
 
 import 'highlight.js/styles/github.css';
-import { getDeprecatedFlags } from './apiDefs/deprecated';
-import { getEnvFlags } from './apiDefs/env';
-import { IApiDescription } from './apiDefs/schema';
 
 class App extends React.Component {
   public render() {

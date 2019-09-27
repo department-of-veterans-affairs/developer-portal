@@ -23,7 +23,7 @@ describe('deprecated API module', () => {
       it('returns false if api.deprecated is undefined', () => {
         expect(isApiDeprecated(apiValues)).toBe(false);
       });
-      
+
       it('returns false if api.deprecated is false', () => {
         const api : IApiDescription = {
           ... apiValues,
@@ -31,7 +31,7 @@ describe('deprecated API module', () => {
         };
         expect(isApiDeprecated(api)).toBe(false);
       });
-      
+
       it('returns true if api.deprecated is true', () => {
         const api : IApiDescription = {
           ... apiValues,
@@ -39,7 +39,7 @@ describe('deprecated API module', () => {
         };
         expect(isApiDeprecated(api)).toBe(true);
       });
-      
+
       it('returns false if api.deprecated is a Moment in the future', () => {
         const api : IApiDescription = {
           ... apiValues,
@@ -47,7 +47,7 @@ describe('deprecated API module', () => {
         };
         expect(isApiDeprecated(api)).toBe(false);
       });
-      
+
       it('returns true if api.deprecated is a Moment in the past', () => {
         const api : IApiDescription = {
           ... apiValues,
@@ -56,7 +56,7 @@ describe('deprecated API module', () => {
         expect(isApiDeprecated(api)).toBe(true);
       });
     });
-    
+
     describe('with string argument', () => {
       afterEach(() => {
         lookupApiByFragment.mockReset();
@@ -66,12 +66,12 @@ describe('deprecated API module', () => {
         lookupApiByFragment.mockReturnValueOnce(null);
         expect(isApiDeprecated('my_api')).toBe(false);
       });
-      
+
       it('returns false if api.deprecated is undefined', () => {
         lookupApiByFragment.mockReturnValueOnce(apiValues);
         expect(isApiDeprecated('my_api')).toBe(false);
       });
-      
+
       it('returns false if api.deprecated is false', () => {
         const api: IApiDescription = {
           ... apiValues,
@@ -80,7 +80,7 @@ describe('deprecated API module', () => {
         lookupApiByFragment.mockReturnValueOnce(api);
         expect(isApiDeprecated('my_api')).toBe(false);
       });
-      
+
       it('returns true if api.deprecated is true', () => {
         const api: IApiDescription = {
           ... apiValues,
@@ -89,7 +89,7 @@ describe('deprecated API module', () => {
         lookupApiByFragment.mockReturnValueOnce(api);
         expect(isApiDeprecated('my_api')).toBe(true);
       });
-      
+
       it('returns false if api.deprecated is a moment in the future', () => {
         const api: IApiDescription = {
           ... apiValues,
@@ -98,7 +98,7 @@ describe('deprecated API module', () => {
         lookupApiByFragment.mockReturnValueOnce(api);
         expect(isApiDeprecated('my_api')).toBe(false);
       });
-      
+
       it('returns true api.deprecated is a Moment in the past', () => {
         const api: IApiDescription = {
           ... apiValues,
