@@ -24,8 +24,10 @@ import { IApiDescription } from './apiDefs/schema';
 
 class App extends React.Component {
   public render() {
+    const appFlags = this.getFlags();
+
     return (
-      <FlagsProvider flags={this.getFlags()}>
+      <FlagsProvider flags={appFlags}>
         <ConnectedRouter history={history}>
           <div className="app-container">
             <div className="app">
@@ -51,9 +53,11 @@ class App extends React.Component {
     }, {});
     
     return {
-      ... apiFlags,
+      deprecated: deprecatedFlags,
+      enabled: envFlags,
+      hosted_apis: apiFlags,
       signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
-    }
+    };
   }
 }
 

@@ -32,8 +32,8 @@ describe('env module', () => {
   describe('getApiEnvFlags', () => {
     it('sets each flag to the result of isHostedApiEnabled', () => {
       const envFlags = getEnvFlags();
-      expect(envFlags.loan_guaranty).toBe(false);
-      expect(envFlags.fhir).toBe(true);
+      expect(envFlags['loan_guaranty']).toBe(false); // tslint:disable-line:no-string-literal
+      expect(envFlags['fhir']).toBe(true); // tslint:disable-line:no-string-literal
     });
   });
 });

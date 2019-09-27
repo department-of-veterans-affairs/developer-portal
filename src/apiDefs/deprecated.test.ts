@@ -13,6 +13,7 @@ describe('deprecated API module', () => {
     const apiValues: IApiDescription = {
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
+      enabledByDefault: true,
       name: 'My API',
       urlFragment: 'my_api',
       vaInternalOnly: false,
