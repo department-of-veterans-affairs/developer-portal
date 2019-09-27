@@ -35,6 +35,12 @@ class Home extends React.Component {
             </div>
             <div className="usa-width-one-whole">
               <div className="va-api-container">
+                <Link className="va-api-card" to="/explore/appeals">
+                  <h3 className="va-api-name">VA Appeals API</h3>
+                  <p className="va-api-description">
+                    Build tools to help Veterans electronically manage, submit, and track appeals.
+                        </p>
+                </Link>
                 <Link className="va-api-card" to="/explore/benefits">
                   <h3 className="va-api-name">VA Benefits API</h3>
                   <p className="va-api-description">
