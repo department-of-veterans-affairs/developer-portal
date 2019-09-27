@@ -1,4 +1,9 @@
 import 'jest';
+
+jest.mock('./query');
+// tslint:disable-next-line:no-var-requires
+const getAllApis = require('./query').getAllApis;
+
 import { getEnvFlags, isHostedApiEnabled } from './env';
 
 describe('env module', () => {
@@ -30,10 +35,34 @@ describe('env module', () => {
   });
 
   describe('getApiEnvFlags', () => {
+    const enableApiId = 'real_api';
+    const disabledApiId = 'fake_api';
+    const sharedApiValues = {
+      description: "it's a fabulous API, you really must try it sometime",
+      docSources: [],
+      name: 'My API',
+      vaInternalOnly: false,
+    };
+
+    beforeEach(() => {
+      getAllApis.mockReturnValue([
+        {
+          ... sharedApiValues,
+          enabledByDefault: true,
+          urlFragment: enableApiId,
+        },
+        {
+          ... sharedApiValues,
+          enabledByDefault: false,
+          urlFragment: disabledApiId,
+        },
+      ]);
+    });
+
     it('sets each flag to the result of isHostedApiEnabled', () => {
       const envFlags = getEnvFlags();
-      expect(envFlags['loan_guaranty']).toBe(false); // tslint:disable-line:no-string-literal
-      expect(envFlags['fhir']).toBe(true); // tslint:disable-line:no-string-literal
+      expect(envFlags[enableApiId]).toBe(true);
+      expect(envFlags[disabledApiId]).toBe(false); 
     });
   });
 });
