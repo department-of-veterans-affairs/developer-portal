@@ -1,4 +1,6 @@
 import * as React from 'react';
+
+import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
 import { isApiDeprecated } from '../../apiDefs/deprecated';
@@ -28,18 +30,20 @@ export default class ApiPage extends React.Component<RouteComponentProps<IApiNam
     }
 
     const isDeprecated = isApiDeprecated(api);
-    const category = lookupApiCategory(this.props.match.params.apiCategoryKey)!;
+    const category = lookupApiCategory(params.apiCategoryKey)!;
     return (
-      <div role="region" aria-labelledby="api-documentation">
-        <PageHeader id="api-documentation" halo={category.name} header={api.name} />
-        <DeprecationMessage api={api} />
-        {!isDeprecated && 
-          <ApiDocumentation 
+      <Flag name={`enabled.${api.urlFragment}`}>
+        <div role="region" aria-labelledby="api-documentation">
+          <PageHeader id="api-documentation" halo={category.name} header={api.name} />
+          <DeprecationMessage api={api} />
+          {!isDeprecated && 
+            <ApiDocumentation 
             apiDefinition={api} 
             categoryKey={params.apiCategoryKey} 
             location={this.props.location} />
-        }
-      </div>
+          }
+        </div>
+      </Flag>
     );
   }
 

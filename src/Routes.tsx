@@ -4,7 +4,7 @@ import { RouteComponentProps, Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
-import { apiEnvFlags } from './apiDefs/env';
+import getApiFlags from './apiDefs/flags';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
 import PageContent from './components/PageContent';
@@ -76,8 +76,9 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
 export function sitemapConfig() {
   function getApiRouteParams(route: string, apiCategory: string): string[] {
     const apiDefs = getApiDefinitions();
+    const apiFlags = getApiFlags();
     const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api: IApiDescription) => {
-      if (apiEnvFlags.hasOwnProperty(api.urlFragment) && apiEnvFlags[api.urlFragment]) {
+      if (apiFlags.hasOwnProperty(api.urlFragment) && apiFlags[api.urlFragment]) {
         result.push(api.urlFragment);
       }
       return result;

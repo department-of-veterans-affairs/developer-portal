@@ -1,11 +1,5 @@
-import { isApiDeprecated } from './deprecated';
-
-export function isHostedApiEnabled(shortName: string, defaultValue: boolean): boolean {
-  const envValue = process.env[`REACT_APP_${shortName.toUpperCase()}_API_ENABLED`];
-  if (isApiDeprecated(shortName)) {
-    return false;
-  }
-  
+export function isHostedApiEnabled(apiIdentifier: string, defaultValue: boolean): boolean {
+  const envValue = process.env[`REACT_APP_${apiIdentifier.toUpperCase()}_API_ENABLED`];
   if (envValue == null) {
     return defaultValue;
   } else {
@@ -13,7 +7,7 @@ export function isHostedApiEnabled(shortName: string, defaultValue: boolean): bo
   }
 }
 
-export const apiEnvFlags = {
+const apiEnvFlags = {
   address_validation: isHostedApiEnabled('address_validation', true),
   appeals: isHostedApiEnabled('appeals', true),
   argonaut: isHostedApiEnabled('argonaut', true),
@@ -28,3 +22,5 @@ export const apiEnvFlags = {
   urgent_care: isHostedApiEnabled('fhir', true),
   veteran_confirmation: isHostedApiEnabled('veteran_confirmation', true),
 };
+
+export const getApiEnvFlags = () => apiEnvFlags;

@@ -4,7 +4,7 @@ import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
-import { apiEnvFlags } from './apiDefs/env';
+import getApiFlags from './apiDefs/flags';
 import Footer from './components/Footer';
 import NavBar from './components/NavBar';
 import { topLevelRoutes } from './Routes';
@@ -20,9 +20,10 @@ history.listen(location => {
 import 'highlight.js/styles/github.css';
 
 const flags = {
-  hosted_apis: apiEnvFlags,
+  ... getApiFlags(),
   signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
 };
+
 
 class App extends React.Component {
   public render() {

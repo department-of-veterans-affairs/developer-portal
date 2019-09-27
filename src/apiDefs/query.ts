@@ -22,44 +22,40 @@ import {
 const getApiDefinitions = () => apiDefs;
 const getApiCategoryOrder = () => apiCategoryOrder;
 
-function lookupApiByFragment(urlFragment: string): IApiDescription | null {
-  for (const cat of Object.values(apiDefs)) {
-    for (const api of cat.apis) {
-      if (api.urlFragment === urlFragment) {
-        return api;
-      }
-    }
-  }
-  
-  return null;
+const getAllApis = () : IApiDescription[] => {
+  return Object.values(apiDefs).flatMap((category: IApiCategory) => category.apis);
+};
+
+function lookupApiByFragment(apiKey: string): IApiDescription | null {
+  const hasMatchingIdentifier = (apiDesc: IApiDescription) : boolean => apiDesc.urlFragment === apiKey;
+  const apiResult = getAllApis().find(hasMatchingIdentifier);
+  return apiResult || null;
 }
   
 function lookupApiCategory(categoryKey: string): IApiCategory | null {
-  return apiDefs[categoryKey];
+  return apiDefs[categoryKey] || null;
 }
 
-function categoriesFor(apiList: string[]): IApiCategory[] {
-  const categories = new Set();
-  for (const cat of Object.values(apiDefs)) {
-    for (const api of cat.apis) {
-      if (apiList.includes(api.urlFragment)) {
-        categories.add(cat);
-      }
+const apiToCategoryMapping: {[key: string]: IApiCategory} = Object.keys(apiDefs)
+  .reduce((mapping: {}, categoryKey: string) => {
+    for (const api of apiDefs[categoryKey].apis) {
+      mapping[api.urlFragment] = apiDefs[categoryKey];
     }
+    return mapping;
+  }, {});
+
+function categoriesFor(apiList: string[]): IApiCategory[] {
+  const categories: Set<IApiCategory> = new Set<IApiCategory>();
+  for (const apiKey of apiList) {
+    categories.add(apiToCategoryMapping[apiKey]);
   }
   return Array.from(categories);
 }
 
 function apisFor(apiList: string[]): IApiDescription[] {
-  const apis = new Set();
-  for (const cat of Object.values(apiDefs)) {
-    for (const api of cat.apis) {
-      if (apiList.includes(api.urlFragment)) {
-        apis.add(api);
-      }
-    }
-  }
-  return Array.from(apis);
+  const allApis = getAllApis();
+  const searchedApiSet = new Set<string>(apiList);
+  return allApis.filter((api: IApiDescription) => searchedApiSet.has(api.urlFragment));
 }
 
 function includesOauthAPI(apiList: string[]): boolean {
@@ -68,27 +64,11 @@ function includesOauthAPI(apiList: string[]): boolean {
   return includesOauthCategory || includesOauthOverride;
 }
 
-// If an API with the given URL fragment exists, the given `fn` callback
-// function will be called with the full IApiDescription. The return value is
-// either the return value of the callback function or `null` if no such API
-// exists.
-function withApiDescription(
-  urlFragment: string,
-  fn: (apiDesc: IApiDescription) => any,
-): any {
-  const api = lookupApiByFragment(urlFragment);
-  if (api == null) {
-    return null;
-  }
-  
-  return fn(api);
-}
-
 export {
+  getAllApis,
   getApiCategoryOrder,
   getApiDefinitions,
   lookupApiByFragment,
   lookupApiCategory,
   includesOauthAPI,
-  withApiDescription,
 };

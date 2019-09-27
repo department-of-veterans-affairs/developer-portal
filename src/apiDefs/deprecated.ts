@@ -1,17 +1,13 @@
 import * as moment from 'moment';
-import apiDefinitions from './data/categories';
-import { IApiCategory, IApiDescription } from "./schema";
-
-const getAllApis = () : IApiDescription[] => {
-  return Object.values(apiDefinitions).flatMap((category: IApiCategory) => category.apis);
-};
+import { getAllApis, lookupApiByFragment } from './query';
+import { IApiDescription } from "./schema";
 
 export const isApiDeprecated = (api: IApiDescription | string) : boolean => {
   // the string branch of this function exists mainly to serve the apiEnvFlags computation
   // in env.ts. we may want to remove it in the future.
   if (typeof api === 'string') {
-    const apiResult = getAllApis().find((apiDesc: IApiDescription) : boolean => apiDesc.urlFragment === api);
-    if (apiResult === undefined) {
+    const apiResult = lookupApiByFragment(api);
+    if (apiResult === null) {
       return false;
     }
 
@@ -29,6 +25,11 @@ export const isApiDeprecated = (api: IApiDescription | string) : boolean => {
   return api.deprecated;
 };
 
-export const getDeprecatedApis = () : IApiDescription[] => {
-  return getAllApis().filter(isApiDeprecated);
-};
+const deprecatedFlags = getAllApis().reduce((flags: {}, api: IApiDescription) => {
+  return {
+    ... flags,
+    [api.urlFragment]: isApiDeprecated(api),
+  };
+}, {});
+
+export const getDeprecatedFlags = () => deprecatedFlags;
