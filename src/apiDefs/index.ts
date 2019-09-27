@@ -22,6 +22,7 @@ import {
   IApiDocSource,
 } from './schema';
 
+// import appealsApis from './appeals'; //TODO uncomment
 import benefitsApis from './benefits';
 import facilitiesApis from './facilities';
 import healthApis from './health';
