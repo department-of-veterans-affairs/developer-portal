@@ -9,7 +9,7 @@
 
 `### <bold> Plain english description of benefit of the change </bold>`
 
-`### • brief details on changes made with link to Github Issue  [#1111](https://github.com)'
+`### • brief details on changes made with link to Github Issue  [#1111](https://github.com)`
 
 ## TEXT SAMPLE
 `#` Benefits Intake
