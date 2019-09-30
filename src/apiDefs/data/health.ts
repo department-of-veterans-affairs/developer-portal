@@ -22,7 +22,7 @@ import { IApiDescription } from "../schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
-const argonautDeprecationDate = moment('01 Sep 2019 00:00 EDT');
+const argonautDeprecationDate = moment('01 Oct 2019 00:00 EDT');
 const isArgonautDeprecated = moment().isAfter(argonautDeprecationDate);
 
 const healthApis : IApiDescription[] = [
