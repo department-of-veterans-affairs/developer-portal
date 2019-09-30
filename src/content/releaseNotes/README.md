@@ -7,7 +7,7 @@
 
 `## API versionname(s) | Month 00, Year`
 
-`### Plain english description of benefit of the change`
+`### Bolded <p> level plain english description of benefit of the change`
 
 `### • brief details on changes made with link to Github Issue  [#1111](https://github.com)`
 
