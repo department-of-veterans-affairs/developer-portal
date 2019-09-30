@@ -2,7 +2,7 @@
 
 #### Release notes should match the following format:
 
-## FORMAT SAMPLE
+## MD FORMAT SAMPLE
 `# Name of API`
 
 `## API versionname(s) | Month 00, Year`
@@ -11,7 +11,7 @@
 
 `### • brief details on changes made with link to Github Issue  [#1111](https://github.com)`
 
-## TEXT SAMPLE
+## HTML TEXT SAMPLE
 `# <h1>` Benefits Intake
 
 `## <h2>` v0 & v1 | August 19, 2019
