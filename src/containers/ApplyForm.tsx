@@ -62,11 +62,11 @@ const mapStateToProps = (state : IRootState) => {
 
 // Mapping from the options on the form to url fragments for APIs
 const formFieldsToFragments = {
-  appeals: 'appeals',
   benefits: 'benefits',
   claims: 'claims',
   communityCare: 'community_care',
-  health: 'argonaut',
+  facilities: 'facilities',
+  health: 'fhir',
   verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
 };
 
