@@ -54,7 +54,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
         <div className="header-content">
           <div className="usa-logo" id="extended-logo">
             <Link to="/" title="Digital VA home page" className="vads-u-text-decoration--none">
-              <strong>VA</strong> | Developer Portal
+              <span className="vads-u-font-weight--bold">VA</span> | Developer Portal
             </Link>
           </div>
           <div className="header-right-container">
