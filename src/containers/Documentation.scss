@@ -2,7 +2,7 @@
   This file is shared between documentation/Documentation.tsx and releaseNotes/ReleaseNotes.tsx.
   This is an indication that it should probably be refactored and that possibly its consuming 
   components might be as well.
-*/ 
+*/
 @import '../styles/variables';
 
 .explore {
@@ -183,6 +183,13 @@
       td {
         border: none;
       }
+    }
+
+    blockquote {
+      line-height: 1.5;
+      color: #323a45;
+      background: #e1f3f8;
+      padding: 1em;
     }
   }
 
