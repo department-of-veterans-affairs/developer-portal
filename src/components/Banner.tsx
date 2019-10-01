@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { VeteransCrisisLine } from './VeteransCrisisLine';
+import VeteransCrisisLine from './VeteransCrisisLine';
 
 import './Banner.scss';
 
@@ -14,7 +14,7 @@ interface IBannerState {
     accordionVisible: boolean;
 }
 
-export class Banner extends React.Component<{}, IBannerState> {
+export default class Banner extends React.Component<{}, IBannerState> {
 
   constructor(props: {}) {
       super(props);

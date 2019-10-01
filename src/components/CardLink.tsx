@@ -15,7 +15,7 @@ export interface IApiCardProps {
  * in the form of a card. It can optionally render an arbitrary JSX.Element
  * subhead before its children, which should be a description of the link.
  */
-export class CardLink extends React.Component<IApiCardProps, {}> {
+export default class CardLink extends React.Component<IApiCardProps, {}> {
   public render() {
     return (
       <NavHashLink to={this.props.url} className="va-api-card">
@@ -26,5 +26,3 @@ export class CardLink extends React.Component<IApiCardProps, {}> {
     );
   }
 }
-
-export default CardLink;

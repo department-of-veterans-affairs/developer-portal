@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
-import { apiCategoryOrder, apiDefs } from '../../apiDefs';
+import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 
 export default class DocumentationOverview extends React.Component<RouteComponentProps, {}> {
   public render() {
+    const apiDefinitions = getApiDefinitions();
+    const apiCategoryOrder = getApiCategoryOrder();
+
     return (
       <div className="doc-overview">
         <PageHeader
@@ -15,7 +18,7 @@ export default class DocumentationOverview extends React.Component<RouteComponen
         />
         <div className="va-api-container">
           {apiCategoryOrder.map((apiCategoryKey: string) => {
-            const { name, shortDescription } = apiDefs[apiCategoryKey];
+            const { name, shortDescription } = apiDefinitions[apiCategoryKey];
             return (
               <CardLink name={name} key={apiCategoryKey} url={`/explore/${apiCategoryKey}`}>
                 {shortDescription}

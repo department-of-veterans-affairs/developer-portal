@@ -27,6 +27,7 @@ export interface IApiDescription {
   readonly docSources: IApiDocSource[];
   readonly urlFragment: string;
   readonly description: string;
+  readonly enabledByDefault: boolean;
   readonly vaInternalOnly: boolean;
   readonly oAuth?: boolean;
   readonly deprecated?: boolean | moment.Moment;

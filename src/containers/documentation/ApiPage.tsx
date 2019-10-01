@@ -1,133 +1,48 @@
 import * as React from 'react';
 
 import { Flag } from 'flag';
-import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
-import { IApiDescription, IApiDocSource, lookupApiByFragment, lookupApiCategory } from '../../apiDefs';
+import { isApiDeprecated } from '../../apiDefs/deprecated';
+import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
+import { IApiDescription } from '../../apiDefs/schema';
 import PageHeader from '../../components/PageHeader';
 import ExplorePage from '../../content/explorePage.mdx';
-import { history } from '../../store';
-import { IApiNameParam, IExternalSwagger, IRootState } from '../../types';
-import SwaggerDocs from './SwaggerDocs';
+import { IApiNameParam } from '../../types';
+import ApiDocumentation from './ApiDocumentation';
 
-import '../../../node_modules/react-tabs/style/react-tabs.scss';
-
-export interface IApiPageProps extends RouteComponentProps<IApiNameParam> {
-  argonaut: IExternalSwagger;
-  fetchArgonaut: () => void;
-}
-
-interface IApiPageState {
-  tabIndex: number;
-}
-
-const mapStateToProps = ({ routing }: IRootState) => {
-  return {
-    ...routing,
-  };
+const DeprecationMessage = ({ api } : { api: IApiDescription }) => {
+  return api.deprecationContent ?(
+    <div className="usa-alert usa-alert-info">
+      <div className="usa-alert-body">
+        {api.deprecationContent({})}
+      </div>
+    </div>
+    ) : null;
 };
 
-class ApiPage extends React.Component<IApiPageProps, IApiPageState> {
-  public constructor(props : IApiPageProps) {
-    super(props);
-    this.state = { tabIndex: 0 };
-  }
-
-  public componentDidMount() {
-    this.setTabIndexFromFragment();
-  }
-
-  public componentDidUpdate(prevProps: IApiPageProps, prevState: IApiPageState) {
-    const { location } = this.props;
-    if (location.pathname !== prevProps.location.pathname || location.hash !== prevProps.location.hash) {
-      this.setTabIndexFromFragment();
-    }
-  }
-
+export default class ApiPage extends React.Component<RouteComponentProps<IApiNameParam>> {
   public render() {
-    let docsDom: JSX.Element | null = null;
-    let deprecated: JSX.Element | null = null;
-    let header: JSX.Element | null = null;
-
+    const { params } = this.props.match;
     const api = this.getApi();
-    const category = lookupApiCategory(this.props.match.params.apiCategoryKey);
-    if (api != null) {
-      docsDom = this.renderApiDocs(api);
-      deprecated = this.renderDeprecationWarning(api);
+    if (api === null) {
+      return <ExplorePage />;
     }
 
-    if (docsDom == null) {
-      docsDom = <ExplorePage />;
-    }
-
-    if (category) {
-      header = <PageHeader id="api-documentation" halo={category.name} header={api!.name} />;
-    }
-
+    const isDeprecated = isApiDeprecated(api);
+    const category = lookupApiCategory(params.apiCategoryKey)!;
     return (
-      <div role="region" aria-labelledby="api-documentation">
-        {header}
-        {deprecated}
-        {docsDom}
-      </div>
-    );
-  }
-
-  private renderDeprecationWarning(apiDefinition: IApiDescription) {
-    const { deprecationContent } = apiDefinition;
-
-    if (!deprecationContent) {
-      return null;
-    }
-
-    return (
-      <div className="usa-alert usa-alert-info">
-        <div className="usa-alert-body">
-          {deprecationContent({})}
+      <Flag name={`enabled.${api.urlFragment}`}>
+        <div role="region" aria-labelledby="api-documentation">
+          <PageHeader id="api-documentation" halo={category.name} header={api.name} />
+          <DeprecationMessage api={api} />
+          {!isDeprecated && 
+            <ApiDocumentation 
+            apiDefinition={api} 
+            categoryKey={params.apiCategoryKey} 
+            location={this.props.location} />
+          }
         </div>
-      </div>
-    );
-  }
-
-  private renderApiDocs(apiDefinition: IApiDescription) {
-    let docs: JSX.Element | null = null;
-    // because this is downstream from a getApi() call, we can assert that apiName is defined
-    const apiName : string = this.props.match.params.apiName!;
-    const category = lookupApiCategory(this.props.match.params.apiCategoryKey);
-    const tabChangeHandler = this.onTabSelect.bind(this);
-    if (apiDefinition.docSources.length === 1) {
-      docs = <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiName} />;
-    } else {
-      docs = (
-        <React.Fragment>
-          {category!.tabBlurb}
-          <Tabs selectedIndex={this.state.tabIndex} onSelect={tabChangeHandler}>
-            <TabList>
-              {apiDefinition.docSources.map(apiDocSource => {
-                return (
-                  <Tab key={apiDocSource.label}>
-                    {apiDocSource.label}
-                  </Tab>
-                );
-              })}
-            </TabList>
-            {apiDefinition.docSources.map(apiDocSource => {
-              return (
-                <TabPanel key={apiDocSource.label}>
-                  <SwaggerDocs docSource={apiDocSource} apiName={apiName} />
-                </TabPanel>
-              );
-            })}
-          </Tabs>
-        </React.Fragment>
-      );
-    }
-
-    return (
-      <Flag name={`hosted_apis.${apiDefinition.urlFragment}`}>
-        {docs}
       </Flag>
     );
   }
@@ -139,34 +54,4 @@ class ApiPage extends React.Component<IApiPageProps, IApiPageState> {
 
     return lookupApiByFragment(this.props.match.params.apiName);
   }
-
-  private setTabIndexFromFragment() : void {
-    const api = this.getApi();
-    if (api !== null && api.docSources.length > 1) {
-      const newTabIndex = this.getTabIndexFromFragment(api.docSources);
-      this.setState({ tabIndex: newTabIndex });
-    }
-  }
-
-  private getTabIndexFromFragment(apiDocSources : IApiDocSource[]) : number {
-    if (this.props.location.hash) {
-      const hasKey = (source : IApiDocSource) => !!source.key;
-      const tabKeys = apiDocSources.filter(hasKey).map(source => source.key!.toLowerCase());
-      const fromFragment = this.props.location.hash.slice(1).toLowerCase();
-      const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === fromFragment);
-      return tabIndex === -1 ? this.state.tabIndex : tabIndex;
-    }
-
-    return this.state.tabIndex;
-  }
-
-  private onTabSelect(tabIndex: number) {
-    const path = this.props.location.pathname;
-    const api = this.getApi()!;
-    history.push(`${path}#${api.docSources[tabIndex].key}`);
-    
-    this.setState({ tabIndex });
-  }
 }
-
-export default connect(mapStateToProps)(ApiPage);

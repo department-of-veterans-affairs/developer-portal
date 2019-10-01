@@ -4,10 +4,11 @@ import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
-import { apiDefs, IApiDescription } from '../../apiDefs';
+import { getApiDefinitions } from '../../apiDefs/query';
+import { IApiDescription } from '../../apiDefs/schema';
 import AuthorizationCard from '../../components/AuthorizationCard';
 import CardLink from '../../components/CardLink';
-import { VAInternalOnlyTag } from '../../components/VAInternalOnlyTag';
+import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
 import { IApiNameParam } from '../../types';
 
 export default class CategoryPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
@@ -18,7 +19,7 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
       apis,
       name: categoryName,
       content: { intro, overview },
-    } = apiDefs[apiCategoryKey];
+    } = getApiDefinitions()[apiCategoryKey];
 
     let cardSection;
     const headerId = `${apiCategoryKey}-overview`;

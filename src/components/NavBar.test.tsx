@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import 'jest';
 import * as React from 'react';
 
-import { NavBar } from './NavBar';
+import NavBar from './NavBar';
 
 describe('NavBar', () => {
   it('should render the navbar', () => {

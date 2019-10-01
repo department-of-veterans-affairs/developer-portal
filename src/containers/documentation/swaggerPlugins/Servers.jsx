@@ -3,7 +3,7 @@ import { OrderedMap } from "immutable";
 import PropTypes from "prop-types";
 import ImPropTypes from "react-immutable-proptypes";
 
-export class Servers extends React.Component {
+export default class Servers extends React.Component {
 
   static propTypes = {
     currentServer: PropTypes.string.isRequired,

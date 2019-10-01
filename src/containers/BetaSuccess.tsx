@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import './BetaSuccess.scss';
 
-export function BetaSuccess() {
+export default function BetaSuccess() {
   return (
     <div className="beta-success">
       <div className="usa-grid top-space bottom-space">

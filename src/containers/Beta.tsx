@@ -68,7 +68,7 @@ const vetConfirmMap = {
   veteran: "Veteran",
 };
 
-export class BetaPage extends React.Component<{}, IBetaPageState> {
+export default class BetaPage extends React.Component<{}, IBetaPageState> {
   constructor(props: {}) {
     super(props);
     this.state = {

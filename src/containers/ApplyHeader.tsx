@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-function ApplyHeader() {
+export default function ApplyHeader() {
   return (
     <div className="va-apply-header">
       <h1 id="apply-header">Apply for VA Lighthouse Developer Access</h1>
@@ -9,5 +9,3 @@ function ApplyHeader() {
     </div>
   );
 }
-
-export default ApplyHeader;

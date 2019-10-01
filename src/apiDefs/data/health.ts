@@ -14,13 +14,17 @@ import {
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
   FhirR4ApiIntro,
-  HealthArgonautDeprecation,
+  HealthArgonautPostDeprecation,
+  HealthArgonautPreDeprecation,
   UrgentCareApiIntro,
-} from '../content/apiDocs';
-import { IApiDescription } from "./schema";
+} from '../../content/apiDocs';
+import { IApiDescription } from "../schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
 const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
+const argonautDeprecationDate = moment('01 Oct 2019 00:00 EDT');
+const isArgonautDeprecated = moment().isAfter(argonautDeprecationDate);
+
 const healthApis : IApiDescription[] = [
   {
     description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
@@ -30,6 +34,7 @@ const healthApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/community-care/v0/eligibility/openapi.json`,
       },
     ],
+    enabledByDefault: true,
     name: 'Community Care Eligibility API',
     urlFragment: 'community_care',
     vaInternalOnly: false,
@@ -42,6 +47,7 @@ const healthApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
       },
     ],
+    enabledByDefault: true,
     name: 'Urgent Care Eligibility API (FHIR)',
     urlFragment: 'urgent_care',
     vaInternalOnly: false,
@@ -68,20 +74,22 @@ const healthApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
       },
     ],
+    enabledByDefault: true,
     name: 'Veterans Health API (FHIR)',
     urlFragment: 'fhir',
     vaInternalOnly: false,
   },
   {
     // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
-    deprecated: moment('01 Oct 2019 00:00 EDT'),
-    deprecationContent: HealthArgonautDeprecation,
-    description: argonautDeprecatedDesc,
+    deprecated: argonautDeprecationDate,
+    deprecationContent: isArgonautDeprecated ? HealthArgonautPostDeprecation : HealthArgonautPreDeprecation,
+    description: isArgonautDeprecated ? '' : argonautDeprecatedDesc,
     docSources: [
       {
         openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
       },
     ],
+    enabledByDefault: true,
     name: 'Veterans Health API (Legacy)',
     urlFragment: 'argonaut',
     vaInternalOnly: false,
