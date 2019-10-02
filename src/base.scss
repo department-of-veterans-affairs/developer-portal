@@ -143,3 +143,9 @@ a:focus,
     outline-color: #004795;
   }
 }
+
+// Override styles from formation/sass/base/_va.scss that hide
+// placeholder text on focus
+input:focus::placeholder {
+  color: $color-gray;
+}
