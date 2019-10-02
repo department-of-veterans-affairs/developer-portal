@@ -33,6 +33,16 @@ footer {
   flex-shrink: 0;
 }
 
+a {
+  transition: none;
+
+  &:hover {
+    transition: none;
+    background-color: rgba(0,0,0,0);
+    text-decoration: none;
+  }
+}
+
 .main {
   flex-grow: 1;
   background-color: #f9f9f9;
