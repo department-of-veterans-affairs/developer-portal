@@ -309,6 +309,7 @@ module.exports = (envName) => {
                   loader: 'markdown-component-loader',
                   options: {
                     markdownItPlugins: [
+                      [require('markdown-it-multimd-table'), {enableMultilineRows: true, enableRowspan: true}],
                       [require('markdown-it-anchor'), { level: 2 }],
                     ],
                   },
