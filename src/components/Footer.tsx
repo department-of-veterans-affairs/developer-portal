@@ -8,7 +8,7 @@ export default function Footer() {
     return (
         <footer className="usa-footer usa-footer-medium" role="contentinfo">
           <div className="usa-grid">
-            <div className="va-api-footer-logo usa-width-one-third">
+            <div className="vads-u-padding-y--1p5 medium-screen:vads-u-padding-y--2p5 usa-width-one-third">
               <a href="https://www.va.gov">
                 <img src={logo} alt="Department of Veterans Affairs" />
               </a>

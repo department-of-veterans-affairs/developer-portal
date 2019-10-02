@@ -10,15 +10,6 @@
     width: 200px;
   }
 
-  // Copied from uswds uswds/src/stylesheets/components/_footer.scss
-  .va-api-footer-logo {
-    padding: 1rem 0;
-
-    @include media($medium-screen) {
-      padding: 2rem 0;
-    }
-  }
-
   .usa-footer-links {
 
     float: left;
