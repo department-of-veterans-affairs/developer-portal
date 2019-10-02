@@ -33,6 +33,19 @@ footer {
   flex-shrink: 0;
 }
 
+// Override <a> styles from formation. The non-hover transition
+// is defined in formation/sass/base/_va.scss and the hover styles
+// can be found in formation/sass/base/_b-mixins.scss
+a {
+  transition: none;
+
+  &:hover {
+    transition: none;
+    background-color: rgba(0,0,0,0);
+    text-decoration: none;
+  }
+}
+
 .main {
   flex-grow: 1;
   background-color: #f9f9f9;
