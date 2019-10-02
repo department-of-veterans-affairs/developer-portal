@@ -308,8 +308,8 @@ module.exports = (envName) => {
                 {
                   loader: 'markdown-component-loader',
                   options: {
+                    enabledMarkdownItRules: ['smartquotes', 'table'],
                     markdownItPlugins: [
-                      [require('markdown-it-multimd-table'), {enableMultilineRows: true, enableRowspan: true}],
                       [require('markdown-it-anchor'), { level: 2 }],
                     ],
                   },
