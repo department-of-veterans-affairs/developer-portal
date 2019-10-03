@@ -5,19 +5,39 @@ import classNames from 'classnames';
 import toHtmlId from '../toHtmlId';
 
 import CardLink from '../components/CardLink';
+import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
+import HoverImage from '../components/HoverImage';
 import PageHeader from '../components/PageHeader';
 import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 
 import './News.scss';
 
-const sections = NewsData.sections.map((section: any) => ({
+interface ISection {
+  title: string;
+  description: string;
+  media: boolean;
+  items: INewsItem[];
+}
+
+interface INewsSection extends ISection {
+  id: string;
+}
+
+interface INewsItem {
+  date: string;
+  title: string;
+  url: string;
+  source?: string;
+}
+
+const sections = NewsData.sections.map((section: ISection) => ({
   ...section,
   id: toHtmlId(section.title),
 }));
 
 function NewsSideNav() {
-  const navSections = sections.map((section: any) => {
+  const navSections = sections.map((section: INewsSection) => {
     return <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />;
   });
 
@@ -29,8 +49,62 @@ function NewsSideNav() {
   );
 }
 
+function renderNewsItem(item: INewsItem, media: boolean) {
+  let content;
+  if(media) {
+    content = mediaItem(item);
+  } else {
+    content = itemDescription(item);
+  }
+
+  return (
+    <div key={item.url}>
+      {content}
+    </div>
+  );
+}
+
+function mediaItem(item: INewsItem) {
+  const description = itemDescription(item);
+  if (item.url.includes('www.youtube.com')) {
+    return (
+      <div className="va-api-media-item">
+        {description}
+        <EmbeddedYoutubeVideo url={item.url} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="va-api-media-row va-api-media-item">
+      <a tabIndex={-1} href={item.url} role="presentation">
+        <HoverImage
+          imagePath={require('../assets/video-player.png')}
+          hoverImagePath={require('../assets/video-player-hover.png')}
+        />
+      </a>
+      <div className="va-api-media-row-description">
+        {description}
+      </div>
+    </div>
+  );
+}
+
+function itemDescription(item: INewsItem) {
+  return (
+    <p key={item.url}>
+      <a href={item.url}>{item.title}</a>
+      <br />
+      <strong>
+        {item.date}
+        {item.source ? ` | ${item.source}` : null}
+      </strong>
+    </p>
+  );
+}
+
 export class News extends React.Component {
-  private cardsSections = sections.map((section: any) => {
+  private cardsSections = sections.map((section: INewsSection) => {
     return (
       <CardLink key={section.id} url={`#${section.id}`} name={section.title}>
         {section.description}
@@ -45,7 +119,7 @@ export class News extends React.Component {
       header: 'News',
     };
 
-    const newsContent = sections.map((section: any) => {
+    const newsContent = sections.map((section: INewsSection) => {
       return (
         <section
           aria-label={section.title}
@@ -54,17 +128,8 @@ export class News extends React.Component {
           className="news-section"
         >
           <h2>{section.title}</h2>
-          {section.items.map((item: any) => {
-            return (
-              <p key={item.url}>
-                <strong>
-                  {item.date}
-                  {item.source ? ` | ${item.source}` : null}
-                </strong>
-                <br />
-                <a href={item.url}>{item.title}</a>
-              </p>
-            );
+          {section.items.map((item: INewsItem) => {
+            return renderNewsItem(item, section.media);
           })}
         </section>
       );

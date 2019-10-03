@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
+import EmbeddedYoutubeVideo from 'src/components/EmbeddedYoutubeVideo';
 import './Home.scss';
 
 class Home extends React.Component {
@@ -75,9 +76,7 @@ class Home extends React.Component {
                     </p>
             </div>
             <div className="usa-width-one-half">
-              <div className="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/at69_Uz05vA" frameBorder="0" allowFullScreen={true} />
-              </div>
+              <EmbeddedYoutubeVideo url="https://www.youtube.com/embed/at69_Uz05vA" />
             </div>
           </div>
         </section>

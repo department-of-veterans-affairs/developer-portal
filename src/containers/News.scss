@@ -6,6 +6,23 @@
     padding-bottom: 3rem;
   }
 
+  // These styles will probably be removed in favor of formation classes once we make the switch
+  .va-api-media-item {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+  }
+
+  .va-api-media-row {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .va-api-media-row-description {
+    margin-left: 2rem;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
   .usa-section {
     padding-top: 0;
 
