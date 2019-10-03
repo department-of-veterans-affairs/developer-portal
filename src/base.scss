@@ -131,3 +131,15 @@ a:focus,
     outline-color: #004795;
   }
 }
+
+.markdown-wrapper {
+  // This rule seeks to mimick the USWDS .usa-section > :first-child
+  // rule that removes the top margin from most top-level headers on
+  // our site. The markdown-component-loader introduces an
+  // intermediation <div> element that prevents the USWDS rule from
+  // matching.
+  :first-child {
+    margin-top: 0;
+  }
+}
+
