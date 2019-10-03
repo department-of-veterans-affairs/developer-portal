@@ -50,6 +50,7 @@
     "jest-puppeteer": "^4.1.1",
     "js-yaml-loader": "^1.2.2",
     "lodash.debounce": "^4.0.8",
+    "lodash.flatten": "^4.4.0",
     "markdown-component-loader": "^1.1.0",
     "markdown-it-anchor": "^5.0.2",
     "mini-css-extract-plugin": "0.4.3",

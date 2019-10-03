@@ -1,3 +1,4 @@
+import { flatten } from 'lodash';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -279,8 +280,8 @@ class ApplyForm extends React.Component<IApplyProps> {
   }
 
   private anyOAuthApisSelected() {
-    const apiUrlFragments = this.selectedApis().flatMap((formField) => formFieldsToFragments[formField]);
-    return includesOauthAPI(apiUrlFragments);
+    const apiIdsByField = this.selectedApis().map((formField) => formFieldsToFragments[formField]);
+    return includesOauthAPI(flatten(apiIdsByField));
   }
 
   private anyApiSelected() {
