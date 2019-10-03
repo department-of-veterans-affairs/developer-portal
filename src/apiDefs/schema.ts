@@ -37,6 +37,7 @@ export interface IApiDescription {
 export interface IApiCategory {
   readonly apiKey: boolean;
   readonly apis: IApiDescription[];
+  readonly placardText: string;
   readonly properName: string;
   readonly buttonText: string;
   readonly name: string;

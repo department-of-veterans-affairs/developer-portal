@@ -35,6 +35,7 @@ class Home extends React.Component {
             </div>
             <div className="usa-width-one-whole">
               <div className="va-api-container">
+                {/* TODO build from categories */}
                 <Link className="va-api-card" to="/explore/appeals">
                   <h3 className="va-api-name">VA Appeals API</h3>
                   <p className="va-api-description">

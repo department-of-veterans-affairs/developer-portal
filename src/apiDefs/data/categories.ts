@@ -29,6 +29,7 @@ const apiDefinitions : IApiCategories = {
     buttonText: 'Get Your Key',
     content: appealsContent,
     name: 'Appeals API',
+    placardText: 'Build tools to help Veterans electronically manage, submit, and track appeals.',
     properName: 'Appeals API',
     releaseNotes: AppealsReleaseNotes,
     shortDescription:
@@ -40,6 +41,7 @@ const apiDefinitions : IApiCategories = {
     buttonText: 'Get Your Key',
     content: benefitsContent,
     name: 'Benefits API',
+    placardText: 'Build tools to help Veterans electronically manage, submit, track, and receive notifications on their claims.',
     properName: 'Benefits Intake API',
     releaseNotes: BenefitsReleaseNotes,
     shortDescription:
@@ -51,6 +53,7 @@ const apiDefinitions : IApiCategories = {
     buttonText: 'Get Your Key',
     content: facilitiesContent,
     name: 'Facilities API',
+    placardText: 'Get information on VA facilities including contact information, location, hours of operation, available services, appointment wait times, and patient satisfaction.',
     properName: 'VA Facilities API',
     releaseNotes: FacilitiesReleaseNotes,
     shortDescription:
@@ -62,6 +65,7 @@ const apiDefinitions : IApiCategories = {
     buttonText: 'Get Your Key',
     content: healthContent,
     name: 'Health API',
+    placardText: 'Build tools to help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and securely share their information with caregivers and providers.',
     properName: 'Health API',
     releaseNotes: HealthReleaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
@@ -73,6 +77,7 @@ const apiDefinitions : IApiCategories = {
     buttonText: 'Stay Informed',
     content: verificationContent,
     name: 'Veteran Verification API',
+    placardText: 'Build tools to help Veterans verify their Veteran status electronically on job sites, e-commerce sites, and third-party benefit sites.',
     properName: 'Veteran Verification API',
     releaseNotes: VerificationReleaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
