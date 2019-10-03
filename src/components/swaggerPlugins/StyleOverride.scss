@@ -1,3 +1,37 @@
 .opblock-body {
   background-color: white;
+  .opblock-section {
+    margin: 2em;
+    .opblock-section-header {
+      padding: 0 !important;
+      .opblock-title {
+        box-shadow: none;
+        font-size: 3rem !important;
+      }
+    }
+    .table-container {
+      padding: 0;
+      .parameters {
+        padding: 0;
+        margin: 0;
+        th {
+          padding: 1rem;
+        }
+        tr {
+          td {
+            padding: 1rem;
+            background-color: #EEEEEE;
+            border: 1px solid #5b616b;
+            border-top-style: none;
+            border-bottom-style: none;
+          }
+          &:last-child{
+            td {
+              border-bottom: 1px solid #5b616b;
+            }
+          }
+        }
+      }
+    }
+  }
 }

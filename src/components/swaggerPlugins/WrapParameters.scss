@@ -1,6 +1,16 @@
-.curl-form {
-  margin: 5px;
-  h2 {
+.curl-container {
+  margin: 2em;
+  #title {
     margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .curl-form {
+    background-color: #EEEEEE;
+    border-radius: 6px;
+    border-style: solid;
+
+    &__contents {
+      margin: 1em;
+    }
   }
 }

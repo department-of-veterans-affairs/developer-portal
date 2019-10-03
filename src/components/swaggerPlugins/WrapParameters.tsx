@@ -9,6 +9,7 @@ export interface ICurlFormProps {
 
 export interface ICurlFormState {
   apiKey: string;
+  bearerToken: string;
   params: object[];
 }
 
@@ -18,11 +19,12 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
 
     let state = {
       apiKey: '',
+      bearerToken: '',
       params: this.props.operation.parameters,
     };
     if (state.params) {
       state.params.map((parameter: any) => {
-        state[parameter.name] = parameter.example;
+        state[parameter.name] = parameter.example || '';
       });
     }
     this.state = state;
@@ -58,13 +60,22 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     const options = {
       operationId: this.props.operation.operationId,
       parameters: this.state,
-      securities: {
+      securities: {},
+      spec,
+    };
+    if (this.state.apiKey.length > 0) {
+      options.securities = {
         authorized: {
           apikey: this.state.apiKey,
         },
-      },
-      spec,
-    };
+      };
+    } else {
+      options.securities = {
+        authorized: {
+          bearer_token: this.state.bearerToken,
+        },
+      };
+    }
     return this.props.system.fn.curlify(options);
   }
 
@@ -81,14 +92,10 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     }
   }
 
-  public render() {
+  public authParameterContainer() {
     if (Object.keys(this.props.operation.security[0]).includes('apikey')) {
       return (
-        <div className="curl-form">
-          <h2>Example Curl</h2>
-          <select>
-            <option>Test User 1</option>
-          </select>
+        <div>
           <h3> API Key: </h3>
           <div>
             <input
@@ -101,11 +108,43 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
               Don't have an API Key? <a href="/apply"> Get One </a>
             </small>
           </div>
-          {this.parameterContainer()}
-          <br />
-          <h3>Generated Curl</h3>
-          <div className="opblock-body">
-            <pre className="highlight-code">{this.buildCurl()}</pre>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <h3> Bearer Token: </h3>
+          <div>
+            <input
+              value={this.state.bearerToken}
+              onChange={e => {
+                this.handleInputChange('bearerToken', e.target.value);
+              }}
+            />
+            <small>
+              Don't have an API Key? <a href="/apply"> Get One </a>
+            </small>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  public render() {
+    if (Object.keys(this.props.operation).includes('security')) {
+      return (
+        <div className="curl-container">
+          <h2 id="title">Example Curl</h2>
+          <div className="curl-form">
+            <div className="curl-form__contents">
+              {this.authParameterContainer()}
+              {this.parameterContainer()}
+              <br />
+              <h3>Generated Curl</h3>
+              <div className="opblock-body">
+                <pre className="highlight-code">{this.buildCurl()}</pre>
+              </div>
+            </div>
           </div>
         </div>
       );
