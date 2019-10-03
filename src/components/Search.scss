@@ -10,7 +10,7 @@
   padding-bottom: 3.0rem;
 
   @include media($large-screen) {
-    background-color: $color-primary-darkest;
+    background: none;
     padding-top: 0;
     padding-bottom: 0;
   }
