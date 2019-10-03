@@ -5,8 +5,8 @@ import * as React from 'react';
 import HoverImage from './HoverImage';
 
 const props = {
-  imagePath: 'image',
   hoverImagePath: 'hover',
+  imagePath: 'image',
 };
 
 describe('HoverImage', () => {
