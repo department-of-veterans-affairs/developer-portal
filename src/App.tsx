@@ -13,14 +13,8 @@ import NavBar from './components/NavBar';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
-import './App.scss';
-
-// let currentPath = history.location.pathname;
-// history.listen(location => {
-//   currentPath = location.pathname;
-// });
-
 import 'highlight.js/styles/github.css';
+import './App.scss';
 
 class App extends React.Component {
   public render() {

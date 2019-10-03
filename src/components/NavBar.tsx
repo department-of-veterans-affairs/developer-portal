@@ -10,11 +10,11 @@ import closeButton from '../../node_modules/uswds/src/img/close.png';
 import minusIcon from '../../node_modules/uswds/src/img/minus.png';
 import plusIcon from '../../node_modules/uswds/src/img/plus.png';
 
-import Banner from './Banner';
-import Search from './Search';
-
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 import { OVER_LARGE_SCREEN_QUERY, UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
+import Banner from './Banner';
+import MainNavItem, { ILargeScreenNavItemProps } from './MainNavItem';
+import Search from './Search';
 
 interface IVisibleSubNavState {
   documentation: boolean;
@@ -43,6 +43,11 @@ export default class NavBar extends React.Component<{}, INavBarState> {
       'va-api-mobile-nav-visible': this.state.menuVisible,
       'va-api-nav': true,
     });
+    const sharedNavItemProps: ILargeScreenNavItemProps = {
+      isActive: this.checkActiveNavLink,
+      onMouseEnter: this.toggleDefaultNavLink.bind(this, false),
+      onMouseLeave: this.toggleDefaultNavLink.bind(this, true),
+    };
 
     return (
       <header className="usa-header usa-header-extended" role="banner">
@@ -78,14 +83,9 @@ export default class NavBar extends React.Component<{}, INavBarState> {
             </MediaQuery>
             <ul className="va-api-nav-primary">
               <li className="va-api-main-nav-item">
-                <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
-                  <NavLink to="/explore" className="va-api-nav-link" activeClassName="default-nav-link"
-                    isActive={this.checkActiveNavLink}
-                    onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
-                    onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
-                    Documentation
-                  </NavLink>
-                </MediaQuery>
+                <MainNavItem targetUrl="/explore" largeScreenProps={sharedNavItemProps} excludeSmallScreen={true}>
+                  Documentation
+                </MainNavItem>
                 <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
                   <button className="va-api-nav-button" onClick={this.toggleDocumentationSubMenu}>
                     <span>Documentation</span>
@@ -96,28 +96,19 @@ export default class NavBar extends React.Component<{}, INavBarState> {
                 </MediaQuery>
               </li>
               <li className="va-api-main-nav-item">
-                <NavLink to="/release-notes" className="va-api-nav-link" activeClassName="default-nav-link"
-                  isActive={this.checkActiveNavLink}
-                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
-                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                <MainNavItem targetUrl="/release-notes" largeScreenProps={sharedNavItemProps}>
                   Release Notes
-                </NavLink>
+                </MainNavItem>
               </li>
               <li className="va-api-main-nav-item">
-                <NavLink to="/support" className="va-api-nav-link" activeClassName="default-nav-link"
-                  isActive={this.checkActiveNavLink}
-                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
-                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                <MainNavItem targetUrl="/support" largeScreenProps={sharedNavItemProps}>
                   Support
-                </NavLink>
+                </MainNavItem>
               </li>
               <li className="va-api-main-nav-item">
-                <NavLink to="/news" className="va-api-nav-link" activeClassName="default-nav-link"
-                  isActive={this.checkActiveNavLink}
-                  onMouseEnter={this.toggleDefaultNavLink.bind(this, false)}
-                  onMouseLeave={this.toggleDefaultNavLink.bind(this, true)}>
+                <MainNavItem targetUrl="/news" largeScreenProps={sharedNavItemProps}>
                   News
-                </NavLink>
+                </MainNavItem>
               </li>
             </ul>
           </div>
@@ -136,12 +127,22 @@ export default class NavBar extends React.Component<{}, INavBarState> {
     return (
       <ul className="va-api-sub-nav">
         <li className="va-api-sub-nav-item" key="all">
-          <NavLink exact={true} to="/explore" className="va-api-sub-nav-link">Overview</NavLink>
+          <NavLink exact={true} 
+            to="/explore" 
+            className="va-api-sub-nav-link"
+            activeClassName="va-api-active-sub-nav"
+          >
+            Overview
+          </NavLink>
         </li>
         {apiCategoryOrder.map(apiKey => {
           return (
             <li className="va-api-sub-nav-item" key={apiKey}>
-              <NavLink to={`/explore/${apiKey}`} className="va-api-sub-nav-link">
+              <NavLink 
+                to={`/explore/${apiKey}`} 
+                className="va-api-sub-nav-link" 
+                activeClassName="va-api-active-sub-nav"
+              >
                 {apiDefs[apiKey].name}
               </NavLink>
             </li>
@@ -171,7 +172,7 @@ export default class NavBar extends React.Component<{}, INavBarState> {
     this.setState({ useDefaultNavLink: useDefault });
   }
 
-  private checkActiveNavLink = (match: {}, location: {}) => {
+  private checkActiveNavLink = (match: {}) => {
     if (!match) {
       return false;
     }

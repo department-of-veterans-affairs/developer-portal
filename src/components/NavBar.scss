@@ -101,13 +101,18 @@
     font-size: 1.6rem;
     padding: 10px;
     text-decoration: none;
+
+    &.va-api-active-nav {
+      font-weight: 700;
+    }
     
     @include media($large-screen) {
       margin-bottom: 3px;
       padding: 15px;
       
-      &.default-nav-link,
+      &.va-api-active-nav,
       &:hover {
+        font-weight: 400;
         border-bottom: 3px solid #FDB81E;
         margin-bottom: 0;
       }
@@ -169,7 +174,7 @@
     text-decoration: none;
     width: 100%;
 
-    &.active {
+    &.va-api-active-sub-nav {
       font-weight: 700;
     }
   }
