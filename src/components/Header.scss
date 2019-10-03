@@ -9,15 +9,15 @@
 
 .header-content {
   max-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   @include media($large-screen) {
     padding-right: 3rem;
     padding-left: 3rem;
     height: 127px;
   }
-
-  display: flex;
-  align-items: center;
 
   a, a:visited {
     color: $color-white;
@@ -29,6 +29,15 @@
     font-size: 1.7rem;
     margin-top: 2rem;
     margin-bottom: 0.3rem;
+  }
+
+  .va-api-mobile-menu-button {
+    border-radius: 0;
+    font-size: 1.4rem;
+    font-weight: 400;
+    height: 4rem;
+    margin: 0;
+    text-transform: uppercase;
   }
 }
 
@@ -50,10 +59,11 @@
 .usa-header.usa-header-extended {
   background: $color-blue-darkest;
 
-  .usa-logo {
+  .va-api-logo {
+    margin-left: 15px;
+
     @include media($large-screen) {
-      margin-top: 0;
-      margin-bottom: 0;
+      margin: 0;
       font-size: 4.2rem;
     }
 

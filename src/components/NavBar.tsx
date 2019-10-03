@@ -53,21 +53,25 @@ export default class NavBar extends React.Component<{}, INavBarState> {
       <header className="usa-header usa-header-extended" role="banner">
         <Banner />
         <div className="header-content">
-          <div className="usa-logo" id="extended-logo">
+          <div className="va-api-logo" id="extended-logo">
             <Link to="/" title="Digital VA home page" className="vads-u-text-decoration--none">
               <span className="vads-u-font-weight--bold">VA</span> | Developer Portal
             </Link>
           </div>
-          <div className="header-right-container">
-            <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
+          <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
+            <div className="header-right-container">
               <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
                 <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
                 <Search />
               </div>
-            </MediaQuery>
-          </div>
-          <button onClick={this.toggleMenuVisible}>Menu</button>
+            </div>
+          </MediaQuery>
+          <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+            <button className="va-api-mobile-menu-button" onClick={this.toggleMenuVisible}>
+              Menu
+            </button>
+          </MediaQuery>
         </div>
         <nav className={navClasses}>
           <div className="va-api-nav-inner">
