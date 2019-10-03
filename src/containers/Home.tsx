@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import EmbeddedYoutubeVideo from 'src/components/EmbeddedYoutubeVideo';
+import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
 import './Home.scss';
 
 class Home extends React.Component {
