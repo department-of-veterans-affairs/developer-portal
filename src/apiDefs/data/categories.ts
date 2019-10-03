@@ -14,6 +14,7 @@ import {
   VerificationReleaseNotes,
 } from '../../content/releaseNotes';
 
+import { isHostedApiEnabled } from '../env';
 import { IApiCategories } from '../schema';
 import appealsApis from './appeals';
 import benefitsApis from './benefits';
@@ -78,5 +79,7 @@ const apiDefinitions : IApiCategories = {
   },
 };
 
-export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
+let rawApiCategoryOrder = ['appeals', 'benefits', 'facilities', 'health', 'verification'];
+// export the order, but remove any APIs that don't have any enabled apis
+export const apiCategoryOrder: string[] = rawApiCategoryOrder.filter( apiName => apiDefinitions[apiName].apis.filter( api => isHostedApiEnabled(api.urlFragment, api.enabledByDefault) ).length > 0);
 export default apiDefinitions;
