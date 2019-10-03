@@ -13,7 +13,6 @@
   - schema.ts
 */
 
-import { flatten } from 'lodash';
 import apiDefs, { apiCategoryOrder } from './data/categories';
 import {
   IApiCategory,
@@ -24,8 +23,7 @@ const getApiDefinitions = () => apiDefs;
 const getApiCategoryOrder = () => apiCategoryOrder;
 
 const getAllApis = () : IApiDescription[] => {
-  const apisByCategory = Object.values(apiDefs).map((category: IApiCategory) => category.apis);
-  return flatten(apisByCategory);
+  return Object.values(apiDefs).flatMap((category: IApiCategory) => category.apis);
 };
 
 function lookupApiByFragment(apiKey: string): IApiDescription | null {

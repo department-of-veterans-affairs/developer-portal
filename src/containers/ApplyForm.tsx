@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { flatten } from 'lodash';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
@@ -281,8 +280,8 @@ class ApplyForm extends React.Component<IApplyProps> {
   }
 
   private anyOAuthApisSelected() {
-    const apiIdsByField = this.selectedApis().map((formField) => formFieldsToFragments[formField]);
-    return includesOauthAPI(flatten(apiIdsByField));
+    const apiIdsByField = this.selectedApis().flatMap((formField) => formFieldsToFragments[formField]);
+    return includesOauthAPI(apiIdsByField);
   }
 
   private anyApiSelected() {
