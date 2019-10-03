@@ -42,7 +42,6 @@ a {
   &:hover {
     transition: none;
     background-color: rgba(0,0,0,0);
-    text-decoration: none;
   }
 }
 
@@ -143,4 +142,10 @@ a:focus,
   &:focus {
     outline-color: #004795;
   }
+}
+
+// Override styles from formation/sass/base/_va.scss that hide
+// placeholder text on focus
+input:focus::placeholder {
+  color: $color-gray;
 }
