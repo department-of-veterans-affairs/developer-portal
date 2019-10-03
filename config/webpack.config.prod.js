@@ -445,6 +445,7 @@ module.exports = (envName) => {
       }),
         new SitemapBuilderPlugin({
           routesFile: path.join(paths.appSrc, 'Routes.tsx'),
+          polyfillsFile: path.join(paths.appConfigScripts, 'polyfills.js')
         }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
