@@ -40,11 +40,11 @@ class Home extends React.Component {
             <div className="usa-width-one-whole">
               <div className="va-api-container">
                 {apiCategoryOrder.map((apiCategoryKey: string) => {
-                  const { name, placardText } = apiDefinitions[apiCategoryKey];
+                  const { name, content } = apiDefinitions[apiCategoryKey];
                   return (
                     <Link className="va-api-card" to="/explore/appeals" key={apiCategoryKey}>
                       <h3 className="va-api-name">VA {name}</h3>
-                      <p className="va-api-description">{placardText}</p>
+                      <p className="va-api-description">{content.placardText}</p>
                     </Link>
                   );
                 })}

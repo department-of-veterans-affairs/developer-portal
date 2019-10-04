@@ -11,11 +11,11 @@ function cards(parent: string): JSX.Element[] {
   const hasReleaseNotes = (categoryKey: string) => !!apiDefs[categoryKey].content.releaseNotes;
 
   return apiCategoryOrder.filter(hasReleaseNotes).map((apiCategoryKey: string) => {
-    const { name, shortDescription } = apiDefs[apiCategoryKey];
+    const { name, content } = apiDefs[apiCategoryKey];
     const cardUrl = parent + '/' + apiCategoryKey;
     return (
       <CardLink name={name} key={apiCategoryKey} url={cardUrl}>
-        {shortDescription}
+        {content.shortDescription}
       </CardLink>
     );
   });

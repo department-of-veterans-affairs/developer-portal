@@ -12,6 +12,8 @@ export interface IApiCategoryContent {
   readonly intro: React.StatelessComponent;
   readonly overview: React.StatelessComponent;
   readonly releaseNotes: React.StatelessComponent;
+  readonly shortDescription: string;
+  readonly placardText: string;
   readonly quickstart?: React.StatelessComponent;
 }
 
@@ -38,11 +40,9 @@ export interface IApiDescription {
 export interface IApiCategory {
   readonly apiKey: boolean;
   readonly apis: IApiDescription[];
-  readonly placardText: string;
   readonly properName: string;
   readonly buttonText: string;
   readonly name: string;
-  readonly shortDescription: string;
   readonly tabBlurb?: string;
   readonly content: IApiCategoryContent;
 }
