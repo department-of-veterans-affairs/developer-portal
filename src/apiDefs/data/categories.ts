@@ -84,7 +84,7 @@ const apiDefinitions : IApiCategories = {
   },
 };
 
-let rawApiCategoryOrder = ['appeals', 'benefits', 'facilities', 'health', 'verification'];
+const rawApiCategoryOrder = ['appeals', 'benefits', 'facilities', 'health', 'verification'];
 // export the order, but remove any APIs that don't have any enabled apis
 export const apiCategoryOrder: string[] = rawApiCategoryOrder.filter( apiName => apiDefinitions[apiName].apis.filter( api => isHostedApiEnabled(api.urlFragment, api.enabledByDefault) ).length > 0);
 export default apiDefinitions;
