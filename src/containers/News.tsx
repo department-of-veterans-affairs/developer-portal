@@ -77,12 +77,14 @@ function mediaItem(item: INewsItem) {
 
   return (
     <div className="va-api-media-row va-api-media-item">
-      <a tabIndex={-1} href={item.url} role="presentation">
-        <HoverImage
-          imagePath={require('../assets/video-player.png')}
-          hoverImagePath={require('../assets/video-player-hover.png')}
-        />
-      </a>
+      <div aria-hidden={true}>
+        <a href={item.url} tabIndex={-1}>
+          <HoverImage
+            imagePath={require('../assets/video-player.png')}
+            hoverImagePath={require('../assets/video-player-hover.png')}
+          />
+        </a>
+      </div>
       <div className="va-api-media-row-description">
         {description}
       </div>
