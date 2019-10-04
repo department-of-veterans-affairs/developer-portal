@@ -1,10 +1,3 @@
-/*
-  This file is here to prep for separating NavBar into two components, NavBar and Header. This file is for 
-  Header, which would currently be the top-level component. It is actually called NavBar, but that naming is
-  confusing, given that the top levels tags and CSS classes use "header" naming terminology. Anyway, in the 
-  future, there will be a component Header to accompany these styles; currently they are used in NavBar.
-*/
-
 @import '../styles/variables';
 
 .header-content {
