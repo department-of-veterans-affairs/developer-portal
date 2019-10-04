@@ -17,7 +17,7 @@ function testActive({
   exact?: boolean;
   expectation: boolean;
 }) {
-  const activeClassName = 'usa-current';
+  const activeClassName = 'va-api-active-sidenav-link';
   const wrapper = render(
     <MemoryRouter initialEntries={[location]}>
       <SideNavEntry name="" to={to} exact={exact} />

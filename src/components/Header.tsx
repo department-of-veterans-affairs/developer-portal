@@ -25,7 +25,7 @@ export default class Header extends React.Component<{}, INavBarState> {
     const navBarCloseHandler = this.toggleMenuVisible.bind(this);
 
     return (
-      <header className="usa-header usa-header-extended" role="banner">
+      <header className="va-api-header" role="banner">
         <Banner />
         <div className="header-content">
           <div className="va-api-logo" id="extended-logo">

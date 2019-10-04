@@ -40,16 +40,17 @@
         color: #222;
       }
 
-      a.usa-current {
+      a.va-api-active-sidenav-link {
         color: #383838;
         border-left: 5px solid #2f70b5;
+        font-weight: 700;
       }
 
       a:hover {
         background-color: #dbdbdd;
       }
 
-      a.usa-current + ul.usa-sidenav-sub_list {
+      a.va-api-active-sidenav-link + ul.usa-sidenav-sub_list {
         // Show the subnav when its parent (represented as a sibling in the DOM)
         // is the selected nav item
         display: block;
@@ -72,7 +73,7 @@
     > li a {
       padding-left: 3.3rem;
 
-      &.usa-current {
+      &.va-api-active-sidenav-link {
         border: none;
       }
     }

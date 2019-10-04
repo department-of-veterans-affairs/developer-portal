@@ -1,5 +1,23 @@
 @import '../styles/variables';
 
+.va-api-header {
+  background: $color-blue-darkest;
+
+  .va-api-logo {
+    margin-left: 15px;
+
+    @include media($large-screen) {
+      margin: 0;
+      font-size: 4.2rem;
+    }
+
+    a {
+      color: #FFFFFF;
+      font-weight: 300;
+    }
+  }
+}
+
 .header-content {
   max-width: none;
   display: flex;
@@ -47,22 +65,4 @@
 // a temporary patch until we adopt VA design system more fully
 #get-started-button {
   margin-right: 2rem;
-}
-
-.usa-header.usa-header-extended {
-  background: $color-blue-darkest;
-
-  .va-api-logo {
-    margin-left: 15px;
-
-    @include media($large-screen) {
-      margin: 0;
-      font-size: 4.2rem;
-    }
-
-    a {
-      color: #FFFFFF;
-      font-weight: 300;
-    }
-  }
 }

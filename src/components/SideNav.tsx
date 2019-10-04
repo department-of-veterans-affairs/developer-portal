@@ -66,7 +66,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
     return (
       <li>
         <NavHashLink
-          activeClassName="usa-current"
+          activeClassName="va-api-active-sidenav-link"
           isActive={this.navHashLinkIsActive}
           {...navLinkProps}
         >

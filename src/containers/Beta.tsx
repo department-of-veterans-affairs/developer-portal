@@ -96,9 +96,9 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
   public render() {
     return (
       <div className="beta-application">
-        <section role="region" aria-label="Page Hero" className="usa-hero">
+        <section role="region" aria-label="Page Hero" className="va-api-hero">
           <div className="usa-grid">
-            <div className="usa-hero-callout">
+            <div className="va-api-hero-callout">
               <h1 className="usa-sans">Sign up to test the next mobile VA applications</h1>
               <div className="usa-grid no-pad">
                 <div className="usa-width-one-half">
@@ -119,7 +119,9 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
                   </div>
                 </div>
               </div>
-              <p className="usa-hero-disclaimer-text"><span className="bold-text">Survey Disclaimer: </span>According to the Paperwork Reduction Act of 1995, no persons are required to respond to a collection of information unless it displays a valid OMB control number. The valid OMB control number for this information collection is 2900-0770. The time required to complete this information collection is estimated to average 5 minutes per response, including the time to review instructions, search existing data resources, gather the data needed, and complete and review the information collection. If you have comments concerning the accuracy of the time estimate(s) or suggestions for improving this form, please write to: Office of Information and Regulatory Affairs, Office of Management and Budget, Attn: VA Desk Officer; 725 17th St. NW, Washington, DC 20503 or sent through electronic mail to oira_submission@omb.eop.gov. Please refer to “OMB Control No. 2900-0770” in any correspondence.</p>
+              <p className="va-api-hero-disclaimer-text">
+                <span className="bold-text">Survey Disclaimer: </span>According to the Paperwork Reduction Act of 1995, no persons are required to respond to a collection of information unless it displays a valid OMB control number. The valid OMB control number for this information collection is 2900-0770. The time required to complete this information collection is estimated to average 5 minutes per response, including the time to review instructions, search existing data resources, gather the data needed, and complete and review the information collection. If you have comments concerning the accuracy of the time estimate(s) or suggestions for improving this form, please write to: Office of Information and Regulatory Affairs, Office of Management and Budget, Attn: VA Desk Officer; 725 17th St. NW, Washington, DC 20503 or sent through electronic mail to oira_submission@omb.eop.gov. Please refer to “OMB Control No. 2900-0770” in any correspondence.
+              </p>
             </div>
           </div>
         </section>

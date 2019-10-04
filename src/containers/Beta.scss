@@ -1,35 +1,8 @@
+@import '../styles/hero';
 @import '../styles/variables';
 
 .beta-application {
   margin-bottom: 3rem;
-
-  .usa-hero {
-    background-color: #4a4a4a;
-    background-image: url('../assets/home-page-banner.png');
-    margin-bottom: 60px;
-
-    .usa-hero-callout {
-      background: none;
-      color: $color-white;
-      max-width: 100%;
-      padding-left: 0;
-
-      h1 {
-        font-family: $font-sans;
-      }
-
-      p {
-        font-size: 1.25em;
-        max-width: 800px;
-      }
-
-      .usa-hero-disclaimer-text {
-        font-size: 0.75em;
-        width: 100%;
-        max-width: none;
-      }
-    }
-  }
 
   .underlined-header {
     border-bottom: 1px solid black;
@@ -46,6 +19,7 @@
   }
 
   .form-container {
+    margin-top: 3rem;
     width: 100%;
   }
 
