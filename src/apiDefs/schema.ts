@@ -11,6 +11,7 @@ import * as moment from 'moment';
 export interface IApiCategoryContent {
   readonly intro: React.StatelessComponent;
   readonly overview: React.StatelessComponent;
+  readonly releaseNotes: React.StatelessComponent;
   readonly quickstart?: React.StatelessComponent;
 }
 
