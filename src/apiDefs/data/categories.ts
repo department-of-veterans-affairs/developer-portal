@@ -23,7 +23,6 @@ const apiDefinitions : IApiCategories = {
     name: 'Appeals API',
     placardText: 'Build tools to help Veterans electronically manage, submit, and track appeals.',
     properName: 'Appeals API',
-    releaseNotes: appealsContent.releaseNotes,
     shortDescription:
       'Enables managing benefit decision appeals on behalf of a Veteran.',
   },
@@ -35,7 +34,6 @@ const apiDefinitions : IApiCategories = {
     name: 'Benefits API',
     placardText: 'Build tools to help Veterans electronically manage, submit, track, and receive notifications on their claims.',
     properName: 'Benefits Intake API',
-    releaseNotes: benefitsContent.releaseNotes,
     shortDescription:
       'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
   },
@@ -47,7 +45,6 @@ const apiDefinitions : IApiCategories = {
     name: 'Facilities API',
     placardText: 'Get information on VA facilities including contact information, location, hours of operation, available services, appointment wait times, and patient satisfaction.',
     properName: 'VA Facilities API',
-    releaseNotes: facilitiesContent.releaseNotes,
     shortDescription:
       'Use the VA Facility API to find relevant information about a specific VA facility.',
   },
@@ -59,7 +56,6 @@ const apiDefinitions : IApiCategories = {
     name: 'Health API',
     placardText: 'Build tools to help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and securely share their information with caregivers and providers.',
     properName: 'Health API',
-    releaseNotes: healthContent.releaseNotes,
     shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
     tabBlurb: "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
   },
@@ -71,7 +67,6 @@ const apiDefinitions : IApiCategories = {
     name: 'Veteran Verification API',
     placardText: 'Build tools to help Veterans verify their Veteran status electronically on job sites, e-commerce sites, and third-party benefit sites.',
     properName: 'Veteran Verification API',
-    releaseNotes: verificationContent.releaseNotes,
     shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
   },
 };

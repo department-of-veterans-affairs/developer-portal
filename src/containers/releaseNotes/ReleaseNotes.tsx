@@ -73,7 +73,7 @@ export function ReleaseNotesSideNav() {
         to="/release-notes"
         name="Overview"
       />
-      {categoryOrder.map((key: string) => apiDefs[key].releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
+      {categoryOrder.map((key: string) => apiDefs[key].content.releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
     </SideNav>
   );
 }
@@ -86,7 +86,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
   private overviewProps = {
     description: 'The goal of the Release Notes section is to inform developers of updates and changes to the VA APIs. This section of the developer portal is new and will expand as release notes for new APIs become available.', 
     halo: 'Release Notes',
-    header: 'Overview', 
+    header: 'Overview',
     parent: 'release-notes',
   };
 

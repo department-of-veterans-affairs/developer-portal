@@ -8,7 +8,7 @@ import PageHeader from '../../components/PageHeader';
 function cards(parent: string): JSX.Element[] {
   const apiDefs = getApiDefinitions();
   const apiCategoryOrder = getApiCategoryOrder();
-  const hasReleaseNotes = (categoryKey: string) => !!apiDefs[categoryKey].releaseNotes;
+  const hasReleaseNotes = (categoryKey: string) => !!apiDefs[categoryKey].content.releaseNotes;
 
   return apiCategoryOrder.filter(hasReleaseNotes).map((apiCategoryKey: string) => {
     const { name, shortDescription } = apiDefs[apiCategoryKey];

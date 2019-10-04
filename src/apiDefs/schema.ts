@@ -43,7 +43,6 @@ export interface IApiCategory {
   readonly buttonText: string;
   readonly name: string;
   readonly shortDescription: string;
-  readonly releaseNotes?: React.StatelessComponent;
   readonly tabBlurb?: string;
   readonly content: IApiCategoryContent;
 }
