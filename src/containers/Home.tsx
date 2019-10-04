@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 
 import './Home.scss';
 
 class Home extends React.Component {
   public render() {
+    const apiDefinitions = getApiDefinitions();
+    const apiCategoryOrder = getApiCategoryOrder();
+
     return (
       <div className="home">
 
@@ -35,37 +39,15 @@ class Home extends React.Component {
             </div>
             <div className="usa-width-one-whole">
               <div className="va-api-container">
-                {/* TODO build from categories */}
-                <Link className="va-api-card" to="/explore/appeals">
-                  <h3 className="va-api-name">VA Appeals API</h3>
-                  <p className="va-api-description">
-                    Build tools to help Veterans electronically manage, submit, and track appeals.
-                        </p>
-                </Link>
-                <Link className="va-api-card" to="/explore/benefits">
-                  <h3 className="va-api-name">VA Benefits API</h3>
-                  <p className="va-api-description">
-                    Build tools to help Veterans electronically manage, submit, track, and receive notifications on their claims.
-                        </p>
-                </Link>
-                <Link className="va-api-card" to="/explore/facilities">
-                  <h3 className="va-api-name">VA Facilities API</h3>
-                  <p className="va-api-description">
-                    Get information on VA facilities including contact information, location, hours of operation, available services, appointment wait times, and patient satisfaction.
-                        </p>
-                </Link>
-                <Link className="va-api-card" to="/explore/health">
-                  <h3 className="va-api-name">VA Health API</h3>
-                  <p className="va-api-description">
-                    Build tools to help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and securely share their information with caregivers and providers.
-                        </p>
-                </Link>
-                <Link className="va-api-card" to="/explore/verification">
-                  <h3 className="va-api-name">VA Veteran Verification API</h3>
-                  <p className="va-api-description">
-                    Build tools to help Veterans verify their Veteran status electronically on job sites, e-commerce sites, and third-party benefit sites.
-                        </p>
-                </Link>
+                {apiCategoryOrder.map((apiCategoryKey: string) => {
+                  const { name, placardText } = apiDefinitions[apiCategoryKey];
+                  return (
+                    <Link className="va-api-card" to="/explore/appeals" key={apiCategoryKey}>
+                      <h3 className="va-api-name">VA {name}</h3>
+                      <p className="va-api-description">{placardText}</p>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
