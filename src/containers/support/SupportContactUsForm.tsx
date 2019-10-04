@@ -2,7 +2,7 @@ import ErrorableCheckboxGroup from '@department-of-veterans-affairs/formation-re
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import * as React from "react";
-import { getApiDefinitions } from '../../apiDefs/query';
+import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import Form from "../../components/Form";
 import { IErrorableInput } from '../../types';
 import { validateEmail, validatePresence } from '../../utils/validators';
@@ -116,7 +116,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
   private static get apiOptions(): object[] {
     const apiDefs = getApiDefinitions();
-    return Object.keys(apiDefs).map(api => {
+    return getApiCategoryOrder().map(api => {
       return {
         label: apiDefs[api].name,
         value: api,
@@ -125,8 +125,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   }
   
   private static get initialApiState() {
-    const apiDefs = getApiDefinitions();
-    return Object.keys(apiDefs).reduce((accumulator, api) => {
+    return getApiCategoryOrder().reduce((accumulator, api) => {
       accumulator[api] = false;
       return accumulator;
     }, {});
