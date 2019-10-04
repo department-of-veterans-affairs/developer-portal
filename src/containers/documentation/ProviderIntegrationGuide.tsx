@@ -1,13 +1,8 @@
-import * as React from 'react';
+import MarkdownPage from '../../components/MarkdownPage';
+
 import IntegrationGuideContent from '../../content/providers/integrationGuide.mdx';
 
-export default function ProviderIntegrationGuide() {
-  return (
-      <section className="usa-section">
-        <div className="usa-grid">
-          <IntegrationGuideContent className="markdown-wrapper" />
-        </div>
-      </section>
-    );
+export default function ProviderIntegrationGuide(): JSX.Element {
+  return MarkdownPage(IntegrationGuideContent);
 }
 
