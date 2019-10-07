@@ -22,7 +22,7 @@ export default class DocumentationOverview extends React.Component<RouteComponen
             const { name, content } = apiDefinitions[apiCategoryKey];
             return (
               <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
-                <CardLink name={name} key={apiCategoryKey} url={`/explore/${apiCategoryKey}`}>
+                <CardLink name={name} url={`/explore/${apiCategoryKey}`}>
                   {content.shortDescription}
                 </CardLink>
               </Flag>

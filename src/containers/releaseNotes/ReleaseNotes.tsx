@@ -52,13 +52,14 @@ function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory)
   };
 
   return (
-    <SideNavEntry
-      key={`hash-link-${apiCategoryKey}`}
-      to={`/release-notes/${apiCategoryKey}`}
-      name={apiCategory.name}
-    >
-      {subNavLinks()}
-    </SideNavEntry>
+    <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
+      <SideNavEntry
+        to={`/release-notes/${apiCategoryKey}`}
+        name={apiCategory.name}
+      >
+        {subNavLinks()}
+      </SideNavEntry>
+    </Flag>
   );
 }
 

@@ -1,3 +1,4 @@
+import { Flag } from 'flag';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
@@ -14,9 +15,11 @@ function cards(parent: string): JSX.Element[] {
     const { name, content } = apiDefs[apiCategoryKey];
     const cardUrl = parent + '/' + apiCategoryKey;
     return (
-      <CardLink name={name} key={apiCategoryKey} url={cardUrl}>
-        {content.shortDescription}
-      </CardLink>
+      <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
+        <CardLink name={name} url={cardUrl}>
+          {content.shortDescription}
+        </CardLink>
+      </Flag>
     );
   });
 }
