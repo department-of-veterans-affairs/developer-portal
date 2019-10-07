@@ -2,7 +2,8 @@ import ErrorableCheckboxGroup from '@department-of-veterans-affairs/formation-re
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import * as React from "react";
-import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
+import { getCategoryFlags } from '../../apiDefs/env';
+import { getApiDefinitions } from '../../apiDefs/query';
 import Form from "../../components/Form";
 import { IErrorableInput } from '../../types';
 import { validateEmail, validatePresence } from '../../utils/validators';
@@ -116,8 +117,10 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
   private static get apiOptions(): object[] {
     const apiDefs = getApiDefinitions();
-    // TODO use env to limit api list
-    return getApiCategoryOrder().map(api => {
+    const categoryFlags = getCategoryFlags();
+    return Object.keys(categoryFlags).filter((category) => {
+        return categoryFlags[category];
+    }).map(api => {
       return {
         label: apiDefs[api].name,
         value: api,
@@ -126,7 +129,10 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   }
 
   private static get initialApiState() {
-    return getApiCategoryOrder().reduce((accumulator, api) => {
+    const categoryFlags = getCategoryFlags();
+    return Object.keys(categoryFlags).filter((category) => {
+        return categoryFlags[category];
+    }).reduce((accumulator, api) => {
       accumulator[api] = false;
       return accumulator;
     }, {});
