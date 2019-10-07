@@ -1,3 +1,4 @@
+import { Flag } from 'flag';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
@@ -42,10 +43,12 @@ class Home extends React.Component {
                 {apiCategoryOrder.map((apiCategoryKey: string) => {
                   const { name, content } = apiDefinitions[apiCategoryKey];
                   return (
-                    <Link className="va-api-card" to={`/explore/${apiCategoryKey}`} key={apiCategoryKey}>
-                      <h3 className="va-api-name">VA {name}</h3>
-                      <p className="va-api-description">{content.placardText}</p>
-                    </Link>
+                    <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
+                      <Link className="va-api-card" to={`/explore/${apiCategoryKey}`}>
+                        <h3 className="va-api-name">VA {name}</h3>
+                        <p className="va-api-description">{content.placardText}</p>
+                      </Link>
+                    </Flag>
                   );
                 })}
               </div>
