@@ -1,3 +1,4 @@
+import { Flag } from 'flag';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
@@ -20,9 +21,11 @@ export default class DocumentationOverview extends React.Component<RouteComponen
           {apiCategoryOrder.map((apiCategoryKey: string) => {
             const { name, content } = apiDefinitions[apiCategoryKey];
             return (
-              <CardLink name={name} key={apiCategoryKey} url={`/explore/${apiCategoryKey}`}>
-                {content.shortDescription}
-              </CardLink>
+              <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
+                <CardLink name={name} key={apiCategoryKey} url={`/explore/${apiCategoryKey}`}>
+                  {content.shortDescription}
+                </CardLink>
+              </Flag>
             );
           })}
         </div>
