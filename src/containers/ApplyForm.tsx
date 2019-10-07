@@ -10,9 +10,8 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 
 import * as actions from '../actions';
-import { includesOauthAPI } from '../apiDefs';
+import { includesOauthAPI } from '../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../types';
-
 import ApplyHeader from './ApplyHeader';
 
 import './Apply.scss';
@@ -38,20 +37,20 @@ type ApplicationDispatch = ThunkDispatch<IRootState, undefined, actions.SubmitFo
 
 const mapDispatchToProps = (dispatch : ApplicationDispatch) => {
   return {
-    submitForm: () => { dispatch(actions.submitForm()) },
-    toggleAcceptTos: () => { dispatch(actions.toggleAcceptTos()) },
-    toggleBenefits: () => { dispatch(actions.toggleBenefitsApi()) },
-    toggleClaims: () => { dispatch(actions.toggleClaimsApi()) },
-    toggleCommunityCare: () => { dispatch(actions.toggleCommunityCareApi()) },
-    toggleFacilities: () => { dispatch(actions.toggleFacilitiesApi()) },
-    toggleHealth: () => { dispatch(actions.toggleHealthApi()) },
-    toggleVerification: () => { dispatch(actions.toggleVerificationApi()) },
-    updateDescription: (value: IErrorableInput) => { dispatch(actions.updateApplicationDescription(value)) },
-    updateEmail: (value: IErrorableInput) => { dispatch(actions.updateApplicationEmail(value)) },
-    updateFirstName: (value: IErrorableInput) => { dispatch(actions.updateApplicationFirstName(value)) },
-    updateLastName: (value: IErrorableInput) => { dispatch(actions.updateApplicationLastName(value)) },
-    updateOAuthRedirectURI: (value: IErrorableInput) => { dispatch(actions.updateApplicationOAuthRedirectURI(value)) },
-    updateOrganization: (value: IErrorableInput) => { dispatch(actions.updateApplicationOrganization(value)) },
+    submitForm: () => { dispatch(actions.submitForm()); },
+    toggleAcceptTos: () => { dispatch(actions.toggleAcceptTos()); },
+    toggleBenefits: () => { dispatch(actions.toggleBenefitsApi()); },
+    toggleClaims: () => { dispatch(actions.toggleClaimsApi()); },
+    toggleCommunityCare: () => { dispatch(actions.toggleCommunityCareApi()); },
+    toggleFacilities: () => { dispatch(actions.toggleFacilitiesApi()); },
+    toggleHealth: () => { dispatch(actions.toggleHealthApi()); },
+    toggleVerification: () => { dispatch(actions.toggleVerificationApi()); },
+    updateDescription: (value: IErrorableInput) => { dispatch(actions.updateApplicationDescription(value)); },
+    updateEmail: (value: IErrorableInput) => { dispatch(actions.updateApplicationEmail(value)); },
+    updateFirstName: (value: IErrorableInput) => { dispatch(actions.updateApplicationFirstName(value)); },
+    updateLastName: (value: IErrorableInput) => { dispatch(actions.updateApplicationLastName(value)); },
+    updateOAuthRedirectURI: (value: IErrorableInput) => { dispatch(actions.updateApplicationOAuthRedirectURI(value)); },
+    updateOrganization: (value: IErrorableInput) => { dispatch(actions.updateApplicationOrganization(value)); },
   };
 };
 
@@ -63,13 +62,13 @@ const mapStateToProps = (state : IRootState) => {
 
 // Mapping from the options on the form to url fragments for APIs
 const formFieldsToFragments = {
-  appeals: 'appeals',
   benefits: 'benefits',
   claims: 'claims',
   communityCare: 'community_care',
-  health: 'argonaut',
+  facilities: 'facilities',
+  health: 'fhir',
   verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
-}
+};
 
 const OAuthHowTo = (props: {show: boolean}) => {
   return (
@@ -86,7 +85,7 @@ const OAuthHowTo = (props: {show: boolean}) => {
     </div> 
     : null
   );
-}
+};
 
 class ApplyForm extends React.Component<IApplyProps> {
   constructor(props: IApplyProps) {
@@ -263,7 +262,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private renderError() {
     const assistanceTrailer = (
-      <span>Need assistance? Create an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">Github page</a></span>
+      <span>Need assistance? Create an issue through our <Link to="/support">Support page</Link></span>
     );
 
     if (this.props.errorStatus) {
@@ -304,4 +303,4 @@ class ApplyForm extends React.Component<IApplyProps> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApplyForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ApplyForm);

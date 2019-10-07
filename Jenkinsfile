@@ -226,7 +226,6 @@ node('vetsgov-general-purpose') {
 
       try {
       def builds = [:]
-
       envNames.each{ envName ->
         builds[envName] = {
           dockerImage.inside(args) {

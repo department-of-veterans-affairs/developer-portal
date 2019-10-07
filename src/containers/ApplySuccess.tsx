@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { apiDefs } from '../apiDefs';
+import { getApiDefinitions } from '../apiDefs/query';
 import sentenceJoin from '../sentenceJoin';
 import { IApiList, IApplication, IRootState } from '../types';
 
@@ -17,7 +17,7 @@ const mapStateToProps = (state : IRootState) => {
 
 function AssistanceTrailer() {
   return (
-    <p>If you would like to report a bug or make a feature request, please open an issue on our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">GitHub page</a>.</p>
+    <p>If you would like to report a bug or make a feature request, please open an issue through our <Link to="/support">Support page</Link>.</p>
   );
 }
 
@@ -40,13 +40,14 @@ const apisToEnglishOauthList: any = {
   community_care: 'Community Care API',
   health: 'VA Health API',
   verification: 'Veteran Verfication API',
-}
+};
 
 const apisToEnglishList = (apis: string[]): string => {
+  const apiDefs = getApiDefinitions();
   return sentenceJoin(apis.map((k) => {
     return apiDefs[k].properName;
   }));
-}
+};
 
 function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } : IOAuthCredentialsNoticeProps) {
   const apiListSnippet = selectedApis.filter((k) => apisToEnglishOauthList[k] );
@@ -66,17 +67,16 @@ function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } 
 }
 
 function ApiKeyNotice({ token, email, selectedApis } : IApiKeyNoticeProps) {
+  const apiDefs = getApiDefinitions();
   const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => apiDefs[k].apiKey));
 
   return (
     <div>
       <p className="usa-font-lead"><strong>Your VA API key is:</strong> {token}</p>
-
       <p>
         You should receive an email at {email} with the same key. That key is for accessing the {apiListSnippet} in the development environment.
         You can use it by including it in each request as an HTTP request header named <span className="mono">apiKey</span>.
       </p>
-
     </div>
   );
 }

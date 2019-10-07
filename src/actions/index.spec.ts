@@ -59,24 +59,13 @@ describe('submitForm', () => {
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
     expect(dispatch).toBeCalledWith({
-      status: 'Max Retries Exceeded. Last Status: Network Failure',
+      status: 'Network Failure',
       type: constants.SUBMIT_APPLICATION_ERROR,
     });
   });
 
-  it('retries the correct number of times when the fetch errors', async () => {
-    fetchMock.mockReject(new Error('Network Failure'));
-    const dispatch = jest.fn();
-    const getState = jest.fn();
-    getState.mockReturnValueOnce(appState);
-    await actions.submitForm()(dispatch, getState, undefined);
-    expect(fetchMock.mock.calls.length).toEqual(3);
-  });
-
   it('dispatches error events when fetch returns non-200', async () => {
     fetchMock.mockResponses(
-      [JSON.stringify({ error: 'not found' }), { status: 404 }],
-      [JSON.stringify({ error: 'not found' }), { status: 404 }],
       [JSON.stringify({ error: 'not found' }), { status: 404 }],
     );
     const dispatch = jest.fn();
@@ -87,33 +76,9 @@ describe('submitForm', () => {
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
     expect(dispatch).toBeCalledWith({
-      status: 'Max Retries Exceeded. Last Status: Not Found',
+      status: 'Not Found',
       type: constants.SUBMIT_APPLICATION_ERROR,
     });
-  });
-});
-
-describe('validateEmail', () => {
-  it('should add validation filed to newValue when email is not valid', () => {
-    expect(
-      actions.validateEmail({
-        dirty: true,
-        value: 'bademail(at)example.com',
-      }),
-    ).toEqual(expect.objectContaining({ validation: 'Must be a valid email address.' }));
-  });
-
-  it('should not add validation if the email is valid', () => {
-    expect(
-      actions.validateEmail({
-        dirty: true,
-        value: 'goodemail@example.com',
-      }),
-    ).toEqual(
-      expect.not.objectContaining({
-        validation: 'Must be a valid email address.',
-      }),
-    );
   });
 });
 
@@ -141,32 +106,6 @@ describe('updateApplicationEmail', () => {
       },
       type: constants.UPDATE_APPLICATION_EMAIL,
     });
-  });
-});
-
-describe('validateOAuthRedirectURI', () => {
-  it('should accept localhost urls with ports', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({
-      dirty: true,
-      value: 'http://localhost:8080/',
-    });
-    expect(validatedInput).not.toEqual(expect.objectContaining({ validation: expect.anything() }));
-  });
-
-  it('should reject URLs with query strings', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({
-      dirty: true,
-      value: 'https://example.com?a=b',
-    });
-    expect(validatedInput).toEqual(expect.objectContaining({ validation: expect.any(String) }));
-  });
-
-  it('should reject URLs with fragments', () => {
-    const validatedInput = actions.validateOAuthRedirectURI({
-      dirty: true,
-      value: 'https://example.com/#frag',
-    });
-    expect(validatedInput).toEqual(expect.objectContaining({ validation: expect.any(String) }));
   });
 });
 

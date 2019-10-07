@@ -1,0 +1,35 @@
+@import '../styles/variables';
+
+a.va-api-card {
+  width: 200px;
+  min-height: 100px;
+  margin: 10px 30px 10px 0;
+  border-top: 5px solid #C4C4C4;
+  text-decoration: none;
+
+  &:hover {
+    border-top: 5px solid $color-gold;
+  }
+
+  &:visited {
+    color: #323A45;
+  }
+
+  h3.va-api-name {
+    margin: 15px 0 !important;
+    font-size: 2rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+}
+
+.va-api-description {
+  color: #222;
+}
+
+.va-api-container {
+  display: flex;
+  flex-flow: row wrap;
+}

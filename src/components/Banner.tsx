@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { VeteransCrisisLine } from './VeteransCrisisLine';
+import VeteransCrisisLine from './VeteransCrisisLine';
 
 import './Banner.scss';
 
@@ -14,7 +14,7 @@ interface IBannerState {
     accordionVisible: boolean;
 }
 
-export class Banner extends React.Component<{}, IBannerState> {
+export default class Banner extends React.Component<{}, IBannerState> {
 
   constructor(props: {}) {
       super(props);
@@ -90,13 +90,13 @@ export class Banner extends React.Component<{}, IBannerState> {
     this.setState(state => {
       return {menuVisible: !state.menuVisible};
     });
-  };
+  }
 
   private toggleAccordionVisible = () => {
     this.setState(state => {
       return {accordionVisible: !state.accordionVisible};
     });
-  };
+  }
 
   private renderSiteGuidance(className: string, iconContent: string, titleText: {}, bodyText: {}) {
     return (

@@ -4,23 +4,24 @@ import { RouteComponentProps, Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
-import { apiCategoryOrder, apiDefs } from './apiDefs';
-import { apiEnvFlags } from './apiDefs/env';
-import { PageContent } from './components/PageContent';
-import {
-  ApplyForm,
-  ApplySuccess,
-  BetaPage,
-  BetaSuccess,
-  DisabledApplyForm,
-  ExploreDocs,
-  Home,
-  OAuth,
-  ReleaseNotes,
-  RoutedContent,
-  Support,
-  WhatsNew,
-} from './containers';
+import { getDeprecatedFlags } from './apiDefs/deprecated';
+import { getEnvFlags } from './apiDefs/env';
+import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
+import { IApiDescription } from './apiDefs/schema';
+import PageContent from './components/PageContent';
+import ApplyForm from './containers/ApplyForm';
+import ApplySuccess from './containers/ApplySuccess';
+import BetaPage from './containers/Beta';
+import BetaSuccess from './containers/BetaSuccess';
+import DisabledApplyForm from './containers/DisabledApplyForm';
+import DocumentationRoot from './containers/documentation/DocumentationRoot';
+import OAuth from './containers/documentation/OAuth';
+import Home from './containers/Home';
+import News from './containers/News';
+import NotFound from './containers/NotFound';
+import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
+import RoutedContent from './containers/RoutedContent';
+import Support from './containers/support/Support';
 
 export function topLevelRoutes(props: RouteComponentProps<void>) {
   return (
@@ -33,6 +34,10 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route
           path="/explore/terms-of-service"
           render={() => <Redirect to="/terms-of-service" />}
+        />
+        <Route
+          path="/whats-new"
+          render={() => <Redirect to="/news" />}
         />
 
         {/* Current routes: */}
@@ -51,12 +56,13 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/applied" component={ApplySuccess} />
         <Route path="/beta" component={BetaPage} />
         <Route path="/beta-success" component={BetaSuccess} />
-        <Route path="/explore/:apiCategoryKey?" component={ExploreDocs} />
+        <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
         <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
         <Route path="/oauth" component={OAuth} />
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-        <Route path="/whats-new" component={WhatsNew} />
+        <Route path="/news" component={News} />
         <Route path="/support" component={Support} />
+        <Route component={NotFound} />
       </Switch>
     </PageContent>
   );
@@ -69,9 +75,13 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
  */
 
 export function sitemapConfig() {
+  const apiDefs = getApiDefinitions();
+  const deprecatedFlags = getDeprecatedFlags();
+  const envFlags = getEnvFlags();
+  
   function getApiRouteParams(route: string, apiCategory: string): string[] {
-    const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api) => {
-      if (apiEnvFlags.hasOwnProperty(api.urlFragment) && apiEnvFlags[api.urlFragment]) {
+    const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api: IApiDescription) => {
+      if (envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment]) {
         result.push(api.urlFragment);
       }
       return result;
@@ -84,6 +94,7 @@ export function sitemapConfig() {
     return routeParams;
   }
 
+  const apiCategoryOrder = getApiCategoryOrder();
   return {
     paramsConfig: {
       '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => {

@@ -13,7 +13,7 @@ interface IPageHeroProps {
     title: string;
 }
 
-export function PageHero({ button,
+export default function PageHero({ button,
                            buttonLink,
                            content,
                            linkDirect = false,

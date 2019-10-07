@@ -11,14 +11,18 @@ export const testPaths = [
   '/apply',
   '/terms-of-service',
   '/go-live',
-  '/oauth',
   '/explore',
+  '/explore/health',
+  '/explore/benefits',
+  '/explore/health/docs/authorization',
+  '/explore/health/docs/quickstart',
   '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
   '/explore/benefits/docs/appeals',
   '/release-notes',
-  '/whats-new',
+  '/news',
   '/support',
   '/support/faq',
+  '/support/contact-us',
 ];
 
 export const metadataTestPaths = [''];

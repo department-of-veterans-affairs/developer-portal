@@ -1,10 +1,10 @@
-import * as React from 'react'
+import * as React from 'react';
 
 import './Footer.scss';
 
 import logo from '../assets/lighthouseVaLogo.png';
 
-export function Footer() {
+export default function Footer() {
     return (
         <footer className="usa-footer usa-footer-medium" role="contentinfo">
           <div className="usa-grid">

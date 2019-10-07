@@ -19,6 +19,7 @@ module.exports = {
     "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
     "^.+\\.tsx?$": "ts-jest",
     "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+    "^.+\\.ya?ml$": "<rootDir>/config/jest/yamlTransform.js",
     "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
   },
   transformIgnorePatterns: [
@@ -34,6 +35,8 @@ module.exports = {
     "tsx",
     "web.js",
     "js",
+    "yml",
+    "yaml",
     "web.jsx",
     "jsx",
     "json",

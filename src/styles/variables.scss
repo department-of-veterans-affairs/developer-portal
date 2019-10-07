@@ -1,0 +1,14 @@
+// Colors
+@import './colors';
+
+// Responsive media
+$medium-large-screen: 768px;
+$medium-screen: 640px;
+$large-screen: 951px;
+
+// Asset reference
+@import './assets';
+
+// Necessary to include this file to polyfill USWDS resources 
+// to reduce duplication until we can find a compiler-level solution
+@import './uswdsPatch';

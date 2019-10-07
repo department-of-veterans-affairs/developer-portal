@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 
-import { validateEmail } from '../actions';
 import { IErrorableInput } from '../types';
+import { validateEmail } from '../utils/validators';
 
 import ds from '../assets/dslogon-icon.svg';
 import idme from '../assets/idme-icon-dark.svg';
@@ -36,28 +36,28 @@ const idMappings = {
     confirm: "00Nt0000000bf2L",
     oid: "00Dr00000001HcX",
   },
-}
+};
 
 const env = process.env.REACT_APP_SALESFORCE_ENV || 'VICDEV';
 
 interface IVetConfirm {
-  caretaker: boolean,
-  family: boolean,
-  no: boolean
-  servicemember: boolean,
-  veteran: boolean,
+  caretaker: boolean;
+  family: boolean;
+  no: boolean;
+  servicemember: boolean;
+  veteran: boolean;
 }
 
 interface IBetaPageState {
-  ds: boolean,
-  email: IErrorableInput,
-  firstName: string,
-  idme: boolean,
-  lastName: string,
-  mhv: boolean,
-  vetConfirm: IVetConfirm,
-  iPhone: boolean,
-  computer: boolean
+  ds: boolean;
+  email: IErrorableInput;
+  firstName: string;
+  idme: boolean;
+  lastName: string;
+  mhv: boolean;
+  vetConfirm: IVetConfirm;
+  iPhone: boolean;
+  computer: boolean;
 }
 
 const vetConfirmMap = {
@@ -66,9 +66,9 @@ const vetConfirmMap = {
   no: "No",
   servicemember: "Servicemember",
   veteran: "Veteran",
-}
+};
 
-export class BetaPage extends React.Component<{}, IBetaPageState> {
+export default class BetaPage extends React.Component<{}, IBetaPageState> {
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -90,7 +90,7 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
         servicemember: false,
         veteran: false,
       },
-    }
+    };
   }
 
   public render() {
@@ -297,7 +297,7 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
       const update = {};
       update[key] = !this.state[key];
       this.setState(update);
-    }
+    };
   }
 
   private updateNameInput = (name: string) => {
@@ -305,18 +305,18 @@ export class BetaPage extends React.Component<{}, IBetaPageState> {
       const update = {};
       update[name] = event.target.value;
       this.setState(update);
-    }
+    };
   }
 
   private updateIVetConfirm = (key: string) => {
     return () => {
-      const update = { ...this.state.vetConfirm }
+      const update = { ...this.state.vetConfirm };
       update[key] = !update[key];
 
       update.no = !(update.caretaker || update.family || update.veteran || update.servicemember);
 
       this.setState({ vetConfirm: update });
-    }
+    };
   }
 
   private updateEmail = (value: IErrorableInput) => {

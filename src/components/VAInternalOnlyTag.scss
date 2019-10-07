@@ -1,0 +1,15 @@
+@import "../styles/variables";
+
+.va-internal-tag {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.4rem;
+
+  span {
+    padding: 3px 5px;
+    color: #000000;
+    background-color: $color-gold;
+    border-radius: 2px;
+  }
+}

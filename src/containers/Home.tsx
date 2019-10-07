@@ -6,14 +6,14 @@ import './Home.scss';
 class Home extends React.Component {
   public render() {
     return (
-      <div className="Home">
+      <div className="home">
 
         <div className="site-disclaimer">
           <strong>This is a beta site.</strong>
           &nbsp;We are always looking to make improvements.&nbsp;
-                <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
+            <Link to="/support">
             <strong>Send us your feedback</strong>
-          </a>
+          </Link>
         </div>
 
         <section role="region" aria-label="Page Hero" className="usa-hero">
@@ -101,4 +101,4 @@ class Home extends React.Component {
   }
 }
 
-export default Home
+export default Home;

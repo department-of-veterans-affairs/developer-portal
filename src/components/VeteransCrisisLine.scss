@@ -1,4 +1,4 @@
-@import '../base';
+@import '../styles/variables';
 
 @mixin no-sr-content {
   &:after {
@@ -62,12 +62,6 @@ button.va-crisis-line-button {
         background-color: #A62D1B;
       }
     }
-  }
-
-  &:focus,
-  &:active {
-    outline-offset: -2px;
-    outline: 2px solid #FDB81E;
   }
 
   .vcl-container {

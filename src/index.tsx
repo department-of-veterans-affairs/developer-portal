@@ -8,9 +8,15 @@ import App from './App';
 import { unregister } from './registerServiceWorker';
 import store from './store';
 
-if (process.env.REACT_APP_SENTRY_DSN) {
+const { REACT_APP_SENTRY_DSN, REACT_APP_SENTRY_RELEASE } = process.env;
+
+// We only want to send errors to sentry when we have a DSN and a relase. Deploys
+// to review instances do not have SENTRY_RELEASE set so those instances will not
+// send errors to sentry
+if (REACT_APP_SENTRY_DSN && REACT_APP_SENTRY_RELEASE) {
   Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
+    dsn: REACT_APP_SENTRY_DSN,
+    release: REACT_APP_SENTRY_RELEASE,
   });
 }
 try {
@@ -26,7 +32,7 @@ try {
   */
   unregister();
 } catch (err) {
-  if (process.env.REACT_APP_SENTRY_DSN) {
+  if (REACT_APP_SENTRY_DSN && REACT_APP_SENTRY_RELEASE) {
     Sentry.captureException(err);
   }
 }

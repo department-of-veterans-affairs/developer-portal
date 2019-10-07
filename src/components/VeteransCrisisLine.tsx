@@ -1,19 +1,19 @@
 import * as React from 'react';
 
-import './VeteransCrisisLine.scss';
-
 import { faComments, faDeaf, faMobileAlt, faPhone, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import classNames from 'classnames';
+
+import './VeteransCrisisLine.scss';
+
 import vclLogo from '../assets/vcl-logo.png';
 
 interface IVeteransCrisisLineProps {
-  visible: boolean,
-  closeHandler: (event?: {}) => void 
+  visible: boolean;
+  closeHandler: (event?: {}) => void; 
 }
 
-export class VeteransCrisisLine extends React.Component<IVeteransCrisisLineProps, {}> {
+export default class VeteransCrisisLine extends React.Component<IVeteransCrisisLineProps, {}> {
   private firstListItemLink = React.createRef<HTMLAnchorElement>();
 
   public componentDidMount() {
@@ -95,5 +95,5 @@ export class VeteransCrisisLine extends React.Component<IVeteransCrisisLineProps
     if (event.key === 'Escape' && this.props.visible) {
       this.props.closeHandler();
     }
-  };
+  }
 }

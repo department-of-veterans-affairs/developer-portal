@@ -28,12 +28,12 @@ const vm = require('vm');
 const fs = require('fs');
 
 class SitemapBuilderPlugin {
-
   constructor(options) {
     if (typeof options === 'undefined' || !options.routesFile) {
       console.error('To use SitemapBuilderPlugin you must provide an options object with routesFile as a property')
     }
     this.routesFile = options.routesFile;
+    this.polyfillsFile = options.polyfillsFile;
     this.verbose = options.verbose || false;
     this.fileName = options.fileName || 'sitemap.xml';
   }
@@ -52,7 +52,7 @@ class SitemapBuilderPlugin {
         callback();
       } else {
         let config = compiler.options;
-        config.entry = [this.routesFile];
+        config.entry = [this.polyfillsFile, this.routesFile];
         config.output.path = '/';
         config.output.filename = 'routes.js';
         config.optimization = { minimize: false };
