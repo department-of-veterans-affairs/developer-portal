@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './WrapParameters.scss';
+import './CurlForm.scss';
 
 export interface ICurlFormProps {
   system: any;
@@ -153,14 +153,3 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     }
   }
 }
-
-export const WrapParameters = {
-  parameters: (Original: any, system: any) => (props: any) => {
-    return (
-      <div>
-        <CurlForm system={system} operation={props.operation.toJS()} />
-        <Original {...props} />
-      </div>
-    );
-  },
-};

@@ -1,15 +1,9 @@
 import { curlify } from './curlify';
-import { DisableTryItOut } from './DisableTryItOut';
 import DisableTryItOut from './DisableTryItOut';
 import ExtendedLayout from './ExtendedLayout';
-import { ExtendedLayout } from './ExtendedLayout';
-import { OperationTag } from './OperationTag';
 import OperationTag from './OperationTag';
 import SchemesContainer from './SchemesContainer';
-import { SchemesContainer } from './SchemesContainer';
 import Servers from './Servers';
-import { Servers } from './Servers';
-import { ServersContainer } from './ServersContainer';
 import ServersContainer from './ServersContainer';
 import './StyleOverride.scss';
 import { VersionActions } from './VersionActions';
