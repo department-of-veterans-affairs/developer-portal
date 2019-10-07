@@ -108,7 +108,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
             name="description"
             field={this.state.description}
             required={true} />
-          
+
         </fieldset>
       </Form>
     );
@@ -116,6 +116,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
   private static get apiOptions(): object[] {
     const apiDefs = getApiDefinitions();
+    // TODO use env to limit api list
     return getApiCategoryOrder().map(api => {
       return {
         label: apiDefs[api].name,
@@ -123,7 +124,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
       };
     });
   }
-  
+
   private static get initialApiState() {
     return getApiCategoryOrder().reduce((accumulator, api) => {
       accumulator[api] = false;
