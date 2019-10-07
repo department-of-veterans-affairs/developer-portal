@@ -21,7 +21,8 @@
 }
 
 .opblock-section, .responses-wrapper {
-  margin: 2em;
+  margin: 2em 2em 0;
+  padding-bottom: 1em;
 }
 
 .execute-wrapper {
@@ -32,33 +33,35 @@
   padding: 1em 0 2em !important;
 }
 
-.opblock-body {
-  background-color: white;
-  margin: 2em;
-  .opblock-section-header {
-    padding: 0 !important;
-    box-shadow: none !important;
-    .opblock-title, h4 {
-      font-size: 3rem !important;
-    }
-  }
-  .table-container {
-    padding: 0;
-    .parameters {
-      @include table-style;
-      input {
-        display: none;
+.opblock {
+  margin-bottom: 0 !important;
+  .opblock-body {
+    background-color: white;
+    .opblock-section-header {
+      padding: 0 !important;
+      box-shadow: none !important;
+      .opblock-title, h4 {
+        font-size: 3rem !important;
       }
     }
-  }
-  .responses-inner {
-    padding: 0;
-    .responses-table{
-      @include table-style;
-      thead {
-        .col_header {
-          border: 1px solid #5b616b;
-          border-bottom: 1px solid rgba(59, 65, 81, .2) !important;
+    .table-container {
+      padding: 0;
+      .parameters {
+        @include table-style;
+        input {
+          display: none;
+        }
+      }
+    }
+    .responses-inner {
+      padding: 0;
+      .responses-table{
+        @include table-style;
+        thead {
+          .col_header {
+            border: 1px solid #5b616b;
+            border-bottom: 1px solid rgba(59, 65, 81, .2) !important;
+          }
         }
       }
     }
