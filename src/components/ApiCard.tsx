@@ -10,7 +10,7 @@ export interface IApiCardProps {
   url: string;
 }
 
-export class ApiCard extends React.Component<IApiCardProps, {}> {
+export default class ApiCard extends React.Component<IApiCardProps, {}> {
   protected static defaultProps = {
     vaInternalOnly: false,
   };
@@ -35,5 +35,3 @@ export class ApiCard extends React.Component<IApiCardProps, {}> {
     );
   }
 }
-
-export default ApiCard;

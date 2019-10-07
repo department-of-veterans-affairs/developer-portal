@@ -3,37 +3,22 @@ import {
   facilitiesContent,
   healthContent,
   verificationContent,
-} from '../content/apiDocs';
+} from '../../content/apiDocs';
 
 import {
   BenefitsReleaseNotes,
   FacilitiesReleaseNotes,
   HealthReleaseNotes,
   VerificationReleaseNotes,
-} from '../content/releaseNotes';
+} from '../../content/releaseNotes';
 
-import {
-  IApiCategories,
-  IApiCategory,
-  IApiCategoryContent,
-  IApiDescription,
-  IApiDocSource,
-} from './schema';
-
+import { IApiCategories } from '../schema';
 import benefitsApis from './benefits';
 import facilitiesApis from './facilities';
 import healthApis from './health';
 import verificationApis from './verification';
 
-export { 
-  IApiCategories,
-  IApiCategory,
-  IApiCategoryContent,
-  IApiDescription,
-  IApiDocSource,
-};
-
-export const apiDefs: IApiCategories = {
+const apiDefinitions : IApiCategories = {
   benefits: {
     apiKey: true,
     apis: benefitsApis,
@@ -80,63 +65,4 @@ export const apiDefs: IApiCategories = {
 };
 
 export const apiCategoryOrder: string[] = ['benefits', 'facilities', 'health', 'verification'];
-
-// If an API with the given URL fragment exists, the given `fn` callback
-// function will be called with the full IApiDescription. The return value is
-// either the return value of the callback function or `null` if no such API
-// exists.
-export function withApiDescription(
-  urlFragment: string,
-  fn: (apiDesc: IApiDescription) => any,
-): any {
-  const api = lookupApiByFragment(urlFragment);
-  if (api == null) {
-    return null;
-  }
-
-  return fn(api);
-}
-
-export function lookupApiByFragment(urlFragment: string): IApiDescription | null {
-  for (const cat of Object.values(apiDefs)) {
-    for (const api of cat.apis) {
-      if (api.urlFragment === urlFragment) {
-        return api;
-      }
-    }
-  }
-
-  return null;
-}
-
-export function lookupApiCategory(categoryKey: string): IApiCategory | null {
-  return apiDefs[categoryKey];
-}
-
-function categoriesFor(apiList: string[]): IApiCategory[] {
-  const categories = new Set();
-  for (const cat of Object.values(apiDefs)) {
-    for (const api of cat.apis) {
-      if (apiList.includes(api.urlFragment)) {
-        categories.add(cat);
-      }
-    }
-  }
-  return Array.from(categories);
-}
-
-function apisFor(apiList: string[]): IApiDescription[] {
-  const apis = new Set();
-  for (const cat of Object.values(apiDefs)) {
-    for (const api of cat.apis) {
-      if (apiList.includes(api.urlFragment)) {
-        apis.add(api);
-      }
-    }
-  }
-  return Array.from(apis);
-}
-
-export function includesOauthAPI(apiList: string[]): boolean {
-  return categoriesFor(apiList).some(category => !category.apiKey)|| apisFor(apiList).some(api => api.oAuth || false);
-}
+export default apiDefinitions;

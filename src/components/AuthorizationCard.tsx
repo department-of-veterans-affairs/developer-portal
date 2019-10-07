@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CardLink } from './CardLink';
+import CardLink from './CardLink';
 
 interface IAuthorizationCardProps {
   categoryKey: string;

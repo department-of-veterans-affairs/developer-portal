@@ -84,7 +84,7 @@ interface ISideNavProps {
 }
 
 // tslint:disable-next-line: max-classes-per-file
-export class SideNav extends React.Component<ISideNavProps> {
+export default class SideNav extends React.Component<ISideNavProps> {
   private navRef = React.createRef<HTMLDivElement>();
 
   public componentDidMount() {

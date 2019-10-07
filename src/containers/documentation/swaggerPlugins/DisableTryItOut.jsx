@@ -1,6 +1,6 @@
 import React from "react";
 
-export class DisableTryItOut {
+export default class DisableTryItOut {
 
   static toggleTryItOut() {
     return {

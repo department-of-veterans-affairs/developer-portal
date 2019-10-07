@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Search.scss';
 
-export class Search extends React.Component {
+export default class Search extends React.Component {
   public render() {
     return (
       <form id="search_form" className="vadp-search-form" action="https://search.usa.gov/search" 

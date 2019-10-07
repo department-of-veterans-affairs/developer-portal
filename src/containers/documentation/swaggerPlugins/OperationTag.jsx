@@ -7,7 +7,7 @@ import { sanitizeUrl } from "@braintree/sanitize-url";
 
 const createDeepLinkPath = (str) => typeof str === "string" || str instanceof String ? str.trim().replace(/\s/g, "_") : "";
 
-export class OperationTag extends React.Component {
+export default class OperationTag extends React.Component {
 
   static defaultProps = {
     tag: "",

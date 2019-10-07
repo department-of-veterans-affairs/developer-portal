@@ -1,4 +1,4 @@
-import { IApiDescription } from './schema';
+import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
 const facilitiesApis : IApiDescription[] = [
@@ -10,6 +10,7 @@ const facilitiesApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/va_facilities/docs/v0/api`,
       },
     ],
+    enabledByDefault: true,
     name: 'VA Facilities API',
     urlFragment: 'facilities',
     vaInternalOnly: false,

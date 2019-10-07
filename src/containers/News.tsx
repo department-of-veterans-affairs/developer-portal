@@ -6,7 +6,7 @@ import toHtmlId from '../toHtmlId';
 
 import CardLink from '../components/CardLink';
 import PageHeader from '../components/PageHeader';
-import { SideNav, SideNavEntry } from '../components/SideNav';
+import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 
 import './News.scss';
