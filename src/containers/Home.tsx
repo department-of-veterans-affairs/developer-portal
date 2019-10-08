@@ -73,10 +73,10 @@ class Home extends React.Component {
               <h2 id="discover">Discover How VA's Partners Use Our APIs</h2>
               <p>
                 Today, 65% of disability and pension claims get to VA through paper or fax. Veterans and their families often use Veteran Service Organizations (VSOs) to help file claims, but in order to successfully submit a claim, VSOs need a way to securely access and submit a Veteran’s information. VA created the Benefits Intake API to streamline the data transfer process. Now VSOs can use VA’s Benefits Intake API to drastically cut down on the steps required to submit a claim, and send the necessary data directly to VA with the press of a button.
-                    </p>
+              </p>
             </div>
             <div className="usa-width-one-half">
-              <EmbeddedYoutubeVideo url="https://www.youtube.com/embed/at69_Uz05vA" />
+              <EmbeddedYoutubeVideo title="VA's Benefits Intake API" url="https://www.youtube.com/embed/at69_Uz05vA" />
             </div>
           </div>
         </section>

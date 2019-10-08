@@ -70,7 +70,7 @@ function mediaItem(item: INewsItem) {
     return (
       <div className="va-api-media-item">
         {description}
-        <EmbeddedYoutubeVideo url={item.url} />
+        <EmbeddedYoutubeVideo title={item.title} url={item.url} />
       </div>
     );
   }
