@@ -17,7 +17,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   public constructor(props: ICurlFormProps) {
     super(props);
 
-    let state = {
+    const state = {
       apiKey: '',
       bearerToken: '',
       params: this.props.operation.parameters,
