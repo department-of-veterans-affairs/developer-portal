@@ -150,6 +150,11 @@ input:focus::placeholder {
   color: $color-gray;
 }
 
+.va-api-sidenav-page {
+  padding-top: 5rem;
+  padding-bottom: 3rem;
+}
+
 .markdown-wrapper {
   // This rule seeks to mimick the USWDS .usa-section > :first-child
   // rule that removes the top margin from most top-level headers on

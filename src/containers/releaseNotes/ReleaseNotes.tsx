@@ -92,7 +92,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
 
   public render() {
     return (
-      <div className="explore">
+      <div className="va-api-sidenav-page">
         <section className="usa-section">
           <div className="usa-grid">
             <ReleaseNotesSideNav />
