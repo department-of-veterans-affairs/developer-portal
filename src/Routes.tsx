@@ -16,6 +16,7 @@ import BetaSuccess from './containers/BetaSuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import OAuth from './containers/documentation/OAuth';
+import ProviderIntegrationGuide from './containers/documentation/ProviderIntegrationGuide';
 import Home from './containers/Home';
 import News from './containers/News';
 import NotFound from './containers/NotFound';
@@ -62,6 +63,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
         <Route path="/news" component={News} />
         <Route path="/support" component={Support} />
+        <Route path="/providers/integration-guide" component={ProviderIntegrationGuide} />
         <Route component={NotFound} />
       </Switch>
     </PageContent>
