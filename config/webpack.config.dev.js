@@ -250,6 +250,7 @@ module.exports = {
               {
                 loader: 'markdown-component-loader',
                 options: {
+                  enabledMarkdownItRules: ['smartquotes', 'table'],
                   markdownItPlugins: [
                     [require('markdown-it-anchor'), { level: 2 }],
                   ],
