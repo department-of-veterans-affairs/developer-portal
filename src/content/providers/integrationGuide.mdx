@@ -1,0 +1,51 @@
+# Lighthouse API Provider Integration Guide
+
+The Lighthouse platform offers an API gateway that VA teams can use to publish their API, exposing it to the internet. This can be an effective way to allow external applications to consume your VA API. This document will explain how to integrate with the API gateway as part of this publishing process.
+
+
+## Authentication and Authorization
+
+When publishing your API on the Lighthouse API platform you will need to choose whether and how to secure requests made to your API. Your API will have a URL path prefix (e.g. `/services/va_facilities/v1`) and all requests using that path prefix will be subject to the same authorization mechanism. You have three choices of authorization: None, API keys, and OpenID Connect (based on OAuth 2.0). Which choice is appropriate for your API depends on the functionality you're providing and the users and applications making API requests.
+
+### No Authorization
+
+This is technically an option. If you have an API backend that is simply hosting static, non-sensitive data about the VA then this option might be appropriate. If you have an application backend providing your API then you should avoid this option.
+
+### API Key Authorization
+
+Every developer that signs up for an API key through developer.va.gov receives an API key. These API keys are used to authenticate the developer. For APIs that require authorization, the Lighthouse platform team maintains access control lists (ACLs) that restrict who can call each API. That is, for API requests to `api.va.gov` the developer needs to request that they be added to the ACL for each API that they want to call. Conversely, every developer has access to the APIs on `dev-api.va.gov`. Since this access is granted automatically to any developer who signs up, you must ensure that the API you publish through `dev-api.va.gov` does not expose any Veteran data.
+
+If you're planning to secure your API by requiring requests to be secured by an API key, your backend should expect to receive a few custom HTTP headers. These are added to the request by the API gateway after the caller is authenticated and authorized.
+
+| Header Name          | Purpose |
+| -------------------- | ------- |
+| x-consumer-id        | A unique identifier for the consumer. Generally you should ignore this. |
+| x-consumer-username  | This is an identifier for the API caller that you can use to correlate requests from the same caller. |
+| x-anonymous-consumer | Indicates that the request has not been authenticated. Boolean, either `true` or `false`. |
+
+
+### OAuth 2.0
+
+If your API allows 3rd party applications to access Veteran PII or PHI, the Lighthouse program requires you to secure your API using OAuth access tokens. This keeps Veterans in control of their data by deciding how it can be used. As an API provider, it's ultimately your job to ensure that PII and PHI is protected. The Lighthouse platform can aid you in this effort by defining OAuth scopes that your API backend can use to ensure that the user has opted into the necessary data access. Just like API keys, any developer can register an OAuth client application for use with APIs on `dev-api.va.gov` so you must ensure that the API you publish through `dev-api.va.gov` only provides data for [the test users](https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts.md).
+
+If you're planning to secure your API by requiring an OAuth access token, you should expect to receive the access token in the HTTP `Authorization` header.
+
+```
+Authorization: Bearer eyJraWQiOiJUdWZhS3pDWlNENlZiN25Xclg3U1VzUkZXQTRQQkJKZGpodHpxbi1aUEZFIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULjlXd1BYc0oyUUxxY0JMaXctMkU3SmEwYUVBd3pjZ0Z3WjFPNi04UkR6RjgiLCJpc3MiOiJodHRwczovL2RlcHR2YS1ldmFsLm9rdGEuY29tL29hdXRoMi9kZWZhdWx0IiwiYXVkIjoiYXBpOi8vZGVmYXVsdCIsImlhdCI6MTU2OTAxMjI1MSwiZXhwIjoxNTY5MDE1ODUxLCJjaWQiOiIwb2EzNXJsYjhwdEh1bGVGZjJwNyIsInVpZCI6IjAwdTJwOWZhcjRpaERBRVg4MnA3Iiwic2NwIjpbInZldGVyYW5fc3RhdHVzLnJlYWQiLCJvcGVuaWQiLCJwcm9maWxlIl0sInN1YiI6ImNmYTMyMjQ0NTY5ODQxYTA5MGFkOWQyZjA1MjRjZjM4In0.CV8IVz12EXgZhnjXragxhMFUN8aRWL3GbwGzlfDn-OEluae9M1b4TKiy379nkMxEvD4t1wn7CsIZZDSUK_ueEiFBQ6qX2_oNpHeyO6HDYJvydhytDDgJnvXA48nH2WySNXt44U9meCCbNegSRN5siJn0hy7Cj1GoaUd9DYPZbmjB-62yVZ67t7NOVjwW86q12-8KhA3gyJoDjU6qAn0KddgbKxi4R6H3wytH778osqMKLCsED9GVvczT0ZIhPobTzLgOcEwkjIBmkt0cZRx0t79o-Cn5sk4DV3frwQgfUJErRy439YyAR2CHGSTT1xet_eMD1KvH0IXGhZcoEEYO7w
+```
+
+The OAuth access token should be validated by submitting it to the Lighthouse token validation service. For details on how to use that service, you can consult the [OpenAPI specification](https://dev-api.va.gov/internal/auth/docs/v0/validation.json) for the service API.
+
+
+### Mixed Authorization
+
+Some APIs provide functionality that requires an API key alongside other functionality that depends on the Veteran consent provided by OAuth. If this describes your API, you can still integrate with the Lighthouse API gateway by mixing authorization mechanisms. To mix authorization mechanisms you need to publish two APIs, on two separate path prefixes. Each API would proxy requests to the same backend URL. Mixing authorization mechanisms is riskier than providing separate backends for each category of functionality.
+
+This approach requires you to be thoughtful about how API requests are served by your backend. The primary risk you'll encounter is receiving an ambiguous request. That is a request that contains both API key auth headers and an `Authorization` header with an access token. In order to best serve API consumers, we require API providers using this authorization pattern to reject such ambiguous requests. In the future the API gateway may reject these ambiguous requests on your behalf. Thus, allowing such requests today may lead you down an unsustainable path, leaving API consumers upset in the future.
+
+## Next Steps
+
+If you're interested in publishing an API on the Lighthouse platform, get in touch by emailing us at api@va.gov.
+
+
+
