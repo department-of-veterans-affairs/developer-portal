@@ -103,7 +103,9 @@ node('vetsgov-general-purpose') {
 
       if (prNum) {
         envNames.each{ envName ->
-          sh "echo PUBLIC_URL=/${reviewBucketPath()}/${envName} >> ./.env.${envName}"
+          def envFile = "./.env.${envName}"
+          sh "echo PUBLIC_URL=/${reviewBucketPath()}/${envName} >> ${envFile}"
+          sh "sed -i '/REACT_APP_SENTRY_/d' ${envFile}"
         }
       }
 
