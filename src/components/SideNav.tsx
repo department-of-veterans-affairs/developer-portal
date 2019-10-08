@@ -100,7 +100,9 @@ export default class SideNav extends React.Component<ISideNavProps> {
       <nav
         className={classNames(
           'vadp-side-nav',
-          'usa-width-one-third',
+          'vads-l-col--12',
+          'medium-screen:vads-l-col--4',
+          'vads-u-padding-right--5',
           'sticky',
           this.props.className,
         )}

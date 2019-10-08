@@ -11,30 +11,19 @@
   }
 
   .va-api-footer-links {
-    float: left;
-    padding-bottom: 20px;
-
     a {
       font-size: 1.4rem;
       color: $color-white;
+    }
 
-      &:visited {
-        color: $color-white;
-        &:hover {
-          color: $color-white;
-        }
-      }
+    ul {
+      list-style: none;
     }
 
     @include media($medium-screen) {
-      position: relative;
-      top: 30px;
-
       ul {
-        float: right;
-
         li {
-          display: inline;
+          margin-bottom: 0;
           padding-left: 3rem;
         }
       }

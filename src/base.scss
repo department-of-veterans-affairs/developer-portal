@@ -1,14 +1,14 @@
 // Variables
 // ==========
 
-// Asset reference - must import before USWDS
+// Asset reference - must import before VADS
 @import './styles/variables';
 
 // Imports
 // =======
 @import '~@department-of-veterans-affairs/formation/sass/full';
 
-// USWDS Overrides 🚗
+// VADS Overrides 🚗
 // ==================
 
 // Layout
@@ -20,9 +20,10 @@ body {
   color: #222;
 }
 
-.usa-grid {
-  max-width: 1200px !important;
-  margin-left: 0 !important;
+// use our site width and left-align rather than center-align grids
+.vads-l-grid-container {
+  max-width: 120rem;
+  margin-left: 0;
 }
 
 header {
