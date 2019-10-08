@@ -21,7 +21,7 @@ export const getEnvFlags = () => {
 
 export const getCategoryFlags = () => {
   const apiDefinitions = getApiDefinitions();
-  let categories = {};
+  const categories = {};
   getApiCategoryOrder().forEach((category) => {
     categories[category] = apiDefinitions[category].apis.filter( api => isHostedApiEnabled(api.urlFragment, api.enabledByDefault) ).length > 0;
   });
