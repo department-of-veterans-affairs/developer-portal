@@ -4,6 +4,7 @@
 // general it is what allows us to confidently add `es2017` to
 // `compilerOptions.lib` in our typescript config.
 import '@babel/polyfill';
+import 'url-polyfill';
 
 if (typeof Promise === 'undefined') {
   // Rejection tracking prevents a common issue where React gets into an
