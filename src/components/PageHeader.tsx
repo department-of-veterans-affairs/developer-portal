@@ -6,7 +6,7 @@ import './PageHeader.scss';
 export default class PageHeader extends React.Component<RouteComponentProps & any, {}> {
   public render() { 
     return (
-      <div className="header">
+      <div className="va-api-header">
         {this.props.halo &&
           <div className="header-halo">
             {this.props.halo}

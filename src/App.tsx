@@ -9,18 +9,12 @@ import { getCategoryFlags, getEnvFlags } from './apiDefs/env';
 import { getAllApis } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
 import Footer from './components/Footer';
-import NavBar from './components/NavBar';
+import Header from './components/Header';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
-import './App.scss';
-
-let currentPath = history.location.pathname;
-history.listen(location => {
-  currentPath = location.pathname;
-});
-
 import 'highlight.js/styles/github.css';
+import './App.scss';
 
 class App extends React.Component {
   public render() {
@@ -31,7 +25,7 @@ class App extends React.Component {
         <ConnectedRouter history={history}>
           <div className="app-container">
             <div className="app">
-              <NavBar hideLinks={currentPath === '/beta' || currentPath === '/beta-success'} />
+              <Header />
               <div className="main" role="main">
                 <Route path="/" render={topLevelRoutes} />
               </div>

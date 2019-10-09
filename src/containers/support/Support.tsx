@@ -45,7 +45,7 @@ function SupportSideNav() {
 export default class Support extends React.Component {
   public render() {
     return (
-      <div className="support">
+      <div className="support va-api-sidenav-page" >
         <section className="usa-section">
           <div className="usa-grid">
             <SupportSideNav />

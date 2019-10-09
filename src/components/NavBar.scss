@@ -1,217 +1,181 @@
 @import '../styles/variables';
 
-.header-content {
-  max-width: none;
+.va-api-nav {
+  background: $color-white;
+  color: #323A45;
+  border-top: 1px solid #DBDBDD;
+  border-bottom: 1px solid #DBDBDD;
+  display: none;
+  width: 25rem;
+  z-index: 0;
+  
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
 
   @include media($large-screen) {
-    padding-right: 3rem;
-    padding-left: 3rem;
-    height: 127px;
+    display: block;
+    position: relative;
+    width: 100%;
+
+    ul.va-api-sub-nav,
+    img.va-api-expand-nav-icon {
+      display: none;
+    }
   }
 
-  display: flex;
-  align-items: center;
-
-  a, a:visited {
-    color: $color-white;
-  }
-
-  .api-status-link {
-    margin-left: auto;
+  &.va-api-mobile-nav-visible {
+    display: block;
     z-index: 2;
-    font-size: 1.7rem;
-    margin-top: 2rem;
-    margin-bottom: 0.3rem;
-  }
-}
-
-.header-right-container {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-}
-
-.header-right-content {
-  display: flex;
-}
-
-// a temporary patch until we adopt VA design system more fully
-#get-started-button {
-  margin-right: 2rem;
-}
-
-.usa-header.usa-header-extended {
-  background: $color-blue-darkest;
-
-  .usa-logo {
-    @include media($large-screen) {
-      margin-top: 0;
-      margin-bottom: 0;
-      font-size: 4.2rem;
-    }
-
-    a {
-      color: #FFFFFF;
-      font-weight: 300;
-    }
   }
 
-  .usa-nav {
-    background: $color-white;
-    color: #323A45;
-    z-index: 0;
-    border-top: 1px solid #DBDBDD;
-    border-bottom: 1px solid #DBDBDD;
-
-    &.is-visible {
-      z-index: 2;
-
-      .usa-menu-button {
-        background-color: $color-primary-alt-dark;
-      }
-
-      a.usa-nav-link:hover {
-        color: $color-primary-darkest;
-      }
-
-      .usa-nav-secondary-links a {
-        color: #FFFFFF;
-      }
-    }
-
-    .usa-nav-inner {
+  .va-api-mobile-nav-close {
+    display: block;
+    height: 40px;
+    width: 40px;
+    margin: 0 -10px 15px 0;
+    float: right;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 0;
+    
+    img {
+      color: #323A45;
       max-width: none;
+      height: 15px;
+      width: 15px;
+    }
+  }
 
-      @include media($large-screen) {
-        padding: 0 3rem;
-        width: 100%;
+  .va-api-nav-inner {
+    max-width: none;
+    padding: 2rem;
+
+    @include media($large-screen) {
+      padding: 0 3rem;
+    }
+  }
+  
+  .va-api-nav-primary {
+    display: block;
+    margin: 15px 0;
+    padding-left: 0;
+    
+    @include media($large-screen) {
+      display: inline;
+    }
+  }
+  
+  li.va-api-main-nav-item {
+    border-top: 1px solid #DBDBDD;
+    display: block;
+    margin-bottom: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    
+    &:first-child {
+      border-top: none;
+    }
+    
+    @include media($large-screen) {
+      border-top: none;
+      display: inline-block;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+
+  a.va-api-nav-link,
+  button.va-api-nav-button {
+    line-height: 24px;
+    padding: 10px;
+    margin: 0;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  a.va-api-nav-link {
+    color: #323A45;
+    cursor: pointer;
+    display: block;
+    font-weight: 400;
+    font-size: 1.6rem;
+    padding: 10px;
+    text-decoration: none;
+
+    &.va-api-active-nav {
+      font-weight: 700;
+    }
+    
+    @include media($large-screen) {
+      margin-bottom: 3px;
+      padding: 15px;
+      
+      &.va-api-active-nav,
+      &:hover {
+        font-weight: 400;
+        border-bottom: 3px solid #FDB81E;
+        margin-bottom: 0;
       }
     }
+  }
 
-    .usa-unstyled-list {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
+  button.va-api-nav-button {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
 
-      li.secondary-nav-item {
-        margin-right: 2rem;
-        width: 100%;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
-        @include media($large-screen) {
-          width: auto;
-        }
-      }
+    background-color: inherit;
+    color: #323A45;
+    font-weight: 400;
+    width: 100%;
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
     }
+  }
+
+  .va-api-nav-secondary {
+    clear: both;
+    margin: 15px 0;
 
     .usa-button {
-      color: $color-white;
-      margin: 0;
-    }
-
-    li.main-nav-item {
-      border-top: 1px solid #DBDBDD;
-
-      &:first-child {
-        border-top: none;
-      }
-    }
-
-    li.main-nav-item,
-    li.main-nav-secondary-item {
-      margin-bottom: 0;
-      padding-top: 8px;
-      padding-bottom: 8px;
-
-      @include media($large-screen) {
-        padding-top: 0;
-        padding-bottom: 0;
-      }
-    }
-
-    .default-nav-link {
-      border-bottom: 3px solid #FDB81E;
-    }
-
-    button.usa-nav-link {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: space-between;
-      align-items: center;
-      color: #323A45;
       width: 100%;
-
-      &:hover {
-        border: none;
-      }
-    }
-
-    a.usa-nav-link,
-    button.usa-nav-link {
-      padding-left: 0.8rem;
-      color: #323A45;
-      font-weight: 400;
-      font-size: 1.6rem;
-
-      &:hover {
-        border: none;
-        color: #323A45;
-      }
-
-      @include media($large-screen) {
-        padding-left: 1.5rem;
-        margin-bottom: 3px;
-
-        &.default-nav-link {
-          margin-bottom: 0;
-        }
-
-        &:hover {
-          border-bottom: 3px solid #FDB81E;
-          margin-bottom: 0;
-        }
-      }
-    }
-
-    .nav-item-button {
-      width: 8px;
-      height: 8px;
-      margin-right: 8px;
-    }
-
-    ul.sub-nav-documentation {
-      list-style: none;
-      padding-left: 0;
       margin: 0;
-
-      li {
-        border-top: 1px solid #DBDBDD;
-      }
-    }
-
-    a.sub-nav-link {
-      padding: 0.8rem 0 0.8rem 3.0rem;
-      color: #323A45;
-      font-size: 1.6rem;
-      font-weight: 400;
-
-      &.active {
-        font-weight: 700;
-      }
-    }
-
-    @include media($large-screen) {
-      ul.sub-nav-documentation,
-      img.nav-item-button {
-        display: none;
-      }
     }
   }
+  
+  img.va-api-expand-nav-icon {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ul.va-api-sub-nav {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  li.va-api-sub-nav-item {
+    // only used in screens under $large-screen
+    border-top: 1px solid #DBDBDD;
+    margin-bottom: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
 
-  .is-hidden {
-    display: none !important;
+  a.va-api-sub-nav-link {
+    color: #323A45;
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 24px;
+    padding-left: 20px;
+    text-decoration: none;
+    width: 100%;
+
+    &.va-api-active-sub-nav {
+      font-weight: 700;
+    }
   }
 }

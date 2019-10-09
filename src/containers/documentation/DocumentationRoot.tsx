@@ -89,7 +89,7 @@ function ExploreSideNav() {
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     return (
-      <div className="explore">
+      <div className="explore va-api-sidenav-page">
         <section className="usa-grid">
           <ExploreSideNav />
           <div className="usa-width-two-thirds">

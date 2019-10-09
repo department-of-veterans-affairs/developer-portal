@@ -308,6 +308,7 @@ module.exports = (envName) => {
                 {
                   loader: 'markdown-component-loader',
                   options: {
+                    enabledMarkdownItRules: ['smartquotes', 'table'],
                     markdownItPlugins: [
                       [require('markdown-it-anchor'), { level: 2 }],
                     ],
@@ -459,7 +460,8 @@ module.exports = (envName) => {
     },
     performance: {
       hints: 'error',
-      maxAssetSize: 300000,
+      maxAssetSize: 600000,
+      maxEntrypointSize: 600000,
       assetFilter: function(assetFilename) {
         // only check CSS bundle size, as our JS bundle is currently over 2M
         return assetFilename.endsWith('.css');
