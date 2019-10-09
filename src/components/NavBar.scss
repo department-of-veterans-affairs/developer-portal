@@ -158,6 +158,25 @@
     padding-top: 8px;
     padding-bottom: 8px;
   }
+  
+  img.va-api-expand-nav-icon {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ul.va-api-sub-nav {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  
+  li.va-api-sub-nav-item {
+    // only used in screens under $large-screen
+    border-top: 1px solid #DBDBDD;
+    margin-bottom: 0;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
 
   a.va-api-sub-nav-link {
     color: #323A45;

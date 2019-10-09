@@ -89,7 +89,7 @@ function ExploreSideNav() {
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     return (
-      <div className="explore">
+      <div className={classNames('explore', 'vads-u-padding-y--5')}>
         <section className="vads-l-grid-container">
           <div className="vads-l-row">
             <ExploreSideNav />

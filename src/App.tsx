@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
@@ -24,7 +25,7 @@ class App extends React.Component {
       <FlagsProvider flags={appFlags}>
         <ConnectedRouter history={history}>
           <div className="app-container">
-            <div className="app">
+            <div className={classNames('app', 'vads-u-width--full')}>
               <Header />
               <div className="main" role="main">
                 <Route path="/" render={topLevelRoutes} />
