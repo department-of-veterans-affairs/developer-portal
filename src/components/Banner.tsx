@@ -16,11 +16,11 @@ interface IBannerState {
 
 export default class Banner extends React.Component<{}, IBannerState> {
   constructor(props: {}) {
-      super(props);
-      this.state = {
-        accordionVisible: false,
-        menuVisible: false,
-      };
+    super(props);
+    this.state = {
+      accordionVisible: false,
+      menuVisible: false,
+    };
   }
 
   public render() {
@@ -130,9 +130,17 @@ export default class Banner extends React.Component<{}, IBannerState> {
 
   private renderSiteGuidance(className: string, iconContent: string, titleText: {}, bodyText: {}) {
     return (
-      <div className={className}>
-        <img className="usa-media_block-img" src={iconContent} alt="Dot Gov" />
-        <div className="guidance-content usa-media_block-body">
+      <div className={classNames(
+        'vads-u-display--flex',
+        'vads-u-align-content--flex-start',
+        className,
+      )}>
+        <img 
+          className={classNames('vads-u-margin-right--1', 'vads-u-margin-top--0p5')}
+          src={iconContent} 
+          alt="Dot Gov" 
+        />
+        <div className="guidance-content">
           <div className="guidance-title">
             <strong>{titleText}</strong>
           </div>
