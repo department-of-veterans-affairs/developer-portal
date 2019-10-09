@@ -68,7 +68,7 @@ function mediaItem(item: INewsItem) {
   const description = itemDescription(item);
   if (item.url.includes('www.youtube.com')) {
     return (
-      <div className="va-api-media-item">
+      <div className="vads-u-margin-y--5">
         {description}
         <EmbeddedYoutubeVideo title={item.title} url={item.url} />
       </div>
@@ -76,7 +76,7 @@ function mediaItem(item: INewsItem) {
   }
 
   return (
-    <div className="va-api-media-row va-api-media-item">
+    <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
       <div aria-hidden={true}>
         <a href={item.url} tabIndex={-1}>
           <HoverImage
@@ -85,7 +85,7 @@ function mediaItem(item: INewsItem) {
           />
         </a>
       </div>
-      <div className="va-api-media-row-description">
+      <div className="vads-u-margin-left--2p5 va-api-media-row-description">
         {description}
       </div>
     </div>
