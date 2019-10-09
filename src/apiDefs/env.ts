@@ -23,7 +23,7 @@ export const getCategoryFlags = () => {
   const apiDefinitions = getApiDefinitions();
   const categories = {};
   getApiCategoryOrder().forEach((category) => {
-    categories[category] = apiDefinitions[category].apis.filter( api => isHostedApiEnabled(api.urlFragment, api.enabledByDefault) ).length > 0;
+    categories[category] = apiDefinitions[category].apis.some( api => isHostedApiEnabled(api.urlFragment, api.enabledByDefault) );
   });
   return categories;
 };
