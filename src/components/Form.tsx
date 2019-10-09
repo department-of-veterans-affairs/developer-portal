@@ -15,7 +15,6 @@ interface IFormState {
 }
 
 export default class Form extends React.Component<IFormProps, IFormState> {
-
   constructor(props: IFormProps) {
     super(props);
     this.state = {
@@ -34,13 +33,13 @@ export default class Form extends React.Component<IFormProps, IFormState> {
     );
 
     return (
-      <form className={this.props.className ? this.props.className : 'va-api-developer-form'}>
+      <form className={this.props.className}>
         {this.props.children}
         <ProgressButton
-              buttonText={this.state.sending ? "Sending..." : "Submit"}
-              disabled={this.props.disabled}
-              onButtonClick={this.submittingForm}
-              buttonClass="usa-button-primary" />
+          buttonText={this.state.sending ? "Sending..." : "Submit"}
+          disabled={this.props.disabled}
+          onButtonClick={this.submittingForm}
+          buttonClass="usa-button-primary" />
         {this.state.error &&
           <AlertBox 
             status="error" 

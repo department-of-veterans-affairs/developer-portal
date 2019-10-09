@@ -10,7 +10,9 @@ const GitHubSnippet = () => {
   return (
     <div className="vads-u-margin-y--2">
       <h3>Submit an Issue via GitHub</h3>
-      <a className="usa-button" href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose"><FontAwesomeIcon icon={faGithub} /> Submit an Issue</a>
+      <a className="usa-button" href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
+        <FontAwesomeIcon icon={faGithub} /> Submit an Issue
+      </a>
     </div>
   );
 };

@@ -48,7 +48,9 @@
     font-weight: 400;
     height: 4rem;
     margin: 0;
+    text-align: center;
     text-transform: uppercase;
+    width: 6rem;
   }
 }
 
@@ -60,9 +62,4 @@
 
 .header-right-content {
   display: flex;
-}
-
-// a temporary patch until we adopt VA design system more fully
-#get-started-button {
-  margin-right: 2rem;
 }

@@ -57,7 +57,9 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
               <img src={closeButton} alt="Close button" />
             </button>
             <div className="va-api-nav-secondary">
-              <Link to="/apply" className="usa-button">Get Started</Link>
+              <Link to="/apply" className={classNames('usa-button', 'vads-u-width--full', 'vads-u-margin--0')}>
+                Get Started
+              </Link>
             </div>
           </MediaQuery>
           <ul className="va-api-nav-primary">

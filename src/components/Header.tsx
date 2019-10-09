@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
@@ -37,13 +38,18 @@ export default class Header extends React.Component<{}, INavBarState> {
             <div className="header-right-container">
               <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
-                <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
+                <Link to="/apply" className={classNames('usa-button', 'vads-u-margin-right--2p5')}>
+                  Get Started
+                </Link>
                 <Search />
               </div>
             </div>
           </MediaQuery>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
-            <button className="va-api-mobile-menu-button" onClick={this.toggleMenuVisible}>
+            <button 
+              className={classNames('va-api-mobile-menu-button', 'vads-u-padding--0')} 
+              onClick={this.toggleMenuVisible}
+            >
               Menu
             </button>
           </MediaQuery>
