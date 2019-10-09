@@ -109,7 +109,7 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
         <section role="region" aria-label="Page Hero" className="va-api-hero">
           <div className="vads-l-grid-container">
             <div className="va-api-hero-callout">
-              <h1 className="usa-sans">Sign up to test the next mobile VA applications</h1>
+              <h1>Sign up to test the next mobile VA applications</h1>
               <div className={classNames('vads-l-row', 'vads-u-justify-content--space-between')}>
                 <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--6')}>
                   <p>Mobile applications are at the center of how we work, play, and connect with each other. The VA would like your help to create the next mobile applications to help Veterans.</p>

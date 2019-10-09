@@ -1,8 +1,6 @@
 @import '../styles/variables';
 
-.usa-banner {
-  padding-bottom: 0 !important;
-
+.va-api-site-banner {
   .usa-alert {
     background-size: 2.8rem;
     margin-top: 0;
@@ -19,121 +17,84 @@
   }
 }
 
-.usa-banner-inner {
+.va-api-banner-inner {
   position: relative;
-  padding: 0 !important;
-
-  @include media($large-screen) {
-    padding-right: 3rem !important;
-    padding-left: 3rem !important;
-  }
-}
-
-.official-site-notice {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-}
-
-.site-notice-text {
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  margin-left: 5px;
-  max-width: 350px;
-
-  .usa-accordion-button.usa-banner-button {
-    margin-left: 0;
-  }
-
-  @include media(850px) {
-    max-width: none;
-
-    .usa-accordion-button.usa-banner-button {
-      margin-left: 3px;
-    }
-  }
-
-  @include media($large-screen) {
-    margin-left: 0;
-  }
-}
-
-.usa-accordion-button.usa-banner-button {
-  background-image: none;
-  width: auto;
-  height: auto;
-  position: relative;
-  padding: 0;
-  margin-top: 2px;
   color: $color-white;
-
-  &:active,
-  &:hover {
-    color: $color-white;
-  }
-
-  &[aria-expanded=true] {
-    @include display-icon(angle-arrow-up-primary, after, 1rem, 0, hover);
-    height: initial;
-
-    .usa-banner-button-text {
-      display: inline;
-    }
-  }
-
-  &[aria-expanded=true]::after,
-  &[aria-expanded=false]::after {
-    margin-left: 4px;
-    position: relative;
-    top: 0;
-    right: 0;
-  }
-
-  .accordion-icon {
-    width: 8px;
-  }
-
-  @include media($large-screen) {
-    margin-left: 8px;
-    margin-top: 0;
-  }
 }
 
-.site-guidance.usa-accordion {
+.site-guidance {
   background-color: #323A45;
-
-  .usa-banner-inner,
-  .usa-banner-content {
-    color: white;
+  
+  .official-site-notice {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
   }
-}
-
-.usa-banner-header {
-  padding-bottom: 0 !important;
-
-  img {
-    margin-top: -3px !important;
-    margin-left: 10px !important;
-
-  @include media($large-screen) {
-      margin-left: 0 !important;
-      margin-top: 1px !important;
-    }
-  }
-
-  .usa-banner-inner {
-    max-width: 100%;
-  }
-}
-
-.usa-banner-content {
-  @include media($medium-screen) {
+  
+  .site-notice-text {
+    font-size: 1.4rem;
     display: flex;
     flex-flow: row wrap;
-    max-width: 1024px;
+    align-items: center;
+    margin-left: 5px;
+    max-width: 350px;
+    
+    @include media($medium-screen) {
+      max-width: none;
+      margin-left: 0;
+    }
+    
+    .va-api-site-guidance-button {
+      font-size: 1.4rem;
+      background-color: rgba(0, 0, 0, 0);
+      width: auto;
+      height: auto;
+      position: relative;
+      color: $color-white;
+      
+      &:active,
+      &:hover {
+        color: $color-white;
+      }
+      
+      &[aria-expanded=true] {
+        @include display-icon(angle-arrow-up-primary, after, 1rem, 4px, hover);
+      }
+      
+      &[aria-expanded=false] {
+        @include display-icon(angle-arrow-down-primary, after, 1rem, 4px, hover);
+      }
+      
+      &[aria-expanded=true]::after,
+      &[aria-expanded=false]::after {
+        position: relative;
+        top: 0;
+        right: 0;
+      }
+      
+      .accordion-icon {
+        width: 8px;
+      }
+    }
+  }
+  
+  .site-guidance-content {
+    background-color: #323A45;
+  
+    @include media($medium-screen) {
+      display: flex;
+      flex-flow: row wrap;
+      max-width: 1024px;
+    }
   }
 }
+
+.va-api-banner-header {
+  img {
+    width: 2rem;
+  }
+}
+
 
 .banner-guidance-gov,
 .banner-guidance-ssl {

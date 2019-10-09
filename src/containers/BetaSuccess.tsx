@@ -7,7 +7,7 @@ export default function BetaSuccess() {
   return (
     <div className={classNames('beta-success', 'vads-l-grid-container', 'vads-u-margin-y--4')}>
       <div className="vads-u-margin-bottom--8">
-        <h1 className="usa-sans">Thank you for your interest!</h1>
+        <h1>Thank you for your interest!</h1>
         <p>Your request to join our Beta Test Group will be reviewed shortly and a response will be sent to the email address you provided.</p>
         <p>Please check your email, and open the email from <span className="bold-text">api@va.gov</span> titled <span className="bold-text">"VA Mobile App Testing."</span></p>
       </div>
