@@ -64,7 +64,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
     const { name, ...navLinkProps } = this.props;
 
     return (
-      <li>
+      <li className="va-api-sidenav-entry">
         <NavHashLink
           activeClassName="va-api-active-sidenav-link"
           isActive={this.navHashLinkIsActive}
@@ -72,7 +72,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
         >
           {this.props.name}
         </NavHashLink>
-        {this.props.children && <ul className="usa-sidenav-sub_list">{this.props.children}</ul>}
+        {this.props.children && <ul className="va-api-sidenav-sub-list">{this.props.children}</ul>}
       </li>
     );
   }
@@ -109,7 +109,9 @@ export default class SideNav extends React.Component<ISideNavProps> {
         aria-label={this.props.ariaLabel}
         ref={this.navRef}
       >
-        <ul className="usa-sidenav-list">{this.props.children}</ul>
+        <ul className={classNames('usa-sidenav-list', 'va-api-sidenav-list')}>
+          {this.props.children}
+        </ul>
       </nav>
     );
   }

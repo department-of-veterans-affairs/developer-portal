@@ -19,7 +19,7 @@
     }
   }
 
-  .usa-sidenav-list {
+  .va-api-sidenav-list {
     border: 2px solid #dbdbdd;
     background-color: white;
 
@@ -33,7 +33,7 @@
       border-top: 2px solid #dbdbdd;
     }
 
-    > li {
+    li.va-api-sidenav-entry {
       a {
         color: #222;
       }
@@ -48,37 +48,36 @@
         background-color: #dbdbdd;
       }
 
-      a.va-api-active-sidenav-link + ul.usa-sidenav-sub_list {
+      a.va-api-active-sidenav-link + ul.va-api-sidenav-sub-list {
         // Show the subnav when its parent (represented as a sibling in the DOM)
         // is the selected nav item
         display: block;
 
-        ul.usa-sidenav-sub_list > li > a {
+        ul.va-api-sidenav-sub-list > li > a {
           padding-left: 5rem;
         }
       }
 
-      a + ul.usa-sidenav-sub_list {
+      a + ul.va-api-sidenav-sub-list {
         // Hide subnav by default
         display: none;
       }
     }
   }
 
-  .usa-sidenav-sub_list {
+  ul.va-api-sidenav-sub-list {
+    list-style: none;
+    margin: 0;
     padding-left: 0;
 
-    > li a {
-      padding-left: 3.3rem;
+    li.va-api-sidenav-entry {
+      a {
+        padding-left: 3.2rem;
+      }
 
-      &.va-api-active-sidenav-link {
+      a.va-api-active-sidenav-link {
         border: none;
       }
     }
-  }
-
-  .usa-sidenav-list > li:first-child {
-    border-top-style: none;
-    border-top-width: 0;
   }
 }
