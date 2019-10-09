@@ -27,3 +27,10 @@ export const getCategoryFlags = () => {
   });
   return categories;
 };
+
+export const getApiCategories = () => {
+  const categoryFlags = getCategoryFlags();
+  return Object.keys(categoryFlags).filter((category) => {
+      return categoryFlags[category];
+  });
+};
