@@ -1,4 +1,8 @@
 import * as React from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
+import { faCopy } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './CurlForm.scss';
 
@@ -142,7 +146,14 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                <pre className="highlight-code">{this.buildCurl()}</pre>
+                <pre className="highlight-code">
+                  <div className="curl-text">{this.buildCurl()}</div>
+                  <CopyToClipboard text={this.buildCurl()}>
+                    <span className="copy-to-clipboard">
+                      <FontAwesomeIcon icon={faCopy} size="2x" />
+                    </span>
+                  </CopyToClipboard>
+                </pre>
               </div>
             </div>
           </div>
