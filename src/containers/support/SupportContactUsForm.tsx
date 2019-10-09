@@ -25,6 +25,13 @@ interface ISupportContactUsFormProps {
 
 export default class SupportContactUsForm extends React.Component<ISupportContactUsFormProps, ISupportContactUsFormState> {
 
+  private static apiCategories() {
+    const categoryFlags = getCategoryFlags();
+    return Object.keys(categoryFlags).filter((category) => {
+        return categoryFlags[category];
+    });
+  }
+
   constructor(props: ISupportContactUsFormProps) {
     super(props);
     this.state = {
@@ -117,10 +124,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
   private static get apiOptions(): object[] {
     const apiDefs = getApiDefinitions();
-    const categoryFlags = getCategoryFlags();
-    return Object.keys(categoryFlags).filter((category) => {
-        return categoryFlags[category];
-    }).map(api => {
+    return SupportContactUsForm.apiCategories().map(api => {
       return {
         label: apiDefs[api].name,
         value: api,
@@ -129,10 +133,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   }
 
   private static get initialApiState() {
-    const categoryFlags = getCategoryFlags();
-    return Object.keys(categoryFlags).filter((category) => {
-        return categoryFlags[category];
-    }).reduce((accumulator, api) => {
+    return SupportContactUsForm.apiCategories().reduce((accumulator, api) => {
       accumulator[api] = false;
       return accumulator;
     }, {});
