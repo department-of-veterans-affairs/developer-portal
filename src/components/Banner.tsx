@@ -10,8 +10,8 @@ import httpsIcon from '../assets/icon-https.svg';
 import './Banner.scss';
 
 interface IBannerState {
-    menuVisible: boolean;
-    accordionVisible: boolean;
+  menuVisible: boolean;
+  accordionVisible: boolean;
 }
 
 export default class Banner extends React.Component<{}, IBannerState> {
@@ -34,7 +34,7 @@ export default class Banner extends React.Component<{}, IBannerState> {
     );
 
     return (
-      <section className="va-api-site-banner">
+      <section>
         <div className="site-guidance">
           <header className={classNames('va-api-banner-header')}>
             <div className={classNames(
