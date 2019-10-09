@@ -1,10 +1,6 @@
 // These styles are lifted from src/containers/Explore.scss and should be
 // extracted since we want them on all pages except the homepage
 .news {
-  &.usa-section {
-    padding-top: 5rem;
-    padding-bottom: 3rem;
-  }
 
   // These styles will probably be removed in favor of formation classes once we make the switch
   .va-api-media-item {

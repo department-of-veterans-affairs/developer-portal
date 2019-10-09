@@ -138,7 +138,7 @@ export class News extends React.Component {
     });
 
     return (
-      <div className={classNames('news', 'usa-section')}>
+      <div className={classNames('news', 'usa-section', 'va-api-sidenav-page')}>
         <div className="usa-grid">
           <NewsSideNav />
           <div className="usa-width-two-thirds">
