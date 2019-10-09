@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
+import classNames from 'classnames';
 
 import { IErrorableInput } from '../types';
 import { validateEmail } from '../utils/validators';
@@ -94,19 +95,28 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
   }
 
   public render() {
+    const textFieldClasses = (paddingDirection: string) : string => {
+      return classNames(
+        'vads-l-col--12',
+        'vads-u-padding-x--0',
+        'small-screen:vads-l-col--6',
+        `small-screen:vads-u-padding-${paddingDirection}--1`,
+      );
+    };
+
     return (
-      <div className="beta-application">
+      <div className={classNames('beta-application', 'vads-u-margin-bottom--4')}>
         <section role="region" aria-label="Page Hero" className="va-api-hero">
-          <div className="usa-grid">
+          <div className="vads-l-grid-container">
             <div className="va-api-hero-callout">
               <h1 className="usa-sans">Sign up to test the next mobile VA applications</h1>
-              <div className="usa-grid no-pad">
-                <div className="usa-width-one-half">
+              <div className={classNames('vads-l-row', 'vads-u-justify-content--space-between')}>
+                <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--6')}>
                   <p>Mobile applications are at the center of how we work, play, and connect with each other. The VA would like your help to create the next mobile applications to help Veterans.</p>
                   <p><span className="bold-text">Please submit the form below </span>and you'll receive and an email shortly with instructions about how to join our exclusive mobile beta test program.</p>
                 </div>
-                <div className="usa-width-one-half">
-                  <div className="right-box">
+                <div className={classNames('vads-l-col--8', 'medium-screen:vads-l-col--4')}>
+                  <div className={classNames('right-box', 'vads-u-padding-x--4')}>
                     <p>
                       <span className="bold-text">Respondent burden:</span> 5 minutes
                     </p>
@@ -125,9 +135,9 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
             </div>
           </div>
         </section>
-        <div className="usa-grid form-container">
+        <div className={classNames('vads-l-grid-container', 'form-container', 'vads-u-margin-y--5')}>
           <h1 className="underlined-header">Tell us about yourself. <small className="small-header-text">(All responses required unless noted.)</small></h1>
-          <form className="usa-width-one-whole" action={env === 'VICPROD' ? "https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" : "https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"} method="POST">
+          <form action={env === 'VICPROD' ? "https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" : "https://test.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"} method="POST">
             <input hidden={true} name="oid" value={idMappings[env].oid} />
             <input hidden={true} name="retURL" value={process.env.REACT_APP_SALESFORCE_RETURN_URL} />
             <input id="company" maxLength={40} name="company" hidden={true} value="Intake Form" />
@@ -135,8 +145,8 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
             <input hidden={true} name="recordType" id="recordType" value="0123500000012eiAAA" />
             <input type="text" hidden={true} name={idMappings[env].confirm} id={idMappings[env].confirm} value={this.formatIVetConfirm(this.state.vetConfirm)} readOnly={true} />
 
-            <div className="usa-width-one-whole">
-              <div className="usa-width-one-half">
+            <div className="vads-l-row">
+              <div className={textFieldClasses('right')}>
                 <label htmlFor="first_name">First Name </label>
                 <input
                   id="first_name"
@@ -147,9 +157,9 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
                   aria-required={true}
                   value={this.state.firstName}
                   onChange={this.updateNameInput('firstName')}
-                />
+                  />
               </div>
-              <div className="usa-width-one-half">
+              <div className={textFieldClasses('left')}>
                 <label htmlFor="last_name">Last Name </label>
                 <input
                   id="last_name"
@@ -160,134 +170,147 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
                   aria-required={true}
                   value={this.state.lastName}
                   onChange={this.updateNameInput('lastName')}
-                />
+                  />
               </div>
             </div>
-
-            <div className="usa-width-one-half">
-              <ErrorableTextInput
-                errorMessage={this.state.email.validation}
-                label="Email"
-                field={this.state.email}
-                name="email"
-                maxLength={80}
-                onValueChange={this.updateEmail}
-              />
-            </div>
-            <div className="usa-width-one-whole question-area">
-              <label className="checkbox-label">Are you a Veteran, Veteran's family member, Veteran's caretaker, or Servicemember? <small className="small-checkbox-label">(Check all that apply)</small></label>
-
-              <div className="form-checkbox">
-                <input
-                  id="vet-checkbox"
-                  type="checkbox"
-                  checked={this.state.vetConfirm.veteran}
-                  onChange={this.updateIVetConfirm('veteran')}
-                />
-                <label htmlFor="vet-checkbox">Veteran</label>
-              </div>
-              <div className="form-checkbox">
-                <input
-                  id="vet-family-checkbox"
-                  type="checkbox"
-                  checked={this.state.vetConfirm.family}
-                  onChange={this.updateIVetConfirm('family')} />
-                <label htmlFor="vet-family-checkbox">Veteran's family member</label>
-              </div>
-              <div className="form-checkbox">
-                <input
-                  id="vet-caretaker-checkbox"
-                  type="checkbox"
-                  checked={this.state.vetConfirm.caretaker}
-                  onChange={this.updateIVetConfirm('caretaker')} />
-                <label htmlFor="vet-caretaker-checkbox">Veteran's caretaker</label>
-              </div>
-              <div className="form-checkbox">
-                <input
-                  id="servicemember-checkbox"
-                  type="checkbox"
-                  checked={this.state.vetConfirm.servicemember}
-                  onChange={this.updateIVetConfirm('servicemember')} />
-                <label htmlFor="servicemember-checkbox">Servicemember</label>
+            <div className="vads-l-row">
+              <div className={textFieldClasses('right')}>
+                <ErrorableTextInput
+                  errorMessage={this.state.email.validation}
+                  label="Email"
+                  field={this.state.email}
+                  name="email"
+                  maxLength={80}
+                  onValueChange={this.updateEmail}
+                  />
               </div>
             </div>
-            <div className="usa-width-one-whole question-area">
-              <label className="checkbox-label">How do you access the internet? <small className="small-checkbox-label">(Check all that apply)</small></label>
-              <div className="usa-width-one-whole internet-checkbox-group">
-                <div className="usa-width-one-half">
-                  <label className="checkbox-label">Select device(s)</label>
-                  <div className="form-checkbox">
-                    <input
-                      id={`${idMappings[env].cell}-1`}
-                      name={idMappings[env].cell}
-                      checked={this.state.iPhone}
-                      type="checkbox"
-                      value="iPhone"
-                      onChange={this.toggleChecked('iPhone')}
-                    />
-                    <label htmlFor={`${idMappings[env].cell}-1`}>iPhone</label>
-                  </div>
-                  <div className="form-checkbox">
-                    <input
-                      id={`${idMappings[env].cell}-2`}
-                      name={idMappings[env].cell}
-                      checked={this.state.computer}
-                      type="checkbox"
-                      onChange={this.toggleChecked('computer')}
-                      value="Computer, tablet or other smartphone"
-                    />
-                    <label htmlFor={`${idMappings[env].cell}-2`}>Computer, tablet, or other smartphone</label>
-                  </div>
+            <div className="vads-l-row">
+              <div className="vads-l-col--12">
+                <label className="checkbox-label">
+                  Are you a Veteran, Veteran's family member, Veteran's caretaker, or Servicemember? <small className="small-checkbox-label">(Check all that apply)</small>
+                </label>
+                <div className="form-checkbox">
+                  <input
+                    id="vet-checkbox"
+                    type="checkbox"
+                    checked={this.state.vetConfirm.veteran}
+                    onChange={this.updateIVetConfirm('veteran')}
+                  />
+                  <label htmlFor="vet-checkbox">Veteran</label>
                 </div>
-
-                <div className="usa-width-one-half">
-                  <label className="checkbox-label">Select log in method</label>
-                  <div className="form-checkbox">
-                    <input
-                      id={`${idMappings[env].auth}-2`}
-                      name={idMappings[env].auth}
-                      type="checkbox"
-                      checked={this.state.ds}
-                      onChange={this.toggleChecked('ds')}
-                      value="DS" />
-                    <label htmlFor={`${idMappings[env].auth}-2`}>Access VA on-line services with <img alt="DSLogon Icon" src={ds} />DS Logon</label>
-                  </div>
-                  <div className="form-checkbox">
-                    <input
-                      id={`${idMappings[env].auth}-1`}
-                      name={idMappings[env].auth}
-                      type="checkbox"
-                      checked={this.state.idme}
-                      onChange={this.toggleChecked('idme')}
-                      value="ID.Me" />
-                    <label htmlFor={`${idMappings[env].auth}-1`}>Access VA on-line services with <img alt="DSLogon Icon" src={idme} /></label>
-                  </div>
-                  <div className="form-checkbox">
-                    <input
-                      id={`${idMappings[env].auth}-3`}
-                      name={idMappings[env].auth}
-                      type="checkbox"
-                      checked={this.state.mhv}
-                      onChange={this.toggleChecked('mhv')}
-                      value="HealtheVet" />
-                    <label htmlFor={`${idMappings[env].auth}-3`}>
-                      Access VA on-line services with <img style={{ backgroundColor: 'rgb(17, 46, 81)' }} alt="DSLogon Icon" src={mhv} /> MyHealtheVet
-                      </label>
-                  </div>
+                <div className="form-checkbox">
+                  <input
+                    id="vet-family-checkbox"
+                    type="checkbox"
+                    checked={this.state.vetConfirm.family}
+                    onChange={this.updateIVetConfirm('family')} />
+                  <label htmlFor="vet-family-checkbox">Veteran's family member</label>
+                </div>
+                <div className="form-checkbox">
+                  <input
+                    id="vet-caretaker-checkbox"
+                    type="checkbox"
+                    checked={this.state.vetConfirm.caretaker}
+                    onChange={this.updateIVetConfirm('caretaker')} />
+                  <label htmlFor="vet-caretaker-checkbox">Veteran's caretaker</label>
+                </div>
+                <div className="form-checkbox">
+                  <input
+                    id="servicemember-checkbox"
+                    type="checkbox"
+                    checked={this.state.vetConfirm.servicemember}
+                    onChange={this.updateIVetConfirm('servicemember')} />
+                  <label htmlFor="servicemember-checkbox">Servicemember</label>
                 </div>
               </div>
-
-
-              <button
-                disabled={this.submitButtonDisabled()}
-                className="usa-button question-area"
-                type="submit"
-                name="submit">
-                Sign me up
-                    </button>
+            </div>
+            <div className={classNames('vads-l-row', 'vads-u-margin-top--4')}>
+              <div className="vads-l-col--12">
+                <label className={classNames('checkbox-label', 'vads-u-margin-y--0')}>
+                  How do you access the internet? <small className="small-checkbox-label">(Check all that apply)</small>
+                </label>
+              </div>
+            </div>  
+            <div className={classNames('vads-l-row', 'vads-u-margin-top--2p5')}>
+              <div className={classNames('vads-l-col--12', 'small-screen:vads-l-col--6')}>
+                <label className={classNames('checkbox-label', 'vads-u-margin-y--0')}>
+                  Select device(s)
+                </label>
+                <div className="form-checkbox">
+                  <input
+                    id={`${idMappings[env].cell}-1`}
+                    name={idMappings[env].cell}
+                    checked={this.state.iPhone}
+                    type="checkbox"
+                    value="iPhone"
+                    onChange={this.toggleChecked('iPhone')}
+                  />
+                  <label htmlFor={`${idMappings[env].cell}-1`}>iPhone</label>
+                </div>
+                <div className="form-checkbox">
+                  <input
+                    id={`${idMappings[env].cell}-2`}
+                    name={idMappings[env].cell}
+                    checked={this.state.computer}
+                    type="checkbox"
+                    onChange={this.toggleChecked('computer')}
+                    value="Computer, tablet or other smartphone"
+                  />
+                  <label htmlFor={`${idMappings[env].cell}-2`}>Computer, tablet, or other smartphone</label>
+                </div>
+              </div>
+              <div className={classNames(
+                'vads-l-col--12', 
+                'vads-u-margin-top--2',
+                'small-screen:vads-l-col--6',
+                'small-screen:vads-u-margin-top--0',
+              )}>
+                <label className={classNames('checkbox-label', 'vads-u-margin-y--0')}>
+                  Select log in method
+                </label>
+                <div className="form-checkbox">
+                  <input
+                    id={`${idMappings[env].auth}-2`}
+                    name={idMappings[env].auth}
+                    type="checkbox"
+                    checked={this.state.ds}
+                    onChange={this.toggleChecked('ds')}
+                    value="DS" />
+                  <label htmlFor={`${idMappings[env].auth}-2`}>Access VA on-line services with <img alt="DSLogon Icon" src={ds} />DS Logon</label>
+                </div>
+                <div className="form-checkbox">
+                  <input
+                    id={`${idMappings[env].auth}-1`}
+                    name={idMappings[env].auth}
+                    type="checkbox"
+                    checked={this.state.idme}
+                    onChange={this.toggleChecked('idme')}
+                    value="ID.Me" />
+                  <label htmlFor={`${idMappings[env].auth}-1`}>Access VA on-line services with <img alt="DSLogon Icon" src={idme} /></label>
+                </div>
+                <div className="form-checkbox">
+                  <input
+                    id={`${idMappings[env].auth}-3`}
+                    name={idMappings[env].auth}
+                    type="checkbox"
+                    checked={this.state.mhv}
+                    onChange={this.toggleChecked('mhv')}
+                    value="HealtheVet" />
+                  <label htmlFor={`${idMappings[env].auth}-3`}>
+                    Access VA on-line services with <img style={{ backgroundColor: 'rgb(17, 46, 81)' }} alt="DSLogon Icon" src={mhv} /> MyHealtheVet
+                  </label>
+                </div>
+              </div>
             </div>
 
-
+            <button
+              disabled={this.submitButtonDisabled()}
+              className={classNames('usa-button', 'vads-u-width--auto')}
+              type="submit"
+              name="submit">
+              Sign me up
+            </button>
           </form>
         </div>
       </div>

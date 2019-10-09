@@ -2,8 +2,6 @@
 @import '../styles/variables';
 
 .beta-application {
-  margin-bottom: 3rem;
-
   .underlined-header {
     border-bottom: 1px solid black;
   }
@@ -19,7 +17,6 @@
   }
 
   .form-container {
-    margin-top: 3rem;
     width: 100%;
   }
 
@@ -33,33 +30,11 @@
     font-weight: normal;
   }
 
-  .no-pad {
-    padding: 0;
-  }
-
   .bold-text {
     font-weight: bold
   }
 
   .right-box {
     border: 1px solid white;
-    padding-left: 2em;
-    padding-right: 2em;
-
-    @media screen and (min-width: $large-screen) {
-      float: right;
-    }
-
-    @media screen and (max-width: $small-screen) {
-      float: left;
-    }
-  }
-
-  .question-area {
-    margin-top: 60px;
-  }
-
-  .internet-checkbox-group {
-    margin-top: 30px;
   }
 }

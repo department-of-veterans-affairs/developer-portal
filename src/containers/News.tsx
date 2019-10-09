@@ -1,35 +1,18 @@
-import * as React from 'react';
-
 import classNames from 'classnames';
-
-import toHtmlId from '../toHtmlId';
+import * as React from 'react';
 
 import CardLink from '../components/CardLink';
 import PageHeader from '../components/PageHeader';
 import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
-
-import './News.scss';
+import toHtmlId from '../toHtmlId';
 
 const sections = NewsData.sections.map((section: any) => ({
   ...section,
   id: toHtmlId(section.title),
 }));
 
-function NewsSideNav() {
-  const navSections = sections.map((section: any) => {
-    return <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />;
-  });
-
-  return (
-    <SideNav ariaLabel="News Side Nav">
-      <SideNavEntry key="all" exact={true} to="/news" name="Overview" />
-      {navSections}
-    </SideNav>
-  );
-}
-
-export class News extends React.Component {
+export default class News extends React.Component {
   private cardsSections = sections.map((section: any) => {
     return (
       <CardLink key={section.id} url={`#${section.id}`} name={section.title}>
@@ -51,7 +34,7 @@ export class News extends React.Component {
           aria-label={section.title}
           key={section.id}
           id={section.id}
-          className="news-section"
+          className="vads-u-margin-bottom--4"
         >
           <h2>{section.title}</h2>
           {section.items.map((item: any) => {
@@ -71,20 +54,31 @@ export class News extends React.Component {
     });
 
     return (
-      <div className={classNames('news', 'usa-section')}>
-        <div className="usa-grid">
-          <NewsSideNav />
-          <div className="usa-width-two-thirds">
-            <section role="region" aria-label="News" className="usa-section">
-              <PageHeader description={headerProps.description} header={headerProps.header} />
-              <div className="va-api-container">{this.cardsSections}</div>
-              {newsContent}
-            </section>
+      <div className="vads-u-padding-y--5">
+        <div className="vads-l-grid-container">
+          <div className="vads-l-row">
+            <SideNav ariaLabel="News Side Nav">
+              <SideNavEntry key="all" exact={true} to="/news" name="Overview" />
+              {sections.map((section: any) => {
+                return <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />;
+              })}
+            </SideNav>
+            <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
+              <section role="region" aria-label="News">
+                <PageHeader
+                  description={headerProps.description}
+                  header={headerProps.header}
+                  className="vads-u-margin-bottom--4"
+                />
+                <div className={classNames('va-api-container', 'vads-u-margin-bottom--4')}>
+                  {this.cardsSections}
+                </div>
+                {newsContent}
+              </section>
+            </div>
           </div>
         </div>
       </div>
     );
   }
 }
-
-export default News;

@@ -3,9 +3,7 @@
 .home {
   .site-disclaimer {
     background-color: $color-gold;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 30px;
+
     a {
       color: #004795 !important;
     }
@@ -14,15 +12,6 @@
   .va-api-hero-callout {
     p {
       font-weight: 100;
-    }
-  }
-
-  .usa-section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-
-    &.discover-apis {
-      padding-bottom: 6rem;
     }
   }
 
@@ -40,10 +29,6 @@
       width: 100%;
       height: 100%;
     }
-  }
-
-  .va-api-container {
-    padding-top: 40px;
   }
 
   a.va-api-card {

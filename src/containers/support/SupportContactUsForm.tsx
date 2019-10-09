@@ -1,7 +1,9 @@
 import ErrorableCheckboxGroup from '@department-of-veterans-affairs/formation-react/ErrorableCheckboxGroup';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
+import classNames from 'classnames';
 import * as React from "react";
+
 import { getApiDefinitions } from '../../apiDefs/query';
 import Form from "../../components/Form";
 import { IErrorableInput } from '../../types';
@@ -23,7 +25,6 @@ interface ISupportContactUsFormProps {
 }
 
 export default class SupportContactUsForm extends React.Component<ISupportContactUsFormProps, ISupportContactUsFormState> {
-
   constructor(props: ISupportContactUsFormProps) {
     super(props);
     this.state = {
@@ -40,8 +41,21 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   }
 
   public render() {
+    const textFieldClasses = (paddingDirection: string) : string => {
+      return classNames(
+        'vads-l-col--12',
+        'small-screen:vads-l-col--6',
+        `small-screen:vads-u-padding-${paddingDirection}--2`,
+      );
+    };
+
     return (
-      <Form onSubmit={this.formSubmission} onSuccess={this.props.onSuccess} disabled={this.disabled} className="va-api-contact-us-form">
+      <Form 
+        onSubmit={this.formSubmission}
+        onSuccess={this.props.onSuccess}
+        disabled={this.disabled}
+        className={classNames('va-api-contact-us-form', 'vads-u-margin-y--2')}
+      >
         <fieldset>
           <legend>
             Contact Us
@@ -50,8 +64,9 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
             </p>
           </legend>
 
-          <div className="usa-grid">
-              <div className="usa-width-one-half">
+          <div className={classNames('vads-l-grid-container', 'vads-u-padding-x--0')}>
+            <div className="vads-l-row">
+              <div className={textFieldClasses('right')}>
                 <ErrorableTextInput
                   errorMessage={this.state.firstName.validation}
                   label="First name"
@@ -59,39 +74,40 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
                   onValueChange={(field: IErrorableInput) => this.setState({ firstName: validatePresence(field, 'First Name') })}
                   required={true} />
               </div>
-              <div className="usa-width-one-half">
-              <ErrorableTextInput
-                errorMessage={this.state.lastName.validation}
-                label="Last name"
-                name="lastName"
-                field={this.state.lastName}
-                onValueChange={(field: IErrorableInput) => this.setState({ lastName: validatePresence(field, 'Last Name') })}
-                required={true} />
-            </div>
-          </div>
-          <div className="usa-grid">
-            <div className="usa-width-one-half">
+              <div className={textFieldClasses('left')}>
                 <ErrorableTextInput
-                errorMessage={this.state.email.validation}
-                label="Email"
-                name="email"
-                field={this.state.email}
-                onValueChange={(field: IErrorableInput) => this.setState({ email: validateEmail(field) })}
-                required={true} />
+                  errorMessage={this.state.lastName.validation}
+                  label="Last name"
+                  name="lastName"
+                  field={this.state.lastName}
+                  onValueChange={(field: IErrorableInput) => this.setState({ lastName: validatePresence(field, 'Last Name') })}
+                  required={true} />
+              </div>
             </div>
-            <div className="usa-width-one-half">
-              <ErrorableTextInput
-                errorMessage={null}
-                label="Organization"
-                name="organization"
-                field={this.state.organization}
-                onValueChange={(field: IErrorableInput) => this.setState({ organization: field })}
-                required={false} />
+            <div className="vads-l-row">
+              <div className={textFieldClasses('right')}>
+                  <ErrorableTextInput
+                  errorMessage={this.state.email.validation}
+                  label="Email"
+                  name="email"
+                  field={this.state.email}
+                  onValueChange={(field: IErrorableInput) => this.setState({ email: validateEmail(field) })}
+                  required={true} />
+              </div>
+              <div className={textFieldClasses('left')}>
+                <ErrorableTextInput
+                  errorMessage={null}
+                  label="Organization"
+                  name="organization"
+                  field={this.state.organization}
+                  onValueChange={(field: IErrorableInput) => this.setState({ organization: field })}
+                  required={false} />
+              </div>
             </div>
           </div>
 
           <ErrorableCheckboxGroup
-            additionalFieldsetClass='va-api-checkboxes'
+            additionalFieldsetClass='vads-u-margin-top--4'
             additionalLegendClass='va-api-contact-us-legend-description'
             label='If applicable, please select any of the APIs pertaining to your issue.'
             onValueChange={this.toggleApis}

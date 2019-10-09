@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
@@ -13,14 +14,7 @@ import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 import '../Documentation.scss';
 
-function VaInternalTag() {
-  return (
-    <span><small>Internal VA use only.</small></span>
-  );
-}
-
 function SideNavApiEntry(api: IApiDescription) {
-  const internalTag = (api.vaInternalOnly === true) ? VaInternalTag() : null;
   const dashUrlFragment = api.urlFragment.replace('_', '-');
 
   return (
@@ -32,7 +26,7 @@ function SideNavApiEntry(api: IApiDescription) {
           <React.Fragment>
             {api.name}
             <br />
-            {internalTag}
+            {api.vaInternalOnly && <span><small>Internal VA use only.</small></span>}
           </React.Fragment>
         }
       />
@@ -62,22 +56,6 @@ function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory)
   );
 }
 
-export function ReleaseNotesSideNav() {
-  const categoryOrder = getApiCategoryOrder();
-  const apiDefs = getApiDefinitions();
-  return (
-    <SideNav ariaLabel="Release Notes Side Nav">
-      <SideNavEntry
-        key="all"
-        exact={true}
-        to="/release-notes"
-        name="Overview"
-      />
-      {categoryOrder.map((key: string) => apiDefs[key].releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
-    </SideNav>
-  );
-}
-
 function renderOverview(routeProps: any, props: any) {
   return <ReleaseNotesOverview {...routeProps} {...props} description={props.description} halo={props.halo} header={props.header} parent={props.parent} />;
 }
@@ -89,16 +67,28 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
     header: 'Overview', 
     parent: 'release-notes',
   };
-
+  
   public render() {
+    const categoryOrder = getApiCategoryOrder();
+    const apiDefs = getApiDefinitions();
     return (
       <div className="explore">
-        <section className="usa-section">
-          <div className="usa-grid">
-            <ReleaseNotesSideNav />
-            <div className="usa-width-two-thirds">
-              <Route exact={true} path="/release-notes/" render={(routeProps) => renderOverview(routeProps, this.overviewProps)} />
-              <Route exact={true} path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotesPage} />
+        <section>
+          <div className="vads-l-grid-container">
+            <div className="vads-l-row">
+              <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
+                <SideNavEntry
+                  key="all"
+                  exact={true}
+                  to="/release-notes"
+                  name="Overview"
+                />
+                {categoryOrder.map((key: string) => apiDefs[key].releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
+              </SideNav>
+              <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
+                <Route exact={true} path="/release-notes/" render={(routeProps) => renderOverview(routeProps, this.overviewProps)} />
+                <Route exact={true} path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotesPage} />
+              </div>
             </div>
           </div>
         </section>

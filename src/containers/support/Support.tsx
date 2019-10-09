@@ -1,5 +1,7 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { Route } from 'react-router';
+
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
@@ -29,50 +31,36 @@ const sections: ISection[] = [
   },
 ];
 
-function SupportSideNav() {
-  const navSections = sections.map(section => {
-    return <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />;
-  });
-
+export default function Support() {
   return (
-    <SideNav ariaLabel="Support page side nav">
-      <SideNavEntry key="all" exact={true} to="/support" name="Overview" />
-      {navSections}
-    </SideNav>
-  );
-}
-
-export default class Support extends React.Component {
-  public render() {
-    return (
-      <div className="support">
-        <section className="usa-section">
-          <div className="usa-grid">
-            <SupportSideNav />
-            <div className="usa-width-two-thirds">
-              <Route
-                exact={true}
-                path="/support/"
-                render={() => <SupportOverview sections={sections} />}
-              />
-              {this.createSubRoutes()}
-            </div>
+    <div className="vads-u-padding-y--5">
+      <div className="vads-l-grid-container">
+        <div className="vads-l-row">
+          <SideNav ariaLabel="Support page side nav">
+            <SideNavEntry key="all" exact={true} to="/support" name="Overview" />
+            {sections.map(section => {
+              return <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />;
+            })}
+          </SideNav>
+          <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
+            <Route
+              exact={true}
+              path="/support/"
+              render={() => <SupportOverview sections={sections} />}
+            />
+            {sections.map(section => {
+              return (
+                <Route
+                  key={section.id}
+                  exact={true}
+                  path={`/support/${section.id}`}
+                  component={section.component}
+                />
+              );
+            })}
           </div>
-        </section>
+        </div>
       </div>
-    );
-  }
-
-  private createSubRoutes() {
-    return sections.map(section => {
-      return (
-        <Route
-          key={section.id}
-          exact={true}
-          path={`/support/${section.id}`}
-          component={section.component}
-        />
-      );
-    });
-  }
+    </div>
+  );
 }

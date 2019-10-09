@@ -101,7 +101,7 @@ class ApplyForm extends React.Component<IApplyProps> {
       },
       ...props
     } = this.props;
-    const applyClasses = classNames('vads-l-grid-container', 'api-application');
+    const applyClasses = classNames('vads-l-grid-container', 'vads-u-padding--4');
 
     return (
       <div role="region" aria-labelledby="apply-header" className={applyClasses}>
