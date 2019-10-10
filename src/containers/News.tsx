@@ -49,16 +49,16 @@ function NewsSideNav() {
   );
 }
 
-function NewsItem({ item, media } : {item: INewsItem, media: boolean}) {
+function NewsItem({item, media} : {item: INewsItem, media: boolean}) {
   return (
     <div>
-      {media ? mediaItem(item) : itemDescription(item)}
+      {media ? <MediaItem item={item} /> : <ItemDescription item={item} />}
     </div>
   );
 }
 
-function mediaItem(item: INewsItem) {
-  const description = itemDescription(item);
+function MediaItem({item} : {item: INewsItem}) {
+  const description = <ItemDescription item={item} />;
   if (item.url.includes('www.youtube.com')) {
     return (
       <div className="vads-u-margin-y--5">
@@ -85,7 +85,7 @@ function mediaItem(item: INewsItem) {
   );
 }
 
-function itemDescription(item: INewsItem) {
+function ItemDescription({item}: {item: INewsItem}) {
   return (
     <p>
       <a href={item.url}>{item.title}</a>
