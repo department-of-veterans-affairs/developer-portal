@@ -52,7 +52,11 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
 
     return (
       <nav className={navClasses}>
-        <div className="va-api-nav-inner">
+        <div className={classNames(
+          'va-api-nav-inner',
+          'medium-screen:vads-u-margin-x--4',
+          'medium-screen:vads-u-padding--0',
+        )}>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
             <button className="va-api-mobile-nav-close" onClick={this.props.onClose}>
               <img src={closeButton} alt="Close button" />
