@@ -51,9 +51,6 @@ export default class Header extends React.Component<{}, INavBarState> {
           </MediaQuery>
         </div>
         <NavBar isMobileMenuVisible={this.state.menuVisible} onClose={navBarCloseHandler} />
-        <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
-          <Search />
-        </MediaQuery>
       </header>
     );
   }

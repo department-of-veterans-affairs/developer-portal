@@ -1,20 +1,18 @@
 @import '../styles/variables';
 
 .va-api-nav {
-  background: $color-white;
-  color: #323A45;
-  border-top: 1px solid #DBDBDD;
-  border-bottom: 1px solid #DBDBDD;
+  background-color: $color-white;
   display: none;
   width: 25rem;
   z-index: 0;
-  
+
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
 
   @include media($large-screen) {
+    background-color: #112E51;
     display: block;
     position: relative;
     width: 100%;
@@ -52,7 +50,7 @@
     padding: 2rem;
 
     @include media($large-screen) {
-      padding: 0 3rem;
+      border-top: 1px solid $color-white;
     }
   }
   
@@ -109,6 +107,7 @@
     @include media($large-screen) {
       margin-bottom: 3px;
       padding: 15px;
+      color: $color-white;
       
       &.va-api-active-nav,
       &:hover {

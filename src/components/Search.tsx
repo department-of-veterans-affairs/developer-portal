@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -5,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Search.scss';
 
-export default class Search extends React.Component {
+export default class Search extends React.Component<{className?: string}> {
   public render() {
     return (
       <div className="vadp-search-form">
@@ -18,7 +19,7 @@ export default class Search extends React.Component {
             name="query"
             id="query"
             autoComplete="off"
-            className="usagov-search-autocomplete vads-u-padding-left--4"
+            className={classNames("usagov-search-autocomplete vads-u-padding-left--4")}
             placeholder="Search..."
             aria-label="Search developer.va.gov" />
         </form>
