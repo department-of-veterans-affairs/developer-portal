@@ -74,6 +74,11 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
               </MediaQuery>
             </li>
             <li className="va-api-main-nav-item">
+              <MainNavItem targetUrl="/news" largeScreenProps={sharedNavItemProps}>
+                News
+              </MainNavItem>
+            </li>
+            <li className="va-api-main-nav-item">
               <MainNavItem targetUrl="/release-notes" largeScreenProps={sharedNavItemProps}>
                 Release Notes
               </MainNavItem>
@@ -81,11 +86,6 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             <li className="va-api-main-nav-item">
               <MainNavItem targetUrl="/support" largeScreenProps={sharedNavItemProps}>
                 Support
-              </MainNavItem>
-            </li>
-            <li className="va-api-main-nav-item">
-              <MainNavItem targetUrl="/news" largeScreenProps={sharedNavItemProps}>
-                News
               </MainNavItem>
             </li>
           </ul>
