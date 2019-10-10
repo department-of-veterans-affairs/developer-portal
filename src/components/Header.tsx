@@ -37,7 +37,7 @@ export default class Header extends React.Component<{}, INavBarState> {
             <div className="header-right-container">
               <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
-                <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
+                <Link id="get-started-button" to="/apply" className="usa-button">Request an API Key</Link>
                 <Search />
               </div>
             </div>
@@ -49,9 +49,6 @@ export default class Header extends React.Component<{}, INavBarState> {
           </MediaQuery>
         </div>
         <NavBar isMobileMenuVisible={this.state.menuVisible} onClose={navBarCloseHandler} />
-        <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
-          <Search />
-        </MediaQuery>
       </header>
     );
   }
