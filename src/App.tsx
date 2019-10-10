@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom';
 import { ConnectedRouter } from 'react-router-redux';
 
 import { getDeprecatedFlags } from './apiDefs/deprecated';
-import { getEnvFlags } from './apiDefs/env';
+import { getCategoryFlags, getEnvFlags } from './apiDefs/env';
 import { getAllApis } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
 import Footer from './components/Footer';
@@ -41,13 +41,15 @@ class App extends React.Component {
   private getFlags() {
     const deprecatedFlags = getDeprecatedFlags();
     const envFlags = getEnvFlags();
+    const apiCategories =  getCategoryFlags();
     const apiFlags = getAllApis().reduce((result: {}, api: IApiDescription): {[key: string]: boolean} => {
       const isApiAvailable = envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment];
       result[api.urlFragment] = isApiAvailable;
       return result;
     }, {});
-    
+
     return {
+      categories: apiCategories,
       deprecated: deprecatedFlags,
       enabled: envFlags,
       hosted_apis: apiFlags,

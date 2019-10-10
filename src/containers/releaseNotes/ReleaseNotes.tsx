@@ -46,13 +46,14 @@ function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory)
   };
 
   return (
-    <SideNavEntry
-      key={`hash-link-${apiCategoryKey}`}
-      to={`/release-notes/${apiCategoryKey}`}
-      name={apiCategory.name}
-    >
-      {subNavLinks()}
-    </SideNavEntry>
+    <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
+      <SideNavEntry
+        to={`/release-notes/${apiCategoryKey}`}
+        name={apiCategory.name}
+      >
+        {subNavLinks()}
+      </SideNavEntry>
+    </Flag>
   );
 }
 
@@ -64,10 +65,10 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
   private overviewProps = {
     description: 'The goal of the Release Notes section is to inform developers of updates and changes to the VA APIs. This section of the developer portal is new and will expand as release notes for new APIs become available.', 
     halo: 'Release Notes',
-    header: 'Overview', 
+    header: 'Overview',
     parent: 'release-notes',
   };
-  
+
   public render() {
     const categoryOrder = getApiCategoryOrder();
     const apiDefs = getApiDefinitions();
@@ -83,7 +84,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
                   to="/release-notes"
                   name="Overview"
                 />
-                {categoryOrder.map((key: string) => apiDefs[key].releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
+                {categoryOrder.map((key: string) => apiDefs[key].content.releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
               </SideNav>
               <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
                 <Route exact={true} path="/release-notes/" render={(routeProps) => renderOverview(routeProps, this.overviewProps)} />

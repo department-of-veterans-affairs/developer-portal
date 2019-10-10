@@ -1,8 +1,14 @@
 import { IApiCategoryContent } from '../../apiDefs/schema';
+import AppealsIntro from './appeals/appealsIntro.mdx';
+import AppealsOverview from './appeals/appealsOverview.mdx';
+import AppealsQuickstart from './appeals/appealsQuickstart.mdx';
+import AppealsReleaseNotes from './appeals/appealsReleaseNotes.mdx';
 import BenefitsIntro from './benefits/benefitsIntro.mdx';
 import BenefitsOverview from './benefits/benefitsOverview.mdx';
+import BenefitsReleaseNotes from './benefits/benefitsReleaseNotes.mdx';
 import FacilitiesIntro from './facilities/facilitiesIntro.mdx';
 import FacilitiesOverview from './facilities/facilitiesOverview.mdx';
+import FacilitiesReleaseNotes from './facilities/facilitiesReleaseNotes.mdx';
 import HealthArgonautPostDeprecation from './health/argonautDeprecatedNotice.mdx';
 import HealthArgonautPreDeprecation from './health/argonautDeprecationNotice.mdx';
 import CommunityCareApiIntro from './health/communityCareApiIntro.mdx';
@@ -12,32 +18,59 @@ import FhirR4ApiIntro from './health/fhirR4ApiIntro.mdx';
 import HealthIntro from './health/healthIntro.mdx';
 import HealthOverview from './health/healthOverview.mdx';
 import HealthQuickstart from './health/healthQuickstart.mdx';
+import HealthReleaseNotes from './health/healthReleaseNotes.mdx';
 import UrgentCareApiIntro from './health/urgentCareApiIntro.mdx';
 import VerificationIntro from './verification/verificationIntro.mdx';
 import VerificationOverview from './verification/verificationOverview.mdx';
+import VerificationReleaseNotes from './verification/verificationReleaseNotes.mdx';
+
+const appealsContent: IApiCategoryContent = {
+  intro: AppealsIntro,
+  overview: AppealsOverview,
+  placardText: 'Build tools to help Veterans electronically manage, submit, and track appeals.',
+  quickstart: AppealsQuickstart,
+  releaseNotes: AppealsReleaseNotes,
+  shortDescription:
+    'Enables managing benefit decision appeals on behalf of a Veteran.',
+};
 
 const benefitsContent: IApiCategoryContent = {
   intro: BenefitsIntro,
   overview: BenefitsOverview,
+  placardText: 'Build tools to help Veterans electronically manage, submit, track, and receive notifications on their claims.',
+  releaseNotes: BenefitsReleaseNotes,
+  shortDescription:
+    'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
 };
 
 const facilitiesContent: IApiCategoryContent = {
   intro: FacilitiesIntro,
   overview: FacilitiesOverview,
+  placardText: 'Get information on VA facilities including contact information, location, hours of operation, available services, appointment wait times, and patient satisfaction.',
+  releaseNotes: FacilitiesReleaseNotes,
+  shortDescription:
+    'Use the VA Facility API to find relevant information about a specific VA facility.',
 };
 
 const healthContent: IApiCategoryContent = {
   intro: HealthIntro,
   overview: HealthOverview,
+  placardText: 'Build tools to help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and securely share their information with caregivers and providers.',
   quickstart: HealthQuickstart,
+  releaseNotes: HealthReleaseNotes,
+  shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
 };
 
 const verificationContent: IApiCategoryContent = {
   intro: VerificationIntro,
   overview: VerificationOverview,
+  placardText: 'Build tools to help Veterans verify their Veteran status electronically on job sites, e-commerce sites, and third-party benefit sites.',
+  releaseNotes: VerificationReleaseNotes,
+  shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
 };
 
 export {
+  appealsContent,
   benefitsContent,
   facilitiesContent,
   healthContent,

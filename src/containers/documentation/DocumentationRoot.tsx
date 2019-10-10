@@ -63,23 +63,24 @@ function ExploreSideNav() {
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: IApiCategory = apiDefinitions[categoryKey];
         return (
-          <SideNavEntry
-            key={categoryKey}
-            to={`/explore/${categoryKey}`}
-            id={`side-nav-category-link-${categoryKey}`}
-            className="side-nav-category-link"
-            name={apiCategory.name}
-          >
-            {apiCategory.content.quickstart &&
-              <SideNavEntry
-                exact={true}
-                to={`/explore/${categoryKey}/docs/quickstart`}
-                name="Quickstart"
-              />
-            }
-            {!apiCategory.apiKey && OAuthSideNavEntry(categoryKey)}
-            {apiCategory.apis.map((api: IApiDescription) => SideNavApiEntry(categoryKey, api))}
-          </SideNavEntry>
+          <Flag name={`categories.${categoryKey}`} key={categoryKey}>
+            <SideNavEntry
+              to={`/explore/${categoryKey}`}
+              id={`side-nav-category-link-${categoryKey}`}
+              className="side-nav-category-link"
+              name={apiCategory.name}
+            >
+              {apiCategory.content.quickstart &&
+                <SideNavEntry
+                  exact={true}
+                  to={`/explore/${categoryKey}/docs/quickstart`}
+                  name="Quickstart"
+                />
+              }
+              {!apiCategory.apiKey && OAuthSideNavEntry(categoryKey)}
+              {apiCategory.apis.map((api: IApiDescription) => SideNavApiEntry(categoryKey, api))}
+            </SideNavEntry>
+          </Flag>
         );
       })}
     </SideNav>

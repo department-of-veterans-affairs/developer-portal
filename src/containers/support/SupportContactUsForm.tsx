@@ -3,7 +3,7 @@ import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/E
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import classNames from 'classnames';
 import * as React from "react";
-
+import { getEnabledApiCategories } from '../../apiDefs/env';
 import { getApiDefinitions } from '../../apiDefs/query';
 import Form from "../../components/Form";
 import { IErrorableInput } from '../../types';
@@ -50,7 +50,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
     };
 
     return (
-      <Form 
+      <Form
         onSubmit={this.formSubmission}
         onSuccess={this.props.onSuccess}
         disabled={this.disabled}
@@ -124,7 +124,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
             name="description"
             field={this.state.description}
             required={true} />
-          
+
         </fieldset>
       </Form>
     );
@@ -132,17 +132,16 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
   private static get apiOptions(): object[] {
     const apiDefs = getApiDefinitions();
-    return Object.keys(apiDefs).map(api => {
+    return getEnabledApiCategories().map(api => {
       return {
         label: apiDefs[api].name,
         value: api,
       };
     });
   }
-  
+
   private static get initialApiState() {
-    const apiDefs = getApiDefinitions();
-    return Object.keys(apiDefs).reduce((accumulator, api) => {
+    return getEnabledApiCategories().reduce((accumulator, api) => {
       accumulator[api] = false;
       return accumulator;
     }, {});

@@ -33,14 +33,14 @@ export default class ApiPage extends React.Component<RouteComponentProps<IApiNam
     const isDeprecated = isApiDeprecated(api);
     const category = lookupApiCategory(params.apiCategoryKey)!;
     return (
-      <Flag name={`enabled.${api.urlFragment}`}>
+      <Flag name={`enabled.${api.urlFragment}`} fallbackComponent={ExplorePage}>
         <div role="region" aria-labelledby="api-documentation">
           <PageHeader id="api-documentation" halo={category.name} header={api.name} />
           <DeprecationMessage api={api} />
-          {!isDeprecated && 
-            <ApiDocumentation 
-              apiDefinition={api} 
-              categoryKey={params.apiCategoryKey} 
+          {!isDeprecated &&
+            <ApiDocumentation
+              apiDefinition={api}
+              categoryKey={params.apiCategoryKey}
               location={this.props.location} />
           }
         </div>

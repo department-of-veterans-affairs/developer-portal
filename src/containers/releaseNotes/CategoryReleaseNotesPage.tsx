@@ -15,7 +15,7 @@ export default class CategoryReleaseNotesPage extends React.Component<RouteCompo
   public render() {
     const apiDefs = getApiDefinitions();
     const { apiCategoryKey } = this.props.match.params;
-    const { apis, releaseNotes } = apiDefs[apiCategoryKey];
+    const { apis, content } = apiDefs[apiCategoryKey];
 
     const headerProps = {
       halo: 'Release Notes',
@@ -57,7 +57,7 @@ export default class CategoryReleaseNotesPage extends React.Component<RouteCompo
         <PageHeader halo={headerProps.halo} header={headerProps.header} />
         {cardSection}
         <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-          {releaseNotes ? releaseNotes({}) : null}
+          {content.releaseNotes ? content.releaseNotes({}) : null}
         </div>
         <hr />
       </section>
