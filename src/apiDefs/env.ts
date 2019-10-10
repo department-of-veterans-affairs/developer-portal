@@ -30,7 +30,5 @@ export const getCategoryFlags = () => {
 
 export const getApiCategories = () => {
   const categoryFlags = getCategoryFlags();
-  return Object.keys(categoryFlags).filter((category) => {
-      return categoryFlags[category];
-  });
+  return getApiCategoryOrder().filter((category) => categoryFlags[category]);
 };
