@@ -2,8 +2,8 @@ import classNames from 'classnames';
 import { Flag } from 'flag';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import CardLink from 'src/components/CardLink';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
+import CardLink from '../components/CardLink';
 
 
 import './Home.scss';
