@@ -18,7 +18,7 @@ export default class Search extends React.Component {
             name="query"
             id="query"
             autoComplete="off"
-            className="usagov-search-autocomplete"
+            className="usagov-search-autocomplete vads-u-padding-left--4"
             placeholder="Search..."
             aria-label="Search developer.va.gov" />
         </form>

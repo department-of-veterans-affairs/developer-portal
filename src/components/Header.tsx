@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
@@ -23,6 +24,7 @@ export default class Header extends React.Component<{}, INavBarState> {
 
   public render() {
     const navBarCloseHandler = this.toggleMenuVisible.bind(this);
+    const buttonClassnames = classnames('vads-u-background-color--white', 'vads-u-color--primary-darkest', 'usa-button');
 
     return (
       <header className="usa-header usa-header-extended" role="banner">
@@ -37,7 +39,7 @@ export default class Header extends React.Component<{}, INavBarState> {
             <div className="header-right-container">
               <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
-                <Link id="header-request-key" to="/apply" className=" button-inverse usa-button">Request an API Key</Link>
+                <Link to="/apply" className={buttonClassnames}>Request an API Key</Link>
                 <Search />
               </div>
             </div>
