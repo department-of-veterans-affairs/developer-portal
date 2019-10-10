@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import * as React from 'react';
 
 import './EmbeddedYoutubeVideo.scss';
@@ -12,10 +13,23 @@ export default function EmbeddedYoutubeVideo({url, title} : IEmbeddedYoutubeVide
     return <a href={url}>{ url }</a>;
   }
 
+  const wrapperStyles = classnames(
+    'va-api-youtube-wrapper',
+    'vads-u-display--block',
+    'vads-u-width--full',
+    'vads-u-height--0',
+    );
+
+  const iframeStyles = classnames(
+    'vads-u-display--block',
+    'vads-u-width--full',
+    'vads-u-height--full',
+  );
+
   const embedUrl = url.replace('watch?v=', 'embed/');
   return (
-    <div className="va-api-youtube-wrapper">
-      <iframe title={title} src={embedUrl} frameBorder="0" allowFullScreen={true} />
+    <div className={wrapperStyles}>
+      <iframe className={iframeStyles} title={title} src={embedUrl} frameBorder="0" allowFullScreen={true} />
     </div>
   );
 }

@@ -4,7 +4,6 @@ import * as React from 'react';
 
 import EmbeddedYoutubeVideo from './EmbeddedYoutubeVideo';
 
-
 describe('EmbeddedYoutubeVideo', () => {
   it('renders a link if url is not youtube', () => {
     const url = "https://localhost:3002";

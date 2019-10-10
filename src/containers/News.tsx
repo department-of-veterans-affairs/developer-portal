@@ -49,17 +49,10 @@ function NewsSideNav() {
   );
 }
 
-function renderNewsItem(item: INewsItem, media: boolean) {
-  let content;
-  if(media) {
-    content = mediaItem(item);
-  } else {
-    content = itemDescription(item);
-  }
-
+function NewsItem({ item, media } : {item: INewsItem, media: boolean}) {
   return (
-    <div key={item.url}>
-      {content}
+    <div>
+      {media ? mediaItem(item) : itemDescription(item)}
     </div>
   );
 }
@@ -94,7 +87,7 @@ function mediaItem(item: INewsItem) {
 
 function itemDescription(item: INewsItem) {
   return (
-    <p key={item.url}>
+    <p>
       <a href={item.url}>{item.title}</a>
       <br />
       <strong>
@@ -131,7 +124,7 @@ export class News extends React.Component {
         >
           <h2>{section.title}</h2>
           {section.items.map((item: INewsItem) => {
-            return renderNewsItem(item, section.media);
+            return <NewsItem key={item.url} item={item} media={section.media} />;
           })}
         </section>
       );

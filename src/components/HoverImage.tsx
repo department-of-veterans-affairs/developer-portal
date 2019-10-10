@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-interface IImageProps {
+interface IHoverImageProps {
   imagePath: string;
   hoverImagePath: string;
 }
@@ -9,8 +9,8 @@ interface IHoverImageState {
   src: string;
 }
 
-export default class HoverImage extends React.Component<IImageProps, IHoverImageState> {
-  constructor(props : IImageProps) {
+export default class HoverImage extends React.Component<IHoverImageProps, IHoverImageState> {
+  constructor(props : IHoverImageProps) {
     super(props);
     this.state = {
       src: props.imagePath,
