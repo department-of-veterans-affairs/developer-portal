@@ -44,11 +44,6 @@
   display: flex;
 }
 
-// a temporary patch until we adopt VA design system more fully
-#get-started-button {
-  margin-right: 2rem;
-}
-
 .usa-header.usa-header-extended {
   background: $color-blue-darkest;
 
@@ -65,4 +60,9 @@
       font-weight: 300;
     }
   }
+}
+
+.button-inverse {
+  color: $color-blue-darkest !important;
+  background-color: $color-white !important;
 }

@@ -38,7 +38,7 @@ export default class Banner extends React.Component<{}, IBannerState> {
       <section className="usa-banner site-banner">
         <div className="site-guidance usa-accordion">
           <header className="usa-banner-header">
-            <div className="usa-grid usa-banner-inner">
+            <div className="usa-grid va-api-banner-inner">
               <div className="official-site-notice">
                 <div><img src={flagIcon} alt="US flag" /></div>
                 <div className="site-notice-text">

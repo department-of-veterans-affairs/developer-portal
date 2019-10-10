@@ -5,7 +5,6 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  background-color: #FFFFFF;
   padding-top: 3.0rem;
   padding-bottom: 3.0rem;
 
@@ -13,6 +12,37 @@
     background: none;
     padding-top: 0;
     padding-bottom: 0;
+  }
+
+  input {
+    background-color: #12223A;
+    color: $color-off-white;
+  }
+
+  *::-webkit-input-placeholder {
+    color: $color-off-white;
+  }
+  *:-moz-placeholder {
+    /* FF 4-18 */
+    color: $color-off-white;
+    opacity: 1;
+  }
+  *::-moz-placeholder {
+    /* FF 19+ */
+    color: $color-off-white;
+    opacity: 1;
+  }
+  *:-ms-input-placeholder {
+    /* IE 10+ */
+    color: $color-off-white;
+  }
+  *::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: $color-off-white;
+  }
+  *::placeholder {
+    /* modern browser */
+    color: $color-off-white;
   }
 
   label {
@@ -37,6 +67,7 @@
     width: 80%;
     max-width: none;
     padding: 8px;
+    padding-left: 30px;
 
     @include media($large-screen) {
       width: 240px;
@@ -44,6 +75,11 @@
     }
   }
 
+  .va-api-search-icon {
+    position: relative;
+    left: 25px;
+    color: $color-white;
+  }
   button.vadp-search-submit {
     border-radius: 0 5px 5px 0;
     width: 40px;

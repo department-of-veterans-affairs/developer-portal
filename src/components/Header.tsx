@@ -37,7 +37,7 @@ export default class Header extends React.Component<{}, INavBarState> {
             <div className="header-right-container">
               <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
-                <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
+                <Link id="header-request-key" to="/apply" className=" button-inverse usa-button">Request an API Key</Link>
                 <Search />
               </div>
             </div>
