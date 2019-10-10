@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 import CardLink from '../components/CardLink';
 
-
 import './Home.scss';
 
 class Home extends React.Component {
