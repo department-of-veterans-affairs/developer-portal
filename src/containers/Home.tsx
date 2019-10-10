@@ -1,7 +1,9 @@
 import { Flag } from 'flag';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import CardLink from 'src/components/CardLink';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
+
 
 import './Home.scss';
 
@@ -44,10 +46,12 @@ class Home extends React.Component {
                   const { name, content } = apiDefinitions[apiCategoryKey];
                   return (
                     <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
-                      <Link className="va-api-card" to={`/explore/${apiCategoryKey}`}>
-                        <h3 className="va-api-name">VA {name}</h3>
-                        <p className="va-api-description">{content.placardText}</p>
-                      </Link>
+                      <CardLink
+                        name={`VA ${name}`}
+                        url={`/explore/${apiCategoryKey}`}
+                      >
+                        {content.placardText}
+                      </CardLink>
                     </Flag>
                   );
                 })}

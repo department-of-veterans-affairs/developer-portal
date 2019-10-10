@@ -2,7 +2,7 @@ import ErrorableCheckboxGroup from '@department-of-veterans-affairs/formation-re
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import * as React from "react";
-import { getCategoryFlags } from '../../apiDefs/env';
+import { getApiCategories } from '../../apiDefs/env';
 import { getApiDefinitions } from '../../apiDefs/query';
 import Form from "../../components/Form";
 import { IErrorableInput } from '../../types';
@@ -24,13 +24,6 @@ interface ISupportContactUsFormProps {
 }
 
 export default class SupportContactUsForm extends React.Component<ISupportContactUsFormProps, ISupportContactUsFormState> {
-
-  private static apiCategories() {
-    const categoryFlags = getCategoryFlags();
-    return Object.keys(categoryFlags).filter((category) => {
-        return categoryFlags[category];
-    });
-  }
 
   constructor(props: ISupportContactUsFormProps) {
     super(props);
@@ -124,7 +117,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
   private static get apiOptions(): object[] {
     const apiDefs = getApiDefinitions();
-    return SupportContactUsForm.apiCategories().map(api => {
+    return getApiCategories().map(api => {
       return {
         label: apiDefs[api].name,
         value: api,
@@ -133,7 +126,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   }
 
   private static get initialApiState() {
-    return SupportContactUsForm.apiCategories().reduce((accumulator, api) => {
+    return getApiCategories().reduce((accumulator, api) => {
       accumulator[api] = false;
       return accumulator;
     }, {});
