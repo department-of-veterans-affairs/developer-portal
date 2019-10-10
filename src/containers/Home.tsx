@@ -1,5 +1,5 @@
-import { Flag } from 'flag';
 import classNames from 'classnames';
+import { Flag } from 'flag';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import CardLink from 'src/components/CardLink';
@@ -37,7 +37,7 @@ class Home extends React.Component {
         </section>
 
         <div className="vads-l-grid-container">
-          <section 
+          <section
             role="region"
             aria-label="API Top-Level List"
             className={classNames('vads-u-padding-y--4')}
@@ -75,7 +75,7 @@ class Home extends React.Component {
               <div className="ruled-stars" />
             </div>
           </div>
-          <section 
+          <section
             className={classNames('vads-u-padding-top--4', 'vads-u-padding-bottom--8')}
             role="region"
             aria-labelledby="discover"
@@ -83,7 +83,7 @@ class Home extends React.Component {
             <div className="vads-l-row">
               <div className={classNames(
                 'vads-l-col--12',
-                'medium-screen:vads-l-col--6', 
+                'medium-screen:vads-l-col--6',
                 'medium-screen:vads-u-padding-right--2',
               )}>
                 <h2 id="discover">Discover How VA's Partners Use Our APIs</h2>
