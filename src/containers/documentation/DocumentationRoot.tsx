@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
@@ -89,29 +90,31 @@ function ExploreSideNav() {
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     return (
-      <div className="explore va-api-sidenav-page">
-        <section className="usa-grid">
-          <ExploreSideNav />
-          <div className="usa-width-two-thirds">
-            <Route exact={true} path="/explore/" component={DocumentationOverview} />
-            <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
-            <Switch>
-              <Route
-                exact={true}
-                path="/explore/:apiCategoryKey/docs/authorization"
-                component={AuthorizationDocs}
-              />
-              <Route
-                exact={true}
-                path="/explore/:apiCategoryKey/docs/quickstart"
-                component={QuickstartPage}
-              />
-              <Route
-                exact={true}
-                path="/explore/:apiCategoryKey/docs/:apiName"
-                component={ApiPage}
-              />
-            </Switch>
+      <div className={classNames('explore', 'vads-u-padding-y--5')}>
+        <section className="vads-l-grid-container">
+          <div className="vads-l-row">
+            <ExploreSideNav />
+            <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
+              <Route exact={true} path="/explore/" component={DocumentationOverview} />
+              <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
+              <Switch>
+                <Route
+                  exact={true}
+                  path="/explore/:apiCategoryKey/docs/authorization"
+                  component={AuthorizationDocs}
+                  />
+                <Route
+                  exact={true}
+                  path="/explore/:apiCategoryKey/docs/quickstart"
+                  component={QuickstartPage}
+                  />
+                <Route
+                  exact={true}
+                  path="/explore/:apiCategoryKey/docs/:apiName"
+                  component={ApiPage}
+                  />
+              </Switch>
+            </div>
           </div>
         </section>
       </div>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
@@ -12,9 +13,9 @@ import { IApiNameParam } from '../../types';
 import ApiDocumentation from './ApiDocumentation';
 
 const DeprecationMessage = ({ api } : { api: IApiDescription }) => {
-  return api.deprecationContent ?(
-    <div className="usa-alert usa-alert-info">
-      <div className="usa-alert-body">
+  return api.deprecationContent ? (
+    <div className={classNames('usa-alert', 'usa-alert-info', 'va-api-deprecation-alert')}>
+      <div className={classNames('usa-alert-body')}>
         {api.deprecationContent({})}
       </div>
     </div>
@@ -38,9 +39,9 @@ export default class ApiPage extends React.Component<RouteComponentProps<IApiNam
           <DeprecationMessage api={api} />
           {!isDeprecated &&
             <ApiDocumentation
-            apiDefinition={api}
-            categoryKey={params.apiCategoryKey}
-            location={this.props.location} />
+              apiDefinition={api}
+              categoryKey={params.apiCategoryKey}
+              location={this.props.location} />
           }
         </div>
       </Flag>

@@ -36,26 +36,14 @@
     margin-top: 0;
   }
 
-  .usa-section {
-    padding-top: 0;
-
-    > div {
-      margin-bottom: 3rem;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  .usa-alert {
+  .va-api-deprecation-alert {
     h2 {
       margin-top: 5px !important;
     }
-  }
 
-  .usa-alert-body {
-    padding-left: 60px;
+    p {
+      margin: 0;
+    }
   }
 
   .swagger-ui {
