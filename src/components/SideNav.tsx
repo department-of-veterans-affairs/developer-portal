@@ -64,7 +64,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
     const { name, ...navLinkProps } = this.props;
 
     return (
-      <li className="va-api-sidenav-entry">
+      <li className={classNames('va-api-sidenav-entry', 'vads-u-margin-y--0')}>
         <NavHashLink
           activeClassName="va-api-active-sidenav-link"
           isActive={this.navHashLinkIsActive}
@@ -97,22 +97,17 @@ export default class SideNav extends React.Component<ISideNavProps> {
 
   public render() {
     return (
-      <nav
-        className={classNames(
-          'vadp-side-nav',
-          'vads-l-col--12',
-          'medium-screen:vads-l-col--4',
-          'vads-u-padding-right--5',
-          'sticky',
-          this.props.className,
-        )}
-        aria-label={this.props.ariaLabel}
-        ref={this.navRef}
-      >
-        <ul className={classNames('usa-sidenav-list', 'va-api-sidenav-list')}>
-          {this.props.children}
-        </ul>
-      </nav>
+      <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--4', 'vads-u-padding-right--5')}>
+        <nav
+          className={classNames('vadp-side-nav', 'sticky', this.props.className)}
+          aria-label={this.props.ariaLabel}
+          ref={this.navRef}
+        >
+          <ul className={classNames('usa-sidenav-list', 'va-api-sidenav-list')}>
+            {this.props.children}
+          </ul>
+        </nav>
+      </div>
     );
   }
 }
