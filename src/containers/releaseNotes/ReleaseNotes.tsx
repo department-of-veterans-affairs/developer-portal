@@ -84,7 +84,19 @@ function renderOverview(routeProps: any, props: any) {
 
 export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   private overviewProps = {
-    description: 'The goal of the Release Notes section is to inform developers of updates and changes to the VA APIs. This section of the developer portal is new and will expand as release notes for new APIs become available.', 
+    description:
+      <div>
+        <p>
+          The VA Lighthouse product teams periodically update these APIs in order to deliver new features and repair defects. Occasionally we need to make "breaking changes" that require developers to modify their existing applications.
+        </p>
+        <p>
+          We recommend that developers periodically check this list for announcements of breaking changes and added features. Changes will also be announced via direct email whenever possible to addresses used to obtain developer keys for each API. Please <a href="https://developer.va.gov/support/contact-us">contact us</a> with any questions, or to request support.
+        </p>
+        <p>
+          For a list of user-requested features and known issues and a place to report bugs, please visit our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients">GitHub repo</a>.
+        </p>
+      </div>
+    ,
     halo: 'Release Notes',
     header: 'Overview', 
     parent: 'release-notes',
