@@ -3,7 +3,7 @@ import { NavHashLink } from 'react-router-hash-link';
 
 import './CardLink.scss';
 
-export interface IApiCardProps {
+export interface ICardLinkProps {
   name: string;
   url: string;
   subhead?: JSX.Element;
@@ -15,7 +15,7 @@ export interface IApiCardProps {
  * in the form of a card. It can optionally render an arbitrary JSX.Element
  * subhead before its children, which should be a description of the link.
  */
-export default class CardLink extends React.Component<IApiCardProps, {}> {
+export default class CardLink extends React.Component<ICardLinkProps, {}> {
   public render() {
     return (
       <NavHashLink to={this.props.url} className="va-api-card">

@@ -61,6 +61,11 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             <button className="va-api-mobile-nav-close" onClick={this.props.onClose}>
               <img src={closeButton} alt="Close button" />
             </button>
+            <div className="va-api-nav-secondary">
+              <Link to="/apply" className={classNames('usa-button', 'vads-u-width--full', 'vads-u-margin--0')}>
+                Get Started
+              </Link>
+            </div>
             <Search className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
           </MediaQuery>
           <ul className="va-api-nav-primary">

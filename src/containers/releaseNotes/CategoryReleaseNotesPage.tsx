@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
@@ -52,11 +53,10 @@ export default class CategoryReleaseNotesPage extends React.Component<RouteCompo
       <section
         role="region"
         aria-labelledby={`${apiCategoryKey}-release-notes`}
-        className="usa-section"
       >
         <PageHeader halo={headerProps.halo} header={headerProps.header} />
         {cardSection}
-        <div className="usa-width-one-whole api-release-notes">
+        <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
           {releaseNotes ? releaseNotes({}) : null}
         </div>
         <hr />
