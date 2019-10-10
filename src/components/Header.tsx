@@ -41,6 +41,7 @@ export default class Header extends React.Component<{}, INavBarState> {
                 <Link to="/apply" className={classNames('usa-button', 'vads-u-margin-right--2p5')}>
                   Get Started
                 </Link>
+                <Link id="get-started-button" to="/apply" className="usa-button">Request an API Key</Link>
                 <Search />
               </div>
             </div>
@@ -55,9 +56,6 @@ export default class Header extends React.Component<{}, INavBarState> {
           </MediaQuery>
         </div>
         <NavBar isMobileMenuVisible={this.state.menuVisible} onClose={navBarCloseHandler} />
-        <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
-          <Search />
-        </MediaQuery>
       </header>
     );
   }
