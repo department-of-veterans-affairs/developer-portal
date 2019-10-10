@@ -28,7 +28,7 @@ export const getCategoryFlags = () => {
   return categories;
 };
 
-export const getApiCategories = () => {
+export const getEnabledApiCategories = () => {
   const categoryFlags = getCategoryFlags();
   return getApiCategoryOrder().filter((category) => categoryFlags[category]);
 };
