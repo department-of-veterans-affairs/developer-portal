@@ -1,6 +1,10 @@
 @import '../styles/variables';
 
 .vadp-side-nav {
+  @include media($medium-screen) {
+    display: none;
+  }
+  
   &.sticky {
     position: -webkit-sticky;
     position: sticky;

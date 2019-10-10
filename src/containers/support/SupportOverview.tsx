@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CardLink from '../../components/CardLink';
+import CardLink, { getCardContainerClasses } from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 import { ISection } from './Support';
 
@@ -17,7 +17,7 @@ export default function SupportOverview(props: ISupportOverviewProps) {
   return (
     <section role="region" aria-label="Support Overview">
       <PageHeader {...headerProps} />
-      <div className="va-api-container">
+      <div className={getCardContainerClasses()}>
         {props.sections.map((section: ISection) => {
           return (
             <CardLink name={section.name} url={`/support/${section.id}`} key={section.id}>

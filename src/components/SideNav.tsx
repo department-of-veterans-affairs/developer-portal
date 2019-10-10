@@ -97,9 +97,18 @@ export default class SideNav extends React.Component<ISideNavProps> {
 
   public render() {
     return (
-      <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--4', 'vads-u-padding-right--5')}>
+      <div className={classNames(
+        'vads-l-col--12',
+        'medium-screen:vads-l-col--4',
+        'vads-u-padding-right--5',
+      )}>
         <nav
-          className={classNames('vadp-side-nav', 'sticky', this.props.className)}
+          className={classNames(
+            'vadp-side-nav',
+            'vads-u-margin-bottom--2',
+            'sticky',
+            this.props.className,
+          )}
           aria-label={this.props.ariaLabel}
           ref={this.navRef}
         >

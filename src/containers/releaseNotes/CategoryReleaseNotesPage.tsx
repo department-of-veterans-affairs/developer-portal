@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import { IApiDescription } from '../../apiDefs/schema';
-import CardLink from '../../components/CardLink';
+import CardLink, { getCardContainerClasses } from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
 import { IApiNameParam } from '../../types';
@@ -44,7 +44,7 @@ export default class CategoryReleaseNotesPage extends React.Component<RouteCompo
 
       cardSection = (
         <div role="navigation" aria-labelledby={`${apiCategoryKey}-overview-apis`}>
-          <div className="va-api-container">{apiCards}</div>
+          <div className={getCardContainerClasses()}>{apiCards}</div>
         </div>
       );
     }

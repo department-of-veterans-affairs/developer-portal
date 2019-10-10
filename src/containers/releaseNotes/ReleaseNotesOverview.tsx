@@ -3,7 +3,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import CardLink from '../../components/CardLink';
+import CardLink, { getCardContainerClasses } from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 
 function cards(parent: string): JSX.Element[] {
@@ -33,7 +33,7 @@ export default class Overview extends React.Component<RouteComponentProps & any,
           header={this.props.header}
           description={this.props.description}
         />
-        <div className="va-api-container">{cards(this.props.parent)}</div>
+        <div className={getCardContainerClasses()}>{cards(this.props.parent)}</div>
       </div>
     );
   }

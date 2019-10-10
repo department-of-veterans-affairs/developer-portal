@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import CardLink from '../components/CardLink';
+import CardLink, { getCardContainerClasses } from '../components/CardLink';
 import PageHeader from '../components/PageHeader';
 import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
@@ -70,7 +70,7 @@ export default class News extends React.Component {
                   header={headerProps.header}
                   className="vads-u-margin-bottom--4"
                 />
-                <div className={classNames('va-api-container', 'vads-u-margin-bottom--4')}>
+                <div className={classNames(getCardContainerClasses(), 'vads-u-margin-bottom--4')}>
                   {this.cardsSections}
                 </div>
                 {newsContent}
