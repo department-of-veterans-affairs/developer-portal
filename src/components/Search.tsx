@@ -9,7 +9,7 @@ export default class Search extends React.Component {
   public render() {
     return (
       <div className="vadp-search-form">
-      <FontAwesomeIcon className="va-api-search-icon" icon={faSearch} />
+        <FontAwesomeIcon className="va-api-search-icon" icon={faSearch} />
         <form action="https://search.usa.gov/search"
             acceptCharset="UTF-8" method="get">
           <input name="utf8" type="hidden" value="&#x2713;" />
