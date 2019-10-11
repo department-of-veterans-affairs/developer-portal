@@ -1,27 +1,26 @@
+import classNames from 'classnames';
 import * as React from 'react';
 
 import VeteransCrisisLine from './VeteransCrisisLine';
-
-import './Banner.scss';
 
 import flagIcon from '../../node_modules/uswds/src/img/favicons/favicon-40.png';
 import rightArrow from '../assets/arrow-right-white.svg';
 import dotGovIcon from '../assets/icon-dot-gov.svg';
 import httpsIcon from '../assets/icon-https.svg';
+import './Banner.scss';
 
 interface IBannerState {
-    menuVisible: boolean;
-    accordionVisible: boolean;
+  menuVisible: boolean;
+  accordionVisible: boolean;
 }
 
 export default class Banner extends React.Component<{}, IBannerState> {
-
   constructor(props: {}) {
-      super(props);
-      this.state = {
-        accordionVisible: false,
-        menuVisible: false,
-      };
+    super(props);
+    this.state = {
+      accordionVisible: false,
+      menuVisible: false,
+    };
   }
 
   public render() {
@@ -35,23 +34,54 @@ export default class Banner extends React.Component<{}, IBannerState> {
     );
 
     return (
-      <section className="usa-banner site-banner">
-        <div className="site-guidance usa-accordion">
-          <header className="usa-banner-header">
-            <div className="usa-grid va-api-banner-inner">
-              <div className="official-site-notice">
-                <div><img src={flagIcon} alt="US flag" /></div>
+      <section>
+        <div className="site-guidance">
+          <header className={classNames('va-api-banner-header')}>
+            <div className={classNames(
+              'va-api-banner-inner',
+              'vads-u-max-width--100',
+              'medium-screen:vads-u-padding-x--4',
+            )}>
+              <div className={classNames('official-site-notice', 'vads-u-padding-y--0p25')}>
+                <div>
+                  <img src={flagIcon} 
+                    alt="US flag" 
+                    className={classNames(
+                      'vads-u-margin-left--1p5',
+                      'vads-u-margin-right--1',
+                      'vads-u-margin-top--neg1',
+                      'medium-screen:vads-u-margin-left--0',
+                      'medium-screen:vads-u-margin-top--0',
+                    )}
+                  />
+                </div>
                 <div className="site-notice-text">
                   <div>An official website of the United States government.</div>
-                  <button className="usa-accordion-button usa-banner-button" onClick={this.toggleAccordionVisible}
-                        aria-expanded={this.state.accordionVisible ? "true" : "false"}>
-                    <span className="usa-banner-button-text">
+                  <button 
+                    className={classNames(
+                      'va-api-site-guidance-button',
+                      'vads-u-margin--0',
+                      'vads-u-margin-top--0p25',
+                      'vads-u-padding--0',
+                      'medium-screen:vads-u-margin-left--1',
+                      'medium-screen:vads-u-margin-top--0',
+                    )}
+                    onClick={this.toggleAccordionVisible}
+                    aria-expanded={this.state.accordionVisible ? "true" : "false"}
+                  >
+                    <span className={classNames(
+                      'vads-u-font-weight--normal',
+                      'vads-u-text-decoration--underline',
+                    )}>
                       Here's how you know
                     </span>
                   </button>
                 </div>
               </div>
-              <div className="usa-banner-content usa-accordion-content" aria-hidden={this.state.accordionVisible ? "false" : "true"}>
+              <div 
+                className={classNames('usa-accordion-content', 'site-guidance-content')}
+                aria-hidden={this.state.accordionVisible ? "false" : "true"}
+              >
                 {this.renderSiteGuidance(
                     "banner-guidance-gov",
                     dotGovIcon,
@@ -100,10 +130,17 @@ export default class Banner extends React.Component<{}, IBannerState> {
 
   private renderSiteGuidance(className: string, iconContent: string, titleText: {}, bodyText: {}) {
     return (
-      <div className={className}>
-        <img className="usa-banner-icon usa-media_block-img" src={iconContent}
-              alt="Dot Gov" />
-        <div className="guidance-content usa-media_block-body">
+      <div className={classNames(
+        'vads-u-display--flex',
+        'vads-u-align-content--flex-start',
+        className,
+      )}>
+        <img 
+          className={classNames('vads-u-margin-right--1', 'vads-u-margin-top--0p5')}
+          src={iconContent} 
+          alt="Dot Gov" 
+        />
+        <div className="guidance-content">
           <div className="guidance-title">
             <strong>{titleText}</strong>
           </div>

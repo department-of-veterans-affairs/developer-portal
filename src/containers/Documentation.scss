@@ -2,7 +2,7 @@
   This file is shared between documentation/Documentation.tsx and releaseNotes/ReleaseNotes.tsx.
   This is an indication that it should probably be refactored and that possibly its consuming 
   components might be as well.
-*/ 
+*/
 @import '../styles/variables';
 
 .explore {
@@ -36,26 +36,14 @@
     margin-top: 0;
   }
 
-  .usa-section {
-    padding-top: 0;
-
-    > div {
-      margin-bottom: 3rem;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  .usa-alert {
+  .va-api-deprecation-alert {
     h2 {
       margin-top: 5px !important;
     }
-  }
 
-  .usa-alert-body {
-    padding-left: 60px;
+    p {
+      margin: 0;
+    }
   }
 
   .swagger-ui {
@@ -180,6 +168,14 @@
       td {
         border: none;
       }
+    }
+
+    blockquote {
+      line-height: 1.5;
+      color: $color-gray-dark;
+      background: $color-primary-alt-lightest;
+      padding: 1rem;
+      padding-right: 2rem;
     }
   }
 

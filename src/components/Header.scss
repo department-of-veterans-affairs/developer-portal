@@ -1,5 +1,23 @@
 @import '../styles/variables';
 
+.va-api-site-header {
+  background: $color-blue-darkest;
+
+  .va-api-logo {
+    margin-left: 15px;
+
+    @include media($large-screen) {
+      margin: 0;
+      font-size: 4.2rem;
+    }
+
+    a {
+      color: #FFFFFF;
+      font-weight: 300;
+    }
+  }
+}
+
 .header-content {
   max-width: none;
   display: flex;
@@ -30,7 +48,9 @@
     font-weight: 400;
     height: 4rem;
     margin: 0;
+    text-align: center;
     text-transform: uppercase;
+    width: 6rem;
   }
 }
 
@@ -42,22 +62,4 @@
 
 .header-right-content {
   display: flex;
-}
-
-.usa-header.usa-header-extended {
-  background: $color-blue-darkest;
-
-  .va-api-logo {
-    margin-left: 15px;
-
-    @include media($large-screen) {
-      margin: 0;
-      font-size: 4.2rem;
-    }
-
-    a {
-      color: #FFFFFF;
-      font-weight: 300;
-    }
-  }
 }

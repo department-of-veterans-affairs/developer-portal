@@ -8,9 +8,11 @@ import SupportContactUsForm from './SupportContactUsForm';
 
 const GitHubSnippet = () => {
   return (
-    <div className="va-api-github-snippet">
+    <div className="vads-u-margin-y--2">
       <h3>Submit an Issue via GitHub</h3>
-      <a className="usa-button" href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose"><FontAwesomeIcon icon={faGithub} /> Submit an Issue</a>
+      <a className="usa-button" href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
+        <FontAwesomeIcon icon={faGithub} /> Submit an Issue
+      </a>
     </div>
   );
 };
@@ -20,7 +22,6 @@ interface ISupportContactUsState {
 }
 
 export default class SupportContactUs extends React.Component<{}, ISupportContactUsState> {
-
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -38,10 +39,10 @@ export default class SupportContactUs extends React.Component<{}, ISupportContac
     };
 
     if (this.state.sent) {
-      return <SupportConfirmation/>;
+      return <SupportConfirmation />;
     } else {
       return (
-        <section role="region" aria-label="Support Overview" className="usa-section">
+        <section role="region" aria-label="Support Overview">
           <PageHeader {...headerProps} />
           <GitHubSnippet />
           <SupportContactUsForm onSuccess={this.onSuccess}/>

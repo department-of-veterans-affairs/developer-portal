@@ -1,0 +1,19 @@
+VA’s Appeals APIs allow a user/application to manage a Veteran's Appeal information.
+
+## Which API should I use?
+
+The **Appeals Status API** is for internal VA use only.  It allows for retrieving the status of all Appeals associated to a Veteran.  These statuses are read-only, and can include Appeals within the legacy process as well as the new Appeals Modernization Act (AMA) process.  You can learn more about the AMA [here](https://benefits.va.gov/benefits/appeals.asp).
+
+The **Decision Reviews API** is currently for internal VA use as well, though will include OAuth authentication in the future.  This API allows for submitting Decision Review requests in accordance with the AMA process.  It also allows for retrieving the details and status of Decision Review requests associated to a Veteran.
+
+## Developement API Access
+
+To gain access to the Decision Reviews API you must request an API Key. Your API Key will need to be included as a header on all of your requests.
+
+## Developer Guidelines
+
+Below are guidelines you should follow to be successful in your VA API integration.
+
+### Data Refresh
+
+Sandbox points to the Caseflow Demo environment which refreshes daily.  The data in this environment is mock data and does not contain any PII.

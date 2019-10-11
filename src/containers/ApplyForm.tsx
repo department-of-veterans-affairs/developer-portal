@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
@@ -100,12 +101,17 @@ class ApplyForm extends React.Component<IApplyProps> {
       },
       ...props
     } = this.props;
+    const applyClasses = classNames('vads-l-grid-container', 'vads-u-padding--4');
 
     return (
-      <div role="region" aria-labelledby="apply-header" className="usa-grid api-application">
+      <div role="region" aria-labelledby="apply-header" className={applyClasses}>
         <ApplyHeader />
-        <div className="usa-grid">
-          <div className="usa-width-two-thirds">
+        <div className="vads-l-row">
+          <div className={classNames(
+            'vads-l-col--12',
+            'medium-screen:vads-l-col--8', 
+            'vads-u-padding-x--2p5',
+          )}>
             <form className="usa-form">
               <h2>Application</h2>
 
@@ -233,7 +239,11 @@ class ApplyForm extends React.Component<IApplyProps> {
             </form>
             { this.renderError() }
           </div>
-          <div className="usa-width-one-third">
+          <div className={classNames(
+            'vads-l-col--12', 
+            'medium-screen:vads-l-col--4',
+            'vads-u-padding-x--2p5',
+          )}>
             <div className="feature">
               <h3>Stay In Touch</h3>
               <p>Want to get news and updates about VA API Program? Sign up to receive email updates.</p>

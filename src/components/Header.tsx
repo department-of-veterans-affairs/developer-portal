@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
@@ -24,10 +24,10 @@ export default class Header extends React.Component<{}, INavBarState> {
 
   public render() {
     const navBarCloseHandler = this.toggleMenuVisible.bind(this);
-    const buttonClassnames = classnames('vads-u-background-color--white', 'vads-u-color--primary-darkest', 'usa-button');
+    const buttonClassnames = classNames('vads-u-background-color--white', 'vads-u-color--primary-darkest', 'usa-button');
 
     return (
-      <header className="usa-header usa-header-extended" role="banner">
+      <header className="va-api-site-header" role="banner">
         <Banner />
         <div className="header-content">
           <div className="va-api-logo" id="extended-logo">
@@ -45,7 +45,10 @@ export default class Header extends React.Component<{}, INavBarState> {
             </div>
           </MediaQuery>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
-            <button className="va-api-mobile-menu-button" onClick={this.toggleMenuVisible}>
+            <button 
+              className={classNames('va-api-mobile-menu-button', 'vads-u-padding--0')} 
+              onClick={this.toggleMenuVisible}
+            >
               Menu
             </button>
           </MediaQuery>
