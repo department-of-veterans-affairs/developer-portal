@@ -1,32 +1,7 @@
-@import '../styles/variables';
+.va-api-footer-logo {
+  width: 20rem;
+}
 
-.va-api-footer {
-  background-color: $color-blue-darkest;
-  color: $color-white;
-  width: 100%;
-
-  img {
-    height: auto;
-    width: 200px;
-  }
-
-  .va-api-footer-links {
-    a {
-      font-size: 1.4rem;
-      color: $color-white;
-    }
-
-    ul {
-      list-style: none;
-    }
-
-    @include media($medium-screen) {
-      ul {
-        li {
-          margin-bottom: 0;
-          padding-left: 3rem;
-        }
-      }
-    }
-  }
+.va-api-footer-link-list {
+  list-style: none;
 }
