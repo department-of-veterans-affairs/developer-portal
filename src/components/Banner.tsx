@@ -35,12 +35,11 @@ export default class Banner extends React.Component<{}, IBannerState> {
 
     return (
       <section>
-        <div className={classNames('site-guidance', 'vads-u-background-color--gray-dark')}>
+        <div className="site-guidance">
           <header className={classNames('va-api-banner-header')}>
             <div className={classNames(
               'va-api-banner-inner',
               'vads-u-max-width--100',
-              'vads-u-color--white',
               'medium-screen:vads-u-padding-x--4',
             )}>
               <div className={classNames('official-site-notice', 'vads-u-padding-y--0p25')}>
