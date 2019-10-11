@@ -1,7 +1,7 @@
 @import '../styles/variables';
 @import '../styles/mixins.scss';
 
-.vadp-search-form--inverse-color {
+.va-api-search-form--inverse-color {
   @include va-api-input-text-color($color-off-white);
 
   input {
@@ -9,12 +9,12 @@
   }
 }
 
-.vadp-search-form {
+.va-api-search-form {
   display: flex;
   flex-flow: row nowrap;
 }
 
-.vadp-search-wrapper {
+.va-api-search-wrapper {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -33,7 +33,7 @@
   }
 
   input.usagov-search-autocomplete,
-  button.vadp-search-submit {
+  button.va-api-search-submit {
     margin: 0;
 
     &:focus {
@@ -60,7 +60,7 @@
     color: $color-alt-gray;
   }
 
-  button.vadp-search-submit {
+  button.va-api-search-submit {
     border-radius: 0 5px 5px 0;
     width: 40px;
     height: 42px;
