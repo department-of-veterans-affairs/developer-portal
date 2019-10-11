@@ -6,9 +6,10 @@ import { RouteComponentProps } from 'react-router';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import { IApiDescription } from '../../apiDefs/schema';
-import CardLink, { getCardContainerClasses } from '../../components/CardLink';
+import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
+import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
 export default class CategoryReleaseNotesPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
@@ -44,7 +45,7 @@ export default class CategoryReleaseNotesPage extends React.Component<RouteCompo
 
       cardSection = (
         <div role="navigation" aria-labelledby={`${apiCategoryKey}-overview-apis`}>
-          <div className={getCardContainerClasses()}>{apiCards}</div>
+          <div className={defaultFlexContainer()}>{apiCards}</div>
         </div>
       );
     }

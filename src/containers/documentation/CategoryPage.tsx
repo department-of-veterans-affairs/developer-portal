@@ -6,8 +6,9 @@ import { RouteComponentProps } from 'react-router';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { IApiDescription } from '../../apiDefs/schema';
 import AuthorizationCard from '../../components/AuthorizationCard';
-import CardLink, { getCardContainerClasses } from '../../components/CardLink';
+import CardLink from '../../components/CardLink';
 import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
+import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
 export default class CategoryPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
@@ -42,7 +43,7 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
 
       cardSection = (
         <div role="navigation" aria-labelledby={headerId}>
-          <div className={getCardContainerClasses()}>
+          <div className={defaultFlexContainer()}>
             {authCard}
             {apiCards}
           </div>
