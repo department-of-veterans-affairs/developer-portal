@@ -34,7 +34,7 @@ const sections = NewsData.sections.map((section: ISection) => ({
 }));
 
 function NewsItem({item, media} : {item: INewsItem, media: boolean}) {
-  return media ? <MediaItem item={item} /> : <ItemDescription item={item} />
+  return media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
 }
 
 function MediaItem({item} : {item: INewsItem}) {
