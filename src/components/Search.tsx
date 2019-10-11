@@ -6,11 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Search.scss';
 
-export default class Search extends React.Component<{inMenu: boolean, className?: string}> {
-  public static defaultProps = {
-    inMenu: false,
-  };
-
+export default class Search extends React.Component<{inMenu?: boolean, className?: string}> {
   public render() {
     const { inMenu } = this.props;
     const wrapperClassName = classNames("vadp-search-wrapper", this.props.className);

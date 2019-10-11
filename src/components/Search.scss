@@ -5,7 +5,7 @@
   @include va-api-input-text-color($color-off-white);
 
   input {
-    background-color: #12223A;
+    background-color: $color-dark-blue;
   }
 }
 
