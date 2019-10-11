@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import { NavLink } from 'react-router-dom';
@@ -11,6 +12,8 @@ export interface ILargeScreenNavItemProps {
 
 interface IMainNavItemProps {
   children: React.ReactChild | React.ReactChildren;
+  activeClassName?: string;
+  className?: string;
   excludeLargeScreen: boolean;
   excludeSmallScreen: boolean;
   targetUrl: string;
@@ -25,8 +28,8 @@ export default class MainNavItem extends React.PureComponent<IMainNavItemProps> 
 
   public render() {
     const sharedProps = {
-      activeClassName: 'va-api-active-nav',
-      className: 'va-api-nav-link',
+      activeClassName: classNames('va-api-active-nav', this.props.activeClassName),
+      className: classNames('va-api-nav-link', this.props.className),
       to: this.props.targetUrl,
     };
   
