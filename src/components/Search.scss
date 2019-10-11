@@ -1,9 +1,20 @@
 @import '../styles/variables';
 @import '../styles/mixins.scss';
 
-.vadp-search-form {
+.vadp-search-form--inverse-color {
   @include va-api-input-text-color($color-off-white);
 
+  input {
+    background-color: #12223A;
+  }
+}
+
+.vadp-search-form {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.vadp-search-wrapper {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
@@ -15,10 +26,6 @@
     background: none;
     padding-top: 0;
     padding-bottom: 0;
-  }
-
-  input {
-    background-color: #12223A;
   }
 
   label {
@@ -55,6 +62,7 @@
     left: 25px;
     color: $color-alt-gray;
   }
+
   button.vadp-search-submit {
     border-radius: 0 5px 5px 0;
     width: 40px;
