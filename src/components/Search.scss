@@ -2,7 +2,7 @@
 @import '../styles/mixins.scss';
 
 .vadp-search-form {
-  @include va-api-input-placeholder-color($color-off-white);
+  @include va-api-input-text-color($color-off-white);
 
   display: flex;
   flex-flow: row nowrap;
@@ -19,7 +19,6 @@
 
   input {
     background-color: #12223A;
-    color: $color-off-white;
   }
 
   label {
@@ -54,7 +53,7 @@
   .va-api-search-icon {
     position: relative;
     left: 25px;
-    color: $color-gray;
+    color: $color-alt-gray;
   }
   button.vadp-search-submit {
     border-radius: 0 5px 5px 0;

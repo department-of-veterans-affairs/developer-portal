@@ -1,4 +1,8 @@
-@mixin va-api-input-placeholder-color($color) {
+@mixin va-api-input-text-color($color) {
+  input {
+    color: $color;
+  }
+
   ::-webkit-input-placeholder {
     color: $color;
   }
