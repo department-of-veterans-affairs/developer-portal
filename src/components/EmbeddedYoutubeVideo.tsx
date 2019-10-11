@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import * as getVideoId from 'get-video-id';
 import * as React from 'react';
 
 import './EmbeddedYoutubeVideo.scss';
@@ -8,8 +9,12 @@ interface IEmbeddedYoutubeVideoProps {
   title: string;
 }
 
+const YOUTUBE_SERVICE = 'youtube';
+const YOUTUBE_BASE = 'https://www.youtube.com/embed/';
+
 export default function EmbeddedYoutubeVideo({url, title} : IEmbeddedYoutubeVideoProps) {
-  if(!url.includes('www.youtube.com')) {
+  const videoInfo = getVideoId(url);
+  if(videoInfo.service !== YOUTUBE_SERVICE) {
     return <a href={url}>{ url }</a>;
   }
 
@@ -26,7 +31,7 @@ export default function EmbeddedYoutubeVideo({url, title} : IEmbeddedYoutubeVide
     'vads-u-height--full',
   );
 
-  const embedUrl = url.replace('watch?v=', 'embed/');
+  const embedUrl = `${YOUTUBE_BASE}${videoInfo.id}`;
   return (
     <div className={wrapperStyles}>
       <iframe className={iframeStyles} title={title} src={embedUrl} frameBorder="0" allowFullScreen={true} />
