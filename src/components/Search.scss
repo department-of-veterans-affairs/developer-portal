@@ -38,9 +38,6 @@
 
     &:focus {
       outline-offset: 0px;
-      // The focus outline renders behind other elements without the
-      // z-index
-      z-index: 1;
     }
   }
 
