@@ -27,7 +27,7 @@ export class OAuth extends React.Component<IOAuthProps, {}> {
 
     return (
       <div id="oauth">
-        <PageHeader halo={category.name} header="Authorization" />
+        <PageHeader halo={category ? category.name : ''} header="Authorization" />
         <Oauth />
       </div>
     );

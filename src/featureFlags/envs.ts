@@ -1,10 +1,10 @@
 import * as flags from './flags';
 
 export const envs = {
-  dev: {
+  development: {
     [flags.curlForm]: true,
   },
-  prod: {
+  production: {
     [flags.curlForm]: true,
   },
   staging: {
