@@ -3,45 +3,15 @@
 .home {
   .site-disclaimer {
     background-color: $color-gold;
-    padding-top: 16px;
-    padding-bottom: 16px;
-    padding-left: 30px;
+
     a {
       color: #004795 !important;
     }
   }
-    
-  .usa-hero {
-    background-color: #4a4a4a;
-    background-image: url('../assets/home-page-banner.png');
-    padding: 8rem 0 9rem;
 
-    .usa-hero-callout {
-      background: none;
-      color: $color-white;
-      max-width: 100%;
-      padding: 0;
-
-      h1 {
-          font-family: $font-sans;
-          color: $color-white;
-      }
-
-      p {
-          font-size: 1.2em;
-          font-weight: 100;
-          margin: 0;
-          max-width: 700px;
-      }
-    }
-  }
-
-  .usa-section {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-
-    &.discover-apis {
-      padding-bottom: 6rem;
+  .va-api-hero-callout {
+    p {
+      font-weight: 100;
     }
   }
 

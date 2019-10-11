@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -88,8 +89,17 @@ function selectedApiNames(apis: IApiList): string[] {
 }
 
 function ApplySuccess(props: IApplication) {
-  const { inputs: { apis, email: { value: email } }, token, clientID, clientSecret } = props;
-  const selectedApis=selectedApiNames(apis);
+  const { 
+    inputs: { 
+      apis, 
+      email: { value: email },
+    }, 
+    token, 
+    clientID, 
+    clientSecret,
+  } = props;
+
+  const selectedApis = selectedApiNames(apis);
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
   const onlyOAuthSelected = (
     (selectedApis.indexOf('benefits') === -1)
@@ -97,22 +107,18 @@ function ApplySuccess(props: IApplication) {
     && (selectedApis.indexOf('appeals') === -1)
   );
 
-  const tokenNotice = onlyOAuthSelected
-                    ? null
-                    : <ApiKeyNotice email={email} token={token} selectedApis={selectedApiNames(apis)} />;
-
   const oAuthNotice = ((apis.health || apis.verification || apis.claims) && clientID && clientSecret)
                     ? <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />
                     : null;
 
   return (
-    <div role="region" aria-labelledby="apply-region" className="usa-grid api-application">
+    <div role="region" 
+      aria-labelledby="apply-region" 
+      className={classNames('vads-l-grid-container', 'vads-u-padding--4')}
+    >
       <p><strong>Thank you for signing up!</strong></p>
-
-      {tokenNotice}
-
+      {!onlyOAuthSelected && <ApiKeyNotice email={email} token={token} selectedApis={selectedApiNames(apis)} />}
       {oAuthNotice}
-
       <AssistanceTrailer />
     </div>
   );
