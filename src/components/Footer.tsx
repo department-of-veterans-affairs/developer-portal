@@ -11,7 +11,6 @@ const listItemStyles = classNames('medium-screen:vads-u-padding-left--4', 'mediu
 export default function Footer() {
   return (
     <footer role="contentinfo" className={classNames(
-      'va-api-footer',
       'vads-u-background-color--primary-darkest',
       'vads-u-color--white',
       'vads-u-width--full',
@@ -33,7 +32,6 @@ export default function Footer() {
             'medium-screen:vads-u-margin-y--4',
             'vads-l-col--12',
             'medium-screen:vads-l-col--8',
-            'va-api-footer-links', 
           )}>
             <ul className={classNames(
               'va-api-footer-link-list',
