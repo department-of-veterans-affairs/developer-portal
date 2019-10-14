@@ -7,10 +7,13 @@
 
 import classNames from 'classnames';
 
-export const defaultFlexContainer = () => {
+export const defaultFlexContainer = (alignItemsCenter: boolean = false) => {
   return classNames(
     'vads-u-display--flex',
     'vads-u-flex-direction--row',
     'vads-u-flex-wrap--wrap',
+    {
+      'vads-u-align-items--center': alignItemsCenter,
+    },
   );
 };
