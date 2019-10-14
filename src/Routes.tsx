@@ -15,7 +15,6 @@ import BetaPage from './containers/Beta';
 import BetaSuccess from './containers/BetaSuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
-import OAuth from './containers/documentation/OAuth';
 import ProviderIntegrationGuide from './containers/documentation/ProviderIntegrationGuide';
 import Home from './containers/Home';
 import News from './containers/News';
@@ -36,10 +35,7 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
           path="/explore/terms-of-service"
           render={() => <Redirect to="/terms-of-service" />}
         />
-        <Route
-          path="/whats-new"
-          render={() => <Redirect to="/news" />}
-        />
+        <Route path="/whats-new" render={() => <Redirect to="/news" />} />
 
         {/* Current routes: */}
         <Route path="/go-live" component={RoutedContent} />
@@ -59,7 +55,10 @@ export function topLevelRoutes(props: RouteComponentProps<void>) {
         <Route path="/beta-success" component={BetaSuccess} />
         <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
         <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
-        <Route path="/oauth" component={OAuth} />
+        <Route
+          path="/oauth"
+          render={() => <Redirect to="/explore/verification/docs/authorization" />}
+        />
         <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
         <Route path="/news" component={News} />
         <Route path="/support" component={Support} />
@@ -80,14 +79,17 @@ export function sitemapConfig() {
   const apiDefs = getApiDefinitions();
   const deprecatedFlags = getDeprecatedFlags();
   const envFlags = getEnvFlags();
-  
+
   function getApiRouteParams(route: string, apiCategory: string): string[] {
-    const routeParams = apiDefs[apiCategory].apis.reduce((result: string[], api: IApiDescription) => {
-      if (envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment]) {
-        result.push(api.urlFragment);
-      }
-      return result;
-    }, []);
+    const routeParams = apiDefs[apiCategory].apis.reduce(
+      (result: string[], api: IApiDescription) => {
+        if (envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment]) {
+          result.push(api.urlFragment);
+        }
+        return result;
+      },
+      [],
+    );
 
     if (route === '/explore/:apiCategoryKey/docs/:apiName' && !apiDefs[apiCategory].apiKey) {
       routeParams.push('authorization');
