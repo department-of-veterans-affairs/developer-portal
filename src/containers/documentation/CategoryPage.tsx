@@ -29,7 +29,7 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
             <CardLink
               name={name}
-              subhead={vaInternalOnly ? VAInternalOnlyTag() : undefined}
+              subhead={vaInternalOnly ? <VAInternalOnlyTag /> : undefined}
               url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
             >
               {description}
