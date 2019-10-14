@@ -30,6 +30,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
             {api.vaInternalOnly && <small className="vadp-internal-tag">Internal VA use only.</small>}
           </React.Fragment>
         }
+        inSubNav={true}
       />
     </Flag>
   );
@@ -41,6 +42,7 @@ function OAuthSideNavEntry(apiCategoryKey: string) {
       to={`/explore/${apiCategoryKey}/docs/authorization`}
       id={`side-nav-authorization-link-${apiCategoryKey}`}
       name="Authorization"
+      inSubNav={true}
     >
       <SideNavEntry to="#getting-started" name="Getting Started" />
       <SideNavEntry to="#scopes" name="Scopes" />
@@ -75,6 +77,7 @@ function ExploreSideNav() {
                   exact={true}
                   to={`/explore/${categoryKey}/docs/quickstart`}
                   name="Quickstart"
+                  inSubNav={true}
                 />
               }
               {!apiCategory.apiKey && OAuthSideNavEntry(categoryKey)}
