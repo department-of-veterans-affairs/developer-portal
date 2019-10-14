@@ -4,8 +4,8 @@ import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
 
 import { Flag } from 'flag';
-import apiDefinitions, { apiCategoryOrder } from 'src/apiDefs/data/categories';
-import CardLink from 'src/components/CardLink';
+import apiDefinitions, { apiCategoryOrder } from '../apiDefs/data/categories';
+import CardLink from '../components/CardLink';
 import padlockImg from '../assets/homepage-padlock.png';
 import apiImg from '../assets/homepage-reliable-api.png';
 import Hero from '../components/Hero';
