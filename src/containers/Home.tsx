@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 import CardLink from '../components/CardLink';
 
+import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
 import './Home.scss';
 
 class Home extends React.Component {
@@ -95,9 +96,7 @@ class Home extends React.Component {
                 'medium-screen:vads-l-col--6',
                 'medium-screen:vads-u-padding-left--2',
               )}>
-                <div className="video-wrapper">
-                  <iframe src="https://www.youtube.com/embed/at69_Uz05vA" frameBorder="0" allowFullScreen={true} />
-                </div>
+                  <EmbeddedYoutubeVideo title="VA's Benefits Intake API" url="https://www.youtube.com/embed/at69_Uz05vA" />
               </div>
             </div>
           </section>
