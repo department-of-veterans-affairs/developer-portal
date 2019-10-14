@@ -14,6 +14,27 @@
   flex-flow: row nowrap;
 }
 
+.va-api-search-form--transparent-submit {
+  button[type=submit] {
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    color: $color-alt-gray;
+    cursor: pointer;
+    overflow: hidden;
+    margin: 0px;
+    outline: none;
+    margin-left: -44px;
+    padding: 0px;
+    position: relative;
+    &:hover {
+      background-color: none !important;
+      color: $color-gold;
+      @include focus-outline;
+    }
+  }
+}
+
 .va-api-search-wrapper {
   display: flex;
   flex-flow: row nowrap;
@@ -52,12 +73,6 @@
       width: 240px;
       max-width: inherit;
     }
-  }
-
-  .va-api-search-icon {
-    position: relative;
-    left: 25px;
-    color: $color-alt-gray;
   }
 
   button.va-api-search-submit {

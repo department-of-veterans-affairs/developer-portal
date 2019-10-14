@@ -34,3 +34,8 @@
     color: $color;
   }
 }
+
+@mixin focus-outline {
+  outline: 2px solid $color-gold;
+  outline-offset: 2px;
+}

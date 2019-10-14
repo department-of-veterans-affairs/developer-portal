@@ -3,6 +3,7 @@
 
 // Asset reference - must import before VADS
 @import './styles/variables';
+@import './styles/mixins';
 
 // Imports
 // =======
@@ -117,11 +118,6 @@ p {
 
 span.mono {
   font-family: monospace;
-}
-
-@mixin focus-outline {
-  outline: 2px solid $color-gold;
-  outline-offset: 2px;
 }
 
 *:focus,

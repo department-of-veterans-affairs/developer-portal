@@ -24,7 +24,7 @@ export default class Header extends React.Component<{}, INavBarState> {
 
   public render() {
     const navBarCloseHandler = this.toggleMenuVisible.bind(this);
-    const buttonClassnames = classNames('vads-u-background-color--white', 'vads-u-color--primary-darkest', 'usa-button');
+    const buttonClassnames = classNames('vads-u-background-color--white', 'vads-u-color--primary-darkest', 'usa-button', 'vads-u-margin-right--2');
 
     return (
       <header className="va-api-site-header" role="banner">
