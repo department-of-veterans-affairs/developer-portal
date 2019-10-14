@@ -30,7 +30,6 @@
     &:hover {
       background-color: none !important;
       color: $color-gold;
-      @include focus-outline;
     }
   }
 }
