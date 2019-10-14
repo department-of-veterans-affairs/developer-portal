@@ -1,4 +1,4 @@
-import { getAllApis } from "./query";
+import { getAllApis, getApiCategoryOrder, getApiDefinitions } from "./query";
 import { IApiDescription } from "./schema";
 
 export function isHostedApiEnabled(apiIdentifier: string, defaultValue: boolean): boolean {
@@ -17,4 +17,18 @@ export const getEnvFlags = () => {
     return result;
   }, {});
   return envFlags;
+};
+
+export const getCategoryFlags = () => {
+  const apiDefinitions = getApiDefinitions();
+  const categories = {};
+  getApiCategoryOrder().forEach((category) => {
+    categories[category] = apiDefinitions[category].apis.some( api => isHostedApiEnabled(api.urlFragment, api.enabledByDefault) );
+  });
+  return categories;
+};
+
+export const getEnabledApiCategories = () => {
+  const categoryFlags = getCategoryFlags();
+  return getApiCategoryOrder().filter((category) => categoryFlags[category]);
 };

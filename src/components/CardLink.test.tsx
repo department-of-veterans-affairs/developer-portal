@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import CardLink from './CardLink';
 
-describe('ApiCard', () => {
+describe('CardLink', () => {
   it('renders the name', () => {
     const apiCard = shallow(
       <CardLink name="Special API" url="/special">

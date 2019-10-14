@@ -13,20 +13,19 @@ interface ISupportOverviewProps {
   readonly sections: ISection[];
 }
 
-export default class SupportOverview extends React.Component<ISupportOverviewProps> {
-  public render() {
-    const cardsSections = this.props.sections.map((section: ISection) => {
-      return (
-        <CardLink name={section.name} url={`/support/${section.id}`} key={section.id}>
-          {section.description}
-        </CardLink>
-      );
-    });
-    return (
-      <section role="region" aria-label="Support Overview" className="usa-section">
-        <PageHeader {...headerProps} />
-        <div className="va-api-container">{cardsSections}</div>
-      </section>
-    );
-  }
+export default function SupportOverview(props: ISupportOverviewProps) {
+  return (
+    <section role="region" aria-label="Support Overview">
+      <PageHeader {...headerProps} />
+      <div className="va-api-container">
+        {props.sections.map((section: ISection) => {
+          return (
+            <CardLink name={section.name} url={`/support/${section.id}`} key={section.id}>
+              {section.description}
+            </CardLink>
+          );
+        })}
+      </div>
+    </section>
+  );
 }

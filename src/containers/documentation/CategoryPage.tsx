@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
@@ -52,15 +51,11 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
     }
 
     return (
-      <section
-        role="region"
-        aria-labelledby={headerId}
-        className={classNames('usa-section', 'api-overview')}
-      >
+      <section role="region" aria-labelledby={headerId} className="api-overview">
         <h1 id={headerId}>{categoryName}</h1>
         {intro({})}
         {cardSection}
-        <div className="usa-width-one-whole">{overview({})}</div>
+        <div className="vads-u-width--full">{overview({})}</div>
         <hr />
       </section>
     );
