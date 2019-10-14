@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { NavHashLink } from 'react-router-hash-link';
 
@@ -7,6 +8,7 @@ export interface ICardLinkProps {
   name: string;
   url: string;
   subhead?: JSX.Element;
+  className?: string;
 }
 
 /*
@@ -18,7 +20,7 @@ export interface ICardLinkProps {
 export default class CardLink extends React.Component<ICardLinkProps, {}> {
   public render() {
     return (
-      <NavHashLink to={this.props.url} className="va-api-card">
+      <NavHashLink to={this.props.url} className={classNames("va-api-card", this.props.className)}>
         <h3 className="va-api-name">{this.props.name}</h3>
         {this.props.subhead}
         <div className="va-api-description">{this.props.children}</div>
