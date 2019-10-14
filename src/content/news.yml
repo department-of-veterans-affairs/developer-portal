@@ -1,6 +1,7 @@
 sections: 
   - title: News releases
     description: Press releases from the Department of Veterans Affairs related to Lighthouse.
+    media: false
     items:
       - date: June 2019
         title: VA receives awards for innovation in health IT
@@ -19,6 +20,7 @@ sections:
         url: https://www.va.gov/opa/pressrel/pressrelease.cfm?id=4022
   - title: Articles
     description: Articles related to developers, APIs, the Developer Portal, and Veterans.
+    media: false
     items:
       - date: September 2019
         source: Nextgov
@@ -70,11 +72,12 @@ sections:
         url: https://healthitanalytics.com/news/va-lighthouse-api-platform-with-fhir-enables-health-data-access
   - title: Digital media
     description: Audio and video related to developers, APIs, Veterans, and the Department of Veterans Affairs.
+    media: true
     items:
       - date: August 2019
         source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
         title: Discover VA's Health APIs
-        url: https://youtu.be/-wvivWI04q0
+        url: https://www.youtube.com/watch?v=-wvivWI04q0
       - date: September 2018
         source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
         title: VA's Benefits Intake API
