@@ -11,14 +11,14 @@ import '../components/SideNav.scss';
 export interface ISideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
   className?: string;
-  inSubNav: boolean;
+  subNavLevel: number;
 }
 
 // Constructs a NavHashLink in the sidebar that also takes into account the
 // hash when determining if it's active
 export class SideNavEntry extends React.Component<ISideNavEntryProps> {
   public static defaultProps = {
-    inSubNav: false,
+    subNavLevel: 0,
   };
 
   // The isActive prop receives two arguments: a `match` object representing
@@ -67,7 +67,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
 
   public render() {
     // Omit unneeded parent props from NavLink
-    const { name, className, inSubNav, ... navLinkProps } = this.props;
+    const { name, className, subNavLevel, ... navLinkProps } = this.props;
 
     return (
       <li className={classNames(
@@ -81,7 +81,8 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
             'vads-u-padding--1p5',
             'vads-u-color--base',
             {
-              'vads-u-padding-left--4': inSubNav,
+              'vads-u-padding-left--4': subNavLevel === 1,
+              'vads-u-padding-left--7': subNavLevel === 2,
             },
             this.props.className,
           )}
@@ -89,8 +90,8 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
             'va-api-active-sidenav-link',
             'vads-u-font-weight--bold',
             {
-              'vads-u-border-color--cool-blue': !inSubNav,
-              'vads-u-border-left--5px': !inSubNav,
+              'vads-u-border-color--cool-blue': subNavLevel === 0,
+              'vads-u-border-left--5px': subNavLevel === 0,
             },
           )}
           isActive={this.navHashLinkIsActive}

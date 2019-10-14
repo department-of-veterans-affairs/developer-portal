@@ -30,7 +30,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
             {api.vaInternalOnly && <small className="vadp-internal-tag">Internal VA use only.</small>}
           </React.Fragment>
         }
-        inSubNav={true}
+        subNavLevel={1}
       />
     </Flag>
   );
@@ -42,15 +42,15 @@ function OAuthSideNavEntry(apiCategoryKey: string) {
       to={`/explore/${apiCategoryKey}/docs/authorization`}
       id={`side-nav-authorization-link-${apiCategoryKey}`}
       name="Authorization"
-      inSubNav={true}
+      subNavLevel={1}
     >
-      <SideNavEntry to="#getting-started" name="Getting Started" />
-      <SideNavEntry to="#scopes" name="Scopes" />
-      <SideNavEntry to="#id-token" name="ID Token" />
-      <SideNavEntry to="#test-users" name="Test Users" />
-      <SideNavEntry to="#security-considerations" name="Security Considerations" />
-      <SideNavEntry to="#support" name="Support" />
-      <SideNavEntry to="#sample-application" name="Sample Application" />
+      <SideNavEntry to="#getting-started" name="Getting Started" subNavLevel={2} />
+      <SideNavEntry to="#scopes" name="Scopes" subNavLevel={2} />
+      <SideNavEntry to="#id-token" name="ID Token" subNavLevel={2} />
+      <SideNavEntry to="#test-users" name="Test Users" subNavLevel={2} />
+      <SideNavEntry to="#security-considerations" name="Security Considerations" subNavLevel={2} />
+      <SideNavEntry to="#support" name="Support" subNavLevel={2} />
+      <SideNavEntry to="#sample-application" name="Sample Application" subNavLevel={2} />
     </SideNavEntry>
   );
 }
@@ -77,7 +77,7 @@ function ExploreSideNav() {
                   exact={true}
                   to={`/explore/${categoryKey}/docs/quickstart`}
                   name="Quickstart"
-                  inSubNav={true}
+                  subNavLevel={1}
                 />
               }
               {!apiCategory.apiKey && OAuthSideNavEntry(categoryKey)}
