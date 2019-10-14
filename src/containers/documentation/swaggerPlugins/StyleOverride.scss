@@ -47,7 +47,7 @@
       padding: 0;
       .parameters {
         @include table-style;
-        input {
+        input, select {
           display: none;
         }
       }
