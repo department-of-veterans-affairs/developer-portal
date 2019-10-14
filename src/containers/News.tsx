@@ -2,18 +2,84 @@ import classNames from 'classnames';
 import * as React from 'react';
 
 import CardLink, { getCardContainerClasses } from '../components/CardLink';
+import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
+import HoverImage from '../components/HoverImage';
 import PageHeader from '../components/PageHeader';
 import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 import toHtmlId from '../toHtmlId';
+import './News.scss';
 
-const sections = NewsData.sections.map((section: any) => ({
+interface ISection {
+  title: string;
+  description: string;
+  media: boolean;
+  items: INewsItem[];
+}
+
+interface INewsSection extends ISection {
+  id: string;
+}
+
+interface INewsItem {
+  date: string;
+  title: string;
+  url: string;
+  source?: string;
+}
+
+const sections = NewsData.sections.map((section: ISection) => ({
   ...section,
   id: toHtmlId(section.title),
 }));
 
+function NewsItem({item, media} : {item: INewsItem, media: boolean}) {
+  return media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
+}
+
+function MediaItem({item} : {item: INewsItem}) {
+  const description = <ItemDescription item={item} />;
+  if (item.url.includes('www.youtube.com')) {
+    return (
+      <div className="vads-u-margin-y--5">
+        {description}
+        <EmbeddedYoutubeVideo title={item.title} url={item.url} />
+      </div>
+    );
+  }
+
+  return (
+    <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
+      <div aria-hidden={true}>
+        <a href={item.url} tabIndex={-1}>
+          <HoverImage
+            imagePath={require('../assets/video-player.png')}
+            hoverImagePath={require('../assets/video-player-hover.png')}
+          />
+        </a>
+      </div>
+      <div className="vads-u-margin-left--2p5 va-api-media-row-description">
+        {description}
+      </div>
+    </div>
+  );
+}
+
+function ItemDescription({item}: {item: INewsItem}) {
+  return (
+    <p>
+      <a href={item.url}>{item.title}</a>
+      <br />
+      <strong>
+        {item.date}
+        {item.source ? ` | ${item.source}` : null}
+      </strong>
+    </p>
+  );
+}
+
 export default class News extends React.Component {
-  private cardsSections = sections.map((section: any) => {
+  private cardsSections = sections.map((section: INewsSection) => {
     return (
       <CardLink key={section.id} url={`#${section.id}`} name={section.title}>
         {section.description}
@@ -28,7 +94,7 @@ export default class News extends React.Component {
       header: 'News',
     };
 
-    const newsContent = sections.map((section: any) => {
+    const newsContent = sections.map((section: INewsSection) => {
       return (
         <section
           aria-label={section.title}
@@ -37,24 +103,15 @@ export default class News extends React.Component {
           className="vads-u-margin-bottom--4"
         >
           <h2>{section.title}</h2>
-          {section.items.map((item: any) => {
-            return (
-              <p key={item.url}>
-                <strong>
-                  {item.date}
-                  {item.source ? ` | ${item.source}` : null}
-                </strong>
-                <br />
-                <a href={item.url}>{item.title}</a>
-              </p>
-            );
+          {section.items.map((item: INewsItem) => {
+            return <NewsItem key={item.url} item={item} media={section.media} />;
           })}
         </section>
       );
     });
 
     return (
-      <div className="vads-u-padding-y--5">
+      <div className="vads-u-padding-y--5 news">
         <div className="vads-l-grid-container">
           <div className="vads-l-row">
             <SideNav ariaLabel="News Side Nav">
