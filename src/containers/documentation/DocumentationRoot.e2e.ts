@@ -10,7 +10,7 @@ describe('position sticky', () => {
     });
     await page.evaluate(() => window.scrollBy(0, 585)); // scroll 585px
     const distanceFromTop = await page.evaluate(() => {
-      return document.querySelectorAll('.sticky')[0].getBoundingClientRect().top;
+      return document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top;
     });
     expect(distanceFromTop).toEqual(20);
     expect(distanceFromTop).not.toEqual(originalDistanceFromTop);
