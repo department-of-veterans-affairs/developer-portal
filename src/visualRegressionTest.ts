@@ -57,6 +57,8 @@ describe('Visual regression test', async () => {
       }
 
       await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
+      // Hide any videos that may be on the page
+      await page.evaluate('document.querySelectorAll("iframe").forEach((e) => { e.style="visibility: hidden;" });');
       await checkScreenshots(page, '.main');
     });
   }
