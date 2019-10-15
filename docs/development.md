@@ -93,4 +93,16 @@ cycle.
 
 ### CSS
 
-Coming soon
+We use the [VA Design System](https://design.va.gov/documentation), aka "Formation", as our base library for styling the site. VADS is composed of the `formation` and `formation-react` packages, which provide SASS styles and React components, respectively.
+
+Broadly speaking, the `formation` styles come in 3 types: components, layouts, and utilities. Components are used to style specific pieces of site functionality. Layout styles implement a flexbox grid system for spacing components on the page. (Please do not use the legacy float grid.) Utilities are classes that provide specific CSS property values, such as `margin` or `color`. Utility classes use `!important` to override any other selectors that might apply to that element, so utility classes can be assumed to be authoritative and should take precedence over other styles. The combination of these three types of classes greatly reduces the amount of SCSS that we need to write on our own. VADS styling should always take precedence over classes we write ourselves; we should aim to style all of our components in JSX using the VADS to the extent possible.
+
+VADS classes use [Block, Element, Modifier (BEM) syntax](https://design.va.gov/documentation/naming) as a naming convention. All classes (at least, those with up-to-date names) are prefixed with `vads-(c|l|u)-`, where `c`, `l`, and `u` refer to components, layouts, and utilities, respectively.
+
+Related resources:
+
+* [VADS components](https://design.va.gov/components)
+* [VADS layout](https://design.va.gov/layout)
+* [VADS utilities](https://design.va.gov/utilities)
+* [`formation-react` docs](https://department-of-veterans-affairs.github.io/veteran-facing-services-tools/visual-design)
+* [VADS naming conventions](https://design.va.gov/documentation/naming)
