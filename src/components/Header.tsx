@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { OVER_LARGE_SCREEN_QUERY, UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
 import Banner from './Banner';
+import VeteransCrisisLine from './crisisLine/VeteransCrisisLine';
 import NavBar from './NavBar';
 import Search from './Search';
 
@@ -28,6 +29,7 @@ export default class Header extends React.Component<{}, INavBarState> {
     return (
       <header className="va-api-site-header" role="banner">
         <Banner />
+        <VeteransCrisisLine />
         <div className="header-content">
           <div className="va-api-logo" id="extended-logo">
             <Link to="/" 

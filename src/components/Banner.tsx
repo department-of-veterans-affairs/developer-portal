@@ -1,17 +1,12 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import Modal from '@department-of-veterans-affairs/formation-react/Modal';
-import VeteransCrisisLine from './VeteransCrisisLine';
-
 import flagIcon from '../../node_modules/uswds/src/img/favicons/favicon-40.png';
-import rightArrow from '../assets/arrow-right-white.svg';
 import dotGovIcon from '../assets/icon-dot-gov.svg';
 import httpsIcon from '../assets/icon-https.svg';
 import './Banner.scss';
 
 interface IBannerState {
-  menuVisible: boolean;
   accordionVisible: boolean;
 }
 
@@ -20,7 +15,6 @@ export default class Banner extends React.Component<{}, IBannerState> {
     super(props);
     this.state = {
       accordionVisible: false,
-      menuVisible: false,
     };
   }
 
@@ -94,52 +88,11 @@ export default class Banner extends React.Component<{}, IBannerState> {
                     "The site is secure.",
                     httpsGuidanceText)}
               </div>
-              <div className={classNames(
-                'va-crisis-line',
-                'vads-u-margin-right--0',
-                'small-desktop-screen:vads-u-margin-right--4',
-              )}>
-                <button 
-                  data-show="#modal-crisisline"
-                  onClick={this.toggleMenuVisible}
-                  className={classNames(
-                    'va-crisis-line-button',
-                    'va-overlay-trigger',
-                    'vads-u-color--white',
-                    'vads-u-display--flex',
-                    'vads-u-justify-content--center',
-                    'vads-u-padding-right--0',
-                    'vads-u-width--full',
-                    'medium-screen:vads-u-width--auto',
-                )}>
-                  <span className={classNames('va-flex', 'vads-u-display--flex', 'vads-u-align-items--center')}>
-                    <span className="vads-u-margin-right--1">
-                      <span className="vcl" />
-                    </span>
-                    <span className="vads-u-margin-right--1">
-                      Talk to the&nbsp;<strong>Veterans Crisis Line</strong>&nbsp;now
-                    </span>
-                    <img src={rightArrow} 
-                      className={classNames('vcl-right-arrow', 'vads-u-margin-right--1')} 
-                      alt="" role="presentation" 
-                    />
-                  </span>
-                </button>
-              </div>
             </div>
           </header>
         </div>
-        <Modal id="crisis-line-modal" visible={this.state.menuVisible} onClose={this.toggleMenuVisible}>
-          <VeteransCrisisLine visible={this.state.menuVisible} closeHandler={this.toggleMenuVisible} />
-        </Modal>
       </section>
     );
-  }
-
-  private toggleMenuVisible = () => {
-    this.setState(state => {
-      return {menuVisible: !state.menuVisible};
-    });
   }
 
   private toggleAccordionVisible = () => {

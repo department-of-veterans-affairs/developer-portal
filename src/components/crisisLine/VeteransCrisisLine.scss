@@ -1,4 +1,4 @@
-@import '../styles/variables';
+@import '../../styles/variables';
 
 // provides dependencies for m-crisis-line
 @import '~@department-of-veterans-affairs/formation/sass/base/b-mixins';
@@ -30,7 +30,7 @@ button.va-crisis-line-button {
 
   .vcl {
     // override with white version of the VCL icon
-    background: url('../assets/VCL-icon-white.svg') no-repeat right 29%/100%;
+    background: url('../../assets/VCL-icon-white.svg') no-repeat right 29%/100%;
   }
 
   .vcl-container {
