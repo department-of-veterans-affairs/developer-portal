@@ -99,6 +99,8 @@ Broadly speaking, the `formation` styles come in 3 types: components, layouts, a
 
 VADS classes use [Block, Element, Modifier (BEM) syntax](https://design.va.gov/documentation/naming) as a naming convention. All classes (at least, those with up-to-date names) are prefixed with `vads-(c|l|u)-`, where `c`, `l`, and `u` refer to components, layouts, and utilities, respectively.
 
+If you do need to write custom styles, please namespace **all** of your classes with `va-api-`. This pattern will allow us to identify which classes we need to maintain in future refactors of the developer portal styles and to identify patterns in our CSS needs that can be abstracted site-wide.
+
 Related resources:
 
 * [VADS components](https://design.va.gov/components)
