@@ -12,6 +12,9 @@
 
     &__contents {
       margin: 1em;
+      .copy-to-clipboard {
+        cursor: pointer;
+      }
     }
     .highlight-code {
       display: flex;
