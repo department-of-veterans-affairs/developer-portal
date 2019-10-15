@@ -6,40 +6,38 @@
 // provides CSS class va-crisis-panel, va-crisis-panel-body, 
 @import '~@department-of-veterans-affairs/formation/sass/site/m-crisis-line';
 
-button.va-crisis-line-button {
+button.va-api-crisis-line-button {
   background-image: none;
   background-size: 0;
   background-color: #A62D1B;
   transition: background-color 0.3s ease-in-out;
 
-  @include media($medium-large-screen) {
-    .vcl-container {
-       background-color: #7F2011;
-    }
-  }
-
   &:hover {
     background-color: #7F2011;
-
-    @include media($medium-large-screen) {
-      .vcl-container {
-        background-color: #A62D1B;
-      }
-    }
   }
 
-  .vcl {
+  .va-api-vcl-logo-white {
     // override with white version of the VCL icon
-    background: url('../../assets/VCL-icon-white.svg') no-repeat right 29%/100%;
+    background-image: url('../../assets/VCL-icon-white.svg');
   }
+}
 
-  .vcl-container {
+@include media($medium-large-screen) {
+  .va-api-crisis-line-container {
+    background-color: #7F2011;
     transition: background-color 0.3s ease-in-out;
   }
-
-  .vcl-right-arrow {
-    width: 1.2rem;
+  
+  button.va-api-crisis-line-button:hover {
+    .va-api-crisis-line-container {
+      background-color:  #A62D1B;
+    }
   }
+}
+
+.va-api-right-arrow {
+  // height: 2rem;
+  width: 1.2rem;
 }
 
 .va-api-crisis-panel {

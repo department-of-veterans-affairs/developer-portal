@@ -35,10 +35,11 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
         'small-desktop-screen:vads-u-margin-right--4',
       )}>
         <button 
-          data-show="#modal-crisisline"
+          data-show="#crisis-line-modal"
           onClick={() => this.setState({ modalVisibile: true })}
           className={classNames(
             'va-crisis-line-button',
+            'va-api-crisis-line-button',
             'va-overlay-trigger',
             'vads-u-color--white',
             'vads-u-display--flex',
@@ -48,19 +49,19 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
             'medium-screen:vads-u-width--auto',
         )}>
           <span className={classNames('va-flex', 'vads-u-display--flex', 'vads-u-align-items--center')}>
-            <span className="vads-u-margin-right--1">
-              <span className="vcl" />
+            <span className={classNames('va-api-crisis-line-container', 'vads-u-margin-right--1')}>
+              <span className={classNames('vcl', 'va-api-vcl-logo-white')} />
             </span>
             <span className="vads-u-margin-right--1">
               Talk to the&nbsp;<strong>Veterans Crisis Line</strong>&nbsp;now
             </span>
             <img src={rightArrow} 
-              className={classNames('vcl-right-arrow', 'vads-u-margin-right--1')} 
+              className={classNames('va-api-right-arrow', 'vads-u-margin-right--1')} 
               alt="" role="presentation" 
             />
           </span>
         </button>
-        <Modal id="crisis-line-modal" visible={this.state.modalVisibile} 
+        <Modal id="crisis-line-modal" visible={this.state.modalVisibile} focusSelector="#first-panel-info"
           onClose={() => this.setState({ modalVisibile: false })}
         >
           <VeteransCrisisLinePanel />
