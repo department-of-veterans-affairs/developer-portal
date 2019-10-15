@@ -17,7 +17,8 @@ export default function Footer() {
             'vads-u-text-align--center',
             'vads-u-color--white')}>
           <p>
-            This is a beta site. We are always looking to make improvements. <Link className={classNames('vads-u-font-weight--bold', 'vads-u-color--primary-alt')} to="/support">Send us your feedback</Link>
+            This is a beta site. We are always looking to make improvements.
+            &nbsp;<Link className={classNames('vads-u-font-weight--bold', 'vads-u-color--primary-alt')} to="/support">Send us your feedback</Link>
           </p>
         </div>
       </section>
