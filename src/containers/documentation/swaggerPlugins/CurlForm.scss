@@ -1,0 +1,20 @@
+.curl-container {
+  margin: 0 2em 2em;
+  padding-top: 1em;
+  #title {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+  .curl-form {
+    background-color: #EEEEEE;
+    border-radius: 6px;
+    border-style: solid;
+
+    &__contents {
+      margin: 1em;
+    }
+    .highlight-code {
+      display: flex;
+    }
+  }
+}
