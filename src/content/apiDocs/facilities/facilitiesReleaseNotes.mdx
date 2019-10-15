@@ -1,6 +1,7 @@
 ## September 30, 2019
 You can now see if Health facilities are mobile or temporarily closed (for power outages, weather, etc.)
 - Added `mobile` and `active_status` flags to the API response for Health facilities (other facility types will return `null` for these fields). Options for `mobile` are `true` or `false`; options for `active_status` are `A` for Active or `T` for Temporarily closed. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3339/commits)
+  - If a facility is mobile, the address is subject to frequently change. To get the exact current location, consumers should contact the mobile facility directly.
 
 ---
 
