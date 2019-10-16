@@ -75,7 +75,7 @@ const formFieldsToFragments = {
 const OAuthHowTo = (props: {show: boolean}) => {
   return (
     props.show ? 
-    <div className="feature oauth-how-to">
+    <div className="feature">
       <div className="description">
         <strong>Note:</strong> You will need to provide your <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">OAuth Redirect URI</a>, which 
         is where the authorization server will return the user to your application after generating an authenticated token. These APIs 
