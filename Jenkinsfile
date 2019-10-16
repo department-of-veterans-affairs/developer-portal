@@ -103,9 +103,15 @@ node('vetsgov-general-purpose') {
 
       if (prNum) {
         envNames.each{ envName ->
-          def envFile = "./.env.${envName}"
-          sh "echo PUBLIC_URL=/${reviewBucketPath()}/${envName} >> ${envFile}"
-          sh "sed -i '/REACT_APP_SENTRY_/d' ${envFile}"
+          // Set public url so review deploys handle not being at the site root
+          // Set sentry DSN to send review deploy errors to the review sentry project
+          writeFile(
+            file: "./.env.${envName}.local",
+            text: """\
+              PUBLIC_URL=/${reviewBucketPath()}/${envName}
+              REACT_APP_SENTRY_DSN=https://dc7d5ebec20e474c80f8150c399d2955@dev-developer.va.gov/sentry/26
+            """.stripIndent()
+          )
         }
       }
 
