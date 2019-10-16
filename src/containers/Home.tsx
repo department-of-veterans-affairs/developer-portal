@@ -97,24 +97,30 @@ function ApiList() {
   );
 }
 
+function VeteransNotice() {
+  return (
+    <section className="vads-u-display--none medium-screen:vads-u-display--block" role="region" aria-label="Veterans Notice">
+      <div className={classNames(
+        'vads-u-background-color--primary',
+        'vads-u-font-size--lg',
+        'vads-u-padding-y--0p5',
+        'vads-u-text-align--center',
+        'vads-u-color--white')}>
+        <div className='vads-u-margin-y--2p5'>
+          Are you a Veteran looking to submit a claim, manage benefits or access your health data?
+          &nbsp;<Link className={classNames('vads-u-font-weight--bold', 'vads-u-color--white')} to="https://www.va.gov/">Visit VA.gov</Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 class Home extends React.Component {
   public render() {
     return (
       <div className="home">
         <Hero />
-        <section role="region" aria-label="Veterans Notice">
-          <div className={classNames(
-            'vads-u-background-color--primary',
-            'vads-u-font-size--lg',
-            'vads-u-padding-y--0p5',
-            'vads-u-text-align--center',
-            'vads-u-color--white')}>
-            <div className='vads-u-margin-y--2p5'>
-              Are you a Veteran looking to submit a claim, manage benefits or access your health data?
-              &nbsp;<Link className={classNames('vads-u-font-weight--bold', 'vads-u-color--white')} to="https://www.va.gov/">Visit VA.gov</Link>
-            </div>
-          </div>
-        </section>
+        <VeteransNotice />
         <ApiPlatform />
         <ReliableApi />
         <ApiList />
