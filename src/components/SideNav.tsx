@@ -10,11 +10,17 @@ import '../components/SideNav.scss';
 
 export interface ISideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
+  className?: string;
+  subNavLevel: number;
 }
 
 // Constructs a NavHashLink in the sidebar that also takes into account the
 // hash when determining if it's active
 export class SideNavEntry extends React.Component<ISideNavEntryProps> {
+  public static defaultProps = {
+    subNavLevel: 0,
+  };
+
   // The isActive prop receives two arguments: a `match` object representing
   // the original determination, and the current location. The match algorithm
   // used by react-router only takes into account the path, and by default will
@@ -61,18 +67,43 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
 
   public render() {
     // Omit unneeded parent props from NavLink
-    const { name, ...navLinkProps } = this.props;
+    const { name, className, subNavLevel, ... navLinkProps } = this.props;
 
     return (
-      <li>
+      <li className={classNames(
+        'va-api-sidenav-entry',
+        'vads-u-border-top--2px',
+        'vads-u-border-color--gray-lighter',
+        'vads-u-margin-y--0',
+      )}>
         <NavHashLink
-          activeClassName="usa-current"
+          className={classNames(
+            'vads-u-padding--1p5',
+            'vads-u-color--base',
+            {
+              'vads-u-padding-left--4': subNavLevel === 1,
+              'vads-u-padding-left--7': subNavLevel === 2,
+            },
+            this.props.className,
+          )}
+          activeClassName={classNames(
+            'va-api-active-sidenav-link',
+            'vads-u-font-weight--bold',
+            {
+              'vads-u-border-color--cool-blue': subNavLevel === 0,
+              'vads-u-border-left--5px': subNavLevel === 0,
+            },
+          )}
           isActive={this.navHashLinkIsActive}
           {...navLinkProps}
         >
           {this.props.name}
         </NavHashLink>
-        {this.props.children && <ul className="usa-sidenav-sub_list">{this.props.children}</ul>}
+        {this.props.children && 
+          <ul className={classNames('va-api-sidenav-sub-list', 'vads-u-margin-y--0', 'vads-u-padding-left--0')}>
+            {this.props.children}
+          </ul>
+        }
       </li>
     );
   }
@@ -97,18 +128,34 @@ export default class SideNav extends React.Component<ISideNavProps> {
 
   public render() {
     return (
-      <nav
-        className={classNames(
-          'vadp-side-nav',
-          'usa-width-one-third',
-          'sticky',
-          this.props.className,
-        )}
-        aria-label={this.props.ariaLabel}
-        ref={this.navRef}
-      >
-        <ul className="usa-sidenav-list">{this.props.children}</ul>
-      </nav>
+      <div className={classNames(
+        'vads-l-col--12',
+        'vads-u-padding-right--5',
+        'medium-screen:vads-l-col--4', 
+      )}>
+        <nav
+          className={classNames(
+            'va-api-side-nav',
+            'vads-u-display--none',
+            'medium-screen:vads-u-display--block',
+            this.props.className,
+          )}
+          aria-label={this.props.ariaLabel}
+          ref={this.navRef}
+        >
+          <ul className={classNames(
+            'usa-sidenav-list',
+            'va-api-sidenav-list',
+            'vads-u-background-color--white',
+            'vads-u-border-bottom--2px',
+            'vads-u-border-left--2px',
+            'vads-u-border-right--2px',
+            'vads-u-border-color--gray-lighter',
+          )}>
+            {this.props.children}
+          </ul>
+        </nav>
+      </div>
     );
   }
 }

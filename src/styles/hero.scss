@@ -1,0 +1,30 @@
+@import './variables';
+
+.va-api-hero {
+  background-color: #4a4a4a;
+  background-image: url('../assets/home-page-banner.png');
+  background-position: center;
+  background-size: cover;
+  padding: 6rem 0;
+
+  .va-api-hero-callout {
+    color: $color-white;
+    max-width: 100%;
+
+    h1 {
+      font-family: $font-sans;
+      color: $color-white;
+    }
+
+    p {
+      font-size: 2rem;
+      max-width: 800px;
+    }
+
+    .va-api-hero-disclaimer-text {
+      font-size: 0.75em;
+      width: 100%;
+      max-width: none;
+    }
+  }
+}

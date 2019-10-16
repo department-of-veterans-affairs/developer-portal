@@ -1,9 +1,5 @@
 @import '../styles/variables';
 
-.api-application {
-    padding: 40px 0;
-}
-
 .form-required-span {
   color: $color-red;
 }
@@ -13,10 +9,4 @@
   padding: 1em 2em;
   clear: both;
   margin: 1.5em 0 1.5em 0;
-}
-
-.va-apply-header {
-  h1 {
-    margin-top: 0;
-  }
 }

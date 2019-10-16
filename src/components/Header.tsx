@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
@@ -25,33 +26,40 @@ export default class Header extends React.Component<{}, INavBarState> {
     const navBarCloseHandler = this.toggleMenuVisible.bind(this);
 
     return (
-      <header className="usa-header usa-header-extended" role="banner">
+      <header className="va-api-site-header" role="banner">
         <Banner />
         <div className="header-content">
           <div className="va-api-logo" id="extended-logo">
-            <Link to="/" title="Digital VA home page" className="vads-u-text-decoration--none">
-              <span className="vads-u-font-weight--bold">VA</span> | Developer Portal
+            <Link to="/" 
+              title="Digital VA home page"
+              className={classNames(
+                'vads-u-text-decoration--none',
+                'vads-u-font-size--lg',
+                'medium-screen:vads-u-font-size--2xl',
+              )}
+            >
+              <span className="vads-u-font-weight--bold">VA</span> | Lighthouse
             </Link>
           </div>
           <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
             <div className="header-right-container">
               <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
-                <Link id="get-started-button" to="/apply" className="usa-button">Get Started</Link>
+                <Link id="get-started-button" to="/apply" className="usa-button">Request an API Key</Link>
                 <Search />
               </div>
             </div>
           </MediaQuery>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
-            <button className="va-api-mobile-menu-button" onClick={this.toggleMenuVisible}>
+            <button 
+              className={classNames('va-api-mobile-menu-button', 'vads-u-padding--0')} 
+              onClick={this.toggleMenuVisible}
+            >
               Menu
             </button>
           </MediaQuery>
         </div>
         <NavBar isMobileMenuVisible={this.state.menuVisible} onClose={navBarCloseHandler} />
-        <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
-          <Search />
-        </MediaQuery>
       </header>
     );
   }

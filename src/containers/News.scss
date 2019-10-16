@@ -1,6 +1,9 @@
-// These styles are lifted from src/containers/Explore.scss and should be
-// extracted since we want them on all pages except the homepage
 .news {
+  .va-api-media-row-description {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+
   .usa-section {
     padding-top: 0;
 

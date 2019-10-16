@@ -10,6 +10,7 @@ import plusIcon from '../../node_modules/uswds/src/img/plus.png';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 import { UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
 import MainNavItem, { ILargeScreenNavItemProps } from './MainNavItem';
+import Search from './Search';
 
 import './NavBar.scss';
 
@@ -51,14 +52,16 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
 
     return (
       <nav className={navClasses}>
-        <div className="va-api-nav-inner">
+        <div className={classNames(
+          'va-api-nav-inner',
+          'medium-screen:vads-u-margin-x--4',
+          'medium-screen:vads-u-padding--0',
+        )}>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
             <button className="va-api-mobile-nav-close" onClick={this.props.onClose}>
               <img src={closeButton} alt="Close button" />
             </button>
-            <div className="va-api-nav-secondary">
-              <Link to="/apply" className="usa-button">Get Started</Link>
-            </div>
+            <Search className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
           </MediaQuery>
           <ul className="va-api-nav-primary">
             <li className="va-api-main-nav-item">
@@ -75,6 +78,11 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
               </MediaQuery>
             </li>
             <li className="va-api-main-nav-item">
+              <MainNavItem targetUrl="/news" largeScreenProps={sharedNavItemProps}>
+                News
+              </MainNavItem>
+            </li>
+            <li className="va-api-main-nav-item">
               <MainNavItem targetUrl="/release-notes" largeScreenProps={sharedNavItemProps}>
                 Release Notes
               </MainNavItem>
@@ -84,12 +92,12 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
                 Support
               </MainNavItem>
             </li>
-            <li className="va-api-main-nav-item">
-              <MainNavItem targetUrl="/news" largeScreenProps={sharedNavItemProps}>
-                News
-              </MainNavItem>
-            </li>
           </ul>
+          <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+            <div className="va-api-nav-secondary">
+              <Link to="/apply" className="usa-button">Request an API Key</Link>
+            </div>
+          </MediaQuery>
         </div>
       </nav>
     );
