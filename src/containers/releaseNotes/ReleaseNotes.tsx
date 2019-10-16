@@ -29,6 +29,7 @@ function SideNavApiEntry(api: IApiDescription) {
             {api.vaInternalOnly && <span><small>Internal VA use only.</small></span>}
           </React.Fragment>
         }
+        subNavLevel={1}
       />
     </Flag>
   );
