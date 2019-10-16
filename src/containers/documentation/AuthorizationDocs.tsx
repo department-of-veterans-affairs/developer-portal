@@ -3,9 +3,12 @@ import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
 import { lookupApiCategory } from '../../apiDefs/query';
+import PageHeader from '../../components/PageHeader';
+import OAuth from '../../content/apiDocs/oauthTechnical.mdx';
 import { IApiNameParam } from '../../types';
 import ApiKeyAuth from './ApiKeyAuth';
-import OAuth from './OAuth';
+
+import './AuthorizationDocs.scss';
 
 export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
@@ -15,7 +18,12 @@ export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiN
       if (category.apiKey === true) {
         return (<ApiKeyAuth apiCategoryKey={apiCategoryKey} />);
       } else {
-        return (<OAuth apiCategoryKey={apiCategoryKey} />);
+        return (
+          <React.Fragment>
+            <PageHeader halo={category.name} header="Authorization" />
+            <OAuth />
+          </React.Fragment>
+        );
       }
     } else {
       return <Redirect to='/explore/bogus' />;
