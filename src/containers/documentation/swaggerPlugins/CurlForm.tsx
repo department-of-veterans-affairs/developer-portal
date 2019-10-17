@@ -150,7 +150,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
                 <pre className="vads-u-display--flex">
                   <div className="curl-text">{this.buildCurl()}</div>
                   <CopyToClipboard text={this.buildCurl()}>
-                    <span className="va-api-copy-to-clipboard">
+                    <span className="va-api-curl__copy-to-clipboard">
                       <FontAwesomeIcon icon={faCopy} size="2x" />
                     </span>
                   </CopyToClipboard>
