@@ -1,8 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import MediaQuery from 'react-responsive';
 import { NavLink } from 'react-router-dom';
-import { OVER_LARGE_SCREEN_QUERY, UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
+import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
 
 export interface ILargeScreenNavItemProps {
   isActive: (match: {}) => boolean;
@@ -36,18 +35,18 @@ export default class MainNavItem extends React.PureComponent<IMainNavItemProps> 
     return (
       <React.Fragment>
         {!this.props.excludeLargeScreen &&
-          <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
+          <div className={desktopOnly()}>
             <NavLink {... sharedProps} {... this.props.largeScreenProps}>
               {this.props.children}
             </NavLink>
-          </MediaQuery>
+          </div>
         }
         {!this.props.excludeSmallScreen &&
-          <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+          <div className={mobileOnly()}>
             <NavLink {... sharedProps}>
               {this.props.children}
             </NavLink>
-          </MediaQuery>
+          </div>
         }
       </React.Fragment>
     );

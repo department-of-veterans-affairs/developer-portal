@@ -10,7 +10,7 @@
   right: 0;
   bottom: 0;
   
-  @include media($large-screen) {
+  @include media($medium-screen) {
     background-color: $color-primary-darkest;
     position: relative;
   }

@@ -18,12 +18,8 @@
   @include media($medium-large-screen) {
     margin-top: 0;
     position: absolute;
-    right: 7rem;
-    top: 0;
-  }
-
-  @include media($large-screen) {
     right: 3rem;
+    top: 0;
   }
 }
 

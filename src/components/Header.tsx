@@ -1,9 +1,8 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
 
-import { OVER_LARGE_SCREEN_QUERY, UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
+import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
 import Banner from './Banner';
 import NavBar from './NavBar';
 import Search from './Search';
@@ -41,23 +40,25 @@ export default class Header extends React.Component<{}, INavBarState> {
               <span className="vads-u-font-weight--bold">VA</span> | Lighthouse
             </Link>
           </div>
-          <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
+          <div className={desktopOnly()}>
             <div className="header-right-container">
               <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
-                <Link id="get-started-button" to="/apply" className="usa-button">Request an API Key</Link>
+                <Link id="get-started-button" to="/apply" className={classNames('usa-button', 'va-api-apply-button')}>
+                  Request an API Key
+                </Link>
                 <Search />
               </div>
             </div>
-          </MediaQuery>
-          <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+          </div>
+          <div className={mobileOnly()}>
             <button 
               className={classNames('va-api-mobile-menu-button', 'vads-u-padding--0')} 
               onClick={this.toggleMenuVisible}
             >
               Menu
             </button>
-          </MediaQuery>
+          </div>
         </div>
         <NavBar isMobileMenuVisible={this.state.menuVisible} onClose={navBarCloseHandler} />
       </header>

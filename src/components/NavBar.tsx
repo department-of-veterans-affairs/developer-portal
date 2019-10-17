@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import MediaQuery from 'react-responsive';
 import { Link, NavLink } from 'react-router-dom';
 
 import closeButton from '../../node_modules/uswds/src/img/close.png';
@@ -8,7 +7,7 @@ import minusIcon from '../../node_modules/uswds/src/img/minus.png';
 import plusIcon from '../../node_modules/uswds/src/img/plus.png';
 
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
-import { UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
+import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
 import MainNavItem, { ILargeScreenNavItemProps } from './MainNavItem';
 import Search from './Search';
 
@@ -101,8 +100,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
         'va-api-mobile-nav-visible': this.props.isMobileMenuVisible,
       },
       'va-api-nav',
-      'vads-u-display--none',
-      'medium-screen:vads-u-display--block',
+      desktopOnly(),
       'medium-screen:vads-u-width--full',
     );
 
@@ -121,7 +119,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           'medium-screen:vads-u-margin-x--4',
           'medium-screen:vads-u-padding--0',
         )}>
-          <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+          <div className={mobileOnly()}>
             <button 
               className={classNames(
                 'va-api-mobile-nav-close',
@@ -138,7 +136,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
                 className={classNames('vads-u-color--gray-dark', 'vads-u-max-width--none')} />
             </button>
             <Search className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
-          </MediaQuery>
+          </div>
           <ul className={classNames(
             'vads-u-margin-y--2',
             'vads-u-padding-left--0',
@@ -153,7 +151,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
               >
                 Documentation
               </MainNavItem>
-              <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+              <div className={mobileOnly()}>
                 <button 
                   className={classNames(
                     'va-api-nav-button', 
@@ -173,7 +171,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
                     alt="Expand Documentation" aria-label="Expand Documentation" className="va-api-expand-nav-icon" />
                 </button>
                 {this.state.visibleSubNavs.documentation && <DocumentationSubNav />}
-              </MediaQuery>
+              </div>
             </li>
             <li className={navItemStyles()}>
               <MainNavItem targetUrl="/news" largeScreenProps={sharedNavItemProps} className={navLinkStyles}>
@@ -191,11 +189,11 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
               </MainNavItem>
             </li>
           </ul>
-          <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+          <div className={mobileOnly()}>
             <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
               <Link to="/apply" className="usa-button">Request an API Key</Link>
             </div>
-          </MediaQuery>
+          </div>
         </div>
       </nav>
     );

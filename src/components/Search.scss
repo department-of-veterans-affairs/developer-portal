@@ -5,11 +5,10 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
-  background-color: #FFFFFF;
   padding-top: 3.0rem;
   padding-bottom: 3.0rem;
 
-  @include media($large-screen) {
+  @include media($medium-screen) {
     background: none;
     padding-top: 0;
     padding-bottom: 0;
@@ -38,7 +37,7 @@
     max-width: none;
     padding: 8px;
 
-    @include media($large-screen) {
+    @include media($medium-screen) {
       width: 240px;
       max-width: inherit;
     }
