@@ -95,7 +95,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           </ul>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
             <div className="va-api-nav-secondary">
-              <Link to="/apply" className="vads-u-width--full usa-button">Request an API Key</Link>
+              <Link to="/apply" className={classNames("vads-u-width--full usa-button")}>Request an API Key</Link>
             </div>
           </MediaQuery>
         </div>

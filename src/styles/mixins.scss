@@ -1,32 +1,10 @@
 @mixin va-api-input-text-color($color) {
   input {
     color: $color;
-  }
 
-  ::-webkit-input-placeholder {
-    color: $color;
-  }
-
-  :-moz-placeholder {
-    /* FF 4-18 */
-    color: $color;
-    opacity: 1;
-  }
-
-  ::-moz-placeholder {
-    /* FF 19+ */
-    color: $color;
-    opacity: 1;
-  }
-  
-  ::-ms-input-placeholder {
-    /* IE 10+ */
-    color: $color;
-  }
-  
-  ::-ms-input-placeholder {
-    /* Microsoft Edge */
-    color: $color;
+    &:focus::placeholder {
+      color: $color;
+    }
   }
   
   ::placeholder {
