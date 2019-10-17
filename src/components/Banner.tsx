@@ -10,16 +10,17 @@ import dotGovIcon from '../assets/icon-dot-gov.svg';
 import httpsIcon from '../assets/icon-https.svg';
 import './Banner.scss';
 
-function GuidanceBox(props: React.PropsWithChildren<{ icon: string, title: string }>) {
+function GuidanceBox(props: React.PropsWithChildren<{ icon: string, title: string, id?: string }>) {
   return (
-    <div className={classNames(
+    <div id={props.id}
+      className={classNames(
       'vads-l-col--12',
       'medium-screen:vads-l-col--6',
       'vads-u-display--flex',
       'vads-u-align-content--flex-start',
       'vads-u-line-height--4',
-      'medium-screen:vads-u-padding-x--1p5',
-    )}>
+      'medium-screen:vads-u-padding-x--1p5')}
+    >
       <img 
         className={classNames('va-api-banner-icon', 'vads-u-margin-right--1', 'vads-u-margin-top--0p5')}
         src={props.icon} 
@@ -113,11 +114,11 @@ export default class Banner extends React.Component<{}, IBannerState> {
                 aria-hidden={this.state.accordionVisible ? "false" : "true"}
               >
                 <div className="vads-l-row">
-                  <GuidanceBox icon={dotGovIcon} title="The .gov means it's official">
+                  <GuidanceBox id="dot-gov-guidance" icon={dotGovIcon} title="The .gov means it's official">
                     Federal government websites often end in .gov or .mil. Before sharing sensitive
                     information, make sure you're on a federal government site.
                   </GuidanceBox>
-                  <GuidanceBox icon={httpsIcon} title="The site is secure.">
+                  <GuidanceBox id="https-guidance" icon={httpsIcon} title="The site is secure.">
                     <span>
                       The <strong>https://</strong> ensures that you're connecting to the official website
                       and that any information you provide is encrypted and sent securely.
