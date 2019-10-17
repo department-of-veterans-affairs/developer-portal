@@ -19,14 +19,6 @@
     padding-top: 40px;
   }
 
-  a.va-api-card {
-    width: 100%;
-
-    @include media($medium-screen) {
-      width: 250px;
-    }
-  }
-
   .ruled-stars {
     align-items: center;
     background: url('../assets/stars.png') no-repeat 50%;
