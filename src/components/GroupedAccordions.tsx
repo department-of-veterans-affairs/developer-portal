@@ -25,7 +25,6 @@ interface ICollapsiblePanelStates {
 }
 
 export default class GroupedAccordions extends React.Component<IGroupedAccordionsProps, IGroupedAccordionsStates> {
-
   private panelRefs: Array<React.RefObject<React.Component<{}, ICollapsiblePanelStates>>>;
 
   constructor(props: IGroupedAccordionsProps) {
@@ -47,30 +46,39 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
 
   public render() {
     return (
-      <section className="va-grouped-accordion">
-        <div className="va-grouped-accordion-header">
+      <section className={classNames('va-grouped-accordion', 'vads-u-margin-bottom--2p5')}>
+        <div className={classNames(
+          'vads-u-display--flex',
+          'vads-u-justify-content--space-between',
+          'vads-u-align-items--center',
+        )}>
           <h3>{this.props.title}</h3>
-          <button className={classNames("toggle-panels", "btn-link")} onClick={(event) => this.handleExpandCollapse(event)}>{this.determineLabelFromState()}</button>
+          <button 
+            className={classNames(
+              'va-api-grouped-accordions-button',
+              'vads-u-color--primary',
+              'vads-u-margin--0',
+              'vads-u-padding--0',
+              'vads-u-text-decoration--underline',
+              'vads-u-font-weight--normal',
+              'vads-u-width--auto',
+            )}
+            onClick={(event) => this.handleExpandCollapse(event)}
+          >
+            {this.state.allCollapsed ? 'Expand all' : 'Collapse all'}
+          </button>
         </div>
-        {this.createPanels()}
+        {this.props.panelContents.map((c: IPanelContent, index: number) => {
+          const panelRef = React.createRef<React.Component<{}, ICollapsiblePanelStates>>();
+          this.panelRefs.push(panelRef);
+          return (
+            <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={!this.state.allCollapsed} key={index}>
+              {c.body}
+            </CollapsiblePanel>
+          );
+        })}
       </section>
     );
-  }
-
-  private determineLabelFromState() {
-    return this.state.allCollapsed ? 'Expand all' : 'Collapse all';
-  }
-
-  private createPanels() {
-    return this.props.panelContents.map((c: IPanelContent, index: number) => {
-      const panelRef = React.createRef<React.Component<{}, ICollapsiblePanelStates>>();
-      this.panelRefs.push(panelRef);
-      return (
-        <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={!this.state.allCollapsed} key={index}>
-          {c.body}
-        </CollapsiblePanel>
-      );
-    });
   }
 
   private handleExpandCollapse(event: React.MouseEvent<HTMLElement>) {
