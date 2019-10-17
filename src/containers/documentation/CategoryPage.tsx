@@ -53,7 +53,7 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
     }
 
     return (
-      <section role="region" aria-labelledby={headerId} className="api-overview">
+      <section role="region" aria-labelledby={headerId} className="va-api-api-overview">
         <PageHeader id={headerId} header={categoryName} />
         {intro({})}
         {cardSection}
