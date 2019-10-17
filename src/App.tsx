@@ -15,17 +15,19 @@ import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
 import 'highlight.js/styles/github.css';
-import './App.scss';
+import './base.scss';
 
 class App extends React.Component {
   public render() {
     const appFlags = this.getFlags();
-
+    // the double flex container only exists and is flexed to
+    // address a bug in IE11 where min-height is only respected
+    // if the parent of a flex container is also a flex container.
     return (
       <FlagsProvider flags={appFlags}>
         <ConnectedRouter history={history}>
-          <div className="app-container">
-            <div className={classNames('app', 'vads-u-width--full')}>
+          <div className="vads-u-display--flex">
+            <div className={classNames("vads-u-display--flex", "vads-u-flex-direction--column", "vads-u-min-height--viewport", "vads-u-flex--1", "vads-u-width--full")}>
               <Header />
               <div className="main" role="main">
                 <Route path="/" render={topLevelRoutes} />
