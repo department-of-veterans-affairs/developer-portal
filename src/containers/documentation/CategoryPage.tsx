@@ -8,6 +8,7 @@ import { IApiDescription } from '../../apiDefs/schema';
 import AuthorizationCard from '../../components/AuthorizationCard';
 import CardLink from '../../components/CardLink';
 import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
+import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
 export default class CategoryPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
@@ -42,7 +43,7 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
 
       cardSection = (
         <div role="navigation" aria-labelledby={headerId}>
-          <div className="va-api-container">
+          <div className={defaultFlexContainer()}>
             {authCard}
             {apiCards}
           </div>

@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { NavHashLink } from 'react-router-hash-link';
 
@@ -18,10 +19,20 @@ export interface ICardLinkProps {
 export default class CardLink extends React.Component<ICardLinkProps, {}> {
   public render() {
     return (
-      <NavHashLink to={this.props.url} className="va-api-card">
-        <h3 className="va-api-name">{this.props.name}</h3>
+      <NavHashLink to={this.props.url} className={classNames(
+        'va-api-card',
+        'vads-u-margin-y--1p5',
+        'vads-u-margin-right--4',
+        'vads-u-width--full',
+        'vads-u-text-decoration--none',
+      )}>
+        <h3 className={classNames('va-api-name', 'vads-u-font-size--lg', 'vads-u-margin-y--2')}>
+          {this.props.name}
+        </h3>
         {this.props.subhead}
-        <div className="va-api-description">{this.props.children}</div>
+        <div className={classNames('va-api-description', 'vads-u-color--base')}>
+          {this.props.children}
+        </div>
       </NavHashLink>
     );
   }

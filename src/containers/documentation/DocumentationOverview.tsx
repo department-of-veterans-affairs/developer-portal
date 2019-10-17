@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
+import { defaultFlexContainer } from '../../styles/vadsUtils';
 
 export default class DocumentationOverview extends React.Component<RouteComponentProps, {}> {
   public render() {
@@ -17,7 +18,7 @@ export default class DocumentationOverview extends React.Component<RouteComponen
           header="Documentation"
           description="Explore usage policies and technical details about VA's API offerings."
         />
-        <div className="va-api-container">
+        <div className={defaultFlexContainer()}>
           {apiCategoryOrder.map((apiCategoryKey: string) => {
             const { name, content } = apiDefinitions[apiCategoryKey];
             return (

@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
+import { defaultFlexContainer } from '../../styles/vadsUtils';
 
 function cards(parent: string): JSX.Element[] {
   const apiDefs = getApiDefinitions();
@@ -27,13 +28,13 @@ function cards(parent: string): JSX.Element[] {
 export default class Overview extends React.Component<RouteComponentProps & any, {}> {
   public render() {
     return (
-      <div className="overview">
+      <div>
         <PageHeader
           halo={this.props.halo}
           header={this.props.header}
           description={this.props.description}
         />
-        <div className="va-api-container">{cards(this.props.parent)}</div>
+        <div className={defaultFlexContainer()}>{cards(this.props.parent)}</div>
       </div>
     );
   }

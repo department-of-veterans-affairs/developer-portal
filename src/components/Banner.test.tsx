@@ -6,23 +6,19 @@ import { shallow } from 'enzyme';
 import Banner from './Banner';
 
 describe('Banner', () => {
-  it('should render the official site notice', () => {
+  it('should render the site notice text', () => {
     const wrapper = shallow(<Banner />);
-    expect(wrapper.find('.official-site-notice').length).toBe(1);
-    expect(wrapper.find('.official-site-notice')
+    expect(wrapper.find('.site-notice-text').length).toBe(1);
+    expect(wrapper.find('.site-notice-text')
       .contains('An official website of the United States government.')).toBeTruthy();
   });
 
   it('should render the dot gov guidance', () => {
-    expect(shallow(<Banner />).find('.banner-guidance-gov').length).toBe(1);
+    expect(shallow(<Banner />).find('#dot-gov-guidance').length).toBe(1);
   });
 
   it('should render the HTTPS guidance', () => {
-    expect(shallow(<Banner />).find('.banner-guidance-ssl').length).toBe(1);
-  });
-
-  it('should render the Veterans Crisis Line box', () => {
-    expect(shallow(<Banner />).find('.va-crisis-line').length).toBe(1);
+    expect(shallow(<Banner />).find('#https-guidance').length).toBe(1);
   });
 
   it('should not show the site guidance accordion by default', () => {
