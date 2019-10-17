@@ -12,8 +12,6 @@ import { IApiNameParam } from '../../types';
 import CategoryReleaseNotesPage from './CategoryReleaseNotesPage';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
-import '../Documentation.scss';
-
 function SideNavApiEntry(api: IApiDescription) {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
 
