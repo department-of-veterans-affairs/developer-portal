@@ -37,7 +37,7 @@ const appealsContent: IApiCategoryContent = {
 const benefitsContent: IApiCategoryContent = {
   intro: BenefitsIntro,
   overview: BenefitsOverview,
-  placardText: 'Build tools to help Veterans electronically manage, submit, track, and receive notifications on their claims.',
+  placardText: 'Submit benefits-related PDFs',
   releaseNotes: BenefitsReleaseNotes,
   shortDescription:
     'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
@@ -46,7 +46,7 @@ const benefitsContent: IApiCategoryContent = {
 const facilitiesContent: IApiCategoryContent = {
   intro: FacilitiesIntro,
   overview: FacilitiesOverview,
-  placardText: 'Get information on VA facilities including contact information, location, hours of operation, available services, appointment wait times, and patient satisfaction.',
+  placardText: 'Access information about VA facilities',
   releaseNotes: FacilitiesReleaseNotes,
   shortDescription:
     'Use the VA Facility API to find relevant information about a specific VA facility.',
@@ -55,7 +55,7 @@ const facilitiesContent: IApiCategoryContent = {
 const healthContent: IApiCategoryContent = {
   intro: HealthIntro,
   overview: HealthOverview,
-  placardText: 'Build tools to help Veterans manage their health, view their medical records, schedule an appointment, find a specialty facility, and securely share their information with caregivers and providers.',
+  placardText: "View medial records and manage Veteran's health",
   quickstart: HealthQuickstart,
   releaseNotes: HealthReleaseNotes,
   shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
@@ -64,7 +64,7 @@ const healthContent: IApiCategoryContent = {
 const verificationContent: IApiCategoryContent = {
   intro: VerificationIntro,
   overview: VerificationOverview,
-  placardText: 'Build tools to help Veterans verify their Veteran status electronically on job sites, e-commerce sites, and third-party benefit sites.',
+  placardText: 'Verify Veteran status for job sites, e-commerce sites, and third-party benefit sites',
   releaseNotes: VerificationReleaseNotes,
   shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
 };

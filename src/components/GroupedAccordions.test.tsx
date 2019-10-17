@@ -26,7 +26,7 @@ describe('GroupedAccordions', () => {
 
   it('should toggle panels when  expand all / collapse all clicked', () => {
     const wrapper = mount(<GroupedAccordions title="title" panelContents={contents}/>);
-    const toggeLink = wrapper.find('.toggle-panels');
+    const toggeLink = wrapper.find('.va-api-grouped-accordions-button');
 
     toggeLink.simulate('click', event);
     expect(wrapper.find('.usa-accordion-content').length).toEqual(2);
