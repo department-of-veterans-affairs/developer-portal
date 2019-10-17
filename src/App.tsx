@@ -27,7 +27,7 @@ class App extends React.Component {
       <FlagsProvider flags={appFlags}>
         <ConnectedRouter history={history}>
           <div className="vads-u-display--flex">
-            <div className={classNames("vads-u-display--flex", "vads-u-flex-direction--column", "vads-u-min-height--viewport", "vads-u-flex--1", "vads-u-width--full")}>
+            <div className={classNames("vads-u-display--flex", "vads-u-flex-direction--column", "vads-u-min-height--viewport", "vads-u-width--full")}>
               <Header />
               <div className="main" role="main">
                 <Route path="/" render={topLevelRoutes} />
