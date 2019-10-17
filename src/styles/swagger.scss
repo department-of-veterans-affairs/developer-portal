@@ -3,33 +3,16 @@
 .swagger-ui {
   margin-top: 20px;
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #323a45;
-  }
-
-  h2 {
-    font-size: 3rem;
-  }
-
-  h3 {
-    font-size: 2rem;
-  }
-
-  p,
   select,
   label {
-    color: #222;
+    color: $color-base;
   }
 
   .info {
     margin-top: 0;
 
     p {
+      color: $color-base;
       font-family: $font-sans;
       font-size: 1.7rem;
     }

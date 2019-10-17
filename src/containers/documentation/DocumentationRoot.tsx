@@ -15,7 +15,7 @@ import CategoryPage from './CategoryPage';
 import DocumentationOverview from './DocumentationOverview';
 import QuickstartPage from './QuickstartPage';
 
-import '../Documentation.scss';
+import './Documentation.scss';
 
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   return (
