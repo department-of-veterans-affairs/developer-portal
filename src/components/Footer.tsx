@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 import './Footer.scss';
 
@@ -37,7 +38,7 @@ export default function Footer() {
               'medium-screen:vads-u-justify-content--flex-end',
             )}>
               <li>
-                <a href="/terms-of-service">Terms of Service</a>
+                <Link to="/terms-of-service">Terms of Service</Link>
               </li>
               <li>
                 <a href="https://github.com/department-of-veterans-affairs/VA-Micropurchase-Repo">Micro-consulting</a>
