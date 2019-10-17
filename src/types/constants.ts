@@ -51,8 +51,8 @@ export type TOGGLE_ACCEPT_TOS = typeof TOGGLE_ACCEPT_TOS;
 
 // Media query values - see src/base.scss and node_modules/uswds/src/stylesheets/core/_variables.scss
 export const MEDIUM_SCREEN = '640px';
-export const OVER_MEDIUM_SCREEN_QUERY = 'screen and (min-width: 640px)';
-export const UNDER_THAN_MEDIUM_SCREEN_QUERY = 'screen and (max-width: 639px)';
+export const OVER_MEDIUM_SCREEN_QUERY = 'screen and (min-width: 600px)';
+export const UNDER_THAN_MEDIUM_SCREEN_QUERY = 'screen and (max-width: 599px)';
 
 export const MEDIUM_LARGE_SCREEN = '768px';
 export const OVER_MEDIUM_LARGE_SCREEN_QUERY = 'screen and (min-width: 768px)';
