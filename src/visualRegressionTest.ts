@@ -30,10 +30,6 @@ describe('Visual regression test', async () => {
   it('renders the homepage properly', async() => {
     // Set unlimited timeout on first request, since it may timeout while webpack is compiling.
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
-
-    // Hide problematic video on homepage
-    await page.evaluate('document.querySelector("iframe").style="visibility: hidden;"');
-
     await checkScreenshots(page, '.main');
   });
 
