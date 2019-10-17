@@ -1,87 +1,24 @@
 @import '../styles/variables';
 
-.vadp-side-nav {
-  @include media($medium-screen) {
-    display: none;
+.va-api-side-nav {
+  position: sticky;
+  top: 20px;
+}
+
+li.va-api-sidenav-entry {
+  a:hover {
+    background-color: $color-gray-lighter;
   }
-  
-  &.sticky {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 20px;
-    display: none;
+}
 
-    @include media($medium-screen) {
-      display: block;
-      position: sticky;
-    }
+ul.va-api-sidenav-sub-list {
+  // Hide subnav by default
+  display: none;
+  list-style: none;
+}
 
-    &:before,
-    &:after {
-      content: '';
-      display: table;
-    }
-  }
-
-  .va-api-sidenav-list {
-    border: 2px solid #dbdbdd;
-    background-color: white;
-
-    a {
-      padding-left: 1.1rem;
-      padding-top: 1.2rem;
-      padding-bottom: 1.2rem;
-    }
-
-    li {
-      border-top: 2px solid #dbdbdd;
-    }
-
-    li.va-api-sidenav-entry {
-      a {
-        color: #222;
-      }
-
-      a.va-api-active-sidenav-link {
-        color: #383838;
-        border-left: 5px solid #2f70b5;
-        font-weight: 700;
-      }
-
-      a:hover {
-        background-color: #dbdbdd;
-      }
-
-      a.va-api-active-sidenav-link + ul.va-api-sidenav-sub-list {
-        // Show the subnav when its parent (represented as a sibling in the DOM)
-        // is the selected nav item
-        display: block;
-
-        ul.va-api-sidenav-sub-list > li > a {
-          padding-left: 5rem;
-        }
-      }
-
-      a + ul.va-api-sidenav-sub-list {
-        // Hide subnav by default
-        display: none;
-      }
-    }
-  }
-
-  ul.va-api-sidenav-sub-list {
-    list-style: none;
-    margin: 0;
-    padding-left: 0;
-
-    li.va-api-sidenav-entry {
-      a {
-        padding-left: 3.2rem;
-      }
-
-      a.va-api-active-sidenav-link {
-        border: none;
-      }
-    }
-  }
+a.va-api-active-sidenav-link + ul.va-api-sidenav-sub-list {
+  // Show the subnav when its parent (represented as a sibling in the DOM)
+  // is the selected nav item
+  display: block;
 }

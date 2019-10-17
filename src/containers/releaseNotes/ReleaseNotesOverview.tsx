@@ -28,7 +28,7 @@ function cards(parent: string): JSX.Element[] {
 export default class Overview extends React.Component<RouteComponentProps & any, {}> {
   public render() {
     return (
-      <div className="overview">
+      <div>
         <PageHeader
           halo={this.props.halo}
           header={this.props.header}

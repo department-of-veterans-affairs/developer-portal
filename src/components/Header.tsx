@@ -30,8 +30,15 @@ export default class Header extends React.Component<{}, INavBarState> {
         <Banner />
         <div className="header-content">
           <div className="va-api-logo" id="extended-logo">
-            <Link to="/" title="Digital VA home page" className="vads-u-text-decoration--none">
-              <span className="vads-u-font-weight--bold">VA</span> | Developer Portal
+            <Link to="/" 
+              title="Digital VA home page"
+              className={classNames(
+                'vads-u-text-decoration--none',
+                'vads-u-font-size--lg',
+                'medium-screen:vads-u-font-size--2xl',
+              )}
+            >
+              <span className="vads-u-font-weight--bold">VA</span> | Lighthouse
             </Link>
           </div>
           <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
