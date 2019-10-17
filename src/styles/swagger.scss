@@ -1,0 +1,134 @@
+@import './variables';
+
+.swagger-ui {
+  margin-top: 20px;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #323a45;
+  }
+
+  h2 {
+    font-size: 3rem;
+  }
+
+  h3 {
+    font-size: 2rem;
+  }
+
+  p,
+  select,
+  label {
+    color: #222;
+  }
+
+  .info {
+    margin-top: 0;
+
+    p {
+      font-family: $font-sans;
+      font-size: 1.7rem;
+    }
+
+    a {
+      color: #4c565c;
+      transition: none;
+    }
+
+    h2.title {
+      // never show Swagger UI's title feature
+      display: none;
+    }
+  }
+
+  .opblock.opblock-post .opblock-summary-method {
+    background: #44615d;
+  }
+
+  .opblock .opblock-summary-description {
+    font-family: $font-sans;
+  }
+
+  .models h4 span {
+    color: #555555;
+  }
+
+  .servers-title {
+    display: block;
+    margin-bottom: 2em;
+  }
+
+  .scheme-container {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+
+  button.authorize {
+    border-color: #4c565c;
+    color: #4c565c;
+  }
+
+  button.authorize:hover,
+  button.authorize:focus {
+    background-color: #4c565c;
+    color: #ffffff;
+
+    svg {
+      fill: currentColor;
+    }
+  }
+
+  button.authorization__btn:hover,
+  button.authorization__btn:focus {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    svg {
+      fill: #ffffff;
+    }
+  }
+
+  .opblock-tag:focus {
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  button.expand-operation:hover,
+  button.expand-operation:focus {
+    background: rgba(0, 0, 0, 0.6);
+
+    svg {
+      fill: #ffffff;
+    }
+  }
+
+  .global-server-container {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    margin-bottom: 2em;
+
+    .servers-title {
+      margin-bottom: 1em;
+    }
+  }
+
+  .wrapper {
+    padding: 0;
+  }
+
+  table {
+    td {
+      border: none;
+    }
+  }
+
+  blockquote {
+    line-height: 1.5;
+    color: $color-gray-dark;
+    background: $color-primary-alt-lightest;
+    padding: 1rem;
+    padding-right: 2rem;
+  }
+}
