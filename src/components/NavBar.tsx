@@ -82,7 +82,6 @@ const navLinkStyles = classNames(
   'vads-u-line-height--4',
   'vads-u-padding--1',
   'vads-u-text-decoration--none',
-  'medium-screen:vads-u-color--white',
   'medium-screen:vads-u-padding--1p5',
 );
 
