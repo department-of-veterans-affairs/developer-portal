@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 import './Footer.scss';
 
@@ -15,6 +16,19 @@ export default function Footer() {
       'vads-u-color--white',
       'vads-u-width--full',
     )}>
+      <section role="region" aria-label="Beta Notice">
+        <div className={classNames(
+            'va-api-beta-banner',
+            'vads-u-font-size--lg',
+            'vads-u-padding-y--1p5',
+            'vads-u-text-align--center',
+            'vads-u-color--white')}>
+          <p>
+            This is a beta site. We are always looking to make improvements.
+            &nbsp;<Link className={classNames('vads-u-font-weight--bold', 'vads-u-color--primary-alt')} to="/support">Send us your feedback</Link>
+          </p>
+        </div>
+      </section>
       <div className="vads-l-grid-container">
         <div className="vads-l-row">
           <div className={classNames(
@@ -44,7 +58,7 @@ export default function Footer() {
               'medium-screen:vads-u-justify-content--flex-end',
             )}>
               <li className={listItemStyles}>
-                <a href="/terms-of-service" className={footerLinkStyles}>Terms of Service</a>
+                <Link to="/terms-of-service" className={footerLinkStyles}>Terms of Service</Link>
               </li>
               <li className={listItemStyles}>
                 <a href="https://github.com/department-of-veterans-affairs/VA-Micropurchase-Repo" className={footerLinkStyles}>
