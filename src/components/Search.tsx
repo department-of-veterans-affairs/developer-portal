@@ -16,7 +16,7 @@ export default class Search extends React.Component<{className?: string}> {
         method="get"
       >
         <input name="utf8" type="hidden" value="&#x2713;" />
-        <input type="hidden" name="affiliate" id="affiliate" value="developer.va.gov" />
+        <input type="hidden" name="affiliate"  value="developer.va.gov" />
         <input type="text" 
           name="query" 
           autoComplete="off" 
