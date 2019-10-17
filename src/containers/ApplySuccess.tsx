@@ -8,8 +8,6 @@ import { getApiDefinitions } from '../apiDefs/query';
 import sentenceJoin from '../sentenceJoin';
 import { IApiList, IApplication, IRootState } from '../types';
 
-import './Apply.scss';
-
 const mapStateToProps = (state : IRootState) => {
   return {
     ...state.application,
