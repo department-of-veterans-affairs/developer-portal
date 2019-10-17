@@ -3,7 +3,8 @@ import { Flag } from 'flag';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
-import CardLink, { getCardContainerClasses } from '../components/CardLink';
+import CardLink from '../components/CardLink';
+import { defaultFlexContainer } from '../styles/vadsUtils';
 
 import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
 import './Home.scss';
@@ -52,7 +53,7 @@ class Home extends React.Component {
             </div>
             <div className="vads-l-row">
               <div className="vads-l-col--12">
-                <div className={classNames(getCardContainerClasses(), 'vads-u-padding-top--5')}>
+                <div className={classNames(defaultFlexContainer(), 'vads-u-padding-top--5')}>
                   {apiCategoryOrder.map((apiCategoryKey: string) => {
                     const { name, content } = apiDefinitions[apiCategoryKey];
                     return (

@@ -6,11 +6,11 @@ describe('position sticky', () => {
   it('should keep nav element in place after scroll', async () => {
     await page.goto(`${puppeteerHost}/explore`, { waitUntil: 'networkidle0' });
     const originalDistanceFromTop = await page.evaluate(() => {
-      return document.querySelectorAll('.sticky')[0].getBoundingClientRect().top;
+      return document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top;
     });
     await page.evaluate(() => window.scrollBy(0, 585)); // scroll 585px
     const distanceFromTop = await page.evaluate(() => {
-      return document.querySelectorAll('.sticky')[0].getBoundingClientRect().top;
+      return document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top;
     });
     expect(distanceFromTop).toEqual(20);
     expect(distanceFromTop).not.toEqual(originalDistanceFromTop);

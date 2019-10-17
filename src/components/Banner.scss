@@ -1,96 +1,28 @@
 @import '../styles/variables';
 
-.va-api-banner-inner {
-  position: relative;
-  color: $color-white;
-}
-
-.site-guidance {
-  background-color: #323A45;
+.site-notice-text {
+  max-width: 350px;
   
-  .official-site-notice {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-  }
-  
-  .site-notice-text {
-    font-size: 1.4rem;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    margin-left: 5px;
-    max-width: 350px;
+  .va-api-site-guidance-button {
+    background-color: rgba(0, 0, 0, 0);
     
-    @include media($medium-screen) {
-      max-width: none;
-      margin-left: 0;
+    &[aria-expanded=true] {
+      @include display-icon(angle-arrow-up-primary, after, 1rem, 4px, hover);
     }
     
-    .va-api-site-guidance-button {
-      font-size: 1.4rem;
-      background-color: rgba(0, 0, 0, 0);
-      width: auto;
-      height: auto;
-      position: relative;
-      color: $color-white;
-      
-      &:active,
-      &:hover {
-        color: $color-white;
-      }
-      
-      &[aria-expanded=true] {
-        @include display-icon(angle-arrow-up-primary, after, 1rem, 4px, hover);
-      }
-      
-      &[aria-expanded=false] {
-        @include display-icon(angle-arrow-down-primary, after, 1rem, 4px, hover);
-      }
-      
-      &[aria-expanded=true]::after,
-      &[aria-expanded=false]::after {
-        position: relative;
-        top: 0;
-        right: 0;
-      }
-      
-      .accordion-icon {
-        width: 8px;
-      }
-    }
-  }
-  
-  .site-guidance-content {
-    background-color: #323A45;
-  
-    @include media($medium-screen) {
-      display: flex;
-      flex-flow: row wrap;
-      max-width: 1024px;
+    &[aria-expanded=false] {
+      @include display-icon(angle-arrow-down-primary, after, 1rem, 4px, hover);
     }
   }
 }
 
-.va-api-banner-header {
-  img {
-    height: 2rem;
-    width: 2rem;
-  }
-}
-
-
-.banner-guidance-gov,
-.banner-guidance-ssl {
-  line-height: 24px;
-
+.site-guidance-content {
   @include media($medium-screen) {
-    width: 50%;
-    padding: 0 12px;
-    margin-bottom: 0;
+    max-width: $site-max-width;
   }
+}
 
-  .guidance-content {
-    margin-bottom: 10px;
-  }
+.va-api-banner-icon {
+  height: 2rem;
+  width: 2rem;
 }

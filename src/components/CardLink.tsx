@@ -37,11 +37,3 @@ export default class CardLink extends React.Component<ICardLinkProps, {}> {
     );
   }
 }
-
-export const getCardContainerClasses = () => {
-  return classNames(
-    'vads-u-display--flex',
-    'vads-u-flex-direction--row',
-    'vads-u-flex-wrap--wrap',
-  );
-};
