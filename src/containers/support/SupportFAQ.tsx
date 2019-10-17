@@ -124,7 +124,7 @@ export default class SupportFAQ extends React.Component {
     return (
       <section role="region" aria-label="Support FAQ">
         <PageHeader {...headerProps} />
-        <div className="va-api-container">
+        <div>
           <SupportQuestions title="General" questions={generalQuestions}/>
           <SupportQuestions title="Development" questions={developmentQuestions}/>
           <SupportQuestions title="Troubleshooting/Support" questions={supportQuestions}/>
