@@ -22,7 +22,7 @@ if (!NODE_ENV) {
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
   // e.g. .env.test.local
-  `${paths.dotenv}.${NODE_ENV}.local`,
+  BUILD_ENV !== null && `${paths.dotenv}.${BUILD_ENV}.local`,
 
   // Don't include `.env.local` for `test` environment
   // since normally you expect tests to produce the same
