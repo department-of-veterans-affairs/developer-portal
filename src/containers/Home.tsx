@@ -4,7 +4,9 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 import CardLink from '../components/CardLink';
+import { defaultFlexContainer } from '../styles/vadsUtils';
 
+import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
 import './Home.scss';
 
 class Home extends React.Component {
@@ -51,7 +53,7 @@ class Home extends React.Component {
             </div>
             <div className="vads-l-row">
               <div className="vads-l-col--12">
-                <div className={classNames('va-api-container', 'vads-u-padding-top--5')}>
+                <div className={classNames(defaultFlexContainer(), 'vads-u-padding-top--5')}>
                   {apiCategoryOrder.map((apiCategoryKey: string) => {
                     const { name, content } = apiDefinitions[apiCategoryKey];
                     return (
@@ -95,9 +97,7 @@ class Home extends React.Component {
                 'medium-screen:vads-l-col--6',
                 'medium-screen:vads-u-padding-left--2',
               )}>
-                <div className="video-wrapper">
-                  <iframe src="https://www.youtube.com/embed/at69_Uz05vA" frameBorder="0" allowFullScreen={true} />
-                </div>
+                  <EmbeddedYoutubeVideo title="VA's Benefits Intake API" url="https://www.youtube.com/embed/at69_Uz05vA" />
               </div>
             </div>
           </section>
