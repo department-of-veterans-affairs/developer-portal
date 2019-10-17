@@ -19,7 +19,6 @@ export default class Search extends React.Component<{className?: string}> {
         <input type="hidden" name="affiliate" id="affiliate" value="developer.va.gov" />
         <input type="text" 
           name="query" 
-          id="query" 
           autoComplete="off" 
           className="usagov-search-autocomplete" 
           placeholder="Search..." 
