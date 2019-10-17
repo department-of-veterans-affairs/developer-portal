@@ -9,6 +9,19 @@ import logo from '../assets/lighthouseVaLogo.png';
 export default function Footer() {
   return (
     <footer className="va-api-footer" role="contentinfo">
+      <section role="region" aria-label="Beta Notice">
+        <div className={classNames(
+            'va-api-beta-banner',
+            'vads-u-font-size--lg',
+            'vads-u-padding-y--1p5',
+            'vads-u-text-align--center',
+            'vads-u-color--white')}>
+          <p>
+            This is a beta site. We are always looking to make improvements.
+            &nbsp;<Link className={classNames('vads-u-font-weight--bold', 'vads-u-color--primary-alt')} to="/support">Send us your feedback</Link>
+          </p>
+        </div>
+      </section>
       <div className="vads-l-grid-container">
         <div className="vads-l-row">
           <div className={classNames(
