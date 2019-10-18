@@ -1,0 +1,17 @@
+@import '../../styles/variables';
+@import '../../styles/swagger';
+@import '../../styles/tabs';
+
+.documentation {
+  .va-api-api-overview {
+    h2 {
+      font-size: 2rem;
+    }
+  }
+  
+  .va-api-deprecation-alert {
+    p {
+      margin: 0;
+    }
+  }
+}
