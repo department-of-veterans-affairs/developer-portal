@@ -8,6 +8,7 @@ export interface ICardLinkProps {
   name: string;
   url: string;
   subhead?: JSX.Element;
+  className?: string;
 }
 
 /*
