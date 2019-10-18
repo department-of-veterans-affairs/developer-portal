@@ -7,6 +7,7 @@
 // Imports
 // =======
 @import '~@department-of-veterans-affairs/formation/sass/full';
+@import './styles/mixins';
 
 // VADS Overrides 🚗
 // ==================
@@ -126,11 +127,6 @@ p {
 
 span.mono {
   font-family: monospace;
-}
-
-@mixin focus-outline {
-  outline: 2px solid $color-gold;
-  outline-offset: 2px;
 }
 
 *:focus,
