@@ -36,7 +36,12 @@ export default class Search extends React.Component<{inMenu?: boolean, className
             className="va-api-search-autocomplete"
             placeholder={inMenu ? "" : "Search..."}
             aria-label="Search developer.va.gov" />
-          <button type="submit" name="commit" className={classNames({"va-api-search-submit": inMenu})}>
+          <button type="submit"
+            name="commit"
+            className={classNames({"va-api-search-submit": inMenu})}
+            value="Search"
+            aria-label="Search"
+          >
             <FontAwesomeIcon className={classNames({"va-api-search-icon": !inMenu})} icon={faSearch} />
           </button>
         </form>
