@@ -1,69 +1,16 @@
-@import '../styles/variables';
-
-.va-api-site-header {
-  background: $color-blue-darkest;
-
-  .va-api-logo {
-    margin-left: 15px;
-
-    @include media($medium-screen) {
-      margin: 0;
-    }
-
-    a {
-      color: #FFFFFF;
-      font-weight: 300;
-    }
+.va-api-logo {
+  a {
+    font-weight: 300;
   }
 }
 
-.header-content {
-  max-width: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  @include media($medium-screen) {
-    padding-right: 3rem;
-    padding-left: 3rem;
-    height: 127px;
-  }
-
-  a, a:visited {
-    color: $color-white;
-  }
-
-  .api-status-link {
-    margin-left: auto;
-    z-index: 2;
-    font-size: 1.7rem;
-    margin-top: 2rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .va-api-mobile-menu-button {
-    border-radius: 0;
-    font-size: 1.4rem;
-    font-weight: 400;
-    height: 4rem;
-    margin: 0;
-    text-align: center;
-    text-transform: uppercase;
-    width: 6rem;
-  }
+.va-api-status-link {
+  z-index: 2;
 }
 
-.header-right-container {
-  display: flex;
-  flex-direction: column;
-  margin-left: auto;
-}
-
-.header-right-content {
-  display: flex;
-  align-items: center;
-}
-
-.va-api-apply-button {
-  max-height: 40px;
+.va-api-mobile-menu-button {
+  border-radius: 0;
+  height: 4rem;
+  text-transform: uppercase;
+  width: 6rem;
 }
