@@ -140,7 +140,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       return (
         <div className={classNames("vads-u-margin-top--0", "vads-u-margin-x--4", "vads-u-margin-bottom--4", "vads-u-padding-top--2")}>
           <h2 className="vads-u-margin-y--0">Example Curl</h2>
-          <div className={classNames("va-api-curl-form", "vads-u-background-color--gray-light-alt", "vads-u-border-style--solid")}>
+          <div className={classNames("va-api-curl-form", "vads-u-background-color--gray-light-alt", "vads-u-border--3px")}>
             <div className="vads-u-margin--2">
               {this.authParameterContainer()}
               {this.parameterContainer()}
