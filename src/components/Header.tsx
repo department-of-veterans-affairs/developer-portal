@@ -24,6 +24,7 @@ export default class Header extends React.Component<{}, INavBarState> {
 
   public render() {
     const navBarCloseHandler = this.toggleMenuVisible.bind(this);
+    const buttonClassnames = classNames('usa-button', 'vads-u-background-color--white', 'vads-u-color--primary-darkest', 'vads-u-margin-right--2');
 
     return (
       <header className="va-api-site-header" role="banner">
@@ -45,7 +46,7 @@ export default class Header extends React.Component<{}, INavBarState> {
             <div className="header-right-container">
               <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
-                <Link id="get-started-button" to="/apply" className="usa-button">Request an API Key</Link>
+                <Link to="/apply" className={buttonClassnames}>Request an API Key</Link>
                 <Search />
               </div>
             </div>
