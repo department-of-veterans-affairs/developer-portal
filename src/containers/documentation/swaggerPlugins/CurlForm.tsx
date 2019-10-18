@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
@@ -137,19 +138,19 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   public render() {
     if (Object.keys(this.props.operation).includes('security')) {
       return (
-        <div className="curl-container">
-          <h2 id="title">Example Curl</h2>
-          <div className="curl-form">
-            <div className="curl-form__contents">
+        <div className={classNames("vads-u-margin-top--0", "vads-u-margin-x--4", "vads-u-margin-bottom--4", "vads-u-padding-top--2")}>
+          <h2 className="vads-u-margin-y--0">Example Curl</h2>
+          <div className={classNames("va-api-curl-form", "vads-u-background-color--gray-light-alt", "vads-u-border--3px")}>
+            <div className="vads-u-margin--2">
               {this.authParameterContainer()}
               {this.parameterContainer()}
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                <pre className="highlight-code">
+                <pre className="vads-u-display--flex">
                   <div className="curl-text">{this.buildCurl()}</div>
                   <CopyToClipboard text={this.buildCurl()}>
-                    <span className="copy-to-clipboard">
+                    <span className="va-api-curl__copy-to-clipboard">
                       <FontAwesomeIcon icon={faCopy} size="2x" />
                     </span>
                   </CopyToClipboard>
