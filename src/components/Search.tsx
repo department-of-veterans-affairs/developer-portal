@@ -44,12 +44,11 @@ export default class Search extends React.Component<{inMenu?: boolean, className
             aria-label="Search developer.va.gov" />
           <button type="submit" name="commit" 
             className={classNames(
-              inMenu && [
+              inMenu ? [
                 'va-api-search-submit',
                 'vads-u-margin--0',
                 'vads-u-padding--0',
-              ],
-              !inMenu && [
+              ] : [
                 'vads-u-margin-bottom--0',
                 'vads-u-margin-left--neg5',
                 'vads-u-margin-right--0',
