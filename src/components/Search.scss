@@ -9,7 +9,7 @@
   input.va-api-search-autocomplete {
     width: 80%;
   
-    @include media($large-screen) {
+    @include media($medium-screen) {
       width: 240px;
     }
   }

@@ -2,7 +2,6 @@
 
 .va-api-nav {
   background-color: $color-white;
-  display: none;
   width: 25rem;
   z-index: 0;
 
@@ -10,104 +9,44 @@
   top: 0;
   right: 0;
   bottom: 0;
-
-  @include media($large-screen) {
-    background-color: #112E51;
-    display: block;
+  
+  @include media($medium-screen) {
+    background-color: $color-primary-darkest;
     position: relative;
-    width: 100%;
-
-    ul.va-api-sub-nav,
-    img.va-api-expand-nav-icon {
-      display: none;
-    }
   }
 
   &.va-api-mobile-nav-visible {
-    display: block;
+    display: block !important;
     z-index: 2;
   }
 
   .va-api-mobile-nav-close {
-    display: block;
     height: 40px;
     width: 40px;
-    margin: 0 -10px 15px 0;
     float: right;
-    background-color: rgba(0, 0, 0, 0);
-    padding: 0;
+    background-color: transparent;
     
     img {
-      color: #323A45;
-      max-width: none;
       height: 15px;
       width: 15px;
     }
   }
 
-  .va-api-nav-inner {
-    max-width: none;
-    padding: 2rem;
-
-    @include media($large-screen) {
-      border-top: 1px solid $color-white;
-    }
-  }
-  
-  .va-api-nav-primary {
-    display: block;
-    margin: 15px 0;
-    padding-left: 0;
-    
-    @include media($large-screen) {
-      display: inline;
-    }
-  }
-  
-  li.va-api-main-nav-item {
-    border-top: 1px solid #DBDBDD;
-    display: block;
-    margin-bottom: 0;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    
-    &:first-child {
-      border-top: none;
-    }
-    
-    @include media($large-screen) {
-      border-top: none;
-      display: inline-block;
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-  }
-
   a.va-api-nav-link,
   button.va-api-nav-button {
-    line-height: 24px;
-    padding: 10px;
-    margin: 0;
     transition: background-color 0.3s ease-in-out;
   }
   
   a.va-api-nav-link {
-    color: #323A45;
     cursor: pointer;
-    display: block;
-    font-weight: 400;
-    font-size: 1.6rem;
-    padding: 10px;
-    text-decoration: none;
 
     &.va-api-active-nav {
       font-weight: 700;
     }
     
-    @include media($large-screen) {
+    @include media($medium-screen) {
       margin-bottom: 3px;
-      padding: 15px;
-      color: $color-white;
+      color: $color-white !important;
       
       &.va-api-active-nav,
       &:hover {
@@ -119,24 +58,15 @@
   }
 
   button.va-api-nav-button {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-
     background-color: inherit;
-    color: #323A45;
-    font-weight: 400;
-    width: 100%;
     
     &:hover {
-      background-color: rgba(0, 0, 0, 0.05);
+      background-color: rgba(0, 0, 0, 0.05) !important;
     }
   }
 
   .va-api-nav-secondary {
     clear: both;
-    margin: 15px 0;
   }
   
   img.va-api-expand-nav-icon {
@@ -146,49 +76,5 @@
   
   ul.va-api-sub-nav {
     list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
-  
-  li.va-api-sub-nav-item {
-    // only used in screens under $large-screen
-    border-top: 1px solid #DBDBDD;
-    margin-bottom: 0;
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-  
-  img.va-api-expand-nav-icon {
-    width: 8px;
-    height: 8px;
-  }
-  
-  ul.va-api-sub-nav {
-    list-style: none;
-    padding-left: 0;
-    margin: 0;
-  }
-  
-  li.va-api-sub-nav-item {
-    // only used in screens under $large-screen
-    border-top: 1px solid #DBDBDD;
-    margin-bottom: 0;
-    padding-top: 8px;
-    padding-bottom: 8px;
-  }
-
-  a.va-api-sub-nav-link {
-    color: #323A45;
-    display: block;
-    font-size: 1.6rem;
-    font-weight: 400;
-    line-height: 24px;
-    padding-left: 20px;
-    text-decoration: none;
-    width: 100%;
-
-    &.va-api-active-sub-nav {
-      font-weight: 700;
-    }
   }
 }

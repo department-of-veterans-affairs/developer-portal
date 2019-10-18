@@ -30,10 +30,9 @@ export default class Search extends React.Component<{inMenu?: boolean, className
           )}
         >
           <input name="utf8" type="hidden" value="&#x2713;" />
-          <input type="hidden" name="affiliate" id="affiliate" value="developer.va.gov" />
+          <input type="hidden" name="affiliate" value="developer.va.gov" />
           <input type="text"
             name="query"
-            id="query"
             autoComplete="off"
             className={classNames(
               'va-api-search-autocomplete',
@@ -56,6 +55,8 @@ export default class Search extends React.Component<{inMenu?: boolean, className
                 'vads-u-padding--0',
               ],
             )}
+            value="Search"
+            aria-label="Search"
           >
             <FontAwesomeIcon className={classNames({"va-api-search-icon": !inMenu})} icon={faSearch} />
           </button>

@@ -17,3 +17,6 @@ export const defaultFlexContainer = (alignItemsCenter: boolean = false) => {
     },
   );
 };
+
+export const mobileOnly = () => classNames('vads-u-display--block', 'medium-screen:vads-u-display--none');
+export const desktopOnly = () => classNames('vads-u-display--none', 'medium-screen:vads-u-display--block');
