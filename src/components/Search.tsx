@@ -26,6 +26,8 @@ export default class Search extends React.Component<{inMenu?: boolean, className
             "vads-u-display--flex",
             "vads-u-flex-direction--row",
             "vads-u-flex-wrap--nowrap",
+            'vads-u-width--full',
+            'medium-screen:vads-u-width--auto',
             { 'va-api-search-form--transparent-submit': !inMenu },
           )}
         >
