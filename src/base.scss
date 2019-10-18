@@ -7,6 +7,7 @@
 // Imports
 // =======
 @import '~@department-of-veterans-affairs/formation/sass/full';
+@import './styles/mixins';
 
 // VADS Overrides 🚗
 // ==================
@@ -24,6 +25,15 @@ body {
 .vads-l-grid-container {
   max-width: 120rem;
   margin-left: 0;
+}
+
+.va-api-home__image {
+  width: 200px;
+}
+
+.va-api-margin-y--auto {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 header {
@@ -117,11 +127,6 @@ p {
 
 span.mono {
   font-family: monospace;
-}
-
-@mixin focus-outline {
-  outline: 2px solid $color-gold;
-  outline-offset: 2px;
 }
 
 *:focus,
