@@ -47,10 +47,12 @@ input.va-api-search-autocomplete {
   }
 }
 
-button.va-api-search-submit {
-  margin: 0;
-  border-radius: 0 5px 5px 0;
-  width: 40px;
-  height: 42px;
-  padding: 10px;
+form {
+  button.va-api-search-submit {
+    margin: 0;
+    border-radius: 0 5px 5px 0;
+    width: 40px;
+    padding: 0;
+    height: 42px;
+  }
 }
