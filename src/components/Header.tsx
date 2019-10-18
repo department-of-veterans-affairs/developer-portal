@@ -44,7 +44,6 @@ export default class Header extends React.Component<{}, INavBarState> {
           </div>
           <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
             <div className="header-right-container">
-              <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
               <div className="header-right-content">
                 <Link to="/apply" className={buttonClassnames}>Request an API Key</Link>
                 <Search />

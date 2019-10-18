@@ -1,3 +1,5 @@
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
 import MediaQuery from 'react-responsive';
@@ -56,6 +58,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           'va-api-nav-inner',
           'medium-screen:vads-u-margin-x--3',
           'medium-screen:vads-u-padding--0',
+          'medium-screen:vads-u-display--flex',
         )}>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
             <button className="va-api-mobile-nav-close" onClick={this.props.onClose}>
@@ -63,7 +66,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             </button>
             <Search inMenu={true} className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
           </MediaQuery>
-          <ul className="va-api-nav-primary">
+          <ul className={classNames("va-api-nav-primary", "vads-u-margin-y--0")}>
             <li className="va-api-main-nav-item">
               <MainNavItem targetUrl="/explore" largeScreenProps={sharedNavItemProps} excludeSmallScreen={true}>
                 Documentation
@@ -93,6 +96,14 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
               </MainNavItem>
             </li>
           </ul>
+          <a className={classNames(
+            "va-api-margin-y--auto",
+            "vads-u-margin-left--auto",
+            "vads-u-color--white",
+            "vads-u-font-weight--bold",
+            "vads-u-text-decoration--none",
+            "vads-u-font-size--base",
+          )} href="https://valighthouse.statuspage.io">API Status <FontAwesomeIcon icon={faExternalLinkAlt} /></a>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
             <div className="va-api-nav-secondary">
               <Link to="/apply" className={classNames("usa-button", "vads-u-width--full")}>Request an API Key</Link>
