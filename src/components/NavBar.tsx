@@ -135,7 +135,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
                 src={closeButton} alt="Close button" 
                 className={classNames('vads-u-color--gray-dark', 'vads-u-max-width--none')} />
             </button>
-            <Search className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
+            <Search inMenu={true} className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
           </div>
           <ul className={classNames(
             'vads-u-margin-y--2',
@@ -191,7 +191,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           </ul>
           <div className={mobileOnly()}>
             <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
-              <Link to="/apply" className="usa-button">Request an API Key</Link>
+              <Link to="/apply" className={classNames("usa-button", "vads-u-width--full")}>Request an API Key</Link>
             </div>
           </div>
         </div>

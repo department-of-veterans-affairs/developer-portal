@@ -15,14 +15,13 @@ if (!NODE_ENV) {
   );
 }
 
-
 // This list replicates the priority order documented by the dotenv gem. It
 // relies on the dotenv behavior of not modifying a variable that was
 // previously set by another env file.
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
   // e.g. .env.test.local
-  `${paths.dotenv}.${NODE_ENV}.local`,
+  BUILD_ENV !== null && `${paths.dotenv}.${BUILD_ENV}.local`,
 
   // Don't include `.env.local` for `test` environment
   // since normally you expect tests to produce the same
@@ -31,7 +30,6 @@ var dotenvFiles = [
 
   // e.g. .env.test
   BUILD_ENV !== null && `${paths.dotenv}.${BUILD_ENV}`,
-  `${paths.dotenv}.${NODE_ENV}`,
 
   paths.dotenv,
 ].filter(Boolean);

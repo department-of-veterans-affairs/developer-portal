@@ -8,8 +8,6 @@ import { getApiDefinitions } from '../apiDefs/query';
 import sentenceJoin from '../sentenceJoin';
 import { IApiList, IApplication, IRootState } from '../types';
 
-import './Apply.scss';
-
 const mapStateToProps = (state : IRootState) => {
   return {
     ...state.application,
@@ -36,17 +34,27 @@ interface IOAuthCredentialsNoticeProps {
 }
 
 // Mapping from the options on the form to Proper Names for APIs
-const apisToEnglishOauthList: any = {
+const apisToEnglishOauthList = {
   claims: 'Benefits Claims API',
   community_care: 'Community Care API',
   health: 'VA Health API',
   verification: 'Veteran Verfication API',
 };
 
+// this isn't great but we need to do it in the short term since Apply isn't based on the API definitions
+const formFieldsToCategories = {
+  benefits: 'benefits',
+  claims: 'benefits',
+  communityCare: 'health',
+  facilities: 'facilities',
+  health: 'health',
+  verification: 'verification',
+};
+
 const apisToEnglishList = (apis: string[]): string => {
   const apiDefs = getApiDefinitions();
   return sentenceJoin(apis.map((k) => {
-    return apiDefs[k].properName;
+    return apiDefs[formFieldsToCategories[k]].properName;
   }));
 };
 
@@ -69,7 +77,7 @@ function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } 
 
 function ApiKeyNotice({ token, email, selectedApis } : IApiKeyNoticeProps) {
   const apiDefs = getApiDefinitions();
-  const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => apiDefs[k].apiKey));
+  const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => apiDefs[formFieldsToCategories[k]].apiKey));
 
   return (
     <div>
