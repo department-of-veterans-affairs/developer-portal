@@ -32,7 +32,7 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
       <div className={classNames(
         'va-crisis-line',
         'vads-u-margin-right--0',
-        'small-desktop-screen:vads-u-margin-right--4',
+        'medium-screen:vads-u-margin-right--4',
       )}>
         <button 
           data-show="#crisis-line-modal"

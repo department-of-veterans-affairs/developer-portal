@@ -75,7 +75,7 @@ export default class Banner extends React.Component<{}, IBannerState> {
                   defaultFlexContainer(true),
                   'vads-u-margin-left--1',
                   'vads-u-font-size--sm',
-                  'medium-screen:vads-u-max-width--none',
+                  'small-desktop-screen:vads-u-max-width--none',
                 )}>
                   <div>An official website of the United States government.</div>
                   <button 
@@ -86,8 +86,8 @@ export default class Banner extends React.Component<{}, IBannerState> {
                       'vads-u-margin--0',
                       'vads-u-margin-top--0p25',
                       'vads-u-padding--0',
-                      'medium-screen:vads-u-margin-left--1',
-                      'medium-screen:vads-u-margin-top--0',
+                      'small-desktop-screen:vads-u-margin-left--1',
+                      'small-desktop-screen:vads-u-margin-top--0',
                     )}
                     onClick={this.toggleAccordionVisible}
                     aria-expanded={this.state.accordionVisible ? "true" : "false"}
