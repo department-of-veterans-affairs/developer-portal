@@ -15,7 +15,6 @@ if (!NODE_ENV) {
   );
 }
 
-
 // This list replicates the priority order documented by the dotenv gem. It
 // relies on the dotenv behavior of not modifying a variable that was
 // previously set by another env file.
@@ -28,7 +27,6 @@ var dotenvFiles = [
   // since normally you expect tests to produce the same
   // results for everyone
   NODE_ENV !== 'test' && `${paths.dotenv}.local`,
-  NODE_ENV === 'test' && `${paths.dotenv}.test`,
 
   // e.g. .env.test
   BUILD_ENV !== null && `${paths.dotenv}.${BUILD_ENV}`,
