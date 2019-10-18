@@ -13,7 +13,7 @@ export default class DocumentationOverview extends React.Component<RouteComponen
     const apiCategoryOrder = getApiCategoryOrder();
 
     return (
-      <div className="doc-overview">
+      <div>
         <PageHeader
           header="Documentation"
           description="Explore usage policies and technical details about VA's API offerings."
