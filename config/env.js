@@ -31,7 +31,6 @@ var dotenvFiles = [
 
   // e.g. .env.test
   BUILD_ENV !== null && `${paths.dotenv}.${BUILD_ENV}`,
-  `${paths.dotenv}.${NODE_ENV}`,
 
   paths.dotenv,
 ].filter(Boolean);
