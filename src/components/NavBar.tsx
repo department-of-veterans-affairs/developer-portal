@@ -54,14 +54,14 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
       <nav className={navClasses}>
         <div className={classNames(
           'va-api-nav-inner',
-          'medium-screen:vads-u-margin-x--4',
+          'medium-screen:vads-u-margin-x--3',
           'medium-screen:vads-u-padding--0',
         )}>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
             <button className="va-api-mobile-nav-close" onClick={this.props.onClose}>
               <img src={closeButton} alt="Close button" />
             </button>
-            <Search className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
+            <Search inMenu={true} className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
           </MediaQuery>
           <ul className="va-api-nav-primary">
             <li className="va-api-main-nav-item">
@@ -95,7 +95,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           </ul>
           <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
             <div className="va-api-nav-secondary">
-              <Link to="/apply" className="usa-button">Request an API Key</Link>
+              <Link to="/apply" className={classNames("usa-button", "vads-u-width--full")}>Request an API Key</Link>
             </div>
           </MediaQuery>
         </div>

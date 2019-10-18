@@ -7,6 +7,7 @@ import HoverImage from '../components/HoverImage';
 import PageHeader from '../components/PageHeader';
 import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
+import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
 import './News.scss';
 
@@ -127,7 +128,7 @@ export default class News extends React.Component {
                   header={headerProps.header}
                   className="vads-u-margin-bottom--4"
                 />
-                <div className={classNames('va-api-container', 'vads-u-margin-bottom--4')}>
+                <div className={classNames(defaultFlexContainer(), 'vads-u-margin-bottom--4')}>
                   {this.cardsSections}
                 </div>
                 {newsContent}

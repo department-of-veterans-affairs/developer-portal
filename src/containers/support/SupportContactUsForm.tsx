@@ -41,6 +41,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
   }
 
   public render() {
+    const legendDescClasses = classNames('vads-u-font-size--md', 'vads-u-font-weight--normal');
     const textFieldClasses = (paddingDirection: string) : string => {
       return classNames(
         'vads-l-col--12',
@@ -57,10 +58,10 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
         className={classNames('va-api-contact-us-form', 'vads-u-margin-y--2')}
       >
         <fieldset>
-          <legend>
+          <legend className="vads-u-font-size--lg">
             Contact Us
-            <p className='va-api-contact-us-legend-description'>
-            Have a question? Use the form below to send us an email and we'll do the best to answer your question and get you headed in the right direction.
+            <p className={legendDescClasses}>
+              Have a question? Use the form below to send us an email and we'll do the best to answer your question and get you headed in the right direction.
             </p>
           </legend>
 
@@ -108,7 +109,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
           <ErrorableCheckboxGroup
             additionalFieldsetClass='vads-u-margin-top--4'
-            additionalLegendClass='va-api-contact-us-legend-description'
+            additionalLegendClass={legendDescClasses}
             label='If applicable, please select any of the APIs pertaining to your issue.'
             onValueChange={this.toggleApis}
             id='default'
