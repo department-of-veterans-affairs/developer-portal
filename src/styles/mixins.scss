@@ -1,14 +1,7 @@
 @mixin va-api-input-text-color($color) {
-  input {
-    color: $color;
-
-    &:focus::placeholder {
-      color: $color;
-    }
-  }
-  
+  input,
+  input:focus::placeholder,
   ::placeholder {
-    /* modern browser */
     color: $color;
   }
 }

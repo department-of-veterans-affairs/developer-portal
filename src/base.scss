@@ -3,11 +3,11 @@
 
 // Asset reference - must import before VADS
 @import './styles/variables';
-@import './styles/mixins';
 
 // Imports
 // =======
 @import '~@department-of-veterans-affairs/formation/sass/full';
+@import './styles/mixins';
 
 // VADS Overrides 🚗
 // ==================
