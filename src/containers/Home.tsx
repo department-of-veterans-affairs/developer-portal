@@ -94,7 +94,7 @@ class Home extends React.Component {
             Lighthouse is an API platform that gives developers secure access to the VA data they need to build helpful tools and services for Veterans.
             Streamlined and accessible, we designed a modern API development experience to easily build services that provide Veterans with consistent
             and reliable access to their data.
-            &nbsp;<Link to="/documention">Read our documentation</Link>
+            &nbsp;<Link to="/explore">Read our documentation</Link>
           </div>
         </HomeSection>
         <HomeSection ariaLabel="reliable API" imageSrc={apiImg} title="A modern, reliable API library.">

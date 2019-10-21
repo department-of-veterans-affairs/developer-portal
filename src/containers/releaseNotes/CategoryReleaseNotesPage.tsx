@@ -34,7 +34,7 @@ export default class CategoryReleaseNotesPage extends React.Component<RouteCompo
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
             <CardLink
               name={name}
-              subhead={vaInternalOnly ? VAInternalOnlyTag() : undefined}
+              subhead={vaInternalOnly ? <VAInternalOnlyTag /> : undefined}
               url={`/release-notes/${apiCategoryKey}#${dashUrlFragment}`}
             >
               {description}

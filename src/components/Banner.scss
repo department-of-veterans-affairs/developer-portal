@@ -2,10 +2,15 @@
 
 .site-notice-text {
   max-width: 350px;
+
+  @include media($large-screen) {
+    max-width: none;
+    margin-left: 0;
+  }
   
   .va-api-site-guidance-button {
-    background-color: rgba(0, 0, 0, 0);
-    
+    background-color: rgba(0, 0, 0, 0);  
+
     &[aria-expanded=true] {
       @include display-icon(angle-arrow-up-primary, after, 1rem, 4px, hover);
     }
