@@ -1,17 +1,17 @@
-// Colors
-$color-gray-cool-light: #dce4ef;
-$color-primary-alt-light: #9bdaf1;
-$color-primary-alt-dark: #00a6d2;
-$color-primary-lightest: #e1f3f8;
-$color-primary-darkest: #112e51;
-$color-white: #ffffff;
-$color-base: #212121;
-$color-dark-blue: #12223A;
-$color-gray-lighter: #d6d7d9;
-$color-alt-gray: #C3C8CF;
-$color-gold: #fdb81e;
-$color-red: #cd2026;
-$color-off-white: #F1F1F1;
-$color-primary-alt-lightest: #e1f3f8;
-$color-gray-dark: #323a45;
-$color-blue-dark: #12223A;
+/*
+  This module defines Lighthouse developer portal-specific color variables to supplement the ones 
+  provided by VADS. Please always prefer VADS color definitions over custom ones; see the VADS resources
+  below to check if the color you need is already available or if a similar one can be used instead. 
+  Please also note that all variables in this file are namespaced with the `va-api-` prefix in order to
+  distinguish developer portal vars from VADS ones, and that this convention should be followed for any new
+  variables defined here.
+
+  VADS color resources
+  - Documentation for color utilities, which corresponds pretty directly to the available vars: 
+    https://design.va.gov/utilities/color
+  - Source file for color vars:
+    https://github.com/department-of-veterans-affairs/veteran-facing-services-tools/blob/master/packages/formation/sass/base/_b-variables.scss
+*/
+
+$va-api-color-blue-dark: #12223a;
+$va-api-color-gray-alt: #c3c8cf;

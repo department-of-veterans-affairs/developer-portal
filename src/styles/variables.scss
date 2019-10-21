@@ -15,3 +15,6 @@ $large-screen: 951px;
 // Necessary to include this file to polyfill USWDS resources 
 // to reduce duplication until we can find a compiler-level solution
 @import './uswdsPatch';
+
+// mostly provides $color-* variables but also $font-sans and other typography vars
+@import '~@department-of-veterans-affairs/formation/sass/base/b-variables';

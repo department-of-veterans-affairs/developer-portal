@@ -20,10 +20,10 @@
 }
 
 .va-api-search-form--inverse-color {
-  @include va-api-input-text-color($color-off-white);
+  @include va-api-input-text-color($color-gray-lightest);
 
   input.va-api-search-autocomplete {
-    background-color: $color-dark-blue;
+    background-color: $va-api-color-blue-dark;
   }
 }
 
@@ -31,7 +31,7 @@
   button[type=submit] {
     appearance: none;
     background-color: transparent;
-    color: $color-alt-gray;
+    color: $va-api-color-gray-alt;
     overflow: hidden;
 
     &:hover {
