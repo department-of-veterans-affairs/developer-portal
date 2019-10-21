@@ -9,11 +9,10 @@ import apiImg from '../assets/homepage-reliable-api.svg';
 import CardLink from '../components/CardLink';
 import Hero from '../components/Hero';
 
-const leftColumnClasses = classNames('medium-screen:vads-l-col--4', 'small-screen:vads-l-col--6', 'va-api-margin-y--auto');
-const rightColumnClasses = classNames('medium-screen:vads-l-col--8', 'small-screen:vads-u-padding-left--2', 'small-screen:vads-l-col--6', 'va-api-margin-y--auto');
+const leftColumnClasses = classNames('medium-screen:vads-l-col--4', 'small-screen:vads-l-col--6', 'va-api-u-margin-y--auto');
+const rightColumnClasses = classNames('medium-screen:vads-l-col--8', 'small-screen:vads-u-padding-left--2', 'small-screen:vads-l-col--6', 'va-api-u-margin-y--auto');
 const flexContainer = classNames('vads-l-grid-container', 'vads-u-margin-top--6', 'vads-u-margin-x--auto');
-const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-home__image');
-
+const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--200');
 
 function HomeSection({ariaLabel, imageSrc, title, children} : {ariaLabel: string, imageSrc: string, title: string, children: React.ReactNode}) {
   return (

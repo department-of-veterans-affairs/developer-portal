@@ -199,7 +199,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           </ul>
           <a className={classNames(
             desktopOnly(),
-            "va-api-margin-y--auto",
+            "va-api-u-margin-y--auto",
             "vads-u-margin-left--auto",
             "vads-u-color--white",
             "vads-u-text-decoration--none",

@@ -1,0 +1,31 @@
+/*
+  This module contains utility classes similar to the utilies provided by VADS (https://design.va.gov/utilities)
+  that abstract away simple styles that are reusable site-wide but are not included in formation. The intent is
+  to 
+
+  Conventions used in the CSS classes in this file:
+  - Classes are prefixed with `va-api-`
+  - Names follow the same BEM syntax as VADS utilities, i.e. `va-api-u-[property]--[value]`
+    * For example, va-api-u-cursor--pointer
+    * See details on VADS naming conventions and BEM syntax: https://design.va.gov/documentation/naming
+  - Classes use !important so that they take precedence over more complex selectors, as the VADS utilities do
+*/
+
+// Fonts 
+
+.va-api-u-font-family--mono {
+  font-family: monospace !important;
+}
+
+// Margins
+
+.va-api-u-margin-y--auto {
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+}
+
+// Width
+
+.va-api-u-width--200 {
+  width: 20rem !important;
+}
