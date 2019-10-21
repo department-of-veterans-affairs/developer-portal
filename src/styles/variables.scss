@@ -1,13 +1,7 @@
 // Colors
 @import './colors';
 
-// Site layout
-$site-max-width: 1200px;
-
-// Responsive media
-$medium-large-screen: 768px;
-$medium-screen: 768px;
-$large-screen: 951px;
+@import './layout';
 
 // Asset reference
 @import './assets';

@@ -7,7 +7,7 @@
 
   button {
     display: block;
-    @include media($large-screen) {
+    @include media($small-desktop-screen) {
       display: inline-block;
       margin-left: 25px;
     }

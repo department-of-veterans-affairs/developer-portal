@@ -48,17 +48,3 @@ export type SUBMIT_APPLICATION_ERROR = typeof SUBMIT_APPLICATION_ERROR;
 
 export const TOGGLE_ACCEPT_TOS = 'TOGGLE_ACCEPT_TOS';
 export type TOGGLE_ACCEPT_TOS = typeof TOGGLE_ACCEPT_TOS;
-
-// Media query values - see src/base.scss and node_modules/uswds/src/stylesheets/core/_variables.scss
-export const MEDIUM_SCREEN = '640px';
-export const OVER_MEDIUM_SCREEN_QUERY = 'screen and (min-width: 600px)';
-export const UNDER_THAN_MEDIUM_SCREEN_QUERY = 'screen and (max-width: 599px)';
-
-export const MEDIUM_LARGE_SCREEN = '768px';
-export const OVER_MEDIUM_LARGE_SCREEN_QUERY = 'screen and (min-width: 768px)';
-export const UNDER_MEDIUM_LARGE_SCREEN_QUERY = 'screen and (max-width: 767px)';
-
-// Note: $large-screen is the same as $nav-width
-export const LARGE_SCREEN = '951px';
-export const OVER_LARGE_SCREEN_QUERY = 'screen and (min-width: 951px)';
-export const UNDER_LARGE_SCREEN_QUERY = 'screen and (max-width: 950px)';

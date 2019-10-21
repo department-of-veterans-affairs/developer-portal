@@ -23,7 +23,7 @@ body {
 
 // use our site width and left-align rather than center-align grids
 .vads-l-grid-container {
-  max-width: 120rem;
+  max-width: $va-api-site-max-width;
   margin-left: 0;
 }
 
