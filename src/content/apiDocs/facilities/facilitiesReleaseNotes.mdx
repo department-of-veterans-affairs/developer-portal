@@ -1,3 +1,10 @@
+## September 30, 2019
+You can now see if Health facilities are mobile or temporarily deactivated.
+- Added `mobile` and `active_status` flags to the API response for Health facilities (other facility types will return `null` for these fields). Options for `mobile` are `true` or `false`; options for `active_status` are `A` for Active or `T` for Temporarily deactivated. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3339/commits)
+  - Mobile facilities are subject to frequent address changes. To get the exact current location, please call the number listed.
+
+---
+
 ## September 20, 2019
 You can now query facilities in `/nearby` using latitude and longitude
 - As an alternative option to `address`, this adds the ability to make a request to `/va_facilities/v1/nearby` using `lat` and `lng` as input parameters. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3273/commits)

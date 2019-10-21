@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import MediaQuery from 'react-responsive';
 import { Link } from 'react-router-dom';
 
-import { OVER_LARGE_SCREEN_QUERY, UNDER_LARGE_SCREEN_QUERY } from '../types/constants';
+import { defaultFlexContainer, desktopOnly, mobileOnly } from '../styles/vadsUtils';
 import Banner from './Banner';
+import VeteransCrisisLine from './crisisLine/VeteransCrisisLine';
 import NavBar from './NavBar';
 import Search from './Search';
 
@@ -24,40 +24,57 @@ export default class Header extends React.Component<{}, INavBarState> {
 
   public render() {
     const navBarCloseHandler = this.toggleMenuVisible.bind(this);
+    const buttonClassnames = classNames('usa-button', 'vads-u-background-color--white', 'vads-u-color--primary-darkest', 'vads-u-margin-right--2');
 
     return (
-      <header className="va-api-site-header" role="banner">
+      <header role="banner" className="vads-u-background-color--primary-darkest">
         <Banner />
-        <div className="header-content">
-          <div className="va-api-logo" id="extended-logo">
+        <VeteransCrisisLine />
+        <div className={classNames(
+          defaultFlexContainer(true),
+          'vads-u-justify-content--space-between',
+          'medium-screen:vads-u-padding-x--4',
+          'medium-screen:vads-u-margin-y--3',
+        )}>
+          <div className={classNames('va-api-logo', 'vads-u-margin-left--2', 'medium-screen:vads-u-margin-left--0')}>
             <Link to="/" 
               title="Digital VA home page"
               className={classNames(
-                'vads-u-text-decoration--none',
+                'vads-u-color--white',
                 'vads-u-font-size--lg',
+                'vads-u-text-decoration--none',
                 'medium-screen:vads-u-font-size--2xl',
               )}
             >
               <span className="vads-u-font-weight--bold">VA</span> | Lighthouse
             </Link>
           </div>
-          <MediaQuery query={OVER_LARGE_SCREEN_QUERY}>
-            <div className="header-right-container">
-              <a className="api-status-link" href="https://valighthouse.statuspage.io">API Status</a>
-              <div className="header-right-content">
-                <Link id="get-started-button" to="/apply" className="usa-button">Request an API Key</Link>
+          <div className={desktopOnly()}>
+            <div className={classNames(
+              'vads-u-display--flex',
+              'vads-u-flex-direction--column',
+            )}>
+              <div className={defaultFlexContainer(true)}>
+                <Link to="/apply" className={buttonClassnames}>Request an API Key</Link>
                 <Search />
               </div>
             </div>
-          </MediaQuery>
-          <MediaQuery query={UNDER_LARGE_SCREEN_QUERY}>
+          </div>
+          <div className={mobileOnly()}>
             <button 
-              className={classNames('va-api-mobile-menu-button', 'vads-u-padding--0')} 
+              className={classNames(
+                'va-api-mobile-menu-button',
+                'vads-u-font-size--sm',
+                'vads-u-font-weight--normal',
+                'vads-u-margin--0',
+                'vads-u-padding--0',
+                'vads-u-text-align--center',
+              )}
               onClick={this.toggleMenuVisible}
             >
               Menu
             </button>
-          </MediaQuery>
+          </div>
         </div>
         <NavBar isMobileMenuVisible={this.state.menuVisible} onClose={navBarCloseHandler} />
       </header>

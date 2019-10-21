@@ -16,8 +16,6 @@ import { includesOauthAPI } from '../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../types';
 import ApplyHeader from './ApplyHeader';
 
-import './Apply.scss';
-
 interface IApplyProps extends IApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
@@ -70,23 +68,6 @@ const formFieldsToFragments = {
   facilities: 'facilities',
   health: 'fhir',
   verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
-};
-
-const OAuthHowTo = (props: {show: boolean}) => {
-  return (
-    props.show ? 
-    <div className="feature oauth-how-to">
-      <div className="description">
-        <strong>Note:</strong> You will need to provide your <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">OAuth Redirect URI</a>, which 
-        is where the authorization server will return the user to your application after generating an authenticated token. These APIs 
-        require authorization via the <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>. 
-      </div>
-      <div className="more-info">
-        <Link to="/explore/health/docs/authorization">Read more</Link>
-      </div>
-    </div> 
-    : null
-  );
 };
 
 class ApplyForm extends React.Component<IApplyProps> {
@@ -210,7 +191,18 @@ class ApplyForm extends React.Component<IApplyProps> {
                 <label htmlFor="verification">VA Veteran Verification API</label>
               </div>
 
-              <OAuthHowTo show={this.anyOAuthApisSelected()}/>
+              {this.anyOAuthApisSelected() &&
+                <div className="feature">
+                  <div>
+                    <strong>Note:</strong> You will need to provide your <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">OAuth Redirect URI</a>, which 
+                    is where the authorization server will return the user to your application after generating an authenticated token. These APIs 
+                    require authorization via the <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>. 
+                  </div>
+                  <div>
+                    <Link to="/explore/health/docs/authorization">Read more</Link>
+                  </div>
+                </div>
+              }
               
               { this.renderOAuthFields() }
 

@@ -8,7 +8,6 @@ import padlockImg from '../assets/homepage-padlock.svg';
 import apiImg from '../assets/homepage-reliable-api.svg';
 import CardLink from '../components/CardLink';
 import Hero from '../components/Hero';
-import './Home.scss';
 
 const leftColumnClasses = classNames('medium-screen:vads-l-col--4', 'small-screen:vads-l-col--6', 'va-api-margin-y--auto');
 const rightColumnClasses = classNames('medium-screen:vads-l-col--8', 'small-screen:vads-u-padding-left--2', 'small-screen:vads-l-col--6', 'va-api-margin-y--auto');
@@ -95,7 +94,7 @@ class Home extends React.Component {
             Lighthouse is an API platform that gives developers secure access to the VA data they need to build helpful tools and services for Veterans.
             Streamlined and accessible, we designed a modern API development experience to easily build services that provide Veterans with consistent
             and reliable access to their data.
-            &nbsp;<Link to="/documention">Read our documentation</Link>
+            &nbsp;<Link to="/explore">Read our documentation</Link>
           </div>
         </HomeSection>
         <HomeSection ariaLabel="reliable API" imageSrc={apiImg} title="A modern, reliable API library.">

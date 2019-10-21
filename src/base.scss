@@ -7,6 +7,7 @@
 // Imports
 // =======
 @import '~@department-of-veterans-affairs/formation/sass/full';
+@import './styles/mixins';
 
 // VADS Overrides 🚗
 // ==================
@@ -33,10 +34,6 @@ body {
 .va-api-margin-y--auto {
   margin-top: auto;
   margin-bottom: auto;
-}
-
-header {
-  flex-shrink: 0;
 }
 
 footer {
@@ -119,18 +116,8 @@ p {
   line-height: 1.5em;
 }
 
-.usa-font-lead {
-  font-family: $font-sans;
-  margin-bottom: 1.5rem !important;
-}
-
 span.mono {
   font-family: monospace;
-}
-
-@mixin focus-outline {
-  outline: 2px solid $color-gold;
-  outline-offset: 2px;
 }
 
 *:focus,
@@ -143,15 +130,6 @@ a:focus,
 .react-tabs__tab:focus {
   @include focus-outline;
   box-shadow: none;
-}
-
-// The site disclaimer has a yellow background so change outline color
-// to the color of the link text so it can be seen
-.site-disclaimer a {
-  &:active,
-  &:focus {
-    outline-color: #004795;
-  }
 }
 
 // Override styles from formation/sass/base/_va.scss that hide
