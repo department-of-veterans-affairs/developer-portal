@@ -34,6 +34,7 @@ export default class Header extends React.Component<{}, INavBarState> {
           defaultFlexContainer(true),
           'vads-u-justify-content--space-between',
           'medium-screen:vads-u-padding-x--4',
+          'medium-screen:vads-u-margin-y--3',
         )}>
           <div className={classNames('va-api-logo', 'vads-u-margin-left--2', 'medium-screen:vads-u-margin-left--0')}>
             <Link to="/" 
@@ -52,20 +53,7 @@ export default class Header extends React.Component<{}, INavBarState> {
             <div className={classNames(
               'vads-u-display--flex',
               'vads-u-flex-direction--column',
-              'vads-u-margin-bottom--1',
             )}>
-              <a href="https://valighthouse.statuspage.io"
-                className={classNames(
-                  'va-api-status-link',
-                  'vads-u-color--white',
-                  'vads-u-font-size--md',
-                  'vads-u-margin-top--2p5',
-                  'vads-u-margin-bottom--0p5',
-                  'vads-u-margin-left--auto',
-                )}
-              >
-                API Status
-              </a>
               <div className={defaultFlexContainer(true)}>
                 <Link to="/apply" className={buttonClassnames}>Request an API Key</Link>
                 <Search />
