@@ -8,7 +8,6 @@ import padlockImg from '../assets/homepage-padlock.svg';
 import apiImg from '../assets/homepage-reliable-api.svg';
 import CardLink from '../components/CardLink';
 import Hero from '../components/Hero';
-import './Home.scss';
 
 const leftColumnClasses = classNames('medium-screen:vads-l-col--4', 'small-screen:vads-l-col--6', 'va-api-margin-y--auto');
 const rightColumnClasses = classNames('medium-screen:vads-l-col--8', 'small-screen:vads-u-padding-left--2', 'small-screen:vads-l-col--6', 'va-api-margin-y--auto');

@@ -132,15 +132,6 @@ a:focus,
   box-shadow: none;
 }
 
-// The site disclaimer has a yellow background so change outline color
-// to the color of the link text so it can be seen
-.site-disclaimer a {
-  &:active,
-  &:focus {
-    outline-color: #004795;
-  }
-}
-
 // Override styles from formation/sass/base/_va.scss that hide
 // placeholder text on focus
 input:focus::placeholder {
