@@ -191,8 +191,14 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
                 Support
               </MainNavItem>
             </li>
+            <li className={classNames(navItemStyles(), mobileOnly())}>
+              <a className={classNames(
+                navLinkStyles,
+              )} href="https://valighthouse.statuspage.io">API Status <FontAwesomeIcon icon={faExternalLinkAlt} /></a>
+            </li>
           </ul>
           <a className={classNames(
+            desktopOnly(),
             "va-api-margin-y--auto",
             "vads-u-margin-left--auto",
             "vads-u-color--white",
@@ -201,7 +207,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             "vads-u-font-size--base",
           )} href="https://valighthouse.statuspage.io">API Status <FontAwesomeIcon icon={faExternalLinkAlt} /></a>
           <div className={mobileOnly()}>
-            <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
+            <div className={classNames("va-api-nav-secondary", "vads-u-margin-y--2")}>
               <Link to="/apply" className={classNames("usa-button", "vads-u-width--full")}>Request an API Key</Link>
             </div>
           </div>
