@@ -202,7 +202,6 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             "va-api-margin-y--auto",
             "vads-u-margin-left--auto",
             "vads-u-color--white",
-            "vads-u-font-weight--bold",
             "vads-u-text-decoration--none",
             "vads-u-font-size--base",
           )} href="https://valighthouse.statuspage.io">API Status <FontAwesomeIcon icon={faExternalLinkAlt} /></a>
