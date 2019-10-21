@@ -1,10 +1,28 @@
 @import '../styles/variables';
 @import '../styles/mixins.scss';
 
+.va-api-search-wrapper {
+  button[type=submit] {
+    width: 4rem;
+  }
+
+  input.va-api-search-autocomplete {
+    @include media($medium-screen) {
+      width: 240px;
+    }
+  }
+  
+  form {
+    button.va-api-search-submit {
+      border-radius: 0 5px 5px 0;
+    }
+  }
+}
+
 .va-api-search-form--inverse-color {
   @include va-api-input-text-color($color-off-white);
 
-  input {
+  input.va-api-search-autocomplete {
     background-color: $color-dark-blue;
   }
 }
@@ -12,47 +30,12 @@
 .va-api-search-form--transparent-submit {
   button[type=submit] {
     appearance: none;
-    background: none;
-    border: none;
+    background-color: transparent;
     color: $color-alt-gray;
-    cursor: pointer;
     overflow: hidden;
-    margin: 0;
-    outline: none;
-    margin-left: -44px;
-    width: 44px;
-    padding: 0;
-    position: relative;
+
     &:hover {
       color: $color-gold;
     }
-  }
-}
-
-input.va-api-search-autocomplete {
-  font-size: 16px;
-  height: 42px;
-  width: 80%;
-  max-width: none;
-  padding: 8px;
-  margin: 0;
-
-  @include media($large-screen) {
-    width: 240px;
-    max-width: inherit;
-  }
-
-  &:focus {
-    outline-offset: 0;
-  }
-}
-
-form {
-  button.va-api-search-submit {
-    margin: 0;
-    border-radius: 0 5px 5px 0;
-    width: 40px;
-    padding: 0;
-    height: 42px;
   }
 }
