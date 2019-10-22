@@ -78,6 +78,12 @@
     background: rgba(0, 0, 0, 0.2);
   }
 
+  .opblock-tag {
+    p {
+      font-family: $font-sans;
+    }
+  }
+
   button.expand-operation:hover,
   button.expand-operation:focus {
     background: rgba(0, 0, 0, 0.6);

@@ -4,11 +4,14 @@
 // Asset reference - must import before VADS
 @import './styles/variables';
 
+// VADS styles should take precedence over our library, since our library is meant
+// to fill in gaps in VADS
+@import './styles/lib';
+
 // Imports
 // =======
 @import '~@department-of-veterans-affairs/formation/sass/full';
 @import './styles/mixins';
-@import './styles/lib';
 
 // VADS Overrides 🚗
 // ==================
@@ -19,38 +22,13 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  color: #222;
+  color: $color-base;
 }
 
 // use our site width and left-align rather than center-align grids
 .vads-l-grid-container {
   max-width: 120rem;
   margin-left: 0;
-}
-
-.va-api-home__image {
-  width: 200px;
-}
-
-.va-api-margin-y--auto {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
-footer {
-  flex-shrink: 0;
-}
-
-// Override <a> styles from formation. The non-hover transition
-// is defined in formation/sass/base/_va.scss and the hover styles
-// can be found in formation/sass/base/_b-mixins.scss
-a {
-  transition: none;
-
-  &:hover {
-    transition: none;
-    background-color: rgba(0,0,0,0);
-  }
 }
 
 .main {
@@ -60,65 +38,43 @@ a {
 
 // Typography
 
-h1 {
+// note that we don't currently use anything smaller than h4
+h1,
+h2,
+h3,
+h4 {
   font-family: $font-sans;
-  font-weight: 700;
+  color: $color-gray-dark;
+}
+
+h1 {
   font-size: 4rem;
-  line-height: 1.3em;
-  color: #323a45;
 }
 
 h2 {
-  font-family: $font-sans;
-  font-weight: 700;
   font-size: 3rem;
-  line-height: 1.3em;
   margin-top: 1.5rem !important;
   margin-bottom: 1.5rem !important;
-  color: #323a45;
 }
 
 h3 {
-  font-family: $font-sans;
-  font-weight: 700;
-  font-size: 2rem;
-  line-height: 1.3em;
   margin-top: 2rem !important;
   margin-bottom: 1.5rem !important;
-  color: #323a45;
 }
 
 h4 {
-  font-family: $font-sans;
-  font-weight: 700;
-  font-size: 19px;
-  line-height: 1.3em;
-  color: #323a45;
+  font-size: 1.9rem;
 }
 
-h5 {
-  font-family: $font-sans;
-  font-weight: 700;
-  font-size: 15px;
-  line-height: 1.3em;
-  color: #323a45;
-}
+// Override <a> styles from formation. The non-hover transition
+// is defined in formation/sass/base/_va.scss and the hover styles
+// can be found in formation/sass/base/_b-mixins.scss
+a {
+  transition: none;
 
-p {
-  font-family: $font-sans;
-  font-weight: 400;
-  line-height: 1.5em;
-}
-
-.lead-paragraph {
-  font-family: $font-sans;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 1.5em;
-}
-
-span.mono {
-  font-family: monospace;
+  &:hover {
+    background-color: rgba(0,0,0,0);
+  }
 }
 
 *:focus,
@@ -126,11 +82,6 @@ a:focus,
 .usa-focus,
 [type=checkbox]:focus + label::before {
   @include focus-outline;
-}
-
-.react-tabs__tab:focus {
-  @include focus-outline;
-  box-shadow: none;
 }
 
 // Override styles from formation/sass/base/_va.scss that hide
