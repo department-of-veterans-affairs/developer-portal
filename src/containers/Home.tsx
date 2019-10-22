@@ -75,7 +75,7 @@ function VeteransNotice() {
         'vads-u-color--white')}>
         <div className='vads-u-margin-y--2p5'>
           Are you a Veteran looking to submit a claim, manage benefits or access your health data?
-          &nbsp;<Link className={classNames('vads-u-font-weight--bold', 'vads-u-color--white')} to="https://www.va.gov/">Visit VA.gov</Link>
+          &nbsp;<a className={classNames('vads-u-font-weight--bold', 'vads-u-color--white')} href="https://www.va.gov/">Visit VA.gov</a>
         </div>
       </div>
     </section>
