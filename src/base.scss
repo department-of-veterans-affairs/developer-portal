@@ -4,13 +4,14 @@
 // Asset reference - must import before VADS
 @import './styles/variables';
 
+// VADS styles should take precedence over our library, since our library is meant
+// to fill in gaps in VADS
 @import './styles/lib';
 
 // Imports
 // =======
 @import '~@department-of-veterans-affairs/formation/sass/full';
 @import './styles/mixins';
-@import './styles/lib';
 
 // VADS Overrides 🚗
 // ==================
