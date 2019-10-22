@@ -2,10 +2,8 @@ import classNames from 'classnames';
 import * as React from 'react';
 
 import { defaultFlexContainer } from '../styles/vadsUtils';
-import VeteransCrisisLine from './VeteransCrisisLine';
 
 import flagIcon from '../../node_modules/uswds/src/img/favicons/favicon-40.png';
-import rightArrow from '../assets/arrow-right-white.svg';
 import dotGovIcon from '../assets/icon-dot-gov.svg';
 import httpsIcon from '../assets/icon-https.svg';
 import './Banner.scss';
@@ -36,7 +34,6 @@ function GuidanceBox(props: React.PropsWithChildren<{ icon: string, title: strin
 }
 
 interface IBannerState {
-  menuVisible: boolean;
   accordionVisible: boolean;
 }
 
@@ -45,7 +42,6 @@ export default class Banner extends React.Component<{}, IBannerState> {
     super(props);
     this.state = {
       accordionVisible: false,
-      menuVisible: false,
     };
   }
 
@@ -79,7 +75,7 @@ export default class Banner extends React.Component<{}, IBannerState> {
                   defaultFlexContainer(true),
                   'vads-u-margin-left--1',
                   'vads-u-font-size--sm',
-                  'medium-screen:vads-u-max-width--none',
+                  'small-desktop-screen:vads-u-max-width--none',
                 )}>
                   <div>An official website of the United States government.</div>
                   <button 
@@ -90,8 +86,8 @@ export default class Banner extends React.Component<{}, IBannerState> {
                       'vads-u-margin--0',
                       'vads-u-margin-top--0p25',
                       'vads-u-padding--0',
-                      'medium-screen:vads-u-margin-left--1',
-                      'medium-screen:vads-u-margin-top--0',
+                      'small-desktop-screen:vads-u-margin-left--1',
+                      'small-desktop-screen:vads-u-margin-top--0',
                     )}
                     onClick={this.toggleAccordionVisible}
                     aria-expanded={this.state.accordionVisible ? "true" : "false"}
@@ -126,33 +122,11 @@ export default class Banner extends React.Component<{}, IBannerState> {
                   </GuidanceBox>
                 </div>
               </div>
-              <div className="va-crisis-line">
-                <div className="va-flex">
-                  <button data-show="#modal-crisisline" onClick={this.toggleMenuVisible} className="va-crisis-line-button va-overlay-trigger">
-                    <span className="va-flex">
-                      <span className="vcl-container">
-                        <span className="vcl" />
-                      </span>
-                      <span className="vcl-text">
-                        Talk to the&nbsp;<strong>Veterans Crisis Line</strong>&nbsp;now
-                      </span>
-                      <img src={rightArrow} className="vcl-right-arrow" alt="" role="presentation" />
-                    </span>
-                  </button>
-                </div>
-              </div>
             </div>
           </header>
         </div>
-        <VeteransCrisisLine visible={this.state.menuVisible} closeHandler={this.toggleMenuVisible} />
       </section>
     );
-  }
-
-  private toggleMenuVisible = () => {
-    this.setState(state => {
-      return {menuVisible: !state.menuVisible};
-    });
   }
 
   private toggleAccordionVisible = () => {

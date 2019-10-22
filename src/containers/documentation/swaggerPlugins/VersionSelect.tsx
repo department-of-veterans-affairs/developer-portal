@@ -1,7 +1,7 @@
+import classNames from 'classnames';
 import * as React from 'react';
 
 import { IVersionInfo } from '../SwaggerDocs';
-import './VersionSelect.scss';
 
 export interface IVersionSelectProps {
   getSystem: any;
@@ -40,11 +40,20 @@ export default class VersionSelect extends React.Component<IVersionSelectProps, 
 
   public render() {
     return (
-      <div id="version-select">
+      <div className={classNames(
+        'vads-u-display--flex',
+        'vads-u-flex-wrap--wrap',
+        'vads-u-justify-content--flex-start',
+      )}>
         <select // tslint:disable-next-line:react-a11y-no-onchange
           aria-label="Version Selection"
           value={this.state.version}
           onChange={e => this.handleSelectChange(e.target.value)}
+          className={classNames(
+            'vads-u-display--inline-block',
+            'vads-u-flex--4',
+            'vads-u-margin-right--4',
+            'va-api-u-min-width--200')}
         >
           {this.props
             .getSystem()
@@ -57,7 +66,9 @@ export default class VersionSelect extends React.Component<IVersionSelectProps, 
               );
             })}
         </select>
-        <button onClick={e => this.handleButtonClick()}>Select</button>
+        <button onClick={e => this.handleButtonClick()} className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}>
+          Select
+        </button>
       </div>
     );
   }

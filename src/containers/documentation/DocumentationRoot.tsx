@@ -15,7 +15,7 @@ import CategoryPage from './CategoryPage';
 import DocumentationOverview from './DocumentationOverview';
 import QuickstartPage from './QuickstartPage';
 
-import '../Documentation.scss';
+import './Documentation.scss';
 
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   return (
@@ -27,7 +27,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
         name={
           <React.Fragment>
             {api.name}
-            {api.vaInternalOnly && <small className="vadp-internal-tag">Internal VA use only.</small>}
+            {api.vaInternalOnly && <small className="vads-u-display--block">Internal VA use only.</small>}
           </React.Fragment>
         }
         subNavLevel={1}
@@ -93,7 +93,7 @@ function ExploreSideNav() {
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     return (
-      <div className={classNames('explore', 'vads-u-padding-y--5')}>
+      <div className={classNames('documentation', 'vads-u-padding-y--5')}>
         <section className="vads-l-grid-container">
           <div className="vads-l-row">
             <ExploreSideNav />
