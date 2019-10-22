@@ -1,11 +1,10 @@
 @import '../styles/variables';
 
 a.va-api-card {
-  min-height: 100px;
-  border-top: 5px solid #C4C4C4;
+  border-top-color: #C4C4C4 !important;
 
   &:hover {
-    border-top: 5px solid $color-gold;
+    border-top-color: $color-gold !important;
   }
 
   @include media($medium-screen) {
