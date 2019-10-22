@@ -16,17 +16,19 @@ export default class Overview extends React.Component<RouteComponentProps> {
     return (
       <div>
         <PageHeader halo="Release Notes" header="Overview" />
-        <div className="vads-u-font-size--lg">
-          <p>
-            The VA Lighthouse product teams periodically update these APIs in order to deliver new features and repair defects. We avoid doing so whenever possible but occasionally we need to make breaking changes that require developers to modify their existing applications to see the benefits of these features and fixes.
-          </p>
-          <p>
-            We recommend that developers periodically check this list for announcements of breaking changes and added features. Changes will also be announced via direct email whenever possible to addresses used to obtain developer keys for each API. Please <a href="https://developer.va.gov/support/contact-us">contact us</a> with any questions or to request support.
-          </p>
-          <p>
-            To view user-requested features and known issues or report a bug, please visit our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients">GitHub repo</a>.
-          </p>
-        </div>
+        <h2 className="vads-u-font-weight--normal">
+          <div className="vads-u-font-size--lg">
+            <p>
+              The VA Lighthouse product teams periodically update these APIs in order to deliver new features and repair defects. We avoid doing so whenever possible but occasionally we need to make breaking changes that require developers to modify their existing applications to see the benefits of these features and fixes.
+            </p>
+            <p>
+              We recommend that developers periodically check this list for announcements of breaking changes and added features. Changes will also be announced via direct email whenever possible to addresses used to obtain developer keys for each API. Please <a href="https://developer.va.gov/support/contact-us">contact us</a> with any questions or to request support.
+            </p>
+            <p>
+              To view user-requested features and known issues or report a bug, please visit our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients">GitHub repo</a>.
+            </p>
+          </div>
+        </h2>
         <div className={defaultFlexContainer()}>
           {categoriesWithNotes.filter(hasReleaseNotes).map((apiCategoryKey: string) => {
             const { name, content } = apiDefs[apiCategoryKey];
