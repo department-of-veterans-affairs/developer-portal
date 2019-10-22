@@ -8,7 +8,6 @@ import padlockImg from '../assets/homepage-padlock.svg';
 import apiImg from '../assets/homepage-reliable-api.svg';
 import CardLink from '../components/CardLink';
 import Hero from '../components/Hero';
-import './Home.scss';
 
 const leftColumnClasses = classNames('medium-screen:vads-l-col--4', 'small-screen:vads-l-col--6', 'va-api-margin-y--auto');
 const rightColumnClasses = classNames('medium-screen:vads-l-col--8', 'small-screen:vads-u-padding-left--2', 'small-screen:vads-l-col--6', 'va-api-margin-y--auto');
@@ -77,7 +76,7 @@ function VeteransNotice() {
         'vads-u-color--white')}>
         <div className='vads-u-margin-y--2p5'>
           Are you a Veteran looking to submit a claim, manage benefits or access your health data?
-          &nbsp;<Link className={classNames('vads-u-font-weight--bold', 'vads-u-color--white')} to="https://www.va.gov/">Visit VA.gov</Link>
+          &nbsp;<a className={classNames('vads-u-font-weight--bold', 'vads-u-color--white')} href="https://www.va.gov/">Visit VA.gov</a>
         </div>
       </div>
     </section>

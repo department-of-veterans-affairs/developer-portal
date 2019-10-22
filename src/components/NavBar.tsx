@@ -1,3 +1,5 @@
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
@@ -118,6 +120,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           'medium-screen:vads-u-border-top--1px',
           'medium-screen:vads-u-margin-x--4',
           'medium-screen:vads-u-padding--0',
+          'medium-screen:vads-u-display--flex',
         )}>
           <div className={mobileOnly()}>
             <button 
@@ -138,7 +141,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             <Search inMenu={true} className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
           </div>
           <ul className={classNames(
-            'vads-u-margin-y--2',
+            'vads-u-margin-y--0',
             'vads-u-padding-left--0',
             'medium-screen:vads-u-display--inline',
           )}>
@@ -188,9 +191,22 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
                 Support
               </MainNavItem>
             </li>
+            <li className={classNames(navItemStyles(), mobileOnly())}>
+              <a className={classNames(
+                navLinkStyles,
+              )} href="https://valighthouse.statuspage.io">API Status <FontAwesomeIcon icon={faExternalLinkAlt} /></a>
+            </li>
           </ul>
+          <a className={classNames(
+            desktopOnly(),
+            "va-api-margin-y--auto",
+            "vads-u-margin-left--auto",
+            "vads-u-color--white",
+            "vads-u-text-decoration--none",
+            "vads-u-font-size--base",
+          )} href="https://valighthouse.statuspage.io">API Status <FontAwesomeIcon icon={faExternalLinkAlt} /></a>
           <div className={mobileOnly()}>
-            <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
+            <div className={classNames("va-api-nav-secondary", "vads-u-margin-y--2")}>
               <Link to="/apply" className={classNames("usa-button", "vads-u-width--full")}>Request an API Key</Link>
             </div>
           </div>
