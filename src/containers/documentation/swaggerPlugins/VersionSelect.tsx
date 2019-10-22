@@ -40,12 +40,20 @@ export default class VersionSelect extends React.Component<IVersionSelectProps, 
 
   public render() {
     return (
-      <div className={classNames('vads-u-display--flex', 'vads-u-justify-content--flex-start')}>
+      <div className={classNames(
+        'vads-u-display--flex',
+        'vads-u-flex-wrap--wrap',
+        'vads-u-justify-content--flex-start',
+      )}>
         <select // tslint:disable-next-line:react-a11y-no-onchange
           aria-label="Version Selection"
           value={this.state.version}
           onChange={e => this.handleSelectChange(e.target.value)}
-          className={classNames('vads-u-display--inline-block', 'vads-u-flex--4')}
+          className={classNames(
+            'vads-u-display--inline-block',
+            'vads-u-flex--4',
+            'vads-u-margin-right--4',
+            'va-api-u-min-width--200')}
         >
           {this.props
             .getSystem()
@@ -58,9 +66,7 @@ export default class VersionSelect extends React.Component<IVersionSelectProps, 
               );
             })}
         </select>
-        <button onClick={e => this.handleButtonClick()}
-          className={classNames('vads-u-margin-left--3', 'vads-u-flex--1')}
-        >
+        <button onClick={e => this.handleButtonClick()} className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}>
           Select
         </button>
       </div>
