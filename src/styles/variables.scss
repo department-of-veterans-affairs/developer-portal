@@ -1,14 +1,12 @@
-// Colors
-@import './colors';
-
-@import './layout';
-
-// Asset reference
-@import './assets';
-
 // Necessary to include this file to polyfill USWDS resources 
 // to reduce duplication until we can find a compiler-level solution
 @import './uswdsPatch';
 
-// mostly provides $color-* variables but also $font-sans and other typography vars
+// provides $color-* variables, $font-sans and other typography vars
 @import '~@department-of-veterans-affairs/formation/sass/base/b-variables';
+
+@import './colors';
+@import './layout';
+
+// Asset reference
+@import './assets';
