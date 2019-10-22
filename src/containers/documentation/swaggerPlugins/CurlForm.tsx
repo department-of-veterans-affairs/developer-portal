@@ -15,6 +15,7 @@ export interface ICurlFormProps {
 export interface ICurlFormState {
   apiKey: string;
   bearerToken: string;
+  env: string;
   params: object[];
 }
 
@@ -25,6 +26,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     const state = {
       apiKey: '',
       bearerToken: '',
+      env: 'dev',
       params: this.props.operation.parameters,
     };
     if (state.params) {
@@ -61,7 +63,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   }
   public buildCurl() {
     const spec = this.props.system.spec().toJS().json;
-    spec.host = `dev-${spec.host}`;
+    spec.host = this.state.env ? `${this.state.env}-${spec.host}` : spec.host;
     const options = {
       operationId: this.props.operation.operationId,
       parameters: this.state,
@@ -75,9 +77,12 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         },
       };
     } else {
+      const token = this.isSwagger2()
+        ? `Bearer: ${this.state.bearerToken}`
+        : this.state.bearerToken;
       options.securities = {
         authorized: {
-          bearer_token: this.state.bearerToken,
+          bearer_token: token,
         },
       };
     }
@@ -95,6 +100,10 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     } else {
       return null;
     }
+  }
+
+  public isSwagger2() {
+    return this.props.system.spec().toJS().json.swagger === '2.0';
   }
 
   public authParameterContainer() {
@@ -135,14 +144,46 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     }
   }
 
+  public environmentSelector() {
+    return (
+      <div>
+        <h3> Environment: </h3>
+        <select // tslint:disable-next-line:react-a11y-no-onchange
+          value={this.state.env}
+          onChange={e => {
+            this.handleInputChange('env', e.target.value);
+          }}
+        >
+          <option value="dev">Development </option>
+          <option value="staging">Staging</option>
+          <option value="">Production</option>
+        </select>
+      </div>
+    );
+  }
+
   public render() {
     if (Object.keys(this.props.operation).includes('security')) {
       return (
-        <div className={classNames("vads-u-margin-top--0", "vads-u-margin-x--4", "vads-u-margin-bottom--4", "vads-u-padding-top--2")}>
+        <div
+          className={classNames(
+            'vads-u-margin-top--0',
+            'vads-u-margin-x--4',
+            'vads-u-margin-bottom--4',
+            'vads-u-padding-top--2',
+          )}
+        >
           <h2 className="vads-u-margin-y--0">Example Curl</h2>
-          <div className={classNames("va-api-curl-form", "vads-u-background-color--gray-light-alt", "vads-u-border--3px")}>
+          <div
+            className={classNames(
+              'va-api-curl-form',
+              'vads-u-background-color--gray-light-alt',
+              'vads-u-border--3px',
+            )}
+          >
             <div className="vads-u-margin--2">
               {this.authParameterContainer()}
+              {this.environmentSelector()}
               {this.parameterContainer()}
               <br />
               <h3>Generated Curl</h3>
