@@ -56,30 +56,7 @@ function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory)
   );
 }
 
-function renderOverview(routeProps: any, props: any) {
-  return <ReleaseNotesOverview {...routeProps} {...props} description={props.description} halo={props.halo} header={props.header} parent={props.parent} />;
-}
-
 export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
-  private overviewProps = {
-    description:
-      <div>
-        <p>
-          The VA Lighthouse product teams periodically update these APIs in order to deliver new features and repair defects. We avoid doing so whenever possible but occasionally we need to make breaking changes that require developers to modify their existing applications to see the benefits of these features and fixes.
-        </p>
-        <p>
-          We recommend that developers periodically check this list for announcements of breaking changes and added features. Changes will also be announced via direct email whenever possible to addresses used to obtain developer keys for each API. Please <a href="https://developer.va.gov/support/contact-us">contact us</a> with any questions or to request support.
-        </p>
-        <p>
-          To view user-requested features and known issues or report a bug, please visit our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients">GitHub repo</a>.
-        </p>
-      </div>
-    ,
-    halo: 'Release Notes',
-    header: 'Overview',
-    parent: 'release-notes',
-  };
-
   public render() {
     const categoryOrder = getApiCategoryOrder();
     const apiDefs = getApiDefinitions();
@@ -98,7 +75,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
                 {categoryOrder.map((key: string) => apiDefs[key].content.releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
               </SideNav>
               <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-                <Route exact={true} path="/release-notes/" render={(routeProps) => renderOverview(routeProps, this.overviewProps)} />
+                <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
                 <Route exact={true} path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotesPage} />
               </div>
             </div>

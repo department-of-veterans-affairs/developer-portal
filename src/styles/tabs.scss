@@ -1,3 +1,5 @@
+@import './mixins';
+
 .react-tabs {
   margin-top: 40px;
 
@@ -23,6 +25,11 @@
   }
 }
 
-.react-tabs__tab:focus:after {
-  display: none;
+.react-tabs__tab:focus {
+  @include focus-outline;
+  box-shadow: none;
+
+  &:after {
+    display: none;
+  }
 }

@@ -84,7 +84,7 @@ function ApiKeyNotice({ token, email, selectedApis } : IApiKeyNoticeProps) {
       <p className="usa-font-lead"><strong>Your VA API key is:</strong> {token}</p>
       <p>
         You should receive an email at {email} with the same key. That key is for accessing the {apiListSnippet} in the development environment.
-        You can use it by including it in each request as an HTTP request header named <span className="mono">apiKey</span>.
+        You can use it by including it in each request as an HTTP request header named <span className="va-api-u-font-family--mono">apiKey</span>.
       </p>
     </div>
   );
