@@ -2,7 +2,6 @@ import { curlify } from './curlify';
 import DisableTryItOut from './DisableTryItOut';
 import ExtendedLayout from './ExtendedLayout';
 import OperationTag from './OperationTag';
-import SchemesContainer from './SchemesContainer';
 import Servers from './Servers';
 import ServersContainer from './ServersContainer';
 import './StyleOverride.scss';
@@ -16,7 +15,6 @@ export function SwaggerPlugins(versionHandler: any) {
     components: {
       ExtendedLayout,
       OperationTag,
-      SchemesContainer,
       Servers,
       ServersContainer,
     },
