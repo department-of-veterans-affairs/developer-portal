@@ -1,3 +1,9 @@
+## October 23, 2019
+When including latitude and longitude parameters in a request to  `/facilities` the results are now sorted in ascending order by distance.
+-  Previously the facilities in the response had be sorted by facility type first and then distance, now the closest facilities to the requested location will be returned first regardless of facility type [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3461)
+
+---
+
 ## September 30, 2019
 You can now see if Health facilities are mobile or temporarily deactivated.
 - Added `mobile` and `active_status` flags to the API response for Health facilities (other facility types will return `null` for these fields). Options for `mobile` are `true` or `false`; options for `active_status` are `A` for Active or `T` for Temporarily deactivated. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3339/commits)
