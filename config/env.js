@@ -9,6 +9,7 @@ delete require.cache[require.resolve('./paths')];
 
 const NODE_ENV = process.env.NODE_ENV;
 const BUILD_ENV = process.env.BUILD_ENV || null;
+const USE_LOCAL = process.env.USE_LOCAL || null;
 if (!NODE_ENV) {
   throw new Error(
     'The NODE_ENV environment variable is required but was not specified.'
@@ -20,17 +21,14 @@ if (!NODE_ENV) {
 // previously set by another env file.
 // https://github.com/bkeepers/dotenv#what-other-env-files-can-i-use
 var dotenvFiles = [
-  // e.g. .env.test.local
+  // e.g. .env.staging.local, used for review instances and written by Jenkins
   BUILD_ENV !== null && `${paths.dotenv}.${BUILD_ENV}.local`,
 
-  // Don't include `.env.local` for `test` environment
-  // since normally you expect tests to produce the same
-  // results for everyone
-  NODE_ENV !== 'test' && `${paths.dotenv}.local`,
+  // only use .env.local if the calling process explicitly requires it
+  USE_LOCAL === 'true' && `${paths.dotenv}.local`,
 
-  // e.g. .env.test
+  // e.g. .env.production
   BUILD_ENV !== null && `${paths.dotenv}.${BUILD_ENV}`,
-
   paths.dotenv,
 ].filter(Boolean);
 
