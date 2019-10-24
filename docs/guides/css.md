@@ -129,3 +129,9 @@ Related resources:
 * [VADS utilities](https://design.va.gov/utilities)
 * [`formation-react` docs](https://department-of-veterans-affairs.github.io/veteran-facing-services-tools/visual-design)
 * [VADS naming conventions](https://design.va.gov/documentation/naming)
+* [SASS language documentation](https://sass-lang.com/documentation)
+* Bourbon framework docs (Bourbon is the base library for `uswds`)
+  * [`bourbon-neat` v1.8.0 docs](https://neat.bourbon.io/docs/1.8.0/) (note that `bourbon-neat` is unmaintained)
+  * [`bourbon` v4 docs](https://www.bourbon.io/docs/4/) (current version is `6.0.0`, `uswds` is on `4.2.7`)
+* [`veteran-facing-services-tools`](https://github.com/department-of-veterans-affairs/veteran-facing-services-tools/), the monorepo for `formation` and `formation-react`
+* [`uswds`](https://github.com/uswds/uswds/tree/release-1.6.10)
