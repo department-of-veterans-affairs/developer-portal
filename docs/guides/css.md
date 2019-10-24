@@ -45,19 +45,32 @@ The following table documents the `formation` styles that we use in the develope
 
 [`uswds`](https://github.com/uswds/uswds), the `npm` package for the [US Web Design System](https://designsystem.digital.gov/), is a direct dependency of `formation`, and `formation` exports some parts of `uswds` as part of its library. As a result, we use some USWDS styles on the developer portal. Most, if not all, of these styles are documented in the [VADS component docs](https://design.va.gov/components). We should only use USWDS styles that are exported and documented by VADS.
 
+##### VADS `uswds` Reference
+
+| Component Type | `uswds` CSS classes | Purpose | Defined in source file | Documentation |
+| -------------- | ------------------- | ------- | ---------------------- | ------------- |
+| Accordion | `usa-accordion`, `usa-accordion-button`, `usa-accordion-content` | Handles display of expandable/collapsible content | [`_accordions.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_accordions.scss) | [https://design.va.gov/components/accordions](https://design.va.gov/components/accordions) |
+| Alert | `usa-alert`, `usa-alert-heading`, `usa-alert-body`, `usa-alert-info`, `usa-alert-warning`, `usa-alert-error`, `usa-alert-success`, `usa-alert-continue` | Displaying info to the user | [`_alerts.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_alerts.scss) | [https://design.va.gov/components/alertboxes](https://design.va.gov/components/alertboxes) |
+| Button | `usa-button`, `usa-button-primary`, `usa-button-secondary`, `usa-button-active`, `usa-button-hover`, `usa-button-big`, `usa-button-disabled` | Provide styles for button elements | [`_buttons.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/elements/_buttons.scss) | [https://design.va.gov/components/buttons](https://design.va.gov/components/buttons) |
+| Form | `usa-form` | Sets some basic form properties | [`_forms.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_forms.scss) | [https://design.va.gov/components/form-controls](https://design.va.gov/components/form-controls) |
+| Label | `usa-label` | Standard label styles | [`_labels.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/elements/_labels.scss) | [https://design.va.gov/components/labels](https://design.va.gov/components/labels) |
+| Sidenav | `usa-sidenav-list` | Provides some styles for lists of items within the side nav | [`_sidenav.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_sidenav.scss) | [https://design.va.gov/components/sidenav](https://design.va.gov/components/sidenav) |
+
+##### `uswds` on the Developer Portal
+
 The following list documents all of the USWDS classes we currently use.
 
-| `uswds` CSS class | Purpose | Defined in source file | Consumed in | Documentation |
-| ----------------- | ------- | ---------------------- | ----------- | ------------- |
-| `usa-accordion-content` | Handles display of expandable/collapsible content based on `aria-hidden`, as well as some `padding` and `overflow` values | [`_accordions.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_accordions.scss) | `Banner`, `formation-react`'s `CollapsiblePanel` in `GroupedAccordions` | [https://design.va.gov/components/accordions](https://design.va.gov/components/accordions) |
-| `usa-alert` | Displaying important info for the user | [`_alerts.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_alerts.scss) | Deprecation notice in `ApiPage` | [https://design.va.gov/components/alertboxes](https://design.va.gov/components/alertboxes) |
-| `usa-alert-body` | Inner content for `usa-alert` | [`_alerts.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_alerts.scss) | Deprecation notice in `ApiPage` | [https://design.va.gov/components/alertboxes](https://design.va.gov/components/alertboxes) |
-| `usa-alert-info` | Styling an alert in a neutral color (blue-gray-ish) for info that is neither positive or negative | [`_alerts.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_alerts.scss) | Deprecation notice in `ApiPage` | [https://design.va.gov/components/alertboxes](https://design.va.gov/components/alertboxes#informational-alert) |
-| `usa-button` | Provides default button style | [`_buttons.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/elements/_buttons.scss) | Various places: `Hero`, `NavBar`, `Header`, `ApplyForm`, `SupportContactUs` | [https://design.va.gov/components/buttons](https://design.va.gov/components/buttons) |
-| `usa-button-primary` | Variation on `usa-button` used for the primary action within a given context | [`_buttons.scss`](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/elements/_buttons.scss) | `Form`, `ApplyForm` | [https://design.va.gov/components/buttons](https://design.va.gov/components/buttons) |
-| `usa-font-lead` | Sets a few properties for leading or significant paragraphs: `font-size`, `font-weight`, `line-height`, `max-width` | [_typography.scss](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/elements/_typography.scss) | `ApplyHeader`, `ApplySuccess` | NOT DOCUMENTED, probably don't use again |
-| `usa-form` | Sets some basic form properties |  | `ApplyForm`, `swaggerPlugins/Servers` | [https://design.va.gov/components/form-controls](https://design.va.gov/components/form-controls)
-| `usa-sidenav-list` | Provides some styles for lists of items within the side nav | [_sidenav.scss](https://github.com/uswds/uswds/blob/release-1.6.10/src/stylesheets/components/_sidenav.scss) | `SideNav` | [https://design.va.gov/components/sidenav](https://design.va.gov/components/sidenav) |
+| `uswds` CSS class       | Consumed in |
+| ----------------------- | ----------- |
+| `usa-accordion-content` | `Banner`, `formation-react`'s `CollapsiblePanel` in `GroupedAccordions` |
+| `usa-alert`             | Deprecation notice in `ApiPage` |
+| `usa-alert-body`        | Deprecation notice in `ApiPage` |
+| `usa-alert-info`        | Deprecation notice in `ApiPage` |
+| `usa-button`            | Various places: `Hero`, `NavBar`, `Header`, `ApplyForm`, `SupportContactUs` |
+| `usa-button-primary`    | `Form`, `ApplyForm` |
+| `usa-font-lead`         | `ApplyHeader`, `ApplySuccess` (NOT DOCUMENTED, probably don't use again) |
+| `usa-form`              | `ApplyForm`, `swaggerPlugins/Servers` |
+| `usa-sidenav-list`      | `SideNav` |
 
 #### `formation` Utilities
 
