@@ -1,23 +1,11 @@
-// Polyfills variables and mixins from USWDS to reduce the size of the compiled
-// bundle by not re-importing base.scss when these variables are required. To be
-// removed on the completion of either of the following tickets:
-// * https://github.com/department-of-veterans-affairs/vets-contrib/issues/2893
-// * https://github.com/department-of-veterans-affairs/vets-contrib/issues/3012
+/*
+  Polyfills mixins from USWDS to reduce the size of the compiled bundle by not re-importing 
+  base.scss when these variables are required.
+  
+  - copied from source file: https://github.com/uswds/uswds/blob/v1.6.10/src/stylesheets/core/_utilities.scss
+  - provided mixins: @media, @display-icon
+*/
 
-// Colors
-$color-black: #000000;
-$color-blue-darkest: #112e51;
-$color-gray-light: #aeb0b5;
-
-// Responsive media
-$small-screen: 481px;
-
-// Fonts
-$helvetica: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-$font-sans: 'Source Sans Pro', $helvetica;
-
-// polyfill media and display-icon mixins
-// see https://github.com/uswds/uswds/blob/v1.6.10/src/stylesheets/core/_utilities.scss
 @mixin media($min-width) {
   @media screen and (min-width: #{$min-width}) {
     @content;

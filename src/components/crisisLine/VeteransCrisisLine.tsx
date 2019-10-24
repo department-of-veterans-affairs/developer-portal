@@ -40,7 +40,6 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
           className={classNames(
             'va-crisis-line-button',
             'va-api-crisis-line-button',
-            'va-overlay-trigger',
             'vads-u-color--white',
             'vads-u-display--flex',
             'vads-u-justify-content--center',

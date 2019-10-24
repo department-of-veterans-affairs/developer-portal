@@ -2,16 +2,15 @@
 // ==========
 
 // Asset reference - must import before VADS
-@import './styles/variables';
+@import './variables';
 
-// VADS styles should take precedence over our library, since our library is meant
-// to fill in gaps in VADS
-@import './styles/lib';
+// VADS styles should take precedence over our library, since our library is meant to fill in gaps in VADS
+@import './lib';
 
 // Imports
 // =======
 @import '~@department-of-veterans-affairs/formation/sass/full';
-@import './styles/mixins';
+@import './mixins';
 
 // VADS Overrides 🚗
 // ==================
@@ -27,7 +26,7 @@ body {
 
 // use our site width and left-align rather than center-align grids
 .vads-l-grid-container {
-  max-width: 120rem;
+  max-width: $va-api-site-max-width;
   margin-left: 0;
 }
 

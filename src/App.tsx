@@ -15,7 +15,7 @@ import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
 import 'highlight.js/styles/github.css';
-import './base.scss';
+import './styles/base.scss';
 
 class App extends React.Component {
   public render() {

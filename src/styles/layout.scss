@@ -1,0 +1,20 @@
+/*
+  Developer portal wrapper for the VADS b-breakpoints module and supplementary responsive media
+  variables. The b-breakpoints module provides the following variables (as well as some other stuff
+  we don't curently use):
+  - $xsmall-screen = 320px
+  - $small-screen = 481px
+  - $medium-screen = 768px
+  - $small-desktop-screen = 1008px
+  - $large-screen = 1201px
+
+  VADS  resources
+  - Documentation for color utilities, which corresponds pretty directly to the available vars: 
+    https://design.va.gov/utilities/color
+  - Source file for breakpoint module:
+    https://github.com/department-of-veterans-affairs/veteran-facing-services-tools/blob/master/packages/formation/sass/base/_b-breakpoints.scss
+*/
+
+@import '~@department-of-veterans-affairs/formation/sass/base/b-breakpoints';
+
+$va-api-site-max-width: 120rem;

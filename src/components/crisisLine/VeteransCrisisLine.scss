@@ -22,7 +22,7 @@ button.va-api-crisis-line-button {
   }
 }
 
-@include media($medium-large-screen) {
+@include media($medium-screen) {
   .va-api-crisis-line-container {
     background-color: #7F2011;
     transition: background-color 0.3s ease-in-out;
@@ -36,7 +36,6 @@ button.va-api-crisis-line-button {
 }
 
 .va-api-right-arrow {
-  // height: 2rem;
   width: 1.2rem;
 }
 
@@ -58,6 +57,6 @@ ul.va-api-crisis-panel-list {
   a:active,
   a:focus {
     outline-offset: -2px;
-    outline: 2px solid #FDB81E;
+    outline: 2px solid $color-gold;
   }
 }

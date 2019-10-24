@@ -4,6 +4,9 @@
 process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
+// explicitly use local environment variables in .env.local unless otherwise specified
+process.env.USE_LOCAL = process.env.USE_LOCAL || 'true';
+
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
