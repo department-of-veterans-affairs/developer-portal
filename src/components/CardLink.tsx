@@ -22,14 +22,23 @@ export default class CardLink extends React.Component<ICardLinkProps, {}> {
     return (
       <NavHashLink to={this.props.url} className={classNames(
         'va-api-card',
+        'vads-u-border-top--5px',
         'vads-u-margin-y--1p5',
         'vads-u-margin-right--4',
         'vads-u-width--full',
         'vads-u-text-decoration--none',
+        'va-api-u-min-height--100',
       )}>
-        <h3 className={classNames('va-api-name', 'vads-u-font-size--lg', 'vads-u-margin-y--2')}>
+        <div className={classNames(
+          'va-api-name',
+          'vads-u-color--gray-dark',
+          'vads-u-font-size--lg',
+          'vads-u-font-weight--bold',
+          'vads-u-line-height--3',
+          'vads-u-margin-y--2',
+        )}>
           {this.props.name}
-        </h3>
+        </div>
         {this.props.subhead}
         <div className={classNames('va-api-description', 'vads-u-color--base')}>
           {this.props.children}

@@ -78,6 +78,12 @@
     background: rgba(0, 0, 0, 0.2);
   }
 
+  .opblock-tag {
+    p {
+      font-family: $font-sans;
+    }
+  }
+
   button.expand-operation:hover,
   button.expand-operation:focus {
     background: rgba(0, 0, 0, 0.6);
@@ -106,7 +112,7 @@
       border: none;
     }
   }
-
+  
   blockquote {
     line-height: 1.5;
     color: $color-gray-dark;

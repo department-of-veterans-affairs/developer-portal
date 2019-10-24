@@ -1,0 +1,90 @@
+// Variables
+// ==========
+
+// Asset reference - must import before VADS
+@import './variables';
+
+// VADS styles should take precedence over our library, since our library is meant to fill in gaps in VADS
+@import './lib';
+
+// Imports
+// =======
+@import '~@department-of-veterans-affairs/formation/sass/full';
+@import './mixins';
+
+// VADS Overrides 🚗
+// ==================
+
+// Layout
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  color: $color-base;
+}
+
+// use our site width and left-align rather than center-align grids
+.vads-l-grid-container {
+  max-width: $va-api-site-max-width;
+  margin-left: 0;
+}
+
+.main {
+  flex-grow: 1;
+  background-color: #f9f9f9;
+}
+
+// Typography
+
+// note that we don't currently use anything smaller than h4
+h1,
+h2,
+h3,
+h4 {
+  font-family: $font-sans;
+  color: $color-gray-dark;
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+h2 {
+  font-size: 3rem;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+h3 {
+  margin-top: 2rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+h4 {
+  font-size: 1.9rem;
+}
+
+// Override <a> styles from formation. The non-hover transition
+// is defined in formation/sass/base/_va.scss and the hover styles
+// can be found in formation/sass/base/_b-mixins.scss
+a {
+  transition: none;
+
+  &:hover {
+    background-color: rgba(0,0,0,0);
+  }
+}
+
+*:focus,
+a:focus,
+.usa-focus,
+[type=checkbox]:focus + label::before {
+  @include focus-outline;
+}
+
+// Override styles from formation/sass/base/_va.scss that hide
+// placeholder text on focus
+input:focus::placeholder {
+  color: $color-gray;
+}

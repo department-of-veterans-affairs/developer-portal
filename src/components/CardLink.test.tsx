@@ -11,8 +11,8 @@ describe('CardLink', () => {
         Use this to manage something!
       </CardLink>,
     );
-    expect(apiCard.find('h3.va-api-name').length).toBe(1);
-    expect(apiCard.find('h3.va-api-name').text()).toBe('Special API');
+    expect(apiCard.find('.va-api-name').length).toBe(1);
+    expect(apiCard.find('.va-api-name').text()).toBe('Special API');
   });
 
   it('renders the description', () => {

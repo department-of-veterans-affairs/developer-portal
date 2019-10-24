@@ -3,7 +3,7 @@
 .site-notice-text {
   max-width: 350px;
 
-  @include media($large-screen) {
+  @include media($small-desktop-screen) {
     max-width: none;
     margin-left: 0;
   }
@@ -18,12 +18,6 @@
     &[aria-expanded=false] {
       @include display-icon(angle-arrow-down-primary, after, 1rem, 4px, hover);
     }
-  }
-}
-
-.site-guidance-content {
-  @include media($medium-screen) {
-    max-width: $site-max-width;
   }
 }
 

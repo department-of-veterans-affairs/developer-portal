@@ -55,7 +55,7 @@ const facilitiesContent: IApiCategoryContent = {
 const healthContent: IApiCategoryContent = {
   intro: HealthIntro,
   overview: HealthOverview,
-  placardText: "View medial records and manage Veteran's health",
+  placardText: "View medical records and manage Veteran's health",
   quickstart: HealthQuickstart,
   releaseNotes: HealthReleaseNotes,
   shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
