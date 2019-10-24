@@ -9,7 +9,6 @@ import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
-import './News.scss';
 
 interface ISection {
   title: string;
@@ -112,7 +111,7 @@ export default class News extends React.Component {
     });
 
     return (
-      <div className="vads-u-padding-y--5 news">
+      <div className="vads-u-padding-y--5">
         <div className="vads-l-grid-container">
           <div className="vads-l-row">
             <SideNav ariaLabel="News Side Nav">
