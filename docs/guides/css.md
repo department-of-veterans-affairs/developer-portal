@@ -15,7 +15,7 @@ If you have questions about any of the guidelines in this document, please feel 
   * The [`formation-react`](#formation-react) package
     * [`formation-react` Components on the Developer Portal](#formation-react-components-on-the-developer-portal)
 * [Developer Portal Custom Styles](#custom-styles)
-  * [`lib.scss`](#lib-scss)
+  * [`lib.scss`](#libscss)
 * [Checklist for Wriing Components and Styles](#checklist-for-writing-components-and-styles)
 * [Resources](#resources)
 
@@ -43,7 +43,7 @@ The following table documents the `formation` styles that we use in the develope
 
 #### `uswds` in `formation`
 
-[`uswds`](https://github.com/uswds/uswds), the `npm` package for the [US Web Design System](https://designsystem.digital.gov/), is a direct dependency of `formation`, and `formation` exports some parts of `uswds` as part of its library. As a result, we use some USWDS styles on the developer portal. Most, if not all, of these styles are documented in the [VADS component docs](https://design.va.gov/components). We should only use USWDS styles that are exported and documented by USWDS.
+[`uswds`](https://github.com/uswds/uswds), the `npm` package for the [US Web Design System](https://designsystem.digital.gov/), is a direct dependency of `formation`, and `formation` exports some parts of `uswds` as part of its library. As a result, we use some USWDS styles on the developer portal. Most, if not all, of these styles are documented in the [VADS component docs](https://design.va.gov/components). We should only use USWDS styles that are exported and documented by VADS.
 
 The following list documents all of the USWDS classes we currently use.
 
@@ -116,7 +116,7 @@ As [documented above](#known-gaps), there are some gaps in VADS that could benef
 1. Check [`formation-react`](https://department-of-veterans-affairs.github.io/veteran-facing-services-tools/visual-design) to see if there is a React component that meets your needs.
 1. Check [the `formation` component docs](https://design.va.gov/components) to see if there are component styles that can be a useful starting point for writing your component.
 1. Try to write the component using [the VADS utilities](https://design.va.gov/utilities).
-1. See if there are any Lighthouse developer portal utilities in [`src/styles/lib.scss`](#lib-scss) that can help with functionality not provided by the `formation` utilities.
+1. See if there are any Lighthouse developer portal utilities in [`src/styles/lib.scss`](#libscss) that can help with functionality not provided by the `formation` utilities.
 1. Add a utility of the form `va-api-u-[css-property]--[value]` to `lib.scss` if the functionality you need can be generalized but is not already included in `formation` or `lib.scss`.
 1. Write a custom component stylesheet that covers anything that can't be accomplished by any of the above strategies.
 
