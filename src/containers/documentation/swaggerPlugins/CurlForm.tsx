@@ -30,7 +30,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       params: this.props.operation.parameters,
     };
     if (!this.isSwagger2()) {
-      state.env = this.props.system.spec().toJS().json.servers[0].url;
+      state.env = this.jsonSpec().servers[0].url;
     }
     if (state.params) {
       state.params.map((parameter: any) => {
@@ -38,6 +38,10 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       });
     }
     this.state = state;
+  }
+
+  public jsonSpec() {
+    return this.props.system.spec().toJS().json;
   }
 
   public handleInputChange(parameterName: string, value: string) {
@@ -66,7 +70,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   }
 
   public buildCurl() {
-    const spec = this.props.system.spec().toJS().json;
+    const spec = this.jsonSpec();
     const options = {
       operationId: this.props.operation.operationId,
       parameters: this.state,
@@ -126,7 +130,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   }
 
   public isSwagger2() {
-    return this.props.system.spec().toJS().json.swagger === '2.0';
+    return this.jsonSpec().swagger === '2.0';
   }
 
   public authParameterContainer() {
@@ -182,16 +186,13 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         );
       });
     } else {
-      return this.props.system
-        .spec()
-        .toJS()
-        .json.servers.map((server: any, i: number) => {
-          return (
-            <option value={server.url} key={i}>
-              {server.description}
-            </option>
-          );
-        });
+      return this.jsonSpec().servers.map((server: any, i: number) => {
+        return (
+          <option value={server.url} key={i}>
+            {server.description}
+          </option>
+        );
+      });
     }
   }
 
