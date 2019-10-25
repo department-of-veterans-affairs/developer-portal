@@ -29,9 +29,11 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       env: 'dev',
       params: this.props.operation.parameters,
     };
+
     if (!this.isSwagger2()) {
       state.env = this.jsonSpec().servers[0].url;
     }
+
     if (state.params) {
       state.params.map((parameter: any) => {
         state[parameter.name] = parameter.example || '';
@@ -196,20 +198,28 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     }
   }
 
+  public containsServerInformation() {
+    return this.jsonSpec().servers.length === 3;
+  }
+
   public environmentSelector() {
-    return (
-      <div>
-        <h3> Environment: </h3>
-        <select // tslint:disable-next-line:react-a11y-no-onchange
-          value={this.state.env}
-          onChange={e => {
-            this.handleInputChange('env', e.target.value);
-          }}
-        >
-          {this.environmentOptions()}
-        </select>
-      </div>
-    );
+    if (this.isSwagger2() || (!this.isSwagger2() && this.containsServerInformation())) {
+      return (
+        <div>
+          <h3> Environment: </h3>
+          <select // tslint:disable-next-line:react-a11y-no-onchange
+            value={this.state.env}
+            onChange={e => {
+              this.handleInputChange('env', e.target.value);
+            }}
+          >
+            {this.environmentOptions()}
+          </select>
+        </div>
+      );
+    } else {
+      return null;
+    }
   }
 
   public render() {
