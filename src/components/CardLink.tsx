@@ -34,6 +34,7 @@ export default class CardLink extends React.Component<ICardLinkProps, {}> {
           'vads-u-color--gray-dark',
           'vads-u-font-size--lg',
           'vads-u-font-weight--bold',
+          'vads-u-line-height--3',
           'vads-u-margin-y--2',
         )}>
           {this.props.name}

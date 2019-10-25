@@ -104,7 +104,6 @@ export default class Banner extends React.Component<{}, IBannerState> {
               <div 
                 className={classNames(
                   'usa-accordion-content', 
-                  'site-guidance-content', 
                   'vads-l-grid-container',
                   'vads-u-background-color--gray-dark')}
                 aria-hidden={this.state.accordionVisible ? "false" : "true"}

@@ -40,7 +40,6 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
           className={classNames(
             'va-crisis-line-button',
             'va-api-crisis-line-button',
-            'va-overlay-trigger',
             'vads-u-color--white',
             'vads-u-display--flex',
             'vads-u-justify-content--center',
@@ -48,7 +47,7 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
             'vads-u-width--full',
             'medium-screen:vads-u-width--auto',
         )}>
-          <span className={classNames('va-flex', 'vads-u-display--flex', 'vads-u-align-items--center')}>
+          <span className={classNames('vads-u-display--flex', 'vads-u-align-items--center')}>
             <span className={classNames('va-api-crisis-line-container', 'vads-u-margin-right--1')}>
               <span className={classNames('vcl', 'va-api-vcl-logo-white')} />
             </span>
