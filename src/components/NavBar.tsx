@@ -1,6 +1,7 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { Flag } from 'flag';
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
@@ -56,11 +57,13 @@ function DocumentationSubNav() {
       </li>
       {apiCategoryOrder.map(apiKey => {
         return (
-          <li className={itemStyles} key={apiKey}>
-            <NavLink to={`/explore/${apiKey}`} className={linkStyles} activeClassName="vads-u-font-weight--bold">
-              {apiDefs[apiKey].name}
-            </NavLink>
-          </li>
+          <Flag name={`categories.${apiKey}`} key={apiKey}>
+            <li className={itemStyles} key={apiKey}>
+              <NavLink to={`/explore/${apiKey}`} className={linkStyles} activeClassName="vads-u-font-weight--bold">
+                {apiDefs[apiKey].name}
+              </NavLink>
+            </li>
+          </Flag>
         );
       })}
     </ul>
