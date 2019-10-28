@@ -58,7 +58,7 @@ function DocumentationSubNav() {
       {apiCategoryOrder.map(apiKey => {
         return (
           <Flag name={`categories.${apiKey}`} key={apiKey}>
-            <li className={itemStyles} key={apiKey}>
+            <li className={itemStyles}>
               <NavLink to={`/explore/${apiKey}`} className={linkStyles} activeClassName="vads-u-font-weight--bold">
                 {apiDefs[apiKey].name}
               </NavLink>
