@@ -254,6 +254,7 @@ module.exports = {
                   markdownItPlugins: [
                     [require('markdown-it-anchor'), { level: 2 }],
                   ],
+                  passElementProps: true,
                 },
               }
             ]

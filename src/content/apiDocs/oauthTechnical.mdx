@@ -19,15 +19,23 @@ We use separate authorization servers for our development and production environ
 
 ### Initiating Authorization
 
-Initiate the OpenID Connect authorization by directing your application's users to `https://dev-api.va.gov/oauth2/authorization` with the following query parameters:
+Initiate the OpenID Connect authorization by directing your application's users to 
 
-* `client_id` - required - The `client_id` issued by the VA API Platform team
-* `nonce` - optional - Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations).
-* `redirect_uri` - required - The URL you supplied. The user will be redirected to this URL after authorizing your application.
-* `response_mode` - optional - Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment.
-* `response_type` - required - one or two of, `id_token`, `token`, or `code`. Using `code` will require your application to complete the [Authorization Code Flow](#authorization-code-flow). Using `id_token` or `token` allows you to use the [Implicit flow](#implicit-flow). See [Token Types](#id-token) for further explanation.
-* `scope` - optional - Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space.
-* `state` - optional - Ensures authorization flow integrity. See [security](#security-considerations).
+```plaintext
+https://dev-api.va.gov/oauth2/authorization
+``` 
+
+with the following query parameters:
+
+| Query Parameter | Required     | Values |
+| --------------- | ------------ | ------ |
+| `client_id`     | **Required** | The `client_id` issued by the VA API Platform team |
+| `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
+| `redirect_uri`  | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application. |
+| `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
+| `response_type` | **Required** | One or two of `id_token`, `token`, or `code`. Using `code` will require your application to complete the [Authorization Code Flow](#authorization-code-flow). Using `id_token` or `token` allows you to use the [Implicit flow](#implicit-flow). See [Token Types](#id-token) for further explanation. |
+| `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
+| `state`         | Optional     | Ensures authorization flow integrity. See [security](#security-considerations). |
 
 Example Authorization URL:
 ```plaintext
@@ -171,27 +179,17 @@ The parameters provided when the user's browser is redirected back to your app h
 
 Scopes define the API endpoint your application is allowed to access. The VA API Platform team will define a maximum set of scopes your application is allowed to request. You can always begin an authorization flow by requesting fewer permissions that your application is allowed to access, which may result in more pleasant experience for users unsure if they should grant your application access to their data. You can then always request additional access to additional data when your application needs additional data for a Veteran or VSO using your application.
 
-Existing Scopes are:
+**Existing Scopes are:**
 
-* `profile` - granted by default allows access to a user's first and last name and email.
-* `offline_access` - this scope causes the authorization server to provide a refresh token when the access token is requested.
-* `launch/patient` - a permission setting to obtain the patient's identifier in the token response when the app is launched from an EHR.
-* `patient/*` - view a user's VA Health records and patient information, see specific read only scopes below.
-  * `patient/Patient.read`
-  * `patient/AllergyIntolerance.read`
-  * `patient/Condition.read`
-  * `patient/CoverageEligibilityResponse.read`
-  * `patient/CommunityCareEligibility.read`
-  * `patient/DiagnosticReport.read`
-  * `patient/Immunization.read`
-  * `patient/Medication.read`
-  * `patient/MedicationOrder.read`
-  * `patient/MedicationStatement.read`
-  * `patient/Observation.read`
-  * `patient/Procedure.read`
-* `service_history.read` - view a Veteran's service history including deployments and discharge status
-* `disability_rating.read` - view a Veteran's VA disability ratings and the effective date of the rating
-* `veteran_status.read` - confirm the Veteran status of an individual
+| Scope                    | Description |
+| ------------------------ | ----------- |
+| `profile`                | Granted by default, allows access to a user's first and last name and email. |
+| `offline_access`         | This scope causes the authorization server to provide a refresh token when the access token is requested. |
+| `launch/patient`         | A permission setting to obtain the patient's identifier in the token response when the app is launched from an EHR. |
+| `patient/*`              | <p>View a user's VA Health records and patient information, see specific read only scopes below.</p><ul><li><code>patient/Patient.read</code></li><li><code>patient/AllergyIntolerance.read</code></li><li><code>patient/Condition.read</code></li><li><code>patient/CoverageEligibilityResponse.read</code></li><li><code>patient/CommunityCareEligibility.read</code></li><li><code>patient/DiagnosticReport.read</code></li><li><code>patient/Immunization.read</code></li><li><code>patient/Medication.read</code></li><li><code>patient/MedicationOrder.read</code></li><li><code>patient/MedicationStatement.read</code></li><li><code>patient/Observation.read</code></li><li><code>patient/Procedure.read</code></li></ul> |
+| `service_history.read`   | View a Veteran's service history including deployments and discharge status |
+| `disability_rating.read` | View a Veteran's VA disability ratings and the effective date of the rating |
+| `veteran_status.read`    | Confirm the Veteran status of an individual |
 
 These are subject to change while the VA API Platform OpenID Connect feature is under development.
 
