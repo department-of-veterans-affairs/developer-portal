@@ -14,7 +14,7 @@ import Header from './components/Header';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/base.scss';
 
 class App extends React.Component {

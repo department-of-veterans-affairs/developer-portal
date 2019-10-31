@@ -412,13 +412,13 @@ This anonymous function asynchronously retrieves the client information then sta
 Now, we'll add routes to handle the OpenID authorization. Again in `index.js` in our `startApp` function:
 
 ```
-  app.get('/', (req, res) => res.send('Hello World!')); // already exists
-  
-  app.get('/auth', passport.authenticate('oidc'));
-  app.get(
-    '/auth/cb',
-    passport.authenticate('oidc', { successRedirect: '/', failureRedirect: '/'})
-  );
+app.get('/', (req, res) => res.send('Hello World!')); // already exists
+
+app.get('/auth', passport.authenticate('oidc'));
+app.get(
+  '/auth/cb',
+  passport.authenticate('oidc', { successRedirect: '/', failureRedirect: '/'})
+);
 ```
 
 And that's all you'll need to do to add VA OAuth to a node application. After starting the app up again with `node index.js` navigate to `<yourRedirectHost>/auth` in your browser (⚠️Be sure to replace `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration). Your browser should then take you through the login flow and return you to a page displaying 'Hello World!'. 
@@ -470,8 +470,8 @@ const verifyVeteranStatus = async (req, res, next) => {
 Finally let's add a new route to the application in `startApp`:
 
 ```
-  app.get('/', (req, res) => res.send('Hello World!')); // already exists
-  app.get('/status', verifyVeteranStatus);
+app.get('/', (req, res) => res.send('Hello World!')); // already exists
+app.get('/status', verifyVeteranStatus);
 ```
 
 Now, after restarting `node index.js` you can first navigate to `<yourRedirectHost>/auth` in your browser (⚠️Be sure to replace `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration) to login, then navigate to `<yourRedirectHost>/status` to see your Veteran Status. 
