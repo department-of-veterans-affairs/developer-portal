@@ -111,7 +111,7 @@ Host: <yourRedirectHost>
 
 Your application then makes a request to our authorization service using the returned `code` and `state` parameters. The request should use HTTP Basic authorization with your *client id* as the username and your *client secret* as the password. Your request should look like:
 
-```plaintext
+```http
 POST /oauth2/token HTTP/1.1
 Host: dev-api.va.gov
 Content-Type: application/x-www-form-urlencoded
@@ -156,7 +156,7 @@ The resulting `access_token` can be used to authorize requests to the VA API Pla
 
 The `refresh_token` can be used to obtain a new `access_token` after its expiry by sending the following request.
 
-```plaintext
+```http
 POST /oauth2/token HTTP/1.1
 Host: dev-api.va.gov
 Content-Type: application/x-www-form-urlencoded
@@ -307,7 +307,7 @@ npm install --save express \
 
 Open up a file called `index.js` in your editor of choice and add the following:
 
-```
+```JavaScript
 const { Issuer } = require('openid-client');
 
 const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration';
@@ -337,7 +337,7 @@ Next you'll need to add some configuration for Express and Passport so they can 
 
 Open `index.js` up again in your preferred editor. Add the following require statements at the top (replacing the existing one):
 
-```
+```JavaScript
 const express = require('express');
 const session = require('express-session');
 const { Issuer, Strategy } = require('openid-client');
@@ -346,7 +346,7 @@ const passport = require('passport');
 
 Below your `createClient` function add a new function:
 
-```
+```JavaScript
 const configurePassport = (client) => {
   passport.serializeUser((user, done) => {
     done(null, user);
@@ -373,7 +373,7 @@ This creates a new passport strategy that will use OpenID Connect to authenticat
 
 Below that, let's add another function `startApp`:
 
-```
+```JavaScript
 const startApp = (client) => {
   const app = express();
   const port = 8080;
@@ -392,7 +392,7 @@ The `startApp` function simply handles configuring passport and express-session,
 
 Finally let's add a little glue so we can get up and running. At the bottom of the file add:
 
-```
+```JavaScript
 (async () => {
   try {
     const oidcClient = await createClient();
@@ -411,7 +411,7 @@ This anonymous function asynchronously retrieves the client information then sta
 
 Now, we'll add routes to handle the OpenID authorization. Again in `index.js` in our `startApp` function:
 
-```
+```JavaScript
 app.get('/', (req, res) => res.send('Hello World!')); // already exists
 
 app.get('/auth', passport.authenticate('oidc'));
@@ -427,13 +427,13 @@ And that's all you'll need to do to add VA OAuth to a node application. After st
 
 Finally, let's add a real call to the Veteran Status API. In the `index.js` file lets add another require statement:
 
-```
+```JavaScript
 const https = require('https');
 ```
 
 Then above `startApp`:
 
-```
+```JavaScript
 const verifyVeteranStatus = async (req, res, next) => {
   if (req.session && req.session.passport && req.session.passport.user) {
     const veteranStatus = await new Promise((resolve, reject) => {
@@ -469,7 +469,7 @@ const verifyVeteranStatus = async (req, res, next) => {
 
 Finally let's add a new route to the application in `startApp`:
 
-```
+```JavaScript
 app.get('/', (req, res) => res.send('Hello World!')); // already exists
 app.get('/status', verifyVeteranStatus);
 ```
