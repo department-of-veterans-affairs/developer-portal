@@ -30,10 +30,10 @@ export default class Header extends React.Component<{}, INavBarState> {
 
     return (
       <React.Fragment>
-        <header role="banner" className="vads-u-background-color--primary-darkest">
-          <Flag name="show_testing_notice">
-            <TestingNotice />
-          </Flag>
+        <Flag name="show_testing_notice">
+          <TestingNotice />
+        </Flag>
+        <header role="banner" className={classNames("va-api-header", "vads-u-background-color--primary-darkest")}>
           <Banner />
           <VeteransCrisisLine />
           <div className={classNames(
