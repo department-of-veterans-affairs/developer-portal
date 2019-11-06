@@ -1,5 +1,43 @@
-pre > code {
-  display: block;
-  overflow-x: auto;
-  padding-bottom: 1.6rem;
+@import '../../styles/variables';
+
+.va-api-authorization-docs {
+  p,
+  td {
+    line-height: 1.6;
+  }
+
+  code {
+    background-color: #222935;
+    border-radius: 3px;
+    color: $color-white;
+    font-family: 'Source Code Pro', monospace;
+    padding: 0.2rem 0.4rem;
+    margin: auto 0.2rem;
+
+    // this may look ugly but there's no padding at line end/start when text wraps
+    white-space: nowrap;
+  }
+
+  pre > code {
+    display: block;
+    overflow-x: scroll;
+    padding: 2rem;
+    margin: 0;
+    white-space: pre;
+
+    &:focus {
+      border: 1px solid $color-gray;
+    }
+  }
+
+  ul {
+    background-color: $color-white;
+    border: 1px solid $color-gray;
+    border-radius: 5px;
+    padding: 2rem 2rem 2rem 4rem; // larger padding-left accounts for list-style
+  }
+
+  td ul {
+    border: none;
+  }
 }

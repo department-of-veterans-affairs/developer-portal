@@ -19,10 +19,10 @@ export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiN
         return (<ApiKeyAuth apiCategoryKey={apiCategoryKey} />);
       } else {
         return (
-          <React.Fragment>
+          <div className="va-api-authorization-docs">
             <PageHeader halo={category.name} header="Authorization" />
             <OAuth />
-          </React.Fragment>
+          </div>
         );
       }
     } else {
