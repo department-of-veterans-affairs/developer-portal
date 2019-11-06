@@ -30,10 +30,10 @@ with the following query parameters:
 | Query Parameter | Required     | Values |
 | --------------- | ------------ | ------ |
 | `client_id`     | **Required** | The `client_id` issued by the VA API Platform team |
-| `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
 | `redirect_uri`  | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application. |
-| `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
 | `response_type` | **Required** | One or two of `id_token`, `token`, or `code`. Using `code` will require your application to complete the [Authorization Code Flow](#authorization-code-flow). Using `id_token` or `token` allows you to use the [Implicit flow](#implicit-flow). See [Token Types](#id-token) for further explanation. |
+| `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
+| `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
 | `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
 | `state`         | Optional     | Ensures authorization flow integrity. See [security](#security-considerations). |
 
@@ -193,7 +193,7 @@ Scopes define the API endpoint your application is allowed to access. The VA API
 
 These are subject to change while the VA API Platform OpenID Connect feature is under development.
 
-## `id token`
+## ID Token
 Unlike the token returned by an authorization_code grant or an implicit token grant, which is simply a random value, an `id_token` is a [JSON Web Token](https://jwt.io) or JWT. A JWT consists of three parts: a header, a payload, and a signature. This provides an extremely brief overview of a JWT.
 
 ### Header
