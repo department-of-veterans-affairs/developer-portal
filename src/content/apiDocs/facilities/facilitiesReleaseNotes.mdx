@@ -1,8 +1,8 @@
 ## November 8, 2019
 The `/nearby` endpoint received major changes. 
 - Previously, the server retrieved an isochrone (a line connecting points of the same time) for a provided location and looked for facilities that fell within that polygon. Now the opposite is true: facilities have isochrones that are compared against the provided location. Users should see increased performance from this endpoint as a result.
-- Data about drive times now comes directly from VHA. Responses may vary slightly from the previous implementation because of this switch.
-- The response schema has also changed. Instead of returning facility data from `/nearby`, the endpoint now provides `min_time` and `max_time` attributes for the matching polygons and links to endpoints that can be queried to retrieve full information about the associated facility. See the schema changes by [visiting the documentation](https://developer.va.gov/explore/facilities/docs/facilities). 
+- Data about drive times now comes directly from the Veterans Health Administration (VHA). Responses may vary slightly from the previous implementation because of this switch.
+- The response schema has also changed. Instead of returning facility data from `/nearby`, the endpoint now provides `min_time` and `max_time` attributes for the matching polygons and links to endpoints that can be queried to retrieve full information about the associated facility. This schema change allows us to keep `/nearby` within v0 of the Facilities API instead of incrementing to v1. See the schema changes by [visiting the documentation](https://developer.va.gov/explore/facilities/docs/facilities). 
 
 [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3512)
 
