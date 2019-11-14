@@ -30,7 +30,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       params: this.props.operation.parameters,
     };
 
-    if (!this.isSwagger2()) {
+    if (!this.isSwagger2() && this.requirementsMet()) {
       state.env = this.jsonSpec().servers[0].url;
     }
 
@@ -40,6 +40,17 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       });
     }
     this.state = state;
+  }
+
+  public requirementsMet() {
+    const hasSecurity = Object.keys(this.props.operation).includes('security');
+    if (this.isSwagger2()) {
+      return hasSecurity && this.jsonSpec().host;
+    } else {
+      const hasServerBlock =
+        this.jsonSpec().servers !== undefined && this.containsServerInformation();
+      return hasSecurity && hasServerBlock;
+    }
   }
 
   public jsonSpec() {
@@ -199,31 +210,27 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   }
 
   public containsServerInformation() {
-    return this.jsonSpec().servers.length === 3;
+    return this.jsonSpec().servers.length > 0;
   }
 
   public environmentSelector() {
-    if (this.isSwagger2() || (!this.isSwagger2() && this.containsServerInformation())) {
-      return (
-        <div>
-          <h3> Environment: </h3>
-          <select // tslint:disable-next-line:react-a11y-no-onchange
-            value={this.state.env}
-            onChange={e => {
-              this.handleInputChange('env', e.target.value);
-            }}
-          >
-            {this.environmentOptions()}
-          </select>
-        </div>
-      );
-    } else {
-      return null;
-    }
+    return (
+      <div>
+        <h3> Environment: </h3>
+        <select // tslint:disable-next-line:react-a11y-no-onchange
+          value={this.state.env}
+          onChange={e => {
+            this.handleInputChange('env', e.target.value);
+          }}
+        >
+          {this.environmentOptions()}
+        </select>
+      </div>
+    );
   }
 
   public render() {
-    if (Object.keys(this.props.operation).includes('security')) {
+    if (this.requirementsMet()) {
       return (
         <div
           className={classNames(
