@@ -25,6 +25,9 @@ sections:
     description: Articles related to developers, APIs, the Developer Portal, and Veterans.
     media: false
     items:
+      - date: November 2019
+        title: End User in Focus for Evolving Digital Services at VA
+        url: https://governmentciomedia.com/end-user-focus-evolving-digital-services-va
       - date: September 2019
         source: Nextgov
         title: Feds Look to Application Programming Interfaces as Gateways to Modernization
