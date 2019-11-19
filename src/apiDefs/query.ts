@@ -14,35 +14,35 @@
 */
 
 import apiDefs, { apiCategoryOrder } from './data/categories';
-import {
-  IApiCategory,
-  IApiDescription,
-} from './schema';
+import { IApiCategory, IApiDescription } from './schema';
 
 const getApiDefinitions = () => apiDefs;
 const getApiCategoryOrder = () => apiCategoryOrder;
 
-const getAllApis = () : IApiDescription[] => {
+const getAllApis = (): IApiDescription[] => {
   return Object.values(apiDefs).flatMap((category: IApiCategory) => category.apis);
 };
 
 function lookupApiByFragment(apiKey: string): IApiDescription | null {
-  const hasMatchingIdentifier = (apiDesc: IApiDescription) : boolean => apiDesc.urlFragment === apiKey;
+  const hasMatchingIdentifier = (apiDesc: IApiDescription): boolean =>
+    apiDesc.urlFragment === apiKey;
   const apiResult = getAllApis().find(hasMatchingIdentifier);
   return apiResult || null;
 }
-  
+
 function lookupApiCategory(categoryKey: string): IApiCategory | null {
   return apiDefs[categoryKey] || null;
 }
 
-const apiToCategoryMapping: {[key: string]: IApiCategory} = Object.keys(apiDefs)
-  .reduce((mapping: {}, categoryKey: string) => {
+const apiToCategoryMapping: { [key: string]: IApiCategory } = Object.keys(apiDefs).reduce(
+  (mapping: {}, categoryKey: string) => {
     for (const api of apiDefs[categoryKey].apis) {
       mapping[api.urlFragment] = apiDefs[categoryKey];
     }
     return mapping;
-  }, {});
+  },
+  {},
+);
 
 function categoriesFor(apiList: string[]): IApiCategory[] {
   const categories: Set<IApiCategory> = new Set<IApiCategory>();
