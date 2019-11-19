@@ -42,6 +42,7 @@ export interface IApplication {
 }
 
 export interface IRootState {
+  apiVersion: string;
   application: IApplication;
   routing: RouterState;
 }

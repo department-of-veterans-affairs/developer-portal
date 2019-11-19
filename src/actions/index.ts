@@ -102,6 +102,11 @@ export interface ISubmitFormError extends Action {
 
 export type SubmitFormAction = ISubmitForm | ISubmitFormSuccess | ISubmitFormError;
 
+export interface IUpdateApiVersionAction extends Action {
+  type: constants.UPDATE_API_VERSION;
+  version: string;
+}
+
 export type SubmitFormThunk = ThunkAction<
   Promise<SubmitFormAction>,
   IRootState,
@@ -300,5 +305,12 @@ export const toggleFacilitiesApi: ActionCreator<IToggleFacilitiesApi> = () => {
 export const toggleAcceptTos: ActionCreator<IToggleAcceptTos> = () => {
   return {
     type: constants.TOGGLE_ACCEPT_TOS,
+  };
+};
+
+export const updateApiVersion: ActionCreator<IUpdateApiVersionAction> = (version: string) => {
+  return {
+    type: constants.UPDATE_API_VERSION,
+    version,
   };
 };

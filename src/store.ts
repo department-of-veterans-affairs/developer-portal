@@ -7,7 +7,7 @@ import { IApplication, IRootState } from './types';
 
 import createBrowserHistory from 'history/createBrowserHistory';
 
-import { application, initialApplicationState } from './reducers';
+import { apiVersion, application, initialApplicationState } from './reducers';
 
 export const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL || '/',
@@ -44,6 +44,7 @@ function saveApplicationState(state: IRootState) {
 
 const store = createStore(
   combineReducers<IRootState>({
+    apiVersion,
     application,
     routing,
   }),

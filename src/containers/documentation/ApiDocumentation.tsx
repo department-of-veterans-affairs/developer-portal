@@ -1,27 +1,46 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import * as actions from '../../actions';
 
 import { Flag } from 'flag';
 import { Location } from 'history';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import SwaggerDocs from './SwaggerDocs';
 
 import { lookupApiCategory } from '../../apiDefs/query';
 import { IApiDescription, IApiDocSource } from '../../apiDefs/schema';
 import { history } from '../../store';
-import SwaggerDocs from './SwaggerDocs';
+import { IRootState } from '../../types';
+
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
 interface IApiDocumentationProps {
   apiDefinition: IApiDescription;
+  apiVersion: string;
   categoryKey: string;
   location: Location;
+  updateApiVersion: (version: string) => void;
 }
 
 interface IApiDocumentationState {
   tabIndex: number;
 }
 
-export default class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocumentationState> {
+const mapStateToProps = (state : IRootState) => {
+  return {
+    apiVersion: state.apiVersion,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<actions.IUpdateApiVersionAction>) => {
+  return {
+    updateApiVersion: (version: string) => { dispatch(actions.updateApiVersion(version)); },
+  };
+};
+
+class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocumentationState> {
   public constructor(props : IApiDocumentationProps) {
     super(props);
     this.state = { tabIndex: 0 };
@@ -29,12 +48,14 @@ export default class ApiDocumentation extends React.Component<IApiDocumentationP
 
   public componentDidMount() {
     this.setTabIndexFromFragment();
+    this.setApiVersionFromHash(location.hash);
   }
 
   public componentDidUpdate(prevProps: IApiDocumentationProps) {
     const { location } = this.props;
     if (location.pathname !== prevProps.location.pathname || location.hash !== prevProps.location.hash) {
       this.setTabIndexFromFragment();
+      this.setApiVersionFromHash(location.hash);
     }
   }
 
@@ -51,7 +72,7 @@ export default class ApiDocumentation extends React.Component<IApiDocumentationP
     return (
       <Flag name={`hosted_apis.${apiDefinition.urlFragment}`}>
         {apiDefinition.docSources.length === 1 
-          ? <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} />
+          ? <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} apiVersion={this.props.apiVersion} />
           : (
             <React.Fragment>
               {category!.tabBlurb}
@@ -68,7 +89,7 @@ export default class ApiDocumentation extends React.Component<IApiDocumentationP
                 {apiDefinition.docSources.map(apiDocSource => {
                   return (
                     <TabPanel key={apiDocSource.label}>
-                      <SwaggerDocs docSource={apiDocSource} apiName={apiDefinition.urlFragment} />
+                      <SwaggerDocs docSource={apiDocSource} apiName={apiDefinition.urlFragment} apiVersion={this.props.apiVersion} />
                     </TabPanel>
                   );
                 })}
@@ -78,6 +99,10 @@ export default class ApiDocumentation extends React.Component<IApiDocumentationP
         }
       </Flag>
     );
+  }
+
+  private setApiVersionFromHash(hash: string = '') {
+    this.props.updateApiVersion(hash.replace(/[^\d.-]/g, ''));
   }
 
   private setTabIndexFromFragment() : void {
@@ -106,3 +131,5 @@ export default class ApiDocumentation extends React.Component<IApiDocumentationP
     this.setState({ tabIndex });
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(ApiDocumentation);
