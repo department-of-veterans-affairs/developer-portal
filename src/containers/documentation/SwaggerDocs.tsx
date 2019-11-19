@@ -45,9 +45,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
   }
 
   public handleVersionChange(version: string) {
-    const versionMetadata = this.state.metadata.meta.versions.find((versionInfo: IVersionInfo) => {
-      return versionInfo.version === version;
-    });
+    const versionMetadata = this.getVersionInfo(version, this.state.metadata);
     this.setState({
       docUrl: this.buildUrlFromVersionInfo(versionMetadata),
     }, () => this.setApiVersion(version));
