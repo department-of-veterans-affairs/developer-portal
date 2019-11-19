@@ -72,7 +72,7 @@ class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocum
     return (
       <Flag name={`hosted_apis.${apiDefinition.urlFragment}`}>
         {apiDefinition.docSources.length === 1 
-          ? <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} apiVersion={this.props.apiVersion} />
+          ? <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} apiVersion={this.props.apiVersion} updateApiVersion={this.props.updateApiVersion} />
           : (
             <React.Fragment>
               {category!.tabBlurb}
@@ -89,7 +89,7 @@ class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocum
                 {apiDefinition.docSources.map(apiDocSource => {
                   return (
                     <TabPanel key={apiDocSource.label}>
-                      <SwaggerDocs docSource={apiDocSource} apiName={apiDefinition.urlFragment} apiVersion={this.props.apiVersion} />
+                      <SwaggerDocs docSource={apiDocSource} apiName={apiDefinition.urlFragment} apiVersion={this.props.apiVersion} updateApiVersion={this.props.updateApiVersion} />
                     </TabPanel>
                   );
                 })}

@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import SwaggerUI from 'swagger-ui';
-import { SwaggerPlugins } from './swaggerPlugins';
-
-import * as actions from '../../actions';
 import { IApiDocSource } from '../../apiDefs/schema';
 import { history } from '../../store';
+import { SwaggerPlugins } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 
@@ -29,13 +26,7 @@ export interface IVersionInfo {
   internal_only: boolean;
 }
 
-const mapDispatchToProps = (dispatch: React.Dispatch<actions.IUpdateApiVersionAction>) => {
-  return {
-    updateApiVersion: (version: string) => { dispatch(actions.updateApiVersion(version)); },
-  };
-};
-
-class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> {
+export default class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> {
   public constructor(props: ISwaggerDocsProps) {
     super(props);
     this.state = {
@@ -45,10 +36,10 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
   }
 
   public handleVersionChange(version: string) {
-    const versionMetadata = this.getVersionInfo(version, this.state.metadata);
+    const versionInfo = this.getVersionInfo(version, this.state.metadata);
     this.setState({
-      docUrl: this.buildUrlFromVersionInfo(versionMetadata),
-    }, () => this.setApiVersion(version));
+      docUrl: versionInfo ? this.buildUrlFromVersionInfo(versionInfo) : this.props.docSource.openApiUrl,
+    }, () => this.props.updateApiVersion(version));
   }
   
   public componentDidMount() {
@@ -60,7 +51,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
       this.setSwaggerDocState();
     }
     if (prevProps.apiVersion !== this.props.apiVersion) {
-      const docUrl = this.getDocUrl(this.state.docUrl, this.state.metadata);
+      const docUrl = this.getDocUrl(this.state.metadata);
       this.setState({
         docUrl,
       }, () => this.renderSwaggerUI());
@@ -77,25 +68,19 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
     );
   }
 
-  private setApiVersion(version: string) {
-    this.props.updateApiVersion(version);
-    const hash = `v${version}`;
-    history.push(`${history.location.pathname}#${hash}`);
-  }
-
   private async setSwaggerDocState() {
-    const { openApiUrl, metadataUrl } = this.props.docSource;
+    const { metadataUrl } = this.props.docSource;
     const metadata = await this.getMetadata(metadataUrl);
-    const docUrl = this.getDocUrl(openApiUrl, metadata);
+    const docUrl = this.getDocUrl(metadata);
     this.setState({
       docUrl,
       metadata,
     }, () => this.renderSwaggerUI());
   }
 
-  private getDocUrl(openApiUrl: string, metadata: any): string {
+  private getDocUrl(metadata: any): string {
     if (!metadata) {
-      return openApiUrl;
+      return this.props.docSource.openApiUrl;
     }
     const versionInfo = this.getVersionInfo(this.props.apiVersion, metadata);
     return this.buildUrlFromVersionInfo(versionInfo);
@@ -120,7 +105,10 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
     return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${versionInfo.path}`;
   }
 
-  private getVersionInfo(version: string, metadata: any) : IVersionInfo {
+  private getVersionInfo(version: string, metadata: any) {
+    if (!metadata) {
+      return null;
+    }
     const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === 'Current Version';
     const selectVersion = (versionInfo: IVersionInfo ) => versionInfo.version === version;
     let metadataInfo = metadata.meta.versions.find(selectVersion);
@@ -141,8 +129,13 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
       });
       ui.versionActions.setApiVersion(this.props.apiVersion);
       ui.versionActions.setApiMetadata(this.state.metadata);
+      const versionInfo = this.getVersionInfo(this.props.apiVersion, this.state.metadata);
+      let hash = 'current';
+      if (versionInfo) {
+        hash = versionInfo.status === 'Current Version' ? 'current' : `v${this.props.apiVersion}`;
+        this.props.updateApiVersion(versionInfo.version);
+      }
+      history.push(`${history.location.pathname}#${hash}`);
     }
   }
 }
-
-export default connect(null, mapDispatchToProps)(SwaggerDocs);
