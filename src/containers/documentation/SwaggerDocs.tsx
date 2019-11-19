@@ -123,7 +123,11 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> 
   private getVersionInfo(version: string, metadata: any) : IVersionInfo {
     const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === 'Current Version';
     const selectVersion = (versionInfo: IVersionInfo ) => versionInfo.version === version;
-    return metadata.meta.versions.find(version ? selectVersion : selectCurrentVersion);
+    let metadataInfo = metadata.meta.versions.find(selectVersion);
+    if (!metadataInfo) {
+      metadataInfo = metadata.meta.versions.find(selectCurrentVersion);
+    }
+    return metadataInfo;
   }
 
   private renderSwaggerUI() {
