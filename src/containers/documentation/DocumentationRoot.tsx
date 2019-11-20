@@ -16,6 +16,7 @@ import DocumentationOverview from './DocumentationOverview';
 import QuickstartPage from './QuickstartPage';
 
 import './Documentation.scss';
+import SwaggerDocs from './SwaggerDocs';
 
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   return (
@@ -23,7 +24,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
       <SideNavEntry
         key={api.urlFragment}
         exact={true}
-        to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}#current`}
+        to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}#${SwaggerDocs.currentHash}`}
         name={
           <React.Fragment>
             {api.name}
