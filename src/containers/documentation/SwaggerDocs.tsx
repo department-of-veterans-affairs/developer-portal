@@ -139,7 +139,7 @@ export default class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwa
 
   private updateURLHash() {
     const versionInfo = this.getVersionInfo(this.props.apiVersion, this.state.metadata);
-    const version = versionInfo ? versionInfo.version : this.props.apiVersion;
+    const version = versionInfo ? versionInfo.version : null;
     const hash = (!version || (versionInfo && versionInfo.status === SwaggerDocs.currentVersionStatus)) ? SwaggerDocs.currentHash : `v${version}`;
     history.push(`${history.location.pathname}#${hash}`);
   }
