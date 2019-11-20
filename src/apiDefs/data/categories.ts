@@ -3,6 +3,7 @@ import {
   benefitsContent,
   facilitiesContent,
   healthContent,
+  vaFormsContent,
   verificationContent,
 } from '../../content/apiDocs';
 
@@ -53,9 +54,9 @@ const apiDefinitions: IApiCategories = {
     apiKey: true,
     apis: vaForms,
     buttonText: 'Stay Informed',
-    content: verificationContent,
-    name: 'Veteran Verification API',
-    properName: 'Veteran Verification API',
+    content: vaFormsContent,
+    name: 'Form API',
+    properName: 'VA Form API',
   },
   verification: {
     apiKey: false,
@@ -72,6 +73,7 @@ export const apiCategoryOrder: string[] = [
   'benefits',
   'facilities',
   'health',
+  'vaForms',
   'verification',
 ];
 export default apiDefinitions;

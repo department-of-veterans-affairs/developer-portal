@@ -20,6 +20,9 @@ import HealthOverview from './health/healthOverview.mdx';
 import HealthQuickstart from './health/healthQuickstart.mdx';
 import HealthReleaseNotes from './health/healthReleaseNotes.mdx';
 import UrgentCareApiIntro from './health/urgentCareApiIntro.mdx';
+import vaFormsIntro from './vaForms/vaFormsIntro.mdx';
+import vaFormsOverview from './vaForms/vaFormsOverview.mdx';
+import vaFormsReleaseNotes from './vaForms/vaFormsReleaseNotes.mdx';
 import VerificationIntro from './verification/verificationIntro.mdx';
 import VerificationOverview from './verification/verificationOverview.mdx';
 import VerificationReleaseNotes from './verification/verificationReleaseNotes.mdx';
@@ -61,6 +64,14 @@ const healthContent: IApiCategoryContent = {
   shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
 };
 
+const vaFormsContent: IApiCategoryContent = {
+  intro: vaFormsIntro,
+  overview: vaFormsOverview,
+  placardText: 'Verify Veteran status for job sites, e-commerce sites, and third-party benefit sites',
+  releaseNotes: vaFormsReleaseNotes,
+  shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
+};
+
 const verificationContent: IApiCategoryContent = {
   intro: VerificationIntro,
   overview: VerificationOverview,
@@ -74,6 +85,7 @@ export {
   benefitsContent,
   facilitiesContent,
   healthContent,
+  vaFormsContent,
   verificationContent,
   CommunityCareApiIntro,
   FhirArgonautApiIntro,
