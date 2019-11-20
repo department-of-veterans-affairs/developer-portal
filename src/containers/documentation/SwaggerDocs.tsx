@@ -27,6 +27,9 @@ export interface IVersionInfo {
 }
 
 export default class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> {
+
+  private static readonly currentVersionStatus = 'Current Version';
+
   public constructor(props: ISwaggerDocsProps) {
     super(props);
     this.state = {
@@ -109,7 +112,7 @@ export default class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwa
     if (!metadata) {
       return null;
     }
-    const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === 'Current Version';
+    const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === SwaggerDocs.currentVersionStatus;
     const selectVersion = (versionInfo: IVersionInfo ) => versionInfo.version === version;
     let metadataInfo = metadata.meta.versions.find(selectVersion);
     if (!metadataInfo) {
@@ -129,13 +132,14 @@ export default class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwa
       });
       ui.versionActions.setApiVersion(this.props.apiVersion);
       ui.versionActions.setApiMetadata(this.state.metadata);
-      const versionInfo = this.getVersionInfo(this.props.apiVersion, this.state.metadata);
-      let hash = 'current';
-      if (versionInfo) {
-        hash = versionInfo.status === 'Current Version' ? 'current' : `v${this.props.apiVersion}`;
-        this.props.updateApiVersion(versionInfo.version);
-      }
-      history.push(`${history.location.pathname}#${hash}`);
+      this.updateURLHash();
     }
+  }
+
+  private updateURLHash() {
+    const versionInfo = this.getVersionInfo(this.props.apiVersion, this.state.metadata);
+    const version = versionInfo ? versionInfo.version : this.props.apiVersion;
+    const hash = (!version || (versionInfo && versionInfo.status === SwaggerDocs.currentVersionStatus)) ? 'current' : `v${version}`;
+    history.push(`${history.location.pathname}#${hash}`);
   }
 }
