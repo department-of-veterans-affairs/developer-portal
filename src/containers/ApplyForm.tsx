@@ -386,7 +386,10 @@ class ApplyForm extends React.Component<IApplyProps> {
     const {
       inputs: { oAuthRedirectURI, termsOfService },
     } = this.props;
-    const redirectURIComplete = !this.anyOAuthApisSelected() || !oAuthRedirectURI.validation;
+    let redirectURIComplete = true;
+    if(this.anyOAuthApisSelected()){
+      redirectURIComplete = oAuthRedirectURI.value.length !== 0 && oAuthRedirectURI.validation === undefined;
+    }
     return (
       this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && redirectURIComplete
     );
