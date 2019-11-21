@@ -55,7 +55,7 @@ const apiDefinitions: IApiCategories = {
     apis: vaForms,
     buttonText: 'Stay Informed',
     content: vaFormsContent,
-    name: 'Form API',
+    name: 'Forms API',
     properName: 'VA Form API',
   },
   verification: {
