@@ -3,7 +3,7 @@ import { IApiDescription } from '../schema';
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
 const vaFormsApis: IApiDescription[] = [
   {
-    description: 'Look up VA forms and check for new versions.Look up VA forms and check for new versions.',
+    description: 'Look up VA forms and check for new versions.',
     docSources: [
       {
         metadataUrl: `${swaggerHost}/services/va_forms/metadata`,
