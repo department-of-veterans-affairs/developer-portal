@@ -34,10 +34,10 @@ export interface IVersionInfo {
 
 const mapStateToProps = (state : IRootState) => {
   return {
-    docUrl: getDocURL(state.versioningRequest),
+    docUrl: getDocURL(state.apiVersioning),
     location: state.routing.location,
-    metadata: state.versioningRequest.metadata,
-    version: getVersion(state.versioningRequest),
+    metadata: state.apiVersioning.metadata,
+    version: getVersion(state.apiVersioning),
   };
 };
 

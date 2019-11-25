@@ -49,7 +49,7 @@ export interface IApiVersioning {
 }
 
 export interface IRootState {
+  apiVersioning: IApiVersioning;
   application: IApplication;
   routing: RouterState;
-  versioningRequest: IApiVersioning;
 }

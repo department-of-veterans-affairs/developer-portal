@@ -46,7 +46,7 @@ export const getVersion = createSelector(
   },
 );
 
-export function versioningRequest(
+export function apiVersioning(
   state = {
     docUrl: '',
     metadata: undefined,
