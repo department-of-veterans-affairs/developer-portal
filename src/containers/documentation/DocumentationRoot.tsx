@@ -8,6 +8,7 @@ import { Route, Switch } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { currentVersion } from '../../reducers/versioning-request';
 import { IApiNameParam } from '../../types';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
@@ -16,7 +17,6 @@ import DocumentationOverview from './DocumentationOverview';
 import QuickstartPage from './QuickstartPage';
 
 import './Documentation.scss';
-import SwaggerDocs from './SwaggerDocs';
 
 function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
   return (
@@ -24,7 +24,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
       <SideNavEntry
         key={api.urlFragment}
         exact={true}
-        to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}#${SwaggerDocs.currentHash}`}
+        to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}?version=${currentVersion}`}
         name={
           <React.Fragment>
             {api.name}

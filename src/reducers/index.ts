@@ -1,4 +1,4 @@
-import { IUpdateApiVersionAction, SubmitFormAction, UpdateApplicationAction } from '../actions';
+import { SubmitFormAction, UpdateApplicationAction } from '../actions';
 import { IApplication, IApplicationInputs } from '../types';
 import * as constants from '../types/constants';
 
@@ -113,14 +113,3 @@ export function application(
       return { ...state, inputs: applicationInput(state.inputs, action) };
   }
 }
-
-export function apiVersion(
-  state: string = '',
-  action: IUpdateApiVersionAction ): string {
-    switch(action.type) {
-      case constants.UPDATE_API_VERSION:
-        return action.version;
-      default:
-        return state;
-    }
-  }
