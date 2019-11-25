@@ -43,7 +43,7 @@ const mapStateToProps = (state : IRootState) => {
 const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion | actions.ISetInitialVersioning>) => {
   return {
     setInitialVersioning: (url: string, metadata: any) => { dispatch(actions.setInitialVersioning(url, metadata)); },
-    setRequestedApiVersion: (version: string) => { dispatch(actions.setApiRequestedVersion(version)); },
+    setRequestedApiVersion: (version: string) => { dispatch(actions.setRequstedApiVersion(version)); },
   };
 };
 

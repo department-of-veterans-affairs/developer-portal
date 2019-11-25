@@ -314,7 +314,7 @@ export const toggleAcceptTos: ActionCreator<IToggleAcceptTos> = () => {
   };
 };
 
-export const setApiRequestedVersion: ActionCreator<ISetRequestedApiVersion> = (version: string) => {
+export const setRequstedApiVersion: ActionCreator<ISetRequestedApiVersion> = (version: string) => {
   return {
     type: constants.SET_REQUESTED_API_VERSION,
     version,

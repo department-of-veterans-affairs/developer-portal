@@ -36,7 +36,7 @@ const mapStateToProps = (state : IRootState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion>) => {
   return {
-    setRequestedApiVersion: (version: string) => { dispatch(actions.setApiRequestedVersion(version)); },
+    setRequestedApiVersion: (version: string) => { dispatch(actions.setRequstedApiVersion(version)); },
   };
 };
 
