@@ -130,7 +130,7 @@ class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocum
   }
 
   private onTabSelect(tabIndex: number) {
-    let tab = this.props.apiDefinition.docSources[tabIndex].key;
+    const tab = this.props.apiDefinition.docSources[tabIndex].key;
     const params = new URLSearchParams(history.location.search);
     if (tab) {
       params.set('tab', tab);
