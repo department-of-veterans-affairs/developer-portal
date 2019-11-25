@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SwaggerUI from 'swagger-ui';
 import * as actions from '../../actions';
 import { IApiDocSource } from '../../apiDefs/schema';
-import { getDocURL, getVersion } from '../../reducers/versioning-request';
+import { getDocURL, getVersion } from '../../reducers/api-versioning';
 import { history } from '../../store';
 import { IRootState } from '../../types';
 import { SwaggerPlugins } from './swaggerPlugins';
@@ -52,13 +52,14 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
 
   public async componentDidMount() {
     await this.setMetadataAndDocUrl();
-    this.renderSwaggerUI();
     this.setSearchParam();
+    this.renderSwaggerUI();
   }
 
   public async componentDidUpdate(prevProps: ISwaggerDocsProps) {
     if (prevProps.apiName !== this.props.apiName) {
       await this.setMetadataAndDocUrl();
+      this.setSearchParam();
       this.renderSwaggerUI();
     } else if (prevProps.version !== this.props.version) {
       this.setSearchParam();

@@ -8,7 +8,7 @@ import { IApplication, IRootState } from './types';
 import createBrowserHistory from 'history/createBrowserHistory';
 
 import { application, initialApplicationState } from './reducers';
-import { versioningRequest } from './reducers/versioning-request';
+import { versioningRequest } from './reducers/api-versioning';
 
 export const history = createBrowserHistory({
   basename: process.env.PUBLIC_URL || '/',

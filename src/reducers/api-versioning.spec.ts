@@ -1,6 +1,6 @@
 import 'jest';
 import { IApiVersioning } from '../types';
-import { getDocURL, getVersion } from './versioning-request';
+import { getDocURL, getVersion } from './api-versioning';
 
 describe('get doc url', () => {
 
