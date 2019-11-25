@@ -1,11 +1,11 @@
 import 'jest';
-import { IApiVersioningRequest } from '../types';
+import { IApiVersioning } from '../types';
 import { getDocURL, getVersion } from './versioning-request';
 
 describe('get doc url', () => {
 
   it('should return initial doc url when no metadata', () => {
-    const state: IApiVersioningRequest = {
+    const state: IApiVersioning = {
       docUrl: 'http://google.com',
       metadata: null,
       requestedApiVersion: '1.0.0',
@@ -15,7 +15,7 @@ describe('get doc url', () => {
   });
 
   it('should return specified doc url when metadata is present', () => {
-    const state: IApiVersioningRequest = {
+    const state: IApiVersioning = {
       docUrl: 'http://google.com',
       metadata: {
         meta: {
@@ -37,7 +37,7 @@ describe('get doc url', () => {
 
 describe('get version', () => {
   it('should return \'current\' when metadata is not present', () => {
-    const state: IApiVersioningRequest = {
+    const state: IApiVersioning = {
       docUrl: 'http://google.com',
       metadata: null,
       requestedApiVersion: '1.0.0',
@@ -47,7 +47,7 @@ describe('get version', () => {
   });
 
   it('should return \'current\' when metadata is present and version is current version', () => {
-    const state: IApiVersioningRequest = {
+    const state: IApiVersioning = {
       docUrl: 'http://google.com',
       metadata: {
         meta: {
@@ -67,7 +67,7 @@ describe('get version', () => {
   });
 
   it('should return the version when metadata is present and version is not the current version', () => {
-    const state: IApiVersioningRequest = {
+    const state: IApiVersioning = {
       docUrl: 'http://google.com',
       metadata: {
         meta: {

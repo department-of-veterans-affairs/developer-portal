@@ -41,7 +41,7 @@ export interface IApplication {
   clientSecret: string;
 }
 
-export interface IApiVersioningRequest {
+export interface IApiVersioning {
   docUrl: string;
   metadata: any;
   requestedApiVersion: string;
@@ -50,5 +50,5 @@ export interface IApiVersioningRequest {
 export interface IRootState {
   application: IApplication;
   routing: RouterState;
-  versioningRequest: IApiVersioningRequest;
+  versioningRequest: IApiVersioning;
 }

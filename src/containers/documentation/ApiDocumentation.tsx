@@ -11,8 +11,6 @@ import SwaggerDocs from './SwaggerDocs';
 import { lookupApiCategory } from '../../apiDefs/query';
 import { IApiDescription, IApiDocSource } from '../../apiDefs/schema';
 import { history } from '../../store';
-import { IRootState } from '../../types';
-
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
@@ -20,19 +18,12 @@ interface IApiDocumentationProps {
   apiDefinition: IApiDescription;
   categoryKey: string;
   location: Location;
-  requestedApiVersion: string;
   setRequestedApiVersion: (version: string | null) => void;
 }
 
 interface IApiDocumentationState {
   tabIndex: number;
 }
-
-const mapStateToProps = (state : IRootState) => {
-  return {
-    requestedApiVersion: state.versioningRequest.requestedApiVersion,
-  };
-};
 
 const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion>) => {
   return {
@@ -140,4 +131,4 @@ class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocum
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ApiDocumentation);
+export default connect(null, mapDispatchToProps)(ApiDocumentation);

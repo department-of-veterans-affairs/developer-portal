@@ -1,15 +1,13 @@
 import { createSelector } from 'reselect';
 import { ISetInitialVersioning, ISetRequestedApiVersion } from '../actions';
 import { IVersionInfo } from '../containers/documentation/SwaggerDocs';
-import { IApiVersioningRequest } from '../types';
+import { IApiVersioning } from '../types';
 import * as constants from '../types/constants';
 
-export const currentVersion = 'current';
-
 const currentVersionStatus = 'Current Version';
-const getRequestedApiVersion = (state: IApiVersioningRequest) => state.requestedApiVersion;
-const getMetadata = (state: IApiVersioningRequest) => state.metadata;
-const getInitialDocURL = (state: IApiVersioningRequest) => state.docUrl;
+const getRequestedApiVersion = (state: IApiVersioning) => state.requestedApiVersion;
+const getMetadata = (state: IApiVersioning) => state.metadata;
+const getInitialDocURL = (state: IApiVersioning) => state.docUrl;
 
 const getVersionInfo = createSelector(
   getRequestedApiVersion, getMetadata,
@@ -18,7 +16,7 @@ const getVersionInfo = createSelector(
       return null;
     }
 
-    if (metadata && (!requestedVersion || requestedVersion === currentVersion)) {
+    if (metadata && (!requestedVersion || requestedVersion === constants.CURRENT_VERSION_IDENTIFIER)) {
       const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === currentVersionStatus;
       return metadata.meta.versions.find(selectCurrentVersion);
     } else {
@@ -42,9 +40,9 @@ export const getVersion = createSelector(
   getVersionInfo,
   (versionInfo: IVersionInfo) => {
     if (!versionInfo) {
-      return currentVersion;
+      return constants.CURRENT_VERSION_IDENTIFIER;
     }
-    return versionInfo.status === currentVersionStatus ? currentVersion : versionInfo.version;
+    return versionInfo.status === currentVersionStatus ? constants.CURRENT_VERSION_IDENTIFIER : versionInfo.version;
   },
 );
 
@@ -52,10 +50,10 @@ export function versioningRequest(
   state = {
     docUrl: '',
     metadata: undefined,
-    requestedApiVersion: currentVersion,
+    requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
   },
   action: ISetInitialVersioning | ISetRequestedApiVersion, 
-): IApiVersioningRequest {
+): IApiVersioning {
     switch(action.type) {
       case constants.SET_REQUESTED_API_VERSION:
         return {...state, requestedApiVersion: action.version};

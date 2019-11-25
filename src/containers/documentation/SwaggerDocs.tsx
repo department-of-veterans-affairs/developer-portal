@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
 import * as React from 'react';
 import { Dispatch } from 'react';
@@ -106,7 +107,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
       const response = await fetch(request);
       return response.json();
     } catch(error) {
-      return null;
+      Sentry.captureException(error);
     }
   }
 
