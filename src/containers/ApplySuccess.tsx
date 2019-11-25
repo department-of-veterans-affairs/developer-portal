@@ -48,6 +48,7 @@ const formFieldsToCategories = {
   communityCare: 'health',
   facilities: 'facilities',
   health: 'health',
+  vaForms: 'benefits',
   verification: 'verification',
 };
 
@@ -113,6 +114,7 @@ function ApplySuccess(props: IApplication) {
     (selectedApis.indexOf('benefits') === -1)
     && (selectedApis.indexOf('facilities') === -1)
     && (selectedApis.indexOf('appeals') === -1)
+    && (selectedApis.indexOf('vaForms') === -1)
   );
 
   const oAuthNotice = ((apis.health || apis.verification || apis.claims) && clientID && clientSecret)
