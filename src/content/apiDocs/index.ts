@@ -67,9 +67,9 @@ const healthContent: IApiCategoryContent = {
 const vaFormsContent: IApiCategoryContent = {
   intro: vaFormsIntro,
   overview: vaFormsOverview,
-  placardText: 'Verify Veteran status for job sites, e-commerce sites, and third-party benefit sites',
+  placardText: 'Look up VA forms and check for new versions.',
   releaseNotes: vaFormsReleaseNotes,
-  shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
+  shortDescription: 'Look up VA forms and check for new versions.',
 };
 
 const verificationContent: IApiCategoryContent = {
