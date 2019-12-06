@@ -107,6 +107,17 @@ export interface ISubmitFormError extends Action {
 
 export type SubmitFormAction = ISubmitForm | ISubmitFormSuccess | ISubmitFormError;
 
+export interface ISetRequestedApiVersion extends Action {
+  type: constants.SET_REQUESTED_API_VERSION;
+  version: string;
+}
+
+export interface ISetInitialVersioning extends Action {
+  docUrl: string;
+  metadata: any;
+  type: constants.SET_INITIAL_VERSIONING;
+}
+
 export type SubmitFormThunk = ThunkAction<
   Promise<SubmitFormAction>,
   IRootState,
@@ -311,5 +322,20 @@ export const toggleFacilitiesApi: ActionCreator<IToggleFacilitiesApi> = () => {
 export const toggleAcceptTos: ActionCreator<IToggleAcceptTos> = () => {
   return {
     type: constants.TOGGLE_ACCEPT_TOS,
+  };
+};
+
+export const setRequstedApiVersion: ActionCreator<ISetRequestedApiVersion> = (version: string) => {
+  return {
+    type: constants.SET_REQUESTED_API_VERSION,
+    version,
+  };
+};
+
+export const setInitialVersioning: ActionCreator<ISetInitialVersioning> = (docUrl: string, metadata: any) => {
+  return {
+    docUrl,
+    metadata,
+    type: constants.SET_INITIAL_VERSIONING,
   };
 };

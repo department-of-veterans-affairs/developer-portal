@@ -116,5 +116,4 @@ export function application(
     default:
       return { ...state, inputs: applicationInput(state.inputs, action) };
   }
-  return state;
 }

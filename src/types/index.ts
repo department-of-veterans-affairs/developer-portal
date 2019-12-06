@@ -42,7 +42,14 @@ export interface IApplication {
   clientSecret: string;
 }
 
+export interface IApiVersioning {
+  docUrl: string;
+  metadata: any;
+  requestedApiVersion: string;
+}
+
 export interface IRootState {
+  apiVersioning: IApiVersioning;
   application: IApplication;
   routing: RouterState;
 }

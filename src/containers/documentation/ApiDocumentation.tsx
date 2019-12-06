@@ -1,13 +1,16 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import * as actions from '../../actions';
 
 import { Flag } from 'flag';
 import { Location } from 'history';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import SwaggerDocs from './SwaggerDocs';
 
 import { lookupApiCategory } from '../../apiDefs/query';
 import { IApiDescription, IApiDocSource } from '../../apiDefs/schema';
 import { history } from '../../store';
-import SwaggerDocs from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
@@ -15,26 +18,35 @@ interface IApiDocumentationProps {
   apiDefinition: IApiDescription;
   categoryKey: string;
   location: Location;
+  setRequestedApiVersion: (version: string | null) => void;
 }
 
 interface IApiDocumentationState {
   tabIndex: number;
 }
 
-export default class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocumentationState> {
+const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion>) => {
+  return {
+    setRequestedApiVersion: (version: string) => { dispatch(actions.setRequstedApiVersion(version)); },
+  };
+};
+
+class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocumentationState> {
   public constructor(props : IApiDocumentationProps) {
     super(props);
     this.state = { tabIndex: 0 };
   }
 
   public componentDidMount() {
-    this.setTabIndexFromFragment();
+    this.setTabIndexFromQueryParams();
+    this.setApiVersionFromQueryParams();
   }
 
   public componentDidUpdate(prevProps: IApiDocumentationProps) {
     const { location } = this.props;
-    if (location.pathname !== prevProps.location.pathname || location.hash !== prevProps.location.hash) {
-      this.setTabIndexFromFragment();
+    if (location.pathname !== prevProps.location.pathname || location.search !== prevProps.location.search) {
+      this.setTabIndexFromQueryParams();
+      this.setApiVersionFromQueryParams();
     }
   }
 
@@ -80,19 +92,27 @@ export default class ApiDocumentation extends React.Component<IApiDocumentationP
     );
   }
 
-  private setTabIndexFromFragment() : void {
+  private setApiVersionFromQueryParams() {
+    const params = new URLSearchParams(this.props.location.search);
+    this.props.setRequestedApiVersion(params.get('version'));
+  }
+
+  private setTabIndexFromQueryParams() : void {
     if (this.props.apiDefinition.docSources.length > 1) {
-      const newTabIndex = this.getTabIndexFromFragment();
+      const newTabIndex = this.getTabIndexFromQueryParams();
       this.setState({ tabIndex: newTabIndex });
     }
   }
 
-  private getTabIndexFromFragment() : number {
-    if (this.props.location.hash) {
+  private getTabIndexFromQueryParams() : number {
+    if (this.props.location.search) {
+      const params = new URLSearchParams(history.location.search);
+
       const hasKey = (source : IApiDocSource) => !!source.key;
       const tabKeys = this.props.apiDefinition.docSources.filter(hasKey)
         .map(source => source.key!.toLowerCase());
-      const fromFragment = this.props.location.hash.slice(1).toLowerCase();
+      const tabQuery = params.get('tab');
+      const fromFragment = tabQuery ? tabQuery.toLowerCase() : '';
       const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === fromFragment);
       return tabIndex === -1 ? this.state.tabIndex : tabIndex;
     }
@@ -101,8 +121,14 @@ export default class ApiDocumentation extends React.Component<IApiDocumentationP
   }
 
   private onTabSelect(tabIndex: number) {
-    const hash = this.props.apiDefinition.docSources[tabIndex].key;
-    history.push(`${history.location.pathname}#${hash}`);
+    const tab = this.props.apiDefinition.docSources[tabIndex].key;
+    const params = new URLSearchParams(history.location.search);
+    if (tab) {
+      params.set('tab', tab);
+    }
+    history.push(`${history.location.pathname}?${params.toString()}`);
     this.setState({ tabIndex });
   }
 }
+
+export default connect(null, mapDispatchToProps)(ApiDocumentation);

@@ -53,7 +53,7 @@ Your application will need to redirect the user's browser to our OpenID authoriz
 
 ```http
 HTTP/1.1 302 Found
-Location: https://dev-api.va.gov/oauth2/authorize?
+Location: https://dev-api.va.gov/oauth2/authorization?
   client_id=s6BhdRkqt3
   &response_type=id_token
   &response_mode=fragment
@@ -90,7 +90,7 @@ Your application will need to redirect the user's browser to our OpenID authoriz
 
 ```http
 HTTP/1.1 302 Found
-Location: https://dev-api.va.gov/oauth2/authorize?
+Location: https://dev-api.va.gov/oauth2/authorization?
   response_type=code
   &scope=openid%20profile%20email%20offline_access
   &client_id=s6BhdRkqt3
