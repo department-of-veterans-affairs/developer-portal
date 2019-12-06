@@ -1,3 +1,10 @@
+## December 6, 2019
+The Veterans Integrated Service Network (VISN) identifier for each health facility is now available.
+- `visn` has been added to all `/facilities` endpoints. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3609)
+- For non-health facilities, this will return as `null`.
+
+---
+
 ## November 8, 2019
 The `/nearby` endpoint received major changes. 
 - Previously, the server retrieved an isochrone (a line connecting points of the same time) for a provided location and looked for facilities that fell within that polygon. Now the opposite is true: facilities have isochrones that are compared against the provided location. Users should see increased performance from this endpoint as a result.
