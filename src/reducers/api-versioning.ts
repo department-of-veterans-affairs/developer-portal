@@ -46,6 +46,16 @@ export const getVersion = createSelector(
   },
 );
 
+export const getVersionNumber = createSelector(
+  getVersionInfo,
+  (versionInfo: IVersionInfo) => {
+    if (!versionInfo) {
+      return '';
+    }
+    return versionInfo.version;
+  },
+);
+
 export function apiVersioning(
   state = {
     docUrl: '',

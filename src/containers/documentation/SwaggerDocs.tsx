@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SwaggerUI from 'swagger-ui';
 import * as actions from '../../actions';
 import { IApiDocSource } from '../../apiDefs/schema';
-import { getDocURL, getVersion } from '../../reducers/api-versioning';
+import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';
 import { history } from '../../store';
 import { IRootState } from '../../types';
 import { SwaggerPlugins } from './swaggerPlugins';
@@ -22,6 +22,7 @@ export interface ISwaggerDocsProps {
   setInitialVersioning: (url: string, metadata: any) => void;
   setRequestedApiVersion: (version: string) => void;
   version: string;
+  versionNumber: string;
 }
 
 export interface IVersionInfo {
@@ -38,6 +39,7 @@ const mapStateToProps = (state : IRootState) => {
     location: state.routing.location,
     metadata: state.apiVersioning.metadata,
     version: getVersion(state.apiVersioning),
+    versionNumber: getVersionNumber(state.apiVersioning),
   };
 };
 
@@ -121,7 +123,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
         plugins: [plugins],
         url: this.props.docUrl,
       });
-      ui.versionActions.setApiVersion(this.props.version);
+      ui.versionActions.setApiVersion(this.props.versionNumber);
       ui.versionActions.setApiMetadata(this.props.metadata);
     }
   }
