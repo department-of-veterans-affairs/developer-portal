@@ -14,7 +14,7 @@ import Header from './components/Header';
 import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
-import 'highlight.js/styles/github.css';
+import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/base.scss';
 
 class App extends React.Component {
@@ -55,6 +55,7 @@ class App extends React.Component {
       deprecated: deprecatedFlags,
       enabled: envFlags,
       hosted_apis: apiFlags,
+      show_testing_notice: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
       signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
     };
   }

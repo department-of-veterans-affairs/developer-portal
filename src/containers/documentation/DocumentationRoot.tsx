@@ -9,6 +9,7 @@ import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
+import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
 import CategoryPage from './CategoryPage';
@@ -23,7 +24,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
       <SideNavEntry
         key={api.urlFragment}
         exact={true}
-        to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}`}
+        to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}?version=${CURRENT_VERSION_IDENTIFIER}`}
         name={
           <React.Fragment>
             {api.name}

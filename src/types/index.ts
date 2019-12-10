@@ -17,6 +17,7 @@ export interface IApiList {
   claims: boolean;
   facilities: boolean;
   health: boolean;
+  vaForms: boolean;
   verification: boolean;
   communityCare: boolean;
 }
@@ -41,7 +42,14 @@ export interface IApplication {
   clientSecret: string;
 }
 
+export interface IApiVersioning {
+  docUrl: string;
+  metadata: any;
+  requestedApiVersion: string;
+}
+
 export interface IRootState {
+  apiVersioning: IApiVersioning;
   application: IApplication;
   routing: RouterState;
 }

@@ -42,3 +42,16 @@ because of the service worker. To prevent this issue in the future the service w
 ## Revproxy Routing
 
 The developer portal sits behind an Nginx reverse proxy. Nginx is configured to route all requests to `/static` through to `/static`. All other paths are routed to `index.html`. This allows react to be in control of `404`ing any bad paths. However there are a group of paths at the root that need to be routed to (favicon.ico, google analytics, etc...). Ngnix is configured to explicitly route to these files. If you need to add an additional file hosted at the root of the developer portal do so [here](https://github.com/department-of-veterans-affairs/devops/blob/master/ansible/deployment/config/revproxy-vagov/vars/developer_portal_root_routes.yml). The vars in that file are used where the developer-portal [is configured](https://github.com/department-of-veterans-affairs/devops/blob/master/ansible/deployment/config/revproxy-vagov/templates/nginx_revproxy.conf.j2#L668) in the revproxy (search for `developer_portal_root_routes`)
+
+## Adding Additional APIs to the Apply Page
+
+Adding a new API to the apply page requires changes in a few different places. You'll need to add the API in the following places:
+
+ * `actions/index.ts` - To control the toggling of the checkbox when signing up
+ * `containers/ApplyForm.ts` - Get the new API's checkbox on the apply page
+ * `containers/ApplySuccess.ts` - Show's the new API key if needed after it has been generated
+ * `reducers/index.ts` - Controls which APIs have been checked on the apply page
+
+## Running the Backend Locally
+
+Sometimes you will need to test the apply page locally. To do so you can fire up the backend and point the developer portal at it. Clone the `developer-portal-lambda-backend` repo. Run `docker-compose up` and local DynamoDB, Kong and lambda containers will spin up. If you update `.env.local` with `REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=http://localhost:9000` (You'll need to restart your locally running developer portal) you can test the apply page locally. See the [backend repo](https://github.com/department-of-veterans-affairs/developer-portal-lambda-backend#local-interation) for more information about running the backend locally.

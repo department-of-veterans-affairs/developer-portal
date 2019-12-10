@@ -1,7 +1,14 @@
+import * as Sentry from '@sentry/browser';
+import { Location } from 'history';
 import * as React from 'react';
+import { Dispatch } from 'react';
+import { connect } from 'react-redux';
 import SwaggerUI from 'swagger-ui';
-
+import * as actions from '../../actions';
 import { IApiDocSource } from '../../apiDefs/schema';
+import { getDocURL, getVersion } from '../../reducers/api-versioning';
+import { history } from '../../store';
+import { IRootState } from '../../types';
 import { SwaggerPlugins } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
@@ -9,11 +16,11 @@ import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 export interface ISwaggerDocsProps {
   apiName: string;
   docSource: IApiDocSource;
-}
-
-export interface ISwaggerDocsState {
   docUrl: string;
+  location: Location;
   metadata: any;
+  setInitialVersioning: (url: string, metadata: any) => void;
+  setRequestedApiVersion: (version: string) => void;
   version: string;
 }
 
@@ -25,40 +32,38 @@ export interface IVersionInfo {
   internal_only: boolean;
 }
 
-export default class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwaggerDocsState> {
-  public constructor(props: ISwaggerDocsProps) {
-    super(props);
-    this.state = {
-      docUrl: props.docSource.openApiUrl,
-      metadata: {},
-      version: '',
-    };
+const mapStateToProps = (state : IRootState) => {
+  return {
+    docUrl: getDocURL(state.apiVersioning),
+    location: state.routing.location,
+    metadata: state.apiVersioning.metadata,
+    version: getVersion(state.apiVersioning),
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion | actions.ISetInitialVersioning>) => {
+  return {
+    setInitialVersioning: (url: string, metadata: any) => { dispatch(actions.setInitialVersioning(url, metadata)); },
+    setRequestedApiVersion: (version: string) => { dispatch(actions.setRequstedApiVersion(version)); },
+  };
+};
+
+class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
+
+  public async componentDidMount() {
+    await this.setMetadataAndDocUrl();
+    this.setSearchParam();
+    this.renderSwaggerUI();
   }
 
-  public handleVersionChange(version: string) {
-    const versionMetadata = this.state.metadata.meta.versions.find((versionInfo: IVersionInfo) => {
-      return versionInfo.version === version;
-    });
-    this.setState({
-      docUrl: this.buildUrlFromVersionInfo(versionMetadata),
-      version,
-    });
-  }
-  
-  public componentDidMount() {
-    this.loadMetaDataAndRender();
-  }
-
-  public componentDidUpdate(prevProps: ISwaggerDocsProps, prevState: ISwaggerDocsState) {
+  public async componentDidUpdate(prevProps: ISwaggerDocsProps) {
     if (prevProps.apiName !== this.props.apiName) {
-      this.setState({
-        docUrl: this.props.docSource.openApiUrl,
-        metadata: null,
-        version: '',
-      });
-      this.loadMetaDataAndRender();
-    } else {
-      this.renderSwaggerUI(this.state.metadata);
+      await this.setMetadataAndDocUrl();
+      this.setSearchParam();
+      this.renderSwaggerUI();
+    } else if (prevProps.version !== this.props.version) {
+      this.setSearchParam();
+      this.renderSwaggerUI();
     }
   }
   
@@ -71,51 +76,55 @@ export default class SwaggerDocs extends React.Component<ISwaggerDocsProps, ISwa
       </React.Fragment>
     );
   }
-  
-  private loadMetaDataAndRender() {
-    const { metadataUrl } = this.props.docSource;
-    if (metadataUrl) {
-      const request = new Request(`${metadataUrl}`, {
-        method: 'GET',
-      });
-      fetch(request)
-      .then(response => response.json())
-      .then(json => {
-        const currentVersionInfo = this.getCurrentVersionInfo(json);
-        this.setState({
-          docUrl: this.buildUrlFromVersionInfo(currentVersionInfo),
-          metadata: json,
-          version: currentVersionInfo.version,
-        });
-        this.renderSwaggerUI(json);
-      })
-      // fall back to openApiUrl as default if metadata request fails
-      .catch(error => this.renderSwaggerUI());
-    } else {
-      this.renderSwaggerUI();
+
+  private handleVersionChange(version: string) {
+    this.props.setRequestedApiVersion(version);
+    this.setSearchParam();
+  }
+
+  private setSearchParam() {
+    const version = this.props.version;
+    const params = new URLSearchParams(this.props.location.search);
+    if (params.get('version') !== version) {
+      params.set('version', version);
+      history.push(`${history.location.pathname}?${params.toString()}`);
     }
   }
 
-  private buildUrlFromVersionInfo(versionInfo: IVersionInfo) {
-    return `${process.env.REACT_APP_VETSGOV_SWAGGER_API}${versionInfo.path}`;
+  private async setMetadataAndDocUrl() {
+    const { openApiUrl, metadataUrl } = this.props.docSource;
+    const metadata = await this.getMetadata(metadataUrl);
+    this.props.setInitialVersioning(openApiUrl, metadata);
   }
 
-  private getCurrentVersionInfo(metadata: any) : IVersionInfo {
-    const selectCurrentVersion = (versionInfo: IVersionInfo) => versionInfo.status === 'Current Version';
-    return metadata.meta.versions.find(selectCurrentVersion);
+  private async getMetadata(metadataUrl?: string): Promise<any> {
+    if (!metadataUrl) {
+      return null;
+    }
+    try {
+      const request = new Request(`${metadataUrl}`, {
+        method: 'GET',
+      });
+      const response = await fetch(request);
+      return response.json();
+    } catch(error) {
+      Sentry.captureException(error);
+    }
   }
 
-  private renderSwaggerUI(metadata?: object) {
-    if (this.state.docUrl.length !== 0) {
+  private renderSwaggerUI() {
+    if (this.props.docUrl.length !== 0) {
       const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
       const ui = SwaggerUI({
         dom_id: '#swagger-ui',
         layout: 'ExtendedLayout',
         plugins: [plugins],
-        url: this.state.docUrl,
+        url: this.props.docUrl,
       });
-      ui.versionActions.setApiMetadata(metadata);
-      ui.versionActions.setApiVersion(this.state.version);
+      ui.versionActions.setApiVersion(this.props.version);
+      ui.versionActions.setApiMetadata(this.props.metadata);
     }
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(SwaggerDocs);

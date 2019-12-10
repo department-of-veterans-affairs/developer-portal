@@ -60,6 +60,10 @@ export interface IToggleFacilitiesApi extends Action {
   type: constants.TOGGLE_FACILITIES_CHECKED;
 }
 
+export interface IToggleVaFormsApi extends Action {
+  type: constants.TOGGLE_VA_FORMS_CHECKED;
+}
+
 export interface IToggleVerificationApi extends Action {
   type: constants.TOGGLE_VERIFICATION_CHECKED;
 }
@@ -78,6 +82,7 @@ export type UpdateApplicationAction =
   | IToggleBenefitsApi
   | IToggleClaimsApi
   | IToggleAppealsApi
+  | IToggleVaFormsApi
   | IToggleVerificationApi
   | IToggleFacilitiesApi
   | IToggleHealthApi
@@ -101,6 +106,17 @@ export interface ISubmitFormError extends Action {
 }
 
 export type SubmitFormAction = ISubmitForm | ISubmitFormSuccess | ISubmitFormError;
+
+export interface ISetRequestedApiVersion extends Action {
+  type: constants.SET_REQUESTED_API_VERSION;
+  version: string;
+}
+
+export interface ISetInitialVersioning extends Action {
+  docUrl: string;
+  metadata: any;
+  type: constants.SET_INITIAL_VERSIONING;
+}
 
 export type SubmitFormThunk = ThunkAction<
   Promise<SubmitFormAction>,
@@ -285,6 +301,12 @@ export const toggleCommunityCareApi: ActionCreator<IToggleCommunityCareApi> = ()
   };
 };
 
+export const toggleVaForms: ActionCreator<IToggleVaFormsApi> = () => {
+  return {
+    type: constants.TOGGLE_VA_FORMS_CHECKED,
+  };
+};
+
 export const toggleVerificationApi: ActionCreator<IToggleVerificationApi> = () => {
   return {
     type: constants.TOGGLE_VERIFICATION_CHECKED,
@@ -300,5 +322,20 @@ export const toggleFacilitiesApi: ActionCreator<IToggleFacilitiesApi> = () => {
 export const toggleAcceptTos: ActionCreator<IToggleAcceptTos> = () => {
   return {
     type: constants.TOGGLE_ACCEPT_TOS,
+  };
+};
+
+export const setRequstedApiVersion: ActionCreator<ISetRequestedApiVersion> = (version: string) => {
+  return {
+    type: constants.SET_REQUESTED_API_VERSION,
+    version,
+  };
+};
+
+export const setInitialVersioning: ActionCreator<ISetInitialVersioning> = (docUrl: string, metadata: any) => {
+  return {
+    docUrl,
+    metadata,
+    type: constants.SET_INITIAL_VERSIONING,
   };
 };
