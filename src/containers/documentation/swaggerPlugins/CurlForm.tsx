@@ -96,7 +96,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     if (this.isSwagger2()) {
       spec.host = this.state.env ? `${this.state.env}-${spec.host}` : spec.host;
     } else {
-      let version = this.props.system.versionSelectors.majorVersion();
+      const version = this.props.system.versionSelectors.majorVersion();
       options.server = this.state.env;
       options.serverVariables = {
         version: `v${version}`,
