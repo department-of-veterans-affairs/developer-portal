@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import { Flag } from 'flag';
-import { RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
-import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
+import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
@@ -93,30 +93,39 @@ function ExploreSideNav() {
 
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
+    const { apiCategoryKey } = this.props.match.params;
+    const validCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
     return (
       <div className={classNames('documentation', 'vads-u-padding-y--5')}>
         <section className="vads-l-grid-container">
           <div className="vads-l-row">
             <ExploreSideNav />
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-              <Route exact={true} path="/explore/" component={DocumentationOverview} />
-              <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
               <Switch>
-                <Route
-                  exact={true}
-                  path="/explore/:apiCategoryKey/docs/authorization"
-                  component={AuthorizationDocs}
-                  />
-                <Route
-                  exact={true}
-                  path="/explore/:apiCategoryKey/docs/quickstart"
-                  component={QuickstartPage}
-                  />
-                <Route
-                  exact={true}
-                  path="/explore/:apiCategoryKey/docs/:apiName"
-                  component={ApiPage}
-                  />
+                <Route exact={true} path="/explore/" component={DocumentationOverview} />
+                { validCategory &&
+                  <React.Fragment>
+                    <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
+                    <Route
+                      exact={true}
+                      path="/explore/:apiCategoryKey/docs/authorization"
+                      component={AuthorizationDocs}
+                      />
+                    <Route
+                      exact={true}
+                      path="/explore/:apiCategoryKey/docs/quickstart"
+                      component={QuickstartPage}
+                      />
+                    <Route
+                      exact={true}
+                      path="/explore/:apiCategoryKey/docs/:apiName"
+                      component={ApiPage}
+                      />
+                  </React.Fragment>
+                }
+                { !validCategory &&
+                  <Redirect from="/explore/:apiCategoryKey" to="/explore" />
+                }
               </Switch>
             </div>
           </div>
