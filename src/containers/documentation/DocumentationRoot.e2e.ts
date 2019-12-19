@@ -71,3 +71,10 @@ describe('position sticky', () => {
     expect(haloText).toEqual('Health API');
   });
 });
+
+describe('inavlid cagetories', () => {
+  it('should redirect to explore', async () => {
+    await page.goto(`${puppeteerHost}/explore/invalid`, { waitUntil: 'networkidle0' });
+    expect(page.url()).toEqual(`${puppeteerHost}/explore`);
+  });
+});
