@@ -94,7 +94,7 @@ function ExploreSideNav() {
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
-    const validCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
+    const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
     return (
       <div className={classNames('documentation', 'vads-u-padding-y--5')}>
         <section className="vads-l-grid-container">
@@ -102,7 +102,7 @@ export default class DocumentationRoot extends React.Component<RouteComponentPro
             <ExploreSideNav />
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
               <Switch>
-                { !validCategory &&
+                { !shouldRouteCategory &&
                   <Redirect from="/explore/:apiCategoryKey" to="/explore" />
                 }
                 <Route exact={true} path="/explore/" component={DocumentationOverview} />
