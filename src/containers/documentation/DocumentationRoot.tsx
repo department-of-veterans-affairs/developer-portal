@@ -102,29 +102,26 @@ export default class DocumentationRoot extends React.Component<RouteComponentPro
             <ExploreSideNav />
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
               <Switch>
-                <Route exact={true} path="/explore/" component={DocumentationOverview} />
-                { validCategory &&
-                  <React.Fragment>
-                    <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
-                    <Route
-                      exact={true}
-                      path="/explore/:apiCategoryKey/docs/authorization"
-                      component={AuthorizationDocs}
-                      />
-                    <Route
-                      exact={true}
-                      path="/explore/:apiCategoryKey/docs/quickstart"
-                      component={QuickstartPage}
-                      />
-                    <Route
-                      exact={true}
-                      path="/explore/:apiCategoryKey/docs/:apiName"
-                      component={ApiPage}
-                      />
-                  </React.Fragment>
-                }
                 { !validCategory &&
                   <Redirect from="/explore/:apiCategoryKey" to="/explore" />
+                }
+                <Route exact={true} path="/explore/" component={DocumentationOverview} />
+                  <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
+                  <Route
+                    exact={true}
+                    path="/explore/:apiCategoryKey/docs/authorization"
+                    component={AuthorizationDocs}
+                    />
+                  <Route
+                    exact={true}
+                    path="/explore/:apiCategoryKey/docs/quickstart"
+                    component={QuickstartPage}
+                    />
+                  <Route
+                    exact={true}
+                    path="/explore/:apiCategoryKey/docs/:apiName"
+                    component={ApiPage}
+                    />
                 }
               </Switch>
             </div>
