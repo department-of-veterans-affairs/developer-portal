@@ -206,7 +206,7 @@ node('vetsgov-general-purpose') {
         sh 'cd /application && npm run test:visual'
       }
     } catch (error) {
-      dir('src/__image_snapshots__/__diff_output__') {
+      dir('test/image_snapshots/diff_output') {
         withEnv(["ref=${ref}",'bucket=developer-portal-screenshots']) {
           // Upload diffs to S3
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
