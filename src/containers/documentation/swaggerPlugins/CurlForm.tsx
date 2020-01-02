@@ -30,7 +30,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       params: this.props.operation.parameters,
     };
 
-    if (!this.isSwagger2() && this.requirementsMet()) {
+    if (this.requirementsMet()) {
       state.env = this.jsonSpec().servers[0].url;
     }
 
@@ -44,13 +44,9 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
 
   public requirementsMet() {
     const hasSecurity = Object.keys(this.props.operation).includes('security');
-    if (this.isSwagger2()) {
-      return hasSecurity && this.jsonSpec().host;
-    } else {
-      const hasServerBlock =
-        this.jsonSpec().servers !== undefined && this.containsServerInformation();
-      return hasSecurity && hasServerBlock;
-    }
+    const hasServerBlock =
+      this.jsonSpec().servers !== undefined && this.containsServerInformation();
+    return hasSecurity && hasServerBlock;
   }
 
   public jsonSpec() {
@@ -93,15 +89,11 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       spec: {},
     };
 
-    if (this.isSwagger2()) {
-      spec.host = this.state.env ? `${this.state.env}-${spec.host}` : spec.host;
-    } else {
-      const version = this.props.system.versionSelectors.majorVersion();
-      options.server = this.state.env;
-      options.serverVariables = {
-        version: `v${version}`,
-      };
-    }
+    const version = this.props.system.versionSelectors.majorVersion();
+    options.server = this.state.env;
+    options.serverVariables = {
+      version: `v${version}`,
+    };
     options.spec = spec;
 
     if (this.state.apiKey.length > 0) {
@@ -111,9 +103,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         },
       };
     } else {
-      const token = this.isSwagger2()
-        ? `Bearer: ${this.state.bearerToken}`
-        : this.state.bearerToken;
+      const token = this.state.bearerToken;
       options.securities = {
         authorized: {
           bearer_token: token,
@@ -134,10 +124,6 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     } else {
       return null;
     }
-  }
-
-  public isSwagger2() {
-    return this.jsonSpec().swagger === '2.0';
   }
 
   public authParameterContainer() {
@@ -179,28 +165,13 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   }
 
   public environmentOptions() {
-    if (this.isSwagger2()) {
-      const options = [
-        { value: 'dev', display: 'Development' },
-        { value: 'staging', display: 'Staging' },
-        { value: '', display: 'Production' },
-      ];
-      return options.map((optionValues, i) => {
-        return (
-          <option value={optionValues.value} key={i}>
-            {optionValues.display}
-          </option>
-        );
-      });
-    } else {
-      return this.jsonSpec().servers.map((server: any, i: number) => {
-        return (
-          <option value={server.url} key={i}>
-            {server.description}
-          </option>
-        );
-      });
-    }
+    return this.jsonSpec().servers.map((server: any, i: number) => {
+      return (
+        <option value={server.url} key={i}>
+          {server.description}
+        </option>
+      );
+    });
   }
 
   public containsServerInformation() {
