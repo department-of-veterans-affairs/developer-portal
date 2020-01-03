@@ -96,7 +96,21 @@ node('vetsgov-general-purpose') {
       prNum = getPullRequestNumber()
       echo("The pull request number captured from the github API: ${prNum}")
       deleteDir()
-      checkout scm
+      checkout([
+        $class: 'GitSCM',
+        branches: [[name: '*/master']],
+        doGenerateSubmoduleConfigurations: false,
+        extensions: [
+          [$class: 'CleanBeforeCheckout'],
+          [$class: 'CleanCheckout'],
+          [$class: 'GitLFSPull']
+        ],
+        submoduleCfg: [],
+        userRemoteConfigs: [[
+        credentialsId: 'va-vfs-bot',
+        url: 'https://github.com/department-of-veterans-affairs/developer-portal'
+        ]]
+      ])
 
       ref = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
       shortRef = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
