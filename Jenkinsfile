@@ -98,7 +98,7 @@ node('vetsgov-general-purpose') {
       deleteDir()
       checkout([
         $class: 'GitSCM',
-        branches: [[name: '*/master']],
+        // branches: [[name: '*/master']],
         doGenerateSubmoduleConfigurations: false,
         extensions: [
           [$class: 'CleanBeforeCheckout'],
@@ -107,8 +107,8 @@ node('vetsgov-general-purpose') {
         ],
         submoduleCfg: [],
         userRemoteConfigs: [[
-        credentialsId: 'va-vfs-bot',
-        url: 'https://github.com/department-of-veterans-affairs/developer-portal'
+          credentialsId: 'va-vfs-bot',
+          url: 'https://github.com/department-of-veterans-affairs/developer-portal'
         ]]
       ])
 
