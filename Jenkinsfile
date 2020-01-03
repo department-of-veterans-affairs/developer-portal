@@ -143,6 +143,8 @@ node('vetsgov-general-purpose') {
 
   stage('Image Prohibition') {
 		if (!onDeployableBranch()) {
+      sh "pwd"
+      sh "ls -lh"
 			sh "./prohibit_image_files.sh master HEAD"
 		} 
   }
