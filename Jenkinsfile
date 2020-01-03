@@ -98,7 +98,7 @@ node('vetsgov-general-purpose') {
       deleteDir()
       checkout([
         $class: 'GitSCM',
-        // branches: [[name: '*/master']],
+        branches: [[name: "origin/${env.BRANCH_NAME}"]],
         doGenerateSubmoduleConfigurations: false,
         extensions: [
           [$class: 'CleanBeforeCheckout'],
