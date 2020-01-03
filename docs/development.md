@@ -2,8 +2,16 @@
 
 ## Contents
 
+* [Prerequisites](#prerequisites)
 * [Guidelines and Standards](#guidelines-and-standards)
 * [Code Organization](#code-organization)
+
+## Prerequisites
+
+In order to work on the developer-portal you need to install git-lfs. You can do so by following [the official
+installation instructions](https://github.com/git-lfs/git-lfs/wiki/Installation). **If you do not install
+git-lfs then you run the risk of adding large binary files to the git history, thereby bloating the repository
+for all time.*
 
 ## Guidelines and Standards
 
