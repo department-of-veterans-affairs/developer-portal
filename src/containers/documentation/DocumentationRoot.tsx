@@ -2,8 +2,13 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import { Flag } from 'flag';
+<<<<<<< HEAD
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
+=======
+import { RouteComponentProps } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router-dom';
+>>>>>>> Add dynamic redirects
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
@@ -91,6 +96,21 @@ function ExploreSideNav() {
   );
 }
 
+const oldRouteToNew = [ 
+  { 
+    from: "/explore/verification/docs/disability_rating", 
+    to: '/explore/verification/docs/veteran_verification',
+  }, 
+  {
+    from: "/explore/verification/docs/service_history",
+    to: '/explore/verification/docs/veteran_verification',
+  }, 
+  {
+    from: "/explore/verification/docs/veteran_confirmation",
+    to: '/explore/verification/docs/veteran_verification',
+  },
+];
+
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
@@ -122,6 +142,16 @@ export default class DocumentationRoot extends React.Component<RouteComponentPro
                     path="/explore/:apiCategoryKey/docs/:apiName"
                     component={ApiPage}
                     />
+                }
+                { 
+                  oldRouteToNew.map( (routes) => {
+                    return <Redirect
+                      key={routes.from}
+                      exact={true}
+                      from={routes.from}
+                      to={routes.to}
+                    />;
+                  })
                 }
               </Switch>
             </div>
