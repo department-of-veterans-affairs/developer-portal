@@ -2,13 +2,9 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import { Flag } from 'flag';
-<<<<<<< HEAD
+
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
-=======
-import { RouteComponentProps } from 'react-router';
-import { Redirect, Route, Switch } from 'react-router-dom';
->>>>>>> Add dynamic redirects
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
@@ -122,6 +118,16 @@ export default class DocumentationRoot extends React.Component<RouteComponentPro
             <ExploreSideNav />
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
               <Switch>
+                {
+                  oldRouteToNew.map((routes) => {
+                    return <Redirect
+                      key={routes.from}
+                      exact={true}
+                      from={routes.from}
+                      to={routes.to}
+                    />;
+                  })
+                }
                 { !shouldRouteCategory &&
                   <Redirect from="/explore/:apiCategoryKey" to="/explore" />
                 }
@@ -142,16 +148,6 @@ export default class DocumentationRoot extends React.Component<RouteComponentPro
                     path="/explore/:apiCategoryKey/docs/:apiName"
                     component={ApiPage}
                     />
-                }
-                { 
-                  oldRouteToNew.map( (routes) => {
-                    return <Redirect
-                      key={routes.from}
-                      exact={true}
-                      from={routes.from}
-                      to={routes.to}
-                    />;
-                  })
                 }
               </Switch>
             </div>
