@@ -98,7 +98,7 @@ node('vetsgov-general-purpose') {
       deleteDir()
       checkout([
         $class: 'GitSCM',
-        branches: [[name: '*/master']],
+        branches: [[name: "origin/${env.BRANCH_NAME}"]],
         doGenerateSubmoduleConfigurations: false,
         extensions: [
           [$class: 'CleanBeforeCheckout'],
@@ -107,8 +107,8 @@ node('vetsgov-general-purpose') {
         ],
         submoduleCfg: [],
         userRemoteConfigs: [[
-        credentialsId: 'va-vfs-bot',
-        url: 'https://github.com/department-of-veterans-affairs/developer-portal'
+          credentialsId: 'va-vfs-bot',
+          url: 'https://github.com/department-of-veterans-affairs/developer-portal'
         ]]
       ])
 
@@ -139,6 +139,12 @@ node('vetsgov-general-purpose') {
       notify()
       throw error
     }
+  }
+
+  stage('Image Prohibition') {
+		if (!onDeployableBranch()) {
+			sh "./prohibit_image_files.sh origin/master HEAD"
+		} 
   }
 
   stage('Security') {
