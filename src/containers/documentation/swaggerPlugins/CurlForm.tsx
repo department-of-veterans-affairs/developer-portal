@@ -24,7 +24,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   public constructor(props: ICurlFormProps) {
     super(props);
 
-    const requestBodyProperties:object[] = [];
+    const requestBodyProperties: object[] = [];
 
     const state = {
       apiKey: '',
@@ -45,7 +45,8 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     }
 
     if (this.props.operation.requestBody) {
-      const properties = this.props.operation.requestBody.content['application/json'].schema.properties;
+      const properties = this.props.operation.requestBody.content['application/json'].schema
+        .properties;
       Object.keys(properties).map((propertyName: any) => {
         const property = properties[propertyName];
         property.name = propertyName;
@@ -141,18 +142,18 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       };
     }
 
-    if(this.state.requestBodyProperties.length > 0) {
+    if (this.state.requestBodyProperties.length > 0) {
       const requestBody = {};
       this.state.requestBodyProperties.map((property: any) => {
-        if(property.type === 'array'){
+        if (property.type === 'array') {
           requestBody[property.name] = this.state[property.name].split(',');
-        } else if(property.type === 'object') {
+        } else if (property.type === 'object') {
           try {
             requestBody[property.name] = JSON.parse(this.state[property.name]);
           } catch (e) {
             requestBody[property.name] = this.state[property.name];
           }
-        }else{
+        } else {
           requestBody[property.name] = this.state[property.name];
         }
       });
