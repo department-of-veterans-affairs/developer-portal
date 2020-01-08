@@ -28,6 +28,7 @@ yarn-error.log*
 
 # Visual regression diffs
 src/__image_snapshots__/__diff_output__
+test/image_snapshots/diff_output
 
 # Text editors
 .vscode/

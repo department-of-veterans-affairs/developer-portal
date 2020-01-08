@@ -96,7 +96,21 @@ node('vetsgov-general-purpose') {
       prNum = getPullRequestNumber()
       echo("The pull request number captured from the github API: ${prNum}")
       deleteDir()
-      checkout scm
+      checkout([
+        $class: 'GitSCM',
+        branches: [[name: "origin/${env.BRANCH_NAME}"]],
+        doGenerateSubmoduleConfigurations: false,
+        extensions: [
+          [$class: 'CleanBeforeCheckout'],
+          [$class: 'CleanCheckout'],
+          [$class: 'GitLFSPull']
+        ],
+        submoduleCfg: [],
+        userRemoteConfigs: [[
+          credentialsId: 'va-vfs-bot',
+          url: 'https://github.com/department-of-veterans-affairs/developer-portal'
+        ]]
+      ])
 
       ref = sh(returnStdout: true, script: 'git rev-parse HEAD').trim()
       shortRef = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
@@ -125,6 +139,12 @@ node('vetsgov-general-purpose') {
       notify()
       throw error
     }
+  }
+
+  stage('Image Prohibition') {
+		if (!onDeployableBranch()) {
+			sh "./prohibit_image_files.sh origin/master HEAD"
+		} 
   }
 
   stage('Security') {
@@ -206,7 +226,7 @@ node('vetsgov-general-purpose') {
         sh 'cd /application && npm run test:visual'
       }
     } catch (error) {
-      dir('src/__image_snapshots__/__diff_output__') {
+      dir('test/image_snapshots/diff_output') {
         withEnv(["ref=${ref}",'bucket=developer-portal-screenshots']) {
           // Upload diffs to S3
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
