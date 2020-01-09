@@ -15,7 +15,7 @@ const verificationApis: IApiDescription[] = [
     vaInternalOnly: true,
   },
   {
-    description: "Confirm a Veteran's status, get a Veteran's disability rating, or get a Veteran's service history",
+    description: "Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.",
     docSources: [
       {
         openApiUrl: `${swaggerHost}/services/veteran_verification/docs/v0/veteran_verification`,
