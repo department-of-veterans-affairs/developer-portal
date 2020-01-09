@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import { Flag } from 'flag';
+
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
@@ -91,6 +92,21 @@ function ExploreSideNav() {
   );
 }
 
+const oldRouteToNew = [ 
+  { 
+    from: "/explore/verification/docs/disability_rating", 
+    to: '/explore/verification/docs/veteran_verification',
+  }, 
+  {
+    from: "/explore/verification/docs/service_history",
+    to: '/explore/verification/docs/veteran_verification',
+  }, 
+  {
+    from: "/explore/verification/docs/veteran_confirmation",
+    to: '/explore/verification/docs/veteran_verification',
+  },
+];
+
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
@@ -102,6 +118,16 @@ export default class DocumentationRoot extends React.Component<RouteComponentPro
             <ExploreSideNav />
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
               <Switch>
+                {
+                  oldRouteToNew.map((routes) => {
+                    return <Redirect
+                      key={routes.from}
+                      exact={true}
+                      from={routes.from}
+                      to={routes.to}
+                    />;
+                  })
+                }
                 { !shouldRouteCategory &&
                   <Redirect from="/explore/:apiCategoryKey" to="/explore" />
                 }
