@@ -15,9 +15,9 @@ export interface IApiList {
   appeals: boolean;
   benefits: boolean;
   claims: boolean;
+  confirmation: boolean;
   facilities: boolean;
   health: boolean;
-  vaConfirmation: boolean;
   vaForms: boolean;
   verification: boolean;
   communityCare: boolean;

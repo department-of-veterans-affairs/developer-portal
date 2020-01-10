@@ -21,9 +21,9 @@ interface IApplyProps extends IApplication {
   toggleAcceptTos: () => void;
   toggleBenefits: () => void;
   toggleClaims: () => void;
+  toggleConfirmation: () => void;
   toggleHealth: () => void;
   toggleFacilities: () => void;
-  toggleVaConfirmation: () => void;
   toggleVaForms: () => void;
   toggleVerification: () => void;
   toggleCommunityCare: () => void;
@@ -58,14 +58,14 @@ const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
     toggleCommunityCare: () => {
       dispatch(actions.toggleCommunityCareApi());
     },
+    toggleConfirmation: () => {
+      dispatch(actions.toggleConfirmation());
+    },
     toggleFacilities: () => {
       dispatch(actions.toggleFacilitiesApi());
     },
     toggleHealth: () => {
       dispatch(actions.toggleHealthApi());
-    },
-    toggleVaConfirmation: () => {
-      dispatch(actions.toggleVaConfirmation());
     },
     toggleVaForms: () => {
       dispatch(actions.toggleVaForms());
@@ -105,11 +105,11 @@ const formFieldsToFragments = {
   benefits: 'benefits',
   claims: 'claims',
   communityCare: 'community_care',
+  confirmation: 'veteran_confirmation',
   facilities: 'facilities',
   health: 'fhir',
-  vaConfirmation: 'veteran_confirmation',
   vaForms: 'vaForms',
-  verification: ['veteran_verification'],
+  verification: 'veteran_verification',
 };
 
 class ApplyForm extends React.Component<IApplyProps> {
@@ -210,12 +210,12 @@ class ApplyForm extends React.Component<IApplyProps> {
               <div className="form-checkbox">
                 <input
                   type="checkbox"
-                  id="vaConfirmation"
-                  name="vaConfirmation"
-                  checked={apis.vaConfirmation}
-                  onChange={props.toggleVaConfirmation}
+                  id="confirmation"
+                  name="confirmation"
+                  checked={apis.confirmation}
+                  onChange={props.toggleConfirmation}
                 />
-                <label htmlFor="vaConfirmation">VA Veteran Confirmation API</label>
+                <label htmlFor="confirmation">VA Veteran Confirmation API</label>
               </div>
 
               <h3>OAuth APIs:</h3>
