@@ -23,6 +23,7 @@ interface IApplyProps extends IApplication {
   toggleClaims: () => void;
   toggleHealth: () => void;
   toggleFacilities: () => void;
+  toggleVaConfirmation: () => void;
   toggleVaForms: () => void;
   toggleVerification: () => void;
   toggleCommunityCare: () => void;
@@ -62,6 +63,9 @@ const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
     },
     toggleHealth: () => {
       dispatch(actions.toggleHealthApi());
+    },
+    toggleVaConfirmation: () => {
+      dispatch(actions.toggleVaConfirmation());
     },
     toggleVaForms: () => {
       dispatch(actions.toggleVaForms());
@@ -103,8 +107,9 @@ const formFieldsToFragments = {
   communityCare: 'community_care',
   facilities: 'facilities',
   health: 'fhir',
+  vaConfirmation: 'veteran_confirmation',
   vaForms: 'vaForms',
-  verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
+  verification: ['veteran_verification'],
 };
 
 class ApplyForm extends React.Component<IApplyProps> {
@@ -200,6 +205,17 @@ class ApplyForm extends React.Component<IApplyProps> {
                   onChange={props.toggleVaForms}
                 />
                 <label htmlFor="vaForms">VA Forms API</label>
+              </div>
+
+              <div className="form-checkbox">
+                <input
+                  type="checkbox"
+                  id="vaConfirmation"
+                  name="vaConfirmation"
+                  checked={apis.vaConfirmation}
+                  onChange={props.toggleVaConfirmation}
+                />
+                <label htmlFor="vaConfirmation">VA Veteran Confirmation API</label>
               </div>
 
               <h3>OAuth APIs:</h3>

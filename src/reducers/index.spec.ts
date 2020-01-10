@@ -15,6 +15,7 @@ const app: IApplication = {
       communityCare: false,
       facilities: false,
       health: false,
+      vaConfirmation: false,
       vaForms: false,
       verification: false,
     },

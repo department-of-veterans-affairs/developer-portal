@@ -59,7 +59,7 @@ const apiDefinitions: IApiCategories = {
     properName: 'VA Form API',
   },
   verification: {
-    apiKey: false,
+    apiKey: true,
     apis: verificationApis,
     buttonText: 'Stay Informed',
     content: verificationContent,

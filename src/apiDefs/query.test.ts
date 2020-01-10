@@ -67,7 +67,7 @@ describe('query module', () => {
       const verificationApi = lookupApiCategory('verification');
       expect(verificationApi).not.toBeNull();
       expect(healthApi!.apis.length).toBeGreaterThanOrEqual(4);
-      expect(verificationApi!.apiKey).toBe(false);
+      expect(verificationApi!.apiKey).toBe(true);
     });
 
     it('returns null for an API that does not exist', () => {
