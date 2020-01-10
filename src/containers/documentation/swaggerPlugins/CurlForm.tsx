@@ -44,7 +44,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       });
     }
 
-    if (this.props.operation.requestBody) {
+    if (this.props.operation.requestBody && this.requirementsMet()) {
       const properties = this.props.operation.requestBody.content['application/json'].schema
         .properties;
       Object.keys(properties).map((propertyName: any) => {
@@ -69,7 +69,10 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     } else {
       const hasServerBlock =
         this.jsonSpec().servers !== undefined && this.containsServerInformation();
-      return hasSecurity && hasServerBlock;
+      const isFormData =
+        this.props.operation.requestBody &&
+        this.props.operation.requestBody.content['multipart/form-data'];
+      return hasSecurity && hasServerBlock && !isFormData;
     }
   }
 
