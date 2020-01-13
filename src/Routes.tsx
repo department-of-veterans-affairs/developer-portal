@@ -91,7 +91,7 @@ export function sitemapConfig() {
       [],
     );
 
-    if (route === '/explore/:apiCategoryKey/docs/:apiName' && !apiDefs[apiCategory].apiKey) {
+    if (route === '/explore/:apiCategoryKey/docs/:apiName' && apiDefs[apiCategory].apis.some(api => api.oAuth)) {
       routeParams.push('authorization');
     }
 

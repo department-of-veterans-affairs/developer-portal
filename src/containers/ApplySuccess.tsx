@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { getApiDefinitions } from '../apiDefs/query';
 import sentenceJoin from '../sentenceJoin';
 import { IApiList, IApplication, IRootState } from '../types';
+import { FORM_FIELDS_TO_URL_FRAGMENTS } from '../types/constants';
 
 const mapStateToProps = (state : IRootState) => {
   return {
@@ -41,22 +42,10 @@ const apisToEnglishOauthList = {
   verification: 'Veteran Verfication API',
 };
 
-// this isn't great but we need to do it in the short term since Apply isn't based on the API definitions
-const formFieldsToCategories = {
-  benefits: 'benefits',
-  claims: 'benefits',
-  communityCare: 'health',
-  facilities: 'facilities',
-  health: 'health',
-  vaForms: 'benefits',
-  verification: 'verification',
-};
 
-const apisToEnglishList = (apis: string[]): string => {
+const apisToEnglishList = (categories: string[]): string => {
   const apiDefs = getApiDefinitions();
-  return sentenceJoin(apis.map((k) => {
-    return apiDefs[formFieldsToCategories[k]].properName;
-  }));
+  return sentenceJoin(categories.map(key => apiDefs[key].properName));
 };
 
 function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } : IOAuthCredentialsNoticeProps) {
@@ -78,7 +67,9 @@ function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } 
 
 function ApiKeyNotice({ token, email, selectedApis } : IApiKeyNoticeProps) {
   const apiDefs = getApiDefinitions();
-  const apiListSnippet = apisToEnglishList(selectedApis.filter((k) => apiDefs[formFieldsToCategories[k]].apiKey));
+  const apiIds = selectedApis.map(api => FORM_FIELDS_TO_URL_FRAGMENTS[api]);
+  const categoryKeys = new Set(Object.keys(apiDefs).filter(cat => apiDefs[cat].apis.filter(api => apiIds.includes(api.urlFragment) && !api.oAuth).length > 0));
+  const apiListSnippet = apisToEnglishList(Array.from(categoryKeys));
 
   return (
     <div>
@@ -115,6 +106,7 @@ function ApplySuccess(props: IApplication) {
     && (selectedApis.indexOf('facilities') === -1)
     && (selectedApis.indexOf('appeals') === -1)
     && (selectedApis.indexOf('vaForms') === -1)
+    && (selectedApis.indexOf('confirmation') === -1)
   );
 
   const oAuthNotice = ((apis.health || apis.verification || apis.claims) && clientID && clientSecret)

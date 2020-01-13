@@ -72,7 +72,7 @@ export interface IToggleAcceptTos extends Action {
   type: constants.TOGGLE_ACCEPT_TOS;
 }
 
-export interface IToggleConfirmation extends Action {
+export interface IToggleConfirmationApi extends Action {
   type: constants.TOGGLE_CONFIRMATION_CHECKED;
 }
 
@@ -86,7 +86,7 @@ export type UpdateApplicationAction =
   | IToggleBenefitsApi
   | IToggleClaimsApi
   | IToggleAppealsApi
-  | IToggleConfirmation
+  | IToggleConfirmationApi
   | IToggleVaFormsApi
   | IToggleVerificationApi
   | IToggleFacilitiesApi
@@ -330,7 +330,7 @@ export const toggleAcceptTos: ActionCreator<IToggleAcceptTos> = () => {
   };
 };
 
-export const toggleConfirmation: ActionCreator<IToggleConfirmation> = () => {
+export const toggleConfirmation: ActionCreator<IToggleConfirmationApi> = () => {
   return {
     type: constants.TOGGLE_CONFIRMATION_CHECKED,
   };

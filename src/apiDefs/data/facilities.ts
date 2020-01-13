@@ -12,6 +12,7 @@ const facilitiesApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'VA Facilities API',
+    oAuth: false,
     urlFragment: 'facilities',
     vaInternalOnly: false,
   },

@@ -52,22 +52,18 @@ describe('query module', () => {
       const benefitsApi = lookupApiCategory('benefits');
       expect(benefitsApi).not.toBeNull();
       expect(benefitsApi!.apis.length).toBeGreaterThanOrEqual(4);
-      expect(benefitsApi!.apiKey).toBe(true);
       
       const facilitiesApi = lookupApiCategory('facilities');
       expect(facilitiesApi).not.toBeNull();
       expect(facilitiesApi!.apis.length).toBeGreaterThanOrEqual(1);
-      expect(facilitiesApi!.apiKey).toBe(true);
       
       const healthApi = lookupApiCategory('health');
       expect(healthApi).not.toBeNull();
       expect(healthApi!.apis.length).toBeGreaterThanOrEqual(4);
-      expect(healthApi!.apiKey).toBe(false);
       
       const verificationApi = lookupApiCategory('verification');
       expect(verificationApi).not.toBeNull();
       expect(healthApi!.apis.length).toBeGreaterThanOrEqual(4);
-      expect(verificationApi!.apiKey).toBe(true);
     });
 
     it('returns null for an API that does not exist', () => {

@@ -34,23 +34,6 @@ function lookupApiCategory(categoryKey: string): IApiCategory | null {
   return apiDefs[categoryKey] || null;
 }
 
-const apiToCategoryMapping: { [key: string]: IApiCategory } = Object.keys(apiDefs).reduce(
-  (mapping: {}, categoryKey: string) => {
-    for (const api of apiDefs[categoryKey].apis) {
-      mapping[api.urlFragment] = apiDefs[categoryKey];
-    }
-    return mapping;
-  },
-  {},
-);
-
-function categoriesFor(apiList: string[]): IApiCategory[] {
-  const categories: Set<IApiCategory> = new Set<IApiCategory>();
-  for (const apiKey of apiList) {
-    categories.add(apiToCategoryMapping[apiKey]);
-  }
-  return Array.from(categories);
-}
 
 function apisFor(apiList: string[]): IApiDescription[] {
   const allApis = getAllApis();
@@ -59,9 +42,7 @@ function apisFor(apiList: string[]): IApiDescription[] {
 }
 
 function includesOauthAPI(apiList: string[]): boolean {
-  const includesOauthCategory = categoriesFor(apiList).some(category => !category.apiKey);
-  const includesOauthOverride = apisFor(apiList).some(api => api.oAuth || false);
-  return includesOauthCategory || includesOauthOverride;
+  return apisFor(apiList).some(api => api.oAuth);
 }
 
 export {

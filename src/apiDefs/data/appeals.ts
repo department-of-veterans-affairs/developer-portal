@@ -12,6 +12,7 @@ const appealsApis : IApiDescription[] = [
     ],
     enabledByDefault: false,
     name: 'Decision Reviews API',
+    oAuth: false,
     urlFragment: 'decision_reviews',
     vaInternalOnly: true,
   },

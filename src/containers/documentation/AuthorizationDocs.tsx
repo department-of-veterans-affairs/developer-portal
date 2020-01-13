@@ -15,7 +15,7 @@ export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiN
     const { apiCategoryKey } = this.props.match.params;
     const category = lookupApiCategory(apiCategoryKey);
     if (category != null) {
-      if (category.apiKey === true) {
+      if (category.apis.some(api => !api.oAuth)) {
         return (<ApiKeyAuth apiCategoryKey={apiCategoryKey} />);
       } else {
         return (

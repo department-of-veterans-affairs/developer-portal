@@ -17,7 +17,7 @@ import verificationApis from './verification';
 
 const apiDefinitions: IApiCategories = {
   appeals: {
-    apiKey: true,
+    // apiKey: true,
     apis: appealsApis,
     buttonText: 'Get Your Key',
     content: appealsContent,
@@ -25,7 +25,7 @@ const apiDefinitions: IApiCategories = {
     properName: 'Appeals API',
   },
   benefits: {
-    apiKey: true,
+    // apiKey: true,
     apis: benefitsApis,
     buttonText: 'Get Your Key',
     content: benefitsContent,
@@ -33,7 +33,7 @@ const apiDefinitions: IApiCategories = {
     properName: 'Benefits Intake API',
   },
   facilities: {
-    apiKey: true,
+    // apiKey: true,
     apis: facilitiesApis,
     buttonText: 'Get Your Key',
     content: facilitiesContent,
@@ -41,7 +41,7 @@ const apiDefinitions: IApiCategories = {
     properName: 'VA Facilities API',
   },
   health: {
-    apiKey: false,
+    // apiKey: false,
     apis: healthApis,
     buttonText: 'Get Your Key',
     content: healthContent,
@@ -51,7 +51,7 @@ const apiDefinitions: IApiCategories = {
       "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
   },
   vaForms: {
-    apiKey: true,
+    // apiKey: true,
     apis: vaForms,
     buttonText: 'Stay Informed',
     content: vaFormsContent,
@@ -59,7 +59,7 @@ const apiDefinitions: IApiCategories = {
     properName: 'VA Form API',
   },
   verification: {
-    apiKey: true,
+    // apiKey: true,
     apis: verificationApis,
     buttonText: 'Stay Informed',
     content: verificationContent,

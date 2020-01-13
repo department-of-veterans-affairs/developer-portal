@@ -14,6 +14,7 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 import * as actions from '../actions';
 import { includesOauthAPI } from '../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../types';
+import { FORM_FIELDS_TO_URL_FRAGMENTS } from '../types/constants';
 import ApplyHeader from './ApplyHeader';
 
 interface IApplyProps extends IApplication {
@@ -98,18 +99,6 @@ const mapStateToProps = (state: IRootState) => {
   return {
     ...state.application,
   };
-};
-
-// Mapping from the options on the form to url fragments for APIs
-const formFieldsToFragments = {
-  benefits: 'benefits',
-  claims: 'claims',
-  communityCare: 'community_care',
-  confirmation: 'veteran_confirmation',
-  facilities: 'facilities',
-  health: 'fhir',
-  vaForms: 'vaForms',
-  verification: 'veteran_verification',
 };
 
 class ApplyForm extends React.Component<IApplyProps> {
@@ -380,7 +369,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private anyOAuthApisSelected() {
     const apiIdsByField = this.selectedApis().flatMap(
-      formField => formFieldsToFragments[formField],
+      formField => FORM_FIELDS_TO_URL_FRAGMENTS[formField],
     );
     return includesOauthAPI(apiIdsByField);
   }

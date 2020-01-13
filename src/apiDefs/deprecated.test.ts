@@ -15,6 +15,7 @@ describe('deprecated API module', () => {
       docSources: [],
       enabledByDefault: true,
       name: 'My API',
+      oAuth: false,
       urlFragment: 'my_api',
       vaInternalOnly: false,
     };
