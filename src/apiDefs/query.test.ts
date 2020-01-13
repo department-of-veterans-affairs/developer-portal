@@ -35,6 +35,7 @@ describe('query module', () => {
         ],
         enabledByDefault: true,
         name: 'VA Facilities API',
+        oAuth: false,
         urlFragment: 'facilities',
         vaInternalOnly: false,
       });
