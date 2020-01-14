@@ -36,6 +36,13 @@ interface IApplyProps extends IApplication {
   updateOrganization: (value: IErrorableInput) => void;
 }
 
+interface IFormCheckboxProps {
+  checked: boolean;
+  id: string;
+  label: string;
+  onChange: () => void;
+}
+
 type ApplicationDispatch = ThunkDispatch<
   IRootState,
   undefined,
@@ -101,6 +108,79 @@ const mapStateToProps = (state: IRootState) => {
   };
 };
 
+const FormCheckbox = (props: IFormCheckboxProps) => {
+  return (
+    <div className="form-checkbox">
+      <input
+        type="checkbox"
+        id={props.id}
+        name={props.id}
+        checked={props.checked}
+        onChange={props.onChange}
+      />
+      <label htmlFor={props.id}>{props.label}</label>
+    </div>
+  );
+};
+
+const oauthInfo = (props: IApplyProps) => {
+  return [
+    {
+      checked: props.inputs.apis.claims,
+      id: 'claims',
+      label: "VA Claims API",
+      onchange: props.toggleClaims,
+    },
+    {
+      checked: props.inputs.apis.health,
+      id: 'health',
+      label: "VA Health API",
+      onchange: props.toggleHealth,
+    },
+    {
+      checked: props.inputs.apis.communityCare,
+      id: 'communityCare',
+      label: "Community Care Eligibility API",
+      onchange: props.toggleCommunityCare,
+    },
+    {
+      checked: props.inputs.apis.verification,
+      id: 'verification',
+      label: "VA Veteran Verification API",
+      onchange: props.toggleVerification,
+    },
+  ];
+};
+
+const apiInfo = (props: IApplyProps) => {
+  return [
+    {
+      checked: props.inputs.apis.benefits,
+      id: 'benefits',
+      label: "VA Benefits API",
+      onchange: props.toggleBenefits,
+    },
+    {
+      checked: props.inputs.apis.facilities,
+      id: 'facilities',
+      label: "VA Facilities API",
+      onchange: props.toggleFacilities,
+    },
+    {
+      checked: props.inputs.apis.vaForms,
+      id: 'vaForms',
+      label: "VA Forms API",
+      onchange: props.toggleVaForms,
+    },
+    {
+      checked: props.inputs.apis.confirmation,
+      id: 'confirmation',
+      label: "VA Veteran Confirmation API",
+      onchange: props.toggleConfirmation,
+    },
+  ];
+};
+
 class ApplyForm extends React.Component<IApplyProps> {
   constructor(props: IApplyProps) {
     super(props);
@@ -108,7 +188,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   public render() {
     const {
-      inputs: { apis, description, email, firstName, lastName, organization, termsOfService },
+      inputs: { description, email, firstName, lastName, organization, termsOfService },
       ...props
     } = this.props;
     const applyClasses = classNames('vads-l-grid-container', 'vads-u-padding--4');
@@ -163,95 +243,11 @@ class ApplyForm extends React.Component<IApplyProps> {
 
               <h3>Standard APIs:</h3>
 
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="benefits"
-                  name="benefits"
-                  checked={apis.benefits}
-                  onChange={props.toggleBenefits}
-                />
-                <label htmlFor="benefits">VA Benefits API</label>
-              </div>
-
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="facilities"
-                  name="facilities"
-                  checked={apis.facilities}
-                  onChange={props.toggleFacilities}
-                />
-                <label htmlFor="facilities">VA Facilities API</label>
-              </div>
-
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="vaForms"
-                  name="vaForms"
-                  checked={apis.vaForms}
-                  onChange={props.toggleVaForms}
-                />
-                <label htmlFor="vaForms">VA Forms API</label>
-              </div>
-
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="confirmation"
-                  name="confirmation"
-                  checked={apis.confirmation}
-                  onChange={props.toggleConfirmation}
-                />
-                <label htmlFor="confirmation">VA Veteran Confirmation API</label>
-              </div>
+              {this.renderCheckboxes(apiInfo)}
 
               <h3>OAuth APIs:</h3>
 
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="claims"
-                  name="claims"
-                  checked={apis.claims}
-                  onChange={props.toggleClaims}
-                />
-                <label htmlFor="claims">VA Claims API</label>
-              </div>
-
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="health"
-                  name="health"
-                  checked={apis.health}
-                  onChange={props.toggleHealth}
-                />
-                <label htmlFor="health">VA Health API</label>
-              </div>
-
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="communityCare"
-                  name="communityCare"
-                  checked={apis.communityCare}
-                  onChange={props.toggleCommunityCare}
-                />
-                <label htmlFor="communityCare">Community Care Eligibility API</label>
-              </div>
-
-              <div className="form-checkbox">
-                <input
-                  type="checkbox"
-                  id="verification"
-                  name="verification"
-                  checked={apis.verification}
-                  onChange={props.toggleVerification}
-                />
-                <label htmlFor="verification">VA Veteran Verification API</label>
-              </div>
+              {this.renderCheckboxes(oauthInfo)}
 
               {this.anyOAuthApisSelected() && (
                 <div className="feature">
@@ -324,6 +320,19 @@ class ApplyForm extends React.Component<IApplyProps> {
         </div>
       </div>
     );
+  }
+
+  private renderCheckboxes(checkboxInfo: (props: IApplyProps) => any[]) {
+    return checkboxInfo(this.props).map((api) => {
+      return (
+        <FormCheckbox 
+            checked={api.checked}
+            onChange={api.onchange}
+            label={api.label}
+            id={api.id}
+            key={api.id}/>
+      );
+    });
   }
 
   private renderOAuthFields() {
