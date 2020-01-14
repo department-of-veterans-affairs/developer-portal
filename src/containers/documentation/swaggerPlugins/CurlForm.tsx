@@ -179,7 +179,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   }
 
   public requestBodyContainer() {
-    if (this.state.requestBodyProperties) {
+    if (this.state.requestBodyProperties.length > 0) {
       return (
         <div>
           <h3> Request Body: </h3>
