@@ -101,10 +101,6 @@ const oldRouteToNew = [
     from: "/explore/verification/docs/service_history",
     to: '/explore/verification/docs/veteran_verification',
   }, 
-  {
-    from: "/explore/verification/docs/veteran_confirmation",
-    to: '/explore/verification/docs/veteran_verification',
-  },
 ];
 
 export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {

@@ -80,6 +80,10 @@ sections:
     description: Audio and video related to developers, APIs, Veterans, and the Department of Veterans Affairs.
     media: true
     items:
+      - date: January 2020
+        source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
+        title: Authentication Methods for Mobile Apps and VA.gov
+        url:  https://www.youtube.com/watch?v=jmnH42Qse48
       - date: August 2019
         source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
         title: Discover VA's Health APIs

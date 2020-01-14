@@ -104,7 +104,7 @@ const formFieldsToFragments = {
   facilities: 'facilities',
   health: 'fhir',
   vaForms: 'vaForms',
-  verification: ['veteran_confirmation', 'service_history', 'disability_rating'],
+  verification: 'veteran_verification',
 };
 
 class ApplyForm extends React.Component<IApplyProps> {
