@@ -17,17 +17,21 @@ export interface ICurlFormState {
   bearerToken: string;
   env: string;
   params: object[];
+  requestBodyProperties: object[];
 }
 
 export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   public constructor(props: ICurlFormProps) {
     super(props);
 
+    const requestBodyProperties: object[] = [];
+
     const state = {
       apiKey: '',
       bearerToken: '',
       env: 'dev',
       params: this.props.operation.parameters,
+      requestBodyProperties,
     };
 
     if (!this.isSwagger2() && this.requirementsMet()) {
@@ -39,6 +43,22 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         state[parameter.name] = parameter.example || '';
       });
     }
+
+    if (this.props.operation.requestBody && this.requirementsMet()) {
+      const properties = this.props.operation.requestBody.content['application/json'].schema
+        .properties;
+      Object.keys(properties).map((propertyName: any) => {
+        const property = properties[propertyName];
+        property.name = propertyName;
+        requestBodyProperties.push(property);
+        if (property.type === 'array') {
+          state[propertyName] = property.items.example;
+        } else {
+          state[propertyName] = JSON.stringify(property.example);
+        }
+      });
+    }
+
     this.state = state;
   }
 
@@ -49,7 +69,10 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     } else {
       const hasServerBlock =
         this.jsonSpec().servers !== undefined && this.containsServerInformation();
-      return hasSecurity && hasServerBlock;
+      const isFormData =
+        this.props.operation.requestBody &&
+        this.props.operation.requestBody.content['multipart/form-data'];
+      return hasSecurity && hasServerBlock && !isFormData;
     }
   }
 
@@ -61,19 +84,19 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     this.setState({ ...this.state, [parameterName]: value });
   }
 
-  public buildInputs() {
+  public buildInputs(fields: object[]) {
     return (
       <div>
-        {this.state.params.map((parameter: any) => {
+        {fields.map((field: any) => {
           return (
-            <div key={parameter.name}>
-              <label htmlFor={parameter.name}>{parameter.name}</label>
+            <div key={field.name}>
+              <label htmlFor={field.name}>{field.name}</label>
               <input
                 type="text"
-                id={parameter.name}
-                placeholder={this.state[parameter.name]}
-                value={this.state[parameter.name]}
-                onChange={e => this.handleInputChange(parameter.name, e.target.value)}
+                id={field.name}
+                placeholder={this.state[field.name]}
+                value={this.state[field.name]}
+                onChange={e => this.handleInputChange(field.name, e.target.value)}
               />
             </div>
           );
@@ -87,6 +110,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     const options = {
       operationId: this.props.operation.operationId,
       parameters: this.state,
+      requestBody: {},
       securities: {},
       server: '',
       serverVariables: {},
@@ -120,6 +144,24 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         },
       };
     }
+
+    if (this.state.requestBodyProperties.length > 0) {
+      const requestBody = {};
+      this.state.requestBodyProperties.map((property: any) => {
+        if (property.type === 'array') {
+          requestBody[property.name] = this.state[property.name].split(',');
+        } else if (property.type === 'object') {
+          try {
+            requestBody[property.name] = JSON.parse(this.state[property.name]);
+          } catch (e) {
+            requestBody[property.name] = this.state[property.name];
+          }
+        } else {
+          requestBody[property.name] = this.state[property.name];
+        }
+      });
+      options.requestBody = requestBody;
+    }
     return this.props.system.fn.curlify(options);
   }
 
@@ -128,7 +170,20 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       return (
         <div>
           <h3> Parameters: </h3>
-          {this.buildInputs()}
+          {this.buildInputs(this.state.params)}
+        </div>
+      );
+    } else {
+      return null;
+    }
+  }
+
+  public requestBodyContainer() {
+    if (this.state.requestBodyProperties.length > 0) {
+      return (
+        <div>
+          <h3> Request Body: </h3>
+          {this.buildInputs(this.state.requestBodyProperties)}
         </div>
       );
     } else {
@@ -246,6 +301,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
               {this.authParameterContainer()}
               {this.environmentSelector()}
               {this.parameterContainer()}
+              {this.requestBodyContainer()}
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
