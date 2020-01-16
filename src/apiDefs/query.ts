@@ -42,7 +42,7 @@ function apisFor(apiList: string[]): IApiDescription[] {
 }
 
 function includesOauthAPI(apiList: string[]): boolean {
-  return apisFor(apiList).some(api => api.oAuth);
+  return apisFor(apiList).some(api => !!api.oAuth);
 }
 
 export {

@@ -82,7 +82,7 @@ function ExploreSideNav() {
                   subNavLevel={1}
                 />
               }
-              {categoryKey !== 'benefits' && apiCategory.apis.some(api => api.oAuth) && OAuthSideNavEntry(categoryKey)}
+              {categoryKey !== 'benefits' && apiCategory.apis.some(api => !!api.oAuth) && OAuthSideNavEntry(categoryKey)}
               {apiCategory.apis.map((api: IApiDescription) => SideNavApiEntry(categoryKey, api))}
             </SideNavEntry>
           </Flag>

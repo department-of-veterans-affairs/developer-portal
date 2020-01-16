@@ -35,7 +35,6 @@ describe('query module', () => {
         ],
         enabledByDefault: true,
         name: 'VA Facilities API',
-        oAuth: false,
         urlFragment: 'facilities',
         vaInternalOnly: false,
       });
@@ -53,18 +52,23 @@ describe('query module', () => {
       const benefitsApi = lookupApiCategory('benefits');
       expect(benefitsApi).not.toBeNull();
       expect(benefitsApi!.apis.length).toBeGreaterThanOrEqual(4);
+      expect(benefitsApi!.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(1);
       
       const facilitiesApi = lookupApiCategory('facilities');
       expect(facilitiesApi).not.toBeNull();
       expect(facilitiesApi!.apis.length).toBeGreaterThanOrEqual(1);
+      expect(facilitiesApi!.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
       
       const healthApi = lookupApiCategory('health');
       expect(healthApi).not.toBeNull();
       expect(healthApi!.apis.length).toBeGreaterThanOrEqual(4);
+      expect(healthApi!.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(4);
       
       const verificationApi = lookupApiCategory('verification');
       expect(verificationApi).not.toBeNull();
-      expect(healthApi!.apis.length).toBeGreaterThanOrEqual(4);
+      expect(verificationApi!.apis.length).toBeGreaterThanOrEqual(3);
+      expect(verificationApi!.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
+
     });
 
     it('returns null for an API that does not exist', () => {

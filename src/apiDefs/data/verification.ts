@@ -24,7 +24,6 @@ const verificationApis: IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Veteran Confirmation',
-    oAuth: false,
     urlFragment: 'veteran_confirmation',
     vaInternalOnly: false,
   },

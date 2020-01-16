@@ -15,7 +15,7 @@ export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiN
     const { apiCategoryKey } = this.props.match.params;
     const category = lookupApiCategory(apiCategoryKey);
     if (category != null) {
-      if (category.apis.some(api => api.oAuth) && apiCategoryKey !== 'benefits') {
+      if (category.apis.some(api => !!api.oAuth) && apiCategoryKey !== 'benefits') {
         return (
           <div className="va-api-authorization-docs">
             <PageHeader halo={category.name} header="Authorization" />

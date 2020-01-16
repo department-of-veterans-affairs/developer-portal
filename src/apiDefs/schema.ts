@@ -32,7 +32,7 @@ export interface IApiDescription {
   readonly description: string;
   readonly enabledByDefault: boolean;
   readonly vaInternalOnly: boolean;
-  readonly oAuth: boolean;
+  readonly oAuth?: boolean;
   readonly deprecated?: boolean | moment.Moment;
   readonly deprecationContent?: React.StatelessComponent;
 }

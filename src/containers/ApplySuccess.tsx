@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { getApiDefinitions } from '../apiDefs/query';
 import sentenceJoin from '../sentenceJoin';
 import { IApiList, IApplication, IRootState } from '../types';
-import { FORM_FIELDS_TO_URL_FRAGMENTS } from '../types/constants';
 
 const mapStateToProps = (state : IRootState) => {
   return {
@@ -42,10 +41,19 @@ const apisToEnglishOauthList = {
   verification: 'Veteran Verfication API',
 };
 
-
-const apisToEnglishList = (categories: string[]): string => {
+const apisToEnglishApiKeyList = () => {
   const apiDefs = getApiDefinitions();
-  return sentenceJoin(categories.map(key => apiDefs[key].properName));
+  return {
+    benefits: apiDefs.benefits.properName,
+    confirmation: 'Veteran Confirmation API',
+    facilities: apiDefs.facilities.properName,
+    vaForms: apiDefs.vaForms.properName,
+  };
+};
+
+
+const apisToEnglishList = (apis: string[]): string => {
+  return sentenceJoin(apis.map(api => apisToEnglishApiKeyList()[api]));
 };
 
 function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } : IOAuthCredentialsNoticeProps) {
@@ -66,10 +74,8 @@ function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } 
 }
 
 function ApiKeyNotice({ token, email, selectedApis } : IApiKeyNoticeProps) {
-  const apiDefs = getApiDefinitions();
-  const apiIds = selectedApis.map(api => FORM_FIELDS_TO_URL_FRAGMENTS[api]);
-  const categoryKeys = new Set(Object.keys(apiDefs).filter(cat => apiDefs[cat].apis.filter(api => apiIds.includes(api.urlFragment) && !api.oAuth).length > 0));
-  const apiListSnippet = apisToEnglishList(Array.from(categoryKeys));
+  const apiList = selectedApis.filter((k) => apisToEnglishApiKeyList()[k]);
+  const apiListSnippet = apisToEnglishList(apiList);
 
   return (
     <div>
