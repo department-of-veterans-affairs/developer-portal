@@ -53,8 +53,10 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         requestBodyProperties.push(property);
         if (property.type === 'array') {
           state[propertyName] = property.items.example;
-        } else {
+        } else if (property.type === 'object') {
           state[propertyName] = JSON.stringify(property.example);
+        } else {
+          state[propertyName] = property.example;
         }
       });
     }
