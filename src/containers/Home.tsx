@@ -87,10 +87,10 @@ function AlertNotice() {
     <section className="usa-alert-full-width usa-alert-full-width-info" role="region" aria-labelledby="alert-heading">
       <div className="usa-alert usa-alert-info" aria-live="assertive" role="alert">
         <div className="usa-alert-body">
-          <h3 className="usa-alert-heading" id="alert-heading">VA Lighthouse Development Sandbox Migration</h3>
+          <h2 className="usa-alert-heading" id="alert-heading">VA Lighthouse Development Sandbox Migration</h2>
           <div className="usa-alert-text">
             <p>
-              We are migrating our consumers in the VA Lighthouse development environment to our new Sandbox on 1 March, 2020. Consumers of the development environment should <strong>make sure to use sandbox-api.va.gov as your new hostname.</strong> Please visit the <a href="https://groups.google.com/forum/m/#!forum/va-lighthouse" target="_blank">VA Lighthouse Forum</a> for more information. 
+              We are migrating our consumers in the VA Lighthouse development environment to our new Sandbox on 1 March, 2020. Consumers of the development environment should <strong>make sure to use sandbox-api.va.gov as your new hostname.</strong> Please visit the <strong><a href="https://groups.google.com/forum/m/#!forum/va-lighthouse" target="_blank">VA Lighthouse Forum</a></strong> for more information. 
             </p>
           </div>
         </div>
