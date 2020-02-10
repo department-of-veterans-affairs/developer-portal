@@ -84,7 +84,7 @@ function VeteransNotice() {
 
 function AlertNotice() {
   return (
-    <section className="usa-alert-full-width usa-alert-full-width-info" role="region" aria-labelledby="alert-heading">
+    <section className="usa-alert-full-width usa-alert-full-width-warning" role="region" aria-labelledby="alert-heading">
       <div className="usa-alert usa-alert-warning" aria-live="polite" role="alert">
         <div className="usa-alert-body">
           <h2 className="usa-alert-heading" id="alert-heading">VA Lighthouse Development Sandbox Migration</h2>
