@@ -47,6 +47,12 @@ Set `TEST_HOST` to the url to use in the end to end testing. If not set a server
 
 ### Visual Regression Testing
 
+#### Using Git LFS to store 
+
+You will need to first [install Git LFS](https://github.com/git-lfs/git-lfs/wiki/Installation) and then run `git lfs install` in the repo, then `git lfs checkout` or `git lfs pull` to get the actual image contents on your machine. This will make cloning the repo far less painful. Adding and updating the snapshots is still done with `git add` but in order for that command to work correctly you need git-lfs installed for your user.
+
+#### Setting Up and Running Tests
+
 This project uses `jest-image-snapshot` for visual regression testing. Screenshots of the app are checked into git, and regenerated whenever a change is made. If they don't match, Jenkins will report a test failure. To run these tests locally, you'll first need to build the docker image:
 ```
 docker build -t developer-portal .
