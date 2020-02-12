@@ -14,6 +14,7 @@ const facilitiesApis : IApiDescription[] = [
     name: 'VA Facilities API',
     urlFragment: 'facilities',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
 ];
 

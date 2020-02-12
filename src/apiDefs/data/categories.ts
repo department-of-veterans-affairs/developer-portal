@@ -3,6 +3,7 @@ import {
   benefitsContent,
   facilitiesContent,
   healthContent,
+  loanGuarantyContent,
   vaFormsContent,
   verificationContent,
 } from '../../content/apiDocs';
@@ -12,6 +13,7 @@ import appealsApis from './appeals';
 import benefitsApis from './benefits';
 import facilitiesApis from './facilities';
 import healthApis from './health';
+import loanGuarantyApis from './loanGuaranty';
 import vaForms from './vaForms';
 import verificationApis from './verification';
 
@@ -46,6 +48,13 @@ const apiDefinitions: IApiCategories = {
     tabBlurb:
       "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
   },
+  loanGuaranty: {
+    apis: loanGuarantyApis,
+    buttonText: 'Get Your Key',
+    content: loanGuarantyContent,
+    name: 'Loan Guaranty API',
+    properName: 'Loan Guaranty API',
+  },
   vaForms: {
     apis: vaForms,
     buttonText: 'Stay Informed',
@@ -67,6 +76,7 @@ export const apiCategoryOrder: string[] = [
   'benefits',
   'facilities',
   'health',
+  'loanGuaranty',
   'vaForms',
   'verification',
 ];

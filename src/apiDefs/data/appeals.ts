@@ -14,6 +14,7 @@ const appealsApis : IApiDescription[] = [
     name: 'Decision Reviews API',
     urlFragment: 'decision_reviews',
     vaInternalOnly: true,
+    trustedPartnerOnly: false,
   },
 ];
 

@@ -42,6 +42,7 @@ describe('env module', () => {
       docSources: [],
       name: 'My API',
       vaInternalOnly: false,
+      trustedPartnerOnly: false,
     };
 
     beforeEach(() => {
