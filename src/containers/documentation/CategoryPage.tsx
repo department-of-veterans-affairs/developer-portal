@@ -35,7 +35,6 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
     if (apis.length > 0) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
-        if  
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
             <CardLink
