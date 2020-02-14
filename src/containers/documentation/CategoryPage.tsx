@@ -9,8 +9,17 @@ import AuthorizationCard from '../../components/AuthorizationCard';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
+import TrustedPartnerOnlyTag from '../../components/TrustedPartnerOnlyTag';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
+
+onlyTags = ({vaInternalyOnly, trustedPartnerOnly}) => {
+  if (!vaInternalOnly && !trustedPartnerOnly) return undefined;
+  return <>
+    {vaInternalOnly ? <VAInternalOnlyTag /> : null}
+    {trustedPartnerOnly ? <VAInternalOnlyTag /> : null}
+  </>;
+};
 
 export default class CategoryPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
@@ -25,12 +34,13 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
     const headerId = `${apiCategoryKey}-overview`;
     if (apis.length > 0) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
-        const { description, name, urlFragment, vaInternalOnly } = apiDesc;
+        const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
+        if  
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
             <CardLink
               name={name}
-              subhead={vaInternalOnly ? <VAInternalOnlyTag /> : undefined}
+              subhead={onlyTags({vaInternalOnly, trustedPartnerOnly})}
               url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
             >
               {description}

@@ -18,6 +18,7 @@ describe('deprecated API module', () => {
       oAuth: false,
       urlFragment: 'my_api',
       vaInternalOnly: false,
+      trustedPartnerOnly: false,
     };
 
     describe('with IApiDescription argument', () => {

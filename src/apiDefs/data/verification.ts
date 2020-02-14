@@ -14,6 +14,7 @@ const verificationApis: IApiDescription[] = [
     oAuth: true,
     urlFragment: 'address_validation',
     vaInternalOnly: true,
+    trustedPartnerOnly: false,
   },
   {
     description: "Confirm Veteran status for a given person with an api key.",
@@ -26,6 +27,7 @@ const verificationApis: IApiDescription[] = [
     name: 'Veteran Confirmation API',
     urlFragment: 'veteran_confirmation',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
   {
     description: "Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.",
@@ -39,6 +41,7 @@ const verificationApis: IApiDescription[] = [
     oAuth: true,
     urlFragment: 'veteran_verification',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
 ];
 

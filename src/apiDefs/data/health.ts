@@ -39,6 +39,7 @@ const healthApis : IApiDescription[] = [
     oAuth: true,
     urlFragment: 'community_care',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
   {
     description: "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
@@ -53,6 +54,7 @@ const healthApis : IApiDescription[] = [
     oAuth: true,
     urlFragment: 'urgent_care',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
   {
     description: 'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
@@ -81,6 +83,7 @@ const healthApis : IApiDescription[] = [
     oAuth: true,
     urlFragment: 'fhir',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
   {
     // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
@@ -97,6 +100,7 @@ const healthApis : IApiDescription[] = [
     oAuth: true,
     urlFragment: 'argonaut',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
 ];
 
