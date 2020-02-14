@@ -13,11 +13,11 @@ import TrustedPartnerOnlyTag from '../../components/TrustedPartnerOnlyTag';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
-onlyTags = ({vaInternalyOnly, trustedPartnerOnly}) => {
+const onlyTags = ({vaInternalOnly, trustedPartnerOnly}:{vaInternalOnly: boolean, trustedPartnerOnly: boolean}) => {
   if (!vaInternalOnly && !trustedPartnerOnly) return undefined;
   return <>
     {vaInternalOnly ? <VAInternalOnlyTag /> : null}
-    {trustedPartnerOnly ? <VAInternalOnlyTag /> : null}
+    {trustedPartnerOnly ? <TrustedPartnerOnlyTag /> : null}
   </>;
 };
 
