@@ -53,7 +53,7 @@ const benefitsApis : IApiDescription[] = [
     ],
     enabledByDefault: false,
     name: 'Loan Guaranty',
-    trustedPartnerOnly: false,
+    trustedPartnerOnly: true,
     urlFragment: 'loan_guaranty',
     vaInternalOnly: false,
   },
