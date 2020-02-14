@@ -14,6 +14,7 @@ const benefitsApis : IApiDescription[] = [
     name: 'Benefits Intake',
     urlFragment: 'benefits',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
   {
     description: 'Track appeals',
@@ -26,6 +27,7 @@ const benefitsApis : IApiDescription[] = [
     name: 'Appeals Status',
     urlFragment: 'appeals',
     vaInternalOnly: true,
+    trustedPartnerOnly: false,
   },
   {
     description: 'Submit and track claims',
@@ -40,6 +42,7 @@ const benefitsApis : IApiDescription[] = [
     oAuth: true,
     urlFragment: 'claims',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
   {
     description: 'Manage VA Home Loans',
@@ -52,6 +55,7 @@ const benefitsApis : IApiDescription[] = [
     name: 'Loan Guaranty',
     urlFragment: 'loan_guaranty',
     vaInternalOnly: false,
+    trustedPartnerOnly: false,
   },
 ];
 
