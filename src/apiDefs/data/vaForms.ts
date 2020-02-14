@@ -12,9 +12,9 @@ const vaFormsApis: IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'VA Forms API',
+    trustedPartnerOnly: false,
     urlFragment: 'vaForms',
     vaInternalOnly: false,
-    trustedPartnerOnly: false,
   },
 ];
 

@@ -12,9 +12,9 @@ const appealsApis : IApiDescription[] = [
     ],
     enabledByDefault: false,
     name: 'Decision Reviews API',
+    trustedPartnerOnly: false,
     urlFragment: 'decision_reviews',
     vaInternalOnly: true,
-    trustedPartnerOnly: false,
   },
 ];
 

@@ -35,9 +35,9 @@ describe('query module', () => {
         ],
         enabledByDefault: true,
         name: 'VA Facilities API',
+        trustedPartnerOnly: false,
         urlFragment: 'facilities',
         vaInternalOnly: false,
-        trustedPartnerOnly: false,
       });
     });
 

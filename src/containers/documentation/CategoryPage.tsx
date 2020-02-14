@@ -8,13 +8,13 @@ import { IApiDescription } from '../../apiDefs/schema';
 import AuthorizationCard from '../../components/AuthorizationCard';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
-import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
 import TrustedPartnerOnlyTag from '../../components/TrustedPartnerOnlyTag';
+import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
 const onlyTags = ({vaInternalOnly, trustedPartnerOnly}:{vaInternalOnly: boolean, trustedPartnerOnly: boolean}) => {
-  if (!vaInternalOnly && !trustedPartnerOnly) return undefined;
+  if (!vaInternalOnly && !trustedPartnerOnly) { return undefined; }
   return <>
     {vaInternalOnly ? <VAInternalOnlyTag /> : null}
     {trustedPartnerOnly ? <TrustedPartnerOnlyTag /> : null}
