@@ -16,7 +16,7 @@ export default function TrustedPartnerOnlyTag() {
         'vads-u-background-color--gold',
         'vads-u-color--black',
       )}>
-        Trusted Partner use only
+        Internal VA use only{/*Trusted Partner use only*/}
       </span>
     </div>
   );
