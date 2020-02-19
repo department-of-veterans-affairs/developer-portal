@@ -7,13 +7,12 @@ import { getApiDefinitions } from '../../apiDefs/query';
 import { IApiDescription } from '../../apiDefs/schema';
 import AuthorizationCard from '../../components/AuthorizationCard';
 import CardLink from '../../components/CardLink';
+import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
-import TrustedPartnerOnlyTag from '../../components/TrustedPartnerOnlyTag';
-import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
-const onlyTags = ({vaInternalOnly, trustedPartnerOnly}:{vaInternalOnly: boolean, trustedPartnerOnly: boolean}) => {
+export const onlyTags = ({vaInternalOnly, trustedPartnerOnly}:{vaInternalOnly: boolean, trustedPartnerOnly: boolean}) : JSX.Element | undefined => {
   if (!vaInternalOnly && !trustedPartnerOnly) { return undefined; }
   return <>
     {vaInternalOnly ? <VAInternalOnlyTag /> : null}
