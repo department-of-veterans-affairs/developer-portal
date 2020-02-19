@@ -12,9 +12,9 @@ const benefitsApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Benefits Intake',
-    trustedPartnerOnly: true,
+    trustedPartnerOnly: false,
     urlFragment: 'benefits',
-    vaInternalOnly: true,
+    vaInternalOnly: false,
   },
   {
     description: 'Track appeals',
