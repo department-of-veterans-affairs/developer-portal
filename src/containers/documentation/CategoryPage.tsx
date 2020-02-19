@@ -12,14 +12,6 @@ import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
-export const onlyTags = ({vaInternalOnly, trustedPartnerOnly}:{vaInternalOnly: boolean, trustedPartnerOnly: boolean}) : JSX.Element | undefined => {
-  if (!vaInternalOnly && !trustedPartnerOnly) { return undefined; }
-  return <>
-    {vaInternalOnly ? <VAInternalOnlyTag /> : null}
-    {trustedPartnerOnly ? <TrustedPartnerOnlyTag /> : null}
-  </>;
-};
-
 export default class CategoryPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
@@ -38,7 +30,13 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
             <CardLink
               name={name}
-              subhead={onlyTags({vaInternalOnly, trustedPartnerOnly})}
+              subhead={
+                vaInternalOnly || trustedPartnerOnly ? (
+                  <OnlyTags {...{ vaInternalOnly, trustedPartnerOnly }} />
+                ) : (
+                  undefined
+                )
+              }
               url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
             >
               {description}
