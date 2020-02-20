@@ -9,7 +9,7 @@ import VAInternalOnlyTag from './VAInternalOnlyTag';
 describe('OnlyTags', () => {
   [[0, 0], [0, 1], [1, 0], [1, 1]].forEach(([vaInternalOnly, trustedPartnerOnly]) => {
     it(`shows and hides 'OnlyTags correctly (${vaInternalOnly}, ${trustedPartnerOnly})`, () => {
-      let wrap = shallow(
+      const wrap = shallow(
         <OnlyTags vaInternalOnly={!!vaInternalOnly} trustedPartnerOnly={!!trustedPartnerOnly} />,
       );
       expect(wrap.find(VAInternalOnlyTag).length).toBe(vaInternalOnly);
