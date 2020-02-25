@@ -14,7 +14,7 @@ export const mockSwagger = {
     tags: [{ name: 'document_uploads', description: 'VA Benefits document upload functionality' }],
     servers: [
       {
-        url: 'sandbox-apii.vets.gov/services/vba_benefits/{version}',
+        url: 'sandbox-api.vets.gov/services/vba_benefits/{version}',
         description: 'Vets.gov API development environment',
         variables: { version: { default: 'v0' } },
       },
