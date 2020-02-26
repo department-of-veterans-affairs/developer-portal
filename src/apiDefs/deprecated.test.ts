@@ -16,6 +16,7 @@ describe('deprecated API module', () => {
       enabledByDefault: true,
       name: 'My API',
       oAuth: false,
+      trustedPartnerOnly: false,
       urlFragment: 'my_api',
       vaInternalOnly: false,
     };

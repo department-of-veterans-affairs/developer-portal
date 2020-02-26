@@ -3,19 +3,6 @@ import { IApiDescription } from '../schema';
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
 const benefitsApis : IApiDescription[] = [
   {
-    description: 'Submit PDF claims',
-    docSources: [
-      {
-        metadataUrl: `${swaggerHost}/services/vba_documents/metadata`,
-        openApiUrl: `${swaggerHost}/services/vba_documents/docs/v0/api`,
-      },
-    ],
-    enabledByDefault: true,
-    name: 'Benefits Intake',
-    urlFragment: 'benefits',
-    vaInternalOnly: false,
-  },
-  {
     description: 'Track appeals',
     docSources: [
       {
@@ -24,6 +11,7 @@ const benefitsApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Appeals Status',
+    trustedPartnerOnly: false,
     urlFragment: 'appeals',
     vaInternalOnly: true,
   },
@@ -38,7 +26,22 @@ const benefitsApis : IApiDescription[] = [
     enabledByDefault: true,
     name: 'Benefits Claims',
     oAuth: true,
+    trustedPartnerOnly: false,
     urlFragment: 'claims',
+    vaInternalOnly: false,
+  },
+  {
+    description: 'Submit PDF claims',
+    docSources: [
+      {
+        metadataUrl: `${swaggerHost}/services/vba_documents/metadata`,
+        openApiUrl: `${swaggerHost}/services/vba_documents/docs/v0/api`,
+      },
+    ],
+    enabledByDefault: true,
+    name: 'Benefits Intake',
+    trustedPartnerOnly: false,
+    urlFragment: 'benefits',
     vaInternalOnly: false,
   },
   {
@@ -50,6 +53,7 @@ const benefitsApis : IApiDescription[] = [
     ],
     enabledByDefault: false,
     name: 'Loan Guaranty',
+    trustedPartnerOnly: true,
     urlFragment: 'loan_guaranty',
     vaInternalOnly: false,
   },
