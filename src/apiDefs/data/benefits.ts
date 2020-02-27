@@ -51,7 +51,7 @@ const benefitsApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/loan_guaranty/docs/v1/api`,
       },
     ],
-    enabledByDefault: false,
+    enabledByDefault: true,
     name: 'Loan Guaranty',
     trustedPartnerOnly: true,
     urlFragment: 'loan_guaranty',
