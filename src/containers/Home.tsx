@@ -90,7 +90,7 @@ function AlertNotice() {
           <h2 className="usa-alert-heading" id="alert-heading">VA Lighthouse Development Sandbox Migration</h2>
           <div className="usa-alert-text">
             <p>
-              We will be migrating active API keys from the development environment at dev-api.va.gov to a <strong>new Sandbox on March 24, 2020</strong>. At that time we will contact anyone with dev API keys to update their hostname to point to the new environment. For more information, visit the <a href="https://groups.google.com/forum/m/#!forum/va-lighthouse" target="_blank">VA Lighthouse Forum</a>.
+              We will be migrating active API keys from the development environment at dev-api.va.gov to a <strong>new Sandbox on March 24, 2020</strong>. At that time we will contact anyone with dev API keys to update their hostname to point to the new environment. For more information, visit the <a href="https://groups.google.com/forum/#!topic/va-lighthouse/aBDqzVyiaXo" target="_blank">VA Lighthouse Forum</a>.
             </p>
           </div>
         </div>
