@@ -56,11 +56,11 @@ You will need to first [install Git LFS](https://github.com/git-lfs/git-lfs/wiki
 This project uses `jest-image-snapshot` for visual regression testing. Screenshots of the app are checked into git, and regenerated whenever a change is made. If they don't match, Jenkins will report a test failure. To run these tests locally, you'll first need to build the docker image:
 ```
 docker build -t developer-portal .
+sudo chmod -R o+rwx test/image_snapshots
 ```
 
 Then you can run them in the docker image with
 ```
-sudo chmod -R o+rwx test/image_snapshots
 docker run --rm -itv "$PWD:/application" -v "/application/node_modules" developer-portal npm run test:visual
 ```
 If the tests don't pass, an image showing the diff will be generated in `test/image_snapshots/diff_output` 
