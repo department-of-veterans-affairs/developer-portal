@@ -66,8 +66,8 @@ export const apiCategoryOrder: string[] = [
   'appeals',
   'benefits',
   'facilities',
-  'health',
   'vaForms',
+  'health',
   'verification',
 ];
 export default apiDefinitions;
