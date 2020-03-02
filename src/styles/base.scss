@@ -88,3 +88,11 @@ a:focus,
 input:focus::placeholder {
   color: $color-gray;
 }
+
+.usa-alert::before {
+  display: block;
+  margin-block-start: 0.8em;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 20px;
+}
