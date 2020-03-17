@@ -41,6 +41,7 @@ describe('env module', () => {
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
       name: 'My API',
+      trustedPartnerOnly: false,
       vaInternalOnly: false,
     };
 

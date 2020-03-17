@@ -30,6 +30,7 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
           <React.Fragment>
             {api.name}
             {api.vaInternalOnly && <small className="vads-u-display--block">Internal VA use only.</small>}
+            {api.trustedPartnerOnly && <small className="vads-u-display--block">Internal VA use only.{/*Trusted Partner use only.*/}</small>}
           </React.Fragment>
         }
         subNavLevel={1}

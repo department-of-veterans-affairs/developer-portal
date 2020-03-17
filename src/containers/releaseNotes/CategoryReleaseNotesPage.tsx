@@ -7,12 +7,15 @@ import { RouteComponentProps } from 'react-router';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { IApiDescription } from '../../apiDefs/schema';
 import CardLink from '../../components/CardLink';
+import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
-import VAInternalOnlyTag from '../../components/VAInternalOnlyTag';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
-export default class CategoryReleaseNotesPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
+export default class CategoryReleaseNotesPage extends React.Component<
+  RouteComponentProps<IApiNameParam>,
+  {}
+> {
   public render() {
     const apiDefs = getApiDefinitions();
     const { apiCategoryKey } = this.props.match.params;
@@ -27,14 +30,20 @@ export default class CategoryReleaseNotesPage extends React.Component<RouteCompo
 
     if (apis.length > 1) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
-        const { description, name, urlFragment, vaInternalOnly } = apiDesc;
+        const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
         const dashUrlFragment = urlFragment.replace('_', '-');
 
         return (
           <Flag key={name} name={`hosted_apis.${urlFragment}`}>
             <CardLink
               name={name}
-              subhead={vaInternalOnly ? <VAInternalOnlyTag /> : undefined}
+              subhead={
+                vaInternalOnly || trustedPartnerOnly ? (
+                  <OnlyTags {...{ vaInternalOnly, trustedPartnerOnly }} />
+                ) : (
+                  undefined
+                )
+              }
               url={`/release-notes/${apiCategoryKey}#${dashUrlFragment}`}
             >
               {description}
@@ -51,10 +60,7 @@ export default class CategoryReleaseNotesPage extends React.Component<RouteCompo
     }
 
     return (
-      <section
-        role="region"
-        aria-labelledby={`${apiCategoryKey}-release-notes`}
-      >
+      <section role="region" aria-labelledby={`${apiCategoryKey}-release-notes`}>
         <PageHeader halo={headerProps.halo} header={headerProps.header} />
         {cardSection}
         <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
