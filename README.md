@@ -14,8 +14,8 @@ npm install
 Next, create a `.env.local` file with the following contents (don't worry about what these mean yet):
 ```
 PORT=3001
-REACT_APP_VETSGOV_SWAGGER_API=https://dev-api.vets.gov
-REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=https://dev-api.va.gov
+REACT_APP_VETSGOV_SWAGGER_API=https://sandbox-api.vets.gov
+REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=https://sandbox-api.va.gov
 REACT_APP_SALESFORCE_ENV=VICDEV
 ```
 

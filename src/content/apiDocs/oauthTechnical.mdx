@@ -22,7 +22,7 @@ We use separate authorization servers for our development and production environ
 Initiate the OpenID Connect authorization by directing your application's users to 
 
 ```plaintext
-https://dev-api.va.gov/oauth2/authorization
+https://sandbox-api.va.gov/oauth2/authorization
 ``` 
 
 with the following query parameters:
@@ -31,7 +31,7 @@ with the following query parameters:
 | --------------- | ------------ | ------ |
 | `client_id`     | **Required** | The `client_id` issued by the VA API Platform team |
 | `redirect_uri`  | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application. |
-| `response_type` | **Required** | One or two of `id_token`, `token`, or `code`. Using `code` will require your application to complete the [Authorization Code Flow](#authorization-code-flow). Using `id_token` or `token` allows you to use the [Implicit flow](#implicit-flow). See [Token Types](#id-token) for further explanation. |
+| `response_type` | **Required** | One or two of `id_token`, and `code`. `token` and by extension the implicit flow is not supported. See [Token Types](#id-token) for further explanation. |
 | `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
 | `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
 | `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
@@ -39,7 +39,7 @@ with the following query parameters:
 
 Example Authorization URL:
 ```plaintext
-https://dev-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=<yourRedirectURL>&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid offline_access profile email veteran_status.read
+https://sandbox-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&redirect_uri=<yourRedirectURL>&response_type=id_token token&response_mode=fragment&state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy&scope=openid offline_access profile email veteran_status.read
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
@@ -53,7 +53,7 @@ Your application will need to redirect the user's browser to our OpenID authoriz
 
 ```http
 HTTP/1.1 302 Found
-Location: https://dev-api.va.gov/oauth2/authorization?
+Location: https://sandbox-api.va.gov/oauth2/authorization?
   client_id=s6BhdRkqt3
   &response_type=id_token
   &response_mode=fragment
@@ -90,7 +90,7 @@ Your application will need to redirect the user's browser to our OpenID authoriz
 
 ```http
 HTTP/1.1 302 Found
-Location: https://dev-api.va.gov/oauth2/authorization?
+Location: https://sandbox-api.va.gov/oauth2/authorization?
   response_type=code
   &scope=openid%20profile%20email%20offline_access
   &client_id=s6BhdRkqt3
@@ -113,7 +113,7 @@ Your application then makes a request to our authorization service using the ret
 
 ```http
 POST /oauth2/token HTTP/1.1
-Host: dev-api.va.gov
+Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
@@ -158,7 +158,7 @@ The `refresh_token` can be used to obtain a new `access_token` after its expiry 
 
 ```http
 POST /oauth2/token HTTP/1.1
-Host: dev-api.va.gov
+Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
@@ -167,13 +167,10 @@ grant_type=refresh_token&refresh_token={your refresh_token}&scope={space separat
 
 You will receive the same kind of response as above and be able to use your new `access_token` normally.
 
-### Hybrid Flow
+### Unsupported Flows
+We do not support the implicit flow as it is considered insecure. In the future, we may support PKCE, but we do not currently.
 
-The hybrid flow is less common than either the authorization code flow or the implicit flow. It is used by applications that need a separate token for the front end and the backend of the application. During the hybrid flow, your application is essentially doing both an implicit flow and authorization code flow at the same time.
-
-You can initiate the hybrid flow by specifying more than one value in the `response_type` parameter when redirecting the user's browser to our authorization server. For example, you can receive both an authorization code and an ID token by specifying `response_type=code%20id_token`.
-
-The parameters provided when the user's browser is redirected back to your app have the same meaning as documented the [implicit flow](#implicit-flow) section and the [authorization code flow](#authorization-code-flow) section.
+If you are building an application that can't securely protect a client secret, such as a single page web app or a mobile app, you must include a sever side component in your architecture. This component will securely store your client secret and make API requests on behalf of your users.
 
 ## Scopes
 
@@ -194,11 +191,11 @@ Scopes define the API endpoint your application is allowed to access. The VA API
 These are subject to change while the VA API Platform OpenID Connect feature is under development.
 
 ## ID Token
-Unlike the token returned by an authorization_code grant or an implicit token grant, which is simply a random value, an `id_token` is a [JSON Web Token](https://jwt.io) or JWT. A JWT consists of three parts: a header, a payload, and a signature. This provides an extremely brief overview of a JWT.
+Unlike the token returned by an authorization_code grant, which is simply a random value, an `id_token` is a [JSON Web Token](https://jwt.io) or JWT. A JWT consists of three parts: a header, a payload, and a signature. This provides an extremely brief overview of a JWT.
 
 ### Header
 
-The JWT's header has two fields `alg` and `kid`. `alg` indicates the algorithm that was used the sign the JWT, and `kid` identifies the key that was used to sign the JWT. Signing keys and associated metadata are accessible from `https://dev-api.va.gov/oauth2/.well-known/openid-configuration`.
+The JWT's header has two fields `alg` and `kid`. `alg` indicates the algorithm that was used the sign the JWT, and `kid` identifies the key that was used to sign the JWT. Signing keys and associated metadata are accessible from `https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration`.
 
 ### Payload
 
@@ -310,7 +307,7 @@ Open up a file called `index.js` in your editor of choice and add the following:
 ```JavaScript
 const { Issuer } = require('openid-client');
 
-const ROOT_URL = 'https://dev-api.va.gov/oauth2/.well-known/openid-configuration';
+const ROOT_URL = 'https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration';
 const client_id = 'your_client_id';
 const client_secret = 'your_client_secret';
 
@@ -438,7 +435,7 @@ const verifyVeteranStatus = async (req, res, next) => {
   if (req.session && req.session.passport && req.session.passport.user) {
     const veteranStatus = await new Promise((resolve, reject) => {
       https.get(
-        'https://dev-api.va.gov/services/veteran_verification/v0/status',
+        'https://sandbox-api.va.gov/services/veteran_verification/v0/status',
         { headers: {'Authorization': `Bearer ${req.session.passport.user.tokenset.access_token}`} },
         (res) => {
           let rawData = '';
