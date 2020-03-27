@@ -45,42 +45,6 @@ https://sandbox-api.va.gov/oauth2/authorization?client_id=0oa1c01m77heEXUZt2p7&r
 
 The user will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive slightly different responses based on the `response_type` you requested.
 
-### Implicit Flow
-
-This flow works for applications that aren't able to keep a *client secret* protected &mdash; such as single-page webapps or mobile applications. This flow is selected by using either the `id_token` or `token` value for the `response_type` parameter.
-
-Your application will need to redirect the user's browser to our OpenID authorization server with a request like this:
-
-```http
-HTTP/1.1 302 Found
-Location: https://sandbox-api.va.gov/oauth2/authorization?
-  client_id=s6BhdRkqt3
-  &response_type=id_token
-  &response_mode=fragment
-  &redirect_uri=<yourRedirectURL>
-  &scope=openid%20profile%20email
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
-
-In the request above the `response_mode` value determines how the token is provided when the user's browser is redirected back to your application. It can be either `fragment` (the default) or `query`.
-
-After the user confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
-
-```http
-GET <yourRedirectURL>#
-  id_token=SlAV32hkKG
-  &access_token=SlAV32hkKG
-  &token_type=Bearer
-  &expires_in=3600
-  &scope=openid%20profile%20email
-  &state=af0ifjsldkj
-Host: <yourRedirectHost>
-```
-(⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration, and `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration)
-
-If you requested an `id_token` it will be returned as a parameter called `id_token`. If you requested a `token`, it will be returned as a parameter called `access_token`.
-
-The `access_token` can be used to authorize requests to the VA API Platform by including them in HTTP requests to the Platform by including it in the `Authorization` header as `Authorization: Bearer {token}`. When using the `id_token` to identify a user, you should validate that the token is properly signed and has the expected `audience` and `nonce`, see [id_token](#id-token) for more information.
 
 ### Authorization Code Flow
 
