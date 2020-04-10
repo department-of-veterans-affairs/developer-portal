@@ -67,7 +67,7 @@ const healthContent: IApiCategoryContent = {
 const vaFormsContent: IApiCategoryContent = {
   intro: vaFormsIntro,
   overview: vaFormsOverview,
-  placardText: 'Look up VA forms and check for new versions.',
+  placardText: 'Look up VA forms and check for new versions',
   releaseNotes: vaFormsReleaseNotes,
   shortDescription: 'Look up VA forms and check for new versions.',
 };
