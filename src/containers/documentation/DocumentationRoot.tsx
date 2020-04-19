@@ -53,7 +53,7 @@ function OAuthSideNavEntry(apiCategoryKey: string) {
       <SideNavEntry to="#test-users" name="Test Users" subNavLevel={2} />
       <SideNavEntry to="#security-considerations" name="Security Considerations" subNavLevel={2} />
       <SideNavEntry to="#support" name="Support" subNavLevel={2} />
-      <SideNavEntry to="#sample-application" name="Sample Application" subNavLevel={2} />
+      <SideNavEntry to="#sample-applications" name="Sample Application" subNavLevel={2} />
     </SideNavEntry>
   );
 }
