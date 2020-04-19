@@ -29,7 +29,6 @@ describe('query module', () => {
         description: "VA Facilities",
         docSources: [
           {
-            metadataUrl: 'http://localhost:3000/services/va_facilities/metadata',
             openApiUrl: 'http://localhost:3000/services/va_facilities/docs/v0/api',
           },
         ],
