@@ -40,7 +40,7 @@ describe('position sticky', () => {
     const selAuthLink = `${selSideNav} a#side-nav-authorization-link-health`;
     await waitScrollClick(selAuthLink);
 
-    const selSampleAppLink = `${selSideNav} a[href$="#sample-application"]`;
+    const selSampleAppLink = `${selSideNav} a[href$="#sample-applications"]`;
     await waitScrollClick(selSampleAppLink);
   });
 
