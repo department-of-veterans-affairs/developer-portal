@@ -361,6 +361,7 @@ class ApplyForm extends React.Component<IApplyProps> {
             ]}
             value={oAuthFlow}
             required={true}
+            additionalLegendClass="vads-u-margin-top--0"
             />
             
           <ErrorableTextInput
