@@ -7,6 +7,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import ErrorableCheckbox from '@department-of-veterans-affairs/formation-react/ErrorableCheckbox';
+import ErrorableRadioButtons from '@department-of-veterans-affairs/formation-react/ErrorableRadioButtons';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
@@ -32,6 +33,7 @@ interface IApplyProps extends IApplication {
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
   updateLastName: (value: IErrorableInput) => void;
+  updateOAuthFlow: (value: IErrorableInput) => void;
   updateOAuthRedirectURI: (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
 }
@@ -92,6 +94,9 @@ const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
     },
     updateLastName: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationLastName(value));
+    },
+    updateOAuthFlow: (value: IErrorableInput) => {
+      dispatch(actions.updateApplicationOAuthFlow(value));
     },
     updateOAuthRedirectURI: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationOAuthRedirectURI(value));
@@ -337,15 +342,35 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private renderOAuthFields() {
     if (this.anyOAuthApisSelected()) {
+      const oAuthFlow = this.props.inputs.oAuthFlow;
       const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
-        <ErrorableTextInput
-          errorMessage={this.props.inputs.oAuthRedirectURI.validation}
-          label="OAuth Redirect URI"
-          field={oAuthRedirectURI}
-          onValueChange={this.props.updateOAuthRedirectURI}
-          required={true}
-        />
+        <div>
+          <ErrorableRadioButtons
+            label="What are you developing?"
+            onValueChange={this.props.updateOAuthFlow}
+            options={[
+              {
+                label: <span>Web app (<a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">authorization code flow</a>)</span>,
+                value: 'code',
+              },
+              {
+                label: <span>Native or single-page app (<a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>)</span>,
+                value: 'PKCE',
+              },
+            ]}
+            value={oAuthFlow}
+            required={true}
+            />
+            
+          <ErrorableTextInput
+            errorMessage={this.props.inputs.oAuthRedirectURI.validation}
+            label="OAuth Redirect URI"
+            field={oAuthRedirectURI}
+            onValueChange={this.props.updateOAuthRedirectURI}
+            required={true}
+            />
+        </div>
       );
     }
 

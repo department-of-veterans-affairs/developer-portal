@@ -35,6 +35,10 @@ const app: IApplication = {
       dirty: false,
       value: '',
     },
+    oAuthFlow: {
+      dirty: false,
+      value: '',
+    },
     oAuthRedirectURI: {
       dirty: false,
       value: '',
@@ -56,6 +60,7 @@ describe('application', () => {
       ['firstName', constants.UPDATE_APPLICATION_FIRST_NAME],
       ['lastName', constants.UPDATE_APPLICATION_LAST_NAME],
       ['email', constants.UPDATE_APPLICATION_EMAIL],
+      ['oAuthFlow', constants.UPDATE_APPLICATION_OAUTH_FLOW],
       ['oAuthRedirectURI', constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL],
       ['organization', constants.UPDATE_APPLICATION_ORGANIZATION],
     ];

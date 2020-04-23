@@ -31,6 +31,11 @@ export interface IUpdateApplicationDescription extends Action {
   type: constants.UPDATE_APPLICATION_DESCRIPTION;
 }
 
+export interface IUpdateApplicationOAuthFlow extends Action {
+  newValue: IErrorableInput;
+  type: constants.UPDATE_APPLICATION_OAUTH_FLOW;
+}
+
 export interface IUpdateApplicationOAuthRedirectURI extends Action {
   newValue: IErrorableInput;
   type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL;
@@ -82,6 +87,7 @@ export type UpdateApplicationAction =
   | IUpdateApplicationFirstName
   | IUpdateApplicationLastName
   | IUpdateApplicationOrganization
+  | IUpdateApplicationOAuthFlow
   | IUpdateApplicationOAuthRedirectURI
   | IToggleBenefitsApi
   | IToggleClaimsApi
@@ -139,7 +145,7 @@ const apisToList = (apis: IApiList) => {
 function buildApplicationBody({ application }: IRootState) {
   const applicationBody: any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
-  ['description', 'email', 'firstName', 'lastName', 'oAuthRedirectURI', 'organization'].forEach(
+  ['description', 'email', 'firstName', 'lastName', 'oAuthFlow', 'oAuthRedirectURI', 'organization'].forEach(
     property => {
       if (application.inputs[property]) {
         applicationBody[property] = application.inputs[property].value;
@@ -255,6 +261,15 @@ export const updateApplicationLastName: ActionCreator<IUpdateApplicationLastName
   return {
     newValue,
     type: constants.UPDATE_APPLICATION_LAST_NAME,
+  };
+};
+
+export const updateApplicationOAuthFlow: ActionCreator<
+  IUpdateApplicationOAuthFlow
+> = (newValue: IErrorableInput) => {
+  return {
+    newValue,
+    type: constants.UPDATE_APPLICATION_OAUTH_FLOW,
   };
 };
 

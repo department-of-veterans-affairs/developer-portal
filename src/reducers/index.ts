@@ -30,6 +30,10 @@ const initialApplicationInputs: IApplicationInputs = {
     dirty: false,
     value: '',
   },
+  oAuthFlow: {
+    dirty: false,
+    value: '',
+  },
   oAuthRedirectURI: {
     dirty: false,
     value: '',
@@ -62,6 +66,8 @@ export function applicationInput(
       return { ...inputs, firstName: action.newValue };
     case constants.UPDATE_APPLICATION_LAST_NAME:
       return { ...inputs, lastName: action.newValue };
+    case constants.UPDATE_APPLICATION_OAUTH_FLOW:
+      return { ...inputs, oAuthFlow: action.newValue };
     case constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL:
       return { ...inputs, oAuthRedirectURI: action.newValue };
     case constants.UPDATE_APPLICATION_ORGANIZATION:
