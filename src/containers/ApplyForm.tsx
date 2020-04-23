@@ -33,7 +33,7 @@ interface IApplyProps extends IApplication {
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
   updateLastName: (value: IErrorableInput) => void;
-  updateOAuthFlow: (value: IErrorableInput) => void;
+  updateOAuthApplicationType: (value: IErrorableInput) => void;
   updateOAuthRedirectURI: (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
 }
@@ -95,8 +95,8 @@ const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
     updateLastName: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationLastName(value));
     },
-    updateOAuthFlow: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationOAuthFlow(value));
+    updateOAuthApplicationType: (value: IErrorableInput) => {
+      dispatch(actions.updateApplicationOAuthApplicationType(value));
     },
     updateOAuthRedirectURI: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationOAuthRedirectURI(value));
@@ -342,24 +342,24 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private renderOAuthFields() {
     if (this.anyOAuthApisSelected()) {
-      const oAuthFlow = this.props.inputs.oAuthFlow;
+      const oAuthApplicationType = this.props.inputs.oAuthApplicationType;
       const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
         <div>
           <ErrorableRadioButtons
             label="What are you developing?"
-            onValueChange={this.props.updateOAuthFlow}
+            onValueChange={this.props.updateOAuthApplicationType}
             options={[
               {
                 label: <span>Web app (<a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">authorization code flow</a>)</span>,
-                value: 'code',
+                value: 'web',
               },
               {
                 label: <span>Native or single-page app (<a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>)</span>,
-                value: 'PKCE',
+                value: 'native',
               },
             ]}
-            value={oAuthFlow}
+            value={oAuthApplicationType}
             required={true}
             additionalLegendClass="vads-u-margin-top--0"
             />
