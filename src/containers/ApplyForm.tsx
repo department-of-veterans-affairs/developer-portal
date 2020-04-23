@@ -347,15 +347,15 @@ class ApplyForm extends React.Component<IApplyProps> {
       return (
         <div>
           <ErrorableRadioButtons
-            label="What are you developing?"
+            label="Can your application securely hide a client secret?"
             onValueChange={this.props.updateOAuthApplicationType}
             options={[
               {
-                label: <span>Web app (<a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">authorization code flow</a>)</span>,
+                label: <span>Yes (<a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">authorization code flow</a>)</span>,
                 value: 'web',
               },
               {
-                label: <span>Native or single-page app (<a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>)</span>,
+                label: <span>No (<a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>)</span>,
                 value: 'native',
               },
             ]}
