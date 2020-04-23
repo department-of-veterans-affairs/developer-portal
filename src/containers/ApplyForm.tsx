@@ -347,6 +347,7 @@ class ApplyForm extends React.Component<IApplyProps> {
       return (
         <div>
           <ErrorableRadioButtons
+            errorMessage={null}
             label="Can your application securely hide a client secret?"
             onValueChange={this.props.updateOAuthApplicationType}
             options={[
@@ -424,14 +425,16 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private readyToSubmit() {
     const {
-      inputs: { oAuthRedirectURI, termsOfService },
+      inputs: { oAuthApplicationType, oAuthRedirectURI, termsOfService },
     } = this.props;
+    let applicationTypeComplete = true;
     let redirectURIComplete = true;
-    if(this.anyOAuthApisSelected()){
+    if (this.anyOAuthApisSelected()) {
+      applicationTypeComplete = oAuthApplicationType.value.length !== 0;
       redirectURIComplete = oAuthRedirectURI.value.length !== 0 && oAuthRedirectURI.validation === undefined;
     }
     return (
-      this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && redirectURIComplete
+      this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && applicationTypeComplete && redirectURIComplete
     );
   }
 }
