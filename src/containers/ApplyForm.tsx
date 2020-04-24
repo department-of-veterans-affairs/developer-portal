@@ -7,6 +7,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import ErrorableCheckbox from '@department-of-veterans-affairs/formation-react/ErrorableCheckbox';
+import ErrorableRadioButtons from '@department-of-veterans-affairs/formation-react/ErrorableRadioButtons';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
@@ -32,6 +33,7 @@ interface IApplyProps extends IApplication {
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
   updateLastName: (value: IErrorableInput) => void;
+  updateOAuthApplicationType: (value: IErrorableInput) => void;
   updateOAuthRedirectURI: (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
 }
@@ -92,6 +94,9 @@ const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
     },
     updateLastName: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationLastName(value));
+    },
+    updateOAuthApplicationType: (value: IErrorableInput) => {
+      dispatch(actions.updateApplicationOAuthApplicationType(value));
     },
     updateOAuthRedirectURI: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationOAuthRedirectURI(value));
@@ -249,24 +254,6 @@ class ApplyForm extends React.Component<IApplyProps> {
 
               {this.renderCheckboxes(oauthInfo)}
 
-              {this.anyOAuthApisSelected() && (
-                <div className="feature">
-                  <div>
-                    <strong>Note:</strong> You will need to provide your{' '}
-                    <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">
-                      OAuth Redirect URI
-                    </a>
-                    , which is where the authorization server will return the user to your
-                    application after generating an authenticated token. These APIs require
-                    authorization via the{' '}
-                    <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>.
-                  </div>
-                  <div>
-                    <Link to="/explore/health/docs/authorization">Read more</Link>
-                  </div>
-                </div>
-              )}
-
               {this.renderOAuthFields()}
 
               <ErrorableTextArea
@@ -337,15 +324,37 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private renderOAuthFields() {
     if (this.anyOAuthApisSelected()) {
+      const oAuthApplicationType = this.props.inputs.oAuthApplicationType;
       const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
-        <ErrorableTextInput
-          errorMessage={this.props.inputs.oAuthRedirectURI.validation}
-          label="OAuth Redirect URI"
-          field={oAuthRedirectURI}
-          onValueChange={this.props.updateOAuthRedirectURI}
-          required={true}
-        />
+        <React.Fragment>
+          <ErrorableRadioButtons
+            errorMessage={null}
+            label="Can your application securely hide a client secret?"
+            onValueChange={this.props.updateOAuthApplicationType}
+            options={[
+              {
+                label: <span>Yes (<a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">authorization code flow</a>)</span>,
+                value: 'web',
+              },
+              {
+                label: <span>No (<a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>)</span>,
+                value: 'native',
+              },
+            ]}
+            value={oAuthApplicationType}
+            required={true}
+            additionalLegendClass="vads-u-margin-top--0"
+            />
+            
+          <ErrorableTextInput
+            errorMessage={this.props.inputs.oAuthRedirectURI.validation}
+            label="OAuth Redirect URI"
+            field={oAuthRedirectURI}
+            onValueChange={this.props.updateOAuthRedirectURI}
+            required={true}
+            />
+        </React.Fragment>
       );
     }
 
@@ -398,14 +407,16 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private readyToSubmit() {
     const {
-      inputs: { oAuthRedirectURI, termsOfService },
+      inputs: { oAuthApplicationType, oAuthRedirectURI, termsOfService },
     } = this.props;
+    let applicationTypeComplete = true;
     let redirectURIComplete = true;
-    if(this.anyOAuthApisSelected()){
+    if (this.anyOAuthApisSelected()) {
+      applicationTypeComplete = oAuthApplicationType.value.length !== 0;
       redirectURIComplete = oAuthRedirectURI.value.length !== 0 && oAuthRedirectURI.validation === undefined;
     }
     return (
-      this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && redirectURIComplete
+      this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && applicationTypeComplete && redirectURIComplete
     );
   }
 }

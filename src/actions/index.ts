@@ -31,6 +31,11 @@ export interface IUpdateApplicationDescription extends Action {
   type: constants.UPDATE_APPLICATION_DESCRIPTION;
 }
 
+export interface IUpdateApplicationOAuthApplicationType extends Action {
+  newValue: IErrorableInput;
+  type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE;
+}
+
 export interface IUpdateApplicationOAuthRedirectURI extends Action {
   newValue: IErrorableInput;
   type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL;
@@ -82,6 +87,7 @@ export type UpdateApplicationAction =
   | IUpdateApplicationFirstName
   | IUpdateApplicationLastName
   | IUpdateApplicationOrganization
+  | IUpdateApplicationOAuthApplicationType
   | IUpdateApplicationOAuthRedirectURI
   | IToggleBenefitsApi
   | IToggleClaimsApi
@@ -139,7 +145,7 @@ const apisToList = (apis: IApiList) => {
 function buildApplicationBody({ application }: IRootState) {
   const applicationBody: any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
-  ['description', 'email', 'firstName', 'lastName', 'oAuthRedirectURI', 'organization'].forEach(
+  ['description', 'email', 'firstName', 'lastName', 'oAuthApplicationType', 'oAuthRedirectURI', 'organization'].forEach(
     property => {
       if (application.inputs[property]) {
         applicationBody[property] = application.inputs[property].value;
@@ -159,7 +165,7 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => {
     const request = new Request(
       `${
         process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL
-      }/services/meta/developer_application`,
+      }/internal/developer-portal-backend/developer_application`,
       {
         body: JSON.stringify(applicationBody),
         headers: {
@@ -255,6 +261,15 @@ export const updateApplicationLastName: ActionCreator<IUpdateApplicationLastName
   return {
     newValue,
     type: constants.UPDATE_APPLICATION_LAST_NAME,
+  };
+};
+
+export const updateApplicationOAuthApplicationType: ActionCreator<
+  IUpdateApplicationOAuthApplicationType
+> = (newValue: IErrorableInput) => {
+  return {
+    newValue,
+    type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE,
   };
 };
 

@@ -28,7 +28,7 @@ interface IApiKeyNoticeProps {
 
 interface IOAuthCredentialsNoticeProps {
   clientID: string;
-  clientSecret: string;
+  clientSecret?: string;
   email: string;
   selectedApis: string[];
 }
@@ -62,7 +62,7 @@ function OAuthCredentialsNotice({ clientID, clientSecret, email, selectedApis } 
   return (
     <div>
       <p className="usa-font-lead"><strong>Your VA API OAuth Client ID:</strong> {clientID}</p>
-      <p className="usa-font-lead"><strong>Your VA API OAuth Client Secret:</strong> {clientSecret}</p>
+      {clientSecret && <p className="usa-font-lead"><strong>Your VA API OAuth Client Secret:</strong> {clientSecret}</p>}
 
       <p>
         You should receive an email at {email} with the same credentials. Those credentials are for accessing the {apiListSnippet} in the development environment.
@@ -115,7 +115,7 @@ function ApplySuccess(props: IApplication) {
     && (selectedApis.indexOf('confirmation') === -1)
   );
 
-  const oAuthNotice = ((apis.health || apis.verification || apis.claims) && clientID && clientSecret)
+  const oAuthNotice = ((apis.health || apis.verification || apis.claims) && clientID)
                     ? <OAuthCredentialsNotice email={email} clientID={clientID} clientSecret={clientSecret} selectedApis={selectedApiNames(apis)} />
                     : null;
 
