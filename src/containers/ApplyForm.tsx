@@ -254,24 +254,6 @@ class ApplyForm extends React.Component<IApplyProps> {
 
               {this.renderCheckboxes(oauthInfo)}
 
-              {this.anyOAuthApisSelected() && (
-                <div className="feature">
-                  <div>
-                    <strong>Note:</strong> You will need to provide your{' '}
-                    <a href="https://www.oauth.com/oauth2-servers/redirect-uris/">
-                      OAuth Redirect URI
-                    </a>
-                    , which is where the authorization server will return the user to your
-                    application after generating an authenticated token. These APIs require
-                    authorization via the{' '}
-                    <a href="https://oauth.net/articles/authentication/">OAuth 2.0 standard</a>.
-                  </div>
-                  <div>
-                    <Link to="/explore/health/docs/authorization">Read more</Link>
-                  </div>
-                </div>
-              )}
-
               {this.renderOAuthFields()}
 
               <ErrorableTextArea
