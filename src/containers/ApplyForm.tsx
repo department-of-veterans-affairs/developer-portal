@@ -327,7 +327,7 @@ class ApplyForm extends React.Component<IApplyProps> {
       const oAuthApplicationType = this.props.inputs.oAuthApplicationType;
       const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
-        <div>
+        <React.Fragment>
           <ErrorableRadioButtons
             errorMessage={null}
             label="Can your application securely hide a client secret?"
@@ -354,7 +354,7 @@ class ApplyForm extends React.Component<IApplyProps> {
             onValueChange={this.props.updateOAuthRedirectURI}
             required={true}
             />
-        </div>
+        </React.Fragment>
       );
     }
 
