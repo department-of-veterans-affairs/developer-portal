@@ -90,7 +90,7 @@ function AlertNotice() {
           <h2 className="usa-alert-heading" id="alert-heading">VA Lighthouse Development Sandbox Migration</h2>
           <div className="usa-alert-text">
             <p>
-              All consumer access to dev-api.va.gov will be <strong>permanently removed on May 1, 2020</strong>. To ensure a smooth transition to our new Sandbox environment, update all references of dev-api.va.gov to <strong>sandbox-api.va.gov</strong>. For more details, visit the <strong><a href="https://groups.google.com/forum/#!topic/va-lighthouse/aBDqzVyiaXo" target="_blank">VA Lighthouse Forum</a></strong> and <strong><a href="https://valighthouse.statuspage.io/" target="_blank">subscribe to updates</a></strong>.
+              Consumer access to dev-api.va.gov was removed on May 1, 2020. It’s been replaced with with our new Sandbox environment, sandbox-api.va.gov. For more details, visit the <strong><a href="https://groups.google.com/forum/#!topic/va-lighthouse/aBDqzVyiaXo" target="_blank">VA Lighthouse Forum</a></strong> and <strong><a href="https://valighthouse.statuspage.io/" target="_blank">subscribe to updates</a></strong>.
             </p>
           </div>
         </div>
