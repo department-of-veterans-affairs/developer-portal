@@ -3,6 +3,9 @@ sections:
     description: Press releases from the Department of Veterans Affairs related to Lighthouse.
     media: false
     items:
+      - date: April 2020
+        title: VA health app now available to Veterans across all mobile and web platforms
+        url: https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5430
       - date: November 2019
         title: Veterans can now access information through Health Records on iPhone
         url: https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5350
