@@ -12,15 +12,15 @@ import Search from './Search';
 import './Header.scss';
 import TestingNotice from './TestingNotice';
 
-interface INavBarState {
-  menuVisible: boolean;
+interface IHeaderState {
+  mobileNavVisible: boolean;
 }
 
-export default class Header extends React.Component<{}, INavBarState> {
+export default class Header extends React.Component<{}, IHeaderState> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      menuVisible: false,
+      mobileNavVisible: false,
     };
   }
 
@@ -82,15 +82,15 @@ export default class Header extends React.Component<{}, INavBarState> {
               </button>
             </div>
           </div>
-          <NavBar isMobileMenuVisible={this.state.menuVisible} onClose={navBarCloseHandler} />
+          <NavBar isMobileMenuVisible={this.state.mobileNavVisible} onClose={navBarCloseHandler} />
         </header>
       </React.Fragment>
     );
   }
 
   private toggleMenuVisible = () => {
-    this.setState((state: INavBarState) => {
-      return { menuVisible: !state.menuVisible };
+    this.setState((state: IHeaderState) => {
+      return { mobileNavVisible: !state.mobileNavVisible };
     });
   }
 }
