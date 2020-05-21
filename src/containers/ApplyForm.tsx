@@ -21,14 +21,7 @@ import ApplyHeader from './ApplyHeader';
 interface IApplyProps extends IApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
-  toggleBenefits: () => void;
-  toggleClaims: () => void;
-  toggleConfirmation: () => void;
-  toggleHealth: () => void;
-  toggleFacilities: () => void;
-  toggleVaForms: () => void;
-  toggleVerification: () => void;
-  toggleCommunityCare: () => void;
+  toggleSelectedApi: (apiId: string) => () => void;
   updateDescription: (value: IErrorableInput) => void;
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
@@ -59,29 +52,10 @@ const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
     toggleAcceptTos: () => {
       dispatch(actions.toggleAcceptTos());
     },
-    toggleBenefits: () => {
-      dispatch(actions.toggleBenefitsApi());
-    },
-    toggleClaims: () => {
-      dispatch(actions.toggleClaimsApi());
-    },
-    toggleCommunityCare: () => {
-      dispatch(actions.toggleCommunityCareApi());
-    },
-    toggleConfirmation: () => {
-      dispatch(actions.toggleConfirmation());
-    },
-    toggleFacilities: () => {
-      dispatch(actions.toggleFacilitiesApi());
-    },
-    toggleHealth: () => {
-      dispatch(actions.toggleHealthApi());
-    },
-    toggleVaForms: () => {
-      dispatch(actions.toggleVaForms());
-    },
-    toggleVerification: () => {
-      dispatch(actions.toggleVerificationApi());
+    toggleSelectedApi: (apiId: string) => {
+      return () => { 
+        dispatch(actions.toggleSelectedApi(apiId)); 
+      };
     },
     updateDescription: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationDescription(value));
@@ -134,25 +108,21 @@ const oauthInfo = (props: IApplyProps) => {
       checked: props.inputs.apis.claims,
       id: 'claims',
       label: "VA Claims API",
-      onchange: props.toggleClaims,
     },
     {
       checked: props.inputs.apis.health,
       id: 'health',
       label: "VA Health API",
-      onchange: props.toggleHealth,
     },
     {
       checked: props.inputs.apis.communityCare,
       id: 'communityCare',
       label: "Community Care Eligibility API",
-      onchange: props.toggleCommunityCare,
     },
     {
       checked: props.inputs.apis.verification,
       id: 'verification',
       label: "VA Veteran Verification API",
-      onchange: props.toggleVerification,
     },
   ];
 };
@@ -163,25 +133,21 @@ const apiInfo = (props: IApplyProps) => {
       checked: props.inputs.apis.benefits,
       id: 'benefits',
       label: "VA Benefits API",
-      onchange: props.toggleBenefits,
     },
     {
       checked: props.inputs.apis.facilities,
       id: 'facilities',
       label: "VA Facilities API",
-      onchange: props.toggleFacilities,
     },
     {
       checked: props.inputs.apis.vaForms,
       id: 'vaForms',
       label: "VA Forms API",
-      onchange: props.toggleVaForms,
     },
     {
       checked: props.inputs.apis.confirmation,
       id: 'confirmation',
       label: "VA Veteran Confirmation API",
-      onchange: props.toggleConfirmation,
     },
   ];
 };
@@ -313,11 +279,12 @@ class ApplyForm extends React.Component<IApplyProps> {
     return checkboxInfo(this.props).map((api) => {
       return (
         <FormCheckbox 
-            checked={api.checked}
-            onChange={api.onchange}
-            label={api.label}
-            id={api.id}
-            key={api.id}/>
+          checked={api.checked}
+          onChange={this.props.toggleSelectedApi(api.id)}
+          label={api.label}
+          id={api.id}
+          key={api.id}
+        />
       );
     });
   }

@@ -53,6 +53,17 @@ export const initialApplicationState: IApplication = {
   token: '',
 };
 
+const applyApis: string[] = [
+  'benefits',
+  'facilities',
+  'vaForms',
+  'confirmation',
+  'claims',
+  'health',
+  'communityCare',
+  'verification',
+];
+
 export function applicationInput(
   inputs: IApplicationInputs = initialApplicationInputs,
   action: UpdateApplicationAction,
@@ -72,33 +83,13 @@ export function applicationInput(
       return { ...inputs, oAuthRedirectURI: action.newValue };
     case constants.UPDATE_APPLICATION_ORGANIZATION:
       return { ...inputs, organization: action.newValue };
-    case constants.TOGGLE_BENEFITS_CHECKED:
-      const benefits = !inputs.apis.benefits;
-      return { ...inputs, apis: { ...inputs.apis, benefits } };
-    case constants.TOGGLE_CLAIMS_CHECKED:
-      const claims = !inputs.apis.claims;
-      return { ...inputs, apis: { ...inputs.apis, claims } };
-    case constants.TOGGLE_APPEALS_CHECKED:
-      const appeals = !inputs.apis.appeals;
-      return { ...inputs, apis: { ...inputs.apis, appeals } };
-    case constants.TOGGLE_HEALTH_CHECKED:
-      const health = !inputs.apis.health;
-      return { ...inputs, apis: { ...inputs.apis, health } };
-    case constants.TOGGLE_COMMUNITY_CARE_CHECKED:
-      const communityCare = !inputs.apis.communityCare;
-      return { ...inputs, apis: { ...inputs.apis, communityCare } };
-    case constants.TOGGLE_CONFIRMATION_CHECKED:
-      const confirmation = !inputs.apis.confirmation;
-      return { ...inputs, apis: { ...inputs.apis, confirmation } };
-    case constants.TOGGLE_VA_FORMS_CHECKED:
-      const vaForms = !inputs.apis.vaForms;
-      return { ...inputs, apis: { ...inputs.apis, vaForms } };
-    case constants.TOGGLE_VERIFICATION_CHECKED:
-      const verification = !inputs.apis.verification;
-      return { ...inputs, apis: { ...inputs.apis, verification } };
-    case constants.TOGGLE_FACILITIES_CHECKED:
-      const facilities = !inputs.apis.facilities;
-      return { ...inputs, apis: { ...inputs.apis, facilities } };
+    case constants.TOGGLE_SELECTED_API:
+      if (!applyApis.includes(action.apiId)) {
+        return inputs;
+      }
+
+      const isApiSelected = !inputs.apis[action.apiId];
+      return { ...inputs, apis: { ... inputs.apis, [action.apiId]: isApiSelected }};
     case constants.TOGGLE_ACCEPT_TOS:
       const termsOfService = !inputs.termsOfService;
       return { ...inputs, termsOfService };

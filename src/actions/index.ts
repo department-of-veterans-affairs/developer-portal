@@ -41,44 +41,13 @@ export interface IUpdateApplicationOAuthRedirectURI extends Action {
   type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL;
 }
 
-export interface IToggleBenefitsApi extends Action {
-  type: constants.TOGGLE_BENEFITS_CHECKED;
-}
-
-export interface IToggleClaimsApi extends Action {
-  type: constants.TOGGLE_CLAIMS_CHECKED;
-}
-
-export interface IToggleAppealsApi extends Action {
-  type: constants.TOGGLE_APPEALS_CHECKED;
-}
-
-export interface IToggleHealthApi extends Action {
-  type: constants.TOGGLE_HEALTH_CHECKED;
-}
-
-export interface IToggleCommunityCareApi extends Action {
-  type: constants.TOGGLE_COMMUNITY_CARE_CHECKED;
-}
-
-export interface IToggleFacilitiesApi extends Action {
-  type: constants.TOGGLE_FACILITIES_CHECKED;
-}
-
-export interface IToggleVaFormsApi extends Action {
-  type: constants.TOGGLE_VA_FORMS_CHECKED;
-}
-
-export interface IToggleVerificationApi extends Action {
-  type: constants.TOGGLE_VERIFICATION_CHECKED;
-}
-
 export interface IToggleAcceptTos extends Action {
   type: constants.TOGGLE_ACCEPT_TOS;
 }
 
-export interface IToggleConfirmationApi extends Action {
-  type: constants.TOGGLE_CONFIRMATION_CHECKED;
+export interface IToggleSelectedApi extends Action {
+  type: constants.TOGGLE_SELECTED_API;
+  apiId: string;
 }
 
 export type UpdateApplicationAction =
@@ -89,16 +58,8 @@ export type UpdateApplicationAction =
   | IUpdateApplicationOrganization
   | IUpdateApplicationOAuthApplicationType
   | IUpdateApplicationOAuthRedirectURI
-  | IToggleBenefitsApi
-  | IToggleClaimsApi
-  | IToggleAppealsApi
-  | IToggleConfirmationApi
-  | IToggleVaFormsApi
-  | IToggleVerificationApi
-  | IToggleFacilitiesApi
-  | IToggleHealthApi
   | IToggleAcceptTos
-  | IToggleCommunityCareApi;
+  | IToggleSelectedApi;
 
 export interface ISubmitForm extends Action {
   type: constants.SUBMIT_APPLICATION_BEGIN;
@@ -291,63 +252,18 @@ export const updateApplicationOrganization: ActionCreator<IUpdateApplicationOrga
   };
 };
 
-export const toggleBenefitsApi: ActionCreator<IToggleBenefitsApi> = () => {
+export const toggleSelectedApi: ActionCreator<IToggleSelectedApi> = (
+  apiId: string,
+) => {
   return {
-    type: constants.TOGGLE_BENEFITS_CHECKED,
-  };
-};
-
-export const toggleClaimsApi: ActionCreator<IToggleClaimsApi> = () => {
-  return {
-    type: constants.TOGGLE_CLAIMS_CHECKED,
-  };
-};
-
-export const toggleAppealsApi: ActionCreator<IToggleAppealsApi> = () => {
-  return {
-    type: constants.TOGGLE_APPEALS_CHECKED,
-  };
-};
-
-export const toggleHealthApi: ActionCreator<IToggleHealthApi> = () => {
-  return {
-    type: constants.TOGGLE_HEALTH_CHECKED,
-  };
-};
-
-export const toggleCommunityCareApi: ActionCreator<IToggleCommunityCareApi> = () => {
-  return {
-    type: constants.TOGGLE_COMMUNITY_CARE_CHECKED,
-  };
-};
-
-export const toggleVaForms: ActionCreator<IToggleVaFormsApi> = () => {
-  return {
-    type: constants.TOGGLE_VA_FORMS_CHECKED,
-  };
-};
-
-export const toggleVerificationApi: ActionCreator<IToggleVerificationApi> = () => {
-  return {
-    type: constants.TOGGLE_VERIFICATION_CHECKED,
-  };
-};
-
-export const toggleFacilitiesApi: ActionCreator<IToggleFacilitiesApi> = () => {
-  return {
-    type: constants.TOGGLE_FACILITIES_CHECKED,
+    apiId,
+    type: constants.TOGGLE_SELECTED_API,
   };
 };
 
 export const toggleAcceptTos: ActionCreator<IToggleAcceptTos> = () => {
   return {
     type: constants.TOGGLE_ACCEPT_TOS,
-  };
-};
-
-export const toggleConfirmation: ActionCreator<IToggleConfirmationApi> = () => {
-  return {
-    type: constants.TOGGLE_CONFIRMATION_CHECKED,
   };
 };
 
