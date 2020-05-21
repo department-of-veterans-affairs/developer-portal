@@ -328,24 +328,34 @@ class ApplyForm extends React.Component<IApplyProps> {
       const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
       return (
         <React.Fragment>
+          <div className="vads-u-margin-top--4">
+            Please specify whether your app can securely hide a client secret. 
+            Apps that can hide a secret will use the&nbsp;
+            <a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">
+              authorization code flow
+            </a>,
+            and apps that cannot will use the&nbsp;
+            <a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>.
+          </div>
           <ErrorableRadioButtons
             errorMessage={null}
             label="Can your application securely hide a client secret?"
             onValueChange={this.props.updateOAuthApplicationType}
             options={[
               {
-                label: <span>Yes (<a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">authorization code flow</a>)</span>,
+                label: 'Yes',
                 value: 'web',
               },
               {
-                label: <span>No (<a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>)</span>,
+                label: 'No',
                 value: 'native',
               },
             ]}
             value={oAuthApplicationType}
             required={true}
             additionalLegendClass="vads-u-margin-top--0"
-            />
+            additionalFieldsetClass="vads-u-margin-top--1"
+          />
             
           <ErrorableTextInput
             errorMessage={this.props.inputs.oAuthRedirectURI.validation}
