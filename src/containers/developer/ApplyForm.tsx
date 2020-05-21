@@ -17,11 +17,11 @@ import { includesOauthAPI } from '../../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../../types';
 import { FORM_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
+import SelectedApis from './SelectedApis';
 
 interface IApplyProps extends IApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
-  toggleSelectedApi: (apiId: string) => () => void;
   updateDescription: (value: IErrorableInput) => void;
   updateEmail: (value: IErrorableInput) => void;
   updateFirstName: (value: IErrorableInput) => void;
@@ -29,13 +29,6 @@ interface IApplyProps extends IApplication {
   updateOAuthApplicationType: (value: IErrorableInput) => void;
   updateOAuthRedirectURI: (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
-}
-
-interface IFormCheckboxProps {
-  checked: boolean;
-  id: string;
-  label: string;
-  onChange: () => void;
 }
 
 type ApplicationDispatch = ThunkDispatch<
@@ -51,11 +44,6 @@ const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
     },
     toggleAcceptTos: () => {
       dispatch(actions.toggleAcceptTos());
-    },
-    toggleSelectedApi: (apiId: string) => {
-      return () => { 
-        dispatch(actions.toggleSelectedApi(apiId)); 
-      };
     },
     updateDescription: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationDescription(value));
@@ -85,71 +73,6 @@ const mapStateToProps = (state: IRootState) => {
   return {
     ...state.application,
   };
-};
-
-const FormCheckbox = (props: IFormCheckboxProps) => {
-  return (
-    <div className="form-checkbox">
-      <input
-        type="checkbox"
-        id={props.id}
-        name={props.id}
-        checked={props.checked}
-        onChange={props.onChange}
-      />
-      <label htmlFor={props.id}>{props.label}</label>
-    </div>
-  );
-};
-
-const oauthInfo = (props: IApplyProps) => {
-  return [
-    {
-      checked: props.inputs.apis.claims,
-      id: 'claims',
-      label: "VA Claims API",
-    },
-    {
-      checked: props.inputs.apis.health,
-      id: 'health',
-      label: "VA Health API",
-    },
-    {
-      checked: props.inputs.apis.communityCare,
-      id: 'communityCare',
-      label: "Community Care Eligibility API",
-    },
-    {
-      checked: props.inputs.apis.verification,
-      id: 'verification',
-      label: "VA Veteran Verification API",
-    },
-  ];
-};
-
-const apiInfo = (props: IApplyProps) => {
-  return [
-    {
-      checked: props.inputs.apis.benefits,
-      id: 'benefits',
-      label: "VA Benefits API",
-    },
-    {
-      checked: props.inputs.apis.facilities,
-      id: 'facilities',
-      label: "VA Facilities API",
-    },
-    {
-      checked: props.inputs.apis.vaForms,
-      id: 'vaForms',
-      label: "VA Forms API",
-    },
-    {
-      checked: props.inputs.apis.confirmation,
-      id: 'confirmation',
-      label: "VA Veteran Confirmation API",
-    },
-  ];
 };
 
 class ApplyForm extends React.Component<IApplyProps> {
@@ -210,13 +133,7 @@ class ApplyForm extends React.Component<IApplyProps> {
                 required={true}
               />
 
-              <label>Please select all of the APIs you'd like access to:</label>
-
-              <h3>Standard APIs:</h3>
-              {this.renderCheckboxes(apiInfo)}
-
-              <h3>OAuth APIs:</h3>
-              {this.renderCheckboxes(oauthInfo)}
+              <SelectedApis />
               {this.renderOAuthFields()}
 
               <ErrorableTextArea
@@ -270,20 +187,6 @@ class ApplyForm extends React.Component<IApplyProps> {
         </div>
       </div>
     );
-  }
-
-  private renderCheckboxes(checkboxInfo: (props: IApplyProps) => any[]) {
-    return checkboxInfo(this.props).map((api) => {
-      return (
-        <FormCheckbox 
-          checked={api.checked}
-          onChange={this.props.toggleSelectedApi(api.id)}
-          label={api.label}
-          id={api.id}
-          key={api.id}
-        />
-      );
-    });
   }
 
   private renderOAuthFields() {
