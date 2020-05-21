@@ -12,10 +12,10 @@ import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/E
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 
-import * as actions from '../actions';
-import { includesOauthAPI } from '../apiDefs/query';
-import { IApplication, IErrorableInput, IRootState } from '../types';
-import { FORM_FIELDS_TO_URL_FRAGMENTS } from '../types/constants';
+import * as actions from '../../actions';
+import { includesOauthAPI } from '../../apiDefs/query';
+import { IApplication, IErrorableInput, IRootState } from '../../types';
+import { FORM_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
 
 interface IApplyProps extends IApplication {
@@ -213,13 +213,10 @@ class ApplyForm extends React.Component<IApplyProps> {
               <label>Please select all of the APIs you'd like access to:</label>
 
               <h3>Standard APIs:</h3>
-
               {this.renderCheckboxes(apiInfo)}
 
               <h3>OAuth APIs:</h3>
-
               {this.renderCheckboxes(oauthInfo)}
-
               {this.renderOAuthFields()}
 
               <ErrorableTextArea

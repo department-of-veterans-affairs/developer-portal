@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { getApiDefinitions } from '../apiDefs/query';
-import sentenceJoin from '../sentenceJoin';
-import { IApiList, IApplication, IRootState } from '../types';
+import { getApiDefinitions } from '../../apiDefs/query';
+import sentenceJoin from '../../sentenceJoin';
+import { IApiList, IApplication, IRootState } from '../../types';
 
 const mapStateToProps = (state : IRootState) => {
   return {
