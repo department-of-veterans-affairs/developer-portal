@@ -27,7 +27,7 @@ type ApiSelectDispatch = ThunkDispatch<
   IRootState, 
   undefined, 
   actions.IToggleSelectedApi
-  >;
+>;
   
 const mapDispatchToProps = (dispatch: ApiSelectDispatch) => {
   return {

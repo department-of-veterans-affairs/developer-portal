@@ -7,9 +7,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import ErrorableCheckbox from '@department-of-veterans-affairs/formation-react/ErrorableCheckbox';
-import ErrorableRadioButtons from '@department-of-veterans-affairs/formation-react/ErrorableRadioButtons';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
-import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 
 import * as actions from '../../actions';
@@ -17,18 +15,14 @@ import { includesOauthAPI } from '../../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../../types';
 import { FORM_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
+import DeveloperInfo from './DeveloperInfo';
+import OAuthAppInfo from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
 
 interface IApplyProps extends IApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
   updateDescription: (value: IErrorableInput) => void;
-  updateEmail: (value: IErrorableInput) => void;
-  updateFirstName: (value: IErrorableInput) => void;
-  updateLastName: (value: IErrorableInput) => void;
-  updateOAuthApplicationType: (value: IErrorableInput) => void;
-  updateOAuthRedirectURI: (value: IErrorableInput) => void;
-  updateOrganization: (value: IErrorableInput) => void;
 }
 
 type ApplicationDispatch = ThunkDispatch<
@@ -48,24 +42,6 @@ const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
     updateDescription: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationDescription(value));
     },
-    updateEmail: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationEmail(value));
-    },
-    updateFirstName: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationFirstName(value));
-    },
-    updateLastName: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationLastName(value));
-    },
-    updateOAuthApplicationType: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationOAuthApplicationType(value));
-    },
-    updateOAuthRedirectURI: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationOAuthRedirectURI(value));
-    },
-    updateOrganization: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationOrganization(value));
-    },
   };
 };
 
@@ -82,7 +58,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   public render() {
     const {
-      inputs: { description, email, firstName, lastName, organization, termsOfService },
+      inputs: { description, termsOfService },
       ...props
     } = this.props;
     const applyClasses = classNames('vads-l-grid-container', 'vads-u-padding--4');
@@ -100,41 +76,9 @@ class ApplyForm extends React.Component<IApplyProps> {
           >
             <form className="usa-form">
               <h2>Application</h2>
-
-              <ErrorableTextInput
-                errorMessage={null}
-                label="First name"
-                field={firstName}
-                onValueChange={props.updateFirstName}
-                required={true}
-              />
-
-              <ErrorableTextInput
-                errorMessage={null}
-                label="Last name"
-                field={lastName}
-                onValueChange={props.updateLastName}
-                required={true}
-              />
-
-              <ErrorableTextInput
-                errorMessage={email.validation}
-                label="Email"
-                field={email}
-                onValueChange={props.updateEmail}
-                required={true}
-              />
-
-              <ErrorableTextInput
-                errorMessage={null}
-                label="Organization"
-                field={organization}
-                onValueChange={props.updateOrganization}
-                required={true}
-              />
-
+              <DeveloperInfo />
               <SelectedApis />
-              {this.renderOAuthFields()}
+              {this.anyOAuthApisSelected() && <OAuthAppInfo />}
 
               <ErrorableTextArea
                 errorMessage={null}
@@ -187,55 +131,6 @@ class ApplyForm extends React.Component<IApplyProps> {
         </div>
       </div>
     );
-  }
-
-  private renderOAuthFields() {
-    if (this.anyOAuthApisSelected()) {
-      const oAuthApplicationType = this.props.inputs.oAuthApplicationType;
-      const oAuthRedirectURI = this.props.inputs.oAuthRedirectURI;
-      return (
-        <React.Fragment>
-          <div className="vads-u-margin-top--4">
-            Please specify whether your app can securely hide a client secret. 
-            Apps that can hide a secret will use the&nbsp;
-            <a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">
-              authorization code flow
-            </a>,
-            and apps that cannot will use the&nbsp;
-            <a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>.
-          </div>
-          <ErrorableRadioButtons
-            errorMessage={null}
-            label="Can your application securely hide a client secret?"
-            onValueChange={this.props.updateOAuthApplicationType}
-            options={[
-              {
-                label: 'Yes',
-                value: 'web',
-              },
-              {
-                label: 'No',
-                value: 'native',
-              },
-            ]}
-            value={oAuthApplicationType}
-            required={true}
-            additionalLegendClass="vads-u-margin-top--0"
-            additionalFieldsetClass="vads-u-margin-top--1"
-          />
-            
-          <ErrorableTextInput
-            errorMessage={this.props.inputs.oAuthRedirectURI.validation}
-            label="OAuth Redirect URI"
-            field={oAuthRedirectURI}
-            onValueChange={this.props.updateOAuthRedirectURI}
-            required={true}
-            />
-        </React.Fragment>
-      );
-    }
-
-    return null;
   }
 
   private renderError() {
