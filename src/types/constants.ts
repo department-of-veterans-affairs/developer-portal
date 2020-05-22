@@ -42,7 +42,7 @@ export type SET_INITIAL_VERSIONING = typeof SET_INITIAL_VERSIONING;
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';
 
-export const FORM_FIELDS_TO_URL_FRAGMENTS = {
+export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
   benefits: 'benefits',
   claims: 'claims',
   communityCare: 'community_care',

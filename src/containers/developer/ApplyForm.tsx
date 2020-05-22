@@ -13,7 +13,7 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 import * as actions from '../../actions';
 import { includesOauthAPI } from '../../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../../types';
-import { FORM_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
+import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
 import DeveloperInfo from './DeveloperInfo';
 import OAuthAppInfo from './OAuthAppInfo';
@@ -159,7 +159,7 @@ class ApplyForm extends React.Component<IApplyProps> {
 
   private anyOAuthApisSelected() {
     const apiIdsByField = this.selectedApis().flatMap(
-      formField => FORM_FIELDS_TO_URL_FRAGMENTS[formField],
+      formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField],
     );
     return includesOauthAPI(apiIdsByField);
   }

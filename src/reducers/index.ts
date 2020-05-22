@@ -53,16 +53,7 @@ export const initialApplicationState: IApplication = {
   token: '',
 };
 
-const applyApis: string[] = [
-  'benefits',
-  'facilities',
-  'vaForms',
-  'confirmation',
-  'claims',
-  'health',
-  'communityCare',
-  'verification',
-];
+const applyApis: string[] = Object.keys(constants.APPLY_FIELDS_TO_URL_FRAGMENTS);
 
 export function applicationInput(
   inputs: IApplicationInputs = initialApplicationInputs,
