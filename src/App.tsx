@@ -3,6 +3,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 import { ConnectedRouter } from 'react-router-redux';
 
 import { getDeprecatedFlags } from './apiDefs/deprecated';
@@ -15,7 +16,7 @@ import { topLevelRoutes } from './Routes';
 import { history } from './store';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
-import './styles/base.scss';
+import './App.scss';
 
 class App extends React.Component {
   public render() {
@@ -28,10 +29,20 @@ class App extends React.Component {
         <ConnectedRouter history={history}>
           <div className="vads-u-display--flex">
             <div className={classNames("vads-u-display--flex", "vads-u-flex-direction--column", "vads-u-min-height--viewport", "vads-u-width--full")}>
+              <HashLink to="#main"
+                className={classNames(
+                  'va-api-skipnav',
+                  'vads-u-padding-x--2',
+                  'vads-u-padding-y--1',
+                )}
+                onClick={this.handleSkipNavClick}
+              >
+                Skip to main content
+              </HashLink>
               <Header />
-              <div className="main" role="main">
+              <main id="main" tabIndex={-1}>
                 <Route path="/" render={topLevelRoutes} />
-              </div>
+              </main>
               <Footer />
             </div>
           </div>
@@ -58,6 +69,15 @@ class App extends React.Component {
       show_testing_notice: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
       signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
     };
+  }
+
+  // need to manually set focus on navigation to #main, since React Router cancels
+  // native anchor click behavior and react-router-hash-link doesn't handle focus
+  private handleSkipNavClick() {
+    const mainElement: HTMLElement | null = document.querySelector('main');
+    if (mainElement) {
+      mainElement.focus();
+    }
   }
 }
 
