@@ -1,7 +1,7 @@
 import 'jest';
 
 import * as constants from '../types/constants';
-import * as actions from './index';
+import * as actions from './apply';
 
 afterEach(() => {
   fetchMock.resetMocks();

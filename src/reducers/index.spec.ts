@@ -1,5 +1,6 @@
 import 'jest';
 
+import { IToggleSelectedApi } from '../actions';
 import { IApplication } from '../types';
 import * as constants from '../types/constants';
 import { application } from './index';
@@ -79,120 +80,41 @@ describe('application', () => {
     });
   });
 
-  it('should toggle benefits api', () => {
-    const newApp = application(app, {
-      type: constants.TOGGLE_BENEFITS_CHECKED,
+  it('should toggle selected APIs', () => {
+    const applyApis: string[] = Object.keys(constants.APPLY_FIELDS_TO_URL_FRAGMENTS);
+    applyApis.forEach(apiId => {
+      const toggleAction: IToggleSelectedApi = {
+        apiId,
+        type: constants.TOGGLE_SELECTED_API,
+      };
+
+      let newApp = application(app, toggleAction);
+      expect(newApp.inputs).toEqual(
+        expect.objectContaining({
+          apis: expect.objectContaining({
+            [apiId]: true,
+          }),
+        }),
+      );
+      
+      newApp = application(newApp, toggleAction);
+      expect(newApp.inputs).toEqual(
+        expect.objectContaining({
+          apis: expect.objectContaining({
+            [apiId]: false,
+          }),
+        }),
+      );
     });
-    expect(newApp.inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          benefits: true,
-        }),
-      }),
-    );
-    expect(application(newApp, { type: constants.TOGGLE_BENEFITS_CHECKED }).inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          benefits: false,
-        }),
-      }),
-    );
   });
 
-  it('should toggle claims api', () => {
-    const newApp = application(app, {
-      type: constants.TOGGLE_CLAIMS_CHECKED,
-    });
-    expect(newApp.inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          claims: true,
-        }),
-      }),
-    );
-    expect(application(newApp, { type: constants.TOGGLE_CLAIMS_CHECKED }).inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          claims: false,
-        }),
-      }),
-    );
-  });
+  it('should not toggle an API that does not exist', () => {
+    const newInputs = application(app, {
+      apiId: 'fakeapi',
+      type: constants.TOGGLE_SELECTED_API,
+    }).inputs;
 
-  it('should toggle appeals api', () => {
-    const newApp = application(app, { type: constants.TOGGLE_APPEALS_CHECKED });
-    expect(newApp.inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          appeals: true,
-        }),
-      }),
-    );
-    expect(application(newApp, { type: constants.TOGGLE_APPEALS_CHECKED }).inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          appeals: false,
-        }),
-      }),
-    );
-  });
-
-  it('should toggle health api', () => {
-    const newApp = application(app, { type: constants.TOGGLE_HEALTH_CHECKED });
-    expect(newApp.inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          health: true,
-        }),
-      }),
-    );
-    expect(application(newApp, { type: constants.TOGGLE_HEALTH_CHECKED }).inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          health: false,
-        }),
-      }),
-    );
-  });
-
-  it('should toggle verification api', () => {
-    const newApp = application(app, {
-      type: constants.TOGGLE_VERIFICATION_CHECKED,
-    });
-    expect(newApp.inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          verification: true,
-        }),
-      }),
-    );
-    expect(application(newApp, { type: constants.TOGGLE_VERIFICATION_CHECKED }).inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          verification: false,
-        }),
-      }),
-    );
-  });
-
-  it('should toggle facilities api', () => {
-    const newApp = application(app, {
-      type: constants.TOGGLE_FACILITIES_CHECKED,
-    });
-    expect(newApp.inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          facilities: true,
-        }),
-      }),
-    );
-    expect(application(newApp, { type: constants.TOGGLE_FACILITIES_CHECKED }).inputs).toEqual(
-      expect.objectContaining({
-        apis: expect.objectContaining({
-          facilities: false,
-        }),
-      }),
-    );
+    expect(newInputs).toEqual(app.inputs);
   });
 
   it('should set state to sending when application send begins', () => {
