@@ -32,11 +32,8 @@ const initialApplyInputs: IApplyInputs = {
 };
 
 export const initialApplicationState: IApplication = {
-  clientID: '',
-  clientSecret: '',
   inputs: initialApplyInputs,
   sending: false,
-  token: '',
 };
 
 const applyApis: string[] = Object.keys(constants.APPLY_FIELDS_TO_URL_FRAGMENTS);
@@ -84,10 +81,15 @@ export function application(
     case constants.SUBMIT_APPLICATION_SUCCESS:
       return {
         ...state,
-        clientID: action.clientID,
-        clientSecret: action.clientSecret,
+        inputs: initialApplyInputs,
+        result: {
+          apis: state.inputs.apis,
+          clientID: action.clientID,
+          clientSecret: action.clientSecret,
+          email: state.inputs.email.value,
+          token: action.token,
+        },
         sending: false,
-        token: action.token,
       };
     case constants.SUBMIT_APPLICATION_ERROR:
       return { ...state, sending: false, errorStatus: action.status };

@@ -1,47 +1,12 @@
 import { RouterState } from 'react-router-redux';
+import { IApplication } from './apply';
+
+export * from './apply';
+export * from './form';
 
 export interface IApiNameParam {
   apiName?: string;
   apiCategoryKey: string;
-}
-
-export interface IErrorableInput {
-  dirty: boolean;
-  value: string;
-  validation?: string;
-}
-
-export interface IApiList {
-  appeals: boolean;
-  benefits: boolean;
-  claims: boolean;
-  confirmation: boolean;
-  facilities: boolean;
-  health: boolean;
-  vaForms: boolean;
-  verification: boolean;
-  communityCare: boolean;
-}
-
-export interface IApplicationInputs {
-  apis: IApiList;
-  description: IErrorableInput;
-  email: IErrorableInput;
-  firstName: IErrorableInput;
-  lastName: IErrorableInput;
-  oAuthApplicationType: IErrorableInput;
-  oAuthRedirectURI: IErrorableInput;
-  organization: IErrorableInput;
-  termsOfService: boolean;
-}
-
-export interface IApplication {
-  inputs: IApplicationInputs;
-  sending: boolean;
-  errorStatus?: string;
-  token: string;
-  clientID: string;
-  clientSecret: string;
 }
 
 export interface IApiVersioning {

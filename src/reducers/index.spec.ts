@@ -6,8 +6,6 @@ import * as constants from '../types/constants';
 import { application } from './index';
 
 const app: IApplication = {
-  clientID: '',
-  clientSecret: '',
   inputs: {
     apis: {
       appeals: false,
@@ -51,7 +49,6 @@ const app: IApplication = {
     termsOfService: false,
   },
   sending: false,
-  token: '',
 };
 
 describe('application', () => {
@@ -142,7 +139,7 @@ describe('application', () => {
     );
   });
 
-  it('should set token on application send errors', () => {
+  it('should set token and OAuth credentials on a successful submit', () => {
     const newApp = application(app, {
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
@@ -155,10 +152,12 @@ describe('application', () => {
       }),
     ).toEqual(
       expect.objectContaining({
-        clientID: 'clientID',
-        clientSecret: 'clientSecret',
+        result: expect.objectContaining({
+          clientID: 'clientID',
+          clientSecret: 'clientSecret',
+          token: 'test-token',
+        }),
         sending: false,
-        token: 'test-token',
       }),
     );
   });

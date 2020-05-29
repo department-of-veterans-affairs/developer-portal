@@ -100,7 +100,7 @@ class ApplyForm extends React.Component<IApplyProps> {
               />
 
               <ProgressButton
-                buttonText={props.sending ? 'Sending...' : 'Submit'}
+                buttonText={props.sending ? 'Sending...' : 'Submit Developer Application'}
                 disabled={!this.readyToSubmit() || props.sending}
                 onButtonClick={props.submitForm}
                 buttonClass="usa-button-primary"
