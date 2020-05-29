@@ -1,6 +1,7 @@
 import 'jest';
 
 import * as constants from '../types/constants';
+import * as validators from '../utils/validators';
 import * as actions from './apply';
 
 afterEach(() => {
@@ -83,9 +84,9 @@ describe('submitForm', () => {
 });
 
 describe('updateApplicationEmail', () => {
-  it('should return the newValue for input', () => {
+  it('should return the input value if the value is not dirty', () => {
     const newValue = {
-      dirty: true,
+      dirty: false,
       value: 'goodemail@example.com',
     };
     expect(actions.updateApplicationEmail(newValue)).toEqual({
@@ -94,28 +95,174 @@ describe('updateApplicationEmail', () => {
     });
   });
 
-  it('should return the newValue for input with validation when email not correct', () => {
+  it('should return the input value for an incomplete/"not dirty" email', () => {
+    // see comment on updateApplicationEmail in apply.ts
+    const newValue = {
+      dirty: false,
+      value: 'imnotdonetyping@example',
+    };
+    expect(actions.updateApplicationEmail(newValue)).toEqual({
+      newValue,
+      type: constants.UPDATE_APPLICATION_EMAIL,
+    });
+  });
+
+  it('should not have an error for a valid email', () => {
+    const newValue = {
+      dirty: true,
+      value: 'goodemail@example.com',
+    };
+
+    expect(actions.updateApplicationEmail(newValue)).toEqual({
+      newValue: {
+        dirty: false,
+        value: newValue.value,
+      },
+      type: constants.UPDATE_APPLICATION_EMAIL,
+    });
+  });
+
+  it('should return the value with an error when email is invalid and "dirty"', () => {
     const newValue = {
       dirty: true,
       value: 'bademail(at)example.com',
     };
     expect(actions.updateApplicationEmail(newValue)).toEqual({
       newValue: {
-        ...newValue,
+        dirty: false,
         validation: 'Must be a valid email address.',
+        value: newValue.value,
       },
       type: constants.UPDATE_APPLICATION_EMAIL,
     });
   });
+
+  it('should include the old validation if email is "not dirty"', () => {
+    const errorMessage = 'whoops bad email';
+    const newValue = {
+      dirty: false,
+      value: 'not an email',
+    };
+
+    const updateAction = actions.updateApplicationEmail(newValue, errorMessage);
+    expect(updateAction).toEqual({
+      newValue: {
+        ... newValue,
+        validation: errorMessage,
+      },
+      type: constants.UPDATE_APPLICATION_EMAIL,
+    });
+  });
+
+  it('should only validate email when input is "dirty" (on blur)', () => {
+    const newValue = {
+      dirty: false,
+      value: 'goodemail@example.com',
+    };
+
+    const mockValidateEmail = jest.spyOn(validators, 'validateEmail')
+      .mockReturnValue(newValue);    
+    actions.updateApplicationEmail(newValue);
+    expect(mockValidateEmail.mock.calls.length).toBe(0);
+    
+    newValue.dirty = true;
+    actions.updateApplicationEmail(newValue);
+    expect(mockValidateEmail.mock.calls.length).toBe(1);
+    mockValidateEmail.mockRestore();
+  });
 });
 
 describe('updateApplicationOAuthRedirectURI', () => {
-  it('should enforce validation', () => {
-    const updateAction: actions.IUpdateApplicationOAuthRedirectURI = actions.updateApplicationOAuthRedirectURI(
-      { dirty: true, value: 'ftp://host:21' },
-    );
-    expect(updateAction.newValue).toEqual(
-      expect.objectContaining({ dirty: true, validation: expect.any(String) }),
-    );
+  it('should return the input value when the value is "not dirty"', () => {
+    const newValue = { 
+      dirty: false, 
+      value: 'http://valid.com/redirect',
+    };
+    
+    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    expect(updateAction).toEqual({
+      newValue,
+      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+    });
+  });
+
+  it('should return the input value for an incomplete/"not dirty" URI', () => {
+    const newValue = { 
+      dirty: false, 
+      value: 'https://',
+    };
+    
+    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    expect(updateAction).toEqual({
+      newValue,
+      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+    });
+  });
+
+  it('should not include an error message for a valid HTTP(S) URI', () => {
+    const newValue = { 
+      dirty: true, 
+      value: 'https://valid.com/redirect',
+    };
+    
+    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    expect(updateAction).toEqual({
+      newValue: {
+        dirty: false, 
+        value: newValue.value,
+      },
+      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+    });
+  });
+
+  it('should include an error for an invalid and "dirty" redirect URI', () => {
+    const newValue = { 
+      dirty: true, 
+      value: 'ftp://host:21',
+    };
+    
+    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    expect(updateAction).toEqual({
+      newValue: {
+        dirty: false, 
+        validation: 'Must be an http or https URI.',
+        value: newValue.value,
+      },
+      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+    });
+  });
+
+  it('should include the old validation if the redirect URI is not "dirty"', () => {
+    const errorMessage = 'oopsy daisy not a URI';
+    const newValue = {
+      dirty: false,
+      value: 'not an HTTP URI',
+    };
+
+    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue, errorMessage);
+    expect(updateAction).toEqual({
+      newValue: {
+        ... newValue,
+        validation: errorMessage,
+      },
+      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+    });
+  });
+
+  it('should only validate redirect URI when field is "dirty" (on blur)', () => {
+    const newValue = {
+      dirty: false,
+      value: 'http://valid.com/redirect',
+    };
+
+    const mockValidateURI = jest.spyOn(validators, 'validateOAuthRedirectURI')
+      .mockReturnValue(newValue);    
+    actions.updateApplicationOAuthRedirectURI(newValue);
+    expect(mockValidateURI.mock.calls.length).toBe(0);
+    
+    newValue.dirty = true;
+    actions.updateApplicationOAuthRedirectURI(newValue);
+    expect(mockValidateURI.mock.calls.length).toBe(1);
+    mockValidateURI.mockRestore();
   });
 });

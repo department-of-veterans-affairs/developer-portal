@@ -62,7 +62,7 @@ describe('application', () => {
       ['lastName', constants.UPDATE_APPLICATION_LAST_NAME],
       ['email', constants.UPDATE_APPLICATION_EMAIL],
       ['oAuthApplicationType', constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE],
-      ['oAuthRedirectURI', constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL],
+      ['oAuthRedirectURI', constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI],
       ['organization', constants.UPDATE_APPLICATION_ORGANIZATION],
     ];
 

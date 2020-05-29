@@ -11,7 +11,7 @@ interface IOAuthAppInfoProps {
   oAuthApplicationType: IErrorableInput;
   oAuthRedirectURI: IErrorableInput;
   updateOAuthApplicationType: (value: IErrorableInput) => void;
-  updateOAuthRedirectURI: (value: IErrorableInput) => void;
+  updateOAuthRedirectURI: (oldValidation?: string) => (value: IErrorableInput) => void;
 }
 
 const mapStateToProps = (state: IRootState) => {
@@ -32,13 +32,20 @@ const mapDispatchToProps = (dispatch: OAuthAppInfoDispatch) => {
     updateOAuthApplicationType: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationOAuthApplicationType(value));
     },
-    updateOAuthRedirectURI: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationOAuthRedirectURI(value));
+    updateOAuthRedirectURI: (oldValidation?: string) => {
+      return (value: IErrorableInput) => {
+        dispatch(actions.updateApplicationOAuthRedirectURI(value, oldValidation));
+      };
     },
   };
 };
 
 const OAuthAppInfo = (props: IOAuthAppInfoProps) => {
+  const {
+    oAuthApplicationType,
+    oAuthRedirectURI,
+  } = props;
+
   return (
     <React.Fragment>
       <div className="vads-u-margin-top--4">
@@ -63,17 +70,17 @@ const OAuthAppInfo = (props: IOAuthAppInfoProps) => {
             value: 'native',
           },
         ]}
-        value={props.oAuthApplicationType}
+        value={oAuthApplicationType}
         required={true}
         additionalLegendClass="vads-u-margin-top--0"
         additionalFieldsetClass="vads-u-margin-top--1"
       />
         
       <ErrorableTextInput
-        errorMessage={props.oAuthRedirectURI.validation}
+        errorMessage={oAuthRedirectURI.validation}
         label="OAuth Redirect URI"
-        field={props.oAuthRedirectURI}
-        onValueChange={props.updateOAuthRedirectURI}
+        field={oAuthRedirectURI}
+        onValueChange={props.updateOAuthRedirectURI(oAuthRedirectURI.validation)}
         required={true}
       />
     </React.Fragment>

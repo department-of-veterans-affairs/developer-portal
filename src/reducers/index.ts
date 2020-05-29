@@ -1,8 +1,15 @@
 import { SubmitFormAction, UpdateApplicationAction } from '../actions';
-import { IApplication, IApplicationInputs } from '../types';
+import { IApplication, IApplicationInputs as IApplyInputs, IErrorableInput } from '../types';
 import * as constants from '../types/constants';
 
-const initialApplicationInputs: IApplicationInputs = {
+const newErrorableInput: () => IErrorableInput = () => {
+  return {
+    dirty: false,
+    value: '',
+  };
+};
+
+const initialApplyInputs: IApplyInputs = {
   apis: {
     appeals: false,
     benefits: false,
@@ -14,41 +21,20 @@ const initialApplicationInputs: IApplicationInputs = {
     vaForms: false,
     verification: false,
   },
-  description: {
-    dirty: false,
-    value: '',
-  },
-  email: {
-    dirty: false,
-    value: '',
-  },
-  firstName: {
-    dirty: false,
-    value: '',
-  },
-  lastName: {
-    dirty: false,
-    value: '',
-  },
-  oAuthApplicationType: {
-    dirty: false,
-    value: '',
-  },
-  oAuthRedirectURI: {
-    dirty: false,
-    value: '',
-  },
-  organization: {
-    dirty: false,
-    value: '',
-  },
+  description: newErrorableInput(),
+  email: newErrorableInput(),
+  firstName: newErrorableInput(),
+  lastName: newErrorableInput(),
+  oAuthApplicationType: newErrorableInput(),
+  oAuthRedirectURI: newErrorableInput(),
+  organization: newErrorableInput(),
   termsOfService: false,
 };
 
 export const initialApplicationState: IApplication = {
   clientID: '',
   clientSecret: '',
-  inputs: initialApplicationInputs,
+  inputs: initialApplyInputs,
   sending: false,
   token: '',
 };
@@ -56,9 +42,9 @@ export const initialApplicationState: IApplication = {
 const applyApis: string[] = Object.keys(constants.APPLY_FIELDS_TO_URL_FRAGMENTS);
 
 export function applicationInput(
-  inputs: IApplicationInputs = initialApplicationInputs,
+  inputs: IApplyInputs = initialApplyInputs,
   action: UpdateApplicationAction,
-): IApplicationInputs {
+): IApplyInputs {
   switch (action.type) {
     case constants.UPDATE_APPLICATION_DESCRIPTION:
       return { ...inputs, description: action.newValue };
@@ -70,7 +56,7 @@ export function applicationInput(
       return { ...inputs, lastName: action.newValue };
     case constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE:
       return { ...inputs, oAuthApplicationType: action.newValue };
-    case constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URL:
+    case constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI:
       return { ...inputs, oAuthRedirectURI: action.newValue };
     case constants.UPDATE_APPLICATION_ORGANIZATION:
       return { ...inputs, organization: action.newValue };
