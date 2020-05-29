@@ -197,10 +197,5 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
     if (!response.ok) {
       throw Error(response.statusText);
     }
-
-    const json = await response.json();
-    if (json && json.statusCode !== 200) {
-      throw Error(json.body);
-    }
   }
 }
