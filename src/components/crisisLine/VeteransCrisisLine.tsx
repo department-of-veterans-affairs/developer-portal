@@ -60,7 +60,7 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
             />
           </span>
         </button>
-        <Modal id="crisis-line-modal" visible={this.state.modalVisibile} focusSelector="#first-panel-info"
+        <Modal id="crisis-line-modal" visible={this.state.modalVisibile}
           onClose={() => this.setState({ modalVisibile: false })}
         >
           <VeteransCrisisLinePanel />
