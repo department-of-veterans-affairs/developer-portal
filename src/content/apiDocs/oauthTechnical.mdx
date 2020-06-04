@@ -38,10 +38,10 @@ with the following query parameters:
 | `client_id`     | **Required** | The `client_id` issued by the VA API Platform team |
 | `redirect_uri`  | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application. |
 | `response_type` | **Required** | One or two of `id_token`, and `code`. |
+| `state`         | **Required** | Ensures authorization flow integrity. See [security](#security-considerations). |
 | `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
 | `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
 | `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
-| `state`         | Optional     | Ensures authorization flow integrity. See [security](#security-considerations). |
 
 Example Authorization URL:
 ```http
