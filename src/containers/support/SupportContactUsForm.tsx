@@ -182,7 +182,7 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
 
   private async formSubmission() {
     const request = new Request(
-      `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL}/services/meta/contact-us`,
+      `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL}/internal/developer-portal-backend/contact-us`,
       {
         body: JSON.stringify(this.processedData),
         headers: {
@@ -196,11 +196,6 @@ export default class SupportContactUsForm extends React.Component<ISupportContac
     const response = await fetch(request);
     if (!response.ok) {
       throw Error(response.statusText);
-    }
-
-    const json = await response.json();
-    if (json && json.statusCode !== 200) {
-      throw Error(json.body);
     }
   }
 }
