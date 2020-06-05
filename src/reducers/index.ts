@@ -1,5 +1,5 @@
 import { SubmitFormAction, UpdateApplicationAction } from '../actions';
-import { IApplication, IApplicationInputs as IApplyInputs, IErrorableInput } from '../types';
+import { IApplication, IApplyInputs, IErrorableInput } from '../types';
 import * as constants from '../types/constants';
 
 const newErrorableInput: () => IErrorableInput = () => {

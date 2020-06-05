@@ -12,7 +12,7 @@ export interface IApiList {
   communityCare: boolean;
 }
 
-export interface IApplicationInputs {
+export interface IApplyInputs {
   apis: IApiList;
   description: IErrorableInput;
   email: IErrorableInput;
@@ -33,7 +33,7 @@ export interface IApplySuccessResult {
 }
 
 export interface IApplication {
-  inputs: IApplicationInputs;
+  inputs: IApplyInputs;
   sending: boolean;
   errorStatus?: string;
   result?: IApplySuccessResult;
