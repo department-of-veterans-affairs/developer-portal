@@ -13,7 +13,7 @@ interface IDeveloperInfoProps {
   organization: IErrorableInput;
   updateFirstName: (value: IErrorableInput) => void;
   updateLastName: (value: IErrorableInput) => void;
-  updateEmail: (value: IErrorableInput) => void;
+  updateEmail: (oldValidation?: string) => (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
 }
 
@@ -34,8 +34,10 @@ type DeveloperInfoDispatch = ThunkDispatch<
 
 const mapDispatchToProps = (dispatch: DeveloperInfoDispatch) => {
   return {
-    updateEmail: (value: IErrorableInput) => {
-      dispatch(actions.updateApplicationEmail(value));
+    updateEmail: (oldValidation?: string) => {
+      return (value: IErrorableInput) => {
+        dispatch(actions.updateApplicationEmail(value, oldValidation));
+      };
     },
     updateFirstName: (value: IErrorableInput) => {
       dispatch(actions.updateApplicationFirstName(value));
@@ -71,7 +73,7 @@ class DeveloperInfo extends React.Component<IDeveloperInfoProps> {
           errorMessage={this.props.email.validation}
           label="Email"
           field={this.props.email}
-          onValueChange={this.props.updateEmail}
+          onValueChange={this.props.updateEmail(this.props.email.validation)}
           required={true}
         />
 

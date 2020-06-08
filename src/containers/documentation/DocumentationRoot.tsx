@@ -145,7 +145,6 @@ export default class DocumentationRoot extends React.Component<RouteComponentPro
                     path="/explore/:apiCategoryKey/docs/:apiName"
                     component={ApiPage}
                     />
-                }
               </Switch>
             </div>
           </div>
