@@ -82,30 +82,12 @@ function VeteransNotice() {
   );
 }
 
-function AlertNotice() {
-  return (
-    <section className="usa-alert-full-width usa-alert-full-width-warning" role="region" aria-labelledby="alert-heading">
-      <div className="usa-alert usa-alert-warning" aria-live="polite" role="alert">
-        <div className="usa-alert-body">
-          <h2 className="usa-alert-heading" id="alert-heading">VA Lighthouse Development Sandbox Migration</h2>
-          <div className="usa-alert-text">
-            <p>
-              We have migrated active API keys from the development environment at dev-api.va.gov to the <strong>new Sandbox environment at sandbox-api.va.gov</strong>. We will contact everyone with dev API keys to update their hostname to point to the new environment. For more information, visit the <a href="https://groups.google.com/forum/#!topic/va-lighthouse/aBDqzVyiaXo" target="_blank">VA Lighthouse Forum</a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 class Home extends React.Component {
   public render() {
     return (
       <div className="home">
         <Hero />
         <VeteransNotice />
-        <AlertNotice />
         <HomeSection ariaLabel="An API platform" imageSrc={padlockImg} title="A secure API platform to service Veterans.">
           <div>
             Lighthouse is an API platform that gives developers secure access to the VA data they need to build helpful tools and services for Veterans.

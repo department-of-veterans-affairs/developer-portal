@@ -10,13 +10,13 @@ import './VeteransCrisisLine.scss';
 import rightArrow from '../../assets/arrow-right-white.svg';
 
 interface IVeteransCrisisLineState {
-  modalVisibile: boolean;
+  modalVisible: boolean;
 }
 
 export default class VeteransCrisisLine extends React.Component<{}, IVeteransCrisisLineState> {
   constructor(props: {}) {
     super(props);
-    this.state = { modalVisibile: false };
+    this.state = { modalVisible: false };
   }
 
   public componentDidMount() {
@@ -36,7 +36,7 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
       )}>
         <button 
           data-show="#crisis-line-modal"
-          onClick={() => this.setState({ modalVisibile: true })}
+          onClick={() => this.setState({ modalVisible: true })}
           className={classNames(
             'va-crisis-line-button',
             'va-api-crisis-line-button',
@@ -60,8 +60,9 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
             />
           </span>
         </button>
-        <Modal id="crisis-line-modal" visible={this.state.modalVisibile} focusSelector="#first-panel-info"
-          onClose={() => this.setState({ modalVisibile: false })}
+        <Modal id="crisis-line-modal" visible={this.state.modalVisible}
+          onClose={() => this.setState({ modalVisible: false })}
+          initialFocusSelector="li > a"
         >
           <VeteransCrisisLinePanel />
         </Modal>
@@ -70,8 +71,8 @@ export default class VeteransCrisisLine extends React.Component<{}, IVeteransCri
   }
 
   private handleEscape = (event: KeyboardEvent) => {
-    if (event.key === 'Escape' && this.state.modalVisibile) {
-      this.setState({ modalVisibile: false });
+    if (event.key === 'Escape' && this.state.modalVisible) {
+      this.setState({ modalVisible: false });
     }
   }
 }

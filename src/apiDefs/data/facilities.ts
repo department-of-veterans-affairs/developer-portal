@@ -6,7 +6,6 @@ const facilitiesApis : IApiDescription[] = [
     description: "VA Facilities",
     docSources: [
       {
-        metadataUrl: `${swaggerHost}/services/va_facilities/metadata`,
         openApiUrl: `${swaggerHost}/services/va_facilities/docs/v0/api`,
       },
     ],

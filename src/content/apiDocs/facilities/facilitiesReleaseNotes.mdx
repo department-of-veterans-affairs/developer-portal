@@ -1,3 +1,20 @@
+## April 20, 2020
+You can now see if Health facilities offer Podiatry or Nutrition services.
+* Added `Podiatry` and `Nutrition` to the array of available services for a facility, where available. At this time, we do not have satisfaction scores and are not exposing wait times for podiatry or nutrition services.
+
+  [View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/38)
+
+You can now see Health facilities' operating status and any important textual notes about that facility.
+- Added `operating_status` and `additional_info` flags to the API response for Health facilities (other facility types will return null for these fields). Options for operating_status are `normal, notice, limited, closed`; options for `additional_info` is a text string showing details of facility notices for visitors, such as messages about parking lot closures or floor visitation information.
+- `active_status` is deprecated and replaced with `operating_status`. It will be removed in version 1.
+
+ [View code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/58)
+ 
+ Note: the Facilities API codebase was refactored and separated from the vets-api repository.
+ 
+
+---
+
 ## December 6, 2019
 The Veterans Integrated Service Network (VISN) identifier for each health facility is now available.
 - `visn` has been added to all `/facilities` endpoints. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3609)
@@ -6,10 +23,10 @@ The Veterans Integrated Service Network (VISN) identifier for each health facili
 ---
 
 ## November 8, 2019
-The `/nearby` endpoint received major changes. 
+The `/nearby` endpoint received major changes.
 - Previously, the server retrieved an isochrone (a line connecting points of the same time) for a provided location and looked for facilities that fell within that polygon. Now the opposite is true: facilities have isochrones that are compared against the provided location. Users should see increased performance from this endpoint as a result.
 - Data about drive times now comes directly from the Veterans Health Administration (VHA). Responses may vary slightly from the previous implementation because of this switch.
-- The response schema has also changed. Instead of returning facility data from `/nearby`, the endpoint now provides `min_time` and `max_time` attributes for the matching polygons and links to endpoints that can be queried to retrieve full information about the associated facility. This schema change allows us to keep `/nearby` within v0 of the Facilities API instead of incrementing to v1. See the schema changes by [visiting the documentation](https://developer.va.gov/explore/facilities/docs/facilities). 
+- The response schema has also changed. Instead of returning facility data from `/nearby`, the endpoint now provides `min_time` and `max_time` attributes for the matching polygons and links to endpoints that can be queried to retrieve full information about the associated facility. This schema change allows us to keep `/nearby` within v0 of the Facilities API instead of incrementing to v1. See the schema changes by [visiting the documentation](https://developer.va.gov/explore/facilities/docs/facilities).
 
 [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3512)
 
@@ -86,7 +103,7 @@ Remove community care providers from all facilities search [#2582](https://githu
 
 ## November 20, 2018
 
-Add facilities distances [#2687](https://github.com/department-of-veterans-affairs/vets-api/pull/2687) 
+Add facilities distances [#2687](https://github.com/department-of-veterans-affairs/vets-api/pull/2687)
 - Adds distance to meta property of lat/long inquiries to the Facilities API and adds documentation for the meta property
 - Facility distances from lat/long point are returned in responses
 
@@ -104,4 +121,3 @@ Community care provider searches [#2405](https://github.com/department-of-vetera
 
 Launch of the VA Facilities API
 - VA_Facilities API endpoint for external API consumers. Supports json/[geojson](http://geojson.org/) results and a bulk "get all" endpoint in geojson and csv format.
-

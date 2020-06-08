@@ -1,4 +1,4 @@
-import { debounce } from 'lodash';
+import { debounce, isEqual } from 'lodash';
 import { routerMiddleware, routerReducer as routing } from 'react-router-redux';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
@@ -22,7 +22,11 @@ function loadApplicationState(): { application: IApplication } {
       return { application: initialApplicationState };
     } else {
       const state = JSON.parse(serializedState);
-      return { application: state.application };
+      if (isEqual(Object.keys(state.application.inputs), Object.keys(initialApplicationState.inputs))) {
+        return { application: state.application };
+      } else {
+        return { application: initialApplicationState };
+      }
     }
   } catch (err) {
     return { application: initialApplicationState };

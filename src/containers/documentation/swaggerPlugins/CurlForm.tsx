@@ -29,7 +29,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
     const state = {
       apiKey: '',
       bearerToken: '',
-      env: 'dev',
+      env: 'sandbox',
       params: this.props.operation.parameters,
       requestBodyProperties,
     };
@@ -238,8 +238,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   public environmentOptions() {
     if (this.isSwagger2()) {
       const options = [
-        { value: 'dev', display: 'Development' },
-        { value: 'staging', display: 'Staging' },
+        { value: 'sandbox', display: 'Sandbox' },
         { value: '', display: 'Production' },
       ];
       return options.map((optionValues, i) => {

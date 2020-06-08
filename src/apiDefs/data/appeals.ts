@@ -7,7 +7,7 @@ const appealsApis : IApiDescription[] = [
     docSources: [
       {
         // metadataUrl: ,// metadata endpoint is not yet exposed
-        openApiUrl: `${swaggerHost}/services/appeals/docs/v3/decision_reviews`,
+        openApiUrl: `${swaggerHost}/services/appeals/docs/v1/decision_reviews`,
       },
     ],
     enabledByDefault: false,

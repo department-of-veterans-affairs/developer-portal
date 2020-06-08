@@ -9,10 +9,12 @@
   top: 0;
   right: 0;
   bottom: 0;
+  overflow-y: scroll;
   
   @include media($medium-screen) {
     background-color: $color-primary-darkest;
     position: relative;
+    overflow-y: visible;
   }
 
   &.va-api-mobile-nav-visible {
