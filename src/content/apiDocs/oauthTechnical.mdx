@@ -152,6 +152,7 @@ with the following query parameters:
 | `code_challenge_method` | **Required** | Supported code challenges: `S256` |
 | `state`                 | **Required** | Ensures authorization flow integrity. See [security](#security-considerations). |
 | `scope`                 | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
+| `prompt`                | Optional     | Will engage authentication prompts. If this includes `login` it will force a client user to re-enter credentials when prompted at the user authentication site such as ID.me. If this is omitted the user will not be forced to re-enter credentials during authentication. Supported prompt values currently include login until others like consent can be verified.|
 
 Example Authorization URL:
 ```http
