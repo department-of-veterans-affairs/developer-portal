@@ -42,7 +42,7 @@ with the following query parameters:
 | `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
 | `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
 | `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
-| `prompt`         | Optional    | Will engage authentication prompts. If this includes 'login' it will force a client user to re-enter credentials when prompted at the user authentication site such as ID.me |
+| `prompt`        | Optional     | Will engage authentication prompts. If this includes `login` it will force a client user to re-enter credentials when prompted at the user authentication site such as ID.me. If this is omitted the user will not be forced to re-enter credentials during authentication. |
 
 Example Authorization URL:
 ```http
@@ -52,7 +52,6 @@ https://sandbox-api.va.gov/oauth2/authorization?
   &response_type=id_token code
   &scope=openid offline_access profile email veteran_status.read launch/patient
   &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy
-  &prompt=login
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
