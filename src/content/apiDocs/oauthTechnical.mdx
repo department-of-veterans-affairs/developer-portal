@@ -42,7 +42,7 @@ with the following query parameters:
 | `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
 | `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
 | `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
-| `prompt`                | Optional     | Will engage authentication prompts. If this includes `login` it will force a client user to re-enter credentials when prompted at the user authentication site such as ID.me. If this is omitted the user will not be forced to re-enter credentials during authentication. Supported prompt values currently include `login` until others like `consent` can be verified.|
+| `prompt`        | Optional     | Supported prompts: `login`. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.|
 
 Example Authorization URL:
 ```http
@@ -150,7 +150,7 @@ with the following query parameters:
 | `code_challenge_method` | **Required** | Supported code challenges: `S256` |
 | `state`                 | **Required** | Ensures authorization flow integrity. See [security](#security-considerations). |
 | `scope`                 | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
-| `prompt`                | Optional     | Will engage authentication prompts. If this includes `login` it will force a client user to re-enter credentials when prompted at the user authentication site such as ID.me. If this is omitted the user will not be forced to re-enter credentials during authentication. Supported prompt values currently include `login` until others like `consent` can be verified.|
+| `prompt`                | Optional     | Supported prompts: `login`. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.|
 
 Example Authorization URL:
 ```http
