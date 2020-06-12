@@ -21,7 +21,7 @@ import {
   HealthArgonautPreDeprecation,
   UrgentCareApiIntro,
   UrgentCareReleaseNotes,
-} from '../../content/apiDocs';
+} from '../../content/apiDocs/health';
 import { IApiDescription } from "../schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;

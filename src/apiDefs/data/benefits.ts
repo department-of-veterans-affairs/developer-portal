@@ -3,7 +3,7 @@ import {
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
-} from '../../content/apiDocs';
+} from '../../content/apiDocs/benefits';
 import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;

@@ -1,4 +1,4 @@
-import { AppealsReleaseNotes } from '../../content/apiDocs';
+import { AppealsReleaseNotes } from '../../content/apiDocs/benefits';
 import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;

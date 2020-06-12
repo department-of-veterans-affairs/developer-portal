@@ -2,37 +2,19 @@ import { IApiCategoryContent } from '../../apiDefs/schema';
 import AppealsIntro from './appeals/appealsIntro.mdx';
 import AppealsOverview from './appeals/appealsOverview.mdx';
 import AppealsQuickstart from './appeals/appealsQuickstart.mdx';
-import AppealsReleaseNotes from './benefits/appealsReleaseNotes.mdx';
-import BenefitsIntakeReleaseNotes from './benefits/benefitsIntakeReleaseNotes.mdx';
 import BenefitsIntro from './benefits/benefitsIntro.mdx';
 import BenefitsOverview from './benefits/benefitsOverview.mdx';
-import ClaimsReleaseNotes from './benefits/claimsReleaseNotes.mdx';
-import LoanGuarantyReleaseNotes from './benefits/loanGuarantyReleaseNotes.mdx';
 import FacilitiesIntro from './facilities/facilitiesIntro.mdx';
 import FacilitiesOverview from './facilities/facilitiesOverview.mdx';
 import FacilitiesReleaseNotes from './facilities/facilitiesReleaseNotes.mdx';
-import HealthArgonautPostDeprecation from './health/argonautDeprecatedNotice.mdx';
-import HealthArgonautPreDeprecation from './health/argonautDeprecationNotice.mdx';
-import ArgonautReleaseNotes from './health/argonautReleaseNotes.mdx';
-import CommunityCareApiIntro from './health/communityCareApiIntro.mdx';
-import CommunityCareReleaseNotes from './health/communityCareReleaseNotes.mdx';
-import FhirApiReleaseNotes from './health/fhirAPIReleaseNotes.mdx';
-import FhirArgonautApiIntro from './health/fhirArgonautApiIntro.mdx';
-import FhirDSTU2ApiIntro from './health/fhirDSTU2ApiIntro.mdx';
-import FhirR4ApiIntro from './health/fhirR4ApiIntro.mdx';
 import HealthIntro from './health/healthIntro.mdx';
 import HealthOverview from './health/healthOverview.mdx';
 import HealthQuickstart from './health/healthQuickstart.mdx';
-import UrgentCareApiIntro from './health/urgentCareApiIntro.mdx';
-import UrgentCareReleaseNotes from './health/urgentCareReleaseNotes.mdx';
 import vaFormsIntro from './vaForms/vaFormsIntro.mdx';
 import vaFormsOverview from './vaForms/vaFormsOverview.mdx';
 import VAFormsReleaseNotes from './vaForms/vaFormsReleaseNotes.mdx';
-import AddressValidationReleaseNotes from './verification/addressValidationReleaseNotes.mdx';
 import VerificationIntro from './verification/verificationIntro.mdx';
 import VerificationOverview from './verification/verificationOverview.mdx';
-import VeteranConfirmationReleaseNotes from './verification/veteranConfirmationReleaseNotes.mdx';
-import VeteranVerificationReleaseNotes from './verification/veteranVerificationReleaseNotes.mdx';
 
 const appealsContent: IApiCategoryContent = {
   intro: AppealsIntro,
@@ -88,24 +70,6 @@ export {
   healthContent,
   vaFormsContent,
   verificationContent,
-  AddressValidationReleaseNotes,
-  AppealsReleaseNotes,
-  ArgonautReleaseNotes,
-  BenefitsIntakeReleaseNotes,
-  ClaimsReleaseNotes,
-  CommunityCareApiIntro,
-  CommunityCareReleaseNotes,
   FacilitiesReleaseNotes,
-  FhirApiReleaseNotes,
-  FhirArgonautApiIntro,
-  FhirDSTU2ApiIntro,
-  FhirR4ApiIntro,
-  HealthArgonautPostDeprecation,
-  HealthArgonautPreDeprecation,
-  LoanGuarantyReleaseNotes,
-  UrgentCareApiIntro,
-  UrgentCareReleaseNotes,
   VAFormsReleaseNotes,
-  VeteranConfirmationReleaseNotes,
-  VeteranVerificationReleaseNotes,
 };

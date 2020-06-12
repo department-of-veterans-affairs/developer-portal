@@ -2,7 +2,7 @@ import {
   AddressValidationReleaseNotes,
   VeteranConfirmationReleaseNotes,
   VeteranVerificationReleaseNotes,
-} from '../../content/apiDocs';
+} from '../../content/apiDocs/verification';
 import { IApiDescription } from '../schema';
 
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
