@@ -1,3 +1,4 @@
+import { VAFormsReleaseNotes } from '../../content/apiDocs';
 import { IApiDescription } from '../schema';
 
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
@@ -12,6 +13,7 @@ const vaFormsApis: IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'VA Forms API',
+    releaseNotes: VAFormsReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'vaForms',
     vaInternalOnly: false,

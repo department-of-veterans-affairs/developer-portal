@@ -1,3 +1,4 @@
+import { FacilitiesReleaseNotes } from '../../content/apiDocs';
 import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
@@ -11,6 +12,7 @@ const facilitiesApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'VA Facilities API',
+    releaseNotes: FacilitiesReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'facilities',
     vaInternalOnly: false,

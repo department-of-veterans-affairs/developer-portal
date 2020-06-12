@@ -1,3 +1,8 @@
+import {
+  AddressValidationReleaseNotes,
+  VeteranConfirmationReleaseNotes,
+  VeteranVerificationReleaseNotes,
+} from '../../content/apiDocs';
 import { IApiDescription } from '../schema';
 
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
@@ -12,6 +17,7 @@ const verificationApis: IApiDescription[] = [
     enabledByDefault: true,
     name: 'Address Validation API',
     oAuth: true,
+    releaseNotes: AddressValidationReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'address_validation',
     vaInternalOnly: true,
@@ -25,6 +31,7 @@ const verificationApis: IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Veteran Confirmation API',
+    releaseNotes: VeteranConfirmationReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'veteran_confirmation',
     vaInternalOnly: false,
@@ -39,6 +46,7 @@ const verificationApis: IApiDescription[] = [
     enabledByDefault: true,
     name: 'Veteran Verification API',
     oAuth: true,
+    releaseNotes: VeteranVerificationReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'veteran_verification',
     vaInternalOnly: false,

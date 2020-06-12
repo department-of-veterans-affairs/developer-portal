@@ -1,3 +1,9 @@
+import {
+  AppealsReleaseNotes,
+  BenefitsIntakeReleaseNotes,
+  ClaimsReleaseNotes,
+  LoanGuarantyReleaseNotes,
+} from '../../content/apiDocs';
 import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
@@ -11,6 +17,7 @@ const benefitsApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Appeals Status',
+    releaseNotes: AppealsReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'appeals',
     vaInternalOnly: true,
@@ -26,6 +33,7 @@ const benefitsApis : IApiDescription[] = [
     enabledByDefault: true,
     name: 'Benefits Claims',
     oAuth: true,
+    releaseNotes: ClaimsReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'claims',
     vaInternalOnly: false,
@@ -40,6 +48,7 @@ const benefitsApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Benefits Intake',
+    releaseNotes: BenefitsIntakeReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'benefits',
     vaInternalOnly: false,
@@ -53,6 +62,7 @@ const benefitsApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Loan Guaranty',
+    releaseNotes: LoanGuarantyReleaseNotes,
     trustedPartnerOnly: true,
     urlFragment: 'loan_guaranty',
     vaInternalOnly: false,

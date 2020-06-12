@@ -10,13 +10,17 @@
 import * as moment from 'moment';
 
 import {
+  ArgonautReleaseNotes,
   CommunityCareApiIntro,
+  CommunityCareReleaseNotes,
+  FhirApiReleaseNotes,
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
   FhirR4ApiIntro,
   HealthArgonautPostDeprecation,
   HealthArgonautPreDeprecation,
   UrgentCareApiIntro,
+  UrgentCareReleaseNotes,
 } from '../../content/apiDocs';
 import { IApiDescription } from "../schema";
 
@@ -37,6 +41,7 @@ const healthApis : IApiDescription[] = [
     enabledByDefault: true,
     name: 'Community Care Eligibility API',
     oAuth: true,
+    releaseNotes: CommunityCareReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'community_care',
     vaInternalOnly: false,
@@ -52,6 +57,7 @@ const healthApis : IApiDescription[] = [
     enabledByDefault: true,
     name: 'Urgent Care Eligibility API (FHIR)',
     oAuth: true,
+    releaseNotes: UrgentCareReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'urgent_care',
     vaInternalOnly: false,
@@ -81,6 +87,7 @@ const healthApis : IApiDescription[] = [
     enabledByDefault: true,
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
+    releaseNotes: FhirApiReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'fhir',
     vaInternalOnly: false,
@@ -98,6 +105,7 @@ const healthApis : IApiDescription[] = [
     enabledByDefault: true,
     name: 'Veterans Health API (Legacy)',
     oAuth: true,
+    releaseNotes: ArgonautReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'argonaut',
     vaInternalOnly: false,
