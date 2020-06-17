@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { RouteComponentProps, Switch } from 'react-router';
+import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
@@ -8,7 +8,6 @@ import { getDeprecatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
-import PageContent from './components/PageContent';
 import ApplyForm from './containers/apply/ApplyForm';
 import ApplySuccess from './containers/apply/ApplySuccess';
 import BetaPage from './containers/Beta';
@@ -23,49 +22,47 @@ import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import RoutedContent from './containers/RoutedContent';
 import Support from './containers/support/Support';
 
-export function topLevelRoutes(props: RouteComponentProps<void>) {
+export function SiteRoutes() {
   return (
-    <PageContent {...props}>
-      <Switch>
-        <Route exact={true} path="/" component={Home} />
-        <Route exact={true} path="/index.html" component={Home} />
+    <Switch>
+      <Route exact={true} path="/" component={Home} />
+      <Route exact={true} path="/index.html" component={Home} />
 
-        {/* Legacy routes that we want to maintain: */}
-        <Route
-          path="/explore/terms-of-service"
-          render={() => <Redirect to="/terms-of-service" />}
-        />
-        <Route path="/whats-new" render={() => <Redirect to="/news" />} />
+      {/* Legacy routes that we want to maintain: */}
+      <Route
+        path="/explore/terms-of-service"
+        render={() => <Redirect to="/terms-of-service" />}
+      />
+      <Route path="/whats-new" render={() => <Redirect to="/news" />} />
 
-        {/* Current routes: */}
-        <Route path="/go-live" component={RoutedContent} />
-        <Route path="/terms-of-service" component={RoutedContent} />
-        <Route
-          path="/apply"
-          render={() => (
-            <Flag
-              name="signups_enabled"
-              component={ApplyForm}
-              fallbackComponent={DisabledApplyForm}
-            />
-          )}
-        />
-        <Route path="/applied" component={ApplySuccess} />
-        <Route path="/beta" component={BetaPage} />
-        <Route path="/beta-success" component={BetaSuccess} />
-        <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
-        <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
-        <Route
-          path="/oauth"
-          render={() => <Redirect to="/explore/verification/docs/authorization" />}
-        />
-        <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-        <Route path="/news" component={News} />
-        <Route path="/support" component={Support} />
-        <Route path="/providers/integration-guide" component={ProviderIntegrationGuide} />
-        <Route component={NotFound} />
-      </Switch>
-    </PageContent>
+      {/* Current routes: */}
+      <Route path="/go-live" component={RoutedContent} />
+      <Route path="/terms-of-service" component={RoutedContent} />
+      <Route
+        path="/apply"
+        render={() => (
+          <Flag
+            name="signups_enabled"
+            component={ApplyForm}
+            fallbackComponent={DisabledApplyForm}
+          />
+        )}
+      />
+      <Route path="/applied" component={ApplySuccess} />
+      <Route path="/beta" component={BetaPage} />
+      <Route path="/beta-success" component={BetaSuccess} />
+      <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
+      <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
+      <Route
+        path="/oauth"
+        render={() => <Redirect to="/explore/verification/docs/authorization" />}
+      />
+      <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
+      <Route path="/news" component={News} />
+      <Route path="/support" component={Support} />
+      <Route path="/providers/integration-guide" component={ProviderIntegrationGuide} />
+      <Route component={NotFound} />
+    </Switch>
   );
 }
 
@@ -114,6 +111,6 @@ export function sitemapConfig() {
       isValid: false,
       rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success|\/oauth/],
     },
-    topLevelRoutes,
+    topLevelRoutes: SiteRoutes,
   };
 }

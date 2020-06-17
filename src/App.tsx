@@ -12,7 +12,7 @@ import { getAllApis } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import { topLevelRoutes } from './Routes';
+import PageContent from './components/PageContent';
 import { history } from './store';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
@@ -40,9 +40,7 @@ class App extends React.Component {
                 Skip to main content
               </HashLink>
               <Header />
-              <main id="main" tabIndex={-1}>
-                <Route path="/" render={topLevelRoutes} />
-              </main>
+              <Route path="/" component={PageContent} />
               <Footer />
             </div>
           </div>
