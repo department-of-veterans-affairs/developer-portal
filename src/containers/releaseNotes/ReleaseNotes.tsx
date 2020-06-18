@@ -16,7 +16,7 @@ function SideNavApiEntry(api: IApiDescription) {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
 
   return (
-    <Flag key={api.urlFragment} name={`enabled.${api.urlFragment}`}>
+    <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
       <SideNavEntry
         key={api.urlFragment}
         to={`#${dashUrlFragment}`}

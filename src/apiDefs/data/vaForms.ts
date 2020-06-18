@@ -1,4 +1,4 @@
-import { VAFormsReleaseNotes } from '../../content/apiDocs';
+import { VAFormsReleaseNotes } from '../../content/apiDocs/vaForms';
 import { IApiDescription } from '../schema';
 
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;

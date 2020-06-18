@@ -2,7 +2,7 @@
 
 ## Overview
 
-Each API has its own file at `src/content/apiDocs/<apiCategory>/<apiName>.mdx`.
+Each API has its own file at `src/content/apiDocs/<apiCategory>/<apiName>ReleaseNotes.mdx`.
 
 [mdx](https://github.com/ticky/markdown-component-loader) is a superset of Markdown for use in React apps. Besides being able to use standard Markdown and HTML in the file, it allows you to pass props to the generated component (declared in the front matter of the `mdx` file), and then use `{ }` style dynamic expressions within the markdown. You can apply styling to the resulting React component.
 

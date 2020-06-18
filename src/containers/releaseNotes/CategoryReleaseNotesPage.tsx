@@ -15,11 +15,13 @@ import { IApiNameParam } from '../../types';
 const ApiReleaseNote = ({ api }: { api: IApiDescription }) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
   return (
-    <div id={dashUrlFragment}>
-      <h2>{api.name}</h2>
-      {api.releaseNotes({})}
-      <hr/>
-    </div>
+    <Flag name={`hosted_apis.${api.urlFragment}`}>
+      <div id={dashUrlFragment}>
+        <h2>{api.name}</h2>
+        {api.releaseNotes({})}
+        <hr/>
+      </div>
+    </Flag>
   );
 };
 
