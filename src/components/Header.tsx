@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { Flag } from 'flag';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { HashLink } from 'react-router-hash-link';
 
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../styles/vadsUtils';
 import Banner from './Banner';
@@ -34,6 +35,16 @@ export default class Header extends React.Component<{}, IHeaderState> {
           <TestingNotice />
         </Flag>
         <header role="banner" className={classNames("va-api-header", "vads-u-background-color--primary-darkest")}>
+          <HashLink to="#main"
+            className={classNames(
+              'va-api-skipnav',
+              'vads-u-padding-x--2',
+              'vads-u-padding-y--1',
+            )}
+            onClick={this.handleSkipNavClick}
+          >
+            Skip to main content
+          </HashLink>
           <Banner />
           <VeteransCrisisLine />
           <div className={classNames(
@@ -92,5 +103,14 @@ export default class Header extends React.Component<{}, IHeaderState> {
     this.setState((state: IHeaderState) => {
       return { mobileNavVisible: !state.mobileNavVisible };
     });
+  }
+
+  // need to manually set focus on navigation to #main, since React Router cancels
+  // native anchor click behavior and react-router-hash-link doesn't handle focus
+  private handleSkipNavClick() {
+    const mainElement: HTMLElement | null = document.querySelector('main');
+    if (mainElement) {
+      mainElement.focus();
+    }
   }
 }

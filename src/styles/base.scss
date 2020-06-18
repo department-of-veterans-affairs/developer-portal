@@ -30,6 +30,11 @@ body {
   margin-left: 0;
 }
 
+main {
+  flex-grow: 1;
+  background-color: #f9f9f9;
+}
+
 // Typography
 
 // note that we don't currently use anything smaller than h4
