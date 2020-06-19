@@ -1,3 +1,11 @@
+### June 10, 2020
+The optional query parameter `prompt` has been added to the authorization flow.
+- Supported prompts: login. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.
+
+[View code changes(s)](https://github.com/department-of-veterans-affairs/vets-saml-proxy/pull/111)
+
+---
+
 ### May 11, 2020
 Added combined disability rating and individual disability ratings to the disability_rating endpoint.
 - `/disability_rating` endpoint: Adds `combined_disability_rating` field to responses. This is expressed as a percentage and represents how much a Veteran’s disability decreases their overall health and ability to function.
