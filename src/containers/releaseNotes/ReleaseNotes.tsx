@@ -74,7 +74,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
                   to="/release-notes"
                   name="Overview"
                 />
-                {categoryOrder.map((key: string) => apiDefs[key].content.releaseNotes && SideNavCategoryEntry(key, apiDefs[key]))}
+                {categoryOrder.map((key: string) => SideNavCategoryEntry(key, apiDefs[key]))}
               </SideNav>
               <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
                 <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />

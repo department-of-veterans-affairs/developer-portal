@@ -1,4 +1,4 @@
-## April 20, 2020
+### April 20, 2020
 You can now see if Health facilities offer Podiatry or Nutrition services.
 * Added `Podiatry` and `Nutrition` to the array of available services for a facility, where available. At this time, we do not have satisfaction scores and are not exposing wait times for podiatry or nutrition services.
 
@@ -15,14 +15,14 @@ You can now see Health facilities' operating status and any important textual no
 
 ---
 
-## December 6, 2019
+### December 6, 2019
 The Veterans Integrated Service Network (VISN) identifier for each health facility is now available.
 - `visn` has been added to all `/facilities` endpoints. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3609)
 - For non-health facilities, this will return as `null`.
 
 ---
 
-## November 8, 2019
+### November 8, 2019
 The `/nearby` endpoint received major changes.
 - Previously, the server retrieved an isochrone (a line connecting points of the same time) for a provided location and looked for facilities that fell within that polygon. Now the opposite is true: facilities have isochrones that are compared against the provided location. Users should see increased performance from this endpoint as a result.
 - Data about drive times now comes directly from the Veterans Health Administration (VHA). Responses may vary slightly from the previous implementation because of this switch.
@@ -32,26 +32,26 @@ The `/nearby` endpoint received major changes.
 
 ---
 
-## October 23, 2019
+### October 23, 2019
 When including latitude and longitude parameters in a request to  `/facilities` the results are now sorted in ascending order by distance.
 -  Previously the facilities in the response were sorted by type first and then distance. Now the closest facilities to the requested location will be returned first regardless of type. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3461)
 
 ---
 
-## September 30, 2019
+### September 30, 2019
 You can now see if Health facilities are mobile or temporarily deactivated.
 - Added `mobile` and `active_status` flags to the API response for Health facilities (other facility types will return `null` for these fields). Options for `mobile` are `true` or `false`; options for `active_status` are `A` for Active or `T` for Temporarily deactivated. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3339/commits)
   - Mobile facilities are subject to frequent address changes. To get the exact current location, please call the number listed.
 
 ---
 
-## September 20, 2019
+### September 20, 2019
 You can now query facilities in `/nearby` using latitude and longitude
 - As an alternative option to `address`, this adds the ability to make a request to `/va_facilities/v1/nearby` using `lat` and `lng` as input parameters. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3273/commits)
 
 ---
 
-## June 17, 2019
+### June 17, 2019
 Get nearby facilities for an address [#3084](https://github.com/department-of-veterans-affairs/vets-api/pull/3084)
 - `/nearby`, the first available endpoint for v1 of Facilities API, returns all facilities within a provided drive time for an address
 - v1 changes
@@ -60,32 +60,32 @@ Get nearby facilities for an address [#3084](https://github.com/department-of-ve
 
 ---
 
-## April 26, 2019
+### April 26, 2019
 Get facilities by state [#2992](https://github.com/department-of-veterans-affairs/vets-api/pull/2992)
 - Facilities endpoint now accepts `state` as a parameter. This returns all facilities in a particular state/territory.
 
 ---
 
-## April 25, 2019
+### April 25, 2019
 Get facilities by zip [#2987](https://github.com/department-of-veterans-affairs/vets-api/pull/2987)
 - Facilities endpoint now accepts `zip` as a parameter. This returns all facilities in a particular zip code.
 
 ---
 
-## April 18, 2019
+### April 18, 2019
 Fix error when returning CSV [#2974](https://github.com/department-of-veterans-affairs/vets-api/pull/2974)
 - The `/facilities/all` endpoint no longer returns a 500 status code when a user requests `text/csv`
 
 ---
 
-## February 13, 2019
+### February 13, 2019
 
 Standardize closed days to "Closed" in Facilities API [#2802](https://github.com/department-of-veterans-affairs/vets-api/pull/2802)
 - Changes any casing of "closed" and "-" to "Closed" for a consistent convention in the Facilities API
 
 ---
 
-## January 16, 2019
+### January 16, 2019
 
 Fix facilities api bugs [#2735](https://github.com/department-of-veterans-affairs/vets-api/pull/2735)
 - Allows users to pass both a list of IDs and a lat/long in the same request.
@@ -93,7 +93,7 @@ Fix facilities api bugs [#2735](https://github.com/department-of-veterans-affair
 
 ---
 
-## December 26, 2018
+### December 26, 2018
 
 Remove community care providers from all facilities search [#2582](https://github.com/department-of-veterans-affairs/vets-api/pull/2582)
 - Reverts back to the old functionality, removing community care providers from the all facility search
@@ -101,7 +101,7 @@ Remove community care providers from all facilities search [#2582](https://githu
 
 ---
 
-## November 20, 2018
+### November 20, 2018
 
 Add facilities distances [#2687](https://github.com/department-of-veterans-affairs/vets-api/pull/2687)
 - Adds distance to meta property of lat/long inquiries to the Facilities API and adds documentation for the meta property
@@ -109,7 +109,7 @@ Add facilities distances [#2687](https://github.com/department-of-veterans-affai
 
 ---
 
-## November 12, 2018
+### November 12, 2018
 
 Community care provider searches [#2405](https://github.com/department-of-veterans-affairs/vets-api/pull/2405)
 - This enhances the facilities search endpoint to include community care providers in the search by default
@@ -117,7 +117,7 @@ Community care provider searches [#2405](https://github.com/department-of-vetera
 
 ---
 
-## August 13, 2018
+### August 13, 2018
 
 Launch of the VA Facilities API
 - VA_Facilities API endpoint for external API consumers. Supports json/[geojson](http://geojson.org/) results and a bulk "get all" endpoint in geojson and csv format.

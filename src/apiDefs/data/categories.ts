@@ -1,11 +1,9 @@
-import {
-  appealsContent,
-  benefitsContent,
-  facilitiesContent,
-  healthContent,
-  vaFormsContent,
-  verificationContent,
-} from '../../content/apiDocs';
+import { appealsContent } from '../../content/apiDocs/appeals';
+import { benefitsContent } from '../../content/apiDocs/benefits';
+import { facilitiesContent } from '../../content/apiDocs/facilities';
+import { healthContent } from '../../content/apiDocs/health';
+import { vaFormsContent } from '../../content/apiDocs/vaForms';
+import { verificationContent } from '../../content/apiDocs/verification';
 
 import { IApiCategories } from '../schema';
 import appealsApis from './appeals';
