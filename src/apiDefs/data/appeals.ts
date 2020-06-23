@@ -11,7 +11,7 @@ const appealsApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/appeals/docs/v1/decision_reviews`,
       },
     ],
-    enabledByDefault: false,
+    enabledByDefault: true,
     name: 'Decision Reviews API',
     releaseNotes: AppealsReleaseNotes,
     trustedPartnerOnly: false,
