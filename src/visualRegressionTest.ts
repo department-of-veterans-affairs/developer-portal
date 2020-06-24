@@ -30,7 +30,7 @@ describe('Visual regression test', async () => {
   it('renders the homepage properly', async() => {
     // Set unlimited timeout on first request, since it may timeout while webpack is compiling.
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
-    await checkScreenshots(page, '.main');
+    await checkScreenshots(page, 'main');
   });
 
   it('renders the header properly', async() => {
@@ -55,7 +55,7 @@ describe('Visual regression test', async () => {
       await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
       // Hide any videos that may be on the page
       await page.evaluate('document.querySelectorAll("iframe").forEach((e) => { e.style="visibility: hidden;" });');
-      await checkScreenshots(page, '.main');
+      await checkScreenshots(page, 'main');
     });
   }
 });
