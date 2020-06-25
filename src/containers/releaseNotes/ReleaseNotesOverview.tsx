@@ -10,7 +10,7 @@ export default () => {
   const apiDefs = getApiDefinitions();
   return (
     <div>
-      <PageHeader halo="Release Notes" header="Overview" />
+      <PageHeader halo="Overview" header="Release Notes" />
       <div className="vads-u-font-size--lg">
         <p>
           The VA Lighthouse product teams periodically update these APIs in order to deliver new features and repair defects. We avoid doing so whenever possible but occasionally we need to make breaking changes that require developers to modify their existing applications to see the benefits of these features and fixes.
