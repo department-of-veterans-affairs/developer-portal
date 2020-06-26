@@ -136,13 +136,22 @@ Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic {base64 encoded *client id* + ':' + *client secret*} 
 
-token=eyJhbG&token_type_hint=access_token
+token={your access token}&token_type_hint=access_token
 ```
+```http
+POST /oauth2/revoke HTTP/1.1
+Host: sandbox-api.va.gov
+Content-Type: application/x-www-form-urlencoded
+Authorization: Basic {base64 encoded *client id* + ':' + *client secret*} 
+
+token={your refresh token}&token_type_hint=refresh_token
+```
+
 Clients may only revoke their own tokens.
 
 #### Manage Account
 
-The manage endpoint directs end-user's to a URL where they can view applications which have access to their data. Users can adjust these application's access rights from this URL as well.
+The manage endpoint directs end users to a URL where they can view and manage their VA health account and applications that have access to their data.
 
 ```http
 GET /oauth2/manage HTTP/1.1
