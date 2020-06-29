@@ -1,3 +1,4 @@
+import { AppealsReleaseNotes } from '../../content/apiDocs/appeals';
 import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
@@ -10,8 +11,9 @@ const appealsApis : IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/appeals/docs/v1/decision_reviews`,
       },
     ],
-    enabledByDefault: false,
+    enabledByDefault: true,
     name: 'Decision Reviews API',
+    releaseNotes: AppealsReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'decision_reviews',
     vaInternalOnly: true,

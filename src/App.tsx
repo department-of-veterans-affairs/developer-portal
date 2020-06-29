@@ -11,7 +11,7 @@ import { getAllApis } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import { topLevelRoutes } from './Routes';
+import PageContent from './components/PageContent';
 import { history } from './store';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
@@ -27,11 +27,14 @@ class App extends React.Component {
       <FlagsProvider flags={appFlags}>
         <ConnectedRouter history={history}>
           <div className="vads-u-display--flex">
-            <div className={classNames("vads-u-display--flex", "vads-u-flex-direction--column", "vads-u-min-height--viewport", "vads-u-width--full")}>
+            <div className={classNames(
+              "vads-u-display--flex", 
+              "vads-u-flex-direction--column", 
+              "vads-u-min-height--viewport", 
+              "vads-u-width--full",
+            )}>
               <Header />
-              <div className="main" role="main">
-                <Route path="/" render={topLevelRoutes} />
-              </div>
+              <Route path="/" component={PageContent} />
               <Footer />
             </div>
           </div>

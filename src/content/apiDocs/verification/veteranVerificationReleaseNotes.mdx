@@ -1,30 +1,12 @@
-<div id="address-validation" />
+### June 10, 2020
+The optional query parameter `prompt` has been added to the authorization flow.
+- Supported prompts: login. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.
 
-# Address Validation
-
-## September 26, 2018
-Create Address Validation API
-- The ‘validate’ API accepts a structured JSON address object (broken down by street/city/state/zip/etc), and returns a result indicating whether the address is valid, and if so includes a canonicalized address and geocoding information (lat/long) for the address.
+[View code changes(s)](https://github.com/department-of-veterans-affairs/vets-saml-proxy/pull/111)
 
 ---
 
-<div id="veteran-confirmation" />
-
-# Veteran Confirmation
-
-## January 13, 2020
-Launched Veteran Confirmation API with a status endpoint
-- `/status`: Allows third-parties to request confirmation from the VA of an individual's Veteran status after providing a valid API key and identifying attributes for the individual.
-
-[View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3676)
-
----
-
-<div id="veteran-verification" />
-
-# Veteran Verification
-
-## May 11, 2020
+### May 11, 2020
 Added combined disability rating and individual disability ratings to the disability_rating endpoint.
 - `/disability_rating` endpoint: Adds `combined_disability_rating` field to responses. This is expressed as a percentage and represents how much a Veteran’s disability decreases their overall health and ability to function.
 - `/disability_rating` endpoint: Adds `individual_ratings` array to responses with each entry representing whether the individual condition is service related, when the Veteran could begin claiming benefits related to this disability, and the disability rating for the individual condition expressed as a percentage.
@@ -33,7 +15,7 @@ Added combined disability rating and individual disability ratings to the disabi
 
 ---
 
-## April 15, 2020
+### April 15, 2020
 Added Veteran First & Last Name to service_history endpoint.
 - `/service_history`: Adds `first_name` and `last_name` fields to responses.
 
@@ -41,7 +23,7 @@ Added Veteran First & Last Name to service_history endpoint.
 
 ---
 
-## March 18, 2020
+### March 18, 2020
 Added pay grade information to service_history endpoint.
 - `/service_history`: Adds `pay_grade_code` and `separation_reason` fields to responses.
 
@@ -49,13 +31,13 @@ Added pay grade information to service_history endpoint.
 
 ---
 
-## November 8, 2018
+### November 8, 2018
 Launched the Disability Rating and Veteran Status endpoints
 - `/disability_rating`: Given an authenticated user, this created an endpoint that returns a Veteran's disability rating from VA
 - `/status`: Allows third-parties to request confirmation from the VA of an individual's Veteran status after receiving authorization to do so using an Open ID Connect flow.
 
 ---
 
-## June 11, 2018
+### June 11, 2018
 Launched the Service History endpoint
 - `/service_history`: Given an authenticated user, this created an endpoint that returns a Veteran's service history from VA

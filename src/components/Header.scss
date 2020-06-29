@@ -14,3 +14,19 @@
 .va-api-header {
   position: relative;
 }
+
+a.va-api-skipnav {
+  background-color: #f9f9f9;
+  position: absolute;
+  z-index: 100;
+  top: -100px;
+  
+  &:focus {
+    top: 0;
+    outline-offset: 0;
+  }
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}

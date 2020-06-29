@@ -42,6 +42,7 @@ with the following query parameters:
 | `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
 | `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
 | `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
+| `prompt`        | Optional     | Supported prompts: `login`. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.|
 
 Example Authorization URL:
 ```http
@@ -181,6 +182,7 @@ with the following query parameters:
 | `code_challenge_method` | **Required** | Supported code challenges: `S256` |
 | `state`                 | **Required** | Ensures authorization flow integrity. See [security](#security-considerations). |
 | `scope`                 | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
+| `prompt`                | Optional     | Supported prompts: `login`. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.|
 
 Example Authorization URL:
 ```http

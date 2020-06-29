@@ -12,22 +12,28 @@ import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
+const ApiReleaseNote = ({ api }: { api: IApiDescription }) => {
+  const dashUrlFragment = api.urlFragment.replace('_', '-');
+  return (
+    <Flag name={`hosted_apis.${api.urlFragment}`}>
+      <div id={dashUrlFragment}>
+        <h2>{api.name}</h2>
+        {api.releaseNotes({})}
+        <hr/>
+      </div>
+    </Flag>
+  );
+};
+
 export default class CategoryReleaseNotesPage extends React.Component<
-  RouteComponentProps<IApiNameParam>,
-  {}
+  RouteComponentProps<IApiNameParam>
 > {
   public render() {
     const apiDefs = getApiDefinitions();
     const { apiCategoryKey } = this.props.match.params;
-    const { apis, content } = apiDefs[apiCategoryKey];
-
-    const headerProps = {
-      halo: 'Release Notes',
-      header: apiDefs[apiCategoryKey].properName,
-    };
-
+    const { apis } = apiDefs[apiCategoryKey];
+    
     let cardSection;
-
     if (apis.length > 1) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
@@ -61,12 +67,11 @@ export default class CategoryReleaseNotesPage extends React.Component<
 
     return (
       <section role="region" aria-labelledby={`${apiCategoryKey}-release-notes`}>
-        <PageHeader halo={headerProps.halo} header={headerProps.header} />
+        <PageHeader halo={apiDefs[apiCategoryKey].name} header="Release Notes" />
         {cardSection}
         <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-          {content.releaseNotes ? content.releaseNotes({}) : null}
+          {apis.map(api => <ApiReleaseNote key={api.urlFragment} api={api} />)}
         </div>
-        <hr />
       </section>
     );
   }

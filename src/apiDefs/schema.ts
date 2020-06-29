@@ -11,7 +11,6 @@ import * as moment from 'moment';
 export interface IApiCategoryContent {
   readonly intro: React.StatelessComponent;
   readonly overview: React.StatelessComponent;
-  readonly releaseNotes: React.StatelessComponent;
   readonly shortDescription: string;
   readonly placardText: string;
   readonly quickstart?: React.StatelessComponent;
@@ -34,6 +33,7 @@ export interface IApiDescription {
   readonly vaInternalOnly: boolean;
   readonly trustedPartnerOnly: boolean;
   readonly oAuth?: boolean;
+  readonly releaseNotes: React.StatelessComponent;
   readonly deprecated?: boolean | moment.Moment;
   readonly deprecationContent?: React.StatelessComponent;
 }
