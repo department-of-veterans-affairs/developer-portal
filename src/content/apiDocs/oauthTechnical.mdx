@@ -126,9 +126,9 @@ grant_type=refresh_token&refresh_token={your refresh_token}&scope={space separat
 
 You will receive the same kind of response as above and be able to use your new `access_token` normally.
 
-#### Revoking Access Token
+#### Revoking Tokens
 
-A user can revoke an `access_token` or `refresh_token` using the following endpoint. Once revoked, the token will be seen as inactive by the introspection endpoint.
+Both `access_tokens` and `refresh_tokens` can be revoked using the following endpoint. Once revoked, the introspection endpoint will see the token as inactive.
 
 ```http
 POST /oauth2/revoke HTTP/1.1
@@ -151,7 +151,7 @@ Clients may only revoke their own tokens.
 
 #### Manage Account
 
-The manage endpoint directs end users to a URL where they can view and manage their VA health account and applications that have access to their data.
+The manage endpoint directs users to a URL where they can view and manage their VA benefits account. From this URL, users can also view applications that have access to their data and adjust these access grants.
 
 ```http
 GET /oauth2/manage HTTP/1.1
