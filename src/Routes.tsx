@@ -4,7 +4,7 @@ import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { Flag } from 'flag';
-import { getDeprecatedFlags } from './apiDefs/deprecated';
+import { getRemovedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
@@ -74,13 +74,13 @@ export function SiteRoutes() {
 
 export function sitemapConfig() {
   const apiDefs = getApiDefinitions();
-  const deprecatedFlags = getDeprecatedFlags();
+  const removedFlags = getRemovedFlags();
   const envFlags = getEnvFlags();
 
   function getApiRouteParams(route: string, apiCategory: string): string[] {
     const routeParams = apiDefs[apiCategory].apis.reduce(
       (result: string[], api: IApiDescription) => {
-        if (envFlags[api.urlFragment] && !deprecatedFlags[api.urlFragment]) {
+        if (envFlags[api.urlFragment] && !removedFlags[api.urlFragment]) {
           result.push(api.urlFragment);
         }
         return result;

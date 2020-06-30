@@ -1,33 +1,33 @@
 import * as moment from 'moment';
-import { getAllApis, lookupApiByFragment } from './query';
+import { getAllApis } from './query';
 import { IApiDescription } from "./schema";
 
-export const isApiDeprecated = (api: IApiDescription | string) : boolean => {
-  // the string branch of this function exists mainly to serve the apiEnvFlags computation
-  // in env.ts. we may want to remove it in the future.
-  if (typeof api === 'string') {
-    const apiResult = lookupApiByFragment(api);
-    if (apiResult === null) {
-      return false;
-    }
-
-    api = apiResult;
-  }
-
-  if (api.deprecated === undefined) {
+export const isApiDeprecated = (api: IApiDescription): boolean => {
+  if (api.removalInfo === undefined) {
     return false;
   }
 
-  if (moment.isMoment(api.deprecated)) {
-    return moment().isAfter(api.deprecated);
+  return moment().isAfter(api.removalInfo.deprecationDate);
+};
+
+export const isApiRemoved = (api: IApiDescription): boolean => {
+  if (api.removalInfo === undefined) {
+    return false;
   }
 
-  return api.deprecated;
+  return moment().isAfter(api.removalInfo.removalDate);
 };
 
 export const getDeprecatedFlags = () => {
   return getAllApis().reduce((flags: {}, api: IApiDescription) => {
     flags[api.urlFragment] = isApiDeprecated(api);
+    return flags;
+  }, {});
+};
+
+export const getRemovedFlags = () => {
+  return getAllApis().reduce((flags: {}, api: IApiDescription) => {
+    flags[api.urlFragment] = isApiRemoved(api);
     return flags;
   }, {});
 };

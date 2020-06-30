@@ -24,6 +24,13 @@ export interface IApiDocSource {
   readonly apiIntro?: React.StatelessComponent;
 }
 
+export interface IApiRemovalInfo {
+  readonly deprecationContent: React.StatelessComponent;
+  readonly deprecationDate: moment.Moment;
+  readonly removalContent: React.StatelessComponent;
+  readonly removalDate: moment.Moment;
+}
+
 export interface IApiDescription {
   readonly name: string;
   readonly docSources: IApiDocSource[];
@@ -34,8 +41,7 @@ export interface IApiDescription {
   readonly trustedPartnerOnly: boolean;
   readonly oAuth?: boolean;
   readonly releaseNotes: React.StatelessComponent;
-  readonly deprecated?: boolean | moment.Moment;
-  readonly deprecationContent?: React.StatelessComponent;
+  readonly removalInfo?: IApiRemovalInfo;
 }
 
 export interface IApiCategory {

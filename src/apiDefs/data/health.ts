@@ -8,7 +8,6 @@
 */
 
 import * as moment from 'moment';
-
 import {
   ArgonautReleaseNotes,
   CommunityCareApiIntro,
@@ -17,18 +16,16 @@ import {
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
   FhirR4ApiIntro,
-  HealthArgonautPostDeprecation,
-  HealthArgonautPreDeprecation,
+  HealthArgonautDeprecationNotice,
+  HealthArgonautRemovalNotice,
   UrgentCareApiIntro,
+  UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
+  UrgentCareRemovalNotice,
 } from '../../content/apiDocs/health';
 import { IApiDescription } from "../schema";
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
-const argonautDeprecatedDesc = 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.';
-const argonautDeprecationDate = moment('01 Oct 2019 00:00 EDT');
-const isArgonautDeprecated = moment().isAfter(argonautDeprecationDate);
-
 const healthApis : IApiDescription[] = [
   {
     description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
@@ -44,22 +41,6 @@ const healthApis : IApiDescription[] = [
     releaseNotes: CommunityCareReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'community_care',
-    vaInternalOnly: false,
-  },
-  {
-    description: "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
-    docSources: [
-      {
-        apiIntro: UrgentCareApiIntro,
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
-      },
-    ],
-    enabledByDefault: true,
-    name: 'Urgent Care Eligibility API (FHIR)',
-    oAuth: true,
-    releaseNotes: UrgentCareReleaseNotes,
-    trustedPartnerOnly: false,
-    urlFragment: 'urgent_care',
     vaInternalOnly: false,
   },
   {
@@ -93,10 +74,29 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
-    // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
-    deprecated: argonautDeprecationDate,
-    deprecationContent: isArgonautDeprecated ? HealthArgonautPostDeprecation : HealthArgonautPreDeprecation,
-    description: isArgonautDeprecated ? '' : argonautDeprecatedDesc,
+    description: "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
+    docSources: [
+      {
+        apiIntro: UrgentCareApiIntro,
+        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
+      },
+    ],
+    enabledByDefault: true,
+    name: 'Urgent Care Eligibility API (FHIR)',
+    oAuth: true,
+    releaseNotes: UrgentCareReleaseNotes,
+    removalInfo: {
+      deprecationContent: UrgentCareDeprecationNotice,
+      deprecationDate: moment('13 Jul 2020 00:00 EDT'),
+      removalContent: UrgentCareRemovalNotice,
+      removalDate: moment('20 Jul 2020 00:00 EDT'),
+    },
+    trustedPartnerOnly: false,
+    urlFragment: 'urgent_care',
+    vaInternalOnly: false,
+  },
+  {
+    description: 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.',
     docSources: [
       {
         openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
@@ -106,6 +106,13 @@ const healthApis : IApiDescription[] = [
     name: 'Veterans Health API (Legacy)',
     oAuth: true,
     releaseNotes: ArgonautReleaseNotes,
+    removalInfo: {
+      deprecationContent: HealthArgonautDeprecationNotice,
+      // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
+      deprecationDate: moment('15 Sep 2019 00:00 EDT'),
+      removalContent: HealthArgonautRemovalNotice,
+      removalDate: moment('01 Oct 2019 00:00 EDT'),
+    },
     trustedPartnerOnly: false,
     urlFragment: 'argonaut',
     vaInternalOnly: false,
