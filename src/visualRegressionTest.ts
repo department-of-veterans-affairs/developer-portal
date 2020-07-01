@@ -26,8 +26,8 @@ const checkScreenshots = async (page: Page, selector: string) => {
 
 const paths = testPaths.filter(path => path !== '/');
 
-describe('Visual regression test', async () => {
-  it('renders the homepage properly', async() => {
+describe('Visual regression test', () => {
+  it('renders the homepage properly', async () => {
     // Set unlimited timeout on first request, since it may timeout while webpack is compiling.
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0', timeout: 0 });
     await checkScreenshots(page, 'main');
