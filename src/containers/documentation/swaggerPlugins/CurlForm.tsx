@@ -145,10 +145,8 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         },
       };
     }
-    options.securities = this.buildSecurityBlock();
-
     if (this.state.requestBodyProperties.length > 0) {
-      options.requestBody = buildRequestBody();
+      options.requestBody = this.buildRequestBody();
     }
     return this.props.system.fn.curlify(options);
   }
