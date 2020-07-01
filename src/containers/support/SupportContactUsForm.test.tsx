@@ -15,10 +15,13 @@ describe('SupportContactUsForm', () => {
   it('should not be disabled when required fields are filled', (done) => {
     const onSuccessMock = jest.fn();
     const component = mount(<SupportContactUsForm onSuccess={onSuccessMock}/>);
-    const mockFetchPromise = Promise.resolve({
-      json: () => Promise.resolve({statusCode: 200}),
-      ok: true,
-    });
+    const mockFetchPromise = Promise.resolve(new Response(
+      '',
+      {
+        status: 200,
+        statusText: 'OK',
+      },
+    ));
     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
     
     const inputs = component.find('input[type="text"]');
