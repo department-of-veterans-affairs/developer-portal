@@ -25,3 +25,17 @@ References:
 * `zenscroll` [event listener](https://github.com/zengabor/zenscroll/blob/dist/zenscroll.js#L305)
 * [The `event.preventDefault()` call](https://github.com/zengabor/zenscroll/blob/dist/zenscroll.js#L336)
 * [Slack thread](https://lighthouseva.slack.com/archives/CSZN6V1CH/p1591980406369000) from the investigation that uncovered this issue
+
+## Content
+
+### API Category Names
+
+The pseudo-schema for API categories in `src/apiDefs/categories.ts` currently includes two fields for the category name, `name` and `properName`. `name` is used in most places; `properName` is most likely a legacy of some earlier presentational needs.
+
+`properName` is sometimes the same as `name` (Appeals, Health), and it is semantically incorrect in at least one case ("Benefits Intake API" for the Benefits category).
+
+`properName` is only used in the following place:
+
+* The `ApplySuccess` page uses `properName` as the display name for Benefits, Facilities, and VA Forms. (Note that the Apply page doesn't maintain a clear distinction between individual APIs and API categories.)
+
+We should eliminate `properName` from the category schema as soon as possible, assuming that we can confirm that we can safely do that with UX.

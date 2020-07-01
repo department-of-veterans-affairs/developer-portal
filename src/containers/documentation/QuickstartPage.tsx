@@ -11,11 +11,11 @@ export default class QuickstartPage extends React.Component<RouteComponentProps<
     const { apiCategoryKey } = this.props.match.params;
     const { 
       content: { quickstart: quickstartContent }, 
-      properName,
+      name,
     } = getApiDefinitions()[apiCategoryKey];
 
     if (quickstartContent) {
-      return <QuickstartWrapper halo={properName} quickstartContent={quickstartContent} />;
+      return <QuickstartWrapper halo={name} quickstartContent={quickstartContent} />;
     } else {
       return <Redirect to={`/explore/${apiCategoryKey}`} />;
     }
