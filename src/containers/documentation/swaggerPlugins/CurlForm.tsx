@@ -129,7 +129,6 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
       };
     }
     options.spec = spec;
-
     if (this.state.apiKey.length > 0) {
       options.securities = {
         authorized: {
@@ -146,25 +145,30 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         },
       };
     }
+    options.securities = this.buildSecurityBlock();
 
     if (this.state.requestBodyProperties.length > 0) {
-      const requestBody = {};
-      this.state.requestBodyProperties.map((property: any) => {
-        if (property.type === 'array') {
-          requestBody[property.name] = this.state[property.name].split(',');
-        } else if (property.type === 'object') {
-          try {
-            requestBody[property.name] = JSON.parse(this.state[property.name]);
-          } catch (e) {
-            requestBody[property.name] = this.state[property.name];
-          }
-        } else {
-          requestBody[property.name] = this.state[property.name];
-        }
-      });
-      options.requestBody = requestBody;
+      options.requestBody = buildRequestBody();
     }
     return this.props.system.fn.curlify(options);
+  }
+
+  public buildRequestBody() {
+    const requestBody = {};
+    this.state.requestBodyProperties.map((property: any) => {
+      if (property.type === 'array' && this.state[property.name]) {
+        requestBody[property.name] = this.state[property.name].split(',');
+      } else if (property.type === 'object') {
+        try {
+          requestBody[property.name] = JSON.parse(this.state[property.name]);
+        } catch (e) {
+          requestBody[property.name] = this.state[property.name];
+        }
+      } else {
+        requestBody[property.name] = this.state[property.name];
+      }
+    });
+    return requestBody;
   }
 
   public parameterContainer() {
