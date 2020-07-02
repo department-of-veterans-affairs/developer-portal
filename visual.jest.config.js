@@ -9,7 +9,7 @@ module.exports = {
   setupFiles: [
     "<rootDir>/config/polyfills.js",
   ],
-  setupTestFrameworkScriptFile: "<rootDir>/config/jest/imageSnapshot.ts",
+  setupFilesAfterEnv: ["<rootDir>/config/jest/imageSnapshot.ts"],
   transform: {
     "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
     "^.+\\.tsx?$": "ts-jest",
