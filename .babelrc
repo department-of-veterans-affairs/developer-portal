@@ -1,0 +1,33 @@
+{
+  "plugins": [
+    "@babel/plugin-proposal-class-properties"
+  ],
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "entry",
+        "forceAllTransforms": true,
+        "loose": true,
+        "corejs": 2,
+        "modules": false,
+        "exclude": [
+          "transform-typeof-symbol"
+        ],
+        "targets": {
+          "ie": "11",
+          "chrome": "54",
+          "firefox": "46",
+          "node": "current"
+        }
+      }
+    ],
+    [
+      "react-app",
+      {
+        "flow": false,
+        "typescript": true
+      }
+    ]
+  ]
+}
