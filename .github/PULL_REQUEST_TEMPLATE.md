@@ -18,6 +18,7 @@ If neither of these checks are relevant to your PR (like changes that only affec
 -->
 - [ ] Tests added or updated for change
 - [ ] Docs updated
+- [ ] Accessibility concerns have been considered and addressed
 
 ### Requested feedback
 <!-- Is there any specific feedback you are looking for on the PR? It's okay if this is blank. -->
