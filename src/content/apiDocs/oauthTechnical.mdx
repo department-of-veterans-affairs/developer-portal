@@ -285,7 +285,7 @@ Scopes define the API endpoint your application is allowed to access. The VA API
 These are subject to change while the VA API Platform OpenID Connect feature is under development.
 
 ## ID Token
-Unlike the token returned by an authorization_code grant, which is simply a random value, an `id_token` is a [JSON Web Token](https://jwt.io) or JWT. A JWT consists of three parts: a header, a payload, and a signature. This provides an extremely brief overview of a JWT.
+Unlike the access token returned by an authorization_code grant, which is simply a random value, an `id_token` is a [JSON Web Token](https://jwt.io) or JWT. A JWT consists of three parts: a header, a payload, and a signature. This provides an extremely brief overview of a JWT. An `id_token` is available in the authorization code flow (response_code = code) token response when the 'openid' scope is used.
 
 ### Header
 
