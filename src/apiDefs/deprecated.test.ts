@@ -2,8 +2,8 @@ import 'jest';
 import * as moment from 'moment';
 
 // we just need a Markdown component for  our test IApiDescription
-import { FhirApiReleaseNotes } from '../content/apiDocs/health';
-import { isApiDeprecated, isApiRemoved } from './deprecated';
+import { UrgentCareDeprecationNotice } from '../content/apiDocs/health';
+import { isApiDeactivated, isApiDeprecated } from './deprecated';
 import { IApiDescription } from './schema';
 
 describe('deprecated API module', () => {
@@ -13,25 +13,25 @@ describe('deprecated API module', () => {
     enabledByDefault: true,
     name: 'My API',
     oAuth: false,
-    releaseNotes: FhirApiReleaseNotes,
+    releaseNotes: UrgentCareDeprecationNotice,
     trustedPartnerOnly: false,
     urlFragment: 'my_api',
     vaInternalOnly: false,
   };
   
   describe('isApiDeprecated', () => {
-    it('returns false if removalInfo is undefined', () => {
+    it('returns false if deactivationInfo is undefined', () => {
       expect(isApiDeprecated(apiValues)).toBe(false);
     });
 
     it('returns false if the deprecation date is in the future', () => {
       const api : IApiDescription = {
         ... apiValues,
-        removalInfo: {
-          deprecationContent: FhirApiReleaseNotes,
+        deactivationInfo: {
+          deactivationContent: UrgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month'),
+          deprecationContent: UrgentCareDeprecationNotice,
           deprecationDate: moment().add(1, 'month'),
-          removalContent: FhirApiReleaseNotes,
-          removalDate: moment().add(2, 'month'),
         },
       };
       expect(isApiDeprecated(api)).toBe(false);
@@ -40,72 +40,72 @@ describe('deprecated API module', () => {
     it('returns true if the deprecation date is in the past', () => {
       const api : IApiDescription = {
         ... apiValues,
-        removalInfo: {
-          deprecationContent: FhirApiReleaseNotes,
+        deactivationInfo: {
+          deactivationContent: UrgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month'),
+          deprecationContent: UrgentCareDeprecationNotice,
           deprecationDate: moment().subtract(1, 'month'),
-          removalContent: FhirApiReleaseNotes,
-          removalDate: moment().add(2, 'month'),
         },
       };
       expect(isApiDeprecated(api)).toBe(true);
     });
 
-    it('returns true if the API is removed', () => {
+    it('returns true if the API is deactivated', () => {
       const api : IApiDescription = {
         ... apiValues,
-        removalInfo: {
-          deprecationContent: FhirApiReleaseNotes,
+        deactivationInfo: {
+          deactivationContent: UrgentCareDeprecationNotice,
+          deactivationDate: moment().subtract(1, 'month'),
+          deprecationContent: UrgentCareDeprecationNotice,
           deprecationDate: moment().subtract(2, 'month'),
-          removalContent: FhirApiReleaseNotes,
-          removalDate: moment().subtract(1, 'month'),
         },
       };
       expect(isApiDeprecated(api)).toBe(true);
     });
   });
 
-  describe('isApiRemoved', () => {
-    it('returns false if removalInfo is undefined', () => {
-      expect(isApiRemoved(apiValues)).toBe(false);
+  describe('isApiDeactivated', () => {
+    it('returns false if deactivationInfo is undefined', () => {
+      expect(isApiDeactivated(apiValues)).toBe(false);
     });
 
     it('returns false if the API is not deprecated yet', () => {
       const api : IApiDescription = {
         ... apiValues,
-        removalInfo: {
-          deprecationContent: FhirApiReleaseNotes,
+        deactivationInfo: {
+          deactivationContent: UrgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month'),
+          deprecationContent: UrgentCareDeprecationNotice,
           deprecationDate: moment().add(1, 'month'),
-          removalContent: FhirApiReleaseNotes,
-          removalDate: moment().add(2, 'month'),
         },
       };
-      expect(isApiRemoved(api)).toBe(false);
+      expect(isApiDeactivated(api)).toBe(false);
     });
 
-    it('returns false if the API is deprecated but the removal date is in the future', () => {
+    it('returns false if the API is deprecated but the deactivation date is in the future', () => {
       const api : IApiDescription = {
         ... apiValues,
-        removalInfo: {
-          deprecationContent: FhirApiReleaseNotes,
+        deactivationInfo: {
+          deactivationContent: UrgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month'),
+          deprecationContent: UrgentCareDeprecationNotice,
           deprecationDate: moment().subtract(1, 'month'),
-          removalContent: FhirApiReleaseNotes,
-          removalDate: moment().add(2, 'month'),
         },
       };
-      expect(isApiRemoved(api)).toBe(false);
+      expect(isApiDeactivated(api)).toBe(false);
     });
 
     it('returns true if the removal date is in the past', () => {
       const api : IApiDescription = {
         ... apiValues,
-        removalInfo: {
-          deprecationContent: FhirApiReleaseNotes,
+        deactivationInfo: {
+          deactivationContent: UrgentCareDeprecationNotice,
+          deactivationDate: moment().subtract(1, 'month'),
+          deprecationContent: UrgentCareDeprecationNotice,
           deprecationDate: moment().subtract(2, 'month'),
-          removalContent: FhirApiReleaseNotes,
-          removalDate: moment().subtract(1, 'month'),
         },
       };
-      expect(isApiRemoved(api)).toBe(true);
+      expect(isApiDeactivated(api)).toBe(true);
     });
   });
 });

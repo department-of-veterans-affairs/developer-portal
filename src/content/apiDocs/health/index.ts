@@ -1,7 +1,7 @@
 import { IApiCategoryContent } from '../../../apiDefs/schema';
+import HealthArgonautDeactivationNotice from './argonautDeactivationNotice.mdx';
 import HealthArgonautDeprecationNotice from './argonautDeprecationNotice.mdx';
 import ArgonautReleaseNotes from './argonautReleaseNotes.mdx';
-import HealthArgonautRemovalNotice from './argonautRemovalNotice.mdx';
 import CommunityCareApiIntro from './communityCareApiIntro.mdx';
 import CommunityCareReleaseNotes from './communityCareReleaseNotes.mdx';
 import FhirApiReleaseNotes from './fhirAPIReleaseNotes.mdx';
@@ -11,9 +11,9 @@ import HealthIntro from './healthIntro.mdx';
 import HealthOverview from './healthOverview.mdx';
 import HealthQuickstart from './healthQuickstart.mdx';
 import UrgentCareApiIntro from './urgentCareApiIntro.mdx';
+import UrgentCareDeactivationNotice from './urgentCareDeactivationNotice.mdx';
 import UrgentCareDeprecationNotice from './urgentCareDeprecationNotice.mdx';
 import UrgentCareReleaseNotes from './urgentCareReleaseNotes.mdx';
-import UrgentCareRemovalNotice from './urgentCareRemovalNotice.mdx';
 
 const healthContent: IApiCategoryContent = {
   intro: HealthIntro,
@@ -32,9 +32,9 @@ export {
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
   HealthArgonautDeprecationNotice,
-  HealthArgonautRemovalNotice,
+  HealthArgonautDeactivationNotice,
   UrgentCareApiIntro,
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
-  UrgentCareRemovalNotice,
+  UrgentCareDeactivationNotice,
 };

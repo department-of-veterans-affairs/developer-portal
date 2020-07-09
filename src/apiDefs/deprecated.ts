@@ -3,19 +3,19 @@ import { getAllApis } from './query';
 import { IApiDescription } from "./schema";
 
 export const isApiDeprecated = (api: IApiDescription): boolean => {
-  if (api.removalInfo === undefined) {
+  if (api.deactivationInfo === undefined) {
     return false;
   }
 
-  return moment().isAfter(api.removalInfo.deprecationDate);
+  return moment().isAfter(api.deactivationInfo.deprecationDate);
 };
 
-export const isApiRemoved = (api: IApiDescription): boolean => {
-  if (api.removalInfo === undefined) {
+export const isApiDeactivated = (api: IApiDescription): boolean => {
+  if (api.deactivationInfo === undefined) {
     return false;
   }
 
-  return moment().isAfter(api.removalInfo.removalDate);
+  return moment().isAfter(api.deactivationInfo.deactivationDate);
 };
 
 export const getDeprecatedFlags = () => {
@@ -25,9 +25,9 @@ export const getDeprecatedFlags = () => {
   }, {});
 };
 
-export const getRemovedFlags = () => {
+export const getDeactivatedFlags = () => {
   return getAllApis().reduce((flags: {}, api: IApiDescription) => {
-    flags[api.urlFragment] = isApiRemoved(api);
+    flags[api.urlFragment] = isApiDeactivated(api);
     return flags;
   }, {});
 };

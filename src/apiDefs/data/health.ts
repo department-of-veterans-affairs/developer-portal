@@ -15,12 +15,12 @@ import {
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
+  HealthArgonautDeactivationNotice,
   HealthArgonautDeprecationNotice,
-  HealthArgonautRemovalNotice,
   UrgentCareApiIntro,
+  UrgentCareDeactivationNotice,
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
-  UrgentCareRemovalNotice,
 } from '../../content/apiDocs/health';
 import { IApiDescription } from "../schema";
 
@@ -43,6 +43,12 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
+    deactivationInfo: {
+      deactivationContent: UrgentCareDeactivationNotice,
+      deactivationDate: moment('20 Jul 2020 00:00 EDT'),
+      deprecationContent: UrgentCareDeprecationNotice,
+      deprecationDate: moment('13 Jul 2020 00:00 EDT'),
+    },
     description: "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
     docSources: [
       {
@@ -54,12 +60,6 @@ const healthApis : IApiDescription[] = [
     name: 'Urgent Care Eligibility API (FHIR)',
     oAuth: true,
     releaseNotes: UrgentCareReleaseNotes,
-    removalInfo: {
-      deprecationContent: UrgentCareDeprecationNotice,
-      deprecationDate: moment('13 Jul 2020 00:00 EDT'),
-      removalContent: UrgentCareRemovalNotice,
-      removalDate: moment('20 Jul 2020 00:00 EDT'),
-    },
     trustedPartnerOnly: false,
     urlFragment: 'urgent_care',
     vaInternalOnly: false,
@@ -96,6 +96,13 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
+    deactivationInfo: {
+      deactivationContent: HealthArgonautDeactivationNotice,
+      // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
+      deactivationDate: moment('01 Oct 2019 00:00 EDT'),
+      deprecationContent: HealthArgonautDeprecationNotice,
+      deprecationDate: moment('15 Sep 2019 00:00 EDT'),
+    },
     description: 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.',
     docSources: [
       {
@@ -106,13 +113,6 @@ const healthApis : IApiDescription[] = [
     name: 'Veterans Health API (Legacy)',
     oAuth: true,
     releaseNotes: ArgonautReleaseNotes,
-    removalInfo: {
-      deprecationContent: HealthArgonautDeprecationNotice,
-      // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
-      deprecationDate: moment('15 Sep 2019 00:00 EDT'),
-      removalContent: HealthArgonautRemovalNotice,
-      removalDate: moment('01 Oct 2019 00:00 EDT'),
-    },
     trustedPartnerOnly: false,
     urlFragment: 'argonaut',
     vaInternalOnly: false,
