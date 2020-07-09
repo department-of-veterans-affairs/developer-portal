@@ -1,9 +1,9 @@
 # based on https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
 
-FROM node:10
+FROM node:12
 
 # Install chromium dependencies
-RUN apt-get update && apt-get install -y wget --no-install-recommends \
+RUN apt-get update && apt-get install -y libxss1 wget --no-install-recommends \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
@@ -23,6 +23,8 @@ RUN groupadd --gid 504 jenkins \
 
 USER jenkins
 
+# Change default global node module directory
+RUN mkdir ~/.npm-global && npm config set prefix '~/.npm-global' && export PATH=~/.npm-global/bin:$PATH
 RUN npm install -g npm
 RUN npm install -g @sentry/cli
 
