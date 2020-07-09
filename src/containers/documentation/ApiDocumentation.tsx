@@ -8,7 +8,6 @@ import { Location } from 'history';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import SwaggerDocs from './SwaggerDocs';
 
-import { lookupApiCategory } from '../../apiDefs/query';
 import { IApiDescription, IApiDocSource } from '../../apiDefs/schema';
 import { history } from '../../store';
 
@@ -51,13 +50,7 @@ class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocum
   }
 
   public render() {
-    const {
-      apiDefinition,
-      categoryKey,
-    } = this.props;
-
-    // because this is only rendered with a valid API, we can assert that the category is non-null
-    const category = lookupApiCategory(categoryKey)!;
+    const { apiDefinition } = this.props;
     const tabChangeHandler = this.onTabSelect.bind(this);
 
     return (
@@ -66,7 +59,7 @@ class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocum
           ? <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} />
           : (
             <React.Fragment>
-              {category!.tabBlurb}
+              {apiDefinition.tabBlurb}
               <Tabs selectedIndex={this.state.tabIndex} onSelect={tabChangeHandler}>
                 <TabList>
                   {apiDefinition.docSources.map(apiDocSource => {

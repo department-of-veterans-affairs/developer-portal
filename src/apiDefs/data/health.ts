@@ -89,6 +89,8 @@ const healthApis : IApiDescription[] = [
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
     releaseNotes: FhirApiReleaseNotes,
+    tabBlurb: 
+      "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
     trustedPartnerOnly: false,
     urlFragment: 'fhir',
     vaInternalOnly: false,

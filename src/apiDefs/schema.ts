@@ -42,6 +42,7 @@ export interface IApiDescription {
   readonly oAuth?: boolean;
   readonly releaseNotes: React.StatelessComponent;
   readonly removalInfo?: IApiRemovalInfo;
+  readonly tabBlurb?: string;
 }
 
 export interface IApiCategory {
@@ -49,7 +50,6 @@ export interface IApiCategory {
   readonly properName: string;
   readonly buttonText: string;
   readonly name: string;
-  readonly tabBlurb?: string;
   readonly content: IApiCategoryContent;
 }
 
