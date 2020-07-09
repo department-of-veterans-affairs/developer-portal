@@ -15,7 +15,6 @@ import {
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
-  FhirR4ApiIntro,
   HealthArgonautDeprecationNotice,
   HealthArgonautRemovalNotice,
   UrgentCareApiIntro,
@@ -44,36 +43,6 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
-    description: 'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
-    docSources: [
-      {
-        apiIntro: FhirArgonautApiIntro,
-        key: 'argonaut',
-        label: 'Argonaut',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/argonaut/data-query/openapi.json`,
-      },
-      {
-        apiIntro: FhirR4ApiIntro,
-        key: 'r4',
-        label: 'R4',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
-      },
-      {
-        apiIntro: FhirDSTU2ApiIntro,
-        key: 'dstu2',
-        label: 'DSTU2',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
-      },
-    ],
-    enabledByDefault: true,
-    name: 'Veterans Health API (FHIR)',
-    oAuth: true,
-    releaseNotes: FhirApiReleaseNotes,
-    trustedPartnerOnly: false,
-    urlFragment: 'fhir',
-    vaInternalOnly: false,
-  },
-  {
     description: "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
     docSources: [
       {
@@ -93,6 +62,35 @@ const healthApis : IApiDescription[] = [
     },
     trustedPartnerOnly: false,
     urlFragment: 'urgent_care',
+    vaInternalOnly: false,
+  },
+  {
+    description: 'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
+    docSources: [
+      {
+        apiIntro: FhirArgonautApiIntro,
+        key: 'argonaut',
+        label: 'Argonaut',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/argonaut/data-query/openapi.json`,
+      },
+      {
+        key: 'r4',
+        label: 'R4',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
+      },
+      {
+        apiIntro: FhirDSTU2ApiIntro,
+        key: 'dstu2',
+        label: 'DSTU2',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
+      },
+    ],
+    enabledByDefault: true,
+    name: 'Veterans Health API (FHIR)',
+    oAuth: true,
+    releaseNotes: FhirApiReleaseNotes,
+    trustedPartnerOnly: false,
+    urlFragment: 'fhir',
     vaInternalOnly: false,
   },
   {

@@ -15,7 +15,7 @@ import { IApiNameParam } from '../../types';
 const ApiReleaseNote = ({ api }: { api: IApiDescription }) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
   return (
-    <Flag name={`hosted_apis.${api.urlFragment}`}>
+    <Flag name={`enabled.${api.urlFragment}`}>
       <div id={dashUrlFragment}>
         <h2>{api.name}</h2>
         {api.releaseNotes({})}
@@ -40,7 +40,7 @@ export default class CategoryReleaseNotesPage extends React.Component<
         const dashUrlFragment = urlFragment.replace('_', '-');
 
         return (
-          <Flag key={name} name={`hosted_apis.${urlFragment}`}>
+          <Flag key={name} name={`enabled.${urlFragment}`}>
             <CardLink
               name={name}
               subhead={

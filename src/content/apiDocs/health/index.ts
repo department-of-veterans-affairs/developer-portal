@@ -7,7 +7,6 @@ import CommunityCareReleaseNotes from './communityCareReleaseNotes.mdx';
 import FhirApiReleaseNotes from './fhirAPIReleaseNotes.mdx';
 import FhirArgonautApiIntro from './fhirArgonautApiIntro.mdx';
 import FhirDSTU2ApiIntro from './fhirDSTU2ApiIntro.mdx';
-import FhirR4ApiIntro from './fhirR4ApiIntro.mdx';
 import HealthIntro from './healthIntro.mdx';
 import HealthOverview from './healthOverview.mdx';
 import HealthQuickstart from './healthQuickstart.mdx';
@@ -32,7 +31,6 @@ export {
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
-  FhirR4ApiIntro,
   HealthArgonautDeprecationNotice,
   HealthArgonautRemovalNotice,
   UrgentCareApiIntro,
