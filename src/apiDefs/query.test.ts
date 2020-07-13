@@ -49,9 +49,14 @@ describe('query module', () => {
     // This test checks relatively stable properties of our API categories. If our API
     // categories change substantially in the future, this test will need to be updated.
     it('returns the API category definition if it is defined', () => {
+      const appealsApi = lookupApiCategory('appeals');
+      expect(appealsApi).not.toBeNull();
+      expect(appealsApi!.apis.length).toBeGreaterThanOrEqual(2);
+      expect(appealsApi!.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
+
       const benefitsApi = lookupApiCategory('benefits');
       expect(benefitsApi).not.toBeNull();
-      expect(benefitsApi!.apis.length).toBeGreaterThanOrEqual(4);
+      expect(benefitsApi!.apis.length).toBeGreaterThanOrEqual(3);
       expect(benefitsApi!.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(1);
       
       const facilitiesApi = lookupApiCategory('facilities');
