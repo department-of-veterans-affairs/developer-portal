@@ -41,8 +41,6 @@ const apiDefinitions: IApiCategories = {
     content: healthContent,
     name: 'Health API',
     properName: 'Health API',
-    tabBlurb:
-      "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
   },
   vaForms: {
     apis: vaForms,

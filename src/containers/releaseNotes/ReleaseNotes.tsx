@@ -24,9 +24,17 @@ function SideNavApiEntry(api: IApiDescription) {
           <React.Fragment>
             {api.name}
             <br />
-            {api.vaInternalOnly && <span><small>Internal VA use only.</small></span>}
-            {api.vaInternalOnly && api.trustedPartnerOnly && <br /> || null}
-            {api.trustedPartnerOnly && <span><small>Internal VA use only.{/*Trusted Partner use only.*/}</small></span>}
+            {api.vaInternalOnly && (
+              <span>
+                <small>Internal VA use only.</small>
+              </span>
+            )}
+            {(api.vaInternalOnly && api.trustedPartnerOnly && <br />) || null}
+            {api.trustedPartnerOnly && (
+              <span>
+                <small>Internal VA use only.{/*Trusted Partner use only.*/}</small>
+              </span>
+            )}
           </React.Fragment>
         }
         subNavLevel={1}
@@ -48,10 +56,7 @@ function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory)
 
   return (
     <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
-      <SideNavEntry
-        to={`/release-notes/${apiCategoryKey}`}
-        name={apiCategory.name}
-      >
+      <SideNavEntry to={`/release-notes/${apiCategoryKey}`} name={apiCategory.name}>
         {subNavLinks()}
       </SideNavEntry>
     </Flag>
@@ -68,17 +73,16 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
           <div className="vads-l-grid-container">
             <div className="vads-l-row">
               <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
-                <SideNavEntry
-                  key="all"
-                  exact={true}
-                  to="/release-notes"
-                  name="Overview"
-                />
+                <SideNavEntry key="all" exact={true} to="/release-notes" name="Overview" />
                 {categoryOrder.map((key: string) => SideNavCategoryEntry(key, apiDefs[key]))}
               </SideNav>
               <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
                 <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
-                <Route exact={true} path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotesPage} />
+                <Route
+                  exact={true}
+                  path="/release-notes/:apiCategoryKey"
+                  component={CategoryReleaseNotesPage}
+                />
               </div>
             </div>
           </div>
@@ -89,4 +93,3 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
 }
 
 export default ReleaseNotes;
-
