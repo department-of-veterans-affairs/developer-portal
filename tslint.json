@@ -6,7 +6,7 @@
   "rulesDirectory": ["node_modules/tslint-microsoft-contrib"],
   "rules": {
     "indent": [true, "spaces", 2],
-    "semicolon": [true, "always"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
     "trailing-comma": {
       "options": {
         "multiline": "always",
