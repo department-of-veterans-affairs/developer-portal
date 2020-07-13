@@ -1,4 +1,7 @@
-import { AppealsReleaseNotes } from '../../content/apiDocs/appeals';
+import { 
+  AppealsStatusReleaseNotes,
+  DecisionReviewReleaseNotes,
+} from '../../content/apiDocs/appeals';
 import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
@@ -11,8 +14,8 @@ const appealsApis : IApiDescription[] = [
       },
     ],
     enabledByDefault: true,
-    name: 'Appeals Status',
-    releaseNotes: AppealsReleaseNotes,
+    name: 'Appeals Status API',
+    releaseNotes: AppealsStatusReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'appeals',
     vaInternalOnly: true,
@@ -27,7 +30,7 @@ const appealsApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Decision Reviews API',
-    releaseNotes: AppealsReleaseNotes,
+    releaseNotes: DecisionReviewReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'decision_reviews',
     vaInternalOnly: true,

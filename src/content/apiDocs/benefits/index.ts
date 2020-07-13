@@ -1,5 +1,4 @@
 import { IApiCategoryContent } from '../../../apiDefs/schema';
-import AppealsReleaseNotes from './appealsReleaseNotes.mdx';
 import BenefitsIntakeReleaseNotes from './benefitsIntakeReleaseNotes.mdx';
 import BenefitsIntro from './benefitsIntro.mdx';
 import BenefitsOverview from './benefitsOverview.mdx';
@@ -16,7 +15,6 @@ const benefitsContent: IApiCategoryContent = {
 
 export {
   benefitsContent,
-  AppealsReleaseNotes,
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
