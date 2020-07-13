@@ -19,7 +19,7 @@ const ApiReleaseNote = ({ api }: { api: IApiDescription }) => {
       <div id={dashUrlFragment}>
         <h2>{api.name}</h2>
         {api.releaseNotes({})}
-        <hr/>
+        <hr />
       </div>
     </Flag>
   );
@@ -32,7 +32,7 @@ export default class CategoryReleaseNotesPage extends React.Component<
     const apiDefs = getApiDefinitions();
     const { apiCategoryKey } = this.props.match.params;
     const { apis } = apiDefs[apiCategoryKey];
-    
+
     let cardSection;
     if (apis.length > 1) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
@@ -59,7 +59,7 @@ export default class CategoryReleaseNotesPage extends React.Component<
       });
 
       cardSection = (
-        <div role="navigation" aria-labelledby={`${apiCategoryKey}-overview-apis`}>
+        <div role="navigation" aria-labelledby={`${apiCategoryKey}-release-notes`}>
           <div className={defaultFlexContainer()}>{apiCards}</div>
         </div>
       );
@@ -67,10 +67,16 @@ export default class CategoryReleaseNotesPage extends React.Component<
 
     return (
       <section role="region" aria-labelledby={`${apiCategoryKey}-release-notes`}>
-        <PageHeader halo={apiDefs[apiCategoryKey].name} header="Release Notes" />
+        <PageHeader
+          halo={apiDefs[apiCategoryKey].name}
+          header="Release Notes"
+          id={`${apiCategoryKey}-release-notes`}
+        />
         {cardSection}
         <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-          {apis.map(api => <ApiReleaseNote key={api.urlFragment} api={api} />)}
+          {apis.map(api => (
+            <ApiReleaseNote key={api.urlFragment} api={api} />
+          ))}
         </div>
       </section>
     );
