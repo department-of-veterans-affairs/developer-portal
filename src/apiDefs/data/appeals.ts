@@ -1,8 +1,25 @@
-import { AppealsReleaseNotes } from '../../content/apiDocs/appeals';
+import { 
+  AppealsStatusReleaseNotes,
+  DecisionReviewReleaseNotes,
+} from '../../content/apiDocs/appeals';
 import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
 const appealsApis : IApiDescription[] = [
+  {
+    description: 'Track appeals',
+    docSources: [
+      {
+        openApiUrl: `${swaggerHost}/services/appeals/docs/v0/api`,
+      },
+    ],
+    enabledByDefault: true,
+    name: 'Appeals Status API',
+    releaseNotes: AppealsStatusReleaseNotes,
+    trustedPartnerOnly: false,
+    urlFragment: 'appeals',
+    vaInternalOnly: true,
+  },
   {
     description: 'The Decision Reviews API allows you to interact with a Veteran’s Decision Review requests, also known as benefit appeals.',
     docSources: [
@@ -13,7 +30,7 @@ const appealsApis : IApiDescription[] = [
     ],
     enabledByDefault: true,
     name: 'Decision Reviews API',
-    releaseNotes: AppealsReleaseNotes,
+    releaseNotes: DecisionReviewReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'decision_reviews',
     vaInternalOnly: true,

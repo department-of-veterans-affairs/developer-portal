@@ -1,5 +1,4 @@
 import {
-  AppealsReleaseNotes,
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
@@ -8,20 +7,6 @@ import { IApiDescription } from '../schema';
 
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
 const benefitsApis : IApiDescription[] = [
-  {
-    description: 'Track appeals',
-    docSources: [
-      {
-        openApiUrl: `${swaggerHost}/services/appeals/docs/v0/api`,
-      },
-    ],
-    enabledByDefault: true,
-    name: 'Appeals Status',
-    releaseNotes: AppealsReleaseNotes,
-    trustedPartnerOnly: false,
-    urlFragment: 'appeals',
-    vaInternalOnly: true,
-  },
   {
     description: 'Submit and track claims',
     docSources: [

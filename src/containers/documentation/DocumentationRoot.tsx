@@ -25,12 +25,20 @@ function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
       <SideNavEntry
         key={api.urlFragment}
         exact={true}
-        to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}?version=${CURRENT_VERSION_IDENTIFIER}`}
+        to={`/explore/${apiCategoryKey}/docs/${
+          api.urlFragment
+        }?version=${CURRENT_VERSION_IDENTIFIER}`}
         name={
           <React.Fragment>
             {api.name}
-            {api.vaInternalOnly && <small className="vads-u-display--block">Internal VA use only.</small>}
-            {api.trustedPartnerOnly && <small className="vads-u-display--block">Internal VA use only.{/*Trusted Partner use only.*/}</small>}
+            {api.vaInternalOnly && (
+              <small className="vads-u-display--block">Internal VA use only.</small>
+            )}
+            {api.trustedPartnerOnly && (
+              <small className="vads-u-display--block">
+                Internal VA use only.{/*Trusted Partner use only.*/}
+              </small>
+            )}
           </React.Fragment>
         }
         subNavLevel={1}
@@ -75,15 +83,17 @@ function ExploreSideNav() {
               className="side-nav-category-link"
               name={apiCategory.name}
             >
-              {apiCategory.content.quickstart &&
+              {apiCategory.content.quickstart && (
                 <SideNavEntry
                   exact={true}
                   to={`/explore/${categoryKey}/docs/quickstart`}
                   name="Quickstart"
                   subNavLevel={1}
                 />
-              }
-              {categoryKey !== 'benefits' && apiCategory.apis.some(api => !!api.oAuth) && OAuthSideNavEntry(categoryKey)}
+              )}
+              {categoryKey !== 'benefits' &&
+                apiCategory.apis.some(api => !!api.oAuth) &&
+                OAuthSideNavEntry(categoryKey)}
               {apiCategory.apis.map((api: IApiDescription) => SideNavApiEntry(categoryKey, api))}
             </SideNavEntry>
           </Flag>
@@ -93,18 +103,25 @@ function ExploreSideNav() {
   );
 }
 
-const oldRouteToNew = [ 
-  { 
-    from: "/explore/verification/docs/disability_rating", 
-    to: '/explore/verification/docs/veteran_verification',
-  }, 
+const oldRouteToNew = [
   {
-    from: "/explore/verification/docs/service_history",
+    from: '/explore/verification/docs/disability_rating',
     to: '/explore/verification/docs/veteran_verification',
-  }, 
+  },
+  {
+    from: '/explore/verification/docs/service_history',
+    to: '/explore/verification/docs/veteran_verification',
+  },
+  {
+    from: '/explore/benefits/docs/appeals',
+    to: '/explore/appeals/docs/appeals',
+  },
 ];
 
-export default class DocumentationRoot extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
+export default class DocumentationRoot extends React.Component<
+  RouteComponentProps<IApiNameParam>,
+  {}
+> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
     const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
@@ -115,36 +132,29 @@ export default class DocumentationRoot extends React.Component<RouteComponentPro
             <ExploreSideNav />
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
               <Switch>
-                {
-                  oldRouteToNew.map((routes) => {
-                    return <Redirect
-                      key={routes.from}
-                      exact={true}
-                      from={routes.from}
-                      to={routes.to}
-                    />;
-                  })
-                }
-                { !shouldRouteCategory &&
-                  <Redirect from="/explore/:apiCategoryKey" to="/explore" />
-                }
+                {oldRouteToNew.map(routes => {
+                  return (
+                    <Redirect key={routes.from} exact={true} from={routes.from} to={routes.to} />
+                  );
+                })}
+                {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
                 <Route exact={true} path="/explore/" component={DocumentationOverview} />
-                  <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
-                  <Route
-                    exact={true}
-                    path="/explore/:apiCategoryKey/docs/authorization"
-                    component={AuthorizationDocs}
-                    />
-                  <Route
-                    exact={true}
-                    path="/explore/:apiCategoryKey/docs/quickstart"
-                    component={QuickstartPage}
-                    />
-                  <Route
-                    exact={true}
-                    path="/explore/:apiCategoryKey/docs/:apiName"
-                    component={ApiPage}
-                    />
+                <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
+                <Route
+                  exact={true}
+                  path="/explore/:apiCategoryKey/docs/authorization"
+                  component={AuthorizationDocs}
+                />
+                <Route
+                  exact={true}
+                  path="/explore/:apiCategoryKey/docs/quickstart"
+                  component={QuickstartPage}
+                />
+                <Route
+                  exact={true}
+                  path="/explore/:apiCategoryKey/docs/:apiName"
+                  component={ApiPage}
+                />
               </Switch>
             </div>
           </div>

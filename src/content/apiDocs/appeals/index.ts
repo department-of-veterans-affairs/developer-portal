@@ -2,7 +2,8 @@ import { IApiCategoryContent } from '../../../apiDefs/schema';
 import AppealsIntro from './appealsIntro.mdx';
 import AppealsOverview from './appealsOverview.mdx';
 import AppealsQuickstart from './appealsQuickstart.mdx';
-import AppealsReleaseNotes from './appealsReleaseNotes.mdx';
+import AppealsStatusReleaseNotes from './appealsStatusReleaseNotes.mdx';
+import DecisionReviewReleaseNotes from './decisionReviewReleaseNotes.mdx';
 
 const appealsContent: IApiCategoryContent = {
   intro: AppealsIntro,
@@ -15,5 +16,6 @@ const appealsContent: IApiCategoryContent = {
 
 export {
   appealsContent,
-  AppealsReleaseNotes,
+  AppealsStatusReleaseNotes,
+  DecisionReviewReleaseNotes,
 };
