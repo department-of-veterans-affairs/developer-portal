@@ -12,7 +12,7 @@ interface IApiCheckbox {
 }
 
 interface IApiCheckboxListProps {
-  apiCheckboxes: IApiCheckbox[]; 
+  apiCheckboxes: IApiCheckbox[];
   apiInputs: IApiList;
   toggleSelectedApi: (apiId: string) => () => void;
 }
@@ -23,17 +23,13 @@ const mapStateToProps = (state: IRootState) => {
   };
 };
 
-type ApiSelectDispatch = ThunkDispatch<
-  IRootState, 
-  undefined, 
-  actions.IToggleSelectedApi
->;
-  
+type ApiSelectDispatch = ThunkDispatch<IRootState, undefined, actions.IToggleSelectedApi>;
+
 const mapDispatchToProps = (dispatch: ApiSelectDispatch) => {
   return {
     toggleSelectedApi: (apiId: string) => {
-      return () => { 
-        dispatch(actions.toggleSelectedApi(apiId)); 
+      return () => {
+        dispatch(actions.toggleSelectedApi(apiId));
       };
     },
   };
@@ -63,38 +59,38 @@ const ApiCheckboxList = connect(
 const oauthInfo = [
   {
     id: 'claims',
-    label: "VA Claims API",
+    label: 'VA Claims API',
   },
   {
     id: 'health',
-    label: "VA Health API",
+    label: 'VA Health API',
   },
   {
     id: 'communityCare',
-    label: "Community Care Eligibility API",
+    label: 'Community Care Eligibility API',
   },
   {
     id: 'verification',
-    label: "VA Veteran Verification API",
+    label: 'VA Veteran Verification API',
   },
 ];
 
 const apiInfo = [
   {
     id: 'benefits',
-    label: "VA Benefits API",
+    label: 'VA Benefits API',
   },
   {
     id: 'facilities',
-    label: "VA Facilities API",
+    label: 'VA Facilities API',
   },
   {
     id: 'vaForms',
-    label: "VA Forms API",
+    label: 'VA Forms API',
   },
   {
     id: 'confirmation',
-    label: "VA Veteran Confirmation API",
+    label: 'VA Veteran Confirmation API',
   },
 ];
 
@@ -103,10 +99,20 @@ export default class SelectedApis extends React.PureComponent {
     return (
       <React.Fragment>
         <label>Please select all of the APIs you'd like access to:</label>
-        <h3>Standard APIs:</h3>
-        <ApiCheckboxList apiCheckboxes={apiInfo} />
-        <h3>OAuth APIs:</h3>
-        <ApiCheckboxList apiCheckboxes={oauthInfo} />
+        <fieldset
+          className="vads-u-margin-top--2p5"
+          aria-label="Please select all of the Standard APIs you'd like access to:"
+        >
+          <legend className="vads-u-font-size--lg">Standard APIs:</legend>
+          <ApiCheckboxList apiCheckboxes={apiInfo} />
+        </fieldset>
+        <fieldset
+          className="vads-u-margin-top--2p5"
+          aria-label="Please select all the OAuth APIs you'd like access to:"
+        >
+          <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
+          <ApiCheckboxList apiCheckboxes={oauthInfo} />
+        </fieldset>
       </React.Fragment>
     );
   }
