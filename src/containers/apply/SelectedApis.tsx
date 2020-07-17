@@ -100,14 +100,14 @@ export default class SelectedApis extends React.PureComponent {
       <React.Fragment>
         <label>Please select all of the APIs you'd like access to:</label>
         <fieldset
-          className="vads-u-margin-top--2p5"
+          className="vads-u-margin-top--2"
           aria-label="Please select all of the Standard APIs you'd like access to:"
         >
           <legend className="vads-u-font-size--lg">Standard APIs:</legend>
           <ApiCheckboxList apiCheckboxes={apiInfo} />
         </fieldset>
         <fieldset
-          className="vads-u-margin-top--2p5"
+          className="vads-u-margin-top--2"
           aria-label="Please select all the OAuth APIs you'd like access to:"
         >
           <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
