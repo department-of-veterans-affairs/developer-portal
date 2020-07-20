@@ -309,7 +309,12 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
               <h3>Generated Curl</h3>
               <div className="opblock-body">
                 <pre className="vads-u-display--flex">
-                  <div className="curl-text">{this.buildCurl()}</div>
+                  <div className="curl-text">
+                    <span className="sr-only">
+                      Ensure your screenreader verbosity is set to high for code snippets
+                    </span>
+                    {this.buildCurl()}
+                  </div>
                   <CopyToClipboard text={this.buildCurl()}>
                     <span className="va-api-curl__copy-to-clipboard">
                       <FontAwesomeIcon icon={faCopy} size="2x" />
