@@ -112,12 +112,17 @@
       border: none;
     }
   }
-  
+
   blockquote {
     line-height: 1.5;
     color: $color-gray-dark;
     background: $color-primary-alt-lightest;
     padding: 1rem;
     padding-right: 2rem;
+  }
+
+  .highlight-code,
+  .highlight-code > pre {
+    pointer-events: none;
   }
 }
