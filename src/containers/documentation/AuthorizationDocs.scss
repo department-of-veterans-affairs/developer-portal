@@ -6,6 +6,15 @@
     line-height: 1.6;
   }
 
+  .code-wrapper {
+    background-color: #222935;
+    border-radius: 3px;
+
+    & > pre {
+      margin: 0;
+    }
+  }
+
   code {
     background-color: #222935;
     border-radius: 3px;
@@ -20,13 +29,17 @@
 
   pre > code {
     display: block;
-    overflow-x: scroll;
     padding: 2rem;
+    pointer-events: none; // allows screen readers to "click" up to the pre tag and read .sr-only
     margin: 0;
     white-space: pre;
 
     &:focus {
       border: 1px solid $color-gray;
+    }
+
+    & > span {
+      pointer-events: none;
     }
   }
 
@@ -39,5 +52,15 @@
 
   td ul {
     border: none;
+  }
+}
+
+.code-wrapper {
+  overflow-x: scroll;
+
+  & > pre {
+    margin: 0;
+    pointer-events: none;
+    overflow: visible;
   }
 }

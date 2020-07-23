@@ -27,9 +27,14 @@ This flow is used by applications that are able to safely store a *client secret
 
 Initiate the OpenID Connect authorization by directing your application's users to
 
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
 ```plaintext
 https://sandbox-api.va.gov/oauth2/authorization
 ```
+
+</div>
 
 with the following query parameters:
 
@@ -45,7 +50,11 @@ with the following query parameters:
 | `prompt`        | Optional     | Supported prompts: `login`. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.|
 
 Example Authorization URL:
-```http
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
+```plaintext
 https://sandbox-api.va.gov/oauth2/authorization?
   client_id=0oa1c01m77heEXUZt2p7
   &redirect_uri=<yourRedirectURL>
@@ -53,6 +62,9 @@ https://sandbox-api.va.gov/oauth2/authorization?
   &scope=openid offline_access profile email veteran_status.read launch/patient
   &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy
 ```
+
+</div>
+
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 The user will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive a response based on the `response_type` you requested.
@@ -61,14 +73,22 @@ The user will be taken through a flow where they are authenticated by VA.gov and
 
 After the user confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
-```http
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
+```plaintext
 GET <yourRedirectURL>?
   code=z92dapo5
   &state=af0ifjsldkj
 Host: <yourRedirectHost>
 ```
 
+</div>
+
 Your application then makes a request to our authorization service using the returned `code` and `state` parameters. The request should use HTTP Basic authorization with your *client id* as the username and your *client secret* as the password. Your request should look like:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 POST /oauth2/token HTTP/1.1
@@ -78,9 +98,15 @@ Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
 grant_type=authorization_code&code=z92dapo5&state=af0ifjsldkj&redirect_uri=<yourRedirectURL>
 ```
+
+</div>
+
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 The authorization server will respond with an access token. If you requested the `offline_access` scope, you will also receive a `refresh_token`. The response will look like this:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 HTTP/1.1 200 OK
@@ -99,7 +125,12 @@ Pragma: no-cache
 }
 ```
 
+</div>
+
 If an error occurs, you will instead receive a response like this:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 HTTP/1.1 400 Bad Request
@@ -112,9 +143,14 @@ Pragma: no-cache
 }
 ```
 
+</div>
+
 The resulting `access_token` can be used to authorize requests to the VA API Platform by including it in HTTP requests to the Platform by included it in the `Authorization` header as `Authorization: Bearer {access_token}`.
 
 The `refresh_token` can be used to obtain a new `access_token` after its expiry by sending the following request.
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 POST /oauth2/token HTTP/1.1
@@ -125,11 +161,16 @@ Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 grant_type=refresh_token&refresh_token={your refresh_token}&scope={space separated scopes}
 ```
 
+</div>
+
 You will receive the same kind of response as above and be able to use your new `access_token` normally.
 
 #### Revoking Tokens
 
 Both `access_tokens` and `refresh_tokens` can be revoked using the following endpoint. Once revoked, the introspection endpoint will see the token as inactive.
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 POST /oauth2/revoke HTTP/1.1
@@ -139,6 +180,12 @@ Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
 token={your access token}&token_type_hint=access_token
 ```
+
+</div>
+<br />
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
 ```http
 POST /oauth2/revoke HTTP/1.1
 Host: sandbox-api.va.gov
@@ -148,16 +195,23 @@ Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 token={your refresh token}&token_type_hint=refresh_token
 ```
 
+</div>
+
 Clients may only revoke their own tokens.
 
 #### Manage Account
 
 The manage endpoint directs end users to a URL where they can view which applications currently have access to their data and can make adjustments to these access rights (grants).
 
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
 ```http
 GET /oauth2/manage HTTP/1.1
 Host: sandbox-api.va.gov
 ```
+
+</div>
 
 ### Proof Key for Code Exchange
 
@@ -167,9 +221,14 @@ The PKCE flow ([RFC 7636](https://tools.ietf.org/html/rfc7636)) is used by publi
 
 Initiate the OpenID Connect authorization by directing your application's users to
 
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
 ```plaintext
 https://sandbox-api.va.gov/oauth2/authorization
 ```
+
+</div>
 
 with the following query parameters:
 
@@ -185,7 +244,10 @@ with the following query parameters:
 | `prompt`                | Optional     | Supported prompts: `login`. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.|
 
 Example Authorization URL:
-```http
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
+```plaintext
 https://sandbox-api.va.gov/oauth2/authorization?
   client_id=0oa1c01m77heEXUZt2p7
   &response_type=code
@@ -195,6 +257,9 @@ https://sandbox-api.va.gov/oauth2/authorization?
   &code_challenge_method=S256
   &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw
 ```
+
+</div>
+
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 The user will be taken through a flow where they are authenticated by VA.gov and then asked to consent to allowing your application access to the data it is requesting (as defined by your scopes). After authorizing, your application will receive an authorization code.
@@ -203,14 +268,22 @@ The user will be taken through a flow where they are authenticated by VA.gov and
 
 After the user confirms they want to authorize your application to access their data, their browser will be redirected to your application with a request like this:
 
-```http
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
+```plaintext
 GET <yourRedirectURL>?
   code=z92dapo5
   &state=af0ifjsldkj
 Host: <yourRedirectHost>
 ```
 
+</div>
+
 Your application then makes a request to our authorization service using the returned `code` and `state` parameters, along with the `code_verifier` used to create the `code_challenge` in the previous step.
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 POST /oauth2/token HTTP/1.1
@@ -219,9 +292,15 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=authorization_code&code=z92dapo5&state=af0ifjsldkj&redirect_uri=<yourRedirectURL>&code_verifier=ccec_bace_d453_e31c_eb86_2ad1_9a1b_0a89_a584_c068_2c96
 ```
+
+</div>
+
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 The authorization server will respond with an access token. If you requested the `offline_access` scope, you will also receive a `refresh_token`. The response will look like this:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 HTTP/1.1 200 OK
@@ -239,7 +318,12 @@ Pragma: no-cache
 }
 ```
 
+</div>
+
 If an error occurs, you will instead receive a response like this:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 HTTP/1.1 400 Bad Request
@@ -252,9 +336,14 @@ Pragma: no-cache
 }
 ```
 
+</div>
+
 The resulting `access_token` can be used to authorize requests to the VA API Platform by including it in HTTP requests to the Platform by included it in the `Authorization` header as `Authorization: Bearer {access_token}`.
 
 The `refresh_token` can be used to obtain a new `access_token` after its expiry by sending the following request.
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```http
 POST /oauth2/token HTTP/1.1
@@ -263,6 +352,8 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=refresh_token&refresh_token={your refresh_token}&client_id={client_id}&scope={space separated scopes}
 ```
+
+</div>
 
 You will receive the same kind of response as above and be able to use your new `access_token` normally.
 
@@ -368,6 +459,9 @@ Init the Node project
 
 You'll be prompted to answer some questions about your application in order to a generate a `package.json` file. Leaving the default value in place should be generally fine. You should be left with a file that looks like:
 
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
 ```json
 {
   "name": "va-oauth",
@@ -382,7 +476,12 @@ You'll be prompted to answer some questions about your application in order to a
 }
 ```
 
+</div>
+
 Next you'll need to install the dependencies we'll be using for the project:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```
 npm install --save express \
@@ -390,6 +489,8 @@ npm install --save express \
   passport \
   openid-client
 ```
+
+</div>
 
 * Express is a "Fast, unopinionated, minimalist web framework for Node.js". It provides the routing layer and utilities around handling asynchronous HTTP requests for our application
 * Express-sesssion is a middleware for Express that allows us to use HTTP Cookies to store user information without introducing state into our server
@@ -399,6 +500,9 @@ npm install --save express \
 #### Configure the OpenID Client
 
 Open up a file called `index.js` in your editor of choice and add the following:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```JavaScript
 const { Issuer } = require('openid-client');
@@ -420,6 +524,9 @@ const createClient = async () => {
   });
 }
 ```
+
+</div>
+
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
 Congratulations you should be able to run `node index.js` in your terminal and have it exit with no errors. All of the configuration required for OpenID Connect can be handled by the client reading metadata supplied by the VA OAuth authorization server.
@@ -430,6 +537,9 @@ Next you'll need to add some configuration for Express and Passport so they can 
 
 Open `index.js` up again in your preferred editor. Add the following require statements at the top (replacing the existing one):
 
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
 ```JavaScript
 const express = require('express');
 const session = require('express-session');
@@ -437,7 +547,12 @@ const { Issuer, Strategy } = require('openid-client');
 const passport = require('passport');
 ```
 
+</div>
+
 Below your `createClient` function add a new function:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```JavaScript
 const configurePassport = (client) => {
@@ -462,9 +577,14 @@ const configurePassport = (client) => {
 }
 ```
 
+</div>
+
 This creates a new passport strategy that will use OpenID Connect to authenticate users in your application. The `serializeUser` and `deserializeUser` functions are boilerplate, so don't worry about them right now!
 
 Below that, let's add another function `startApp`:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```JavaScript
 const startApp = (client) => {
@@ -481,9 +601,14 @@ const startApp = (client) => {
 }
 ```
 
+</div>
+
 The `startApp` function simply handles configuring passport and express-session, so they can be used from express. the `secret` const should be changed to a random value in production.
 
 Finally let's add a little glue so we can get up and running. At the bottom of the file add:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```JavaScript
 (async () => {
@@ -498,11 +623,16 @@ Finally let's add a little glue so we can get up and running. At the bottom of t
 })();
 ```
 
+</div>
+
 This anonymous function asynchronously retrieves the client information then starts the express server. Now you should be able to run `node index.js` and navigate to `<yourRedirectURL>` in your browser (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration). You should see 'Hello World!' on your screen.
 
 #### Add OpenID authorization
 
 Now, we'll add routes to handle the OpenID authorization. Again in `index.js` in our `startApp` function:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```JavaScript
 app.get('/', (req, res) => res.send('Hello World!')); // already exists
@@ -514,17 +644,27 @@ app.get(
 );
 ```
 
+</div>
+
 And that's all you'll need to do to add VA OAuth to a node application. After starting the app up again with `node index.js` navigate to `<yourRedirectHost>/auth` in your browser (⚠️Be sure to replace `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration). Your browser should then take you through the login flow and return you to a page displaying 'Hello World!'.
 
 #### Add the Veteran Status API Call
 
 Finally, let's add a real call to the Veteran Status API. In the `index.js` file lets add another require statement:
 
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
 ```JavaScript
 const https = require('https');
 ```
 
+</div>
+
 Then above `startApp`:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```JavaScript
 const verifyVeteranStatus = async (req, res, next) => {
@@ -560,12 +700,19 @@ const verifyVeteranStatus = async (req, res, next) => {
 };
 ```
 
+</div>
+
 Finally let's add a new route to the application in `startApp`:
+
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
 
 ```JavaScript
 app.get('/', (req, res) => res.send('Hello World!')); // already exists
 app.get('/status', verifyVeteranStatus);
 ```
+
+</div>
 
 Now, after restarting `node index.js` you can first navigate to `<yourRedirectHost>/auth` in your browser (⚠️Be sure to replace `<yourRedirectHost>` with the host part of the redirect URL that you provided during registration) to login, then navigate to `<yourRedirectHost>/status` to see your Veteran Status.
 
