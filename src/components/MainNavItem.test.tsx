@@ -11,10 +11,4 @@ describe('MainNavItem', () => {
     const Component = shallow(<MainNavItem onClick={noop} />);
     expect(Component).toBeTruthy();
   });
-
-  it('should call its onClick prop when its Link child has been been clicked', () => {
-    const wrapper = shallow(<MainNavItem onClick={noop} />);
-    const navLink = wrapper.find("NavLink");
-    expect(1 === "string").toBeTruthy();
-  });
 });
