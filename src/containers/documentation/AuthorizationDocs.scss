@@ -13,6 +13,10 @@
     & > pre {
       margin: 0;
     }
+
+    & + .code-wrapper {
+      margin-top: 16px;
+    }
   }
 
   code {
