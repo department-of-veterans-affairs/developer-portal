@@ -1,12 +1,11 @@
-import { shallow, mount} from 'enzyme';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { mount, shallow } from 'enzyme';
 import 'jest';
 import * as React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import MainNavItem from './MainNavItem';
 
 const mockProps = {
-  targetUrl: '/mock',
   className: 'mock',
   largeScreenProps: {
     isActive: () => false,
@@ -14,6 +13,7 @@ const mockProps = {
     onMouseLeave: jest.fn(),
   },
   onClick: jest.fn(),
+  targetUrl: '/mock',
 };
 
 describe('MainNavItem', () => {
