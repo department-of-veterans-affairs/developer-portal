@@ -30,7 +30,7 @@ interface INavBarState {
   visibleSubNavs: IVisibleSubNavState;
 }
 
-interface IDocuemntationSubNavProps {
+interface IDocumentationSubNavProps {
   onClose: () => void;
 }
 
