@@ -34,7 +34,7 @@ interface IDocumentationSubNavProps {
   onClose: () => void;
 }
 
-function DocumentationSubNav(props: IDocuemntationSubNavProps) {
+function DocumentationSubNav(props: IDocumentationSubNavProps) {
   const apiDefs = getApiDefinitions();
   const apiCategoryOrder = getApiCategoryOrder();
 
