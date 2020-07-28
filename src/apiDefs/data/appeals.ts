@@ -10,6 +10,7 @@ const appealsApis : IApiDescription[] = [
     description: 'Allows retrieval of all decision review request statuses (both legacy and AMA). Statuses are read only.',
     docSources: [
       {
+        metadataUrl: `${swaggerHost}/services/appeals/appeals_status/metadata`,
         openApiUrl: `${swaggerHost}/services/appeals/docs/v0/api`,
       },
     ],
@@ -24,7 +25,7 @@ const appealsApis : IApiDescription[] = [
     description: 'Allows submission, management, and retrieval of decision review requests and details such as statuses in accordance with the AMA.',
     docSources: [
       {
-        // metadataUrl: ,// metadata endpoint is not yet exposed
+        metadataUrl: `${swaggerHost}/services/appeals/decision_reviews/metadata`,
         openApiUrl: `${swaggerHost}/services/appeals/docs/v1/decision_reviews`,
       },
     ],
