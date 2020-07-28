@@ -7,7 +7,7 @@ import { IApiDescription } from '../schema';
 const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
 const appealsApis : IApiDescription[] = [
   {
-    description: 'Track appeals',
+    description: 'Allows retrieval of all decision review request statuses (both legacy and AMA). Statuses are read only.',
     docSources: [
       {
         metadataUrl: `${swaggerHost}/services/appeals/appeals_status/metadata`,
@@ -22,7 +22,7 @@ const appealsApis : IApiDescription[] = [
     vaInternalOnly: true,
   },
   {
-    description: 'The Decision Reviews API allows you to interact with a Veteran’s Decision Review requests, also known as benefit appeals.',
+    description: 'Allows submission, management, and retrieval of decision review requests and details such as statuses in accordance with the AMA.',
     docSources: [
       {
         metadataUrl: `${swaggerHost}/services/appeals/decision_reviews/metadata`,
