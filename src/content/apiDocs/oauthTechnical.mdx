@@ -203,7 +203,10 @@ Clients may only revoke their own tokens.
 
 A user will only be prompted once to consent to each client's use of their data, and the grants will remain in effect unless revoked. Revoke grants for a specified user and client in the Sandbox environment with the following endpoint:
 
-```HTTP
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
+```http
 DELETE /oauth2/grants HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
@@ -213,10 +216,15 @@ Content-Type: application/x-www-form-urlencoded
 	"email": {test account email}
 }
 ```
- 
+
+</div>
+
 The user's email address (test account email) and application client ID (client_id) must be passed into the body of the request. Bad requests will be returned with an error response and description of the error.
 
-```HTTP
+<div class="code-wrapper">
+  <span class="sr-only">Ensure your screenreader verbosity is set to high for code snippets</span>
+
+```http
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
 Cache-Control: no-store
@@ -227,6 +235,8 @@ Pragma: no-cache
   "error_description": "Invalid email address."
 }
 ```
+
+</div>
 
 **Note:** This endpoint is not available in the Production environment and excludes identity provider grants. 
 
