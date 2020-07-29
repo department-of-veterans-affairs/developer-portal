@@ -30,6 +30,9 @@ Example:
 All release notes in the file should be separated by a horizontal rule (`---`). There
 shouldn't be one after the final note.
 
+If there are multiple release notes on the same day that appear on the same release notes page (even if they span multiple
+markdown files) you must add a custom ID to one to prevent duplicate IDs. Example `{#february-13%2C-2019-2}`
+
 ## Finding Release History
 
 This will hopefully not need to be done going forward, but this is how I found additional content for release notes for the Facility API
