@@ -306,8 +306,26 @@ module.exports = envName => {
                   options: {
                     enabledMarkdownItRules: ['smartquotes', 'table'],
                     markdownItPlugins: [
-                      [require('markdown-it-attrs')],
-                      [require('markdown-it-anchor'), { level: 2 }],
+                      [
+                        require('markdown-it-attrs'),
+                        {
+                          allowedAttributes: ['id'],
+                        },
+                      ],
+                      [
+                        require('markdown-it-anchor'),
+                        {
+                          level: 2,
+                          slugify: s =>
+                            encodeURIComponent(
+                              String(s)
+                                .trim()
+                                .toLowerCase()
+                                .replace(',', '')
+                                .replace(/\s+/g, '-'),
+                            ),
+                        },
+                      ],
                     ],
                   },
                 },

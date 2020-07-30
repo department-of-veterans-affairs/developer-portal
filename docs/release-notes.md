@@ -20,6 +20,7 @@ This interactive page lets you see how the markdown syntax in `mdx` files are co
 ```
 
 Example:
+
 ```
 ### **February 13, 2019** | v0.0.0.307
 
@@ -31,14 +32,16 @@ All release notes in the file should be separated by a horizontal rule (`---`). 
 shouldn't be one after the final note.
 
 If there are multiple release notes on the same day that appear on the same release notes page (even if they span multiple
-markdown files) you must add a custom ID to one to prevent duplicate IDs. Example `{#february-13%2C-2019-2}`
+markdown files) you must add a custom ID to one to prevent duplicate IDs. Example `{#[date]-[apiIdentifier]}`
+
+Using the aXe plugin ([Chrome](https://chrome.google.com/webstore/detail/axe-web-accessibility-tes/lhdoppojpmngadmnindnejefpokejbdd), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/axe-devtools/)) after adding any release notes will alert you to any duplicates that need to be manually addressed with custom IDs.
 
 ## Finding Release History
 
 This will hopefully not need to be done going forward, but this is how I found additional content for release notes for the Facility API
 
 1. Go to `vets-api` repo
-2. Search for "facilities" 
+2. Search for "facilities"
 3. Look at the results for commits ([example](https://github.com/department-of-veterans-affairs/vets-api/search?q=facilities&type=Commits))
 4. Copy and massage the PR text
 5. Look through the daily releases to get the release version and date of a PR ([example](https://github.com/department-of-veterans-affairs/vets-api/tags?after=vets-api%2Fv0.0.256)).
