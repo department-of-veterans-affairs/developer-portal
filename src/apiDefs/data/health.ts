@@ -90,7 +90,8 @@ const healthApis : IApiDescription[] = [
     oAuth: true,
     releaseNotes: FhirApiReleaseNotes,
     tabBlurb: 
-      "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
+      "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations. 
+      Data entered through the production environment Veterans Health API is held in the original data source for 36 hours before it is visible elsewhere, including in any patient-facing applications. This holding period exists to allow health care providers time to discuss health data, such as sensitive diagnoses, before the patient sees this data elsewhere.",
     trustedPartnerOnly: false,
     urlFragment: 'fhir',
     vaInternalOnly: false,
