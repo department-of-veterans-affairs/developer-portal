@@ -42,7 +42,7 @@
       border: 1px solid $color-gray;
     }
 
-    & > span {
+    > span {
       pointer-events: none;
     }
   }
@@ -56,15 +56,5 @@
 
   td ul {
     border: none;
-  }
-}
-
-.code-wrapper {
-  overflow-x: scroll;
-
-  & > pre {
-    margin: 0;
-    pointer-events: none;
-    overflow: visible;
   }
 }

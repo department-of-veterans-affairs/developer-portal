@@ -72,14 +72,14 @@ a {
   transition: none;
 
   &:hover {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
   }
 }
 
 *:focus,
 a:focus,
 .usa-focus,
-[type=checkbox]:focus + label::before {
+[type='checkbox']:focus + label::before {
   @include focus-outline;
 }
 
@@ -95,4 +95,14 @@ input:focus::placeholder {
   margin-block-end: 0.83em;
   margin-inline-start: 0px;
   margin-inline-end: 20px;
+}
+
+.code-wrapper {
+  overflow-x: scroll;
+
+  & > pre {
+    margin: 0;
+    pointer-events: none;
+    overflow: visible;
+  }
 }
