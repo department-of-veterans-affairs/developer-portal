@@ -93,7 +93,7 @@ export default class Header extends React.Component<{}, IHeaderState> {
               </button>
             </div>
           </div>
-          <NavBar isMobileMenuVisible={this.state.mobileNavVisible} onClose={navBarCloseHandler} />
+          <NavBar isMobileMenuVisible={this.state.mobileNavVisible} onMobileNavClose={navBarCloseHandler} />
         </header>
       </React.Fragment>
     );

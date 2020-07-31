@@ -18,7 +18,7 @@ import './NavBar.scss';
 
 interface INavBarProps {
   isMobileMenuVisible: boolean;
-  onClose: () => void;
+  onMobileNavClose: () => void;
 }
 
 interface IVisibleSubNavState {
@@ -30,7 +30,11 @@ interface INavBarState {
   visibleSubNavs: IVisibleSubNavState;
 }
 
-function DocumentationSubNav() {
+interface IDocumentationSubNavProps {
+  onMobileNavClose: () => void;
+}
+
+function DocumentationSubNav(props: IDocumentationSubNavProps) {
   const apiDefs = getApiDefinitions();
   const apiCategoryOrder = getApiCategoryOrder();
 
@@ -51,15 +55,15 @@ function DocumentationSubNav() {
   return (
     <ul className={classNames('va-api-sub-nav', 'vads-u-margin-y--0', 'vads-u-padding-left--0')}>
       <li key="all" className={itemStyles}>
-        <NavLink exact={true} to="/explore" className={linkStyles} activeClassName="va-api-active-sub-nav">
+        <NavLink onClick={props.onMobileNavClose} exact={true} to="/explore" className={linkStyles} activeClassName="va-api-active-sub-nav">
           Overview
         </NavLink>
       </li>
       {apiCategoryOrder.map(apiKey => {
         return (
-          <Flag name={`categories.${apiKey}`} key={apiKey}>
+          <Flag  name={`categories.${apiKey}`} key={apiKey}>
             <li className={itemStyles}>
-              <NavLink to={`/explore/${apiKey}`} className={linkStyles} activeClassName="vads-u-font-weight--bold">
+              <NavLink to={`/explore/${apiKey}`} onClick={props.onMobileNavClose} className={linkStyles} activeClassName="vads-u-font-weight--bold">
                 {apiDefs[apiKey].name}
               </NavLink>
             </li>
@@ -79,7 +83,7 @@ const navItemStyles = (isFirstChild: boolean = false) => classNames(
   'medium-screen:vads-u-padding-y--0',
   !isFirstChild && ['vads-u-border-top--1px', 'vads-u-border-color--gray-lighter', 'medium-screen:vads-u-border-top--0'],
   );
-  
+
 const navLinkStyles = classNames(
   'vads-u-color--gray-dark',
   'vads-u-display--block',
@@ -126,7 +130,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           'medium-screen:vads-u-display--flex',
         )}>
           <div className={mobileOnly()}>
-            <button 
+            <button
               className={classNames(
                 'va-api-mobile-nav-close',
                 'vads-u-display--block',
@@ -134,11 +138,11 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
                 'vads-u-margin-right--neg1',
                 'vads-u-margin-bottom--2',
                 'vads-u-padding--0',
-              )} 
-              onClick={this.props.onClose}
+              )}
+              onClick={this.props.onMobileNavClose}
             >
-              <img 
-                src={closeButton} alt="Close button" 
+              <img
+                src={closeButton} alt="Close button"
                 className={classNames('vads-u-color--gray-dark', 'vads-u-max-width--none')} />
             </button>
             <Search inMenu={true} className={classNames('vads-u-margin-y--2', 'vads-u-padding-y--0', 'vads-u-width--full')} />
@@ -149,18 +153,18 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
             'medium-screen:vads-u-display--inline',
           )}>
             <li className={navItemStyles(true)}>
-              <MainNavItem 
-                targetUrl="/explore" 
-                largeScreenProps={sharedNavItemProps} 
+              <MainNavItem
+                targetUrl="/explore"
+                largeScreenProps={sharedNavItemProps}
                 excludeSmallScreen={true}
                 className={navLinkStyles}
               >
                 Documentation
               </MainNavItem>
               <div className={mobileOnly()}>
-                <button 
+                <button
                   className={classNames(
-                    'va-api-nav-button', 
+                    'va-api-nav-button',
                     navLinkStyles,
                     'vads-u-display--flex',
                     'vads-u-flex-wrap--nowrap',
@@ -176,21 +180,21 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
                   <img src={this.state.visibleSubNavs.documentation ? minusIcon : plusIcon}
                     alt="Expand Documentation" aria-label="Expand Documentation" className="va-api-expand-nav-icon" />
                 </button>
-                {this.state.visibleSubNavs.documentation && <DocumentationSubNav />}
+                {this.state.visibleSubNavs.documentation && <DocumentationSubNav onMobileNavClose={this.props.onMobileNavClose} />}
               </div>
             </li>
             <li className={navItemStyles()}>
-              <MainNavItem targetUrl="/news" largeScreenProps={sharedNavItemProps} className={navLinkStyles}>
+              <MainNavItem onClick={this.props.onMobileNavClose} targetUrl="/news" largeScreenProps={sharedNavItemProps} className={navLinkStyles}>
                 News
               </MainNavItem>
             </li>
             <li className={navItemStyles()}>
-              <MainNavItem targetUrl="/release-notes" largeScreenProps={sharedNavItemProps} className={navLinkStyles}>
+              <MainNavItem onClick={this.props.onMobileNavClose} targetUrl="/release-notes" largeScreenProps={sharedNavItemProps} className={navLinkStyles}>
                 Release Notes
               </MainNavItem>
             </li>
             <li className={navItemStyles()}>
-              <MainNavItem targetUrl="/support" largeScreenProps={sharedNavItemProps} className={navLinkStyles}>
+              <MainNavItem onClick={this.props.onMobileNavClose} targetUrl="/support" largeScreenProps={sharedNavItemProps} className={navLinkStyles}>
                 Support
               </MainNavItem>
             </li>
@@ -210,7 +214,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
           )} href="https://valighthouse.statuspage.io">API Status <FontAwesomeIcon icon={faExternalLinkAlt} /></a>
           <div className={mobileOnly()}>
             <div className={classNames("va-api-nav-secondary", "vads-u-margin-y--2")}>
-              <Link to="/apply" className={classNames("usa-button", "vads-u-width--full")}>Request an API Key</Link>
+              <Link onClick={this.props.onMobileNavClose} to="/apply" className={classNames("usa-button", "vads-u-width--full")}>Request an API Key</Link>
             </div>
           </div>
         </div>
