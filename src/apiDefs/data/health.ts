@@ -7,20 +7,20 @@
   used in all developer portal environments for health documentation.
 */
 
-import * as moment from 'moment';
+// import * as moment from 'moment';
 import {
-  ArgonautReleaseNotes,
+  // ArgonautReleaseNotes,
   CommunityCareApiIntro,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
-  HealthArgonautDeactivationNotice,
-  HealthArgonautDeprecationNotice,
-  UrgentCareApiIntro,
-  UrgentCareDeactivationNotice,
-  UrgentCareDeprecationNotice,
-  UrgentCareReleaseNotes,
+  // HealthArgonautDeactivationNotice,
+  // HealthArgonautDeprecationNotice,
+  // UrgentCareApiIntro,
+  // UrgentCareDeactivationNotice,
+  // UrgentCareDeprecationNotice,
+  // UrgentCareReleaseNotes,
 } from '../../content/apiDocs/health';
 import { IApiDescription } from "../schema";
 
@@ -40,28 +40,6 @@ const healthApis : IApiDescription[] = [
     releaseNotes: CommunityCareReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'community_care',
-    vaInternalOnly: false,
-  },
-  {
-    deactivationInfo: {
-      deactivationContent: UrgentCareDeactivationNotice,
-      deactivationDate: moment('20 Jul 2020 00:00 EDT'),
-      deprecationContent: UrgentCareDeprecationNotice,
-      deprecationDate: moment('13 Jul 2020 00:00 EDT'),
-    },
-    description: "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
-    docSources: [
-      {
-        apiIntro: UrgentCareApiIntro,
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
-      },
-    ],
-    enabledByDefault: true,
-    name: 'Urgent Care Eligibility API (FHIR)',
-    oAuth: true,
-    releaseNotes: UrgentCareReleaseNotes,
-    trustedPartnerOnly: false,
-    urlFragment: 'urgent_care',
     vaInternalOnly: false,
   },
   {
@@ -89,32 +67,10 @@ const healthApis : IApiDescription[] = [
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
     releaseNotes: FhirApiReleaseNotes,
-    tabBlurb: 
+    tabBlurb:
       "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
     trustedPartnerOnly: false,
     urlFragment: 'fhir',
-    vaInternalOnly: false,
-  },
-  {
-    deactivationInfo: {
-      deactivationContent: HealthArgonautDeactivationNotice,
-      // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
-      deactivationDate: moment('01 Oct 2019 00:00 EDT'),
-      deprecationContent: HealthArgonautDeprecationNotice,
-      deprecationDate: moment('15 Sep 2019 00:00 EDT'),
-    },
-    description: 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.',
-    docSources: [
-      {
-        openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
-      },
-    ],
-    enabledByDefault: true,
-    name: 'Veterans Health API (Legacy)',
-    oAuth: true,
-    releaseNotes: ArgonautReleaseNotes,
-    trustedPartnerOnly: false,
-    urlFragment: 'argonaut',
     vaInternalOnly: false,
   },
 ];
