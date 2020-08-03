@@ -96,13 +96,3 @@ input:focus::placeholder {
   margin-inline-start: 0px;
   margin-inline-end: 20px;
 }
-
-.code-wrapper {
-  overflow-x: scroll;
-
-  & > pre {
-    margin: 0;
-    pointer-events: none;
-    overflow: visible;
-  }
-}
