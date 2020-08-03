@@ -1,13 +1,13 @@
 /*
-  This module defines Lighthouse developer portal-specific color variables to supplement the ones 
+  This module defines Lighthouse developer portal-specific color variables to supplement the ones
   provided by VADS. Please always prefer VADS color definitions over custom ones; see the VADS resources
-  below to check if the color you need is already available or if a similar one can be used instead. 
+  below to check if the color you need is already available or if a similar one can be used instead.
   Please also note that all variables in this file are namespaced with the `va-api-` prefix in order to
   distinguish developer portal vars from VADS ones, and that this convention should be followed for any new
   variables defined here.
 
   VADS color resources
-  - Documentation for color utilities, which corresponds pretty directly to the available vars: 
+  - Documentation for color utilities, which corresponds pretty directly to the available vars:
     https://design.va.gov/utilities/color
   - Source file for color vars:
     https://github.com/department-of-veterans-affairs/veteran-facing-services-tools/blob/master/packages/formation/sass/base/_b-variables.scss
