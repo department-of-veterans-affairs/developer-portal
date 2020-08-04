@@ -7,20 +7,16 @@
   used in all developer portal environments for health documentation.
 */
 
-// import * as moment from 'moment';
+import * as moment from 'moment';
 import {
-  // ArgonautReleaseNotes,
+  ArgonautReleaseNotes,
   CommunityCareApiIntro,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
-  // HealthArgonautDeactivationNotice,
-  // HealthArgonautDeprecationNotice,
-  // UrgentCareApiIntro,
-  // UrgentCareDeactivationNotice,
-  // UrgentCareDeprecationNotice,
-  // UrgentCareReleaseNotes,
+  HealthArgonautDeactivationNotice,
+  HealthArgonautDeprecationNotice,
 } from '../../content/apiDocs/health';
 import { IApiDescription } from "../schema";
 
@@ -71,6 +67,28 @@ const healthApis : IApiDescription[] = [
       "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations.",
     trustedPartnerOnly: false,
     urlFragment: 'fhir',
+    vaInternalOnly: false,
+  },
+  {
+    deactivationInfo: {
+      deactivationContent: HealthArgonautDeactivationNotice,
+      // see the RFC 2822 date format section here: https://momentjs.com/docs/#/parsing/string-format/
+      deactivationDate: moment('01 Oct 2019 00:00 EDT'),
+      deprecationContent: HealthArgonautDeprecationNotice,
+      deprecationDate: moment('15 Sep 2019 00:00 EDT'),
+    },
+    description: 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.',
+    docSources: [
+      {
+        openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
+      },
+    ],
+    enabledByDefault: true,
+    name: 'Veterans Health API (Legacy)',
+    oAuth: true,
+    releaseNotes: ArgonautReleaseNotes,
+    trustedPartnerOnly: false,
+    urlFragment: 'argonaut',
     vaInternalOnly: false,
   },
 ];

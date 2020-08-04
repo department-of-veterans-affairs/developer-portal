@@ -55,6 +55,7 @@ class App extends React.Component {
 
     return {
       categories: apiCategories,
+      deactivated_apis: deactivatedFlags,
       enabled: envFlags,
       hosted_apis: apiFlags,
       show_testing_notice: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',

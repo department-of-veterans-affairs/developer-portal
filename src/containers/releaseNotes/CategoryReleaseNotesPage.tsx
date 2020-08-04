@@ -1,3 +1,4 @@
+import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import * as React from 'react';
 
 import classNames from 'classnames';
@@ -12,10 +13,12 @@ import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
-const ApiReleaseNote = ({ api }: { api: IApiDescription }) => {
+const ApiReleaseNote = ({ api, apiCategoryKey }: { api: IApiDescription, apiCategoryKey: string }) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
+
+  const flagName = apiCategoryKey === 'deactivated' ? `deactivated_apis.${api.urlFragment}` : `hosted_apis.${api.urlFragment}`;
   return (
-    <Flag name={`hosted_apis.${api.urlFragment}`}>
+    <Flag name={flagName}>
       <div id={dashUrlFragment}>
         <h2>{api.name}</h2>
         {api.releaseNotes({})}
@@ -39,8 +42,9 @@ export default class CategoryReleaseNotesPage extends React.Component<
         const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
         const dashUrlFragment = urlFragment.replace('_', '-');
 
+        const flagName = apiCategoryKey === 'deactivated' ? `deactivated_apis.${urlFragment}` : `hosted_apis.${urlFragment}`;
         return (
-          <Flag key={name} name={`hosted_apis.${urlFragment}`}>
+          <Flag key={name} name={flagName}>
             <CardLink
               name={name}
               subhead={
@@ -75,10 +79,34 @@ export default class CategoryReleaseNotesPage extends React.Component<
         {cardSection}
         <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
           {apis.map(api => (
-            <ApiReleaseNote key={api.urlFragment} api={api} />
+            <React.Fragment>
+              {this.renderDeactivatedNotice(api)}
+              <ApiReleaseNote
+                apiCategoryKey={apiCategoryKey}
+                key={api.urlFragment}
+                api={api}
+              />
+            </React.Fragment>
           ))}
         </div>
       </section>
     );
+  }
+
+  private renderDeactivatedNotice(api: IApiDescription) {
+    const { deactivationInfo } = api;
+
+    if (deactivationInfo) {
+      const NoticeComponent = deactivationInfo.deactivationContent;
+      return (
+        <AlertBox
+          headline="Deactivated API"
+          status="info"
+        >
+          <NoticeComponent />
+        </AlertBox>
+      );
+    }
+    return null;
   }
 }

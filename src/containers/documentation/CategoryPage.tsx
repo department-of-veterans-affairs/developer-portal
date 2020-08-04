@@ -26,8 +26,10 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
     if (apis.length > 0) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
+
+        const flagName = apiCategoryKey === 'deactivated' ? `deactivated_apis.${urlFragment}` : `hosted_apis.${urlFragment}`;
         return (
-          <Flag key={name} name={`hosted_apis.${urlFragment}`}>
+          <Flag key={name} name={flagName}>
             <CardLink
               name={name}
               subhead={
