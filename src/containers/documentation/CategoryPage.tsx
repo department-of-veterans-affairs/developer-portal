@@ -47,7 +47,7 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
         );
       });
 
-      const authCard = apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API'  ? <AuthorizationCard categoryKey={apiCategoryKey} /> : null;
+      const authCard = apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' && apiCategoryKey !== 'deactivated' ? <AuthorizationCard categoryKey={apiCategoryKey} /> : null;
 
       cardSection = (
         <div role="navigation" aria-labelledby={headerId}>
