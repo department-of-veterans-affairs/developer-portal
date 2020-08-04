@@ -7,15 +7,15 @@ import NavBar from './NavBar';
 
 describe('NavBar', () => {
   it('should render the navbar', () => {
-    const documentation = shallow(<NavBar isMobileMenuVisible={true} onClose={noop} />).contains('Documentation');
+    const documentation = shallow(<NavBar isMobileMenuVisible={true} onMobileNavClose={noop} />).contains('Documentation');
     expect(documentation).toBeTruthy();
   });
 
   it('should use "va-api-mobile-nav-visible" when isMobileMenuVisible is true', () => {
-    let result = shallow(<NavBar isMobileMenuVisible={false} onClose={noop} />);
+    let result = shallow(<NavBar isMobileMenuVisible={false} onMobileNavClose={noop} />);
     expect(result.find('nav').hasClass('va-api-mobile-nav-visible')).toBeFalsy();
-    
-    result = shallow(<NavBar isMobileMenuVisible={true} onClose={noop} />);
+
+    result = shallow(<NavBar isMobileMenuVisible={true} onMobileNavClose={noop} />);
     expect(result.find('nav').hasClass('va-api-mobile-nav-visible')).toBeTruthy();
   });
 });

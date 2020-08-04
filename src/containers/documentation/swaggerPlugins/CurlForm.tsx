@@ -206,6 +206,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
           <h3> API Key: </h3>
           <div>
             <input
+              aria-label="Enter API Key"
               value={this.state.apiKey}
               onChange={e => {
                 this.handleInputChange('apiKey', e.target.value);
@@ -223,6 +224,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
           <h3> Bearer Token: </h3>
           <div>
             <input
+              aria-label="Enter Bearer Token"
               value={this.state.bearerToken}
               onChange={e => {
                 this.handleInputChange('bearerToken', e.target.value);

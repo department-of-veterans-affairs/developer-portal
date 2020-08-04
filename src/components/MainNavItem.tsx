@@ -17,12 +17,14 @@ interface IMainNavItemProps {
   excludeSmallScreen: boolean;
   targetUrl: string;
   largeScreenProps: ILargeScreenNavItemProps;
+  onClick: () => void;
 }
 
 export default class MainNavItem extends React.PureComponent<IMainNavItemProps> {
   public static defaultProps = {
     excludeLargeScreen: false,
     excludeSmallScreen: false,
+    onClick: null,
   };
 
   public render() {
@@ -31,7 +33,7 @@ export default class MainNavItem extends React.PureComponent<IMainNavItemProps> 
       className: classNames('va-api-nav-link', this.props.className),
       to: this.props.targetUrl,
     };
-  
+
     return (
       <React.Fragment>
         {!this.props.excludeLargeScreen &&
@@ -43,7 +45,7 @@ export default class MainNavItem extends React.PureComponent<IMainNavItemProps> 
         }
         {!this.props.excludeSmallScreen &&
           <div className={mobileOnly()}>
-            <NavLink {... sharedProps}>
+            <NavLink onClick={this.props.onClick} {... sharedProps}>
               {this.props.children}
             </NavLink>
           </div>
