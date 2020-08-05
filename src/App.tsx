@@ -26,12 +26,12 @@ class App extends React.Component {
     return (
       <FlagsProvider flags={appFlags}>
         <ConnectedRouter history={history}>
-          <div className="vads-u-display--flex">
+          <div className='vads-u-display--flex'>
             <div className={classNames(
-              "vads-u-display--flex",
-              "vads-u-flex-direction--column",
-              "vads-u-min-height--viewport",
-              "vads-u-width--full",
+              'vads-u-display--flex',
+              'vads-u-flex-direction--column',
+              'vads-u-min-height--viewport',
+              'vads-u-width--full',
             )}>
               <Header />
               <Route path="/" component={PageContent} />
@@ -55,7 +55,7 @@ class App extends React.Component {
 
     return {
       categories: apiCategories,
-      deactivated_apis: deactivatedFlags,
+      deactivatedApis: deactivatedFlags,
       enabled: envFlags,
       hosted_apis: apiFlags,
       show_testing_notice: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
