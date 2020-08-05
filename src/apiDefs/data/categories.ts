@@ -1,6 +1,5 @@
 import { appealsContent } from '../../content/apiDocs/appeals';
 import { benefitsContent } from '../../content/apiDocs/benefits';
-import { deactivatedContent } from '../../content/apiDocs/deactivated';
 import { facilitiesContent } from '../../content/apiDocs/facilities';
 import { healthContent } from '../../content/apiDocs/health';
 import { vaFormsContent } from '../../content/apiDocs/vaForms';
@@ -10,7 +9,6 @@ import { verificationContent } from '../../content/apiDocs/verification';
 import { IApiCategories } from '../schema';
 import appealsApis from './appeals';
 import benefitsApis from './benefits';
-import deactivatedApis from './deactivated';
 import facilitiesApis from './facilities';
 import healthApis from './health';
 import vaForms from './vaForms';
@@ -30,13 +28,6 @@ const apiDefinitions: IApiCategories = {
     content: benefitsContent,
     name: 'Benefits API',
     properName: 'Benefits Intake API',
-  },
-  deactivated: {
-    apis: deactivatedApis,
-    buttonText: 'Deactivated APIs',
-    content: deactivatedContent,
-    name: 'Deactivated APIs',
-    properName: 'Deactivated APIs',
   },
   facilities: {
     apis: facilitiesApis,
@@ -75,6 +66,5 @@ export const apiCategoryOrder: string[] = [
   'vaForms',
   'health',
   'verification',
-  'deactivated',
 ];
 export default apiDefinitions;
