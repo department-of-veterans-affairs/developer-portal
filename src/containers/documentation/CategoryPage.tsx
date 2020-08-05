@@ -27,9 +27,8 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
 
-        const flagName = apiCategoryKey === 'deactivated' ? `deactivated_apis.${urlFragment}` : `hosted_apis.${urlFragment}`;
         return (
-          <Flag key={name} name={flagName}>
+          <Flag key={name} name={`hosted_apis.${urlFragment}`}>
             <CardLink
               name={name}
               subhead={
@@ -47,7 +46,7 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
         );
       });
 
-      const authCard = apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' && apiCategoryKey !== 'deactivated' ? <AuthorizationCard categoryKey={apiCategoryKey} /> : null;
+      const authCard = apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' ? <AuthorizationCard categoryKey={apiCategoryKey} /> : null;
 
       cardSection = (
         <div role="navigation" aria-labelledby={headerId}>
