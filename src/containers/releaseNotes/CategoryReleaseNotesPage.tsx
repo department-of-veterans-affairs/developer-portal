@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 
+import { getDeactivatedCategory } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { IApiDescription } from '../../apiDefs/schema';
 import CardLink from '../../components/CardLink';
@@ -16,9 +17,27 @@ import { IApiNameParam } from '../../types';
 const ApiReleaseNote = ({ api, apiCategoryKey }: { api: IApiDescription, apiCategoryKey: string }) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
 
+  const renderDeactivatedNotice = () => {
+    const { deactivationInfo } = api;
+
+    if (deactivationInfo) {
+      const NoticeComponent = deactivationInfo.deactivationContent;
+      return (
+        <AlertBox
+          headline="Deactivated API"
+          status="info"
+        >
+          <NoticeComponent />
+        </AlertBox>
+      );
+    }
+    return null;
+  };
+
   const flagName = apiCategoryKey === 'deactivated' ? `deactivated_apis.${api.urlFragment}` : `hosted_apis.${api.urlFragment}`;
   return (
     <Flag name={flagName}>
+      {renderDeactivatedNotice()}
       <div id={dashUrlFragment}>
         <h2>{api.name}</h2>
         {api.releaseNotes({})}
@@ -32,9 +51,12 @@ export default class CategoryReleaseNotesPage extends React.Component<
   RouteComponentProps<IApiNameParam>
 > {
   public render() {
-    const apiDefs = getApiDefinitions();
     const { apiCategoryKey } = this.props.match.params;
-    const { apis } = apiDefs[apiCategoryKey];
+
+    const isDeactivatedPage = apiCategoryKey === 'deactivated';
+
+    const apiDefs = isDeactivatedPage ? getDeactivatedCategory() : getApiDefinitions();
+    const { apis, name: categoryName } = apiDefs[apiCategoryKey];
 
     let cardSection;
     if (apis.length > 1) {
@@ -42,7 +64,7 @@ export default class CategoryReleaseNotesPage extends React.Component<
         const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
         const dashUrlFragment = urlFragment.replace('_', '-');
 
-        const flagName = apiCategoryKey === 'deactivated' ? `deactivated_apis.${urlFragment}` : `hosted_apis.${urlFragment}`;
+        const flagName = isDeactivatedPage ? `deactivated_apis.${urlFragment}` : `hosted_apis.${urlFragment}`;
         return (
           <Flag key={name} name={flagName}>
             <CardLink
@@ -72,15 +94,14 @@ export default class CategoryReleaseNotesPage extends React.Component<
     return (
       <section role="region" aria-labelledby={`${apiCategoryKey}-release-notes`}>
         <PageHeader
-          halo={apiDefs[apiCategoryKey].name}
+          halo={categoryName}
           header="Release Notes"
           id={`${apiCategoryKey}-release-notes`}
         />
         {cardSection}
         <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-          {apis.map(api => (
+          {apis.map((api: IApiDescription) => (
             <React.Fragment>
-              {this.renderDeactivatedNotice(api)}
               <ApiReleaseNote
                 apiCategoryKey={apiCategoryKey}
                 key={api.urlFragment}
@@ -91,22 +112,5 @@ export default class CategoryReleaseNotesPage extends React.Component<
         </div>
       </section>
     );
-  }
-
-  private renderDeactivatedNotice(api: IApiDescription) {
-    const { deactivationInfo } = api;
-
-    if (deactivationInfo) {
-      const NoticeComponent = deactivationInfo.deactivationContent;
-      return (
-        <AlertBox
-          headline="Deactivated API"
-          status="info"
-        >
-          <NoticeComponent />
-        </AlertBox>
-      );
-    }
-    return null;
   }
 }

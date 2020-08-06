@@ -31,3 +31,12 @@ export const getDeactivatedFlags = () => {
     return flags;
   }, {});
 };
+
+export const getDeactivatedCategory = () => ({
+  deactivated: {
+    apis: getAllApis().filter((api: IApiDescription) => isApiDeprecated(api)),
+    buttonText: 'Deactivated APIs',
+    name: 'Deactivated APIs',
+    properName: 'deactivated',
+  },
+});

@@ -5,8 +5,12 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
 
+import { getDeactivatedCategory } from "../../apiDefs/deprecated";
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
+import {
+  IApiBaseCategory,
+  IApiDescription,
+} from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
 import CategoryReleaseNotesPage from './CategoryReleaseNotesPage';
@@ -43,7 +47,7 @@ function SideNavApiEntry(api: IApiDescription) {
   );
 }
 
-function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory) {
+function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiBaseCategory) {
   const subNavLinks = () => {
     return apiCategory.apis.map(api => {
       if (apiCategory.apis.length > 1) {
@@ -54,11 +58,19 @@ function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiCategory)
     });
   };
 
+  const sideNavEntry = (
+    <SideNavEntry to={`/release-notes/${apiCategoryKey}`} name={apiCategory.name}>
+      {subNavLinks()}
+    </SideNavEntry>
+  );
+
+  if (apiCategoryKey === 'deactivated') {
+    return sideNavEntry;
+  }
+
   return (
     <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
-      <SideNavEntry to={`/release-notes/${apiCategoryKey}`} name={apiCategory.name}>
-        {subNavLinks()}
-      </SideNavEntry>
+      {sideNavEntry}
     </Flag>
   );
 }
@@ -67,6 +79,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
   public render() {
     const categoryOrder = getApiCategoryOrder();
     const apiDefs = getApiDefinitions();
+    const { deactivated: deactivatedApis } = getDeactivatedCategory();
     return (
       <div className={classNames('vads-u-padding-y--5')}>
         <section>
@@ -75,6 +88,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
               <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
                 <SideNavEntry key="all" exact={true} to="/release-notes" name="Overview" />
                 {categoryOrder.map((key: string) => SideNavCategoryEntry(key, apiDefs[key]))}
+                {SideNavCategoryEntry('deactivated', deactivatedApis)}
               </SideNav>
               <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
                 <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
