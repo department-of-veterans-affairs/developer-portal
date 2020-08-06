@@ -252,7 +252,7 @@ grant_type=authorization_code&code=z92dapo5&state=af0ifjsldkj&redirect_uri=<your
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
-The authorization server will respond with an access token. Since the PKCE flow is typically used by applications that cannot safely store information, using the `offline_access` scope is not recommended. Silent authentication can be used to retrieve a new `access_token` safely. A new authentication request can be made using the `none` prompt like this:
+The authorization server will respond with an access token. If you requested the `offline_access` scope, you will also receive a `refresh_token`. The response will look like this:
 
 ```http
 HTTP/1.1 200 OK
@@ -264,20 +264,38 @@ Pragma: no-cache
   "access_token": "SlAV32hkKG",
   "expires_in": 3600,
   "refresh_token": "8xLOxBtZp8",
-  "scope": "openid profile email",
-  "prompt": "none",
-  "patient": "1558538470",
+  "scope": "openid profile email offline_access",
   "state": "af0ifjsldkj",
   "token_type": "Bearer",
 }
 ```
 
-If the user's session is inactive or there are claims that have not consented to, the redirect will contain one of the following errors: `login_required` or `consent_required`.
+If an error occurs, you will instead receive a response like this:
 
 ```http
-GET /redirect?state={state}&error=login_required&error_description=The+client+specified+not+to+prompt%2C+but+the+user+is+not+logged+in. HTTP/1.1
-Host: sandbox-api.va.gov
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+Cache-Control: no-store
+Pragma: no-cache
+
+{
+  "error": "invalid_request"
+}
 ```
+
+The resulting `access_token` can be used to authorize requests to the VA API Platform by including it in HTTP requests to the Platform by included it in the `Authorization` header as `Authorization: Bearer {access_token}`.
+
+The `refresh_token` can be used to obtain a new `access_token` after its expiry by sending the following request.
+
+```http
+POST /oauth2/token HTTP/1.1
+Host: sandbox-api.va.gov
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=refresh_token&refresh_token={your refresh_token}&client_id={client_id}&scope={space separated scopes}
+```
+
+You will receive the same kind of response as above and be able to use your new `access_token` normally.
 
 ## Scopes
 
