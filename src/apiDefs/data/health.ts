@@ -15,6 +15,7 @@ import {
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
   FhirDSTU2ApiIntro,
+  FHIRMultiOpenAPIIntro,
   HealthArgonautDeactivationNotice,
   HealthArgonautDeprecationNotice,
   UrgentCareApiIntro,
@@ -22,12 +23,13 @@ import {
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
 } from '../../content/apiDocs/health';
-import { IApiDescription } from "../schema";
+import { IApiDescription } from '../schema';
 
-const swaggerHost : string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
-const healthApis : IApiDescription[] = [
+const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
+const healthApis: IApiDescription[] = [
   {
-    description: "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
+    description:
+      "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
       {
         apiIntro: CommunityCareApiIntro,
@@ -49,7 +51,8 @@ const healthApis : IApiDescription[] = [
       deprecationContent: UrgentCareDeprecationNotice,
       deprecationDate: moment('13 Jul 2020 00:00 EDT'),
     },
-    description: "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
+    description:
+      "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
     docSources: [
       {
         apiIntro: UrgentCareApiIntro,
@@ -65,7 +68,8 @@ const healthApis : IApiDescription[] = [
     vaInternalOnly: false,
   },
   {
-    description: 'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
+    description:
+      'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
     docSources: [
       {
         apiIntro: FhirArgonautApiIntro,
@@ -86,12 +90,10 @@ const healthApis : IApiDescription[] = [
       },
     ],
     enabledByDefault: true,
+    multiOpenAPIIntro: FHIRMultiOpenAPIIntro,
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
     releaseNotes: FhirApiReleaseNotes,
-    tabBlurb: 
-      "The VA's FHIR Health APIs allow consumers to develop applications using Veteran data. Please see the tabs below for the specific FHIR implementations. 
-      Data entered through the production environment Veterans Health API is held in the original data source for 36 hours before it is visible elsewhere, including in any patient-facing applications. This holding period exists to allow health care providers time to discuss health data, such as sensitive diagnoses, before the patient sees this data elsewhere.",
     trustedPartnerOnly: false,
     urlFragment: 'fhir',
     vaInternalOnly: false,
@@ -104,7 +106,8 @@ const healthApis : IApiDescription[] = [
       deprecationContent: HealthArgonautDeprecationNotice,
       deprecationDate: moment('15 Sep 2019 00:00 EDT'),
     },
-    description: 'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.',
+    description:
+      'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.',
     docSources: [
       {
         openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
