@@ -73,7 +73,7 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/253
     modules: ['node_modules', paths.appNodeModules].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean)
+      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
     ),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
@@ -252,11 +252,30 @@ module.exports = {
                 options: {
                   enabledMarkdownItRules: ['smartquotes', 'table'],
                   markdownItPlugins: [
-                    [require('markdown-it-anchor'), { level: 2 }],
+                    [
+                      require('markdown-it-attrs'),
+                      {
+                        allowedAttributes: ['id'],
+                      },
+                    ],
+                    [
+                      require('markdown-it-anchor'),
+                      {
+                        level: 2,
+                        slugify: s =>
+                          encodeURIComponent(
+                            String(s)
+                              .trim()
+                              .toLowerCase()
+                              .replace(',', '')
+                              .replace(/\s+/g, '-'),
+                          ),
+                      },
+                    ],
                   ],
                 },
-              }
-            ]
+              },
+            ],
           },
           {
             test: /\.ya?ml$/,
