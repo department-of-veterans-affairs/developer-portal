@@ -36,9 +36,9 @@ const ApiReleaseNote = ({ api, flagName }: { api: IApiDescription, flagName: str
 
   return (
     <Flag name={flagName}>
-      {renderDeactivatedNotice()}
       <div id={dashUrlFragment}>
         <h2>{api.name}</h2>
+        {renderDeactivatedNotice()}
         {api.releaseNotes({})}
         <hr />
       </div>
