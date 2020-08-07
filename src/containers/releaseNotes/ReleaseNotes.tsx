@@ -8,7 +8,7 @@ import { Route } from 'react-router-dom';
 import { getDeactivatedCategory } from "../../apiDefs/deprecated";
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import {
-  IApiBaseCategory,
+  BaseAPICategory,
   IApiDescription,
 } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
@@ -47,7 +47,7 @@ function SideNavApiEntry(api: IApiDescription) {
   );
 }
 
-function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: IApiBaseCategory) {
+function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: BaseAPICategory) {
   const subNavLinks = () => {
     return apiCategory.apis.map(api => {
       if (apiCategory.apis.length > 1) {

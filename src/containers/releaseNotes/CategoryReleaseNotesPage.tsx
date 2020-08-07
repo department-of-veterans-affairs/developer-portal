@@ -14,7 +14,7 @@ import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
-const ApiReleaseNote = ({ api, apiCategoryKey }: { api: IApiDescription, apiCategoryKey: string }) => {
+const ApiReleaseNote = ({ api, flagName }: { api: IApiDescription, flagName: string }) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
 
   const renderDeactivatedNotice = () => {
@@ -34,7 +34,6 @@ const ApiReleaseNote = ({ api, apiCategoryKey }: { api: IApiDescription, apiCate
     return null;
   };
 
-  const flagName = apiCategoryKey === 'deactivated' ? `deactivated_apis.${api.urlFragment}` : `hosted_apis.${api.urlFragment}`;
   return (
     <Flag name={flagName}>
       {renderDeactivatedNotice()}
@@ -58,15 +57,16 @@ export default class CategoryReleaseNotesPage extends React.Component<
     const apiDefs = isDeactivatedPage ? getDeactivatedCategory() : getApiDefinitions();
     const { apis, name: categoryName } = apiDefs[apiCategoryKey];
 
+    const flagName = isDeactivatedPage ? `deactivated_apis` : `hosted_apis`;
+
     let cardSection;
     if (apis.length > 1) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
         const dashUrlFragment = urlFragment.replace('_', '-');
 
-        const flagName = isDeactivatedPage ? `deactivated_apis.${urlFragment}` : `hosted_apis.${urlFragment}`;
         return (
-          <Flag key={name} name={flagName}>
+          <Flag key={name} name={`${flagName}.${urlFragment}`}>
             <CardLink
               name={name}
               subhead={
@@ -103,7 +103,7 @@ export default class CategoryReleaseNotesPage extends React.Component<
           {apis.map((api: IApiDescription) => (
             <React.Fragment>
               <ApiReleaseNote
-                apiCategoryKey={apiCategoryKey}
+                flagName={`${flagName}.${api.urlFragment}`}
                 key={api.urlFragment}
                 api={api}
               />

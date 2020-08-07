@@ -45,14 +45,15 @@ export interface IApiDescription {
   readonly multiOpenAPIIntro?: React.FunctionComponent;
 }
 
-export interface IApiBaseCategory {
+// tslint:disable-next-line:interface-name
+export interface BaseAPICategory {
   readonly apis: IApiDescription[];
   readonly properName: string;
   readonly buttonText: string;
   readonly name: string;
 }
 
-export interface IApiCategory extends IApiBaseCategory {
+export interface IApiCategory extends BaseAPICategory {
   readonly content: IApiCategoryContent;
 }
 
