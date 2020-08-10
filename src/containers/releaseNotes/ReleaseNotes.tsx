@@ -48,15 +48,9 @@ function SideNavApiEntry(api: IApiDescription) {
 }
 
 function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: BaseAPICategory) {
-  const subNavLinks = () => {
-    return apiCategory.apis.map(api => {
-      if (apiCategory.apis.length > 1) {
-        return SideNavApiEntry(api);
-      } else {
-        return null;
-      }
-    });
-  };
+  const subNavLinks = () => (
+    apiCategory.apis.length > 1 && apiCategory.apis.map(api => SideNavApiEntry(api))
+  );
 
   const sideNavEntry = (
     <SideNavEntry to={`/release-notes/${apiCategoryKey}`} name={apiCategory.name}>

@@ -17,28 +17,18 @@ import { IApiNameParam } from '../../types';
 const ApiReleaseNote = ({ api, flagName }: { api: IApiDescription, flagName: string }) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
 
-  const renderDeactivatedNotice = () => {
-    const { deactivationInfo } = api;
-
-    if (deactivationInfo) {
-      const NoticeComponent = deactivationInfo.deactivationContent;
-      return (
-        <AlertBox
-          headline="Deactivated API"
-          status="info"
-        >
-          <NoticeComponent />
-        </AlertBox>
-      );
-    }
-    return null;
-  };
-
   return (
     <Flag name={flagName}>
       <div id={dashUrlFragment}>
         <h2>{api.name}</h2>
-        {renderDeactivatedNotice()}
+        {api.deactivationInfo && (
+          <AlertBox
+            headline="Deactivated API"
+            status="info"
+          >
+            {api.deactivationInfo.deactivationContent({})}
+          </AlertBox>
+        )}
         {api.releaseNotes({})}
         <hr />
       </div>
@@ -101,13 +91,11 @@ export default class CategoryReleaseNotesPage extends React.Component<
         {cardSection}
         <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
           {apis.map((api: IApiDescription) => (
-            <React.Fragment>
-              <ApiReleaseNote
-                flagName={`${flagName}.${api.urlFragment}`}
-                key={api.urlFragment}
-                api={api}
-              />
-            </React.Fragment>
+            <ApiReleaseNote
+              flagName={`${flagName}.${api.urlFragment}`}
+              key={api.urlFragment}
+              api={api}
+            />
           ))}
         </div>
       </section>
