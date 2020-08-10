@@ -1,104 +1,43 @@
-import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import * as React from 'react';
 
-import classNames from 'classnames';
-import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
-
-import { getDeactivatedCategory } from '../../apiDefs/deprecated';
-import { getApiDefinitions } from '../../apiDefs/query';
-import { IApiDescription } from '../../apiDefs/schema';
-import CardLink from '../../components/CardLink';
-import OnlyTags from '../../components/OnlyTags';
-import PageHeader from '../../components/PageHeader';
-import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
-const ApiReleaseNote = ({ api, flagName }: { api: IApiDescription, flagName: string }) => {
-  const dashUrlFragment = api.urlFragment.replace('_', '-');
+import PageHeader from '../../components/PageHeader';
+import useApiCategoryKey from '../../hooks/useApiCategoryKey';
 
-  return (
-    <Flag name={flagName}>
-      <div id={dashUrlFragment}>
-        <h2>{api.name}</h2>
-        {api.deactivationInfo && (
-          <AlertBox
-            headline="Deactivated API"
-            status="info"
-          >
-            {api.deactivationInfo.deactivationContent({})}
-          </AlertBox>
-        )}
-        {api.releaseNotes({})}
-        <hr />
-      </div>
-    </Flag>
-  );
-};
+import CategoryReleaseNotesCardSection from './CategoryReleaseNotesCardSection';
+import CategoryReleaseNotesList from './CategoryReleaseNotesList';
 
-export default class CategoryReleaseNotesPage extends React.Component<
-  RouteComponentProps<IApiNameParam>
-> {
-  public render() {
-    const { apiCategoryKey } = this.props.match.params;
+const CategoryReleaseNotesPage = (props: RouteComponentProps<IApiNameParam>) => {
+  // when react-router is updated to v5+, we should move line 12 to within the
+  // custom hook using "useLocation"
+  const { apiCategoryKey } = props.match.params;
+  const {
+    apiDefinition,
+    apiFlagName,
+  } = useApiCategoryKey(apiCategoryKey);
 
-    const isDeactivatedPage = apiCategoryKey === 'deactivated';
-
-    const apiDefs = isDeactivatedPage ? getDeactivatedCategory() : getApiDefinitions();
-    const { apis, name: categoryName } = apiDefs[apiCategoryKey];
-
-    const flagName = isDeactivatedPage ? `deactivated_apis` : `hosted_apis`;
-
-    let cardSection;
-    if (apis.length > 1) {
-      const apiCards = apis.map((apiDesc: IApiDescription) => {
-        const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
-        const dashUrlFragment = urlFragment.replace('_', '-');
-
-        return (
-          <Flag key={name} name={`${flagName}.${urlFragment}`}>
-            <CardLink
-              name={name}
-              subhead={
-                vaInternalOnly || trustedPartnerOnly ? (
-                  <OnlyTags {...{ vaInternalOnly, trustedPartnerOnly }} />
-                ) : (
-                  undefined
-                )
-              }
-              url={`/release-notes/${apiCategoryKey}#${dashUrlFragment}`}
-            >
-              {description}
-            </CardLink>
-          </Flag>
-        );
-      });
-
-      cardSection = (
-        <div role="navigation" aria-labelledby={`${apiCategoryKey}-release-notes`}>
-          <div className={defaultFlexContainer()}>{apiCards}</div>
-        </div>
-      );
-    }
-
+  if (apiDefinition && apiFlagName !== '') {
     return (
       <section role="region" aria-labelledby={`${apiCategoryKey}-release-notes`}>
         <PageHeader
-          halo={categoryName}
+          halo={apiCategoryKey}
           header="Release Notes"
           id={`${apiCategoryKey}-release-notes`}
         />
-        {cardSection}
-        <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-          {apis.map((api: IApiDescription) => (
-            <ApiReleaseNote
-              flagName={`${flagName}.${api.urlFragment}`}
-              key={api.urlFragment}
-              api={api}
-            />
-          ))}
-        </div>
+        <CategoryReleaseNotesCardSection
+          apiDefinition={apiDefinition}
+          apiFlagName={apiFlagName}
+        />
+        <CategoryReleaseNotesList
+          apiDefinition={apiDefinition}
+          apiFlagName={apiFlagName}
+        />
       </section>
     );
   }
-}
+  return null;
+};
+
+export default CategoryReleaseNotesPage;
