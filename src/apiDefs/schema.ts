@@ -9,11 +9,11 @@
 import * as moment from 'moment';
 
 export interface IApiCategoryContent {
-  readonly intro: React.StatelessComponent;
-  readonly overview: React.StatelessComponent;
+  readonly intro: React.FunctionComponent;
+  readonly overview: React.FunctionComponent;
   readonly shortDescription: string;
   readonly placardText: string;
-  readonly quickstart?: React.StatelessComponent;
+  readonly quickstart?: React.FunctionComponent;
 }
 
 export interface IApiDocSource {
@@ -21,13 +21,13 @@ export interface IApiDocSource {
   readonly openApiUrl: string;
   readonly key?: string;
   readonly label?: string;
-  readonly apiIntro?: React.StatelessComponent;
+  readonly apiIntro?: React.FunctionComponent;
 }
 
 export interface IApiDeactivationInfo {
-  readonly deprecationContent: React.StatelessComponent;
+  readonly deprecationContent: React.FunctionComponent;
   readonly deprecationDate: moment.Moment;
-  readonly deactivationContent: React.StatelessComponent;
+  readonly deactivationContent: React.FunctionComponent;
   readonly deactivationDate: moment.Moment;
 }
 
@@ -40,9 +40,9 @@ export interface IApiDescription {
   readonly vaInternalOnly: boolean;
   readonly trustedPartnerOnly: boolean;
   readonly oAuth?: boolean;
-  readonly releaseNotes: React.StatelessComponent;
+  readonly releaseNotes: React.FunctionComponent;
   readonly deactivationInfo?: IApiDeactivationInfo;
-  readonly tabBlurb?: string;
+  readonly multiOpenAPIIntro?: React.FunctionComponent;
 }
 
 export interface IApiCategory {
