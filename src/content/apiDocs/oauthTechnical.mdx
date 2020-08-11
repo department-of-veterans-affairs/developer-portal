@@ -39,6 +39,7 @@ with the following query parameters:
 | `redirect_uri`  | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application. |
 | `response_type` | **Required** | Supported response types: `code` |
 | `state`         | **Required** | Ensures authorization flow integrity. See [security](#security-considerations). |
+| `aud`           | **Required** | The FHIR resource server an application is making API calls to. See [security](#security-considerations). |
 | `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
 | `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
 | `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
@@ -52,6 +53,7 @@ https://sandbox-api.va.gov/oauth2/authorization?
   &response_type=code
   &scope=openid offline_access profile email veteran_status.read launch/patient
   &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ&nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy
+  &aud={fhirResourceServer}
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
@@ -212,6 +214,7 @@ with the following query parameters:
 | `code_challenge`        | **Required** | Base64 encoded challenge generated from your `code_verifier` |
 | `code_challenge_method` | **Required** | Supported code challenges: `S256` |
 | `state`                 | **Required** | Ensures authorization flow integrity. See [security](#security-considerations). |
+| `aud`                   | **Required** | The FHIR resource server an application is making API calls to. See [security](#security-considerations). |
 | `scope`                 | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
 | `prompt`                | Optional     | Supported prompts: `login`, `consent` and `none`.<p>If `login` is specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.</p><p>If `consent` is specified, the user will be asked to consent to their scopes being used regardless of prior consent.</p><p>If `none` is specified, an application will attempt an authorization request without user interaction. When the session is invalid or there are scopes the user has not consented to, one of the following errors will be thrown: `login_required` or `consent_required`.</p> |
 
@@ -225,6 +228,7 @@ https://sandbox-api.va.gov/oauth2/authorization?
   &state=499f_073a_5094_fd7a_ff7f_0bf0_69e4_adad_2bdf_e3ab_76b9
   &code_challenge_method=S256
   &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw
+  &aud={fhirResourceServer}
 ```
 (⚠️Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration)
 
@@ -372,6 +376,10 @@ The [OpenID Connect documentation](https://openid.net/specs/openid-connect-core-
 ### JWT Signature validation
 
 Your application must validate JWT signatures. This allows your application to verify that the provided JWT originates from our authorization servers and prevents your application from accepting a JWT with claims that are attempting to impersonate one of your users.
+
+### aud
+
+The `aud` query parameter is the FHIR resource server an application makes API calls to. Specifying this parameter in the authorization request prevents applications from leaking `access_tokens` to conterfeit resource servers.
 
 ## Support
 
