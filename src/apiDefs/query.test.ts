@@ -15,7 +15,7 @@
 */
 
 import 'jest';
-import {
+import { 
   includesOauthAPI,
   lookupApiByFragment,
   lookupApiCategory,
