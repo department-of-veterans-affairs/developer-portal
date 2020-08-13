@@ -1,5 +1,4 @@
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
-import * as moment from 'moment';
 import * as React from 'react';
 
 import { Flag } from 'flag';
@@ -39,24 +38,5 @@ describe('ApiReleaseNote', () => {
     expect(wrapper.find('h2').text()).toBe(mockProps.api.name);
     expect(wrapper.find(AlertBox).length).toBe(0);
     expect(mockProps.api.releaseNotes).toHaveBeenCalled();
-  });
-
-  it('should render Alert box if api has deactivation info', () => {
-    const deactivationProps = {
-      api: {
-        ...mockApi,
-        deactivationInfo: {
-          deactivationContent: jest.fn(),
-          deactivationDate: moment(),
-          deprecationContent: jest.fn(),
-          deprecationDate: moment(),
-        },
-      },
-      flagName: 'mock_apis',
-    };
-
-    const wrapper = shallow(<ApiReleaseNote {...deactivationProps} />);
-    expect(wrapper.find(AlertBox).length).toBe(1);
-    expect(deactivationProps.api.deactivationInfo.deactivationContent).toHaveBeenCalled();
   });
 });
