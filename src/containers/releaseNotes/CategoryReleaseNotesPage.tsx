@@ -7,8 +7,6 @@ import { BaseAPICategory } from '../../apiDefs/schema';
 import PageHeader from '../../components/PageHeader';
 import { IApiNameParam } from '../../types';
 
-// import useApiCategoryKey from '../../hooks/useApiCategoryKey';
-
 import CategoryReleaseNotesCardSection from './CategoryReleaseNotesCardSection';
 import CategoryReleaseNotesList from './CategoryReleaseNotesList';
 
@@ -36,8 +34,9 @@ const CategoryReleaseNotesPageContent = ({ apiCategory, apiFlagName } : { apiCat
   return null;
 };
 
-export const ActiveCategoryReleaseNotesPage = ({ matchParam }: { matchParam: string }) => {
-  const categoryDefinition = getApiDefinitions()[matchParam];
+export const ActiveCategoryReleaseNotesPage = (props: RouteComponentProps<IApiNameParam>) => {
+  const { apiCategoryKey } = props.match.params;
+  const categoryDefinition = getApiDefinitions()[apiCategoryKey];
   return (
     <CategoryReleaseNotesPageContent
       apiCategory={categoryDefinition}
@@ -46,8 +45,9 @@ export const ActiveCategoryReleaseNotesPage = ({ matchParam }: { matchParam: str
   );
 };
 
-export const DeactivatedReleaseNotesPage = ({ matchParam }: { matchParam: string }) => {
-  const categoryDefinition = getDeactivatedCategory()[matchParam];
+export const DeactivatedReleaseNotesPage = (props: RouteComponentProps<IApiNameParam>) => {
+  const apiCategoryKey = 'deactivated';
+  const categoryDefinition = getDeactivatedCategory()[apiCategoryKey];
   return (
     <CategoryReleaseNotesPageContent
       apiCategory={categoryDefinition}
@@ -55,20 +55,3 @@ export const DeactivatedReleaseNotesPage = ({ matchParam }: { matchParam: string
     />
   );
 };
-
-const CategoryReleaseNotesPage = (props: RouteComponentProps<IApiNameParam>) => {
-  const { apiCategoryKey } = props.match.params;
-
-  if (apiCategoryKey === 'deactivated') {
-    return (
-      <DeactivatedReleaseNotesPage matchParam='deactivated' />
-    );
-  }
-
-  return (
-    <ActiveCategoryReleaseNotesPage matchParam={apiCategoryKey} />
-  );
-};
-
-
-export default CategoryReleaseNotesPage;

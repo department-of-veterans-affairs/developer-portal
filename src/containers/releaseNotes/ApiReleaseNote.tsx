@@ -4,8 +4,8 @@ import * as React from 'react';
 
 import { Flag } from 'flag';
 
-import { IApiDescription } from '../../apiDefs/schema';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
+import { IApiDescription } from '../../apiDefs/schema';
 
 const ApiReleaseNote = ({ api, flagName }: { api: IApiDescription, flagName: string }) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
@@ -14,7 +14,7 @@ const ApiReleaseNote = ({ api, flagName }: { api: IApiDescription, flagName: str
     <Flag name={`${flagName}.${api.urlFragment}`}>
       <div id={dashUrlFragment}>
         <h2>{api.name}</h2>
-        {isApiDeactivated(api) && (
+        {api.deactivationInfo && isApiDeactivated(api) && (
           <AlertBox
             headline="Deactivated API"
             status="info"

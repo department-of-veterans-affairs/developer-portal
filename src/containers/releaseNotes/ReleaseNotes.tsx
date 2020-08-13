@@ -3,7 +3,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import { getDeactivatedCategory } from "../../apiDefs/deprecated";
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
@@ -13,7 +13,10 @@ import {
 } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
-import CategoryReleaseNotesPage from './CategoryReleaseNotesPage';
+import {
+  ActiveCategoryReleaseNotesPage,
+  DeactivatedReleaseNotesPage,
+} from './CategoryReleaseNotesPage';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 function SideNavApiEntry(api: IApiDescription) {
@@ -85,12 +88,18 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
                 {SideNavCategoryEntry('deactivated', deactivatedApis)}
               </SideNav>
               <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-                <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
-                <Route
-                  exact={true}
-                  path="/release-notes/:apiCategoryKey"
-                  component={CategoryReleaseNotesPage}
-                />
+                <Switch>
+                  <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
+                  <Route
+                    exact={true}
+                    path="/release-notes/deactivated"
+                    render={DeactivatedReleaseNotesPage}
+                  />
+                  <Route
+                    path="/release-notes/:apiCategoryKey"
+                    component={ActiveCategoryReleaseNotesPage}
+                  />
+                </Switch>
               </div>
             </div>
           </div>

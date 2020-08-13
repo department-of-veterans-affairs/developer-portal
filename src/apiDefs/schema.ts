@@ -49,6 +49,7 @@ export interface IApiDescription {
 export interface BaseAPICategory {
   readonly apis: IApiDescription[];
   readonly properName: string;
+  readonly buttonText: string;
   readonly name: string;
 }
 
