@@ -10,17 +10,17 @@ import OnlyTags from '../../components/OnlyTags';
 // tslint:disable-next-line:interface-name
 interface CategoryReleaseNotesCardSectionProps {
   apiFlagName: string;
-  apiDefinition: BaseAPICategory;
+  apiCategory: BaseAPICategory;
 }
 
 const CategoryReleaseNotesCardSection = (props: CategoryReleaseNotesCardSectionProps) => {
-  const { apiDefinition, apiFlagName } = props;
+  const { apiCategory, apiFlagName } = props;
 
-  if (apiDefinition && apiDefinition.apis.length > 1) {
+  if (apiCategory && apiCategory.apis.length > 1) {
     return (
-      <div role="navigation" aria-labelledby={`${apiDefinition.name}-release-notes`}>
+      <div role="navigation" aria-labelledby={`${apiCategory.name}-release-notes`}>
         <div className={defaultFlexContainer()}>
-          {apiDefinition.apis.map((apiDesc: IApiDescription) => {
+          {apiCategory.apis.map((apiDesc: IApiDescription) => {
             const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
             const dashUrlFragment = urlFragment.replace('_', '-');
 

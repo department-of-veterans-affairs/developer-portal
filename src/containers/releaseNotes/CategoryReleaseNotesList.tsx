@@ -9,15 +9,15 @@ import classNames from 'classnames';
 // tslint:disable-next-line:interface-name
 interface CategoryReleaseNotesListProps {
   apiFlagName: string;
-  apiDefinition: BaseAPICategory;
+  apiCategory: BaseAPICategory;
 }
 
 const CategoryReleaseNotesList = (props: CategoryReleaseNotesListProps) => {
-  const { apiDefinition, apiFlagName } = props;
+  const { apiCategory, apiFlagName } = props;
 
   return (
     <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-      {apiDefinition.apis.map((api: IApiDescription) => (
+      {apiCategory.apis.map((api: IApiDescription) => (
         <ApiReleaseNote
           flagName={apiFlagName}
           key={api.urlFragment}

@@ -11,7 +11,7 @@ import CategoryReleaseNotesCardSection from './CategoryReleaseNotesCardSection';
 const apiDefinitions = getApiDefinitions();
 
 const mockProps = (categoryKey: string) => ({
-  apiDefinition: apiDefinitions[categoryKey],
+  apiCategory: apiDefinitions[categoryKey],
   apiFlagName: 'mock_apis',
 });
 
@@ -20,7 +20,7 @@ describe('CategoryReleaseNotesCardSection', () => {
     const componentProps = mockProps('health');
     const wrapper = shallow(<CategoryReleaseNotesCardSection {...componentProps} />);
     expect(wrapper.find('div').length).toBe(2);
-    expect(wrapper.find(Flag).length).toBe(componentProps.apiDefinition.apis.length);
+    expect(wrapper.find(Flag).length).toBe(componentProps.apiCategory.apis.length);
   });
 
   it('should render nothing if no apis exist on this category', () => {

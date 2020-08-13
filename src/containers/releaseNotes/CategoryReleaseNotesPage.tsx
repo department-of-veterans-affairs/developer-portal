@@ -1,37 +1,33 @@
 import * as React from 'react';
-
 import { RouteComponentProps } from 'react-router';
+
+import { getDeactivatedCategory } from '../../apiDefs/deprecated';
+import { getApiDefinitions } from '../../apiDefs/query';
+import { BaseAPICategory } from '../../apiDefs/schema';
+import PageHeader from '../../components/PageHeader';
 import { IApiNameParam } from '../../types';
 
-import PageHeader from '../../components/PageHeader';
-import useApiCategoryKey from '../../hooks/useApiCategoryKey';
+// import useApiCategoryKey from '../../hooks/useApiCategoryKey';
 
 import CategoryReleaseNotesCardSection from './CategoryReleaseNotesCardSection';
 import CategoryReleaseNotesList from './CategoryReleaseNotesList';
 
-const CategoryReleaseNotesPage = (props: RouteComponentProps<IApiNameParam>) => {
-  // when react-router is updated to v5+, we should move line 12 to within the
-  // custom hook using "useLocation"
-  const { apiCategoryKey } = props.match.params;
-  const {
-    apiDefinition,
-    apiFlagName,
-  } = useApiCategoryKey(apiCategoryKey);
+const CategoryReleaseNotesPageContent = ({ apiCategory, apiFlagName } : { apiCategory: BaseAPICategory, apiFlagName: string }) => {
 
-  if (apiDefinition && apiFlagName !== '') {
+  if (apiCategory && apiFlagName !== '') {
     return (
-      <section role="region" aria-labelledby={`${apiCategoryKey}-release-notes`}>
+      <section role="region" aria-labelledby={`${apiCategory.name}-release-notes`}>
         <PageHeader
-          halo={apiCategoryKey}
+          halo={apiCategory.name}
           header="Release Notes"
-          id={`${apiCategoryKey}-release-notes`}
+          id={`${apiCategory.name}-release-notes`}
         />
         <CategoryReleaseNotesCardSection
-          apiDefinition={apiDefinition}
+          apiCategory={apiCategory}
           apiFlagName={apiFlagName}
         />
         <CategoryReleaseNotesList
-          apiDefinition={apiDefinition}
+          apiCategory={apiCategory}
           apiFlagName={apiFlagName}
         />
       </section>
@@ -39,5 +35,40 @@ const CategoryReleaseNotesPage = (props: RouteComponentProps<IApiNameParam>) => 
   }
   return null;
 };
+
+export const ActiveCategoryReleaseNotesPage = ({ matchParam }: { matchParam: string }) => {
+  const categoryDefinition = getApiDefinitions()[matchParam];
+  return (
+    <CategoryReleaseNotesPageContent
+      apiCategory={categoryDefinition}
+      apiFlagName='hosted_apis'
+    />
+  );
+};
+
+export const DeactivatedReleaseNotesPage = ({ matchParam }: { matchParam: string }) => {
+  const categoryDefinition = getDeactivatedCategory()[matchParam];
+  return (
+    <CategoryReleaseNotesPageContent
+      apiCategory={categoryDefinition}
+      apiFlagName='deactivated_apis'
+    />
+  );
+};
+
+const CategoryReleaseNotesPage = (props: RouteComponentProps<IApiNameParam>) => {
+  const { apiCategoryKey } = props.match.params;
+
+  if (apiCategoryKey === 'deactivated') {
+    return (
+      <DeactivatedReleaseNotesPage matchParam='deactivated' />
+    );
+  }
+
+  return (
+    <ActiveCategoryReleaseNotesPage matchParam={apiCategoryKey} />
+  );
+};
+
 
 export default CategoryReleaseNotesPage;

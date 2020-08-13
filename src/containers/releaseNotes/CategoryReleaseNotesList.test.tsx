@@ -11,7 +11,7 @@ import CategoryReleaseNotesList from './CategoryReleaseNotesList';
 const apiDefinitions = getApiDefinitions();
 
 const mockProps = (categoryKey: string) => ({
-  apiDefinition: apiDefinitions[categoryKey],
+  apiCategory: apiDefinitions[categoryKey],
   apiFlagName: 'mock_apis',
 });
 
@@ -20,6 +20,6 @@ describe('CategoryReleaseNotesList', () => {
     const componentProps = mockProps('health');
     const wrapper = shallow(<CategoryReleaseNotesList {...componentProps}/>);
     expect(wrapper.find('div').length).toBe(1);
-    expect(wrapper.find(ApiReleaseNote).length).toBe(componentProps.apiDefinition.apis.length);
+    expect(wrapper.find(ApiReleaseNote).length).toBe(componentProps.apiCategory.apis.length);
   });
 });
