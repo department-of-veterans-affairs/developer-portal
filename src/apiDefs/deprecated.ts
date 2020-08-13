@@ -34,7 +34,7 @@ export const getDeactivatedFlags = () => {
 
 export const getDeactivatedCategory = () => ({
   deactivated: {
-    apis: getAllApis().filter((api: IApiDescription) => isApiDeprecated(api)),
+    apis: getAllApis().filter((api: IApiDescription) => isApiDeactivated(api)),
     buttonText: 'Deactivated APIs',
     name: 'Deactivated APIs',
     properName: 'deactivated',
