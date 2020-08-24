@@ -5,12 +5,9 @@ import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
-import { getDeactivatedCategory } from "../../apiDefs/deprecated";
+import { getDeactivatedCategory } from '../../apiDefs/deprecated';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import {
-  BaseAPICategory,
-  IApiDescription,
-} from '../../apiDefs/schema';
+import { BaseAPICategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
 import {
@@ -51,9 +48,8 @@ function SideNavApiEntry(api: IApiDescription) {
 }
 
 function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: BaseAPICategory) {
-  const subNavLinks = () => (
-    apiCategory.apis.length > 1 && apiCategory.apis.map(api => SideNavApiEntry(api))
-  );
+  const subNavLinks = () =>
+    apiCategory.apis.length > 1 && apiCategory.apis.map(api => SideNavApiEntry(api));
 
   const sideNavEntry = (
     <SideNavEntry to={`/release-notes/${apiCategoryKey}`} name={apiCategory.name}>
@@ -76,7 +72,7 @@ export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNamePa
   public render() {
     const categoryOrder = getApiCategoryOrder();
     const apiDefs = getApiDefinitions();
-    const { deactivated: deactivatedApis } = getDeactivatedCategory();
+    const deactivatedApis = getDeactivatedCategory();
     return (
       <div className={classNames('vads-u-padding-y--5')}>
         <section>
