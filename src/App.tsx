@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
+import { ConnectedRouter } from 'connected-react-router';
 import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
 
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getCategoryFlags, getEnvFlags } from './apiDefs/env';

@@ -11,12 +11,20 @@ interface IApiCheckbox {
   label: string;
 }
 
-interface IApiCheckboxListProps {
-  apiCheckboxes: IApiCheckbox[];
+// tslint:disable:interface-name
+interface APICheckboxStateProps {
   apiInputs: IApiList;
+}
+
+interface APICheckboxDispatchProps {
   toggleSelectedApi: (apiId: string) => () => void;
 }
 
+interface APICheckboxOwnProps {
+  apiCheckboxes: IApiCheckbox[];
+}
+
+type APICheckboxListProps = APICheckboxStateProps & APICheckboxDispatchProps & APICheckboxOwnProps;
 const mapStateToProps = (state: IRootState) => {
   return {
     apiInputs: state.application.inputs.apis,
@@ -35,10 +43,14 @@ const mapDispatchToProps = (dispatch: ApiSelectDispatch) => {
   };
 };
 
-const ApiCheckboxList = connect(
+const ApiCheckboxList = connect<
+  APICheckboxStateProps,
+  APICheckboxDispatchProps,
+  APICheckboxOwnProps
+>(
   mapStateToProps,
   mapDispatchToProps,
-)((props: IApiCheckboxListProps) => {
+)((props: APICheckboxListProps) => {
   return (
     <React.Fragment>
       {props.apiCheckboxes.map(api => {
