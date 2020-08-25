@@ -2,25 +2,26 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import { Flag } from 'flag';
-import { RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
-import { getDeactivatedCategory } from '../../apiDefs/deprecated';
+import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { BaseAPICategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
-import { IApiNameParam } from '../../types';
-import {
-  ActiveCategoryReleaseNotesPage,
-  DeactivatedReleaseNotesPage,
-} from './CategoryReleaseNotesPage';
+import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotesPage';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
-function SideNavApiEntry(api: IApiDescription) {
-  const dashUrlFragment = api.urlFragment.replace('_', '-');
+// tslint:disable:interface-name
+interface SideNavAPIEntryProps {
+  api: IApiDescription;
+  flagName: string;
+}
 
+function SideNavAPIEntry(props: SideNavAPIEntryProps) {
+  const { api, flagName } = props;
+  const dashUrlFragment = props.api.urlFragment.replace('_', '-');
   return (
-    <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
+    <Flag key={api.urlFragment} name={`${flagName}.${api.urlFragment}`}>
       <SideNavEntry
         key={api.urlFragment}
         to={`#${dashUrlFragment}`}
@@ -47,62 +48,63 @@ function SideNavApiEntry(api: IApiDescription) {
   );
 }
 
-function SideNavCategoryEntry(apiCategoryKey: string, apiCategory: BaseAPICategory) {
-  const subNavLinks = () =>
-    apiCategory.apis.length > 1 && apiCategory.apis.map(api => SideNavApiEntry(api));
+interface SideNavCategoryEntryProps {
+  categoryKey: string;
+  apiCategory: BaseAPICategory;
+}
 
-  const sideNavEntry = (
-    <SideNavEntry to={`/release-notes/${apiCategoryKey}`} name={apiCategory.name}>
-      {subNavLinks()}
-    </SideNavEntry>
-  );
-
-  if (apiCategoryKey === 'deactivated') {
-    return sideNavEntry;
-  }
-
+function SideNavCategoryEntry(props: SideNavCategoryEntryProps) {
+  const { apiCategory, categoryKey } = props;
+  const apis: IApiDescription[] = apiCategory.apis.filter(api => !isApiDeactivated(api));
   return (
-    <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
-      {sideNavEntry}
+    <Flag name={`categories.${categoryKey}`} key={categoryKey}>
+      <SideNavEntry to={`/release-notes/${categoryKey}`} name={apiCategory.name}>
+        {apis.length > 1 &&
+          apis.map(api => (
+            <SideNavAPIEntry api={api} key={api.urlFragment} flagName="hosted_apis" />
+          ))}
+      </SideNavEntry>
     </Flag>
   );
 }
 
-export class ReleaseNotes extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
-  public render() {
-    const categoryOrder = getApiCategoryOrder();
-    const apiDefs = getApiDefinitions();
-    const deactivatedApis = getDeactivatedCategory();
-    return (
-      <div className={classNames('vads-u-padding-y--5')}>
-        <section>
-          <div className="vads-l-grid-container">
-            <div className="vads-l-row">
-              <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
-                <SideNavEntry key="all" exact={true} to="/release-notes" name="Overview" />
-                {categoryOrder.map((key: string) => SideNavCategoryEntry(key, apiDefs[key]))}
-                {SideNavCategoryEntry('deactivated', deactivatedApis)}
-              </SideNav>
-              <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-                <Switch>
-                  <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
-                  <Route
-                    exact={true}
-                    path="/release-notes/deactivated"
-                    render={DeactivatedReleaseNotesPage}
-                  />
-                  <Route
-                    path="/release-notes/:apiCategoryKey"
-                    component={ActiveCategoryReleaseNotesPage}
-                  />
-                </Switch>
-              </div>
+export function ReleaseNotes() {
+  const categoryOrder = getApiCategoryOrder();
+  const apiDefs = getApiDefinitions();
+  const deactivatedApis = getDeactivatedCategory();
+  return (
+    <div className={classNames('vads-u-padding-y--5')}>
+      <section>
+        <div className="vads-l-grid-container">
+          <div className="vads-l-row">
+            <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
+              <SideNavEntry key="all" exact={true} to="/release-notes" name="Overview" />
+              {categoryOrder.map((key: string) => (
+                <SideNavCategoryEntry categoryKey={key} apiCategory={apiDefs[key]} key={key} />
+              ))}
+              <SideNavEntry to="/release-notes/deactivated" name={deactivatedApis.name}>
+                {deactivatedApis.apis.length > 1 &&
+                  deactivatedApis.apis.map(api => (
+                    <SideNavAPIEntry api={api} key={api.urlFragment} flagName="enabled" />
+                  ))}
+              </SideNavEntry>
+            </SideNav>
+            <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
+              <Switch>
+                <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
+                <Route
+                  exact={true}
+                  path="/release-notes/deactivated"
+                  render={DeactivatedReleaseNotes}
+                />
+                <Route path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotes} />
+              </Switch>
             </div>
           </div>
-        </section>
-      </div>
-    );
-  }
+        </div>
+      </section>
+    </div>
+  );
 }
 
 export default ReleaseNotes;

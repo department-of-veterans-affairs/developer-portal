@@ -74,46 +74,49 @@ const APIReleaseNote = ({ api, flagName }: { api: IApiDescription; flagName: str
   );
 };
 
-const CategoryReleaseNotesPageContent = ({
-  apiCategory,
-  apiFlagName,
-}: {
+// tslint:disable-next-line:interface-name
+interface ReleaseNotesCollectionProps {
+  categoryKey: string;
   apiCategory: BaseAPICategory;
   apiFlagName: string;
-}) => {
-  if (apiCategory && apiFlagName !== '') {
-    return (
-      <section role="region" aria-labelledby={`${apiCategory.name}-release-notes`}>
-        <PageHeader
-          halo={apiCategory.name}
-          header="Release Notes"
-          id={`${apiCategory.name}-release-notes`}
-        />
-        <ReleaseNotesCardLinks apiCategory={apiCategory} apiFlagName={apiFlagName} />
-        <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-          {apiCategory.apis.map((api: IApiDescription) => (
-            <APIReleaseNote flagName={apiFlagName} key={api.urlFragment} api={api} />
-          ))}
-        </div>
-      </section>
-    );
-  }
-  return null;
-};
+}
 
-export const ActiveCategoryReleaseNotesPage = (props: RouteComponentProps<IApiNameParam>) => {
-  const { apiCategoryKey } = props.match.params;
-  const categoryDefinition = getApiDefinitions()[apiCategoryKey];
+const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => {
   return (
-    <CategoryReleaseNotesPageContent apiCategory={categoryDefinition} apiFlagName="hosted_apis" />
+    <section role="region" aria-labelledby={`${props.categoryKey}-release-notes`}>
+      <PageHeader
+        halo={props.apiCategory.name}
+        header="Release Notes"
+        containerId={`${props.categoryKey}-release-notes`}
+      />
+      <ReleaseNotesCardLinks apiCategory={props.apiCategory} apiFlagName={props.apiFlagName} />
+      <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
+        {props.apiCategory.apis.map((api: IApiDescription) => (
+          <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />
+        ))}
+      </div>
+    </section>
   );
 };
 
-export const DeactivatedReleaseNotesPage = () => {
+export const CategoryReleaseNotes = (props: RouteComponentProps<IApiNameParam>) => {
+  const { apiCategoryKey } = props.match.params;
+  const categoryDefinition = getApiDefinitions()[apiCategoryKey];
   return (
-    <CategoryReleaseNotesPageContent
+    <ReleaseNotesCollection
+      categoryKey={apiCategoryKey}
+      apiCategory={categoryDefinition}
+      apiFlagName="hosted_apis"
+    />
+  );
+};
+
+export const DeactivatedReleaseNotes = () => {
+  return (
+    <ReleaseNotesCollection
+      categoryKey="deactivated"
       apiCategory={getDeactivatedCategory()}
-      apiFlagName="deactivated_apis"
+      apiFlagName="enabled"
     />
   );
 };
