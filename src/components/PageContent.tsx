@@ -10,11 +10,11 @@ export default class PageContent extends React.Component<RouteComponentProps, {}
     if (prevProps.location.pathname === location.pathname && location.hash) {
       return;
     }
-    
+
     if (this.mainRef && this.mainRef.current) {
       this.mainRef.current.focus();
     }
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
   public render() {

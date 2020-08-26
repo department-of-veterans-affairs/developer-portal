@@ -6,4 +6,8 @@
     pointer-events: none;
     overflow: visible;
   }
+
+  & + .code-wrapper {
+    margin-top: 16px;
+  }
 }

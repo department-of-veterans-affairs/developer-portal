@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import CodeWrapper from 'src/components/CodeWrapper';
 
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -310,13 +311,13 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                <pre className="vads-u-display--flex">
-                  <div className="curl-text">
-                    <span className="sr-only">
-                      Ensure your screenreader verbosity is set to high for code snippets
-                    </span>
-                    {this.buildCurl()}
-                  </div>
+                <pre
+                  className={classNames(
+                    'vads-u-display--flex',
+                    'vads-u-justify-content--space-between',
+                  )}
+                >
+                  <CodeWrapper>{this.buildCurl()}</CodeWrapper>
                   <CopyToClipboard text={this.buildCurl()}>
                     <span className="va-api-curl__copy-to-clipboard">
                       <FontAwesomeIcon icon={faCopy} size="2x" />

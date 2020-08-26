@@ -9,14 +9,6 @@
   .code-wrapper {
     background-color: #222935;
     border-radius: 3px;
-
-    & > pre {
-      margin: 0;
-    }
-
-    & + .code-wrapper {
-      margin-top: 16px;
-    }
   }
 
   code {
@@ -34,7 +26,6 @@
   pre > code {
     display: block;
     padding: 2rem;
-    pointer-events: none; // allows screen readers to "click" up to the pre tag and read .sr-only
     margin: 0;
     white-space: pre;
 
