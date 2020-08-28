@@ -82,6 +82,7 @@ interface ReleaseNotesCollectionProps {
   categoryKey: string;
   apiCategory: BaseAPICategory;
   apiFlagName: string;
+  alertText?: string;
 }
 
 const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => {
@@ -92,6 +93,11 @@ const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => {
         header="Release Notes"
         containerId={`${props.categoryKey}-release-notes`}
       />
+      {props.alertText && (
+        <AlertBox status="info" className="vads-u-padding-y--2">
+          {props.alertText}
+        </AlertBox>
+      )}
       <ReleaseNotesCardLinks
         apiCategory={props.apiCategory}
         categoryKey={props.categoryKey}
@@ -124,6 +130,7 @@ export const DeactivatedReleaseNotes = () => {
       categoryKey="deactivated"
       apiCategory={getDeactivatedCategory()}
       apiFlagName="enabled"
+      alertText="This is a repository for deactivated APIs and related documentation and release notes."
     />
   );
 };

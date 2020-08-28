@@ -167,6 +167,15 @@ describe('ReleaseNotesCollection', () => {
       expect(heading1.previousElementSibling!).toHaveTextContent('Deactivated APIs');
     });
 
+    it('has an alert box explaining that the page is for deactivated APIs', () => {
+      const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
+      expect(heading1.parentElement).not.toBeNull();
+      expect(heading1.parentElement!.nextElementSibling).not.toBeNull();
+      expect(heading1.parentElement!.nextElementSibling!).toHaveTextContent(
+        'This is a repository for deactivated APIs and related documentation and release notes.',
+      );
+    });
+
     describe('card links', () => {
       it('renders the card link section', () => {
         allAPIsSpy.mockReturnValue([

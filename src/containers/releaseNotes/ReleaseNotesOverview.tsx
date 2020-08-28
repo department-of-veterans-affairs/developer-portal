@@ -1,6 +1,7 @@
 import { Flag } from 'flag';
 import * as React from 'react';
 
+import { getDeactivatedCategory } from '../../apiDefs/deprecated';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
@@ -8,6 +9,7 @@ import { defaultFlexContainer } from '../../styles/vadsUtils';
 
 export default () => {
   const apiDefs = getApiDefinitions();
+  const deactivatedCategory = getDeactivatedCategory();
   return (
     <div>
       <PageHeader halo="Overview" header="Release Notes" />
@@ -43,6 +45,11 @@ export default () => {
             </Flag>
           );
         })}
+        {deactivatedCategory.apis.length > 0 && (
+          <CardLink name={deactivatedCategory.name} url="/release-notes/deactivated">
+            This is a repository for deactivated APIs and related documentation and release notes.
+          </CardLink>
+        )}
       </div>
     </div>
   );

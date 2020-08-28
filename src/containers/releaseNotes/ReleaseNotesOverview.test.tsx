@@ -23,11 +23,12 @@ function renderComponent() {
 
 describe('ReleaseNotesOverview', () => {
   let apiDefsSpy: jest.SpyInstance<IApiCategories>;
+  let allAPIsSpy: jest.SpyInstance<IApiDescription[]>;
 
   beforeAll(() => {
     jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
     apiDefsSpy = jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
-    jest.spyOn(apiQueries, 'getAllApis').mockReturnValue(fakeAPIs);
+    allAPIsSpy = jest.spyOn(apiQueries, 'getAllApis').mockReturnValue(fakeAPIs);
   });
 
   beforeEach(renderComponent);
@@ -80,6 +81,30 @@ describe('ReleaseNotesOverview', () => {
       expect(
         screen.queryByRole('link', {
           name: `Sports API ${fakeCategories.sports.content.shortDescription}`,
+        }),
+      ).toBeNull();
+    });
+
+    it('has a card link for deactivated APIs if there are any', () => {
+      const cardLink = screen.getByRole('link', {
+        name:
+          'Deactivated APIs This is a repository for deactivated APIs and related documentation and release notes.',
+      });
+
+      expect(cardLink).toBeInTheDocument();
+      expect(cardLink.getAttribute('href')).toBe('/release-notes/deactivated');
+    });
+
+    it('does not have a card link for deactivated APIs if there are none', () => {
+      const apis = fakeAPIs.map(api => ({ ...api, deactivationInfo: undefined }));
+      allAPIsSpy.mockReturnValue(apis);
+
+      renderComponent();
+
+      expect(
+        screen.queryByRole('link', {
+          name:
+            'Deactivated APIs This is a repository for deactivated APIs and related documentation and release notes.',
         }),
       ).toBeNull();
     });
