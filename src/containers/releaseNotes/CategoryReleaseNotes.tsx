@@ -7,6 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { BaseAPICategory, IApiDescription } from '../../apiDefs/schema';
+import { getFlags } from '../../App';
 import CardLink from '../../components/CardLink';
 import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
@@ -15,39 +16,41 @@ import { IApiNameParam } from '../../types';
 
 // tslint:disable-next-line:interface-name
 interface ReleaseNotesCardLinksProps {
-  apiFlagName: string;
+  categoryKey: string;
   apiCategory: BaseAPICategory;
+  flagName: string;
 }
 
 const ReleaseNotesCardLinks = (props: ReleaseNotesCardLinksProps) => {
-  const { apiCategory, apiFlagName } = props;
-  if (apiCategory.apis.length < 1) {
+  const { apiCategory, categoryKey, flagName } = props;
+  const flags: { [apiId: string]: boolean } = getFlags()[flagName];
+  const apis: IApiDescription[] = apiCategory.apis.filter(api => flags[api.urlFragment]);
+  if (apis.length < 2) {
     return null;
   }
 
   return (
-    <div role="navigation" aria-labelledby={`${apiCategory.name}-release-notes`}>
+    <div role="navigation" aria-labelledby={`${categoryKey}-release-notes`}>
       <div className={defaultFlexContainer()}>
-        {apiCategory.apis.map((apiDesc: IApiDescription) => {
+        {apis.map((apiDesc: IApiDescription) => {
           const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
           const dashUrlFragment = urlFragment.replace('_', '-');
 
           return (
-            <Flag key={name} name={`${apiFlagName}.${urlFragment}`}>
-              <CardLink
-                name={name}
-                subhead={
-                  vaInternalOnly || trustedPartnerOnly ? (
-                    <OnlyTags {...{ vaInternalOnly, trustedPartnerOnly }} />
-                  ) : (
-                    undefined
-                  )
-                }
-                url={`/release-notes/${name}#${dashUrlFragment}`}
-              >
-                {description}
-              </CardLink>
-            </Flag>
+            <CardLink
+              key={name}
+              name={name}
+              subhead={
+                vaInternalOnly || trustedPartnerOnly ? (
+                  <OnlyTags {...{ vaInternalOnly, trustedPartnerOnly }} />
+                ) : (
+                  undefined
+                )
+              }
+              url={`/release-notes/${categoryKey}#${dashUrlFragment}`}
+            >
+              {description}
+            </CardLink>
           );
         })}
       </div>
@@ -89,7 +92,11 @@ const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => {
         header="Release Notes"
         containerId={`${props.categoryKey}-release-notes`}
       />
-      <ReleaseNotesCardLinks apiCategory={props.apiCategory} apiFlagName={props.apiFlagName} />
+      <ReleaseNotesCardLinks
+        apiCategory={props.apiCategory}
+        categoryKey={props.categoryKey}
+        flagName={props.apiFlagName}
+      />
       <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
         {props.apiCategory.apis.map((api: IApiDescription) => (
           <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />

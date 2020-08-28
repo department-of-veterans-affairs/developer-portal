@@ -12,12 +12,12 @@ export const fakeCategories: IApiCategories = {
         enabledByDefault: true,
         name: 'Rings API',
         releaseNotes: () => (
-          <>
+          <div>
             <h3>March 25, 2020</h3>
             <p>One Ring destroyed</p>
             <h3>June 10, 2019</h3>
             <p>One Ring discovered by Bilbo in Misty Mountains</p>
-          </>
+          </div>
         ),
         trustedPartnerOnly: false,
         urlFragment: 'rings',
@@ -35,12 +35,12 @@ export const fakeCategories: IApiCategories = {
         enabledByDefault: true,
         name: 'Silmarils API',
         releaseNotes: () => (
-          <>
+          <div>
             <h3>April 3, 1005</h3>
             <p>Stolen by Morgoth</p>
             <h3>December 1, 0215</h3>
             <p>Feanor created the jewels</p>
-          </>
+          </div>
         ),
         trustedPartnerOnly: false,
         urlFragment: 'silmarils',
@@ -52,12 +52,12 @@ export const fakeCategories: IApiCategories = {
         enabledByDefault: true,
         name: 'Hobbits API',
         releaseNotes: () => (
-          <>
+          <div>
             <h3>September 22, 2019</h3>
             <p>Pippin and Merry got taller</p>
             <h3>June 11, 2019</h3>
             <p>Bilbo disappeared</p>
-          </>
+          </div>
         ),
         trustedPartnerOnly: false,
         urlFragment: 'hobbits',
@@ -83,12 +83,12 @@ export const fakeCategories: IApiCategories = {
         enabledByDefault: true,
         name: 'Basketball API',
         releaseNotes: () => (
-          <>
+          <div>
             <h3>September 21, 2019</h3>
             <p>Moved exiled Numenoreans to Middle-earth</p>
             <h3>June 12, 2019</h3>
             <p>Released our API</p>
-          </>
+          </div>
         ),
         trustedPartnerOnly: false,
         urlFragment: 'basketball',
@@ -100,12 +100,12 @@ export const fakeCategories: IApiCategories = {
         enabledByDefault: false,
         name: 'Baseball API',
         releaseNotes: () => (
-          <>
+          <div>
             <h3>September 22, 2019</h3>
             <p>Mike Trout homers</p>
             <h3>June 11, 2019</h3>
             <p>Gerrit Cole strikes out 80</p>
-          </>
+          </div>
         ),
         trustedPartnerOnly: false,
         urlFragment: 'baseball',
@@ -133,12 +133,12 @@ export const extraAPI: IApiDescription = {
   enabledByDefault: true,
   name: 'Soccer API',
   releaseNotes: () => (
-    <>
+    <div>
       <h3>October 22, 2019</h3>
       <p>a lot of goals get scored</p>
       <h3>August 11, 2019</h3>
       <p>champions league</p>
-    </>
+    </div>
   ),
   trustedPartnerOnly: false,
   urlFragment: 'soccer',

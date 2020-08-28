@@ -9,7 +9,7 @@ import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { BaseAPICategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
-import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotesPage';
+import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 // tslint:disable:interface-name
