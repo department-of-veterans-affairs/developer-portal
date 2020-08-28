@@ -22,17 +22,18 @@ import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import RoutedContent from './containers/RoutedContent';
 import Support from './containers/support/Support';
 
-export function SiteRoutes() {
+interface ISiteRoutesProps {
+  forwardedRef: React.RefObject<HTMLHeadingElement>;
+}
+
+export function SiteRoutes(props: ISiteRoutesProps) {
   return (
     <Switch>
       <Route exact={true} path="/" component={Home} />
       <Route exact={true} path="/index.html" component={Home} />
 
       {/* Legacy routes that we want to maintain: */}
-      <Route
-        path="/explore/terms-of-service"
-        render={() => <Redirect to="/terms-of-service" />}
-      />
+      <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
       <Route path="/whats-new" render={() => <Redirect to="/news" />} />
 
       {/* Current routes: */}
@@ -58,7 +59,7 @@ export function SiteRoutes() {
         render={() => <Redirect to="/explore/verification/docs/authorization" />}
       />
       <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-      <Route path="/news" component={News} />
+      <Route path="/news" render={() => <News forwardedRef={props.forwardedRef} />} />
       <Route path="/support" component={Support} />
       <Route path="/providers/integration-guide" component={ProviderIntegrationGuide} />
       <Route component={NotFound} />
@@ -88,7 +89,11 @@ export function sitemapConfig() {
       [],
     );
 
-    if (route === '/explore/:apiCategoryKey/docs/:apiName' && apiDefs[apiCategory].apis.some(api => !!api.oAuth) && apiCategory !== 'benefits') {
+    if (
+      route === '/explore/:apiCategoryKey/docs/:apiName' &&
+      apiDefs[apiCategory].apis.some(api => !!api.oAuth) &&
+      apiCategory !== 'benefits'
+    ) {
       routeParams.push('authorization');
     }
 

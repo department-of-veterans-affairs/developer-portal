@@ -33,11 +33,11 @@ const sections = NewsData.sections.map((section: ISection) => ({
   id: toHtmlId(section.title),
 }));
 
-function NewsItem({item, media} : {item: INewsItem, media: boolean}) {
+function NewsItem({ item, media }: { item: INewsItem; media: boolean }) {
   return media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
 }
 
-function MediaItem({item} : {item: INewsItem}) {
+function MediaItem({ item }: { item: INewsItem }) {
   const description = <ItemDescription item={item} />;
   if (item.url.includes('www.youtube.com')) {
     return (
@@ -58,14 +58,12 @@ function MediaItem({item} : {item: INewsItem}) {
           />
         </a>
       </div>
-      <div className="vads-u-margin-left--2p5 va-api-media-row-description">
-        {description}
-      </div>
+      <div className="vads-u-margin-left--2p5 va-api-media-row-description">{description}</div>
     </div>
   );
 }
 
-function ItemDescription({item}: {item: INewsItem}) {
+function ItemDescription({ item }: { item: INewsItem }) {
   return (
     <p>
       <a href={item.url}>{item.title}</a>
@@ -78,7 +76,11 @@ function ItemDescription({item}: {item: INewsItem}) {
   );
 }
 
-export default class News extends React.Component {
+interface INewsProps {
+  forwardedRef: React.RefObject<HTMLHeadingElement>;
+}
+
+export default class News extends React.Component<INewsProps> {
   private cardsSections = sections.map((section: INewsSection) => {
     return (
       <CardLink key={section.id} url={`#${section.id}`} name={section.title}>
@@ -126,6 +128,7 @@ export default class News extends React.Component {
                   description={headerProps.description}
                   header={headerProps.header}
                   className="vads-u-margin-bottom--4"
+                  forwardedRef={this.props.forwardedRef}
                 />
                 <div className={classNames(defaultFlexContainer(), 'vads-u-margin-bottom--4')}>
                   {this.cardsSections}
