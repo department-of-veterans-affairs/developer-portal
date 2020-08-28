@@ -13,26 +13,18 @@ import { SwaggerPlugins } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 
-// tslint:disable:interface-name
-interface SwaggerDocsStateProps {
+export interface ISwaggerDocsProps {
+  apiName: string;
+  docSource: IApiDocSource;
   docUrl: string;
   location: Location;
   metadata: any;
+  setInitialVersioning: (url: string, metadata: any) => void;
+  setRequestedApiVersion: (version: string) => void;
   version: string;
   versionNumber: string;
 }
 
-interface SwaggerDocsDispatchProps {
-  setInitialVersioning: (url: string, metadata: any) => void;
-  setRequestedApiVersion: (version: string) => void;
-}
-
-interface SwaggerDocsOwnProps {
-  apiName: string;
-  docSource: IApiDocSource;
-}
-
-type SwaggerDocsProps = SwaggerDocsStateProps & SwaggerDocsDispatchProps & SwaggerDocsOwnProps;
 export interface IVersionInfo {
   version: string;
   status: string;
@@ -41,7 +33,7 @@ export interface IVersionInfo {
   internal_only: boolean;
 }
 
-const mapStateToProps = (state: IRootState): SwaggerDocsStateProps => {
+const mapStateToProps = (state: IRootState) => {
   return {
     docUrl: getDocURL(state.apiVersioning),
     location: state.router.location,
@@ -53,7 +45,7 @@ const mapStateToProps = (state: IRootState): SwaggerDocsStateProps => {
 
 const mapDispatchToProps = (
   dispatch: Dispatch<actions.ISetRequestedApiVersion | actions.ISetInitialVersioning>,
-): SwaggerDocsDispatchProps => {
+) => {
   return {
     setInitialVersioning: (url: string, metadata: any) => {
       dispatch(actions.setInitialVersioning(url, metadata));
@@ -64,14 +56,14 @@ const mapDispatchToProps = (
   };
 };
 
-class SwaggerDocs extends React.Component<SwaggerDocsProps> {
+class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
   public async componentDidMount() {
     await this.setMetadataAndDocUrl();
     this.setSearchParam();
     this.renderSwaggerUI();
   }
 
-  public async componentDidUpdate(prevProps: SwaggerDocsProps) {
+  public async componentDidUpdate(prevProps: ISwaggerDocsProps) {
     if (prevProps.apiName !== this.props.apiName) {
       await this.setMetadataAndDocUrl();
       this.setSearchParam();
@@ -142,7 +134,7 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
   }
 }
 
-export default connect<SwaggerDocsStateProps, SwaggerDocsDispatchProps, SwaggerDocsOwnProps>(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(SwaggerDocs);
