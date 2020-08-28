@@ -6,7 +6,7 @@ import * as React from 'react';
 import { MemoryRouter } from 'react-router';
 import { fakeAPIs, fakeCategories, fakeCategoryOrder } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
-import { IApiCategories, IApiCategory, IApiDescription } from '../../apiDefs/schema';
+import { IApiCategories, IApiDescription } from '../../apiDefs/schema';
 import { getFlags } from '../../App';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
@@ -47,15 +47,17 @@ describe('ReleaseNotesOverview', () => {
 
   describe('card links', () => {
     it('renders a card for each category', () => {
-      fakeCategoryOrder.forEach((categoryKey: string) => {
-        const category: IApiCategory = fakeCategories[categoryKey];
-        const cardLink = screen.getByRole('link', {
-          name: `${category.name} ${category.content.shortDescription}`,
-        });
-
-        expect(cardLink).toBeInTheDocument();
-        expect(cardLink.getAttribute('href')).toBe(`/release-notes/${categoryKey}`);
+      let cardLink = screen.getByRole('link', {
+        name: 'LOTR API Learn more about things in Middle-earth',
       });
+      expect(cardLink).toBeInTheDocument();
+      expect(cardLink.getAttribute('href')).toBe('/release-notes/lotr');
+
+      cardLink = screen.getByRole('link', {
+        name: 'Sports API Learn more about throwing, running, and hitting',
+      });
+      expect(cardLink).toBeInTheDocument();
+      expect(cardLink.getAttribute('href')).toBe('/release-notes/sports');
     });
 
     it('does not render a card for a disabled category', () => {

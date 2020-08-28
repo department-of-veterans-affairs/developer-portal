@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
 import { FlagsProvider } from 'flag';
-import { createMemoryHistory, MemoryHistory } from 'history';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
@@ -11,7 +10,6 @@ import {
   fakeCategories,
   fakeCategoryOrder,
 } from '../../__mocks__/fakeCategories';
-import { isApiDeactivated } from '../../apiDefs/deprecated';
 import * as apiQueries from '../../apiDefs/query';
 import { IApiDescription } from '../../apiDefs/schema';
 import { getFlags } from '../../App';
@@ -30,20 +28,14 @@ function renderComponent(route: string = '/release-notes') {
 
 const allAPIs: IApiDescription[] = Object.values(fakeCategories).flatMap(category => category.apis);
 describe('ReleaseNotes', () => {
-  let history: MemoryHistory;
   let apiDefinitionsSpy: jest.SpyInstance;
   let allAPIsSpy: jest.SpyInstance;
-  beforeAll(() => {
-    history = createMemoryHistory();
-  });
-
   beforeEach(() => {
     jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
     apiDefinitionsSpy = jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
     allAPIsSpy = jest.spyOn(apiQueries, 'getAllApis').mockReturnValue(allAPIs);
 
     renderComponent();
-    history.push('/release-notes');
   });
 
   it('renders successfully, on the Overview page by default', () => {
@@ -54,13 +46,11 @@ describe('ReleaseNotes', () => {
   });
 
   it('renders the route for the category release note page', () => {
-    fakeCategoryOrder.forEach((categoryKey: string) => {
-      renderComponent(`/release-notes/${categoryKey}`);
-      const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
-      expect(heading1).toBeInTheDocument();
-      expect(heading1.previousElementSibling).not.toBeNull();
-      expect(heading1.previousElementSibling).toHaveTextContent(fakeCategories[categoryKey].name);
-    });
+    renderComponent('/release-notes/lotr');
+    const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
+    expect(heading1).toBeInTheDocument();
+    expect(heading1.previousElementSibling).not.toBeNull();
+    expect(heading1.previousElementSibling).toHaveTextContent('LOTR API');
   });
 
   it('renders the route for the deactivated APIs release notes page', () => {
@@ -88,12 +78,13 @@ describe('ReleaseNotes', () => {
 
       it('has an entry for each API category', () => {
         const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
-        fakeCategoryOrder.forEach((categoryKey: string) => {
-          const category = fakeCategories[categoryKey];
-          const navLink = getByRole(sideNav, 'link', { name: category.name });
-          expect(navLink).toBeInTheDocument();
-          expect(navLink.getAttribute('href')).toBe(`/release-notes/${categoryKey}`);
-        });
+        let navLink = getByRole(sideNav, 'link', { name: 'LOTR API' });
+        expect(navLink).toBeInTheDocument();
+        expect(navLink.getAttribute('href')).toBe('/release-notes/lotr');
+
+        navLink = getByRole(sideNav, 'link', { name: 'Sports API' });
+        expect(navLink).toBeInTheDocument();
+        expect(navLink.getAttribute('href')).toBe('/release-notes/sports');
       });
 
       it('does not have an entry for API categories with no active and enabled APIs', () => {
@@ -139,15 +130,14 @@ describe('ReleaseNotes', () => {
         expect(lotrLink.nextElementSibling).not.toBeNull();
         expect(lotrLink.nextElementSibling!.tagName.toLowerCase()).toBe('ul');
         const subnavList: HTMLElement = lotrLink.nextElementSibling! as HTMLElement;
-        const apis = fakeCategories.lotr.apis.filter(
-          (api: IApiDescription) => !isApiDeactivated(api),
-        );
 
-        apis.forEach((api: IApiDescription) => {
-          const subnavLink = getByRole(subnavList, 'link', { name: api.name });
-          expect(subnavLink).toBeInTheDocument();
-          expect(subnavLink.getAttribute('href')).toBe(`/release-notes/lotr#${api.urlFragment}`);
-        });
+        let subnavLink = getByRole(subnavList, 'link', { name: 'Rings API' });
+        expect(subnavLink).toBeInTheDocument();
+        expect(subnavLink.getAttribute('href')).toBe('/release-notes/lotr#rings');
+
+        subnavLink = getByRole(subnavList, 'link', { name: 'Hobbits API' });
+        expect(subnavLink).toBeInTheDocument();
+        expect(subnavLink.getAttribute('href')).toBe('/release-notes/lotr#hobbits');
       });
 
       it('does not have a second-level entry for an API with no other APIs in its category', () => {
