@@ -1,6 +1,6 @@
 # Typescript
 
-This doc contains miscellaneous
+This doc contains miscellaneous notes and tips about Typescript that we've learned that might be useful to document for the future.
 
 ## Compiler Options
 
