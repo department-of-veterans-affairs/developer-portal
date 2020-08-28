@@ -19,21 +19,19 @@ import DeveloperInfo from './DeveloperInfo';
 import OAuthAppInfo from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
 
-// tslint:disable:interface-name
-interface ApplyDispatchProps {
+interface IApplyProps extends IApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
   updateDescription: (value: IErrorableInput) => void;
 }
 
-type ApplyProps = ApplyDispatchProps & IApplication;
 type ApplicationDispatch = ThunkDispatch<
   IRootState,
   undefined,
   actions.SubmitFormAction | actions.UpdateApplicationAction
 >;
 
-const mapDispatchToProps = (dispatch: ApplicationDispatch): ApplyDispatchProps => {
+const mapDispatchToProps = (dispatch: ApplicationDispatch) => {
   return {
     submitForm: () => {
       dispatch(actions.submitForm());
@@ -53,7 +51,11 @@ const mapStateToProps = (state: IRootState) => {
   };
 };
 
-class ApplyForm extends React.Component<ApplyProps> {
+class ApplyForm extends React.Component<IApplyProps> {
+  constructor(props: IApplyProps) {
+    super(props);
+  }
+
   public render() {
     const {
       inputs: { description, termsOfService },
@@ -183,20 +185,15 @@ class ApplyForm extends React.Component<ApplyProps> {
     let redirectURIComplete = true;
     if (this.anyOAuthApisSelected()) {
       applicationTypeComplete = oAuthApplicationType.value.length !== 0;
-      redirectURIComplete =
-        oAuthRedirectURI.value.length !== 0 && oAuthRedirectURI.validation === undefined;
+      redirectURIComplete = oAuthRedirectURI.value.length !== 0 && oAuthRedirectURI.validation === undefined;
     }
     return (
-      this.allBioFieldsComplete() &&
-      this.anyApiSelected() &&
-      termsOfService &&
-      applicationTypeComplete &&
-      redirectURIComplete
+      this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && applicationTypeComplete && redirectURIComplete
     );
   }
 }
 
-export default connect<IApplication, ApplyDispatchProps>(
+export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(ApplyForm);

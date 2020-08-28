@@ -6,23 +6,18 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/
 import * as actions from '../../actions';
 import { IErrorableInput, IRootState } from '../../types';
 
-// tslint:disable:interface-name
-interface DeveloperInfoStateProps {
+interface IDeveloperInfoProps {
   firstName: IErrorableInput;
   lastName: IErrorableInput;
   email: IErrorableInput;
   organization: IErrorableInput;
-}
-
-interface DeveloperInfoDispatchProps {
   updateFirstName: (value: IErrorableInput) => void;
   updateLastName: (value: IErrorableInput) => void;
   updateEmail: (oldValidation?: string) => (value: IErrorableInput) => void;
   updateOrganization: (value: IErrorableInput) => void;
 }
 
-type DeveloperInfoProps = DeveloperInfoStateProps & DeveloperInfoDispatchProps;
-const mapStateToProps = (state: IRootState): DeveloperInfoStateProps => {
+const mapStateToProps = (state: IRootState) => {
   return {
     email: state.application.inputs.email,
     firstName: state.application.inputs.firstName,
@@ -31,9 +26,13 @@ const mapStateToProps = (state: IRootState): DeveloperInfoStateProps => {
   };
 };
 
-type DeveloperInfoDispatch = ThunkDispatch<IRootState, undefined, actions.UpdateApplicationAction>;
+type DeveloperInfoDispatch = ThunkDispatch<
+  IRootState, 
+  undefined, 
+  actions.UpdateApplicationAction
+>;
 
-const mapDispatchToProps = (dispatch: DeveloperInfoDispatch): DeveloperInfoDispatchProps => {
+const mapDispatchToProps = (dispatch: DeveloperInfoDispatch) => {
   return {
     updateEmail: (oldValidation?: string) => {
       return (value: IErrorableInput) => {
@@ -52,7 +51,7 @@ const mapDispatchToProps = (dispatch: DeveloperInfoDispatch): DeveloperInfoDispa
   };
 };
 
-class DeveloperInfo extends React.Component<DeveloperInfoProps> {
+class DeveloperInfo extends React.Component<IDeveloperInfoProps> {
   public render() {
     return (
       <React.Fragment>
@@ -89,7 +88,4 @@ class DeveloperInfo extends React.Component<DeveloperInfoProps> {
   }
 }
 
-export default connect<DeveloperInfoStateProps, DeveloperInfoDispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DeveloperInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(DeveloperInfo);

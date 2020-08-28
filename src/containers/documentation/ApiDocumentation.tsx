@@ -13,18 +13,13 @@ import { history } from '../../store';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
-// tslint:disable:interface-name
-interface APIDocsDispatchProps {
-  setRequestedApiVersion: (version: string | null) => void;
-}
-
-interface APIDocsOwnProps {
+interface IApiDocumentationProps {
   apiDefinition: IApiDescription;
   categoryKey: string;
   location: Location;
+  setRequestedApiVersion: (version: string | null) => void;
 }
 
-type APIDocumentationProps = APIDocsDispatchProps & APIDocsOwnProps;
 interface IApiDocumentationState {
   tabIndex: number;
 }
@@ -37,8 +32,8 @@ const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion>)
   };
 };
 
-class ApiDocumentation extends React.Component<APIDocumentationProps, IApiDocumentationState> {
-  public constructor(props: APIDocumentationProps) {
+class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocumentationState> {
+  public constructor(props: IApiDocumentationProps) {
     super(props);
     this.state = { tabIndex: 0 };
   }
@@ -48,7 +43,7 @@ class ApiDocumentation extends React.Component<APIDocumentationProps, IApiDocume
     this.setApiVersionFromQueryParams();
   }
 
-  public componentDidUpdate(prevProps: APIDocumentationProps) {
+  public componentDidUpdate(prevProps: IApiDocumentationProps) {
     const { location } = this.props;
     if (
       location.pathname !== prevProps.location.pathname ||
@@ -133,7 +128,7 @@ class ApiDocumentation extends React.Component<APIDocumentationProps, IApiDocume
   }
 }
 
-export default connect<null, APIDocsDispatchProps, APIDocsOwnProps>(
+export default connect(
   null,
   mapDispatchToProps,
 )(ApiDocumentation);

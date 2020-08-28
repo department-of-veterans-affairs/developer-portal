@@ -7,18 +7,13 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/
 import * as actions from '../../actions';
 import { IErrorableInput, IRootState } from '../../types';
 
-// tslint:disable:interface-name
-interface OAuthInfoStateProps {
+interface IOAuthAppInfoProps {
   oAuthApplicationType: IErrorableInput;
   oAuthRedirectURI: IErrorableInput;
-}
-
-interface OAuthInfoDispatchProps {
   updateOAuthApplicationType: (value: IErrorableInput) => void;
   updateOAuthRedirectURI: (oldValidation?: string) => (value: IErrorableInput) => void;
 }
 
-type OAuthAppInfoProps = OAuthInfoStateProps & OAuthInfoDispatchProps;
 const mapStateToProps = (state: IRootState) => {
   return {
     oAuthApplicationType: state.application.inputs.oAuthApplicationType,
@@ -26,7 +21,11 @@ const mapStateToProps = (state: IRootState) => {
   };
 };
 
-type OAuthAppInfoDispatch = ThunkDispatch<IRootState, undefined, actions.UpdateApplicationAction>;
+type OAuthAppInfoDispatch = ThunkDispatch<
+  IRootState,
+  undefined,
+  actions.UpdateApplicationAction
+>;
 
 const mapDispatchToProps = (dispatch: OAuthAppInfoDispatch) => {
   return {
@@ -41,25 +40,22 @@ const mapDispatchToProps = (dispatch: OAuthAppInfoDispatch) => {
   };
 };
 
-const OAuthAppInfo = (props: OAuthAppInfoProps) => {
-  const { oAuthApplicationType, oAuthRedirectURI } = props;
+const OAuthAppInfo = (props: IOAuthAppInfoProps) => {
+  const {
+    oAuthApplicationType,
+    oAuthRedirectURI,
+  } = props;
 
   return (
     <React.Fragment>
       <div className="vads-u-margin-top--4">
-        Please specify whether your app can securely hide a client secret. Apps that can hide a
-        secret will use the&nbsp;
-        <a
-          href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/"
-          target="_blank"
-        >
+        Please specify whether your app can securely hide a client secret. 
+        Apps that can hide a secret will use the&nbsp;
+        <a href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/" target="_blank">
           authorization code flow
-        </a>
-        , and apps that cannot will use the&nbsp;
-        <a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">
-          PKCE flow
-        </a>
-        .
+        </a>,
+        and apps that cannot will use the&nbsp;
+        <a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">PKCE flow</a>.
       </div>
       <ErrorableRadioButtons
         label="Can your application securely hide a client secret?"
@@ -79,7 +75,7 @@ const OAuthAppInfo = (props: OAuthAppInfoProps) => {
         additionalLegendClass="vads-u-margin-top--0"
         additionalFieldsetClass="vads-u-margin-top--1"
       />
-
+        
       <ErrorableTextInput
         errorMessage={oAuthRedirectURI.validation}
         label="OAuth Redirect URI"
@@ -91,7 +87,4 @@ const OAuthAppInfo = (props: OAuthAppInfoProps) => {
   );
 };
 
-export default connect<OAuthInfoStateProps, OAuthInfoDispatchProps>(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OAuthAppInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(OAuthAppInfo);
