@@ -5,6 +5,7 @@ import { Flag } from 'flag';
 import { Route, Switch } from 'react-router-dom';
 
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
+import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { BaseAPICategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
@@ -14,37 +15,35 @@ import ReleaseNotesOverview from './ReleaseNotesOverview';
 // tslint:disable:interface-name
 interface SideNavAPIEntryProps {
   api: IApiDescription;
-  flagName: string;
+  categoryKey: string;
 }
 
 function SideNavAPIEntry(props: SideNavAPIEntryProps) {
-  const { api, flagName } = props;
+  const { api, categoryKey } = props;
   const dashUrlFragment = props.api.urlFragment.replace('_', '-');
   return (
-    <Flag key={api.urlFragment} name={`${flagName}.${api.urlFragment}`}>
-      <SideNavEntry
-        key={api.urlFragment}
-        to={`#${dashUrlFragment}`}
-        name={
-          <React.Fragment>
-            {api.name}
-            <br />
-            {api.vaInternalOnly && (
-              <span>
-                <small>Internal VA use only.</small>
-              </span>
-            )}
-            {(api.vaInternalOnly && api.trustedPartnerOnly && <br />) || null}
-            {api.trustedPartnerOnly && (
-              <span>
-                <small>Internal VA use only.{/*Trusted Partner use only.*/}</small>
-              </span>
-            )}
-          </React.Fragment>
-        }
-        subNavLevel={1}
-      />
-    </Flag>
+    <SideNavEntry
+      key={api.urlFragment}
+      to={`/release-notes/${categoryKey}#${dashUrlFragment}`}
+      name={
+        <React.Fragment>
+          {api.name}
+          <br />
+          {api.vaInternalOnly && (
+            <span>
+              <small>Internal VA use only.</small>
+            </span>
+          )}
+          {(api.vaInternalOnly && api.trustedPartnerOnly && <br />) || null}
+          {api.trustedPartnerOnly && (
+            <span>
+              <small>Internal VA use only.{/*Trusted Partner use only.*/}</small>
+            </span>
+          )}
+        </React.Fragment>
+      }
+      subNavLevel={1}
+    />
   );
 }
 
@@ -55,13 +54,16 @@ interface SideNavCategoryEntryProps {
 
 function SideNavCategoryEntry(props: SideNavCategoryEntryProps) {
   const { apiCategory, categoryKey } = props;
-  const apis: IApiDescription[] = apiCategory.apis.filter(api => !isApiDeactivated(api));
+  const apis: IApiDescription[] = apiCategory.apis.filter(
+    api => !isApiDeactivated(api) && isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  );
+
   return (
     <Flag name={`categories.${categoryKey}`} key={categoryKey}>
       <SideNavEntry to={`/release-notes/${categoryKey}`} name={apiCategory.name}>
         {apis.length > 1 &&
           apis.map(api => (
-            <SideNavAPIEntry api={api} key={api.urlFragment} flagName="hosted_apis" />
+            <SideNavAPIEntry api={api} key={api.urlFragment} categoryKey={categoryKey} />
           ))}
       </SideNavEntry>
     </Flag>
@@ -71,7 +73,11 @@ function SideNavCategoryEntry(props: SideNavCategoryEntryProps) {
 export function ReleaseNotes() {
   const categoryOrder = getApiCategoryOrder();
   const apiDefs = getApiDefinitions();
-  const deactivatedApis = getDeactivatedCategory();
+  const deactivatedCategory = getDeactivatedCategory();
+  const deactivatedApis = deactivatedCategory.apis.filter(api =>
+    isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  );
+
   return (
     <div className={classNames('vads-u-padding-y--5')}>
       <section>
@@ -82,12 +88,14 @@ export function ReleaseNotes() {
               {categoryOrder.map((key: string) => (
                 <SideNavCategoryEntry categoryKey={key} apiCategory={apiDefs[key]} key={key} />
               ))}
-              <SideNavEntry to="/release-notes/deactivated" name={deactivatedApis.name}>
-                {deactivatedApis.apis.length > 1 &&
-                  deactivatedApis.apis.map(api => (
-                    <SideNavAPIEntry api={api} key={api.urlFragment} flagName="enabled" />
-                  ))}
-              </SideNavEntry>
+              {deactivatedApis.length > 0 && (
+                <SideNavEntry to="/release-notes/deactivated" name={deactivatedCategory.name}>
+                  {deactivatedApis.length > 1 &&
+                    deactivatedApis.map(api => (
+                      <SideNavAPIEntry api={api} key={api.urlFragment} categoryKey="deactivated" />
+                    ))}
+                </SideNavEntry>
+              )}
             </SideNav>
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
               <Switch>

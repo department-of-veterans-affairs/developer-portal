@@ -1,14 +1,14 @@
 import * as moment from 'moment';
 import * as React from 'react';
-import { IApiCategories as APICategories } from '../apiDefs/schema';
+import { IApiCategories, IApiDeactivationInfo, IApiDescription } from '../apiDefs/schema';
 
-export const fakeCategoryOrder: string[] = ['people', 'objects'];
-export const fakeCategories: APICategories = {
-  objects: {
+export const fakeCategoryOrder: string[] = ['lotr', 'sports'];
+export const fakeCategories: IApiCategories = {
+  lotr: {
     apis: [
       {
         description: 'One Ring to rule them all',
-        docSources: [], // doesn't matter here
+        docSources: [], // doesn't matter yet
         enabledByDefault: true,
         name: 'Rings API',
         releaseNotes: () => (
@@ -26,9 +26,9 @@ export const fakeCategories: APICategories = {
       {
         deactivationInfo: {
           deactivationContent: () => <div>Silmarils lost forever</div>,
-          deactivationDate: moment('01 Oct 2019 00:00 EDT'),
+          deactivationDate: moment().subtract(1, 'year'),
           deprecationContent: () => <div>Morgoth claims the jewels</div>,
-          deprecationDate: moment('15 Sep 2019 00:00 EDT'),
+          deprecationDate: moment().subtract(15, 'months'),
         },
         description: 'Three pretty gems',
         docSources: [],
@@ -44,60 +44,6 @@ export const fakeCategories: APICategories = {
         ),
         trustedPartnerOnly: false,
         urlFragment: 'silmarils',
-        vaInternalOnly: false,
-      },
-      {
-        description: 'Discover hand-crafted pipes of the Shire',
-        docSources: [],
-        enabledByDefault: true,
-        name: 'Pipes API',
-        releaseNotes: () => (
-          <>
-            <h3>April 3, 2020</h3>
-            <p>Sackville-Bagginses repossessed some of Bilbo's pipes</p>
-            <h3>December 1, 2019</h3>
-            <p>Green Dragon begins selling pipes</p>
-          </>
-        ),
-        trustedPartnerOnly: false,
-        urlFragment: 'pipes',
-        vaInternalOnly: false,
-      },
-    ],
-    content: {
-      intro: () => (
-        <h2>The Objects APIs contain info about fictional objects in the world of LOTR.</h2>
-      ),
-      overview: () => null,
-      placardText: 'Learn more about things in Middle-earth',
-      shortDescription: 'Learn more about things in Middle-earth',
-    },
-    name: 'Objects API',
-    properName: 'Fancy Objects API',
-  },
-  people: {
-    apis: [
-      {
-        deactivationInfo: {
-          deactivationContent: () => <div>Numenor swallowed by the sea</div>,
-          deactivationDate: moment('01 Oct 2019 00:00 EDT'),
-          deprecationContent: () => <div>Army sailed on Undying lands, exiles fled east</div>,
-          deprecationDate: moment('15 Sep 2019 00:00 EDT'),
-        },
-        description: 'People of Numenor',
-        docSources: [], // doesn't matter here
-        enabledByDefault: true,
-        name: 'Numenoreans API',
-        releaseNotes: () => (
-          <>
-            <h3>September 21, 2019</h3>
-            <p>Moved exiled Numenoreans to Middle-earth</p>
-            <h3>June 12, 2019</h3>
-            <p>Released our API</p>
-          </>
-        ),
-        trustedPartnerOnly: false,
-        urlFragment: 'numenor',
         vaInternalOnly: false,
       },
       {
@@ -120,13 +66,88 @@ export const fakeCategories: APICategories = {
     ],
     content: {
       intro: () => (
-        <h2>The People APIs contain info about fictional characters in the world of LOTR.</h2>
+        <h2>The Lord of the Rings APIs contain info about the world of Middle-earth.</h2>
       ),
       overview: () => null,
-      placardText: 'Learn more about the the peoples of Middle-earth',
-      shortDescription: 'Learn more about the the peoples of Middle-earth',
+      placardText: 'Learn more about things in Middle-earth',
+      shortDescription: 'Learn more about things in Middle-earth',
     },
-    name: 'People API',
-    properName: 'Fancy People API',
+    name: 'LOTR API',
+    properName: 'Fancy LOTR API',
   },
+  sports: {
+    apis: [
+      {
+        description: 'stuff about hoops or whatever',
+        docSources: [], // doesn't matter here
+        enabledByDefault: true,
+        name: 'Basketball API',
+        releaseNotes: () => (
+          <>
+            <h3>September 21, 2019</h3>
+            <p>Moved exiled Numenoreans to Middle-earth</p>
+            <h3>June 12, 2019</h3>
+            <p>Released our API</p>
+          </>
+        ),
+        trustedPartnerOnly: false,
+        urlFragment: 'basketball',
+        vaInternalOnly: false,
+      },
+      {
+        description: 'a slow summer game',
+        docSources: [], // doesn't matter here
+        enabledByDefault: false,
+        name: 'Baseball API',
+        releaseNotes: () => (
+          <>
+            <h3>September 22, 2019</h3>
+            <p>Mike Trout homers</p>
+            <h3>June 11, 2019</h3>
+            <p>Gerrit Cole strikes out 80</p>
+          </>
+        ),
+        trustedPartnerOnly: false,
+        urlFragment: 'baseball',
+        vaInternalOnly: false,
+      },
+    ],
+    content: {
+      intro: () => <h2>The Sports APIs are about games and stuff</h2>,
+      overview: () => null,
+      placardText: 'Learn more about throwing, running, and hitting',
+      shortDescription: 'Learn more about throwing, running, and hitting',
+    },
+    name: 'Sports API',
+    properName: 'Fancy Sports API',
+  },
+};
+
+export const fakeAPIs: IApiDescription[] = Object.values(fakeCategories).flatMap(
+  category => category.apis,
+);
+
+export const extraAPI: IApiDescription = {
+  description: 'the beautiful game',
+  docSources: [],
+  enabledByDefault: true,
+  name: 'Soccer API',
+  releaseNotes: () => (
+    <>
+      <h3>October 22, 2019</h3>
+      <p>a lot of goals get scored</p>
+      <h3>August 11, 2019</h3>
+      <p>champions league</p>
+    </>
+  ),
+  trustedPartnerOnly: false,
+  urlFragment: 'soccer',
+  vaInternalOnly: false,
+};
+
+export const extraDeactivationInfo: IApiDeactivationInfo = {
+  deactivationContent: () => <div>deactivated this API</div>,
+  deactivationDate: moment().subtract(3, 'months'),
+  deprecationContent: () => <div>deprecated this API</div>,
+  deprecationDate: moment().subtract(6, 'months'),
 };

@@ -1,29 +1,49 @@
 import '@testing-library/jest-dom';
-import { fireEvent, getByRole, queryByRole, render, screen } from '@testing-library/react';
+import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
 import { FlagsProvider } from 'flag';
+import { createMemoryHistory, MemoryHistory } from 'history';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
-import { fakeCategories, fakeCategoryOrder } from '../../__mocks__/fakeCategories';
+import {
+  extraAPI,
+  extraDeactivationInfo,
+  fakeCategories,
+  fakeCategoryOrder,
+} from '../../__mocks__/fakeCategories';
+import { isApiDeactivated } from '../../apiDefs/deprecated';
 import * as apiQueries from '../../apiDefs/query';
-import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
+import { IApiDescription } from '../../apiDefs/schema';
 import { getFlags } from '../../App';
 import ReleaseNotes from './ReleaseNotes';
 
+function renderComponent(route: string = '/release-notes') {
+  cleanup(); // in case we're calling from a test, not beforeEach()
+  render(
+    <FlagsProvider flags={getFlags()}>
+      <MemoryRouter initialEntries={[route]}>
+        <ReleaseNotes />
+      </MemoryRouter>
+    </FlagsProvider>,
+  );
+}
+
+const allAPIs: IApiDescription[] = Object.values(fakeCategories).flatMap(category => category.apis);
 describe('ReleaseNotes', () => {
+  let history: MemoryHistory;
+  let apiDefinitionsSpy: jest.SpyInstance;
+  let allAPIsSpy: jest.SpyInstance;
   beforeAll(() => {
-    jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
-    jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
+    history = createMemoryHistory();
   });
 
   beforeEach(() => {
-    render(
-      <FlagsProvider flags={getFlags()}>
-        <MemoryRouter initialEntries={['/release-notes']}>
-          <ReleaseNotes />
-        </MemoryRouter>
-      </FlagsProvider>,
-    );
+    jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
+    apiDefinitionsSpy = jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
+    allAPIsSpy = jest.spyOn(apiQueries, 'getAllApis').mockReturnValue(allAPIs);
+
+    renderComponent();
+    history.push('/release-notes');
   });
 
   it('renders successfully, on the Overview page by default', () => {
@@ -31,6 +51,24 @@ describe('ReleaseNotes', () => {
     expect(heading1).toBeInTheDocument();
     expect(heading1.previousElementSibling).not.toBeNull();
     expect(heading1.previousElementSibling).toHaveTextContent('Overview');
+  });
+
+  it('renders the route for the category release note page', () => {
+    fakeCategoryOrder.forEach((categoryKey: string) => {
+      renderComponent(`/release-notes/${categoryKey}`);
+      const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
+      expect(heading1).toBeInTheDocument();
+      expect(heading1.previousElementSibling).not.toBeNull();
+      expect(heading1.previousElementSibling).toHaveTextContent(fakeCategories[categoryKey].name);
+    });
+  });
+
+  it('renders the route for the deactivated APIs release notes page', () => {
+    renderComponent('/release-notes/deactivated');
+    const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
+    expect(heading1).toBeInTheDocument();
+    expect(heading1.previousElementSibling).not.toBeNull();
+    expect(heading1.previousElementSibling).toHaveTextContent('Deactivated APIs');
   });
 
   describe('side nav', () => {
@@ -58,66 +96,145 @@ describe('ReleaseNotes', () => {
         });
       });
 
+      it('does not have an entry for API categories with no active and enabled APIs', () => {
+        apiDefinitionsSpy.mockReturnValue({
+          ...fakeCategories,
+          sports: {
+            ...fakeCategories.sports,
+            apis: fakeCategories.sports.apis.map(
+              (api: IApiDescription): IApiDescription => {
+                return { ...api, enabledByDefault: false };
+              },
+            ),
+          },
+        });
+
+        renderComponent();
+        const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
+        expect(queryByRole(sideNav, 'link', { name: 'Sports API' })).toBeNull();
+      });
+
       it('has an entry for deactivated APIs', () => {
         const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
         const deactivatedLink = getByRole(sideNav, 'link', { name: 'Deactivated APIs' });
         expect(deactivatedLink).toBeInTheDocument();
         expect(deactivatedLink.getAttribute('href')).toBe('/release-notes/deactivated');
       });
+
+      it('does not have an entry for deactivated APIs if there are none', () => {
+        allAPIsSpy.mockReturnValue(allAPIs.filter(api => !api.deactivationInfo));
+        renderComponent();
+
+        const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
+        expect(queryByRole(sideNav, 'link', { name: 'Deactivated APIs' })).toBeNull();
+      });
     });
 
     describe('second-level entries', () => {
-      it('does not show second-level nav entries if the category page is not selected', () => {
-        // on overview page, so no category should have subnav showing
+      it('has a second-level entry for APIs in categories with multiple APIs', () => {
         const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
-        fakeCategoryOrder.forEach((categoryKey: string) => {
-          const category: IApiCategory = fakeCategories[categoryKey];
-          const categoryLink = getByRole(sideNav, 'link', { name: category.name });
-          expect(categoryLink).toBeInTheDocument();
+        const lotrLink = getByRole(sideNav, 'link', { name: 'LOTR API' });
+        expect(lotrLink).toBeInTheDocument();
 
-          console.log(categoryLink.parentElement!.outerHTML);
-          expect(categoryLink.nextElementSibling).not.toBeNull();
-          expect(categoryLink.nextElementSibling!.tagName.toLowerCase()).toBe('ul');
-          const subnavList: HTMLElement = categoryLink.nextElementSibling! as HTMLElement;
-          expect(subnavList).toHaveStyle('display: none');
-          expect(queryByRole(subnavList, 'link')).toBeNull();
-        });
-      });
-
-      it.skip('has a second-level entry for APIs in categories with multiple APIs', () => {
-        const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
-        const objectsLink = getByRole(sideNav, 'link', { name: 'Objects API' });
-        expect(objectsLink).toBeInTheDocument();
-
-        expect(objectsLink.nextElementSibling).not.toBeNull();
-        expect(objectsLink.nextElementSibling!.tagName.toLowerCase()).toBe('ul');
-        const subnavList: HTMLElement = objectsLink.nextElementSibling! as HTMLElement;
-
-        fireEvent.click(objectsLink);
-        expect(subnavList).toHaveStyle('display: block');
-
-        const apis = fakeCategories.objects.apis.filter(
-          (api: IApiDescription) => !api.deactivationInfo,
+        expect(lotrLink.nextElementSibling).not.toBeNull();
+        expect(lotrLink.nextElementSibling!.tagName.toLowerCase()).toBe('ul');
+        const subnavList: HTMLElement = lotrLink.nextElementSibling! as HTMLElement;
+        const apis = fakeCategories.lotr.apis.filter(
+          (api: IApiDescription) => !isApiDeactivated(api),
         );
+
         apis.forEach((api: IApiDescription) => {
           const subnavLink = getByRole(subnavList, 'link', { name: api.name });
           expect(subnavLink).toBeInTheDocument();
-          expect(subnavLink.getAttribute('href')).toBe(`/release-notes/objects#${api.urlFragment}`);
+          expect(subnavLink.getAttribute('href')).toBe(`/release-notes/lotr#${api.urlFragment}`);
         });
       });
 
-      it.skip('does not have a second-level entry for an API with no other APIs in its category', () => {
+      it('does not have a second-level entry for an API with no other APIs in its category', () => {
         const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
-        const peopleLink = getByRole(sideNav, 'link', { name: 'People API' });
-        expect(peopleLink).toBeInTheDocument();
+        const sportsLink = getByRole(sideNav, 'link', { name: 'Sports API' });
+        expect(sportsLink).toBeInTheDocument();
+        expect(sportsLink.nextElementSibling).toBeNull();
+      });
 
-        expect(peopleLink.nextElementSibling).not.toBeNull();
-        expect(peopleLink.nextElementSibling!.tagName.toLowerCase()).toBe('ul');
-        const subnavList: HTMLElement = peopleLink.nextElementSibling! as HTMLElement;
-        expect(subnavList.childElementCount).toBe(0);
+      it('does not have a second-level entry for deactivated APIs under their API category', () => {
+        const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
+        const lotrLink = getByRole(sideNav, 'link', { name: 'LOTR API' });
+        expect(lotrLink).toBeInTheDocument();
+        expect(lotrLink.nextElementSibling).not.toBeNull();
 
-        fireEvent.click(peopleLink);
-        expect(queryByRole(subnavList, 'link')).toBeNull();
+        const subnavList: HTMLElement = lotrLink.nextElementSibling! as HTMLElement;
+        expect(queryByRole(subnavList, 'link', { name: 'Silmarils API' })).toBeNull();
+      });
+
+      it('does not have a second-level entry for disabled APIs under their API category', () => {
+        // add another API so Sports gets a sub-nav list
+        apiDefinitionsSpy.mockReturnValue({
+          ...fakeCategories,
+          sports: {
+            ...fakeCategories.sports,
+            apis: [...fakeCategories.sports.apis, extraAPI],
+          },
+        });
+
+        renderComponent();
+        const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
+        const sportsLink = getByRole(sideNav, 'link', { name: 'Sports API' });
+        expect(sportsLink).toBeInTheDocument();
+        expect(sportsLink.nextElementSibling).not.toBeNull();
+        expect(sportsLink.nextElementSibling!.tagName.toLowerCase()).toBe('ul');
+
+        const subnavList: HTMLElement = sportsLink.nextElementSibling! as HTMLElement;
+        expect(queryByRole(subnavList, 'link', { name: 'Baseball API' })).toBeNull();
+      });
+
+      it('has second-level entries for deactivated APIs in a pseudo-category', () => {
+        // add another deactivated API so Deactivated APIs get a sub-nav list
+        allAPIsSpy.mockReturnValue([
+          ...allAPIs,
+          {
+            ...extraAPI,
+            deactivationInfo: extraDeactivationInfo,
+          },
+        ]);
+
+        renderComponent();
+        const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
+        const deactivatedLink = getByRole(sideNav, 'link', { name: 'Deactivated APIs' });
+        expect(deactivatedLink).toBeInTheDocument();
+        expect(deactivatedLink.nextElementSibling).not.toBeNull();
+        expect(deactivatedLink.nextElementSibling!.tagName.toLowerCase()).toBe('ul');
+
+        const subnavList: HTMLElement = deactivatedLink.nextElementSibling! as HTMLElement;
+        expect(getByRole(subnavList, 'link', { name: 'Soccer API' })).toBeInTheDocument();
+        expect(getByRole(subnavList, 'link', { name: 'Silmarils API' })).toBeInTheDocument();
+      });
+
+      it('does not show second-level entries for deactivated APIs if there is only one', () => {
+        const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
+        const deactivatedLink = getByRole(sideNav, 'link', { name: 'Deactivated APIs' });
+        expect(deactivatedLink).toBeInTheDocument();
+        expect(deactivatedLink.nextElementSibling).toBeNull();
+      });
+
+      it('does not include disabled APIs in the deacivated APIs subnav', () => {
+        allAPIsSpy.mockReturnValue(
+          allAPIs.map(
+            (api: IApiDescription): IApiDescription => {
+              return { ...api, deactivationInfo: extraDeactivationInfo };
+            },
+          ),
+        );
+
+        renderComponent();
+        const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
+        const deactivatedLink = getByRole(sideNav, 'link', { name: 'Deactivated APIs' });
+        expect(deactivatedLink).toBeInTheDocument();
+        expect(deactivatedLink.nextElementSibling).not.toBeNull();
+        expect(deactivatedLink.nextElementSibling!.tagName.toLowerCase()).toBe('ul');
+
+        const subnavList: HTMLElement = deactivatedLink.nextElementSibling! as HTMLElement;
+        expect(queryByRole(subnavList, 'link', { name: 'Baseball API' })).toBeNull();
       });
     });
   });
