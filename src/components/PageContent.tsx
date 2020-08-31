@@ -38,6 +38,10 @@ export default class PageContent extends React.Component<RouteComponentProps, {}
   }
 
   private handleSkipNavClick = () => {
-    this.pageHeadingRef!.current!.focus();
+    if (this.pageHeadingRef && this.pageHeadingRef.current) {
+      this.pageHeadingRef.current.focus();
+    } else {
+      document.querySelector('h1')!.focus();
+    }
   };
 }
