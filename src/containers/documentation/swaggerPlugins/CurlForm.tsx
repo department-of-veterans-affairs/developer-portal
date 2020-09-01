@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import CodeWrapper from 'src/components/CodeWrapper';
+import CodeWrapper from '../../../components/CodeWrapper';
 
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
