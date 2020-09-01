@@ -1,4 +1,4 @@
-import { RouterState } from 'react-router-redux';
+import { RouterState } from 'connected-react-router';
 import { IApplication } from './apply';
 
 export * from './apply';
@@ -18,5 +18,5 @@ export interface IApiVersioning {
 export interface IRootState {
   apiVersioning: IApiVersioning;
   application: IApplication;
-  routing: RouterState;
+  router: RouterState;
 }

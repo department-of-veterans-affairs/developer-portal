@@ -36,7 +36,7 @@ export interface IVersionInfo {
 const mapStateToProps = (state: IRootState) => {
   return {
     docUrl: getDocURL(state.apiVersioning),
-    location: state.routing.location,
+    location: state.router.location,
     metadata: state.apiVersioning.metadata,
     version: getVersion(state.apiVersioning),
     versionNumber: getVersionNumber(state.apiVersioning),

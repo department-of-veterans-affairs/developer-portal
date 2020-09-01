@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { SiteRoutes } from '../Routes';
 
 export default class PageContent extends React.Component<RouteComponentProps, {}> {
-  private mainRef: React.RefObject<HTMLMainElement> = React.createRef<HTMLMainElement>();
+  private mainRef: React.RefObject<HTMLElement> = React.createRef<HTMLElement>();
 
   public componentDidUpdate(prevProps: RouteComponentProps) {
     const { location } = this.props;
