@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import './CodeWrapper.scss';
 
-// tslint:disable:interface-name
 interface CodeWrapperProps {
   children: React.ReactNode;
 }
