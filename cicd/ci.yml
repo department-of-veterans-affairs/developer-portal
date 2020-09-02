@@ -7,6 +7,6 @@ phases:
   build:
     commands:
       - npm install
-      - prohibit_image_files.sh origin/master HEAD
+      - ./prohibit_image_files.sh origin/master HEAD
 #    - if [ "$BRANCH" = master  ]; then
 #      ./prohibit_image_files.sh 
