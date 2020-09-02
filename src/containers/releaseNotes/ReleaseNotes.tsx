@@ -12,7 +12,6 @@ import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
-// tslint:disable:interface-name
 interface SideNavAPIEntryProps {
   api: IApiDescription;
   categoryKey: string;

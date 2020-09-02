@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import './PageHeader.scss';
 
-// tslint:disable-next-line:interface-name
 interface PageHeaderProps {
   className?: string;
   description?: string;

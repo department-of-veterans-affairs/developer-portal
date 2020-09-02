@@ -14,7 +14,6 @@ import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
-// tslint:disable-next-line:interface-name
 interface ReleaseNotesCardLinksProps {
   categoryKey: string;
   apiCategory: BaseAPICategory;
@@ -77,7 +76,6 @@ const APIReleaseNote = ({ api, flagName }: { api: IApiDescription; flagName: str
   );
 };
 
-// tslint:disable-next-line:interface-name
 interface ReleaseNotesCollectionProps {
   categoryKey: string;
   apiCategory: BaseAPICategory;

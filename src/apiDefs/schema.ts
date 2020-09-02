@@ -45,7 +45,6 @@ export interface IApiDescription {
   readonly multiOpenAPIIntro?: React.FunctionComponent;
 }
 
-// tslint:disable-next-line:interface-name
 export interface BaseAPICategory {
   readonly apis: IApiDescription[];
   readonly properName: string;
