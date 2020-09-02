@@ -1,10 +1,12 @@
+version: 0.2
 #env:
 #  parameter-store:
 #    GH_USERNAME: parampath
 #    TOKEN: parampath
-build:
- commands:
-    - npm install
-    - prohibit_image_files.sh origin/master HEAD
+phases:
+  build:
+    commands:
+      - npm install
+      - prohibit_image_files.sh origin/master HEAD
 #    - if [ "$BRANCH" = master  ]; then
 #      ./prohibit_image_files.sh 
