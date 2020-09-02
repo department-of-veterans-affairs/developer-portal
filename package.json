@@ -126,7 +126,7 @@
     "mini-css-extract-plugin": "0.4.3",
     "node-sass": "^4.14.1",
     "node-sass-tilde-importer": "^1.0.2",
-    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
     "postcss-flexbugs-fixes": "4.1.0",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "6.0.6",
