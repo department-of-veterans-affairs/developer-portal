@@ -4,16 +4,11 @@
 
   & > pre {
     margin: 0;
-    pointer-events: none; // This allows the click to
     overflow: visible;
   }
 
   .opblock-body & {
     background: #41444e;
     border-radius: 4px;
-
-    .va-api-curl__copy-to-clipboard {
-      pointer-events: all; // Need to give back pointer events to copy to clipboard
-    }
   }
 }

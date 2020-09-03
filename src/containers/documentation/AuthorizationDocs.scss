@@ -32,10 +32,6 @@
     &:focus {
       border: 1px solid $color-gray;
     }
-
-    > span {
-      pointer-events: none;
-    }
   }
 
   ul {
