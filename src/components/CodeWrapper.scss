@@ -1,13 +1,19 @@
 .code-wrapper {
-  overflow-x: scroll;
+  margin: 16px 0;
+  overflow-x: auto;
 
   & > pre {
     margin: 0;
-    pointer-events: none;
+    pointer-events: none; // This allows the click to
     overflow: visible;
   }
 
-  & + .code-wrapper {
-    margin-top: 16px;
+  .opblock-body & {
+    background: #41444e;
+    border-radius: 4px;
+
+    .va-api-curl__copy-to-clipboard {
+      pointer-events: all; // Need to give back pointer events to copy to clipboard
+    }
   }
 }

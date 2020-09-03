@@ -311,19 +311,22 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                <pre
-                  className={classNames(
-                    'vads-u-display--flex',
-                    'vads-u-justify-content--space-between',
-                  )}
-                >
-                  <CodeWrapper>{this.buildCurl()}</CodeWrapper>
-                  <CopyToClipboard text={this.buildCurl()}>
-                    <span className="va-api-curl__copy-to-clipboard">
-                      <FontAwesomeIcon icon={faCopy} size="2x" />
-                    </span>
-                  </CopyToClipboard>
-                </pre>
+                <CodeWrapper>
+                  <pre
+                    className={classNames(
+                      'vads-u-display--flex',
+                      'vads-u-justify-content--space-between',
+                    )}
+                  >
+                    {this.buildCurl()}
+
+                    <CopyToClipboard text={this.buildCurl()}>
+                      <span className="va-api-curl__copy-to-clipboard">
+                        <FontAwesomeIcon icon={faCopy} size="2x" />
+                      </span>
+                    </CopyToClipboard>
+                  </pre>
+                </CodeWrapper>
               </div>
             </div>
           </div>
