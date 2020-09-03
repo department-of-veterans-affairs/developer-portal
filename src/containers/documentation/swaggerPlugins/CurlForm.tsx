@@ -318,7 +318,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
                       'vads-u-justify-content--space-between',
                     )}
                   >
-                    {this.buildCurl()}
+                    <code>{this.buildCurl()}</code>
 
                     <CopyToClipboard text={this.buildCurl()}>
                       <span className="va-api-curl__copy-to-clipboard">

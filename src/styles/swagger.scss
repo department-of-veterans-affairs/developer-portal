@@ -121,7 +121,8 @@
     padding-right: 2rem;
   }
 
-  .highlight-code {
-    pointer-events: none;
+  .opblock-body .code-wrapper {
+    background: #41444e;
+    border-radius: 4px;
   }
 }
