@@ -33,25 +33,30 @@ export interface IVersionInfo {
   internal_only: boolean;
 }
 
-const mapStateToProps = (state : IRootState) => {
+const mapStateToProps = (state: IRootState) => {
   return {
     docUrl: getDocURL(state.apiVersioning),
-    location: state.routing.location,
+    location: state.router.location,
     metadata: state.apiVersioning.metadata,
     version: getVersion(state.apiVersioning),
     versionNumber: getVersionNumber(state.apiVersioning),
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion | actions.ISetInitialVersioning>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<actions.ISetRequestedApiVersion | actions.ISetInitialVersioning>,
+) => {
   return {
-    setInitialVersioning: (url: string, metadata: any) => { dispatch(actions.setInitialVersioning(url, metadata)); },
-    setRequestedApiVersion: (version: string) => { dispatch(actions.setRequstedApiVersion(version)); },
+    setInitialVersioning: (url: string, metadata: any) => {
+      dispatch(actions.setInitialVersioning(url, metadata));
+    },
+    setRequestedApiVersion: (version: string) => {
+      dispatch(actions.setRequstedApiVersion(version));
+    },
   };
 };
 
 class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
-
   public async componentDidMount() {
     await this.setMetadataAndDocUrl();
     this.setSearchParam();
@@ -68,7 +73,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
       this.renderSwaggerUI();
     }
   }
-  
+
   public render() {
     const { apiIntro } = this.props.docSource;
     return (
@@ -109,7 +114,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
       });
       const response = await fetch(request);
       return response.json();
-    } catch(error) {
+    } catch (error) {
       Sentry.captureException(error);
     }
   }
@@ -129,4 +134,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SwaggerDocs);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SwaggerDocs);

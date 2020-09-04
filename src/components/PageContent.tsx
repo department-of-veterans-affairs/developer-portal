@@ -5,7 +5,7 @@ import { HashLink } from 'react-router-hash-link';
 import { SiteRoutes } from '../Routes';
 
 export default class PageContent extends React.Component<RouteComponentProps, {}> {
-  private mainRef: React.RefObject<HTMLMainElement> = React.createRef<HTMLMainElement>();
+  private mainRef: React.RefObject<HTMLElement> = React.createRef<HTMLElement>();
   private pageHeadingRef: React.RefObject<HTMLHeadingElement> = React.createRef<
     HTMLHeadingElement
   >();
