@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 import { SiteRoutes } from '../Routes';
 import './PageContent.scss';
 
@@ -23,13 +23,13 @@ export default class PageContent extends React.Component<RouteComponentProps, {}
   public render() {
     return (
       <main id="main" ref={this.mainRef} tabIndex={-1}>
-        <HashLink
+        <Link
           to={window.location.pathname + window.location.search}
           className={classNames('va-api-skipnav', 'vads-u-padding-x--2', 'vads-u-padding-y--1')}
           onClick={this.handleSkipNavClick}
         >
           Skip side navigation
-        </HashLink>
+        </Link>
         <SiteRoutes />
       </main>
     );
