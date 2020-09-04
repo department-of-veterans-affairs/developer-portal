@@ -3,16 +3,15 @@ import * as React from 'react';
 
 import './PageHeader.scss';
 
-interface IPageHeaderProps {
+interface PageHeaderProps {
   className?: string;
   description?: string;
   halo?: string;
   header: string;
   id?: string;
-  forwardedRef?: React.RefObject<HTMLDivElement>;
 }
 
-export default class PageHeader extends React.Component<IPageHeaderProps, {}> {
+export default class PageHeader extends React.Component<PageHeaderProps, {}> {
   public render() {
     return (
       <div className={this.props.className}>
@@ -23,7 +22,6 @@ export default class PageHeader extends React.Component<IPageHeaderProps, {}> {
           id={this.props.id}
           className={classNames('vads-u-margin-top--0', 'vads-u-margin-bottom--2')}
           tabIndex={-1}
-          ref={this.props.forwardedRef}
         >
           {this.props.header}
         </h1>

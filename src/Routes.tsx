@@ -24,11 +24,7 @@ import Support from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
 
-interface ISiteRoutesProps {
-  forwardedRef: React.RefObject<HTMLHeadingElement>;
-}
-
-export function SiteRoutes(props: ISiteRoutesProps) {
+export function SiteRoutes() {
   return (
     <Switch>
       <Route exact={true} path="/" component={Home} />
@@ -61,7 +57,7 @@ export function SiteRoutes(props: ISiteRoutesProps) {
         render={() => <Redirect to="/explore/verification/docs/authorization" />}
       />
       <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-      <Route path="/news" render={() => <News forwardedRef={props.forwardedRef} />} />
+      <Route path="/news" component={News} />
       <Route path="/support" component={Support} />
       <Route path="/providers/integration-guide" component={ProviderIntegrationGuide} />
       <Route component={NotFound} />

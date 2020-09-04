@@ -76,11 +76,7 @@ function ItemDescription({ item }: { item: INewsItem }) {
   );
 }
 
-interface INewsProps {
-  forwardedRef: React.RefObject<HTMLHeadingElement>;
-}
-
-export default class News extends React.Component<INewsProps> {
+export default class News extends React.Component {
   private cardsSections = sections.map((section: INewsSection) => {
     return (
       <CardLink key={section.id} url={`#${section.id}`} name={section.title}>
@@ -128,7 +124,6 @@ export default class News extends React.Component<INewsProps> {
                   description={headerProps.description}
                   header={headerProps.header}
                   className="vads-u-margin-bottom--4"
-                  forwardedRef={this.props.forwardedRef}
                 />
                 <div className={classNames(defaultFlexContainer(), 'vads-u-margin-bottom--4')}>
                   {this.cardsSections}
