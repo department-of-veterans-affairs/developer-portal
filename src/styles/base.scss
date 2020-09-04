@@ -72,14 +72,14 @@ a {
   transition: none;
 
   &:hover {
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
   }
 }
 
 *:focus,
 a:focus,
 .usa-focus,
-[type=checkbox]:focus + label::before {
+[type='checkbox']:focus + label::before {
   @include focus-outline;
 }
 
