@@ -23,7 +23,7 @@ export default class ExtendedLayout extends React.Component<IExtendedLayoutProps
     const BaseLayout = getComponent('BaseLayout', true)!;
     return (
       <div>
-        {apiMetadata && Object.keys(apiMetadata).length !== 0 && (
+        {apiMetadata && apiMetadata.meta.versions.length > 1 && (
           <VersionSelect getSystem={getSystem} />
         )}
         <BaseLayout />
