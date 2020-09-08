@@ -112,12 +112,17 @@
       border: none;
     }
   }
-  
+
   blockquote {
     line-height: 1.5;
     color: $color-gray-dark;
     background: $color-primary-alt-lightest;
     padding: 1rem;
     padding-right: 2rem;
+  }
+
+  .opblock-body .code-wrapper {
+    background: #41444e;
+    border-radius: 4px;
   }
 }

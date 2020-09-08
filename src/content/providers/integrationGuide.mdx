@@ -1,3 +1,8 @@
+---
+imports:
+  CodeWrapper: ../../components/CodeWrapper.tsx
+---
+
 # Lighthouse API Provider Integration Guide
 
 The Lighthouse platform offers an API gateway that VA teams can use to publish their API, exposing it to the internet. This can be an effective way to allow external applications to consume your VA API. This document will explain how to integrate with the API gateway as part of this publishing process.
@@ -30,9 +35,13 @@ If your API allows 3rd party applications to access Veteran PII or PHI, the Ligh
 
 If you're planning to secure your API by requiring an OAuth access token, you should expect to receive the access token in the HTTP `Authorization` header.
 
-```
+<CodeWrapper>
+
+```plaintext
 Authorization: Bearer eyJraWQiOiJUdWZhS3pDWlNENlZiN25Xclg3U1VzUkZXQTRQQkJKZGpodHpxbi1aUEZFIiwiYWxnIjoiUlMyNTYifQ.eyJ2ZXIiOjEsImp0aSI6IkFULjlXd1BYc0oyUUxxY0JMaXctMkU3SmEwYUVBd3pjZ0Z3WjFPNi04UkR6RjgiLCJpc3MiOiJodHRwczovL2RlcHR2YS1ldmFsLm9rdGEuY29tL29hdXRoMi9kZWZhdWx0IiwiYXVkIjoiYXBpOi8vZGVmYXVsdCIsImlhdCI6MTU2OTAxMjI1MSwiZXhwIjoxNTY5MDE1ODUxLCJjaWQiOiIwb2EzNXJsYjhwdEh1bGVGZjJwNyIsInVpZCI6IjAwdTJwOWZhcjRpaERBRVg4MnA3Iiwic2NwIjpbInZldGVyYW5fc3RhdHVzLnJlYWQiLCJvcGVuaWQiLCJwcm9maWxlIl0sInN1YiI6ImNmYTMyMjQ0NTY5ODQxYTA5MGFkOWQyZjA1MjRjZjM4In0.CV8IVz12EXgZhnjXragxhMFUN8aRWL3GbwGzlfDn-OEluae9M1b4TKiy379nkMxEvD4t1wn7CsIZZDSUK_ueEiFBQ6qX2_oNpHeyO6HDYJvydhytDDgJnvXA48nH2WySNXt44U9meCCbNegSRN5siJn0hy7Cj1GoaUd9DYPZbmjB-62yVZ67t7NOVjwW86q12-8KhA3gyJoDjU6qAn0KddgbKxi4R6H3wytH778osqMKLCsED9GVvczT0ZIhPobTzLgOcEwkjIBmkt0cZRx0t79o-Cn5sk4DV3frwQgfUJErRy439YyAR2CHGSTT1xet_eMD1KvH0IXGhZcoEEYO7w
 ```
+
+</CodeWrapper>
 
 The OAuth access token should be validated by submitting it to the Lighthouse token validation service. For details on how to use that service, you can consult the [OpenAPI specification](https://sandbox-api.va.gov/internal/auth/docs/v0/validation.json) for the service API.
 
