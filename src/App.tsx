@@ -1,9 +1,9 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
+import { ConnectedRouter } from 'connected-react-router';
 import { FlagsProvider } from 'flag';
 import { Route } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
 
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getCategoryFlags, getEnvFlags } from './apiDefs/env';
@@ -27,12 +27,14 @@ class App extends React.Component {
       <FlagsProvider flags={appFlags}>
         <ConnectedRouter history={history}>
           <div className="vads-u-display--flex">
-            <div className={classNames(
-              "vads-u-display--flex", 
-              "vads-u-flex-direction--column", 
-              "vads-u-min-height--viewport", 
-              "vads-u-width--full",
-            )}>
+            <div
+              className={classNames(
+                'vads-u-display--flex',
+                'vads-u-flex-direction--column',
+                'vads-u-min-height--viewport',
+                'vads-u-width--full',
+              )}
+            >
               <Header />
               <Route path="/" component={PageContent} />
               <Footer />
@@ -46,8 +48,10 @@ class App extends React.Component {
   private getFlags() {
     const deactivatedFlags = getDeactivatedFlags();
     const envFlags = getEnvFlags();
-    const apiCategories =  getCategoryFlags();
-    const apiFlags = getAllApis().reduce((result: {}, api: IApiDescription): {[key: string]: boolean} => {
+    const apiCategories = getCategoryFlags();
+    const apiFlags = getAllApis().reduce((result: {}, api: IApiDescription): {
+      [key: string]: boolean;
+    } => {
       const isApiAvailable = envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment];
       result[api.urlFragment] = isApiAvailable;
       return result;
