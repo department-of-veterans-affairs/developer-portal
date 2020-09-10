@@ -120,16 +120,18 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
   }
 
   private renderSwaggerUI() {
-    if (this.props.docUrl.length !== 0) {
-      const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
-      const ui = SwaggerUI({
-        dom_id: '#swagger-ui',
-        layout: 'ExtendedLayout',
-        plugins: [plugins],
-        url: this.props.docUrl,
-      });
-      ui.versionActions.setApiVersion(this.props.versionNumber);
-      ui.versionActions.setApiMetadata(this.props.metadata);
+    if (document.getElementById("swagger-ui")) {
+      if (this.props.docUrl.length !== 0) {
+        const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
+        const ui = SwaggerUI({
+          dom_id: '#swagger-ui',
+          layout: 'ExtendedLayout',
+          plugins: [plugins],
+          url: this.props.docUrl,
+        });
+        ui.versionActions.setApiVersion(this.props.versionNumber);
+        ui.versionActions.setApiMetadata(this.props.metadata);
+      }
     }
   }
 }

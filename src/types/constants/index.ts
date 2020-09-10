@@ -19,16 +19,6 @@ export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
   verification: 'veteran_verification',
 };
 
-export const APPLY_STANDARD_APIS = [
-  'benefits',
-  'facilities',
-  'vaForms',
-  'confirmation',
-];
+export const APPLY_STANDARD_APIS = ['benefits', 'facilities', 'vaForms', 'confirmation'];
 
-export const APPLY_OAUTH_APIS = [
-  'claims',
-  'communityCare',
-  'health',
-  'verification',
-];
+export const APPLY_OAUTH_APIS = ['claims', 'communityCare', 'health', 'verification'];
