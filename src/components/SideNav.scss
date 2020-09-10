@@ -6,8 +6,10 @@
 }
 
 li.va-api-sidenav-entry {
-  a:hover {
+  a:hover,
+  a:focus {
     background-color: $color-gray-lighter;
+    outline: none;
   }
 }
 

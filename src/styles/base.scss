@@ -84,6 +84,13 @@ a:focus,
   @include focus-outline;
 }
 
+iframe:focus,
+[href]:focus,
+[tabindex]:focus,
+[contentEditable='true']:focus {
+  outline: none;
+}
+
 // Override styles from formation/sass/base/_va.scss that hide
 // placeholder text on focus
 input:focus::placeholder {

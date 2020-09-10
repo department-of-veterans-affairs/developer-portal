@@ -1,3 +1,10 @@
 #main[tabindex]:focus {
   outline: none;
 }
+
+#main a.va-api-secondary-skipnav:focus {
+  outline: none;
+  border: 2px solid #f9c643;
+  border-top: none;
+  border-left: none;
+}

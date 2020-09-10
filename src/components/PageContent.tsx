@@ -25,7 +25,7 @@ export default class PageContent extends React.Component<RouteComponentProps, {}
       <main id="main" ref={this.mainRef} tabIndex={-1}>
         <Link
           to={window.location.pathname + window.location.search}
-          className={classNames('va-api-skipnav', 'vads-u-padding-x--2', 'vads-u-padding-y--1')}
+          className={classNames('va-api-skipnav', 'vads-u-padding-x--2', 'vads-u-padding-y--1', 'va-api-secondary-skipnav')}
           onClick={this.handleSkipNavClick}
         >
           Skip side navigation
