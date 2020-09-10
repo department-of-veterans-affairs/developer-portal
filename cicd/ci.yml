@@ -6,6 +6,7 @@ version: 0.2
 phases:
   install:
     commands:
+      - echo $CODEBUILD_SOURCE_REPO_URL
       - npm install
   build:
     commands:
