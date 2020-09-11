@@ -21,6 +21,7 @@
   "exclude": [
     "node_modules",
     "build",
+    "config",
     "scripts",
     "acceptance-tests",
     "webpack",
@@ -28,6 +29,7 @@
     "src/setupTests.ts",
     "src/e2eHelpers.ts",
     "*.jest.config.js",
-    "jest-puppeteer.config.js"
+    "jest-puppeteer.config.js",
+    "SitemapBuilderWebpackPlugin.js"
   ]
 }

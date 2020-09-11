@@ -6,9 +6,14 @@
     line-height: 1.6;
   }
 
-  code {
+  code,
+  .code-wrapper {
+    // Needs both due to covering of both code blocks and inline formatted code/parameter names
     background-color: #222935;
     border-radius: 3px;
+  }
+
+  code {
     color: $color-white;
     font-family: 'Source Code Pro', monospace;
     padding: 0.2rem 0.4rem;
@@ -20,7 +25,6 @@
 
   pre > code {
     display: block;
-    overflow-x: scroll;
     padding: 2rem;
     margin: 0;
     white-space: pre;

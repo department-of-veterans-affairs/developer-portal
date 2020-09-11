@@ -21,6 +21,7 @@
     "prefer-const": {
       "severity": "off"
     },
+    "interface-name": false,
     "react-a11y-anchors": {},
     "react-a11y-aria-unsupported-elements": {},
     "react-a11y-event-has-role": {},

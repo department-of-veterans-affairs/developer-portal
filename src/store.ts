@@ -1,19 +1,16 @@
+import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory, History } from 'history';
 import { debounce, isEqual } from 'lodash';
-import { routerMiddleware, routerReducer as routing } from 'react-router-redux';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 
-import { IApplication, IRootState } from './types';
-
-import createBrowserHistory from 'history/createBrowserHistory';
-
 import { application, initialApplicationState } from './reducers';
 import { apiVersioning } from './reducers/api-versioning';
+import { IApplication, IRootState } from './types';
 
-export const history = createBrowserHistory({
+export const history: History = createBrowserHistory({
   basename: process.env.PUBLIC_URL || '/',
 });
-const middleware = routerMiddleware(history);
 
 function loadApplicationState(): { application: IApplication } {
   try {
@@ -22,7 +19,9 @@ function loadApplicationState(): { application: IApplication } {
       return { application: initialApplicationState };
     } else {
       const state = JSON.parse(serializedState);
-      if (isEqual(Object.keys(state.application.inputs), Object.keys(initialApplicationState.inputs))) {
+      if (
+        isEqual(Object.keys(state.application.inputs), Object.keys(initialApplicationState.inputs))
+      ) {
         return { application: state.application };
       } else {
         return { application: initialApplicationState };
@@ -51,13 +50,12 @@ const store = createStore(
   combineReducers<IRootState>({
     apiVersioning,
     application,
-    routing,
+    router: connectRouter(history),
   }),
   {
     application: loadApplicationState().application,
-    routing: undefined,
   },
-  compose(applyMiddleware(middleware), applyMiddleware(thunk as ThunkMiddleware<IRootState>)),
+  compose(applyMiddleware(routerMiddleware(history), thunk as ThunkMiddleware<IRootState>)),
 );
 
 store.subscribe(
