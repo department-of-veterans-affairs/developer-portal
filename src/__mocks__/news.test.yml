@@ -1,0 +1,31 @@
+sections:
+  - title: News releases
+    description: Press releases from Gondor, Rohan, Rivendell, Lothlorien, etc
+    media: false
+    items:
+      - title: Rohan declares war on Saruman
+        date: February 3019
+        url: https://rohan.mark/war-on-saruman
+      - title: Gondor calls for aid
+        date: March 3019
+        url: https://gondor.com/doom
+  - title: Articles
+    description: Third-party content about the VA API program
+    media: false
+    items:
+      - title: Frodo stabbed by Witch King on Weathertop
+        date: October 3018
+        source: Bill the Pony
+        url: https://fellowship.org/weathertop
+      - title: Aragorn seeks the Paths of the Dead :(
+        date: February 3019
+        source: Eomer
+        url: https://rohan.mark/
+  - title: Digital media
+    description: YouTube videos and such
+    media: true
+    items:
+      - title: Sweeping panoramas of the New Zealand hills
+        date: January 3019
+        source: Middle Earth Preservation Committee
+        url: https://youtube.net/middleearth
