@@ -33,25 +33,30 @@ export interface IVersionInfo {
   internal_only: boolean;
 }
 
-const mapStateToProps = (state : IRootState) => {
+const mapStateToProps = (state: IRootState) => {
   return {
     docUrl: getDocURL(state.apiVersioning),
-    location: state.routing.location,
+    location: state.router.location,
     metadata: state.apiVersioning.metadata,
     version: getVersion(state.apiVersioning),
     versionNumber: getVersionNumber(state.apiVersioning),
   };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion | actions.ISetInitialVersioning>) => {
+const mapDispatchToProps = (
+  dispatch: Dispatch<actions.ISetRequestedApiVersion | actions.ISetInitialVersioning>,
+) => {
   return {
-    setInitialVersioning: (url: string, metadata: any) => { dispatch(actions.setInitialVersioning(url, metadata)); },
-    setRequestedApiVersion: (version: string) => { dispatch(actions.setRequstedApiVersion(version)); },
+    setInitialVersioning: (url: string, metadata: any) => {
+      dispatch(actions.setInitialVersioning(url, metadata));
+    },
+    setRequestedApiVersion: (version: string) => {
+      dispatch(actions.setRequstedApiVersion(version));
+    },
   };
 };
 
 class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
-
   public async componentDidMount() {
     await this.setMetadataAndDocUrl();
     this.setSearchParam();
@@ -68,7 +73,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
       this.renderSwaggerUI();
     }
   }
-  
+
   public render() {
     const { apiIntro } = this.props.docSource;
     return (
@@ -109,24 +114,29 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
       });
       const response = await fetch(request);
       return response.json();
-    } catch(error) {
+    } catch (error) {
       Sentry.captureException(error);
     }
   }
 
   private renderSwaggerUI() {
-    if (this.props.docUrl.length !== 0) {
-      const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
-      const ui = SwaggerUI({
-        dom_id: '#swagger-ui',
-        layout: 'ExtendedLayout',
-        plugins: [plugins],
-        url: this.props.docUrl,
-      });
-      ui.versionActions.setApiVersion(this.props.versionNumber);
-      ui.versionActions.setApiMetadata(this.props.metadata);
+    if (document.getElementById("swagger-ui")) {
+      if (this.props.docUrl.length !== 0) {
+        const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
+        const ui = SwaggerUI({
+          dom_id: '#swagger-ui',
+          layout: 'ExtendedLayout',
+          plugins: [plugins],
+          url: this.props.docUrl,
+        });
+        ui.versionActions.setApiVersion(this.props.versionNumber);
+        ui.versionActions.setApiMetadata(this.props.metadata);
+      }
     }
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SwaggerDocs);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SwaggerDocs);

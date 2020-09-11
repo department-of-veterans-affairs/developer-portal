@@ -8,6 +8,7 @@ import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
+import MarkdownPage from './components/MarkdownPage';
 import ApplyForm from './containers/apply/ApplyForm';
 import ApplySuccess from './containers/apply/ApplySuccess';
 import BetaPage from './containers/Beta';
@@ -19,8 +20,9 @@ import Home from './containers/Home';
 import News from './containers/News';
 import NotFound from './containers/NotFound';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
-import RoutedContent from './containers/RoutedContent';
 import Support from './containers/support/Support';
+import PathToProduction from './content/goLive.mdx';
+import TermsOfService from './content/termsOfService.mdx';
 
 export function SiteRoutes() {
   return (
@@ -29,15 +31,12 @@ export function SiteRoutes() {
       <Route exact={true} path="/index.html" component={Home} />
 
       {/* Legacy routes that we want to maintain: */}
-      <Route
-        path="/explore/terms-of-service"
-        render={() => <Redirect to="/terms-of-service" />}
-      />
+      <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
       <Route path="/whats-new" render={() => <Redirect to="/news" />} />
 
       {/* Current routes: */}
-      <Route path="/go-live" component={RoutedContent} />
-      <Route path="/terms-of-service" component={RoutedContent} />
+      <Route path="/go-live" render={() => MarkdownPage(PathToProduction)} />
+      <Route path="/terms-of-service" render={() => MarkdownPage(TermsOfService)} />
       <Route
         path="/apply"
         render={() => (
@@ -88,7 +87,11 @@ export function sitemapConfig() {
       [],
     );
 
-    if (route === '/explore/:apiCategoryKey/docs/:apiName' && apiDefs[apiCategory].apis.some(api => !!api.oAuth) && apiCategory !== 'benefits') {
+    if (
+      route === '/explore/:apiCategoryKey/docs/:apiName' &&
+      apiDefs[apiCategory].apis.some(api => !!api.oAuth) &&
+      apiCategory !== 'benefits'
+    ) {
       routeParams.push('authorization');
     }
 
