@@ -85,7 +85,7 @@ describe('ReleaseNotesOverview', () => {
       ).toBeNull();
     });
 
-    it('has a card link for deactivated APIs if there are any', () => {
+    it('has a card link for deactivated APIs if there is at least one deactivated API', () => {
       const cardLink = screen.getByRole('link', {
         name:
           'Deactivated APIs This is a repository for deactivated APIs and related documentation and release notes.',

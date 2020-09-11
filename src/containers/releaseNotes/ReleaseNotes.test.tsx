@@ -105,7 +105,7 @@ describe('ReleaseNotes', () => {
         expect(queryByRole(sideNav, 'link', { name: 'Sports API' })).toBeNull();
       });
 
-      it('has an entry for deactivated APIs', () => {
+      it('has an entry for deactivated APIs if there is at least one deactivated API', () => {
         const sideNav = screen.getByRole('navigation', { name: 'Release Notes Side Nav' });
         const deactivatedLink = getByRole(sideNav, 'link', { name: 'Deactivated APIs' });
         expect(deactivatedLink).toBeInTheDocument();

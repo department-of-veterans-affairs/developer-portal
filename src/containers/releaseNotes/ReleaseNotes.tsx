@@ -102,7 +102,7 @@ export function ReleaseNotes() {
                 <Route
                   exact={true}
                   path="/release-notes/deactivated"
-                  render={DeactivatedReleaseNotes}
+                  component={DeactivatedReleaseNotes}
                 />
                 <Route path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotes} />
               </Switch>
