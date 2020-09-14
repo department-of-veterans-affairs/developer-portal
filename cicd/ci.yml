@@ -4,13 +4,6 @@ version: 0.2
 #    GH_USERNAME: parampath
 #    TOKEN: parampath
 phases:
-  install:
-    commands:
-      - echo $CODEBUILD_SOURCE_REPO_URL
-      - npm install
   build:
     commands:
-      - ./prohibit_image_files.sh origin/master HEAD
-      - npm config set audit-level critical && npm audit
-#    - if [ "$BRANCH" = master  ]; then
-#      ./prohibit_image_files.sh 
+      - docker build . 
