@@ -6,7 +6,7 @@ version: 0.2
 phases:
   install:
     commands:
-      - curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | sudo bash
+      - curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | bash
       - yum install git-lfs -y
   pre_build:
     commands:
