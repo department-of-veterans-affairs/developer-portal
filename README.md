@@ -55,3 +55,4 @@ Adding a new API to the apply page requires changes in a few different places. Y
 ## Running the Backend Locally
 
 Sometimes you will need to test the apply page locally. To do so you can fire up the backend and point the developer portal at it. Clone the `developer-portal-lambda-backend` repo. Run `docker-compose up` and local DynamoDB, Kong and lambda containers will spin up. If you update `.env.local` with `REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=http://localhost:9000` (You'll need to restart your locally running developer portal) you can test the apply page locally. See the [backend repo](https://github.com/department-of-veterans-affairs/developer-portal-lambda-backend#local-interation) for more information about running the backend locally.
+test 2
