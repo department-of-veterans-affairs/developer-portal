@@ -80,16 +80,24 @@ const developmentQuestions: ISupportQuestion[] = [
       <p>
         The Address Validation API is for internal VA use only and is not listed on the developer portal. To begin development in the sandbox environment, request a developer <a href="https://developer.va.gov/apply">API key for the Facilities API</a>. Once finished, send an email to <a href="mailto:api@va.gov?subject=Request%20for%20Sandbox%20Access%20to%20Address%20Validation%20API" target="_BLANK" rel="noopener noreferrer">api@va.gov</a> with the subject line "Request for Sandbox Access to Address Validation API." In the email, include the following:
 
-        <ul>
-          <li>Email address used for the sandbox Facilities API key request</li>
-          <li>Name of team/project</li>
-          <li>Consumer name (if different from team/project)</li>
-          <li>Expected call volume (our default rate limit is 60 requests per minute)</li>
-          <li>Desired production date</li>
-          <li>Any IP addresses or subnets outside the VA intranet from which you require developer access (permitted in sandbox only)</li>
-          <li>When indicating your desired production date, note that we require at least one week's notice before a demo can be scheduled, and that it may take up to a week after the demo to grant you the sandbox key for the Address Validation API. </li>
+        <br />
+        <br />
+        Email address used for the sandbox Facilities API key request
+        <br />
+        Name of team/project
+        <br />
+        Consumer name (if different from team/project)
+        <br />
+        Expected call volume (our default rate limit is 60 requests per minute)
+        <br />
+        Desired production date
+        <br />
+        Any IP addresses or subnets outside the VA intranet from which you require developer access (permitted in sandbox only)
+        <br />
+        When indicating your desired production date, note that we require at least one week's notice before a demo can be scheduled, and that it may take up to a week after the demo to grant you the sandbox key for the Address Validation API.
+        <br />
+        <br />
 
-        </ul>
         We will respond to your request within 2 business days.
       </p>
              ),
