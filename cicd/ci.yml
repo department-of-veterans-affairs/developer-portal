@@ -4,6 +4,13 @@ version: 0.2
 #    GH_USERNAME: parampath
 #    TOKEN: parampath
 phases:
+  install:
+    commands:
+      - curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | bash
+      - apt-get install -y git-lfs
+  pre_build:
+    commands:
+      - git lfs pull
   build:
     commands:
       - docker build . 
