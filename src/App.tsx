@@ -17,9 +17,31 @@ import { history } from './store';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/base.scss';
 
-class App extends React.Component {
+export function getFlags() {
+  const deactivatedFlags = getDeactivatedFlags();
+  const envFlags = getEnvFlags();
+  const apiCategories = getCategoryFlags();
+  const apiFlags = getAllApis().reduce((result: {}, api: IApiDescription): {
+    [key: string]: boolean;
+  } => {
+    const isApiAvailable = envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment];
+    result[api.urlFragment] = isApiAvailable;
+    return result;
+  }, {});
+
+  return {
+    categories: apiCategories,
+    deactivated_apis: deactivatedFlags,
+    enabled: envFlags,
+    hosted_apis: apiFlags,
+    show_testing_notice: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
+    signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
+  };
+}
+
+export default class App extends React.Component {
   public render() {
-    const appFlags = this.getFlags();
+    const appFlags = getFlags();
     // the double flex container only exists and is flexed to
     // address a bug in IE11 where min-height is only respected
     // if the parent of a flex container is also a flex container.
@@ -44,27 +66,4 @@ class App extends React.Component {
       </FlagsProvider>
     );
   }
-
-  private getFlags() {
-    const deactivatedFlags = getDeactivatedFlags();
-    const envFlags = getEnvFlags();
-    const apiCategories = getCategoryFlags();
-    const apiFlags = getAllApis().reduce((result: {}, api: IApiDescription): {
-      [key: string]: boolean;
-    } => {
-      const isApiAvailable = envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment];
-      result[api.urlFragment] = isApiAvailable;
-      return result;
-    }, {});
-
-    return {
-      categories: apiCategories,
-      enabled: envFlags,
-      hosted_apis: apiFlags,
-      show_testing_notice: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
-      signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
-    };
-  }
 }
-
-export default App;
