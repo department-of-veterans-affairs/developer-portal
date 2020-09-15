@@ -84,10 +84,8 @@ a:focus,
   @include focus-outline;
 }
 
-iframe:focus,
-[href]:focus,
-[tabindex]:focus,
-[contentEditable='true']:focus {
+#page-header:focus,
+#main:focus {
   outline: none;
 }
 
