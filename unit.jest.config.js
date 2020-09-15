@@ -24,6 +24,7 @@ module.exports = {
   transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$'],
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
+    'content/news.yml': '<rootDir>/src/__mocks__/news.test.yml',
   },
   moduleFileExtensions: [
     'web.ts',

@@ -20,7 +20,7 @@ const getApiDefinitions = () => apiDefs;
 const getApiCategoryOrder = () => apiCategoryOrder;
 
 const getAllApis = (): IApiDescription[] => {
-  return Object.values(apiDefs).flatMap((category: IApiCategory) => category.apis);
+  return Object.values(getApiDefinitions()).flatMap((category: IApiCategory) => category.apis);
 };
 
 function lookupApiByFragment(apiKey: string): IApiDescription | null {
@@ -33,7 +33,6 @@ function lookupApiByFragment(apiKey: string): IApiDescription | null {
 function lookupApiCategory(categoryKey: string): IApiCategory | null {
   return apiDefs[categoryKey] || null;
 }
-
 
 function apisFor(apiList: string[]): IApiDescription[] {
   const allApis = getAllApis();
