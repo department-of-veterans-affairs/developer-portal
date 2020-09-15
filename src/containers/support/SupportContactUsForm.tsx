@@ -58,7 +58,7 @@ export default class SupportContactUsForm extends React.Component<
       <Form
         onSubmit={this.formSubmission}
         onSuccess={this.props.onSuccess}
-        disabled={this.disabled}
+        disabled={!this.isFormValid}
         className={classNames('va-api-contact-us-form', 'vads-u-margin-y--2')}
       >
         <fieldset>
@@ -183,14 +183,24 @@ export default class SupportContactUsForm extends React.Component<
     };
   }
 
-  private get disabled(): boolean {
-    return !(
-      !this.state.firstName.validation &&
-      this.state.firstName.value &&
-      (!this.state.lastName.validation && this.state.lastName.value) &&
-      (!this.state.email.validation && this.state.email.value) &&
-      (!this.state.description.validation && this.state.description.value)
+  private get isFormValid(): boolean {
+    const validateField = (field: IErrorableInput): boolean => !!field.value && !field.validation;
+    const { description, email, firstName, lastName } = this.state;
+
+    return (
+      validateField(firstName) &&
+      validateField(lastName) &&
+      validateField(email) &&
+      validateField(description)
     );
+
+    // return !(
+    //   !this.state.firstName.validation &&
+    //   this.state.firstName.value &&
+    //   (!this.state.lastName.validation && this.state.lastName.value) &&
+    //   (!this.state.email.validation && this.state.email.value) &&
+    //   (!this.state.description.validation && this.state.description.value)
+    // );
   }
 
   private toggleApis(input: IErrorableInput, checked: boolean) {
