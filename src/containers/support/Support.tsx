@@ -39,7 +39,9 @@ export default function Support() {
           <SideNav ariaLabel="Support page side nav">
             <SideNavEntry key="all" exact={true} to="/support" name="Overview" />
             {sections.map(section => {
-              return <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />;
+              return (
+                <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />
+              );
             })}
           </SideNav>
           <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>

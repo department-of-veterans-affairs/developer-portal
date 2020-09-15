@@ -11,6 +11,7 @@ import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
+import { PAGE_HEADER_ID } from '../../types/constants';
 
 const ApiReleaseNote = ({ api }: { api: IApiDescription }) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
@@ -59,19 +60,15 @@ export default class CategoryReleaseNotesPage extends React.Component<
       });
 
       cardSection = (
-        <div role="navigation" aria-labelledby={`${apiCategoryKey}-release-notes`}>
+        <div role="navigation" aria-labelledby={PAGE_HEADER_ID}>
           <div className={defaultFlexContainer()}>{apiCards}</div>
         </div>
       );
     }
 
     return (
-      <section role="region" aria-labelledby={`${apiCategoryKey}-release-notes`}>
-        <PageHeader
-          halo={apiDefs[apiCategoryKey].name}
-          header="Release Notes"
-          id={`${apiCategoryKey}-release-notes`}
-        />
+      <section role="region" aria-labelledby={PAGE_HEADER_ID}>
+        <PageHeader halo={apiDefs[apiCategoryKey].name} header="Release Notes" />
         {cardSection}
         <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
           {apis.map(api => (

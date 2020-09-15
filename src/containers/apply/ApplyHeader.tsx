@@ -6,7 +6,7 @@ import PageHeader from '../../components/PageHeader';
 export default function ApplyHeader() {
   return (
     <div>
-      <PageHeader header="Apply for VA Lighthouse Developer Access" id="apply-header" />
+      <PageHeader header="Apply for VA Lighthouse Developer Access" />
       <p
         className={classNames(
           'usa-font-lead',
