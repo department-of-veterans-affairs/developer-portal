@@ -13,7 +13,7 @@ export const APPLY_URL = `${
 }/internal/developer-portal-backend/developer_application`;
 export const CONTACT_US_URL = `${
   process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL
-}/internal/developer-portal-backend/developer_application`;
+}/internal/developer-portal-backend/contact-us`;
 
 export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
   benefits: 'benefits',
