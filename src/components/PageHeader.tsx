@@ -21,6 +21,7 @@ export default function PageHeader(props: PageHeaderProps) {
       <h1
         id={PAGE_HEADER_ID}
         className={classNames('vads-u-margin-top--0', 'vads-u-margin-bottom--2')}
+        tabIndex={-1}
       >
         {props.header}
       </h1>
