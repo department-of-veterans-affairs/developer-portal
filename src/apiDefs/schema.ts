@@ -1,8 +1,8 @@
 /*
   This file contains all of the interfaces that currently make up the API definition schema.
-  Any future additions to this schema should be defined here as well. In the future, we will 
+  Any future additions to this schema should be defined here as well. In the future, we will
   likely move this data to a non-Typescript location, i.e. a database. As a result, we should
-  also not add any more React components to these schema definitions, as that will add to the 
+  also not add any more React components to these schema definitions, as that will add to the
   work that we need to do to convert this schema to a database-based systeem.
 */
 
@@ -45,11 +45,13 @@ export interface IApiDescription {
   readonly multiOpenAPIIntro?: React.FunctionComponent;
 }
 
-export interface IApiCategory {
+export interface BaseAPICategory {
   readonly apis: IApiDescription[];
   readonly properName: string;
-  readonly buttonText: string;
   readonly name: string;
+}
+
+export interface IApiCategory extends BaseAPICategory {
   readonly content: IApiCategoryContent;
 }
 
