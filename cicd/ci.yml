@@ -1,16 +1,16 @@
 version: 0.2
-#env:
-#  parameter-store:
-#    GH_USERNAME: parampath
-#    TOKEN: parampath
 phases:
   install:
     commands:
-      - curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | bash
-      - yum install git-lfs -y
+      - /usr/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
     commands:
       - git lfs pull
+      - mkdir failures
+      - echo "building"
   build:
     commands:
-      - docker build . 
+      - ./prohibit_image_files.sh origin/master HEAD
+      - cd cicd
+      - make test
