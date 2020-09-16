@@ -92,7 +92,7 @@ const developmentQuestions: ISupportQuestion[] = [
         <br />
         Desired production date
         <br />
-        Any IP addresses or subnets outside the VA intranet from which you require developer access (permitted in sandbox only)
+        Any IP addresses or subnets <em>outside the VA intranet</em> from which you require developer access (permitted in sandbox only)
         <br />
         When indicating your desired production date, note that we require at least one week's notice before a demo can be scheduled, and that it may take up to a week after the demo to grant you the sandbox key for the Address Validation API.
         <br />
