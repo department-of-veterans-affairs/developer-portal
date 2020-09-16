@@ -17,8 +17,11 @@ const generalQuestions: ISupportQuestion[] = [
     question: 'Is this where I apply for VA Benefits and access to my health records?',
   },
   {
-    answer: 'The APIs are the "front door" or "wall outlet" to VA health records, benefits eligibility, facility locations, and veteran status verification. Developers may create applications to securely access this information via mobile devices and web browsers, across a variety of platforms.',
-    question: 'What are the VA APIs? Why use the VA APIs?',
+    answer: 
+    <p>
+      The APIs are the "front door" or "wall outlet" to VA health records, benefits eligibility, facility locations, and veteran status verification. Developers may create applications to securely access this information via mobile devices and web browsers, across a variety of platforms.',
+    question: 'What are the VA APIs? Why use the VA APIs?
+    </p>,
   },
   {
     answer: 'Access to all VA APIs is free of charge, with the goal of making access to federal government data easier for veterans.',
@@ -49,7 +52,10 @@ const developmentQuestions: ISupportQuestion[] = [
     question: 'How do we move forward with production API access once dev is complete?',
   },
   {
-    answer: 'Not by default. Your key can be authorized for access to additional APIs, but you will need to arrange a demo for each new API that your application uses before being granted production access.',
+    answer: 
+      <p>
+        Not by default. Your key can be authorized for access to additional APIs, but you will need to arrange a demo for each new API that your application uses before being granted production access.
+      </p>,
     question: 'Is the production key I received for one API good for other VA APIs as well?',
   },
   {
@@ -62,7 +68,9 @@ const developmentQuestions: ISupportQuestion[] = [
     question: 'Can I start using the API as soon as I sign up?',
   },
   {
-    answer: 'Yes, we have implemented basic rate limiting of 60 requests per minute. If you exceed this quota, your request will return a 429 status code. You may petition for increased rate limits by emailing api@va.gov and requests will be decided on a case-by-case basis.',
+    answer: 
+      <p> Yes, we have implemented basic rate limiting of 60 requests per minute. If you exceed this quota, your request will return a 429 status code. You may petition for increased rate limits by emailing api@va.gov and requests will be decided on a case-by-case basis.
+      </p>,
     question: 'Are there any rate limits on the APIs?',
   },
   {
@@ -79,7 +87,6 @@ const developmentQuestions: ISupportQuestion[] = [
     answer: (
       <p>
         The Address Validation API is for internal VA use only and is not listed on the developer portal. To begin development in the sandbox environment, request a developer <a href="https://developer.va.gov/apply">API key for the Facilities API</a>. Once finished, send an email to <a href="mailto:api@va.gov?subject=Request%20for%20Sandbox%20Access%20to%20Address%20Validation%20API" target="_BLANK" rel="noopener noreferrer">api@va.gov</a> with the subject line "Request for Sandbox Access to Address Validation API." In the email, include the following:
-
         <br />
         <br />
         Email address used for the sandbox Facilities API key request
