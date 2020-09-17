@@ -43,14 +43,12 @@ phases:
       #   done
       # # upload archive
       - phase=archive
-      - make archive ENV=dev
-      - aws us-gov-west-1 s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2"
-      #- |
-      #  for env in ${ENVS[@]}; do
-      #    make archive ENV=env
-      #    #deploy to s3
-      #    aws us-gov-west-1 s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2"
-      #  done
+      - |
+        for env in ${ENVS[@]}; do
+          make archive ENV=${env}
+          #deploy to s3
+          aws us-gov-west-1 s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2
+        done
       - phase=deploy
       # deploy
       - |
