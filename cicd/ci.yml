@@ -13,6 +13,7 @@ phases:
     commands:
       - git lfs pull
       - mkdir -p reports
+      - ls
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
@@ -25,8 +26,9 @@ phases:
       #
   post_build:
     commands:
+      - ls reports
       - |
-        if [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]] && [[ -v ${FAIL_VISUAL} ]]; then
+        if [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]] && [[ ${FAIL_VISUAL} ]]; then
           S3_BUCKET=liberty-codebuild-artifacts
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
           links="todo"
