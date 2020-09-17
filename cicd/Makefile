@@ -48,7 +48,7 @@ endif
 .PHONY: unit
 unit: build
 	docker run -i --name unit --user ${UNAME}:${GNAME} devportal npm run-script test:unit:ci \
-	|| { docker cp unit:/application/test-report.xml .; \
+	|| { docker cp unit:/application/test-report.xml reports/.; \
 	docker container rm unit; \
 	exit 1; }
 	docker container rm unit
@@ -56,7 +56,7 @@ unit: build
 .PHONY: lint
 lint: build
 	docker run -i --name lint --user ${UNAME}:${GNAME} devportal npm run-script lint:ci \
-	|| { docker cp unit:/application/lint-results.xml .; \
+	|| { docker cp unit:/application/lint-results.xml reports/.; \
 	docker container rm lint; \
 	exit 1; }
 	docker container rm lint
@@ -64,7 +64,7 @@ lint: build
 .PHONY: visual
 visual: build
 	docker run -i --name visual --user ${UNAME}:${GNAME} devportal npm run test:visual \
-	|| { docker cp unit:/application/tst-report.xml .; \
+	|| { docker cp unit:/application/test/image_snapshots/diff_output/* reports/.; \
 	docker container rm visual; \
 	exit 1; }
 	docker container rm visual
@@ -72,7 +72,7 @@ visual: build
 .PHONY: e2e
 e2e: build
 	docker run -i --name e2e --user ${UNAME}:${GNAME} devportal npm run test:e2e:ci \
-	|| { docker cp unit:/application/test-report.xml .; \
+	|| { docker cp unit:/application/test-report.xml reports/.; \
 	docker container rm e2e; \
 	exit 1; }
 	docker container rm e2e
@@ -80,7 +80,7 @@ e2e: build
 .PHONY: accessibility
 accessibility: build
 	docker run -i --name accessibility --user ${UNAME}:${GNAME} devportal npm run test:accessibility:ci \
-	|| { docker cp unit:/application/test-report.xml .; \
+	|| { docker cp unit:/application/test-report.xml reports/.; \
 	docker container rm accessibility; \
 	exit 1; }
 	docker container rm accessibility
