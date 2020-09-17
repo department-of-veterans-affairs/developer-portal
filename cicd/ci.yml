@@ -2,6 +2,12 @@ version: 0.2
 env:
   variables:
     GITHUB_USERNAME: me
+    TESTS: ""
+    ENVS=: "dev staging production"
+    S3_ARCHIVE_BUCKET: "liberty-codebuild-artifacts"
+    S3_VISUAL_BUCKET: "liberty-codebuild-artifacts"
+    S3_ERRORS_BUCKET: "liberty-codebuild-artifacts"
+    S3_PR_DEPLOY_BUCKET: "liberty-codebuild-artifacts"
   parameter-store:
     GITHUB_TOKEN: "/github_token"
 phases:
@@ -12,21 +18,12 @@ phases:
   pre_build:
     commands:
       # set variables
-      - S3_ARCHIVE_BUCKET=liberty-codebuild-artifacts
-      - S3_VISUAL_BUCKET=liberty-codebuild-artifacts
-      - S3_ERRORS_BUCKET=liberty-codebuild-artifacts
-      - S3_PR_DEPLOY_BUCKET=liberty-codebuild-artifacts
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
-      - COMMIT_HASH=$CODEBUILD_RESOLVED_SOURCE_VERSION
-      - S3_ARCHIVE_BUCKET=
-      # Test you want to run
-      - TESTS=""
-      - ENVS="dev staging production"
+      - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
       - mkdir -p reports
-      - docker container rm build_app
   build:
     commands:
       - phase=image_scan
