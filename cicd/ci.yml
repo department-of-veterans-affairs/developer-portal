@@ -15,18 +15,23 @@ phases:
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
+      - TESTS="security unit"
       - git lfs pull
       - mkdir -p reports
   build:
     commands:
       - ./prohibit_image_files.sh origin/master HEAD
       # run all tests
-      - make unit 
+      - |
+        for test in ${TESTS}; do
+          phase=${test}
+          make ${test} 
+        done
       #- make build_app
       # upload archive
   post_build:
     commands:
-      - echo $?
+      - echo $phase 
       - |
         if [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]] && [[ ${FAIL_VISUAL} ]]; then
           S3_BUCKET=liberty-codebuild-artifacts
