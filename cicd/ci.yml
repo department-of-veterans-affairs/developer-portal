@@ -25,7 +25,7 @@ phases:
       - ./prohibit_image_files.sh origin/master HEAD
       - cd cicd
       # run all tests
-      - make test
+      #- make test
   post_build:
     commands:
       - |
@@ -35,10 +35,12 @@ phases:
           links="todo"
           docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
           comment = "Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
-        elif [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]] 
+        elif [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]]; then
           S3_BUCKET=liberty-devportal-reports
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
           comment = "errors on build check url"
+        fi
       - |
         if [[ -v $PRNUM ]]; then
           prcomment.sh duganth-va/developer-portal ${BRANCH} ${comment:-"CI success"}
+        fi
