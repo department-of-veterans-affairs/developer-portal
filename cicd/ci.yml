@@ -27,9 +27,19 @@ phases:
           phase=${test}
           make ${test} 
         done
-      #- make build_app
+      - phase=build_app
+      # Run build if all tsts are good.
+      #      - make build_app
+
+
       # upload archive
-      phase=success
+      - phase=archive
+      # deploy
+      - |
+        if [[ ${PR_NUM} ]]; then
+          echo "we will do pr deploys here"
+        fi
+      - phase=success
   post_build:
     commands:
       # Handle phase errors. 
@@ -47,6 +57,9 @@ phases:
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${CODEBUILD_RESOLVED_SOURCE_VERSION}/ --recursive
           comment="errors on build check url"
         fi
+      # notify slack if build fails
+      
+
       # Handle comments
       - |
         if [[ ${PR_NUM} ]]; then
