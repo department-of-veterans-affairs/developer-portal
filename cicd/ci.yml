@@ -32,14 +32,14 @@ phases:
       # run tests
       - phase=test
       - |
-        for test in ${TESTS[@]}; do
+        for test in ${TESTS}; do
           phase=${test}
           make ${test}
         done
       # Run build if all tests are good.
       - phase=build_app
       - |
-        for env in ${ENVS[@]}; do
+        for env in ${ENVS}; do
           make build_app ENV=dev
         done
       # upload archive
