@@ -38,6 +38,6 @@ phases:
           comment = "errors on build check url"
         fi
       - |
-        if [[ -n ${PRNUM} ]]; then
+        if [[ -z ${PRNUM} ]]; then
           prcomment.sh ${REPO} ${PRNUM} ${comment:-"CI success"}
         fi
