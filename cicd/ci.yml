@@ -13,12 +13,28 @@ phases:
     commands:
       - git lfs pull
       - mkdir -p reports
-      - echo "building"
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
+      - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
+      - echo $REPO
       - PRNUM=$(prnum.sh duganth-va/developer-portal ${BRANCH:-default})
-      - echo $PRNUM
   build:
     commands:
       - ./prohibit_image_files.sh origin/master HEAD
       - cd cicd
+      # run all tests
       - make test
+  post_build:
+      - |
+        if [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]] && [[ -v ${FAIL_VISUAL} ]]; then
+          S3_BUCKET=liberty-devportal-visual
+          aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
+          links="todo"
+          docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
+          comment = "Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
+        elif [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]] 
+          S3_BUCKET=liberty-devportal-reports
+          aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
+          comment = "errors on build check url"
+      - |
+        if [[ -v $PRNUM ]]; then
+          prcomment.sh duganth-va/developer-portal ${BRANCH} ${comment:-"CI success"}

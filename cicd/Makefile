@@ -31,7 +31,7 @@ build:
 
 ## test:	runs all tests
 .PHONY: test 
-test: security unit lint visual accessibility e2e
+test: security unit lint accessibility e2e visual
 
 ## security:	runs `npm audit --audit-level critical`
 .PHONY: security
@@ -66,6 +66,7 @@ visual: build
 	docker run -i --name visual --user ${UNAME}:${GNAME} devportal npm run test:visual \
 	|| { docker cp unit:/application/test/image_snapshots/diff_output/* reports/.; \
 	docker container rm visual; \
+	FAIL_VISUAL=1; \
 	exit 1; }
 	docker container rm visual
 	 
@@ -84,8 +85,6 @@ accessibility: build
 	docker container rm accessibility; \
 	exit 1; }
 	docker container rm accessibility
-
-
 
 ## clean:	Removes a local image
 .PHONY: clean
