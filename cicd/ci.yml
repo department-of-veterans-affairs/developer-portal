@@ -12,10 +12,18 @@ phases:
   pre_build:
     commands:
       # set variables
+      - S3_ARCHIVE_BUCKET=liberty-codebuild-artifacts
+      - S3_VISUAL_BUCKET=liberty-codebuild-artifacts
+      - S3_ERRORS_BUCKET=liberty-codebuild-artifacts
+      - S3_PR_DEPLOY_BUCKET=liberty-codebuild-artifacts
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
+      - COMMIT_HASH=$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - S3_ARCHIVE_BUCKET=
+      # Test you want to run
       - TESTS=
+      - ENVS="dev staging production"
       - git lfs pull
       - mkdir -p reports
   build:
@@ -29,10 +37,18 @@ phases:
         done
       # Run build if all tsts are good.
       - phase=build_app
-      - make build_app
-      - ls
+      - | 
+        for env in ${ENVS}; do
+          make build_app ENV=env
+        done
       # upload archive
       - phase=archive
+      - |
+        for env in ${ENVS}; do
+          make archive ENV=env
+          #deploy to s3
+          aws us-gov-west-1 s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2"
+        done
       # deploy
       - |
         if [[ ${PR_NUM} ]]; then
@@ -44,7 +60,6 @@ phases:
       # Handle phase errors. 
       - |
         if [[ $phase = visual ]]; then
-          S3_BUCKET=liberty-codebuild-artifacts
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
           links="todo"
           docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
@@ -52,8 +67,7 @@ phases:
         fi
       - |
         if [[ "unit lint security e2e accesbility" =~ $phase ]; then
-          S3_BUCKET=liberty-codebuild-artifacts
-          aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${CODEBUILD_RESOLVED_SOURCE_VERSION}/ --recursive
+          aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
           comment="errors on build check url"
         fi
       # notify slack if build fails

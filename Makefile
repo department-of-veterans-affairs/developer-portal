@@ -15,10 +15,8 @@ GNAME ?= jenkins
 AUDIT_LEVEL?= critical
 # Sets Branch running in
 BRANCH ?= notmaster
-# Sets default tag
-TAG ?= dev 
-# Shorten full repo path 
-REPOSITORY = $(AWS_ACCOUNT_ID).dkr.ecr.$(AWS_REGION).amazonaws.com
+# Sets default env 
+ENV ?= dev
 
 .PHONY: help
 help : Makefile
@@ -92,16 +90,15 @@ accessibility: build
 
 .PHONY: build_app 
 build_app: build
-	docker run -i --name buildapp \
+	docker run -i --name build_app \
 		--user ${UNAME}:${GNAME} \
 		--env NODE_ENV=production \
-		--env BUILD_ENV=dev \
-		devportal npm run-script build devportal 
-	docker cp build_app/build/ .
+		--env BUILD_ENV=${ENV} \
+		devportal npm run-script build ${ENV} \
+		--no-cache
+	docker cp build_app:/application/build/ .
+	docker container rm build_app
 
-archive: buildapp
-
-
-## clean:	Removes a local image
-.PHONY: clean
-clean:
+.PHONY: archive 
+archive: 
+	tar -C build/${ENV} -cf build/${ENV}.tar.bz2 .	
