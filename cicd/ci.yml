@@ -30,12 +30,12 @@ phases:
       - ./prohibit_image_files.sh origin/master HEAD
       - phase=test
       # run all tests
-      - |
-        for test in ${TESTS[@]}; do
-          phase=${test}
-          make ${test}
-        done
-      # Run build if all tests are good.
+      # - |
+      #   for test in ${TESTS[@]}; do
+      #     phase=${test}
+      #     make ${test}
+      #   done
+      # # Run build if all tests are good.
       - phase=build_app
       - | 
         for env in ${ENVS[@]}; do
