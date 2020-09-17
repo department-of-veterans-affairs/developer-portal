@@ -14,7 +14,7 @@ phases:
       - git lfs pull
       - mkdir -p reports
       - echo "building"
-      - if [ -z ${CODEBUILD_WEBHOOK_TRIGGER} ]; then echo "Webhook not set"
+      - if [ -z ${CODEBUILD_WEBHOOK_TRIGGER} ]; then echo "Webhook not set"; fi
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - PRNUM=$(prnum.sh duganth-va/developer-portal ${BRANCH})
       - echo $PRNUM
