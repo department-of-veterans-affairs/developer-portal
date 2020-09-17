@@ -33,7 +33,7 @@ test: security unit lint accessibility e2e visual
 
 ## security:	runs `npm audit --audit-level critical`
 .PHONY: security
-security: build
+security:
 ifeq ($(BRANCH), master)
 	docker run --rm -i --name security devportal /bin/bash -c "npm config set audit-level ${AUDIT_LEVEL} && npm audit"
 else	
@@ -44,7 +44,7 @@ endif
 
 ## unit:	runs unit test script 
 .PHONY: unit
-unit: build
+unit:
 	@echo "Running unit tests"
 	docker run -i --name unit --user ${UNAME}:${GNAME} devportal npm run-script test:unit:ci \
 	|| { docker cp unit:/application/test-report.xml reports/.; \
@@ -53,7 +53,7 @@ unit: build
 	docker container rm unit
 	 
 .PHONY: lint
-lint: build
+lint:
 	@echo "Running lint tests"
 	docker run -i --name lint --user ${UNAME}:${GNAME} devportal npm run-script lint:ci \
 	|| { docker cp lint:/application/lint-results.xml reports/.; \
@@ -62,7 +62,7 @@ lint: build
 	docker container rm lint
 
 .PHONY: visual
-visual: build
+visual:
 	@echo "Running visual tests"
 	docker run -i --name visual --user ${UNAME}:${GNAME} devportal npm run test:visual \
 	|| { docker cp visual:/application/test/image_snapshots/diff_output/* reports/.; \
@@ -71,7 +71,7 @@ visual: build
 	docker container rm visual
 	 
 .PHONY: e2e
-e2e: build
+e2e:
 	@echo "Running e2e tests"
 	docker run -i --name e2e --user ${UNAME}:${GNAME} devportal npm run-script test:e2e:ci \
 	|| { docker cp e2e:/application/test-report.xml reports/.; \
@@ -80,7 +80,7 @@ e2e: build
 	docker container rm e2e
 
 .PHONY: accessibility
-accessibility: build
+accessibility:
 	@echo "Running accessibility tests"
 	docker run -i --name accessibility --user ${UNAME}:${GNAME} devportal npm run-script test:accessibility:ci \
 	|| { docker cp accessibility:/application/test-report.xml reports/.; \
@@ -89,16 +89,16 @@ accessibility: build
 	docker container rm accessibility
 
 .PHONY: build_app 
-build_app: build
+build_app:
 	docker run -i --name build_app \
 		--env NODE_ENV=production \
 		--env BUILD_ENV=${ENV} \
 		--user ${UNAME}:${GNAME} \
 		devportal npm run-script build ${ENV} \
 		--no-cache
-	docker cp build_app:/application/build/ .
+	docker cp build_app:/application/build/${ENV} .
 	docker container rm build_app
 
 .PHONY: archive 
-archive: 
-	tar -C build/${ENV} -cf build/${ENV}.tar.bz2 .	
+archive:
+	tar -C ${ENV} -cf ${ENV}.tar.bz2 .	
