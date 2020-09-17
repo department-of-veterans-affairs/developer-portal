@@ -33,9 +33,9 @@ phases:
       - |
         for test in ${TESTS[@]}; do
           phase=${test}
-          make ${test} 
+          make ${test}
         done
-      # Run build if all tsts are good.
+      # Run build if all tests are good.
       - phase=build_app
       - | 
         for env in ${ENVS[@]}; do
