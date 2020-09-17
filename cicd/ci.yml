@@ -19,9 +19,10 @@ phases:
   build:
     commands:
       - ./prohibit_image_files.sh origin/master HEAD
-      - cd cicd
+      #- cd cicd
       # run all tests
       # - make unit
+      #
   post_build:
     commands:
       - |
