@@ -27,6 +27,7 @@ phases:
       - mkdir -p reports
   build:
     commands:
+      - make build
       - phase=image_scan
       - ./prohibit_image_files.sh origin/master HEAD
       # run tests
