@@ -88,7 +88,7 @@ export function sitemapConfig() {
     );
 
     if (
-      === '/explore/:apiCategoryKey/docs/:apiName' &&
+      route === '/explore/:apiCategoryKey/docs/:apiName' &&
       apiDefs[apiCategory].apis.some(api => !!api.oAuth) &&
       apiCategory !== 'benefits'
     ) {

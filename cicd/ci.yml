@@ -62,6 +62,5 @@ phases:
       # Handle comments
       - |
         if [[ ${PR_NUM} ]]; then
-          echo ${PR_NUM}
           prcomment.sh ${REPO} ${PR_NUM} "${comment:-"CI success"}"
         fi
