@@ -3,7 +3,7 @@ env:
   variables:
     GITHUB_USERNAME: "me"
     TESTS: "lint"
-    ENVS=: "dev"
+    ENVS: "dev"
     S3_ARCHIVE_BUCKET: "liberty-codebuild-artifacts"
     S3_VISUAL_BUCKET: "liberty-codebuild-artifacts"
     S3_ERRORS_BUCKET: "liberty-codebuild-artifacts"
