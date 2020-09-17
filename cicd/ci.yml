@@ -12,7 +12,7 @@ phases:
   pre_build:
     commands:
       - git lfs pull
-      - git rev-list --objects "origin/master HEAD" 
+      - git rev-list --objects "origin/master..HEAD" 
       - mkdir -p reports
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
