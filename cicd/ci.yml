@@ -28,8 +28,8 @@ phases:
     commands:
       - phase=image_scan
       - ./prohibit_image_files.sh origin/master HEAD
+      # run tests
       - phase=test
-      # run all tests
       - |
         for test in ${TESTS[@]}; do
           phase=${test}
@@ -49,10 +49,10 @@ phases:
           #deploy to s3
           aws us-gov-west-1 s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2
         done
-      - phase=deploy
-      # deploy
+      # Check if we deploy
       - |
         if [[ ${PR_NUM} ]]; then
+          phase=deploy
           echo "we will do pr deploys here"
         fi
       - phase=success
@@ -70,6 +70,7 @@ phases:
         unit|lint|security|e2e|accessibilty)
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
           comment="errors on build check url"
+          ;;
         success)
           comment="good"
           ;;
