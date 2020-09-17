@@ -31,20 +31,20 @@ phases:
       - ./prohibit_image_files.sh origin/master HEAD
       # run all tests
       - |
-        for test in ${TESTS}; do
+        for test in ${TESTS[@]}; do
           phase=${test}
           make ${test} 
         done
       # Run build if all tsts are good.
       - phase=build_app
       - | 
-        for env in ${ENVS}; do
+        for env in ${ENVS[@]}; do
           make build_app ENV=env
         done
       # upload archive
       - phase=archive
       - |
-        for env in ${ENVS}; do
+        for env in ${ENVS[@]}; do
           make archive ENV=env
           #deploy to s3
           aws us-gov-west-1 s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2"
