@@ -22,7 +22,7 @@ phases:
       - COMMIT_HASH=$CODEBUILD_RESOLVED_SOURCE_VERSION
       - S3_ARCHIVE_BUCKET=
       # Test you want to run
-      - TESTS=
+      - TESTS=""
       - ENVS="dev staging production"
       - git lfs pull
       - mkdir -p reports
