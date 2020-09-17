@@ -37,11 +37,11 @@ phases:
       #   done
       # # Run build if all tests are good.
       - phase=build_app
-      - make build_app ENV=dev
-      # - | 
-      #   for env in ${ENVS[@]}; do
-      #   done
-      # # upload archive
+      - |
+        for env in ${ENVS[@]}; do
+          make build_app ENV=dev
+        done
+      # upload archive
       - phase=archive
       - |
         for env in ${ENVS[@]}; do
