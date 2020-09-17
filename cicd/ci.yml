@@ -26,6 +26,7 @@ phases:
       - ENVS="dev staging production"
       - git lfs pull
       - mkdir -p reports
+      - docker container rm build_app
   build:
     commands:
       - ./prohibit_image_files.sh origin/master HEAD
