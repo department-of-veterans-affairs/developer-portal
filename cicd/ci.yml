@@ -2,7 +2,8 @@ version: 0.2
 env:
   variables:
     GITHUB_USERNAME: "me"
-    TESTS: "lint security e2e visual accesbility unit"
+    #TESTS: "lint security e2e visual accesbility unit"
+    TESTS: ""
     ENVS: "dev staging production"
     S3_ARCHIVE_BUCKET: "liberty-codebuild-artifacts"
     S3_VISUAL_BUCKET: "liberty-codebuild-artifacts"
@@ -40,6 +41,7 @@ phases:
       - |
         for env in ${ENVS}; do
           make build_app ENV=${env}
+          ls
         done
       # upload archive
       - phase=archive
@@ -76,7 +78,7 @@ phases:
           comment="errors on build check url"
           ;;
         success)
-          comment="good"
+            comment="Build Id: $CODEBUILD_BUILD_ID \n Start Time: $(date $CODEBUILD_START_TIME \n End Time: $(date +%s%N | cut -b1-13)"
           ;;
         *)
           comment="not good"

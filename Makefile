@@ -91,9 +91,9 @@ accessibility: build
 .PHONY: build_app 
 build_app: build
 	docker run -i --name build_app \
-		--user ${UNAME}:${GNAME} \
 		--env NODE_ENV=production \
 		--env BUILD_ENV=${ENV} \
+		--user ${UNAME}:${GNAME} \
 		devportal npm run-script build ${ENV} \
 		--no-cache
 	docker cp build_app:/application/build/ .
