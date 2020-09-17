@@ -171,7 +171,6 @@ export default class SideNav extends React.Component<ISideNavProps> {
   }
 
   private focusPageHeader = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
     document.getElementById('page-header')?.focus();
   }
 }
