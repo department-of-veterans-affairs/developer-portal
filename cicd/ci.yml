@@ -29,7 +29,7 @@ phases:
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
           links="todo"
           docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
-          comment = "Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
+          comment="Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
         elif [[ ${CODEBUILD_BUILD_SUCCEEDING} -eq 0 ]]; then
           S3_BUCKET=liberty-codebuild-artifacts
           ls reports
@@ -39,5 +39,6 @@ phases:
       - |
         if [[ ${PR_NUM} ]]; then
           echo ${PR_NUM}
+          echo ${REPO} ${PR_NUM} ${comment:-"CI success"}
           prcomment.sh ${REPO} ${PR_NUM} ${comment:-"CI success"}
         fi
