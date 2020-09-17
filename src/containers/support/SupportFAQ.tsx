@@ -20,8 +20,8 @@ const generalQuestions: ISupportQuestion[] = [
     answer: 
     <p>
       The APIs are the "front door" or "wall outlet" to VA health records, benefits eligibility, facility locations, and veteran status verification. Developers may create applications to securely access this information via mobile devices and web browsers, across a variety of platforms.',
-    question: 'What are the VA APIs? Why use the VA APIs?
     </p>,
+    question: 'What are the VA APIs? Why use the VA APIs?',
   },
   {
     answer: 'Access to all VA APIs is free of charge, with the goal of making access to federal government data easier for veterans.',
