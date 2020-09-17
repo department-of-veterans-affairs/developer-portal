@@ -24,6 +24,7 @@ phases:
       # run all tests
       - make test
   post_build:
+    commands:
       - |
         if [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]] && [[ -v ${FAIL_VISUAL} ]]; then
           S3_BUCKET=liberty-devportal-visual
