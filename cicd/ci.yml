@@ -15,7 +15,6 @@ phases:
     commands:
       - /usr/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
-      - bash
   pre_build:
     commands:
       # set variables
@@ -40,12 +39,12 @@ phases:
       - phase=build_app
       - |
         for env in ${ENVS}; do
-          make build_app ENV=dev
+          make build_app ENV=${env}
         done
       # upload archive
       - phase=archive
       - |
-        for env in ${ENVS[@]}; do
+        for env in ${ENVS}; do
           make archive ENV=${env}
           #deploy to s3
           aws us-gov-west-1 s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2
@@ -63,8 +62,12 @@ phases:
       - |
         case ${phase} in
         visual) 
+          links=""
+          for f in report/*; do
+            new_f=$(echo $f | sed -e "s/reports\///g")
+            links="$links \n [$new_f](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/$new_f)
+          done
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
-          links="todo"
           docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
           comment="Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
           ;;
