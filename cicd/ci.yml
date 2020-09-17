@@ -28,6 +28,7 @@ phases:
   build:
     commands:
       - make build
+      - echo $CODEBUILD_START_TIME
       - phase=image_scan
       - ./prohibit_image_files.sh origin/master HEAD
       # run tests
@@ -42,16 +43,16 @@ phases:
       - |
         for env in ${ENVS}; do
           make build_app ENV=${env}
-          ls
         done
-      # upload archive
-      - phase=archive
+      # Check if we archive
       - |
-        for env in ${ENVS}; do
-          make archive ENV=${env}
-          #deploy to s3
-          aws s3 cp --no-progress --acl public-read ${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2
-        done
+        if [[ $BRANCH != 'master' ]]; then
+          phase=archive
+          for env in ${ENVS}; do
+            make archive env=${env}
+            aws s3 cp --no-progress --acl public-read ${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2
+          done
+        fi
       # Check if we deploy
       - |
         if [[ ${PR_NUM} ]]; then
@@ -76,7 +77,8 @@ phases:
           ;;
         unit|lint|security|e2e|accessibilty)
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
-          comment="errors on build check url"
+          link="[report](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/)
+          comment="There was an error during the ${phase}. View your ${link} for more information."
           ;;
         success)
             comment="Build Id: $CODEBUILD_BUILD_ID \n Start Time: $(date $CODEBUILD_START_TIME \n End Time: $(date +%s%N | cut -b1-13)"
