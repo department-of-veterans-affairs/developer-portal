@@ -15,8 +15,7 @@ phases:
       - mkdir -p reports
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
-      - echo $REPO
-      - PRNUM=$(prnum.sh ${REPO} ${BRANCH:-default})
+      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
   build:
     commands:
       - ./prohibit_image_files.sh origin/master HEAD
@@ -38,6 +37,7 @@ phases:
           comment = "errors on build check url"
         fi
       - |
-        if [[ -z ${PRNUM} ]]; then
-          prcomment.sh ${REPO} ${PRNUM} ${comment:-"CI success"}
+        if [[ -z ${PR_NUM} ]]; then
+          echo ${PR_NUM}
+          prcomment.sh ${REPO} ${PR_NUM} ${comment:-"CI success"}
         fi
