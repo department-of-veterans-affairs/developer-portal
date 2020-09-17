@@ -39,7 +39,7 @@ phases:
       - phase=build_app
       - | 
         for env in ${ENVS[@]}; do
-          make build_app ENV=env
+          make build_app ENV=${env}
         done
       # upload archive
       - phase=archive
