@@ -10,7 +10,7 @@ phases:
       - mkdir -p reports
       - echo "building"
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
-      - PRNUM=prnum.sh duganth-va/developer-portal $BRANCH
+      - PRNUM=$(prnum.sh duganth-va/developer-portal $BRANCH)
       - echo $PRNUM
   build:
     commands:
