@@ -91,7 +91,7 @@ accessibility: build
 	docker container rm accessibility
 
 .PHONY: build_app 
-buildapp: build
+build_app: build
 	docker run -i --name buildapp \
 		--user ${UNAME}:${GNAME} \
 		--env NODE_ENV=production \
