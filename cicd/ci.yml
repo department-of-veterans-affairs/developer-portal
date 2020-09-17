@@ -39,6 +39,5 @@ phases:
       - |
         if [[ ${PR_NUM} ]]; then
           echo ${PR_NUM}
-          echo ${REPO} ${PR_NUM} ${comment:-"CI success"}
-          prcomment.sh ${REPO} ${PR_NUM} ${comment:-"CI success"}
+          prcomment.sh ${REPO} ${PR_NUM} "${comment:-"CI success"}"
         fi
