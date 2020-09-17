@@ -40,5 +40,5 @@ phases:
         fi
       - |
         if [[ -v $PRNUM ]]; then
-          prcomment.sh duganth-va/developer-portal ${BRANCH} ${comment:-"CI success"}
+          prcomment.sh duganth-va/developer-portal ${PRNUM} ${comment:-"CI success"}
         fi
