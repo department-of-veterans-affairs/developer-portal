@@ -15,7 +15,7 @@ phases:
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
-      - TESTS="unit"
+      - TESTS=
       - git lfs pull
       - mkdir -p reports
   build:
@@ -27,11 +27,10 @@ phases:
           phase=${test}
           make ${test} 
         done
-      - phase=build_app
       # Run build if all tsts are good.
-      #      - make build_app
-
-
+      - phase=build_app
+      - make build_app
+      - ls
       # upload archive
       - phase=archive
       # deploy

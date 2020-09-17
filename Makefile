@@ -90,13 +90,14 @@ accessibility: build
 	exit 1; }
 	docker container rm accessibility
 
-.PHONY: buildapp 
+.PHONY: build_app 
 buildapp: build
 	docker run -i --name buildapp \
 		--user ${UNAME}:${GNAME} \
 		--env NODE_ENV=production \
 		--env BUILD_ENV=dev \
-		devportal npm run-script build dev
+		devportal npm run-script build devportal 
+	docker cp build_app/build/ .
 
 archive: buildapp
 
