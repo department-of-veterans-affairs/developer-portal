@@ -12,12 +12,11 @@ phases:
   pre_build:
     commands:
       - git lfs pull
-      - git rev-list --objects "origin/master..HEAD" 
       - mkdir -p reports
       - BRANCH=$(echo $CODEBUILD_WEBHOOK_TRIGGER | awk -F'/' '{print $2}')
       - REPO=$(echo $CODEBUILD_SOURCE_REPO_URL | sed -e 's#^https://github.com/##')
       - echo $REPO
-      - PRNUM=$(prnum.sh duganth-va/developer-portal ${BRANCH:-default})
+      - PRNUM=$(prnum.sh ${REPO} ${BRANCH:-default})
   build:
     commands:
       - ./prohibit_image_files.sh origin/master HEAD
@@ -40,5 +39,5 @@ phases:
         fi
       - |
         if [[ -v $PRNUM ]]; then
-          prcomment.sh duganth-va/developer-portal ${PRNUM} ${comment:-"CI success"}
+          prcomment.sh ${REPO} ${PRNUM} ${comment:-"CI success"}
         fi
