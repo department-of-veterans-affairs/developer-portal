@@ -37,7 +37,7 @@ phases:
           comment = "errors on build check url"
         fi
       - |
-        if [[ -z "${PR_NUM}" ]]; then
+        if [[ ${PR_NUM} =~ ^[0-9]+$ ]]; then
           echo ${PR_NUM}
           prcomment.sh ${REPO} ${PR_NUM} ${comment:-"CI success"}
         fi
