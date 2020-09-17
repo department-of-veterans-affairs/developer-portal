@@ -1,4 +1,9 @@
 version: 0.2
+env:
+  variables:
+    GITHUB_USERNAME: me
+  parameter-store:
+    GITHUB_TOKEN: "/github_token"
 phases:
   install:
     commands:
