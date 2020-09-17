@@ -47,6 +47,7 @@ endif
 ## unit:	runs unit test script 
 .PHONY: unit
 unit: build
+	@echo "Running unit tests"
 	docker run -i --name unit --user ${UNAME}:${GNAME} devportal npm run-script test:unit:ci \
 	|| { docker cp unit:/application/test-report.xml reports/.; \
 	docker container rm unit; \
@@ -55,39 +56,51 @@ unit: build
 	 
 .PHONY: lint
 lint: build
+	@echo "Running lint tests"
 	docker run -i --name lint --user ${UNAME}:${GNAME} devportal npm run-script lint:ci \
-	|| { docker cp unit:/application/lint-results.xml reports/.; \
+	|| { docker cp lint:/application/lint-results.xml reports/.; \
 	docker container rm lint; \
 	exit 1; }
 	docker container rm lint
 
 .PHONY: visual
 visual: build
+	@echo "Running visual tests"
 	docker run -i --name visual --user ${UNAME}:${GNAME} devportal npm run test:visual \
-	|| { docker cp unit:/application/test/image_snapshots/diff_output/* reports/.; \
+	|| { docker cp visual:/application/test/image_snapshots/diff_output/* reports/.; \
 	docker container rm visual; \
-	FAIL_VISUAL=1; \
 	exit 1; }
 	docker container rm visual
 	 
 .PHONY: e2e
 e2e: build
-	docker run -i --name e2e --user ${UNAME}:${GNAME} devportal npm run test:e2e:ci \
-	|| { docker cp unit:/application/test-report.xml reports/.; \
+	@echo "Running e2e tests"
+	docker run -i --name e2e --user ${UNAME}:${GNAME} devportal npm run-script test:e2e:ci \
+	|| { docker cp e2e:/application/test-report.xml reports/.; \
 	docker container rm e2e; \
 	exit 1; }
 	docker container rm e2e
 
 .PHONY: accessibility
 accessibility: build
-	docker run -i --name accessibility --user ${UNAME}:${GNAME} devportal npm run test:accessibility:ci \
-	|| { docker cp unit:/application/test-report.xml reports/.; \
+	@echo "Running accessibility tests"
+	docker run -i --name accessibility --user ${UNAME}:${GNAME} devportal npm run-script test:accessibility:ci \
+	|| { docker cp accessibility:/application/test-report.xml reports/.; \
 	docker container rm accessibility; \
 	exit 1; }
 	docker container rm accessibility
 
+.PHONY: buildapp 
+buildapp: build
+	docker run -i --name buildapp \
+		--user ${UNAME}:${GNAME} \
+		--env NODE_ENV=production \
+		--env BUILD_ENV=dev \
+		devportal npm run-script build dev
+
+archive: buildapp
+
+
 ## clean:	Removes a local image
 .PHONY: clean
 clean:
-
-## Tdod build; run; ? 

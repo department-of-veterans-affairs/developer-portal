@@ -21,11 +21,12 @@ phases:
     commands:
       - ./prohibit_image_files.sh origin/master HEAD
       # run all tests
-      - make unit
+      - make unit 
       #- make build_app
       # upload archive
   post_build:
     commands:
+      - echo $?
       - |
         if [[ $CODEBUILD_BUILD_SUCCEEDING -eq 0 ]] && [[ ${FAIL_VISUAL} ]]; then
           S3_BUCKET=liberty-codebuild-artifacts
