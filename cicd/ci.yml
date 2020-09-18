@@ -100,6 +100,9 @@ phases:
           link="[report](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/)"
           comment="There was an error during the ${phase}. View your ${link} for more information."
           ;;
+        build)
+          slack_post "developer-portal ${BRANCH} branch CI failed." 
+          ;;
         success)
             echo "Good Job by You"
           ;;
