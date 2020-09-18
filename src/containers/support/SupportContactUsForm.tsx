@@ -193,14 +193,6 @@ export default class SupportContactUsForm extends React.Component<
       validateField(email) &&
       validateField(description)
     );
-
-    // return !(
-    //   !this.state.firstName.validation &&
-    //   this.state.firstName.value &&
-    //   (!this.state.lastName.validation && this.state.lastName.value) &&
-    //   (!this.state.email.validation && this.state.email.value) &&
-    //   (!this.state.description.validation && this.state.description.value)
-    // );
   }
 
   private toggleApis(input: IErrorableInput, checked: boolean) {
