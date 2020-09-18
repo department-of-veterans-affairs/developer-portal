@@ -2,8 +2,7 @@ version: 0.2
 env:
   variables:
     GITHUB_USERNAME: "me"
-    #TESTS: "lint security e2e visual accesbility unit"
-    TESTS: ""
+    TESTS: "lint security e2e visual accesbility unit"
     ENVS: "dev staging production"
     S3_ARCHIVE_BUCKET: "liberty-codebuild-artifacts"
     S3_VISUAL_BUCKET: "liberty-codebuild-artifacts"
@@ -81,7 +80,7 @@ phases:
           comment="There was an error during the ${phase}. View your ${link} for more information."
           ;;
         success)
-            comment="Build Id: $CODEBUILD_BUILD_ID \n Start Time: $(date $CODEBUILD_START_TIME \n End Time: $(date +%s%N | cut -b1-13)"
+            comment="Good Job by You"
           ;;
         *)
           comment="not good"
