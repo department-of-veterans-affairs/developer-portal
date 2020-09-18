@@ -3,7 +3,7 @@ env:
   variables:
     GITHUB_USERNAME: "me"
     # These are the test make targets. 
-    TESTS: "lint security e2e visual accesbility unit"
+    #TESTS: "lint security e2e visual accesbility unit"
     # These are the build environments
     ENVS: "dev staging production"
     # Bucket for archiving deployments
@@ -76,9 +76,9 @@ phases:
           links=""
           for env in ${ENVS}; do
             mv ${env} build
-            links="${links}[${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}/index.html)"
+            links="${links}[${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}/index.html) <br>"
           done
-          aws s3 synch --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/
+          aws s3 sync --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/
           comment="These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${links} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly." 
         fi
       - phase=success
@@ -93,12 +93,12 @@ phases:
             new_f=$(echo $f | sed -e "s/reports\///g")
             links="$links[$new_f](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/$new_f)"
           done
-          aws s3 synch --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/
+          aws s3 sync --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/
           docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
           comment="Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
           ;;
         unit|lint|security|e2e|accessibilty)
-          aws s3 synch --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/
+          aws s3 sync --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/
           link="[report](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/)"
           comment="There was an error during the ${phase}. View your ${link} for more information."
           ;;
