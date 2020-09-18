@@ -36,6 +36,7 @@ phases:
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
       - mkdir -p reports
+      - mkdir -p build
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
       - |
         if [[ ${PR_NUM} ]]; then
@@ -46,8 +47,6 @@ phases:
         EOF
           done
         fi
-      - ls
-      - cat .env.dev.local
       - make build
   build:
     commands:
@@ -82,7 +81,6 @@ phases:
       - |
         if [[ ${PR_NUM} ]]; then
           phase=deploy
-          mkdir -p build
           links=""
           for env in ${ENVS}; do
             mv ${env} build
