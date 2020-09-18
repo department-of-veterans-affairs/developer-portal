@@ -80,6 +80,7 @@ phases:
       - |
         if [[ ${PR_NUM} ]]; then
           phase=deploy
+          mkdir -p build
           links=""
           for env in ${ENVS}; do
             mv ${env} build
