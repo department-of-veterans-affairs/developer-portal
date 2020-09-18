@@ -37,7 +37,7 @@ phases:
       - mkdir -p reports
       - slackpost.sh "Beginning Deployment"
       - slackpost.sh $CODEBUILD_BUILD_ID
-      - slackpost.sh $CODEBUILD_BUILD_ARN
+      - slackpost.sh $CODEBUILD_WEBHOOK_EVENT
       - make build
   build:
     commands:
