@@ -38,6 +38,7 @@ phases:
       - slackpost.sh "Beginning Deployment"
       - slackpost.sh $CODEBUILD_WEBHOOK_EVENT
       - slackpost.sh $CODEBUILD_WEBHOOK_BASE_REF
+      - slackpost.sh $CODEBUILD_WEBHOOK_HEAD_REF
       - make build
   build:
     commands:
