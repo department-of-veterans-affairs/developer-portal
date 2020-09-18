@@ -35,8 +35,8 @@ phases:
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
       - mkdir -p reports
-      - make build
       - slack_post.sh "Beginning Deployment"
+      - make build
   build:
     commands:
       - phase=image_scan
