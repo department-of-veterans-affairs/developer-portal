@@ -36,8 +36,8 @@ phases:
       - git lfs pull
       - mkdir -p reports
       - slackpost.sh "Beginning Deployment"
-      - slackpost.sh $CODEBUILD_BUILD_ID
       - slackpost.sh $CODEBUILD_WEBHOOK_EVENT
+      - slackpost.sh $CODEBUILD_WEBHOOK_BASE_REF
       - make build
   build:
     commands:
