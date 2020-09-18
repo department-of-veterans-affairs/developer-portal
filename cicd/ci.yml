@@ -14,6 +14,8 @@ env:
     S3_ERRORS_BUCKET: "liberty-codebuild-artifacts"
     # Bucket for uploading PR deploy previews.
     S3_REVIEW_BUCKET: "liberty-review-bucket"
+    ## move to paramstore
+    REACT_APP_SENTRY_DSN: "https://4409b200977e4429bb210b601439ef0a@developer.va.gov/sentry/17"
   parameter-store:
     GITHUB_TOKEN: "/github_token"
     SLACK_WEBHOOK: "/slack_web_hook"
@@ -28,17 +30,22 @@ phases:
     commands:
       # set variables
       # If you replay a job in the console the Branch will not be set.
-      # [[ TODO ]] Some logic to prevent errors here
-      - BRANCH=$(echo ${CODEBUILD_WEBHOOK_TRIGGER} | awk -F'/' '{print $2}')
+      - if [[ $CODEBUILD_WEBHOOK_EVENT == "PULL_REQUEST_CREATED"  ]]; then TESTS=""; fi
+      - BRANCH=$(echo ${CODEBUILD_WEBHOOK_HEAD_REF} | awk -F'/' '{print $3}')
       - REPO=$(echo ${CODEBUILD_SOURCE_REPO_URL} | sed -e 's#^https://github.com/##')
-      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
       - mkdir -p reports
-      - slackpost.sh "Beginning Deployment"
-      - slackpost.sh $CODEBUILD_WEBHOOK_EVENT
-      - slackpost.sh $CODEBUILD_WEBHOOK_BASE_REF
-      - slackpost.sh $CODEBUILD_WEBHOOK_HEAD_REF
+      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
+      - |
+        if [[ ${PR_NUM} ]]; then
+          for env in ${ENVS}; do
+        cat <<EOF > .env.${env}.local
+        PUBLIC_URL=/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}
+        REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN}
+        EOF
+          done
+        fi
       - make build
   build:
     commands:
@@ -79,7 +86,7 @@ phases:
             mv ${env} build
             links="${links}[${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}/index.html) <br>"
           done
-          aws s3 sync --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${BRANCH}/preview/
+          aws s3 sync --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/
           comment="These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${links} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly." 
         fi
       - phase=success
@@ -104,7 +111,7 @@ phases:
           comment="There was an error during the ${phase}. View your ${link} for more information."
           ;;
         build)
-          slackpost "developer-portal ${BRANCH} branch CI failed." 
+          slackpost.sh "developer-portal ${BRANCH} branch CI failed." 
           ;;
         success)
             echo "Good Job by You"
