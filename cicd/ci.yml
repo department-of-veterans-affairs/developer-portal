@@ -36,6 +36,8 @@ phases:
       - git lfs pull
       - mkdir -p reports
       - slack_post.sh "Beginning Deployment"
+      - slack_post.sh $CODEBUILD_BUILD_ID
+      - slack_post.sh $CODEBUILD_BUILD_ARN
       - make build
   build:
     commands:
