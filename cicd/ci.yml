@@ -46,6 +46,8 @@ phases:
         EOF
           done
         fi
+      - ls
+      - cat .env.dev.local
       - make build
   build:
     commands:

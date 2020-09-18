@@ -94,8 +94,7 @@ build_app:
 		--env NODE_ENV=production \
 		--env BUILD_ENV=${ENV} \
 		--user ${UNAME}:${GNAME} \
-		devportal npm run-script build ${ENV} \
-		--no-cache
+		devportal npm run-script build ${ENV}
 	docker cp build_app:/application/build/${ENV} .
 	docker container rm build_app
 
