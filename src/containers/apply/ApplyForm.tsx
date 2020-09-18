@@ -13,7 +13,7 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 import * as actions from '../../actions';
 import { includesOauthAPI } from '../../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../../types';
-import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
+import { APPLY_FIELDS_TO_URL_FRAGMENTS, PAGE_HEADER_ID } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
 import DeveloperInfo from './DeveloperInfo';
 import OAuthAppInfo from './OAuthAppInfo';
@@ -64,7 +64,7 @@ class ApplyForm extends React.Component<IApplyProps> {
     const applyClasses = classNames('vads-l-grid-container', 'vads-u-padding--4');
 
     return (
-      <div role="region" aria-labelledby="apply-header" className={applyClasses}>
+      <div role="region" aria-labelledby={PAGE_HEADER_ID} className={applyClasses}>
         <ApplyHeader />
         <div className="vads-l-row">
           <div
@@ -185,10 +185,15 @@ class ApplyForm extends React.Component<IApplyProps> {
     let redirectURIComplete = true;
     if (this.anyOAuthApisSelected()) {
       applicationTypeComplete = oAuthApplicationType.value.length !== 0;
-      redirectURIComplete = oAuthRedirectURI.value.length !== 0 && oAuthRedirectURI.validation === undefined;
+      redirectURIComplete =
+        oAuthRedirectURI.value.length !== 0 && oAuthRedirectURI.validation === undefined;
     }
     return (
-      this.allBioFieldsComplete() && this.anyApiSelected() && termsOfService && applicationTypeComplete && redirectURIComplete
+      this.allBioFieldsComplete() &&
+      this.anyApiSelected() &&
+      termsOfService &&
+      applicationTypeComplete &&
+      redirectURIComplete
     );
   }
 }
