@@ -28,19 +28,12 @@ phases:
     commands:
       # set variables
       # If you replay a job in the console the Branch will not be set.
-      - if [[ $CODEBUILD_WEBHOOK_EVENT == "PULL_REQUEST_CREATED"  ]]; then TESTS=""
+      - if [[ $CODEBUILD_WEBHOOK_EVENT == "PULL_REQUEST_CREATED"  ]]; then TESTS=""; fi
       - BRANCH=$(echo ${CODEBUILD_WEBHOOK_HEAD_REF} | awk -F'/' '{print $2}')
       - REPO=$(echo ${CODEBUILD_SOURCE_REPO_URL} | sed -e 's#^https://github.com/##')
-      - echo $REPO
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
-      - echo $COMMIT_HASH
       - git lfs pull
       - mkdir -p reports
-      - slackpost.sh "Beginning Deployment"
-      - slackpost.sh 
-      - slackpost.sh $CODEBUILD_SOURCE_VERSION
-      - slackpost.sh $CODEBUILD_WEBHOOK_
-      - slackpost.sh $BRANCH
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
       - make build
   build:
