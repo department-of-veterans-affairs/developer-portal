@@ -31,7 +31,7 @@ phases:
       # [[ TODO ]] Some logic to prevent errors here
       - BRANCH=$(echo ${CODEBUILD_WEBHOOK_TRIGGER} | awk -F'/' '{print $2}')
       - REPO=$(echo ${CODEBUILD_SOURCE_REPO_URL} | sed -e 's#^https://github.com/##')
-      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
+      - echo $REPO
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
       - mkdir -p reports
@@ -39,6 +39,7 @@ phases:
       - slackpost.sh $CODEBUILD_WEBHOOK_EVENT
       - slackpost.sh $CODEBUILD_WEBHOOK_BASE_REF
       - slackpost.sh $CODEBUILD_WEBHOOK_HEAD_REF
+      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
       - make build
   build:
     commands:
