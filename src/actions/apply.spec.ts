@@ -1,12 +1,26 @@
 import 'jest';
-
+import { MockedRequest, rest, restContext } from 'msw';
+import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
+import { setupServer } from 'msw/node';
 import * as constants from '../types/constants';
 import * as validators from '../utils/validators';
 import * as actions from './apply';
 
-afterEach(() => {
-  fetchMock.resetMocks();
-});
+const server = setupServer(
+  rest.post(
+    constants.APPLY_URL,
+    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
+      return res(
+        context.status(200),
+        context.json({
+          clientID: 'testid',
+          clientSecret: 'test_secret',
+          token: 'testtoken',
+        }),
+      );
+    },
+  ),
+);
 
 const appState = {
   application: {
@@ -27,14 +41,11 @@ const appState = {
 };
 
 describe('submitForm', () => {
+  beforeAll(() => server.listen());
+  beforeEach(() => server.resetHandlers());
+  afterAll(() => server.close());
+
   it('dispatches correct events when fetch has a 200 response', async () => {
-    fetchMock.mockResponse(
-      JSON.stringify({
-        clientID: 'testid',
-        clientSecret: 'test_secret',
-        token: 'testtoken',
-      }),
-    );
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
@@ -51,7 +62,19 @@ describe('submitForm', () => {
   });
 
   it('dispatches error events when the fetch errors', async () => {
-    fetchMock.mockReject(new Error('Network Failure'));
+    server.use(
+      rest.post(
+        constants.APPLY_URL,
+        (
+          req: MockedRequest,
+          res: ResponseComposition,
+          context: typeof restContext,
+        ): MockedResponse => {
+          return res(context.status(500, 'KABOOM'));
+        },
+      ),
+    );
+
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
@@ -60,15 +83,24 @@ describe('submitForm', () => {
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
     expect(dispatch).toBeCalledWith({
-      status: 'Network Failure',
+      status: 'KABOOM',
       type: constants.SUBMIT_APPLICATION_ERROR,
     });
   });
 
   it('dispatches error events when fetch returns non-200', async () => {
-    fetchMock.mockResponses(
-      [JSON.stringify({ error: 'not found' }), { status: 404 }],
+    server.use(
+      rest.post(
+        constants.APPLY_URL,
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
+          return res(
+            context.status(400, 'bad bad not good'),
+            context.json({ error: 'sorry, who are you?' }),
+          );
+        },
+      ),
     );
+
     const dispatch = jest.fn();
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
@@ -77,7 +109,7 @@ describe('submitForm', () => {
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
     expect(dispatch).toBeCalledWith({
-      status: 'Not Found',
+      status: 'bad bad not good',
       type: constants.SUBMIT_APPLICATION_ERROR,
     });
   });
@@ -147,7 +179,7 @@ describe('updateApplicationEmail', () => {
     const updateAction = actions.updateApplicationEmail(newValue, errorMessage);
     expect(updateAction).toEqual({
       newValue: {
-        ... newValue,
+        ...newValue,
         validation: errorMessage,
       },
       type: constants.UPDATE_APPLICATION_EMAIL,
@@ -160,11 +192,10 @@ describe('updateApplicationEmail', () => {
       value: 'goodemail@example.com',
     };
 
-    const mockValidateEmail = jest.spyOn(validators, 'validateEmail')
-      .mockReturnValue(newValue);    
+    const mockValidateEmail = jest.spyOn(validators, 'validateEmail').mockReturnValue(newValue);
     actions.updateApplicationEmail(newValue);
     expect(mockValidateEmail.mock.calls.length).toBe(0);
-    
+
     newValue.dirty = true;
     actions.updateApplicationEmail(newValue);
     expect(mockValidateEmail.mock.calls.length).toBe(1);
@@ -174,11 +205,11 @@ describe('updateApplicationEmail', () => {
 
 describe('updateApplicationOAuthRedirectURI', () => {
   it('should return the input value when the value is "not dirty"', () => {
-    const newValue = { 
-      dirty: false, 
+    const newValue = {
+      dirty: false,
       value: 'http://valid.com/redirect',
     };
-    
+
     const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue,
@@ -187,11 +218,11 @@ describe('updateApplicationOAuthRedirectURI', () => {
   });
 
   it('should return the input value for an incomplete/"not dirty" URI', () => {
-    const newValue = { 
-      dirty: false, 
+    const newValue = {
+      dirty: false,
       value: 'https://',
     };
-    
+
     const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue,
@@ -200,15 +231,15 @@ describe('updateApplicationOAuthRedirectURI', () => {
   });
 
   it('should not include an error message for a valid HTTP(S) URI', () => {
-    const newValue = { 
-      dirty: true, 
+    const newValue = {
+      dirty: true,
       value: 'https://valid.com/redirect',
     };
-    
+
     const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue: {
-        dirty: false, 
+        dirty: false,
         value: newValue.value,
       },
       type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
@@ -216,15 +247,15 @@ describe('updateApplicationOAuthRedirectURI', () => {
   });
 
   it('should include an error for an invalid and "dirty" redirect URI', () => {
-    const newValue = { 
-      dirty: true, 
+    const newValue = {
+      dirty: true,
       value: 'ftp://host:21',
     };
-    
+
     const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue: {
-        dirty: false, 
+        dirty: false,
         validation: 'Must be an http or https URI.',
         value: newValue.value,
       },
@@ -242,7 +273,7 @@ describe('updateApplicationOAuthRedirectURI', () => {
     const updateAction = actions.updateApplicationOAuthRedirectURI(newValue, errorMessage);
     expect(updateAction).toEqual({
       newValue: {
-        ... newValue,
+        ...newValue,
         validation: errorMessage,
       },
       type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
@@ -255,11 +286,12 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'http://valid.com/redirect',
     };
 
-    const mockValidateURI = jest.spyOn(validators, 'validateOAuthRedirectURI')
-      .mockReturnValue(newValue);    
+    const mockValidateURI = jest
+      .spyOn(validators, 'validateOAuthRedirectURI')
+      .mockReturnValue(newValue);
     actions.updateApplicationOAuthRedirectURI(newValue);
     expect(mockValidateURI.mock.calls.length).toBe(0);
-    
+
     newValue.dirty = true;
     actions.updateApplicationOAuthRedirectURI(newValue);
     expect(mockValidateURI.mock.calls.length).toBe(1);
