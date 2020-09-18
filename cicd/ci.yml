@@ -1,16 +1,120 @@
 version: 0.2
-#env:
-#  parameter-store:
-#    GH_USERNAME: parampath
-#    TOKEN: parampath
+env:
+  variables:
+    GITHUB_USERNAME: "me"
+    # These are the test make targets. 
+    #TESTS: "lint security e2e visual accesbility unit"
+    # These are the build environments
+    ENVS: "dev staging production"
+    # Bucket for archiving deployments
+    S3_ARCHIVE_BUCKET: "liberty-codebuild-artifacts"
+    # Bucket for uploading visual regression failures.
+    S3_VISUAL_BUCKET: "liberty-codebuild-artifacts"
+    # Bucket for uploading build failure artifacts
+    S3_ERRORS_BUCKET: "liberty-codebuild-artifacts"
+    # Bucket for uploading PR deploy previews.
+    S3_REVIEW_BUCKET: "liberty-review-bucket"
+  parameter-store:
+    GITHUB_TOKEN: "/github_token"
+    SLACK_WEBHOOK: "/slack_web_hook"
 phases:
   install:
     commands:
-      - curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.rpm.sh | bash
-      - yum install git-lfs -y
+      # There is considerable slow down in the provisioning phase when using Amazon provided images.
+      # Therefore we use our own Alpine based image. In order to activate the Docker Daemon these lines are needed.
+      - /usr/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2 &
+      - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
     commands:
+      # set variables
+      # If you replay a job in the console the Branch will not be set.
+      # [[ TODO ]] Some logic to prevent errors here
+      - BRANCH=$(echo ${CODEBUILD_WEBHOOK_TRIGGER} | awk -F'/' '{print $2}')
+      - REPO=$(echo ${CODEBUILD_SOURCE_REPO_URL} | sed -e 's#^https://github.com/##')
+      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
+      - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
+      - mkdir -p reports
+      - slackpost.sh "Beginning Deployment"
+      - slackpost.sh $CODEBUILD_WEBHOOK_EVENT
+      - slackpost.sh $CODEBUILD_WEBHOOK_BASE_REF
+      - slackpost.sh $CODEBUILD_WEBHOOK_HEAD_REF
+      - make build
   build:
     commands:
-      - docker build . 
+      - phase=image_scan
+      - ./prohibit_image_files.sh origin/master HEAD
+      # Run tests
+      # We will run these in a loop so we can handle the build failures correctly utilizing the phase variable.
+      # Instead of checking for a combination of CODEBUILD_BUILD_SUCCEDING and some other variable we will assume
+      # the phase variable is an indiation of the where the build failed and act accordingly in the POST_BUILD section.
+      - phase=test
+      - |
+        for test in ${TESTS}; do
+          phase=${test}
+          make ${test}
+        done
+      # Run build if all tests are good.
+      - phase=build_app
+      - |
+        for env in ${ENVS}; do
+          make build_app ENV=${env}
+        done
+      # Check if we archive
+      - |
+        if [[ $BRANCH == 'master' ]]; then
+          phase=archive
+          for env in ${ENVS}; do
+            make archive ENV=${env}
+            aws s3 cp --no-progress --acl public-read ${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}.tar.bz2
+          done
+        fi
+      # Check if we deploy
+      - |
+        if [[ ${PR_NUM} ]]; then
+          phase=deploy
+          mkdir -p build
+          links=""
+          for env in ${ENVS}; do
+            mv ${env} build
+            links="${links}[${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}/index.html) <br>"
+          done
+          aws s3 sync --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${BRANCH}/preview/
+          comment="These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${links} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly." 
+        fi
+      - phase=success
+  post_build:
+    commands:
+      # Handle phase errors. 
+      - |
+        case ${phase} in
+        visual) 
+          links=""
+          for f in report/*; do
+            new_f=$(echo $f | sed -e "s/reports\///g")
+            links="$links[$new_f](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/$new_f)"
+          done
+          aws s3 sync --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/
+          docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
+          comment="Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
+          ;;
+        unit|lint|security|e2e|accessibilty)
+          aws s3 sync --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/
+          link="[report](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/)"
+          comment="There was an error during the ${phase}. View your ${link} for more information."
+          ;;
+        build)
+          slackpost "developer-portal ${BRANCH} branch CI failed." 
+          ;;
+        success)
+            echo "Good Job by You"
+          ;;
+        *)
+          comment="An unhandled error occured with the build process. This is most likely a failure with the build pipeline."
+          ;;
+        esac
+      # Handle comments.
+      - |
+        if [[ ${PR_NUM} ]]; then
+          prcomment.sh ${REPO} ${PR_NUM} "${comment:-"CI success"}"
+        fi
