@@ -139,8 +139,19 @@ export default class SideNav extends React.Component<ISideNavProps> {
           'medium-screen:vads-l-col--4',
         )}
       >
-        <HashLink className="va-api-secondary-skip-nav" to="#page-header" onClick={this.focusPageHeader}>
-          Skip Navigation
+        <HashLink
+          className={classNames(
+            'va-api-secondary-skip-nav',
+            'vads-u-padding--1p5',
+            'vads-u-margin-bottom--5',
+            'vads-u-line-height--3',
+            'vads-u-text-decoration--none',
+            'vads-u-display--block',
+          )}
+          to="#page-header"
+          onClick={this.focusPageHeader}
+        >
+          Skip Page Navigation
         </HashLink>
         <nav
           className={classNames(

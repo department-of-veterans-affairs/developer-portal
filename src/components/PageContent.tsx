@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { SiteRoutes } from '../Routes';
-import './PageContent.scss';
 
 export default class PageContent extends React.Component<RouteComponentProps, {}> {
   private mainRef: React.RefObject<HTMLElement> = React.createRef<HTMLElement>();
