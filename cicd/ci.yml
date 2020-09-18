@@ -30,6 +30,7 @@ phases:
       # If you replay a job in the console the Branch will not be set.
       - if [[ $CODEBUILD_WEBHOOK_EVENT == "PULL_REQUEST_CREATED"  ]]; then TESTS=""; fi
       - BRANCH=$(echo ${CODEBUILD_WEBHOOK_HEAD_REF} | awk -F'/' '{print $2}')
+      - slackpost.sh $BRANCH
       - REPO=$(echo ${CODEBUILD_SOURCE_REPO_URL} | sed -e 's#^https://github.com/##')
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
