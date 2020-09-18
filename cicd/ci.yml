@@ -40,8 +40,8 @@ phases:
       - |
         if [[ ${PR_NUM} ]]; then
           for env in ${ENVS}; do
-        cat <<EOF > .env.${env}.local
-        PUBLIC_URL=/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${ENV}
+        cat <<EOF > .nv.${env}.local
+        PUBLIC_URL=/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}
         REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN}
         EOF
           done
