@@ -36,7 +36,6 @@ phases:
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
       - mkdir -p reports
-      - mkdir -p build
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
       - |
         if [[ ${PR_NUM} ]]; then
@@ -70,7 +69,7 @@ phases:
         done
       # Check if we archive
       - |
-        if [[ $BRANCH != 'master' ]]; then
+        if [[ $BRANCH == 'master' ]]; then
           phase=archive
           for env in ${ENVS}; do
             make archive ENV=${env}
@@ -111,7 +110,7 @@ phases:
           comment="There was an error during the ${phase}. View your ${link} for more information."
           ;;
         build)
-          slackpost "developer-portal ${BRANCH} branch CI failed." 
+          slackpost.sh "developer-portal ${BRANCH} branch CI failed." 
           ;;
         success)
             echo "Good Job by You"
