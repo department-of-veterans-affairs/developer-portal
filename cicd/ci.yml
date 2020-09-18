@@ -13,7 +13,7 @@ env:
     # Bucket for uploading build failure artifacts
     S3_ERRORS_BUCKET: "liberty-codebuild-artifacts"
     # Bucket for uploading PR deploy previews.
-    S3_PR_DEPLOY_BUCKET: "liberty-codebuild-artifacts"
+    S3_REVIEW_DEPLOY_BUCKET: "liberty-codebuild-artifacts"
   parameter-store:
     GITHUB_TOKEN: "/github_token"
 phases:
