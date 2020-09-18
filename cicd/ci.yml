@@ -14,6 +14,8 @@ env:
     S3_ERRORS_BUCKET: "liberty-codebuild-artifacts"
     # Bucket for uploading PR deploy previews.
     S3_REVIEW_BUCKET: "liberty-review-bucket"
+    ## move to paramstore
+    REACT_APP_SENTRY_DSN: "/sentry_dsn"
   parameter-store:
     GITHUB_TOKEN: "/github_token"
     SLACK_WEBHOOK: "/slack_web_hook"
@@ -35,6 +37,16 @@ phases:
       - git lfs pull
       - mkdir -p reports
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH:-default})
+      - |
+        if [[ ${PR_NUM} ]]; then
+          for env in ${ENVS};
+          do
+            cat <<EOF > .env.${env}.local
+            PUBLIC_URL=/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${ENV}
+            REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN}
+            EOF
+          done
+        fi
       - make build
   build:
     commands:
@@ -58,7 +70,7 @@ phases:
         done
       # Check if we archive
       - |
-        if [[ $BRANCH == 'master' ]]; then
+        if [[ $BRANCH != 'master' ]]; then
           phase=archive
           for env in ${ENVS}; do
             make archive ENV=${env}
@@ -75,7 +87,7 @@ phases:
             mv ${env} build
             links="${links}[${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${BRANCH}/${COMMIT_HASH}/${env}/index.html) <br>"
           done
-          aws s3 sync --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${BRANCH}/preview/
+          aws s3 sync --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${BRANCH}/{COMMIT_HASH}/
           comment="These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${links} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly." 
         fi
       - phase=success
