@@ -24,9 +24,9 @@ phases:
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
       - mkdir -p reports
+      - make build
   build:
     commands:
-      - make build
       - echo $CODEBUILD_START_TIME
       - phase=image_scan
       - ./prohibit_image_files.sh origin/master HEAD
@@ -68,7 +68,7 @@ phases:
           links=""
           for f in report/*; do
             new_f=$(echo $f | sed -e "s/reports\///g")
-            links="$links \n [$new_f](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/$new_f)
+            links="$links \n [$new_f](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/$new_f)"
           done
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
           docsLink = 'https://github.com/department-of-veterans-affairs/developer-portal/blob/master/docs/testing.md#visual-regression-testing'
@@ -76,7 +76,7 @@ phases:
           ;;
         unit|lint|security|e2e|accessibilty)
           aws s3 cp --no-progress reports/ s3://${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/ --recursive
-          link="[report](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/)
+          link="[report](https://s3-us-gov-west-1.amazonaws.com/${S3_BUCKET}/${BRANCH}/${COMMIT_HASH}/)"
           comment="There was an error during the ${phase}. View your ${link} for more information."
           ;;
         success)
