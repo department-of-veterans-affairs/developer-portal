@@ -16,6 +16,7 @@ env:
     S3_REVIEW_DEPLOY_BUCKET: "liberty-codebuild-artifacts"
   parameter-store:
     GITHUB_TOKEN: "/github_token"
+    SLACK_WEBHOOK: "/slack_web_hook"
 phases:
   install:
     commands:
@@ -35,6 +36,7 @@ phases:
       - git lfs pull
       - mkdir -p reports
       - make build
+      - slack_post.sh "Beginning Deployment"
   build:
     commands:
       - phase=image_scan
@@ -102,7 +104,7 @@ phases:
             echo "Good Job by You"
           ;;
         *)
-          comment="not good"
+          comment="An unhandled error occured with the build process. This is most likely a failure with the build pipeline."
           ;;
         esac
       # Handle comments.
