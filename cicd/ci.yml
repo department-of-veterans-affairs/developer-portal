@@ -35,9 +35,9 @@ phases:
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
       - git lfs pull
       - mkdir -p reports
-      - slack_post.sh "Beginning Deployment"
-      - slack_post.sh $CODEBUILD_BUILD_ID
-      - slack_post.sh $CODEBUILD_BUILD_ARN
+      - slackpost.sh "Beginning Deployment"
+      - slackpost.sh $CODEBUILD_BUILD_ID
+      - slackpost.sh $CODEBUILD_BUILD_ARN
       - make build
   build:
     commands:
@@ -103,7 +103,7 @@ phases:
           comment="There was an error during the ${phase}. View your ${link} for more information."
           ;;
         build)
-          slack_post "developer-portal ${BRANCH} branch CI failed." 
+          slackpost "developer-portal ${BRANCH} branch CI failed." 
           ;;
         success)
             echo "Good Job by You"
