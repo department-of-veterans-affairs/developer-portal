@@ -125,7 +125,7 @@
     "markdown-component-loader": "github:adhocteam/markdown-component-loader#dv-3146-from110",
     "markdown-it-anchor": "^5.0.2",
     "mini-css-extract-plugin": "0.4.3",
-    "msw": "^0.20.5",
+    "msw": "^0.21.2",
     "node-sass": "^4.14.1",
     "node-sass-tilde-importer": "^1.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
