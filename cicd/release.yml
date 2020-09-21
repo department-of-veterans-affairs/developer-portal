@@ -17,7 +17,6 @@ phases:
       - mkdir -p release
       - phase=download_artifacts
       - aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH} release/.
-      - echo "download complete: $(ls release)"
       # Check all files exist 
       - phase=check_artifacts
       - | 
