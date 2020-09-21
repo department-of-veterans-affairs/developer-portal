@@ -11,6 +11,7 @@ import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
+import { PAGE_HEADER_ID } from '../../types/constants';
 
 export default class CategoryPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
   public render() {
@@ -22,7 +23,6 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
     } = getApiDefinitions()[apiCategoryKey];
 
     let cardSection;
-    const headerId = `${apiCategoryKey}-overview`;
     if (apis.length > 0) {
       const apiCards = apis.map((apiDesc: IApiDescription) => {
         const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
@@ -45,10 +45,13 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
         );
       });
 
-      const authCard = apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API'  ? <AuthorizationCard categoryKey={apiCategoryKey} /> : null;
+      const authCard =
+        apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' ? (
+          <AuthorizationCard categoryKey={apiCategoryKey} />
+        ) : null;
 
       cardSection = (
-        <div role="navigation" aria-labelledby={headerId}>
+        <div role="navigation" aria-labelledby={PAGE_HEADER_ID}>
           <div className={defaultFlexContainer()}>
             {authCard}
             {apiCards}
@@ -58,8 +61,8 @@ export default class CategoryPage extends React.Component<RouteComponentProps<IA
     }
 
     return (
-      <section role="region" aria-labelledby={headerId} className="va-api-api-overview">
-        <PageHeader id={headerId} header={categoryName} />
+      <section role="region" aria-labelledby={PAGE_HEADER_ID} className="va-api-api-overview">
+        <PageHeader header={categoryName} />
         {intro({})}
         {cardSection}
         <div className="vads-u-width--full">{overview({})}</div>

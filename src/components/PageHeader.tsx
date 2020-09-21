@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
+import { PAGE_HEADER_ID } from '../types/constants';
 import './PageHeader.scss';
 
 interface PageHeaderProps {
@@ -8,7 +9,6 @@ interface PageHeaderProps {
   description?: string;
   halo?: string;
   header: string;
-  id?: string;
   containerId?: string;
 }
 
@@ -18,7 +18,11 @@ export default function PageHeader(props: PageHeaderProps) {
       {props.halo && (
         <div className={classNames('header-halo', 'vads-u-color--gray')}>{props.halo}</div>
       )}
-      <h1 id={props.id} className={classNames('vads-u-margin-top--0', 'vads-u-margin-bottom--2')}>
+      <h1
+        id={PAGE_HEADER_ID}
+        className={classNames('vads-u-margin-top--0', 'vads-u-margin-bottom--2')}
+        tabIndex={-1}
+      >
         {props.header}
       </h1>
       {props.description && (

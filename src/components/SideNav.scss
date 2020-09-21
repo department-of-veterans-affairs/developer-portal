@@ -6,7 +6,8 @@
 }
 
 li.va-api-sidenav-entry {
-  a:hover {
+  a:hover,
+  a:focus {
     background-color: $color-gray-lighter;
   }
 }
@@ -21,4 +22,15 @@ a.va-api-active-sidenav-link + ul.va-api-sidenav-sub-list {
   // Show the subnav when its parent (represented as a sibling in the DOM)
   // is the selected nav item
   display: block;
+}
+
+a.va-api-secondary-skip-nav {
+  position: absolute;
+  top: -1000px;
+  background: $va-api-color-blue-dark;
+
+  &:focus {
+    position: relative;
+    top: auto;
+  }
 }
