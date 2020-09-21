@@ -54,22 +54,6 @@ describe('ApiDocumentation', () => {
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
-  it('renders successfully', () => {
-    expect(() => {
-      render(
-        <Provider store={store}>
-          <FlagsProvider
-            flags={{
-              hosted_apis: { my_api: true },
-            }}
-          >
-            <ApiDocumentation apiDefinition={api} categoryKey="fake" location={history.location} />
-          </FlagsProvider>
-        </Provider>,
-      );
-    }).not.toThrow();
-  });
-
   it('renders the OpenAPI URI', async () => {
     expect(await screen.findByText('https://example.com/my/openapi/spec')).toBeInTheDocument();
   });
