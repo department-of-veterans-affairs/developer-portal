@@ -2,6 +2,7 @@ import * as React from 'react';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
+import { PAGE_HEADER_ID } from '../../types/constants';
 import { ISection } from './Support';
 
 const headerProps = {
@@ -16,7 +17,7 @@ interface ISupportOverviewProps {
 
 export default function SupportOverview(props: ISupportOverviewProps) {
   return (
-    <section role="region" aria-label="Support Overview">
+    <section role="region" aria-labelledby={PAGE_HEADER_ID}>
       <PageHeader {...headerProps} />
       <div className={defaultFlexContainer()}>
         {props.sections.map((section: ISection) => {

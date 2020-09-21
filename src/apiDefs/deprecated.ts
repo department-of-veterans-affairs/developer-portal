@@ -1,6 +1,6 @@
 import * as moment from 'moment';
 import { getAllApis } from './query';
-import { IApiDescription } from "./schema";
+import { BaseAPICategory, IApiDescription } from './schema';
 
 export const isApiDeprecated = (api: IApiDescription): boolean => {
   if (api.deactivationInfo === undefined) {
@@ -31,3 +31,10 @@ export const getDeactivatedFlags = () => {
     return flags;
   }, {});
 };
+
+// returns a synthetic "category" of deactivated APIs
+export const getDeactivatedCategory = (): BaseAPICategory => ({
+  apis: getAllApis().filter((api: IApiDescription) => isApiDeactivated(api)),
+  name: 'Deactivated APIs',
+  properName: 'Deactivated APIs',
+});

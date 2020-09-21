@@ -15,7 +15,7 @@ env:
     # Bucket for uploading PR deploy previews.
     S3_REVIEW_BUCKET: "liberty-review-bucket"
     ## move to paramstore
-    REACT_APP_SENTRY_DSN: "https://4409b200977e4429bb210b601439ef0a@developer.va.gov/sentry/17"
+    REACT_APP_SENTRY_DSN: "https://dc7d5ebec20e474c80f8150c399d2955@dev-developer.va.gov/sentry/26"
   parameter-store:
     GITHUB_TOKEN: "/github_token"
     SLACK_WEBHOOK: "/slack_web_hook"
