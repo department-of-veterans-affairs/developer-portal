@@ -8,6 +8,7 @@ import './StyleOverride.scss';
 import { VersionActions } from './VersionActions';
 import { VersionReducers } from './VersionReducers';
 import { VersionSelector } from './VersionSelector';
+import { WrapHighlightCode } from './WrapHighlightCode';
 import { WrapParameters } from './WrapParameters';
 
 export function SwaggerPlugins(versionHandler: any) {
@@ -33,6 +34,7 @@ export function SwaggerPlugins(versionHandler: any) {
     },
     wrapComponents: {
       ...DisableTryItOut.toggleAuthorize(),
+      ...WrapHighlightCode,
       ...WrapParameters,
     },
   };
