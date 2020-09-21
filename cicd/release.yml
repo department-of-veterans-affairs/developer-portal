@@ -1,0 +1,42 @@
+version: 0.2
+env:
+  variables:
+    ENVS: "dev staging production"
+    S3_ARCHIVE_BUCKET: "liberty-codebuild-artifacts"
+  parameter-store:
+    GITHUB_TOKEN: "/github_token"
+phases:
+  pre_build:
+    commands:
+      - gh config set prompt disabled
+      - gh config set git_protocol ssh
+      - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - echo "Generating release for ${COMMIT_HASH}" 
+  build:
+    commands:
+      - mkdir -p release
+      - phase=download_artifacts
+      - aws s3 sync --no-progress s3://{S3_ARCHIVE_BUCKET}/{$COMMIT_HASH release/.
+      # Create new tag
+      - NEW_TAG=$(./increment.sh $(git tag --sort=-creatordate | grep CodeBuild | tail -1))
+      # Check all files exist 
+      - phase=check_artifacts
+      -| 
+       for env in ${ENVS}; do
+       if [[ ! -f release/${env}.tar.bz2 ]]; then
+          echo "${env}.tar.bz2 was not found. Aborting release process and sending notification to slack " >&2
+          echo "slackpost here"
+          exit 1
+        fi
+      done
+      - phase=create_release
+      - echo "Creating ${NEW_TAG} release"
+      - gh release create ${NEW_TAG}
+      - phase=upload_artificats
+      - echo "Uploading artifacts"
+      - |
+        for env in ${ENVS}; do
+          gh release upload ${NEW_TAG} "release/${env}.tar.bz2#${env}"
+          echo "${env} artifact uploaded"
+        done
+      - phase=success
