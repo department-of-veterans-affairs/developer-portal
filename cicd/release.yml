@@ -17,13 +17,13 @@ phases:
       - mkdir -p release
       - phase=download_artifacts
       - aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH} release/.
-      # Check all files exist 
+      # Check that all files exist 
       - phase=check_artifacts
       - | 
         for env in ${ENVS}; do
           if [[ ! -f release/${env}.tar.bz2 ]]; then
             echo "${env}.tar.bz2 was not found. Aborting release process and sending notification to slack " >&2
-            echo "slackpost here"
+            slackpost.sh   
             exit 1
           fi
         done
