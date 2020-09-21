@@ -16,7 +16,7 @@ phases:
     commands:
       - mkdir -p release
       - phase=download_artifacts
-      - aws s3 sync --no-progress s3://{S3_ARCHIVE_BUCKET}/{$COMMIT_HASH release/.
+      - aws s3 sync --no-progress s3://{S3_ARCHIVE_BUCKET}/cb-{$COMMIT_HASH release/.
       # Create new tag
       - NEW_TAG=$(./increment.sh $(git tag --sort=-creatordate | grep CodeBuild | tail -1))
       # Check all files exist 
