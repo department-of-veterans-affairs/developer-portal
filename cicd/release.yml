@@ -21,14 +21,14 @@ phases:
       - NEW_TAG=$(./increment.sh $(git tag --sort=-creatordate | grep CodeBuild | tail -1))
       # Check all files exist 
       - phase=check_artifacts
-      -| 
-       for env in ${ENVS}; do
-       if [[ ! -f release/${env}.tar.bz2 ]]; then
-          echo "${env}.tar.bz2 was not found. Aborting release process and sending notification to slack " >&2
-          echo "slackpost here"
-          exit 1
-        fi
-      done
+      - | 
+        for env in ${ENVS}; do
+          if [[ ! -f release/${env}.tar.bz2 ]]; then
+            echo "${env}.tar.bz2 was not found. Aborting release process and sending notification to slack " >&2
+            echo "slackpost here"
+            exit 1
+          fi
+        done
       - phase=create_release
       - echo "Creating ${NEW_TAG} release"
       - gh release create ${NEW_TAG}
