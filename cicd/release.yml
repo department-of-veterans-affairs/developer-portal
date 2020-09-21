@@ -17,8 +17,7 @@ phases:
       - mkdir -p release
       - phase=download_artifacts
       - aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH} release/.
-      # Create new tag
-      - NEW_TAG=$(increment.sh $(git tag --sort=-creatordate | grep CodeBuild | tail -1))
+      - echo "download complete: $(ls release)"
       # Check all files exist 
       - phase=check_artifacts
       - | 
@@ -29,6 +28,12 @@ phases:
             exit 1
           fi
         done
+      # Create new tag
+      - phase=create_tag
+      - OLD_TAG=$(git tag --sort=-creatordate | grep CodeBuild | head -1)
+      - echo "Found ${OLD_TAG} - incrementing..."
+      - NEW_TAG=$(increment.sh ${OLD_TAG}) 
+      - echo "New Tag is ${NEW_TAG}"
       - phase=create_release
       - echo "Creating ${NEW_TAG} release"
       - gh release create ${NEW_TAG}
