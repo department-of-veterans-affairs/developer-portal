@@ -59,10 +59,8 @@ describe('ApiDocumentation', () => {
   });
 
   it('has a section for each tag', async () => {
-    const tags: string[] = ['Places', 'People'];
-    for (const tag of tags) {
-      expect(await screen.findByRole('heading', { name: tag })).toBeInTheDocument();
-    }
+    expect(await screen.findByRole('heading', { name: 'Places' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'People' })).toBeInTheDocument();
   });
 
   describe('operations', () => {
