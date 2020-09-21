@@ -33,3 +33,4 @@ test/image_snapshots/__diff_output__
 
 # Text editors
 .vscode/
+.idea/
