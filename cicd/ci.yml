@@ -46,7 +46,6 @@ phases:
         EOF
           done
         fi
-      - make build
   build:
     commands:
       - phase=image_scan
