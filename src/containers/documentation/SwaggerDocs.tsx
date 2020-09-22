@@ -3,7 +3,7 @@ import { Location } from 'history';
 import * as React from 'react';
 import { Dispatch } from 'react';
 import { connect } from 'react-redux';
-import SwaggerUI from 'swagger-ui';
+import * as SwaggerUI from 'swagger-ui';
 import * as actions from '../../actions';
 import { IApiDocSource } from '../../apiDefs/schema';
 import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';
@@ -120,7 +120,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
   }
 
   private renderSwaggerUI() {
-    if (document.getElementById("swagger-ui")) {
+    if (document.getElementById('swagger-ui')) {
       if (this.props.docUrl.length !== 0) {
         const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
         const ui = SwaggerUI({
