@@ -1,13 +1,29 @@
-import React from "react";
-import PropTypes from "prop-types";
+import * as PropTypes from "prop-types";
+import * as React from "react";
 
-export default function ServersContainer(props) {
+interface ServersContainerProps {
+  specSelectors: {
+    servers: () => any,
+  };
+  oas3Selectors: {
+    serverVariableValue: () => any,
+    serverEffectiveValue: () => any,
+    selectedServer: () => any,
+  };
+  oas3Actions: {
+    setServerVariableValue: () => any,
+    setSelectedServer: () => any,
+  };
+  getComponent: (componentName: string) => typeof React.Component;
+}
+
+export default function ServersContainer(props: ServersContainerProps): JSX.Element {
   const {specSelectors, oas3Selectors, oas3Actions, getComponent} = props;
 
   const servers = specSelectors.servers();
 
-  const Col = getComponent("Col");
-  const Servers = getComponent("Servers");
+  const Col: typeof React.Component = getComponent('Col');
+  const Servers: typeof React.Component = getComponent('Servers');
 
   return (
     <div>
@@ -34,5 +50,5 @@ ServersContainer.propTypes = {
   getComponent: PropTypes.func.isRequired,
   oas3Actions: PropTypes.object.isRequired,
   oas3Selectors: PropTypes.object.isRequired,
-  specSelectors: PropTypes.object.isRequired
-}
+  specSelectors: PropTypes.object.isRequired,
+};
