@@ -9,8 +9,8 @@ import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getCategoryFlags, getEnvFlags } from './apiDefs/env';
 import { getAllApis } from './apiDefs/query';
 import { IApiDescription } from './apiDefs/schema';
+import { Header } from './components';
 import Footer from './components/Footer';
-import Header from './components/Header';
 import PageContent from './components/PageContent';
 import { history } from './store';
 
