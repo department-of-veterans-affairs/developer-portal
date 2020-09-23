@@ -93,6 +93,9 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
             'vads-u-border-left--5px': subNavLevel === 0,
           })}
           isActive={this.navHashLinkIsActive}
+          onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
+            this.onHashAnchorClick(e, subNavLevel);
+          }}
           {...navLinkProps}
         >
           {this.props.name}
@@ -111,6 +114,15 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
       </li>
     );
   }
+  private onHashAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, subNavLevel: number) => {
+    if (subNavLevel === 2) {
+      const id: string = e.currentTarget.href.split('#')?.[1];
+      if (id) {
+        document.getElementById(id)?.focus();
+      }
+    }
+  }
+
 }
 
 interface ISideNavProps {
