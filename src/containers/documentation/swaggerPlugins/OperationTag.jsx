@@ -7,102 +7,99 @@ import { sanitizeUrl } from "@braintree/sanitize-url";
 
 const createDeepLinkPath = (str) => typeof str === "string" || str instanceof String ? str.trim().replace(/\s/g, "_") : "";
 
-export default class OperationTag extends React.Component {
+export default function OperationTag(props = {
+  tag: '',
+  tagObj: Im.fromJS({}),
+}) {
 
-  static defaultProps = {
-    tag: "",
-    tagObj: Im.fromJS({})
-  };
+  const {
+    children,
+    getConfigs,
+    getComponent,
+    layoutSelectors,
+    layoutActions,
+    tag,
 
-  static propTypes = {
-    tag: PropTypes.string.isRequired,
-    tagObj: ImPropTypes.map.isRequired,
+    tagObj
+  } = props;
 
-    layoutActions: PropTypes.object.isRequired,
-    layoutSelectors: PropTypes.object.isRequired,
+  const {
+    deepLinking,
+    docExpansion
+  } = getConfigs();
 
-    getComponent: PropTypes.func.isRequired,
-    getConfigs: PropTypes.func.isRequired
-  };
+  const isDeepLinkingEnabled = deepLinking && deepLinking !== "false";
 
-  render() {
-    const {
-      children,
-      getConfigs,
-      getComponent,
-      layoutSelectors,
-      layoutActions,
-      tag,
-      tagObj
-    } = this.props;
+  const Collapse = getComponent("Collapse");
+  const Markdown = getComponent("Markdown");
+  const DeepLink = getComponent("DeepLink");
 
-    let {
-      deepLinking,
-      docExpansion
-    } = getConfigs();
+  let tagDescription = tagObj.getIn(["tagDetails", "description"], null);
+  let tagExternalDocsDescription = tagObj.getIn(["tagDetails", "externalDocs", "description"]);
+  let tagExternalDocsUrl = tagObj.getIn(["tagDetails", "externalDocs", "url"]);
 
-    const isDeepLinkingEnabled = deepLinking && deepLinking !== "false";
+  let isShownKey = ["operations-tag", createDeepLinkPath(tag)];
+  let showTag = layoutSelectors.isShown(isShownKey, docExpansion === "full" || docExpansion === "list");
 
-    const Collapse = getComponent("Collapse");
-    const Markdown = getComponent("Markdown");
-    const DeepLink = getComponent("DeepLink");
+  return (
+    <div className={showTag ? "opblock-tag-section is-open" : "opblock-tag-section"} >
 
-    let tagDescription = tagObj.getIn(["tagDetails", "description"], null);
-    let tagExternalDocsDescription = tagObj.getIn(["tagDetails", "externalDocs", "description"]);
-    let tagExternalDocsUrl = tagObj.getIn(["tagDetails", "externalDocs", "url"]);
+      <h3
+        onClick={() => layoutActions.show(isShownKey, !showTag)}
+        className={!tagDescription ? "opblock-tag no-desc" : "opblock-tag" }
+        id={isShownKey.join("-")}>
+        <DeepLink
+          enabled={isDeepLinkingEnabled}
+          isShown={showTag}
+          path={tag}
+          text={tag} />
+        { !tagDescription ? <small></small> :
+          <small>
+              <Markdown source={tagDescription} />
+            </small>
+          }
 
-    let isShownKey = ["operations-tag", createDeepLinkPath(tag)];
-    let showTag = layoutSelectors.isShown(isShownKey, docExpansion === "full" || docExpansion === "list");
+          <div>
+            { !tagExternalDocsDescription ? null :
+              <small>
+                  { tagExternalDocsDescription }
+                    { tagExternalDocsUrl ? ": " : null }
+                    { tagExternalDocsUrl ?
+                      <a
+                          href={sanitizeUrl(tagExternalDocsUrl)}
+                          onClick={(e) => e.stopPropagation()}
+                          target={"_blank"}
+                          >{tagExternalDocsUrl}</a> : null
+                        }
+                </small>
+              }
+          </div>
 
-    return (
-      <div className={showTag ? "opblock-tag-section is-open" : "opblock-tag-section"} >
+          <button
+            className="expand-operation"
+            title={showTag ? "Collapse operation": "Expand operation"}
+            onClick={() => layoutActions.show(isShownKey, !showTag)}>
 
-        <h3
-          onClick={() => layoutActions.show(isShownKey, !showTag)}
-          className={!tagDescription ? "opblock-tag no-desc" : "opblock-tag" }
-          id={isShownKey.join("-")}>
-          <DeepLink
-            enabled={isDeepLinkingEnabled}
-            isShown={showTag}
-            path={tag}
-            text={tag} />
-          { !tagDescription ? <small></small> :
-            <small>
-                <Markdown source={tagDescription} />
-              </small>
-            }
+            <svg className="arrow" width="20" height="20">
+              <use href={showTag ? "#large-arrow-down" : "#large-arrow"} xlinkHref={showTag ? "#large-arrow-down" : "#large-arrow"} />
+            </svg>
+          </button>
+      </h3>
 
-            <div>
-              { !tagExternalDocsDescription ? null :
-                <small>
-                    { tagExternalDocsDescription }
-                      { tagExternalDocsUrl ? ": " : null }
-                      { tagExternalDocsUrl ?
-                        <a
-                            href={sanitizeUrl(tagExternalDocsUrl)}
-                            onClick={(e) => e.stopPropagation()}
-                            target={"_blank"}
-                            >{tagExternalDocsUrl}</a> : null
-                          }
-                  </small>
-                }
-            </div>
-
-            <button
-              className="expand-operation"
-              title={showTag ? "Collapse operation": "Expand operation"}
-              onClick={() => layoutActions.show(isShownKey, !showTag)}>
-
-              <svg className="arrow" width="20" height="20">
-                <use href={showTag ? "#large-arrow-down" : "#large-arrow"} xlinkHref={showTag ? "#large-arrow-down" : "#large-arrow"} />
-              </svg>
-            </button>
-        </h3>
-
-        <Collapse isOpened={showTag}>
-          {children}
-        </Collapse>
-      </div>
-    );
-  }
+      <Collapse isOpened={showTag}>
+        {children}
+      </Collapse>
+    </div>
+  );
 }
+
+OperationTag.propTypes = {
+  tag: PropTypes.string.isRequired,
+  tagObj: ImPropTypes.map.isRequired,
+
+  layoutActions: PropTypes.object.isRequired,
+  layoutSelectors: PropTypes.object.isRequired,
+
+  getComponent: PropTypes.func.isRequired,
+  getConfigs: PropTypes.func.isRequired
+};
