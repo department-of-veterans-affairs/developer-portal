@@ -19,7 +19,6 @@ export default function OperationTag(props = {
     layoutSelectors,
     layoutActions,
     tag,
-
     tagObj
   } = props;
 
