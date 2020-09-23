@@ -27,7 +27,7 @@ const handleSkipNavClick = () => {
   }
 };
 
-export const Header = (): JSX.Element => {
+const Header = (): JSX.Element => {
   /**
    * TOGGLE MENU VISIBLE
    */
@@ -117,3 +117,7 @@ export const Header = (): JSX.Element => {
     </>
   );
 };
+
+Header.propTypes = {};
+
+export { Header };
