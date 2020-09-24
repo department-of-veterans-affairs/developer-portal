@@ -20,6 +20,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -33,6 +34,7 @@ module.exports = {
     'eslint-plugin-react',
     '@typescript-eslint',
     '@typescript-eslint/tslint',
+    'react-hooks',
   ],
   rules: {
     '@typescript-eslint/adjacent-overload-signatures': 'error',
