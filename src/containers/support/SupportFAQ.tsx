@@ -150,17 +150,16 @@ const SupportQuestions = (props: ISupportQuestionsProps) => {
   );
 };
 
-export default class SupportFAQ extends React.Component {
-  public render() {
-    return (
-      <section role="region" aria-label="Support FAQ">
-        <PageHeader {...headerProps} />
-        <div>
-          <SupportQuestions title="General" questions={generalQuestions}/>
-          <SupportQuestions title="Development" questions={developmentQuestions}/>
-          <SupportQuestions title="Troubleshooting/Support" questions={supportQuestions}/>
-        </div>
-      </section>
-    );
-  }
+export default function SupportFAQ() {
+  
+  return (
+    <section role="region" aria-label="Support FAQ">
+      <PageHeader {...headerProps} />
+      <div>
+        <SupportQuestions title="General" questions={generalQuestions}/>
+        <SupportQuestions title="Development" questions={developmentQuestions}/>
+        <SupportQuestions title="Troubleshooting/Support" questions={supportQuestions}/>
+      </div>
+    </section>
+  );
 }
