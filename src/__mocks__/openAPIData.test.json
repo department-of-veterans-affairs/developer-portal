@@ -1,0 +1,105 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "My API",
+    "version": "v0"
+  },
+  "paths": {
+    "/places/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved place data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Place"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed to retrieve place by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchByIdError"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["Places"]
+      }
+    },
+    "/people/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved person data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed to retrieve person by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchByIdError"
+                }
+              }
+            }
+          }
+        },
+        "tags": ["People"]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Person": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "home": { "type": "string" },
+          "dateOfBirth": { "type": "string", "format": "full-date" }
+        }
+      },
+      "Place": {
+        "type": "string",
+        "properties": {
+          "name": { "type": "string" },
+          "region": { "type": "string" }
+        }
+      },
+      "SearchByIdError": {
+        "type": "string",
+        "properties": {
+          "resourceName": { "type": "string" },
+          "id": { "type": "string" }
+        }
+      }
+    }
+  }
+}
