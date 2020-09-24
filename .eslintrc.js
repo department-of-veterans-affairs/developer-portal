@@ -185,7 +185,9 @@ module.exports = {
     'react/jsx-curly-spacing': 'off',
     'react/jsx-equals-spacing': 'off',
     'react/jsx-key': 'error',
-    'react/jsx-no-bind': 'error',
+    // inline arrow functions are not very expensive, and React.useCallback can be
+    // if it's overused https://kentcdodds.com/blog/usememo-and-usecallback
+    'react/jsx-no-bind': 'off',
     'react/jsx-wrap-multilines': 'off',
     'space-before-function-paren': 'off',
     'space-in-parens': ['off', 'never'],
