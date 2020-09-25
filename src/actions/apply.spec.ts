@@ -88,13 +88,39 @@ describe('submitForm', () => {
     });
   });
 
-  it('dispatches error events when fetch returns non-200', async () => {
+  it('dispatches error events when fetch returns validation errors with status 400', async () => {
     server.use(
       rest.post(
         constants.APPLY_URL,
         (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
           return res(
-            context.status(400, 'bad bad not good'),
+            context.status(400),
+            context.json({ errors: ['email must be valid email'] }),
+          );
+        },
+      ),
+    );
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+    getState.mockReturnValueOnce(appState);
+    await actions.submitForm()(dispatch, getState, undefined);
+    expect(dispatch).toBeCalledWith({
+      type: constants.SUBMIT_APPLICATION_BEGIN,
+    });
+    expect(dispatch).toBeCalledWith({
+      status: 'email must be valid email',
+      type: constants.SUBMIT_APPLICATION_ERROR,
+    });
+  });
+
+  it('dispatches error events when fetch returns non-200 and non-400', async () => {
+    server.use(
+      rest.post(
+        constants.APPLY_URL,
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
+          return res(
+            context.status(404, 'bad bad not good'),
             context.json({ error: 'sorry, who are you?' }),
           );
         },
