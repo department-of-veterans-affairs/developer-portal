@@ -147,7 +147,6 @@ export default class SideNav extends React.Component<ISideNavProps> {
             'vads-u-line-height--3',
             'vads-u-text-decoration--none',
             'vads-u-display--block',
-            'vads-u-color--white',
           )}
           to="#page-header"
           onClick={this.focusPageHeader}
