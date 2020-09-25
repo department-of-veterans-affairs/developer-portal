@@ -7,6 +7,7 @@ import { HashLink, NavHashLink, NavHashLinkProps } from 'react-router-hash-link'
 import * as Stickyfill from 'stickyfilljs';
 
 import '../components/SideNav.scss';
+import { onHashAnchorClick } from '../utils/clickHandlers';
 
 export interface ISideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
@@ -93,9 +94,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
             'vads-u-border-left--5px': subNavLevel === 0,
           })}
           isActive={this.navHashLinkIsActive}
-          onClick={(e: React.MouseEvent<HTMLAnchorElement>) => {
-            this.onHashAnchorClick(e, subNavLevel);
-          }}
+          onClick={onHashAnchorClick}
           {...navLinkProps}
         >
           {this.props.name}
@@ -114,15 +113,6 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
       </li>
     );
   }
-  private onHashAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, subNavLevel: number) => {
-    if (subNavLevel === 2) {
-      const id: string = e.currentTarget.href.split('#')?.[1];
-      if (id) {
-        document.getElementById(id)?.focus();
-      }
-    }
-  }
-
 }
 
 interface ISideNavProps {
@@ -162,7 +152,7 @@ export default class SideNav extends React.Component<ISideNavProps> {
             'vads-u-color--white',
           )}
           to="#page-header"
-          onClick={this.focusPageHeader}
+          onClick={onHashAnchorClick}
         >
           Skip Page Navigation
         </HashLink>
@@ -192,9 +182,5 @@ export default class SideNav extends React.Component<ISideNavProps> {
         </nav>
       </div>
     );
-  }
-
-  private focusPageHeader = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    document.getElementById('page-header')?.focus();
   }
 }

@@ -10,6 +10,7 @@ import VeteransCrisisLine from './crisisLine/VeteransCrisisLine';
 import NavBar from './NavBar';
 import Search from './Search';
 
+import { onHashAnchorClick } from '../utils/clickHandlers';
 import './Header.scss';
 import TestingNotice from './TestingNotice';
 
@@ -41,7 +42,7 @@ export default class Header extends React.Component<{}, IHeaderState> {
               'vads-u-padding-x--2',
               'vads-u-padding-y--1',
             )}
-            onClick={this.handleSkipNavClick}
+            onClick={onHashAnchorClick}
           >
             Skip to main content
           </HashLink>
@@ -103,14 +104,5 @@ export default class Header extends React.Component<{}, IHeaderState> {
     this.setState((state: IHeaderState) => {
       return { mobileNavVisible: !state.mobileNavVisible };
     });
-  }
-
-  // need to manually set focus on navigation to #main, since React Router cancels
-  // native anchor click behavior and react-router-hash-link doesn't handle focus
-  private handleSkipNavClick() {
-    const mainElement: HTMLElement | null = document.querySelector('main');
-    if (mainElement) {
-      mainElement.focus();
-    }
   }
 }
