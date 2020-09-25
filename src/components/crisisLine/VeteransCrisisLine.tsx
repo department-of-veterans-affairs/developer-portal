@@ -3,8 +3,8 @@ import * as React from 'react';
 import Modal from '@department-of-veterans-affairs/formation-react/Modal';
 import classNames from 'classnames';
 
-import useModalController from '../../hooks/ModalController';
 import rightArrow from '../../assets/arrow-right-white.svg';
+import useModalController from '../../hooks/ModalController';
 import VeteransCrisisLinePanel from './VeteransCrisisLinePanel';
 
 import './VeteransCrisisLine.scss';
