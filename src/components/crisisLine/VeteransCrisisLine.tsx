@@ -55,4 +55,6 @@ const VeteransCrisisLine = (): JSX.Element => {
   );
 };
 
+VeteransCrisisLine.propTypes = {};
+
 export default VeteransCrisisLine;

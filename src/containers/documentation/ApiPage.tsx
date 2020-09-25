@@ -73,4 +73,6 @@ const ApiPage = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
   );
 };
 
+ApiPage.propTypes = {};
+
 export default ApiPage;
