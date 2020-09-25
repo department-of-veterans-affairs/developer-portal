@@ -9,7 +9,8 @@ interface CodeWrapperProps {
 export default class CodeWrapper extends React.Component<CodeWrapperProps, {}> {
   public render() {
     return (
-      <div className="code-wrapper">
+      // future improvement: add role="region" and add appropriate aria-labels
+      <div className="code-wrapper" tabIndex={0}>
         <span className="sr-only">
           Ensure your screenreader verbosity is set to high for code snippets.
         </span>
