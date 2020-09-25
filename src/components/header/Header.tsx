@@ -75,7 +75,7 @@ const Header = (): JSX.Element => {
           >
             <Link
               to="/"
-              title="Digital VA home page"
+              title="VA API Platform home page"
               className={classNames(
                 'vads-u-color--white',
                 'vads-u-font-size--lg',
