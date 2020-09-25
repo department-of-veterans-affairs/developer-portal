@@ -8,7 +8,7 @@ This document tracks running issues that are useful to be aware when developing 
 
 React Router anchor links do not update focus to the anchored section, as would be expected with native browser behavior. `Link` components cancel the default `click` event behavior so that the component can navigate with the [`history`](https://github.com/ReactTraining/history) object. This is a longstanding and well-known issue with React Router.
 
-[`react-router-hash-link`](https://github.com/rafrex/react-router-hash-link) is a well-known workaround, but it doesn't actually handle the focus part of anchor clicks. Therefore, you need to manually handle focus for anchor links in the dev portal. Within `SideNav.tsx` this is being handled on tier 3 items specifically within the OAuth Authorization pages. You will need to set the `tabIndex="-1"` accordingly on the targetted element.
+[`react-router-hash-link`](https://github.com/rafrex/react-router-hash-link) is a well-known workaround, but it doesn't actually handle the focus part of anchor clicks. Therefore, you need to manually handle focus for anchor links in the dev portal. For `HashLink` elements where ensuring that focus is respected you can use the `onHashAnchorClick` utility method in `src/utils/clickHandlers.ts` as an `onClick` method.
 
 References:
 
