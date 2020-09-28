@@ -21,13 +21,9 @@ const DeactivationMessage = ({ api }: { api: IApiDescription }) => {
     return null;
   }
 
-  if (!api.deactivationInfo) {
-    return null;
-  }
-
   const content = isDeactivated
-    ? api.deactivationInfo.deactivationContent
-    : api.deactivationInfo.deprecationContent;
+    ? (api.deactivationInfo?.deactivationContent || (() => 'Deactived API'))
+    : (api.deactivationInfo?.deprecationContent || (() => 'Deprecated API'));
   return (
     <div className={classNames('usa-alert', 'usa-alert-info', 'va-api-deprecation-alert')}>
       <div className={classNames('usa-alert-body')}>{content({})}</div>
@@ -52,14 +48,11 @@ const ApiPage = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
   }
 
   const category = lookupApiCategory(params.apiCategoryKey);
-  if (category === null) {
-    return <ExplorePage />;
-  }
 
   return (
     <Flag name={`enabled.${api.urlFragment}`} fallbackComponent={ExplorePage}>
       <div role="region" aria-labelledby={PAGE_HEADER_ID}>
-        <PageHeader halo={category.name} header={api.name} />
+        <PageHeader halo={category?.name} header={api.name} />
         <DeactivationMessage api={api} />
         {!isApiDeactivated(api) && (
           <ApiDocumentation
