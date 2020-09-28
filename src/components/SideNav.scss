@@ -28,19 +28,13 @@ a.va-api-secondary-skip-nav {
   position: absolute;
   top: -1000px;
   background: $va-api-color-blue-dark;
-  color: $color-white;    
 
   &:focus {
     position: relative;
     top: auto;
   }
 
-  &:visited {
-    color: $color-white;
-  }
-
   &:hover {
-    background-color: $color-gray-lighter;
-    color: $va-api-color-blue-dark;
+    background: $va-api-color-blue-dark;
   }
 }
