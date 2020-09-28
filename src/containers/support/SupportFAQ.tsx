@@ -138,29 +138,27 @@ interface ISupportQuestion {
 }
 
 const SupportQuestions = (props: ISupportQuestionsProps) => {
-  const content: IPanelContent[] = props.questions.map((q: ISupportQuestion) => {
-    return {
+  const content: IPanelContent[] = props.questions.map((q: ISupportQuestion) => (
+    {
       body: q.answer,
       title: q.question,
-    };
-  });
+    }
+  ));
 
   return (
     <GroupedAccordions panelContents={content} title={props.title} />
   );
 };
 
-export default class SupportFAQ extends React.Component {
-  public render() {
-    return (
-      <section role="region" aria-label="Support FAQ">
-        <PageHeader {...headerProps} />
-        <div>
-          <SupportQuestions title="General" questions={generalQuestions}/>
-          <SupportQuestions title="Development" questions={developmentQuestions}/>
-          <SupportQuestions title="Troubleshooting/Support" questions={supportQuestions}/>
-        </div>
-      </section>
-    );
-  }
-}
+const SupportFAQ: () => JSX.Element = () => (
+  <section role="region" aria-label="Support FAQ">
+    <PageHeader {...headerProps} />
+    <div>
+      <SupportQuestions title="General" questions={generalQuestions}/>
+      <SupportQuestions title="Development" questions={developmentQuestions}/>
+      <SupportQuestions title="Troubleshooting/Support" questions={supportQuestions}/>
+    </div>
+  </section>
+);
+
+export default SupportFAQ;
