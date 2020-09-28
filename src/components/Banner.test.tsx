@@ -2,33 +2,48 @@ import * as React from 'react';
 
 import 'jest';
 
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import Banner from './Banner';
 
 describe('Banner', () => {
   it('should render the site notice text', () => {
-    const wrapper = shallow(<Banner />);
+    const wrapper = mount(<Banner />);
     expect(wrapper.find('.site-notice-text').length).toBe(1);
     expect(wrapper.find('.site-notice-text')
       .contains('An official website of the United States government.')).toBeTruthy();
+
+    wrapper.unmount();
   });
 
   it('should render the dot gov guidance', () => {
-    expect(shallow(<Banner />).find('#dot-gov-guidance').length).toBe(1);
+    const wrapper = mount(<Banner />);
+    expect(wrapper.find('#dot-gov-guidance').length).toBe(2);
+    wrapper.unmount();
   });
 
   it('should render the HTTPS guidance', () => {
-    expect(shallow(<Banner />).find('#https-guidance').length).toBe(1);
+    const wrapper = mount(<Banner />);
+    expect(wrapper.find('#https-guidance').length).toBe(2); 
+    wrapper.unmount();
   });
 
   it('should not show the site guidance accordion by default', () => {
-    const accordionWrapper = shallow(<Banner />).find('.usa-accordion-content');
+    const wrapper = mount(<Banner />);
+    const accordionWrapper = wrapper.find('.usa-accordion-content');
     expect(accordionWrapper.prop('aria-hidden')).toBe('true');
+    wrapper.unmount();
   });
 
-  it('should show the site guidance accordion when accordionVisible is true', () => {
-    const wrapper = shallow(<Banner />);
-    wrapper.setState({ accordionVisible: true });
+  it('should toggle the site guidance accordion when the guidance accordion toggle is clicked', () => {
+    const wrapper = mount(<Banner />);
+    const toggleButtonWrapper = wrapper.find('#toggle-how-you-know-dropdown');
+
+    toggleButtonWrapper.simulate('click');
     expect(wrapper.find('.usa-accordion-content').prop('aria-hidden')).toBe('false');
+    
+    toggleButtonWrapper.simulate('click');
+    expect(wrapper.find('.usa-accordion-content').prop('aria-hidden')).toBe('true');
+
+    wrapper.unmount();
   });
 });
