@@ -1,4 +1,6 @@
 import classNames from 'classnames';
+
+import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { defaultFlexContainer } from '../styles/vadsUtils';
@@ -8,15 +10,17 @@ import dotGovIcon from '../assets/icon-dot-gov.svg';
 import httpsIcon from '../assets/icon-https.svg';
 import './Banner.scss';
 
-interface GuidanceBoxProps {
-  icon: string;
-  title: string;
-  id?: string;
-  children?: React.ReactNode;
-}
+const GuidanceBoxPropTypes = {
+  children: PropTypes.node,
+  icon: PropTypes.string.isRequired,
+  id: PropTypes.string,
+  title: PropTypes.string.isRequired,
+};
+
+type GuidanceBoxProps = PropTypes.InferProps<typeof GuidanceBoxPropTypes>;
 
 const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
-  <div id={props.id}
+  <div id={props.id ?? undefined}
     className={classNames(
       'vads-l-col--12',
       'medium-screen:vads-l-col--6',
@@ -37,6 +41,8 @@ const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
     </div>
   </div>
 );
+
+GuidanceBox.propTypes = GuidanceBoxPropTypes;
 
 const Banner = (): JSX.Element => {
   const [accordionVisible, setAccordionVisible] = React.useState(false);
