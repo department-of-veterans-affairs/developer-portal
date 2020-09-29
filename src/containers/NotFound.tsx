@@ -65,65 +65,75 @@ function NotFound() {
           </div>
         </div>
       </div>
-      <div className="not-found-body">
-        <div className="list-wrapper">
-          <h2>
-            <a href="/explore">Documentation</a>
-          </h2>
-          <ul>
-            {lists.map((item, i) => {
-              return (
-                <li key={i}>
-                  <a href={`/explore/${item.pathSegment}`}>{item.title}</a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="list-wrapper">
-          <h2>
-            <a href="/news">News</a>
-          </h2>
-          <ul>
-            <li>
-              <a href="/news#News-releases">News Releases</a>
-            </li>
-            <li>
-              <a href="/news#Articles">Articles</a>
-            </li>
-            <li>
-              <a href="news#Digital-media">Digital Media</a>
-            </li>
-          </ul>
-        </div>
-        <div className="list-wrapper">
-          <h2>
-            <a href="/release-notes">Release Notes</a>
-          </h2>
-          <ul>
-            {lists.map((item, i) => {
-              return (
-                <li key={i}>
-                  <a href={`/release-notes/${item.pathSegment}`}>{item.title}</a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="list-wrapper">
-          <h2>
-            <a href="/support">Support</a>
-          </h2>
-          <ul>
-            <li>
-              <a href="/support/faq" role="button">
-                FAQ
-              </a>
-            </li>
-            <li>
-              <a href="/support/contact-us">Contact Us</a>
-            </li>
-          </ul>
+      <div
+        className={classNames(
+          'not-found-body',
+          'vads-l-grid-container--full',
+          'medium-screen:vads-u-padding-x--9',
+          'small-screen:vads-u-padding--5',
+          'vads-u-padding--3',
+        )}
+      >
+        <div className="vads-l-row">
+          <div className="list-wrapper">
+            <h3>
+              <a href="/explore">Documentation</a>
+            </h3>
+            <ul>
+              {lists.map((item, i) => {
+                return (
+                  <li key={i}>
+                    <a href={`/explore/${item.pathSegment}`}>{item.title}</a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="list-wrapper">
+            <h3>
+              <a href="/news">News</a>
+            </h3>
+            <ul>
+              <li>
+                <a href="/news#News-releases">News Releases</a>
+              </li>
+              <li>
+                <a href="/news#Articles">Articles</a>
+              </li>
+              <li>
+                <a href="news#Digital-media">Digital Media</a>
+              </li>
+            </ul>
+          </div>
+          <div className="list-wrapper">
+            <h3>
+              <a href="/release-notes">Release Notes</a>
+            </h3>
+            <ul>
+              {lists.map((item, i) => {
+                return (
+                  <li key={i}>
+                    <a href={`/release-notes/${item.pathSegment}`}>{item.title}</a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="list-wrapper">
+            <h3>
+              <a href="/support">Support</a>
+            </h3>
+            <ul>
+              <li>
+                <a href="/support/faq" role="button">
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <a href="/support/contact-us">Contact Us</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </>
