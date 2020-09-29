@@ -129,6 +129,7 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => {
 
     return fetch(request)
       .then(response => {
+        // The developer-portal-backend sends a 400 status, along with an array of validation error strings, when validation errors are present on the form.
         if (!response.ok && response.status !== 400) {
           throw Error(response.statusText);
         }
