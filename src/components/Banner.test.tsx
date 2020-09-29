@@ -17,13 +17,13 @@ describe('Banner', () => {
 
   it('should render the dot gov guidance', () => {
     const wrapper = mount(<Banner />);
-    expect(wrapper.find('#dot-gov-guidance').length).toBe(2);
+    expect(wrapper.find('#dot-gov-guidance').hostNodes().length).toEqual(1);
     wrapper.unmount();
   });
 
   it('should render the HTTPS guidance', () => {
     const wrapper = mount(<Banner />);
-    expect(wrapper.find('#https-guidance').length).toBe(2); 
+    expect(wrapper.find('#https-guidance').hostNodes().length).toEqual(1); 
     wrapper.unmount();
   });
 
