@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/browser';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
 import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
@@ -5,6 +6,9 @@ import { setupServer } from 'msw/node';
 import * as constants from '../types/constants';
 import * as validators from '../utils/validators';
 import * as actions from './apply';
+
+jest.mock('@sentry/browser');
+const mockedSentry = Sentry as any;
 
 const server = setupServer(
   rest.post(
@@ -42,7 +46,10 @@ const appState = {
 
 describe('submitForm', () => {
   beforeAll(() => server.listen());
-  beforeEach(() => server.resetHandlers());
+  beforeEach(() => {
+    server.resetHandlers(); 
+    mockedSentry.withScope.mockClear();
+  });
   afterAll(() => server.close());
 
   it('dispatches correct events when fetch has a 200 response', async () => {
@@ -105,9 +112,13 @@ describe('submitForm', () => {
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
+    const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
+    const scope = { setLevel: jest.fn() };
+    sentryCallback(scope);
     expect(dispatch).toBeCalledWith({
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
+    expect(mockedSentry.captureException).toBeCalledWith(Error('email must be valid email'));
     expect(dispatch).toBeCalledWith({
       status: 'email must be valid email',
       type: constants.SUBMIT_APPLICATION_ERROR,
@@ -131,9 +142,13 @@ describe('submitForm', () => {
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
+    const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
+    const scope = { setLevel: jest.fn() };
+    sentryCallback(scope);
     expect(dispatch).toBeCalledWith({
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
+    expect(mockedSentry.captureException).toBeCalledWith(Error('bad bad not good'));
     expect(dispatch).toBeCalledWith({
       status: 'bad bad not good',
       type: constants.SUBMIT_APPLICATION_ERROR,
