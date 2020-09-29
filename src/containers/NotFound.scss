@@ -6,7 +6,7 @@
 
   h1,
   p {
-    color: #132f52;
+    color: $color-blue-darkest;
   }
 
   @include media($medium-screen) {
@@ -21,7 +21,7 @@
   @extend .medium-screen\:vads-l-col--3;
 
   h3 a {
-    color: $color-link-default;
+    color: $color-blue-darkest;
 
     @extend .vads-u-text-decoration--none;
 

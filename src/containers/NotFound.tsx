@@ -1,4 +1,5 @@
 import * as React from 'react';
+import notFoundImage from '../assets/404.svg';
 import './NotFound.scss';
 
 import classNames from 'classnames';
@@ -57,11 +58,7 @@ function NotFound() {
               'vads-u-order--first',
             )}
           >
-            <img
-              className="vads-u-width--auto"
-              src={require('../assets/404.svg')}
-              alt="404 graphic"
-            />
+            <img className="vads-u-width--auto" src={notFoundImage} alt="404 graphic" />
           </div>
         </div>
       </div>
