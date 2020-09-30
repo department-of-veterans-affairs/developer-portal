@@ -56,6 +56,7 @@ function OAuthSideNavEntry(apiCategoryKey: string) {
       subNavLevel={1}
     >
       <SideNavEntry to="#getting-started" name="Getting Started" subNavLevel={2} />
+      <SideNavEntry to="#building-openid-connect-applications" name="Building OpenID Connect Applications" subNavLevel={2} />
       <SideNavEntry to="#scopes" name="Scopes" subNavLevel={2} />
       <SideNavEntry to="#id-token" name="ID Token" subNavLevel={2} />
       <SideNavEntry to="#test-users" name="Test Users" subNavLevel={2} />
