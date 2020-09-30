@@ -114,9 +114,9 @@ describe('submitForm', () => {
     expect(dispatch).toBeCalledWith({
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
-    expect(mockedSentry.captureException).toBeCalledWith(Error('email must be valid email'));
+    expect(mockedSentry.captureException).toBeCalledWith(Error('Developer Application validation errors: email must be valid email'));
     expect(dispatch).toBeCalledWith({
-      status: 'email must be valid email',
+      status: 'Developer Application validation errors: email must be valid email',
       type: constants.SUBMIT_APPLICATION_ERROR,
     });
   });

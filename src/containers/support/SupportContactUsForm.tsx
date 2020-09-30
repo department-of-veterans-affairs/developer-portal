@@ -224,7 +224,7 @@ export default class SupportContactUsForm extends React.Component<
     .then(response => response.json())
     .then(json => {
       if (json.errors) {
-        throw Error(json.errors.join(', '));
+        throw Error(`Contact Us Form validation errors: ${json.errors.join(', ')}`);
       }
     })
     .catch(error => {

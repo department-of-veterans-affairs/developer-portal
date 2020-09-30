@@ -138,7 +138,7 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => {
       .then(response => response.json())
       .then(json => {
         if (json.errors) {
-          throw Error(json.errors.join(', '));
+          throw Error(`Developer Application validation errors: ${json.errors.join(', ')}`);
         }
         if (json.token || json.clientID) {
           const result = dispatch(submitFormSuccess(json.token, json.clientID, json.clientSecret));
