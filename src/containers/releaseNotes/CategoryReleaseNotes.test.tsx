@@ -101,12 +101,14 @@ describe('ReleaseNotesCollection', () => {
         const ringsHeading = screen.getByRole('heading', { name: 'Rings API' });
         expect(ringsHeading).toBeInTheDocument();
         expect(ringsHeading.tagName).toBe('H2');
-        expect(ringsHeading.parentElement!.id).toBe('rings');
+        expect(ringsHeading.tabIndex).toBe(-1);
+        expect(ringsHeading.id).toBe('rings');
 
         const hobbitsHeading = screen.getByRole('heading', { name: 'Hobbits API' });
         expect(hobbitsHeading).toBeInTheDocument();
         expect(hobbitsHeading.tagName).toBe('H2');
-        expect(hobbitsHeading.parentElement!.id).toBe('hobbits');
+        expect(hobbitsHeading.tabIndex).toBe(-1);
+        expect(hobbitsHeading.id).toBe('hobbits');
       });
 
       it('renders the release notes themselves within the section', () => {
@@ -249,7 +251,8 @@ describe('ReleaseNotesCollection', () => {
         const silmarilsHeading = screen.getByRole('heading', { name: 'Silmarils API' });
         expect(silmarilsHeading).toBeInTheDocument();
         expect(silmarilsHeading.tagName).toBe('H2');
-        expect(silmarilsHeading.parentElement!.id).toBe('silmarils');
+        expect(silmarilsHeading.tabIndex).toBe(-1);
+        expect(silmarilsHeading.id).toBe('silmarils');
       });
 
       it('renders deactivation info for each API', () => {

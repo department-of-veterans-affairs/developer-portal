@@ -9,6 +9,7 @@ import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { BaseAPICategory, IApiDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
@@ -42,6 +43,7 @@ function SideNavAPIEntry(props: SideNavAPIEntryProps) {
         </React.Fragment>
       }
       subNavLevel={1}
+      onClick={onHashAnchorClick}
     />
   );
 }
