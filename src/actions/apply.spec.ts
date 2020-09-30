@@ -8,21 +8,19 @@ import * as validators from '../utils/validators';
 import * as actions from './apply';
 
 jest.mock('@sentry/browser');
-const mockedSentry = Sentry as any;
+const mockedSentry = Sentry as jest.Mocked<typeof Sentry>;
 
 const server = setupServer(
   rest.post(
     constants.APPLY_URL,
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
-      return res(
-        context.status(200),
-        context.json({
-          clientID: 'testid',
-          clientSecret: 'test_secret',
-          token: 'testtoken',
-        }),
-      );
-    },
+    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => res(
+      context.status(200),
+      context.json({
+        clientID: 'testid',
+        clientSecret: 'test_secret',
+        token: 'testtoken',
+      }),
+    ),
   ),
 );
 
@@ -76,9 +74,7 @@ describe('submitForm', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => {
-          return res(context.status(500, 'KABOOM'));
-        },
+        ): MockedResponse => res(context.status(500, 'KABOOM')),
       ),
     );
 
@@ -99,12 +95,10 @@ describe('submitForm', () => {
     server.use(
       rest.post(
         constants.APPLY_URL,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
-          return res(
-            context.status(400),
-            context.json({ errors: ['email must be valid email'] }),
-          );
-        },
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => res(
+          context.status(400),
+          context.json({ errors: ['email must be valid email'] }),
+        ),
       ),
     );
 
@@ -113,7 +107,9 @@ describe('submitForm', () => {
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-    const scope = { setLevel: jest.fn() };
+    const scope: any = { 
+      setLevel: jest.fn(),
+    };
     sentryCallback(scope);
     expect(dispatch).toBeCalledWith({
       type: constants.SUBMIT_APPLICATION_BEGIN,
@@ -129,12 +125,10 @@ describe('submitForm', () => {
     server.use(
       rest.post(
         constants.APPLY_URL,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
-          return res(
-            context.status(404, 'bad bad not good'),
-            context.json({ error: 'sorry, who are you?' }),
-          );
-        },
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => res(
+          context.status(404, 'bad bad not good'),
+          context.json({ error: 'sorry, who are you?' }),
+        ),
       ),
     );
 
@@ -143,7 +137,7 @@ describe('submitForm', () => {
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-    const scope = { setLevel: jest.fn() };
+    const scope: any = { setLevel: jest.fn() };
     sentryCallback(scope);
     expect(dispatch).toBeCalledWith({
       type: constants.SUBMIT_APPLICATION_BEGIN,
