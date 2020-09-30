@@ -1,0 +1,42 @@
+@import '../styles/variables';
+@import '~@department-of-veterans-affairs/formation/sass/full';
+
+.vaapi-not-found-header {
+  background: #c4c4c4;
+
+  h1,
+  p {
+    color: $color-blue-darkest;
+  }
+
+  @include media($medium-screen) {
+    p {
+      max-width: 330px;
+    }
+  }
+}
+.list-wrapper {
+  @extend .vads-l-col--12;
+  @extend .small-screen\:vads-l-col--6;
+  @extend .medium-screen\:vads-l-col--3;
+
+  h3 a {
+    color: $color-blue-darkest;
+
+    @extend .vads-u-text-decoration--none;
+
+    &:hover {
+      @extend .vads-u-text-decoration--underline;
+    }
+  }
+  ul {
+    border-left: 3px solid $va-api-color-gray-alt;
+    list-style: none;
+
+    @extend .vads-u-padding-left--2;
+  }
+
+  li {
+    @extend .vads-u-margin-bottom--0;
+  }
+}
