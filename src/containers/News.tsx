@@ -9,6 +9,7 @@ import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
+import { onHashAnchorClick } from '../utils/clickHandlers';
 
 export interface DataSection {
   title: string;
@@ -87,7 +88,14 @@ export default function News() {
           <SideNav ariaLabel="News Side Nav">
             <SideNavEntry key="all" exact={true} to="/news" name="Overview" />
             {sections.map((section: any) => {
-              return <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />;
+              return (
+                <SideNavEntry
+                  key={section.id}
+                  to={`#${section.id}`}
+                  name={section.title}
+                  onClick={onHashAnchorClick}
+                />
+              );
             })}
           </SideNav>
           <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
@@ -111,10 +119,11 @@ export default function News() {
                   <section
                     aria-label={section.title}
                     key={section.id}
-                    id={section.id}
                     className="vads-u-margin-bottom--4"
                   >
-                    <h2>{section.title}</h2>
+                    <h2 id={section.id} tabIndex={-1}>
+                      {section.title}
+                    </h2>
                     {section.items.map((item: NewsItem) => {
                       return <NewsItem key={item.url} item={item} media={section.media} />;
                     })}
