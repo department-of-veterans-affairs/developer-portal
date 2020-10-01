@@ -110,9 +110,9 @@ phases:
       # Run builds if all tests are good. We run all builds but we could shorten the CI part for branches by only building on push.
       - phase=build_app
       - |
-        for environment in ${ENVIROMENTS}; do
-          time="${time}\n${phase}-${enviroment} - $(date +%r) - started"
-          make build_app ENVIRONMENT=${enviroment} || exit 1
+        for env in ${ENVIROMENTS}; do
+          time="${time}\n${phase}-${env} - $(date +%r) - started"
+          make build_app ENVIRONMENT=${env} || exit 1
         done
       # Check if we archive the build
       - phase=archive
