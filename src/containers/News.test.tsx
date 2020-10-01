@@ -63,6 +63,7 @@ describe('News', () => {
 
         const header = getByRole(newsSection, 'heading', { name: section.title });
         expect(header).toBeInTheDocument();
+        expect(header.tabIndex).toBe(-1);
       });
     });
 
