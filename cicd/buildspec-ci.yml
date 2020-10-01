@@ -88,6 +88,7 @@ phases:
         EOF
           done
         fi
+      - echo ${ENVIROMENTS}
       - make build
   build:
     # We use a phase variable to tell where we are in case of failure. This will allow us to handle the POST_BUILD stage with (some) grace.
