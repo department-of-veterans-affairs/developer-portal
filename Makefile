@@ -12,8 +12,9 @@ AUDIT_LEVEL?= high
 # Sets Branch
 BRANCH ?= notmaster
 # Sets default env 
-ENVIROMENT ?= dev
+ENVIRONMENT ?= dev
 
+# the sed command in the help target will echo any comment preceded two #'s when make or make help is run 
 .PHONY: help
 help : Makefile
 	@sed -n 's/^##//p' $<
@@ -92,7 +93,7 @@ accessibility:
 		--volume "/application/node_modules" \
 		developer-portal npm run-script test:accessibility:ci
 
-## dev:	builds the developer-portal dev website, and copies to host
+## build_app:	builds the developer-portal website, and copies to host
 .PHONY: build_app
 build_app: 
 	@echo "Building ${ENVIRONMENT}"
@@ -107,4 +108,4 @@ build_app:
 ## archive:	builds tar ball of local build
 .PHONY: archive 
 archive:
-	tar -C build/${ENVIROMENT} -cf build/${ENVIROMENT}.tar.bz2 .
+	tar -C build/${ENVIRONMENT} -cf build/${ENVIRONMENT}.tar.bz2 .

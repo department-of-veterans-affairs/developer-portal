@@ -24,7 +24,7 @@ env:
     # These are the test make targets. 
     TESTS: "images lint security unit e2e accessibility visual"
     # These are the build environments
-    ENVIROMENTS: "dev staging production"
+    ENVIRONMENTS: "dev staging production"
     # Bucket for archiving deployments
     S3_ARCHIVE_BUCKET: "developer-portal-builds-s3-upload"
     # Bucket for uploading visual regression failures.
@@ -42,6 +42,7 @@ env:
     GNAME: root
   parameter-store:
     GITHUB_TOKEN: "/dvp/devops/va_bot_github_token"
+# This webhook currently targets DSVA workspace #lighthous-deploys channel
     SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook"
 phases:
   install:
@@ -56,7 +57,7 @@ phases:
       - time="Start - $(date +%r)"
       # Bypass tests if a PR is created
       - if [[ $CODEBUILD_WEBHOOK_EVENT == "PULL_REQUEST_CREATED"  ]]; then TESTS=""; fi
-      # Log all environment varbiables to cloudwatch incase we need to troubleshoot. AWS is nice enough to hide any secrets from parameter-store.
+      # Log all environment varbiables to cloudwatch in case we need to troubleshoot. AWS is nice enough to hide any secrets from parameter-store.
       - printenv
       # Get usable branch name
       - GET_BRANCH=${CODEBUILD_WEBHOOK_HEAD_REF#"refs/heads/"}
@@ -81,14 +82,13 @@ phases:
       # Create the required dot files prior to build for proper deployment to review bucket
       - |
         if [[ ${PR_NUM} ]]; then
-          for env in ${ENVIROMENTS}; do
+          for env in ${ENVIRONMENTS}; do
         cat <<EOF > .env.${env}.local
         PUBLIC_URL=/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}
         REACT_APP_SENTRY_DSN=${PREVIEW_SENTRY_DSN}
         EOF
           done
         fi
-      - echo ${ENVIROMENTS}
       - make build
   build:
     # We use a phase variable to tell where we are in case of failure. This will allow us to handle the POST_BUILD stage with (some) grace.
@@ -111,7 +111,7 @@ phases:
       # Run builds if all tests are good. We run all builds but we could shorten the CI part for branches by only building on push.
       - phase=build_app
       - |
-        for env in ${ENVIROMENTS}; do
+        for env in ${ENVIRONMENTS}; do
           time="${time}\n${phase}-${env} - $(date +%r) - started"
           make build_app ENVIRONMENT=${env} || exit 1
         done
@@ -119,7 +119,7 @@ phases:
       - phase=archive
       - |
         if [[ $BRANCH == 'master' ]]; then
-          for env in ${ENVIROMENTS}; do
+          for env in ${ENVIRONMENTS}; do
             time="${time}\n${phase}-${env} - $(date +%r) - started"
             make archive ENV=${env} || exit 1 
             aws s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH}/${env}.tar.bz2
@@ -131,7 +131,7 @@ phases:
         if [[ ${PR_NUM} ]]; then
           time="${time}\n${phase} - $(date +%r) started"
           links=""
-          for env in ${ENVIROMENTS}; do
+          for env in ${ENVIRONMENTS}; do
             links="${links}[${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}/index.html) <br>"
           done
           aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/
