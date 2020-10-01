@@ -78,15 +78,15 @@ const healthApis: IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/fhir/v0/argonaut/data-query/openapi.json`,
       },
       {
-        key: 'r4',
-        label: 'R4',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
-      },
-      {
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
         openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
+      },
+      {
+        key: 'r4',
+        label: 'R4',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
       },
     ],
     enabledByDefault: true,
