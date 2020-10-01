@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import { IApiDescription } from '../../apiDefs/schema';
-import AuthorizationCard from '../../components/AuthorizationCard';
+import { AuthorizationCard } from '../../components';
 import CardLink from '../../components/CardLink';
 import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';

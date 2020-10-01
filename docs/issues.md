@@ -8,13 +8,13 @@ This document tracks running issues that are useful to be aware when developing 
 
 React Router anchor links do not update focus to the anchored section, as would be expected with native browser behavior. `Link` components cancel the default `click` event behavior so that the component can navigate with the [`history`](https://github.com/ReactTraining/history) object. This is a longstanding and well-known issue with React Router.
 
-[`react-router-hash-link`](https://github.com/rafrex/react-router-hash-link) is a well-known workaround, but it doesn't actually handle the focus part of anchor clicks. Therefore, you need to manually handle focus for anchor links in the dev portal.
+[`react-router-hash-link`](https://github.com/rafrex/react-router-hash-link) is a well-known workaround, but it doesn't actually handle the focus part of anchor clicks. Therefore, you need to manually handle focus for anchor links in the dev portal. For `HashLink` elements where ensuring that focus is respected you can use the `onHashAnchorClick` utility method in `src/utils/clickHandlers.ts` as an `onClick` method.
 
 References:
 
-* [Issue in the React Router repo](https://github.com/ReactTraining/react-router/issues/394#issuecomment-220221604)
-* [Stack Overflow question](https://stackoverflow.com/questions/48223566/using-anchor-tags-in-react-router-4)
-* [Source code](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/modules/Link.js#L49)
+- [Issue in the React Router repo](https://github.com/ReactTraining/react-router/issues/394#issuecomment-220221604)
+- [Stack Overflow question](https://stackoverflow.com/questions/48223566/using-anchor-tags-in-react-router-4)
+- [Source code](https://github.com/ReactTraining/react-router/blob/master/packages/react-router-dom/modules/Link.js#L49)
 
 ### zenscroll
 
@@ -22,9 +22,9 @@ References:
 
 **Note:** this behavior doesn't affect links created with `HashLink` or `NavHashLink` from `react-router-hash-link`. React Router `Link`s use `history.createHref()` to define the `href` attribute, and `history.createHref()` always includes the path.
 
-* `zenscroll` [event listener](https://github.com/zengabor/zenscroll/blob/dist/zenscroll.js#L305)
-* [The `event.preventDefault()` call](https://github.com/zengabor/zenscroll/blob/dist/zenscroll.js#L336)
-* [Slack thread](https://lighthouseva.slack.com/archives/CSZN6V1CH/p1591980406369000) from the investigation that uncovered this issue
+- `zenscroll` [event listener](https://github.com/zengabor/zenscroll/blob/dist/zenscroll.js#L305)
+- [The `event.preventDefault()` call](https://github.com/zengabor/zenscroll/blob/dist/zenscroll.js#L336)
+- [Slack thread](https://lighthouseva.slack.com/archives/CSZN6V1CH/p1591980406369000) from the investigation that uncovered this issue
 
 ## Content
 
@@ -36,6 +36,6 @@ The pseudo-schema for API categories in `src/apiDefs/categories.ts` currently in
 
 `properName` is only used in the following place:
 
-* The `ApplySuccess` page uses `properName` as the display name for Benefits, Facilities, and VA Forms. (Note that the Apply page doesn't maintain a clear distinction between individual APIs and API categories.)
+- The `ApplySuccess` page uses `properName` as the display name for Benefits, Facilities, and VA Forms. (Note that the Apply page doesn't maintain a clear distinction between individual APIs and API categories.)
 
 We should eliminate `properName` from the category schema as soon as possible, assuming that we can confirm that we can safely do that with UX.
