@@ -3,7 +3,7 @@ imports:
   CodeWrapper: ../../components/CodeWrapper.tsx
 ---
 
-## Getting Started
+## Getting Started {tabIndex="-1"}
 
 The VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf. The platform also allows some users, such as officers working at Veteran Service Organizations (VSO), to access data on behalf of a Veteran who has granted them approval.
 
@@ -11,22 +11,22 @@ While we test our OpenID Connect flow to ensure the best experience for Veterans
 
 **In order to get approval of your application, you'll need to supply the following information:**
 
-* **A Redirect URL** - that will receive your OpenID Connect token
-* **Application name** - The name and/or URL of your application that identifies it on authorization screens.
-* **Type of Application** - Mobile app, Single page web application, or a Server-based application
-* **Scopes** - Data you'd like to access with your app (see [#scopes](#scopes))
+- **A Redirect URL** - that will receive your OpenID Connect token
+- **Application name** - The name and/or URL of your application that identifies it on authorization screens.
+- **Type of Application** - Mobile app, Single page web application, or a Server-based application
+- **Scopes** - Data you'd like to access with your app (see [#scopes](#scopes))
 
-## Building OpenID Connect Applications
+## Building OpenID Connect Applications {tabIndex="-1"}
 
-After being approved to use VA OpenID Connect, you'll receive a *client id* and, if you're building a server-based application, a *client secret*.
+After being approved to use VA OpenID Connect, you'll receive a _client id_ and, if you're building a server-based application, a _client secret_.
 
-We support [Authorization Code Flow](#authorization-code-flow) with a *client secret* and [Proof Key for Code Exchange](#proof-key-for-code-exchange) (PKCE) for public apps.
+We support [Authorization Code Flow](#authorization-code-flow) with a _client secret_ and [Proof Key for Code Exchange](#proof-key-for-code-exchange) (PKCE) for public apps.
 
 We use separate authorization servers for our development and production environments. This documentation uses the development environment authorization server URL. You'll be provided with the production authorization server URL when you are approved for production access.
 
 ### Authorization Code Flow
 
-This flow is used by applications that are able to safely store a *client secret* such as server-based applications.
+This flow is used by applications that are able to safely store a _client secret_ such as server-based applications.
 
 #### Initiating Authorization
 
@@ -42,15 +42,15 @@ https://sandbox-api.va.gov/oauth2/authorization
 
 with the following query parameters:
 
-| Query Parameter | Required     | Values |
-| --------------- | ------------ | ------ |
-| `client_id`     | **Required** | The `client_id` issued by the VA API Platform team |
-| `redirect_uri`  | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application. |
-| `response_type` | **Required** | Supported response types: `code` |
-| `state`         | **Required** | Ensures authorization flow integrity. See [security](#security-considerations). |
-| `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations). |
-| `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment. |
-| `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
+| Query Parameter | Required     | Values                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| --------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `client_id`     | **Required** | The `client_id` issued by the VA API Platform team                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `redirect_uri`  | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `response_type` | **Required** | Supported response types: `code`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `state`         | **Required** | Ensures authorization flow integrity. See [security](#security-considerations).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `nonce`         | Optional     | Used with `id_token` to verify token integrity. Ensure the nonce in your `id_token` is the same as this value. See [security](#security-considerations).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `response_mode` | Optional     | Either `fragment` or `query`, recommended not to use unless you have a specific reason. Defaults to fragment.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `scope`         | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `prompt`        | Optional     | Supported prompts: `login`, `consent` and `none`.<p>If `login` is specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.</p><p>If `consent` is specified, the user will be asked to consent to their scopes being used regardless of prior consent.</p><p>If `none` is specified, an application will attempt an authorization request without user interaction. When the session is invalid or there are scopes the user has not consented to, one of the following errors will be thrown: `login_required` or `consent_required`.</p> |
 
 Example Authorization URL:
@@ -87,7 +87,7 @@ Host: <yourRedirectHost>
 
 </CodeWrapper>
 
-Your application then makes a request to our authorization service using the returned `code` and `state` parameters. The request should use HTTP Basic authorization with your *client id* as the username and your *client secret* as the password. Your request should look like:
+Your application then makes a request to our authorization service using the returned `code` and `state` parameters. The request should use HTTP Basic authorization with your _client id_ as the username and your _client secret_ as the password. Your request should look like:
 
 <CodeWrapper>
 
@@ -173,7 +173,7 @@ Both `access_tokens` and `refresh_tokens` can be revoked using the following end
 POST /oauth2/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic {base64 encoded *client id* + ':' + *client secret*} 
+Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
 token={your access token}&token_type_hint=access_token
 ```
@@ -186,7 +186,7 @@ token={your access token}&token_type_hint=access_token
 POST /oauth2/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic {base64 encoded *client id* + ':' + *client secret*} 
+Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
 
 token={your refresh token}&token_type_hint=refresh_token
 ```
@@ -232,7 +232,7 @@ Pragma: no-cache
 
 </CodeWrapper>
 
-**Note:** This endpoint is not available in the Production environment and excludes identity provider grants. 
+**Note:** This endpoint is not available in the Production environment and excludes identity provider grants.
 
 #### Manage Account
 
@@ -249,7 +249,7 @@ Host: sandbox-api.va.gov
 
 ### Proof Key for Code Exchange
 
-The PKCE flow ([RFC 7636](https://tools.ietf.org/html/rfc7636)) is used by public applications that are unable to safely store a *client secret* such as a native mobile app.
+The PKCE flow ([RFC 7636](https://tools.ietf.org/html/rfc7636)) is used by public applications that are unable to safely store a _client secret_ such as a native mobile app.
 
 #### Initiating Authorization
 
@@ -265,15 +265,15 @@ https://sandbox-api.va.gov/oauth2/authorization
 
 with the following query parameters:
 
-| Query Parameter         | Required     | Values |
-| ----------------------- | ------------ | ------ |
-| `client_id`             | **Required** | The `client_id` issued by the VA API Platform team |
-| `redirect_uri`          | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application. |
-| `response_type`         | **Required** | Supported response types: `code` |
-| `code_challenge`        | **Required** | Base64 encoded challenge generated from your `code_verifier` |
-| `code_challenge_method` | **Required** | Supported code challenges: `S256` |
-| `state`                 | **Required** | Ensures authorization flow integrity. See [security](#security-considerations). |
-| `scope`                 | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space. |
+| Query Parameter         | Required     | Values                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ----------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `client_id`             | **Required** | The `client_id` issued by the VA API Platform team                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `redirect_uri`          | **Required** | The URL you supplied. The user will be redirected to this URL after authorizing your application.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `response_type`         | **Required** | Supported response types: `code`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `code_challenge`        | **Required** | Base64 encoded challenge generated from your `code_verifier`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `code_challenge_method` | **Required** | Supported code challenges: `S256`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `state`                 | **Required** | Ensures authorization flow integrity. See [security](#security-considerations).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `scope`                 | Optional     | Will use your application's default scopes unless you specify a smaller subset of scopes separated by a space.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | `prompt`                | Optional     | Supported prompts: `login`, `consent` and `none`.<p>If `login` is specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.</p><p>If `consent` is specified, the user will be asked to consent to their scopes being used regardless of prior consent.</p><p>If `none` is specified, an application will attempt an authorization request without user interaction. When the session is invalid or there are scopes the user has not consented to, one of the following errors will be thrown: `login_required` or `consent_required`.</p> |
 
 Example Authorization URL:
@@ -385,25 +385,26 @@ grant_type=refresh_token&refresh_token={your refresh_token}&client_id={client_id
 
 You will receive the same kind of response as above and be able to use your new `access_token` normally.
 
-## Scopes
+## Scopes {tabIndex="-1"}
 
 Scopes define the API endpoint your application is allowed to access. The VA API Platform team will define a maximum set of scopes your application is allowed to request. You can always begin an authorization flow by requesting fewer permissions that your application is allowed to access, which may result in more pleasant experience for users unsure if they should grant your application access to their data. You can then always request additional access to additional data when your application needs additional data for a Veteran or VSO using your application.
 
 **Existing Scopes are:**
 
-| Scope                    | Description |
-| ------------------------ | ----------- |
-| `profile`                | Granted by default, allows access to a user's first and last name and email. |
-| `offline_access`         | This scope causes the authorization server to provide a refresh token when the access token is requested. |
-| `launch/patient`         | A permission setting to obtain the patient's identifier in the token response when the app is launched from an EHR. |
+| Scope                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `profile`                | Granted by default, allows access to a user's first and last name and email.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `offline_access`         | This scope causes the authorization server to provide a refresh token when the access token is requested.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `launch/patient`         | A permission setting to obtain the patient's identifier in the token response when the app is launched from an EHR.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 | `patient/*`              | <p>View a user's VA Health records and patient information, see specific read only scopes below.</p><ul><li><code>patient/Patient.read</code></li><li><code>patient/AllergyIntolerance.read</code></li><li><code>patient/Condition.read</code></li><li><code>patient/CoverageEligibilityResponse.read</code></li><li><code>patient/CommunityCareEligibility.read</code></li><li><code>patient/DiagnosticReport.read</code></li><li><code>patient/Immunization.read</code></li><li><code>patient/Medication.read</code></li><li><code>patient/MedicationOrder.read</code></li><li><code>patient/MedicationStatement.read</code></li><li><code>patient/Observation.read</code></li><li><code>patient/Procedure.read</code></li></ul> |
-| `service_history.read`   | View a Veteran's service history including deployments and discharge status |
-| `disability_rating.read` | View a Veteran's VA disability ratings and the effective date of the rating |
-| `veteran_status.read`    | Confirm the Veteran status of an individual |
+| `service_history.read`   | View a Veteran's service history including deployments and discharge status                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `disability_rating.read` | View a Veteran's VA disability ratings and the effective date of the rating                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| `veteran_status.read`    | Confirm the Veteran status of an individual                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 
 These are subject to change while the VA API Platform OpenID Connect feature is under development.
 
-## ID Token
+## ID Token {tabIndex="-1"}
+
 Unlike the access token returned by an authorization_code grant, which is simply a random value, an `id_token` is a [JSON Web Token](https://jwt.io) or JWT. A JWT consists of three parts: a header, a payload, and a signature. This provides an extremely brief overview of a JWT. An `id_token` is available in the authorization code flow (response_type = code) token response when the 'openid' scope is used.
 
 ### Header
@@ -416,24 +417,24 @@ The payload is a JSON object containing `claims`.
 
 There are a couple claims in the JWT that are important for your application to consider:
 
-* `nonce` - should match the `nonce` you initiated authorization with.
-* `exp` - the expiration time of the JWT. The token cannot be accepted by the VA API Platform after this time, and your application should not use an expired token to identify a user.
+- `nonce` - should match the `nonce` you initiated authorization with.
+- `exp` - the expiration time of the JWT. The token cannot be accepted by the VA API Platform after this time, and your application should not use an expired token to identify a user.
 
 The payload also contains claims about the user. Our JWTs will have the following fields:
 
-* `uid` - A unique identifier for the user in UUIDv4 format.
+- `uid` - A unique identifier for the user in UUIDv4 format.
 
 ### Signature
 
 The signature is a cryptographically generated signature of the JWT's header and payload used to confirm the JWT's authenticity. Your application must validate this signature using the `alg` and the `kid` from the JWT's header. You may want use one of the JWT libraries listed at [jwt.io](https://jwt.io) to help make this process easier.
 
-## Test Users
+## Test Users {tabIndex="-1"}
 
 While developing and testing your application, you'll need to be able to login. Since most of the data provided from the VA API Platform comes from internal VA systems, you can't sign up for an account and find useful data in it. We provide [test accounts](https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts.md) for you to use while developing your VA API Platform-based application.
 
 Test user data is reset regularly.
 
-## Security Considerations
+## Security Considerations {tabIndex="-1"}
 
 While some security concerns have been noted in this document, there are a few things application developers should take extra care to pay attention to when using VA OAuth.
 
@@ -461,11 +462,11 @@ The [OpenID Connect documentation](https://openid.net/specs/openid-connect-core-
 
 Your application must validate JWT signatures. This allows your application to verify that the provided JWT originates from our authorization servers and prevents your application from accepting a JWT with claims that are attempting to impersonate one of your users.
 
-## Support
+## Support {tabIndex="-1"}
 
 If you have any questions please feel free to reach out to the VA API Platform team at [api@va.gov](mailto:api@va.gov). If you would like to report a bug or make a feature request, please open an issue through our [Support page](https://developer.va.gov/support).
 
-## Sample Applications
+## Sample Applications {tabIndex="-1"}
 
 ### Authorization Code Flow
 
