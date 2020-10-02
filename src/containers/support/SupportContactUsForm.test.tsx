@@ -99,6 +99,16 @@ describe('SupportContactUsForm', () => {
   });
 
   it('logs error events in Sentry when fetch returns validation errors with status 400', async () => {
+    server.use(
+      rest.post(
+        CONTACT_US_URL,
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse => res(
+          context.status(400),
+          context.json({ errors: ['email must be valid email'] }),
+        ),
+      ),
+    );
+
     const onSuccessMock = jest.fn();
     const formSubmissionSpy = jest.spyOn(SupportContactUsForm.prototype as any, 'formSubmission');
     const component = mount(<SupportContactUsForm onSuccess={onSuccessMock} />);
@@ -114,26 +124,17 @@ describe('SupportContactUsForm', () => {
 
     const form = component.find('Form');
     form.find('.usa-button-primary').simulate('click');
-
-    formSubmissionSpy.mockImplementationOnce(() => {
-      server.use(
-        rest.post(
-          CONTACT_US_URL,
-          (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => res(
-            context.status(400),
-            context.json({ errors: ['email must be valid email'] }),
-          ),
-        ),
-      );
-
-      const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-      const scope: any = { 
-        setLevel: jest.fn(),
-      };
-      sentryCallback(scope);
-      expect(mockedSentry.captureException).toBeCalledWith(Error('Contact Us Form validation errors: email must be valid email'));
-    });
+    
+    
     expect(formSubmissionSpy).toHaveBeenCalled();
+    await formSubmissionSpy.mock.results[0].value; 
+    
 
+    const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
+    const scope: any = { 
+      setLevel: jest.fn(),
+    };
+    sentryCallback(scope);
+    expect(mockedSentry.captureException).toBeCalledWith(Error('Contact Us Form validation errors: email must be valid email'));
   });
 });
