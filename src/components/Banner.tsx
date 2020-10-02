@@ -13,6 +13,7 @@ import './Banner.scss';
 const GuidanceBoxPropTypes = {
   children: PropTypes.node,
   icon: PropTypes.string.isRequired,
+  icon_alt: PropTypes.string,
   id: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
@@ -32,7 +33,7 @@ const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
     <img 
       className={classNames('va-api-banner-icon', 'vads-u-margin-right--1', 'vads-u-margin-top--0p5')}
       src={props.icon} 
-      alt="Dot Gov" 
+      alt={props.icon_alt ?? undefined}
     />
     <div className="vads-u-margin-bottom--1p5">
       <div><strong>{props.title}</strong>
@@ -113,11 +114,11 @@ const Banner = (): JSX.Element => {
               aria-hidden={accordionVisible ? "false" : "true"}
             >
               <div className="vads-l-row">
-                <GuidanceBox id="dot-gov-guidance" icon={dotGovIcon} title="The .gov means it's official">
+                <GuidanceBox id="dot-gov-guidance" icon={dotGovIcon} icon_alt="Government icon" title="The .gov means it's official">
                   Federal government websites often end in .gov or .mil. Before sharing sensitive
                   information, make sure you're on a federal government site.
                 </GuidanceBox>
-                <GuidanceBox id="https-guidance" icon={httpsIcon} title="The site is secure.">
+                <GuidanceBox id="https-guidance" icon={httpsIcon} icon_alt="HTTPS browser icon" title="The site is secure.">
                   <span>
                     The <strong>https://</strong> ensures that you're connecting to the official website
                     and that any information you provide is encrypted and sent securely.
