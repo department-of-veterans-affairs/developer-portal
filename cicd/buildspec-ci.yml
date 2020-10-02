@@ -139,10 +139,10 @@ phases:
         fi
       # Call the release job if this is running on master branch.
       - phase=release
-      - |
-        if [[ ${BRANCH} == 'master' ]]; then
-          aws codebuild start-build --project-name developer-portal-release --source-version ${CODEBUILD_RESOLVED_SOURCE_VERSION}
-        fi
+      # - |
+      #   if [[ ${BRANCH} == 'master' ]]; then
+      #     aws codebuild start-build --project-name developer-portal-release --source-version ${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      #   fi
       - phase=success
   post_build:
     commands:
@@ -179,7 +179,7 @@ phases:
       # Output build times
       - printf '%b\n' "${time}"
       # Handle comments.
-      - |
-        if [[ ${PR_NUM} ]]; then
-          prcomment.sh ${REPO} ${PR_NUM} "${comment:-"CI Job has finished without comment."}"
-        fi
+      # - |
+      #   if [[ ${PR_NUM} ]]; then
+      #     prcomment.sh ${REPO} ${PR_NUM} "${comment:-"CI Job has finished without comment."}"
+      #  fi

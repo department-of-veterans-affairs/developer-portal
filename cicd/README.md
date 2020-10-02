@@ -74,21 +74,15 @@ This is just an echo stating you are running the test the `@` suppresses the com
 
 This is the docker command to run your tests:
 
-`docker run --name newtest --user ${UNAME}:${GNAME} devportal npm run-script test:newtest:ci \`
-
-These lines will run the following command if the test exits with an exit code other than 1. Since each command in make is run in its own sub-shell; we use this opportunity to copy the test reports to the reports folder and then rm the container from the host and exit 1 so that CodeBuild will move to `post_build` stage (covered later).
-
-```makefile
-|| { docker cp newtest:/application/test-report.xml reports/.; \
-docker container rm newtest; \
-exit 1; }
+```
+docker run --rm \
+	--user ${UNAME}:${GNAME} \
+	--volume "/application/node_modules" \
+	--volume "${PWD}:/application" \
+	developer-portal npm run test:newtest:ci 
 ```
 
-Lastly, if the tests exits successfully we remove the container. While not necessary in CodeBuild, this is very helpful for local CI runs. 
-
-`docker container rm newest`
-
-After this is added you can then run `make build` then `make newest` to run your tests locally. If you need to make changes to your script you can run the same commands in succession. Alternatively, for the iteration process you can add this `newtest: build` and that will run build on every `make newest`.  
+After this is added you can then run `make build` then `make newtest` to run your tests locally. If you need to make changes to your script you can run the same commands in succession. Alternatively, for the iteration process you can add this `newtest: build` and that will run build on every `make newtest`.  
 
 Lastly add your new test to `make test`
 
@@ -151,4 +145,3 @@ Deploying
 
 1. Add more Slack web hooks to param store so slack posts can be iterated on while adding new tests.
 2. Work on slackpost script to add more flair
-3. Bump
