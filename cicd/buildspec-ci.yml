@@ -108,7 +108,7 @@ phases:
         done
       - if [[ ${phase} != "test_success"  && ${phase} != "test" ]]; then exit 1; fi
       - time="${time}\n${phase} - $(date +%r)"
-      # Run builds if all tests are good. We run all builds but we could shorten the CI part for branches by only building on push.
+      # Run builds if all tests are good.
       - phase=build_app
       - |
         for env in ${ENVIRONMENTS}; do
@@ -122,7 +122,7 @@ phases:
           for env in ${ENVIRONMENTS}; do
             time="${time}\n${phase}-${env} - $(date +%r) - started"
             make archive ENV=${env} || exit 1 
-            aws s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH}/${env}.tar.bz2
+            aws s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH}/developer-portal-${env}.tar.bz2
           done
         fi
       # Check if we deploy to the review bucket
