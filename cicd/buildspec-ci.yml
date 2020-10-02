@@ -121,7 +121,7 @@ phases:
         if [[ ${BRANCH} == 'master' ]]; then
           for env in ${ENVIRONMENTS}; do
             time="${time}\n${phase}-${env} - $(date +%r) - started"
-            make archive ENV=${env} || exit 1 
+	          tar -C build/${env} -cf build/developer-portal-${env}.tar.bz2 .
             aws s3 cp --no-progress --acl public-read build/${env}.tar.bz2 s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH}/developer-portal-${env}.tar.bz2
           done
         fi

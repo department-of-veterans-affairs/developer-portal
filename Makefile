@@ -104,8 +104,3 @@ build_app:
 		--env NODE_ENV=production \
 		--env BUILD_ENV=${ENVIRONMENT} \
 		developer-portal npm run-script build ${ENVIRONMENT}
-
-## archive:	builds tar ball of local build
-.PHONY: archive 
-archive:
-	tar -C build/${ENVIRONMENT} -cf build/${ENVIRONMENT}.tar.bz2 .
