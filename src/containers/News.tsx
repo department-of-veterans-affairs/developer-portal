@@ -37,7 +37,7 @@ const sections = NewsData.sections.map((section: DataSection) => ({
 const NewsItem = ({ item, media }: { item: NewsItem; media: boolean }) =>
   media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
 
-const MediaItem = ({ item }: { item: NewsItem }) => {
+const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
   const description = <ItemDescription item={item} />;
   if (item.url.includes('www.youtube.com')) {
     return (
@@ -63,7 +63,7 @@ const MediaItem = ({ item }: { item: NewsItem }) => {
   );
 };
 
-const ItemDescription = ({ item }: { item: NewsItem }) => (
+const ItemDescription = ({ item }: { item: NewsItem }): JSX.Element => (
   <p>
     <a href={item.url}>{item.title}</a>
     <br />
@@ -74,7 +74,7 @@ const ItemDescription = ({ item }: { item: NewsItem }) => (
   </p>
 );
 
-const News = () => {
+const News = (): JSX.Element => {
   const pageDescription =
     'This page is where you’ll find interesting press releases, articles, or media that relate to the VA Lighthouse program and the Developer Portal.';
 
