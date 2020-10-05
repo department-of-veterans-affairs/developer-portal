@@ -14,7 +14,7 @@ const rightColumnClasses = classNames('medium-screen:vads-l-col--8', 'small-scre
 const flexContainer = classNames('vads-l-grid-container', 'vads-u-margin-top--6', 'vads-u-margin-x--auto');
 const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--200');
 
-const HomeSection = ({ariaLabel, imageSrc, title, children} : {ariaLabel: string; imageSrc: string; title: string; children: React.ReactNode}) => (
+const HomeSection = ({ariaLabel, imageSrc, title, children} : {ariaLabel: string; imageSrc: string; title: string; children: React.ReactNode}): JSX.Element => (
   <section role="region" aria-label={ariaLabel}>
     <div className={flexContainer}>
       <div className="vads-l-row">
@@ -32,7 +32,7 @@ const HomeSection = ({ariaLabel, imageSrc, title, children} : {ariaLabel: string
   </section>
 );
 
-const ApiList = () => (
+const ApiList = (): JSX.Element => (
   <section>
     <div className={classNames(flexContainer, 'vads-u-margin-bottom--6')}>
       <div className="vads-l-row">
@@ -60,7 +60,7 @@ const ApiList = () => (
   </section>
 );
 
-const VeteransNotice = () => (
+const VeteransNotice = (): JSX.Element => (
   <section className="vads-u-display--none medium-screen:vads-u-display--block" role="region" aria-label="Veterans Notice">
     <div className={classNames(
       'vads-u-background-color--primary',
@@ -76,7 +76,7 @@ const VeteransNotice = () => (
   </section>
 );
 
-const Home = () => (
+const Home = (): JSX.Element => (
   <div className="home">
     <Hero />
     <VeteransNotice />
