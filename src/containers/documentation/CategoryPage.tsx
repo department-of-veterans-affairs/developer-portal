@@ -14,7 +14,7 @@ import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 
-export default function CategoryPage({ match }: RouteComponentProps<IApiNameParam>): JSX.Element {
+const CategoryPage = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Element => {
   
   const { apiCategoryKey } = match.params;
   const {
@@ -71,4 +71,6 @@ export default function CategoryPage({ match }: RouteComponentProps<IApiNamePara
     </section>
   );
   
-}
+};
+
+export default CategoryPage;
