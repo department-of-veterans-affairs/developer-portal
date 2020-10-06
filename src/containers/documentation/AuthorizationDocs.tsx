@@ -11,7 +11,7 @@ import ApiKeyAuth from './ApiKeyAuth';
 
 import './AuthorizationDocs.scss';
 
-export function AuthorizationDocs({ match }: RouteComponentProps<IApiNameParam>): JSX.Element {
+export const AuthorizationDocs = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Element => {
 
   const { apiCategoryKey } = match.params;
   const category = lookupApiCategory(apiCategoryKey);
@@ -30,5 +30,5 @@ export function AuthorizationDocs({ match }: RouteComponentProps<IApiNameParam>)
     return <Redirect to='/explore/bogus' />;
   }
   
-}
+};
 
