@@ -14,23 +14,33 @@ const rightColumnClasses = classNames('medium-screen:vads-l-col--8', 'small-scre
 const flexContainer = classNames('vads-l-grid-container', 'vads-u-margin-top--6', 'vads-u-margin-x--auto');
 const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--200');
 
-const HomeSection = ({ariaLabel, imageSrc, title, children} : {ariaLabel: string; imageSrc: string; title: string; children: React.ReactNode}): JSX.Element => (
-  <section role="region" aria-label={ariaLabel}>
-    <div className={flexContainer}>
-      <div className="vads-l-row">
-        <div className={leftColumnClasses}>
-          <img className={imageClasses} src={imageSrc} alt="" role="presentation" />
-        </div>
-        <div className={rightColumnClasses}>
-          <h2>
-            {title}
-          </h2>
-          {children}
+export interface HomeProps {
+  ariaLabel: string;
+  imageSrc: string;
+  title: string;
+  children: React.ReactNode;
+}
+
+const HomeSection = (props: HomeProps): JSX.Element => {
+
+  const {ariaLabel, imageSrc, title, children} = props;
+
+  return (
+    <section role="region" aria-label={ariaLabel}>
+      <div className={flexContainer}>
+        <div className="vads-l-row">
+          <div className={leftColumnClasses}>
+            <img className={imageClasses} src={imageSrc} alt="" role="presentation" />
+          </div>
+          <div className={rightColumnClasses}>
+            <h2>{title}</h2>
+            {children}
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const ApiList = (): JSX.Element => (
   <section>
