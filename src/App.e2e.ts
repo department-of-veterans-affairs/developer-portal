@@ -14,7 +14,7 @@ describe('terms of service', () => {
   // access to this link whereever they are.
   it('is displayed in the footer', async () => {
     for (const path of ['/', '/apply', '/explore']) {
-      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
+      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0', timeout: 60000 });
       const tosLinkCount = await page.evaluate(() => {
         const pathExpr = "//footer//a[contains(., 'Terms of Service')]";
         const results = document.evaluate(
