@@ -118,17 +118,18 @@ class SitemapBuilderPlugin {
       .filterPaths(sitemapConfig.pathFilter)
       .applyParams(sitemapConfig.paramsConfig)
       .build(prodURL)
-      .save(path.join(paths.appBuild, 'sitemap.xml')).sitemaps[0].cache;
+      .save(path.join(paths.appBuild, 'sitemap.xml'));
+    const cachedSitemap = sitemap.sitemaps[0].cache;
 
     fs.unlinkSync(path.join(paths.appBuild, 'sitemap.xml'));
 
     compilation.fileDependencies.add(this.fileName);
     compilation.assets[this.fileName] = {
       size: () => {
-        return Buffer.byteLength(sitemap, 'utf8');
+        return Buffer.byteLength(cachedSitemap, 'utf8');
       },
       source: () => {
-        return sitemap;
+        return cachedSitemap;
       },
     };
   }
