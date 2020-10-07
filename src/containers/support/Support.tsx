@@ -7,14 +7,14 @@ import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
 
-export interface ISection {
+export interface SupportSection {
   readonly component: React.ComponentType;
   readonly description: string;
   readonly id: string;
   readonly name: string;
 }
 
-const sections: ISection[] = [
+const sections: SupportSection[] = [
   {
     component: SupportFAQ,
     description:

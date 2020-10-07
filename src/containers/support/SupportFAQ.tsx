@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import GroupedAccordions, { IPanelContent } from '../../components/GroupedAccordions';
 import PageHeader from '../../components/PageHeader';
 
-const generalQuestions: ISupportQuestion[] = [
+const generalQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
@@ -39,7 +39,7 @@ const generalQuestions: ISupportQuestion[] = [
   },
 ];
 
-const developmentQuestions: ISupportQuestion[] = [
+const developmentQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
@@ -84,7 +84,6 @@ const developmentQuestions: ISupportQuestion[] = [
   {
     answer: (
       <p>
-        {' '}
         Yes, we have implemented basic rate limiting of 60 requests per minute. If you exceed this
         quota, your request will return a 429 status code. You may petition for increased rate
         limits by emailing api@va.gov and requests will be decided on a case-by-case basis.
@@ -109,8 +108,7 @@ const developmentQuestions: ISupportQuestion[] = [
         <p>
           The Address Validation API is for internal VA use only and is not listed on the developer
           portal. To begin development in the sandbox environment, request a developer{' '}
-          <a href="https://developer.va.gov/apply">API key for the Facilities API</a>. Once
-          finished, send an email to{' '}
+          <Link to="/apply">API key for the Facilities API</Link>. Once finished, send an email to{' '}
           <a
             href="mailto:api@va.gov?subject=Request%20for%20Sandbox%20Access%20to%20Address%20Validation%20API"
             target="_BLANK"
@@ -144,7 +142,7 @@ const developmentQuestions: ISupportQuestion[] = [
   },
 ];
 
-const supportQuestions: ISupportQuestion[] = [
+const supportQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
@@ -164,18 +162,18 @@ const headerProps = {
   header: 'FAQ',
 };
 
-interface ISupportQuestionsProps {
+interface SupportQuestionsProps {
   readonly title: string;
-  readonly questions: ISupportQuestion[];
+  readonly questions: SupportQuestion[];
 }
 
-interface ISupportQuestion {
+interface SupportQuestion {
   readonly answer: string | JSX.Element;
   readonly question: string;
 }
 
-const SupportQuestions = (props: ISupportQuestionsProps) => {
-  const content: IPanelContent[] = props.questions.map((q: ISupportQuestion) => ({
+const SupportQuestions = (props: SupportQuestionsProps) => {
+  const content: IPanelContent[] = props.questions.map((q: SupportQuestion) => ({
     body: q.answer,
     title: q.question,
   }));
