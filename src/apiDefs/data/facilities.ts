@@ -7,7 +7,7 @@ if (!process.env.REACT_APP_VETSGOV_SWAGGER_API) {
   );
 }
 
-const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API;
+const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API || '';
 const facilitiesApis: IApiDescription[] = [
   {
     description: 'VA Facilities',

@@ -25,13 +25,7 @@ import {
 } from '../../content/apiDocs/health';
 import { IApiDescription } from '../schema';
 
-if (!process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API) {
-  throw new Error(
-    'Developer portal environment is missing config var REACT_APP_VETSGOV_SECONDARY_SWAGGER_API',
-  );
-}
-
-const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API;
+const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API || '';
 const healthApis: IApiDescription[] = [
   {
     description:
