@@ -10,7 +10,7 @@ describe('Accessibility tests', () => {
         page.on('request', mockSwagger);
       }
 
-      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle2' });
+      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0', timeout: 60000 });
       await page.addScriptTag({ path: require.resolve('axe-core') });
 
       // THIS IS BAD. code highlighting on the Authorization page has several color contrast

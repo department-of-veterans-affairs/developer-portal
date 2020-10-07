@@ -25,6 +25,7 @@ module.exports = {
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
     'content/news.yml': '<rootDir>/src/__mocks__/news.test.yml',
+    '\\.(svg|png)': '<rootDir>/src/__mocks__/fakeImage.ts',
   },
   moduleFileExtensions: [
     'web.ts',

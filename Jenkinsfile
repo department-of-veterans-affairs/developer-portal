@@ -226,7 +226,7 @@ node('vetsgov-general-purpose') {
         sh 'cd /application && npm run test:visual'
       }
     } catch (error) {
-      dir('test/image_snapshots/diff_output') {
+      dir('test/image_snapshots/__diff_output__') {
         withEnv(["ref=${ref}",'bucket=developer-portal-screenshots']) {
           // Upload diffs to S3
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
@@ -252,7 +252,7 @@ node('vetsgov-general-purpose') {
   stage('Build') {
     if (supercededByConcurrentBuild()) { return }
 
-      try {
+    try {
       def builds = [:]
       envNames.each{ envName ->
         builds[envName] = {
