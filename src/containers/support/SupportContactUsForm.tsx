@@ -143,7 +143,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
         return response;
       })
       .then(response => response.json())
-      .then(json => {
+      .then((json: { errors?: string[] }) => {
         if (json.errors) {
           throw Error(`Contact Us Form validation errors: ${json.errors.join(', ')}`);
         }
@@ -203,7 +203,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                     value: validatePresence(field, 'First Name'),
                   })
                 }
-                required={true}
+                required
               />
             </div>
             <div className={textFieldClasses('left')}>
@@ -218,7 +218,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                     value: validatePresence(field, 'Last Name'),
                   })
                 }
-                required={true}
+                required
               />
             </div>
           </div>
@@ -232,7 +232,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 onValueChange={(field: IErrorableInput) =>
                   setFormState({ type: 'SET_EMAIL', value: validateEmail(field) })
                 }
-                required={true}
+                required
               />
             </div>
             <div className={textFieldClasses('left')}>
@@ -269,7 +269,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
           }
           name="description"
           field={formState.description}
-          required={true}
+          required
         />
       </fieldset>
     </Form>
