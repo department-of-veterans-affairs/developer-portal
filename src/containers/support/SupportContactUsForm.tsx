@@ -32,7 +32,7 @@ export default class SupportContactUsForm extends React.Component<
   SupportContactUsFormState
 > {
   /* eslint-enable @typescript-eslint/indent */
-  public constructor(props: ContactUsFormProps) {
+  public constructor(props: SupportContactUsFormProps) {
     super(props);
     this.state = {
       apis: SupportContactUsForm.initialApiState,
