@@ -7,7 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import { BaseAPICategory, APIDescription } from '../../apiDefs/schema';
+import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';

@@ -6,7 +6,7 @@ import { RouteComponentProps } from 'react-router';
 
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
-import { BaseAPICategory, APIDescription } from '../../apiDefs/schema';
+import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
 import { getFlags } from '../../App';
 import CardLink from '../../components/CardLink';
 import OnlyTags from '../../components/OnlyTags';
