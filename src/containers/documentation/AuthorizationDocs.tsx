@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Redirect } from 'react-router-dom';
@@ -10,24 +11,24 @@ import ApiKeyAuth from './ApiKeyAuth';
 
 import './AuthorizationDocs.scss';
 
-export class AuthorizationDocs extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
-  public render() {
-    const { apiCategoryKey } = this.props.match.params;
-    const category = lookupApiCategory(apiCategoryKey);
-    if (category != null) {
-      if (category.apis.some(api => !!api.oAuth) && apiCategoryKey !== 'benefits') {
-        return (
-          <div className="va-api-authorization-docs">
-            <PageHeader halo={category.name} header="Authorization" />
-            <OAuth />
-          </div>
-        );
-      } else {
-        return (<ApiKeyAuth apiCategoryKey={apiCategoryKey} />);
-      }
+export const AuthorizationDocs = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Element => {
+
+  const { apiCategoryKey } = match.params;
+  const category = lookupApiCategory(apiCategoryKey);
+  if (category != null) {
+    if (category.apis.some(api => !!api.oAuth) && apiCategoryKey !== 'benefits') {
+      return (
+        <div className="va-api-authorization-docs">
+          <PageHeader halo={category.name} header="Authorization" />
+          <OAuth />
+        </div>
+      );
     } else {
-      return <Redirect to='/explore/bogus' />;
+      return (<ApiKeyAuth apiCategoryKey={apiCategoryKey} />);
     }
+  } else {
+    return <Redirect to='/explore/bogus' />;
   }
-}
+  
+};
 
