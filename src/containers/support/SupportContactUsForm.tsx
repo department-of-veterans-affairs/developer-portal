@@ -13,7 +13,7 @@ import { validateEmail, validatePresence } from '../../utils/validators';
 
 import './SupportContactUsForm.scss';
 
-interface ISupportContactUsFormState {
+interface SupportContactUsFormState {
   apis: { [x: string]: boolean };
   description: IErrorableInput;
   email: IErrorableInput;
@@ -22,15 +22,17 @@ interface ISupportContactUsFormState {
   organization: IErrorableInput;
 }
 
-interface ISupportContactUsFormProps {
+interface SupportContactUsFormProps {
   onSuccess: () => void;
 }
 
+/* eslint-disable @typescript-eslint/indent */
 export default class SupportContactUsForm extends React.Component<
-  ISupportContactUsFormProps,
-  ISupportContactUsFormState
+  SupportContactUsFormProps,
+  SupportContactUsFormState
 > {
-  constructor(props: ISupportContactUsFormProps) {
+  /* eslint-enable @typescript-eslint/indent */
+  public constructor(props: SupportContactUsFormProps) {
     super(props);
     this.state = {
       apis: SupportContactUsForm.initialApiState,
@@ -41,23 +43,24 @@ export default class SupportContactUsForm extends React.Component<
       organization: SupportContactUsForm.defaultErrorableField,
     };
 
-    this.formSubmission = this.formSubmission.bind(this);
-    this.toggleApis = this.toggleApis.bind(this);
+    this.formSubmission = this.formSubmission.bind(this) as () => Promise<void>;
+    this.toggleApis = this.toggleApis.bind(this) as () => void;
   }
 
-  public render() {
+  public render(): JSX.Element {
     const legendDescClasses = classNames('vads-u-font-size--md', 'vads-u-font-weight--normal');
-    const textFieldClasses = (paddingDirection: string): string => {
-      return classNames(
+    const textFieldClasses = (paddingDirection: string): string =>
+      classNames(
         'vads-l-col--12',
         'small-screen:vads-l-col--6',
         `small-screen:vads-u-padding-${paddingDirection}--2`,
       );
-    };
 
     return (
       <Form
+        /* eslint-disable @typescript-eslint/unbound-method */
         onSubmit={this.formSubmission}
+        /* eslint-enable @typescript-eslint/unbound-method */
         onSuccess={this.props.onSuccess}
         disabled={!this.isFormValid}
         className={classNames('va-api-contact-us-form', 'vads-u-margin-y--2')}
@@ -66,7 +69,7 @@ export default class SupportContactUsForm extends React.Component<
           <legend className="vads-u-font-size--lg">
             Contact Us
             <p className={legendDescClasses}>
-              Have a question? Use the form below to send us an email and we'll do the best to
+              Have a question? Use the form below to send us an email and we&apos;ll do the best to
               answer your question and get you headed in the right direction.
             </p>
           </legend>
@@ -81,7 +84,7 @@ export default class SupportContactUsForm extends React.Component<
                   onValueChange={(field: IErrorableInput) =>
                     this.setState({ firstName: validatePresence(field, 'First Name') })
                   }
-                  required={true}
+                  required
                 />
               </div>
               <div className={textFieldClasses('left')}>
@@ -93,7 +96,7 @@ export default class SupportContactUsForm extends React.Component<
                   onValueChange={(field: IErrorableInput) =>
                     this.setState({ lastName: validatePresence(field, 'Last Name') })
                   }
-                  required={true}
+                  required
                 />
               </div>
             </div>
@@ -107,7 +110,7 @@ export default class SupportContactUsForm extends React.Component<
                   onValueChange={(field: IErrorableInput) =>
                     this.setState({ email: validateEmail(field) })
                   }
-                  required={true}
+                  required
                 />
               </div>
               <div className={textFieldClasses('left')}>
@@ -127,7 +130,9 @@ export default class SupportContactUsForm extends React.Component<
             additionalFieldsetClass="vads-u-margin-top--4"
             additionalLegendClass={legendDescClasses}
             label="If applicable, please select any of the APIs pertaining to your issue."
+            /* eslint-disable @typescript-eslint/unbound-method */
             onValueChange={this.toggleApis}
+            /* eslint-enable @typescript-eslint/unbound-method */
             id="default"
             required={false}
             options={SupportContactUsForm.apiOptions}
@@ -142,21 +147,22 @@ export default class SupportContactUsForm extends React.Component<
             }
             name="description"
             field={this.state.description}
-            required={true}
+            required
           />
         </fieldset>
       </Form>
     );
   }
 
-  private static get apiOptions(): object[] {
+  private static get apiOptions(): Array<{
+    label: string;
+    value: string;
+  }> {
     const apiDefs = getApiDefinitions();
-    return getEnabledApiCategories().map(api => {
-      return {
-        label: apiDefs[api].name,
-        value: api,
-      };
-    });
+    return getEnabledApiCategories().map(api => ({
+      label: apiDefs[api].name,
+      value: api,
+    }));
   }
 
   private static get initialApiState() {
@@ -214,24 +220,24 @@ export default class SupportContactUsForm extends React.Component<
     });
 
     return fetch(request)
-    .then(response => {
-      // The developer-portal-backend sends a 400 status, along with an array of validation error strings, when validation errors are present on the form.
-      if (!response.ok && response.status !== 400) {
-        throw Error(response.statusText);
-      }
-      return response;
-    })
-    .then(response => response.json())
-    .then(json => {
-      if (json.errors) {
-        throw Error(`Contact Us Form validation errors: ${json.errors.join(', ')}`);
-      }
-    })
-    .catch(error => {
-      Sentry.withScope(scope => {
-        scope.setLevel(Sentry.Severity.fromString('warning'));
-        Sentry.captureException(error);
+      .then(response => {
+        // The developer-portal-backend sends a 400 status, along with an array of validation error strings, when validation errors are present on the form.
+        if (!response.ok && response.status !== 400) {
+          throw Error(response.statusText);
+        }
+        return response;
+      })
+      .then(response => response.json())
+      .then((json: { errors?: string[] }) => {
+        if (json.errors) {
+          throw Error(`Contact Us Form validation errors: ${json.errors.join(', ')}`);
+        }
+      })
+      .catch(error => {
+        Sentry.withScope(scope => {
+          scope.setLevel(Sentry.Severity.fromString('warning'));
+          Sentry.captureException(error);
+        });
       });
-    });
   }
 }
