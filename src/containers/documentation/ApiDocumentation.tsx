@@ -12,8 +12,6 @@ import { ApiDescriptionPropType, IApiDescription, IApiDocSource } from '../../ap
 
 import { history } from '../../store';
 
-import usePrevious from '../../hooks/Previous';
-
 import SwaggerDocs from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
@@ -31,51 +29,36 @@ const ApiDocumentationPropTypes = {
   location: PropTypes.any.isRequired,
 };
 
+const getInitialTabIndex = (searchQuery: string, docSources: IApiDocSource[]): number => {
+  // Get tab from query string
+  const params = new URLSearchParams(searchQuery ?? undefined);
+  const tabQuery = params.get('tab');
+  const queryStringTab = tabQuery ? tabQuery.toLowerCase() : '';
+
+  // Get doc source keys
+  const hasKey = (source: IApiDocSource) => !!source.key;
+  const tabKeys = docSources
+    .filter(hasKey)
+    .map(source => source.key?.toLowerCase() || '');
+
+  // Return tab index
+  const sourceTabIndex = tabKeys.findIndex(sourceKey => sourceKey === queryStringTab);
+  return sourceTabIndex === -1 ? 0 : sourceTabIndex;
+};
+
 const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
+
   const { apiDefinition, location } = props;
-  const prevLocation = usePrevious(location);
 
   /*
    * Tab Index
    */
-  const [tabIndex, setTabIndex] = React.useState(0);
-
-  const getTabIndexFromQueryParams = React.useCallback((): number => {
-    if (location.search) {
-      const params = new URLSearchParams(history.location.search);
-  
-      const hasKey = (source: IApiDocSource) => !!source.key;
-      const tabKeys = apiDefinition.docSources
-        .filter(hasKey)
-        .map(source => source.key?.toLowerCase());
-      const tabQuery = params.get('tab');
-      const fromFragment = tabQuery ? tabQuery.toLowerCase() : '';
-      const sourceTabIndex = tabKeys.findIndex(sourceKey => sourceKey === fromFragment);
-      return sourceTabIndex === -1 ? tabIndex : sourceTabIndex;
-    }
-  
-    return tabIndex;
-  }, [location.search, apiDefinition.docSources, tabIndex]);
-
-  const setTabIndexFromQueryParams = React.useCallback((): void => {
-    if (apiDefinition.docSources.length > 1) {
-      const newTabIndex = getTabIndexFromQueryParams();
-      setTabIndex(newTabIndex);
-    }
-  }, [apiDefinition, getTabIndexFromQueryParams]);
-
-  React.useEffect((): void => {
-    setTabIndexFromQueryParams();
-  }, [setTabIndexFromQueryParams]);
-
-  React.useEffect((): void => {
-    if (
-      location.pathname !== prevLocation?.pathname ||
-      location.search !== prevLocation?.search
-    ) {
-      setTabIndexFromQueryParams();
-    }
-  }, [location.pathname, location.search, setTabIndexFromQueryParams, prevLocation]);
+  const [tabIndex, setTabIndex] = React.useState(
+    getInitialTabIndex(
+      location.search,
+      apiDefinition.docSources,
+    ),
+  );
 
   const onTabSelect = (selectedTabIndex: number): void => {
     const tab = props.apiDefinition.docSources[selectedTabIndex].key;
@@ -91,25 +74,13 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
    * API Version
    */
   const dispatch = useDispatch();
-
-  const setApiVersionFromQueryParams = React.useCallback((): void => {  
-    const params = new URLSearchParams(location.search ?? undefined);
-    dispatch(actions.setRequstedApiVersion(params.get('version')));
-  }, [dispatch, location.search]);
+  const queryParams = new URLSearchParams(location.search ?? undefined);
+  const apiVersion = queryParams.get('version');
 
   React.useEffect((): void => {
-    setApiVersionFromQueryParams();
-  }, [setApiVersionFromQueryParams]);
-
-  React.useEffect((): void => {
-    if (
-      location.pathname !== prevLocation?.pathname ||
-      location.search !== prevLocation?.search
-    ) {
-      setApiVersionFromQueryParams();
-    }
-  }, [location.pathname, location.search, setApiVersionFromQueryParams, prevLocation]);
-
+    dispatch(actions.setRequstedApiVersion(apiVersion));
+  }, [dispatch, apiVersion, location.pathname]);
+  
   /*
    * RENDER
    */
