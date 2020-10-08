@@ -13,7 +13,7 @@ import { validateEmail, validatePresence } from '../../utils/validators';
 
 import './SupportContactUsForm.scss';
 
-interface ContactUsFormState {
+interface SupportContactUsFormState {
   apis: { [x: string]: boolean };
   description: IErrorableInput;
   email: IErrorableInput;
@@ -22,14 +22,14 @@ interface ContactUsFormState {
   organization: IErrorableInput;
 }
 
-interface ContactUsFormProps {
+interface SupportContactUsFormProps {
   onSuccess: () => void;
 }
 
 /* eslint-disable @typescript-eslint/indent */
 export default class SupportContactUsForm extends React.Component<
-  ContactUsFormProps,
-  ContactUsFormState
+  SupportContactUsFormProps,
+  SupportContactUsFormState
 > {
   /* eslint-enable @typescript-eslint/indent */
   public constructor(props: ContactUsFormProps) {
