@@ -123,6 +123,7 @@ const oldRouteToNew = [
 const DocumentationRoot = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
   const { apiCategoryKey } = props.match.params;
   const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
+
   return (
     <div className={classNames('documentation', 'vads-u-padding-y--5')}>
       <section className="vads-l-grid-container">
@@ -160,7 +161,7 @@ const DocumentationRoot = (props: RouteComponentProps<IApiNameParam>): JSX.Eleme
 };
 
 DocumentationRoot.propTypes = {
-  math: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default DocumentationRoot;
