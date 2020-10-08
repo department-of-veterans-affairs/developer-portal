@@ -9,9 +9,23 @@ export interface IApiNameParam {
   apiCategoryKey: string;
 }
 
+export interface VersionMetadata {
+  version: string;
+  path: string;
+  status: string;
+  internal_only: boolean;
+  healthcheck: string;
+}
+
+export interface APIMetadata {
+  meta: {
+    versions: VersionMetadata[];
+  };
+}
+
 export interface IApiVersioning {
   docUrl: string;
-  metadata: any;
+  metadata: APIMetadata | null;
   requestedApiVersion: string;
 }
 

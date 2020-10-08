@@ -9,6 +9,7 @@ import { VersionSelector } from './VersionSelector';
 import { WrapHighlightCode } from './WrapHighlightCode';
 import { WrapParameters } from './WrapParameters';
 
+export * from './types';
 export function SwaggerPlugins(versionHandler: any) {
   return {
     components: {
