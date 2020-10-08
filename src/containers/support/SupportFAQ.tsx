@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import GroupedAccordions, { IPanelContent } from '../../components/GroupedAccordions';
+import GroupedAccordions, { AccordionPanelContent } from '../../components/GroupedAccordions';
 import PageHeader from '../../components/PageHeader';
 
 const generalQuestions: SupportQuestion[] = [
@@ -173,7 +173,7 @@ interface SupportQuestion {
 }
 
 const SupportQuestions = (props: SupportQuestionsProps) => {
-  const content: IPanelContent[] = props.questions.map((q: SupportQuestion) => ({
+  const content: AccordionPanelContent[] = props.questions.map((q: SupportQuestion) => ({
     body: q.answer,
     title: q.question,
   }));
