@@ -1,9 +1,9 @@
-import { OPEN_API_SPEC_HOST } from 'src/types/constants';
 import {
   AddressValidationReleaseNotes,
   VeteranConfirmationReleaseNotes,
   VeteranVerificationReleaseNotes,
 } from '../../content/apiDocs/verification';
+import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import { IApiDescription } from '../schema';
 
 const verificationApis: IApiDescription[] = [
