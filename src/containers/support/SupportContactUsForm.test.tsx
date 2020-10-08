@@ -11,9 +11,6 @@ import * as React from 'react';
 import { CONTACT_US_URL } from '../../types/constants';
 import SupportContactUsForm from './SupportContactUsForm';
 
-jest.mock('@sentry/browser');
-const mockedSentry = Sentry as jest.Mocked<typeof Sentry>;
-
 const server = setupServer(
   rest.post(
     CONTACT_US_URL,
@@ -81,6 +78,55 @@ describe('SupportContactUsForm', () => {
     );
   });
 
+  it('logs error events in Sentry when fetch returns validation errors with status 400', async () => {
+    const captureException = jest.spyOn(Sentry, 'captureException');
+    const fromString = jest.spyOn(Sentry.Severity, 'fromString');
+    const scope = jest.spyOn(Sentry, 'withScope');
+
+    server.use(
+      rest.post(
+        CONTACT_US_URL,
+        (
+          req: MockedRequest,
+          res: ResponseComposition,
+          context: typeof restContext,
+        ): MockedResponse => res(context.status(400), context.json({ errors: ['unknown error'] })),
+      ),
+    );
+
+    const onSuccessMock = jest.fn();
+
+    const { getByLabelText, getByText } = render(
+      <SupportContactUsForm onSuccess={onSuccessMock} />,
+    );
+
+    const firstNameInput = getByLabelText('First name(*Required)');
+    fireEvent.change(firstNameInput, { target: { value: 'john' } });
+    const lastNameInput = getByLabelText('Last name(*Required)');
+    fireEvent.change(lastNameInput, { target: { value: 'doe' } });
+    const description = getByLabelText(
+      'Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable.(*Required)',
+    );
+    fireEvent.change(description, { target: { value: 'this is a test' } });
+    const emailInput = getByLabelText('Email(*Required)');
+    fireEvent.change(emailInput, { target: { value: 'hello@test.com' } });
+    const submitBtn = getByText('Submit');
+    await waitFor(() => expect(submitBtn).not.toHaveAttribute('disabled', ''));
+    fireEvent.click(submitBtn);
+
+    await waitFor(() => expect(Sentry.withScope).toHaveBeenCalled());
+
+    expect(Sentry.Severity.fromString).toHaveBeenCalledWith('warning');
+
+    expect(Sentry.captureException).toHaveBeenCalledWith(
+      Error('Contact Us Form validation errors: unknown error'),
+    );
+
+    captureException.mockRestore();
+    fromString.mockRestore();
+    scope.mockRestore();
+  });
+
   it('should not be disabled when required fields are filled', done => {
     const component = mount(<SupportContactUsForm onSuccess={done} />);
 
@@ -128,57 +174,5 @@ describe('SupportContactUsForm', () => {
     const submitButton = component.find('.usa-button-primary');
     expect(submitButton.length).toEqual(1);
     expect(submitButton.hasClass('usa-button-disabled')).toBe(true);
-  });
-
-  it('logs error events in Sentry when fetch returns validation errors with status 400', async () => {
-    server.use(
-      rest.post(
-        CONTACT_US_URL,
-        (
-          req: MockedRequest,
-          res: ResponseComposition,
-          context: typeof restContext,
-        ): MockedResponse =>
-          res(context.status(400), context.json({ errors: ['email must be valid email'] })),
-      ),
-    );
-
-    const onSuccessMock = jest.fn();
-    const formSubmissionSpy = jest.spyOn(SupportContactUsForm.prototype, 'formSubmission');
-    const component = mount(<SupportContactUsForm onSuccess={onSuccessMock} />);
-    component
-      .find(SupportContactUsForm)
-      .instance()
-      .setState({
-        apis: {
-          appeals: false,
-          benefits: true,
-          facilities: true,
-          health: false,
-          vaForms: false,
-          verification: false,
-        },
-        description: { value: 'help', dirty: true },
-        email: { value: 'test', dirty: true },
-        firstName: { value: 'Spongebob', dirty: true },
-        lastName: { value: 'Squarepants', dirty: true },
-        organization: { value: 'Krusty Krab', dirty: true },
-      });
-    component.update();
-
-    const form = component.find('Form');
-    form.find('.usa-button-primary').simulate('click');
-
-    expect(formSubmissionSpy).toHaveBeenCalled();
-    await formSubmissionSpy.mock.results[0].value;
-
-    const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-    const scope: any = {
-      setLevel: jest.fn(),
-    };
-    sentryCallback(scope);
-    expect(mockedSentry.captureException).toBeCalledWith(
-      Error('Contact Us Form validation errors: email must be valid email'),
-    );
   });
 });
