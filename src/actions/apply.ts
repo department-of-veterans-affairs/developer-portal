@@ -129,13 +129,17 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => {
 
     return fetch(request)
       .then(response => {
-        if (!response.ok) {
+        // The developer-portal-backend sends a 400 status, along with an array of validation error strings, when validation errors are present on the form.
+        if (!response.ok && response.status !== 400) {
           throw Error(response.statusText);
         }
         return response;
       })
       .then(response => response.json())
       .then(json => {
+        if (json.errors) {
+          throw Error(`Developer Application validation errors: ${json.errors.join(', ')}`);
+        }
         if (json.token || json.clientID) {
           const result = dispatch(submitFormSuccess(json.token, json.clientID, json.clientSecret));
           history.push('/applied');

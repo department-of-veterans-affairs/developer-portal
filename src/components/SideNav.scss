@@ -33,4 +33,8 @@ a.va-api-secondary-skip-nav {
     position: relative;
     top: auto;
   }
+
+  &:hover {
+    background: $va-api-color-blue-dark;
+  }
 }

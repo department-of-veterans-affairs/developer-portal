@@ -62,16 +62,16 @@ const APIReleaseNote = ({ api, flagName }: { api: IApiDescription; flagName: str
 
   return (
     <Flag name={`${flagName}.${api.urlFragment}`}>
-      <div id={dashUrlFragment}>
-        <h2>{api.name}</h2>
-        {api.deactivationInfo && isApiDeactivated(api) && (
-          <AlertBox headline="Deactivated API" status="info">
-            {api.deactivationInfo.deactivationContent({})}
-          </AlertBox>
-        )}
-        {api.releaseNotes({})}
-        <hr />
-      </div>
+      <h2 id={dashUrlFragment} tabIndex={-1}>
+        {api.name}
+      </h2>
+      {api.deactivationInfo && isApiDeactivated(api) && (
+        <AlertBox headline="Deactivated API" status="info">
+          {api.deactivationInfo.deactivationContent({})}
+        </AlertBox>
+      )}
+      {api.releaseNotes({})}
+      <hr />
     </Flag>
   );
 };
