@@ -1,8 +1,8 @@
 import { FacilitiesReleaseNotes } from '../../content/apiDocs/facilities';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { IApiDescription } from '../schema';
+import { APIDescription } from '../schema';
 
-const facilitiesApis: IApiDescription[] = [
+const facilitiesApis: APIDescription[] = [
   {
     description: 'VA Facilities',
     docSources: [

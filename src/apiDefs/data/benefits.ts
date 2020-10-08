@@ -4,9 +4,9 @@ import {
   LoanGuarantyReleaseNotes,
 } from '../../content/apiDocs/benefits';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { IApiDescription } from '../schema';
+import { APIDescription } from '../schema';
 
-const benefitsApis: IApiDescription[] = [
+const benefitsApis: APIDescription[] = [
   {
     description: 'Submit and track claims',
     docSources: [

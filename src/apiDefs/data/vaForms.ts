@@ -1,8 +1,8 @@
 import { VAFormsReleaseNotes } from '../../content/apiDocs/vaForms';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { IApiDescription } from '../schema';
+import { APIDescription } from '../schema';
 
-const vaFormsApis: IApiDescription[] = [
+const vaFormsApis: APIDescription[] = [
   {
     description: 'Look up VA forms and check for new versions.',
     docSources: [

@@ -3,9 +3,9 @@ import {
   DecisionReviewReleaseNotes,
 } from '../../content/apiDocs/appeals';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { IApiDescription } from '../schema';
+import { APIDescription } from '../schema';
 
-const appealsApis: IApiDescription[] = [
+const appealsApis: APIDescription[] = [
   {
     description:
       'Allows retrieval of all decision review request statuses (both legacy and AMA). Statuses are read only.',

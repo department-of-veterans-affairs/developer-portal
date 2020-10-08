@@ -14,28 +14,27 @@
 */
 
 import apiDefs, { apiCategoryOrder } from './data/categories';
-import { IApiCategories, IApiCategory, IApiDescription } from './schema';
+import { APICategories, APICategory, APIDescription } from './schema';
 
-const getApiDefinitions = (): IApiCategories => apiDefs;
+const getApiDefinitions = (): APICategories => apiDefs;
 const getApiCategoryOrder = (): string[] => apiCategoryOrder;
 
-const getAllApis = (): IApiDescription[] =>
-  Object.values(getApiDefinitions()).flatMap((category: IApiCategory) => category.apis);
+const getAllApis = (): APIDescription[] =>
+  Object.values(getApiDefinitions()).flatMap((category: APICategory) => category.apis);
 
-const lookupApiByFragment = (apiKey: string): IApiDescription | null => {
-  const hasMatchingIdentifier = (apiDesc: IApiDescription): boolean =>
+const lookupApiByFragment = (apiKey: string): APIDescription | null => {
+  const hasMatchingIdentifier = (apiDesc: APIDescription): boolean =>
     apiDesc.urlFragment === apiKey;
   const apiResult = getAllApis().find(hasMatchingIdentifier);
   return apiResult || null;
 };
 
-const lookupApiCategory = (categoryKey: string): IApiCategory | null =>
-  apiDefs[categoryKey] || null;
+const lookupApiCategory = (categoryKey: string): APICategory | null => apiDefs[categoryKey] || null;
 
-const apisFor = (apiList: string[]): IApiDescription[] => {
+const apisFor = (apiList: string[]): APIDescription[] => {
   const allApis = getAllApis();
   const searchedApiSet = new Set<string>(apiList);
-  return allApis.filter((api: IApiDescription) => searchedApiSet.has(api.urlFragment));
+  return allApis.filter((api: APIDescription) => searchedApiSet.has(api.urlFragment));
 };
 
 const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(api => !!api.oAuth);

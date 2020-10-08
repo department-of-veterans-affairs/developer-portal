@@ -1,5 +1,5 @@
 import { getAllApis, getApiCategoryOrder, getApiDefinitions } from './query';
-import { IApiDescription } from './schema';
+import { APIDescription } from './schema';
 
 export const isHostedApiEnabled = (apiIdentifier: string, defaultValue: boolean): boolean => {
   const envValue = process.env[`REACT_APP_${apiIdentifier.toUpperCase()}_API_ENABLED`];
@@ -11,8 +11,8 @@ export const isHostedApiEnabled = (apiIdentifier: string, defaultValue: boolean)
 };
 
 export const getEnvFlags = (): { [apiId: string]: boolean } => {
-  const allApis: IApiDescription[] = getAllApis();
-  const envFlags = allApis.reduce((result: { [key: string]: boolean }, api: IApiDescription) => {
+  const allApis: APIDescription[] = getAllApis();
+  const envFlags = allApis.reduce((result: { [key: string]: boolean }, api: APIDescription) => {
     result[api.urlFragment] = isHostedApiEnabled(api.urlFragment, api.enabledByDefault);
     return result;
   }, {});

@@ -2,11 +2,11 @@ import 'jest';
 import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
 import { getEnvFlags, isHostedApiEnabled } from './env';
 import * as queries from './query';
-import { IApiDescription } from './schema';
+import { APIDescription } from './schema';
 
 describe('env module', () => {
   const DEFAULT_ENV = process.env;
-  let getAllApisSpy: jest.SpyInstance<Partial<IApiDescription[]>>;
+  let getAllApisSpy: jest.SpyInstance<Partial<APIDescription[]>>;
 
   beforeEach(() => {
     getAllApisSpy = jest.spyOn(queries, 'getAllApis');
