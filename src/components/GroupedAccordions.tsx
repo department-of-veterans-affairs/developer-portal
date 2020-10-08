@@ -1,5 +1,5 @@
 import CollapsiblePanel from '@department-of-veterans-affairs/formation-react/CollapsiblePanel';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import * as React from 'react';
 
 import './GroupedAccordions.scss';
@@ -24,7 +24,10 @@ interface ICollapsiblePanelStates {
   open: boolean;
 }
 
-export default class GroupedAccordions extends React.Component<IGroupedAccordionsProps, IGroupedAccordionsStates> {
+export default class GroupedAccordions extends React.Component<
+  IGroupedAccordionsProps,
+  IGroupedAccordionsStates
+> {
   private panelRefs: Array<React.RefObject<React.Component<{}, ICollapsiblePanelStates>>>;
 
   constructor(props: IGroupedAccordionsProps) {
@@ -47,13 +50,15 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
   public render() {
     return (
       <section className={classNames('va-grouped-accordion', 'vads-u-margin-bottom--2p5')}>
-        <div className={classNames(
-          'vads-u-display--flex',
-          'vads-u-justify-content--space-between',
-          'vads-u-align-items--center',
-        )}>
+        <div
+          className={classNames(
+            'vads-u-display--flex',
+            'vads-u-justify-content--space-between',
+            'vads-u-align-items--center',
+          )}
+        >
           <h3>{this.props.title}</h3>
-          <button 
+          <button
             className={classNames(
               'va-api-grouped-accordions-button',
               'vads-u-color--primary',
@@ -63,7 +68,7 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
               'vads-u-font-weight--normal',
               'vads-u-width--auto',
             )}
-            onClick={(event) => this.handleExpandCollapse(event)}
+            onClick={event => this.handleExpandCollapse(event)}
           >
             {this.state.allCollapsed ? 'Expand all' : 'Collapse all'}
           </button>
@@ -72,7 +77,12 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
           const panelRef = React.createRef<React.Component<{}, ICollapsiblePanelStates>>();
           this.panelRefs.push(panelRef);
           return (
-            <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={!this.state.allCollapsed} key={index}>
+            <CollapsiblePanel
+              ref={panelRef}
+              panelName={c.title}
+              startOpen={!this.state.allCollapsed}
+              key={index}
+            >
               {c.body}
             </CollapsiblePanel>
           );
@@ -83,12 +93,17 @@ export default class GroupedAccordions extends React.Component<IGroupedAccordion
 
   private handleExpandCollapse(event: React.MouseEvent<HTMLElement>) {
     event.preventDefault();
-    this.setState((prevState: IGroupedAccordionsStates) => ({ allCollapsed: !prevState.allCollapsed }), () => {
-      this.panelRefs.filter(r => r.current && (r.current.state.open === this.state.allCollapsed)).forEach(r => {
-        if (r.current) {
-          r.current.setState({ open: !this.state.allCollapsed });
-        }
-      });
-    });
+    this.setState(
+      (prevState: IGroupedAccordionsStates) => ({ allCollapsed: !prevState.allCollapsed }),
+      () => {
+        this.panelRefs
+          .filter(r => r.current && r.current.state.open === this.state.allCollapsed)
+          .forEach(r => {
+            if (r.current) {
+              r.current.setState({ open: !this.state.allCollapsed });
+            }
+          });
+      },
+    );
   }
 }
