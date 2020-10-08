@@ -18,13 +18,11 @@ const PageContent = (props: RouteComponentProps): JSX.Element => {
 
   React.useEffect(() => {
     const prevLocation: string | null = prevLocationRef.current;
-
-    if (prevLocation === location.pathname && location.hash) {
-      return;
+    
+    if (prevLocation && prevLocation !== location.pathname || location.hash) {
+      focusAndScroll(mainRef.current);
+      prevLocationRef.current = location.pathname;
     }
-
-    focusAndScroll(mainRef.current);
-    prevLocationRef.current = location.pathname;
   }, [location]);
 
   return (
