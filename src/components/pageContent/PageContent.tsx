@@ -11,18 +11,22 @@ const focusAndScroll = (elementToFocus: HTMLElement | null) => {
 };
 
 const PageContent = (props: RouteComponentProps): JSX.Element => {
-
   const mainRef = React.useRef<HTMLElement>(null);
   const prevLocationRef = React.useRef<string | null>(null);
 
   const { location } = props;
 
   React.useEffect(() => {
-    
-    if (prevLocationRef.current !== location.pathname || location.hash) {
-      focusAndScroll(mainRef.current);
-      prevLocationRef.current = location.pathname;
+    const prevLocation: string | null = prevLocationRef.current;
+
+    if (prevLocation === location.pathname && location.hash) {
+      return;
     }
+
+    if (prevLocationRef.current) {
+      focusAndScroll(mainRef.current);
+    }
+    prevLocationRef.current = location.pathname;
   }, [location]);
 
   return (
