@@ -12,16 +12,19 @@ const focusAndScroll = (elementToFocus: HTMLElement | null) => {
 
 const PageContent = (props: RouteComponentProps): JSX.Element => {
   const mainRef = React.useRef<HTMLElement>(null);
-  const prevLocationRef = React.useRef<string | null>(null);
+  const prevPathRef = React.useRef<string | null>(null);
 
   const { location } = props;
 
   React.useEffect(() => {
-    const prevLocation: string | null = prevLocationRef.current;
+    const prevPath: string | null = prevPathRef.current;
     
-    if (prevLocation && prevLocation !== location.pathname || location.hash) {
-      focusAndScroll(mainRef.current);
-      prevLocationRef.current = location.pathname;
+    if (prevPath !== location.pathname || location.hash) {
+      // Only focus and scroll if it's not an initial page load
+      if (prevPath) {
+        focusAndScroll(mainRef.current);
+      }
+      prevPathRef.current = location.pathname;
     }
   }, [location]);
 
