@@ -1,3 +1,4 @@
+import { OPEN_API_SPEC_HOST } from 'src/types/constants';
 import {
   AddressValidationReleaseNotes,
   VeteranConfirmationReleaseNotes,
@@ -5,13 +6,12 @@ import {
 } from '../../content/apiDocs/verification';
 import { IApiDescription } from '../schema';
 
-const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API || '';
 const verificationApis: IApiDescription[] = [
   {
     description: 'Provides methods to standardize and validate addresses.',
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/services/address_validation/docs/v1/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/address_validation/docs/v1/api`,
       },
     ],
     enabledByDefault: true,
@@ -26,7 +26,7 @@ const verificationApis: IApiDescription[] = [
     description: 'Confirm Veteran status for a given person with an api key.',
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/services/veteran_confirmation/docs/v0/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran_confirmation/docs/v0/api`,
       },
     ],
     enabledByDefault: true,
@@ -41,7 +41,7 @@ const verificationApis: IApiDescription[] = [
       'Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.',
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/services/veteran_verification/docs/v0/veteran_verification`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran_verification/docs/v0/veteran_verification`,
       },
     ],
     enabledByDefault: true,

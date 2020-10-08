@@ -1,10 +1,11 @@
 /*
-  Note the use of the secondary swagger api instead of the primary for openApiUrl. Health APIs do not have a
-  staging environment setup, as such we can only use `sandbox-api.va.gov` or `api.va.gov` for the openApiUrl host.
-  The primary swagger api is tied to the environment. The secondary swagger api always points to production.
-  Using the primary swagger api would break staging. The swagger url is shown in the UI. In order to avoid the
-  confusion of having a `sandbox-api.va.gov` url shown in production `api.va.gov` (the secondary swagger api) is
-  used in all developer portal environments for health documentation.
+  Note the use of the secondary OpenAPI host instead of the primary for openApiUrl. Health APIs do not 
+  have a staging environment setup; as such, we can use dev-api.va.gov, sandbox-api.va.gov, or 
+  api.va.gov for the openApiUrl host. The primary swagger api is tied to the environment. The secondary
+  OpenAPI host always points to production. Using the primary OpenAPI host would break staging. The 
+  OpenAPI url is shown in the UI. In order to avoid the confusion of having a dev-api.va.gov or
+  sandbox-api.va.gov url shown in production, api.va.gov is used in all developer portal environments 
+  for health documentation.
 */
 
 import * as moment from 'moment';
@@ -23,9 +24,9 @@ import {
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
 } from '../../content/apiDocs/health';
+import { PROD_OPEN_API_SPEC_HOST } from '../../types/constants';
 import { IApiDescription } from '../schema';
 
-const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API || '';
 const healthApis: IApiDescription[] = [
   {
     description:
@@ -33,7 +34,7 @@ const healthApis: IApiDescription[] = [
     docSources: [
       {
         apiIntro: CommunityCareApiIntro,
-        openApiUrl: `${swaggerHost}/services/community-care/v0/eligibility/openapi.json`,
+        openApiUrl: `${PROD_OPEN_API_SPEC_HOST}/services/community-care/v0/eligibility/openapi.json`,
       },
     ],
     enabledByDefault: true,
@@ -56,7 +57,7 @@ const healthApis: IApiDescription[] = [
     docSources: [
       {
         apiIntro: UrgentCareApiIntro,
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
+        openApiUrl: `${PROD_OPEN_API_SPEC_HOST}/services/fhir/v0/r4/openapi.json`,
       },
     ],
     enabledByDefault: true,
@@ -75,18 +76,18 @@ const healthApis: IApiDescription[] = [
         apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/argonaut/data-query/openapi.json`,
+        openApiUrl: `${PROD_OPEN_API_SPEC_HOST}/services/fhir/v0/argonaut/data-query/openapi.json`,
       },
       {
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
+        openApiUrl: `${PROD_OPEN_API_SPEC_HOST}/services/fhir/v0/dstu2/openapi.json`,
       },
       {
         key: 'r4',
         label: 'R4',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
+        openApiUrl: `${PROD_OPEN_API_SPEC_HOST}/services/fhir/v0/r4/openapi.json`,
       },
     ],
     enabledByDefault: true,
@@ -110,7 +111,7 @@ const healthApis: IApiDescription[] = [
       'Both the legacy API endpoints and this legacy documentation will no longer be accessible beginning Oct 1, 2019.',
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/services/argonaut/v0/openapi.json`,
+        openApiUrl: `${PROD_OPEN_API_SPEC_HOST}/services/argonaut/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,

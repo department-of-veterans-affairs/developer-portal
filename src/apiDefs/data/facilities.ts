@@ -1,19 +1,13 @@
 import { FacilitiesReleaseNotes } from '../../content/apiDocs/facilities';
+import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import { IApiDescription } from '../schema';
 
-if (!process.env.REACT_APP_VETSGOV_SWAGGER_API) {
-  throw new Error(
-    'Developer portal environment is missing config var REACT_APP_VETSGOV_SWAGGER_API',
-  );
-}
-
-const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API || '';
 const facilitiesApis: IApiDescription[] = [
   {
     description: 'VA Facilities',
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/services/va_facilities/docs/v0/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/va_facilities/docs/v0/api`,
       },
     ],
     enabledByDefault: true,
