@@ -1,17 +1,18 @@
-import { 
+import {
   AppealsStatusReleaseNotes,
   DecisionReviewReleaseNotes,
 } from '../../content/apiDocs/appeals';
-import { IApiDescription } from '../schema';
+import { OPEN_API_SPEC_HOST } from '../../types/constants';
+import { APIDescription } from '../schema';
 
-const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
-const appealsApis : IApiDescription[] = [
+const appealsApis: APIDescription[] = [
   {
-    description: 'Allows retrieval of all decision review request statuses (both legacy and AMA). Statuses are read only.',
+    description:
+      'Allows retrieval of all decision review request statuses (both legacy and AMA). Statuses are read only.',
     docSources: [
       {
-        metadataUrl: `${swaggerHost}/services/appeals/appeals_status/metadata`,
-        openApiUrl: `${swaggerHost}/services/appeals/docs/v0/api`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/services/appeals/appeals_status/metadata`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/appeals/docs/v0/api`,
       },
     ],
     enabledByDefault: true,
@@ -22,11 +23,12 @@ const appealsApis : IApiDescription[] = [
     vaInternalOnly: true,
   },
   {
-    description: 'Allows submission, management, and retrieval of decision review requests and details such as statuses in accordance with the AMA.',
+    description:
+      'Allows submission, management, and retrieval of decision review requests and details such as statuses in accordance with the AMA.',
     docSources: [
       {
-        metadataUrl: `${swaggerHost}/services/appeals/decision_reviews/metadata`,
-        openApiUrl: `${swaggerHost}/services/appeals/docs/v1/decision_reviews`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/services/appeals/decision_reviews/metadata`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/appeals/docs/v1/decision_reviews`,
       },
     ],
     enabledByDefault: true,

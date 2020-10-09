@@ -8,7 +8,7 @@ import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
-import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
+import { APICategory, APIDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
@@ -20,11 +20,11 @@ import QuickstartPage from './QuickstartPage';
 
 import './Documentation.scss';
 
-const SideNavApiEntry = (apiCategoryKey: string, api: IApiDescription): JSX.Element => (
+const SideNavApiEntry = (apiCategoryKey: string, api: APIDescription): JSX.Element => (
   <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
     <SideNavEntry
       key={api.urlFragment}
-      exact={true}
+      exact
       to={`/explore/${apiCategoryKey}/docs/${
         api.urlFragment
       }?version=${CURRENT_VERSION_IDENTIFIER}`}
@@ -69,14 +69,14 @@ const OAuthSideNavEntry = (apiCategoryKey: string): JSX.Element => (
 );
 
 const ExploreSideNav = (): JSX.Element => {
-  const apiCategoryOrder = getApiCategoryOrder();
+  const apiCategoryOrder: string[] = getApiCategoryOrder();
   const apiDefinitions = getApiDefinitions();
 
   return (
     <SideNav ariaLabel="API Docs Side Nav">
-      <SideNavEntry key="all" exact={true} to="/explore" name="Overview" />
+      <SideNavEntry key="all" exact to="/explore" name="Overview" />
       {apiCategoryOrder.map((categoryKey: string) => {
-        const apiCategory: IApiCategory = apiDefinitions[categoryKey];
+        const apiCategory: APICategory = apiDefinitions[categoryKey];
         return (
           <Flag name={`categories.${categoryKey}`} key={categoryKey}>
             <SideNavEntry
@@ -87,7 +87,7 @@ const ExploreSideNav = (): JSX.Element => {
             >
               {apiCategory.content.quickstart && (
                 <SideNavEntry
-                  exact={true}
+                  exact
                   to={`/explore/${categoryKey}/docs/quickstart`}
                   name="Quickstart"
                   subNavLevel={1}
@@ -96,7 +96,7 @@ const ExploreSideNav = (): JSX.Element => {
               {categoryKey !== 'benefits' &&
                 apiCategory.apis.some(api => !!api.oAuth) &&
                 OAuthSideNavEntry(categoryKey)}
-              {apiCategory.apis.map((api: IApiDescription) => SideNavApiEntry(categoryKey, api))}
+              {apiCategory.apis.map((api: APIDescription) => SideNavApiEntry(categoryKey, api))}
             </SideNavEntry>
           </Flag>
         );
@@ -132,26 +132,22 @@ const DocumentationRoot = (props: RouteComponentProps<IApiNameParam>): JSX.Eleme
           <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
             <Switch>
               {oldRouteToNew.map(routes => (
-                <Redirect key={routes.from} exact={true} from={routes.from} to={routes.to} />
+                <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
               {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
-              <Route exact={true} path="/explore/" component={DocumentationOverview} />
-              <Route exact={true} path="/explore/:apiCategoryKey" component={CategoryPage} />
+              <Route exact path="/explore/" component={DocumentationOverview} />
+              <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
               <Route
-                exact={true}
+                exact
                 path="/explore/:apiCategoryKey/docs/authorization"
                 component={AuthorizationDocs}
               />
               <Route
-                exact={true}
+                exact
                 path="/explore/:apiCategoryKey/docs/quickstart"
                 component={QuickstartPage}
               />
-              <Route
-                exact={true}
-                path="/explore/:apiCategoryKey/docs/:apiName"
-                component={ApiPage}
-              />
+              <Route exact path="/explore/:apiCategoryKey/docs/:apiName" component={ApiPage} />
             </Switch>
           </div>
         </div>
