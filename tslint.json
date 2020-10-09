@@ -48,6 +48,7 @@
     "jsx-no-lambda": {
       "severity": "off"
     },
+    "jsx-boolean-value": false,
     "ordered-imports": false
   }
 }

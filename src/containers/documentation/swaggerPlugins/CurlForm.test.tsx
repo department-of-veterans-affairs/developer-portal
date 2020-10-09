@@ -21,6 +21,10 @@ import * as decisionReviews from '../../../__mocks__/openAPIData/decisionReviews
 import * as fhirR4 from '../../../__mocks__/openAPIData/fhirR4.test.json';
 import { SwaggerPlugins, System } from './index';
 
+// some tests in this file are long-running because of the expense of rendering Swagger UI,
+// so we double the timeout to 10s from the default 5s.
+jest.setTimeout(10000);
+
 const expandOperation = (operationTag: string, description: string): HTMLElement => {
   const operationTagHeader = screen.getByRole('heading', { name: operationTag });
   expect(operationTagHeader).toBeInTheDocument();
@@ -103,7 +107,6 @@ describe('CurlForm', () => {
   });
 
   it('renders the default generated curl command', async () => {
-    jest.setTimeout(10000); // longer running test with two specs
     renderDecisionReviews();
     renderFHIRR4();
 
@@ -128,8 +131,6 @@ describe('CurlForm', () => {
     operationContainer = expandOperation('Condition', 'Condition Search');
     expectedCurl = "curl -X GET 'https://sandbox-api.va.gov/services/fhir/v0/r4/Condition'";
     await testCurlText(expectedCurl, operationContainer);
-
-    jest.setTimeout(5000); // restore default
   });
 
   describe('authorization params', () => {
@@ -320,15 +321,10 @@ describe('CurlForm', () => {
   });
 
   describe('parameter inputs', () => {
-    // bump timeout for long async interactions in the DOM
-    beforeAll(() => jest.setTimeout(10000));
     beforeEach(() => {
       renderDecisionReviews();
       operationContainer = expandOperation('Higher-Level Reviews', createHLRDesc);
     });
-
-    // restore default timeout
-    afterAll(() => jest.setTimeout(5000));
 
     it('renders the parameter inputs', async () => {
       const paramsHeading = await findByRole(operationContainer, 'heading', {

@@ -7,7 +7,7 @@ import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
-import { IApiCategory, IApiDescription } from '../../apiDefs/schema';
+import { APICategory, APIDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
 import { IApiNameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
@@ -19,7 +19,7 @@ import QuickstartPage from './QuickstartPage';
 
 import './Documentation.scss';
 
-function SideNavApiEntry(apiCategoryKey: string, api: IApiDescription) {
+function SideNavApiEntry(apiCategoryKey: string, api: APIDescription) {
   return (
     <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
       <SideNavEntry
@@ -56,7 +56,11 @@ function OAuthSideNavEntry(apiCategoryKey: string) {
       subNavLevel={1}
     >
       <SideNavEntry to="#getting-started" name="Getting Started" subNavLevel={2} />
-      <SideNavEntry to="#building-openid-connect-applications" name="Building OpenID Connect Applications" subNavLevel={2} />
+      <SideNavEntry
+        to="#building-openid-connect-applications"
+        name="Building OpenID Connect Applications"
+        subNavLevel={2}
+      />
       <SideNavEntry to="#scopes" name="Scopes" subNavLevel={2} />
       <SideNavEntry to="#id-token" name="ID Token" subNavLevel={2} />
       <SideNavEntry to="#test-users" name="Test Users" subNavLevel={2} />
@@ -75,7 +79,7 @@ function ExploreSideNav() {
     <SideNav ariaLabel="API Docs Side Nav">
       <SideNavEntry key="all" exact={true} to="/explore" name="Overview" />
       {apiCategoryOrder.map((categoryKey: string) => {
-        const apiCategory: IApiCategory = apiDefinitions[categoryKey];
+        const apiCategory: APICategory = apiDefinitions[categoryKey];
         return (
           <Flag name={`categories.${categoryKey}`} key={categoryKey}>
             <SideNavEntry
@@ -95,7 +99,7 @@ function ExploreSideNav() {
               {categoryKey !== 'benefits' &&
                 apiCategory.apis.some(api => !!api.oAuth) &&
                 OAuthSideNavEntry(categoryKey)}
-              {apiCategory.apis.map((api: IApiDescription) => SideNavApiEntry(categoryKey, api))}
+              {apiCategory.apis.map((api: APIDescription) => SideNavApiEntry(categoryKey, api))}
             </SideNavEntry>
           </Flag>
         );

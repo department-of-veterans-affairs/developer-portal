@@ -6,13 +6,13 @@ import './GroupedAccordions.scss';
 
 declare const window: { VetsGov: object };
 
-export interface IPanelContent {
+export interface AccordionPanelContent {
   readonly body: string | JSX.Element;
   readonly title: string;
 }
 
 interface IGroupedAccordionsProps {
-  readonly panelContents: IPanelContent[];
+  readonly panelContents: AccordionPanelContent[];
   readonly title: string;
 }
 
@@ -73,7 +73,7 @@ export default class GroupedAccordions extends React.Component<
             {this.state.allCollapsed ? 'Expand all' : 'Collapse all'}
           </button>
         </div>
-        {this.props.panelContents.map((c: IPanelContent, index: number) => {
+        {this.props.panelContents.map((c: AccordionPanelContent, index: number) => {
           const panelRef = React.createRef<React.Component<{}, ICollapsiblePanelStates>>();
           this.panelRefs.push(panelRef);
           return (

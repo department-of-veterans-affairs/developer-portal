@@ -5,7 +5,7 @@ import { Dispatch } from 'react';
 import { connect } from 'react-redux';
 import SwaggerUI from 'swagger-ui';
 import * as actions from '../../actions';
-import { IApiDocSource } from '../../apiDefs/schema';
+import { APIDocSource } from '../../apiDefs/schema';
 import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';
 import { history } from '../../store';
 import { IRootState } from '../../types';
@@ -15,7 +15,7 @@ import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 
 export interface ISwaggerDocsProps {
   apiName: string;
-  docSource: IApiDocSource;
+  docSource: APIDocSource;
   docUrl: string;
   location: Location;
   metadata: any;

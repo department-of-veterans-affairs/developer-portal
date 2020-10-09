@@ -70,6 +70,7 @@ const ApiList = (): JSX.Element => (
   </section>
 );
 
+
 const VeteransNotice = (): JSX.Element => (
   <section className="vads-u-display--none medium-screen:vads-u-display--block" role="region" aria-label="Veterans Notice">
     <div className={classNames(

@@ -14,9 +14,8 @@ const mockedSentry = Sentry as jest.Mocked<typeof Sentry>;
 const server = setupServer(
   rest.post(
     CONTACT_US_URL,
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse => {
-      return res(context.status(200), context.json({}));
-    },
+    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse =>
+      res(context.status(200), context.json({})),
   ),
 );
 
@@ -102,39 +101,51 @@ describe('SupportContactUsForm', () => {
     server.use(
       rest.post(
         CONTACT_US_URL,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse => res(
-          context.status(400),
-          context.json({ errors: ['email must be valid email'] }),
-        ),
+        (
+          req: MockedRequest,
+          res: ResponseComposition,
+          context: typeof restContext,
+        ): MockedResponse =>
+          res(context.status(400), context.json({ errors: ['email must be valid email'] })),
       ),
     );
 
     const onSuccessMock = jest.fn();
     const formSubmissionSpy = jest.spyOn(SupportContactUsForm.prototype as any, 'formSubmission');
     const component = mount(<SupportContactUsForm onSuccess={onSuccessMock} />);
-    component.find(SupportContactUsForm).instance().setState({
-      apis: {appeals: false, benefits: true, facilities: true, health: false, vaForms: false, verification: false},
-      description: {value: 'help', dirty: true},
-      email: {value: 'test', dirty: true},
-      firstName: {value: 'Spongebob', dirty: true},
-      lastName: {value: 'Squarepants', dirty: true},
-      organization: {value: 'Krusty Krab', dirty: true},
-    });
+    component
+      .find(SupportContactUsForm)
+      .instance()
+      .setState({
+        apis: {
+          appeals: false,
+          benefits: true,
+          facilities: true,
+          health: false,
+          vaForms: false,
+          verification: false,
+        },
+        description: { value: 'help', dirty: true },
+        email: { value: 'test', dirty: true },
+        firstName: { value: 'Spongebob', dirty: true },
+        lastName: { value: 'Squarepants', dirty: true },
+        organization: { value: 'Krusty Krab', dirty: true },
+      });
     component.update();
 
     const form = component.find('Form');
     form.find('.usa-button-primary').simulate('click');
-    
-    
+
     expect(formSubmissionSpy).toHaveBeenCalled();
-    await formSubmissionSpy.mock.results[0].value; 
-    
+    await formSubmissionSpy.mock.results[0].value;
 
     const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-    const scope: any = { 
+    const scope: any = {
       setLevel: jest.fn(),
     };
     sentryCallback(scope);
-    expect(mockedSentry.captureException).toBeCalledWith(Error('Contact Us Form validation errors: email must be valid email'));
+    expect(mockedSentry.captureException).toBeCalledWith(
+      Error('Contact Us Form validation errors: email must be valid email'),
+    );
   });
 });

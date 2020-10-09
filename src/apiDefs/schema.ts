@@ -8,7 +8,7 @@
 
 import * as moment from 'moment';
 
-export interface IApiCategoryContent {
+export interface APICategoryContent {
   readonly intro: React.FunctionComponent;
   readonly overview: React.FunctionComponent;
   readonly shortDescription: string;
@@ -16,7 +16,7 @@ export interface IApiCategoryContent {
   readonly quickstart?: React.FunctionComponent;
 }
 
-export interface IApiDocSource {
+export interface APIDocSource {
   readonly metadataUrl?: string;
   readonly openApiUrl: string;
   readonly key?: string;
@@ -24,16 +24,16 @@ export interface IApiDocSource {
   readonly apiIntro?: React.FunctionComponent;
 }
 
-export interface IApiDeactivationInfo {
+export interface APIDeactivationInfo {
   readonly deprecationContent: React.FunctionComponent;
   readonly deprecationDate: moment.Moment;
   readonly deactivationContent: React.FunctionComponent;
   readonly deactivationDate: moment.Moment;
 }
 
-export interface IApiDescription {
+export interface APIDescription {
   readonly name: string;
-  readonly docSources: IApiDocSource[];
+  readonly docSources: APIDocSource[];
   readonly urlFragment: string;
   readonly description: string;
   readonly enabledByDefault: boolean;
@@ -41,20 +41,20 @@ export interface IApiDescription {
   readonly trustedPartnerOnly: boolean;
   readonly oAuth?: boolean;
   readonly releaseNotes: React.FunctionComponent;
-  readonly deactivationInfo?: IApiDeactivationInfo;
+  readonly deactivationInfo?: APIDeactivationInfo;
   readonly multiOpenAPIIntro?: React.FunctionComponent;
 }
 
 export interface BaseAPICategory {
-  readonly apis: IApiDescription[];
+  readonly apis: APIDescription[];
   readonly properName: string;
   readonly name: string;
 }
 
-export interface IApiCategory extends BaseAPICategory {
-  readonly content: IApiCategoryContent;
+export interface APICategory extends BaseAPICategory {
+  readonly content: APICategoryContent;
 }
 
-export interface IApiCategories {
-  [key: string]: IApiCategory;
+export interface APICategories {
+  [key: string]: APICategory;
 }
