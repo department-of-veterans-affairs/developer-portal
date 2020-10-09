@@ -18,12 +18,12 @@ import { System } from './types';
 
 import './CurlForm.scss';
 
-export interface ICurlFormProps {
+export interface CurlFormProps {
   system: System;
   operation: Operation;
 }
 
-export interface ICurlFormState {
+export interface CurlFormState {
   apiKey: string;
   bearerToken: string;
   env: string;
@@ -32,8 +32,8 @@ export interface ICurlFormState {
   paramValues: { [propertyName: string]: string };
 }
 
-export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
-  public constructor(props: ICurlFormProps) {
+export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
+  public constructor(props: CurlFormProps) {
     super(props);
     const requestBodyProperties: Schema[] = [];
     const state = {
