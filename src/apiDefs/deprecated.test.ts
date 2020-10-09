@@ -1,5 +1,5 @@
 import 'jest';
-import * as moment from 'moment';
+import moment from 'moment';
 
 // we just need a Markdown component for  our test IApiDescription
 import { UrgentCareDeprecationNotice } from '../content/apiDocs/health';

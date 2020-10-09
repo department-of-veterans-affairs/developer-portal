@@ -1,15 +1,13 @@
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 import * as React from 'react';
-
-import { Flag } from 'flag';
 import { RouteComponentProps } from 'react-router';
-
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { AuthorizationCard } from '../../components';
 import CardLink from '../../components/CardLink';
 import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
+import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
@@ -27,7 +25,7 @@ const CategoryPage = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Elemen
     const apiCards = apis.map((apiDesc: APIDescription) => {
       const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
       return (
-        <Flag key={name} name={`hosted_apis.${urlFragment}`}>
+        <Flag key={name} name={['hosted_apis', urlFragment]}>
           <CardLink
             name={name}
             subhead={

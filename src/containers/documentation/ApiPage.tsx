@@ -1,14 +1,12 @@
-import * as React from 'react';
-
 import classNames from 'classnames';
-import { Flag } from 'flag';
+import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import PageHeader from '../../components/PageHeader';
 import ExplorePage from '../../content/explorePage.mdx';
+import { Flag } from '../../flags';
 import { IApiNameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 import ApiDocumentation from './ApiDocumentation';
@@ -50,7 +48,7 @@ const ApiPage = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
   const category = lookupApiCategory(params.apiCategoryKey);
 
   return (
-    <Flag name={`enabled.${api.urlFragment}`} fallbackComponent={ExplorePage}>
+    <Flag name={['enabled', api.urlFragment]} fallbackRender={() => <ExplorePage />}>
       <div role="region" aria-labelledby={PAGE_HEADER_ID}>
         <PageHeader halo={category?.name} header={api.name} />
         <DeactivationMessage api={api} />
@@ -67,5 +65,4 @@ const ApiPage = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
 };
 
 ApiPage.propTypes = {};
-
 export default ApiPage;

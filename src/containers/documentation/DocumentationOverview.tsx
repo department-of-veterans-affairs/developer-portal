@@ -1,10 +1,9 @@
-import { Flag } from 'flag';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
+import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 
 export default class DocumentationOverview extends React.Component<RouteComponentProps, {}> {
@@ -22,7 +21,7 @@ export default class DocumentationOverview extends React.Component<RouteComponen
           {apiCategoryOrder.map((apiCategoryKey: string) => {
             const { name, content } = apiDefinitions[apiCategoryKey];
             return (
-              <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
+              <Flag name={['categories', apiCategoryKey]} key={apiCategoryKey}>
                 <CardLink name={name} url={`/explore/${apiCategoryKey}`}>
                   {content.shortDescription}
                 </CardLink>

@@ -3,7 +3,7 @@ import { Location } from 'history';
 import * as React from 'react';
 import { Dispatch } from 'react';
 import { connect } from 'react-redux';
-import * as SwaggerUI from 'swagger-ui';
+import SwaggerUI from 'swagger-ui';
 import * as actions from '../../actions';
 import { APIDocSource } from '../../apiDefs/schema';
 import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';

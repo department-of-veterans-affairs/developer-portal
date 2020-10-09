@@ -1,16 +1,15 @@
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import classNames from 'classnames';
-import { Flag } from 'flag';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
-import { getFlags } from '../../App';
 import CardLink from '../../components/CardLink';
 import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
+import { Flag, getFlags } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { IApiNameParam } from '../../types';
 
@@ -57,11 +56,17 @@ const ReleaseNotesCardLinks = (props: ReleaseNotesCardLinksProps) => {
   );
 };
 
-const APIReleaseNote = ({ api, flagName }: { api: APIDescription; flagName: string }) => {
+const APIReleaseNote = ({
+  api,
+  flagName,
+}: {
+  api: APIDescription;
+  flagName: 'enabled' | 'hosted_apis';
+}) => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
 
   return (
-    <Flag name={`${flagName}.${api.urlFragment}`}>
+    <Flag name={[flagName, api.urlFragment]}>
       <h2 id={dashUrlFragment} tabIndex={-1}>
         {api.name}
       </h2>
@@ -79,7 +84,7 @@ const APIReleaseNote = ({ api, flagName }: { api: APIDescription; flagName: stri
 interface ReleaseNotesCollectionProps {
   categoryKey: string;
   apiCategory: BaseAPICategory;
-  apiFlagName: string;
+  apiFlagName: 'enabled' | 'hosted_apis';
   alertText?: string;
 }
 

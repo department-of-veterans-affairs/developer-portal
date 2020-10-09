@@ -1,14 +1,12 @@
-import * as React from 'react';
-
 import classNames from 'classnames';
-import { Flag } from 'flag';
-
+import * as React from 'react';
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { Flag } from '../../flags';
 import { IApiNameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
 import ApiPage from './ApiPage';
@@ -21,7 +19,7 @@ import './Documentation.scss';
 
 function SideNavApiEntry(apiCategoryKey: string, api: APIDescription) {
   return (
-    <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
+    <Flag key={api.urlFragment} name={['hosted_apis', api.urlFragment]}>
       <SideNavEntry
         key={api.urlFragment}
         exact={true}
@@ -81,7 +79,7 @@ function ExploreSideNav() {
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
         return (
-          <Flag name={`categories.${categoryKey}`} key={categoryKey}>
+          <Flag name={['categories', categoryKey]} key={categoryKey}>
             <SideNavEntry
               to={`/explore/${categoryKey}`}
               id={`side-nav-category-link-${categoryKey}`}

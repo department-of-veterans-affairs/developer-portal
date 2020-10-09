@@ -1,15 +1,13 @@
+import { Location } from 'history';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { Dispatch } from 'redux';
 import * as actions from '../../actions';
-
-import { Flag } from 'flag';
-import { Location } from 'history';
-import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import SwaggerDocs from './SwaggerDocs';
-
 import { APIDescription, APIDocSource } from '../../apiDefs/schema';
+import { Flag } from '../../flags';
 import { history } from '../../store';
+import SwaggerDocs from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
@@ -59,7 +57,7 @@ class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocum
     const tabChangeHandler = this.onTabSelect.bind(this);
 
     return (
-      <Flag name={`hosted_apis.${apiDefinition.urlFragment}`}>
+      <Flag name={['hosted_apis', apiDefinition.urlFragment]}>
         {apiDefinition.docSources.length === 1 ? (
           <SwaggerDocs
             docSource={apiDefinition.docSources[0]}
