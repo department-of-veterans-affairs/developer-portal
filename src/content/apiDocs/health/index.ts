@@ -1,4 +1,4 @@
-import { IApiCategoryContent } from '../../../apiDefs/schema';
+import { APICategoryContent } from '../../../apiDefs/schema';
 import HealthArgonautDeactivationNotice from './argonautDeactivationNotice.mdx';
 import HealthArgonautDeprecationNotice from './argonautDeprecationNotice.mdx';
 import ArgonautReleaseNotes from './argonautReleaseNotes.mdx';
@@ -16,7 +16,7 @@ import UrgentCareDeactivationNotice from './urgentCareDeactivationNotice.mdx';
 import UrgentCareDeprecationNotice from './urgentCareDeprecationNotice.mdx';
 import UrgentCareReleaseNotes from './urgentCareReleaseNotes.mdx';
 
-const healthContent: IApiCategoryContent = {
+const healthContent: APICategoryContent = {
   intro: HealthIntro,
   overview: HealthOverview,
   placardText: "View medical records and manage Veteran's health",

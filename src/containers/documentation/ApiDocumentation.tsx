@@ -8,13 +8,13 @@ import { Location } from 'history';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import SwaggerDocs from './SwaggerDocs';
 
-import { IApiDescription, IApiDocSource } from '../../apiDefs/schema';
+import { APIDescription, APIDocSource } from '../../apiDefs/schema';
 import { history } from '../../store';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
 interface IApiDocumentationProps {
-  apiDefinition: IApiDescription;
+  apiDefinition: APIDescription;
   categoryKey: string;
   location: Location;
   setRequestedApiVersion: (version: string | null) => void;
@@ -104,7 +104,7 @@ class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocum
     if (this.props.location.search) {
       const params = new URLSearchParams(history.location.search);
 
-      const hasKey = (source: IApiDocSource) => !!source.key;
+      const hasKey = (source: APIDocSource) => !!source.key;
       const tabKeys = this.props.apiDefinition.docSources
         .filter(hasKey)
         .map(source => source.key!.toLowerCase());

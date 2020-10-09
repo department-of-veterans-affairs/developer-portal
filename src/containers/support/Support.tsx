@@ -7,14 +7,14 @@ import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
 
-export interface ISection {
+export interface SupportSection {
   readonly component: React.ComponentType;
   readonly description: string;
   readonly id: string;
   readonly name: string;
 }
 
-const sections: ISection[] = [
+const sections: SupportSection[] = [
   {
     component: SupportFAQ,
     description:
@@ -31,38 +31,30 @@ const sections: ISection[] = [
   },
 ];
 
-export default function Support() {
-  return (
-    <div className="vads-u-padding-y--5">
-      <div className="vads-l-grid-container">
-        <div className="vads-l-row">
-          <SideNav ariaLabel="Support page side nav">
-            <SideNavEntry key="all" exact={true} to="/support" name="Overview" />
-            {sections.map(section => {
-              return (
-                <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />
-              );
-            })}
-          </SideNav>
-          <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
+const Support: React.FunctionComponent = (): JSX.Element => (
+  <div className="vads-u-padding-y--5">
+    <div className="vads-l-grid-container">
+      <div className="vads-l-row">
+        <SideNav ariaLabel="Support page side nav">
+          <SideNavEntry key="all" exact to="/support" name="Overview" />
+          {sections.map(section => (
+            <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />
+          ))}
+        </SideNav>
+        <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
+          <Route exact path="/support/" render={() => <SupportOverview sections={sections} />} />
+          {sections.map(section => (
             <Route
-              exact={true}
-              path="/support/"
-              render={() => <SupportOverview sections={sections} />}
+              key={section.id}
+              exact
+              path={`/support/${section.id}`}
+              component={section.component}
             />
-            {sections.map(section => {
-              return (
-                <Route
-                  key={section.id}
-                  exact={true}
-                  path={`/support/${section.id}`}
-                  component={section.component}
-                />
-              );
-            })}
-          </div>
+          ))}
         </div>
       </div>
     </div>
-  );
-}
+  </div>
+);
+
+export default Support;
