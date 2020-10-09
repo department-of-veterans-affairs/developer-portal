@@ -116,7 +116,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
             <input
               type="text"
               id={fieldName}
-              value={this.state.paramValues[fieldName]}
+              value={this.state.paramValues[fieldName] || ''}
               onChange={e => this.handleInputChange(fieldName, e.target.value)}
             />
           </div>
@@ -165,6 +165,16 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
         : this.state.bearerToken;
       options.securities = {
         authorized: {
+          // support multiple means of passing the bearer token. this is mostly due to swagger-client
+          // not being particularly sophisticated on this front.
+          // Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
+          // OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
+          // https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
+          OauthFlow: token ? {
+            token: {
+              access_token: token,
+            },
+          } : undefined,
           bearer_token: token,
         },
       };
@@ -238,7 +248,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
           <div>
             <input
               aria-label="Enter API Key"
-              value={this.state.paramValues.apiKey}
+              value={this.state.apiKey}
               onChange={e => {
                 this.setState({ apiKey: e.target.value });
               }}
@@ -256,7 +266,7 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
           <div>
             <input
               aria-label="Enter Bearer Token"
-              value={this.state.paramValues.bearerToken}
+              value={this.state.bearerToken}
               onChange={e => {
                 this.setState({ bearerToken: e.target.value });
               }}
@@ -305,12 +315,13 @@ export class CurlForm extends React.Component<ICurlFormProps, ICurlFormState> {
   public environmentSelector(): JSX.Element {
     return (
       <div>
-        <h3> Environment: </h3>
+        <h3>Environment:</h3>
         <select // tslint:disable-next-line:react-a11y-no-onchange
           value={this.state.env}
           onChange={e => {
             this.setState({ env: e.target.value });
           }}
+          aria-label="Select environment"
         >
           {this.environmentOptions()}
         </select>
