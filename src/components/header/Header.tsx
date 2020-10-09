@@ -8,7 +8,7 @@ import { onHashAnchorClick } from '../../utils/clickHandlers';
 import Banner from '../Banner';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
 import NavBar from '../NavBar';
-import Search from '../Search';
+import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
 import './Header.scss';
 

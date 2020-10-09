@@ -12,7 +12,7 @@ import plusIcon from '../../node_modules/uswds/src/img/plus.png';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
 import MainNavItem, { ILargeScreenNavItemProps } from './MainNavItem';
-import Search from './Search';
+import Search from './search/Search';
 
 import './NavBar.scss';
 
@@ -59,22 +59,21 @@ function DocumentationSubNav(props: IDocumentationSubNavProps) {
           Overview
         </NavLink>
       </li>
-      {apiCategoryOrder.map(apiKey => {
-        return (
-          <Flag  name={`categories.${apiKey}`} key={apiKey}>
-            <li className={itemStyles}>
-              <NavLink to={`/explore/${apiKey}`} onClick={props.onMobileNavClose} className={linkStyles} activeClassName="vads-u-font-weight--bold">
-                {apiDefs[apiKey].name}
-              </NavLink>
-            </li>
-          </Flag>
-        );
-      })}
+      {apiCategoryOrder.map(apiKey => (
+        <Flag  name={`categories.${apiKey}`} key={apiKey}>
+          <li className={itemStyles}>
+            
+            <NavLink to={`/explore/${apiKey}`} onClick={props.onMobileNavClose} className={linkStyles} activeClassName="vads-u-font-weight--bold">
+              {apiDefs[apiKey].name}
+            </NavLink>
+          </li>
+        </Flag>
+      ))}
     </ul>
   );
 }
 
-const navItemStyles = (isFirstChild: boolean = false) => classNames(
+const navItemStyles = (isFirstChild = false) => classNames(
   'va-api-main-nav-item',
   'vads-u-display--block',
   'vads-u-margin-bottom--0',
@@ -82,7 +81,7 @@ const navItemStyles = (isFirstChild: boolean = false) => classNames(
   'medium-screen:vads-u-display--inline-block',
   'medium-screen:vads-u-padding-y--0',
   !isFirstChild && ['vads-u-border-top--1px', 'vads-u-border-color--gray-lighter', 'medium-screen:vads-u-border-top--0'],
-  );
+);
 
 const navLinkStyles = classNames(
   'vads-u-color--gray-dark',
@@ -106,11 +105,11 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
 
   public render() {
     const navClasses = classNames({
-        'va-api-mobile-nav-visible': this.props.isMobileMenuVisible,
-      },
-      'va-api-nav',
-      desktopOnly(),
-      'medium-screen:vads-u-width--full',
+      'va-api-mobile-nav-visible': this.props.isMobileMenuVisible,
+    },
+    'va-api-nav',
+    desktopOnly(),
+    'medium-screen:vads-u-width--full',
     );
 
     const sharedNavItemProps: ILargeScreenNavItemProps = {
@@ -223,23 +222,21 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
   }
 
   private toggleDocumentationSubMenu = () => {
-    this.setState((state: INavBarState) => {
-      return {
-        visibleSubNavs: {
-          documentation: !state.visibleSubNavs.documentation,
-        },
-      };
-    });
-  }
+    this.setState((state: INavBarState) => ({
+      visibleSubNavs: {
+        documentation: !state.visibleSubNavs.documentation,
+      },
+    }));
+  };
 
   private toggleDefaultNavLink = (useDefault: boolean) => {
     this.setState({ useDefaultNavLink: useDefault });
-  }
+  };
 
   private checkActiveNavLink = (match: {}) => {
     if (!match) {
       return false;
     }
     return this.state.useDefaultNavLink;
-  }
+  };
 }
