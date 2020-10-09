@@ -8,7 +8,7 @@ import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecat
 import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
-import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { SideNav, SideNavEntry } from '../../components';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
@@ -37,7 +37,7 @@ function SideNavAPIEntry(props: SideNavAPIEntryProps) {
           {(api.vaInternalOnly && api.trustedPartnerOnly && <br />) || null}
           {api.trustedPartnerOnly && (
             <span>
-              <small>Internal VA use only.{/*Trusted Partner use only.*/}</small>
+              <small>Internal VA use only.{/* Trusted Partner use only.*/}</small>
             </span>
           )}
         </React.Fragment>
@@ -85,7 +85,7 @@ export function ReleaseNotes() {
         <div className="vads-l-grid-container">
           <div className="vads-l-row">
             <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
-              <SideNavEntry key="all" exact={true} to="/release-notes" name="Overview" />
+              <SideNavEntry key="all" exact to="/release-notes" name="Overview" />
               {categoryOrder.map((key: string) => (
                 <SideNavCategoryEntry categoryKey={key} apiCategory={apiDefs[key]} key={key} />
               ))}
@@ -100,9 +100,9 @@ export function ReleaseNotes() {
             </SideNav>
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
               <Switch>
-                <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
+                <Route exact path="/release-notes/" component={ReleaseNotesOverview} />
                 <Route
-                  exact={true}
+                  exact
                   path="/release-notes/deactivated"
                   component={DeactivatedReleaseNotes}
                 />

@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import * as React from 'react';
 
 import classNames from 'classnames';
@@ -6,8 +7,8 @@ import { match } from 'react-router';
 import { HashLink, NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
 import * as Stickyfill from 'stickyfilljs';
 
+import { onHashAnchorClick } from '../../utils/clickHandlers';
 import '../components/SideNav.scss';
-import { onHashAnchorClick } from '../utils/clickHandlers';
 
 export interface ISideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
@@ -17,6 +18,7 @@ export interface ISideNavEntryProps extends NavHashLinkProps {
 
 // Constructs a NavHashLink in the sidebar that also takes into account the
 // hash when determining if it's active
+// tslint:disable-next-line: max-classes-per-file
 export class SideNavEntry extends React.Component<ISideNavEntryProps> {
   public static defaultProps = {
     subNavLevel: 0,
@@ -31,9 +33,7 @@ export class SideNavEntry extends React.Component<ISideNavEntryProps> {
   // there are cases where the original would return false and this function returns true,
   // and vice versa.
   public navHashLinkIsActive = (pathMatch: match, location: Location): boolean => {
-    const withoutTrailingSlash = (path: string) => {
-      return path.replace(/\/$/, '');
-    };
+    const withoutTrailingSlash = (path: string) => path.replace(/\/$/, '');
 
     let pathname: string;
     let hash: string;
