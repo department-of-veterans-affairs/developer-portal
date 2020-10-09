@@ -38,7 +38,6 @@ const NewsItem = ({ item, media }: { item: NewsItem; media: boolean }) =>
   media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
 
 const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
-
   const description = <ItemDescription item={item} />;
   if (item.url.includes('www.youtube.com')) {
     return (
