@@ -8,7 +8,7 @@ import { Route } from 'react-router-dom';
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getCategoryFlags, getEnvFlags } from './apiDefs/env';
 import { getAllApis } from './apiDefs/query';
-import { IApiDescription } from './apiDefs/schema';
+import { APIDescription } from './apiDefs/schema';
 import { Header, PageContent } from './components';
 import Footer from './components/Footer';
 import { history } from './store';
@@ -20,7 +20,7 @@ export const getFlags = () => {
   const deactivatedFlags = getDeactivatedFlags();
   const envFlags = getEnvFlags();
   const apiCategories = getCategoryFlags();
-  const apiFlags = getAllApis().reduce((result, api: IApiDescription): {
+  const apiFlags = getAllApis().reduce((result, api: APIDescription): {
     [key: string]: boolean;
   } => {
     const isApiAvailable = envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment];

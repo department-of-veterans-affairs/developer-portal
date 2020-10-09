@@ -177,6 +177,17 @@ node('vetsgov-general-purpose') {
     }
   }
 
+  stage('ESLint') {
+    try {
+      dockerImage.inside(args) {
+        sh 'cd /application && npm run eslint'
+      }
+    } catch (error) {
+      notify()
+      throw error
+    }
+  }
+
   stage('Unit test') {
     try {
       dockerImage.inside(args) {
