@@ -2,18 +2,26 @@ import * as React from 'react';
 
 const useModalController = (): {
   modalVisible: boolean;
-  setModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setModalVisible: (visible: boolean) => void;
 } => {
 
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const [modalVisible, setModalVisibleState] = React.useState(false);
+  // We're using a mutable ref here so that we can use it within the effect without
+  // the chance of our state being out of sync
+  const modalVisibleRef = React.useRef<boolean>(false);
+  
+  const setModalVisible = (visible: boolean) => {
+    modalVisibleRef.current = visible;
+    setModalVisibleState(visible);
+  };
 
   React.useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && modalVisible) {
+      if (event.key === 'Escape' && modalVisibleRef.current) {
         setModalVisible(false);
       }
     };
-    
+
     document.addEventListener("keydown", handleEscape, false);
 
     return () => {
