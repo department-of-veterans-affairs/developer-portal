@@ -1,1 +1,1 @@
-declare module 'get-video-id'
+declare module 'get-video-id';
