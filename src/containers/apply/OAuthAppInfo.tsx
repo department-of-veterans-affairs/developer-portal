@@ -5,13 +5,13 @@ import { ThunkDispatch } from 'redux-thunk';
 import ErrorableRadioButtons from '@department-of-veterans-affairs/formation-react/ErrorableRadioButtons';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import * as actions from '../../actions';
-import { IErrorableInput, RootState } from '../../types';
+import { ErrorableInput, RootState } from '../../types';
 
 interface IOAuthAppInfoProps {
-  oAuthApplicationType: IErrorableInput;
-  oAuthRedirectURI: IErrorableInput;
-  updateOAuthApplicationType: (value: IErrorableInput) => void;
-  updateOAuthRedirectURI: (oldValidation?: string) => (value: IErrorableInput) => void;
+  oAuthApplicationType: ErrorableInput;
+  oAuthRedirectURI: ErrorableInput;
+  updateOAuthApplicationType: (value: ErrorableInput) => void;
+  updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput) => void;
 }
 
 const mapStateToProps = (state: RootState) => {
@@ -25,11 +25,11 @@ type OAuthAppInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateAp
 
 const mapDispatchToProps = (dispatch: OAuthAppInfoDispatch) => {
   return {
-    updateOAuthApplicationType: (value: IErrorableInput) => {
+    updateOAuthApplicationType: (value: ErrorableInput) => {
       dispatch(actions.updateApplicationOAuthApplicationType(value));
     },
     updateOAuthRedirectURI: (oldValidation?: string) => {
-      return (value: IErrorableInput) => {
+      return (value: ErrorableInput) => {
         dispatch(actions.updateApplicationOAuthRedirectURI(value, oldValidation));
       };
     },

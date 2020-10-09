@@ -4,17 +4,17 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import * as actions from '../../actions';
-import { IErrorableInput, RootState } from '../../types';
+import { ErrorableInput, RootState } from '../../types';
 
 interface IDeveloperInfoProps {
-  firstName: IErrorableInput;
-  lastName: IErrorableInput;
-  email: IErrorableInput;
-  organization: IErrorableInput;
-  updateFirstName: (value: IErrorableInput) => void;
-  updateLastName: (value: IErrorableInput) => void;
-  updateEmail: (oldValidation?: string) => (value: IErrorableInput) => void;
-  updateOrganization: (value: IErrorableInput) => void;
+  firstName: ErrorableInput;
+  lastName: ErrorableInput;
+  email: ErrorableInput;
+  organization: ErrorableInput;
+  updateFirstName: (value: ErrorableInput) => void;
+  updateLastName: (value: ErrorableInput) => void;
+  updateEmail: (oldValidation?: string) => (value: ErrorableInput) => void;
+  updateOrganization: (value: ErrorableInput) => void;
 }
 
 const mapStateToProps = (state: RootState) => ({
@@ -27,16 +27,16 @@ const mapStateToProps = (state: RootState) => ({
 type DeveloperInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateApplicationAction>;
 
 const mapDispatchToProps = (dispatch: DeveloperInfoDispatch) => ({
-  updateEmail: (oldValidation?: string) => (value: IErrorableInput) => {
+  updateEmail: (oldValidation?: string) => (value: ErrorableInput) => {
     dispatch(actions.updateApplicationEmail(value, oldValidation));
   },
-  updateFirstName: (value: IErrorableInput) => {
+  updateFirstName: (value: ErrorableInput) => {
     dispatch(actions.updateApplicationFirstName(value));
   },
-  updateLastName: (value: IErrorableInput) => {
+  updateLastName: (value: ErrorableInput) => {
     dispatch(actions.updateApplicationLastName(value));
   },
-  updateOrganization: (value: IErrorableInput) => {
+  updateOrganization: (value: ErrorableInput) => {
     dispatch(actions.updateApplicationOrganization(value));
   },
 });

@@ -1,8 +1,8 @@
 import { SubmitFormAction, UpdateApplicationAction } from '../actions';
-import { DevApplication, ApplyInputs, IErrorableInput } from '../types';
+import { DevApplication, ApplyInputs, ErrorableInput } from '../types';
 import * as constants from '../types/constants';
 
-const newErrorableInput: () => IErrorableInput = () => {
+const newErrorableInput: () => ErrorableInput = () => {
   return {
     dirty: false,
     value: '',

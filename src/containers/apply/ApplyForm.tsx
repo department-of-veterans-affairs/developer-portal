@@ -12,7 +12,7 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 
 import * as actions from '../../actions';
 import { includesOAuthAPI } from '../../apiDefs/query';
-import { DevApplication, IErrorableInput, RootState } from '../../types';
+import { DevApplication, ErrorableInput, RootState } from '../../types';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS, PAGE_HEADER_ID } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
 import DeveloperInfo from './DeveloperInfo';
@@ -22,7 +22,7 @@ import SelectedApis from './SelectedApis';
 interface IApplyProps extends DevApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
-  updateDescription: (value: IErrorableInput) => void;
+  updateDescription: (value: ErrorableInput) => void;
 }
 
 type ApplicationDispatch = ThunkDispatch<

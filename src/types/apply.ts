@@ -1,4 +1,4 @@
-import { IErrorableInput } from './form';
+import { ErrorableInput } from './form';
 
 export interface APIList {
   appeals: boolean;
@@ -14,13 +14,13 @@ export interface APIList {
 
 export interface ApplyInputs {
   apis: APIList;
-  description: IErrorableInput;
-  email: IErrorableInput;
-  firstName: IErrorableInput;
-  lastName: IErrorableInput;
-  oAuthApplicationType: IErrorableInput;
-  oAuthRedirectURI: IErrorableInput;
-  organization: IErrorableInput;
+  description: ErrorableInput;
+  email: ErrorableInput;
+  firstName: ErrorableInput;
+  lastName: ErrorableInput;
+  oAuthApplicationType: ErrorableInput;
+  oAuthRedirectURI: ErrorableInput;
+  organization: ErrorableInput;
   termsOfService: boolean;
 }
 
