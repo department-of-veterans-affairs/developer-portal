@@ -11,4 +11,4 @@ const usePrevious = <T extends unknown>(props?: T): T | null => {
   return theRef.current;
 };
 
-export default usePrevious;
+export { usePrevious };

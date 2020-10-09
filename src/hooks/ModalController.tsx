@@ -27,4 +27,4 @@ const useModalController = (): {
   };
 };
 
-export default useModalController;
+export { useModalController };
