@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import 'jest';
 import * as React from 'react';
 
-import GroupedAccordions from './GroupedAccordions';
+import { GroupedAccordions } from './GroupedAccordions';
 
 const contents = [
   {

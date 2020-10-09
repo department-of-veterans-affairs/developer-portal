@@ -9,9 +9,8 @@ import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getCategoryFlags, getEnvFlags } from './apiDefs/env';
 import { getAllApis } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
-import { Header } from './components';
+import { Header, PageContent } from './components';
 import Footer from './components/Footer';
-import PageContent from './components/PageContent';
 import { history } from './store';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
