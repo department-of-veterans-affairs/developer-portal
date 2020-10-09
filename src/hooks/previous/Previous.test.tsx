@@ -1,7 +1,7 @@
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import 'jest';
-import { render, cleanup, screen, fireEvent } from '@testing-library/react';
 import * as React from 'react';
-import usePrevious from './Previous';
+import { usePrevious } from './Previous';
 
 const TestComponent = (): JSX.Element => {
   const [count, setCount] = React.useState(5);

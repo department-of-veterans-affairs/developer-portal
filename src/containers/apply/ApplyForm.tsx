@@ -11,7 +11,7 @@ import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/E
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 
 import * as actions from '../../actions';
-import { includesOauthAPI } from '../../apiDefs/query';
+import { includesOAuthAPI } from '../../apiDefs/query';
 import { IApplication, IErrorableInput, IRootState } from '../../types';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS, PAGE_HEADER_ID } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
@@ -161,7 +161,7 @@ class ApplyForm extends React.Component<IApplyProps> {
     const apiIdsByField = this.selectedApis().flatMap(
       formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField],
     );
-    return includesOauthAPI(apiIdsByField);
+    return includesOAuthAPI(apiIdsByField);
   }
 
   private anyApiSelected() {

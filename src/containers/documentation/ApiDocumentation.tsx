@@ -8,7 +8,7 @@ import { Location } from 'history';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
 import * as actions from '../../actions';
-import { ApiDescriptionPropType, IApiDescription, IApiDocSource } from '../../apiDefs/schema';
+import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
 
 import { history } from '../../store';
 
@@ -17,7 +17,7 @@ import SwaggerDocs from './SwaggerDocs';
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
 interface ApiDocumentationProps {
-  apiDefinition: IApiDescription;
+  apiDefinition: APIDescription;
   categoryKey: string;
   location: Location;
 }
@@ -29,14 +29,14 @@ const ApiDocumentationPropTypes = {
   location: PropTypes.any.isRequired,
 };
 
-const getInitialTabIndex = (searchQuery: string, docSources: IApiDocSource[]): number => {
+const getInitialTabIndex = (searchQuery: string, docSources: APIDocSource[]): number => {
   // Get tab from query string
   const params = new URLSearchParams(searchQuery ?? undefined);
   const tabQuery = params.get('tab');
   const queryStringTab = tabQuery ? tabQuery.toLowerCase() : '';
 
   // Get doc source keys
-  const hasKey = (source: IApiDocSource) => !!source.key;
+  const hasKey = (source: APIDocSource) => !!source.key;
   const tabKeys = docSources
     .filter(hasKey)
     .map(source => source.key?.toLowerCase() || '');

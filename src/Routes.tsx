@@ -7,7 +7,7 @@ import { Flag } from 'flag';
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
-import { IApiDescription } from './apiDefs/schema';
+import { APIDescription } from './apiDefs/schema';
 import MarkdownPage from './components/MarkdownPage';
 import ApplyForm from './containers/apply/ApplyForm';
 import ApplySuccess from './containers/apply/ApplySuccess';
@@ -78,7 +78,7 @@ export function sitemapConfig() {
 
   function getApiRouteParams(route: string, apiCategory: string): string[] {
     const routeParams = apiDefs[apiCategory].apis.reduce(
-      (result: string[], api: IApiDescription) => {
+      (result: string[], api: APIDescription) => {
         if (envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment]) {
           result.push(api.urlFragment);
         }
