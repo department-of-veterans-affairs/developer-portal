@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/browser';
 import { Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { history } from '../store';
-import { IApiList, IErrorableInput, IRootState } from '../types';
+import { APIList, IErrorableInput, IRootState } from '../types';
 import * as constants from '../types/constants';
 import { validateEmail, validateOAuthRedirectURI } from '../utils/validators';
 
@@ -88,7 +88,7 @@ export type SubmitFormThunk = ThunkAction<
   SubmitFormAction
 >;
 
-const apisToList = (apis: IApiList) => {
+const apisToList = (apis: APIList) => {
   return Object.keys(apis)
     .filter(key => apis[key])
     .join(',');

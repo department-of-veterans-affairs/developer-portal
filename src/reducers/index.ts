@@ -1,5 +1,5 @@
 import { SubmitFormAction, UpdateApplicationAction } from '../actions';
-import { IApplication, IApplyInputs, IErrorableInput } from '../types';
+import { DevApplication, ApplyInputs, IErrorableInput } from '../types';
 import * as constants from '../types/constants';
 
 const newErrorableInput: () => IErrorableInput = () => {
@@ -9,7 +9,7 @@ const newErrorableInput: () => IErrorableInput = () => {
   };
 };
 
-const initialApplyInputs: IApplyInputs = {
+const initialApplyInputs: ApplyInputs = {
   apis: {
     appeals: false,
     benefits: false,
@@ -31,7 +31,7 @@ const initialApplyInputs: IApplyInputs = {
   termsOfService: false,
 };
 
-export const initialApplicationState: IApplication = {
+export const initialApplicationState: DevApplication = {
   inputs: initialApplyInputs,
   sending: false,
 };
@@ -39,9 +39,9 @@ export const initialApplicationState: IApplication = {
 const applyApis: string[] = Object.keys(constants.APPLY_FIELDS_TO_URL_FRAGMENTS);
 
 export function applicationInput(
-  inputs: IApplyInputs = initialApplyInputs,
+  inputs: ApplyInputs = initialApplyInputs,
   action: UpdateApplicationAction,
-): IApplyInputs {
+): ApplyInputs {
   switch (action.type) {
     case constants.UPDATE_APPLICATION_DESCRIPTION:
       return { ...inputs, description: action.newValue };
@@ -63,7 +63,7 @@ export function applicationInput(
       }
 
       const isApiSelected = !inputs.apis[action.apiId];
-      return { ...inputs, apis: { ... inputs.apis, [action.apiId]: isApiSelected }};
+      return { ...inputs, apis: { ...inputs.apis, [action.apiId]: isApiSelected } };
     case constants.TOGGLE_ACCEPT_TOS:
       const termsOfService = !inputs.termsOfService;
       return { ...inputs, termsOfService };
@@ -72,9 +72,9 @@ export function applicationInput(
 }
 
 export function application(
-  state: IApplication = initialApplicationState,
+  state: DevApplication = initialApplicationState,
   action: SubmitFormAction | UpdateApplicationAction,
-): IApplication {
+): DevApplication {
   switch (action.type) {
     case constants.SUBMIT_APPLICATION_BEGIN:
       return { ...state, sending: true, errorStatus: undefined };

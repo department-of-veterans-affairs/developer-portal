@@ -6,13 +6,13 @@ import thunk, { ThunkMiddleware } from 'redux-thunk';
 
 import { application, initialApplicationState } from './reducers';
 import { apiVersioning } from './reducers/api-versioning';
-import { IApplication, IRootState } from './types';
+import { DevApplication, IRootState } from './types';
 
 export const history: History = createBrowserHistory({
   basename: process.env.PUBLIC_URL || '/',
 });
 
-function loadApplicationState(): { application: IApplication } {
+function loadApplicationState(): { application: DevApplication } {
   try {
     const serializedState = sessionStorage.getItem('state');
     if (serializedState == null) {

@@ -1,5 +1,5 @@
 import { RouterState } from 'connected-react-router';
-import { IApplication } from './apply';
+import { DevApplication } from './apply';
 
 export * from './apply';
 export * from './form';
@@ -17,6 +17,6 @@ export interface IApiVersioning {
 
 export interface IRootState {
   apiVersioning: IApiVersioning;
-  application: IApplication;
+  application: DevApplication;
   router: RouterState;
 }

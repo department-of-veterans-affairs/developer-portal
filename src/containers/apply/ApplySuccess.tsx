@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import sentenceJoin from '../../sentenceJoin';
-import { IApplySuccessResult, IRootState } from '../../types';
+import { ApplySuccessResult, IRootState } from '../../types';
 import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS, PAGE_HEADER_ID } from '../../types/constants';
 
 const mapStateToProps = (state: IRootState) => {
@@ -102,7 +102,7 @@ function ApiKeyNotice({ token, email, selectedApis }: IApiKeyNoticeProps) {
   );
 }
 
-function ApplySuccess(props: IApplySuccessResult) {
+function ApplySuccess(props: ApplySuccessResult) {
   const { apis, email, token, clientID, clientSecret } = props;
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
