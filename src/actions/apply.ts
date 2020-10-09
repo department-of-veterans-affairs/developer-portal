@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/browser';
 import { Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { history } from '../store';
-import { APIList, IErrorableInput, IRootState } from '../types';
+import { APIList, IErrorableInput, RootState } from '../types';
 import * as constants from '../types/constants';
 import { validateEmail, validateOAuthRedirectURI } from '../utils/validators';
 
@@ -83,7 +83,7 @@ export type SubmitFormAction = ISubmitForm | ISubmitFormSuccess | ISubmitFormErr
 
 export type SubmitFormThunk = ThunkAction<
   Promise<SubmitFormAction>,
-  IRootState,
+  RootState,
   undefined,
   SubmitFormAction
 >;
@@ -94,7 +94,7 @@ const apisToList = (apis: APIList) => {
     .join(',');
 };
 
-function buildApplicationBody({ application }: IRootState) {
+function buildApplicationBody({ application }: RootState) {
   const applicationBody: any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
   [

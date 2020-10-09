@@ -4,7 +4,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
 import * as actions from '../../actions';
-import { IErrorableInput, IRootState } from '../../types';
+import { IErrorableInput, RootState } from '../../types';
 
 interface IDeveloperInfoProps {
   firstName: IErrorableInput;
@@ -17,18 +17,14 @@ interface IDeveloperInfoProps {
   updateOrganization: (value: IErrorableInput) => void;
 }
 
-const mapStateToProps = (state: IRootState) => ({
+const mapStateToProps = (state: RootState) => ({
   email: state.application.inputs.email,
   firstName: state.application.inputs.firstName,
   lastName: state.application.inputs.lastName,
   organization: state.application.inputs.organization,
 });
 
-type DeveloperInfoDispatch = ThunkDispatch<
-IRootState, 
-undefined, 
-actions.UpdateApplicationAction
->;
+type DeveloperInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateApplicationAction>;
 
 const mapDispatchToProps = (dispatch: DeveloperInfoDispatch) => ({
   updateEmail: (oldValidation?: string) => (value: IErrorableInput) => {
@@ -78,4 +74,7 @@ const DeveloperInfo = (props: IDeveloperInfoProps): JSX.Element => (
   </React.Fragment>
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeveloperInfo);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DeveloperInfo);

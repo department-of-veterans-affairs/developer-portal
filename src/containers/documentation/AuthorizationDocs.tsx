@@ -6,13 +6,12 @@ import { Redirect } from 'react-router-dom';
 import { lookupApiCategory } from '../../apiDefs/query';
 import PageHeader from '../../components/PageHeader';
 import OAuth from '../../content/apiDocs/oauthTechnical.mdx';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 import ApiKeyAuth from './ApiKeyAuth';
 
 import './AuthorizationDocs.scss';
 
-export const AuthorizationDocs = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Element => {
-
+export const AuthorizationDocs = ({ match }: RouteComponentProps<APINameParam>): JSX.Element => {
   const { apiCategoryKey } = match.params;
   const category = lookupApiCategory(apiCategoryKey);
   if (category != null) {
@@ -24,11 +23,9 @@ export const AuthorizationDocs = ({ match }: RouteComponentProps<IApiNameParam>)
         </div>
       );
     } else {
-      return (<ApiKeyAuth apiCategoryKey={apiCategoryKey} />);
+      return <ApiKeyAuth apiCategoryKey={apiCategoryKey} />;
     }
   } else {
-    return <Redirect to='/explore/bogus' />;
+    return <Redirect to="/explore/bogus" />;
   }
-  
 };
-

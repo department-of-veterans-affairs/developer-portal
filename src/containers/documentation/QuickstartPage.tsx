@@ -4,13 +4,13 @@ import { Redirect, RouteComponentProps } from 'react-router';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import QuickstartWrapper from '../../components/QuickstartWrapper';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 
-export default class QuickstartPage extends React.Component<RouteComponentProps<IApiNameParam>, {}> {
+export default class QuickstartPage extends React.Component<RouteComponentProps<APINameParam>, {}> {
   public render() {
     const { apiCategoryKey } = this.props.match.params;
-    const { 
-      content: { quickstart: quickstartContent }, 
+    const {
+      content: { quickstart: quickstartContent },
       name,
     } = getApiDefinitions()[apiCategoryKey];
 
