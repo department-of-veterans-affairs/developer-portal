@@ -1,9 +1,9 @@
 import * as moment from 'moment';
 import * as React from 'react';
-import { IApiCategories, IApiDeactivationInfo, IApiDescription } from '../apiDefs/schema';
+import { APICategories, APIDeactivationInfo, APIDescription } from '../apiDefs/schema';
 
 export const fakeCategoryOrder: string[] = ['lotr', 'sports'];
-export const fakeCategories: IApiCategories = {
+export const fakeCategories: APICategories = {
   lotr: {
     apis: [
       {
@@ -123,11 +123,11 @@ export const fakeCategories: IApiCategories = {
   },
 };
 
-export const fakeAPIs: IApiDescription[] = Object.values(fakeCategories).flatMap(
+export const fakeAPIs: APIDescription[] = Object.values(fakeCategories).flatMap(
   category => category.apis,
 );
 
-export const extraAPI: IApiDescription = {
+export const extraAPI: APIDescription = {
   description: 'the beautiful game',
   docSources: [],
   enabledByDefault: true,
@@ -145,7 +145,7 @@ export const extraAPI: IApiDescription = {
   vaInternalOnly: false,
 };
 
-export const extraDeactivationInfo: IApiDeactivationInfo = {
+export const extraDeactivationInfo: APIDeactivationInfo = {
   deactivationContent: () => <div>deactivated this API</div>,
   deactivationDate: moment().subtract(3, 'months'),
   deprecationContent: () => <div>deprecated this API</div>,

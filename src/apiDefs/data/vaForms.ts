@@ -1,14 +1,14 @@
 import { VAFormsReleaseNotes } from '../../content/apiDocs/vaForms';
-import { IApiDescription } from '../schema';
+import { OPEN_API_SPEC_HOST } from '../../types/constants';
+import { APIDescription } from '../schema';
 
-const swaggerHost: string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
-const vaFormsApis: IApiDescription[] = [
+const vaFormsApis: APIDescription[] = [
   {
     description: 'Look up VA forms and check for new versions.',
     docSources: [
       {
-        metadataUrl: `${swaggerHost}/services/va_forms/metadata`,
-        openApiUrl: `${swaggerHost}/services/va_forms/docs/v0/api`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/services/va_forms/metadata`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/va_forms/docs/v0/api`,
       },
     ],
     enabledByDefault: true,

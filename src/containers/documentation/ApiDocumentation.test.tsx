@@ -7,7 +7,7 @@ import { setupServer } from 'msw/node';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import * as openAPIData from '../../__mocks__/openAPIData.test.json';
-import { IApiDescription as APIDescription } from '../../apiDefs/schema';
+import { APIDescription } from '../../apiDefs/schema';
 import store, { history } from '../../store';
 import ApiDocumentation from './ApiDocumentation';
 

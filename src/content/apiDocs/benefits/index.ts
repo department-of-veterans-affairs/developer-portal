@@ -1,11 +1,11 @@
-import { IApiCategoryContent } from '../../../apiDefs/schema';
+import { APICategoryContent } from '../../../apiDefs/schema';
 import BenefitsIntakeReleaseNotes from './benefitsIntakeReleaseNotes.mdx';
 import BenefitsIntro from './benefitsIntro.mdx';
 import BenefitsOverview from './benefitsOverview.mdx';
 import ClaimsReleaseNotes from './claimsReleaseNotes.mdx';
 import LoanGuarantyReleaseNotes from './loanGuarantyReleaseNotes.mdx';
 
-const benefitsContent: IApiCategoryContent = {
+const benefitsContent: APICategoryContent = {
   intro: BenefitsIntro,
   overview: BenefitsOverview,
   placardText: 'Submit benefits-related PDFs',

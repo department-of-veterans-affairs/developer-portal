@@ -47,6 +47,7 @@
     "react-a11y-titles": {},
     "jsx-no-lambda": {
       "severity": "off"
-    }
+    },
+    "jsx-boolean-value": false
   }
 }

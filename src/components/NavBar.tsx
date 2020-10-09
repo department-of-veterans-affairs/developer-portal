@@ -13,7 +13,7 @@ import plusIcon from '../../node_modules/uswds/src/img/plus.png';
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
 import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
 import MainNavItem, { ILargeScreenNavItemProps } from './MainNavItem';
-import Search from './Search';
+import Search from './search/Search';
 
 import './NavBar.scss';
 
@@ -66,27 +66,25 @@ function DocumentationSubNav(props: IDocumentationSubNavProps) {
           Overview
         </NavLink>
       </li>
-      {apiCategoryOrder.map(apiKey => {
-        return (
-          <Flag name={`categories.${apiKey}`} key={apiKey}>
-            <li className={itemStyles}>
-              <NavLink
-                to={`/explore/${apiKey}`}
-                onClick={props.onMobileNavClose}
-                className={linkStyles}
-                activeClassName="vads-u-font-weight--bold"
-              >
-                {apiDefs[apiKey].name}
-              </NavLink>
-            </li>
-          </Flag>
-        );
-      })}
+      {apiCategoryOrder.map(apiKey => (
+        <Flag name={`categories.${apiKey}`} key={apiKey}>
+          <li className={itemStyles}>
+            <NavLink
+              to={`/explore/${apiKey}`}
+              onClick={props.onMobileNavClose}
+              className={linkStyles}
+              activeClassName="vads-u-font-weight--bold"
+            >
+              {apiDefs[apiKey].name}
+            </NavLink>
+          </li>
+        </Flag>
+      ))}
     </ul>
   );
 }
 
-const navItemStyles = (isFirstChild: boolean = false) =>
+const navItemStyles = (isFirstChild = false) =>
   classNames(
     'va-api-main-nav-item',
     'vads-u-display--block',
@@ -286,13 +284,11 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
   }
 
   private toggleDocumentationSubMenu = () => {
-    this.setState((state: INavBarState) => {
-      return {
-        visibleSubNavs: {
-          documentation: !state.visibleSubNavs.documentation,
-        },
-      };
-    });
+    this.setState((state: INavBarState) => ({
+      visibleSubNavs: {
+        documentation: !state.visibleSubNavs.documentation,
+      },
+    }));
   };
 
   private toggleDefaultNavLink = (useDefault: boolean) => {
