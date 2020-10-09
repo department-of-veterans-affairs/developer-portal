@@ -1,132 +1,112 @@
 import { Location } from 'history';
+import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-import { Dispatch } from 'redux';
 import * as actions from '../../actions';
-import { APIDescription, APIDocSource } from '../../apiDefs/schema';
+import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
 import { Flag } from '../../flags';
 import { history } from '../../store';
 import SwaggerDocs from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
-interface IApiDocumentationProps {
+interface ApiDocumentationProps {
   apiDefinition: APIDescription;
   categoryKey: string;
   location: Location;
-  setRequestedApiVersion: (version: string | null) => void;
 }
 
-interface IApiDocumentationState {
-  tabIndex: number;
-}
-
-const mapDispatchToProps = (dispatch: Dispatch<actions.ISetRequestedApiVersion>) => {
-  return {
-    setRequestedApiVersion: (version: string) => {
-      dispatch(actions.setRequstedApiVersion(version));
-    },
-  };
+const ApiDocumentationPropTypes = {
+  apiDefinition: ApiDescriptionPropType.isRequired,
+  categoryKey: PropTypes.string.isRequired,
+  // Leave as any for now until we can use the location react hooks
+  location: PropTypes.any.isRequired,
 };
 
-class ApiDocumentation extends React.Component<IApiDocumentationProps, IApiDocumentationState> {
-  public constructor(props: IApiDocumentationProps) {
-    super(props);
-    this.state = { tabIndex: 0 };
-  }
+const getInitialTabIndex = (searchQuery: string, docSources: APIDocSource[]): number => {
+  // Get tab from query string
+  const params = new URLSearchParams(searchQuery ?? undefined);
+  const tabQuery = params.get('tab');
+  const queryStringTab = tabQuery ? tabQuery.toLowerCase() : '';
 
-  public componentDidMount() {
-    this.setTabIndexFromQueryParams();
-    this.setApiVersionFromQueryParams();
-  }
+  // Get doc source keys
+  const hasKey = (source: APIDocSource) => !!source.key;
+  const tabKeys = docSources
+    .filter(hasKey)
+    .map(source => source.key?.toLowerCase() || '');
 
-  public componentDidUpdate(prevProps: IApiDocumentationProps) {
-    const { location } = this.props;
-    if (
-      location.pathname !== prevProps.location.pathname ||
-      location.search !== prevProps.location.search
-    ) {
-      this.setTabIndexFromQueryParams();
-      this.setApiVersionFromQueryParams();
-    }
-  }
+  // Return tab index
+  const sourceTabIndex = tabKeys.findIndex(sourceKey => sourceKey === queryStringTab);
+  return sourceTabIndex === -1 ? 0 : sourceTabIndex;
+};
 
-  public render() {
-    const { apiDefinition } = this.props;
-    const tabChangeHandler = this.onTabSelect.bind(this);
+const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
 
-    return (
-      <Flag name={['hosted_apis', apiDefinition.urlFragment]}>
-        {apiDefinition.docSources.length === 1 ? (
-          <SwaggerDocs
-            docSource={apiDefinition.docSources[0]}
-            apiName={apiDefinition.urlFragment}
-          />
-        ) : (
-          <React.Fragment>
-            {apiDefinition.multiOpenAPIIntro && apiDefinition.multiOpenAPIIntro({})}
-            <Tabs selectedIndex={this.state.tabIndex} onSelect={tabChangeHandler}>
-              <TabList>
-                {apiDefinition.docSources.map(apiDocSource => {
-                  return <Tab key={apiDocSource.label}>{apiDocSource.label}</Tab>;
-                })}
-              </TabList>
-              {apiDefinition.docSources.map(apiDocSource => {
-                return (
-                  <TabPanel key={apiDocSource.label}>
-                    <SwaggerDocs docSource={apiDocSource} apiName={apiDefinition.urlFragment} />
-                  </TabPanel>
-                );
-              })}
-            </Tabs>
-          </React.Fragment>
-        )}
-      </Flag>
-    );
-  }
+  const { apiDefinition, location } = props;
 
-  private setApiVersionFromQueryParams() {
-    const params = new URLSearchParams(this.props.location.search);
-    this.props.setRequestedApiVersion(params.get('version'));
-  }
+  /*
+   * Tab Index
+   */
+  const [tabIndex, setTabIndex] = React.useState(
+    getInitialTabIndex(
+      location.search,
+      apiDefinition.docSources,
+    ),
+  );
 
-  private setTabIndexFromQueryParams(): void {
-    if (this.props.apiDefinition.docSources.length > 1) {
-      const newTabIndex = this.getTabIndexFromQueryParams();
-      this.setState({ tabIndex: newTabIndex });
-    }
-  }
-
-  private getTabIndexFromQueryParams(): number {
-    if (this.props.location.search) {
-      const params = new URLSearchParams(history.location.search);
-
-      const hasKey = (source: APIDocSource) => !!source.key;
-      const tabKeys = this.props.apiDefinition.docSources
-        .filter(hasKey)
-        .map(source => source.key!.toLowerCase());
-      const tabQuery = params.get('tab');
-      const fromFragment = tabQuery ? tabQuery.toLowerCase() : '';
-      const tabIndex = tabKeys.findIndex(sourceKey => sourceKey === fromFragment);
-      return tabIndex === -1 ? this.state.tabIndex : tabIndex;
-    }
-
-    return this.state.tabIndex;
-  }
-
-  private onTabSelect(tabIndex: number) {
-    const tab = this.props.apiDefinition.docSources[tabIndex].key;
+  const onTabSelect = (selectedTabIndex: number): void => {
+    const tab = props.apiDefinition.docSources[selectedTabIndex].key;
     const params = new URLSearchParams(history.location.search);
     if (tab) {
       params.set('tab', tab);
     }
     history.push(`${history.location.pathname}?${params.toString()}`);
-    this.setState({ tabIndex });
-  }
-}
+    setTabIndex(selectedTabIndex);
+  };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(ApiDocumentation);
+  /*
+   * API Version
+   */
+  const dispatch = useDispatch();
+  const queryParams = new URLSearchParams(location.search ?? undefined);
+  const apiVersion = queryParams.get('version');
+
+  React.useEffect((): void => {
+    dispatch(actions.setRequstedApiVersion(apiVersion));
+  }, [dispatch, apiVersion, location.pathname]);
+  
+  /*
+   * RENDER
+   */
+  return (
+    <Flag name={['hosted_apis', apiDefinition.urlFragment]}>
+      {apiDefinition.docSources.length === 1 ? (
+        <SwaggerDocs
+          docSource={apiDefinition.docSources[0]}
+          apiName={apiDefinition.urlFragment}
+        />
+      ) : (
+        <>
+          {apiDefinition.multiOpenAPIIntro && apiDefinition.multiOpenAPIIntro({})}
+          <Tabs selectedIndex={tabIndex} onSelect={onTabSelect}>
+            <TabList>
+              {apiDefinition.docSources.map(apiDocSource => (
+                <Tab key={apiDocSource.label}>{apiDocSource.label}</Tab>
+              ))}
+            </TabList>
+            {apiDefinition.docSources.map(apiDocSource => (
+              <TabPanel key={apiDocSource.label}>
+                <SwaggerDocs docSource={apiDocSource} apiName={apiDefinition.urlFragment} />
+              </TabPanel>
+            ))}
+          </Tabs>
+        </>
+      )}
+    </Flag>
+  );
+};
+
+ApiDocumentation.propTypes = ApiDocumentationPropTypes;
+
+export default ApiDocumentation;
