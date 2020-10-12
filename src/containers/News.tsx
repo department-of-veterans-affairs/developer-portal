@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
+import { HoverImage } from '../components';
 import CardLink from '../components/CardLink';
 import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
-import HoverImage from '../components/hoverImage/HoverImage';
 import PageHeader from '../components/PageHeader';
 import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';

@@ -1,8 +1,11 @@
-import { mount } from 'enzyme';
+import { cleanup, render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import 'jest';
 import * as React from 'react';
 
-import HoverImage from './HoverImage';
+import { HoverImage } from './HoverImage';
+
+afterEach(cleanup);
 
 const props = {
   hoverImagePath: 'hover',
@@ -11,15 +14,20 @@ const props = {
 
 describe('HoverImage', () => {
   it('should render base image', () => {
-    const wrapper = mount(<HoverImage imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />);
-    expect(wrapper.find('img').prop('src')).toEqual(props.imagePath);
+    const { getByRole } = render(
+      <HoverImage imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
+    );
+    expect(getByRole('presentation').getAttribute('src')).toEqual(props.imagePath);
   });
 
   it('should render hover image when hovered over', () => {
-    const wrapper = mount(<HoverImage imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />);
-    wrapper.simulate('mouseenter');
-    expect(wrapper.find('img').prop('src')).toEqual(props.hoverImagePath);
-    wrapper.simulate('mouseleave');
-    expect(wrapper.find('img').prop('src')).toEqual(props.imagePath);
+    const { getByRole } = render(
+      <HoverImage imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
+    );
+    const image = getByRole('presentation');
+    userEvent.hover(image);
+    expect(image.getAttribute('src')).toEqual(props.hoverImagePath);
+    userEvent.unhover(image);
+    expect(image.getAttribute('src')).toEqual(props.imagePath);
   });
 });
