@@ -5,15 +5,15 @@ import * as React from 'react';
 import { match as Match } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 
-import closeButton from '../../node_modules/uswds/src/img/close.png';
-import minusIcon from '../../node_modules/uswds/src/img/minus.png';
-import plusIcon from '../../node_modules/uswds/src/img/plus.png';
+import closeButton from '../../../node_modules/uswds/src/img/close.png';
+import minusIcon from '../../../node_modules/uswds/src/img/minus.png';
+import plusIcon from '../../../node_modules/uswds/src/img/plus.png';
 
-import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
-import { Flag } from '../flags';
-import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
-import MainNavItem, { ILargeScreenNavItemProps } from './MainNavItem';
-import Search from './search/Search';
+import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
+import { Flag } from '../../flags';
+import { desktopOnly, mobileOnly } from '../../styles/vadsUtils';
+import MainNavItem, { ILargeScreenNavItemProps } from '../MainNavItem';
+import Search from '../search/Search';
 
 import './NavBar.scss';
 

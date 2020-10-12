@@ -7,7 +7,7 @@ import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vads
 import { onHashAnchorClick } from '../../utils/clickHandlers';
 import Banner from '../Banner';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
-import NavBar from '../NavBar';
+import NavBar from '../navBar/NavBar';
 import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
 import './Header.scss';
