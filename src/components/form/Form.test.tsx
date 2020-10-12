@@ -9,7 +9,7 @@ describe('Form', () => {
   it('should not be able to submit when disabled is set', () => {
     const onSubmitMock = jest.fn();
     const onSuccessMock = jest.fn();
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={true}/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled/>);
 
     component.find('.usa-button-primary').simulate('click');
 
