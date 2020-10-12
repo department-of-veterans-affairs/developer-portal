@@ -2,20 +2,21 @@ import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import ProgressButton from '@department-of-veterans-affairs/formation-react/ProgressButton';
 import * as React from "react";
 
-export interface IFormProps {
+interface FormProps {
   disabled?: boolean;
   className?: string;
   onSubmit: () => void;
   onSuccess: () => void;
 }
 
-interface IFormState {
+interface FormState {
   error: boolean;
   sending: boolean;
 }
 
-export class Form extends React.Component<IFormProps, IFormState> {
-  constructor(props: IFormProps) {
+export class Form extends React.Component<FormProps, FormState> {
+
+  constructor(props: FormProps) {
     super(props);
     this.state = {
       error: false,
