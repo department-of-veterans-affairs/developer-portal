@@ -1,21 +1,39 @@
-import { shallow } from 'enzyme';
+import '@testing-library/jest-dom/extend-expect';
+import { cleanup, render } from '@testing-library/react';
 import 'jest';
-import { noop } from 'lodash';
 import * as React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import NavBar from './NavBar';
+import { NavBar } from './NavBar';
+
+const noop = () => undefined;
+
+afterEach(cleanup);
 
 describe('NavBar', () => {
   it('should render the navbar', () => {
-    const documentation = shallow(<NavBar isMobileMenuVisible={true} onMobileNavClose={noop} />).contains('Documentation');
-    expect(documentation).toBeTruthy();
+    const { getAllByText } = render(
+      <Router>
+        <NavBar isMobileMenuVisible onMobileNavClose={noop} />
+      </Router>,
+    );
+    const documentation = getAllByText('Documentation')[0];
+    expect(documentation).toBeInTheDocument();
   });
 
   it('should use "va-api-mobile-nav-visible" when isMobileMenuVisible is true', () => {
-    let result = shallow(<NavBar isMobileMenuVisible={false} onMobileNavClose={noop} />);
-    expect(result.find('nav').hasClass('va-api-mobile-nav-visible')).toBeFalsy();
+    let navbar = render(
+      <Router>
+        <NavBar isMobileMenuVisible={false} onMobileNavClose={noop} />
+      </Router>,
+    );
+    expect(navbar.container.querySelector('nav')?.classList.contains('va-api-mobile-nav-visible')).toBeFalsy();
 
-    result = shallow(<NavBar isMobileMenuVisible={true} onMobileNavClose={noop} />);
-    expect(result.find('nav').hasClass('va-api-mobile-nav-visible')).toBeTruthy();
+    navbar = render(
+      <Router>
+        <NavBar isMobileMenuVisible onMobileNavClose={noop} />
+      </Router>,
+    );
+    expect(navbar.container.querySelector('nav')?.classList.contains('va-api-mobile-nav-visible')).toBeTruthy();
   });
 });

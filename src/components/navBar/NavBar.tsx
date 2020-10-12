@@ -17,27 +17,18 @@ import Search from '../search/Search';
 
 import './NavBar.scss';
 
-interface INavBarProps {
+interface NavBarProps {
   isMobileMenuVisible: boolean;
   onMobileNavClose: () => void;
 }
 
-interface IVisibleSubNavState {
-  documentation: boolean;
-}
-
-interface INavBarState {
-  useDefaultNavLink: boolean;
-  visibleSubNavs: IVisibleSubNavState;
-}
-
-interface IDocumentationSubNavProps {
+interface DocumentationSubNavProps {
   onMobileNavClose: () => void;
 }
 
-function DocumentationSubNav(props: IDocumentationSubNavProps) {
+const DocumentationSubNav = (props: DocumentationSubNavProps): JSX.Element => {
   const apiDefs = getApiDefinitions();
-  const apiCategoryOrder = getApiCategoryOrder();
+  const apiCategoryOrder: string[] = getApiCategoryOrder();
 
   const itemStyles = classNames(
     'vads-u-border-top--1px',
@@ -58,7 +49,7 @@ function DocumentationSubNav(props: IDocumentationSubNavProps) {
       <li key="all" className={itemStyles}>
         <NavLink
           onClick={props.onMobileNavClose}
-          exact={true}
+          exact
           to="/explore"
           className={linkStyles}
           activeClassName="va-api-active-sub-nav"
@@ -82,7 +73,7 @@ function DocumentationSubNav(props: IDocumentationSubNavProps) {
       ))}
     </ul>
   );
-}
+};
 
 const navItemStyles = (isFirstChild = false) =>
   classNames(
@@ -108,197 +99,186 @@ const navLinkStyles = classNames(
   'medium-screen:vads-u-padding--1p5',
 );
 
-export default class NavBar extends React.Component<INavBarProps, INavBarState> {
-  constructor(props: INavBarProps) {
-    super(props);
-    this.state = {
-      useDefaultNavLink: true,
-      visibleSubNavs: {
-        documentation: false,
-      },
-    };
-  }
+const NavBar = (props: NavBarProps): JSX.Element => {
+  const [useDefaultNavLink, setUseDefaultNavLink] = React.useState(true);
+  const [visibleSubNavs, setVisibleSubNavs] = React.useState({ documentation: false });
 
-  public render() {
-    const navClasses = classNames(
-      {
-        'va-api-mobile-nav-visible': this.props.isMobileMenuVisible,
-      },
-      'va-api-nav',
-      desktopOnly(),
-      'medium-screen:vads-u-width--full',
-    );
+  const navClasses = classNames(
+    {
+      'va-api-mobile-nav-visible': props.isMobileMenuVisible,
+    },
+    'va-api-nav',
+    desktopOnly(),
+    'medium-screen:vads-u-width--full',
+  );
 
-    const sharedNavItemProps: ILargeScreenNavItemProps = {
-      isActive: this.checkActiveNavLink,
-      onMouseEnter: this.toggleDefaultNavLink.bind(this, false),
-      onMouseLeave: this.toggleDefaultNavLink.bind(this, true),
-    };
-
-    return (
-      <nav className={navClasses}>
-        <div
-          className={classNames(
-            'vads-u-padding--2p5',
-            'vads-u-border-color--white',
-            'medium-screen:vads-u-border-top--1px',
-            'medium-screen:vads-u-margin-x--4',
-            'medium-screen:vads-u-padding--0',
-            'medium-screen:vads-u-display--flex',
-          )}
-        >
-          <div className={mobileOnly()}>
-            <button
-              className={classNames(
-                'va-api-mobile-nav-close',
-                'vads-u-display--block',
-                'vads-u-margin-top--0',
-                'vads-u-margin-right--neg1',
-                'vads-u-margin-bottom--2',
-                'vads-u-padding--0',
-              )}
-              onClick={this.props.onMobileNavClose}
-            >
-              <img
-                src={closeButton}
-                alt="Close button"
-                className={classNames('vads-u-color--gray-dark', 'vads-u-max-width--none')}
-              />
-            </button>
-            <Search
-              inMenu={true}
-              className={classNames(
-                'vads-u-margin-y--2',
-                'vads-u-padding-y--0',
-                'vads-u-width--full',
-              )}
-            />
-          </div>
-          <ul
-            className={classNames(
-              'vads-u-margin-y--0',
-              'vads-u-padding-left--0',
-              'medium-screen:vads-u-display--inline',
-            )}
-          >
-            <li className={navItemStyles(true)}>
-              <MainNavItem
-                targetUrl="/explore"
-                largeScreenProps={sharedNavItemProps}
-                excludeSmallScreen={true}
-                className={navLinkStyles}
-              >
-                Documentation
-              </MainNavItem>
-              <div className={mobileOnly()}>
-                <button
-                  className={classNames(
-                    'va-api-nav-button',
-                    navLinkStyles,
-                    'vads-u-display--flex',
-                    'vads-u-flex-wrap--nowrap',
-                    'vads-u-justify-content--space-between',
-                    'vads-u-align-items--center',
-                    'vads-u-font-weight--normal',
-                    'vads-u-margin--0',
-                    'vads-u-width--full',
-                  )}
-                  onClick={this.toggleDocumentationSubMenu}
-                >
-                  <span>Documentation</span>
-                  <img
-                    src={this.state.visibleSubNavs.documentation ? minusIcon : plusIcon}
-                    alt="Expand Documentation"
-                    aria-label="Expand Documentation"
-                    className="va-api-expand-nav-icon"
-                  />
-                </button>
-                {this.state.visibleSubNavs.documentation && (
-                  <DocumentationSubNav onMobileNavClose={this.props.onMobileNavClose} />
-                )}
-              </div>
-            </li>
-            <li className={navItemStyles()}>
-              <MainNavItem
-                onClick={this.props.onMobileNavClose}
-                targetUrl="/news"
-                largeScreenProps={sharedNavItemProps}
-                className={navLinkStyles}
-              >
-                News
-              </MainNavItem>
-            </li>
-            <li className={navItemStyles()}>
-              <MainNavItem
-                onClick={this.props.onMobileNavClose}
-                targetUrl="/release-notes"
-                largeScreenProps={sharedNavItemProps}
-                className={navLinkStyles}
-              >
-                Release Notes
-              </MainNavItem>
-            </li>
-            <li className={navItemStyles()}>
-              <MainNavItem
-                onClick={this.props.onMobileNavClose}
-                targetUrl="/support"
-                largeScreenProps={sharedNavItemProps}
-                className={navLinkStyles}
-              >
-                Support
-              </MainNavItem>
-            </li>
-            <li className={classNames(navItemStyles(), mobileOnly())}>
-              <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
-                API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
-              </a>
-            </li>
-          </ul>
-          <a
-            className={classNames(
-              desktopOnly(),
-              'va-api-u-margin-y--auto',
-              'vads-u-margin-left--auto',
-              'vads-u-color--white',
-              'vads-u-text-decoration--none',
-              'vads-u-font-size--base',
-            )}
-            href="https://valighthouse.statuspage.io"
-          >
-            API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
-          </a>
-          <div className={mobileOnly()}>
-            <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
-              <Link
-                onClick={this.props.onMobileNavClose}
-                to="/apply"
-                className={classNames('usa-button', 'vads-u-width--full')}
-              >
-                Request an API Key
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-    );
-  }
-
-  private toggleDocumentationSubMenu = () => {
-    this.setState((state: INavBarState) => ({
-      visibleSubNavs: {
-        documentation: !state.visibleSubNavs.documentation,
-      },
-    }));
+  const toggleDocumentationSubMenu = () => {
+    setVisibleSubNavs({ documentation: !visibleSubNavs.documentation });
   };
 
-  private toggleDefaultNavLink = (useDefault: boolean) => {
-    this.setState({ useDefaultNavLink: useDefault });
+  const toggleDefaultNavLink = (useDefault: boolean) => {
+    setUseDefaultNavLink(useDefault);
   };
 
-  private checkActiveNavLink = (match: Match | null) => {
+  const checkActiveNavLink = (match: Match | null) => {
     if (!match) {
       return false;
     }
-    return this.state.useDefaultNavLink;
+    return useDefaultNavLink;
   };
-}
+
+  const sharedNavItemProps: ILargeScreenNavItemProps = {
+    isActive: checkActiveNavLink,
+    onMouseEnter: () => toggleDefaultNavLink(false),
+    onMouseLeave: () => toggleDefaultNavLink(true),
+  };
+
+  return (
+    <nav className={navClasses}>
+      <div
+        className={classNames(
+          'vads-u-padding--2p5',
+          'vads-u-border-color--white',
+          'medium-screen:vads-u-border-top--1px',
+          'medium-screen:vads-u-margin-x--4',
+          'medium-screen:vads-u-padding--0',
+          'medium-screen:vads-u-display--flex',
+        )}
+      >
+        <div className={mobileOnly()}>
+          <button
+            className={classNames(
+              'va-api-mobile-nav-close',
+              'vads-u-display--block',
+              'vads-u-margin-top--0',
+              'vads-u-margin-right--neg1',
+              'vads-u-margin-bottom--2',
+              'vads-u-padding--0',
+            )}
+            onClick={props.onMobileNavClose}
+          >
+            <img
+              src={closeButton}
+              alt="Close button"
+              className={classNames('vads-u-color--gray-dark', 'vads-u-max-width--none')}
+            />
+          </button>
+          <Search
+            inMenu
+            className={classNames(
+              'vads-u-margin-y--2',
+              'vads-u-padding-y--0',
+              'vads-u-width--full',
+            )}
+          />
+        </div>
+        <ul
+          className={classNames(
+            'vads-u-margin-y--0',
+            'vads-u-padding-left--0',
+            'medium-screen:vads-u-display--inline',
+          )}
+        >
+          <li className={navItemStyles(true)}>
+            <MainNavItem
+              targetUrl="/explore"
+              largeScreenProps={sharedNavItemProps}
+              excludeSmallScreen
+              className={navLinkStyles}
+            >
+              Documentation
+            </MainNavItem>
+            <div className={mobileOnly()}>
+              <button
+                className={classNames(
+                  'va-api-nav-button',
+                  navLinkStyles,
+                  'vads-u-display--flex',
+                  'vads-u-flex-wrap--nowrap',
+                  'vads-u-justify-content--space-between',
+                  'vads-u-align-items--center',
+                  'vads-u-font-weight--normal',
+                  'vads-u-margin--0',
+                  'vads-u-width--full',
+                )}
+                onClick={() => toggleDocumentationSubMenu()}
+              >
+                <span>Documentation</span>
+                <img
+                  src={visibleSubNavs.documentation ? minusIcon : plusIcon}
+                  alt="Expand Documentation"
+                  aria-label="Expand Documentation"
+                  className="va-api-expand-nav-icon"
+                />
+              </button>
+              {visibleSubNavs.documentation && (
+                <DocumentationSubNav onMobileNavClose={props.onMobileNavClose} />
+              )}
+            </div>
+          </li>
+          <li className={navItemStyles()}>
+            <MainNavItem
+              onClick={props.onMobileNavClose}
+              targetUrl="/news"
+              largeScreenProps={sharedNavItemProps}
+              className={navLinkStyles}
+            >
+              News
+            </MainNavItem>
+          </li>
+          <li className={navItemStyles()}>
+            <MainNavItem
+              onClick={props.onMobileNavClose}
+              targetUrl="/release-notes"
+              largeScreenProps={sharedNavItemProps}
+              className={navLinkStyles}
+            >
+              Release Notes
+            </MainNavItem>
+          </li>
+          <li className={navItemStyles()}>
+            <MainNavItem
+              onClick={props.onMobileNavClose}
+              targetUrl="/support"
+              largeScreenProps={sharedNavItemProps}
+              className={navLinkStyles}
+            >
+              Support
+            </MainNavItem>
+          </li>
+          <li className={classNames(navItemStyles(), mobileOnly())}>
+            <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
+              API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
+            </a>
+          </li>
+        </ul>
+        <a
+          className={classNames(
+            desktopOnly(),
+            'va-api-u-margin-y--auto',
+            'vads-u-margin-left--auto',
+            'vads-u-color--white',
+            'vads-u-text-decoration--none',
+            'vads-u-font-size--base',
+          )}
+          href="https://valighthouse.statuspage.io"
+        >
+          API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
+        </a>
+        <div className={mobileOnly()}>
+          <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
+            <Link
+              onClick={props.onMobileNavClose}
+              to="/apply"
+              className={classNames('usa-button', 'vads-u-width--full')}
+            >
+              Request an API Key
+            </Link>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export { NavBar };
