@@ -10,7 +10,7 @@ interface IHoverImageState {
 }
 
 export default class HoverImage extends React.Component<IHoverImageProps, IHoverImageState> {
-  constructor(props : IHoverImageProps) {
+  constructor(props: IHoverImageProps) {
     super(props);
     this.state = {
       src: props.imagePath,
@@ -23,8 +23,8 @@ export default class HoverImage extends React.Component<IHoverImageProps, IHover
     const { src } = this.state;
     return (
       <img
-        alt=''
-        role='presentation'
+        alt=""
+        role="presentation"
         src={src}
         onMouseEnter={this.onMouseEnter}
         onMouseLeave={this.onMouseLeave}

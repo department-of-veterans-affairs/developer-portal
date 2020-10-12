@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import CardLink from '../components/CardLink';
 import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
-import HoverImage from '../components/HoverImage';
+import HoverImage from '../components/hoverImage/HoverImage';
 import PageHeader from '../components/PageHeader';
 import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
@@ -64,7 +64,6 @@ const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
 };
 
 const ItemDescription = ({ item }: { item: NewsItem }): JSX.Element => (
-
   <p>
     <a href={item.url}>{item.title}</a>
     <br />
