@@ -9,7 +9,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
-import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { SideNav, SideNavEntry } from '../../components';
 import { IApiNameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
 import ApiPage from './ApiPage';
