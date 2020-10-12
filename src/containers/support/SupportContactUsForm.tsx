@@ -8,7 +8,7 @@ import * as React from 'react';
 
 import { getEnabledApiCategories } from '../../apiDefs/env';
 import { getApiDefinitions } from '../../apiDefs/query';
-import Form from '../../components/Form';
+import { Form } from '../../components'
 import { IErrorableInput } from '../../types';
 import { CONTACT_US_URL } from '../../types/constants';
 import { validateEmail, validatePresence } from '../../utils/validators';

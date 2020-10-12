@@ -14,7 +14,7 @@ interface IFormState {
   sending: boolean;
 }
 
-export default class Form extends React.Component<IFormProps, IFormState> {
+export class Form extends React.Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
     this.state = {

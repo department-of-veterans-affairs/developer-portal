@@ -2,7 +2,7 @@ import { mount } from "enzyme";
 import 'jest';
 import * as React from 'react';
 
-import Form from './Form';
+import { Form } from './Form';
 
 describe('Form', () => {
 
