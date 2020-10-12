@@ -8,11 +8,12 @@ import App from './App';
 import { unregister } from './registerServiceWorker';
 import store from './store';
 
-const { REACT_APP_SENTRY_DSN } = process.env;
+const { REACT_APP_SENTRY_DSN, REACT_APP_SENTRY_ENV } = process.env;
 
 if (REACT_APP_SENTRY_DSN) {
   Sentry.init({
     dsn: REACT_APP_SENTRY_DSN,
+    environment: REACT_APP_SENTRY_ENV,
   });
 }
 try {
