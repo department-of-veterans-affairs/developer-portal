@@ -23,15 +23,6 @@ const SideNav = (props: SideNavProps): JSX.Element => {
       Stickyfill.addOne(navRef.current);
     }
   }, [navRef]);
-  /*
-  public componentDidMount() {
-    if (this.navRef.current) {
-      // Stickyfill lets us use `position: sticky` in browsers that may not
-      // support it. The library requires a dom reference to work, hence the ref.
-      Stickyfill.addOne(this.navRef.current);
-    }
-  }
-   */
 
   return (
     <div
