@@ -4,7 +4,7 @@ import Modal from '@department-of-veterans-affairs/formation-react/Modal';
 import classNames from 'classnames';
 
 import rightArrow from '../../assets/arrow-right-white.svg';
-import useModalController from '../../hooks/ModalController';
+import { useModalController } from '../../hooks';
 import VeteransCrisisLinePanel from './VeteransCrisisLinePanel';
 
 import './VeteransCrisisLine.scss';
