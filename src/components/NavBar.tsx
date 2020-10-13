@@ -2,6 +2,7 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
+import { match as Match } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
 
 import closeButton from '../../node_modules/uswds/src/img/close.png';
@@ -294,7 +295,7 @@ export default class NavBar extends React.Component<INavBarProps, INavBarState> 
     this.setState({ useDefaultNavLink: useDefault });
   };
 
-  private checkActiveNavLink = (match: {}) => {
+  private checkActiveNavLink = (match: Match | null) => {
     if (!match) {
       return false;
     }
