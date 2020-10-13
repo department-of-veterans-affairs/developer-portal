@@ -12,21 +12,21 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 
 import * as actions from '../../actions';
 import { includesOAuthAPI } from '../../apiDefs/query';
-import { IApplication, IRootState } from '../../types';
+import { DevApplication, RootState } from '../../types';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS, PAGE_HEADER_ID } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
 import DeveloperInfo from './DeveloperInfo';
 import OAuthAppInfo from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
 
-type ApplyProps = IApplication;
+type ApplyProps = DevApplication;
 type ApplicationDispatch = ThunkDispatch<
-  IRootState,
+  RootState,
   undefined,
   actions.SubmitFormAction | actions.UpdateApplicationAction
 >;
 
-const mapStateToProps = (state: IRootState) => ({
+const mapStateToProps = (state: RootState) => ({
   ...state.application,
 });
 

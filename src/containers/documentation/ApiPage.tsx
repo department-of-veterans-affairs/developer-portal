@@ -7,7 +7,7 @@ import { APIDescription } from '../../apiDefs/schema';
 import PageHeader from '../../components/PageHeader';
 import ExplorePage from '../../content/explorePage.mdx';
 import { Flag } from '../../flags';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 import ApiDocumentation from './ApiDocumentation';
 
@@ -37,7 +37,7 @@ const getApi = (apiName?: string): APIDescription | null => {
   return lookupApiByFragment(apiName);
 };
 
-const ApiPage = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
+const ApiPage = (props: RouteComponentProps<APINameParam>): JSX.Element => {
   const { params } = props.match;
 
   const api = getApi(params.apiName);
