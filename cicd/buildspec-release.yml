@@ -85,6 +85,7 @@ phases:
           gh release upload ${NEW_TAG} "release/developer-portal-${env}-${VERSION}.tar.bz2#${NEW_TAG}_${env}.tar.bz2"
           echo "${env} artifact uploaded"
         done
+      # This to be uncommented when CodeBuild deployment is transitioned
       # This is will kick off a a deployment to dev and staging deployments
       # - | 
       #   if [[ ${DEPLOY} == "true" ]]; then
