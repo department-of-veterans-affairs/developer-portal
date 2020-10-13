@@ -1,4 +1,3 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import * as React from 'react';
 
 import { Flag } from 'flag';
@@ -6,9 +5,8 @@ import { RouteComponentProps } from 'react-router';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { AuthorizationCard } from '../../components';
+import { AuthorizationCard, OnlyTags } from '../../components';
 import CardLink from '../../components/CardLink';
-import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';

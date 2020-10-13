@@ -8,8 +8,8 @@ import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecat
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
 import { getFlags } from '../../App';
+import { OnlyTags } from '../../components';
 import CardLink from '../../components/CardLink';
-import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';

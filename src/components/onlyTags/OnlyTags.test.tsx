@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import 'jest';
 import * as React from 'react';
 
-import OnlyTags from './OnlyTags';
+import { OnlyTags } from './OnlyTags';
 import TrustedPartnerOnlyTag from './TrustedPartnerOnlyTag';
 import VAInternalOnlyTag from './VAInternalOnlyTag';
 
