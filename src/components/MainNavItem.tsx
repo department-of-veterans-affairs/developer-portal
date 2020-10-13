@@ -1,10 +1,11 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { match as Match } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
 
 export interface ILargeScreenNavItemProps {
-  isActive: (match: {}) => boolean;
+  isActive: (match: Match | null) => boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
@@ -36,20 +37,20 @@ export default class MainNavItem extends React.PureComponent<IMainNavItemProps> 
 
     return (
       <React.Fragment>
-        {!this.props.excludeLargeScreen &&
+        {!this.props.excludeLargeScreen && (
           <div className={desktopOnly()}>
-            <NavLink {... sharedProps} {... this.props.largeScreenProps}>
+            <NavLink {...sharedProps} {...this.props.largeScreenProps}>
               {this.props.children}
             </NavLink>
           </div>
-        }
-        {!this.props.excludeSmallScreen &&
+        )}
+        {!this.props.excludeSmallScreen && (
           <div className={mobileOnly()}>
-            <NavLink onClick={this.props.onClick} {... sharedProps}>
+            <NavLink onClick={this.props.onClick} {...sharedProps}>
               {this.props.children}
             </NavLink>
           </div>
-        }
+        )}
       </React.Fragment>
     );
   }
