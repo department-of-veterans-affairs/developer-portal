@@ -5,7 +5,7 @@ import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import * as React from 'react';
 import { Provider } from 'react-redux';
-import * as openAPIData from '../../__mocks__/openAPIData.test.json';
+import * as openAPIData from '../../__mocks__/openAPIData/openAPIData.test.json';
 import { APIDescription } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider } from '../../flags';
 import store, { history } from '../../store';
