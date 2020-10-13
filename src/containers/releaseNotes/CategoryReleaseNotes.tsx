@@ -8,11 +8,11 @@ import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecat
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
 import { getFlags } from '../../App';
+import { OnlyTags } from '../../components';
 import CardLink from '../../components/CardLink';
-import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 
 interface ReleaseNotesCardLinksProps {
   categoryKey: string;
@@ -110,7 +110,7 @@ const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => {
   );
 };
 
-export const CategoryReleaseNotes = (props: RouteComponentProps<IApiNameParam>) => {
+export const CategoryReleaseNotes = (props: RouteComponentProps<APINameParam>) => {
   const { apiCategoryKey } = props.match.params;
   const categoryDefinition = getApiDefinitions()[apiCategoryKey];
   return (
