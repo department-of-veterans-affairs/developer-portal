@@ -14,7 +14,7 @@
 #
 # Custom Scripts:
 #  - slackpost.sh
-#
+#  - increment.sh
 ####################################################################### 
 
 version: 0.2
@@ -25,7 +25,7 @@ env:
     DEPLOY: "true"
   parameter-store:
     GITHUB_TOKEN: "/dvp/devops/va_bot_github_token"
-    SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook"
+    SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook_lighthouse"
 phases:
   pre_build:
     commands:
@@ -36,6 +36,7 @@ phases:
       - printenv
   build:
     commands:
+      - slackpost.sh -started "Creating Developer Portal release ${NEW_TAG}..."
       # Check CI status of current commit hash
       - ci_status=$(gh api /repos/department-of-veterans-affairs/developer-portal/commits/${COMMIT_HASH}/status | jq -r .state)
       - |
@@ -63,14 +64,21 @@ phases:
           fi
         done
       # Create new tag
+      # The cb- prefix is used to test functionalty of CodeBuild without interfering with Jenkins
+      # the cb- prefix should be removed once we migrate releases to CodeBuild
       - OLD_TAG=$(git tag --sort=-creatordate | grep cb- | head -1)
+      # Migration Code
+      #- OLD_TAG=$(git tag --sort=-creatordate | head -1)
       - echo "Found ${OLD_TAG} - incrementing..."
       - NEW_TAG=$(increment.sh ${OLD_TAG}) 
       - echo "Creating ${NEW_TAG} release"
       - gh release create ${NEW_TAG}
       - echo "Uploading artifacts"
       - VERSION=${NEW_TAG#"cb-developer-portal/v"}
-      # Upload artificats to release after adding version number to file.
+      # Upload artifacts to release after adding version number to file.
+      # gh tool utilizes # to define the display name for the uploaded asset
+      # <file#display_name> i.e. developer-portal-dev-v0.0.1.tar.bz2#Developer_Portal_v0.0.1_dev.tar.bz2
+      # For more information - https://cli.github.com/manual/gh_release_upload
       - |
         for env in ${ENVS}; do
           mv "release/developer-portal-${env}.tar.bz2" "release/developer-portal-${env}-${VERSION}.tar.bz2"
@@ -78,17 +86,17 @@ phases:
           echo "${env} artifact uploaded"
         done
       # This is will kick off a a deployment to dev and staging deployments
-      - | 
-        if [[ ${DEPLOY} == "true" ]]; then
-          echo "Initiating build for ${NEW_TAG}"
-          aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,value=${NEW_TAG}
-        fi
+      # - | 
+      #   if [[ ${DEPLOY} == "true" ]]; then
+      #     echo "Initiating build for ${NEW_TAG}"
+      #     aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,value=${NEW_TAG}
+      #   fi
   post_build:
     commands:
       # Post to Slack.
       - |
         if [[ ${CODEBUILD_BUILD_SUCCEEDING} -eq 0 ]]; then
-          slackpost.sh "There was an error with the release process for ${CODEBUILD_BUILD_ID}."
+          slackpost.sh -failure "There was an error with the release process for ${CODEBUILD_BUILD_ID}."
         else
-          slackpost.sh "Developer Portal release ${NEW_TAG} was successful."
+          slackpost.sh -success "Developer Portal release ${NEW_TAG} was successful."
         fi
