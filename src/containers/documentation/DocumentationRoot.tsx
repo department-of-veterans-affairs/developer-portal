@@ -10,7 +10,7 @@ import { Route, Switch } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
@@ -120,7 +120,7 @@ const oldRouteToNew = [
   },
 ];
 
-const DocumentationRoot = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
+const DocumentationRoot = (props: RouteComponentProps<APINameParam>): JSX.Element => {
   const { apiCategoryKey } = props.match.params;
   const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
 

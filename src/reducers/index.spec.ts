@@ -1,11 +1,11 @@
 import 'jest';
 
 import { IToggleSelectedApi } from '../actions';
-import { IApplication } from '../types';
+import { DevApplication } from '../types';
 import * as constants from '../types/constants';
 import { application } from './index';
 
-const app: IApplication = {
+const app: DevApplication = {
   inputs: {
     apis: {
       appeals: false,
@@ -93,7 +93,7 @@ describe('application', () => {
           }),
         }),
       );
-      
+
       newApp = application(newApp, toggleAction);
       expect(newApp.inputs).toEqual(
         expect.objectContaining({

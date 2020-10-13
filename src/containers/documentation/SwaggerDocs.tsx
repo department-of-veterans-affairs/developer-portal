@@ -8,7 +8,7 @@ import * as actions from '../../actions';
 import { APIDocSource } from '../../apiDefs/schema';
 import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';
 import { history } from '../../store';
-import { IRootState } from '../../types';
+import { RootState } from '../../types';
 import { SwaggerPlugins, System } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
@@ -33,7 +33,7 @@ export interface IVersionInfo {
   internal_only: boolean;
 }
 
-const mapStateToProps = (state: IRootState) => {
+const mapStateToProps = (state: RootState) => {
   return {
     docUrl: getDocURL(state.apiVersioning),
     location: state.router.location,

@@ -9,10 +9,10 @@ import { AuthorizationCard, OnlyTags } from '../../components';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 
-const CategoryPage = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Element => {
+const CategoryPage = ({ match }: RouteComponentProps<APINameParam>): JSX.Element => {
   const { apiCategoryKey } = match.params;
   const {
     apis,

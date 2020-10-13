@@ -2,43 +2,43 @@ import * as Sentry from '@sentry/browser';
 import { Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { history } from '../store';
-import { IApiList, IErrorableInput, IRootState } from '../types';
+import { APIList, ErrorableInput, RootState } from '../types';
 import * as constants from '../types/constants';
 import { validateEmail, validateOAuthRedirectURI } from '../utils/validators';
 
 export interface IUpdateApplicationFirstName extends Action {
-  newValue: IErrorableInput;
+  newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_FIRST_NAME;
 }
 
 export interface IUpdateApplicationLastName extends Action {
-  newValue: IErrorableInput;
+  newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_LAST_NAME;
 }
 
 export interface IUpdateApplicationEmail extends Action {
-  newValue: IErrorableInput;
+  newValue: ErrorableInput;
   previousValidation?: string;
   type: constants.UPDATE_APPLICATION_EMAIL;
 }
 
 export interface IUpdateApplicationOrganization extends Action {
-  newValue: IErrorableInput;
+  newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_ORGANIZATION;
 }
 
 export interface IUpdateApplicationDescription extends Action {
-  newValue: IErrorableInput;
+  newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_DESCRIPTION;
 }
 
 export interface IUpdateApplicationOAuthApplicationType extends Action {
-  newValue: IErrorableInput;
+  newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE;
 }
 
 export interface IUpdateApplicationOAuthRedirectURI extends Action {
-  newValue: IErrorableInput;
+  newValue: ErrorableInput;
   previousValidation?: string;
   type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI;
 }
@@ -83,18 +83,18 @@ export type SubmitFormAction = ISubmitForm | ISubmitFormSuccess | ISubmitFormErr
 
 export type SubmitFormThunk = ThunkAction<
   Promise<SubmitFormAction>,
-  IRootState,
+  RootState,
   undefined,
   SubmitFormAction
 >;
 
-const apisToList = (apis: IApiList) => {
+const apisToList = (apis: APIList) => {
   return Object.keys(apis)
     .filter(key => apis[key])
     .join(',');
 };
 
-function buildApplicationBody({ application }: IRootState) {
+function buildApplicationBody({ application }: RootState) {
   const applicationBody: any = {};
   applicationBody.apis = apisToList(application.inputs.apis);
   [
@@ -211,7 +211,7 @@ export const submitFormError: ActionCreator<ISubmitFormError> = (status: string)
   anything else.
 */
 export const updateApplicationEmail: ActionCreator<IUpdateApplicationEmail> = (
-  newValue: IErrorableInput,
+  newValue: ErrorableInput,
   previousValidation?: string,
 ) => {
   if (newValue.dirty) {
@@ -229,7 +229,7 @@ export const updateApplicationEmail: ActionCreator<IUpdateApplicationEmail> = (
 };
 
 export const updateApplicationDescription: ActionCreator<IUpdateApplicationDescription> = (
-  newValue: IErrorableInput,
+  newValue: ErrorableInput,
 ) => {
   return {
     newValue,
@@ -238,7 +238,7 @@ export const updateApplicationDescription: ActionCreator<IUpdateApplicationDescr
 };
 
 export const updateApplicationFirstName: ActionCreator<IUpdateApplicationFirstName> = (
-  newValue: IErrorableInput,
+  newValue: ErrorableInput,
 ) => {
   return {
     newValue,
@@ -247,7 +247,7 @@ export const updateApplicationFirstName: ActionCreator<IUpdateApplicationFirstNa
 };
 
 export const updateApplicationLastName: ActionCreator<IUpdateApplicationLastName> = (
-  newValue: IErrorableInput,
+  newValue: ErrorableInput,
 ) => {
   return {
     newValue,
@@ -257,7 +257,7 @@ export const updateApplicationLastName: ActionCreator<IUpdateApplicationLastName
 
 export const updateApplicationOAuthApplicationType: ActionCreator<
   IUpdateApplicationOAuthApplicationType
-> = (newValue: IErrorableInput) => {
+> = (newValue: ErrorableInput) => {
   return {
     newValue,
     type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE,
@@ -267,7 +267,7 @@ export const updateApplicationOAuthApplicationType: ActionCreator<
 // see note on update/validate above on updateApplicationEmail
 export const updateApplicationOAuthRedirectURI: ActionCreator<
   IUpdateApplicationOAuthRedirectURI
-> = (newValue: IErrorableInput, previousValidation?: string) => {
+> = (newValue: ErrorableInput, previousValidation?: string) => {
   if (newValue.dirty) {
     newValue = validateOAuthRedirectURI(newValue);
     newValue.dirty = false;
@@ -283,7 +283,7 @@ export const updateApplicationOAuthRedirectURI: ActionCreator<
 };
 
 export const updateApplicationOrganization: ActionCreator<IUpdateApplicationOrganization> = (
-  newValue: IErrorableInput,
+  newValue: ErrorableInput,
 ) => {
   return {
     newValue,

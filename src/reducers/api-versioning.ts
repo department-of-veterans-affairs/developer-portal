@@ -1,13 +1,13 @@
 import { createSelector } from 'reselect';
 import { ISetInitialVersioning, ISetRequestedApiVersion } from '../actions';
 import { IVersionInfo } from '../containers/documentation/SwaggerDocs';
-import { APIMetadata, IApiVersioning } from '../types';
+import { APIMetadata, APIVersioning } from '../types';
 import * as constants from '../types/constants';
 
 const currentVersionStatus = 'Current Version';
-const getRequestedApiVersion = (state: IApiVersioning) => state.requestedApiVersion;
-const getMetadata = (state: IApiVersioning) => state.metadata;
-const getInitialDocURL = (state: IApiVersioning) => state.docUrl;
+const getRequestedApiVersion = (state: APIVersioning) => state.requestedApiVersion;
+const getMetadata = (state: APIVersioning) => state.metadata;
+const getInitialDocURL = (state: APIVersioning) => state.docUrl;
 
 const getVersionInfo = createSelector(
   getRequestedApiVersion,
@@ -72,7 +72,7 @@ export const apiVersioning = (
     requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
   },
   action: ISetInitialVersioning | ISetRequestedApiVersion,
-): IApiVersioning => {
+): APIVersioning => {
   switch (action.type) {
     case constants.SET_REQUESTED_API_VERSION:
       return { ...state, requestedApiVersion: action.version };
