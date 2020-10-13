@@ -9,7 +9,7 @@ import * as React from 'react';
 import { getEnabledApiCategories } from '../../apiDefs/env';
 import { getApiDefinitions } from '../../apiDefs/query';
 import Form from '../../components/Form';
-import { IErrorableInput } from '../../types';
+import { ErrorableInput } from '../../types';
 import { CONTACT_US_URL } from '../../types/constants';
 import { validateEmail, validatePresence } from '../../utils/validators';
 
@@ -26,11 +26,11 @@ type SupportContactUsFormProps = PropTypes.InferProps<typeof SupportContactUsFor
 
 interface SupportContactUsFormState {
   apis: { [x: string]: boolean };
-  description: IErrorableInput;
-  email: IErrorableInput;
-  firstName: IErrorableInput;
-  lastName: IErrorableInput;
-  organization: IErrorableInput;
+  description: ErrorableInput;
+  email: ErrorableInput;
+  firstName: ErrorableInput;
+  lastName: ErrorableInput;
+  organization: ErrorableInput;
 }
 
 interface FormData {
@@ -51,7 +51,7 @@ const initialApiState = () =>
     return accumulator;
   }, {});
 
-const defaultErrorableField = (): IErrorableInput => ({
+const defaultErrorableField = (): ErrorableInput => ({
   dirty: false,
   value: '',
 });
@@ -65,7 +65,7 @@ const initialFormState = {
   organization: defaultErrorableField(),
 };
 
-type actionValue = { [x: string]: boolean } | IErrorableInput;
+type actionValue = { [x: string]: boolean } | ErrorableInput;
 
 const reducer = (
   state: SupportContactUsFormState,
@@ -75,15 +75,15 @@ const reducer = (
     case 'SET_APIS':
       return { ...state, apis: action.value as { [x: string]: boolean } };
     case 'SET_DESCRIPTION':
-      return { ...state, description: action.value as IErrorableInput };
+      return { ...state, description: action.value as ErrorableInput };
     case 'SET_EMAIL':
-      return { ...state, email: action.value as IErrorableInput };
+      return { ...state, email: action.value as ErrorableInput };
     case 'SET_FIRST_NAME':
-      return { ...state, firstName: action.value as IErrorableInput };
+      return { ...state, firstName: action.value as ErrorableInput };
     case 'SET_LAST_NAME':
-      return { ...state, lastName: action.value as IErrorableInput };
+      return { ...state, lastName: action.value as ErrorableInput };
     case 'SET_ORGANIZATION':
-      return { ...state, organization: action.value as IErrorableInput };
+      return { ...state, organization: action.value as ErrorableInput };
     default:
       return state;
   }
@@ -104,7 +104,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
   const [formState, setFormState] = React.useReducer(reducer, initialFormState);
 
   const isFormValid = (): boolean => {
-    const validateField = (field: IErrorableInput): boolean => !!field.value && !field.validation;
+    const validateField = (field: ErrorableInput): boolean => !!field.value && !field.validation;
     const { description, email, firstName, lastName } = formState;
 
     return (
@@ -156,7 +156,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
       });
   };
 
-  const toggleApis = (input: IErrorableInput, checked: boolean) => {
+  const toggleApis = (input: ErrorableInput, checked: boolean) => {
     const name = input.value;
     const apis = formState.apis;
     apis[name] = checked;
@@ -197,7 +197,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 errorMessage={formState.firstName.validation}
                 label="First name"
                 field={formState.firstName}
-                onValueChange={(field: IErrorableInput) =>
+                onValueChange={(field: ErrorableInput) =>
                   setFormState({
                     type: 'SET_FIRST_NAME',
                     value: validatePresence(field, 'First Name'),
@@ -212,7 +212,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 label="Last name"
                 name="lastName"
                 field={formState.lastName}
-                onValueChange={(field: IErrorableInput) =>
+                onValueChange={(field: ErrorableInput) =>
                   setFormState({
                     type: 'SET_LAST_NAME',
                     value: validatePresence(field, 'Last Name'),
@@ -229,7 +229,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 label="Email"
                 name="email"
                 field={formState.email}
-                onValueChange={(field: IErrorableInput) =>
+                onValueChange={(field: ErrorableInput) =>
                   setFormState({ type: 'SET_EMAIL', value: validateEmail(field) })
                 }
                 required
@@ -241,7 +241,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 label="Organization"
                 name="organization"
                 field={formState.organization}
-                onValueChange={(field: IErrorableInput) =>
+                onValueChange={(field: ErrorableInput) =>
                   setFormState({ type: 'SET_ORGANIZATION', value: field })
                 }
                 required={false}
@@ -264,7 +264,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
         <ErrorableTextArea
           errorMessage={formState.description.validation}
           label="Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
-          onValueChange={(field: IErrorableInput) =>
+          onValueChange={(field: ErrorableInput) =>
             setFormState({ type: 'SET_DESCRIPTION', value: validatePresence(field, 'Description') })
           }
           name="description"

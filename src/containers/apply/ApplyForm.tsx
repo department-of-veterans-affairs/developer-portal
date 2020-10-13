@@ -12,26 +12,26 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 
 import * as actions from '../../actions';
 import { includesOAuthAPI } from '../../apiDefs/query';
-import { IApplication, IErrorableInput, IRootState } from '../../types';
+import { DevApplication, ErrorableInput, RootState } from '../../types';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS, PAGE_HEADER_ID } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
 import DeveloperInfo from './DeveloperInfo';
 import OAuthAppInfo from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
 
-interface IApplyProps extends IApplication {
+interface IApplyProps extends DevApplication {
   submitForm: () => void;
   toggleAcceptTos: () => void;
-  updateDescription: (value: IErrorableInput) => void;
+  updateDescription: (value: ErrorableInput) => void;
 }
 
 type ApplicationDispatch = ThunkDispatch<
-IRootState,
-undefined,
-actions.SubmitFormAction | actions.UpdateApplicationAction
+  RootState,
+  undefined,
+  actions.SubmitFormAction | actions.UpdateApplicationAction
 >;
 
-const mapStateToProps = (state: IRootState) => ({
+const mapStateToProps = (state: RootState) => ({
   ...state.application,
 });
 
@@ -71,7 +71,6 @@ const anyApiSelected = (props: IApplyProps) => {
   return numSelected > 0;
 };
 
-
 const allBioFieldsComplete = (props: IApplyProps) => {
   const bioFieldNames = ['email', 'firstName', 'lastName', 'organization'];
   const incompleteFields = bioFieldNames.filter(fieldName => !props.inputs[fieldName].value);
@@ -79,7 +78,9 @@ const allBioFieldsComplete = (props: IApplyProps) => {
 };
 
 const readyToSubmit = (props: IApplyProps) => {
-  const { inputs: { oAuthApplicationType, oAuthRedirectURI, termsOfService }} = props;
+  const {
+    inputs: { oAuthApplicationType, oAuthRedirectURI, termsOfService },
+  } = props;
 
   let applicationTypeComplete = true;
   let redirectURIComplete = true;
@@ -100,7 +101,6 @@ const readyToSubmit = (props: IApplyProps) => {
 const applyClasses = classNames('vads-l-grid-container', 'vads-u-padding--4');
 
 const ApplyForm = (props: IApplyProps): JSX.Element => {
-
   const dispatch: ApplicationDispatch = useDispatch();
 
   return (
@@ -123,7 +123,7 @@ const ApplyForm = (props: IApplyProps): JSX.Element => {
             <ErrorableTextArea
               errorMessage={null}
               label="Briefly describe how your organization will use VA APIs:"
-              onValueChange={ (e: string) => dispatch(actions.updateApplicationDescription(e))}
+              onValueChange={(e: string) => dispatch(actions.updateApplicationDescription(e))}
               name="description"
               field={props.inputs.description}
             />
@@ -132,17 +132,17 @@ const ApplyForm = (props: IApplyProps): JSX.Element => {
               checked={props.inputs.termsOfService}
               label={
                 <span>
-                    I agree to the <Link to="/terms-of-service">Terms of Service</Link>
+                  I agree to the <Link to="/terms-of-service">Terms of Service</Link>
                 </span>
               }
-              onValueChange={ () => dispatch(actions.toggleAcceptTos())}
+              onValueChange={() => dispatch(actions.toggleAcceptTos())}
               required
             />
 
             <ProgressButton
               buttonText={props.sending ? 'Sending...' : 'Submit'}
               disabled={!readyToSubmit(props) || props.sending}
-              onButtonClick={ () => dispatch(actions.submitForm())}
+              onButtonClick={() => dispatch(actions.submitForm())}
               buttonClass="usa-button-primary"
             />
           </form>
@@ -158,10 +158,13 @@ const ApplyForm = (props: IApplyProps): JSX.Element => {
           <div className="feature">
             <h3>Stay In Touch</h3>
             <p>
-                Want to get news and updates about VA API Program? Sign up to receive email updates.
+              Want to get news and updates about VA API Program? Sign up to receive email updates.
             </p>
-            <a className="usa-button" href="https://public.govdelivery.com/accounts/USVAOIT/subscriber/new?topic_id=USVAOIT_20">
-                Sign Up
+            <a
+              className="usa-button"
+              href="https://public.govdelivery.com/accounts/USVAOIT/subscriber/new?topic_id=USVAOIT_20"
+            >
+              Sign Up
             </a>
           </div>
         </div>
@@ -170,6 +173,4 @@ const ApplyForm = (props: IApplyProps): JSX.Element => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-)(ApplyForm);
+export default connect(mapStateToProps)(ApplyForm);
