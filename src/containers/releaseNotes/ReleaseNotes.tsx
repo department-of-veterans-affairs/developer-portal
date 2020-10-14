@@ -1,14 +1,12 @@
-import * as React from 'react';
-
 import classNames from 'classnames';
-import { Flag } from 'flag';
+import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
 import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { Flag } from '../../flags';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
@@ -60,7 +58,7 @@ function SideNavCategoryEntry(props: SideNavCategoryEntryProps) {
   );
 
   return (
-    <Flag name={`categories.${categoryKey}`} key={categoryKey}>
+    <Flag name={['categories', categoryKey]} key={categoryKey}>
       <SideNavEntry to={`/release-notes/${categoryKey}`} name={apiCategory.name}>
         {apis.length > 1 &&
           apis.map(api => (
