@@ -6,14 +6,14 @@ import { RouteComponentProps } from 'react-router';
 
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
-import { IApiDescription } from '../../apiDefs/schema';
+import { APIDescription } from '../../apiDefs/schema';
 import PageHeader from '../../components/PageHeader';
 import ExplorePage from '../../content/explorePage.mdx';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 import ApiDocumentation from './ApiDocumentation';
 
-const DeactivationMessage = ({ api }: { api: IApiDescription }) => {
+const DeactivationMessage = ({ api }: { api: APIDescription }) => {
   const isDeprecated = isApiDeprecated(api);
   const isDeactivated = isApiDeactivated(api);
 
@@ -31,7 +31,7 @@ const DeactivationMessage = ({ api }: { api: IApiDescription }) => {
   );
 };
 
-const getApi = (apiName?: string): IApiDescription | null => {
+const getApi = (apiName?: string): APIDescription | null => {
   if (!apiName) {
     return null;
   }
@@ -39,7 +39,7 @@ const getApi = (apiName?: string): IApiDescription | null => {
   return lookupApiByFragment(apiName);
 };
 
-const ApiPage = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
+const ApiPage = (props: RouteComponentProps<APINameParam>): JSX.Element => {
   const { params } = props.match;
 
   const api = getApi(params.apiName);

@@ -1,28 +1,27 @@
 import 'jest';
-
-jest.mock('./query');
-// tslint:disable-next-line:no-var-requires
-const getAllApis = require('./query').getAllApis;
-
+import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
 import { getEnvFlags, isHostedApiEnabled } from './env';
+import * as queries from './query';
+import { APIDescription } from './schema';
 
 describe('env module', () => {
   const DEFAULT_ENV = process.env;
+  let getAllApisSpy: jest.SpyInstance<Partial<APIDescription[]>>;
 
   beforeEach(() => {
-    jest.resetModules();
-    process.env = { ... DEFAULT_ENV };
+    getAllApisSpy = jest.spyOn(queries, 'getAllApis');
+    process.env = { ...DEFAULT_ENV };
   });
 
   describe('isHostedApiEnabled', () => {
     it("returns the env variable's value if it is explicitly set", () => {
       process.env.REACT_APP_FAKE_API_ENABLED = 'false';
       expect(isHostedApiEnabled('fake', true)).toBe(false);
-      
+
       process.env.REACT_APP_FAKE_API_ENABLED = 'true';
       expect(isHostedApiEnabled('fake', false)).toBe(true);
     });
-    
+
     it('returns the default value if the env variable is not set', () => {
       expect(isHostedApiEnabled('fake', true)).toBe(true);
       expect(isHostedApiEnabled('fake', false)).toBe(false);
@@ -41,19 +40,20 @@ describe('env module', () => {
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
       name: 'My API',
+      releaseNotes: ClaimsReleaseNotes,
       trustedPartnerOnly: false,
       vaInternalOnly: false,
     };
 
     beforeEach(() => {
-      getAllApis.mockReturnValue([
+      getAllApisSpy.mockReturnValue([
         {
-          ... sharedApiValues,
+          ...sharedApiValues,
           enabledByDefault: true,
           urlFragment: enableApiId,
         },
         {
-          ... sharedApiValues,
+          ...sharedApiValues,
           enabledByDefault: false,
           urlFragment: disabledApiId,
         },
@@ -63,7 +63,7 @@ describe('env module', () => {
     it('sets each flag to the result of isHostedApiEnabled', () => {
       const envFlags = getEnvFlags();
       expect(envFlags[enableApiId]).toBe(true);
-      expect(envFlags[disabledApiId]).toBe(false); 
+      expect(envFlags[disabledApiId]).toBe(false);
     });
   });
 });
