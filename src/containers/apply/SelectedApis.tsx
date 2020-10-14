@@ -23,7 +23,7 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-type ApiSelectDispatch = ThunkDispatch<RootState, undefined, actions.IToggleSelectedApi>;
+type ApiSelectDispatch = ThunkDispatch<RootState, undefined, actions.ToggleSelectedAPI>;
 
 const mapDispatchToProps = (dispatch: ApiSelectDispatch) => {
   return {

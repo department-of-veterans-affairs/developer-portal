@@ -1,6 +1,6 @@
 import 'jest';
 
-import { IToggleSelectedApi } from '../actions';
+import { ToggleSelectedAPI } from '../actions';
 import { DevApplication } from '../types';
 import * as constants from '../types/constants';
 import { application } from './index';
@@ -80,7 +80,7 @@ describe('application', () => {
   it('should toggle selected APIs', () => {
     const applyApis: string[] = Object.keys(constants.APPLY_FIELDS_TO_URL_FRAGMENTS);
     applyApis.forEach(apiId => {
-      const toggleAction: IToggleSelectedApi = {
+      const toggleAction: ToggleSelectedAPI = {
         apiId,
         type: constants.TOGGLE_SELECTED_API,
       };

@@ -38,3 +38,22 @@ export interface DevApplication {
   errorStatus?: string;
   result?: ApplySuccessResult;
 }
+
+export interface DevApplicationRequest {
+  email: string;
+  firstName: string;
+  lastName: string;
+  organization: string;
+  description: string;
+  apis: string;
+  oAuthApplicationType: string;
+  oAuthRedirectURI: string;
+  termsOfService: boolean;
+}
+
+export interface DevApplicationResponse {
+  token?: string;
+  clientID?: string;
+  clientSecret?: string;
+  errors?: string[];
+}
