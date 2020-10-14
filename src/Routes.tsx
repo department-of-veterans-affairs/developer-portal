@@ -1,9 +1,7 @@
 import * as React from 'react';
-
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
-import { Flag } from 'flag';
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
@@ -23,6 +21,7 @@ import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
+import { Flag } from './flags';
 
 export function SiteRoutes() {
   return (
@@ -41,7 +40,7 @@ export function SiteRoutes() {
         path="/apply"
         render={() => (
           <Flag
-            name="signups_enabled"
+            name={['signups_enabled']}
             component={ApplyForm}
             fallbackComponent={DisabledApplyForm}
           />

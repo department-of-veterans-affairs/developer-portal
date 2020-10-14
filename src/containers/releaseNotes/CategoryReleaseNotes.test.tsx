@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
-import { FlagsProvider } from 'flag';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter, Route } from 'react-router';
@@ -13,7 +12,7 @@ import {
 } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
-import { getFlags } from '../../App';
+import { FlagsProvider, getFlags } from '../../flags';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {

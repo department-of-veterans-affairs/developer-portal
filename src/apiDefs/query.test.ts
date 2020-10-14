@@ -15,6 +15,7 @@
 */
 
 import 'jest';
+import { FacilitiesReleaseNotes } from '../content/apiDocs/facilities';
 import { includesOAuthAPI, lookupApiByFragment, lookupApiCategory } from './query';
 
 describe('query module', () => {
@@ -30,6 +31,7 @@ describe('query module', () => {
         ],
         enabledByDefault: true,
         name: 'VA Facilities API',
+        releaseNotes: FacilitiesReleaseNotes,
         trustedPartnerOnly: false,
         urlFragment: 'facilities',
         vaInternalOnly: false,
