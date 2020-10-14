@@ -10,7 +10,11 @@
 
 declare module 'swagger-ui' {
   import { List, Map, OrderedMap } from 'immutable';
+  import React from 'react';
 
+  /**
+   * OPENAPI SPEC TYPES
+   */
   type Example = string | Record<string, unknown>;
   export interface Parameter {
     name: string;
@@ -79,6 +83,28 @@ declare module 'swagger-ui' {
     loadingStatus: string;
   }
 
+  /**
+   * SWAGGER UI COMPONENTS
+   */
+  export interface CollapseProps {
+    children: React.ReactNode;
+    isOpened: boolean;
+  }
+
+  export interface MarkdownProps {
+    source: string;
+  }
+
+  export interface DeepLinkProps {
+    enabled: boolean;
+    isShown: boolean;
+    path: string;
+    text: string;
+  }
+
+  /**
+   * SYSTEM
+   */
   export interface System {
     spec: () => Map<string, SwaggerMapValues>;
     fn: {
