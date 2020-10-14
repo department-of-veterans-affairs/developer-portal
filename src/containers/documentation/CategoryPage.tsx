@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Flag } from 'flag';
 import { useParams } from 'react-router';
+import { Flag } from 'flag';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { AuthorizationCard, OnlyTags } from '../../components';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
-import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
