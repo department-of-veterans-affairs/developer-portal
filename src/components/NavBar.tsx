@@ -1,7 +1,6 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { Flag } from 'flag';
 import * as React from 'react';
 import { match as Match } from 'react-router';
 import { Link, NavLink } from 'react-router-dom';
@@ -11,6 +10,7 @@ import minusIcon from '../../node_modules/uswds/src/img/minus.png';
 import plusIcon from '../../node_modules/uswds/src/img/plus.png';
 
 import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
+import { Flag } from '../flags';
 import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
 import MainNavItem, { ILargeScreenNavItemProps } from './MainNavItem';
 import Search from './search/Search';
@@ -67,7 +67,7 @@ function DocumentationSubNav(props: IDocumentationSubNavProps) {
         </NavLink>
       </li>
       {apiCategoryOrder.map(apiKey => (
-        <Flag name={`categories.${apiKey}`} key={apiKey}>
+        <Flag name={['categories', apiKey]} key={apiKey}>
           <li className={itemStyles}>
             <NavLink
               to={`/explore/${apiKey}`}
