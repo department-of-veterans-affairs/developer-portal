@@ -1,4 +1,3 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import * as React from 'react';
 import { useParams } from 'react-router';
 import { Redirect } from 'react-router-dom';
