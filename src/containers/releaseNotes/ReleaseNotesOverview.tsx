@@ -1,10 +1,9 @@
-import { Flag } from 'flag';
 import * as React from 'react';
-
 import { getDeactivatedCategory } from '../../apiDefs/deprecated';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
+import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 
 export default () => {
@@ -38,7 +37,7 @@ export default () => {
         {getApiCategoryOrder().map((apiCategoryKey: string) => {
           const { name, content } = apiDefs[apiCategoryKey];
           return (
-            <Flag name={`categories.${apiCategoryKey}`} key={apiCategoryKey}>
+            <Flag name={['categories', apiCategoryKey]} key={apiCategoryKey}>
               <CardLink name={name} url={`/release-notes/${apiCategoryKey}`}>
                 {content.shortDescription}
               </CardLink>
