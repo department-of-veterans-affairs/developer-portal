@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
 import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
-import { FlagsProvider } from 'flag';
 import { MockedRequest, rest, restContext } from 'msw';
 import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
@@ -8,6 +7,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import * as openAPIData from '../../__mocks__/openAPIData/openAPIData.test.json';
 import { APIDescription } from '../../apiDefs/schema';
+import { AppFlags, FlagsProvider } from '../../flags';
 import store, { history } from '../../store';
 import ApiDocumentation from './ApiDocumentation';
 
@@ -36,15 +36,20 @@ const server = setupServer(
 );
 
 describe('ApiDocumentation', () => {
+  const defaultFlags: AppFlags = {
+    categories: { category: true },
+    deactivated_apis: { my_api: false },
+    enabled: { my_api: true },
+    hosted_apis: { my_api: true },
+    show_testing_notice: false,
+    signups_enabled: true,
+  };
+
   beforeAll(() => server.listen());
   beforeEach(() => {
     render(
       <Provider store={store}>
-        <FlagsProvider
-          flags={{
-            hosted_apis: { my_api: true },
-          }}
-        >
+        <FlagsProvider flags={defaultFlags}>
           <ApiDocumentation apiDefinition={api} categoryKey="fake" location={history.location} />
         </FlagsProvider>
       </Provider>,

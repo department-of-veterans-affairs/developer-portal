@@ -1,17 +1,12 @@
+import { Location } from 'history';
+import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-
-import * as PropTypes from 'prop-types';
-
-import { Flag } from 'flag';
-import { Location } from 'history';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
-
 import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
-
+import { Flag } from '../../flags';
 import { history } from '../../store';
-
 import SwaggerDocs from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
@@ -85,7 +80,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
    * RENDER
    */
   return (
-    <Flag name={`hosted_apis.${apiDefinition.urlFragment}`}>
+    <Flag name={['hosted_apis', apiDefinition.urlFragment]}>
       {apiDefinition.docSources.length === 1 ? (
         <SwaggerDocs
           docSource={apiDefinition.docSources[0]}
