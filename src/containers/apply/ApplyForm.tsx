@@ -12,19 +12,14 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 
 import * as actions from '../../actions';
 import { includesOAuthAPI } from '../../apiDefs/query';
-import { DevApplication, ErrorableInput, RootState } from '../../types';
+import { DevApplication, RootState } from '../../types';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS, PAGE_HEADER_ID } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
 import DeveloperInfo from './DeveloperInfo';
 import OAuthAppInfo from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
 
-interface IApplyProps extends DevApplication {
-  submitForm: () => void;
-  toggleAcceptTos: () => void;
-  updateDescription: (value: ErrorableInput) => void;
-}
-
+type ApplyProps = DevApplication;
 type ApplicationDispatch = ThunkDispatch<
   RootState,
   undefined,
@@ -35,7 +30,7 @@ const mapStateToProps = (state: RootState) => ({
   ...state.application,
 });
 
-const renderError = (props: IApplyProps) => {
+const renderError = (props: ApplyProps) => {
   const assistanceTrailer = (
     <span>
       Need assistance? Create an issue through our <Link to="/support">Support page</Link>
@@ -54,30 +49,30 @@ const renderError = (props: IApplyProps) => {
   return null;
 };
 
-const selectedApis = (props: IApplyProps) => {
+const selectedApis = (props: ApplyProps) => {
   const apis = props.inputs.apis;
   return Object.keys(apis).filter(apiName => apis[apiName]);
 };
 
-const anyOAuthApisSelected = (props: IApplyProps) => {
+const anyOAuthApisSelected = (props: ApplyProps) => {
   const apiIdsByField = selectedApis(props).flatMap(
     formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField],
   );
   return includesOAuthAPI(apiIdsByField);
 };
 
-const anyApiSelected = (props: IApplyProps) => {
+const anyApiSelected = (props: ApplyProps) => {
   const numSelected = selectedApis(props).length;
   return numSelected > 0;
 };
 
-const allBioFieldsComplete = (props: IApplyProps) => {
+const allBioFieldsComplete = (props: ApplyProps) => {
   const bioFieldNames = ['email', 'firstName', 'lastName', 'organization'];
   const incompleteFields = bioFieldNames.filter(fieldName => !props.inputs[fieldName].value);
   return incompleteFields.length === 0;
 };
 
-const readyToSubmit = (props: IApplyProps) => {
+const readyToSubmit = (props: ApplyProps) => {
   const {
     inputs: { oAuthApplicationType, oAuthRedirectURI, termsOfService },
   } = props;
@@ -100,7 +95,7 @@ const readyToSubmit = (props: IApplyProps) => {
 
 const applyClasses = classNames('vads-l-grid-container', 'vads-u-padding--4');
 
-const ApplyForm = (props: IApplyProps): JSX.Element => {
+const ApplyForm = (props: ApplyProps): JSX.Element => {
   const dispatch: ApplicationDispatch = useDispatch();
 
   return (
