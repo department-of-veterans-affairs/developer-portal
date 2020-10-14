@@ -12,7 +12,6 @@ export interface SideNavEntryProps extends NavHashLinkProps {
   className?: string;
   subNavLevel: number;
   sharedAnchors: string[];
-  to: any;
 }
 
 // Constructs a NavHashLink in the sidebar that also takes into account the
