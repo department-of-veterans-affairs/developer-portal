@@ -1,5 +1,4 @@
 import { curlify } from './curlify';
-import DisableTryItOut from './DisableTryItOut';
 import ExtendedLayout from './ExtendedLayout';
 import OperationTag from './OperationTag';
 import './StyleOverride.scss';
@@ -16,13 +15,16 @@ export function SwaggerPlugins(versionHandler: any) {
       ExtendedLayout,
       OperationTag,
       ServersContainer: () => null,
+      authorizeBtn: () => null,
     },
     fn: {
       curlify,
     },
     statePlugins: {
       spec: {
-        ...DisableTryItOut.toggleTryItOut(),
+        wrapSelectors: {
+          allowTryItOutFor: () => () => false,
+        },
       },
       version: {
         ...VersionActions(versionHandler),
@@ -31,7 +33,6 @@ export function SwaggerPlugins(versionHandler: any) {
       },
     },
     wrapComponents: {
-      ...DisableTryItOut.toggleAuthorize(),
       ...WrapHighlightCode,
       ...WrapParameters,
     },
