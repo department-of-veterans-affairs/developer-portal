@@ -1,4 +1,5 @@
-import { render } from 'enzyme';
+import '@testing-library/jest-dom/extend-expect';
+import { cleanup, render, screen } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 
@@ -7,90 +8,361 @@ import { MemoryRouter } from 'react-router';
 import { SideNavEntry } from './SideNavEntry';
 
 function testActive({
-  location,
-  to,
   exact = false,
   expectation,
+  location,
+  to,
+  sharedAnchors,
 }: {
-  location: LocationDescriptor<any>;
-  to: string;
+  location: LocationDescriptor;
+  to: LocationDescriptor;
   exact?: boolean;
   expectation: boolean;
+  sharedAnchors?: string[];
 }) {
   const activeClassName = 'va-api-active-sidenav-link';
-  const wrapper = render(
+  render(
     <MemoryRouter initialEntries={[location]}>
-      <SideNavEntry name="" to={to} exact={exact} />
+      <SideNavEntry name="Go to Fake Page" to={to} exact={exact} sharedAnchors={sharedAnchors} />
     </MemoryRouter>,
   );
 
-  expect(wrapper.find('a').hasClass(activeClassName)).toBe(expectation);
+  const navLink = screen.getByRole('link', { name: 'Go to Fake Page' });
+  expect(navLink).toBeInTheDocument();
+  expect(navLink.className.includes(activeClassName)).toBe(expectation);
+  cleanup(); // used multiple times in one test
 }
 
-describe('SideNavEntry isActive matching', () => {
-  describe('paths with no hash', () => {
-    it('is active when the path is the same as the location', () => {
-      testActive({ location: '/foo', to: '/foo', expectation: true });
-    });
-    it('is not active when the path is not the same as the location', () => {
-      testActive({ location: '/bar', to: '/foo', expectation: false });
-    });
-  });
+describe('SideNavEntry', () => {
+  describe('isActive', () => {
+    describe('exact matches', () => {
+      it('is active when the path is the same as the location (to = "/fake" matches location = "/fake")', () => {
+        testActive({ location: '/fake', to: '/fake', exact: true, expectation: true });
+        testActive({
+          exact: true,
+          expectation: true,
+          location: '/fake',
+          to: { pathname: '/fake' },
+        });
+      });
 
-  describe('handles partial matches in the same way as a NavLink', () => {
-    it('is active when the destination exactly matches the beginning path segment', () => {
-      testActive({ location: '/foo/l', to: '/foo', expectation: true });
-    });
-    it('is not active when the destination only partially matches the beginning path segment', () => {
-      testActive({ location: '/fool', to: '/foo', expectation: false });
-    });
-  });
+      it('is not active when the path is not the same as the location (to = "/fake" does not match location = "/phony")', () => {
+        testActive({ location: '/phony', to: '/fake', exact: true, expectation: false });
+        testActive({
+          exact: true,
+          expectation: false,
+          location: '/phony',
+          to: { pathname: '/fake' },
+        });
+      });
 
-  describe('paths with hashes', () => {
-    it('is active when the destination hash is the same as the location', () => {
-      testActive({ location: '#bar', to: '#bar', expectation: true });
-    });
-    it('is not active when the destination hash is different from the location', () => {
-      testActive({ location: '#foo', to: '#bar', expectation: false });
-    });
-    it('is active when the destination hash is the same as the location hash and there is no destination path', () => {
-      testActive({ location: '/foo#bar', to: '#bar', expectation: true });
-    });
-    it('is not active when the destination hash is the same as the location hash, but the paths differ', () => {
-      testActive({ location: '/foo#bar', to: '/baz#bar', expectation: false });
-    });
-    it('is not active when exact is true and the location has a hash but the destination does not', () => {
-      testActive({ location: '/foo#bar', to: '/foo', exact: true, expectation: false });
-    });
-    it('is active when exact is false and the location has a hash but the destination does not', () => {
-      testActive({ location: '/foo#bar', to: '/foo', expectation: true });
-    });
-    it('is not active when only the destination has a hash', () => {
-      testActive({ location: '/foo', to: '#bar', expectation: false });
-    });
-    it('is not active for a partial path match where the hashes match', () => {
-      testActive({ location: '/foo/bar#local', to: '/foo#local', expectation: false });
-    });
-  });
+      describe('trailing slashes', () => {
+        it('is active when the paths are the same except for a trailing slash on the to prop (to = "/fake/" matches location = "/fake")', () => {
+          testActive({ location: '/fake', to: '/fake/', exact: true, expectation: true });
+          testActive({
+            exact: true,
+            expectation: true,
+            location: '/fake',
+            to: { pathname: '/fake/' },
+          });
+        });
 
-  describe('paths with trailing slashes', () => {
-    it('ignores a trailing slash in the destination', () => {
-      testActive({ location: '/foo', to: '/foo/', expectation: true });
+        it('is active when the paths are the same except for a trailing slash on the location (to = "/fake" matches location = "/fake/")', () => {
+          testActive({ location: '/fake/', to: '/fake', exact: true, expectation: true });
+          testActive({
+            exact: true,
+            expectation: true,
+            location: '/fake/',
+            to: { pathname: '/fake' },
+          });
+        });
+      });
+
+      describe('with hashes', () => {
+        it('is active when the path + hash match exactly (to = "/fake#anchor" matches location = "/fake#anchor"', () => {
+          testActive({
+            exact: true,
+            expectation: true,
+            location: '/fake#anchor',
+            to: '/fake#anchor',
+          });
+          testActive({
+            exact: true,
+            expectation: true,
+            location: '/fake#anchor',
+            to: { pathname: '/fake', hash: '#anchor' },
+          });
+        });
+
+        it('is not active when the paths match but the hashes do not (to = "/fake#anchor" does not match location = "/fake#hash")', () => {
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/fake#hash',
+            to: '/fake#anchor',
+          });
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/fake#hash',
+            to: { pathname: '/fake', hash: '#anchor' },
+          });
+        });
+
+        it('is not active when the hashes match but the paths do not (to = "/fake#anchor" does not match location = "/phony#anchor")', () => {
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/phony#anchor',
+            to: '/fake#anchor',
+          });
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/phony#anchor',
+            to: { pathname: '/fake', hash: '#anchor' },
+          });
+        });
+
+        it('is not active when the hashes match and there is a partial path match (to = "/fake/phony#anchor" does not match location = "/fake#anchor")', () => {
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/fake#anchor',
+            to: '/fake/phony#anchor',
+          });
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/fake#anchor',
+            to: { pathname: '/fake/phony', hash: '#anchor' },
+          });
+        });
+
+        it('is not active when the paths match but the to prop has a hash anchor (to = "/fake#anchor" does not match location = "/fake")', () => {
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/fake',
+            to: '/fake#anchor',
+          });
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/fake',
+            to: { pathname: '/fake', hash: '#anchor' },
+          });
+        });
+
+        it('is not active when the paths match but the location has a hash anchor (to = "/fake" does not match location = "/fake#anchor")', () => {
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/fake#anchor',
+            to: '/fake',
+          });
+          testActive({
+            exact: true,
+            expectation: false,
+            location: '/fake#anchor',
+            to: { pathname: '/fake' },
+          });
+        });
+
+        it('is active when the paths match exactly and location.hash is shared across the site (to = "/fake" matches location = "/fake#main")', () => {
+          testActive({
+            exact: true,
+            expectation: true,
+            location: '/fake#main',
+            sharedAnchors: ['#main'],
+            to: '/fake',
+          });
+          testActive({
+            exact: true,
+            expectation: true,
+            location: '/fake#main',
+            sharedAnchors: ['#main'],
+            to: { pathname: '/fake' },
+          });
+        });
+
+        describe('that link to in-page anchors', () => {
+          it('is active when the to prop is an in-page anchor link that matches location.hash exactly (to =  "#anchor" matches location = "/fake#anchor")', () => {
+            testActive({
+              exact: true,
+              expectation: true,
+              location: '/fake#anchor',
+              to: '#anchor',
+            });
+            testActive({
+              exact: true,
+              expectation: true,
+              location: '/fake#anchor',
+              to: { hash: '#anchor' },
+            });
+          });
+
+          it('is not active when the to prop is an in-page anchor link that does not match location.hash (to = "#anchor" does not match location = "/fake#hash")', () => {
+            testActive({
+              exact: true,
+              expectation: false,
+              location: '/fake#hash',
+              to: '#anchor',
+            });
+            testActive({
+              exact: true,
+              expectation: false,
+              location: '/fake#hash',
+              to: { hash: '#anchor' },
+            });
+          });
+        });
+
+        describe('and trailing slashes', () => {
+          it('is active when the hashes match and the paths match except for a trailing slash on the to prop (to = "/fake/#anchor" matches location = "/fake#anchor")', () => {
+            testActive({
+              exact: true,
+              expectation: true,
+              location: '/fake#anchor',
+              to: '/fake/#anchor',
+            });
+            testActive({
+              exact: true,
+              expectation: true,
+              location: '/fake#anchor',
+              to: { pathname: '/fake/', hash: '#anchor' },
+            });
+          });
+
+          it('is active when the hashes match and the paths match except for a trailing slash on the location (to = "/fake#anchor" matches location = "/fake/#anchor")', () => {
+            testActive({
+              exact: true,
+              expectation: true,
+              location: '/fake/#anchor',
+              to: '/fake#anchor',
+            });
+            testActive({
+              exact: true,
+              expectation: true,
+              location: '/fake/#anchor',
+              to: { pathname: '/fake', hash: '#anchor' },
+            });
+          });
+        });
+      });
     });
-    it('ignores a trailing slash in the location', () => {
-      testActive({ location: '/foo/', to: '/foo', expectation: true });
-    });
-    it('is active when there is a trailing slash and hash in both the destination and location', () => {
-      testActive({ location: '/foo/#bar', to: '/foo/#bar', expectation: true });
-    });
-    it('ignores a trailing slash in the location when the destination is a hash', () => {
-      testActive({ location: '/foo/#bar', to: '/foo#bar', expectation: true });
-    });
-    it('ignores a trailing slash in the location when the location has a path and hash and the destination is only a hash', () => {
-      testActive({ location: '/foo/#bar', to: '#bar', expectation: true });
-    });
-    it('ignores a trailing slash in the destination when both the location and destination have a path and hash', () => {
-      testActive({ location: '/foo#bar', to: '/foo/#bar', expectation: true });
+
+    describe('partial matches', () => {
+      it('is active for partial matches (to = "/fake" matches location = "/fake/phony")', () => {
+        testActive({ location: '/fake/phony', to: '/fake', expectation: true });
+        testActive({
+          expectation: true,
+          location: '/fake/phony',
+          to: { pathname: '/fake' },
+        });
+      });
+
+      it('is active for exact matches (to = "/fake" matches location = "/fake")', () => {
+        testActive({ location: '/fake', to: '/fake', expectation: true });
+        testActive({
+          expectation: true,
+          location: '/fake',
+          to: { pathname: '/fake' },
+        });
+      });
+
+      it('is not active for paths that do not match (to = "/fake" does not match location = "/phony/fake")', () => {
+        testActive({ location: '/phony/fake', to: '/fake', expectation: false });
+        testActive({
+          expectation: false,
+          location: '/phony/fake',
+          to: { pathname: '/fake' },
+        });
+      });
+
+      describe('with hashes', () => {
+        it('is active if the paths match exactly but the location has a hash (to = "/fake" matches location ="/fake#anchor")', () => {
+          testActive({ location: '/fake#anchor', to: '/fake', expectation: true });
+          testActive({
+            expectation: true,
+            location: '/fake#anchor',
+            to: { pathname: '/fake' },
+          });
+        });
+
+        it('is active if the paths match partially but the location has a hash (to = "/fake" matches location = "/fake/phony#anchor")', () => {
+          testActive({ location: '/fake/phony#anchor', to: '/fake', expectation: true });
+          testActive({
+            expectation: true,
+            location: '/fake/phony#anchor',
+            to: { pathname: '/fake' },
+          });
+        });
+
+        it('is not active if the paths match exactly but the to prop has a hash (to = "/fake#anchor" does not match location = "/fake")', () => {
+          testActive({ location: '/fake', to: '/fake#anchor', expectation: false });
+          testActive({
+            expectation: false,
+            location: '/fake',
+            to: { pathname: '/fake', hash: '#anchor' },
+          });
+        });
+
+        it('is not active if the paths match exactly but the hashes do not match (to = "/fake#anchor" does not match location = "/fake#hash")', () => {
+          testActive({ location: '/fake#hash', to: '/fake#anchor', expectation: false });
+          testActive({
+            expectation: false,
+            location: '/fake#hash',
+            to: { pathname: '/fake', hash: '#anchor' },
+          });
+        });
+
+        it('is not active if the hashes match but the paths do not match at all (to = "/fake#anchor" does not match location = "/phony#anchor")', () => {
+          testActive({ location: '/phony#anchor', to: '/fake#anchor', expectation: false });
+          testActive({
+            expectation: false,
+            location: '/phony#anchor',
+            to: { pathname: '/fake', hash: '#anchor' },
+          });
+        });
+
+        it('is not active if the hashes match and there is a partial path match (to = "/fake#anchor" does not match location = "/fake/phony#anchor")', () => {
+          testActive({ location: '/fake/phony#anchor', to: '/fake#anchor', expectation: false });
+          testActive({
+            expectation: false,
+            location: '/fake#anchor',
+            to: { pathname: '/fake/phony', hash: '#anchor' },
+          });
+        });
+
+        describe('that link to in-page anchors', () => {
+          it('is active when the to prop is an in-page anchor link that matches location.hash exactly (to =  "#anchor" matches location = "/fake#anchor")', () => {
+            testActive({
+              expectation: true,
+              location: '/fake#anchor',
+              to: '#anchor',
+            });
+            testActive({
+              expectation: true,
+              location: '/fake#anchor',
+              to: { hash: '#anchor' },
+            });
+          });
+
+          it('is not active when the to prop is an in-page anchor link that does not match location.hash (to = "#anchor" does not match location = "/fake#hash")', () => {
+            testActive({
+              expectation: false,
+              location: '/fake#hash',
+              to: '#anchor',
+            });
+            testActive({
+              expectation: false,
+              location: '/fake#hash',
+              to: { hash: '#anchor' },
+            });
+          });
+        });
+      });
     });
   });
 });

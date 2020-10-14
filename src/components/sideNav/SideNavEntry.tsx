@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
-import { Location } from 'history';
-import { match } from 'react-router';
+import { Location, LocationDescriptor } from 'history';
+import { match as Match } from 'react-router';
 import { NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
 import './SideNav.scss';
@@ -11,6 +11,8 @@ export interface SideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
   className?: string;
   subNavLevel: number;
+  sharedAnchors: string[];
+  to: any;
 }
 
 // Constructs a NavHashLink in the sidebar that also takes into account the
@@ -21,45 +23,46 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
   // used by react-router only takes into account the path, and by default will
   // include partial matches according to the https://github.com/pillarjs/path-to-regexp
   // implementation.
-  // `navHashLinkIsActive` is both more and less strict than the default implementation:
-  // there are cases where the original would return false and this function returns true,
-  // and vice versa.
-  const navHashLinkIsActive = (pathMatch: match, location: Location): boolean => {
+  const navHashLinkIsActive = (pathMatch: Match | null, location: Location): boolean => {
     const withoutTrailingSlash = (path: string) => path.replace(/\/$/, '');
 
     let pathname: string;
     let hash: string;
-    if (typeof props.to === 'string') {
-      const url = new URL(props.to, 'http://example.com');
+    let to: LocationDescriptor =
+      typeof props.to === 'function' ? props.to(location) : props.to;
+
+    if (typeof to === 'string') {
+      const url = new URL(to, 'http://example.com');
       pathname = url.pathname;
       hash = url.hash;
     } else {
-      pathname = props.to.pathname || '';
-      hash = props.to.hash || '';
-    }
-    const to = withoutTrailingSlash(pathname) + hash;
-    const currentPath = withoutTrailingSlash(location.pathname);
-
-    // If the location with hash exactly matches our navlink's `to` then
-    // we can return true, regardless of the `exact` prop
-    if (to === `${currentPath}${location.hash}`) {
-      return true;
+      // object
+      pathname = to.pathname || '';
+      hash = to.hash || '';
     }
 
-    // Handle two cases: a path match where the hashes match, or when the hashes
-    // match and `to` doesn't have a path
-    if ((pathMatch || to.startsWith('#')) && location.hash && hash === location.hash) {
-      return true;
-    }
-    // Fall back to the native implementation which does partial matching
-    if (!props.exact) {
+    to = withoutTrailingSlash(pathname) + hash;
+    if (to.startsWith('#')) {
+      // for an in-page anchor link, check that the link's destination is the same as the current hash
+      return to === location.hash;
+    } else if (hash) {
+      // exact path match + exact hash match = exact match overall. nav links with a hash require 
+      // both regardless of props.exact because partial path matches aren't applicable.
+      return !!pathMatch?.isExact && hash === location.hash;
+    } else if (props.exact) {
+      // allow "exact" matches for some anchors that are shared across the site if the nav link
+      // does not include a hash.
+      const hashMatch: boolean = !location.hash || props.sharedAnchors.includes(location.hash);
+      return !!pathMatch && hashMatch;
+    } else {
+      // default partial matching. since the nav link doesn't have a hash, partial matching 
+      // works whether or not the location has a hash.
       return !!pathMatch;
     }
-    return false;
-  }; // tslint:disable-line: semicolon
+  };
 
   // Omit unneeded parent props from NavLink
-  const { name, className, subNavLevel, ...navLinkProps } = props;
+  const { name, className, subNavLevel, sharedAnchors, ...navLinkProps } = props;
 
   return (
     <li
@@ -106,6 +109,7 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
 };
 
 SideNavEntry.defaultProps = {
+  sharedAnchors: ['#main', '#page-header'],
   subNavLevel: 0,
 };
 
