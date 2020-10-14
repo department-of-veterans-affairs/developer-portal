@@ -53,7 +53,7 @@ export default class OperationTag extends React.Component<OperationTagProps> {
       tagObj,
     } = this.props;
 
-    let { deepLinking, docExpansion } = getConfigs();
+    const { deepLinking, docExpansion } = getConfigs();
 
     const isDeepLinkingEnabled = (deepLinking && deepLinking !== 'false') || false;
 
@@ -61,16 +61,18 @@ export default class OperationTag extends React.Component<OperationTagProps> {
     const Markdown = getComponent('Markdown') as React.ComponentType<MarkdownProps>;
     const DeepLink = getComponent('DeepLink') as React.ComponentType<DeepLinkProps>;
 
-    let tagDescription = tagObj.getIn(['tagDetails', 'description'], null) as string | undefined;
-    let tagExternalDocsDescription = tagObj.getIn(['tagDetails', 'externalDocs', 'description']) as
-      | string
-      | undefined;
-    let tagExternalDocsUrl = tagObj.getIn(['tagDetails', 'externalDocs', 'url']) as
+    const tagDescription = tagObj.getIn(['tagDetails', 'description'], null) as string | undefined;
+    const tagExternalDocsDescription = tagObj.getIn([
+      'tagDetails',
+      'externalDocs',
+      'description',
+    ]) as string | undefined;
+    const tagExternalDocsUrl = tagObj.getIn(['tagDetails', 'externalDocs', 'url']) as
       | string
       | undefined;
 
-    let isShownKey = ['operations-tag', createDeepLinkPath(tag)];
-    let showTag = layoutSelectors.isShown(
+    const isShownKey = ['operations-tag', createDeepLinkPath(tag)];
+    const showTag = layoutSelectors.isShown(
       isShownKey,
       docExpansion === 'full' || docExpansion === 'list',
     );
