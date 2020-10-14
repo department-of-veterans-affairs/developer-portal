@@ -3,13 +3,13 @@ import { Location } from 'history';
 import * as React from 'react';
 import { Dispatch } from 'react';
 import { connect } from 'react-redux';
-import * as SwaggerUI from 'swagger-ui';
+import SwaggerUI from 'swagger-ui';
 import * as actions from '../../actions';
 import { APIDocSource } from '../../apiDefs/schema';
 import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';
 import { history } from '../../store';
-import { IRootState } from '../../types';
-import { SwaggerPlugins } from './swaggerPlugins';
+import { RootState } from '../../types';
+import { SwaggerPlugins, System } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 
@@ -33,7 +33,7 @@ export interface IVersionInfo {
   internal_only: boolean;
 }
 
-const mapStateToProps = (state: IRootState) => {
+const mapStateToProps = (state: RootState) => {
   return {
     docUrl: getDocURL(state.apiVersioning),
     location: state.router.location,
@@ -116,6 +116,7 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
       return response.json();
     } catch (error) {
       Sentry.captureException(error);
+      return null;
     }
   }
 
@@ -123,12 +124,12 @@ class SwaggerDocs extends React.Component<ISwaggerDocsProps> {
     if (document.getElementById('swagger-ui')) {
       if (this.props.docUrl.length !== 0) {
         const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
-        const ui = SwaggerUI({
+        const ui: System = SwaggerUI({
           dom_id: '#swagger-ui',
           layout: 'ExtendedLayout',
           plugins: [plugins],
           url: this.props.docUrl,
-        });
+        }) as System;
         ui.versionActions.setApiVersion(this.props.versionNumber);
         ui.versionActions.setApiMetadata(this.props.metadata);
       }

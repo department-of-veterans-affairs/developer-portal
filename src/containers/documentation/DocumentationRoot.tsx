@@ -1,16 +1,14 @@
+import classNames from 'classnames';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-
-import classNames from 'classnames';
-import { Flag } from 'flag';
-
 import { Redirect, RouteComponentProps } from 'react-router';
 import { Route, Switch } from 'react-router-dom';
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
 import { SideNav, SideNavEntry } from '../../components';
-import { IApiNameParam } from '../../types';
+import { Flag } from '../../flags';
+import { APINameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
@@ -21,7 +19,7 @@ import QuickstartPage from './QuickstartPage';
 import './Documentation.scss';
 
 const SideNavApiEntry = (apiCategoryKey: string, api: APIDescription): JSX.Element => (
-  <Flag key={api.urlFragment} name={`hosted_apis.${api.urlFragment}`}>
+  <Flag key={api.urlFragment} name={['hosted_apis', api.urlFragment]}>
     <SideNavEntry
       key={api.urlFragment}
       exact
@@ -78,7 +76,7 @@ const ExploreSideNav = (): JSX.Element => {
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
         return (
-          <Flag name={`categories.${categoryKey}`} key={categoryKey}>
+          <Flag name={['categories', categoryKey]} key={categoryKey}>
             <SideNavEntry
               to={`/explore/${categoryKey}`}
               id={`side-nav-category-link-${categoryKey}`}
@@ -120,7 +118,7 @@ const oldRouteToNew = [
   },
 ];
 
-const DocumentationRoot = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
+const DocumentationRoot = (props: RouteComponentProps<APINameParam>): JSX.Element => {
   const { apiCategoryKey } = props.match.params;
   const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
 

@@ -7,7 +7,7 @@
   used in all developer portal environments for health documentation.
 */
 
-import * as moment from 'moment';
+import moment from 'moment';
 import {
   ArgonautReleaseNotes,
   CommunityCareApiIntro,

@@ -1,4 +1,5 @@
 import { Action, ActionCreator } from 'redux';
+import { APIMetadata } from '../types';
 import * as constants from '../types/constants';
 
 export * from './apply';
@@ -10,7 +11,7 @@ export interface ISetRequestedApiVersion extends Action {
 
 export interface ISetInitialVersioning extends Action {
   docUrl: string;
-  metadata: any;
+  metadata: APIMetadata;
   type: constants.SET_INITIAL_VERSIONING;
 }
 
@@ -21,7 +22,10 @@ export const setRequstedApiVersion: ActionCreator<ISetRequestedApiVersion> = (ve
   };
 };
 
-export const setInitialVersioning: ActionCreator<ISetInitialVersioning> = (docUrl: string, metadata: any) => {
+export const setInitialVersioning: ActionCreator<ISetInitialVersioning> = (
+  docUrl: string,
+  metadata: any,
+) => {
   return {
     docUrl,
     metadata,

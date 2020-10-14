@@ -1,6 +1,6 @@
-import { IErrorableInput } from './form';
+import { ErrorableInput } from './form';
 
-export interface IApiList {
+export interface APIList {
   appeals: boolean;
   benefits: boolean;
   claims: boolean;
@@ -12,29 +12,29 @@ export interface IApiList {
   communityCare: boolean;
 }
 
-export interface IApplyInputs {
-  apis: IApiList;
-  description: IErrorableInput;
-  email: IErrorableInput;
-  firstName: IErrorableInput;
-  lastName: IErrorableInput;
-  oAuthApplicationType: IErrorableInput;
-  oAuthRedirectURI: IErrorableInput;
-  organization: IErrorableInput;
+export interface ApplyInputs {
+  apis: APIList;
+  description: ErrorableInput;
+  email: ErrorableInput;
+  firstName: ErrorableInput;
+  lastName: ErrorableInput;
+  oAuthApplicationType: ErrorableInput;
+  oAuthRedirectURI: ErrorableInput;
+  organization: ErrorableInput;
   termsOfService: boolean;
 }
 
-export interface IApplySuccessResult {
+export interface ApplySuccessResult {
   email: string;
   token: string;
   clientID: string;
   clientSecret: string;
-  apis: IApiList;
+  apis: APIList;
 }
 
-export interface IApplication {
-  inputs: IApplyInputs;
+export interface DevApplication {
+  inputs: ApplyInputs;
   sending: boolean;
   errorStatus?: string;
-  result?: IApplySuccessResult;
+  result?: ApplySuccessResult;
 }

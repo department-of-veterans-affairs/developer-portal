@@ -1,5 +1,5 @@
 import CollapsiblePanel from '@department-of-veterans-affairs/formation-react/CollapsiblePanel';
-import * as classNames from 'classnames';
+import classNames from 'classnames';
 import * as React from 'react';
 
 import './GroupedAccordions.scss';
@@ -42,10 +42,10 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
   const handleExpandCollapse = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
     panelRefs
-      .filter(ref => ref.current && (ref.current.state.open === allExpanded))
+      .filter(ref => ref.current && ref.current.state.open === allExpanded)
       .forEach(ref => {
         if (ref.current) {
-          ref.current.setState({open: !allExpanded});
+          ref.current.setState({ open: !allExpanded });
         }
       });
     setAllExpanded(!allExpanded);
@@ -80,12 +80,7 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
         const panelRef: CollapsiblePanelComponentRef = React.createRef<CollapsiblePanelComponent>();
         panelRefs.push(panelRef);
         return (
-          <CollapsiblePanel
-            ref={panelRef}
-            panelName={c.title}
-            startOpen={allExpanded}
-            key={index}
-          >
+          <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={allExpanded} key={index}>
             {c.body}
           </CollapsiblePanel>
         );

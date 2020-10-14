@@ -5,3 +5,4 @@ export * from './groupedAccordions/GroupedAccordions';
 export * from './search/Search';
 export * from './sideNav/SideNav';
 export * from './sideNav/SideNavEntry';
+export * from './onlyTags/OnlyTags';

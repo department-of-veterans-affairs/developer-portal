@@ -5,13 +5,13 @@ import { Redirect, RouteComponentProps } from 'react-router';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import QuickstartWrapper from '../../components/QuickstartWrapper';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 
 const QuickstartPagePropTypes = {
   match: PropTypes.object.isRequired,
 };
 
-const QuickstartPage = (props: RouteComponentProps<IApiNameParam>): JSX.Element => {
+const QuickstartPage = (props: RouteComponentProps<APINameParam>): JSX.Element => {
   const { apiCategoryKey } = props.match.params;
   const {
     content: { quickstart: quickstartContent },
@@ -26,5 +26,4 @@ const QuickstartPage = (props: RouteComponentProps<IApiNameParam>): JSX.Element 
 };
 
 QuickstartPage.propTypes = QuickstartPagePropTypes;
-
 export default QuickstartPage;
