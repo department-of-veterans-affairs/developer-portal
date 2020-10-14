@@ -8,7 +8,7 @@ import * as React from 'react';
 
 import { getEnabledApiCategories } from '../../apiDefs/env';
 import { getApiDefinitions } from '../../apiDefs/query';
-import Form from '../../components/Form';
+import { Form } from '../../components';
 import { ErrorableInput } from '../../types';
 import { CONTACT_US_URL } from '../../types/constants';
 import { validateEmail, validatePresence } from '../../utils/validators';
@@ -124,7 +124,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
     organization: formState.organization.value,
   });
 
-  const formSubmission = () => {
+  const formSubmission = (): Promise<void> => {
     const request = new Request(CONTACT_US_URL, {
       body: JSON.stringify(processedData()),
       headers: {
