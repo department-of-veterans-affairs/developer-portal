@@ -4,7 +4,7 @@ import { ThunkDispatch } from 'redux-thunk';
 
 import ErrorableCheckbox from '@department-of-veterans-affairs/formation-react/ErrorableCheckbox';
 import * as actions from '../../actions';
-import { IApiList, IRootState } from '../../types';
+import { APIList, RootState } from '../../types';
 
 interface IApiCheckbox {
   id: string;
@@ -13,17 +13,17 @@ interface IApiCheckbox {
 
 interface IApiCheckboxListProps {
   apiCheckboxes: IApiCheckbox[];
-  apiInputs: IApiList;
+  apiInputs: APIList;
   toggleSelectedApi: (apiId: string) => () => void;
 }
 
-const mapStateToProps = (state: IRootState) => {
+const mapStateToProps = (state: RootState) => {
   return {
     apiInputs: state.application.inputs.apis,
   };
 };
 
-type ApiSelectDispatch = ThunkDispatch<IRootState, undefined, actions.IToggleSelectedApi>;
+type ApiSelectDispatch = ThunkDispatch<RootState, undefined, actions.IToggleSelectedApi>;
 
 const mapDispatchToProps = (dispatch: ApiSelectDispatch) => {
   return {

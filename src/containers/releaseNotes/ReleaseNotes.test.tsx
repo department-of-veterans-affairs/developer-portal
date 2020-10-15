@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
-import { FlagsProvider } from 'flag';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
@@ -11,8 +10,8 @@ import {
   fakeCategoryOrder,
 } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
-import { IApiDescription } from '../../apiDefs/schema';
-import { getFlags } from '../../App';
+import { APIDescription } from '../../apiDefs/schema';
+import { FlagsProvider, getFlags } from '../../flags';
 import ReleaseNotes from './ReleaseNotes';
 
 function renderComponent(route: string = '/release-notes') {
@@ -26,7 +25,7 @@ function renderComponent(route: string = '/release-notes') {
   );
 }
 
-const allAPIs: IApiDescription[] = Object.values(fakeCategories).flatMap(category => category.apis);
+const allAPIs: APIDescription[] = Object.values(fakeCategories).flatMap(category => category.apis);
 describe('ReleaseNotes', () => {
   let apiDefinitionsSpy: jest.SpyInstance;
   let allAPIsSpy: jest.SpyInstance;
@@ -93,7 +92,7 @@ describe('ReleaseNotes', () => {
           sports: {
             ...fakeCategories.sports,
             apis: fakeCategories.sports.apis.map(
-              (api: IApiDescription): IApiDescription => {
+              (api: APIDescription): APIDescription => {
                 return { ...api, enabledByDefault: false };
               },
             ),
@@ -210,7 +209,7 @@ describe('ReleaseNotes', () => {
       it('does not include disabled APIs in the deacivated APIs subnav', () => {
         allAPIsSpy.mockReturnValue(
           allAPIs.map(
-            (api: IApiDescription): IApiDescription => {
+            (api: APIDescription): APIDescription => {
               return { ...api, deactivationInfo: extraDeactivationInfo };
             },
           ),

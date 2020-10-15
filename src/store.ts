@@ -6,13 +6,13 @@ import thunk, { ThunkMiddleware } from 'redux-thunk';
 
 import { application, initialApplicationState } from './reducers';
 import { apiVersioning } from './reducers/api-versioning';
-import { IApplication, IRootState } from './types';
+import { DevApplication, RootState } from './types';
 
 export const history: History = createBrowserHistory({
   basename: process.env.PUBLIC_URL || '/',
 });
 
-function loadApplicationState(): { application: IApplication } {
+function loadApplicationState(): { application: DevApplication } {
   try {
     const serializedState = sessionStorage.getItem('state');
     if (serializedState == null) {
@@ -32,7 +32,7 @@ function loadApplicationState(): { application: IApplication } {
   }
 }
 
-function saveApplicationState(state: IRootState) {
+function saveApplicationState(state: RootState) {
   try {
     const stateToSerialize = {
       application: {
@@ -47,7 +47,7 @@ function saveApplicationState(state: IRootState) {
 }
 
 const store = createStore(
-  combineReducers<IRootState>({
+  combineReducers<RootState>({
     apiVersioning,
     application,
     router: connectRouter(history),
@@ -55,7 +55,7 @@ const store = createStore(
   {
     application: loadApplicationState().application,
   },
-  compose(applyMiddleware(routerMiddleware(history), thunk as ThunkMiddleware<IRootState>)),
+  compose(applyMiddleware(routerMiddleware(history), thunk as ThunkMiddleware<RootState>)),
 );
 
 store.subscribe(

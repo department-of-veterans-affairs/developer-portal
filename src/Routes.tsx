@@ -1,13 +1,11 @@
 import * as React from 'react';
-
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
-import { Flag } from 'flag';
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
-import { IApiDescription } from './apiDefs/schema';
+import { APIDescription } from './apiDefs/schema';
 import MarkdownPage from './components/MarkdownPage';
 import ApplyForm from './containers/apply/ApplyForm';
 import ApplySuccess from './containers/apply/ApplySuccess';
@@ -23,6 +21,7 @@ import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
+import { Flag } from './flags';
 
 export function SiteRoutes() {
   return (
@@ -41,7 +40,7 @@ export function SiteRoutes() {
         path="/apply"
         render={() => (
           <Flag
-            name="signups_enabled"
+            name={['signups_enabled']}
             component={ApplyForm}
             fallbackComponent={DisabledApplyForm}
           />
@@ -78,7 +77,7 @@ export function sitemapConfig() {
 
   function getApiRouteParams(route: string, apiCategory: string): string[] {
     const routeParams = apiDefs[apiCategory].apis.reduce(
-      (result: string[], api: IApiDescription) => {
+      (result: string[], api: APIDescription) => {
         if (envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment]) {
           result.push(api.urlFragment);
         }

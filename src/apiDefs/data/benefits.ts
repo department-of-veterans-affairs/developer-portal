@@ -3,16 +3,16 @@ import {
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
 } from '../../content/apiDocs/benefits';
-import { IApiDescription } from '../schema';
+import { OPEN_API_SPEC_HOST } from '../../types/constants';
+import { APIDescription } from '../schema';
 
-const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
-const benefitsApis : IApiDescription[] = [
+const benefitsApis: APIDescription[] = [
   {
     description: 'Submit and track claims',
     docSources: [
       {
-        metadataUrl: `${swaggerHost}/services/claims/metadata`,
-        openApiUrl: `${swaggerHost}/services/claims/docs/v0/api`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/services/claims/metadata`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/claims/docs/v0/api`,
       },
     ],
     enabledByDefault: true,
@@ -27,8 +27,8 @@ const benefitsApis : IApiDescription[] = [
     description: 'Submit PDF claims',
     docSources: [
       {
-        metadataUrl: `${swaggerHost}/services/vba_documents/metadata`,
-        openApiUrl: `${swaggerHost}/services/vba_documents/docs/v0/api`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/metadata`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/docs/v0/api`,
       },
     ],
     enabledByDefault: true,
@@ -42,7 +42,7 @@ const benefitsApis : IApiDescription[] = [
     description: 'Manage VA Home Loans',
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/services/loan_guaranty/docs/v1/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/loan_guaranty/docs/v1/api`,
       },
     ],
     enabledByDefault: true,

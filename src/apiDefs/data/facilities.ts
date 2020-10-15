@@ -1,13 +1,13 @@
 import { FacilitiesReleaseNotes } from '../../content/apiDocs/facilities';
-import { IApiDescription } from '../schema';
+import { OPEN_API_SPEC_HOST } from '../../types/constants';
+import { APIDescription } from '../schema';
 
-const swaggerHost : string = process.env.REACT_APP_VETSGOV_SWAGGER_API!;
-const facilitiesApis : IApiDescription[] = [
+const facilitiesApis: APIDescription[] = [
   {
-    description: "VA Facilities",
+    description: 'VA Facilities',
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/services/va_facilities/docs/v0/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/va_facilities/docs/v0/api`,
       },
     ],
     enabledByDefault: true,
