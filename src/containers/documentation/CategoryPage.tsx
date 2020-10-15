@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
-import { Flag } from 'flag';
+import { Flag } from '../../../src/flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { AuthorizationCard, OnlyTags } from '../../components';
