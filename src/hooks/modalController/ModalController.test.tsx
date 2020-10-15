@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import 'jest';
 import * as React from 'react';
@@ -27,7 +27,11 @@ describe('useModalController', () => {
   let toggleVisibleButton: HTMLElement;
 
   beforeEach(() => {
+    // Note: I did not use the renderHook functionality because it doesn't give access to
+    // elements, which means I was unable to test the [Escape] key functionality
+    // This test should give full coverage to the ModalController hook though
     container = render(<TestComponent />).container;
+
     toggleVisibleButton = screen.getByRole('button');
   });
 
@@ -39,24 +43,25 @@ describe('useModalController', () => {
     expect(await screen.findByText('Modal Visible: false')).toBeDefined();
   });
 
-  describe('when invisible', () => {
-
-    it('becomes visible when modal visisble is set to true', async () => {
-      userEvent.click(toggleVisibleButton);
-      expect(await screen.findByText('Modal Visible: true')).toBeDefined();
-    });
+  it('turns visible when modal visisble is set to true', async () => {
+    userEvent.click(toggleVisibleButton);
+    expect(await screen.findByText('Modal Visible: true')).toBeDefined();
   });
-
-  describe('when visible', ()=> {
+  describe('when visible', () => {
 
     beforeEach(() => {
-      // It initializes as invisible, so we toggled it before these tests
-      fireEvent.click(toggleVisibleButton);
+      // The component initalized as invisible, so we toggle it before these tests
+      userEvent.click(toggleVisibleButton);
     });
 
     it('goes invisible when the [Escape] key is pressed', async () => {
       await userEvent.type(container, '{esc}');
       expect(await screen.findByText('Modal Visible: false')).toBeDefined();
+    });
+
+    it('does not go invisible when a key other than [Escape] is pressed', async () => {
+      await userEvent.type(container, 'A');
+      expect(await screen.findByText('Modal Visible: true')).toBeDefined();
     });
 
     it('goes invisible when modal visible is set to false', async () => {
