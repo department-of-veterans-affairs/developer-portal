@@ -1,6 +1,5 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
 import { lookupApiCategory } from '../../apiDefs/query';
@@ -11,8 +10,8 @@ import ApiKeyAuth from './ApiKeyAuth';
 
 import './AuthorizationDocs.scss';
 
-export const AuthorizationDocs = ({ match }: RouteComponentProps<APINameParam>): JSX.Element => {
-  const { apiCategoryKey } = match.params;
+export const AuthorizationDocs = (): JSX.Element => {
+  const { apiCategoryKey } = useParams<APINameParam>();
   const category = lookupApiCategory(apiCategoryKey);
   if (category != null) {
     if (category.apis.some(api => !!api.oAuth) && apiCategoryKey !== 'benefits') {

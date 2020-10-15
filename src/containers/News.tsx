@@ -1,10 +1,9 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import { SideNav, SideNavEntry } from '../components';
+import { HoverImage, SideNav, SideNavEntry } from '../components';
 import CardLink from '../components/CardLink';
 import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
-import HoverImage from '../components/HoverImage';
 import PageHeader from '../components/PageHeader';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';

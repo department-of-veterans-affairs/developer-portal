@@ -127,8 +127,9 @@ describe('SupportContactUsForm', () => {
     scope.mockRestore();
   });
 
-  it('should not be disabled when required fields are filled', done => {
-    const component = mount(<SupportContactUsForm onSuccess={done} />);
+  it('should not be disabled when required fields are filled', async () => {
+    const onSuccessMock = jest.fn();
+    const component = mount(<SupportContactUsForm onSuccess={onSuccessMock} />);
 
     const inputs = component.find('input[type="text"]');
     expect(inputs.length).toEqual(4);
@@ -156,8 +157,8 @@ describe('SupportContactUsForm', () => {
     expect(submitButton.length).toEqual(1);
     expect(submitButton.hasClass('usa-button-disabled')).toBe(false);
 
-    // submitting the form should call the done() callback
     submitButton.simulate('click');
+    await waitFor(() => expect(onSuccessMock).toHaveBeenCalled());
   });
 
   it('should have an error when entering a non-email', () => {

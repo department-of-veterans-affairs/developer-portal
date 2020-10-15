@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router';
+import { Flag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { AuthorizationCard, OnlyTags } from '../../components';
 import CardLink from '../../components/CardLink';
 import PageHeader from '../../components/PageHeader';
-import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 
-const CategoryPage = ({ match }: RouteComponentProps<APINameParam>): JSX.Element => {
-  const { apiCategoryKey } = match.params;
+const CategoryPage = (): JSX.Element => {
+  const { apiCategoryKey } = useParams<APINameParam>();
+ 
   const {
     apis,
     name: categoryName,
