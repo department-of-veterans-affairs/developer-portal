@@ -36,7 +36,7 @@ phases:
       - printenv
   build:
     commands:
-      - slackpost.sh -started "Creating Developer Portal release ${NEW_TAG}..."
+      - slackpost.sh -t started "Creating Developer Portal release ${NEW_TAG}..."
       # Check CI status of current commit hash
       - ci_status=$(gh api /repos/department-of-veterans-affairs/developer-portal/commits/${COMMIT_HASH}/status | jq -r .state)
       - |
@@ -97,7 +97,7 @@ phases:
       # Post to Slack.
       - |
         if [[ ${CODEBUILD_BUILD_SUCCEEDING} -eq 0 ]]; then
-          slackpost.sh -failure "There was an error with the release process for ${CODEBUILD_BUILD_ID}."
+          slackpost.sh -t failure "There was an error with the release process for ${CODEBUILD_BUILD_ID}."
         else
-          slackpost.sh -success "Developer Portal release ${NEW_TAG} was successful."
+          slackpost.sh -t success "Developer Portal release ${NEW_TAG} was successful."
         fi
