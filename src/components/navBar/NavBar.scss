@@ -1,4 +1,4 @@
-@import '../styles/variables';
+@import '../../styles/variables';
 
 .va-api-nav {
   background-color: $color-white;
@@ -10,7 +10,7 @@
   right: 0;
   bottom: 0;
   overflow-y: scroll;
-  
+
   @include media($medium-screen) {
     background-color: $color-primary-darkest;
     position: relative;
@@ -27,7 +27,7 @@
     width: 40px;
     float: right;
     background-color: transparent;
-    
+
     img {
       height: 15px;
       width: 15px;
@@ -38,22 +38,22 @@
   button.va-api-nav-button {
     transition: background-color 0.3s ease-in-out;
   }
-  
+
   a.va-api-nav-link {
     cursor: pointer;
 
     &.va-api-active-nav {
       font-weight: 700;
     }
-    
+
     @include media($medium-screen) {
       margin-bottom: 3px;
       color: $color-white !important;
-      
+
       &.va-api-active-nav,
       &:hover {
         font-weight: 400;
-        border-bottom: 3px solid #FDB81E;
+        border-bottom: 3px solid #fdb81e;
         margin-bottom: 0;
       }
     }
@@ -61,7 +61,7 @@
 
   button.va-api-nav-button {
     background-color: inherit;
-    
+
     &:hover {
       background-color: rgba(0, 0, 0, 0.05) !important;
     }
@@ -70,12 +70,12 @@
   .va-api-nav-secondary {
     clear: both;
   }
-  
+
   img.va-api-expand-nav-icon {
     width: 8px;
     height: 8px;
   }
-  
+
   ul.va-api-sub-nav {
     list-style: none;
   }
