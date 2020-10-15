@@ -1,6 +1,6 @@
 import * as React from 'react';
-import classNames from 'classnames';
 import { useLocation, useParams } from 'react-router-dom';
+import classNames from 'classnames';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
