@@ -5,7 +5,7 @@ export const onHashAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
   const id: string = e.currentTarget.href.split('#')?.[1];
   if (id) {
     setTimeout(() => {
-      document.getElementById(id)!.focus();
+      document.getElementById(id)?.focus();
     }, 0);
   }
 };
