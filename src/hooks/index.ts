@@ -1,2 +1,2 @@
 export * from './previous/Previous';
-export * from './ModalController';
+export * from './modalController/ModalController';
