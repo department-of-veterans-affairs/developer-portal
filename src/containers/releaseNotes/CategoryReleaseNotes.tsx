@@ -1,7 +1,7 @@
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import classNames from 'classnames';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { useParams } from 'react-router';
 
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
@@ -88,35 +88,33 @@ interface ReleaseNotesCollectionProps {
   alertText?: string;
 }
 
-const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => {
-  return (
-    <section role="region" aria-labelledby={`${props.categoryKey}-release-notes`}>
-      <PageHeader
-        halo={props.apiCategory.name}
-        header="Release Notes"
-        containerId={`${props.categoryKey}-release-notes`}
-      />
-      {props.alertText && (
-        <AlertBox status="info" className="vads-u-padding-y--2">
-          {props.alertText}
-        </AlertBox>
-      )}
-      <ReleaseNotesCardLinks
-        apiCategory={props.apiCategory}
-        categoryKey={props.categoryKey}
-        flagName={props.apiFlagName}
-      />
-      <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-        {props.apiCategory.apis.map((api: APIDescription) => (
-          <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />
-        ))}
-      </div>
-    </section>
-  );
-};
+const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => (
+  <section role="region" aria-labelledby={`${props.categoryKey}-release-notes`}>
+    <PageHeader
+      halo={props.apiCategory.name}
+      header="Release Notes"
+      containerId={`${props.categoryKey}-release-notes`}
+    />
+    {props.alertText && (
+      <AlertBox status="info" className="vads-u-padding-y--2">
+        {props.alertText}
+      </AlertBox>
+    )}
+    <ReleaseNotesCardLinks
+      apiCategory={props.apiCategory}
+      categoryKey={props.categoryKey}
+      flagName={props.apiFlagName}
+    />
+    <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
+      {props.apiCategory.apis.map((api: APIDescription) => (
+        <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />
+      ))}
+    </div>
+  </section>
+);
 
-export const CategoryReleaseNotes = (props: RouteComponentProps<APINameParam>) => {
-  const { apiCategoryKey } = props.match.params;
+export const CategoryReleaseNotes = (): JSX.Element => {
+  const { apiCategoryKey } = useParams<APINameParam>();
   const categoryDefinition = getApiDefinitions()[apiCategoryKey];
   return (
     <ReleaseNotesCollection
@@ -127,13 +125,11 @@ export const CategoryReleaseNotes = (props: RouteComponentProps<APINameParam>) =
   );
 };
 
-export const DeactivatedReleaseNotes = () => {
-  return (
-    <ReleaseNotesCollection
-      categoryKey="deactivated"
-      apiCategory={getDeactivatedCategory()}
-      apiFlagName="enabled"
-      alertText="This is a repository for deactivated APIs and related documentation and release notes."
-    />
-  );
-};
+export const DeactivatedReleaseNotes = () => (
+  <ReleaseNotesCollection
+    categoryKey="deactivated"
+    apiCategory={getDeactivatedCategory()}
+    apiFlagName="enabled"
+    alertText="This is a repository for deactivated APIs and related documentation and release notes."
+  />
+);
