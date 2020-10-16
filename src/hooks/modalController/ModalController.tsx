@@ -1,9 +1,11 @@
 import * as React from 'react';
 
-const useModalController = (): {
+export interface ModalController {
   modalVisible: boolean;
   setModalVisible: (visible: boolean) => void;
-} => {
+}
+
+const useModalController = (): ModalController => {
 
   const [modalVisible, setModalVisibleState] = React.useState(false);
   // We're using a mutable ref here so that we can use it within the effect without
