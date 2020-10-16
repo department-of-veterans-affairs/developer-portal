@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { Redirect, RouteComponentProps } from 'react-router';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect } from 'react-router';
+import { Route, Switch, useParams } from 'react-router-dom';
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
@@ -118,8 +118,8 @@ const oldRouteToNew = [
   },
 ];
 
-const DocumentationRoot = (props: RouteComponentProps<APINameParam>): JSX.Element => {
-  const { apiCategoryKey } = props.match.params;
+const DocumentationRoot = (): JSX.Element => {
+  const { apiCategoryKey } = useParams<APINameParam>();
   const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
 
   return (
