@@ -62,7 +62,7 @@ const APIReleaseNote = ({
 }: {
   api: APIDescription;
   flagName: 'enabled' | 'hosted_apis';
-}) => {
+}): JSX.Element => {
   const dashUrlFragment = api.urlFragment.replace('_', '-');
 
   return (
@@ -125,7 +125,7 @@ export const CategoryReleaseNotes = (): JSX.Element => {
   );
 };
 
-export const DeactivatedReleaseNotes = () => (
+export const DeactivatedReleaseNotes = (): JSX.Element => (
   <ReleaseNotesCollection
     categoryKey="deactivated"
     apiCategory={getDeactivatedCategory()}
