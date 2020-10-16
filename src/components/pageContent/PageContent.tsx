@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { SiteRoutes } from '../../Routes';
 
 const focusAndScroll = (elementToFocus: HTMLElement | null) => {
@@ -10,11 +10,10 @@ const focusAndScroll = (elementToFocus: HTMLElement | null) => {
   window.scrollTo(0, 0);
 };
 
-const PageContent = (props: RouteComponentProps): JSX.Element => {
+const PageContent = (): JSX.Element => {
   const mainRef = React.useRef<HTMLElement>(null);
   const prevPathRef = React.useRef<string | null>(null);
-
-  const { location } = props;
+  const location = useLocation();
 
   React.useEffect(() => {
     const prevPath: string | null = prevPathRef.current;
