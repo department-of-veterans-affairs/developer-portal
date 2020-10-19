@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { ISetInitialVersioning, ISetRequestedApiVersion } from '../actions';
+import { SetInitialVersioning, SetRequestedAPIVersion } from '../actions';
 import { IVersionInfo } from '../containers/documentation/SwaggerDocs';
 import { APIMetadata, APIVersioning } from '../types';
 import * as constants from '../types/constants';
@@ -71,7 +71,7 @@ export const apiVersioning = (
     metadata: null,
     requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
   },
-  action: ISetInitialVersioning | ISetRequestedApiVersion,
+  action: SetInitialVersioning | SetRequestedAPIVersion,
 ): APIVersioning => {
   switch (action.type) {
     case constants.SET_REQUESTED_API_VERSION:

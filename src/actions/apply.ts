@@ -2,187 +2,179 @@ import * as Sentry from '@sentry/browser';
 import { Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { history } from '../store';
-import { APIList, ErrorableInput, RootState } from '../types';
+import {
+  APIList,
+  DevApplicationRequest,
+  DevApplicationResponse,
+  ErrorableInput,
+  RootState,
+} from '../types';
 import * as constants from '../types/constants';
 import { validateEmail, validateOAuthRedirectURI } from '../utils/validators';
 
-export interface IUpdateApplicationFirstName extends Action {
+export interface UpdateApplicationFirstName extends Action {
   newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_FIRST_NAME;
 }
 
-export interface IUpdateApplicationLastName extends Action {
+export interface UpdateApplicationLastName extends Action {
   newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_LAST_NAME;
 }
 
-export interface IUpdateApplicationEmail extends Action {
+export interface UpdateApplicationEmail extends Action {
   newValue: ErrorableInput;
   previousValidation?: string;
   type: constants.UPDATE_APPLICATION_EMAIL;
 }
 
-export interface IUpdateApplicationOrganization extends Action {
+export interface UpdateApplicationOrganization extends Action {
   newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_ORGANIZATION;
 }
 
-export interface IUpdateApplicationDescription extends Action {
+export interface UpdateApplicationDescription extends Action {
   newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_DESCRIPTION;
 }
 
-export interface IUpdateApplicationOAuthApplicationType extends Action {
+export interface UpdateApplicationOAuthApplicationType extends Action {
   newValue: ErrorableInput;
   type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE;
 }
 
-export interface IUpdateApplicationOAuthRedirectURI extends Action {
+export interface UpdateApplicationOAuthRedirectURI extends Action {
   newValue: ErrorableInput;
   previousValidation?: string;
   type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI;
 }
 
-export interface IToggleAcceptTos extends Action {
+export interface ToggleAcceptTOS extends Action {
   type: constants.TOGGLE_ACCEPT_TOS;
 }
 
-export interface IToggleSelectedApi extends Action {
+export interface ToggleSelectedAPI extends Action {
   type: constants.TOGGLE_SELECTED_API;
   apiId: string;
 }
 
 export type UpdateApplicationAction =
-  | IUpdateApplicationDescription
-  | IUpdateApplicationEmail
-  | IUpdateApplicationFirstName
-  | IUpdateApplicationLastName
-  | IUpdateApplicationOrganization
-  | IUpdateApplicationOAuthApplicationType
-  | IUpdateApplicationOAuthRedirectURI
-  | IToggleAcceptTos
-  | IToggleSelectedApi;
+  | UpdateApplicationDescription
+  | UpdateApplicationEmail
+  | UpdateApplicationFirstName
+  | UpdateApplicationLastName
+  | UpdateApplicationOrganization
+  | UpdateApplicationOAuthApplicationType
+  | UpdateApplicationOAuthRedirectURI
+  | ToggleAcceptTOS
+  | ToggleSelectedAPI;
 
-export interface ISubmitForm extends Action {
+export interface SubmitForm extends Action {
   type: constants.SUBMIT_APPLICATION_BEGIN;
 }
 
-export interface ISubmitFormSuccess extends Action {
+export interface SubmitFormSuccess extends Action {
   clientID: string;
   clientSecret: string;
   type: constants.SUBMIT_APPLICATION_SUCCESS;
   token: string;
 }
 
-export interface ISubmitFormError extends Action {
+export interface SubmitFormError extends Action {
   type: constants.SUBMIT_APPLICATION_ERROR;
   status: string;
 }
 
-export type SubmitFormAction = ISubmitForm | ISubmitFormSuccess | ISubmitFormError;
+export type SubmitFormAction = SubmitForm | SubmitFormSuccess | SubmitFormError;
 
+/* eslint-disable @typescript-eslint/indent */
 export type SubmitFormThunk = ThunkAction<
   Promise<SubmitFormAction>,
   RootState,
   undefined,
   SubmitFormAction
 >;
+/* eslint-enable @typescript-eslint/indent */
 
-const apisToList = (apis: APIList) => {
-  return Object.keys(apis)
+const apisToList = (apis: APIList) =>
+  Object.keys(apis)
     .filter(key => apis[key])
     .join(',');
-};
 
-function buildApplicationBody({ application }: RootState) {
-  const applicationBody: any = {};
-  applicationBody.apis = apisToList(application.inputs.apis);
-  [
-    'description',
-    'email',
-    'firstName',
-    'lastName',
-    'oAuthApplicationType',
-    'oAuthRedirectURI',
-    'organization',
-  ].forEach(property => {
-    if (application.inputs[property]) {
-      applicationBody[property] = application.inputs[property].value;
-    }
+const buildApplicationBody = ({ application }: RootState): DevApplicationRequest => ({
+  apis: apisToList(application.inputs.apis),
+  description: application.inputs.description.value,
+  email: application.inputs.email.value,
+  firstName: application.inputs.firstName.value,
+  lastName: application.inputs.lastName.value,
+  oAuthApplicationType: application.inputs.oAuthApplicationType.value,
+  oAuthRedirectURI: application.inputs.oAuthRedirectURI.value,
+  organization: application.inputs.organization.value,
+  termsOfService: application.inputs.termsOfService,
+});
+
+export const submitForm: ActionCreator<SubmitFormThunk> = () => (dispatch, state) => {
+  dispatch(submitFormBegin());
+  const applicationBody = buildApplicationBody(state());
+  const request = new Request(constants.APPLY_URL, {
+    body: JSON.stringify(applicationBody),
+    headers: {
+      accept: 'application/json',
+      'content-type': 'application/json',
+    },
+    method: 'POST',
   });
-  applicationBody.termsOfService = application.inputs.termsOfService;
-  return applicationBody;
-}
 
-export const submitForm: ActionCreator<SubmitFormThunk> = () => {
-  return (dispatch, state) => {
-    dispatch(submitFormBegin());
-    const applicationBody = buildApplicationBody(state());
-    const request = new Request(constants.APPLY_URL, {
-      body: JSON.stringify(applicationBody),
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
-      method: 'POST',
-    });
+  return fetch(request)
+    .then(response => {
+      // The developer-portal-backend sends a 400 status, along with an array of validation error strings, when validation errors are present on the form.
+      if (!response.ok && response.status !== 400) {
+        throw Error(response.statusText);
+      }
+      return response;
+    })
+    .then(response => response.json())
+    .then((json: DevApplicationResponse) => {
+      if (json.errors) {
+        throw Error(`Developer Application validation errors: ${json.errors.join(', ')}`);
+      } else if (!json.token && !json.clientID) {
+        throw Error(
+          'Developer Application endpoint returned 200 response with a valid response body',
+        );
+      }
 
-    return fetch(request)
-      .then(response => {
-        // The developer-portal-backend sends a 400 status, along with an array of validation error strings, when validation errors are present on the form.
-        if (!response.ok && response.status !== 400) {
-          throw Error(response.statusText);
-        }
-        return response;
-      })
-      .then(response => response.json())
-      .then(json => {
-        if (json.errors) {
-          throw Error(`Developer Application validation errors: ${json.errors.join(', ')}`);
-        }
-        if (json.token || json.clientID) {
-          const result = dispatch(submitFormSuccess(json.token, json.clientID, json.clientSecret));
-          history.push('/applied');
-          return result;
-        } else {
-          return dispatch(submitFormError(json.errorMessage));
-        }
-      })
-      .catch(error => {
-        Sentry.withScope(scope => {
-          scope.setLevel(Sentry.Severity.fromString('warning'));
-          Sentry.captureException(error);
-        });
-        return dispatch(submitFormError(error.message));
+      const result = dispatch(submitFormSuccess(json.token, json.clientID, json.clientSecret));
+      history.push('/applied');
+      return result;
+    })
+    .catch((error: Error) => {
+      Sentry.withScope(scope => {
+        scope.setLevel(Sentry.Severity.fromString('warning'));
+        Sentry.captureException(error);
       });
-  };
+      return dispatch(submitFormError(error.message));
+    });
 };
 
-export const submitFormBegin: ActionCreator<ISubmitForm> = () => {
-  return {
-    type: constants.SUBMIT_APPLICATION_BEGIN,
-  };
-};
+export const submitFormBegin: ActionCreator<SubmitForm> = () => ({
+  type: constants.SUBMIT_APPLICATION_BEGIN,
+});
 
-export const submitFormSuccess: ActionCreator<ISubmitFormSuccess> = (
+export const submitFormSuccess: ActionCreator<SubmitFormSuccess> = (
   token: string,
   clientID: string,
   clientSecret: string,
-) => {
-  return {
-    clientID,
-    clientSecret,
-    token,
-    type: constants.SUBMIT_APPLICATION_SUCCESS,
-  };
-};
+) => ({
+  clientID,
+  clientSecret,
+  token,
+  type: constants.SUBMIT_APPLICATION_SUCCESS,
+});
 
-export const submitFormError: ActionCreator<ISubmitFormError> = (status: string) => {
-  return {
-    status,
-    type: constants.SUBMIT_APPLICATION_ERROR,
-  };
-};
+export const submitFormError: ActionCreator<SubmitFormError> = (status: string) => ({
+  status,
+  type: constants.SUBMIT_APPLICATION_ERROR,
+});
 
 /*
   IErrorableInput is designed to work with the formation-react form controls, but
@@ -210,7 +202,7 @@ export const submitFormError: ActionCreator<ISubmitFormError> = (status: string)
   tl;dr dirty doesn't mean dirty, it means validate, and we shouldn't use it for 
   anything else.
 */
-export const updateApplicationEmail: ActionCreator<IUpdateApplicationEmail> = (
+export const updateApplicationEmail: ActionCreator<UpdateApplicationEmail> = (
   newValue: ErrorableInput,
   previousValidation?: string,
 ) => {
@@ -228,46 +220,41 @@ export const updateApplicationEmail: ActionCreator<IUpdateApplicationEmail> = (
   };
 };
 
-export const updateApplicationDescription: ActionCreator<IUpdateApplicationDescription> = (
+export const updateApplicationDescription: ActionCreator<UpdateApplicationDescription> = (
   newValue: ErrorableInput,
-) => {
-  return {
-    newValue,
-    type: constants.UPDATE_APPLICATION_DESCRIPTION,
-  };
-};
+) => ({
+  newValue,
+  type: constants.UPDATE_APPLICATION_DESCRIPTION,
+});
 
-export const updateApplicationFirstName: ActionCreator<IUpdateApplicationFirstName> = (
+export const updateApplicationFirstName: ActionCreator<UpdateApplicationFirstName> = (
   newValue: ErrorableInput,
-) => {
-  return {
-    newValue,
-    type: constants.UPDATE_APPLICATION_FIRST_NAME,
-  };
-};
+) => ({
+  newValue,
+  type: constants.UPDATE_APPLICATION_FIRST_NAME,
+});
 
-export const updateApplicationLastName: ActionCreator<IUpdateApplicationLastName> = (
+export const updateApplicationLastName: ActionCreator<UpdateApplicationLastName> = (
   newValue: ErrorableInput,
-) => {
-  return {
-    newValue,
-    type: constants.UPDATE_APPLICATION_LAST_NAME,
-  };
-};
+) => ({
+  newValue,
+  type: constants.UPDATE_APPLICATION_LAST_NAME,
+});
 
+/* eslint-disable @typescript-eslint/indent */
 export const updateApplicationOAuthApplicationType: ActionCreator<
-  IUpdateApplicationOAuthApplicationType
-> = (newValue: ErrorableInput) => {
-  return {
-    newValue,
-    type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE,
-  };
-};
+  UpdateApplicationOAuthApplicationType
+> = (newValue: ErrorableInput) => ({
+  /* eslint-enable @typescript-eslint/indent */
+  newValue,
+  type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE,
+});
 
 // see note on update/validate above on updateApplicationEmail
-export const updateApplicationOAuthRedirectURI: ActionCreator<
-  IUpdateApplicationOAuthRedirectURI
-> = (newValue: ErrorableInput, previousValidation?: string) => {
+export const updateApplicationOAuthRedirectURI: ActionCreator<UpdateApplicationOAuthRedirectURI> = (
+  newValue: ErrorableInput,
+  previousValidation?: string,
+) => {
   if (newValue.dirty) {
     newValue = validateOAuthRedirectURI(newValue);
     newValue.dirty = false;
@@ -282,24 +269,18 @@ export const updateApplicationOAuthRedirectURI: ActionCreator<
   };
 };
 
-export const updateApplicationOrganization: ActionCreator<IUpdateApplicationOrganization> = (
+export const updateApplicationOrganization: ActionCreator<UpdateApplicationOrganization> = (
   newValue: ErrorableInput,
-) => {
-  return {
-    newValue,
-    type: constants.UPDATE_APPLICATION_ORGANIZATION,
-  };
-};
+) => ({
+  newValue,
+  type: constants.UPDATE_APPLICATION_ORGANIZATION,
+});
 
-export const toggleSelectedApi: ActionCreator<IToggleSelectedApi> = (apiId: string) => {
-  return {
-    apiId,
-    type: constants.TOGGLE_SELECTED_API,
-  };
-};
+export const toggleSelectedApi: ActionCreator<ToggleSelectedAPI> = (apiId: string) => ({
+  apiId,
+  type: constants.TOGGLE_SELECTED_API,
+});
 
-export const toggleAcceptTos: ActionCreator<IToggleAcceptTos> = () => {
-  return {
-    type: constants.TOGGLE_ACCEPT_TOS,
-  };
-};
+export const toggleAcceptTos: ActionCreator<ToggleAcceptTOS> = () => ({
+  type: constants.TOGGLE_ACCEPT_TOS,
+});
