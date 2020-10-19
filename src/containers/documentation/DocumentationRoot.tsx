@@ -6,7 +6,7 @@ import { Route, Switch, useParams } from 'react-router-dom';
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
-import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { SideNav, SideNavEntry } from '../../components';
 import { Flag } from '../../flags';
 import { APINameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';

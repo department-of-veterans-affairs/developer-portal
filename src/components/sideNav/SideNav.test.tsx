@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import { LocationDescriptor } from 'history';
 import { MemoryRouter } from 'react-router';
-import { SideNavEntry } from './SideNav';
+import { SideNavEntry } from './SideNavEntry';
 
 function testActive({
   exact = false,
