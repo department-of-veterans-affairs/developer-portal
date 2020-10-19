@@ -1,12 +1,12 @@
 import * as Sentry from "@sentry/browser";
 
-export const fetchWrap = async <T extends Record<string, unknown> | any>(request: Record<string, unknown>, errorFlag: Record<string, unknown>, dispatch: Record<string, unknown> ): Promise<T> => {
+export const fetchWrap = async (request: Request, errorFlag: string) => {
   try {
     const response = await fetch(request);
     if (!response.ok && response.status !== 400) {
       throw Error(response.statusText);
     }
-    const json: Record<string, unknown> = await response.json();
+    const json = await response.json() as Record<string, unknown>;
     if (json.errors) {
       throw Error(`${errorFlag}: ${json.errors.join(', ')}`);
     }
@@ -17,9 +17,7 @@ export const fetchWrap = async <T extends Record<string, unknown> | any>(request
     } else {
       return dispatch(submitFormError(json.errorMessage));
     }
-  }
-    
-  catch (error) {
+  } catch (error) {
     Sentry.withScope(scope => {
       scope.setLevel(Sentry.Severity.fromString('warning'));
       Sentry.captureException(error);
