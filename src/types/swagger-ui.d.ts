@@ -9,67 +9,12 @@
  */
 
 declare module 'swagger-ui' {
-  import { List, Map, OrderedMap } from 'immutable';
+  import { Map } from 'immutable';
+  import React from 'react';
+  import { OpenAPISpec, SwaggerMapValues } from 'swagger-client';
 
-  type Example = string | Record<string, unknown>;
-  export interface Parameter {
-    name: string;
-    in: 'query' | 'header' | 'path' | 'cookie';
-    example: Example;
-  }
-
-  export interface Schema {
-    type: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'null';
-    properties: { [key: string]: Schema };
-    items?: Schema;
-    example: Example;
-
-    // not actually a part of the OpenAPI Spec - name is the key in properties, above, but we
-    // store it here for convenience in CurlForm.
-    name: string;
-  }
-
-  export interface MediaType {
-    schema: Schema;
-  }
-
-  export interface RequestBody {
-    description: string;
-    content: { [key: string]: MediaType };
-  }
-
-  export interface Operation {
-    parameters: Parameter[];
-    requestBody: RequestBody;
-    operationId?: string;
-    security: { [schemeName: string]: string } | Array<{ [schemeName: string]: string }>;
-  }
-
-  export interface Server {
-    url: string;
-    description: string;
-  }
-
-  export interface OpenAPISpecV3 {
-    openapi: string;
-    servers: Server[];
-  }
-
-  export interface OpenAPISpecV2 {
-    swagger: string;
-    host: string;
-    basePath: string;
-    schemes: string[];
-  }
-
-  export type OpenAPISpec = OpenAPISpecV3 | OpenAPISpecV2;
-
-  // Swagger doesn't really have any consistent typing, or typing at all
-  export type SwaggerMapValues =
-    | string
-    | List<SwaggerMapValues>
-    | Map<string, SwaggerMapValues>
-    | OrderedMap<string, SwaggerMapValues>;
+  // re-export swagger-client
+  export * from 'swagger-client';
 
   // partial result of system.spec().toJS()
   export interface SwaggerSpecObject {
@@ -79,6 +24,28 @@ declare module 'swagger-ui' {
     loadingStatus: string;
   }
 
+  /**
+   * SWAGGER UI COMPONENTS
+   */
+  export interface CollapseProps {
+    children: React.ReactNode;
+    isOpened: boolean;
+  }
+
+  export interface MarkdownProps {
+    source: string;
+  }
+
+  export interface DeepLinkProps {
+    enabled: boolean;
+    isShown: boolean;
+    path: string;
+    text: string;
+  }
+
+  /**
+   * SYSTEM
+   */
   export interface System {
     spec: () => Map<string, SwaggerMapValues>;
     fn: {
