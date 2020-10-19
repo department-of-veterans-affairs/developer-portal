@@ -1,22 +1,18 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import * as React from 'react';
-
-import { Flag } from 'flag';
-import { RouteComponentProps } from 'react-router';
-
+import { useParams } from 'react-router';
+import { Flag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
-import { IApiDescription } from '../../apiDefs/schema';
-import { AuthorizationCard } from '../../components';
+import { APIDescription } from '../../apiDefs/schema';
+import { AuthorizationCard, OnlyTags } from '../../components';
 import CardLink from '../../components/CardLink';
-import OnlyTags from '../../components/OnlyTags';
 import PageHeader from '../../components/PageHeader';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
-import { IApiNameParam } from '../../types';
+import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 
-const CategoryPage = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Element => {
-  
-  const { apiCategoryKey } = match.params;
+const CategoryPage = (): JSX.Element => {
+  const { apiCategoryKey } = useParams<APINameParam>();
+ 
   const {
     apis,
     name: categoryName,
@@ -25,10 +21,10 @@ const CategoryPage = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Elemen
 
   let cardSection;
   if (apis.length > 0) {
-    const apiCards = apis.map((apiDesc: IApiDescription) => {
+    const apiCards = apis.map((apiDesc: APIDescription) => {
       const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
       return (
-        <Flag key={name} name={`hosted_apis.${urlFragment}`}>
+        <Flag key={name} name={['hosted_apis', urlFragment]}>
           <CardLink
             name={name}
             subhead={
@@ -47,9 +43,9 @@ const CategoryPage = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Elemen
     });
 
     const authCard =
-        apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' ? (
-          <AuthorizationCard categoryKey={apiCategoryKey} />
-        ) : null;
+      apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' ? (
+        <AuthorizationCard categoryKey={apiCategoryKey} />
+      ) : null;
 
     cardSection = (
       <div role="navigation" aria-labelledby={PAGE_HEADER_ID}>
@@ -70,7 +66,6 @@ const CategoryPage = ({ match }: RouteComponentProps<IApiNameParam>): JSX.Elemen
       <hr />
     </section>
   );
-  
 };
 
 export default CategoryPage;

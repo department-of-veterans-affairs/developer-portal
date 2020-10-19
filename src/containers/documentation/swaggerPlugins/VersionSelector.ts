@@ -1,12 +1,16 @@
 import { createSelector } from 'reselect';
+import { APIMetadata } from '../../../types';
 
+const apiVersion = (state: Map<string, unknown>): string => state.get('apiVersion') as string;
 export const VersionSelector = {
   selectors: {
-    apiMetadata: (state: any) => state.get('apiMetadata'),
-    apiName: (state: any) => state.get('apiName'),
-    apiVersion: (state: any) => state.get('apiVersion'),
-    majorVersion: createSelector((state: any) => state.get('apiVersion'), (apiVersion: string) => {
-      return apiVersion ? apiVersion.substring(0, 1) : '0';
-    }),
+    apiMetadata: (state: Map<string, unknown>): APIMetadata =>
+      state.get('apiMetadata') as APIMetadata,
+    apiName: (state: Map<string, unknown>): string => state.get('apiName') as string,
+    apiVersion: (state: Map<string, unknown>): string => state.get('apiVersion') as string,
+    majorVersion: createSelector(
+      apiVersion,
+      (version: string): string => (version ? version.substring(0, 1) : '0'),
+    ),
   },
 };

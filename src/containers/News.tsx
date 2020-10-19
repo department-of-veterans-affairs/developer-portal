@@ -1,11 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
+import { HoverImage, SideNav, SideNavEntry } from '../components';
 import CardLink from '../components/CardLink';
 import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
-import HoverImage from '../components/HoverImage';
 import PageHeader from '../components/PageHeader';
-import SideNav, { SideNavEntry } from '../components/SideNav';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
@@ -38,7 +37,6 @@ const NewsItem = ({ item, media }: { item: NewsItem; media: boolean }) =>
   media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
 
 const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
-
   const description = <ItemDescription item={item} />;
   if (item.url.includes('www.youtube.com')) {
     return (
@@ -51,7 +49,7 @@ const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
 
   return (
     <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
-      <div aria-hidden={true}>
+      <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
           <HoverImage
             imagePath={require('../assets/video-player.png')}
@@ -65,7 +63,6 @@ const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
 };
 
 const ItemDescription = ({ item }: { item: NewsItem }): JSX.Element => (
-
   <p>
     <a href={item.url}>{item.title}</a>
     <br />
@@ -85,7 +82,7 @@ const News = (): JSX.Element => {
       <div className="vads-l-grid-container">
         <div className="vads-l-row">
           <SideNav ariaLabel="News Side Nav">
-            <SideNavEntry key="all" exact={true} to="/news" name="Overview" />
+            <SideNavEntry key="all" exact to="/news" name="Overview" />
             {sections.map((section: any) => (
               <SideNavEntry
                 key={section.id}

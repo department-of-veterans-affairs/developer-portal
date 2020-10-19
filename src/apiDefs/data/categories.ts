@@ -5,7 +5,7 @@ import { healthContent } from '../../content/apiDocs/health';
 import { vaFormsContent } from '../../content/apiDocs/vaForms';
 import { verificationContent } from '../../content/apiDocs/verification';
 
-import { IApiCategories } from '../schema';
+import { APICategories } from '../schema';
 import appealsApis from './appeals';
 import benefitsApis from './benefits';
 import facilitiesApis from './facilities';
@@ -13,7 +13,7 @@ import healthApis from './health';
 import vaForms from './vaForms';
 import verificationApis from './verification';
 
-const apiDefinitions: IApiCategories = {
+const apiDefinitions: APICategories = {
   appeals: {
     apis: appealsApis,
     content: appealsContent,

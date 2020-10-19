@@ -1,11 +1,11 @@
 import 'jest';
 
-import { IToggleSelectedApi } from '../actions';
-import { IApplication } from '../types';
+import { ToggleSelectedAPI } from '../actions';
+import { DevApplication } from '../types';
 import * as constants from '../types/constants';
 import { application } from './index';
 
-const app: IApplication = {
+const app: DevApplication = {
   inputs: {
     apis: {
       appeals: false,
@@ -80,7 +80,7 @@ describe('application', () => {
   it('should toggle selected APIs', () => {
     const applyApis: string[] = Object.keys(constants.APPLY_FIELDS_TO_URL_FRAGMENTS);
     applyApis.forEach(apiId => {
-      const toggleAction: IToggleSelectedApi = {
+      const toggleAction: ToggleSelectedAPI = {
         apiId,
         type: constants.TOGGLE_SELECTED_API,
       };
@@ -93,7 +93,7 @@ describe('application', () => {
           }),
         }),
       );
-      
+
       newApp = application(newApp, toggleAction);
       expect(newApp.inputs).toEqual(
         expect.objectContaining({

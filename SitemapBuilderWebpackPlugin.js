@@ -1,28 +1,28 @@
 /* tslint:disable no-console */
 
-/*  This webpack plugin uses the existing React routes and JSON API definitions 
-*   included in the app to create a sitemap at build using react-router-sitemap
-*   (as opposed to having to maintain a separate map of the app that uses 
-*   Node.js-friendly code or building the sitemap by hand). 
-*   This is complicated by the fact that the app's routes and API definitions 
-*   include dependencies on the components that they render, leading to dependencies 
-*   on not just tsx files but also scss and mdx files.
-*   The processing necessary to transform these dependencies into Node.js-friendly code 
-*   taps into the existing webpack configuration to avoid a reimplementation 
-*   of this workflow that also is run at build.
-*
-*   The basic flow of this plugin is:
-*     1. Copy the webpack.config.prod.js and change the entry point to Routes.tsx
-*     2. Compile Routes.tsx and its dependencies
-*     3. Save the compiled bundle into memory and execute the script 
-*        using a Node.js virtual machine with implementations of web standards (notably DOM and Window)
-*     4. use the resulting exported function `getSitemapData` to build a sitemap with react-router-sitemap
-*     5. add `sitemap.xml` to the original webpack compilation's assets so that it is output like any other file in the build bundle
-*   You can pass this plugin the option verbose: true to receive messages as it moves through this flow.
-*/
+/*  This webpack plugin uses the existing React routes and JSON API definitions
+ *   included in the app to create a sitemap at build using react-router-sitemap
+ *   (as opposed to having to maintain a separate map of the app that uses
+ *   Node.js-friendly code or building the sitemap by hand).
+ *   This is complicated by the fact that the app's routes and API definitions
+ *   include dependencies on the components that they render, leading to dependencies
+ *   on not just tsx files but also scss and mdx files.
+ *   The processing necessary to transform these dependencies into Node.js-friendly code
+ *   taps into the existing webpack configuration to avoid a reimplementation
+ *   of this workflow that also is run at build.
+ *
+ *   The basic flow of this plugin is:
+ *     1. Copy the webpack.config.prod.js and change the entry point to Routes.tsx
+ *     2. Compile Routes.tsx and its dependencies
+ *     3. Save the compiled bundle into memory and execute the script
+ *        using a Node.js virtual machine with implementations of web standards (notably DOM and Window)
+ *     4. use the resulting exported function `getSitemapData` to build a sitemap with react-router-sitemap
+ *     5. add `sitemap.xml` to the original webpack compilation's assets so that it is output like any other file in the build bundle
+ *   You can pass this plugin the option verbose: true to receive messages as it moves through this flow.
+ */
 
 const webpack = require('webpack');
-const MemoryFileSystem = require('memory-fs')
+const MemoryFileSystem = require('memory-fs');
 const util = require('util');
 const vm = require('vm');
 const fs = require('fs');
@@ -30,7 +30,9 @@ const fs = require('fs');
 class SitemapBuilderPlugin {
   constructor(options) {
     if (typeof options === 'undefined' || !options.routesFile) {
-      console.error('To use SitemapBuilderPlugin you must provide an options object with routesFile as a property')
+      console.error(
+        'To use SitemapBuilderPlugin you must provide an options object with routesFile as a property',
+      );
     }
     this.routesFile = options.routesFile;
     this.polyfillsFile = options.polyfillsFile;
@@ -58,8 +60,8 @@ class SitemapBuilderPlugin {
         config.optimization = { minimize: false };
 
         this.compileRoutes(config)
-          .then((mfs) => this.executeRoutes(mfs))
-          .then((sitemapConfig) => this.buildSitemap(sitemapConfig, compilation))
+          .then(mfs => this.executeRoutes(mfs))
+          .then(sitemapConfig => this.buildSitemap(sitemapConfig, compilation))
           .then(() => this.finish(callback))
           .catch(err => this.finishWithError(err, compilation, callback));
       }
@@ -83,8 +85,8 @@ class SitemapBuilderPlugin {
         } else {
           resolve(mfs);
         }
-      })
-    })
+      });
+    });
   }
 
   executeRoutes(mfs) {
@@ -97,9 +99,10 @@ class SitemapBuilderPlugin {
       const jsdom = require('jsdom');
       const { JSDOM } = jsdom;
       const dom = new JSDOM(``, { runScripts: 'outside-only' });
-      const sitemapConfig = dom.runVMScript(script).sitemapConfig();
+      const vmContext = dom.getInternalVMContext();
+      const sitemapConfig = script.runInContext(vmContext).sitemapConfig();
       resolve(sitemapConfig);
-    })
+    });
   }
 
   buildSitemap(sitemapConfig, compilation) {
@@ -111,23 +114,22 @@ class SitemapBuilderPlugin {
     const prodURL = require(paths.appPackageJson).homepage;
     const Sitemap = require('react-router-sitemap').default;
 
-    const sitemap = (
-      new Sitemap(sitemapConfig.topLevelRoutes())
-        .filterPaths(sitemapConfig.pathFilter)
-        .applyParams(sitemapConfig.paramsConfig)
-        .build(prodURL)
-        .save(path.join(paths.appBuild, 'sitemap.xml'))
-    ).sitemaps[0].cache;
+    const sitemap = new Sitemap(sitemapConfig.topLevelRoutes())
+      .filterPaths(sitemapConfig.pathFilter)
+      .applyParams(sitemapConfig.paramsConfig)
+      .build(prodURL)
+      .save(path.join(paths.appBuild, 'sitemap.xml'));
+    const cachedSitemap = sitemap.sitemaps[0].cache;
 
     fs.unlinkSync(path.join(paths.appBuild, 'sitemap.xml'));
 
     compilation.fileDependencies.add(this.fileName);
     compilation.assets[this.fileName] = {
       size: () => {
-        return Buffer.byteLength(sitemap, 'utf8');
+        return Buffer.byteLength(cachedSitemap, 'utf8');
       },
       source: () => {
-        return sitemap;
+        return cachedSitemap;
       },
     };
   }

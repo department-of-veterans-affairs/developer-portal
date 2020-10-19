@@ -1,13 +1,12 @@
 import '@testing-library/jest-dom';
 import { cleanup, render, screen } from '@testing-library/react';
-import { FlagsProvider } from 'flag';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
 import { fakeAPIs, fakeCategories, fakeCategoryOrder } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
-import { IApiCategories, IApiDescription } from '../../apiDefs/schema';
-import { getFlags } from '../../App';
+import { APICategories, APIDescription } from '../../apiDefs/schema';
+import { FlagsProvider, getFlags } from '../../flags';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 function renderComponent() {
@@ -22,8 +21,8 @@ function renderComponent() {
 }
 
 describe('ReleaseNotesOverview', () => {
-  let apiDefsSpy: jest.SpyInstance<IApiCategories>;
-  let allAPIsSpy: jest.SpyInstance<IApiDescription[]>;
+  let apiDefsSpy: jest.SpyInstance<APICategories>;
+  let allAPIsSpy: jest.SpyInstance<APIDescription[]>;
 
   beforeAll(() => {
     jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
@@ -63,7 +62,7 @@ describe('ReleaseNotesOverview', () => {
 
     it('does not render a card for a disabled category', () => {
       const sportsAPIs = fakeCategories.sports.apis.map(
-        (api: IApiDescription): IApiDescription => ({
+        (api: APIDescription): APIDescription => ({
           ...api,
           enabledByDefault: false,
         }),

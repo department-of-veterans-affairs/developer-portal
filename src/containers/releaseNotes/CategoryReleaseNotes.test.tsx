@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
-import { FlagsProvider } from 'flag';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter, Route } from 'react-router';
@@ -12,13 +11,13 @@ import {
   fakeCategoryOrder,
 } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
-import { IApiCategories, IApiDescription } from '../../apiDefs/schema';
-import { getFlags } from '../../App';
+import { APICategories, APIDescription } from '../../apiDefs/schema';
+import { FlagsProvider, getFlags } from '../../flags';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
-  let apiDefsSpy: jest.SpyInstance<IApiCategories>;
-  let allAPIsSpy: jest.SpyInstance<IApiDescription[]>;
+  let apiDefsSpy: jest.SpyInstance<APICategories>;
+  let allAPIsSpy: jest.SpyInstance<APIDescription[]>;
   beforeEach(() => {
     jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
     apiDefsSpy = jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
@@ -229,7 +228,7 @@ describe('ReleaseNotesCollection', () => {
 
       it('does not include card links for disabled APIs', () => {
         const apis = fakeAPIs.map(
-          (api: IApiDescription): IApiDescription => ({
+          (api: APIDescription): APIDescription => ({
             ...api,
             deactivationInfo: extraDeactivationInfo,
           }),
@@ -285,7 +284,7 @@ describe('ReleaseNotesCollection', () => {
       });
 
       it('does not include release notes for disabled APIs', () => {
-        const apis: IApiDescription[] = fakeAPIs.map(api => ({
+        const apis: APIDescription[] = fakeAPIs.map(api => ({
           ...api,
           deactivationInfo: extraDeactivationInfo,
         }));

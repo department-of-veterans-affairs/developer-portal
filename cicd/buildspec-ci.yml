@@ -139,10 +139,10 @@ phases:
         fi
       # Call the release job if this is running on master branch.
       - phase=release
-      # - |
-      #   if [[ ${BRANCH} == 'master' ]]; then
-      #     aws codebuild start-build --project-name developer-portal-release --source-version ${CODEBUILD_RESOLVED_SOURCE_VERSION}
-      #   fi
+      - |
+        if [[ ${BRANCH} == 'master' ]]; then
+          aws codebuild start-build --project-name developer-portal-release --source-version ${CODEBUILD_RESOLVED_SOURCE_VERSION}
+        fi
       - phase=success
   post_build:
     commands:
