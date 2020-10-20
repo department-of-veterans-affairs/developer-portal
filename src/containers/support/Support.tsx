@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { Route } from 'react-router';
 
-import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { SideNav, SideNavEntry } from '../../components';
 import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';

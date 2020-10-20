@@ -1,7 +1,6 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-
-import CardLink from '../CardLink';
+import { CardLink } from '../../components';
 
 const AuthorizationCardPropTypes = {
   categoryKey: PropTypes.string.isRequired,

@@ -1,16 +1,27 @@
 import classNames from 'classnames';
-import * as React from 'react';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { NavHashLink } from 'react-router-hash-link';
 
 import './CardLink.scss';
 
-export interface ICardLinkProps {
-  name: string;
-  url: string;
-  subhead?: JSX.Element;
-  className?: string;
-  children?: React.ReactNode;
-}
+const CardLinkPropTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  name: PropTypes.string.isRequired,
+  subhead: PropTypes.node,
+  url: PropTypes.string.isRequired,
+};
+
+// export interface CardLinkProps {
+//   name: string;
+//   url: string;
+//   subhead?: JSX.Element;
+//   className?: string;
+//   children?: React.ReactNode;
+// }
+
+type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
 
 /*
  * The CardLink component is a pattern used across the developer portal
@@ -18,7 +29,7 @@ export interface ICardLinkProps {
  * in the form of a card. It can optionally render an arbitrary JSX.Element
  * subhead before its children, which should be a description of the link.
  */
-const CardLink = (props: ICardLinkProps): JSX.Element => (
+const CardLink = (props: CardLinkProps): JSX.Element => (
   <NavHashLink
     to={props.url}
     className={classNames(
@@ -48,4 +59,5 @@ const CardLink = (props: ICardLinkProps): JSX.Element => (
   </NavHashLink>
 );
 
-export default CardLink;
+CardLink.propTypes = CardLinkPropTypes;
+export { CardLink };

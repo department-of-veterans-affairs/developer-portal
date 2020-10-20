@@ -5,7 +5,7 @@ import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecat
 import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
-import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { SideNav, SideNavEntry } from '../../components';
 import { Flag } from '../../flags';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';

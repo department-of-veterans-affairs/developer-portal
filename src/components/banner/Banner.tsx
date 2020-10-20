@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-import { defaultFlexContainer } from '../styles/vadsUtils';
+import { defaultFlexContainer } from '../../styles/vadsUtils';
 
-import flagIcon from '../../node_modules/uswds/src/img/favicons/favicon-40.png';
-import dotGovIcon from '../assets/icon-dot-gov.svg';
-import httpsIcon from '../assets/icon-https.svg';
+import flagIcon from '../../../node_modules/uswds/src/img/favicons/favicon-40.png';
+import dotGovIcon from '../../assets/icon-dot-gov.svg';
+import httpsIcon from '../../assets/icon-https.svg';
 import './Banner.scss';
 
 const GuidanceBoxPropTypes = {
@@ -101,7 +101,7 @@ const Banner = (): JSX.Element => {
                     'vads-u-font-weight--normal',
                     'vads-u-text-decoration--underline',
                   )}>
-                    Here's how you know
+                    Here&apos;s how you know
                   </span>
                 </button>
               </div>
@@ -116,11 +116,11 @@ const Banner = (): JSX.Element => {
               <div className="vads-l-row">
                 <GuidanceBox id="dot-gov-guidance" icon={dotGovIcon} icon_alt="Government icon" title="The .gov means it's official">
                   Federal government websites often end in .gov or .mil. Before sharing sensitive
-                  information, make sure you're on a federal government site.
+                  information, make sure you&apos;re on a federal government site.
                 </GuidanceBox>
                 <GuidanceBox id="https-guidance" icon={httpsIcon} icon_alt="HTTPS browser icon" title="The site is secure.">
                   <span>
-                    The <strong>https://</strong> ensures that you're connecting to the official website
+                    The <strong>https://</strong> ensures that you&apos;re connecting to the official website
                     and that any information you provide is encrypted and sent securely.
                   </span>
                 </GuidanceBox>
@@ -134,5 +134,4 @@ const Banner = (): JSX.Element => {
 };
 
 Banner.propTypes = {};
-
-export default Banner;
+export { Banner };
