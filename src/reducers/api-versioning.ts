@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 import { SetInitialVersioning, SetRequestedAPIVersion } from '../actions';
-import { VersionInfo } from '../containers/documentation/SwaggerDocs';
-import { APIMetadata, APIVersioning } from '../types';
+import { APIMetadata, APIVersioning, VersionMetadata } from '../types';
 import * as constants from '../types/constants';
 
 const currentVersionStatus = 'Current Version';
@@ -21,11 +20,11 @@ const getVersionInfo = createSelector(
       metadata &&
       (!requestedVersion || requestedVersion === constants.CURRENT_VERSION_IDENTIFIER)
     ) {
-      const selectCurrentVersion = (versionInfo: VersionInfo) =>
+      const selectCurrentVersion = (versionInfo: VersionMetadata) =>
         versionInfo.status === currentVersionStatus;
       return metadata.meta.versions.find(selectCurrentVersion);
     } else {
-      const selectSpecificVersion = (versionInfo: VersionInfo) =>
+      const selectSpecificVersion = (versionInfo: VersionMetadata) =>
         versionInfo.version === requestedVersion;
       return metadata.meta.versions.find(selectSpecificVersion);
     }
@@ -35,7 +34,7 @@ const getVersionInfo = createSelector(
 export const getDocURL = createSelector(
   getVersionInfo,
   getInitialDocURL,
-  (versionInfo: VersionInfo, initialDocUrl: string) => {
+  (versionInfo: VersionMetadata, initialDocUrl: string) => {
     if (!versionInfo) {
       return initialDocUrl;
     }
@@ -45,7 +44,7 @@ export const getDocURL = createSelector(
 
 export const getVersion = createSelector(
   getVersionInfo,
-  (versionInfo: VersionInfo) => {
+  (versionInfo: VersionMetadata) => {
     if (!versionInfo) {
       return constants.CURRENT_VERSION_IDENTIFIER;
     }
@@ -57,7 +56,7 @@ export const getVersion = createSelector(
 
 export const getVersionNumber = createSelector(
   getVersionInfo,
-  (versionInfo: VersionInfo) => {
+  (versionInfo: VersionMetadata) => {
     if (!versionInfo) {
       return '';
     }

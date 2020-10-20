@@ -25,14 +25,6 @@ export interface SwaggerDocsProps {
   versionNumber: string;
 }
 
-export interface VersionInfo {
-  version: string;
-  status: string;
-  path: string;
-  healthcheck: string;
-  internal_only: boolean;
-}
-
 const mapStateToProps = (state: RootState) => ({
   docUrl: getDocURL(state.apiVersioning),
   location: state.router.location,
