@@ -7,16 +7,12 @@
 
 import classNames from 'classnames';
 
-export const defaultFlexContainer = (alignItemsCenter: boolean = false) => {
-  return classNames(
-    'vads-u-display--flex',
-    'vads-u-flex-direction--row',
-    'vads-u-flex-wrap--wrap',
-    {
-      'vads-u-align-items--center': alignItemsCenter,
-    },
-  );
-};
+export const defaultFlexContainer = (alignItemsCenter = false): string =>
+  classNames('vads-u-display--flex', 'vads-u-flex-direction--row', 'vads-u-flex-wrap--wrap', {
+    'vads-u-align-items--center': alignItemsCenter,
+  });
 
-export const mobileOnly = () => classNames('vads-u-display--block', 'medium-screen:vads-u-display--none');
-export const desktopOnly = () => classNames('vads-u-display--none', 'medium-screen:vads-u-display--block');
+export const mobileOnly = (): string =>
+  classNames('vads-u-display--block', 'medium-screen:vads-u-display--none');
+export const desktopOnly = (): string =>
+  classNames('vads-u-display--none', 'medium-screen:vads-u-display--block');
