@@ -7,9 +7,7 @@ export const SET_INITIAL_VERSIONING = 'SET_INITIAL_VERSIONING';
 export type SET_INITIAL_VERSIONING = typeof SET_INITIAL_VERSIONING;
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';
-
 export const OPEN_API_SPEC_HOST: string = process.env.REACT_APP_VETSGOV_SWAGGER_API || '';
-export const PROD_OPEN_API_SPEC_HOST = 'https://api.va.gov';
 
 export const APPLY_URL = `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL ||
   ''}/internal/developer-portal-backend/developer_application`;
