@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import './EmbeddedYoutubeVideo.scss';
 
-interface IEmbeddedYoutubeVideoProps {
+interface EmbeddedYoutubeVideoProps {
   url: string;
   title: string;
 }
@@ -12,7 +12,7 @@ interface IEmbeddedYoutubeVideoProps {
 const YOUTUBE_SERVICE = 'youtube';
 const YOUTUBE_BASE = 'https://www.youtube.com/embed/';
 
-export default function EmbeddedYoutubeVideo({ url, title }: IEmbeddedYoutubeVideoProps) {
+export const EmbeddedYoutubeVideo = ({ url, title }: EmbeddedYoutubeVideoProps): JSX.Element => {
   const videoInfo = getVideoId(url);
   if (videoInfo.service !== YOUTUBE_SERVICE) {
     return <a href={url}>{url}</a>;
@@ -39,8 +39,8 @@ export default function EmbeddedYoutubeVideo({ url, title }: IEmbeddedYoutubeVid
         title={title}
         src={embedUrl}
         frameBorder="0"
-        allowFullScreen={true}
+        allowFullScreen
       />
     </div>
   );
-}
+};
