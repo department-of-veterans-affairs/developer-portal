@@ -1,33 +1,30 @@
 import * as React from 'react';
+import { System } from './types';
 import VersionSelect from './VersionSelect';
 
 // These two props are handed in via swagger-ui
 // getSystem allows access to the swagger-ui state
 // getComponent just allows a helper function to get the base layout
 // see: https://github.com/swagger-api/swagger-ui/blob/master/docs/customization/custom-layout.md
-export interface IExtendedLayoutProps {
-  getSystem: any;
-  getComponent: any;
+export interface ExtendedLayoutProps {
+  getSystem: () => System;
+  getComponent: (componentName: string, container: boolean | undefined) => React.ComponentType;
 }
 
-export default class ExtendedLayout extends React.Component<IExtendedLayoutProps, {}> {
-  public constructor(props: IExtendedLayoutProps) {
-    super(props);
-  }
+const ExtendedLayout: React.FunctionComponent<ExtendedLayoutProps> = (
+  props: ExtendedLayoutProps,
+): JSX.Element => {
+  const { getComponent, getSystem } = props;
+  const apiMetadata = getSystem().versionSelectors.apiMetadata();
+  const BaseLayout = getComponent('BaseLayout', true);
+  return (
+    <div>
+      {apiMetadata && apiMetadata.meta.versions.length > 1 && (
+        <VersionSelect getSystem={getSystem} />
+      )}
+      <BaseLayout />
+    </div>
+  );
+};
 
-  public render() {
-    const { getComponent, getSystem } = this.props;
-
-    const apiMetadata = getSystem().versionSelectors.apiMetadata();
-
-    const BaseLayout = getComponent('BaseLayout', true)!;
-    return (
-      <div>
-        {apiMetadata && apiMetadata.meta.versions.length > 1 && (
-          <VersionSelect getSystem={getSystem} />
-        )}
-        <BaseLayout />
-      </div>
-    );
-  }
-}
+export default ExtendedLayout;
