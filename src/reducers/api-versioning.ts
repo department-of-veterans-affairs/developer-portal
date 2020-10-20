@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { SetInitialVersioning, SetRequestedAPIVersion } from '../actions';
+import { SetVersioning, SetRequestedAPIVersion } from '../actions';
 import { APIVersioning, VersionMetadata } from '../types';
 import * as constants from '../types/constants';
 
@@ -70,12 +70,12 @@ export const apiVersioning = (
     requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
     versions: null,
   },
-  action: SetInitialVersioning | SetRequestedAPIVersion,
+  action: SetVersioning | SetRequestedAPIVersion,
 ): APIVersioning => {
   switch (action.type) {
     case constants.SET_REQUESTED_API_VERSION:
       return { ...state, requestedApiVersion: action.version };
-    case constants.SET_INITIAL_VERSIONING:
+    case constants.SET_VERSIONING:
       return { ...state, versions: action.versions, docUrl: action.docUrl };
     default:
       return state;

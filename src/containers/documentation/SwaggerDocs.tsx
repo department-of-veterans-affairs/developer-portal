@@ -19,7 +19,7 @@ export interface SwaggerDocsProps {
   docUrl: string;
   location: Location;
   versions: VersionMetadata[];
-  setInitialVersioning: (url: string, metadata: VersionMetadata[]) => void;
+  setVersioning: (url: string, metadata: VersionMetadata[] | null) => void;
   setRequestedApiVersion: (version: string) => void;
   version: string;
   versionNumber: string;
@@ -34,13 +34,13 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<actions.SetRequestedAPIVersion | actions.SetInitialVersioning>,
+  dispatch: Dispatch<actions.SetRequestedAPIVersion | actions.SetVersioning>,
 ) => ({
-  setInitialVersioning: (url: string, metadata: VersionMetadata[]) => {
-    dispatch(actions.setInitialVersioning(url, metadata));
-  },
   setRequestedApiVersion: (version: string) => {
     dispatch(actions.setRequstedApiVersion(version));
+  },
+  setVersioning: (url: string, metadata: VersionMetadata[]) => {
+    dispatch(actions.setVersioning(url, metadata));
   },
 });
 
@@ -89,11 +89,7 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
   private async setMetadataAndDocUrl() {
     const { openApiUrl, metadataUrl } = this.props.docSource;
     const metadata = await this.getMetadata(metadataUrl);
-    if (!metadata) {
-      return;
-    }
-
-    this.props.setInitialVersioning(openApiUrl, metadata);
+    this.props.setVersioning(openApiUrl, metadata);
   }
 
   private async getMetadata(metadataUrl?: string): Promise<VersionMetadata[] | null> {
@@ -114,18 +110,16 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
   }
 
   private renderSwaggerUI() {
-    if (document.getElementById('swagger-ui')) {
-      if (this.props.docUrl.length !== 0) {
-        const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
-        const ui: System = SwaggerUI({
-          dom_id: '#swagger-ui',
-          layout: 'ExtendedLayout',
-          plugins: [plugins],
-          url: this.props.docUrl,
-        }) as System;
-        ui.versionActions.setApiVersion(this.props.versionNumber);
-        ui.versionActions.setVersionMetadata(this.props.versions);
-      }
+    if (document.getElementById('swagger-ui') && this.props.docUrl.length !== 0) {
+      const plugins = SwaggerPlugins(this.handleVersionChange.bind(this));
+      const ui: System = SwaggerUI({
+        dom_id: '#swagger-ui',
+        layout: 'ExtendedLayout',
+        plugins: [plugins],
+        url: this.props.docUrl,
+      }) as System;
+      ui.versionActions.setApiVersion(this.props.versionNumber);
+      ui.versionActions.setVersionMetadata(this.props.versions);
     }
   }
 }
