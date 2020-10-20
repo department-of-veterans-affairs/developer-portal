@@ -20,14 +20,14 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
   }
 
   public getCurrentVersion(): string {
-    const metadata = this.props.getSystem().versionSelectors.apiMetadata();
+    const versions = this.props.getSystem().versionSelectors.versionMetadata();
     const selectCurrentVersion = (versionInfo: VersionMetadata) =>
       versionInfo.status === 'Current Version';
 
     // if this component is rendered, there should (a) be versions present in metadata and (b) 
     // be a version with the status "Current Version". as a fallback, though, we set it to the 
     // empty string as in getVersionNumber() in src/reducers/api-versioning.ts.
-    return metadata.meta.versions.find(selectCurrentVersion)?.version || '';
+    return versions.find(selectCurrentVersion)?.version || '';
   }
 
   public handleSelectChange(version: string): void {
@@ -65,8 +65,8 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
         >
           {this.props
             .getSystem()
-            .versionSelectors.apiMetadata()
-            .meta.versions.map((versionInfo: VersionMetadata) =>(
+            .versionSelectors.versionMetadata()
+            .map((versionInfo: VersionMetadata) =>(
               <option value={versionInfo.version} key={versionInfo.version}>
                 {this.buildDisplay(versionInfo)}
               </option>

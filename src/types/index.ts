@@ -25,7 +25,7 @@ export interface APIMetadata {
 
 export interface APIVersioning {
   docUrl: string;
-  metadata: APIMetadata | null;
+  versions: VersionMetadata[] | null;
   requestedApiVersion: string;
 }
 

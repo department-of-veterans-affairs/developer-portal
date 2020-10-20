@@ -8,7 +8,7 @@ import * as actions from '../../actions';
 import { APIDocSource } from '../../apiDefs/schema';
 import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';
 import { history } from '../../store';
-import { APIMetadata, RootState } from '../../types';
+import { APIMetadata, RootState, VersionMetadata } from '../../types';
 import { SwaggerPlugins, System } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
@@ -18,8 +18,8 @@ export interface SwaggerDocsProps {
   docSource: APIDocSource;
   docUrl: string;
   location: Location;
-  metadata: any;
-  setInitialVersioning: (url: string, metadata: any) => void;
+  versions: VersionMetadata[];
+  setInitialVersioning: (url: string, metadata: VersionMetadata[]) => void;
   setRequestedApiVersion: (version: string) => void;
   version: string;
   versionNumber: string;
@@ -28,15 +28,15 @@ export interface SwaggerDocsProps {
 const mapStateToProps = (state: RootState) => ({
   docUrl: getDocURL(state.apiVersioning),
   location: state.router.location,
-  metadata: state.apiVersioning.metadata,
   version: getVersion(state.apiVersioning),
   versionNumber: getVersionNumber(state.apiVersioning),
+  versions: state.apiVersioning.versions,
 });
 
 const mapDispatchToProps = (
   dispatch: Dispatch<actions.SetRequestedAPIVersion | actions.SetInitialVersioning>,
 ) => ({
-  setInitialVersioning: (url: string, metadata: any) => {
+  setInitialVersioning: (url: string, metadata: VersionMetadata[]) => {
     dispatch(actions.setInitialVersioning(url, metadata));
   },
   setRequestedApiVersion: (version: string) => {
@@ -89,10 +89,14 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
   private async setMetadataAndDocUrl() {
     const { openApiUrl, metadataUrl } = this.props.docSource;
     const metadata = await this.getMetadata(metadataUrl);
+    if (!metadata) {
+      return;
+    }
+
     this.props.setInitialVersioning(openApiUrl, metadata);
   }
 
-  private async getMetadata(metadataUrl?: string): Promise<APIMetadata | null> {
+  private async getMetadata(metadataUrl?: string): Promise<VersionMetadata[] | null> {
     if (!metadataUrl) {
       return null;
     }
@@ -101,7 +105,8 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
         method: 'GET',
       });
       const response = await fetch(request);
-      return response.json() as Promise<APIMetadata>;
+      const metadata = await (response.json() as Promise<APIMetadata>);
+      return metadata.meta.versions;
     } catch (error) {
       Sentry.captureException(error);
       return null;
@@ -119,7 +124,7 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
           url: this.props.docUrl,
         }) as System;
         ui.versionActions.setApiVersion(this.props.versionNumber);
-        ui.versionActions.setApiMetadata(this.props.metadata);
+        ui.versionActions.setVersionMetadata(this.props.versions);
       }
     }
   }

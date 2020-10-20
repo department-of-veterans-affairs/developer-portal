@@ -1,32 +1,32 @@
 import { createSelector } from 'reselect';
 import { SetInitialVersioning, SetRequestedAPIVersion } from '../actions';
-import { APIMetadata, APIVersioning, VersionMetadata } from '../types';
+import { APIVersioning, VersionMetadata } from '../types';
 import * as constants from '../types/constants';
 
 const currentVersionStatus = 'Current Version';
 const getRequestedApiVersion = (state: APIVersioning) => state.requestedApiVersion;
-const getMetadata = (state: APIVersioning) => state.metadata;
+const getAPIVersions = (state: APIVersioning) => state.versions;
 const getInitialDocURL = (state: APIVersioning) => state.docUrl;
 
 const getVersionInfo = createSelector(
   getRequestedApiVersion,
-  getMetadata,
-  (requestedVersion: string, metadata: APIMetadata) => {
-    if (!metadata) {
+  getAPIVersions,
+  (requestedVersion: string, versionMetadata: VersionMetadata[]) => {
+    if (!versionMetadata) {
       return null;
     }
 
     if (
-      metadata &&
+      versionMetadata &&
       (!requestedVersion || requestedVersion === constants.CURRENT_VERSION_IDENTIFIER)
     ) {
       const selectCurrentVersion = (versionInfo: VersionMetadata) =>
         versionInfo.status === currentVersionStatus;
-      return metadata.meta.versions.find(selectCurrentVersion);
+      return versionMetadata.find(selectCurrentVersion);
     } else {
       const selectSpecificVersion = (versionInfo: VersionMetadata) =>
         versionInfo.version === requestedVersion;
-      return metadata.meta.versions.find(selectSpecificVersion);
+      return versionMetadata.find(selectSpecificVersion);
     }
   },
 );
@@ -67,8 +67,8 @@ export const getVersionNumber = createSelector(
 export const apiVersioning = (
   state = {
     docUrl: '',
-    metadata: null,
     requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
+    versions: null,
   },
   action: SetInitialVersioning | SetRequestedAPIVersion,
 ): APIVersioning => {
@@ -76,7 +76,7 @@ export const apiVersioning = (
     case constants.SET_REQUESTED_API_VERSION:
       return { ...state, requestedApiVersion: action.version };
     case constants.SET_INITIAL_VERSIONING:
-      return { ...state, metadata: action.metadata, docUrl: action.docUrl };
+      return { ...state, versions: action.versions, docUrl: action.docUrl };
     default:
       return state;
   }
