@@ -8,7 +8,7 @@
     "build": "node scripts/build.js",
     "lint": "./node_modules/.bin/tslint --config tslint.json --project tsconfig.json",
     "lint:ci": "./node_modules/.bin/tslint --config tslint.ci.json --project tsconfig.json -t junit > lint-results.xml",
-    "eslint": "./node_modules/.bin/eslint --ext .ts,.tsx src/actions src/apiDefs src/components/onlyTags src/containers/apply src/containers/documentation/swaggerPlugins src/containers/releaseNotes src/containers/support src/reducers",
+    "eslint": "./node_modules/.bin/eslint --ext .ts,.tsx src/actions src/apiDefs src/components/onlyTags src/containers/apply src/containers/documentation/swaggerPlugins src/containers/releaseNotes src/containers/support src/reducers src/types",
     "test": "echo You should run test:unit, test:e2e, test:accessibility, or test:visual",
     "test:unit": "node scripts/test.js --projects=unit.jest.config.js",
     "test:unit:ci": "node scripts/test.js --projects=unit.jest.config.js --ci --testResultsProcessor=\"./node_modules/jest-junit-reporter\"",
