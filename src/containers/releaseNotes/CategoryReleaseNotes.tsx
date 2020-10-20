@@ -1,7 +1,7 @@
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import classNames from 'classnames';
 import * as React from 'react';
-import { useParams } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
@@ -115,13 +115,17 @@ const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => (
 export const CategoryReleaseNotes = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const categoryDefinition = getApiDefinitions()[apiCategoryKey];
-  return (
-    <ReleaseNotesCollection
-      categoryKey={apiCategoryKey}
-      apiCategory={categoryDefinition}
-      apiFlagName="hosted_apis"
-    />
-  );
+  if (categoryDefinition != null) {
+    return (
+      <ReleaseNotesCollection
+        categoryKey={apiCategoryKey}
+        apiCategory={categoryDefinition}
+        apiFlagName="hosted_apis"
+      />
+    );
+  } else {
+    return <Redirect to="/release-notes" />;
+  }
 };
 
 export const DeactivatedReleaseNotes = (): JSX.Element => (
