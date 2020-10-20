@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter, Route, Router } from 'react-router';
@@ -14,7 +15,6 @@ import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
-import { createMemoryHistory } from 'history';
 
 describe('ReleaseNotesCollection', () => {
   let apiDefsSpy: jest.SpyInstance<APICategories>;
@@ -152,10 +152,10 @@ describe('ReleaseNotesCollection', () => {
         const history = createMemoryHistory({ initialEntries: ['/release-notes/fakeCategory'] });
         const { container } = render(
           <Router history={history}>
-            <Route path="/release-notes" exact={true} render={() => <div>/release-notes</div>} />
+            <Route path="/release-notes" exact render={() => <div>/release-notes</div>} />
             <Route
               path="/release-notes/fakeCategory"
-              exact={true}
+              exact
               component={CategoryReleaseNotes}
             />
           </Router>,
