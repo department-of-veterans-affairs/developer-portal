@@ -1,13 +1,14 @@
 import classNames from 'classnames';
-import { Flag } from 'flag';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
+import { NavBar } from '../../components';
+import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
+import { onHashAnchorClick } from '../../utils/clickHandlers';
 import Banner from '../Banner';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
-import NavBar from '../NavBar';
-import Search from '../Search';
+import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
 import './Header.scss';
 
@@ -17,15 +18,6 @@ const buttonClassnames = classNames(
   'vads-u-color--primary-darkest',
   'vads-u-margin-right--2',
 );
-
-// need to manually set focus on navigation to #main, since React Router cancels
-// native anchor click behavior and react-router-hash-link doesn't handle focus
-const handleSkipNavClick = () => {
-  const mainElement: HTMLElement | null = document.querySelector('main');
-  if (mainElement) {
-    mainElement.focus();
-  }
-};
 
 const Header = (): JSX.Element => {
   /**
@@ -42,7 +34,7 @@ const Header = (): JSX.Element => {
    */
   return (
     <>
-      <Flag name="show_testing_notice">
+      <Flag name={['show_testing_notice']}>
         <TestingNotice />
       </Flag>
       <header
@@ -52,7 +44,7 @@ const Header = (): JSX.Element => {
         <HashLink
           to="#main"
           className={classNames('va-api-skipnav', 'vads-u-padding-x--2', 'vads-u-padding-y--1')}
-          onClick={handleSkipNavClick}
+          onClick={onHashAnchorClick}
         >
           Skip to main content
         </HashLink>

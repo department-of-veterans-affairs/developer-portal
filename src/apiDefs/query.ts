@@ -14,35 +14,30 @@
 */
 
 import apiDefs, { apiCategoryOrder } from './data/categories';
-import { IApiCategory, IApiDescription } from './schema';
+import { APICategories, APICategory, APIDescription } from './schema';
 
-const getApiDefinitions = () => apiDefs;
-const getApiCategoryOrder = () => apiCategoryOrder;
+const getApiDefinitions = (): APICategories => apiDefs;
+const getApiCategoryOrder = (): string[] => apiCategoryOrder;
 
-const getAllApis = (): IApiDescription[] => {
-  return Object.values(getApiDefinitions()).flatMap((category: IApiCategory) => category.apis);
-};
+const getAllApis = (): APIDescription[] =>
+  Object.values(getApiDefinitions()).flatMap((category: APICategory) => category.apis);
 
-function lookupApiByFragment(apiKey: string): IApiDescription | null {
-  const hasMatchingIdentifier = (apiDesc: IApiDescription): boolean =>
+const lookupApiByFragment = (apiKey: string): APIDescription | null => {
+  const hasMatchingIdentifier = (apiDesc: APIDescription): boolean =>
     apiDesc.urlFragment === apiKey;
   const apiResult = getAllApis().find(hasMatchingIdentifier);
   return apiResult || null;
-}
+};
 
-function lookupApiCategory(categoryKey: string): IApiCategory | null {
-  return apiDefs[categoryKey] || null;
-}
+const lookupApiCategory = (categoryKey: string): APICategory | null => apiDefs[categoryKey] || null;
 
-function apisFor(apiList: string[]): IApiDescription[] {
+const apisFor = (apiList: string[]): APIDescription[] => {
   const allApis = getAllApis();
   const searchedApiSet = new Set<string>(apiList);
-  return allApis.filter((api: IApiDescription) => searchedApiSet.has(api.urlFragment));
-}
+  return allApis.filter((api: APIDescription) => searchedApiSet.has(api.urlFragment));
+};
 
-function includesOauthAPI(apiList: string[]): boolean {
-  return apisFor(apiList).some(api => !!api.oAuth);
-}
+const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(api => !!api.oAuth);
 
 export {
   getAllApis,
@@ -50,5 +45,5 @@ export {
   getApiDefinitions,
   lookupApiByFragment,
   lookupApiCategory,
-  includesOauthAPI,
+  includesOAuthAPI,
 };

@@ -1,9 +1,6 @@
 import { curlify } from './curlify';
-import DisableTryItOut from './DisableTryItOut';
 import ExtendedLayout from './ExtendedLayout';
 import OperationTag from './OperationTag';
-import Servers from './Servers';
-import ServersContainer from './ServersContainer';
 import './StyleOverride.scss';
 import { VersionActions } from './VersionActions';
 import { VersionReducers } from './VersionReducers';
@@ -11,20 +8,23 @@ import { VersionSelector } from './VersionSelector';
 import { WrapHighlightCode } from './WrapHighlightCode';
 import { WrapParameters } from './WrapParameters';
 
+export * from './types';
 export function SwaggerPlugins(versionHandler: any) {
   return {
     components: {
       ExtendedLayout,
       OperationTag,
-      Servers,
-      ServersContainer,
+      ServersContainer: () => null,
+      authorizeBtn: () => null,
     },
     fn: {
       curlify,
     },
     statePlugins: {
       spec: {
-        ...DisableTryItOut.toggleTryItOut(),
+        wrapSelectors: {
+          allowTryItOutFor: () => () => false,
+        },
       },
       version: {
         ...VersionActions(versionHandler),
@@ -33,7 +33,6 @@ export function SwaggerPlugins(versionHandler: any) {
       },
     },
     wrapComponents: {
-      ...DisableTryItOut.toggleAuthorize(),
       ...WrapHighlightCode,
       ...WrapParameters,
     },

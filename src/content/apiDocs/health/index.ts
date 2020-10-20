@@ -1,8 +1,7 @@
-import { IApiCategoryContent } from '../../../apiDefs/schema';
+import { APICategoryContent } from '../../../apiDefs/schema';
 import HealthArgonautDeactivationNotice from './argonautDeactivationNotice.mdx';
 import HealthArgonautDeprecationNotice from './argonautDeprecationNotice.mdx';
 import ArgonautReleaseNotes from './argonautReleaseNotes.mdx';
-import CommunityCareApiIntro from './communityCareApiIntro.mdx';
 import CommunityCareReleaseNotes from './communityCareReleaseNotes.mdx';
 import FhirApiReleaseNotes from './fhirAPIReleaseNotes.mdx';
 import FhirArgonautApiIntro from './fhirArgonautApiIntro.mdx';
@@ -16,7 +15,7 @@ import UrgentCareDeactivationNotice from './urgentCareDeactivationNotice.mdx';
 import UrgentCareDeprecationNotice from './urgentCareDeprecationNotice.mdx';
 import UrgentCareReleaseNotes from './urgentCareReleaseNotes.mdx';
 
-const healthContent: IApiCategoryContent = {
+const healthContent: APICategoryContent = {
   intro: HealthIntro,
   overview: HealthOverview,
   placardText: "View medical records and manage Veteran's health",
@@ -27,7 +26,6 @@ const healthContent: IApiCategoryContent = {
 export {
   healthContent,
   ArgonautReleaseNotes,
-  CommunityCareApiIntro,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,

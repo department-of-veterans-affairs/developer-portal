@@ -1,19 +1,18 @@
-import * as React from 'react';
-
 import classNames from 'classnames';
-import { Flag } from 'flag';
+import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import { BaseAPICategory, IApiDescription } from '../../apiDefs/schema';
-import SideNav, { SideNavEntry } from '../../components/SideNav';
+import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
+import { SideNav, SideNavEntry } from '../../components';
+import { Flag } from '../../flags';
+import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 interface SideNavAPIEntryProps {
-  api: IApiDescription;
+  api: APIDescription;
   categoryKey: string;
 }
 
@@ -36,12 +35,13 @@ function SideNavAPIEntry(props: SideNavAPIEntryProps) {
           {(api.vaInternalOnly && api.trustedPartnerOnly && <br />) || null}
           {api.trustedPartnerOnly && (
             <span>
-              <small>Internal VA use only.{/*Trusted Partner use only.*/}</small>
+              <small>Internal VA use only.{/* Trusted Partner use only.*/}</small>
             </span>
           )}
         </React.Fragment>
       }
       subNavLevel={1}
+      onClick={onHashAnchorClick}
     />
   );
 }
@@ -53,12 +53,12 @@ interface SideNavCategoryEntryProps {
 
 function SideNavCategoryEntry(props: SideNavCategoryEntryProps) {
   const { apiCategory, categoryKey } = props;
-  const apis: IApiDescription[] = apiCategory.apis.filter(
+  const apis: APIDescription[] = apiCategory.apis.filter(
     api => !isApiDeactivated(api) && isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
   );
 
   return (
-    <Flag name={`categories.${categoryKey}`} key={categoryKey}>
+    <Flag name={['categories', categoryKey]} key={categoryKey}>
       <SideNavEntry to={`/release-notes/${categoryKey}`} name={apiCategory.name}>
         {apis.length > 1 &&
           apis.map(api => (
@@ -83,7 +83,7 @@ export function ReleaseNotes() {
         <div className="vads-l-grid-container">
           <div className="vads-l-row">
             <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
-              <SideNavEntry key="all" exact={true} to="/release-notes" name="Overview" />
+              <SideNavEntry key="all" exact to="/release-notes" name="Overview" />
               {categoryOrder.map((key: string) => (
                 <SideNavCategoryEntry categoryKey={key} apiCategory={apiDefs[key]} key={key} />
               ))}
@@ -98,9 +98,9 @@ export function ReleaseNotes() {
             </SideNav>
             <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
               <Switch>
-                <Route exact={true} path="/release-notes/" component={ReleaseNotesOverview} />
+                <Route exact path="/release-notes/" component={ReleaseNotesOverview} />
                 <Route
-                  exact={true}
+                  exact
                   path="/release-notes/deactivated"
                   component={DeactivatedReleaseNotes}
                 />

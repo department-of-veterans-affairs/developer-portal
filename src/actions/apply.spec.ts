@@ -1,48 +1,69 @@
+import * as Sentry from '@sentry/browser';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
 import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
+import { ErrorableInput, RootState } from 'src/types';
 import * as constants from '../types/constants';
 import * as validators from '../utils/validators';
 import * as actions from './apply';
 
+jest.mock('@sentry/browser');
+const mockedSentry = Sentry as jest.Mocked<typeof Sentry>;
+
 const server = setupServer(
   rest.post(
     constants.APPLY_URL,
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
-      return res(
+    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+      res(
         context.status(200),
         context.json({
           clientID: 'testid',
           clientSecret: 'test_secret',
           token: 'testtoken',
         }),
-      );
-    },
+      ),
   ),
 );
 
-const appState = {
+const defaultInput = (value: string): ErrorableInput => ({
+  dirty: false,
+  value,
+});
+
+const appState: Pick<RootState, 'application'> = {
   application: {
     inputs: {
       apis: {
+        appeals: false,
         benefits: true,
+        claims: false,
+        communityCare: false,
+        confirmation: false,
         facilities: false,
         health: true,
+        vaForms: false,
         verification: false,
       },
-      email: 'james@hotmail.co',
-      firstName: 'James',
-      lastName: 'Rodríguez',
-      oAuthRedirectURI: 'http://localhost:8080/oauth/cb',
-      organization: 'Fußball-Club Bayern München',
+      description: defaultInput(''),
+      email: defaultInput('james@hotmail.co'),
+      firstName: defaultInput('James'),
+      lastName: defaultInput('Rodríguez'),
+      oAuthApplicationType: defaultInput('web'),
+      oAuthRedirectURI: defaultInput('http://localhost:8080/oauth/cb'),
+      organization: defaultInput('Fußball-Club Bayern München'),
+      termsOfService: true,
     },
+    sending: false,
   },
 };
 
 describe('submitForm', () => {
   beforeAll(() => server.listen());
-  beforeEach(() => server.resetHandlers());
+  beforeEach(() => {
+    server.resetHandlers();
+    mockedSentry.withScope.mockClear();
+  });
   afterAll(() => server.close());
 
   it('dispatches correct events when fetch has a 200 response', async () => {
@@ -69,9 +90,7 @@ describe('submitForm', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => {
-          return res(context.status(500, 'KABOOM'));
-        },
+        ): MockedResponse => res(context.status(500, 'KABOOM')),
       ),
     );
 
@@ -88,16 +107,12 @@ describe('submitForm', () => {
     });
   });
 
-  it('dispatches error events when fetch returns non-200', async () => {
+  it('dispatches error events when fetch returns validation errors with status 400', async () => {
     server.use(
       rest.post(
         constants.APPLY_URL,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) => {
-          return res(
-            context.status(400, 'bad bad not good'),
-            context.json({ error: 'sorry, who are you?' }),
-          );
-        },
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+          res(context.status(400), context.json({ errors: ['email must be valid email'] })),
       ),
     );
 
@@ -105,9 +120,46 @@ describe('submitForm', () => {
     const getState = jest.fn();
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
+    const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
+    const scope: any = {
+      setLevel: jest.fn(),
+    };
+    sentryCallback(scope);
     expect(dispatch).toBeCalledWith({
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
+    expect(mockedSentry.captureException).toBeCalledWith(
+      Error('Developer Application validation errors: email must be valid email'),
+    );
+    expect(dispatch).toBeCalledWith({
+      status: 'Developer Application validation errors: email must be valid email',
+      type: constants.SUBMIT_APPLICATION_ERROR,
+    });
+  });
+
+  it('dispatches error events when fetch returns non-200 and non-400', async () => {
+    server.use(
+      rest.post(
+        constants.APPLY_URL,
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+          res(
+            context.status(404, 'bad bad not good'),
+            context.json({ error: 'sorry, who are you?' }),
+          ),
+      ),
+    );
+
+    const dispatch = jest.fn();
+    const getState = jest.fn();
+    getState.mockReturnValueOnce(appState);
+    await actions.submitForm()(dispatch, getState, undefined);
+    const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
+    const scope: any = { setLevel: jest.fn() };
+    sentryCallback(scope);
+    expect(dispatch).toBeCalledWith({
+      type: constants.SUBMIT_APPLICATION_BEGIN,
+    });
+    expect(mockedSentry.captureException).toBeCalledWith(Error('bad bad not good'));
     expect(dispatch).toBeCalledWith({
       status: 'bad bad not good',
       type: constants.SUBMIT_APPLICATION_ERROR,

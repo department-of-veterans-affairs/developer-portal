@@ -7,10 +7,9 @@
   used in all developer portal environments for health documentation.
 */
 
-import * as moment from 'moment';
+import moment from 'moment';
 import {
   ArgonautReleaseNotes,
-  CommunityCareApiIntro,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
@@ -23,16 +22,15 @@ import {
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
 } from '../../content/apiDocs/health';
-import { IApiDescription } from '../schema';
+import { APIDescription } from '../schema';
 
-const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API!;
-const healthApis: IApiDescription[] = [
+const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API || '';
+const healthApis: APIDescription[] = [
   {
     description:
       "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
       {
-        apiIntro: CommunityCareApiIntro,
         openApiUrl: `${swaggerHost}/services/community-care/v0/eligibility/openapi.json`,
       },
     ],
@@ -78,15 +76,15 @@ const healthApis: IApiDescription[] = [
         openApiUrl: `${swaggerHost}/services/fhir/v0/argonaut/data-query/openapi.json`,
       },
       {
-        key: 'r4',
-        label: 'R4',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
-      },
-      {
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
         openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
+      },
+      {
+        key: 'r4',
+        label: 'R4',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
       },
     ],
     enabledByDefault: true,
