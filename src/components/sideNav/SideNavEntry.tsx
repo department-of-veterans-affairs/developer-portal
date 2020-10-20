@@ -61,7 +61,9 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
   };
 
   // Omit unneeded parent props from NavLink
+  /* eslint-disable @typescript-eslint/no-unused-vars -- omit sharedAnchors from navLinkProps */
   const { name, className, subNavLevel, sharedAnchors, ...navLinkProps } = props;
+  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   return (
     <li

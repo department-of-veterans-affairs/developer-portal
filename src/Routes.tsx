@@ -50,7 +50,6 @@ export function SiteRoutes() {
       <Route path="/beta" component={BetaPage} />
       <Route path="/beta-success" component={BetaSuccess} />
       <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
-      <Route exact={true} path="/explore/:apiCategoryKey/docs/:apiName" />
       <Route
         path="/oauth"
         render={() => <Redirect to="/explore/verification/docs/authorization" />}

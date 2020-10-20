@@ -1,8 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import { CardLink, HoverImage, SideNav, SideNavEntry } from '../components';
-import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
+import { CardLink, EmbeddedYoutubeVideo, HoverImage, SideNav, SideNavEntry } from '../components';
 import PageHeader from '../components/PageHeader';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
