@@ -1,7 +1,16 @@
-import { Map } from 'immutable';
+import { Map, OrderedMap } from 'immutable';
+import { RequestOptions, SwaggerMapValues } from 'swagger-client';
 import { System as BaseSystem } from 'swagger-ui';
 import { OutputSelector } from 'reselect';
 import { APIMetadata } from '../../../types';
+
+/**
+ * COMPONENT PLUGINS
+ */
+export interface ParametersProps {
+  system: System;
+  operation: OrderedMap<string, SwaggerMapValues>;
+}
 
 /**
  * ACTION PLUGINS
@@ -54,6 +63,32 @@ export interface SwaggerVersionSelectors {
     apiName: (state: Map<string, unknown>) => string;
     apiVersion: (state: Map<string, unknown>) => string;
     majorVersion: OutputSelector<Map<string, unknown>, string, (result: string) => string>;
+  };
+}
+
+/**
+ * PLUGINS
+ */
+export interface SwaggerPlugins {
+  components: { [name: string]: React.ComponentType };
+  wrapComponents: {
+    parameters: (
+      Original: React.ComponentType<ParametersProps>,
+      system: System,
+    ) => React.ComponentType<ParametersProps>;
+  };
+
+  fn: {
+    curlify: (options: RequestOptions) => string;
+  };
+
+  statePlugins: {
+    version: SwaggerVersionActions & SwaggerVersionReducers & SwaggerVersionSelectors;
+    spec: {
+      wrapSelectors: {
+        allowTryItOutFor: () => () => boolean;
+      };
+    };
   };
 }
 
