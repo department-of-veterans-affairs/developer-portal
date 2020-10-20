@@ -10,3 +10,6 @@ export * from './sideNav/SideNavEntry';
 export * from './form/Form';
 export * from './onlyTags/OnlyTags';
 export * from './mainNavItem/MainNavItem';
+export * from './banner/Banner';
+export * from './footer/Footer';
+export * from './cardLink/CardLink';

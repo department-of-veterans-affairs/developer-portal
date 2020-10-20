@@ -2,14 +2,14 @@
   This file contains unit tests for the query.ts module in this directory. Because query.ts
   is the only module that accesses data from the Typescript definition files in data/ directly,
   we cannot currently mock the dependencies of these functions. Because query is a core module for
-  this application, however, it is better not to leave these functions untested. Therefore, this 
+  this application, however, it is better not to leave these functions untested. Therefore, this
   test suite tests high-level results of these functions by querying our real data. When the source
   of that data changes from Typescript objects to a database, we can mock the calls to the database
-  instead of checking real data. 
-  
+  instead of checking real data.
+
   In the meantime, these tests are limited to checking properties of our APIs that should be relatively
   stable over time, so that they will not break for the majority of pull requests to developer-portal.
-  If you make a significant change to one of the APIs, you may need to update these tests, but that 
+  If you make a significant change to one of the APIs, you may need to update these tests, but that
   should be a rare occurrence. If you need to add tests to this file, please respect this convention
   and avoid testing with data that is likely to change over time.
 */

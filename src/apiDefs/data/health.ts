@@ -10,7 +10,6 @@
 import moment from 'moment';
 import {
   ArgonautReleaseNotes,
-  CommunityCareApiIntro,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
@@ -32,7 +31,6 @@ const healthApis: APIDescription[] = [
       "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
       {
-        apiIntro: CommunityCareApiIntro,
         openApiUrl: `${swaggerHost}/services/community-care/v0/eligibility/openapi.json`,
       },
     ],
