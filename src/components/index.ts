@@ -9,3 +9,6 @@ export * from './sideNav/SideNav';
 export * from './sideNav/SideNavEntry';
 export * from './form/Form';
 export * from './onlyTags/OnlyTags';
+export * from './banner/Banner';
+export * from './footer/Footer';
+export * from './cardLink/CardLink';
