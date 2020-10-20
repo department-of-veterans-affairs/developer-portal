@@ -137,7 +137,7 @@ module.exports = {
     complexity: 'off',
     'constructor-super': 'error',
     curly: 'error',
-    'eol-last': 'off',
+    'eol-last': 'error',
     eqeqeq: ['error', 'smart'],
     'guard-for-in': 'error',
     'id-blacklist': [
