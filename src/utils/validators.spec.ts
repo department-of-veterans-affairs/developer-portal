@@ -32,7 +32,7 @@ describe('validateOAuthRedirectURI', () => {
       dirty: true,
       value: 'http://localhost:8080/',
     });
-    expect(validatedInput).not.toEqual(expect.objectContaining({ validation: expect.anything() }));
+    expect(validatedInput.validation).toBeUndefined();
   });
 
   it('should reject URLs with query strings', () => {
@@ -40,7 +40,7 @@ describe('validateOAuthRedirectURI', () => {
       dirty: true,
       value: 'https://example.com?a=b',
     });
-    expect(validatedInput).toEqual(expect.objectContaining({ validation: expect.any(String) }));
+    expect(validatedInput.validation).toBeTruthy();
   });
 
   it('should reject URLs with fragments', () => {
@@ -48,26 +48,32 @@ describe('validateOAuthRedirectURI', () => {
       dirty: true,
       value: 'https://example.com/#frag',
     });
-    expect(validatedInput).toEqual(expect.objectContaining({ validation: expect.any(String) }));
+    expect(validatedInput.validation).toBeTruthy();
   });
 });
 
 describe('validatePresence', () => {
   it('should add validation filed to newValue when field is not valid', () => {
     expect(
-      validatePresence({
-        dirty: true,
-        value: '',
-      }, 'email'),
+      validatePresence(
+        {
+          dirty: true,
+          value: '',
+        },
+        'email',
+      ),
     ).toEqual(expect.objectContaining({ validation: 'email must not be blank.' }));
   });
 
   it('should not add validation if the email is valid', () => {
     expect(
-      validatePresence({
-        dirty: true,
-        value: 'goodemail@example.com',
-      }, 'email'),
+      validatePresence(
+        {
+          dirty: true,
+          value: 'goodemail@example.com',
+        },
+        'email',
+      ),
     ).toEqual(
       expect.not.objectContaining({
         validation: 'email must not be blank.',
