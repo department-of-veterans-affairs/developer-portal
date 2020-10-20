@@ -15,7 +15,7 @@ import { APINameParam } from '../../types';
 interface ReleaseNotesCardLinksProps {
   categoryKey: string;
   apiCategory: BaseAPICategory;
-  flagName: string;
+  flagName: 'enabled' | 'hosted_apis';
 }
 
 const ReleaseNotesCardLinks = (props: ReleaseNotesCardLinksProps) => {

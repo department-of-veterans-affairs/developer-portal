@@ -16,7 +16,7 @@ interface SideNavAPIEntryProps {
   categoryKey: string;
 }
 
-function SideNavAPIEntry(props: SideNavAPIEntryProps) {
+const SideNavAPIEntry = (props: SideNavAPIEntryProps): JSX.Element => {
   const { api, categoryKey } = props;
   const dashUrlFragment = props.api.urlFragment.replace('_', '-');
   return (
@@ -35,7 +35,7 @@ function SideNavAPIEntry(props: SideNavAPIEntryProps) {
           {(api.vaInternalOnly && api.trustedPartnerOnly && <br />) || null}
           {api.trustedPartnerOnly && (
             <span>
-              <small>Internal VA use only.{/* Trusted Partner use only.*/}</small>
+              <small>Internal VA use only.{/* Trusted Partner use only. */}</small>
             </span>
           )}
         </React.Fragment>
@@ -44,14 +44,14 @@ function SideNavAPIEntry(props: SideNavAPIEntryProps) {
       onClick={onHashAnchorClick}
     />
   );
-}
+};
 
 interface SideNavCategoryEntryProps {
   categoryKey: string;
   apiCategory: BaseAPICategory;
 }
 
-function SideNavCategoryEntry(props: SideNavCategoryEntryProps) {
+const SideNavCategoryEntry = (props: SideNavCategoryEntryProps): JSX.Element => {
   const { apiCategory, categoryKey } = props;
   const apis: APIDescription[] = apiCategory.apis.filter(
     api => !isApiDeactivated(api) && isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
@@ -67,9 +67,9 @@ function SideNavCategoryEntry(props: SideNavCategoryEntryProps) {
       </SideNavEntry>
     </Flag>
   );
-}
+};
 
-export function ReleaseNotes() {
+const ReleaseNotes = (): JSX.Element => {
   const categoryOrder = getApiCategoryOrder();
   const apiDefs = getApiDefinitions();
   const deactivatedCategory = getDeactivatedCategory();
@@ -112,6 +112,6 @@ export function ReleaseNotes() {
       </section>
     </div>
   );
-}
+};
 
 export default ReleaseNotes;
