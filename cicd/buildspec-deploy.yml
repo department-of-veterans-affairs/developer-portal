@@ -1,0 +1,97 @@
+ ######################################################################
+#  Developer Portal CodeBuild Deploy 
+#  
+# ***  Maintenance Request Needed for Production deployments   *** 
+# 
+# Maintenance Request Documentation:
+#  - https://github.com/department-of-veterans-affairs/lighthouse-maintenance
+#  - https://community.max.gov/pages/viewpage.action?pageId=2172170301
+#  - https://github.com/department-of-veterans-affairs/lighthouse-devops-support
+#
+# Tool Links:
+#  - CodeBuild - https://docs.aws.amazon.com/codebuild/index.html
+#  - CodeBuild Environmental Variables - https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html
+#  - CodeBuild Source Image - ecs-deployer - https://github.com/department-of-veterans-affairs/lighthouse-codebuild-containers/tree/main/ecs-deployer
+#  - AWS CLI 2.0 - https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
+# 
+# All Custom scripts are on the CodeBuild Environment container. 
+# https://github.com/department-of-veterans-affairs/lighthouse-codebuild-containers/tree/main/
+#
+# Custom Scripts:
+#  - slackpost.sh
+#
+######################################################################     
+version: 0.2
+env:
+  variables:
+    # These are the default deploy environments
+    ENVIRONMENTS: "dev staging"
+    S3_DEV_BUCKET: "dev-developer.va.gov"
+    S3_STAGING_BUCKET: "staging-developer.va.gov"
+    S3_PRODUCTION_BUCKET: "developer.va.gov"
+    S3_ARCHIVE_BUCKET: "developer-portal-builds-s3-upload"
+  parameter-store:
+    GITHUB_TOKEN: "/dvp/devops/va_bot_github_token"
+    # LIGHTHOUSE SLACK_WEBHOOK
+    SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook_lighthouse"
+phases:
+  pre_build:
+    commands:
+      # Set gh configs.
+      - gh config set prompt disabled
+      - gh config set git_protocol ssh
+      # Echo environment variables to console if needed for troubleshooting.
+      - printenv
+  build:
+    commands:
+      # Set release to latest if release and commit hash is not set.
+      - | 
+        if [[ ! ${RELEASE} ]] && [[ ! ${COMMIT_HASH} ]]; then
+          RELEASE=$(git tag --sort=-creatordate | grep cb- | head -1)
+          echo "Release set to ${RELEASE}"
+        fi
+      # Download and prepare release assets if deploying from release.
+      - |
+        if [[ ${RELEASE} ]]; then 
+          echo "Downloading assets for ${RELEASE}"
+          gh release download ${RELEASE} -p "*.bz2"
+          # The cb- prefix is used until Jenkins pipeline is decommissioned.
+          # strip release string from asset name
+          VERSION=${RELEASE#"cb-developer-portal/v"}
+          for f in *.bz2; do
+            mv ${f} "${f%-${VERSION}.tar.bz2}.tar.bz2"
+          done
+        fi
+      # Download and prepare S3 assets if deploying from commit hash.
+      - |
+        if [[ ${COMMIT_HASH} ]]; then 
+          aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7}/ . 
+        fi
+      # Deploy environments
+      - echo "Begining deployments to ${ENVIRONMENTS}"
+      - | 
+        for env in ${ENVIRONMENTS}; do
+          # Production deploys will require a MR number be set. This MR will not be check for validity but will serve as small safety measure for production deploys and reminder to enforce the process.
+          if [[ "${env}" == "production" ]] && [[ ! ${MR} ]]; then
+            echo "production deployments need a maintenance request prior to deployment!"
+            slackpost.sh -t failure "Production deploy aborted. Maintenance Request number was not provided."
+            exit 1 
+          fi
+          echo "Deploying to ${env}"
+          slackpost.sh -t started "Starting to Deploy ${RELEASE}${COMMIT_HASH} to ${env}."
+          # transforming given lower case environment string to uppercase to match the S3 bucket name.
+          u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
+          S3_BUCKET=S3_${u_env}_BUCKET 
+          mkdir -p ${env}
+          tar xf developer-portal-${env}.tar.bz2 -C ${env}
+          # eval is used for variable subsitution.
+          eval aws s3 sync --no-progress --delete --acl public-read ${env}/ s3://\${$S3_BUCKET}/
+          slackpost.sh -t success "Deployment of ${RELEASE}${COMMIT_HASH} to ${env} was completed."
+        done
+  post_build:
+    commands:
+      # Post to Slack.
+      - |
+        if [[ ${CODEBUILD_BUILD_SUCCEEDING} -eq 0 ]]; then
+          slackpost.sh -t failure "There was an error with the deployment process for CodeBuild Job ${CODEBUILD_BUILD_ID}."
+        fi
