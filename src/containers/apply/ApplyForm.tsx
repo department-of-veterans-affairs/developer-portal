@@ -58,7 +58,7 @@ const selectedApis = (props: ApplyProps) => {
 
 const anyOAuthApisSelected = (props: ApplyProps) => {
   const apiIdsByField = selectedApis(props).flatMap(
-    formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField] as string,
+    formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField],
   );
   return includesOAuthAPI(apiIdsByField);
 };
