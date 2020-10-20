@@ -6,7 +6,7 @@ import PageHeader from '../../components/PageHeader';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 
-export default () => {
+const ReleaseNotesOverview = (): JSX.Element => {
   const apiDefs = getApiDefinitions();
   const deactivatedCategory = getDeactivatedCategory();
   return (
@@ -53,3 +53,5 @@ export default () => {
     </div>
   );
 };
+
+export default ReleaseNotesOverview;
