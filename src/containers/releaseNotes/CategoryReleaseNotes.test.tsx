@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
 import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
 import 'jest';
 import * as React from 'react';
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter, Route, Router } from 'react-router';
 import {
   extraAPI,
   extraDeactivationInfo,
@@ -145,6 +146,21 @@ describe('ReleaseNotesCollection', () => {
       it('does not include release notes for disabled APIs', async () => {
         await renderComponent('/release-notes/sports');
         expect(screen.queryByRole('heading', { name: 'Baseball API' })).toBeNull();
+      });
+
+      it("redirect to /release-notes when category isn't found", () => {
+        const history = createMemoryHistory({ initialEntries: ['/release-notes/fakeCategory'] });
+        const { container } = render(
+          <Router history={history}>
+            <Route path="/release-notes" exact render={() => <div>/release-notes</div>} />
+            <Route
+              path="/release-notes/fakeCategory"
+              exact
+              component={CategoryReleaseNotes}
+            />
+          </Router>,
+        );
+        expect(container.innerHTML).toEqual(expect.stringContaining('/release-notes'));
       });
     });
   });
