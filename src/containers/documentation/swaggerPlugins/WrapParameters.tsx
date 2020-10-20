@@ -1,13 +1,7 @@
-import { OrderedMap } from 'immutable';
 import * as React from 'react';
-import { Operation, SwaggerMapValues } from 'swagger-ui';
+import { Operation } from 'swagger-ui';
 import { CurlForm } from './CurlForm';
-import { System } from './types';
-
-interface ParametersProps {
-  system: System;
-  operation: OrderedMap<string, SwaggerMapValues>;
-}
+import { ParametersProps, System } from './types';
 
 export const WrapParameters = {
   parameters: (
