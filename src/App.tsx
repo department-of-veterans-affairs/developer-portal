@@ -3,8 +3,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route } from 'react-router-dom';
-import { Header, PageContent } from './components';
-import Footer from './components/Footer';
+import { Footer, Header, PageContent } from './components';
 import { FlagsProvider, getFlags } from './flags';
 import { history } from './store';
 
