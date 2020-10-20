@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { IVersionInfo } from '../SwaggerDocs';
+import { VersionInfo } from '../SwaggerDocs';
 import { System } from './types';
 
 export interface VersionSelectProps {
@@ -21,7 +21,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
 
   public getCurrentVersion(): string {
     const metadata = this.props.getSystem().versionSelectors.apiMetadata();
-    const selectCurrentVersion = (versionInfo: IVersionInfo) =>
+    const selectCurrentVersion = (versionInfo: VersionInfo) =>
       versionInfo.status === 'Current Version';
 
     // if this component is rendered, there should (a) be versions present in metadata and (b) 
@@ -38,7 +38,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
     this.props.getSystem().versionActions.updateVersion(this.state.version);
   }
 
-  public buildDisplay(metaObject: IVersionInfo): string {
+  public buildDisplay(metaObject: VersionInfo): string {
     const { version, status, internal_only } = metaObject;
     return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
   }
@@ -66,7 +66,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
           {this.props
             .getSystem()
             .versionSelectors.apiMetadata()
-            .meta.versions.map((versionInfo: IVersionInfo) =>(
+            .meta.versions.map((versionInfo: VersionInfo) =>(
               <option value={versionInfo.version} key={versionInfo.version}>
                 {this.buildDisplay(versionInfo)}
               </option>
