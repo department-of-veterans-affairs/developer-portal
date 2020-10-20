@@ -1,4 +1,4 @@
-@import '../styles/variables';
+@import '../../styles/variables';
 
 .site-notice-text {
   max-width: 350px;
@@ -7,15 +7,15 @@
     max-width: none;
     margin-left: 0;
   }
-  
-  .va-api-site-guidance-button {
-    background-color: rgba(0, 0, 0, 0);  
 
-    &[aria-expanded=true] {
+  .va-api-site-guidance-button {
+    background-color: rgba(0, 0, 0, 0);
+
+    &[aria-expanded='true'] {
       @include display-icon(angle-arrow-up-primary, after, 1rem, 4px, hover);
     }
-    
-    &[aria-expanded=false] {
+
+    &[aria-expanded='false'] {
       @include display-icon(angle-arrow-down-primary, after, 1rem, 4px, hover);
     }
   }
