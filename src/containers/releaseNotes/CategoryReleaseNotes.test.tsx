@@ -146,7 +146,7 @@ describe('ReleaseNotesCollection', () => {
         expect(screen.queryByRole('heading', { name: 'Baseball API' })).toBeNull();
       });
 
-      it("reditect to /release-notes when category isn't found", () => {
+      it("redirect to /release-notes when category isn't found", () => {
         const history = createMemoryHistory({ initialEntries: ['/release-notes/fakeCategory'] });
         const { container } = render(
           <Router history={history}>
