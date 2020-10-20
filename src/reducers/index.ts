@@ -2,12 +2,10 @@ import { SubmitFormAction, UpdateApplicationAction } from '../actions';
 import { DevApplication, ApplyInputs, ErrorableInput } from '../types';
 import * as constants from '../types/constants';
 
-const newErrorableInput: () => ErrorableInput = () => {
-  return {
-    dirty: false,
-    value: '',
-  };
-};
+const newErrorableInput: () => ErrorableInput = () => ({
+  dirty: false,
+  value: '',
+});
 
 const initialApplyInputs: ApplyInputs = {
   apis: {
@@ -38,10 +36,10 @@ export const initialApplicationState: DevApplication = {
 
 const applyApis: string[] = Object.keys(constants.APPLY_FIELDS_TO_URL_FRAGMENTS);
 
-export function applicationInput(
+export const applicationInput = (
   inputs: ApplyInputs = initialApplyInputs,
   action: UpdateApplicationAction,
-): ApplyInputs {
+): ApplyInputs => {
   switch (action.type) {
     case constants.UPDATE_APPLICATION_DESCRIPTION:
       return { ...inputs, description: action.newValue };
@@ -69,12 +67,12 @@ export function applicationInput(
       return { ...inputs, termsOfService };
   }
   return inputs;
-}
+};
 
-export function application(
+export const application = (
   state: DevApplication = initialApplicationState,
   action: SubmitFormAction | UpdateApplicationAction,
-): DevApplication {
+): DevApplication => {
   switch (action.type) {
     case constants.SUBMIT_APPLICATION_BEGIN:
       return { ...state, sending: true, errorStatus: undefined };
@@ -96,4 +94,4 @@ export function application(
     default:
       return { ...state, inputs: applicationInput(state.inputs, action) };
   }
-}
+};

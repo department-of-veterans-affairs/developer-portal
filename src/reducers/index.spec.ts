@@ -1,7 +1,7 @@
 import 'jest';
 
-import { ToggleSelectedAPI } from '../actions';
-import { DevApplication } from '../types';
+import { ToggleSelectedAPI, UpdateApplicationAction } from '../actions';
+import { ApplySuccessResult, DevApplication } from '../types';
 import * as constants from '../types/constants';
 import { application } from './index';
 
@@ -63,16 +63,16 @@ describe('application', () => {
       ['organization', constants.UPDATE_APPLICATION_ORGANIZATION],
     ];
 
-    inputToActionMap.forEach(([fieldName, actionName]) => {
+    inputToActionMap.forEach(([fieldName, actionName]: [string, string]) => {
       const newValue = {
         dirty: true,
         value: 'test',
       };
 
-      const inputs = application(app, { newValue, type: actionName }).inputs;
+      const inputs = application(app, { newValue, type: actionName } as UpdateApplicationAction)
+        .inputs;
 
       const expectedSubObject = { [fieldName]: newValue };
-
       expect(inputs).toEqual(expect.objectContaining(expectedSubObject));
     });
   });
@@ -86,22 +86,10 @@ describe('application', () => {
       };
 
       let newApp = application(app, toggleAction);
-      expect(newApp.inputs).toEqual(
-        expect.objectContaining({
-          apis: expect.objectContaining({
-            [apiId]: true,
-          }),
-        }),
-      );
+      expect(newApp.inputs.apis[apiId]).toBe(true);
 
       newApp = application(newApp, toggleAction);
-      expect(newApp.inputs).toEqual(
-        expect.objectContaining({
-          apis: expect.objectContaining({
-            [apiId]: false,
-          }),
-        }),
-      );
+      expect(newApp.inputs.apis[apiId]).toBe(false);
     });
   });
 
@@ -151,12 +139,14 @@ describe('application', () => {
         type: constants.SUBMIT_APPLICATION_SUCCESS,
       }),
     ).toEqual(
-      expect.objectContaining({
-        result: expect.objectContaining({
+      expect.objectContaining<Partial<DevApplication>>({
+        result: expect.objectContaining<ApplySuccessResult>({
+          apis: newApp.inputs.apis,
           clientID: 'clientID',
           clientSecret: 'clientSecret',
+          email: newApp.inputs.email.value,
           token: 'test-token',
-        }),
+        }) as ApplySuccessResult,
         sending: false,
       }),
     );
