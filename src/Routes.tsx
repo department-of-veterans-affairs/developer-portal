@@ -13,7 +13,6 @@ import BetaPage from './containers/Beta';
 import BetaSuccess from './containers/BetaSuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
-import ProviderIntegrationGuide from './containers/documentation/ProviderIntegrationGuide';
 import Home from './containers/Home';
 import News from './containers/News';
 import NotFound from './containers/NotFound';
@@ -21,6 +20,7 @@ import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
+import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag } from './flags';
 
 export function SiteRoutes() {
@@ -58,7 +58,10 @@ export function SiteRoutes() {
       <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
       <Route path="/news" component={News} />
       <Route path="/support" component={Support} />
-      <Route path="/providers/integration-guide" component={ProviderIntegrationGuide} />
+      <Route
+        path="/providers/integration-guide"
+        render={() => MarkdownPage(ProviderIntegrationGuide)}
+      />
       <Route component={NotFound} />
     </Switch>
   );
