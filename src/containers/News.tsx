@@ -1,8 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import { HoverImage, SideNav, SideNavEntry } from '../components';
-import CardLink from '../components/CardLink';
+import { CardLink, HoverImage, SideNav, SideNavEntry } from '../components';
 import EmbeddedYoutubeVideo from '../components/EmbeddedYoutubeVideo';
 import PageHeader from '../components/PageHeader';
 import * as NewsData from '../content/news.yml';

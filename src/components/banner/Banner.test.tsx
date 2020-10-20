@@ -3,7 +3,7 @@ import * as React from 'react';
 import 'jest';
 
 import { mount, ReactWrapper } from 'enzyme';
-import Banner from './Banner';
+import { Banner } from './Banner';
 
 describe('Banner', () => {
   let wrapper: ReactWrapper<unknown, unknown, React.Component>;
@@ -18,8 +18,11 @@ describe('Banner', () => {
 
   it('should render the site notice text', () => {
     expect(wrapper.find('.site-notice-text').length).toBe(1);
-    expect(wrapper.find('.site-notice-text')
-      .contains('An official website of the United States government.')).toBeTruthy();
+    expect(
+      wrapper
+        .find('.site-notice-text')
+        .contains('An official website of the United States government.'),
+    ).toBeTruthy();
   });
 
   it('should render the dot gov guidance', () => {
@@ -27,7 +30,7 @@ describe('Banner', () => {
   });
 
   it('should render the HTTPS guidance', () => {
-    expect(wrapper.find('#https-guidance').hostNodes().length).toEqual(1); 
+    expect(wrapper.find('#https-guidance').hostNodes().length).toEqual(1);
   });
 
   it('should not show the site guidance accordion by default', () => {
@@ -40,7 +43,7 @@ describe('Banner', () => {
 
     toggleButtonWrapper.simulate('click');
     expect(wrapper.find('.usa-accordion-content').prop('aria-hidden')).toBe('false');
-    
+
     toggleButtonWrapper.simulate('click');
     expect(wrapper.find('.usa-accordion-content').prop('aria-hidden')).toBe('true');
   });
