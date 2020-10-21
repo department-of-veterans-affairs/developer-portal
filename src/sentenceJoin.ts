@@ -1,5 +1,5 @@
 // Provides english-centric word list construction.
-function sentenceJoin(words: string[]) {
+const sentenceJoin = (words: string[]): string => {
   if (words.length === 0) {
     return '';
   } else if (words.length === 1) {
@@ -7,11 +7,11 @@ function sentenceJoin(words: string[]) {
   } else if (words.length === 2) {
     return `${words[0]} and ${words[1]}`;
   } else {
-    const wordsDup = Object.assign([], words);
-    const lastWord = wordsDup.pop();
+    const wordsDup = Object.assign([], words) as string[];
+    const lastWord = wordsDup.pop() as string;
     wordsDup.push(`and ${lastWord}`);
     return wordsDup.join(', ');
   }
-}
+};
 
 export default sentenceJoin;

@@ -34,3 +34,7 @@ export interface RootState {
   application: DevApplication;
   router: RouterState;
 }
+
+export interface SerializedState {
+  application: Pick<DevApplication, 'inputs'>;
+}

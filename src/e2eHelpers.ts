@@ -40,18 +40,16 @@ jest.setTimeout(100000);
 
 expect.extend(toHaveNoViolations);
 
-export const axeCheck = () => {
-  return new Promise(resolve => {
-    window.axe.run({ exclude: [['iframe']] }, (err, results) => {
-      if (err) {
-        throw err;
-      }
-      resolve(results);
-    });
+export const axeCheck = (): Promise<axe.AxeResults> => new Promise(resolve => {
+  window.axe.run({ exclude: [['iframe']] }, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    resolve(results);
   });
-};
+});
 
-export const mockSwagger = (req: Request) => {
+export const mockSwagger = (req: Request) : void => {
   const response = {
     body: '',
     contentType: 'application/json',
@@ -64,5 +62,9 @@ export const mockSwagger = (req: Request) => {
     response.body = JSON.stringify(metadataMocks[req.url()]);
   }
 
-  response.body ? req.respond(response) : req.continue();
+  if (response.body) {
+    void req.respond(response);
+  } else {
+    void req.continue();
+  }
 };
