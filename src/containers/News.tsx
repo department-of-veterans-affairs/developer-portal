@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
+import videoPlayerIcon from '../assets/video-player.png';
+import videoPlayerHoverIcon from '../assets/video-player-hover.png';
 import { CardLink, EmbeddedYoutubeVideo, HoverImage, SideNav, SideNavEntry } from '../components';
 import PageHeader from '../components/PageHeader';
 import * as NewsData from '../content/news.yml';
@@ -26,7 +28,11 @@ export interface NewsItem {
   source?: string;
 }
 
-const sections = NewsData.sections.map((section: DataSection) => ({
+const data = NewsData as {
+  sections: DataSection[];
+};
+
+const sections = data.sections.map((section: DataSection) => ({
   ...section,
   id: toHtmlId(section.title),
 }));
@@ -50,8 +56,8 @@ const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
       <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
           <HoverImage
-            imagePath={require('../assets/video-player.png')}
-            hoverImagePath={require('../assets/video-player-hover.png')}
+            imagePath={videoPlayerIcon}
+            hoverImagePath={videoPlayerHoverIcon}
           />
         </a>
       </div>
@@ -81,7 +87,7 @@ const News = (): JSX.Element => {
         <div className="vads-l-row">
           <SideNav ariaLabel="News Side Nav">
             <SideNavEntry key="all" exact to="/news" name="Overview" />
-            {sections.map((section: any) => (
+            {sections.map((section: NewsSection) => (
               <SideNavEntry
                 key={section.id}
                 to={`#${section.id}`}
