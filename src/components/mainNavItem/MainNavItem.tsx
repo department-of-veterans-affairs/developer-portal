@@ -2,33 +2,33 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { match as Match } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { desktopOnly, mobileOnly } from '../styles/vadsUtils';
+import { desktopOnly, mobileOnly } from '../../styles/vadsUtils';
 
-export interface ILargeScreenNavItemProps {
+export interface LargeScreenNavItemProps {
   isActive: (match: Match | null) => boolean;
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
 
-interface IMainNavItemProps {
+interface MainNavItemProps {
   children: React.ReactChild | React.ReactChildren;
   activeClassName?: string;
   className?: string;
   excludeLargeScreen: boolean;
   excludeSmallScreen: boolean;
   targetUrl: string;
-  largeScreenProps: ILargeScreenNavItemProps;
+  largeScreenProps: LargeScreenNavItemProps;
   onClick: () => void;
 }
 
-export default class MainNavItem extends React.PureComponent<IMainNavItemProps> {
+export class MainNavItem extends React.Component<MainNavItemProps> {
   public static defaultProps = {
     excludeLargeScreen: false,
     excludeSmallScreen: false,
     onClick: null,
   };
 
-  public render() {
+  public render(): JSX.Element {
     const sharedProps = {
       activeClassName: classNames('va-api-active-nav', this.props.activeClassName),
       className: classNames('va-api-nav-link', this.props.className),
