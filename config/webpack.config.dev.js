@@ -345,7 +345,7 @@ module.exports = {
       tsconfig: paths.appTsConfig,
       tslint: paths.appTsLint,
     }),
-    // Place the appropriate robots.txt in public folder
+    // Place the dev robots.txt file in the public folder
     new CopyPlugin({
       patterns: [{ from: 'config/robots.dev.txt', to: 'robots.txt' }],
     }),

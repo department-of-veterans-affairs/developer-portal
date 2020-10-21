@@ -460,7 +460,7 @@ module.exports = envName => {
           silent: true,
         }),
 
-      // Place the appropriate robots.txt in public folder
+      // Place the appropriate robots.txt in public folder based on the environment
       new CopyPlugin({
         patterns: [
           {
