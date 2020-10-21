@@ -34,14 +34,14 @@ interface OAuthCredentialsNoticeProps {
 }
 
 // Mapping from the options on the form to Proper Names for APIs
-const apisToEnglishOAuthList = {
+const apisToEnglishOAuthList: Record<string, string> = {
   claims: 'Benefits Claims API',
   communityCare: 'Community Care API',
   health: 'VA Health API',
   verification: 'Veteran Verification API',
 };
 
-const apisToEnglishApiKeyList = () => {
+const apisToEnglishApiKeyList = (): Record<string, string> => {
   const apiDefs = getApiDefinitions();
   return {
     benefits: apiDefs.benefits.properName,
@@ -57,7 +57,7 @@ const OAuthCredentialsNotice = ({
   email,
   selectedApis,
 }: OAuthCredentialsNoticeProps) => {
-  const apiNameList = selectedApis.map(k => apisToEnglishOAuthList[k] as string);
+  const apiNameList = selectedApis.map(k => apisToEnglishOAuthList[k]);
   const apiListSnippet = sentenceJoin(apiNameList);
 
   return (
@@ -81,7 +81,7 @@ const OAuthCredentialsNotice = ({
 };
 
 const ApiKeyNotice = ({ token, email, selectedApis }: APIKeyNoticeProps) => {
-  const apiNameList = selectedApis.map(k => apisToEnglishApiKeyList()[k] as string);
+  const apiNameList = selectedApis.map(k => apisToEnglishApiKeyList()[k]);
   const apiListSnippet = sentenceJoin(apiNameList);
 
   return (
