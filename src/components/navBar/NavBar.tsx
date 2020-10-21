@@ -12,7 +12,7 @@ import plusIcon from '../../../node_modules/uswds/src/img/plus.png';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { Flag } from '../../flags';
 import { desktopOnly, mobileOnly } from '../../styles/vadsUtils';
-import MainNavItem, { ILargeScreenNavItemProps } from '../MainNavItem';
+import { LargeScreenNavItemProps, MainNavItem } from '../../components';
 import Search from '../search/Search';
 
 import './NavBar.scss';
@@ -127,7 +127,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     return useDefaultNavLink;
   };
 
-  const sharedNavItemProps: ILargeScreenNavItemProps = {
+  const sharedNavItemProps: LargeScreenNavItemProps = {
     isActive: checkActiveNavLink,
     onMouseEnter: () => toggleDefaultNavLink(false),
     onMouseLeave: () => toggleDefaultNavLink(true),
