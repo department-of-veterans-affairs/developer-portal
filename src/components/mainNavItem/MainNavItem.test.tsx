@@ -3,7 +3,7 @@ import 'jest';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import MainNavItem from './MainNavItem';
+import { MainNavItem } from './MainNavItem';
 
 const mockProps = {
   className: 'mock',
@@ -26,16 +26,13 @@ describe('MainNavItem', () => {
     // this test is applicable only to mobile
     const MobileComponentMock = (
       <Router>
-        <MainNavItem
-          excludeLargeScreen={true}
-          {...mockProps}
-        >
+        <MainNavItem excludeLargeScreen {...mockProps}>
           Mock
         </MainNavItem>
       </Router>
     );
     const wrapper = mount(MobileComponentMock);
-    wrapper.find("NavLink").simulate('click');
+    wrapper.find('NavLink').simulate('click');
     expect(mockProps.onClick).toHaveBeenCalled();
   });
 });
