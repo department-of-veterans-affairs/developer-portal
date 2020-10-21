@@ -1,15 +1,14 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import notFoundImage from '../assets/404.svg';
 import './NotFound.scss';
-
-import classNames from 'classnames';
 
 interface LinkTarget {
   pathSegment: string;
   title: string;
 }
 
-function NotFound() {
+const NotFound: React.FunctionComponent = () => {
   const lists: LinkTarget[] = [
     { pathSegment: 'appeals', title: 'Appeals API' },
     { pathSegment: 'benefits', title: 'Benefits API' },
@@ -18,6 +17,7 @@ function NotFound() {
     { pathSegment: 'health', title: 'Health API' },
     { pathSegment: 'verification', title: 'Vereran Verification API' },
   ];
+
   return (
     <>
       <div
@@ -77,13 +77,11 @@ function NotFound() {
               <a href="/explore">Documentation</a>
             </h3>
             <ul>
-              {lists.map((item, i) => {
-                return (
-                  <li key={i}>
-                    <a href={`/explore/${item.pathSegment}`}>{item.title}</a>
-                  </li>
-                );
-              })}
+              {lists.map((item, i) => (
+                <li key={i}>
+                  <a href={`/explore/${item.pathSegment}`}>{item.title}</a>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="list-wrapper">
@@ -107,13 +105,11 @@ function NotFound() {
               <a href="/release-notes">Release Notes</a>
             </h3>
             <ul>
-              {lists.map((item, i) => {
-                return (
-                  <li key={i}>
-                    <a href={`/release-notes/${item.pathSegment}`}>{item.title}</a>
-                  </li>
-                );
-              })}
+              {lists.map((item, i) => (
+                <li key={i}>
+                  <a href={`/release-notes/${item.pathSegment}`}>{item.title}</a>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="list-wrapper">
@@ -135,6 +131,6 @@ function NotFound() {
       </div>
     </>
   );
-}
+};
 
 export default NotFound;

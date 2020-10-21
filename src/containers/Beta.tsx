@@ -1,3 +1,5 @@
+// tslint:disable:react-a11y-required
+// tslint:disable:react-a11y-proptypes
 import * as React from 'react';
 
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
@@ -12,7 +14,14 @@ import mhv from '../assets/mhv-icon.svg';
 
 import './Beta.scss';
 
-const idMappings = {
+interface SalesforceEnv {
+  auth: string;
+  cell: string;
+  confirm: string;
+  oid: string;
+}
+
+const idMappings: Record<string, SalesforceEnv> = {
   VICDEV: {
     auth: '00N35000000rd9y',
     cell: '00N35000000rd61',
@@ -41,7 +50,7 @@ const idMappings = {
 
 const env = process.env.REACT_APP_SALESFORCE_ENV || 'VICDEV';
 
-interface IVetConfirm {
+interface VetConfirm {
   caretaker: boolean;
   family: boolean;
   no: boolean;
@@ -49,14 +58,14 @@ interface IVetConfirm {
   veteran: boolean;
 }
 
-interface IBetaPageState {
+interface BetaPageState {
   ds: boolean;
   email: ErrorableInput;
   firstName: string;
   idme: boolean;
   lastName: string;
   mhv: boolean;
-  vetConfirm: IVetConfirm;
+  vetConfirm: VetConfirm;
   iPhone: boolean;
   computer: boolean;
 }
@@ -69,8 +78,8 @@ const vetConfirmMap = {
   veteran: 'Veteran',
 };
 
-export default class BetaPage extends React.Component<{}, IBetaPageState> {
-  constructor(props: {}) {
+export default class BetaPage extends React.Component<Record<string, unknown>, BetaPageState> {
+  public constructor(props: Record<string, unknown>) {
     super(props);
     this.state = {
       computer: false,
@@ -94,15 +103,13 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
     };
   }
 
-  public render() {
-    const textFieldClasses = (paddingDirection: string): string => {
-      return classNames(
-        'vads-l-col--12',
-        'vads-u-padding-x--0',
-        'small-screen:vads-l-col--6',
-        `small-screen:vads-u-padding-${paddingDirection}--1`,
-      );
-    };
+  public render(): JSX.Element {
+    const textFieldClasses = (paddingDirection: string): string => classNames(
+      'vads-l-col--12',
+      'vads-u-padding-x--0',
+      'small-screen:vads-l-col--6',
+      `small-screen:vads-u-padding-${paddingDirection}--1`,
+    );
 
     return (
       <div className={classNames('beta-application', 'vads-u-margin-bottom--4')}>
@@ -118,7 +125,7 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
                     to help Veterans.
                   </p>
                   <p>
-                    <span className="bold-text">Please submit the form below </span>and you'll
+                    <span className="bold-text">Please submit the form below </span>and you&apos;ll
                     receive and an email shortly with instructions about how to join our exclusive
                     mobile beta test program.
                   </p>
@@ -169,28 +176,28 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
             }
             method="POST"
           >
-            <input hidden={true} name="oid" value={idMappings[env].oid} />
+            <input hidden name="oid" value={idMappings[env].oid} />
             <input
-              hidden={true}
+              hidden
               name="retURL"
               value={process.env.REACT_APP_SALESFORCE_RETURN_URL}
             />
-            <input id="company" maxLength={40} name="company" hidden={true} value="Intake Form" />
+            <input id="company" maxLength={40} name="company" hidden value="Intake Form" />
             <input
               id="lead_source"
               maxLength={40}
               name="lead_source"
-              hidden={true}
+              hidden
               value="Intake Form"
             />
-            <input hidden={true} name="recordType" id="recordType" value="0123500000012eiAAA" />
+            <input hidden name="recordType" id="recordType" value="0123500000012eiAAA" />
             <input
               type="text"
-              hidden={true}
+              hidden
               name={idMappings[env].confirm}
               id={idMappings[env].confirm}
               value={this.formatIVetConfirm(this.state.vetConfirm)}
-              readOnly={true}
+              readOnly
             />
 
             <div className="vads-l-row">
@@ -201,8 +208,8 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
                   maxLength={40}
                   name="first_name"
                   type="text"
-                  required={true}
-                  aria-required={true}
+                  required
+                  aria-required
                   value={this.state.firstName}
                   onChange={this.updateNameInput('firstName')}
                 />
@@ -214,8 +221,8 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
                   maxLength={80}
                   name="last_name"
                   type="text"
-                  required={true}
-                  aria-required={true}
+                  required
+                  aria-required
                   value={this.state.lastName}
                   onChange={this.updateNameInput('lastName')}
                 />
@@ -236,7 +243,7 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
             <div className="vads-l-row">
               <div className="vads-l-col--12">
                 <label className="checkbox-label">
-                  Are you a Veteran, Veteran's family member, Veteran's caretaker, or Servicemember?{' '}
+                  Are you a Veteran, Veteran&apos;s family member, Veteran&apos;s caretaker, or Servicemember?{' '}
                   <small className="small-checkbox-label">(Check all that apply)</small>
                 </label>
                 <div className="form-checkbox">
@@ -255,7 +262,7 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
                     checked={this.state.vetConfirm.family}
                     onChange={this.updateIVetConfirm('family')}
                   />
-                  <label htmlFor="vet-family-checkbox">Veteran's family member</label>
+                  <label htmlFor="vet-family-checkbox">Veteran&apos;s family member</label>
                 </div>
                 <div className="form-checkbox">
                   <input
@@ -264,7 +271,7 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
                     checked={this.state.vetConfirm.caretaker}
                     onChange={this.updateIVetConfirm('caretaker')}
                   />
-                  <label htmlFor="vet-caretaker-checkbox">Veteran's caretaker</label>
+                  <label htmlFor="vet-caretaker-checkbox">Veteran&apos;s caretaker</label>
                 </div>
                 <div className="form-checkbox">
                   <input
@@ -389,38 +396,32 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
     );
   }
 
-  private toggleChecked = (key: string) => {
-    return () => {
-      const update = {};
-      update[key] = !this.state[key];
-      this.setState(update);
-    };
+  private toggleChecked = (key: string) => () => {
+    const update = {};
+    update[key] = !this.state[key];
+    this.setState(update);
   };
 
-  private updateNameInput = (name: string) => {
-    return (event: React.ChangeEvent<HTMLInputElement>) => {
-      const update = {};
-      update[name] = event.target.value;
-      this.setState(update);
-    };
+  private updateNameInput = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const update = {};
+    update[name] = event.target.value;
+    this.setState(update);
   };
 
-  private updateIVetConfirm = (key: string) => {
-    return () => {
-      const update = { ...this.state.vetConfirm };
-      update[key] = !update[key];
+  private updateIVetConfirm = (key: string) => () => {
+    const update = { ...this.state.vetConfirm };
+    update[key] = !update[key];
 
-      update.no = !(update.caretaker || update.family || update.veteran || update.servicemember);
+    update.no = !(update.caretaker || update.family || update.veteran || update.servicemember);
 
-      this.setState({ vetConfirm: update });
-    };
+    this.setState({ vetConfirm: update });
   };
 
   private updateEmail = (value: ErrorableInput) => {
     this.setState({ email: validateEmail(value) });
   };
 
-  private formatIVetConfirm = (confirm: IVetConfirm) => {
+  private formatIVetConfirm = (confirm: VetConfirm) => {
     if (confirm.no) {
       return vetConfirmMap.no;
     } else {
@@ -436,35 +437,24 @@ export default class BetaPage extends React.Component<{}, IBetaPageState> {
     }
   };
 
-  private submitButtonDisabled = () => {
-    return !(
-      this.loginChecked() &&
-      this.deviceChecked() &&
-      this.vetStatusChecked() &&
-      this.validTextInput()
-    );
-  };
+  private submitButtonDisabled = () => !(
+    this.loginChecked() &&
+    this.deviceChecked() &&
+    this.vetStatusChecked() &&
+    this.validTextInput()
+  );
 
-  private loginChecked = () => {
-    return this.state.idme || this.state.ds || this.state.mhv;
-  };
+  private loginChecked = () => this.state.idme || this.state.ds || this.state.mhv;
+  private deviceChecked = () => this.state.computer || this.state.iPhone;
 
-  private deviceChecked = () => {
-    return this.state.computer || this.state.iPhone;
-  };
+  private vetStatusChecked = () => (
+    this.state.vetConfirm.veteran ||
+    this.state.vetConfirm.family ||
+    this.state.vetConfirm.caretaker ||
+    this.state.vetConfirm.servicemember
+  );
 
-  private vetStatusChecked = () => {
-    return (
-      this.state.vetConfirm.veteran ||
-      this.state.vetConfirm.family ||
-      this.state.vetConfirm.caretaker ||
-      this.state.vetConfirm.servicemember
-    );
-  };
-
-  private validTextInput = () => {
-    return (
-      this.state.firstName !== '' && this.state.lastName !== '' && !this.state.email.validation
-    );
-  };
+  private validTextInput = () => (
+    this.state.firstName !== '' && this.state.lastName !== '' && !this.state.email.validation
+  );
 }
