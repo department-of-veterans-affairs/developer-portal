@@ -102,13 +102,7 @@ const ApplyForm = (props: ApplyProps): JSX.Element => {
     <div role="region" aria-labelledby={PAGE_HEADER_ID} className={applyClasses}>
       <ApplyHeader />
       <div className="vads-l-row">
-        <div
-          className={classNames(
-            'vads-l-col--12',
-            'medium-screen:vads-l-col--8',
-            'vads-u-padding-x--2p5',
-          )}
-        >
+        <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
           <form className="usa-form">
             <h2>Application</h2>
             <DeveloperInfo />
@@ -142,26 +136,6 @@ const ApplyForm = (props: ApplyProps): JSX.Element => {
             />
           </form>
           {renderError(props)}
-        </div>
-        <div
-          className={classNames(
-            'vads-l-col--12',
-            'medium-screen:vads-l-col--4',
-            'vads-u-padding-x--2p5',
-          )}
-        >
-          <div className="feature">
-            <h3>Stay In Touch</h3>
-            <p>
-              Want to get news and updates about VA API Program? Sign up to receive email updates.
-            </p>
-            <a
-              className="usa-button"
-              href="https://public.govdelivery.com/accounts/USVAOIT/subscriber/new?topic_id=USVAOIT_20"
-            >
-              Sign Up
-            </a>
-          </div>
         </div>
       </div>
     </div>
