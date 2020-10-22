@@ -25,6 +25,7 @@ const paths = require('./paths');
 const getClientEnvironment = require('./env');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const SitemapBuilderPlugin = require('../SitemapBuilderWebpackPlugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 // Webpack uses `output.publicPath`, from it's options object, to determine
 // where the app is being served from. It requires a trailing slash, or the
@@ -458,6 +459,16 @@ module.exports = envName => {
           watch: paths.appSrc,
           silent: true,
         }),
+
+      // Place the appropriate robots.txt in public folder based on the environment
+      new CopyPlugin({
+        patterns: [
+          {
+            from: envName === 'production' ? 'config/robots.prod.txt' : 'config/robots.dev.txt',
+            to: 'robots.txt',
+          },
+        ],
+      }),
       new SitemapBuilderPlugin({
         routesFile: path.join(paths.appSrc, 'Routes.tsx'),
         polyfillsFile: path.join(paths.appConfigScripts, 'polyfills.js'),

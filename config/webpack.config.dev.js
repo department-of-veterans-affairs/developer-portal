@@ -12,6 +12,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 // Webpack uses `output.publicPath`, from its options object, to determine
 // where the app is being served from.  In development, we always serve from
@@ -343,6 +344,10 @@ module.exports = {
       watch: paths.appSrc,
       tsconfig: paths.appTsConfig,
       tslint: paths.appTsLint,
+    }),
+    // Place the dev robots.txt file in the public folder
+    new CopyPlugin({
+      patterns: [{ from: 'config/robots.dev.txt', to: 'robots.txt' }],
     }),
   ],
   // Some libraries import Node modules but don't use them in the browser.

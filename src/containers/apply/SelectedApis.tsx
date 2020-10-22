@@ -6,55 +6,45 @@ import ErrorableCheckbox from '@department-of-veterans-affairs/formation-react/E
 import * as actions from '../../actions';
 import { APIList, RootState } from '../../types';
 
-interface IApiCheckbox {
+interface APICheckbox {
   id: string;
   label: string;
 }
 
-interface IApiCheckboxListProps {
-  apiCheckboxes: IApiCheckbox[];
+interface APICheckboxListProps {
+  apiCheckboxes: APICheckbox[];
   apiInputs: APIList;
   toggleSelectedApi: (apiId: string) => () => void;
 }
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    apiInputs: state.application.inputs.apis,
-  };
-};
+const mapStateToProps = (state: RootState) => ({
+  apiInputs: state.application.inputs.apis,
+});
 
 type ApiSelectDispatch = ThunkDispatch<RootState, undefined, actions.ToggleSelectedAPI>;
 
-const mapDispatchToProps = (dispatch: ApiSelectDispatch) => {
-  return {
-    toggleSelectedApi: (apiId: string) => {
-      return () => {
-        dispatch(actions.toggleSelectedApi(apiId));
-      };
-    },
-  };
-};
+const mapDispatchToProps = (dispatch: ApiSelectDispatch) => ({
+  toggleSelectedApi: (apiId: string) => () => {
+    dispatch(actions.toggleSelectedApi(apiId));
+  },
+});
 
 const ApiCheckboxList = connect(
   mapStateToProps,
   mapDispatchToProps,
-)((props: IApiCheckboxListProps) => {
-  return (
-    <React.Fragment>
-      {props.apiCheckboxes.map(api => {
-        return (
-          <ErrorableCheckbox
-            key={api.id}
-            name={api.id}
-            checked={props.apiInputs[api.id]}
-            label={api.label}
-            onValueChange={props.toggleSelectedApi(api.id)}
-          />
-        );
-      })}
-    </React.Fragment>
-  );
-});
+)((props: APICheckboxListProps) => (
+  <React.Fragment>
+    {props.apiCheckboxes.map(api => (
+      <ErrorableCheckbox
+        key={api.id}
+        name={api.id}
+        checked={props.apiInputs[api.id] as boolean}
+        label={api.label}
+        onValueChange={props.toggleSelectedApi(api.id)}
+      />
+    ))}
+  </React.Fragment>
+));
 
 const oauthInfo = [
   {
@@ -94,26 +84,24 @@ const apiInfo = [
   },
 ];
 
-export default class SelectedApis extends React.PureComponent {
-  public render() {
-    return (
-      <React.Fragment>
-        <label>Please select all of the APIs you'd like access to:</label>
-        <fieldset
-          className="vads-u-margin-top--2"
-          aria-label="Please select all of the Standard APIs you'd like access to:"
-        >
-          <legend className="vads-u-font-size--lg">Standard APIs:</legend>
-          <ApiCheckboxList apiCheckboxes={apiInfo} />
-        </fieldset>
-        <fieldset
-          className="vads-u-margin-top--2"
-          aria-label="Please select all the OAuth APIs you'd like access to:"
-        >
-          <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
-          <ApiCheckboxList apiCheckboxes={oauthInfo} />
-        </fieldset>
-      </React.Fragment>
-    );
-  }
-}
+const SelectedAPIs = (): JSX.Element => (
+  <React.Fragment>
+    <label>Please select all of the APIs you&apos;d like access to:</label>
+    <fieldset
+      className="vads-u-margin-top--2"
+      aria-label="Please select all of the Standard APIs you'd like access to:"
+    >
+      <legend className="vads-u-font-size--lg">Standard APIs:</legend>
+      <ApiCheckboxList apiCheckboxes={apiInfo} />
+    </fieldset>
+    <fieldset
+      className="vads-u-margin-top--2"
+      aria-label="Please select all the OAuth APIs you'd like access to:"
+    >
+      <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
+      <ApiCheckboxList apiCheckboxes={oauthInfo} />
+    </fieldset>
+  </React.Fragment>
+);
+
+export default SelectedAPIs;

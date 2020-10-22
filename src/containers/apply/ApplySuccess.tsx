@@ -9,28 +9,24 @@ import sentenceJoin from '../../sentenceJoin';
 import { ApplySuccessResult, RootState } from '../../types';
 import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS, PAGE_HEADER_ID } from '../../types/constants';
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    ...state.application.result,
-  };
-};
+const mapStateToProps = (state: RootState) => ({
+  ...state.application.result,
+});
 
-function AssistanceTrailer() {
-  return (
-    <p>
-      If you would like to report a bug or make a feature request, please open an issue through our{' '}
-      <Link to="/support">Support page</Link>.
-    </p>
-  );
-}
+const AssistanceTrailer = () => (
+  <p>
+    If you would like to report a bug or make a feature request, please open an issue through our{' '}
+    <Link to="/support">Support page</Link>.
+  </p>
+);
 
-interface IApiKeyNoticeProps {
+interface APIKeyNoticeProps {
   token: string;
   email: string;
   selectedApis: string[];
 }
 
-interface IOAuthCredentialsNoticeProps {
+interface OAuthCredentialsNoticeProps {
   clientID: string;
   clientSecret?: string;
   email: string;
@@ -38,14 +34,14 @@ interface IOAuthCredentialsNoticeProps {
 }
 
 // Mapping from the options on the form to Proper Names for APIs
-const apisToEnglishOAuthList = {
+const apisToEnglishOAuthList: Record<string, string> = {
   claims: 'Benefits Claims API',
   communityCare: 'Community Care API',
   health: 'VA Health API',
   verification: 'Veteran Verification API',
 };
 
-const apisToEnglishApiKeyList = () => {
+const apisToEnglishApiKeyList = (): Record<string, string> => {
   const apiDefs = getApiDefinitions();
   return {
     benefits: apiDefs.benefits.properName,
@@ -55,12 +51,12 @@ const apisToEnglishApiKeyList = () => {
   };
 };
 
-function OAuthCredentialsNotice({
+const OAuthCredentialsNotice = ({
   clientID,
   clientSecret,
   email,
   selectedApis,
-}: IOAuthCredentialsNoticeProps) {
+}: OAuthCredentialsNoticeProps) => {
   const apiNameList = selectedApis.map(k => apisToEnglishOAuthList[k]);
   const apiListSnippet = sentenceJoin(apiNameList);
 
@@ -82,9 +78,9 @@ function OAuthCredentialsNotice({
       </p>
     </div>
   );
-}
+};
 
-function ApiKeyNotice({ token, email, selectedApis }: IApiKeyNoticeProps) {
+const ApiKeyNotice = ({ token, email, selectedApis }: APIKeyNoticeProps) => {
   const apiNameList = selectedApis.map(k => apisToEnglishApiKeyList()[k]);
   const apiListSnippet = sentenceJoin(apiNameList);
 
@@ -100,9 +96,9 @@ function ApiKeyNotice({ token, email, selectedApis }: IApiKeyNoticeProps) {
       </p>
     </div>
   );
-}
+};
 
-function ApplySuccess(props: ApplySuccessResult) {
+const ApplySuccess = (props: ApplySuccessResult) => {
   const { apis, email, token, clientID, clientSecret } = props;
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
@@ -132,6 +128,6 @@ function ApplySuccess(props: ApplySuccessResult) {
       <AssistanceTrailer />
     </div>
   );
-}
+};
 
 export default connect(mapStateToProps)(ApplySuccess);
