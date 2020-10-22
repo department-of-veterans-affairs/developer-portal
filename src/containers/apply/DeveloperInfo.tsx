@@ -6,7 +6,7 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/
 import * as actions from '../../actions';
 import { ErrorableInput, RootState } from '../../types';
 
-interface IDeveloperInfoProps {
+interface DeveloperInfoProps {
   firstName: ErrorableInput;
   lastName: ErrorableInput;
   email: ErrorableInput;
@@ -41,7 +41,7 @@ const mapDispatchToProps = (dispatch: DeveloperInfoDispatch) => ({
   },
 });
 
-const DeveloperInfo = (props: IDeveloperInfoProps): JSX.Element => (
+const DeveloperInfo = (props: DeveloperInfoProps): JSX.Element => (
   <React.Fragment>
     <ErrorableTextInput
       label="First name"
