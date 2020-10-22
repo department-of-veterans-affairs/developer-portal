@@ -15,13 +15,11 @@ const ExtendedLayout: React.FunctionComponent<ExtendedLayoutProps> = (
   props: ExtendedLayoutProps,
 ): JSX.Element => {
   const { getComponent, getSystem } = props;
-  const apiMetadata = getSystem().versionSelectors.apiMetadata();
+  const versions = getSystem().versionSelectors.versionMetadata();
   const BaseLayout = getComponent('BaseLayout', true);
   return (
     <div>
-      {apiMetadata && apiMetadata.meta.versions.length > 1 && (
-        <VersionSelect getSystem={getSystem} />
-      )}
+      {versions && versions.length > 1 && <VersionSelect getSystem={getSystem} />}
       <BaseLayout />
     </div>
   );

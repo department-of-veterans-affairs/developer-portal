@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { lookupApiCategory } from '../../apiDefs/query';
@@ -9,7 +10,6 @@ import { APIDescription } from '../../apiDefs/schema';
 import PageHeader from '../../components/PageHeader';
 import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
-import { Link } from 'react-router-dom';
 
 const ApiNotFoundPage = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
@@ -28,9 +28,7 @@ const ApiNotFoundPage = (): JSX.Element => {
       )}
       <ul>
         {category?.apis
-          .filter((item: APIDescription) => {
-            return !isApiDeactivated(item);
-          })
+          .filter((item: APIDescription) => !isApiDeactivated(item))
           .map((item: APIDescription) => (
             <li key={item.urlFragment}>
               <Link to={`/explore/${apiCategoryKey}/docs/${item.urlFragment}`}>

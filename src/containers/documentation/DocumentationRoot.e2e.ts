@@ -5,13 +5,13 @@ import { puppeteerHost } from '../../e2eHelpers';
 describe('position sticky', () => {
   it('should keep nav element in place after scroll', async () => {
     await page.goto(`${puppeteerHost}/explore`, { waitUntil: 'networkidle0', timeout: 60000 });
-    const originalDistanceFromTop = await page.evaluate(() => {
-      return document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top;
-    });
+    const originalDistanceFromTop = await page.evaluate(
+      () => document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top,
+    );
     await page.evaluate(() => window.scrollBy(0, 585)); // scroll 585px
-    const distanceFromTop = await page.evaluate(() => {
-      return document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top;
-    });
+    const distanceFromTop = await page.evaluate(
+      () => document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top,
+    );
     expect(distanceFromTop).toEqual(20);
     expect(distanceFromTop).not.toEqual(originalDistanceFromTop);
   });
@@ -20,7 +20,7 @@ describe('position sticky', () => {
     const waitScrollClick = async (selector: string) => {
       await page.waitForSelector(selector, { visible: true });
       await page.evaluate(sel => {
-        const elem = document.querySelector(sel);
+        const elem = document.querySelector(sel) as HTMLElement;
         if (elem) {
           elem.scrollIntoView();
         }
@@ -65,9 +65,7 @@ describe('position sticky', () => {
     });
     await clickCard('Health API');
     await clickCard('Authorization');
-    const haloText = await page.$eval('.header-halo', elem => {
-      return elem.textContent;
-    });
+    const haloText = await page.$eval('.header-halo', elem => elem.textContent);
     expect(haloText).toEqual('Health API');
   });
 });

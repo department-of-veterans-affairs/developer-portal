@@ -11,6 +11,7 @@ import { AppFlags, FlagsProvider } from '../../flags';
 import store, { history } from '../../store';
 import ApiDocumentation from './ApiDocumentation';
 
+const ReleaseNotes: React.FunctionComponent = () => <div>My API&apos;s release notes</div>;
 const api: APIDescription = {
   description: "it's a great API!",
   docSources: [
@@ -20,7 +21,7 @@ const api: APIDescription = {
   ],
   enabledByDefault: true,
   name: 'My API',
-  releaseNotes: () => <div>My API's release notes</div>,
+  releaseNotes: ReleaseNotes,
   trustedPartnerOnly: false,
   urlFragment: 'my_api',
   vaInternalOnly: false,
@@ -29,9 +30,8 @@ const api: APIDescription = {
 const server = setupServer(
   rest.get(
     'https://example.com/my/openapi/spec',
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse => {
-      return res(context.status(200), context.json(openAPIData));
-    },
+    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse =>
+      res(context.status(200), context.json(openAPIData)),
   ),
 );
 
@@ -73,7 +73,7 @@ describe('ApiDocumentation', () => {
       const tagEl: HTMLElement = await screen.findByRole('heading', { name: tag });
       expect(tagEl.tagName.toLowerCase()).toBe('h3');
       expect(tagEl.nextElementSibling).not.toBeNull();
-      return tagEl.nextElementSibling! as HTMLElement;
+      return tagEl.nextElementSibling as HTMLElement;
     };
 
     it('has a section for each operation', async () => {
