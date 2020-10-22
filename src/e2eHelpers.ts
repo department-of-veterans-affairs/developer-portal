@@ -2,8 +2,8 @@ import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
 
-import { mockMetadata as metadataMocks } from './mockMetadata';
-import { mockSwagger as mocks } from './mockSwagger.js';
+import { mockMetadata as metadataMocks } from './__mocks__/mockMetadata';
+import { mockSwagger as mocks } from './__mocks__/mockSwagger';
 
 // Paths to test in visual regression and accessibility tests
 export const testPaths = [
