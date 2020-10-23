@@ -1,10 +1,5 @@
 export * from './actions/apply';
-
-export const SET_REQUESTED_API_VERSION = 'SET_REQUESTED_APIVERSION';
-export type SET_REQUESTED_API_VERSION = typeof SET_REQUESTED_API_VERSION;
-
-export const SET_INITIAL_VERSIONING = 'SET_INITIAL_VERSIONING';
-export type SET_INITIAL_VERSIONING = typeof SET_INITIAL_VERSIONING;
+export * from './actions/version';
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';
 export const OPEN_API_SPEC_HOST: string = process.env.REACT_APP_VETSGOV_SWAGGER_API || '';
@@ -23,7 +18,7 @@ export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
   health: 'fhir',
   vaForms: 'vaForms',
   verification: 'veteran_verification',
-};
+} as Record<string, string>;
 
 export const APPLY_STANDARD_APIS = ['benefits', 'facilities', 'vaForms', 'confirmation'];
 export const APPLY_OAUTH_APIS = ['claims', 'communityCare', 'health', 'verification'];

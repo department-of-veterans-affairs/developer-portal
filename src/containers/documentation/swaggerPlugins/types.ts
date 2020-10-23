@@ -2,7 +2,7 @@ import { Map, OrderedMap } from 'immutable';
 import { RequestOptions, SwaggerMapValues } from 'swagger-client';
 import { System as BaseSystem } from 'swagger-ui';
 import { OutputSelector } from 'reselect';
-import { APIMetadata } from '../../../types';
+import { VersionMetadata } from '../../../types';
 
 /**
  * COMPONENT PLUGINS
@@ -15,8 +15,8 @@ export interface ParametersProps {
 /**
  * ACTION PLUGINS
  */
-export interface SetAPIMetadataAction {
-  payload: APIMetadata;
+export interface SetVersionMetadataAction {
+  payload: VersionMetadata[];
   type: string;
 }
 
@@ -31,7 +31,7 @@ interface UpdateVersionAction {
 
 export interface SwaggerVersionActions {
   actions: {
-    setApiMetadata: (metadata: APIMetadata) => SetAPIMetadataAction;
+    setVersionMetadata: (metadata: VersionMetadata[]) => SetVersionMetadataAction;
     setApiVersion: (version: string) => SetAPIVersionAction;
     updateVersion: (version: string) => UpdateVersionAction;
   };
@@ -47,9 +47,9 @@ export interface SwaggerVersionReducers {
       action: SetAPIVersionAction,
     ) => Map<string, unknown>;
 
-    API_METADATA_SET: (
+    VERSION_METADATA_SET: (
       state: Map<string, unknown>,
-      action: SetAPIMetadataAction,
+      action: SetVersionMetadataAction,
     ) => Map<string, unknown>;
   };
 }
@@ -59,7 +59,7 @@ export interface SwaggerVersionReducers {
  */
 export interface SwaggerVersionSelectors {
   selectors: {
-    apiMetadata: (state: Map<string, unknown>) => APIMetadata;
+    versionMetadata: (state: Map<string, unknown>) => VersionMetadata[];
     apiName: (state: Map<string, unknown>) => string;
     apiVersion: (state: Map<string, unknown>) => string;
     majorVersion: OutputSelector<Map<string, unknown>, string, (result: string) => string>;
@@ -98,13 +98,13 @@ export interface SwaggerPlugins {
 export interface System extends BaseSystem {
   versionActions: {
     setApiVersion: (version: string) => void;
-    setApiMetadata: (meta: APIMetadata) => void;
+    setVersionMetadata: (meta: VersionMetadata[]) => void;
     updateVersion: (version: string) => void;
   };
 
   versionSelectors: {
     majorVersion: () => string;
-    apiMetadata: () => APIMetadata;
+    versionMetadata: () => VersionMetadata[];
     apiVersion: () => string;
   };
 }

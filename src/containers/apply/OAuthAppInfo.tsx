@@ -7,36 +7,30 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/
 import * as actions from '../../actions';
 import { ErrorableInput, RootState } from '../../types';
 
-interface IOAuthAppInfoProps {
+interface OAuthAppInfoProps {
   oAuthApplicationType: ErrorableInput;
   oAuthRedirectURI: ErrorableInput;
   updateOAuthApplicationType: (value: ErrorableInput) => void;
   updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput) => void;
 }
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    oAuthApplicationType: state.application.inputs.oAuthApplicationType,
-    oAuthRedirectURI: state.application.inputs.oAuthRedirectURI,
-  };
-};
+const mapStateToProps = (state: RootState) => ({
+  oAuthApplicationType: state.application.inputs.oAuthApplicationType,
+  oAuthRedirectURI: state.application.inputs.oAuthRedirectURI,
+});
 
 type OAuthAppInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateApplicationAction>;
 
-const mapDispatchToProps = (dispatch: OAuthAppInfoDispatch) => {
-  return {
-    updateOAuthApplicationType: (value: ErrorableInput) => {
-      dispatch(actions.updateApplicationOAuthApplicationType(value));
-    },
-    updateOAuthRedirectURI: (oldValidation?: string) => {
-      return (value: ErrorableInput) => {
-        dispatch(actions.updateApplicationOAuthRedirectURI(value, oldValidation));
-      };
-    },
-  };
-};
+const mapDispatchToProps = (dispatch: OAuthAppInfoDispatch) => ({
+  updateOAuthApplicationType: (value: ErrorableInput) => {
+    dispatch(actions.updateApplicationOAuthApplicationType(value));
+  },
+  updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput) => {
+    dispatch(actions.updateApplicationOAuthRedirectURI(value, oldValidation));
+  },
+});
 
-const OAuthAppInfo = (props: IOAuthAppInfoProps) => {
+const OAuthAppInfo = (props: OAuthAppInfoProps) => {
   const { oAuthApplicationType, oAuthRedirectURI } = props;
 
   return (
@@ -47,11 +41,12 @@ const OAuthAppInfo = (props: IOAuthAppInfoProps) => {
         <a
           href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/"
           target="_blank"
+          rel="noreferrer"
         >
           authorization code flow
         </a>
         , and apps that cannot will use the&nbsp;
-        <a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank">
+        <a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank" rel="noreferrer">
           PKCE flow
         </a>
         .
@@ -70,7 +65,7 @@ const OAuthAppInfo = (props: IOAuthAppInfoProps) => {
           },
         ]}
         value={oAuthApplicationType}
-        required={true}
+        required
         additionalLegendClass="vads-u-margin-top--0"
         additionalFieldsetClass="vads-u-margin-top--1"
       />
@@ -80,7 +75,7 @@ const OAuthAppInfo = (props: IOAuthAppInfoProps) => {
         label="OAuth Redirect URI"
         field={oAuthRedirectURI}
         onValueChange={props.updateOAuthRedirectURI(oAuthRedirectURI.validation)}
-        required={true}
+        required
       />
     </React.Fragment>
   );

@@ -6,23 +6,23 @@ import thunk, { ThunkMiddleware } from 'redux-thunk';
 
 import { application, initialApplicationState } from './reducers';
 import { apiVersioning } from './reducers/api-versioning';
-import { DevApplication, RootState } from './types';
+import { DevApplication, RootState, SerializedState } from './types';
 
 export const history: History = createBrowserHistory({
   basename: process.env.PUBLIC_URL || '/',
 });
 
-function loadApplicationState(): { application: DevApplication } {
+const loadApplicationState = (): { application: DevApplication } => {
   try {
     const serializedState = sessionStorage.getItem('state');
     if (serializedState == null) {
       return { application: initialApplicationState };
     } else {
-      const state = JSON.parse(serializedState);
+      const state = JSON.parse(serializedState) as SerializedState;
       if (
         isEqual(Object.keys(state.application.inputs), Object.keys(initialApplicationState.inputs))
       ) {
-        return { application: state.application };
+        return { application: { ...state.application, sending: false } };
       } else {
         return { application: initialApplicationState };
       }
@@ -30,11 +30,11 @@ function loadApplicationState(): { application: DevApplication } {
   } catch (err) {
     return { application: initialApplicationState };
   }
-}
+};
 
-function saveApplicationState(state: RootState) {
+const saveApplicationState = (state: RootState) => {
   try {
-    const stateToSerialize = {
+    const stateToSerialize: SerializedState = {
       application: {
         inputs: state.application.inputs,
       },
@@ -44,7 +44,7 @@ function saveApplicationState(state: RootState) {
   } catch (err) {
     // swallow the error.
   }
-}
+};
 
 const store = createStore(
   combineReducers<RootState>({

@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import moment from 'moment';
 import * as React from 'react';
 import { APICategories, APIDeactivationInfo, APIDescription } from '../apiDefs/schema';
@@ -11,7 +12,7 @@ export const fakeCategories: APICategories = {
         docSources: [], // doesn't matter yet
         enabledByDefault: true,
         name: 'Rings API',
-        releaseNotes: () => (
+        releaseNotes: (): JSX.Element => (
           <div>
             <h3>March 25, 2020</h3>
             <p>One Ring destroyed</p>
@@ -25,16 +26,16 @@ export const fakeCategories: APICategories = {
       },
       {
         deactivationInfo: {
-          deactivationContent: () => <div>Silmarils lost forever</div>,
+          deactivationContent: (): JSX.Element => <div>Silmarils lost forever</div>,
           deactivationDate: moment().subtract(1, 'year'),
-          deprecationContent: () => <div>Morgoth claims the jewels</div>,
+          deprecationContent: (): JSX.Element => <div>Morgoth claims the jewels</div>,
           deprecationDate: moment().subtract(15, 'months'),
         },
         description: 'Three pretty gems',
         docSources: [],
         enabledByDefault: true,
         name: 'Silmarils API',
-        releaseNotes: () => (
+        releaseNotes: (): JSX.Element => (
           <div>
             <h3>April 3, 1005</h3>
             <p>Stolen by Morgoth</p>
@@ -51,7 +52,7 @@ export const fakeCategories: APICategories = {
         docSources: [], // doesn't matter here
         enabledByDefault: true,
         name: 'Hobbits API',
-        releaseNotes: () => (
+        releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 22, 2019</h3>
             <p>Pippin and Merry got taller</p>
@@ -65,10 +66,10 @@ export const fakeCategories: APICategories = {
       },
     ],
     content: {
-      intro: () => (
+      intro: (): JSX.Element => (
         <h2>The Lord of the Rings APIs contain info about the world of Middle-earth.</h2>
       ),
-      overview: () => null,
+      overview: (): JSX.Element | null => null,
       placardText: 'Learn more about things in Middle-earth',
       shortDescription: 'Learn more about things in Middle-earth',
     },
@@ -82,7 +83,7 @@ export const fakeCategories: APICategories = {
         docSources: [], // doesn't matter here
         enabledByDefault: true,
         name: 'Basketball API',
-        releaseNotes: () => (
+        releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 21, 2019</h3>
             <p>Moved exiled Numenoreans to Middle-earth</p>
@@ -99,7 +100,7 @@ export const fakeCategories: APICategories = {
         docSources: [], // doesn't matter here
         enabledByDefault: false,
         name: 'Baseball API',
-        releaseNotes: () => (
+        releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 22, 2019</h3>
             <p>Mike Trout homers</p>
@@ -113,8 +114,8 @@ export const fakeCategories: APICategories = {
       },
     ],
     content: {
-      intro: () => <h2>The Sports APIs are about games and stuff</h2>,
-      overview: () => null,
+      intro: (): JSX.Element => <h2>The Sports APIs are about games and stuff</h2>,
+      overview: (): JSX.Element | null => null,
       placardText: 'Learn more about throwing, running, and hitting',
       shortDescription: 'Learn more about throwing, running, and hitting',
     },

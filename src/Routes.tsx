@@ -13,7 +13,6 @@ import BetaPage from './containers/Beta';
 import BetaSuccess from './containers/BetaSuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
-import ProviderIntegrationGuide from './containers/documentation/ProviderIntegrationGuide';
 import Home from './containers/Home';
 import News from './containers/News';
 import NotFound from './containers/NotFound';
@@ -21,46 +20,54 @@ import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
+import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag } from './flags';
 
-export function SiteRoutes() {
-  return (
-    <Switch>
-      <Route exact={true} path="/" component={Home} />
-      <Route exact={true} path="/index.html" component={Home} />
+export const SiteRoutes: React.FunctionComponent = () => (
+  <Switch>
+    <Route exact path="/" component={Home} />
+    <Route exact path="/index.html" component={Home} />
 
-      {/* Legacy routes that we want to maintain: */}
-      <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
-      <Route path="/whats-new" render={() => <Redirect to="/news" />} />
+    {/* Legacy routes that we want to maintain: */}
+    <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
+    <Route path="/whats-new" render={() => <Redirect to="/news" />} />
 
-      {/* Current routes: */}
-      <Route path="/go-live" render={() => MarkdownPage(PathToProduction)} />
-      <Route path="/terms-of-service" render={() => MarkdownPage(TermsOfService)} />
-      <Route
-        path="/apply"
-        render={() => (
-          <Flag
-            name={['signups_enabled']}
-            component={ApplyForm}
-            fallbackComponent={DisabledApplyForm}
-          />
-        )}
-      />
-      <Route path="/applied" component={ApplySuccess} />
-      <Route path="/beta" component={BetaPage} />
-      <Route path="/beta-success" component={BetaSuccess} />
-      <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
-      <Route
-        path="/oauth"
-        render={() => <Redirect to="/explore/verification/docs/authorization" />}
-      />
-      <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-      <Route path="/news" component={News} />
-      <Route path="/support" component={Support} />
-      <Route path="/providers/integration-guide" component={ProviderIntegrationGuide} />
-      <Route component={NotFound} />
-    </Switch>
-  );
+    {/* Current routes: */}
+    <Route path="/go-live" render={() => MarkdownPage(PathToProduction)} />
+    <Route path="/terms-of-service" render={() => MarkdownPage(TermsOfService)} />
+    <Route
+      path="/apply"
+      render={() => (
+        <Flag
+          name={['signups_enabled']}
+          component={ApplyForm}
+          fallbackComponent={DisabledApplyForm}
+        />
+      )}
+    />
+    <Route path="/applied" component={ApplySuccess} />
+    <Route path="/beta" component={BetaPage} />
+    <Route path="/beta-success" component={BetaSuccess} />
+    <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
+    <Route
+      path="/oauth"
+      render={() => <Redirect to="/explore/verification/docs/authorization" />}
+    />
+    <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
+    <Route path="/news" component={News} />
+    <Route path="/support" component={Support} />
+    <Route path="/providers/integration-guide" render={() => MarkdownPage(ProviderIntegrationGuide)} />
+    <Route component={NotFound} />
+  </Switch>
+);
+
+interface SitemapConfig {
+  topLevelRoutes: React.FunctionComponent;
+  paramsConfig: Record<string, unknown>;
+  pathFilter: {
+    isValid: boolean;
+    rules: RegExp[];
+  };
 }
 
 /*  When a route is added to or removed from `topLevelRoutes` the sitemap will be automatically updated during the next build.
@@ -69,12 +76,12 @@ export function SiteRoutes() {
  *     - a route with dynamic subroutes (e.g. `/route/:param`) is added an array of the available params needs to be added to `paramsConfig`
  */
 
-export function sitemapConfig() {
+export const sitemapConfig = (): SitemapConfig => {
   const apiDefs = getApiDefinitions();
   const deactivatedFlags = getDeactivatedFlags();
   const envFlags = getEnvFlags();
 
-  function getApiRouteParams(route: string, apiCategory: string): string[] {
+  const getApiRouteParams = (route: string, apiCategory: string): string[] => {
     const routeParams = apiDefs[apiCategory].apis.reduce(
       (result: string[], api: APIDescription) => {
         if (envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment]) {
@@ -94,17 +101,15 @@ export function sitemapConfig() {
     }
 
     return routeParams;
-  }
+  };
 
   const apiCategoryOrder = getApiCategoryOrder();
   return {
     paramsConfig: {
-      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => {
-        return {
-          apiCategoryKey: apiCategory,
-          apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
-        };
-      }),
+      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => ({
+        apiCategoryKey: apiCategory,
+        apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
+      })),
       '/explore/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
       '/release-notes/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
     },
@@ -114,4 +119,4 @@ export function sitemapConfig() {
     },
     topLevelRoutes: SiteRoutes,
   };
-}
+};
