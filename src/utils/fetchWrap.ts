@@ -1,22 +1,35 @@
-import * as Sentry from "@sentry/browser";
+import * as Sentry from '@sentry/browser';
+import { v4 as uuidv4 } from 'uuid';
+
+let newID = uuidv4();
+let newHeaders = new Headers();
+newHeaders.append('reqID', newID);
+
+const newInit = {
+  cache: 'default',
+  headers: newHeaders,
+  method: 'GET',
+  mode: 'cors',
+};
+
+const debugURL = 'http://localhost:3030/url';
+
+const request = new Request(debugURL, newInit);
 
 const errorFunc = (error: string) => {
   Sentry.withScope(scope => {
-    scope.setLevel(Sentry.Severity.fromString('warning'));
+    scope.setTag('Error ID', newID);
     Sentry.captureException(error);
   });
 };
 
-export const fetchWrap = async (request: Request, errorFlag: string) => {
+export const fetchWrap = async (request: Request) => {
   try {
     const response = await fetch(request);
-    if (!response.ok && response.status !== 300 || 400 || 500) {
-      throw Error(response.statusText);
+    if ((!response.ok && response.status !== 300) || 400 || 500) {
+      throw TypeError(`Front End Error ID: ${newID}`);
     }
-    const json = await response.json() as Record<string, unknown>;
-    if (json.errors) {
-      throw Error(`${errorFlag}: ${json.errors.join(', ')}`);
-    }
+    
   } catch (error) {
     errorFunc(error);
   }
