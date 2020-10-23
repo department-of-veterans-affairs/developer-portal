@@ -11,6 +11,14 @@ https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FA
 
 Happy linting! 💖
 */
+
+// https://eslint.org/docs/rules/
+const coreESLintRules = {
+  'no-console': 'error',
+  'no-promise-executor-return': 'error',
+  'no-useless-backreference': 'error',
+};
+
 module.exports = {
   env: {
     browser: true,
@@ -37,6 +45,7 @@ module.exports = {
     'react-hooks',
   ],
   rules: {
+    ... coreESLintRules,
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [
       'error',
@@ -164,10 +173,6 @@ module.exports = {
     'newline-per-chained-call': 'off',
     'no-bitwise': 'error',
     'no-caller': 'error',
-    'no-cond-assign': 'error',
-    'no-console': 'off',
-    'no-debugger': 'error',
-    'no-empty': 'error',
     'no-eval': 'error',
     'no-extra-semi': 'off',
     'no-fallthrough': 'off',
@@ -185,7 +190,6 @@ module.exports = {
     'no-trailing-spaces': 'off',
     'no-undef-init': 'error',
     'no-underscore-dangle': 'error',
-    'no-unsafe-finally': 'error',
     'no-unused-labels': 'error',
     'no-var': 'error',
     'object-shorthand': 'error',
@@ -211,8 +215,6 @@ module.exports = {
         markers: ['/'],
       },
     ],
-    'use-isnan': 'error',
-    'valid-typeof': 'off',
     '@typescript-eslint/tslint/config': [
       'error',
       {
