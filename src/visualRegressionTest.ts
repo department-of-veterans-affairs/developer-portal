@@ -1,5 +1,5 @@
+/* eslint-disable no-loop-func -- we need to break up these Jest tests inside loops */
 import { Page } from 'puppeteer';
-
 import { mockSwagger, puppeteerHost, testPaths } from './e2eHelpers';
 
 jest.setTimeout(100000);

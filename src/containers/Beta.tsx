@@ -111,6 +111,7 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
       `small-screen:vads-u-padding-${paddingDirection}--1`,
     );
 
+    const updateEmail = this.updateEmail.bind(this) as (value: ErrorableInput) => void;
     return (
       <div className={classNames('beta-application', 'vads-u-margin-bottom--4')}>
         <section role="region" aria-label="Page Hero" className="va-api-hero">
@@ -236,7 +237,7 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
                   field={this.state.email}
                   name="email"
                   maxLength={80}
-                  onValueChange={this.updateEmail}
+                  onValueChange={updateEmail}
                 />
               </div>
             </div>
@@ -396,30 +397,36 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
     );
   }
 
-  private toggleChecked = (key: string) => () => {
-    const update = {};
-    update[key] = !this.state[key];
-    this.setState(update);
-  };
+  private toggleChecked(key: string) {
+    return () => {
+      const update = {};
+      update[key] = !this.state[key];
+      this.setState(update);
+    };
+  }
 
-  private updateNameInput = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    const update = {};
-    update[name] = event.target.value;
-    this.setState(update);
-  };
+  private updateNameInput(name: string) {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
+      const update = {};
+      update[name] = event.target.value;
+      this.setState(update);
+    };
+  }
 
-  private updateIVetConfirm = (key: string) => () => {
-    const update = { ...this.state.vetConfirm };
-    update[key] = !update[key];
+  private updateIVetConfirm(key: string) {
+    return () => {
+      const update = { ...this.state.vetConfirm };
+      update[key] = !update[key];
 
-    update.no = !(update.caretaker || update.family || update.veteran || update.servicemember);
+      update.no = !(update.caretaker || update.family || update.veteran || update.servicemember);
 
-    this.setState({ vetConfirm: update });
-  };
+      this.setState({ vetConfirm: update });
+    };
+  }
 
-  private updateEmail = (value: ErrorableInput) => {
+  private updateEmail(value: ErrorableInput) {
     this.setState({ email: validateEmail(value) });
-  };
+  }
 
   private formatIVetConfirm = (confirm: VetConfirm) => {
     if (confirm.no) {
@@ -437,24 +444,35 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
     }
   };
 
-  private submitButtonDisabled = () => !(
-    this.loginChecked() &&
-    this.deviceChecked() &&
-    this.vetStatusChecked() &&
-    this.validTextInput()
-  );
+  private submitButtonDisabled() {
+    return !(
+      this.loginChecked() &&
+      this.deviceChecked() &&
+      this.vetStatusChecked() &&
+      this.validTextInput()
+    );
+  }
 
-  private loginChecked = () => this.state.idme || this.state.ds || this.state.mhv;
-  private deviceChecked = () => this.state.computer || this.state.iPhone;
+  private loginChecked() {
+    return this.state.idme || this.state.ds || this.state.mhv;
+  }
 
-  private vetStatusChecked = () => (
-    this.state.vetConfirm.veteran ||
-    this.state.vetConfirm.family ||
-    this.state.vetConfirm.caretaker ||
-    this.state.vetConfirm.servicemember
-  );
+  private deviceChecked() {
+    return this.state.computer || this.state.iPhone;
+  }
 
-  private validTextInput = () => (
-    this.state.firstName !== '' && this.state.lastName !== '' && !this.state.email.validation
-  );
+  private vetStatusChecked() {
+    return (
+      this.state.vetConfirm.veteran ||
+      this.state.vetConfirm.family ||
+      this.state.vetConfirm.caretaker ||
+      this.state.vetConfirm.servicemember
+    );
+  }
+
+  private validTextInput() {
+    return (
+      this.state.firstName !== '' && this.state.lastName !== '' && !this.state.email.validation
+    );
+  }
 }

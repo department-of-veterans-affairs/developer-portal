@@ -51,7 +51,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     }
 
     if (state.params) {
-      state.params.map((parameter: Parameter) => {
+      state.params.forEach((parameter: Parameter) => {
         state.paramValues[parameter.name] = parameter.example || '';
       });
     }
@@ -59,7 +59,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     if (this.props.operation.requestBody && this.requirementsMet()) {
       const properties = this.props.operation.requestBody.content['application/json'].schema
         .properties;
-      Object.keys(properties).map((propertyName: string) => {
+      Object.keys(properties).forEach((propertyName: string) => {
         const property = properties[propertyName];
         property.name = propertyName;
         requestBodyProperties.push(property);
@@ -187,7 +187,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
 
   public buildRequestBody(): { [key: string]: string | string[] | Record<string, unknown> } {
     const requestBody = {};
-    this.state.requestBodyProperties.map((property: Schema) => {
+    this.state.requestBodyProperties.forEach((property: Schema) => {
       if (property.type === 'array' && this.state.paramValues[property.name]) {
         requestBody[property.name] = this.state.paramValues[property.name].split(',');
       } else if (property.type === 'object') {
