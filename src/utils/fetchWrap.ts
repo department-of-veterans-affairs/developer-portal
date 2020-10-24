@@ -1,11 +1,13 @@
 import * as Sentry from '@sentry/browser';
 import { v4 as uuidv4 } from 'uuid';
 
-let newID = uuidv4();
-let newHeaders = new Headers();
+
+// ===== Start page specific data ===== 
+const newID: string = uuidv4();
+const newHeaders = new Headers();
 newHeaders.append('reqID', newID);
 
-const newInit = {
+const newInit: RequestInit = {
   cache: 'default',
   headers: newHeaders,
   method: 'GET',
@@ -14,7 +16,9 @@ const newInit = {
 
 const debugURL = 'http://localhost:3030/url';
 
-const request = new Request(debugURL, newInit);
+export const fetchRequest = new Request(debugURL, newInit);
+
+// ===== End page specific data =====
 
 const errorFunc = (error: string) => {
   Sentry.withScope(scope => {
@@ -24,14 +28,19 @@ const errorFunc = (error: string) => {
 };
 
 export const fetchWrap = async (request: Request) => {
+  console.time('timer starts');
   try {
     const response = await fetch(request);
     if ((!response.ok && response.status !== 300) || 400 || 500) {
       throw TypeError(`Front End Error ID: ${newID}`);
     }
+    return response;
     
   } catch (error) {
-    errorFunc(error);
+    return errorFunc(error);
+  } finally {
+    // not sure what to do here. Timer for science.
+    console.timeEnd('timer ends');
   }
-  return;
 };
+
