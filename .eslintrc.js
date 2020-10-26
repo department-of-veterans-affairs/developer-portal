@@ -11,6 +11,23 @@ https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FA
 
 Happy linting! 💖
 */
+
+const coreESLintRules = {
+  'arrow-body-style': 'error',
+  'arrow-parens': ['error', 'as-needed'],
+  'arrow-spacing': 'error',
+  'no-confusing-arrow': 'error',
+  'no-duplicate-imports': 'error',
+  'no-useless-computed-key': 'error',
+  'no-useless-constructor': 'error',
+  'no-useless-rename': 'error',
+  'object-shorthand': 'error',
+  'prefer-destructuring': ['error', { array: false, object: true }],
+  'prefer-template': 'error',
+  'rest-spread-spacing': 'error',
+  'template-curly-spacing': 'error',
+};
+
 module.exports = {
   env: {
     browser: true,
@@ -37,6 +54,7 @@ module.exports = {
     'react-hooks',
   ],
   rules: {
+    ... coreESLintRules,
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [
       'error',
@@ -130,12 +148,9 @@ module.exports = {
     ],
     '@typescript-eslint/type-annotation-spacing': 'off',
     '@typescript-eslint/unified-signatures': 'error',
-    'arrow-body-style': 'error',
-    'arrow-parens': ['off', 'always'],
     'brace-style': ['off', 'off'],
     'comma-dangle': ['error', 'always-multiline'],
     complexity: 'off',
-    'constructor-super': 'error',
     curly: 'error',
     'eol-last': 'error',
     eqeqeq: ['error', 'smart'],
@@ -187,11 +202,8 @@ module.exports = {
     'no-underscore-dangle': 'error',
     'no-unsafe-finally': 'error',
     'no-unused-labels': 'error',
-    'no-var': 'error',
-    'object-shorthand': 'error',
     'one-var': ['error', 'never'],
     'prefer-arrow/prefer-arrow-functions': 'error',
-    'prefer-const': 'off',
     'quote-props': 'off',
     radix: 'error',
     'react/jsx-boolean-value': 'error',

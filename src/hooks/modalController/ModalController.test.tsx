@@ -9,7 +9,7 @@ const TestComponent = (): JSX.Element => {
   const { modalVisible, setModalVisible } = useModalController();
 
   // False values are rendered as blank. This helper shows the actual value
-  const displayModalVisibility = () => modalVisible ? 'true' : 'false';
+  const displayModalVisibility = () => (modalVisible ? 'true' : 'false');
 
   return (
     <div>
@@ -30,7 +30,7 @@ describe('useModalController', () => {
     // Note: I did not use the renderHook functionality because it doesn't give access to
     // elements, which means I was unable to test the [Escape] key functionality
     // This test should give full coverage to the ModalController hook though
-    container = render(<TestComponent />).container;
+    ({ container } = render(<TestComponent />));
 
     toggleVisibleButton = screen.getByRole('button');
   });

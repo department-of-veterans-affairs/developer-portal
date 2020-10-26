@@ -1,7 +1,6 @@
 import * as Sentry from '@sentry/browser';
 import { Location } from 'history';
 import * as React from 'react';
-import { Dispatch } from 'react';
 import { connect } from 'react-redux';
 import SwaggerUI from 'swagger-ui';
 import * as actions from '../../actions';
@@ -34,7 +33,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<actions.SetRequestedAPIVersion | actions.SetVersioning>,
+  dispatch: React.Dispatch<actions.SetRequestedAPIVersion | actions.SetVersioning>,
 ) => ({
   setRequestedApiVersion: (version: string) => {
     dispatch(actions.setRequstedApiVersion(version));
@@ -78,7 +77,7 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
   }
 
   private setSearchParam() {
-    const version = this.props.version;
+    const { version } = this.props;
     const params = new URLSearchParams(this.props.location.search);
     if (params.get('version') !== version) {
       params.set('version', version);
