@@ -1,4 +1,4 @@
-/* eslint-disable max-lines-per-function, max-nested-callbacks -- Jest callbacks */
+/* eslint-disable max-nested-callbacks -- Jest callbacks */
 import '@testing-library/jest-dom/extend-expect';
 import { getAllByRole, getByRole, getByText, render, screen } from '@testing-library/react';
 import 'jest';

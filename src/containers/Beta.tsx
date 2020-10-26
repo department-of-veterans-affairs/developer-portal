@@ -1,4 +1,4 @@
-/* eslint-disable max-lines, max-lines-per-function, multiline-comment-style
+/* eslint-disable max-lines, multiline-comment-style
   -- module is deprecated and I don't care to refactor */
 // tslint:disable:react-a11y-required
 // tslint:disable:react-a11y-proptypes

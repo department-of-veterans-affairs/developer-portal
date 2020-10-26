@@ -16,7 +16,6 @@ const coreESLintRules = {
   'array-bracket-spacing': 'error',
   'array-element-newline': ['error', 'consistent'],
   'block-spacing': 'error',
-  // 'camelcase': 'warn',
   'comma-dangle': ['error', 'always-multiline'],
   'comma-spacing': 'error',
   'comma-style': 'error',

@@ -24,7 +24,6 @@ const server = setupServer(
 const spyFetch = jest.spyOn(global, 'fetch');
 /* eslint-enable  */
 
-/* eslint-disable max-lines-per-function -- Jest callbacks */
 describe('SupportContactUsForm', () => {
   beforeAll(() => server.listen());
   beforeEach(() => server.resetHandlers());
