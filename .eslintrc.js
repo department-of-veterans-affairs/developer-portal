@@ -75,7 +75,6 @@ const coreESLintRules = {
   'no-whitespace-before-property': 'error',
   'object-curly-spacing': ['error', 'always'],
   'padded-blocks': ['error', 'never'],
-  'quote-props': ['error', 'as-needed'],
   'quotes': ['error', 'single', { avoidEscape: true }],
   'semi': 'error',
   'semi-spacing': 'error',
@@ -241,7 +240,6 @@ module.exports = {
     'one-var': ['error', 'never'],
     'prefer-arrow/prefer-arrow-functions': 'error',
     'prefer-const': 'off',
-    'quote-props': 'off',
     radix: 'error',
     'react/jsx-boolean-value': 'error',
     'react/jsx-curly-spacing': 'off',
@@ -251,13 +249,6 @@ module.exports = {
     // if it's overused https://kentcdodds.com/blog/usememo-and-usecallback
     'react/jsx-no-bind': 'off',
     'react/jsx-wrap-multilines': 'off',
-    'spaced-comment': [
-      'error',
-      'always',
-      {
-        markers: ['/'],
-      },
-    ],
     'use-isnan': 'error',
     'valid-typeof': 'off',
     '@typescript-eslint/tslint/config': [
