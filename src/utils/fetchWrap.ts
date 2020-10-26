@@ -15,11 +15,12 @@ const fetchHandler = (response: Response, errorID: string) => {
   return response;
 };
 
-export const fetchWrap = async (request: Request, errorID: string) => {
+export const fetchWrap = async (request: Request, errorID: string): Promise<unknown> => {
   try {
     const response = await fetch(request);
     fetchHandler(response, errorID);
   } catch (error) {
     return sentryErrorHandler(error, errorID);
   }
+  return request;
 };
