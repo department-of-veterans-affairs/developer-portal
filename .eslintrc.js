@@ -11,6 +11,13 @@ https://github.com/typescript-eslint/tslint-to-eslint-config/blob/master/docs/FA
 
 Happy linting! 💖
 */
+
+const coreESLintRules = {
+  'no-label-var': 'error',
+  'no-shadow': ['error', { hoist: 'all' }],
+  'no-undef-init': 'error',
+};
+
 module.exports = {
   env: {
     browser: true,
@@ -37,6 +44,7 @@ module.exports = {
     'react-hooks',
   ],
   rules: {
+    ... coreESLintRules,
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [
       'error',
@@ -175,15 +183,8 @@ module.exports = {
     'no-irregular-whitespace': 'off',
     'no-multiple-empty-lines': 'off',
     'no-new-wrappers': 'error',
-    'no-shadow': [
-      'error',
-      {
-        hoist: 'all',
-      },
-    ],
     'no-throw-literal': 'error',
     'no-trailing-spaces': 'off',
-    'no-undef-init': 'error',
     'no-underscore-dangle': 'error',
     'no-unsafe-finally': 'error',
     'no-unused-labels': 'error',
