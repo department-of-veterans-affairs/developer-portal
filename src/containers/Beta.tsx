@@ -1,3 +1,5 @@
+/* eslint-disable max-lines, max-lines-per-function, multiline-comment-style
+  -- module is deprecated and I don't care to refactor */
 // tslint:disable:react-a11y-required
 // tslint:disable:react-a11y-proptypes
 import * as React from 'react';
@@ -445,6 +447,7 @@ export default class BetaPage extends React.Component<Record<string, unknown>, B
   );
 
   private loginChecked = () => this.state.idme || this.state.ds || this.state.mhv;
+
   private deviceChecked = () => this.state.computer || this.state.iPhone;
 
   private vetStatusChecked = () => (

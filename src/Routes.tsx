@@ -70,10 +70,12 @@ interface SitemapConfig {
   };
 }
 
-/*  When a route is added to or removed from `topLevelRoutes` the sitemap will be automatically updated during the next build.
- *   There are situations when the config for react-router-sitemap needs to be updated for the sitemap to reflect the desired paths:
- *     - a route is included in `topLevelRoutes` that should not be included in the sitemap needs to be added to `pathFilter`
- *     - a route with dynamic subroutes (e.g. `/route/:param`) is added an array of the available params needs to be added to `paramsConfig`
+/**
+ * When a route is added to or removed from `topLevelRoutes` the sitemap will be automatically
+ * updated during the next build. There are situations when the config for react-router-sitemap needs
+ * to be updated for the sitemap to reflect the desired paths:
+ * - a route is included in `topLevelRoutes` that should not be included in the sitemap needs to be added to `pathFilter`
+ * - a route with dynamic subroutes (e.g. `/route/:param`) is added an array of the available params needs to be added to `paramsConfig`
  */
 
 export const sitemapConfig = (): SitemapConfig => {

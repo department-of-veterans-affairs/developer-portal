@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks -- Jest callbacks */
 import Swagger, { OpenAPISpec, RequestOptions, SwaggerRequest } from 'swagger-client';
 import testSpec from '../../../__mocks__/openAPIData/decisionReviews.test.json';
 import { curlify } from './curlify';

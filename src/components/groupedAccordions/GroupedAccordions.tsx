@@ -73,7 +73,7 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
           )}
           onClick={event => handleExpandCollapse(event)}
         >
-          {!allExpanded ? 'Expand all' : 'Collapse all'}
+          {allExpanded ? 'Collapse all' : 'Expand all'}
         </button>
       </div>
       {props.panelContents.map((c: AccordionPanelContent, index: number) => {

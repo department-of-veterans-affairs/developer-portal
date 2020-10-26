@@ -1,10 +1,10 @@
-/*
-  This file contains all of the interfaces that currently make up the API definition schema.
-  Any future additions to this schema should be defined here as well. In the future, we will
-  likely move this data to a non-Typescript location, i.e. a database. As a result, we should
-  also not add any more React components to these schema definitions, as that will add to the
-  work that we need to do to convert this schema to a database-based systeem.
-*/
+/**
+ * This file contains all of the interfaces that currently make up the API definition schema.
+ * Any future additions to this schema should be defined here as well. In the future, we will
+ * likely move this data to a non-Typescript location, i.e. a database. As a result, we should
+ * also not add any more React components to these schema definitions, as that will add to the
+ * work that we need to do to convert this schema to a database-based system.
+ */
 import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 

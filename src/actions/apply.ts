@@ -176,32 +176,32 @@ export const submitFormError: ActionCreator<SubmitFormError> = (status: string) 
   type: constants.SUBMIT_APPLICATION_ERROR,
 });
 
-/*
-  IErrorableInput is designed to work with the formation-react form controls, but
-  formation-react text inputs (ErrorableTextInput, ErrorableNumberInput, and 
-  ErrorableTextArea) take a sort of backwards approach to dirty fields and therefore 
-  validation hooks. these components have a required onValueChange prop that accepts
-  an object with a `value` string and a `dirty` bool that is used for both the onChange
-  and onBlur events - meaning (a) that the component manages those events itself and (b)
-  the handler prop must work for both events. 
-
-  the big problem with that is that the dirty bool isn't set to a value that makes
-  sense. in the change handler, `dirty` is set to the value of `props.field.dirty`,
-  when the change event implies that the value *is* dirty. meanwhile, in the blur
-  handler, `dirty` is always true, but the blur event *does not* imply that the value
-  changed.
-
-  the implication for us is that we want to validate when `dirty` is true, because we
-  want to validate on blur. this will trigger validations that are unnecessary but not
-  harmful (because if the value has not changed, the validation result will be the same).
-  on the other hand, `dirty` doesn't actually mean "dirty", and we don't want to set 
-  it to true ourselves because then we might validate outside
-
-  code: https://github.com/department-of-veterans-affairs/veteran-facing-services-tools/blob/e7d2a079e7ed1979b125f8a43495b35da34d66e5/packages/formation-react/src/components/ErrorableTextInput/ErrorableTextInput.jsx#L41
-
-  tl;dr dirty doesn't mean dirty, it means validate, and we shouldn't use it for 
-  anything else.
-*/
+/**
+ * IErrorableInput is designed to work with the formation-react form controls, but
+ * formation-react text inputs (ErrorableTextInput, ErrorableNumberInput, and
+ * ErrorableTextArea) take a sort of backwards approach to dirty fields and therefore
+ * validation hooks. these components have a required onValueChange prop that accepts
+ * an object with a `value` string and a `dirty` bool that is used for both the onChange
+ * and onBlur events - meaning (a) that the component manages those events itself and (b)
+ * the handler prop must work for both events.
+ *
+ * the big problem with that is that the dirty bool isn't set to a value that makes
+ * sense. in the change handler, `dirty` is set to the value of `props.field.dirty`,
+ * when the change event implies that the value *is* dirty. meanwhile, in the blur
+ * handler, `dirty` is always true, but the blur event *does not* imply that the value
+ * changed.
+ *
+ * the implication for us is that we want to validate when `dirty` is true, because we
+ * want to validate on blur. this will trigger validations that are unnecessary but not
+ * harmful (because if the value has not changed, the validation result will be the same).
+ * on the other hand, `dirty` doesn't actually mean "dirty", and we don't want to set
+ * it to true ourselves because then we might validate outside
+ *
+ * code: https://github.com/department-of-veterans-affairs/veteran-facing-services-tools/blob/e7d2a079e7ed1979b125f8a43495b35da34d66e5/packages/formation-react/src/components/ErrorableTextInput/ErrorableTextInput.jsx#L41
+ *
+ * tl;dr dirty doesn't mean dirty, it means validate, and we shouldn't use it for
+ * anything else.
+ */
 export const updateApplicationEmail: ActionCreator<UpdateApplicationEmail> = (
   newValue: ErrorableInput,
   previousValidation?: string,
@@ -242,16 +242,16 @@ export const updateApplicationLastName: ActionCreator<UpdateApplicationLastName>
 });
 
 /* eslint-disable @typescript-eslint/indent */
-export const updateApplicationOAuthApplicationType: ActionCreator<
+export const updateApplyOAuthApplicationType: ActionCreator<
   UpdateApplicationOAuthApplicationType
 > = (newValue: ErrorableInput) => ({
   /* eslint-enable @typescript-eslint/indent */
   newValue,
-  type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE,
+  type: constants.UPDATE_APPLY_OAUTH_APP_TYPE,
 });
 
 // see note on update/validate above on updateApplicationEmail
-export const updateApplicationOAuthRedirectURI: ActionCreator<UpdateApplicationOAuthRedirectURI> = (
+export const updateApplyOAuthRedirectURI: ActionCreator<UpdateApplicationOAuthRedirectURI> = (
   newValue: ErrorableInput,
   previousValidation?: string,
 ) => {
@@ -265,7 +265,7 @@ export const updateApplicationOAuthRedirectURI: ActionCreator<UpdateApplicationO
 
   return {
     newValue,
-    type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+    type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI,
   };
 };
 

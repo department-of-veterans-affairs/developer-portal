@@ -1,3 +1,4 @@
+/* eslint-disable max-nested-callbacks -- Jest callbacks */
 import '@testing-library/jest-dom';
 import { cleanup, render, screen } from '@testing-library/react';
 import 'jest';

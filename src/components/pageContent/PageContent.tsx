@@ -17,7 +17,7 @@ const PageContent = (): JSX.Element => {
 
   React.useEffect(() => {
     const prevPath: string | null = prevPathRef.current;
-    
+
     if (prevPath !== location.pathname || location.hash) {
       // Only focus and scroll if it's not an initial page load
       if (prevPath) {

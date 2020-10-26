@@ -39,7 +39,7 @@ const ReleaseNotesCardLinks = (props: ReleaseNotesCardLinksProps) => {
               name={name}
               subhead={
                 vaInternalOnly || trustedPartnerOnly ? (
-                  <OnlyTags {...{ vaInternalOnly, trustedPartnerOnly }} />
+                  <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
                 ) : (
                   undefined
                 )
@@ -115,17 +115,17 @@ const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => (
 export const CategoryReleaseNotes = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const categoryDefinition = getApiDefinitions()[apiCategoryKey];
-  if (categoryDefinition != null) {
-    return (
-      <ReleaseNotesCollection
-        categoryKey={apiCategoryKey}
-        apiCategory={categoryDefinition}
-        apiFlagName="hosted_apis"
-      />
-    );
-  } else {
+  if (categoryDefinition == null) {
     return <Redirect to="/release-notes" />;
   }
+
+  return (
+    <ReleaseNotesCollection
+      categoryKey={apiCategoryKey}
+      apiCategory={categoryDefinition}
+      apiFlagName="hosted_apis"
+    />
+  );
 };
 
 export const DeactivatedReleaseNotes = (): JSX.Element => (

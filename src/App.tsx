@@ -10,9 +10,11 @@ import { history } from './store';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/base.scss';
 
-// the double flex container only exists and is flexed to
-// address a bug in IE11 where min-height is only respected
-// if the parent of a flex container is also a flex container.
+/**
+ * the double flex container only exists and is flexed to
+ * address a bug in IE11 where min-height is only respected
+ * if the parent of a flex container is also a flex container.
+ */
 const App = (): JSX.Element => (
   <FlagsProvider flags={getFlags()}>
     <ConnectedRouter history={history}>

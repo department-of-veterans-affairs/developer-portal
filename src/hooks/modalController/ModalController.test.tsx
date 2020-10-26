@@ -5,7 +5,6 @@ import * as React from 'react';
 import { useModalController } from './ModalController';
 
 const TestComponent = (): JSX.Element => {
-
   const { modalVisible, setModalVisible } = useModalController();
 
   // False values are rendered as blank. This helper shows the actual value
@@ -22,14 +21,15 @@ const TestComponent = (): JSX.Element => {
 };
 
 describe('useModalController', () => {
-
   let container: HTMLElement;
   let toggleVisibleButton: HTMLElement;
 
   beforeEach(() => {
-    // Note: I did not use the renderHook functionality because it doesn't give access to
-    // elements, which means I was unable to test the [Escape] key functionality
-    // This test should give full coverage to the ModalController hook though
+    /**
+     * Note: I did not use the renderHook functionality because it doesn't give access to
+     * elements, which means I was unable to test the [Escape] key functionality
+     * This test should give full coverage to the ModalController hook though
+     */
     container = render(<TestComponent />).container;
 
     toggleVisibleButton = screen.getByRole('button');
@@ -47,8 +47,8 @@ describe('useModalController', () => {
     userEvent.click(toggleVisibleButton);
     expect(await screen.findByText('Modal Visible: true')).toBeDefined();
   });
-  describe('when visible', () => {
 
+  describe('when visible', () => {
     beforeEach(() => {
       // The component initalized as invisible, so we toggle it before these tests
       userEvent.click(toggleVisibleButton);

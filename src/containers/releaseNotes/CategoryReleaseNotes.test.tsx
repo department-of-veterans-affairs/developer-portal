@@ -1,3 +1,4 @@
+/* eslint-disable max-lines, max-lines-per-function -- exceptions for tests */
 import '@testing-library/jest-dom';
 import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';

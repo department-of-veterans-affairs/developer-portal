@@ -10,12 +10,14 @@ describe('Accessibility tests', () => {
         page.on('request', mockSwagger);
       }
 
-      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0', timeout: 60000 });
+      await page.goto(`${puppeteerHost}${path}`, { timeout: 60000, waitUntil: 'networkidle0' });
       await page.addScriptTag({ path: require.resolve('axe-core') });
 
-      // THIS IS BAD. code highlighting on the Authorization page has several color contrast
-      // issues. upgrading axe-core from 3.3.1 to 4.0.2 and jest-axe from 3.2.0 to 4.0.0 introduced
-      // stricter rules, which is good, but we can't resolve this issue without UX input.
+      /**
+       * THIS IS BAD. code highlighting on the Authorization page has several color contrast
+       * issues. upgrading axe-core from 3.3.1 to 4.0.2 and jest-axe from 3.2.0 to 4.0.0 introduced
+       * stricter rules, which is good, but we can't resolve this issue without UX input.
+       */
       if (path === '/explore/health/docs/authorization') {
         await page.evaluate(() => {
           window.axe.configure({
