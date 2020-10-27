@@ -16,7 +16,7 @@ export interface SetVersioning extends Action {
   versions: VersionMetadata[] | null;
 }
 
-export const setRequstedApiVersion: ActionCreator<SetRequestedAPIVersion> = (version: string) => ({
+export const setRequestedApiVersion: ActionCreator<SetRequestedAPIVersion> = (version: string) => ({
   type: constants.SET_REQUESTED_API_VERSION,
   version,
 });

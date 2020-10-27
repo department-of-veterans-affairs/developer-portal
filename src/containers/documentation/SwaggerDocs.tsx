@@ -8,7 +8,7 @@ import { usePrevious } from '../../hooks';
 import {
   setVersioning,
   SetVersioning,
-  setRequstedApiVersion,
+  setRequestedApiVersion,
   SetRequestedAPIVersion,
 } from '../../actions';
 import { APIDocSource } from '../../apiDefs/schema';
@@ -51,7 +51,7 @@ const getInitialVersion = (searchQuery: string) => {
 
 const handleVersionChange = (dispatch: React.Dispatch<SetRequestedAPIVersion>) => (
   (requestedVersion: string) => {
-    dispatch(setRequstedApiVersion(requestedVersion));
+    dispatch(setRequestedApiVersion(requestedVersion));
   }
 );
 

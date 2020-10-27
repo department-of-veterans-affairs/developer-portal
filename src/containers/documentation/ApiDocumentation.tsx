@@ -72,7 +72,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const apiVersion = queryParams.get('version');
 
   React.useEffect((): void => {
-    dispatch(actions.setRequstedApiVersion(apiVersion));
+    dispatch(actions.setRequestedApiVersion(apiVersion));
   }, [dispatch, apiVersion, location.pathname]);
 
   /*
