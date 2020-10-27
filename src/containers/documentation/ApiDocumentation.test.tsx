@@ -35,6 +35,20 @@ const server = setupServer(
   ),
 );
 
+jest.mock('react-router-dom', () => ({
+  useHistory: jest.fn().mockReturnValue({
+    location: { pathname: '/another-route' },
+    push: jest.fn(),
+  }),
+  useLocation: jest.fn().mockReturnValue({
+    hash: '',
+    key: '5nvxpbdafa',
+    pathname: '/another-route',
+    search: '',
+    state: null,
+  }),
+}));
+
 describe('ApiDocumentation', () => {
   const defaultFlags: AppFlags = {
     categories: { category: true },
