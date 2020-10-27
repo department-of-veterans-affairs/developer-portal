@@ -68,7 +68,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
           {this.props
             .getSystem()
             .versionSelectors.versionMetadata()
-            .map((versionInfo: VersionMetadata) =>(
+            .map((versionInfo: VersionMetadata) => (
               <option value={versionInfo.version} key={versionInfo.version}>
                 {this.buildDisplay(versionInfo)}
               </option>

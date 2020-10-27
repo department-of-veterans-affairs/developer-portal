@@ -52,7 +52,7 @@ const handleVersionChange =
     }
   );
 
-const setSearchParam = (history: History, queryString: string, version: string) => {
+const setSearchParam = (history: History, queryString: string, version: string): void => {
   const params = new URLSearchParams(queryString);
   if (params.get('version') !== version) {
     params.set('version', version);
@@ -66,7 +66,7 @@ const renderSwaggerUI = (
   docUrl: string,
   versionNumber: string,
   versions: VersionMetadata[],
-) => {
+): void => {
   if (document.getElementById('swagger-ui') && docUrl.length !== 0) {
     const plugins = SwaggerPlugins(handleVersionChange(dispatch));
     const ui: System = SwaggerUI({
@@ -97,7 +97,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   if (initializing.current) {
     initializing.current = false;
     // Use the version from the search param only if it's the first render
-    version = getInitialVersion(location.search) ;
+    version = getInitialVersion(location.search);
   }
 
   /**

@@ -36,8 +36,10 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
 
     if (typeof to === 'string') {
       const url = new URL(to, 'http://example.com');
-      pathname = url.pathname;
-      hash = url.hash;
+      ({
+        hash,
+        pathname,
+      } = url);
     } else {
       // object
       pathname = to.pathname || '';

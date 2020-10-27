@@ -158,7 +158,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
 
   const toggleApis = (input: ErrorableInput, checked: boolean) => {
     const name = input.value;
-    const apis = formState.apis;
+    const { apis } = formState;
     apis[name] = checked;
     setFormState({ type: 'SET_APIS', value: apis });
   };

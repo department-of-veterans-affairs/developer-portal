@@ -52,7 +52,7 @@ const renderError = (props: ApplyProps) => {
 };
 
 const selectedApis = (props: ApplyProps) => {
-  const apis = props.inputs.apis;
+  const { apis } = props.inputs;
   return Object.keys(apis).filter(apiName => apis[apiName]);
 };
 

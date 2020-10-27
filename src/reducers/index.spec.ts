@@ -69,9 +69,7 @@ describe('application', () => {
         value: 'test',
       };
 
-      const inputs = application(app, { newValue, type: actionName } as UpdateApplicationAction)
-        .inputs;
-
+      const { inputs } = application(app, { newValue, type: actionName } as UpdateApplicationAction);
       const expectedSubObject = { [fieldName]: newValue };
       expect(inputs).toEqual(expect.objectContaining(expectedSubObject));
     });

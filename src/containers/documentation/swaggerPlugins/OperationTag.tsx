@@ -6,7 +6,7 @@ import { CollapseProps, DeepLinkProps, MarkdownProps } from 'swagger-ui';
 import { sanitizeUrl } from '@braintree/sanitize-url';
 
 const createDeepLinkPath = (str: string | unknown) =>
-  typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '';
+  (typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '');
 
 interface OperationTagProps {
   tag: string;
