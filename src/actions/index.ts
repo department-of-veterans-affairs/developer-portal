@@ -23,8 +23,8 @@ export const setRequstedApiVersion: ActionCreator<SetRequestedAPIVersion> = (ver
 
 export const setVersioning: ActionCreator<SetVersioning> = (
   docUrl: string,
-  version: string,
   versions: VersionMetadata[] | null,
+  version: string,
 ) => ({
   docUrl,
   type: constants.SET_VERSIONING,

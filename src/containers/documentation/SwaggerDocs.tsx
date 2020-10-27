@@ -19,20 +19,12 @@ import { SwaggerPlugins, System } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 
-export interface SwaggerDocsProps {
+interface SwaggerDocsProps {
   apiName: string;
   docSource: APIDocSource;
 }
 
-export interface VersionInfo {
-  version: string;
-  status: string;
-  path: string;
-  healthcheck: string;
-  internal_only: boolean;
-}
-
-const getMetadata = async (metadataUrl?: string): Promise<APIMetadata | null> => {
+const getMetadata = async (metadataUrl?: string): Promise<VersionMetadata[] | null> => {
   if (!metadataUrl) {
     return null;
   }
@@ -41,7 +33,8 @@ const getMetadata = async (metadataUrl?: string): Promise<APIMetadata | null> =>
       method: 'GET',
     });
     const response = await fetch(request);
-    return response.json() as Promise<APIMetadata>;
+    const metadata = await (response.json() as Promise<APIMetadata>);
+    return metadata.meta.versions;
   } catch (error) {
     Sentry.captureException(error);
     return null;
@@ -138,6 +131,9 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
     [], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
+  /**
+   * UPDATES URL WITH CORRECT VERSION PARAM
+   */
   React.useEffect(() => {
     if (prevVersion !== version) {
       setSearchParam(history, location.search, version);
