@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- test suite allowed to break file length rule */
 import * as Sentry from '@sentry/browser';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
@@ -262,10 +263,10 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'http://valid.com/redirect',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue,
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI,
     });
   });
 
@@ -275,10 +276,10 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'https://',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue,
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI,
     });
   });
 
@@ -288,13 +289,13 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'https://valid.com/redirect',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue: {
         dirty: false,
         value: newValue.value,
       },
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI,
     });
   });
 
@@ -304,14 +305,14 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'ftp://host:21',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue: {
         dirty: false,
         validation: 'Must be an http or https URI.',
         value: newValue.value,
       },
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI,
     });
   });
 
@@ -322,13 +323,13 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'not an HTTP URI',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue, errorMessage);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue, errorMessage);
     expect(updateAction).toEqual({
       newValue: {
         ...newValue,
         validation: errorMessage,
       },
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI,
     });
   });
 
@@ -341,11 +342,11 @@ describe('updateApplicationOAuthRedirectURI', () => {
     const mockValidateURI = jest
       .spyOn(validators, 'validateOAuthRedirectURI')
       .mockReturnValue(newValue);
-    actions.updateApplicationOAuthRedirectURI(newValue);
+    actions.updateApplyOAuthRedirectURI(newValue);
     expect(mockValidateURI.mock.calls.length).toBe(0);
 
     newValue.dirty = true;
-    actions.updateApplicationOAuthRedirectURI(newValue);
+    actions.updateApplyOAuthRedirectURI(newValue);
     expect(mockValidateURI.mock.calls.length).toBe(1);
     mockValidateURI.mockRestore();
   });
