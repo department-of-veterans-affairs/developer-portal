@@ -24,14 +24,12 @@ interface SwaggerDocsProps {
   docSource: APIDocSource;
 }
 
-const getMetadata = async (metadataUrl?: string): Promise<VersionMetadata[] | null> => {
+const getVersionsFromMetadata = async (metadataUrl?: string): Promise<VersionMetadata[] | null> => {
   if (!metadataUrl) {
     return null;
   }
   try {
-    const request = new Request(`${metadataUrl}`, {
-      method: 'GET',
-    });
+    const request = new Request(`${metadataUrl}`, { method: 'GET' });
     const response = await fetch(request);
     const metadata = await (response.json() as Promise<APIMetadata>);
     return metadata.meta.versions;
@@ -41,19 +39,18 @@ const getMetadata = async (metadataUrl?: string): Promise<VersionMetadata[] | nu
   }
 };
 
-const getInitialVersion = (searchQuery: string) => {
+const getInitialVersion = (searchQuery: string): string => {
   const params = new URLSearchParams(searchQuery ?? undefined);
   const versionQuery = params.get('version');
-  const version = versionQuery ? versionQuery.toLowerCase() : CURRENT_VERSION_IDENTIFIER;
-
-  return version;
+  return versionQuery ? versionQuery.toLowerCase() : CURRENT_VERSION_IDENTIFIER;
 };
 
-const handleVersionChange = (dispatch: React.Dispatch<SetRequestedAPIVersion>) => (
-  (requestedVersion: string) => {
-    dispatch(setRequestedApiVersion(requestedVersion));
-  }
-);
+const handleVersionChange =
+  (dispatch: React.Dispatch<SetRequestedAPIVersion>): (requestedVersion: string) => void => (
+    (requestedVersion: string) => {
+      dispatch(setRequestedApiVersion(requestedVersion));
+    }
+  );
 
 const setSearchParam = (history: History, queryString: string, version: string) => {
   const params = new URLSearchParams(queryString);
@@ -63,6 +60,7 @@ const setSearchParam = (history: History, queryString: string, version: string) 
   }
 };
 
+/* eslint-disable max-params */
 const renderSwaggerUI = (
   dispatch: React.Dispatch<SetRequestedAPIVersion>,
   docUrl: string,
@@ -81,6 +79,7 @@ const renderSwaggerUI = (
     ui.versionActions.setVersionMetadata(versions);
   }
 };
+/* eslint-enable max-params */
 
 const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const dispatch: React.Dispatch<SetRequestedAPIVersion | SetVersioning> = useDispatch();
@@ -88,13 +87,13 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const docUrl = useSelector((state: RootState) => getDocURL(state.apiVersioning));
   const history = useHistory();
   const location = useLocation();
-  const versionNumber = useSelector((state: RootState) => getVersionNumber(state.apiVersioning));  
+  const versionNumber = useSelector((state: RootState) => getVersionNumber(state.apiVersioning));
   const versions = useSelector((state: RootState) => state.apiVersioning.versions);
-  
+
   const initializing = React.useRef(true);
-  
+
   let version = useSelector((state: RootState) => getVersion(state.apiVersioning));
-  
+
   if (initializing.current) {
     initializing.current = false;
     // Use the version from the search param only if it's the first render
@@ -111,10 +110,10 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const prevVersion = usePrevious(version);
 
   const setMetadataAndDocUrl = async () => {
-    const currentMetadata = await getMetadata(metadataUrl);
+    const metadataVersions = await getVersionsFromMetadata(metadataUrl);
     const initialVersion = getInitialVersion(location.search);
 
-    dispatch(setVersioning(openApiUrl, currentMetadata, initialVersion));
+    dispatch(setVersioning(openApiUrl, metadataVersions, initialVersion));
   };
 
   if (prevApiName !== apiName) {
