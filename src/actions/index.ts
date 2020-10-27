@@ -13,6 +13,7 @@ export interface SetInitialVersioning extends Action {
   docUrl: string;
   metadata: APIMetadata;
   type: constants.SET_INITIAL_VERSIONING;
+  version?: string;
 }
 
 export const setRequstedApiVersion: ActionCreator<SetRequestedAPIVersion> = (version: string) => ({
@@ -23,8 +24,10 @@ export const setRequstedApiVersion: ActionCreator<SetRequestedAPIVersion> = (ver
 export const setInitialVersioning: ActionCreator<SetInitialVersioning> = (
   docUrl: string,
   metadata: APIMetadata,
+  version: string,
 ) => ({
   docUrl,
   metadata,
   type: constants.SET_INITIAL_VERSIONING,
+  version,
 });

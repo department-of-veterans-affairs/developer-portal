@@ -77,7 +77,8 @@ export const apiVersioning = (
     case constants.SET_REQUESTED_API_VERSION:
       return { ...state, requestedApiVersion: action.version };
     case constants.SET_INITIAL_VERSIONING:
-      return { ...state, metadata: action.metadata, docUrl: action.docUrl };
+      const requestedApiVersion = action.version || state.requestedApiVersion;
+      return { ...state, docUrl: action.docUrl, metadata: action.metadata, requestedApiVersion };
     default:
       return state;
   }

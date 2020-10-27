@@ -5,10 +5,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import SwaggerUI from 'swagger-ui';
 import { usePrevious } from '../../hooks';
-import * as actions from '../../actions';
+import {
+  setInitialVersioning,
+  SetInitialVersioning,
+  setRequstedApiVersion,
+  SetRequestedAPIVersion,
+} from '../../actions';
 import { APIDocSource } from '../../apiDefs/schema';
 import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';
 import { RootState, APIMetadata } from '../../types';
+import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
 import { SwaggerPlugins, System } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
@@ -42,6 +48,20 @@ const getMetadata = async (metadataUrl?: string): Promise<APIMetadata | null> =>
   }
 };
 
+const getInitialVersion = (searchQuery: string) => {
+  const params = new URLSearchParams(searchQuery ?? undefined);
+  const versionQuery = params.get('version');
+  const version = versionQuery ? versionQuery.toLowerCase() : CURRENT_VERSION_IDENTIFIER;
+
+  return version;
+};
+
+const handleVersionChange = (dispatch: React.Dispatch<SetRequestedAPIVersion>) => (
+  (requestedVersion: string) => {
+    dispatch(setRequstedApiVersion(requestedVersion));
+  }
+);
+
 const setSearchParam = (history: History, queryString: string, version: string) => {
   const params = new URLSearchParams(queryString);
   if (params.get('version') !== version) {
@@ -51,16 +71,13 @@ const setSearchParam = (history: History, queryString: string, version: string) 
 };
 
 const renderSwaggerUI = (
-  dispatch: React.Dispatch<actions.SetRequestedAPIVersion>,
+  dispatch: React.Dispatch<SetRequestedAPIVersion>,
   docUrl: string,
   versionNumber: string,
   metadata: APIMetadata | null,
 ) => {
-  const handleVersionChange = (requestedVersion: string) => {
-    dispatch(actions.setRequstedApiVersion(requestedVersion));
-  };
   if (document.getElementById('swagger-ui') && docUrl.length !== 0) {
-    const plugins = SwaggerPlugins(handleVersionChange);
+    const plugins = SwaggerPlugins(handleVersionChange(dispatch));
     const ui: System = SwaggerUI({
       dom_id: '#swagger-ui',
       layout: 'ExtendedLayout',
@@ -73,29 +90,38 @@ const renderSwaggerUI = (
 };
 
 const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
-  const dispatch: React.Dispatch<
-    actions.SetRequestedAPIVersion | actions.SetInitialVersioning
-  > = useDispatch();
+  const dispatch: React.Dispatch<SetRequestedAPIVersion | SetInitialVersioning> = useDispatch();
 
   const docUrl = useSelector((state: RootState) => getDocURL(state.apiVersioning));
-  const metadata = useSelector((state: RootState) => state.apiVersioning.metadata);
-  const version = useSelector((state: RootState) => getVersion(state.apiVersioning));
-  const versionNumber = useSelector((state: RootState) => getVersionNumber(state.apiVersioning));
-
   const history = useHistory();
   const location = useLocation();
+  const metadata = useSelector((state: RootState) => state.apiVersioning.metadata);
+  const versionNumber = useSelector((state: RootState) => getVersionNumber(state.apiVersioning));  
+  
+  const initializing = React.useRef(true);
+  
+  let version = useSelector((state: RootState) => getVersion(state.apiVersioning));
+  
+  if (initializing.current) {
+    initializing.current = false;
+    // Use the version from the search param only if it's the first render
+    version = getInitialVersion(location.search) ;
+  }
 
+  /**
+   * RETRIEVE API INFORMATION
+   */
   const { apiName } = props;
+  const { openApiUrl, metadataUrl } = props.docSource;
 
   const prevApiName = usePrevious(apiName);
   const prevVersion = usePrevious(version);
 
-  const { openApiUrl, metadataUrl } = props.docSource;
-
   const setMetadataAndDocUrl = async () => {
     const currentMetadata = await getMetadata(metadataUrl);
+    const initialVersion = getInitialVersion(location.search);
 
-    dispatch(actions.setInitialVersioning(openApiUrl, currentMetadata));
+    dispatch(setInitialVersioning(openApiUrl, currentMetadata, initialVersion));
   };
 
   if (prevApiName !== apiName) {
@@ -103,28 +129,33 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   }
 
   /**
-   * Clear state on unmount
+   * CLEAR REDUX STATE ON UNMOUNT
    */
   React.useEffect(
     () => () => {
-      dispatch(actions.setInitialVersioning('', null));
+      dispatch(setInitialVersioning('', null));
     },
     [], // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   React.useEffect(() => {
-    let navigating = false;
-
     if (prevVersion !== version) {
-      navigating = true;
       setSearchParam(history, location.search, version);
     }
+  }, [history, location.search, prevVersion, version]);
 
-    if (!navigating) {
+  /**
+   * TRIGGERS RENDER OF SWAGGER UI
+   */
+  React.useEffect(() => {
+    if (docUrl) {
       renderSwaggerUI(dispatch, docUrl, versionNumber, metadata);
     }
-  }, [dispatch, docUrl, history, location.search, prevVersion, version, versionNumber, metadata]);
+  }, [dispatch, docUrl, metadata, versionNumber]);
 
+  /**
+   * RENDER
+   */
   const { apiIntro } = props.docSource;
 
   return (
