@@ -1,11 +1,11 @@
-/*
-  Note the use of the secondary swagger api instead of the primary for openApiUrl. Health APIs do not have a
-  staging environment setup, as such we can only use `sandbox-api.va.gov` or `api.va.gov` for the openApiUrl host.
-  The primary swagger api is tied to the environment. The secondary swagger api always points to production.
-  Using the primary swagger api would break staging. The swagger url is shown in the UI. In order to avoid the
-  confusion of having a `sandbox-api.va.gov` url shown in production `api.va.gov` (the secondary swagger api) is
-  used in all developer portal environments for health documentation.
-*/
+/**
+ * Note the use of the secondary swagger api instead of the primary for openApiUrl. Health APIs do not have a
+ * staging environment setup, as such we can only use `sandbox-api.va.gov` or `api.va.gov` for the openApiUrl host.
+ * The primary swagger api is tied to the environment. The secondary swagger api always points to production.
+ * Using the primary swagger api would break staging. The swagger url is shown in the UI. In order to avoid the
+ * confusion of having a `sandbox-api.va.gov` url shown in production `api.va.gov` (the secondary swagger api) is
+ * used in all developer portal environments for health documentation.
+ */
 
 import moment from 'moment';
 import {

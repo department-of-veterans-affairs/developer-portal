@@ -13,17 +13,9 @@ const CardLinkPropTypes = {
   url: PropTypes.string.isRequired,
 };
 
-// export interface CardLinkProps {
-//   name: string;
-//   url: string;
-//   subhead?: JSX.Element;
-//   className?: string;
-//   children?: React.ReactNode;
-// }
-
 type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
 
-/*
+/**
  * The CardLink component is a pattern used across the developer portal
  * where links to other parts of the site are made more visually prominent
  * in the form of a card. It can optionally render an arbitrary JSX.Element

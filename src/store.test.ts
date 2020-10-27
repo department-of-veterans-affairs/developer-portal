@@ -1,10 +1,11 @@
 import { initialApplicationState } from './reducers';
 import { SerializedState } from './types';
 
-// sessionStorage.getItem('state') is called when the store is imported at application start up.
-// To be able to pass in artibray values for testing purposes, the store is reset between tests 
-// and then initialized after setting sessionStorage.
-
+/**
+ * sessionStorage.getItem('state') is called when the store is imported at application start up.
+ * To be able to pass in artibray values for testing purposes, the store is reset between tests
+ * and then initialized after setting sessionStorage.
+ */
 beforeEach(() => {
   sessionStorage.clear();
   jest.resetModules();

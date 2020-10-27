@@ -1,9 +1,10 @@
+/* eslint-disable max-lines -- component is long, need to refactor at some point */
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { 
+import {
   OpenAPISpec,
   OpenAPISpecV2,
   OpenAPISpecV3,
@@ -11,7 +12,7 @@ import {
   Parameter,
   Schema,
   Server,
-  SwaggerSpecObject, 
+  SwaggerSpecObject,
 } from 'swagger-ui';
 import CodeWrapper from '../../../components/CodeWrapper';
 import { System } from './types';
@@ -97,7 +98,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public handleInputChange(parameterName: string, value: string): void {
-    this.setState({ 
+    this.setState({
       ...this.state,
       paramValues: {
         ...this.state.paramValues,
@@ -164,11 +165,13 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         : this.state.bearerToken;
       options.securities = {
         authorized: {
-          // support multiple means of passing the bearer token. this is mostly due to swagger-client
-          // not being particularly sophisticated on this front.
-          // Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
-          // OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
-          // https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
+          /**
+           * support multiple means of passing the bearer token. this is mostly due to swagger-client
+           * not being particularly sophisticated on this front.
+           * Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
+           * OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
+           * https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
+           */
           OauthFlow: token ? {
             token: {
               access_token: token,
@@ -282,8 +285,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public environmentOptions(): JSX.Element[] {
     if (this.isSwagger2()) {
       const options = [
-        { value: 'sandbox', display: 'Sandbox' },
-        { value: '', display: 'Production' },
+        { display: 'Sandbox', value: 'sandbox' },
+        { display: 'Production', value: '' },
       ];
       return options.map((optionValues, i) => (
         <option value={optionValues.value} key={i}>

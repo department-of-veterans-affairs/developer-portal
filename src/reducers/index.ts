@@ -49,9 +49,9 @@ export const applicationInput = (
       return { ...inputs, firstName: action.newValue };
     case constants.UPDATE_APPLICATION_LAST_NAME:
       return { ...inputs, lastName: action.newValue };
-    case constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE:
+    case constants.UPDATE_APPLY_OAUTH_APP_TYPE:
       return { ...inputs, oAuthApplicationType: action.newValue };
-    case constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI:
+    case constants.UPDATE_APPLY_OAUTH_REDIRECT_URI:
       return { ...inputs, oAuthRedirectURI: action.newValue };
     case constants.UPDATE_APPLICATION_ORGANIZATION:
       return { ...inputs, organization: action.newValue };
@@ -75,7 +75,7 @@ export const application = (
 ): DevApplication => {
   switch (action.type) {
     case constants.SUBMIT_APPLICATION_BEGIN:
-      return { ...state, sending: true, errorStatus: undefined };
+      return { ...state, errorStatus: undefined, sending: true };
     case constants.SUBMIT_APPLICATION_SUCCESS:
       return {
         ...state,
@@ -90,7 +90,7 @@ export const application = (
         sending: false,
       };
     case constants.SUBMIT_APPLICATION_ERROR:
-      return { ...state, sending: false, errorStatus: action.status };
+      return { ...state, errorStatus: action.status, sending: false };
     default:
       return { ...state, inputs: applicationInput(state.inputs, action) };
   }

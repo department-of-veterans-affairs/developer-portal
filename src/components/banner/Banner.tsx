@@ -30,9 +30,9 @@ const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
       'vads-u-line-height--4',
       'medium-screen:vads-u-padding-x--1p5')}
   >
-    <img 
+    <img
       className={classNames('va-api-banner-icon', 'vads-u-margin-right--1', 'vads-u-margin-top--0p5')}
-      src={props.icon} 
+      src={props.icon}
       alt={props.icon_alt ?? undefined}
     />
     <div className="vads-u-margin-bottom--1p5">
@@ -62,8 +62,8 @@ const Banner = (): JSX.Element => {
           )}>
             <div className={classNames(defaultFlexContainer(true), 'vads-u-padding-y--0p25')}>
               <div>
-                <img src={flagIcon} 
-                  alt="US flag" 
+                <img src={flagIcon}
+                  alt="US flag"
                   className={classNames(
                     'va-api-banner-icon',
                     'vads-u-margin-left--1p5',
@@ -95,7 +95,7 @@ const Banner = (): JSX.Element => {
                     'small-desktop-screen:vads-u-margin-top--0',
                   )}
                   onClick={toggleAccordionVisible}
-                  aria-expanded={accordionVisible ? "true" : "false"}
+                  aria-expanded={accordionVisible ? 'true' : 'false'}
                 >
                   <span className={classNames(
                     'vads-u-font-weight--normal',
@@ -106,12 +106,12 @@ const Banner = (): JSX.Element => {
                 </button>
               </div>
             </div>
-            <div 
+            <div
               className={classNames(
-                'usa-accordion-content', 
+                'usa-accordion-content',
                 'vads-l-grid-container',
                 'vads-u-background-color--gray-dark')}
-              aria-hidden={accordionVisible ? "false" : "true"}
+              aria-hidden={accordionVisible ? 'false' : 'true'}
             >
               <div className="vads-l-row">
                 <GuidanceBox id="dot-gov-guidance" icon={dotGovIcon} icon_alt="Government icon" title="The .gov means it's official">

@@ -33,7 +33,7 @@ describe('get doc url', () => {
 });
 
 describe('get version', () => {
-  it("should return 'current' when metadata is not present", () => {
+  it('should return "current" when metadata is not present', () => {
     const state: APIVersioning = {
       docUrl: 'http://google.com',
       requestedApiVersion: '1.0.0',
@@ -43,7 +43,7 @@ describe('get version', () => {
     expect(getVersion(state)).toEqual('current');
   });
 
-  it("should return 'current' when metadata is present and version is current version", () => {
+  it('should return "current" when metadata is present and version is current version', () => {
     const state: APIVersioning = {
       docUrl: 'http://google.com',
       requestedApiVersion: '1.0.0',

@@ -4,7 +4,7 @@ import { puppeteerHost } from '../../e2eHelpers';
 
 describe('position sticky', () => {
   it('should keep nav element in place after scroll', async () => {
-    await page.goto(`${puppeteerHost}/explore`, { waitUntil: 'networkidle0', timeout: 60000 });
+    await page.goto(`${puppeteerHost}/explore`, { timeout: 60000, waitUntil: 'networkidle0' });
     const originalDistanceFromTop = await page.evaluate(
       () => document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top,
     );
@@ -28,7 +28,7 @@ describe('position sticky', () => {
       await page.click(selector);
     };
 
-    await page.setViewport({ width: 1200, height: 800 });
+    await page.setViewport({ height: 800, width: 1200 });
     await page.goto(`${puppeteerHost}/explore`, {
       waitUntil: ['domcontentloaded', 'networkidle0'],
     });
@@ -59,7 +59,7 @@ describe('position sticky', () => {
       }, caption);
     };
 
-    await page.setViewport({ width: 1200, height: 800 });
+    await page.setViewport({ height: 800, width: 1200 });
     await page.goto(`${puppeteerHost}/explore`, {
       waitUntil: ['domcontentloaded', 'networkidle0'],
     });

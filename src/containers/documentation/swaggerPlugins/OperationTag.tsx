@@ -32,14 +32,14 @@ export default class OperationTag extends React.Component<OperationTagProps> {
   };
 
   public static propTypes = {
-    tag: PropTypes.string.isRequired,
-    tagObj: ImPropTypes.map.isRequired,
+    getComponent: PropTypes.func.isRequired,
+    getConfigs: PropTypes.func.isRequired,
 
     layoutActions: PropTypes.object.isRequired,
     layoutSelectors: PropTypes.object.isRequired,
 
-    getComponent: PropTypes.func.isRequired,
-    getConfigs: PropTypes.func.isRequired,
+    tag: PropTypes.string.isRequired,
+    tagObj: ImPropTypes.map.isRequired,
   };
 
   public render(): JSX.Element {
@@ -81,20 +81,20 @@ export default class OperationTag extends React.Component<OperationTagProps> {
       <div className={showTag ? 'opblock-tag-section is-open' : 'opblock-tag-section'}>
         <h3
           onClick={() => layoutActions.show(isShownKey, !showTag)}
-          className={!tagDescription ? 'opblock-tag no-desc' : 'opblock-tag'}
+          className={tagDescription ? 'opblock-tag' : 'opblock-tag no-desc'}
           id={isShownKey.join('-')}
         >
           <DeepLink enabled={isDeepLinkingEnabled} isShown={showTag} path={tag} text={tag} />
-          {!tagDescription ? (
-            <small />
-          ) : (
+          {tagDescription ? (
             <small>
               <Markdown source={tagDescription} />
             </small>
+          ) : (
+            <small/>
           )}
 
           <div>
-            {!tagExternalDocsDescription ? null : (
+            {tagExternalDocsDescription ? (
               <small>
                 {tagExternalDocsDescription}
                 {tagExternalDocsUrl ? ': ' : null}
@@ -109,7 +109,7 @@ export default class OperationTag extends React.Component<OperationTagProps> {
                   </a>
                 ) : null}
               </small>
-            )}
+            ) : null}
           </div>
 
           <button

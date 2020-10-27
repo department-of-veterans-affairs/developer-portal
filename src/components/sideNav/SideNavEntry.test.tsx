@@ -1,3 +1,4 @@
+/* eslint-disable max-lines, max-nested-callbacks -- Jest exceptions */
 import '@testing-library/jest-dom/extend-expect';
 import { cleanup, render, screen } from '@testing-library/react';
 import 'jest';
@@ -37,7 +38,7 @@ describe('SideNavEntry', () => {
   describe('isActive', () => {
     describe('exact matches', () => {
       it('is active when the path is the same as the location (to = "/fake" matches location = "/fake")', async () => {
-        await testActive({ location: '/fake', to: '/fake', exact: true, expectation: true });
+        await testActive({ exact: true, expectation: true, location: '/fake', to: '/fake' });
         await testActive({
           exact: true,
           expectation: true,
@@ -47,7 +48,7 @@ describe('SideNavEntry', () => {
       });
 
       it('is not active when the path is not the same as the location (to = "/fake" does not match location = "/phony")', async () => {
-        await testActive({ location: '/phony', to: '/fake', exact: true, expectation: false });
+        await testActive({ exact: true, expectation: false, location: '/phony', to: '/fake' });
         await testActive({
           exact: true,
           expectation: false,
@@ -58,7 +59,7 @@ describe('SideNavEntry', () => {
 
       describe('trailing slashes', () => {
         it('is active when the paths are the same except for a trailing slash on the to prop (to = "/fake/" matches location = "/fake")', async () => {
-          await testActive({ location: '/fake', to: '/fake/', exact: true, expectation: true });
+          await testActive({ exact: true, expectation: true, location: '/fake', to: '/fake/' });
           await testActive({
             exact: true,
             expectation: true,
@@ -68,7 +69,7 @@ describe('SideNavEntry', () => {
         });
 
         it('is active when the paths are the same except for a trailing slash on the location (to = "/fake" matches location = "/fake/")', async () => {
-          await testActive({ location: '/fake/', to: '/fake', exact: true, expectation: true });
+          await testActive({ exact: true, expectation: true, location: '/fake/', to: '/fake' });
           await testActive({
             exact: true,
             expectation: true,
@@ -90,7 +91,7 @@ describe('SideNavEntry', () => {
             exact: true,
             expectation: true,
             location: '/fake#anchor',
-            to: { pathname: '/fake', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake' },
           });
         });
 
@@ -105,7 +106,7 @@ describe('SideNavEntry', () => {
             exact: true,
             expectation: false,
             location: '/fake#hash',
-            to: { pathname: '/fake', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake' },
           });
         });
 
@@ -120,7 +121,7 @@ describe('SideNavEntry', () => {
             exact: true,
             expectation: false,
             location: '/phony#anchor',
-            to: { pathname: '/fake', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake' },
           });
         });
 
@@ -135,7 +136,7 @@ describe('SideNavEntry', () => {
             exact: true,
             expectation: false,
             location: '/fake#anchor',
-            to: { pathname: '/fake/phony', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake/phony' },
           });
         });
 
@@ -150,7 +151,7 @@ describe('SideNavEntry', () => {
             exact: true,
             expectation: false,
             location: '/fake',
-            to: { pathname: '/fake', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake' },
           });
         });
 
@@ -230,7 +231,7 @@ describe('SideNavEntry', () => {
               exact: true,
               expectation: true,
               location: '/fake#anchor',
-              to: { pathname: '/fake/', hash: '#anchor' },
+              to: { hash: '#anchor', pathname: '/fake/' },
             });
           });
 
@@ -245,7 +246,7 @@ describe('SideNavEntry', () => {
               exact: true,
               expectation: true,
               location: '/fake/#anchor',
-              to: { pathname: '/fake', hash: '#anchor' },
+              to: { hash: '#anchor', pathname: '/fake' },
             });
           });
         });
@@ -254,7 +255,7 @@ describe('SideNavEntry', () => {
 
     describe('partial matches', () => {
       it('is active for partial matches (to = "/fake" matches location = "/fake/phony")', async () => {
-        await testActive({ location: '/fake/phony', to: '/fake', expectation: true });
+        await testActive({ expectation: true, location: '/fake/phony', to: '/fake' });
         await testActive({
           expectation: true,
           location: '/fake/phony',
@@ -263,7 +264,7 @@ describe('SideNavEntry', () => {
       });
 
       it('is active for exact matches (to = "/fake" matches location = "/fake")', async () => {
-        await testActive({ location: '/fake', to: '/fake', expectation: true });
+        await testActive({ expectation: true, location: '/fake', to: '/fake' });
         await testActive({
           expectation: true,
           location: '/fake',
@@ -272,7 +273,7 @@ describe('SideNavEntry', () => {
       });
 
       it('is not active for paths that do not match (to = "/fake" does not match location = "/phony/fake")', async () => {
-        await testActive({ location: '/phony/fake', to: '/fake', expectation: false });
+        await testActive({ expectation: false, location: '/phony/fake', to: '/fake' });
         await testActive({
           expectation: false,
           location: '/phony/fake',
@@ -282,7 +283,7 @@ describe('SideNavEntry', () => {
 
       describe('with hashes', () => {
         it('is active if the paths match exactly but the location has a hash (to = "/fake" matches location ="/fake#anchor")', async () => {
-          await testActive({ location: '/fake#anchor', to: '/fake', expectation: true });
+          await testActive({ expectation: true, location: '/fake#anchor', to: '/fake' });
           await testActive({
             expectation: true,
             location: '/fake#anchor',
@@ -291,7 +292,7 @@ describe('SideNavEntry', () => {
         });
 
         it('is active if the paths match partially but the location has a hash (to = "/fake" matches location = "/fake/phony#anchor")', async () => {
-          await testActive({ location: '/fake/phony#anchor', to: '/fake', expectation: true });
+          await testActive({ expectation: true, location: '/fake/phony#anchor', to: '/fake' });
           await testActive({
             expectation: true,
             location: '/fake/phony#anchor',
@@ -300,29 +301,29 @@ describe('SideNavEntry', () => {
         });
 
         it('is not active if the paths match exactly but the to prop has a hash (to = "/fake#anchor" does not match location = "/fake")', async () => {
-          await testActive({ location: '/fake', to: '/fake#anchor', expectation: false });
+          await testActive({ expectation: false, location: '/fake', to: '/fake#anchor' });
           await testActive({
             expectation: false,
             location: '/fake',
-            to: { pathname: '/fake', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake' },
           });
         });
 
         it('is not active if the paths match exactly but the hashes do not match (to = "/fake#anchor" does not match location = "/fake#hash")', async () => {
-          await testActive({ location: '/fake#hash', to: '/fake#anchor', expectation: false });
+          await testActive({ expectation: false, location: '/fake#hash', to: '/fake#anchor' });
           await testActive({
             expectation: false,
             location: '/fake#hash',
-            to: { pathname: '/fake', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake' },
           });
         });
 
         it('is not active if the hashes match but the paths do not match at all (to = "/fake#anchor" does not match location = "/phony#anchor")', async () => {
-          await testActive({ location: '/phony#anchor', to: '/fake#anchor', expectation: false });
+          await testActive({ expectation: false, location: '/phony#anchor', to: '/fake#anchor' });
           await testActive({
             expectation: false,
             location: '/phony#anchor',
-            to: { pathname: '/fake', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake' },
           });
         });
 
@@ -335,7 +336,7 @@ describe('SideNavEntry', () => {
           await testActive({
             expectation: false,
             location: '/fake#anchor',
-            to: { pathname: '/fake/phony', hash: '#anchor' },
+            to: { hash: '#anchor', pathname: '/fake/phony' },
           });
         });
 
