@@ -1,5 +1,5 @@
 import { Action, ActionCreator } from 'redux';
-import { APIMetadata } from '../types';
+import { VersionMetadata } from '../types';
 import * as constants from '../types/constants';
 
 export * from './apply';
@@ -9,11 +9,11 @@ export interface SetRequestedAPIVersion extends Action {
   version: string;
 }
 
-export interface SetInitialVersioning extends Action {
+export interface SetVersioning extends Action {
   docUrl: string;
-  metadata: APIMetadata;
-  type: constants.SET_INITIAL_VERSIONING;
+  type: constants.SET_VERSIONING;
   version?: string;
+  versions: VersionMetadata[] | null;
 }
 
 export const setRequstedApiVersion: ActionCreator<SetRequestedAPIVersion> = (version: string) => ({
@@ -21,13 +21,13 @@ export const setRequstedApiVersion: ActionCreator<SetRequestedAPIVersion> = (ver
   version,
 });
 
-export const setInitialVersioning: ActionCreator<SetInitialVersioning> = (
+export const setVersioning: ActionCreator<SetVersioning> = (
   docUrl: string,
-  metadata: APIMetadata,
   version: string,
+  versions: VersionMetadata[] | null,
 ) => ({
   docUrl,
-  metadata,
-  type: constants.SET_INITIAL_VERSIONING,
+  type: constants.SET_VERSIONING,
   version,
+  versions,
 });

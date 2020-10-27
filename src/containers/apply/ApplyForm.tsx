@@ -12,7 +12,7 @@ import ProgressButton from '@department-of-veterans-affairs/formation-react/Prog
 
 import * as actions from '../../actions';
 import { includesOAuthAPI } from '../../apiDefs/query';
-import { DevApplication, RootState } from '../../types';
+import { DevApplication, ErrorableInput, RootState } from '../../types';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS, PAGE_HEADER_ID } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
 import DeveloperInfo from './DeveloperInfo';
@@ -20,11 +20,13 @@ import OAuthAppInfo from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
 
 type ApplyProps = DevApplication;
+/* eslint-disable @typescript-eslint/indent */
 type ApplicationDispatch = ThunkDispatch<
   RootState,
   undefined,
   actions.SubmitFormAction | actions.UpdateApplicationAction
 >;
+/* eslint-enable @typescript-eslint/indent */
 
 const mapStateToProps = (state: RootState) => ({
   ...state.application,
@@ -68,7 +70,10 @@ const anyApiSelected = (props: ApplyProps) => {
 
 const allBioFieldsComplete = (props: ApplyProps) => {
   const bioFieldNames = ['email', 'firstName', 'lastName', 'organization'];
-  const incompleteFields = bioFieldNames.filter(fieldName => !props.inputs[fieldName].value);
+  const incompleteFields = bioFieldNames.filter(fieldName => {
+    const input = props.inputs[fieldName] as ErrorableInput;
+    return !input.value;
+  });
   return incompleteFields.length === 0;
 };
 
@@ -102,13 +107,7 @@ const ApplyForm = (props: ApplyProps): JSX.Element => {
     <div role="region" aria-labelledby={PAGE_HEADER_ID} className={applyClasses}>
       <ApplyHeader />
       <div className="vads-l-row">
-        <div
-          className={classNames(
-            'vads-l-col--12',
-            'medium-screen:vads-l-col--8',
-            'vads-u-padding-x--2p5',
-          )}
-        >
+        <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
           <form className="usa-form">
             <h2>Application</h2>
             <DeveloperInfo />
@@ -142,26 +141,6 @@ const ApplyForm = (props: ApplyProps): JSX.Element => {
             />
           </form>
           {renderError(props)}
-        </div>
-        <div
-          className={classNames(
-            'vads-l-col--12',
-            'medium-screen:vads-l-col--4',
-            'vads-u-padding-x--2p5',
-          )}
-        >
-          <div className="feature">
-            <h3>Stay In Touch</h3>
-            <p>
-              Want to get news and updates about VA API Program? Sign up to receive email updates.
-            </p>
-            <a
-              className="usa-button"
-              href="https://public.govdelivery.com/accounts/USVAOIT/subscriber/new?topic_id=USVAOIT_20"
-            >
-              Sign Up
-            </a>
-          </div>
         </div>
       </div>
     </div>

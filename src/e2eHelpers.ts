@@ -2,8 +2,8 @@ import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
 
-import { mockMetadata as metadataMocks } from './mockMetadata';
-import { mockSwagger as mocks } from './mockSwagger.js';
+import { mockMetadata as metadataMocks } from './__mocks__/mockMetadata';
+import { mockSwagger as mocks } from './__mocks__/mockSwagger';
 
 // Paths to test in visual regression and accessibility tests
 export const testPaths = [
@@ -40,18 +40,16 @@ jest.setTimeout(100000);
 
 expect.extend(toHaveNoViolations);
 
-export const axeCheck = () => {
-  return new Promise(resolve => {
-    window.axe.run({ exclude: [['iframe']] }, (err, results) => {
-      if (err) {
-        throw err;
-      }
-      resolve(results);
-    });
+export const axeCheck = (): Promise<axe.AxeResults> => new Promise(resolve => {
+  window.axe.run({ exclude: [['iframe']] }, (err, results) => {
+    if (err) {
+      throw err;
+    }
+    resolve(results);
   });
-};
+});
 
-export const mockSwagger = (req: Request) => {
+export const mockSwagger = (req: Request) : void => {
   const response = {
     body: '',
     contentType: 'application/json',
@@ -64,5 +62,9 @@ export const mockSwagger = (req: Request) => {
     response.body = JSON.stringify(metadataMocks[req.url()]);
   }
 
-  response.body ? req.respond(response) : req.continue();
+  if (response.body) {
+    void req.respond(response);
+  } else {
+    void req.continue();
+  }
 };

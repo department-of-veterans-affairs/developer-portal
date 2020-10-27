@@ -1,12 +1,12 @@
-import MarkdownComponent from '*.mdx';
 import * as React from 'react';
+import MarkdownComponent from '*.mdx';
 
-export default function MarkdownPage(Component: MarkdownComponent): JSX.Element {
-  return (
-    <section className="vads-u-padding-y--5">
-      <div className="vads-l-grid-container">
-        <Component />
-      </div>
-    </section>
-  );
-}
+const MarkdownPage = (Component: MarkdownComponent): JSX.Element => (
+  <section className="vads-u-padding-y--5">
+    <div className="vads-l-grid-container">
+      <Component />
+    </div>
+  </section>
+);
+
+export default MarkdownPage;

@@ -25,7 +25,7 @@ export interface APIMetadata {
 
 export interface APIVersioning {
   docUrl: string;
-  metadata: APIMetadata | null;
+  versions: VersionMetadata[] | null;
   requestedApiVersion: string;
 }
 
@@ -33,4 +33,8 @@ export interface RootState {
   apiVersioning: APIVersioning;
   application: DevApplication;
   router: RouterState;
+}
+
+export interface SerializedState {
+  application: Pick<DevApplication, 'inputs'>;
 }
