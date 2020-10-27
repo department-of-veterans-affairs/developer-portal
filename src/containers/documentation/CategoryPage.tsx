@@ -28,7 +28,7 @@ const CategoryPage = (): JSX.Element => {
             name={name}
             subhead={
               vaInternalOnly || trustedPartnerOnly ? (
-                <OnlyTags {...{ vaInternalOnly, trustedPartnerOnly }} />
+                <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
               ) : (
                 undefined
               )

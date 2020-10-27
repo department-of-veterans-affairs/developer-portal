@@ -6,7 +6,6 @@ import * as React from 'react';
 import { Form } from './Form';
 
 describe('Form', () => {
-
   const successfulSubmitMockImpl = () => Promise.resolve();
   const rejectedSubmitMockImpl = () => Promise.reject('test');
   const onSuccessMock = jest.fn();
@@ -55,11 +54,13 @@ describe('Form', () => {
   });
 
   it('should display appropriate text in progress button when sending', async () => {
-    // I attempted to using jest timers for simulating the 'in between' time of submitting
-    // and getting a response. This didn't work out for some reason. I spent a few hours on
-    // it. From what I could find, the jest timers don't support promises properly.
-    // This is a work around I made so that we can trigger the promises within the test to
-    // mock a success response at the time we want.
+    /**
+     * I attempted to using jest timers for simulating the 'in between' time of submitting
+     * and getting a response. This didn't work out for some reason. I spent a few hours on
+     * it. From what I could find, the jest timers don't support promises properly.
+     * This is a work around I made so that we can trigger the promises within the test to
+     * mock a success response at the time we want.
+     */
     interface PromiseTrigger {
       reject: () => void;
       resolve: () => void;
@@ -86,9 +87,8 @@ describe('Form', () => {
     expect(submitButton.text()).toEqual('Sending...');
 
     promiseTrigger.resolve();
-    
+
     await waitFor(() => expect(onSuccessMock).toHaveBeenCalled());
     expect(submitButton.text()).toEqual('Submit');
-
   });
 });

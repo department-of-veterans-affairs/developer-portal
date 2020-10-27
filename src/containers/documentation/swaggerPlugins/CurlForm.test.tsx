@@ -4,6 +4,7 @@
  * form's requirements.
  */
 
+/* eslint-disable max-lines -- exception for test suite */
 import '@testing-library/jest-dom/extend-expect';
 import {
   findByRole,
@@ -21,8 +22,10 @@ import * as decisionReviews from '../../../__mocks__/openAPIData/decisionReviews
 import * as fhirR4 from '../../../__mocks__/openAPIData/fhirR4.test.json';
 import { SwaggerPlugins, System } from './index';
 
-// some tests in this file are long-running because of the expense of rendering Swagger UI,
-// so we double the timeout to 10s from the default 5s.
+/**
+ * some tests in this file are long-running because of the expense of rendering Swagger UI,
+ * so we double the timeout to 10s from the default 5s.
+ */
 jest.setTimeout(10000);
 
 const expandOperation = (operationTag: string, description: string): HTMLElement => {

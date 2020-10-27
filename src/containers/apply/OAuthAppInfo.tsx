@@ -23,10 +23,10 @@ type OAuthAppInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateAp
 
 const mapDispatchToProps = (dispatch: OAuthAppInfoDispatch) => ({
   updateOAuthApplicationType: (value: ErrorableInput) => {
-    dispatch(actions.updateApplicationOAuthApplicationType(value));
+    dispatch(actions.updateApplyOAuthApplicationType(value));
   },
   updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput) => {
-    dispatch(actions.updateApplicationOAuthRedirectURI(value, oldValidation));
+    dispatch(actions.updateApplyOAuthRedirectURI(value, oldValidation));
   },
 });
 

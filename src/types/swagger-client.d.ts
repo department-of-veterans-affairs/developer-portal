@@ -17,8 +17,10 @@ declare module 'swagger-client' {
     items?: Schema;
     example: Example;
 
-    // not actually a part of the OpenAPI Spec - name is the key in properties, above, but we
-    // store it here for convenience in CurlForm.
+    /**
+     * not actually a part of the OpenAPI Spec - name is the key in properties, above, but we
+     * store it here for convenience in CurlForm.
+     */
     name: string;
   }
 

@@ -77,7 +77,7 @@ export const apiVersioning = (
       return { ...state, requestedApiVersion: action.version };
     case constants.SET_VERSIONING:
       const requestedApiVersion = action.version || state.requestedApiVersion;
-      return { ...state, docUrl: action.docUrl, versions: action.versions, requestedApiVersion };
+      return { ...state, docUrl: action.docUrl, requestedApiVersion, versions: action.versions };
     default:
       return state;
   }

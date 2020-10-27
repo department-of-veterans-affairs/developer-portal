@@ -42,7 +42,6 @@ const getInitialTabIndex = (searchQuery: string, docSources: APIDocSource[]): nu
 };
 
 const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
-
   const { apiDefinition, location } = props;
 
   /*
@@ -75,7 +74,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   React.useEffect((): void => {
     dispatch(actions.setRequstedApiVersion(apiVersion));
   }, [dispatch, apiVersion, location.pathname]);
-  
+
   /*
    * RENDER
    */

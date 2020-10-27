@@ -3,7 +3,6 @@ import { usePrevious } from './Previous';
 import 'jest';
 
 describe('usePrevious', () => {
-
   let element: RenderHookResult<number, number | null>;
 
   const initialVal = 0;
