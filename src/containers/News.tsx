@@ -38,7 +38,7 @@ const sections = data.sections.map((section: DataSection) => ({
 }));
 
 const NewsItem = ({ item, media }: { item: NewsItem; media: boolean }) =>
-  media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
+  (media ? <MediaItem item={item} /> : <ItemDescription item={item} />);
 
 const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
   const description = <ItemDescription item={item} />;

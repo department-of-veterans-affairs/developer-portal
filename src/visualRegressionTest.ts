@@ -14,7 +14,7 @@ const checkScreenshots = async (page: Page, selector: string) => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
     // eslint-disable-next-line no-promise-executor-return
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 500));
     const content = await page.$(selector);
     if (content) {
       const screenshot = await content.screenshot({});

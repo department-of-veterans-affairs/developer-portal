@@ -32,7 +32,7 @@ const ExternalDocs: React.FunctionComponent<ExternalDocsProps> = (props: Externa
 );
 
 const createDeepLinkPath = (str: string | unknown) =>
-  typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '';
+  (typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '');
 
 interface OperationTagProps {
   tag: string;
