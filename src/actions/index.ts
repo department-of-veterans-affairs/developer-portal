@@ -24,7 +24,7 @@ export const setRequestedApiVersion: ActionCreator<SetRequestedAPIVersion> = (ve
 export const setVersioning: ActionCreator<SetVersioning> = (
   defaultUrl: string,
   versions: VersionMetadata[] | null,
-  version: string,
+  version?: string,
 ) => ({
   defaultUrl,
   type: constants.SET_VERSIONING,
