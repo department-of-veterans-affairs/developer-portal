@@ -65,8 +65,9 @@ export const applicationInput = (
     case constants.TOGGLE_ACCEPT_TOS:
       const termsOfService = !inputs.termsOfService;
       return { ...inputs, termsOfService };
+    default:
+      return inputs;
   }
-  return inputs;
 };
 
 export const application = (
