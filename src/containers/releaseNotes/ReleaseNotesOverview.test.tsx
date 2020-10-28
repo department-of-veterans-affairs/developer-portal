@@ -1,5 +1,5 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/extend-expect';
 import { cleanup, render, screen } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';

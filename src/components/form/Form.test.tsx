@@ -66,8 +66,12 @@ describe('Form', () => {
       resolve: () => void;
     }
     let promiseTrigger: PromiseTrigger = {
-      reject: () => { throw new Error('promise trigger is set to default reject'); },
-      resolve: () => { throw new Error('promise trigger is set to default resolve'); },
+      reject: () => {
+        throw new Error('promise trigger is set to default reject');
+      },
+      resolve: () => {
+        throw new Error('promise trigger is set to default resolve');
+      },
     };
     const submitPromise = new Promise((resolve: () => void, reject: () => void) => {
       promiseTrigger = {

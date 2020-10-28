@@ -21,6 +21,7 @@ const coreESLintRules = {
   'arrow-body-style': 'error',
   'arrow-parens': ['error', 'as-needed'],
   'arrow-spacing': 'error',
+  'brace-style': 'error',
   'block-scoped-var': 'error',
   'block-spacing': 'error',
   'class-methods-use-this': 'error',
@@ -30,7 +31,7 @@ const coreESLintRules = {
   complexity: ['error', 12],
   'computed-property-spacing': 'error',
   'consistent-return': 'error',
-  'curly': 'error',
+  curly: 'error',
   'default-case': 'error',
   'default-case-last': 'error',
   'dot-location': ['error', 'property'],
@@ -157,6 +158,41 @@ const coreESLintRules = {
   'template-curly-spacing': 'error',
 };
 
+/**
+ * A lot of import rules are already covered by the Typescript compiler, so we don't use any
+ * of the eslint-plugin-import presets. These rules are helpful additions.
+ */
+const importRules = {
+  'import/first': 'error',
+  'import/newline-after-import': 'error',
+  'import/no-absolute-path': 'error',
+  'import/no-amd': 'error',
+  'import/no-anonymous-default-export': 'error',
+  'import/no-commonjs': 'error',
+  'import/no-cycle': 'error',
+  'import/no-duplicates': 'error', // prefer over ESLint's no-duplicate-imports rule?
+  'import/no-dynamic-require': 'error',
+  'import/no-extraneous-dependencies': 'error',
+  'import/no-mutable-exports': 'error',
+  'import/no-named-as-default': 'error',
+  'import/no-named-default': 'error',
+  'import/no-self-import': 'error',
+  'import/no-unassigned-import': [
+    'warn',
+    {
+      allow: [
+        '**/*.scss',
+        '**/*.css',
+        'jest', // can probably remove because an explicit import is not required in Jest context
+        '@testing-library/jest-dom/extend-expect',
+      ],
+    },
+  ],
+  'import/no-useless-path-segments': 'error',
+  'import/no-webpack-loader-syntax': 'error',
+  'import/order': 'error', // preferred over ESLint's sorted-imports rule
+};
+
 module.exports = {
   env: {
     browser: true,
@@ -174,7 +210,6 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
-    'eslint-plugin-jsdoc',
     'eslint-plugin-prefer-arrow',
     'eslint-plugin-import',
     'eslint-plugin-react',
@@ -184,6 +219,7 @@ module.exports = {
   ],
   rules: {
     ...coreESLintRules,
+    ...importRules,
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [
       'error',
@@ -278,16 +314,6 @@ module.exports = {
     ],
     '@typescript-eslint/type-annotation-spacing': 'off',
     '@typescript-eslint/unified-signatures': 'error',
-    'brace-style': ['off', 'off'],
-    'import/order': 'error',
-    'jsdoc/check-alignment': 'error',
-    'jsdoc/check-indentation': 'error',
-    'jsdoc/newline-after-description': 'error',
-    'no-extra-semi': 'off',
-    'no-fallthrough': 'off',
-    'no-irregular-whitespace': 'off',
-    'no-unused-labels': 'error',
-    'one-var': ['error', 'never'],
     'prefer-arrow/prefer-arrow-functions': 'error',
     'react/jsx-boolean-value': 'error',
     'react/jsx-curly-spacing': 'off',

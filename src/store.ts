@@ -1,6 +1,7 @@
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory, History } from 'history';
-import { debounce, isEqual } from 'lodash';
+import debounce from 'lodash.debounce';
+import isEqual from 'lodash.isequal';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 
