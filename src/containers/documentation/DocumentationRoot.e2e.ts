@@ -71,10 +71,11 @@ describe('position sticky', () => {
 });
 
 describe('invalid cagetories', () => {
-  it('should redirect invalid paths to "/explore"', async () => {
-    for (const path of ['', 'docs/quickstart']) {
-      await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
-      expect(page.url()).toEqual(`${puppeteerHost}/explore`);
-    }
+  it.each([
+    '',
+    'docs/quickstart',
+  ])('should redirect to /explore from /explore/invalid/%s', async (path: string) => {
+    await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
+    expect(page.url()).toEqual(`${puppeteerHost}/explore`);
   });
 });
