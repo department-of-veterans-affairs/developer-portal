@@ -62,8 +62,8 @@ const setSearchParam = (history: History, queryString: string, version: string):
 
 /* eslint-disable max-params */
 const renderSwaggerUI = (
+  defaultUrl: string,
   dispatch: React.Dispatch<SetRequestedAPIVersion>,
-  docUrl: string,
   versionNumber: string,
   versions: VersionMetadata[],
 ): void => {
@@ -73,7 +73,7 @@ const renderSwaggerUI = (
       dom_id: '#swagger-ui',
       layout: 'ExtendedLayout',
       plugins: [plugins],
-      url: docUrl,
+      url: defaultUrl,
     }) as System;
     ui.versionActions.setApiVersion(versionNumber);
     ui.versionActions.setVersionMetadata(versions);
@@ -84,7 +84,7 @@ const renderSwaggerUI = (
 const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const dispatch: React.Dispatch<SetRequestedAPIVersion | SetVersioning> = useDispatch();
 
-  const docUrl = useSelector((state: RootState) => getDocURL(state.apiVersioning));
+  const defaultUrl = useSelector((state: RootState) => getDocURL(state.apiVersioning));
   const history = useHistory();
   const location = useLocation();
   const versionNumber = useSelector((state: RootState) => getVersionNumber(state.apiVersioning));
@@ -143,10 +143,10 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
    * TRIGGERS RENDER OF SWAGGER UI
    */
   React.useEffect(() => {
-    if (docUrl) {
-      renderSwaggerUI(dispatch, docUrl, versionNumber, versions as VersionMetadata[]);
+    if (defaultUrl) {
+      renderSwaggerUI(defaultUrl, dispatch, versionNumber, versions);
     }
-  }, [dispatch, docUrl, versions, versionNumber]);
+  }, [defaultUrl, dispatch, versions, versionNumber]);
 
   /**
    * RENDER

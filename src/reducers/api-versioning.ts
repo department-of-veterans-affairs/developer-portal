@@ -6,7 +6,7 @@ import * as constants from '../types/constants';
 const currentVersionStatus = 'Current Version';
 const getRequestedApiVersion = (state: APIVersioning) => state.requestedApiVersion;
 const getAPIVersions = (state: APIVersioning) => state.versions;
-const getInitialDocURL = (state: APIVersioning) => state.docUrl;
+const getInitialDocURL = (state: APIVersioning) => state.defaultUrl;
 
 const getVersionInfo = createSelector(
   getRequestedApiVersion,
@@ -66,7 +66,7 @@ export const getVersionNumber = createSelector(
 
 export const apiVersioning = (
   state = {
-    docUrl: '',
+    defaultUrl: '',
     requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
     versions: null,
   },
@@ -77,7 +77,8 @@ export const apiVersioning = (
       return { ...state, requestedApiVersion: action.version };
     case constants.SET_VERSIONING:
       const requestedApiVersion = action.version || state.requestedApiVersion;
-      return { ...state, docUrl: action.docUrl, requestedApiVersion, versions: action.versions };
+      const { defaultUrl, versions } = action;
+      return { ...state, defaultUrl, requestedApiVersion, versions };
     default:
       return state;
   }

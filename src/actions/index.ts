@@ -10,7 +10,7 @@ export interface SetRequestedAPIVersion extends Action {
 }
 
 export interface SetVersioning extends Action {
-  docUrl: string;
+  defaultUrl: string;
   type: constants.SET_VERSIONING;
   version?: string;
   versions: VersionMetadata[] | null;
@@ -22,11 +22,11 @@ export const setRequestedApiVersion: ActionCreator<SetRequestedAPIVersion> = (ve
 });
 
 export const setVersioning: ActionCreator<SetVersioning> = (
-  docUrl: string,
+  defaultUrl: string,
   versions: VersionMetadata[] | null,
   version: string,
 ) => ({
-  docUrl,
+  defaultUrl,
   type: constants.SET_VERSIONING,
   version,
   versions,
