@@ -32,8 +32,7 @@ const Form = (props: FormProps): JSX.Element => {
         await onSubmit();
         onSuccess();
         setSending(false);
-      }
-      catch (e: unknown) {
+      } catch (e: unknown) {
         setSending(false);
         setError(true);
       }
