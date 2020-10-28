@@ -206,16 +206,20 @@ export const updateApplicationEmail: ActionCreator<UpdateApplicationEmail> = (
   newValue: ErrorableInput,
   previousValidation?: string,
 ) => {
+  let validatedValue: ErrorableInput;
   if (newValue.dirty) {
-    newValue = validateEmail(newValue);
-    newValue.dirty = false;
+    validatedValue = validateEmail(newValue);
+    validatedValue.dirty = false;
   } else {
-    // the newValue passed by IErrorableInput doesn't include validation
-    newValue.validation = previousValidation;
+    // the newValue passed by ErrorableInput doesn't include validation
+    validatedValue = {
+      ...newValue,
+      validation: previousValidation,
+    };
   }
 
   return {
-    newValue,
+    newValue: validatedValue,
     type: constants.UPDATE_APPLICATION_EMAIL,
   };
 };
@@ -255,16 +259,20 @@ export const updateApplyOAuthRedirectURI: ActionCreator<UpdateApplicationOAuthRe
   newValue: ErrorableInput,
   previousValidation?: string,
 ) => {
+  let validatedValue: ErrorableInput;
   if (newValue.dirty) {
-    newValue = validateOAuthRedirectURI(newValue);
-    newValue.dirty = false;
+    validatedValue = validateOAuthRedirectURI(newValue);
+    validatedValue.dirty = false;
   } else {
     // the newValue passed by IErrorableInput doesn't include validation
-    newValue.validation = previousValidation;
+    validatedValue = {
+      ...newValue,
+      validation: previousValidation,
+    };
   }
 
   return {
-    newValue,
+    newValue: validatedValue,
     type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI,
   };
 };

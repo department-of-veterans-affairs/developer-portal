@@ -5,6 +5,32 @@ import Im from 'immutable';
 import { CollapseProps, DeepLinkProps, MarkdownProps } from 'swagger-ui';
 import { sanitizeUrl } from '@braintree/sanitize-url';
 
+interface ExternalDocsProps {
+  url?: string;
+  description?: string;
+}
+
+const ExternalDocs: React.FunctionComponent<ExternalDocsProps> = (props: ExternalDocsProps) => (
+  <div>
+    {props.description ? (
+      <small>
+        {props.description}
+        {props.url ? ': ' : null}
+        {props.url ? (
+          <a
+            href={sanitizeUrl(props.url)}
+            onClick={e => e.stopPropagation()}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {props.url}
+          </a>
+        ) : null}
+      </small>
+    ) : null}
+  </div>
+);
+
 const createDeepLinkPath = (str: string | unknown) =>
   (typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '');
 
@@ -93,25 +119,7 @@ export default class OperationTag extends React.Component<OperationTagProps> {
             <small/>
           )}
 
-          <div>
-            {tagExternalDocsDescription ? (
-              <small>
-                {tagExternalDocsDescription}
-                {tagExternalDocsUrl ? ': ' : null}
-                {tagExternalDocsUrl ? (
-                  <a
-                    href={sanitizeUrl(tagExternalDocsUrl)}
-                    onClick={e => e.stopPropagation()}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {tagExternalDocsUrl}
-                  </a>
-                ) : null}
-              </small>
-            ) : null}
-          </div>
-
+          <ExternalDocs description={tagExternalDocsDescription} url={tagExternalDocsUrl} />
           <button
             className="expand-operation"
             title={showTag ? 'Collapse operation' : 'Expand operation'}

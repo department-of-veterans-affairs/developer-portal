@@ -1,5 +1,5 @@
+/* eslint-disable no-loop-func -- we need to break up these Jest tests inside loops */
 import { Page } from 'puppeteer';
-
 import { mockSwagger, puppeteerHost, testPaths } from './e2eHelpers';
 
 jest.setTimeout(100000);
@@ -13,6 +13,7 @@ const viewports = [
 const checkScreenshots = async (page: Page, selector: string) => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
+    // eslint-disable-next-line no-promise-executor-return
     await new Promise(resolve => setTimeout(resolve, 500));
     const content = await page.$(selector);
     if (content) {

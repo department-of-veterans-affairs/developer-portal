@@ -70,11 +70,12 @@ describe('position sticky', () => {
   });
 });
 
-describe('inavlid cagetories', () => {
-  for (const path of ['', 'docs/quickstart']) {
-    it(`should redirect "explore/invalid/${path}" to "explore"`, async () => {
-      await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
-      expect(page.url()).toEqual(`${puppeteerHost}/explore`);
-    });
-  }
+describe('invalid cagetories', () => {
+  it.each([
+    '',
+    'docs/quickstart',
+  ])('should redirect to /explore from /explore/invalid/%s', async (path: string) => {
+    await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
+    expect(page.url()).toEqual(`${puppeteerHost}/explore`);
+  });
 });

@@ -40,12 +40,12 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
     this.props.getSystem().versionActions.updateVersion(this.state.version);
   }
 
-  public buildDisplay(metaObject: VersionMetadata): string {
-    const { version, status, internal_only } = metaObject;
-    return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
-  }
-
   public render(): JSX.Element {
+    const buildDisplay = (meta: VersionMetadata): string => {
+      const { version, status, internal_only } = meta;
+      return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
+    };
+
     return (
       <div
         className={classNames(
@@ -70,7 +70,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
             .versionSelectors.versionMetadata()
             .map((versionInfo: VersionMetadata) => (
               <option value={versionInfo.version} key={versionInfo.version}>
-                {this.buildDisplay(versionInfo)}
+                {buildDisplay(versionInfo)}
               </option>
             ))}
         </select>

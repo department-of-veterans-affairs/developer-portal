@@ -43,6 +43,23 @@ const mapDispatchToProps = (
   },
 });
 
+const getMetadata = async (metadataUrl?: string): Promise<VersionMetadata[] | null> => {
+  if (!metadataUrl) {
+    return null;
+  }
+  try {
+    const request = new Request(`${metadataUrl}`, {
+      method: 'GET',
+    });
+    const response = await fetch(request);
+    const metadata = await (response.json() as Promise<APIMetadata>);
+    return metadata.meta.versions;
+  } catch (error) {
+    Sentry.captureException(error);
+    return null;
+  }
+};
+
 class SwaggerDocs extends React.Component<SwaggerDocsProps> {
   public async componentDidMount() {
     await this.setMetadataAndDocUrl();
@@ -87,25 +104,8 @@ class SwaggerDocs extends React.Component<SwaggerDocsProps> {
 
   private async setMetadataAndDocUrl() {
     const { openApiUrl, metadataUrl } = this.props.docSource;
-    const metadata = await this.getMetadata(metadataUrl);
+    const metadata = await getMetadata(metadataUrl);
     this.props.setVersioning(openApiUrl, metadata);
-  }
-
-  private async getMetadata(metadataUrl?: string): Promise<VersionMetadata[] | null> {
-    if (!metadataUrl) {
-      return null;
-    }
-    try {
-      const request = new Request(`${metadataUrl}`, {
-        method: 'GET',
-      });
-      const response = await fetch(request);
-      const metadata = await (response.json() as Promise<APIMetadata>);
-      return metadata.meta.versions;
-    } catch (error) {
-      Sentry.captureException(error);
-      return null;
-    }
   }
 
   private renderSwaggerUI() {
