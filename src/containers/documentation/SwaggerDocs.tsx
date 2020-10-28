@@ -65,9 +65,9 @@ const renderSwaggerUI = (
   defaultUrl: string,
   dispatch: React.Dispatch<SetRequestedAPIVersion>,
   versionNumber: string,
-  versions: VersionMetadata[],
+  versions: VersionMetadata[] | null,
 ): void => {
-  if (document.getElementById('swagger-ui') && docUrl.length !== 0) {
+  if (document.getElementById('swagger-ui')) {
     const plugins = SwaggerPlugins(handleVersionChange(dispatch));
     const ui: System = SwaggerUI({
       dom_id: '#swagger-ui',
@@ -76,7 +76,9 @@ const renderSwaggerUI = (
       url: defaultUrl,
     }) as System;
     ui.versionActions.setApiVersion(versionNumber);
-    ui.versionActions.setVersionMetadata(versions);
+    if (versions !== null) {
+      ui.versionActions.setVersionMetadata(versions);
+    }
   }
 };
 /* eslint-enable max-params */
