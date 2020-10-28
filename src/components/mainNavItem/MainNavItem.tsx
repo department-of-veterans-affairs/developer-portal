@@ -24,8 +24,17 @@ interface MainNavItemProps {
 /* eslint-disable react/prefer-stateless-function
   -- defaultProps and Typescript don't place nicely with each other, couldn't solve in time box */
 
-  const MainNavItem = ( props: MainNavItemProps ): JSX.Element => {
-  const { activeClassName, className, onClick, targetUrl, excludeLargeScreen, excludeSmallScreen, largeScreenProps, children } = props;
+const MainNavItem = (props: MainNavItemProps): JSX.Element => {
+  const {
+    activeClassName,
+    className,
+    onClick,
+    targetUrl,
+    excludeLargeScreen,
+    excludeSmallScreen,
+    largeScreenProps,
+    children,
+  } = props;
 
   const sharedProps = {
     activeClassName: classNames('va-api-active-nav', activeClassName),
@@ -59,4 +68,4 @@ MainNavItem.defaultProps = {
   onClick: undefined,
 };
 
-export { MainNavItem }
+export { MainNavItem };
