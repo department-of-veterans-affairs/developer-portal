@@ -9,7 +9,7 @@ export const VersionActions = (
       payload: version,
       type: 'API_VERSION_SET',
     }),
-    setVersionMetadata: (metadata: VersionMetadata[]) => ({
+    setVersionMetadata: (metadata: VersionMetadata[] | null) => ({
       payload: metadata,
       type: 'VERSION_METADATA_SET',
     }),

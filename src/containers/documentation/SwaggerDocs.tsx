@@ -6,6 +6,8 @@ import { useHistory, useLocation } from 'react-router-dom';
 import SwaggerUI from 'swagger-ui';
 import { usePrevious } from '../../hooks';
 import {
+  resetVersioning,
+  ResetVersioning,
   setVersioning,
   SetVersioning,
   setRequestedApiVersion,
@@ -66,23 +68,20 @@ const renderSwaggerUI = (
   versionNumber: string,
   versions: VersionMetadata[] | null,
 ): void => {
-  if (document.getElementById('swagger-ui')) {
-    const plugins = SwaggerPlugins(handleVersionChange(dispatch));
-    const ui: System = SwaggerUI({
-      dom_id: '#swagger-ui',
-      layout: 'ExtendedLayout',
-      plugins: [plugins],
-      url: defaultUrl,
-    }) as System;
-    ui.versionActions.setApiVersion(versionNumber);
-    if (versions !== null) {
-      ui.versionActions.setVersionMetadata(versions);
-    }
-  }
+  const plugins = SwaggerPlugins(handleVersionChange(dispatch));
+  const ui: System = SwaggerUI({
+    dom_id: '#swagger-ui',
+    layout: 'ExtendedLayout',
+    plugins: [plugins],
+    url: defaultUrl,
+  }) as System;
+  ui.versionActions.setApiVersion(versionNumber);
+  ui.versionActions.setVersionMetadata(versions);
 };
 
 const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
-  const dispatch: React.Dispatch<SetRequestedAPIVersion | SetVersioning> = useDispatch();
+  const dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning> =
+    useDispatch();
 
   const defaultUrl = useSelector((state: RootState) => getDocURL(state.apiVersioning));
   const history = useHistory();
@@ -125,7 +124,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
    */
   React.useEffect(
     () => () => {
-      dispatch(setVersioning('', null));
+      dispatch(resetVersioning());
     },
     [], // eslint-disable-line react-hooks/exhaustive-deps
   );
@@ -143,7 +142,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
    * TRIGGERS RENDER OF SWAGGER UI
    */
   React.useEffect(() => {
-    if (defaultUrl) {
+    if (document.getElementById('swagger-ui') && defaultUrl) {
       renderSwaggerUI(defaultUrl, dispatch, versionNumber, versions);
     }
   }, [defaultUrl, dispatch, versions, versionNumber]);

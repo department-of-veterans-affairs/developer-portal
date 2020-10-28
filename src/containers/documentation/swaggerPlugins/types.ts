@@ -16,7 +16,7 @@ export interface ParametersProps {
  * ACTION PLUGINS
  */
 export interface SetVersionMetadataAction {
-  payload: VersionMetadata[];
+  payload: VersionMetadata[] | null;
   type: string;
 }
 
@@ -31,7 +31,7 @@ interface UpdateVersionAction {
 
 export interface SwaggerVersionActions {
   actions: {
-    setVersionMetadata: (metadata: VersionMetadata[]) => SetVersionMetadataAction;
+    setVersionMetadata: (metadata: VersionMetadata[] | null) => SetVersionMetadataAction;
     setApiVersion: (version: string) => SetAPIVersionAction;
     updateVersion: (version: string) => UpdateVersionAction;
   };
@@ -59,7 +59,7 @@ export interface SwaggerVersionReducers {
  */
 export interface SwaggerVersionSelectors {
   selectors: {
-    versionMetadata: (state: Map<string, unknown>) => VersionMetadata[];
+    versionMetadata: (state: Map<string, unknown>) => VersionMetadata[] | null;
     apiName: (state: Map<string, unknown>) => string;
     apiVersion: (state: Map<string, unknown>) => string;
     majorVersion: OutputSelector<Map<string, unknown>, string, (result: string) => string>;
@@ -98,13 +98,13 @@ export interface SwaggerPlugins {
 export interface System extends BaseSystem {
   versionActions: {
     setApiVersion: (version: string) => void;
-    setVersionMetadata: (meta: VersionMetadata[]) => void;
+    setVersionMetadata: (meta: VersionMetadata[] | null) => void;
     updateVersion: (version: string) => void;
   };
 
   versionSelectors: {
     majorVersion: () => string;
-    versionMetadata: () => VersionMetadata[];
+    versionMetadata: () => VersionMetadata[] | null;
     apiVersion: () => string;
   };
 }
