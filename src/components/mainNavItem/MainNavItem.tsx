@@ -23,37 +23,40 @@ interface MainNavItemProps {
 
 /* eslint-disable react/prefer-stateless-function
   -- defaultProps and Typescript don't place nicely with each other, couldn't solve in time box */
-export class MainNavItem extends React.Component<MainNavItemProps> {
-  public static defaultProps = {
-    excludeLargeScreen: false,
-    excludeSmallScreen: false,
-    onClick: null,
+
+  const MainNavItem = ( props: MainNavItemProps ): JSX.Element => {
+  const { activeClassName, className, onClick, targetUrl, excludeLargeScreen, excludeSmallScreen, largeScreenProps, children } = props;
+
+  const sharedProps = {
+    activeClassName: classNames('va-api-active-nav', activeClassName),
+    className: classNames('va-api-nav-link', className),
+    to: targetUrl,
   };
 
-  public render(): JSX.Element {
-    const sharedProps = {
-      activeClassName: classNames('va-api-active-nav', this.props.activeClassName),
-      className: classNames('va-api-nav-link', this.props.className),
-      to: this.props.targetUrl,
-    };
+  return (
+    <>
+      {!excludeLargeScreen && (
+        <div className={desktopOnly()}>
+          <NavLink {...sharedProps} {...largeScreenProps}>
+            {children}
+          </NavLink>
+        </div>
+      )}
+      {!excludeSmallScreen && (
+        <div className={mobileOnly()}>
+          <NavLink onClick={onClick} {...sharedProps}>
+            {children}
+          </NavLink>
+        </div>
+      )}
+    </>
+  );
+};
 
-    return (
-      <React.Fragment>
-        {!this.props.excludeLargeScreen && (
-          <div className={desktopOnly()}>
-            <NavLink {...sharedProps} {...this.props.largeScreenProps}>
-              {this.props.children}
-            </NavLink>
-          </div>
-        )}
-        {!this.props.excludeSmallScreen && (
-          <div className={mobileOnly()}>
-            <NavLink onClick={this.props.onClick} {...sharedProps}>
-              {this.props.children}
-            </NavLink>
-          </div>
-        )}
-      </React.Fragment>
-    );
-  }
-}
+MainNavItem.defaultProps = {
+  excludeLargeScreen: false,
+  excludeSmallScreen: false,
+  onClick: undefined,
+};
+
+export { MainNavItem }
