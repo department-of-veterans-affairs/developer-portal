@@ -52,7 +52,7 @@ const coreESLintRules = {
   'max-depth': 'error',
   'max-lines': 'error', // default file length 300
   'max-nested-callbacks': ['error', 3], // default max is 10 callbacks
-  'max-params': 'error',
+  'max-params': ['error', 4],
   'max-statements-per-line': 'error',
   'multiline-comment-style': 'warn',
   'no-confusing-arrow': 'error',
@@ -85,9 +85,9 @@ const coreESLintRules = {
   'padded-blocks': ['error', 'never'],
   'prefer-destructuring': ['error', { array: false, object: true }],
   'prefer-template': 'error',
-  'quotes': ['error', 'single', { avoidEscape: true }],
+  quotes: ['error', 'single', { avoidEscape: true }],
   'rest-spread-spacing': 'error',
-  'semi': 'error',
+  semi: 'error',
   'semi-spacing': 'error',
   'semi-style': 'error',
   'sort-keys': 'error',
@@ -126,7 +126,7 @@ module.exports = {
     'react-hooks',
   ],
   rules: {
-    ... coreESLintRules,
+    ...coreESLintRules,
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [
       'error',

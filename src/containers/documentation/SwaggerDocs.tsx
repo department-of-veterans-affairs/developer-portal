@@ -60,7 +60,6 @@ const setSearchParam = (history: History, queryString: string, version: string):
   }
 };
 
-/* eslint-disable max-params */
 const renderSwaggerUI = (
   defaultUrl: string,
   dispatch: React.Dispatch<SetRequestedAPIVersion>,
@@ -81,7 +80,6 @@ const renderSwaggerUI = (
     }
   }
 };
-/* eslint-enable max-params */
 
 const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const dispatch: React.Dispatch<SetRequestedAPIVersion | SetVersioning> = useDispatch();
