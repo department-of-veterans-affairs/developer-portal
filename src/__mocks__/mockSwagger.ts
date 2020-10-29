@@ -1,5 +1,4 @@
 /* eslint-disable id-length, max-lines, sort-keys -- mock data */
-// tslint:disable:object-literal-sort-keys
 export const mockSwagger = {
   'http://localhost:3000/services/vba_documents/docs/v0/api': {
     openapi: '3.0.0',

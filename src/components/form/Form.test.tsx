@@ -16,7 +16,7 @@ describe('Form', () => {
 
   it('should be able to submit when disabled is not set', async () => {
     const onSubmitMock = jest.fn().mockImplementation(successfulSubmitMockImpl);
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false}/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
 
     component.find('.usa-button-primary').simulate('click');
 
@@ -30,7 +30,7 @@ describe('Form', () => {
 
   it('should not be able to submit when disabled is set', () => {
     const onSubmitMock = jest.fn().mockImplementation(successfulSubmitMockImpl);
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled />);
 
     component.find('.usa-button-primary').simulate('click');
 
@@ -42,7 +42,7 @@ describe('Form', () => {
   it('should display the error alert when in error', async() => {
     const onSubmitMock = jest.fn().mockImplementation(rejectedSubmitMockImpl);
 
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false}/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
     component.find('.usa-button-primary').simulate('click');
 
     await waitFor(() => expect(onSubmitMock).toHaveBeenCalled());
@@ -81,7 +81,7 @@ describe('Form', () => {
     });
     const onSubmitMock = jest.fn().mockImplementation(() => submitPromise);
 
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false}/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
 
     component.find('.usa-button-primary').simulate('click');
 

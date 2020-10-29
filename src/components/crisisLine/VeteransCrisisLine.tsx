@@ -33,6 +33,7 @@ const VeteransCrisisLine = (): JSX.Element => {
           'vads-u-width--full',
           'medium-screen:vads-u-width--auto',
         )}
+        type="button"
       >
         <span className={classNames('vads-u-display--flex', 'vads-u-align-items--center')}>
           <span className={classNames('va-api-crisis-line-container', 'vads-u-margin-right--1')}>

@@ -37,6 +37,7 @@ export const MainNavItem = (props: MainNavItemProps): JSX.Element => {
     activeClassName: classNames('va-api-active-nav', activeClassName),
     className: classNames('va-api-nav-link', className),
     to: targetUrl,
+
   };
 
   return (

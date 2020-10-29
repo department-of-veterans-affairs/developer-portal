@@ -38,7 +38,7 @@ const SupportContactUs = (): JSX.Element => {
     <>
       {sent && <SupportConfirmation />}
       {!sent && (
-        <section role="region" aria-label="Support Overview">
+        <section aria-label="Support Overview">
           <PageHeader {...headerProps} />
           <GitHubSnippet />
           <SupportContactUsForm onSuccess={onSuccess} />

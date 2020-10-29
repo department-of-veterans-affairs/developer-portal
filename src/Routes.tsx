@@ -9,8 +9,6 @@ import { APIDescription } from './apiDefs/schema';
 import MarkdownPage from './components/MarkdownPage';
 import ApplyForm from './containers/apply/ApplyForm';
 import ApplySuccess from './containers/apply/ApplySuccess';
-import BetaPage from './containers/Beta';
-import BetaSuccess from './containers/BetaSuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
@@ -46,8 +44,6 @@ export const SiteRoutes: React.FunctionComponent = () => (
       )}
     />
     <Route path="/applied" component={ApplySuccess} />
-    <Route path="/beta" component={BetaPage} />
-    <Route path="/beta-success" component={BetaSuccess} />
     <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
     <Route
       path="/oauth"
@@ -117,7 +113,7 @@ export const sitemapConfig = (): SitemapConfig => {
     },
     pathFilter: {
       isValid: false,
-      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success|\/oauth/],
+      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/oauth/],
     },
     topLevelRoutes: SiteRoutes,
   };

@@ -99,9 +99,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
 
   public handleInputChange(parameterName: string, value: string): void {
     this.setState({
-      ...this.state,
       paramValues: {
-        ...this.state.paramValues,
         [parameterName]: value,
       },
     });
@@ -288,16 +286,16 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         { display: 'Sandbox', value: 'sandbox' },
         { display: 'Production', value: '' },
       ];
-      return options.map((optionValues, i) => (
-        <option value={optionValues.value} key={i}>
+      return options.map(optionValues => (
+        <option value={optionValues.value} key={optionValues.value}>
           {optionValues.display}
         </option>
       ));
     } else {
       const spec: OpenAPISpecV3 = this.jsonSpec() as OpenAPISpecV3;
       return spec.servers.map(
-        (server: Server, i: number): JSX.Element => (
-          <option value={server.url} key={i}>
+        (server: Server): JSX.Element => (
+          <option value={server.url} key={server.url}>
             {server.description}
           </option>
         ),
@@ -318,7 +316,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     return (
       <div>
         <h3>Environment:</h3>
-        <select // tslint:disable-next-line:react-a11y-no-onchange
+        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+        <select
           value={this.state.env}
           onChange={e => {
             this.setState({ env: e.target.value });

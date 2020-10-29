@@ -77,8 +77,8 @@ const NotFound: React.FunctionComponent = () => {
               <a href="/explore">Documentation</a>
             </h3>
             <ul>
-              {lists.map((item, i) => (
-                <li key={i}>
+              {lists.map(item => (
+                <li key={item.pathSegment}>
                   <a href={`/explore/${item.pathSegment}`}>{item.title}</a>
                 </li>
               ))}
@@ -105,8 +105,8 @@ const NotFound: React.FunctionComponent = () => {
               <a href="/release-notes">Release Notes</a>
             </h3>
             <ul>
-              {lists.map((item, i) => (
-                <li key={i}>
+              {lists.map(item => (
+                <li key={item.pathSegment}>
                   <a href={`/release-notes/${item.pathSegment}`}>{item.title}</a>
                 </li>
               ))}
