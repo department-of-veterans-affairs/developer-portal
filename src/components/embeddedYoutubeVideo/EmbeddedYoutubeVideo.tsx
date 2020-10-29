@@ -12,7 +12,7 @@ interface EmbeddedYoutubeVideoProps {
 const YOUTUBE_SERVICE = 'youtube';
 const YOUTUBE_BASE = 'https://www.youtube.com/embed/';
 
-export const EmbeddedYoutubeVideo = ({ url, title }: EmbeddedYoutubeVideoProps): JSX.Element => {
+const EmbeddedYoutubeVideo = ({ url, title }: EmbeddedYoutubeVideoProps): JSX.Element => {
   const videoInfo = getVideoId(url);
   if (videoInfo.service !== YOUTUBE_SERVICE) {
     return <a href={url}>{url}</a>;
@@ -44,3 +44,5 @@ export const EmbeddedYoutubeVideo = ({ url, title }: EmbeddedYoutubeVideoProps):
     </div>
   );
 };
+
+export { EmbeddedYoutubeVideo };

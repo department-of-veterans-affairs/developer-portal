@@ -9,4 +9,4 @@ const MarkdownPage = (Component: MarkdownComponent): JSX.Element => (
   </section>
 );
 
-export default MarkdownPage;
+export { MarkdownPage };
