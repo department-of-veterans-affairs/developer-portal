@@ -106,6 +106,9 @@ export default class OperationTag extends React.Component<OperationTagProps> {
 
     return (
       <div className={showTag ? 'opblock-tag-section is-open' : 'opblock-tag-section'}>
+        {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+          jsx-a11y/click-events-have-key-events
+          -- Swagger is bad (I guess these kind of canncel out?) */}
         <h3
           onClick={() => layoutActions.show(isShownKey, !showTag)}
           className={tagDescription ? 'opblock-tag' : 'opblock-tag no-desc'}

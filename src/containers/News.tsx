@@ -97,7 +97,7 @@ const News = (): JSX.Element => {
             ))}
           </SideNav>
           <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-            <section role="region" aria-label="News">
+            <section aria-label="News">
               <PageHeader
                 description={pageDescription}
                 header="News"

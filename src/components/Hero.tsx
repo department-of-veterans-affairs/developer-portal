@@ -6,7 +6,6 @@ import logo from '../assets/hero-logo.svg';
 
 const Hero: React.FunctionComponent = (): JSX.Element => (
   <section
-    role="region"
     aria-label="Page Hero"
     className={classNames(
       'vads-u-background-color--primary-darkest',
