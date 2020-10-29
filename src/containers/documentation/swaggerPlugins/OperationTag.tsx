@@ -19,7 +19,7 @@ const ExternalDocs: React.FunctionComponent<ExternalDocsProps> = (props: Externa
         {props.url ? (
           <a
             href={sanitizeUrl(props.url)}
-            onClick={e => e.stopPropagation()}
+            onClick={(e): void => e.stopPropagation()}
             target="_blank"
             rel="noreferrer"
           >
@@ -31,7 +31,7 @@ const ExternalDocs: React.FunctionComponent<ExternalDocsProps> = (props: Externa
   </div>
 );
 
-const createDeepLinkPath = (str: string | unknown) =>
+const createDeepLinkPath = (str: string | unknown): string =>
   (typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '');
 
 interface OperationTagProps {
@@ -106,7 +106,7 @@ export default class OperationTag extends React.Component<OperationTagProps> {
     return (
       <div className={showTag ? 'opblock-tag-section is-open' : 'opblock-tag-section'}>
         <h3
-          onClick={() => layoutActions.show(isShownKey, !showTag)}
+          onClick={(): void => layoutActions.show(isShownKey, !showTag)}
           className={tagDescription ? 'opblock-tag' : 'opblock-tag no-desc'}
           id={isShownKey.join('-')}
         >
@@ -123,7 +123,7 @@ export default class OperationTag extends React.Component<OperationTagProps> {
           <button
             className="expand-operation"
             title={showTag ? 'Collapse operation' : 'Expand operation'}
-            onClick={() => layoutActions.show(isShownKey, !showTag)}
+            onClick={(): void => layoutActions.show(isShownKey, !showTag)}
           >
             <svg className="arrow" width="20" height="20">
               <use

@@ -18,7 +18,9 @@ interface ReleaseNotesCardLinksProps {
   flagName: 'enabled' | 'hosted_apis';
 }
 
-const ReleaseNotesCardLinks = (props: ReleaseNotesCardLinksProps) => {
+const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps> = (
+  props: ReleaseNotesCardLinksProps,
+) => {
   const { apiCategory, categoryKey, flagName } = props;
   const flags: { [apiId: string]: boolean } = getFlags()[flagName];
   const apis: APIDescription[] = apiCategory.apis.filter(api => flags[api.urlFragment]);
@@ -87,7 +89,9 @@ interface ReleaseNotesCollectionProps {
   alertText?: string;
 }
 
-const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => (
+const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProps> = (
+  props: ReleaseNotesCollectionProps,
+) => (
   <section role="region" aria-labelledby={`${props.categoryKey}-release-notes`}>
     <PageHeader
       halo={props.apiCategory.name}
@@ -114,15 +118,15 @@ const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => (
 
 export const CategoryReleaseNotes = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
-  const categoryDefinition = getApiDefinitions()[apiCategoryKey];
-  if (categoryDefinition == null) {
+  const categories = getApiDefinitions();
+  if (!(apiCategoryKey in categories)) {
     return <Redirect to="/release-notes" />;
   }
 
   return (
     <ReleaseNotesCollection
       categoryKey={apiCategoryKey}
-      apiCategory={categoryDefinition}
+      apiCategory={categories[apiCategoryKey]}
       apiFlagName="hosted_apis"
     />
   );

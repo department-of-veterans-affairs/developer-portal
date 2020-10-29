@@ -6,18 +6,23 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/
 import * as actions from '../../actions';
 import { ErrorableInput, RootState } from '../../types';
 
-interface DeveloperInfoProps {
+interface DeveloperInfoStateProps {
   firstName: ErrorableInput;
   lastName: ErrorableInput;
   email: ErrorableInput;
   organization: ErrorableInput;
+}
+
+interface DeveloperInfoDispatchProps {
   updateFirstName: (value: ErrorableInput) => void;
   updateLastName: (value: ErrorableInput) => void;
   updateEmail: (oldValidation?: string) => (value: ErrorableInput) => void;
   updateOrganization: (value: ErrorableInput) => void;
 }
 
-const mapStateToProps = (state: RootState) => ({
+type DeveloperInfoProps = DeveloperInfoStateProps & DeveloperInfoDispatchProps;
+
+const mapStateToProps = (state: RootState): DeveloperInfoStateProps => ({
   email: state.application.inputs.email,
   firstName: state.application.inputs.firstName,
   lastName: state.application.inputs.lastName,
@@ -26,17 +31,17 @@ const mapStateToProps = (state: RootState) => ({
 
 type DeveloperInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateApplicationAction>;
 
-const mapDispatchToProps = (dispatch: DeveloperInfoDispatch) => ({
-  updateEmail: (oldValidation?: string) => (value: ErrorableInput) => {
+const mapDispatchToProps = (dispatch: DeveloperInfoDispatch): DeveloperInfoDispatchProps => ({
+  updateEmail: (oldValidation?: string) => (value: ErrorableInput): void => {
     dispatch(actions.updateApplicationEmail(value, oldValidation));
   },
-  updateFirstName: (value: ErrorableInput) => {
+  updateFirstName: (value: ErrorableInput): void => {
     dispatch(actions.updateApplicationFirstName(value));
   },
-  updateLastName: (value: ErrorableInput) => {
+  updateLastName: (value: ErrorableInput): void => {
     dispatch(actions.updateApplicationLastName(value));
   },
-  updateOrganization: (value: ErrorableInput) => {
+  updateOrganization: (value: ErrorableInput): void => {
     dispatch(actions.updateApplicationOrganization(value));
   },
 });

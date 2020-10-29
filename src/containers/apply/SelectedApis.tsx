@@ -17,14 +17,16 @@ interface APICheckboxListProps {
   toggleSelectedApi: (apiId: string) => () => void;
 }
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: RootState): Pick<APICheckboxListProps, 'apiInputs'> => ({
   apiInputs: state.application.inputs.apis,
 });
 
 type ApiSelectDispatch = ThunkDispatch<RootState, undefined, actions.ToggleSelectedAPI>;
 
-const mapDispatchToProps = (dispatch: ApiSelectDispatch) => ({
-  toggleSelectedApi: (apiId: string) => () => {
+const mapDispatchToProps = (
+  dispatch: ApiSelectDispatch,
+): Pick<APICheckboxListProps, 'toggleSelectedApi'> => ({
+  toggleSelectedApi: (apiId: string) => (): void => {
     dispatch(actions.toggleSelectedApi(apiId));
   },
 });

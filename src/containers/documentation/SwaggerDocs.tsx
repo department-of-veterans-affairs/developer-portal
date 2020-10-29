@@ -35,21 +35,21 @@ const getVersionsFromMetadata = async (metadataUrl?: string): Promise<VersionMet
     const response = await fetch(request);
     const metadata = await (response.json() as Promise<APIMetadata>);
     return metadata.meta.versions;
-  } catch (error) {
+  } catch (error: unknown) {
     Sentry.captureException(error);
     return null;
   }
 };
 
 const getInitialVersion = (searchQuery: string): string => {
-  const params = new URLSearchParams(searchQuery ?? undefined);
+  const params = new URLSearchParams(searchQuery || undefined);
   const versionQuery = params.get('version');
   return versionQuery ? versionQuery.toLowerCase() : CURRENT_VERSION_IDENTIFIER;
 };
 
 const handleVersionChange =
   (dispatch: React.Dispatch<SetRequestedAPIVersion>): (requestedVersion: string) => void => (
-    (requestedVersion: string) => {
+    (requestedVersion: string): void => {
       dispatch(setRequestedApiVersion(requestedVersion));
     }
   );
@@ -108,7 +108,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const prevApiName = usePrevious(apiName);
   const prevVersion = usePrevious(version);
 
-  const setMetadataAndDocUrl = async () => {
+  const setMetadataAndDocUrl = async (): Promise<void> => {
     const metadataVersions = await getVersionsFromMetadata(metadataUrl);
     const initialVersion = getInitialVersion(location.search);
 
@@ -123,7 +123,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
    * CLEAR REDUX STATE ON UNMOUNT
    */
   React.useEffect(
-    () => () => {
+    () => (): void => {
       dispatch(resetVersioning());
     },
     [], // eslint-disable-line react-hooks/exhaustive-deps
@@ -154,7 +154,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
 
   return (
     <React.Fragment>
-      {apiIntro && apiIntro({})}
+      {apiIntro?.({})}
       <div id="swagger-ui" />
     </React.Fragment>
   );

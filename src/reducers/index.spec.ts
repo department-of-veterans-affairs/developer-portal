@@ -53,7 +53,7 @@ const app: DevApplication = {
 
 describe('application', () => {
   it('should update application state when inputs are changed', () => {
-    const inputToActionMap: any[] = [
+    const inputToActionMap: Array<[string, string]> = [
       ['description', constants.UPDATE_APPLICATION_DESCRIPTION],
       ['firstName', constants.UPDATE_APPLICATION_FIRST_NAME],
       ['lastName', constants.UPDATE_APPLICATION_LAST_NAME],

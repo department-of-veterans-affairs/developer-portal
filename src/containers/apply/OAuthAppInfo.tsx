@@ -14,23 +14,27 @@ interface OAuthAppInfoProps {
   updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput) => void;
 }
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (
+  state: RootState,
+): Pick<OAuthAppInfoProps, 'oAuthApplicationType' | 'oAuthRedirectURI'> => ({
   oAuthApplicationType: state.application.inputs.oAuthApplicationType,
   oAuthRedirectURI: state.application.inputs.oAuthRedirectURI,
 });
 
 type OAuthAppInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateApplicationAction>;
 
-const mapDispatchToProps = (dispatch: OAuthAppInfoDispatch) => ({
-  updateOAuthApplicationType: (value: ErrorableInput) => {
+const mapDispatchToProps = (
+  dispatch: OAuthAppInfoDispatch,
+): Pick<OAuthAppInfoProps, 'updateOAuthApplicationType' | 'updateOAuthRedirectURI'> => ({
+  updateOAuthApplicationType: (value: ErrorableInput): void => {
     dispatch(actions.updateApplyOAuthApplicationType(value));
   },
-  updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput) => {
+  updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput): void => {
     dispatch(actions.updateApplyOAuthRedirectURI(value, oldValidation));
   },
 });
 
-const OAuthAppInfo = (props: OAuthAppInfoProps) => {
+const OAuthAppInfo: React.FunctionComponent<OAuthAppInfoProps> = (props: OAuthAppInfoProps) => {
   const { oAuthApplicationType, oAuthRedirectURI } = props;
 
   return (

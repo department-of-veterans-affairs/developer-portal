@@ -25,7 +25,7 @@ export interface SetAPIVersionAction {
   type: string;
 }
 
-interface UpdateVersionAction {
+export interface UpdateVersionAction {
   type: string;
 }
 

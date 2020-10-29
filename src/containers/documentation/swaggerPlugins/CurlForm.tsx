@@ -117,7 +117,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               type="text"
               id={fieldName}
               value={this.state.paramValues[fieldName] || ''}
-              onChange={e => this.handleInputChange(fieldName, e.target.value)}
+              onChange={(e): void => this.handleInputChange(fieldName, e.target.value)}
             />
           </div>
         ))}

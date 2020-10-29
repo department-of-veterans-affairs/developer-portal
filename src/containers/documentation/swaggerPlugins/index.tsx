@@ -14,8 +14,8 @@ const SwaggerPlugins = (versionHandler: (newVersion: string) => void): Plugins =
   components: {
     ExtendedLayout,
     OperationTag,
-    ServersContainer: () => null,
-    authorizeBtn: () => null,
+    ServersContainer: (): null => null,
+    authorizeBtn: (): null => null,
   },
   fn: {
     curlify,
@@ -23,7 +23,7 @@ const SwaggerPlugins = (versionHandler: (newVersion: string) => void): Plugins =
   statePlugins: {
     spec: {
       wrapSelectors: {
-        allowTryItOutFor: () => () => false,
+        allowTryItOutFor: () => ((): boolean => false),
       },
     },
     version: {

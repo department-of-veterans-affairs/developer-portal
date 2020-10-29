@@ -15,7 +15,7 @@ import { APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
 import ReleaseNotes from './ReleaseNotes';
 
-const renderComponent = async (route = '/release-notes') => {
+const renderComponent = async (route = '/release-notes'): Promise<void> => {
   await cleanup(); // in case we're calling from a test, not beforeEach()
   render(
     <FlagsProvider flags={getFlags()}>

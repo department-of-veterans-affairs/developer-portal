@@ -28,11 +28,11 @@ type ApplicationDispatch = ThunkDispatch<
 >;
 /* eslint-enable @typescript-eslint/indent */
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: RootState): DevApplication => ({
   ...state.application,
 });
 
-const renderError = (props: ApplyProps) => {
+const renderError = (props: ApplyProps): JSX.Element | null => {
   const assistanceTrailer = (
     <span>
       Need assistance? Create an issue through our <Link to="/support">Support page</Link>
@@ -51,24 +51,24 @@ const renderError = (props: ApplyProps) => {
   return null;
 };
 
-const selectedApis = (props: ApplyProps) => {
+const selectedApis = (props: ApplyProps): string[] => {
   const { apis } = props.inputs;
   return Object.keys(apis).filter(apiName => apis[apiName]);
 };
 
-const anyOAuthApisSelected = (props: ApplyProps) => {
+const anyOAuthApisSelected = (props: ApplyProps): boolean => {
   const apiIdsByField = selectedApis(props).flatMap(
     formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField],
   );
   return includesOAuthAPI(apiIdsByField);
 };
 
-const anyApiSelected = (props: ApplyProps) => {
+const anyApiSelected = (props: ApplyProps): boolean => {
   const numSelected = selectedApis(props).length;
   return numSelected > 0;
 };
 
-const allBioFieldsComplete = (props: ApplyProps) => {
+const allBioFieldsComplete = (props: ApplyProps): boolean => {
   const bioFieldNames = ['email', 'firstName', 'lastName', 'organization'];
   const incompleteFields = bioFieldNames.filter(fieldName => {
     const input = props.inputs[fieldName] as ErrorableInput;
@@ -77,7 +77,7 @@ const allBioFieldsComplete = (props: ApplyProps) => {
   return incompleteFields.length === 0;
 };
 
-const readyToSubmit = (props: ApplyProps) => {
+const readyToSubmit = (props: ApplyProps): boolean => {
   const {
     inputs: { oAuthApplicationType, oAuthRedirectURI, termsOfService },
   } = props;
@@ -117,7 +117,7 @@ const ApplyForm = (props: ApplyProps): JSX.Element => {
             <ErrorableTextArea
               errorMessage={null}
               label="Briefly describe how your organization will use VA APIs:"
-              onValueChange={(e: string) => dispatch(actions.updateApplicationDescription(e))}
+              onValueChange={(e: string): void => void dispatch(actions.updateApplicationDescription(e))}
               name="description"
               field={props.inputs.description}
             />
@@ -129,14 +129,14 @@ const ApplyForm = (props: ApplyProps): JSX.Element => {
                   I agree to the <Link to="/terms-of-service">Terms of Service</Link>
                 </span>
               }
-              onValueChange={() => dispatch(actions.toggleAcceptTos())}
+              onValueChange={(): void => void dispatch(actions.toggleAcceptTos())}
               required
             />
 
             <ProgressButton
               buttonText={props.sending ? 'Sending...' : 'Submit'}
               disabled={!readyToSubmit(props) || props.sending}
-              onButtonClick={() => dispatch(actions.submitForm())}
+              onButtonClick={(): void => void dispatch(actions.submitForm())}
               buttonClass="usa-button-primary"
             />
           </form>

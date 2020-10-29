@@ -10,7 +10,7 @@ const viewports = [
   { height: 800, width: 375 },
 ];
 
-const checkScreenshots = async (page: Page, selector: string) => {
+const checkScreenshots = async (page: Page, selector: string): Promise<void> => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
     // eslint-disable-next-line no-promise-executor-return
