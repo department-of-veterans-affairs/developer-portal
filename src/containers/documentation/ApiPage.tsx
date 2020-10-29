@@ -57,7 +57,6 @@ const ApiPage = (): JSX.Element => {
         {!isApiDeactivated(api) && (
           <ApiDocumentation
             apiDefinition={api}
-            categoryKey={params.apiCategoryKey}
             location={location}
           />
         )}

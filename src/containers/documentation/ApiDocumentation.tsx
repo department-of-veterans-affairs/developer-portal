@@ -13,13 +13,11 @@ import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
 interface ApiDocumentationProps {
   apiDefinition: APIDescription;
-  categoryKey: string;
   location: Location;
 }
 
 const ApiDocumentationPropTypes = {
   apiDefinition: ApiDescriptionPropType.isRequired,
-  categoryKey: PropTypes.string.isRequired,
   // Leave as any for now until we can use the location react hooks
   location: PropTypes.any.isRequired,
 };

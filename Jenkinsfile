@@ -163,7 +163,7 @@ node('vetsgov-general-purpose') {
     }
   }
 
-  stage('TSLint') {
+  stage('ESLint') {
     try {
       dockerImage.inside(args) {
         sh 'cd /application && npm run-script lint:ci'
@@ -173,17 +173,6 @@ node('vetsgov-general-purpose') {
       dir(pwd()) {
         step([$class: 'JUnitResultArchiver', testResults: 'lint-results.xml'])
       }
-      throw error
-    }
-  }
-
-  stage('ESLint') {
-    try {
-      dockerImage.inside(args) {
-        sh 'cd /application && npm run eslint'
-      }
-    } catch (error) {
-      notify()
       throw error
     }
   }

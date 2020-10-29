@@ -113,7 +113,7 @@ export const sitemapConfig = (): SitemapConfig => {
     },
     pathFilter: {
       isValid: false,
-      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success|\/oauth/],
+      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/oauth/],
     },
     topLevelRoutes: SiteRoutes,
   };

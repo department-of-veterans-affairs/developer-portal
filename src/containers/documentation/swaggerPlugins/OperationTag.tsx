@@ -51,12 +51,8 @@ interface OperationTagProps {
   };
 }
 
+/* eslint-disable react/prefer-stateless-function -- Swagger UI is on React 15 */
 export default class OperationTag extends React.Component<OperationTagProps> {
-  public static defaultProps: Pick<OperationTagProps, 'tag' | 'tagObj'> = {
-    tag: '',
-    tagObj: Im.fromJS({}) as Im.Map<string, unknown>,
-  };
-
   public static propTypes = {
     getComponent: PropTypes.func.isRequired,
     getConfigs: PropTypes.func.isRequired,
@@ -64,8 +60,13 @@ export default class OperationTag extends React.Component<OperationTagProps> {
     layoutActions: PropTypes.object.isRequired,
     layoutSelectors: PropTypes.object.isRequired,
 
-    tag: PropTypes.string.isRequired,
-    tagObj: ImPropTypes.map.isRequired,
+    tag: PropTypes.string,
+    tagObj: ImPropTypes.map,
+  };
+
+  public static defaultProps: Pick<OperationTagProps, 'tag' | 'tagObj'> = {
+    tag: '',
+    tagObj: Im.fromJS({}) as Im.Map<string, unknown>,
   };
 
   public render(): JSX.Element {
@@ -105,6 +106,9 @@ export default class OperationTag extends React.Component<OperationTagProps> {
 
     return (
       <div className={showTag ? 'opblock-tag-section is-open' : 'opblock-tag-section'}>
+        {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+          jsx-a11y/click-events-have-key-events
+          -- Swagger is bad (I guess these kind of canncel out?) */}
         <h3
           onClick={(): void => layoutActions.show(isShownKey, !showTag)}
           className={tagDescription ? 'opblock-tag' : 'opblock-tag no-desc'}
@@ -116,7 +120,7 @@ export default class OperationTag extends React.Component<OperationTagProps> {
               <Markdown source={tagDescription} />
             </small>
           ) : (
-            <small/>
+            <small />
           )}
 
           <ExternalDocs description={tagExternalDocsDescription} url={tagExternalDocsUrl} />
@@ -124,6 +128,7 @@ export default class OperationTag extends React.Component<OperationTagProps> {
             className="expand-operation"
             title={showTag ? 'Collapse operation' : 'Expand operation'}
             onClick={(): void => layoutActions.show(isShownKey, !showTag)}
+            type="button"
           >
             <svg className="arrow" width="20" height="20">
               <use

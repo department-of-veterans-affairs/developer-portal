@@ -1,5 +1,3 @@
-/* tslint:disable no-console */
-
 /*  This webpack plugin uses the existing React routes and JSON API definitions
  *   included in the app to create a sitemap at build using react-router-sitemap
  *   (as opposed to having to maintain a separate map of the app that uses

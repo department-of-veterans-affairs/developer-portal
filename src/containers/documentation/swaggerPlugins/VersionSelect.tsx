@@ -54,6 +54,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
           'vads-u-justify-content--flex-start',
         )}
       >
+        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
         <select
           aria-label="Version Selection"
           value={this.state.version}
@@ -77,6 +78,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
         <button
           onClick={(): void => this.handleButtonClick()}
           className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
+          type="button"
         >
           Select
         </button>

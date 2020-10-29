@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { Redirect } from 'react-router';
 import { Route, Switch, useParams } from 'react-router-dom';
@@ -152,10 +151,6 @@ const DocumentationRoot = (): JSX.Element => {
       </section>
     </div>
   );
-};
-
-DocumentationRoot.propTypes = {
-  match: PropTypes.object.isRequired,
 };
 
 export default DocumentationRoot;

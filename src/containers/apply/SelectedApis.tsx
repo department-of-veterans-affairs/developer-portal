@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
@@ -87,8 +88,10 @@ const apiInfo = [
 ];
 
 const SelectedAPIs = (): JSX.Element => (
-  <React.Fragment>
-    <label>Please select all of the APIs you&apos;d like access to:</label>
+  <fieldset className="vads-u-margin-top--3">
+    <legend className={classNames('vads-u-font-weight--normal', 'vads-u-font-size--base')}>
+      Please select all of the APIs you&apos;d like access to:
+    </legend>
     <fieldset
       className="vads-u-margin-top--2"
       aria-label="Please select all of the Standard APIs you'd like access to:"
@@ -103,7 +106,7 @@ const SelectedAPIs = (): JSX.Element => (
       <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
       <ApiCheckboxList apiCheckboxes={oauthInfo} />
     </fieldset>
-  </React.Fragment>
+  </fieldset>
 );
 
 export default SelectedAPIs;

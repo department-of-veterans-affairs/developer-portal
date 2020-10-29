@@ -35,8 +35,7 @@ const ApiNotFoundPage = (): JSX.Element => {
                 {item.name}
               </Link>
             </li>
-          ))
-        }
+          ))}
       </ul>
     </div>
   );

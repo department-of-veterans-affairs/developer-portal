@@ -21,7 +21,8 @@ const GuidanceBoxPropTypes = {
 type GuidanceBoxProps = PropTypes.InferProps<typeof GuidanceBoxPropTypes>;
 
 const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
-  <div id={props.id ?? undefined}
+  <div
+    id={props.id ?? undefined}
     className={classNames(
       'vads-l-col--12',
       'medium-screen:vads-l-col--6',
@@ -54,15 +55,18 @@ const Banner = (): JSX.Element => {
     <section>
       <div className={classNames('site-guidance', 'vads-u-background-color--gray-dark')}>
         <header className={classNames('va-api-banner-header')}>
-          <div className={classNames(
-            'va-api-banner-inner',
-            'vads-u-max-width--100',
-            'vads-u-color--white',
-            'medium-screen:vads-u-padding-x--4',
-          )}>
+          <div
+            className={classNames(
+              'va-api-banner-inner',
+              'vads-u-max-width--100',
+              'vads-u-color--white',
+              'medium-screen:vads-u-padding-x--4',
+            )}
+          >
             <div className={classNames(defaultFlexContainer(true), 'vads-u-padding-y--0p25')}>
               <div>
-                <img src={flagIcon}
+                <img
+                  src={flagIcon}
                   alt="US flag"
                   className={classNames(
                     'va-api-banner-icon',
@@ -74,13 +78,15 @@ const Banner = (): JSX.Element => {
                   )}
                 />
               </div>
-              <div className={classNames(
-                'site-notice-text',
-                defaultFlexContainer(true),
-                'vads-u-margin-left--1',
-                'vads-u-font-size--sm',
-                'small-desktop-screen:vads-u-max-width--none',
-              )}>
+              <div
+                className={classNames(
+                  'site-notice-text',
+                  defaultFlexContainer(true),
+                  'vads-u-margin-left--1',
+                  'vads-u-font-size--sm',
+                  'small-desktop-screen:vads-u-max-width--none',
+                )}
+              >
                 <div>An official website of the United States government.</div>
                 <button
                   id="toggle-how-you-know-dropdown"
@@ -96,11 +102,14 @@ const Banner = (): JSX.Element => {
                   )}
                   onClick={toggleAccordionVisible}
                   aria-expanded={accordionVisible ? 'true' : 'false'}
+                  type="button"
                 >
-                  <span className={classNames(
-                    'vads-u-font-weight--normal',
-                    'vads-u-text-decoration--underline',
-                  )}>
+                  <span
+                    className={classNames(
+                      'vads-u-font-weight--normal',
+                      'vads-u-text-decoration--underline',
+                    )}
+                  >
                     Here&apos;s how you know
                   </span>
                 </button>

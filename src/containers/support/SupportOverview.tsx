@@ -18,7 +18,7 @@ interface SupportOverviewProps {
 const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
   props: SupportOverviewProps,
 ): JSX.Element => (
-  <section role="region" aria-labelledby={PAGE_HEADER_ID}>
+  <section aria-labelledby={PAGE_HEADER_ID}>
     <PageHeader {...headerProps} />
     <div className={defaultFlexContainer()}>
       {props.sections.map((section: SupportSection) => (
