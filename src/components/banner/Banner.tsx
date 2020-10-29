@@ -48,7 +48,7 @@ GuidanceBox.propTypes = GuidanceBoxPropTypes;
 const Banner = (): JSX.Element => {
   const [accordionVisible, setAccordionVisible] = React.useState(false);
 
-  const toggleAccordionVisible = () => setAccordionVisible(!accordionVisible);
+  const toggleAccordionVisible = (): void => setAccordionVisible(!accordionVisible);
 
   return (
     <section>

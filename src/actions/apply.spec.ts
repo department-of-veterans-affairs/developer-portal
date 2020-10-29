@@ -122,10 +122,10 @@ describe('submitForm', () => {
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-    const scope: any = {
+    const scope: Partial<Sentry.Scope> = {
       setLevel: jest.fn(),
     };
-    sentryCallback(scope);
+    sentryCallback(scope as Sentry.Scope);
     expect(dispatch).toBeCalledWith({
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });
@@ -155,8 +155,8 @@ describe('submitForm', () => {
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-    const scope: any = { setLevel: jest.fn() };
-    sentryCallback(scope);
+    const scope: Partial<Sentry.Scope> = { setLevel: jest.fn() };
+    sentryCallback(scope as Sentry.Scope);
     expect(dispatch).toBeCalledWith({
       type: constants.SUBMIT_APPLICATION_BEGIN,
     });

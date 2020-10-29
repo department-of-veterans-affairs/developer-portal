@@ -96,7 +96,7 @@ export type SubmitFormThunk = ThunkAction<
 >;
 /* eslint-enable @typescript-eslint/indent */
 
-const apisToList = (apis: APIList) =>
+const apisToList = (apis: APIList): string =>
   Object.keys(apis)
     .filter(key => apis[key])
     .join(',');
@@ -113,7 +113,10 @@ const buildApplicationBody = ({ application }: RootState): DevApplicationRequest
   termsOfService: application.inputs.termsOfService,
 });
 
-export const submitForm: ActionCreator<SubmitFormThunk> = () => (dispatch, state) => {
+export const submitForm: ActionCreator<SubmitFormThunk> = () => (
+  dispatch,
+  state,
+): Promise<SubmitFormAction> => {
   dispatch(submitFormBegin());
   const applicationBody = buildApplicationBody(state());
   const request = new Request(constants.APPLY_URL, {

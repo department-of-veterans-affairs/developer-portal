@@ -71,7 +71,7 @@ const coreESLintRules = {
   'max-nested-callbacks': ['error', 3], // default max is 10 callbacks
   'max-params': ['error', 4],
   'max-statements-per-line': 'error',
-  'multiline-comment-style': 'error',
+  'multiline-comment-style': 'warn',
   'no-confusing-arrow': 'error',
   'no-duplicate-imports': 'error',
   'no-useless-computed-key': 'error',

@@ -22,7 +22,7 @@ const VeteransCrisisLine = (): JSX.Element => {
     >
       <button
         data-show="#crisis-line-modal"
-        onClick={() => setModalVisible(true)}
+        onClick={(): void => setModalVisible(true)}
         className={classNames(
           'va-crisis-line-button',
           'va-api-crisis-line-button',
@@ -52,7 +52,7 @@ const VeteransCrisisLine = (): JSX.Element => {
       <Modal
         id="crisis-line-modal"
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        onClose={(): void => setModalVisible(false)}
         initialFocusSelector="li > a"
       >
         <VeteransCrisisLinePanel />

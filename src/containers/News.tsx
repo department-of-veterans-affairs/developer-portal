@@ -37,7 +37,7 @@ const sections = data.sections.map((section: DataSection) => ({
   id: toHtmlId(section.title),
 }));
 
-const NewsItem = ({ item, media }: { item: NewsItem; media: boolean }) =>
+const NewsItem = ({ item, media }: { item: NewsItem; media: boolean }): JSX.Element =>
   (media ? <MediaItem item={item} /> : <ItemDescription item={item} />);
 
 const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {

@@ -24,7 +24,7 @@ const Header = (): JSX.Element => {
    */
   const [mobileNavVisible, setMobileNavVisible] = React.useState(false);
 
-  const toggleMenuVisible = () => {
+  const toggleMenuVisible = (): void => {
     setMobileNavVisible((state: boolean) => !state);
   };
 

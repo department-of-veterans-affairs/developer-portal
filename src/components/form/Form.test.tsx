@@ -6,8 +6,8 @@ import * as React from 'react';
 import { Form } from './Form';
 
 describe('Form', () => {
-  const successfulSubmitMockImpl = () => Promise.resolve();
-  const rejectedSubmitMockImpl = () => Promise.reject(new Error('test'));
+  const successfulSubmitMockImpl = (): Promise<void> => Promise.resolve();
+  const rejectedSubmitMockImpl = (): Promise<void> => Promise.reject(new Error('test'));
   const onSuccessMock = jest.fn();
 
   afterEach(() => {

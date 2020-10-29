@@ -73,7 +73,7 @@ describe('News', () => {
     });
 
     describe('items', () => {
-      const testSectionItems = (section: DataSection) => {
+      const testSectionItems = (section: DataSection): void => {
         const newsSection = screen.getByRole('region', { name: section.title });
         expect(newsSection).toBeInTheDocument();
         // header plus paragraph per news item
