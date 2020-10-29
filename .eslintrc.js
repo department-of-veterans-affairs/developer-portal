@@ -13,6 +13,7 @@
  * 
  * Presets included
  *  - Typescript ESLint: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.ts
+ *    = ESLint via Typescript ESLint: https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js
  *  - Typescript ESLint with type checking: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended-requiring-type-checking.ts
  *  - React: https://github.com/yannickcr/eslint-plugin-react/blob/master/index.js
  *  - Accessibility: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/src/index.js
@@ -143,6 +144,7 @@ const coreESLintRules = {
   'vars-on-top': 'error',
 };
 
+// https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin
 const typescriptESLintRules = {
   '@typescript-eslint/array-type': [
     'error',
@@ -160,7 +162,6 @@ const typescriptESLintRules = {
   '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
   '@typescript-eslint/explicit-function-return-type': 'warn',
   '@typescript-eslint/explicit-member-accessibility': 'error',
-  '@typescript-eslint/explicit-module-boundary-types': 'error',
   '@typescript-eslint/func-call-spacing': 'error',
   /**
    * note that there are some issues with Typescript ESLint's indent rule: 
@@ -208,7 +209,6 @@ const typescriptESLintRules = {
   '@typescript-eslint/no-unnecessary-type-constraint': 'error',
   '@typescript-eslint/no-unused-expressions': 'error',
   '@typescript-eslint/no-use-before-define': 'warn',
-  '@typescript-eslint/no-var-requires': 'error',
   '@typescript-eslint/prefer-enum-initializers': 'error',
   '@typescript-eslint/prefer-for-of': 'error',
   '@typescript-eslint/prefer-function-type': 'error',
@@ -353,7 +353,6 @@ module.exports = {
     ...typescriptESLintRules,
     ...importRules,
     ...reactRules,
-    '@typescript-eslint/type-annotation-spacing': 'off',
     // https://github.com/TristonJ/eslint-plugin-prefer-arrow
     'prefer-arrow/prefer-arrow-functions': 'error',
   },

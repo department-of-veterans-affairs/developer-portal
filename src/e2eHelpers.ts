@@ -51,7 +51,7 @@ export const axeCheck = (): Promise<axe.AxeResults> => new Promise(resolve => {
   });
 });
 
-export const mockSwagger = (req: Request) : void => {
+export const mockSwagger = (req: Request): void => {
   const response = {
     body: '',
     contentType: 'application/json',
