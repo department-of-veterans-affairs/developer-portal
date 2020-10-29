@@ -6,7 +6,7 @@ import * as React from 'react';
 import { MemoryRouter } from 'react-router';
 import * as NewsData from '../__mocks__/news.test.yml';
 import toHtmlId from '../toHtmlId';
-import News, { DataSection, NewsItem } from './News';
+import News, { DataSection, NewsItemData } from './News';
 
 const data = NewsData as {
   sections: DataSection[];
@@ -81,7 +81,7 @@ describe('News', () => {
         const items: HTMLElement[] = Array.from(newsSection.children).slice(1) as HTMLElement[];
         expect(items.length).toBe(section.items.length);
 
-        section.items.forEach((expected: NewsItem, index: number) => {
+        section.items.forEach((expected: NewsItemData, index: number) => {
           let link: HTMLElement;
           if (section.media) {
             const links = getAllByRole(items[index], 'link');

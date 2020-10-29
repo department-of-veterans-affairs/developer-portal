@@ -14,39 +14,39 @@ import { validateEmail, validateOAuthRedirectURI } from '../utils/validators';
 
 export interface UpdateApplicationFirstName extends Action {
   newValue: ErrorableInput;
-  type: constants.UPDATE_APPLICATION_FIRST_NAME;
+  type: constants.UPDATE_APPLY_FIRST_NAME;
 }
 
 export interface UpdateApplicationLastName extends Action {
   newValue: ErrorableInput;
-  type: constants.UPDATE_APPLICATION_LAST_NAME;
+  type: constants.UPDATE_APPLY_LAST_NAME;
 }
 
 export interface UpdateApplicationEmail extends Action {
   newValue: ErrorableInput;
   previousValidation?: string;
-  type: constants.UPDATE_APPLICATION_EMAIL;
+  type: constants.UPDATE_APPLY_EMAIL;
 }
 
 export interface UpdateApplicationOrganization extends Action {
   newValue: ErrorableInput;
-  type: constants.UPDATE_APPLICATION_ORGANIZATION;
+  type: constants.UPDATE_APPLY_ORGANIZATION;
 }
 
 export interface UpdateApplicationDescription extends Action {
   newValue: ErrorableInput;
-  type: constants.UPDATE_APPLICATION_DESCRIPTION;
+  type: constants.UPDATE_APPLY_DESCRIPTION;
 }
 
 export interface UpdateApplicationOAuthApplicationType extends Action {
   newValue: ErrorableInput;
-  type: constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE;
+  type: constants.UPDATE_APPLY_OAUTH_APPLICATION_TYPE;
 }
 
 export interface UpdateApplicationOAuthRedirectURI extends Action {
   newValue: ErrorableInput;
   previousValidation?: string;
-  type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI;
+  type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI;
 }
 
 export interface ToggleAcceptTOS extends Action {
@@ -113,6 +113,26 @@ const buildApplicationBody = ({ application }: RootState): DevApplicationRequest
   termsOfService: application.inputs.termsOfService,
 });
 
+export const submitFormBegin: ActionCreator<SubmitForm> = () => ({
+  type: constants.SUBMIT_APPLICATION_BEGIN_VALUE,
+});
+
+export const submitFormSuccess: ActionCreator<SubmitFormSuccess> = (
+  token: string,
+  clientID: string,
+  clientSecret: string,
+) => ({
+  clientID,
+  clientSecret,
+  token,
+  type: constants.SUBMIT_APPLICATION_SUCCESS_VALUE,
+});
+
+export const submitFormError: ActionCreator<SubmitFormError> = (status: string) => ({
+  status,
+  type: constants.SUBMIT_APPLICATION_ERROR_VALUE,
+});
+
 export const submitForm: ActionCreator<SubmitFormThunk> = () => (
   dispatch,
   state,
@@ -159,26 +179,6 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => (
     });
 };
 
-export const submitFormBegin: ActionCreator<SubmitForm> = () => ({
-  type: constants.SUBMIT_APPLICATION_BEGIN,
-});
-
-export const submitFormSuccess: ActionCreator<SubmitFormSuccess> = (
-  token: string,
-  clientID: string,
-  clientSecret: string,
-) => ({
-  clientID,
-  clientSecret,
-  token,
-  type: constants.SUBMIT_APPLICATION_SUCCESS,
-});
-
-export const submitFormError: ActionCreator<SubmitFormError> = (status: string) => ({
-  status,
-  type: constants.SUBMIT_APPLICATION_ERROR,
-});
-
 /**
  * IErrorableInput is designed to work with the formation-react form controls, but
  * formation-react text inputs (ErrorableTextInput, ErrorableNumberInput, and
@@ -223,7 +223,7 @@ export const updateApplicationEmail: ActionCreator<UpdateApplicationEmail> = (
 
   return {
     newValue: validatedValue,
-    type: constants.UPDATE_APPLICATION_EMAIL,
+    type: constants.UPDATE_APPLY_EMAIL_VALUE,
   };
 };
 
@@ -231,21 +231,21 @@ export const updateApplicationDescription: ActionCreator<UpdateApplicationDescri
   newValue: ErrorableInput,
 ) => ({
   newValue,
-  type: constants.UPDATE_APPLICATION_DESCRIPTION,
+  type: constants.UPDATE_APPLY_DESCRIPTION_VALUE,
 });
 
 export const updateApplicationFirstName: ActionCreator<UpdateApplicationFirstName> = (
   newValue: ErrorableInput,
 ) => ({
   newValue,
-  type: constants.UPDATE_APPLICATION_FIRST_NAME,
+  type: constants.UPDATE_APPLY_FIRST_NAME_VALUE,
 });
 
 export const updateApplicationLastName: ActionCreator<UpdateApplicationLastName> = (
   newValue: ErrorableInput,
 ) => ({
   newValue,
-  type: constants.UPDATE_APPLICATION_LAST_NAME,
+  type: constants.UPDATE_APPLY_LAST_NAME_VALUE,
 });
 
 /* eslint-disable @typescript-eslint/indent */
@@ -254,7 +254,7 @@ export const updateApplyOAuthApplicationType: ActionCreator<
 > = (newValue: ErrorableInput) => ({
   /* eslint-enable @typescript-eslint/indent */
   newValue,
-  type: constants.UPDATE_APPLY_OAUTH_APP_TYPE,
+  type: constants.UPDATE_APPLY_OAUTH_APP_TYPE_VAL,
 });
 
 // see note on update/validate above on updateApplicationEmail
@@ -276,7 +276,7 @@ export const updateApplyOAuthRedirectURI: ActionCreator<UpdateApplicationOAuthRe
 
   return {
     newValue: validatedValue,
-    type: constants.UPDATE_APPLY_OAUTH_REDIRECT_URI,
+    type: constants.UPDATE_APPLY_REDIRECT_URI_VALUE,
   };
 };
 
@@ -284,14 +284,14 @@ export const updateApplicationOrganization: ActionCreator<UpdateApplicationOrgan
   newValue: ErrorableInput,
 ) => ({
   newValue,
-  type: constants.UPDATE_APPLICATION_ORGANIZATION,
+  type: constants.UPDATE_APPLY_ORGANIZATION_VALUE,
 });
 
 export const toggleSelectedApi: ActionCreator<ToggleSelectedAPI> = (apiId: string) => ({
   apiId,
-  type: constants.TOGGLE_SELECTED_API,
+  type: constants.TOGGLE_SELECTED_API_VALUE,
 });
 
 export const toggleAcceptTos: ActionCreator<ToggleAcceptTOS> = () => ({
-  type: constants.TOGGLE_ACCEPT_TOS,
+  type: constants.TOGGLE_ACCEPT_TOS_VALUE,
 });

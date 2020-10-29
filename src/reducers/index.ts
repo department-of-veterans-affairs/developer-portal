@@ -41,28 +41,28 @@ export const applicationInput = (
   action: UpdateApplicationAction,
 ): ApplyInputs => {
   switch (action.type) {
-    case constants.UPDATE_APPLICATION_DESCRIPTION:
+    case constants.UPDATE_APPLY_DESCRIPTION_VALUE:
       return { ...inputs, description: action.newValue };
-    case constants.UPDATE_APPLICATION_EMAIL:
+    case constants.UPDATE_APPLY_EMAIL_VALUE:
       return { ...inputs, email: action.newValue };
-    case constants.UPDATE_APPLICATION_FIRST_NAME:
+    case constants.UPDATE_APPLY_FIRST_NAME_VALUE:
       return { ...inputs, firstName: action.newValue };
-    case constants.UPDATE_APPLICATION_LAST_NAME:
+    case constants.UPDATE_APPLY_LAST_NAME_VALUE:
       return { ...inputs, lastName: action.newValue };
-    case constants.UPDATE_APPLY_OAUTH_APP_TYPE:
+    case constants.UPDATE_APPLY_OAUTH_APP_TYPE_VAL:
       return { ...inputs, oAuthApplicationType: action.newValue };
-    case constants.UPDATE_APPLY_OAUTH_REDIRECT_URI:
+    case constants.UPDATE_APPLY_REDIRECT_URI_VALUE:
       return { ...inputs, oAuthRedirectURI: action.newValue };
-    case constants.UPDATE_APPLICATION_ORGANIZATION:
+    case constants.UPDATE_APPLY_ORGANIZATION_VALUE:
       return { ...inputs, organization: action.newValue };
-    case constants.TOGGLE_SELECTED_API:
+    case constants.TOGGLE_SELECTED_API_VALUE:
       if (!applyApis.includes(action.apiId)) {
         return inputs;
       }
 
       const isApiSelected = !inputs.apis[action.apiId];
       return { ...inputs, apis: { ...inputs.apis, [action.apiId]: isApiSelected } };
-    case constants.TOGGLE_ACCEPT_TOS:
+    case constants.TOGGLE_ACCEPT_TOS_VALUE:
       const termsOfService = !inputs.termsOfService;
       return { ...inputs, termsOfService };
     default:
@@ -75,9 +75,9 @@ export const application = (
   action: SubmitFormAction | UpdateApplicationAction,
 ): DevApplication => {
   switch (action.type) {
-    case constants.SUBMIT_APPLICATION_BEGIN:
+    case constants.SUBMIT_APPLICATION_BEGIN_VALUE:
       return { ...state, errorStatus: undefined, sending: true };
-    case constants.SUBMIT_APPLICATION_SUCCESS:
+    case constants.SUBMIT_APPLICATION_SUCCESS_VALUE:
       return {
         ...state,
         inputs: initialApplyInputs,
@@ -90,7 +90,7 @@ export const application = (
         },
         sending: false,
       };
-    case constants.SUBMIT_APPLICATION_ERROR:
+    case constants.SUBMIT_APPLICATION_ERROR_VALUE:
       return { ...state, errorStatus: action.status, sending: false };
     default:
       return { ...state, inputs: applicationInput(state.inputs, action) };

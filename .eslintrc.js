@@ -1,8 +1,21 @@
 /**
- * presets included
- * - Typescript ESLint: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.ts
- * - React: https://github.com/yannickcr/eslint-plugin-react/blob/master/index.js
- * - accessibility: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/src/index.js
+ * This file represents the best approximation of our development conventions in this project as of
+ * the conversion from TSLint to ESLint in API-1323. The rules in this file should be considered
+ * flexible and can be extended or relaxed as necessary. Feel free to add rules that would be helpful
+ * and remove rules that are overly strict.
+ * 
+ * Notes
+ *  1. The Typescript ESLint plugin has several rules that extend rules in the core ESLint module. In
+ *  general, we prefer to use the Typescript ESLint version. You can see a list of the extended rules
+ *  here: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#extension-rules
+ *  2. If any rule should apply to committed code but is painful in development, it should be included
+ *  as a warning in this file and marked as an error in .eslintrc.ci.js.
+ * 
+ * Presets included
+ *  - Typescript ESLint: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.ts
+ *  - Typescript ESLint with type checking: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended-requiring-type-checking.ts
+ *  - React: https://github.com/yannickcr/eslint-plugin-react/blob/master/index.js
+ *  - Accessibility: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/src/index.js
  */
 
 // https://eslint.org/docs/rules/
@@ -14,12 +27,9 @@ const coreESLintRules = {
   'arrow-body-style': 'error',
   'arrow-parens': ['error', 'as-needed'],
   'arrow-spacing': 'error',
-  'brace-style': 'error',
   'block-scoped-var': 'error',
   'block-spacing': 'error',
   'class-methods-use-this': 'error',
-  'comma-dangle': ['error', 'always-multiline'],
-  'comma-spacing': 'error',
   'comma-style': 'error',
   complexity: ['error', 12],
   'computed-property-spacing': 'error',
@@ -28,10 +38,8 @@ const coreESLintRules = {
   'default-case': 'error',
   'default-case-last': 'error',
   'dot-location': ['error', 'property'],
-  'dot-notation': 'error',
   'eol-last': 'error',
   eqeqeq: ['error', 'always', { null: 'ignore' }],
-  'func-call-spacing': 'error',
   'grouped-accessor-pairs': 'error',
   'guard-for-in': 'error',
   'id-denylist': [
@@ -55,9 +63,7 @@ const coreESLintRules = {
   ],
   'jsx-quotes': 'error',
   'key-spacing': 'error',
-  'keyword-spacing': 'error',
   'linebreak-style': 'error',
-  'lines-between-class-members': 'error',
   'max-classes-per-file': ['error', 1],
   'max-depth': 'error',
   'max-lines': 'error', // default file length 300
@@ -68,27 +74,22 @@ const coreESLintRules = {
   'new-parens': 'error',
   'newline-per-chained-call': 'error',
   'no-alert': 'error',
-  'no-array-constructor': 'error',
   'no-bitwise': 'error',
   'no-caller': 'error',
   'no-confusing-arrow': 'error',
   'no-console': 'off',
   'no-constructor-return': 'error',
-  'no-duplicate-imports': 'error',
   'no-div-regex': 'error',
-  'no-empty-function': 'error',
   'no-eval': 'error',
   'no-extend-native': 'error',
   'no-extra-bind': 'error',
   'no-floating-decimal': 'error',
   'no-implicit-globals': 'error',
-  'no-invalid-this': 'error',
   'no-iterator': 'error',
   'no-label-var': 'error',
   'no-labels': 'error',
   'no-lone-blocks': 'error',
   'no-lonely-if': 'error',
-  'no-loop-func': 'error',
   'no-mixed-operators': 'error',
   'no-multi-assign': 'error',
   'no-multiple-empty-lines': ['error', { max: 1 }],
@@ -107,14 +108,12 @@ const coreESLintRules = {
   'no-script-url': 'error',
   'no-self-compare': 'error',
   'no-sequences': 'error',
-  'no-shadow': ['error', { hoist: 'all' }],
   'no-tabs': 'error',
   'no-trailing-spaces': 'error',
   'no-undef-init': 'error',
   'no-underscore-dangle': 'error',
   'no-unmodified-loop-condition': 'error',
   'no-unneeded-ternary': 'error',
-  'no-unused-expressions': 'error',
   'no-useless-backreference': 'error',
   'no-useless-call': 'error',
   'no-useless-computed-key': 'error',
@@ -125,28 +124,23 @@ const coreESLintRules = {
   'no-whitespace-before-property': 'error',
   'prefer-promise-reject-errors': 'error',
   'prefer-regex-literals': 'error',
-  'require-await': 'error',
-  'vars-on-top': 'error',
   radix: 'error',
-  'require-await': 'error',
   'object-curly-spacing': ['error', 'always'],
   'object-shorthand': 'error',
   'padded-blocks': ['error', 'never'],
   'prefer-destructuring': ['error', { array: false, object: true }],
   'prefer-template': 'error',
-  quotes: ['error', 'single', { avoidEscape: true }],
   'rest-spread-spacing': 'error',
-  semi: 'error',
   'semi-spacing': 'error',
   'semi-style': 'error',
   'sort-keys': 'error',
   'space-before-blocks': 'error',
   'space-in-parens': 'error',
-  'space-infix-ops': 'error',
   'space-unary-ops': 'error',
   'spaced-comment': 'error',
   'switch-colon-spacing': 'error',
   'template-curly-spacing': 'error',
+  'vars-on-top': 'error',
 };
 
 const typescriptESLintRules = {
@@ -158,11 +152,25 @@ const typescriptESLintRules = {
   ],
   // can be removed soon - leave for a bit after TSLint removal
   '@typescript-eslint/ban-tslint-comment': 'error',
+  '@typescript-eslint/brace-style': 'error',
+  '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
+  '@typescript-eslint/comma-spacing': 'error',
+  '@typescript-eslint/dot-notation': 'error',
   '@typescript-eslint/consistent-type-assertions': 'error',
   '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
   '@typescript-eslint/explicit-function-return-type': 'warn',
   '@typescript-eslint/explicit-member-accessibility': 'error',
   '@typescript-eslint/explicit-module-boundary-types': 'error',
+  '@typescript-eslint/func-call-spacing': 'error',
+  /**
+   * note that there are some issues with Typescript ESLint's indent rule: 
+   * https://github.com/typescript-eslint/typescript-eslint/issues/1824
+   * ESLint's indent rule will not work for Typescript either, though. feel free to disable this
+   * rule with a comment wherever you run into issues.
+   */
+  '@typescript-eslint/indent': ['error', 2],
+  '@typescript-eslint/keyword-spacing': 'error',
+  '@typescript-eslint/lines-between-class-members': 'error',
   '@typescript-eslint/member-delimiter-style': 'warn',
   '@typescript-eslint/member-ordering': 'error',
   '@typescript-eslint/method-signature-style': 'error',
@@ -181,18 +189,25 @@ const typescriptESLintRules = {
   '@typescript-eslint/no-base-to-string': 'error',
   '@typescript-eslint/no-confusing-non-null-assertion': 'error',
   '@typescript-eslint/no-dynamic-delete': 'error',
-  '@typescript-eslint/no-explicit-any': 'warn',
+  '@typescript-eslint/no-dupe-class-members': 'error',
+  '@typescript-eslint/no-explicit-any': 'error',
   '@typescript-eslint/no-extraneous-class': 'error',
   '@typescript-eslint/no-implicit-any-catch': 'error',
   '@typescript-eslint/no-inferrable-types': 'off',
+  '@typescript-eslint/no-invalid-this': 'error',
   '@typescript-eslint/no-invalid-void-type': 'error',
+  '@typescript-eslint/no-loop-func': 'error',
   '@typescript-eslint/no-parameter-properties': 'error',
-  '@typescript-eslint/no-throw-literal': 'error', // preferred over ESLint's no-throw-literal rule
+  '@typescript-eslint/no-redeclare': 'error',
+  '@typescript-eslint/no-shadow': ['error', { hoist: 'all' }],
+  '@typescript-eslint/no-throw-literal': 'error',
   '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
   '@typescript-eslint/no-unnecessary-condition': 'error',
   '@typescript-eslint/no-unnecessary-qualifier': 'error',
   '@typescript-eslint/no-unnecessary-type-arguments': 'error',
   '@typescript-eslint/no-unnecessary-type-constraint': 'error',
+  '@typescript-eslint/no-unused-expressions': 'error',
+  '@typescript-eslint/no-use-before-define': 'warn',
   '@typescript-eslint/no-var-requires': 'error',
   '@typescript-eslint/prefer-enum-initializers': 'error',
   '@typescript-eslint/prefer-for-of': 'error',
@@ -204,8 +219,12 @@ const typescriptESLintRules = {
   '@typescript-eslint/prefer-readonly': 'warn',
   '@typescript-eslint/prefer-reduce-type-parameter': 'warn',
   '@typescript-eslint/prefer-string-starts-ends-with': 'warn',
-  '@typescript-eslint/require-array-sort-compare': ['warn', { ignoreStringArrays: true }],
-  '@typescript-eslint/switch-exhaustiveness-check': 'warn',
+  '@typescript-eslint/quotes': ['error', 'single', { avoidEscape: true }],
+  '@typescript-eslint/require-array-sort-compare': ['error', { ignoreStringArrays: true }],
+  '@typescript-eslint/return-await': 'error',
+  '@typescript-eslint/semi': ['error', 'always'],
+  '@typescript-eslint/space-infix-ops': 'error',
+  '@typescript-eslint/switch-exhaustiveness-check': 'error',
   '@typescript-eslint/type-annotation-spacing': 'error',
   '@typescript-eslint/unified-signatures': 'error',
 };
@@ -223,7 +242,8 @@ const importRules = {
   'import/no-anonymous-default-export': 'error',
   'import/no-commonjs': 'error',
   'import/no-cycle': 'error',
-  'import/no-duplicates': 'error', // prefer over ESLint's no-duplicate-imports rule?
+  // preferred over Typescript ESLint's and ESLint's no-duplicate-imports rules
+  'import/no-duplicates': 'error',
   'import/no-dynamic-require': 'error',
   'import/no-extraneous-dependencies': 'error',
   'import/no-mutable-exports': 'error',
@@ -333,15 +353,7 @@ module.exports = {
     ...typescriptESLintRules,
     ...importRules,
     ...reactRules,
-    '@typescript-eslint/dot-notation': 'error',
-    '@typescript-eslint/indent': ['error', 2],
-    '@typescript-eslint/no-empty-function': 'error',
-    '@typescript-eslint/no-unused-expressions': 'error',
-    '@typescript-eslint/no-use-before-define': 'off',
-    '@typescript-eslint/quotes': 'off',
-    '@typescript-eslint/semi': ['error', 'always'],
     '@typescript-eslint/type-annotation-spacing': 'off',
-    '@typescript-eslint/unified-signatures': 'error',
     // https://github.com/TristonJ/eslint-plugin-prefer-arrow
     'prefer-arrow/prefer-arrow-functions': 'error',
   },
