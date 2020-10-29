@@ -127,7 +127,6 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
 };
 
 const ApplySuccess = (): JSX.Element => {
-
   const result: ApplySuccessResult | undefined = useSelector((state: RootState) => state.application.result);
 
   // Result can be undefined so we need this to be conditional
