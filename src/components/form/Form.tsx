@@ -15,7 +15,12 @@ const assistanceTrailer = (
    * Specific to the Contact Us form only. This points to GitHub instead of Support in order
    * to avoid looping the user back to an apparently broken Contact Us form
    */
-  <span>Need assistance? Create an issue through our <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">GitHub page</a></span>
+  <span>
+    Need assistance? Create an issue through our&nbsp;
+    <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/issues/new/choose">
+      GitHub page
+    </a>
+  </span>
 );
 
 const Form = (props: FormProps): JSX.Element => {
@@ -46,13 +51,14 @@ const Form = (props: FormProps): JSX.Element => {
         buttonText={sending ? 'Sending...' : 'Submit'}
         disabled={disabled}
         onButtonClick={submitForm}
-        buttonClass="usa-button-primary" />
+        buttonClass="usa-button-primary"
+      />
       {error &&
         <AlertBox
           status="error"
           headline="We encountered a server error while saving your form. Please try again later."
-          content={ assistanceTrailer } />
-      }
+          content={assistanceTrailer}
+        />}
     </form>
   );
 };

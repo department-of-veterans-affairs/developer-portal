@@ -15,16 +15,19 @@ const Search = (props: SearchTypes): JSX.Element => {
   const { inMenu, className } = props;
 
   return (
-    <div className={classNames(
-      'vads-u-display--flex',
-      'vads-u-flex-direction--row',
-      'vads-u-flex-wrap--nowrap',
-      'vads-u-align-items--center',
-      'va-api-search-wrapper',
-      { 'va-api-search-form--inverse-color': !inMenu },
-      className,
-    )}>
-      <form action="https://search.usa.gov/search"
+    <div
+      className={classNames(
+        'vads-u-display--flex',
+        'vads-u-flex-direction--row',
+        'vads-u-flex-wrap--nowrap',
+        'vads-u-align-items--center',
+        'va-api-search-wrapper',
+        { 'va-api-search-form--inverse-color': !inMenu },
+        className,
+      )}
+    >
+      <form
+        action="https://search.usa.gov/search"
         acceptCharset="UTF-8"
         method="get"
         className={classNames(
@@ -38,7 +41,8 @@ const Search = (props: SearchTypes): JSX.Element => {
       >
         <input name="utf8" type="hidden" value="&#x2713;" />
         <input type="hidden" name="affiliate" value="developer.va.gov" />
-        <input type="text"
+        <input
+          type="text"
           name="query"
           autoComplete="off"
           className={classNames(
@@ -47,8 +51,11 @@ const Search = (props: SearchTypes): JSX.Element => {
             'vads-u-padding--1',
           )}
           placeholder={inMenu ? '' : 'Search...'}
-          aria-label="Search developer.va.gov" />
-        <button type="submit" name="commit"
+          aria-label="Search developer.va.gov"
+        />
+        <button
+          type="submit"
+          name="commit"
           className={classNames(
             inMenu ? [
               'va-api-search-submit',

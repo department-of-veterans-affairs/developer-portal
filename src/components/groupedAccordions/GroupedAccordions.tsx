@@ -72,15 +72,16 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
             'vads-u-width--auto',
           )}
           onClick={event => handleExpandCollapse(event)}
+          type="button"
         >
           {allExpanded ? 'Collapse all' : 'Expand all'}
         </button>
       </div>
-      {props.panelContents.map((c: AccordionPanelContent, index: number) => {
+      {props.panelContents.map((c: AccordionPanelContent) => {
         const panelRef: CollapsiblePanelComponentRef = React.createRef<CollapsiblePanelComponent>();
         panelRefs.push(panelRef);
         return (
-          <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={allExpanded} key={index}>
+          <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={allExpanded} key={c.title}>
             {c.body}
           </CollapsiblePanel>
         );

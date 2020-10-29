@@ -156,6 +156,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               'vads-u-padding--0',
             )}
             onClick={props.onMobileNavClose}
+            type="button"
           >
             <img
               src={closeButton}
@@ -201,6 +202,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                   'vads-u-margin--0',
                   'vads-u-width--full',
                 )}
+                type="button"
                 onClick={() => toggleDocumentationSubMenu()}
               >
                 <span>Documentation</span>

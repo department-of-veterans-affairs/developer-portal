@@ -44,12 +44,10 @@ const OAuthAppInfo = (props: OAuthAppInfoProps) => {
           rel="noreferrer"
         >
           authorization code flow
-        </a>
-        , and apps that cannot will use the&nbsp;
+        </a>, and apps that cannot will use the&nbsp;
         <a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank" rel="noreferrer">
           PKCE flow
-        </a>
-        .
+        </a>.
       </div>
       <ErrorableRadioButtons
         label="Can your application securely hide a client secret?"

@@ -43,7 +43,7 @@ const renderError = (props: ApplyProps) => {
     return (
       <AlertBox
         status="error"
-        headline={'We encountered a server error while saving your form. Please try again later.'}
+        headline="We encountered a server error while saving your form. Please try again later."
         content={assistanceTrailer}
       />
     );

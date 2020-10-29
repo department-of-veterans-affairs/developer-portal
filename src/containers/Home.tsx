@@ -65,11 +65,7 @@ const ApiList = (): JSX.Element => (
               const { name, content } = apiDefinitions[apiCategoryKey];
               return (
                 <Flag name={['categories', apiCategoryKey]} key={apiCategoryKey}>
-                  <CardLink
-                    className="medium-screen:vads-l-col--5"
-                    name={`VA ${name}`}
-                    url={`/explore/${apiCategoryKey}`}
-                  >
+                  <CardLink name={`VA ${name}`} url={`/explore/${apiCategoryKey}`}>
                     {content.placardText}
                   </CardLink>
                 </Flag>

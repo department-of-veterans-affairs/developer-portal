@@ -21,6 +21,8 @@ interface MainNavItemProps {
   onClick: () => void;
 }
 
+/* eslint-disable react/prefer-stateless-function
+  -- defaultProps and Typescript don't place nicely with each other, couldn't solve in time box */
 export class MainNavItem extends React.Component<MainNavItemProps> {
   public static defaultProps = {
     excludeLargeScreen: false,

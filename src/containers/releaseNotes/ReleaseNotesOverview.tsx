@@ -29,8 +29,7 @@ const ReleaseNotesOverview = (): JSX.Element => {
           To view user-requested features and known issues or report a bug, please visit our{' '}
           <a href="https://github.com/department-of-veterans-affairs/vets-api-clients">
             GitHub repo
-          </a>
-          .
+          </a>.
         </p>
       </div>
       <div className={defaultFlexContainer()}>
