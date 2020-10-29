@@ -42,7 +42,7 @@ const VeteransCrisisLinePanel = (): JSX.Element => (
         <CrisisPanelInfo target="tel:18002738255" icon={faPhone} id="first-panel-info">
           Call <strong>1-800-273-8255 and press 1</strong>
         </CrisisPanelInfo>
-        <CrisisPanelInfo target={'sms:838255'} icon={faMobileAlt}>
+        <CrisisPanelInfo target="sms:838255" icon={faMobileAlt}>
           Text <strong>838255</strong>
         </CrisisPanelInfo>
         <CrisisPanelInfo

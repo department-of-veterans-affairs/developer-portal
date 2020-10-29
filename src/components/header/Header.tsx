@@ -98,6 +98,7 @@ const Header = (): JSX.Element => {
                 'vads-u-text-align--center',
               )}
               onClick={toggleMenuVisible}
+              type="button"
             >
               Menu
             </button>

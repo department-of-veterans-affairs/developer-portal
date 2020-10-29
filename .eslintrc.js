@@ -72,19 +72,16 @@ const coreESLintRules = {
   'max-params': ['error', 4],
   'max-statements-per-line': 'error',
   'multiline-comment-style': 'error',
-  'no-confusing-arrow': 'error',
-  'no-duplicate-imports': 'error',
-  'no-useless-computed-key': 'error',
-  'no-useless-constructor': 'error',
-  'no-useless-rename': 'error',
   'new-parens': 'error',
   'newline-per-chained-call': 'error',
   'no-alert': 'error',
   'no-array-constructor': 'error',
   'no-bitwise': 'error',
   'no-caller': 'error',
+  'no-confusing-arrow': 'error',
   'no-console': 'error',
   'no-constructor-return': 'error',
+  'no-duplicate-imports': 'error',
   'no-div-regex': 'error',
   'no-empty-function': 'error',
   'no-eval': 'error',
@@ -129,7 +126,10 @@ const coreESLintRules = {
   'no-unused-expressions': 'error',
   'no-useless-backreference': 'error',
   'no-useless-call': 'error',
+  'no-useless-computed-key': 'error',
   'no-useless-concat': 'error',
+  'no-useless-constructor': 'error',
+  'no-useless-rename': 'error',
   'no-useless-return': 'error',
   'no-whitespace-before-property': 'error',
   'prefer-promise-reject-errors': 'error',
@@ -161,6 +161,7 @@ const coreESLintRules = {
 /**
  * A lot of import rules are already covered by the Typescript compiler, so we don't use any
  * of the eslint-plugin-import presets. These rules are helpful additions.
+ * https://github.com/benmosher/eslint-plugin-import/tree/master/docs/rules
  */
 const importRules = {
   'import/first': 'error',
@@ -178,7 +179,7 @@ const importRules = {
   'import/no-named-default': 'error',
   'import/no-self-import': 'error',
   'import/no-unassigned-import': [
-    'warn',
+    'error',
     {
       allow: [
         '**/*.scss',
@@ -191,6 +192,55 @@ const importRules = {
   'import/no-useless-path-segments': 'error',
   'import/no-webpack-loader-syntax': 'error',
   'import/order': 'error', // preferred over ESLint's sorted-imports rule
+};
+
+// https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
+const reactRules = {
+  'react/button-has-type': 'error',
+  'react/default-props-match-prop-types': 'error',
+  'react/function-component-definition': ['error', {
+    namedComponents: 'arrow-function',
+    unnamedComponents: 'arrow-function',
+  }],
+  'react/jsx-boolean-value': 'error',
+  'react/jsx-closing-bracket-location': 'error',
+  'react/jsx-closing-tag-location': 'error',
+  'react/jsx-curly-brace-presence': ['error', {
+    children: 'never',
+    props: 'never',
+  }],
+  'react/jsx-curly-newline': 'error',
+  'react/jsx-curly-spacing': 'error',
+  'react/jsx-equals-spacing': 'error',
+  'react/jsx-first-prop-new-line': ['error', 'multiline'],
+  'react/jsx-indent': ['error', 2],
+  'react/jsx-indent-props': ['error', 2],
+  'react/jsx-max-depth': ['error', { max: 8 }],
+  'react/jsx-max-props-per-line': ['error', { when: 'multiline' }],
+  // inline arrow functions are not very expensive, and React.useCallback can be
+  // if it's overused https://kentcdodds.com/blog/usememo-and-usecallback
+  'react/jsx-no-bind': 'off',
+  // the following rule looks useful but isn't released yet?
+  // 'react/jsx-no-constructed-context-values': 'error',
+  'react/jsx-no-useless-fragment': 'error',
+  'react/jsx-pascal-case': 'error',
+  'react/jsx-props-no-multi-spaces': 'error',
+  'react/jsx-tag-spacing': 'error',
+  'react/no-adjacent-inline-elements': 'error',
+  'react/no-array-index-key': 'error',
+  'react/no-danger': 'error',
+  'react/no-this-in-sfc': 'error',
+  'react/no-unsafe': 'error',
+  'react/no-unused-prop-types': 'error',
+  'react/no-unused-state': 'error',
+  'react/prefer-es6-class': 'error', // class extends React.Component vs createReactClass
+  'react/prefer-stateless-function': 'error',
+  'react/self-closing-comp': 'error',
+  'react/sort-prop-types': 'error',
+  'react/state-in-constructor': 'error',
+  'react/static-property-placement': 'error',
+  'react/style-prop-object': 'error',
+  'react/void-dom-elements-no-children': 'error',
 };
 
 module.exports = {
@@ -210,16 +260,17 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: [
+    '@typescript-eslint',
+    '@typescript-eslint/tslint',
     'eslint-plugin-prefer-arrow',
     'eslint-plugin-import',
     'eslint-plugin-react',
-    '@typescript-eslint',
-    '@typescript-eslint/tslint',
     'react-hooks',
   ],
   rules: {
     ...coreESLintRules,
     ...importRules,
+    ...reactRules,
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [
       'error',
@@ -314,15 +365,8 @@ module.exports = {
     ],
     '@typescript-eslint/type-annotation-spacing': 'off',
     '@typescript-eslint/unified-signatures': 'error',
+    // https://github.com/TristonJ/eslint-plugin-prefer-arrow
     'prefer-arrow/prefer-arrow-functions': 'error',
-    'react/jsx-boolean-value': 'error',
-    'react/jsx-curly-spacing': 'off',
-    'react/jsx-equals-spacing': 'off',
-    'react/jsx-key': 'error',
-    // inline arrow functions are not very expensive, and React.useCallback can be
-    // if it's overused https://kentcdodds.com/blog/usememo-and-usecallback
-    'react/jsx-no-bind': 'off',
-    'react/jsx-wrap-multilines': 'off',
     '@typescript-eslint/tslint/config': [
       'error',
       {
