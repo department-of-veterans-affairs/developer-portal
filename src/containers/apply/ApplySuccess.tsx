@@ -129,8 +129,15 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
 const ApplySuccess = (): JSX.Element => {
   const result: ApplySuccessResult | undefined = useSelector((state: RootState) => state.application.result);
 
-  // Result can be undefined so we need this to be conditional
-  return result ? <ApplySuccessContent result={result} /> : <div>Error</div>;
+  /*
+   * If there is no result in redux then this page can't render
+   * Throw an error to be catched by the error boundary component
+   */
+  if (!result) {
+    throw new Error('Apply Success page unable to render as no result exists');
+  }
+
+  return <ApplySuccessContent result={result} />;
 };
 
 export { ApplySuccess };
