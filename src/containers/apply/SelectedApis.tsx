@@ -16,12 +16,16 @@ interface APICheckboxListProps {
   apiCheckboxes: APICheckbox[];
 }
 
-type ApiSelectDispatch = ThunkDispatch<RootState, undefined, actions.ToggleSelectedAPI>;
+type ApiSelectDispatch = ThunkDispatch<
+RootState, 
+undefined, 
+actions.ToggleSelectedAPI
+>;
 
-const ApiCheckboxList = (props: APICheckboxListProps): JSX.Element => {
+const ApiCheckboxList = ((props: APICheckboxListProps): JSX.Element => {
   const apiInputs = useSelector((state: RootState) => state.application.inputs.apis);
   const dispatch: ApiSelectDispatch = useDispatch();
-  return (
+  return(
     <>
       {props.apiCheckboxes.map(api => (
         <ErrorableCheckbox
@@ -29,12 +33,12 @@ const ApiCheckboxList = (props: APICheckboxListProps): JSX.Element => {
           name={api.id}
           checked={apiInputs[api.id] as boolean}
           label={api.label}
-          onValueChange={() => dispatch(actions.toggleSelectedApi(api.id))}
+          onValueChange={ () => dispatch(actions.toggleSelectedApi(api.id))}
         />
       ))}
     </>
   );
-};
+});
 
 const oauthInfo = [
   {
@@ -79,7 +83,6 @@ const SelectedAPIs = (): JSX.Element => (
     <legend className={classNames('vads-u-font-weight--normal', 'vads-u-font-size--base')}>
       Please select all of the APIs you&apos;d like access to:
     </legend>
-
     <fieldset
       className="vads-u-margin-top--2"
       aria-label="Please select all of the Standard APIs you'd like access to:"
