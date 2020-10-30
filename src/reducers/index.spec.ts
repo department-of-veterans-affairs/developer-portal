@@ -58,7 +58,7 @@ describe('application', () => {
       ['firstName', constants.UPDATE_APPLY_FIRST_NAME_VALUE],
       ['lastName', constants.UPDATE_APPLY_LAST_NAME_VALUE],
       ['email', constants.UPDATE_APPLY_EMAIL_VALUE],
-      ['oAuthApplicationType', constants.UPDATE_APPLY_OAUTH_APP_TYPE_VAL],
+      ['oAuthApplicationType', constants.UPDATE_APPLY_CLIENT_TYPE_VALUE],
       ['oAuthRedirectURI', constants.UPDATE_APPLY_REDIRECT_URI_VALUE],
       ['organization', constants.UPDATE_APPLY_ORGANIZATION_VALUE],
     ];

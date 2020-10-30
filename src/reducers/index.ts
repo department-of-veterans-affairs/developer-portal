@@ -49,7 +49,7 @@ export const applicationInput = (
       return { ...inputs, firstName: action.newValue };
     case constants.UPDATE_APPLY_LAST_NAME_VALUE:
       return { ...inputs, lastName: action.newValue };
-    case constants.UPDATE_APPLY_OAUTH_APP_TYPE_VAL:
+    case constants.UPDATE_APPLY_CLIENT_TYPE_VALUE:
       return { ...inputs, oAuthApplicationType: action.newValue };
     case constants.UPDATE_APPLY_REDIRECT_URI_VALUE:
       return { ...inputs, oAuthRedirectURI: action.newValue };

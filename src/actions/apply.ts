@@ -254,7 +254,7 @@ export const updateApplyOAuthApplicationType: ActionCreator<
 > = (newValue: ErrorableInput) => ({
   /* eslint-enable @typescript-eslint/indent */
   newValue,
-  type: constants.UPDATE_APPLY_OAUTH_APP_TYPE_VAL,
+  type: constants.UPDATE_APPLY_CLIENT_TYPE_VALUE,
 });
 
 // see note on update/validate above on updateApplicationEmail

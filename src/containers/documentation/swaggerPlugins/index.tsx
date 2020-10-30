@@ -10,6 +10,8 @@ import { WrapParameters } from './WrapParameters';
 import { SwaggerPlugins as Plugins } from './types';
 
 export * from './types';
+
+const allowTryItOutSelector = (): boolean => false;
 const SwaggerPlugins = (versionHandler: (newVersion: string) => void): Plugins => ({
   components: {
     ExtendedLayout,
@@ -23,7 +25,7 @@ const SwaggerPlugins = (versionHandler: (newVersion: string) => void): Plugins =
   statePlugins: {
     spec: {
       wrapSelectors: {
-        allowTryItOutFor: () => ((): boolean => false),
+        allowTryItOutFor: (): (() => boolean) => allowTryItOutSelector,
       },
     },
     version: {
