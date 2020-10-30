@@ -126,18 +126,14 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
   );
 };
 
+const ApplySuccessError = (): JSX.Element => (
+  <div>Error! Unable to render apply success</div>
+);
+
 const ApplySuccess = (): JSX.Element => {
   const result: ApplySuccessResult | undefined = useSelector((state: RootState) => state.application.result);
 
-  /*
-   * If there is no result in redux then this page can't render
-   * Throw an error to be catched by the error boundary component
-   */
-  if (!result) {
-    throw new Error('Apply Success page unable to render as no result exists');
-  }
-
-  return <ApplySuccessContent result={result} />;
+  return result ? <ApplySuccessContent result={result} /> : <ApplySuccessError />;
 };
 
 export { ApplySuccess };
