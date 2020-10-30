@@ -42,6 +42,8 @@ env:
     GNAME: root
   parameter-store:
     GITHUB_TOKEN: "/dvp/devops/va_bot_github_token"
+    DOCKER_USERNAME: "/dvp/devops/DOCKER_USERNAME"
+    DOCKER_PASSWORD: "/dvp/devops/DOCKER_PASSWORD"
 # This webhook currently targets DSVA workspace #lighthous-deploys channel
     SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook"
 phases:
@@ -89,6 +91,7 @@ phases:
         EOF
           done
         fi
+      - docker login --username ${DOCKER_USERNAME} --password ${DOCKER_PASSWORD}
       - make build
   build:
     # We use a phase variable to tell where we are in case of failure. This will allow us to handle the POST_BUILD stage with (some) grace.
