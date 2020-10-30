@@ -79,15 +79,10 @@ const apiInfo = [
 ];
 
 const SelectedAPIs = (): JSX.Element => (
-<<<<<<< HEAD
   <fieldset className="vads-u-margin-top--3">
     <legend className={classNames('vads-u-font-weight--normal', 'vads-u-font-size--base')}>
       Please select all of the APIs you&apos;d like access to:
     </legend>
-=======
-  <>
-    <label>Please select all of the APIs you&apos;d like access to:</label>
->>>>>>> c9164a1... modern React implemented useSelector + useDispatch
     <fieldset
       className="vads-u-margin-top--2"
       aria-label="Please select all of the Standard APIs you'd like access to:"
@@ -102,11 +97,7 @@ const SelectedAPIs = (): JSX.Element => (
       <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
       <ApiCheckboxList apiCheckboxes={oauthInfo} />
     </fieldset>
-<<<<<<< HEAD
   </fieldset>
-=======
-  </>
->>>>>>> c9164a1... modern React implemented useSelector + useDispatch
 );
 
 export default SelectedAPIs;
