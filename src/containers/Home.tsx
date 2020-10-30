@@ -6,7 +6,6 @@ import apiDefinitions, { apiCategoryOrder } from '../apiDefs/data/categories';
 import padlockImg from '../assets/homepage-padlock.svg';
 import apiImg from '../assets/homepage-reliable-api.svg';
 import { CardLink, Hero } from '../components';
-
 import { Flag } from '../flags';
 
 const leftColumnClasses = classNames(
