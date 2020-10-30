@@ -13,9 +13,10 @@
  * 
  * Presets included
  *  - Typescript ESLint: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.ts
- *    = ESLint via Typescript ESLint: https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js
+ *    - ESLint via Typescript ESLint: https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js
  *  - Typescript ESLint with type checking: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended-requiring-type-checking.ts
  *  - React: https://github.com/yannickcr/eslint-plugin-react/blob/master/index.js
+ *  - React rules of hooks: https://github.com/facebook/react/blob/master/packages/eslint-plugin-react-hooks/src/index.js
  *  - Accessibility: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/src/index.js
  */
 
@@ -320,13 +321,8 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'plugin:jsx-a11y/recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
-  ],
+  root: true,
+  // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: 'tsconfig.json',
@@ -347,6 +343,13 @@ module.exports = {
     'prefer-arrow',
     'react',
     'react-hooks',
+  ],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'plugin:jsx-a11y/recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
   ],
   rules: {
     ...coreESLintRules,
