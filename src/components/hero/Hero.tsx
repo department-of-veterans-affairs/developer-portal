@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import logo from '../assets/hero-logo.svg';
+import logo from '../../assets/hero-logo.svg';
 
 const Hero: React.FunctionComponent = (): JSX.Element => (
   <section
@@ -57,4 +57,5 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
 );
 
 Hero.propTypes = {};
-export default Hero;
+
+export { Hero };
