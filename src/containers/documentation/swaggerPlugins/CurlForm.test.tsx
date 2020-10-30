@@ -81,7 +81,6 @@ const renderDecisionReviews = (): void => {
 };
 
 const renderFHIRR4 = (): void => {
-  // tslint:disable-next-line:no-unused-expression
   SwaggerUI({
     dom_id: '#mount-fhir-r4',
     plugins: [SwaggerPlugins(() => false)],

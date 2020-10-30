@@ -57,7 +57,7 @@ const CategoryPage = (): JSX.Element => {
   }
 
   return (
-    <section role="region" aria-labelledby={PAGE_HEADER_ID} className="va-api-api-overview">
+    <section aria-labelledby={PAGE_HEADER_ID} className="va-api-api-overview">
       <PageHeader header={categoryName} />
       {intro({})}
       {cardSection}

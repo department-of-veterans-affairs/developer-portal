@@ -54,7 +54,8 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
           'vads-u-justify-content--flex-start',
         )}
       >
-        <select // tslint:disable-next-line:react-a11y-no-onchange
+        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+        <select
           aria-label="Version Selection"
           value={this.state.version}
           onChange={e => this.handleSelectChange(e.target.value)}

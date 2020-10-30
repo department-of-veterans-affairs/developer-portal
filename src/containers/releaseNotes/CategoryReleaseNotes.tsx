@@ -88,7 +88,7 @@ interface ReleaseNotesCollectionProps {
 }
 
 const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => (
-  <section role="region" aria-labelledby={`${props.categoryKey}-release-notes`}>
+  <section aria-labelledby={`${props.categoryKey}-release-notes`}>
     <PageHeader
       halo={props.apiCategory.name}
       header="Release Notes"
