@@ -1,14 +1,14 @@
 ######################################################################
 #  Developer Portal CodeBuild CI
-#  
+#
 #
 # Tool Links:
 #  - CodeBuild - https://docs.aws.amazon.com/codebuild/index.html
 #  - CodeBuild Environmental Variables - https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html
 #  - Runner for CodeBuild Enironment - https://github.com/department-of-veterans-affairs/lighthouse-codebuild-containers/tree/main/docker-runner
 #  - AWS CLI 2.0 - https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
-# 
-# All Custom scripts are on the CodeBuild Environment container. 
+#
+# All Custom scripts are on the CodeBuild Environment container.
 # https://github.com/department-of-veterans-affairs/lighthouse-codebuild-containers/tree/main/
 #
 # Custom Scripts:
@@ -20,30 +20,30 @@
 version: 0.2
 env:
   variables:
-    GITHUB_USERNAME: "va-bot"
-    # These are the test make targets. 
-    TESTS: "images lint security unit e2e accessibility visual"
+    GITHUB_USERNAME: 'va-bot'
+    # These are the test make targets.
+    TESTS: 'images lint security unit e2e accessibility visual'
     # These are the build environments
-    ENVIRONMENTS: "dev staging production"
+    ENVIRONMENTS: 'dev staging production'
     # Bucket for archiving deployments
-    S3_ARCHIVE_BUCKET: "developer-portal-builds-s3-upload"
+    S3_ARCHIVE_BUCKET: 'developer-portal-builds-s3-upload'
     # Bucket for uploading visual regression failures.
-    S3_VISUAL_BUCKET: "developer-portal-screenshots"
+    S3_VISUAL_BUCKET: 'developer-portal-screenshots'
     # Bucket for uploading build failure artifacts
-    S3_ERROR_BUCKET: "developer-portal-ci-error-artifacts"
+    S3_ERROR_BUCKET: 'developer-portal-ci-error-artifacts'
     # Bucket for uploading PR deploy previews.
-    S3_REVIEW_BUCKET: "review-developer-va-gov"
+    S3_REVIEW_BUCKET: 'review-developer-va-gov'
     ## move to paramstore
-    PREVIEW_SENTRY_DSN: "http://dc7d5ebec20e474c80f8150c399d2955@sentry.vfs.va.gov/26"
+    PREVIEW_SENTRY_DSN: 'http://dc7d5ebec20e474c80f8150c399d2955@sentry.vfs.va.gov/26'
     # Setting REPO
-    REPO: "department-of-veterans-affairs/developer-portal"
+    REPO: 'department-of-veterans-affairs/developer-portal'
     # Running the container as root.
     UNAME: root
     GNAME: root
   parameter-store:
-    GITHUB_TOKEN: "/dvp/devops/va_bot_github_token"
-# This webhook currently targets DSVA workspace #lighthous-deploys channel
-    SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook"
+    GITHUB_TOKEN: '/dvp/devops/va_bot_github_token'
+    # This webhook currently targets DSVA workspace #lighthous-deploys channel
+    SLACK_WEBHOOK: '/dvp/devops/codebuild_slack_webhook'
 phases:
   install:
     commands:
@@ -72,7 +72,7 @@ phases:
           echo No branch found... setting to \"default\"
           BRANCH=default
         fi
-      # Make a url compliant name for S3 
+      # Make a url compliant name for S3
       - S3_BRANCH=$(echo ${BRANCH} | sed 's/\//-/g' | tr -dc [:alnum:]-_)
       # Short Ref to commit hash
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
@@ -146,7 +146,7 @@ phases:
       - phase=success
   post_build:
     commands:
-      # Handle phase errors. 
+      # Handle phase errors.
       - |
         case ${phase} in
         visual) 
@@ -159,10 +159,11 @@ phases:
           docsLink="https://github.com/${REPO}/blob/master/docs/testing.md#visual-regression-testing"
           comment="Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
           ;;
-        unit|lint|security|e2e|accessibility)
-          if [[ $phase == "lint" ]]; then report=lint-results.xml; else report=test-report.xml; fi
-          aws s3 cp --no-progress ${report} s3://${S3_ERROR_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/
-          link="[report](https://console.amazonaws-us-gov.com/s3/buckets/${S3_ERROR_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/)"
+        lint)
+          comment='Linting failed. Run "npm run lint:ci" to see linting errors or look at the CodeBuild output.'
+        unit|security|e2e|accessibility)
+          aws s3 cp --no-progress test-report.xml s3://${S3_ERROR_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/
+          link="[test-report.xml](https://console.amazonaws-us-gov.com/s3/buckets/${S3_ERROR_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/)"
           comment="There was an error during the ${phase} test. View your ${link} for more information."
           ;;
         build)

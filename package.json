@@ -7,7 +7,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "lint": "./node_modules/.bin/eslint --ext .ts,.tsx src",
-    "lint:ci": "./node_modules/.bin/eslint -c .eslintrc.ci.js --ext .ts,.tsx -o lint-results.xml -f junit src",
+    "lint:ci": "./node_modules/.bin/eslint -c .eslintrc.ci.js --ext .ts,.tsx src",
     "test": "echo You should run test:unit, test:e2e, test:accessibility, or test:visual",
     "test:unit": "node scripts/test.js --projects=unit.jest.config.js",
     "test:unit:ci": "node scripts/test.js --projects=unit.jest.config.js --ci --testResultsProcessor=\"./node_modules/jest-junit-reporter\"",

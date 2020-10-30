@@ -170,9 +170,6 @@ node('vetsgov-general-purpose') {
       }
     } catch (error) {
       notify()
-      dir(pwd()) {
-        step([$class: 'JUnitResultArchiver', testResults: 'lint-results.xml'])
-      }
       throw error
     }
   }
