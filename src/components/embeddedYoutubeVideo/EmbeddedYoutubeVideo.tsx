@@ -1,13 +1,16 @@
 import classnames from 'classnames';
 import getVideoId from 'get-video-id';
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 
 import './EmbeddedYoutubeVideo.scss';
 
-interface EmbeddedYoutubeVideoProps {
-  url: string;
-  title: string;
-}
+const EmbeddedYoutubeVideoPropTypes = {
+  title: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
+
+type EmbeddedYoutubeVideoProps = PropTypes.InferProps<typeof EmbeddedYoutubeVideoPropTypes>;
 
 const YOUTUBE_SERVICE = 'youtube';
 const YOUTUBE_BASE = 'https://www.youtube.com/embed/';
