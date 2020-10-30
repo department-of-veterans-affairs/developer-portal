@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import logo from '../../assets/hero-logo.svg';
 
-const Hero = (): JSX.Element => (
+const Hero: React.FunctionComponent = (): JSX.Element => (
   <section
     role="region"
     aria-label="Page Hero"
