@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { match as Match } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { desktopOnly, mobileOnly } from '../../styles/vadsUtils';
@@ -20,9 +21,6 @@ interface MainNavItemProps {
   largeScreenProps: LargeScreenNavItemProps;
   onClick: () => void;
 }
-
-/* eslint-disable react/prefer-stateless-function
-  -- defaultProps and Typescript don't place nicely with each other, couldn't solve in time box */
 
 const MainNavItem = (props: MainNavItemProps): JSX.Element => {
   const {
@@ -60,6 +58,12 @@ const MainNavItem = (props: MainNavItemProps): JSX.Element => {
       )}
     </>
   );
+};
+
+MainNavItem.propTypes = {
+  excludeLargeScreen: PropTypes.bool,
+  excludeSmallScreen: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 MainNavItem.defaultProps = {
