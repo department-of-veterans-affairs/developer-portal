@@ -26,7 +26,7 @@ export const makeRequest = async (request: Request): Promise<Response> => {
     const response = await fetch(request);
     const json = await response.json();
     fetchMiddleware(json, requestId);
-    return response;
+    return json;
   } catch (error) {
     sentryErrorLogger(error, requestId, request.url);
     throw new Error(error);
