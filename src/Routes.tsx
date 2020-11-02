@@ -6,7 +6,7 @@ import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
-import { MarkdownPage } from './components/markdownPage/MarkdownPage';
+import { MarkdownPage } from './components';
 import ApplyForm from './containers/apply/ApplyForm';
 import ApplySuccess from './containers/apply/ApplySuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
@@ -52,7 +52,10 @@ export const SiteRoutes: React.FunctionComponent = () => (
     <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
     <Route path="/news" component={News} />
     <Route path="/support" component={Support} />
-    <Route path="/providers/integration-guide" render={() => MarkdownPage(ProviderIntegrationGuide)} />
+    <Route
+      path="/providers/integration-guide"
+      render={() => MarkdownPage(ProviderIntegrationGuide)}
+    />
     <Route component={NotFound} />
   </Switch>
 );
