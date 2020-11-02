@@ -7,8 +7,8 @@ import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 import MarkdownPage from './components/MarkdownPage';
-import ApplyForm from './containers/apply/ApplyForm';
-import ApplySuccess from './containers/apply/ApplySuccess';
+import { ApplyForm } from './containers/apply/ApplyForm';
+import { ApplySuccess } from './containers/apply/ApplySuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
@@ -38,7 +38,7 @@ export const SiteRoutes: React.FunctionComponent = () => (
       render={() => (
         <Flag
           name={['signups_enabled']}
-          component={ApplyForm}
+          render={ApplyForm}
           fallbackComponent={DisabledApplyForm}
         />
       )}
