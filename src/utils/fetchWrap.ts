@@ -3,9 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 const sentryErrorLogger = (error: string, errorID: string, endpointUrl: string): void => {
   const pageName = location.pathname;
-  console.info(
-    `sentry log:${error} - x-request-id: ${errorID}- endpointUrl:${endpointUrl} - pageName: ${pageName}`,
-  );
   Sentry.withScope(scope => {
     scope.setTag('Error ID', errorID);
     scope.setTag('Endpoint Url', endpointUrl);
