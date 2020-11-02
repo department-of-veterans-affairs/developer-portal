@@ -1,17 +1,13 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import sentenceJoin from '../../sentenceJoin';
 import { ApplySuccessResult, RootState } from '../../types';
 import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS, PAGE_HEADER_ID } from '../../types/constants';
-
-const mapStateToProps = (state: RootState): Partial<ApplySuccessResult> => ({
-  ...state.application.result,
-});
 
 const AssistanceTrailer = (): JSX.Element => (
   <p>
@@ -102,8 +98,8 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
   );
 };
 
-const ApplySuccess: React.FunctionComponent<ApplySuccessResult> = (props: ApplySuccessResult) => {
-  const { apis, email, token, clientID, clientSecret } = props;
+const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element => {
+  const { apis, email, token, clientID, clientSecret } = props.result;
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
   const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis[apiId]);
@@ -134,4 +130,14 @@ const ApplySuccess: React.FunctionComponent<ApplySuccessResult> = (props: ApplyS
   );
 };
 
-export default connect(mapStateToProps)(ApplySuccess);
+const ApplySuccessError = (): JSX.Element => (
+  <div>Error! Unable to render apply success</div>
+);
+
+const ApplySuccess = (): JSX.Element => {
+  const result: ApplySuccessResult | undefined = useSelector((state: RootState) => state.application.result);
+
+  return result ? <ApplySuccessContent result={result} /> : <ApplySuccessError />;
+};
+
+export { ApplySuccess };
