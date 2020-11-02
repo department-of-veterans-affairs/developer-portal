@@ -62,13 +62,15 @@ const MainNavItem = (props: MainNavItemProps): JSX.Element => {
 
 MainNavItem.propTypes = {
   activeClassName: PropTypes.string,
-  children: PropTypes.oneOfType([
-    PropTypes.object,
-    PropTypes.string]).isRequired,
-  className: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
+  className: PropTypes.string,
   excludeLargeScreen: PropTypes.bool,
   excludeSmallScreen: PropTypes.bool,
-  largeScreenProps: PropTypes.object.isRequired,
+  largeScreenProps: PropTypes.shape({
+    isActive: PropTypes.func.isRequired,
+    onMouseEnter: PropTypes.func.isRequired,
+    onMouseLeave: PropTypes.func.isRequired,
+  }),
   onClick: PropTypes.func,
   targetUrl: PropTypes.string.isRequired,
 };
