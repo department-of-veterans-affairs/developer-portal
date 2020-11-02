@@ -182,7 +182,7 @@ const SupportQuestions = (props: SupportQuestionsProps) => {
 };
 
 const SupportFAQ: () => JSX.Element = () => (
-  <section role="region" aria-label="Support FAQ">
+  <section aria-label="Support FAQ">
     <PageHeader {...headerProps} />
     <div>
       <SupportQuestions title="General" questions={generalQuestions} />

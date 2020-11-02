@@ -35,6 +35,20 @@ const server = setupServer(
   ),
 );
 
+jest.mock('react-router-dom', () => ({
+  useHistory: jest.fn().mockReturnValue({
+    location: { pathname: '/another-route' },
+    push: jest.fn(),
+  }),
+  useLocation: jest.fn().mockReturnValue({
+    hash: '',
+    key: '5nvxpbdafa',
+    pathname: '/another-route',
+    search: '',
+    state: null,
+  }),
+}));
+
 describe('ApiDocumentation', () => {
   const defaultFlags: AppFlags = {
     categories: { category: true },
@@ -50,7 +64,7 @@ describe('ApiDocumentation', () => {
     render(
       <Provider store={store}>
         <FlagsProvider flags={defaultFlags}>
-          <ApiDocumentation apiDefinition={api} categoryKey="fake" location={history.location} />
+          <ApiDocumentation apiDefinition={api} location={history.location} />
         </FlagsProvider>
       </Provider>,
     );

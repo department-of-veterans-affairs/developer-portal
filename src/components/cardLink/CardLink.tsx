@@ -7,7 +7,6 @@ import './CardLink.scss';
 
 const CardLinkPropTypes = {
   children: PropTypes.node,
-  className: PropTypes.string,
   name: PropTypes.string.isRequired,
   subhead: PropTypes.node,
   url: PropTypes.string.isRequired,

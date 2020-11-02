@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ThunkDispatch } from 'redux-thunk';
 
@@ -19,7 +19,6 @@ import DeveloperInfo from './DeveloperInfo';
 import OAuthAppInfo from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
 
-type ApplyProps = DevApplication;
 /* eslint-disable @typescript-eslint/indent */
 type ApplicationDispatch = ThunkDispatch<
   RootState,
@@ -28,11 +27,7 @@ type ApplicationDispatch = ThunkDispatch<
 >;
 /* eslint-enable @typescript-eslint/indent */
 
-const mapStateToProps = (state: RootState) => ({
-  ...state.application,
-});
-
-const renderError = (props: ApplyProps) => {
+const renderError = (props: DevApplication) => {
   const assistanceTrailer = (
     <span>
       Need assistance? Create an issue through our <Link to="/support">Support page</Link>
@@ -43,7 +38,7 @@ const renderError = (props: ApplyProps) => {
     return (
       <AlertBox
         status="error"
-        headline={'We encountered a server error while saving your form. Please try again later.'}
+        headline="We encountered a server error while saving your form. Please try again later."
         content={assistanceTrailer}
       />
     );
@@ -51,24 +46,24 @@ const renderError = (props: ApplyProps) => {
   return null;
 };
 
-const selectedApis = (props: ApplyProps) => {
+const selectedApis = (props: DevApplication) => {
   const { apis } = props.inputs;
   return Object.keys(apis).filter(apiName => apis[apiName]);
 };
 
-const anyOAuthApisSelected = (props: ApplyProps) => {
+const anyOAuthApisSelected = (props: DevApplication) => {
   const apiIdsByField = selectedApis(props).flatMap(
     formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField],
   );
   return includesOAuthAPI(apiIdsByField);
 };
 
-const anyApiSelected = (props: ApplyProps) => {
+const anyApiSelected = (props: DevApplication) => {
   const numSelected = selectedApis(props).length;
   return numSelected > 0;
 };
 
-const allBioFieldsComplete = (props: ApplyProps) => {
+const allBioFieldsComplete = (props: DevApplication) => {
   const bioFieldNames = ['email', 'firstName', 'lastName', 'organization'];
   const incompleteFields = bioFieldNames.filter(fieldName => {
     const input = props.inputs[fieldName] as ErrorableInput;
@@ -77,7 +72,7 @@ const allBioFieldsComplete = (props: ApplyProps) => {
   return incompleteFields.length === 0;
 };
 
-const readyToSubmit = (props: ApplyProps) => {
+const readyToSubmit = (props: DevApplication) => {
   const {
     inputs: { oAuthApplicationType, oAuthRedirectURI, termsOfService },
   } = props;
@@ -100,8 +95,9 @@ const readyToSubmit = (props: ApplyProps) => {
 
 const applyClasses = classNames('vads-l-grid-container', 'vads-u-padding--4');
 
-const ApplyForm = (props: ApplyProps): JSX.Element => {
+const ApplyForm = (): JSX.Element => {
   const dispatch: ApplicationDispatch = useDispatch();
+  const application: DevApplication = useSelector((state: RootState) => state.application);
 
   return (
     <div role="region" aria-labelledby={PAGE_HEADER_ID} className={applyClasses}>
@@ -112,18 +108,18 @@ const ApplyForm = (props: ApplyProps): JSX.Element => {
             <h2>Application</h2>
             <DeveloperInfo />
             <SelectedApis />
-            {anyOAuthApisSelected(props) && <OAuthAppInfo />}
+            {anyOAuthApisSelected(application) && <OAuthAppInfo />}
 
             <ErrorableTextArea
               errorMessage={null}
               label="Briefly describe how your organization will use VA APIs:"
               onValueChange={(e: string) => dispatch(actions.updateApplicationDescription(e))}
               name="description"
-              field={props.inputs.description}
+              field={application.inputs.description}
             />
 
             <ErrorableCheckbox
-              checked={props.inputs.termsOfService}
+              checked={application.inputs.termsOfService}
               label={
                 <span>
                   I agree to the <Link to="/terms-of-service">Terms of Service</Link>
@@ -134,17 +130,17 @@ const ApplyForm = (props: ApplyProps): JSX.Element => {
             />
 
             <ProgressButton
-              buttonText={props.sending ? 'Sending...' : 'Submit'}
-              disabled={!readyToSubmit(props) || props.sending}
+              buttonText={application.sending ? 'Sending...' : 'Submit'}
+              disabled={!readyToSubmit(application) || application.sending}
               onButtonClick={() => dispatch(actions.submitForm())}
               buttonClass="usa-button-primary"
             />
           </form>
-          {renderError(props)}
+          {renderError(application)}
         </div>
       </div>
     </div>
   );
 };
 
-export default connect(mapStateToProps)(ApplyForm);
+export { ApplyForm };

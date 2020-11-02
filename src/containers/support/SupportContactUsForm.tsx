@@ -197,12 +197,12 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 errorMessage={formState.firstName.validation}
                 label="First name"
                 field={formState.firstName}
-                onValueChange={(field: ErrorableInput) =>
+                onValueChange={(field: ErrorableInput) => {
                   setFormState({
                     type: 'SET_FIRST_NAME',
                     value: validatePresence(field, 'First Name'),
-                  })
-                }
+                  });
+                }}
                 required
               />
             </div>
@@ -212,12 +212,12 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 label="Last name"
                 name="lastName"
                 field={formState.lastName}
-                onValueChange={(field: ErrorableInput) =>
+                onValueChange={(field: ErrorableInput) => {
                   setFormState({
                     type: 'SET_LAST_NAME',
                     value: validatePresence(field, 'Last Name'),
-                  })
-                }
+                  });
+                }}
                 required
               />
             </div>
@@ -229,9 +229,9 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 label="Email"
                 name="email"
                 field={formState.email}
-                onValueChange={(field: ErrorableInput) =>
-                  setFormState({ type: 'SET_EMAIL', value: validateEmail(field) })
-                }
+                onValueChange={(field: ErrorableInput) => {
+                  setFormState({ type: 'SET_EMAIL', value: validateEmail(field) });
+                }}
                 required
               />
             </div>
@@ -241,9 +241,9 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
                 label="Organization"
                 name="organization"
                 field={formState.organization}
-                onValueChange={(field: ErrorableInput) =>
-                  setFormState({ type: 'SET_ORGANIZATION', value: field })
-                }
+                onValueChange={(field: ErrorableInput) => {
+                  setFormState({ type: 'SET_ORGANIZATION', value: field });
+                }}
                 required={false}
               />
             </div>
@@ -264,9 +264,9 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
         <ErrorableTextArea
           errorMessage={formState.description.validation}
           label="Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
-          onValueChange={(field: ErrorableInput) =>
-            setFormState({ type: 'SET_DESCRIPTION', value: validatePresence(field, 'Description') })
-          }
+          onValueChange={(field: ErrorableInput) => {
+            setFormState({ type: 'SET_DESCRIPTION', value: validatePresence(field, 'Description') });
+          }}
           name="description"
           field={formState.description}
           required

@@ -4,27 +4,38 @@ import * as constants from '../types/constants';
 
 export * from './apply';
 
+export interface ResetVersioning extends Action {
+  type: constants.RESET_VERSIONING;
+}
+
 export interface SetRequestedAPIVersion extends Action {
   type: constants.SET_REQUESTED_API_VERSION;
   version: string;
 }
 
 export interface SetVersioning extends Action {
-  docUrl: string;
-  versions: VersionMetadata[] | null;
+  defaultUrl: string;
   type: constants.SET_VERSIONING;
+  version: string;
+  versions: VersionMetadata[] | null;
 }
 
-export const setRequstedApiVersion: ActionCreator<SetRequestedAPIVersion> = (version: string) => ({
+export const resetVersioning: ActionCreator<ResetVersioning> = () => ({
+  type: constants.RESET_VERSIONING,
+});
+
+export const setRequestedApiVersion: ActionCreator<SetRequestedAPIVersion> = (version: string) => ({
   type: constants.SET_REQUESTED_API_VERSION,
   version,
 });
 
 export const setVersioning: ActionCreator<SetVersioning> = (
-  docUrl: string,
+  defaultUrl: string,
   versions: VersionMetadata[] | null,
+  version: string = '',
 ) => ({
-  docUrl,
+  defaultUrl,
   type: constants.SET_VERSIONING,
+  version,
   versions,
 });

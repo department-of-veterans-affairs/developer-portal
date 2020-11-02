@@ -7,19 +7,17 @@ import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
 import { Flag } from '../../flags';
 import { history } from '../../store';
-import SwaggerDocs from './SwaggerDocs';
+import { SwaggerDocs } from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
 interface ApiDocumentationProps {
   apiDefinition: APIDescription;
-  categoryKey: string;
   location: Location;
 }
 
 const ApiDocumentationPropTypes = {
   apiDefinition: ApiDescriptionPropType.isRequired,
-  categoryKey: PropTypes.string.isRequired,
   // Leave as any for now until we can use the location react hooks
   location: PropTypes.any.isRequired,
 };
@@ -72,7 +70,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const apiVersion = queryParams.get('version');
 
   React.useEffect((): void => {
-    dispatch(actions.setRequstedApiVersion(apiVersion));
+    dispatch(actions.setRequestedApiVersion(apiVersion));
   }, [dispatch, apiVersion, location.pathname]);
 
   /*

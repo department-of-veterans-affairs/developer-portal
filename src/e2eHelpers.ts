@@ -30,7 +30,6 @@ export const metadataTestPaths = [''];
 export const puppeteerHost = process.env.TEST_HOST || 'http://localhost:4444';
 
 declare global {
-  // tslint:disable-next-line
   interface Window {
     axe: typeof axe;
   }

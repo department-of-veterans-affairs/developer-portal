@@ -29,7 +29,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
      * be a version with the status "Current Version". as a fallback, though, we set it to the
      * empty string as in getVersionNumber() in src/reducers/api-versioning.ts.
      */
-    return versions.find(selectCurrentVersion)?.version || '';
+    return versions?.find(selectCurrentVersion)?.version || '';
   }
 
   public handleSelectChange(version: string): void {
@@ -54,7 +54,8 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
           'vads-u-justify-content--flex-start',
         )}
       >
-        <select // tslint:disable-next-line:react-a11y-no-onchange
+        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+        <select
           aria-label="Version Selection"
           value={this.state.version}
           onChange={e => this.handleSelectChange(e.target.value)}
@@ -68,7 +69,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
           {this.props
             .getSystem()
             .versionSelectors.versionMetadata()
-            .map((versionInfo: VersionMetadata) => (
+            ?.map((versionInfo: VersionMetadata) => (
               <option value={versionInfo.version} key={versionInfo.version}>
                 {buildDisplay(versionInfo)}
               </option>
@@ -77,6 +78,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
         <button
           onClick={() => this.handleButtonClick()}
           className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
+          type="button"
         >
           Select
         </button>
