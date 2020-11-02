@@ -161,6 +161,7 @@ phases:
           ;;
         lint)
           comment='Linting failed. Run "npm run lint:ci" to see linting errors or look at the CodeBuild output.'
+          ;;
         unit|security|e2e|accessibility)
           aws s3 cp --no-progress test-report.xml s3://${S3_ERROR_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/
           link="[test-report.xml](https://console.amazonaws-us-gov.com/s3/buckets/${S3_ERROR_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/)"
