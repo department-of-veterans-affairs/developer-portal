@@ -61,9 +61,16 @@ const MainNavItem = (props: MainNavItemProps): JSX.Element => {
 };
 
 MainNavItem.propTypes = {
+  activeClassName: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.string]).isRequired,
+  className: PropTypes.string.isRequired,
   excludeLargeScreen: PropTypes.bool,
   excludeSmallScreen: PropTypes.bool,
+  largeScreenProps: PropTypes.object.isRequired,
   onClick: PropTypes.func,
+  targetUrl: PropTypes.string.isRequired,
 };
 
 MainNavItem.defaultProps = {
