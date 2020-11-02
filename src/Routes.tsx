@@ -38,7 +38,7 @@ export const SiteRoutes: React.FunctionComponent = () => (
       render={() => (
         <Flag
           name={['signups_enabled']}
-          component={ApplyForm}
+          render={ApplyForm}
           fallbackComponent={DisabledApplyForm}
         />
       )}
