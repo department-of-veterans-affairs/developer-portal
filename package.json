@@ -138,7 +138,7 @@
     "js-yaml-loader": "^1.2.2",
     "jsdom": "^16.4.0",
     "lodash.noop": "^3.0.1",
-    "markdown-component-loader": "github:department-of-veterans-affairs/markdown-component-loader#c1398bd59314c82c9ff1a8042754291b92754f30",
+    "markdown-component-loader": "github:department-of-veterans-affairs/markdown-component-loader#develop",
     "markdown-it-anchor": "^5.0.2",
     "mini-css-extract-plugin": "0.4.3",
     "msw": "^0.21.2",
