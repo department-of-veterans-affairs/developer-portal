@@ -5,7 +5,7 @@ import * as React from 'react';
 
 import './TestingNotice.scss';
 
-const TestingNotice: React.FunctionComponent = ():JSX.Element => (
+const TestingNotice: React.FunctionComponent = (): JSX.Element => (
   <div
     className={classNames(
       'va-api-testing-notice',
