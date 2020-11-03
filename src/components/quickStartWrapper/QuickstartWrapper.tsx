@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { PAGE_HEADER_ID } from '../types/constants';
-import PageHeader from './PageHeader';
+import { PAGE_HEADER_ID } from '../../types/constants';
+import PageHeader from '../PageHeader';
 
 interface QuickstartWrapperProps {
   halo: string;
   quickstartContent: React.FunctionComponent;
 }
 
-const Quickstart: React.FunctionComponent<QuickstartWrapperProps> = (
+const QuickstartWrapper: React.FunctionComponent<QuickstartWrapperProps> = (
   props: QuickstartWrapperProps,
 ) => {
   const { halo, quickstartContent } = props;
@@ -20,4 +20,4 @@ const Quickstart: React.FunctionComponent<QuickstartWrapperProps> = (
   );
 };
 
-export default Quickstart;
+export { QuickstartWrapper };

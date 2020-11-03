@@ -42,6 +42,8 @@ env:
     GNAME: root
   parameter-store:
     GITHUB_TOKEN: "/dvp/devops/va_bot_github_token"
+    DOCKER_USERNAME: "/dvp/devops/DOCKER_USERNAME"
+    DOCKER_PASSWORD: "/dvp/devops/DOCKER_PASSWORD"
 # This webhook currently targets DSVA workspace #lighthous-deploys channel
     SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook"
 phases:
@@ -89,6 +91,8 @@ phases:
         EOF
           done
         fi
+        # Login to Docker Hub prior to pulling Dockerfile's base image node:12. This prevents rate limiting from Docker Hub. 
+      - echo "${DOCKER_PASSWORD}" | docker login --username ${DOCKER_USERNAME} --password-stdin 
       - make build
   build:
     # We use a phase variable to tell where we are in case of failure. This will allow us to handle the POST_BUILD stage with (some) grace.
