@@ -73,7 +73,7 @@ describe('SupportContactUsForm', () => {
         method: 'POST',
         mode: null,
         referrer: null,
-        url: 'http://fake.va.gov/internal/developer-portal-backend/contact-us',
+        url: 'http://fake.va.gov/internal/developer-portal/public/contact-us',
       }),
     );
   });
