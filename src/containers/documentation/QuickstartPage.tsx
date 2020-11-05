@@ -4,7 +4,7 @@ import * as React from 'react';
 import { Redirect, useParams } from 'react-router';
 
 import { getApiDefinitions } from '../../apiDefs/query';
-import QuickstartWrapper from '../../components/QuickstartWrapper';
+import { QuickstartWrapper } from '../../components';
 import { APINameParam } from '../../types';
 
 const QuickstartPagePropTypes = {
