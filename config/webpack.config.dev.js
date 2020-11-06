@@ -140,14 +140,6 @@ module.exports = {
           },
           {
             test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              compact: true,
-            },
-          },
-          {
-            test: /\.(js|jsx|mjs)$/,
             loader: require.resolve('babel-loader'),
             options: {
               babelrc: false,
@@ -343,6 +335,10 @@ module.exports = {
       async: false,
       eslint: {
         files: 'src/**/*.{ts,tsx}',
+        memoryLimit: 4096,
+        options: {
+          configFile: '.eslintrc.dev.js',
+        },
       },
       typescript: true,
     }),
