@@ -14,16 +14,20 @@ export interface SideNavEntryProps extends NavHashLinkProps {
   sharedAnchors: string[];
 }
 
-// Constructs a NavHashLink in the sidebar that also takes into account the
-// hash when determining if it's active
+/**
+ * Constructs a NavHashLink in the sidebar that also takes into account the
+ * hash when determining if it's active
+ */
 const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
-  // The isActive prop receives two arguments: a `match` object representing
-  // the original determination, and the current location. The match algorithm
-  // used by react-router only takes into account the path, and by default will
-  // include partial matches according to the https://github.com/pillarjs/path-to-regexp
-  // implementation.
+  /**
+   * The isActive prop receives two arguments: a `match` object representing
+   * the original determination, and the current location. The match algorithm
+   * used by react-router only takes into account the path, and by default will
+   * include partial matches according to the https://github.com/pillarjs/path-to-regexp
+   * implementation.
+   */
   const navHashLinkIsActive = (pathMatch: Match | null, location: Location): boolean => {
-    const withoutTrailingSlash = (path: string) => path.replace(/\/$/, '');
+    const withoutTrailingSlash = (path: string): string => path.replace(/\/$/, '');
 
     let pathname: string;
     let hash: string;
@@ -32,12 +36,14 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
 
     if (typeof to === 'string') {
       const url = new URL(to, 'http://example.com');
-      pathname = url.pathname;
-      hash = url.hash;
+      ({
+        hash,
+        pathname,
+      } = url);
     } else {
       // object
-      pathname = to.pathname || '';
-      hash = to.hash || '';
+      pathname = to.pathname ?? '';
+      hash = to.hash ?? '';
     }
 
     to = withoutTrailingSlash(pathname) + hash;
@@ -45,17 +51,23 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
       // for an in-page anchor link, check that the link's destination is the same as the current hash
       return to === location.hash;
     } else if (hash) {
-      // exact path match + exact hash match = exact match overall. nav links with a hash require 
-      // both regardless of props.exact because partial path matches aren't applicable.
+      /**
+       * exact path match + exact hash match = exact match overall. nav links with a hash require
+       * both regardless of props.exact because partial path matches aren't applicable.
+       */
       return !!pathMatch?.isExact && hash === location.hash;
     } else if (props.exact) {
-      // allow "exact" matches for some anchors that are shared across the site if the nav link
-      // does not include a hash.
+      /**
+       * allow "exact" matches for some anchors that are shared across the site if the nav link
+       * does not include a hash.
+       */
       const hashMatch: boolean = !location.hash || props.sharedAnchors.includes(location.hash);
       return !!pathMatch && hashMatch;
     } else {
-      // default partial matching. since the nav link doesn't have a hash, partial matching 
-      // works whether or not the location has a hash.
+      /**
+       * default partial matching. since the nav link doesn't have a hash, partial matching
+       * works whether or not the location has a hash.
+       */
       return !!pathMatch;
     }
   };

@@ -6,9 +6,8 @@ import * as React from 'react';
 import { Form } from './Form';
 
 describe('Form', () => {
-
-  const successfulSubmitMockImpl = () => Promise.resolve();
-  const rejectedSubmitMockImpl = () => Promise.reject('test');
+  const successfulSubmitMockImpl = (): Promise<void> => Promise.resolve();
+  const rejectedSubmitMockImpl = (): Promise<void> => Promise.reject(new Error('test'));
   const onSuccessMock = jest.fn();
 
   afterEach(() => {
@@ -17,7 +16,7 @@ describe('Form', () => {
 
   it('should be able to submit when disabled is not set', async () => {
     const onSubmitMock = jest.fn().mockImplementation(successfulSubmitMockImpl);
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false}/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
 
     component.find('.usa-button-primary').simulate('click');
 
@@ -31,7 +30,7 @@ describe('Form', () => {
 
   it('should not be able to submit when disabled is set', () => {
     const onSubmitMock = jest.fn().mockImplementation(successfulSubmitMockImpl);
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled />);
 
     component.find('.usa-button-primary').simulate('click');
 
@@ -43,7 +42,7 @@ describe('Form', () => {
   it('should display the error alert when in error', async() => {
     const onSubmitMock = jest.fn().mockImplementation(rejectedSubmitMockImpl);
 
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false}/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
     component.find('.usa-button-primary').simulate('click');
 
     await waitFor(() => expect(onSubmitMock).toHaveBeenCalled());
@@ -55,18 +54,24 @@ describe('Form', () => {
   });
 
   it('should display appropriate text in progress button when sending', async () => {
-    // I attempted to using jest timers for simulating the 'in between' time of submitting
-    // and getting a response. This didn't work out for some reason. I spent a few hours on
-    // it. From what I could find, the jest timers don't support promises properly.
-    // This is a work around I made so that we can trigger the promises within the test to
-    // mock a success response at the time we want.
+    /**
+     * I attempted to using jest timers for simulating the 'in between' time of submitting
+     * and getting a response. This didn't work out for some reason. I spent a few hours on
+     * it. From what I could find, the jest timers don't support promises properly.
+     * This is a work around I made so that we can trigger the promises within the test to
+     * mock a success response at the time we want.
+     */
     interface PromiseTrigger {
       reject: () => void;
       resolve: () => void;
     }
     let promiseTrigger: PromiseTrigger = {
-      reject: () => { throw new Error('promise trigger is set to default reject'); },
-      resolve: () => { throw new Error('promise trigger is set to default resolve'); },
+      reject: () => {
+        throw new Error('promise trigger is set to default reject');
+      },
+      resolve: () => {
+        throw new Error('promise trigger is set to default resolve');
+      },
     };
     const submitPromise = new Promise((resolve: () => void, reject: () => void) => {
       promiseTrigger = {
@@ -76,7 +81,7 @@ describe('Form', () => {
     });
     const onSubmitMock = jest.fn().mockImplementation(() => submitPromise);
 
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false}/>);
+    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
 
     component.find('.usa-button-primary').simulate('click');
 
@@ -86,9 +91,8 @@ describe('Form', () => {
     expect(submitButton.text()).toEqual('Sending...');
 
     promiseTrigger.resolve();
-    
+
     await waitFor(() => expect(onSuccessMock).toHaveBeenCalled());
     expect(submitButton.text()).toEqual('Submit');
-
   });
 });

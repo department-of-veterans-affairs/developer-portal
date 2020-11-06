@@ -172,7 +172,7 @@ interface SupportQuestion {
   readonly question: string;
 }
 
-const SupportQuestions = (props: SupportQuestionsProps) => {
+const SupportQuestions = (props: SupportQuestionsProps): JSX.Element => {
   const content: AccordionPanelContent[] = props.questions.map((q: SupportQuestion) => ({
     body: q.answer,
     title: q.question,
@@ -182,7 +182,7 @@ const SupportQuestions = (props: SupportQuestionsProps) => {
 };
 
 const SupportFAQ: () => JSX.Element = () => (
-  <section role="region" aria-label="Support FAQ">
+  <section aria-label="Support FAQ">
     <PageHeader {...headerProps} />
     <div>
       <SupportQuestions title="General" questions={generalQuestions} />

@@ -75,7 +75,7 @@ const DocumentationSubNav = (props: DocumentationSubNavProps): JSX.Element => {
   );
 };
 
-const navItemStyles = (isFirstChild = false) =>
+const navItemStyles = (isFirstChild = false): string =>
   classNames(
     'va-api-main-nav-item',
     'vads-u-display--block',
@@ -112,15 +112,15 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     'medium-screen:vads-u-width--full',
   );
 
-  const toggleDocumentationSubMenu = () => {
+  const toggleDocumentationSubMenu = (): void => {
     setVisibleSubNavs({ documentation: !visibleSubNavs.documentation });
   };
 
-  const toggleDefaultNavLink = (useDefault: boolean) => {
+  const toggleDefaultNavLink = (useDefault: boolean): void => {
     setUseDefaultNavLink(useDefault);
   };
 
-  const checkActiveNavLink = (match: Match | null) => {
+  const checkActiveNavLink = (match: Match | null): boolean => {
     if (!match) {
       return false;
     }
@@ -156,6 +156,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               'vads-u-padding--0',
             )}
             onClick={props.onMobileNavClose}
+            type="button"
           >
             <img
               src={closeButton}
@@ -201,7 +202,8 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                   'vads-u-margin--0',
                   'vads-u-width--full',
                 )}
-                onClick={() => toggleDocumentationSubMenu()}
+                onClick={(): void => toggleDocumentationSubMenu()}
+                type="button"
               >
                 <span>Documentation</span>
                 <img

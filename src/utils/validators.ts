@@ -7,8 +7,7 @@ export const validateByPattern = (
   pattern: RegExp,
   failMsg: string,
 ): void => {
-  const invalid = newValue.value == null || !pattern.test(newValue.value);
-  if (invalid) {
+  if (!pattern.test(newValue.value)) {
     newValue.validation = failMsg;
   }
 };

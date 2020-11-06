@@ -17,8 +17,10 @@ declare module 'swagger-client' {
     items?: Schema;
     example: Example;
 
-    // not actually a part of the OpenAPI Spec - name is the key in properties, above, but we
-    // store it here for convenience in CurlForm.
+    /**
+     * not actually a part of the OpenAPI Spec - name is the key in properties, above, but we
+     * store it here for convenience in CurlForm.
+     */
     name: string;
   }
 
@@ -32,8 +34,8 @@ declare module 'swagger-client' {
   }
 
   export interface Operation {
-    parameters: Parameter[];
-    requestBody: RequestBody;
+    parameters?: Parameter[];
+    requestBody?: RequestBody;
     operationId?: string;
     security: { [schemeName: string]: string } | Array<{ [schemeName: string]: string }>;
   }

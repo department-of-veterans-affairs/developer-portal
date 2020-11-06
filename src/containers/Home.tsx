@@ -5,8 +5,7 @@ import { Link } from 'react-router-dom';
 import apiDefinitions, { apiCategoryOrder } from '../apiDefs/data/categories';
 import padlockImg from '../assets/homepage-padlock.svg';
 import apiImg from '../assets/homepage-reliable-api.svg';
-import { CardLink } from '../components';
-import Hero from '../components/Hero';
+import { CardLink, Hero } from '../components';
 import { Flag } from '../flags';
 
 const leftColumnClasses = classNames(
@@ -38,7 +37,7 @@ const HomeSection = (props: HomeProps): JSX.Element => {
   const { ariaLabel, imageSrc, title, children } = props;
 
   return (
-    <section role="region" aria-label={ariaLabel}>
+    <section aria-label={ariaLabel}>
       <div className={flexContainer}>
         <div className="vads-l-row">
           <div className={leftColumnClasses}>
@@ -65,11 +64,7 @@ const ApiList = (): JSX.Element => (
               const { name, content } = apiDefinitions[apiCategoryKey];
               return (
                 <Flag name={['categories', apiCategoryKey]} key={apiCategoryKey}>
-                  <CardLink
-                    className="medium-screen:vads-l-col--5"
-                    name={`VA ${name}`}
-                    url={`/explore/${apiCategoryKey}`}
-                  >
+                  <CardLink name={`VA ${name}`} url={`/explore/${apiCategoryKey}`}>
                     {content.placardText}
                   </CardLink>
                 </Flag>
@@ -85,7 +80,6 @@ const ApiList = (): JSX.Element => (
 const VeteransNotice = (): JSX.Element => (
   <section
     className="vads-u-display--none medium-screen:vads-u-display--block"
-    role="region"
     aria-label="Veterans Notice"
   >
     <div

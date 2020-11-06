@@ -1,6 +1,7 @@
 import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory, History } from 'history';
-import { debounce, isEqual } from 'lodash';
+import debounce from 'lodash.debounce';
+import isEqual from 'lodash.isequal';
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 
@@ -9,7 +10,7 @@ import { apiVersioning } from './reducers/api-versioning';
 import { DevApplication, RootState, SerializedState } from './types';
 
 export const history: History = createBrowserHistory({
-  basename: process.env.PUBLIC_URL || '/',
+  basename: process.env.PUBLIC_URL ?? '/',
 });
 
 const loadApplicationState = (): { application: DevApplication } => {
@@ -27,12 +28,12 @@ const loadApplicationState = (): { application: DevApplication } => {
         return { application: initialApplicationState };
       }
     }
-  } catch (err) {
+  } catch (err: unknown) {
     return { application: initialApplicationState };
   }
 };
 
-const saveApplicationState = (state: RootState) => {
+const saveApplicationState = (state: RootState): void => {
   try {
     const stateToSerialize: SerializedState = {
       application: {
@@ -41,7 +42,7 @@ const saveApplicationState = (state: RootState) => {
     };
     const serializedState = JSON.stringify(stateToSerialize);
     sessionStorage.setItem('state', serializedState);
-  } catch (err) {
+  } catch (err: unknown) {
     // swallow the error.
   }
 };

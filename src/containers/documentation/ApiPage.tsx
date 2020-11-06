@@ -12,7 +12,7 @@ import { PAGE_HEADER_ID } from '../../types/constants';
 import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
 
-const DeactivationMessage = ({ api }: { api: APIDescription }) => {
+const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | null => {
   const isDeprecated = isApiDeprecated(api);
   const isDeactivated = isApiDeactivated(api);
 
@@ -21,8 +21,8 @@ const DeactivationMessage = ({ api }: { api: APIDescription }) => {
   }
 
   const content = isDeactivated
-    ? (api.deactivationInfo?.deactivationContent || (() => 'Deactived API'))
-    : (api.deactivationInfo?.deprecationContent || (() => 'Deprecated API'));
+    ? (api.deactivationInfo?.deactivationContent ?? ((): string => 'Deactivated API'))
+    : (api.deactivationInfo?.deprecationContent ?? ((): string => 'Deprecated API'));
   return (
     <div className={classNames('usa-alert', 'usa-alert-info', 'va-api-alert-box')}>
       <div className={classNames('usa-alert-body')}>{content({})}</div>
@@ -50,14 +50,13 @@ const ApiPage = (): JSX.Element => {
   const category = lookupApiCategory(params.apiCategoryKey);
 
   return (
-    <Flag name={['enabled', api.urlFragment]} fallbackRender={() => <ExplorePage />}>
+    <Flag name={['enabled', api.urlFragment]} fallbackRender={(): JSX.Element => <ExplorePage />}>
       <div role="region" aria-labelledby={PAGE_HEADER_ID}>
         <PageHeader halo={category?.name} header={api.name} />
         <DeactivationMessage api={api} />
         {!isApiDeactivated(api) && (
           <ApiDocumentation
             apiDefinition={api}
-            categoryKey={params.apiCategoryKey}
             location={location}
           />
         )}

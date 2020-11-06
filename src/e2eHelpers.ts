@@ -27,10 +27,9 @@ export const testPaths = [
 
 export const metadataTestPaths = [''];
 
-export const puppeteerHost = process.env.TEST_HOST || 'http://localhost:4444';
+export const puppeteerHost = process.env.TEST_HOST ?? 'http://localhost:4444';
 
 declare global {
-  // tslint:disable-next-line
   interface Window {
     axe: typeof axe;
   }
@@ -42,14 +41,17 @@ expect.extend(toHaveNoViolations);
 
 export const axeCheck = (): Promise<axe.AxeResults> => new Promise(resolve => {
   window.axe.run({ exclude: [['iframe']] }, (err, results) => {
+    /* eslint-disable @typescript-eslint/no-unnecessary-condition
+      -- aXe typing marks err param as always present */
     if (err) {
       throw err;
     }
+    /* eslint-enable @typescript-eslint/no-unnecessary-condition */
     resolve(results);
   });
 });
 
-export const mockSwagger = (req: Request) : void => {
+export const mockSwagger = (req: Request): void => {
   const response = {
     body: '',
     contentType: 'application/json',

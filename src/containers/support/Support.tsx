@@ -42,7 +42,7 @@ const Support: React.FunctionComponent = (): JSX.Element => (
           ))}
         </SideNav>
         <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-          <Route exact path="/support/" render={() => <SupportOverview sections={sections} />} />
+          <Route exact path="/support/" render={(): JSX.Element => <SupportOverview sections={sections} />} />
           {sections.map(section => (
             <Route
               key={section.id}

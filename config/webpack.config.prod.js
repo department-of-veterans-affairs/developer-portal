@@ -433,33 +433,13 @@ module.exports = envName => {
         ],
       }),
       // TypeScript type checking
-      fs.existsSync(paths.appTsConfig) &&
-        new ForkTsCheckerWebpackPlugin({
-          typescript: resolve.sync('typescript', {
-            basedir: paths.appNodeModules,
-          }),
-          async: false,
-          checkSyntacticErrors: true,
-          tsconfig: paths.appTsProdConfig(envName),
-          compilerOptions: {
-            module: 'esnext',
-            moduleResolution: 'node',
-            resolveJsonModule: true,
-            noEmit: true,
-            jsx: 'preserve',
-          },
-          reportFiles: [
-            '**',
-            '!**/*.json',
-            '!**/__tests__/**',
-            '!**/?(*.)(e2e|spec|test).*',
-            '!src/setupProxy.js',
-            '!src/setupTests.*',
-          ],
-          watch: paths.appSrc,
-          silent: true,
-        }),
-
+      new ForkTsCheckerWebpackPlugin({
+        async: false,
+        eslint: {
+          files: 'src/**/*.{ts,tsx}',
+        },
+        typescript: true,
+      }),
       // Place the appropriate robots.txt in public folder based on the environment
       new CopyPlugin({
         patterns: [

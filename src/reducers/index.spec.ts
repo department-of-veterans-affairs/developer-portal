@@ -53,14 +53,14 @@ const app: DevApplication = {
 
 describe('application', () => {
   it('should update application state when inputs are changed', () => {
-    const inputToActionMap: any[] = [
-      ['description', constants.UPDATE_APPLICATION_DESCRIPTION],
-      ['firstName', constants.UPDATE_APPLICATION_FIRST_NAME],
-      ['lastName', constants.UPDATE_APPLICATION_LAST_NAME],
-      ['email', constants.UPDATE_APPLICATION_EMAIL],
-      ['oAuthApplicationType', constants.UPDATE_APPLICATION_OAUTH_APPLICATION_TYPE],
-      ['oAuthRedirectURI', constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI],
-      ['organization', constants.UPDATE_APPLICATION_ORGANIZATION],
+    const inputToActionMap: Array<[string, string]> = [
+      ['description', constants.UPDATE_APPLY_DESCRIPTION_VALUE],
+      ['firstName', constants.UPDATE_APPLY_FIRST_NAME_VALUE],
+      ['lastName', constants.UPDATE_APPLY_LAST_NAME_VALUE],
+      ['email', constants.UPDATE_APPLY_EMAIL_VALUE],
+      ['oAuthApplicationType', constants.UPDATE_APPLY_CLIENT_TYPE_VALUE],
+      ['oAuthRedirectURI', constants.UPDATE_APPLY_REDIRECT_URI_VALUE],
+      ['organization', constants.UPDATE_APPLY_ORGANIZATION_VALUE],
     ];
 
     inputToActionMap.forEach(([fieldName, actionName]: [string, string]) => {
@@ -69,9 +69,7 @@ describe('application', () => {
         value: 'test',
       };
 
-      const inputs = application(app, { newValue, type: actionName } as UpdateApplicationAction)
-        .inputs;
-
+      const { inputs } = application(app, { newValue, type: actionName } as UpdateApplicationAction);
       const expectedSubObject = { [fieldName]: newValue };
       expect(inputs).toEqual(expect.objectContaining(expectedSubObject));
     });
@@ -82,7 +80,7 @@ describe('application', () => {
     applyApis.forEach(apiId => {
       const toggleAction: ToggleSelectedAPI = {
         apiId,
-        type: constants.TOGGLE_SELECTED_API,
+        type: constants.TOGGLE_SELECTED_API_VALUE,
       };
 
       let newApp = application(app, toggleAction);
@@ -96,14 +94,14 @@ describe('application', () => {
   it('should not toggle an API that does not exist', () => {
     const newInputs = application(app, {
       apiId: 'fakeapi',
-      type: constants.TOGGLE_SELECTED_API,
+      type: constants.TOGGLE_SELECTED_API_VALUE,
     }).inputs;
 
     expect(newInputs).toEqual(app.inputs);
   });
 
   it('should set state to sending when application send begins', () => {
-    expect(application(app, { type: constants.SUBMIT_APPLICATION_BEGIN })).toEqual(
+    expect(application(app, { type: constants.SUBMIT_APPLICATION_BEGIN_VALUE })).toEqual(
       expect.objectContaining({
         sending: true,
       }),
@@ -112,12 +110,12 @@ describe('application', () => {
 
   it('should set errorStatus application send errors', () => {
     const newApp = application(app, {
-      type: constants.SUBMIT_APPLICATION_BEGIN,
+      type: constants.SUBMIT_APPLICATION_BEGIN_VALUE,
     });
     expect(
       application(newApp, {
         status: 'Error happened',
-        type: constants.SUBMIT_APPLICATION_ERROR,
+        type: constants.SUBMIT_APPLICATION_ERROR_VALUE,
       }),
     ).toEqual(
       expect.objectContaining({
@@ -129,14 +127,14 @@ describe('application', () => {
 
   it('should set token and OAuth credentials on a successful submit', () => {
     const newApp = application(app, {
-      type: constants.SUBMIT_APPLICATION_BEGIN,
+      type: constants.SUBMIT_APPLICATION_BEGIN_VALUE,
     });
     expect(
       application(newApp, {
         clientID: 'clientID',
         clientSecret: 'clientSecret',
         token: 'test-token',
-        type: constants.SUBMIT_APPLICATION_SUCCESS,
+        type: constants.SUBMIT_APPLICATION_SUCCESS_VALUE,
       }),
     ).toEqual(
       expect.objectContaining<Partial<DevApplication>>({
@@ -153,13 +151,13 @@ describe('application', () => {
   });
 
   it('should toggle termsOfService acceptance', () => {
-    const newApp = application(app, { type: constants.TOGGLE_ACCEPT_TOS });
+    const newApp = application(app, { type: constants.TOGGLE_ACCEPT_TOS_VALUE });
     expect(newApp.inputs).toEqual(
       expect.objectContaining({
         termsOfService: true,
       }),
     );
-    expect(application(newApp, { type: constants.TOGGLE_ACCEPT_TOS }).inputs).toEqual(
+    expect(application(newApp, { type: constants.TOGGLE_ACCEPT_TOS_VALUE }).inputs).toEqual(
       expect.objectContaining({
         termsOfService: false,
       }),

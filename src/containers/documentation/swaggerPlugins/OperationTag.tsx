@@ -5,8 +5,34 @@ import Im from 'immutable';
 import { CollapseProps, DeepLinkProps, MarkdownProps } from 'swagger-ui';
 import { sanitizeUrl } from '@braintree/sanitize-url';
 
-const createDeepLinkPath = (str: string | unknown) =>
-  typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '';
+interface ExternalDocsProps {
+  url?: string;
+  description?: string;
+}
+
+const ExternalDocs: React.FunctionComponent<ExternalDocsProps> = (props: ExternalDocsProps) => (
+  <div>
+    {props.description ? (
+      <small>
+        {props.description}
+        {props.url ? ': ' : null}
+        {props.url ? (
+          <a
+            href={sanitizeUrl(props.url)}
+            onClick={(e): void => e.stopPropagation()}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {props.url}
+          </a>
+        ) : null}
+      </small>
+    ) : null}
+  </div>
+);
+
+const createDeepLinkPath = (str: string | unknown): string =>
+  (typeof str === 'string' || str instanceof String ? str.trim().replace(/\s/g, '_') : '');
 
 interface OperationTagProps {
   tag: string;
@@ -25,21 +51,22 @@ interface OperationTagProps {
   };
 }
 
+/* eslint-disable react/prefer-stateless-function -- Swagger UI is on React 15 */
 export default class OperationTag extends React.Component<OperationTagProps> {
-  public static defaultProps: Pick<OperationTagProps, 'tag' | 'tagObj'> = {
-    tag: '',
-    tagObj: Im.fromJS({}) as Im.Map<string, unknown>,
-  };
-
   public static propTypes = {
-    tag: PropTypes.string.isRequired,
-    tagObj: ImPropTypes.map.isRequired,
+    getComponent: PropTypes.func.isRequired,
+    getConfigs: PropTypes.func.isRequired,
 
     layoutActions: PropTypes.object.isRequired,
     layoutSelectors: PropTypes.object.isRequired,
 
-    getComponent: PropTypes.func.isRequired,
-    getConfigs: PropTypes.func.isRequired,
+    tag: PropTypes.string,
+    tagObj: ImPropTypes.map,
+  };
+
+  public static defaultProps: Pick<OperationTagProps, 'tag' | 'tagObj'> = {
+    tag: '',
+    tagObj: Im.fromJS({}) as Im.Map<string, unknown>,
   };
 
   public render(): JSX.Element {
@@ -79,43 +106,29 @@ export default class OperationTag extends React.Component<OperationTagProps> {
 
     return (
       <div className={showTag ? 'opblock-tag-section is-open' : 'opblock-tag-section'}>
+        {/* eslint-disable jsx-a11y/no-noninteractive-element-interactions,
+          jsx-a11y/click-events-have-key-events
+          -- Swagger is bad (I guess these kind of canncel out?) */}
         <h3
-          onClick={() => layoutActions.show(isShownKey, !showTag)}
-          className={!tagDescription ? 'opblock-tag no-desc' : 'opblock-tag'}
+          onClick={(): void => layoutActions.show(isShownKey, !showTag)}
+          className={tagDescription ? 'opblock-tag' : 'opblock-tag no-desc'}
           id={isShownKey.join('-')}
         >
           <DeepLink enabled={isDeepLinkingEnabled} isShown={showTag} path={tag} text={tag} />
-          {!tagDescription ? (
-            <small />
-          ) : (
+          {tagDescription ? (
             <small>
               <Markdown source={tagDescription} />
             </small>
+          ) : (
+            <small />
           )}
 
-          <div>
-            {!tagExternalDocsDescription ? null : (
-              <small>
-                {tagExternalDocsDescription}
-                {tagExternalDocsUrl ? ': ' : null}
-                {tagExternalDocsUrl ? (
-                  <a
-                    href={sanitizeUrl(tagExternalDocsUrl)}
-                    onClick={e => e.stopPropagation()}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {tagExternalDocsUrl}
-                  </a>
-                ) : null}
-              </small>
-            )}
-          </div>
-
+          <ExternalDocs description={tagExternalDocsDescription} url={tagExternalDocsUrl} />
           <button
             className="expand-operation"
             title={showTag ? 'Collapse operation' : 'Expand operation'}
-            onClick={() => layoutActions.show(isShownKey, !showTag)}
+            onClick={(): void => layoutActions.show(isShownKey, !showTag)}
+            type="button"
           >
             <svg className="arrow" width="20" height="20">
               <use

@@ -133,8 +133,11 @@ node('vetsgov-general-purpose') {
 
       imageTag = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
 
-      dockerImage = docker.build("developer-portal:${imageTag}")
-      args = "-v ${pwd()}:/application -v /application/node_modules"
+
+      docker.withRegistry('https://index.docker.io/v1/', 'vasdvdocker') {
+      	dockerImage = docker.build("developer-portal:${imageTag}")
+        args = "-v ${pwd()}:/application -v /application/node_modules"
+      }
     } catch (error) {
       notify()
       throw error
@@ -163,24 +166,10 @@ node('vetsgov-general-purpose') {
     }
   }
 
-  stage('TSLint') {
-    try {
-      dockerImage.inside(args) {
-        sh 'cd /application && npm run-script lint:ci'
-      }
-    } catch (error) {
-      notify()
-      dir(pwd()) {
-        step([$class: 'JUnitResultArchiver', testResults: 'lint-results.xml'])
-      }
-      throw error
-    }
-  }
-
   stage('ESLint') {
     try {
       dockerImage.inside(args) {
-        sh 'cd /application && npm run eslint'
+        sh 'cd /application && npm run-script lint:ci'
       }
     } catch (error) {
       notify()

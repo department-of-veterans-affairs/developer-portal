@@ -22,7 +22,7 @@ const VeteransCrisisLine = (): JSX.Element => {
     >
       <button
         data-show="#crisis-line-modal"
-        onClick={() => setModalVisible(true)}
+        onClick={(): void => setModalVisible(true)}
         className={classNames(
           'va-crisis-line-button',
           'va-api-crisis-line-button',
@@ -33,6 +33,7 @@ const VeteransCrisisLine = (): JSX.Element => {
           'vads-u-width--full',
           'medium-screen:vads-u-width--auto',
         )}
+        type="button"
       >
         <span className={classNames('vads-u-display--flex', 'vads-u-align-items--center')}>
           <span className={classNames('va-api-crisis-line-container', 'vads-u-margin-right--1')}>
@@ -52,7 +53,7 @@ const VeteransCrisisLine = (): JSX.Element => {
       <Modal
         id="crisis-line-modal"
         visible={modalVisible}
-        onClose={() => setModalVisible(false)}
+        onClose={(): void => setModalVisible(false)}
         initialFocusSelector="li > a"
       >
         <VeteransCrisisLinePanel />

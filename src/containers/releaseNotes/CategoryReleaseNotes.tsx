@@ -18,7 +18,9 @@ interface ReleaseNotesCardLinksProps {
   flagName: 'enabled' | 'hosted_apis';
 }
 
-const ReleaseNotesCardLinks = (props: ReleaseNotesCardLinksProps) => {
+const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps> = (
+  props: ReleaseNotesCardLinksProps,
+) => {
   const { apiCategory, categoryKey, flagName } = props;
   const flags: { [apiId: string]: boolean } = getFlags()[flagName];
   const apis: APIDescription[] = apiCategory.apis.filter(api => flags[api.urlFragment]);
@@ -39,7 +41,7 @@ const ReleaseNotesCardLinks = (props: ReleaseNotesCardLinksProps) => {
               name={name}
               subhead={
                 vaInternalOnly || trustedPartnerOnly ? (
-                  <OnlyTags {...{ vaInternalOnly, trustedPartnerOnly }} />
+                  <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
                 ) : (
                   undefined
                 )
@@ -87,8 +89,10 @@ interface ReleaseNotesCollectionProps {
   alertText?: string;
 }
 
-const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => (
-  <section role="region" aria-labelledby={`${props.categoryKey}-release-notes`}>
+const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProps> = (
+  props: ReleaseNotesCollectionProps,
+) => (
+  <section aria-labelledby={`${props.categoryKey}-release-notes`}>
     <PageHeader
       halo={props.apiCategory.name}
       header="Release Notes"
@@ -114,18 +118,18 @@ const ReleaseNotesCollection = (props: ReleaseNotesCollectionProps) => (
 
 export const CategoryReleaseNotes = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
-  const categoryDefinition = getApiDefinitions()[apiCategoryKey];
-  if (categoryDefinition != null) {
-    return (
-      <ReleaseNotesCollection
-        categoryKey={apiCategoryKey}
-        apiCategory={categoryDefinition}
-        apiFlagName="hosted_apis"
-      />
-    );
-  } else {
+  const categories = getApiDefinitions();
+  if (!(apiCategoryKey in categories)) {
     return <Redirect to="/release-notes" />;
   }
+
+  return (
+    <ReleaseNotesCollection
+      categoryKey={apiCategoryKey}
+      apiCategory={categories[apiCategoryKey]}
+      apiFlagName="hosted_apis"
+    />
+  );
 };
 
 export const DeactivatedReleaseNotes = (): JSX.Element => (

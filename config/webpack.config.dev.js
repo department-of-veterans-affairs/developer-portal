@@ -341,9 +341,10 @@ module.exports = {
     // Perform type checking and linting in a separate process to speed up compilation
     new ForkTsCheckerWebpackPlugin({
       async: false,
-      watch: paths.appSrc,
-      tsconfig: paths.appTsConfig,
-      tslint: paths.appTsLint,
+      eslint: {
+        files: 'src/**/*.{ts,tsx}',
+      },
+      typescript: true,
     }),
     // Place the dev robots.txt file in the public folder
     new CopyPlugin({
