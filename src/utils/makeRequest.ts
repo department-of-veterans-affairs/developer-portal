@@ -1,29 +1,37 @@
 import * as Sentry from '@sentry/browser';
 import { v4 as uuidv4 } from 'uuid';
-​
+
 // Interfaces & Constants
 
 interface CallFetchConfig {
-  responseType: string;
-}
-​
-export interface HttpResponse<T> {
-  ok: boolean;
-  status: number;
-  body: T | string | null;
+  responseType: ResponseType;
 }
 
-export enum responseType {
+export interface HttpSuccessResponse<T> {
+  ok: boolean;
+  status: number;
+  body: T;
+}
+
+type HttpResponse<T> = HttpErrorResponse | HttpSuccessResponse<T>;
+
+export interface HttpErrorResponse {
+  ok: boolean;
+  status: number;
+  body: string;
+}
+
+export enum ResponseType {
   BLOB = 'BLOB',
   JSON = 'JSON',
   TEXT = 'TEXT',
 }
-​
+
 // Sends errors to Sentry
 
 const sentryErrorLogger = (error: string, errorID: string, endpointUrl: string): void => {
   const pageName = location.pathname;
-  
+
   Sentry.withScope(scope => {
     scope.setTag('Error ID', errorID);
     scope.setTag('Endpoint Url', endpointUrl);
@@ -31,82 +39,71 @@ const sentryErrorLogger = (error: string, errorID: string, endpointUrl: string):
     Sentry.captureException(error);
   });
 };
-​
-// Handles non network errors (response not ok and status not 200) and logs them to Sentry 
 
-const handleNonNetworkError = async( url: string, requestId: string,  type: string, response: Response): Promise<HttpResponse> => {
-​
+// Handles non network errors (response not ok and status not 200) and logs them to Sentry
+
+const handleNonNetworkError = async <T extends unknown>(url: string, requestId: string,  type: string, response: Response): Promise<HttpResponse<T>> => {
   // Tries to resolve the response to obtain error details
-  let responseBody: any | string | null;
-​
-  try{
+  let responseBody: { errors: string[] } | null | string;
+
+  try {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    responseBody = (response.headers.get('Content-type')?.indexOf('application/json') !== -1) ? await response.json() : await response.text();
-  } catch(e){
+    responseBody = (response.headers.get('Content-type')?.includes('application/json')) ? await response.json() : await response.text();
+  } catch (e: unknown) {
     responseBody = null;
   }
-​
+
   // Create sentry errors based on status
-  if(response.status === 400 && type === responseType.JSON && responseBody?.errors){
-    sentryErrorLogger(`Validation errors: ${responseBody?.errors?.join(', ')}`, requestId, url);
-  } else if(response.status === 404){
-    sentryErrorLogger(`API not found: ${response.status}`, requestId, url);
-  } else if(response.status>=500 && response.status<=599){
-    sentryErrorLogger(`Server Error:${response.status}`, requestId, url);
-  } 
-​
+  if (response.status === 400 && typeof responseBody === 'object' && responseBody?.errors) {
+    sentryErrorLogger(`Validation errors: ${responseBody.errors.join(', ')}`, requestId, url);
+  } else if (response.status === 404) {
+    sentryErrorLogger(`Route not found: ${response.status}`, requestId, url);
+  } else if (response.status >= 500 && response.status <= 599) {
+    sentryErrorLogger(`Server Error: ${response.status}`, requestId, url);
+  }
+
   // All http codes outside the 200 range will be rejected
   return Promise.reject({
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     body: responseBody,
-    ok:response.ok,
-    status:response.status,
-  });
+    ok: response.ok,
+    status: response.status,
+  } as HttpErrorResponse);
 };
-​
-// Fetch common logic 
-export const makeRequest = async (url:string, requestInit: RequestInit, config:CallFetchConfig = { responseType: responseType.JSON }): Promise<HttpResponse> => {
-​
+
+// Fetch common logic
+export const makeRequest = async <T extends unknown>(url: string, requestInit: RequestInit, config: CallFetchConfig = { responseType: ResponseType.JSON }): Promise<HttpResponse<T>> => {
   const request = new Request(url, requestInit);
-  const requestId: string = uuidv4() ;
-  
+  const requestId: string = uuidv4();
+
   // Common Headers
   request.headers.append('X-Request-ID', requestId);
-​
-​
-  try{
+
+  try {
     const response = await fetch(request);
-​
-    let responseBody: any | string |null;
-​
-    if(!response.ok){
-      return handleNonNetworkError(url, requestId, config.responseType,  response );
+
+    if (!response.ok) {
+      return await handleNonNetworkError(url, requestId, config.responseType,  response);
     }
- 
-    if(config.responseType === responseType.JSON){
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      responseBody = await response.json(); 
-    }
-​
-    if(config.responseType === responseType.TEXT){
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      responseBody = await response.text(); 
-    }
-​
-    if(config.responseType === responseType.BLOB){
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      responseBody = await response.blob();
-    }
-   
-    const httpResponse:HttpResponse  = {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      body: responseBody,
+
+    const httpResponse: Partial<HttpResponse<T>> = {
       ok: response.ok,
-      status:response.status,
+      status: response.status,
     };
-​
-    return Promise.resolve(httpResponse);   
-​
+
+    if (config.responseType === ResponseType.JSON) {
+      httpResponse.body = await response.json() as T;
+    }
+
+    if (config.responseType === ResponseType.TEXT) {
+      httpResponse.body = await response.text() as T;
+    }
+
+    if (config.responseType === ResponseType.BLOB) {
+      httpResponse.body = await response.blob() as T;
+    }
+
+    return httpResponse as HttpResponse<T>;
+  // eslint-disable-next-line @typescript-eslint/no-implicit-any-catch
   } catch (error) {
     sentryErrorLogger(error, requestId, url);
     throw new Error(error);
