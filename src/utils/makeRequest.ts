@@ -13,7 +13,7 @@ export interface HttpResponse<T> {
   body: T | string | null;
 }
 
-export enum responseEnum {
+export enum responseType {
   BLOB = 'BLOB',
   JSON = 'JSON',
   TEXT = 'TEXT',
