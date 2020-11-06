@@ -34,8 +34,8 @@ declare module 'swagger-client' {
   }
 
   export interface Operation {
-    parameters: Parameter[];
-    requestBody: RequestBody;
+    parameters?: Parameter[];
+    requestBody?: RequestBody;
     operationId?: string;
     security: { [schemeName: string]: string } | Array<{ [schemeName: string]: string }>;
   }

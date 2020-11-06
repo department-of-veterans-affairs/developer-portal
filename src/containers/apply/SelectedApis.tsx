@@ -29,7 +29,7 @@ const ApiCheckboxList = (props: APICheckboxListProps): JSX.Element => {
           name={api.id}
           checked={apiInputs[api.id] as boolean}
           label={api.label}
-          onValueChange={() => dispatch(actions.toggleSelectedApi(api.id))}
+          onValueChange={(): void => void dispatch(actions.toggleSelectedApi(api.id))}
         />
       ))}
     </>

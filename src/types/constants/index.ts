@@ -2,9 +2,9 @@ export * from './actions/apply';
 export * from './actions/version';
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';
-export const OPEN_API_SPEC_HOST: string = process.env.REACT_APP_VETSGOV_SWAGGER_API || '';
+export const OPEN_API_SPEC_HOST: string = process.env.REACT_APP_VETSGOV_SWAGGER_API ?? '';
 
-const BACKEND_BASE_URL = `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL ||
+const BACKEND_BASE_URL = `${process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL ??
   ''}/internal/developer-portal/public`;
 export const APPLY_URL = `${BACKEND_BASE_URL}/developer_application`;
 export const CONTACT_US_URL = `${BACKEND_BASE_URL}/contact-us`;

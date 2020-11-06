@@ -27,15 +27,15 @@ export const SiteRoutes: React.FunctionComponent = () => (
     <Route exact path="/index.html" component={Home} />
 
     {/* Legacy routes that we want to maintain: */}
-    <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
-    <Route path="/whats-new" render={() => <Redirect to="/news" />} />
+    <Route path="/explore/terms-of-service" render={(): JSX.Element => <Redirect to="/terms-of-service" />} />
+    <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
 
     {/* Current routes: */}
-    <Route path="/go-live" render={() => MarkdownPage(PathToProduction)} />
-    <Route path="/terms-of-service" render={() => MarkdownPage(TermsOfService)} />
+    <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
+    <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
     <Route
       path="/apply"
-      render={() => (
+      render={(): JSX.Element => (
         <Flag
           name={['signups_enabled']}
           render={ApplyForm}
@@ -47,14 +47,14 @@ export const SiteRoutes: React.FunctionComponent = () => (
     <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
     <Route
       path="/oauth"
-      render={() => <Redirect to="/explore/verification/docs/authorization" />}
+      render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
     />
     <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
     <Route path="/news" component={News} />
     <Route path="/support" component={Support} />
     <Route
       path="/providers/integration-guide"
-      render={() => MarkdownPage(ProviderIntegrationGuide)}
+      render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
     />
     <Route component={NotFound} />
   </Switch>

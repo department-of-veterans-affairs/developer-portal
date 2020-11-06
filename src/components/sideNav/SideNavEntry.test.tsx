@@ -20,7 +20,7 @@ const testActive = async ({
   exact?: boolean;
   expectation: boolean;
   sharedAnchors?: string[];
-}) => {
+}): Promise<void> => {
   const activeClassName = 'va-api-active-sidenav-link';
   render(
     <MemoryRouter initialEntries={[location]}>

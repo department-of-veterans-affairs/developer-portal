@@ -19,10 +19,10 @@ const server = setupServer(
   ),
 );
 
-/* eslint-disable  */
-// @ts-ignore
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-ignore: need to mock fetch on global
 const spyFetch = jest.spyOn(global, 'fetch');
-/* eslint-enable  */
+/* eslint-enable @typescript-eslint/ban-ts-comment */
 
 describe('SupportContactUsForm', () => {
   beforeAll(() => server.listen());

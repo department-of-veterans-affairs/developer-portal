@@ -17,10 +17,10 @@ describe('position sticky', () => {
   });
 
   it('provides 3-level navigation via the sidenav', async () => {
-    const waitScrollClick = async (selector: string) => {
+    const waitScrollClick = async (selector: string): Promise<void> => {
       await page.waitForSelector(selector, { visible: true });
       await page.evaluate(sel => {
-        const elem = document.querySelector(sel) as HTMLElement;
+        const elem = document.querySelector(sel) as HTMLElement | null;
         if (elem) {
           elem.scrollIntoView();
         }
@@ -45,7 +45,7 @@ describe('position sticky', () => {
   });
 
   it('provides step-wise navigation via in-page cards', async () => {
-    const clickCard = async (caption: string) => {
+    const clickCard = async (caption: string): Promise<void> => {
       await page.evaluate(cap => {
         const elems = Array.from(document.querySelectorAll('a.va-api-card'));
         for (const el of elems) {

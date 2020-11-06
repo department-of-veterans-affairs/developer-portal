@@ -13,8 +13,8 @@ const HoverImage = (props: HoverImageProps): JSX.Element => {
       alt=""
       role="presentation"
       src={src}
-      onMouseEnter={() => setSrc(props.hoverImagePath)}
-      onMouseLeave={() => setSrc(props.imagePath)}
+      onMouseEnter={(): void => setSrc(props.hoverImagePath)}
+      onMouseLeave={(): void => setSrc(props.imagePath)}
     />
   );
 };

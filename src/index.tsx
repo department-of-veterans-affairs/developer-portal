@@ -28,7 +28,7 @@ try {
    * service worker, only unregister any that have already been installed.
    */
   unregister();
-} catch (err) {
+} catch (err: unknown) {
   if (REACT_APP_SENTRY_DSN) {
     Sentry.captureException(err);
   }
