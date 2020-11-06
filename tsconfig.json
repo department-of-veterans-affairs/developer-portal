@@ -18,7 +18,8 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "importsNotUsedAsValues": "preserve"
   },
   "include": ["src/**/*"],
   "exclude": ["src/e2eHelpers.ts"]
