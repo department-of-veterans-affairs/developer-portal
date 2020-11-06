@@ -5,7 +5,7 @@ import PageHeader from '../../components/PageHeader';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
 import SupportContactUsForm from './SupportContactUsForm';
 
-const GitHubSnippet = () => (
+const GitHubSnippet = (): JSX.Element => (
   <div className="vads-u-margin-y--2">
     <h3>Submit an Issue via GitHub</h3>
     <a
@@ -27,7 +27,7 @@ const headerProps = {
 const SupportContactUs = (): JSX.Element => {
   const [sent, setSent] = React.useState(false);
 
-  const onSuccess = () => {
+  const onSuccess = (): void => {
     setSent(true);
   };
 
@@ -38,7 +38,7 @@ const SupportContactUs = (): JSX.Element => {
     <>
       {sent && <SupportConfirmation />}
       {!sent && (
-        <section role="region" aria-label="Support Overview">
+        <section aria-label="Support Overview">
           <PageHeader {...headerProps} />
           <GitHubSnippet />
           <SupportContactUsForm onSuccess={onSuccess} />

@@ -1,9 +1,10 @@
+/* eslint-disable max-lines -- component is long, need to refactor at some point */
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { 
+import {
   OpenAPISpec,
   OpenAPISpecV2,
   OpenAPISpecV3,
@@ -11,7 +12,7 @@ import {
   Parameter,
   Schema,
   Server,
-  SwaggerSpecObject, 
+  SwaggerSpecObject,
 } from 'swagger-ui';
 import CodeWrapper from '../../../components/CodeWrapper';
 import { System } from './types';
@@ -41,7 +42,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       bearerToken: '',
       env: 'sandbox',
       paramValues: {},
-      params: this.props.operation.parameters,
+      params: this.props.operation.parameters ?? [],
       requestBodyProperties,
     };
 
@@ -50,16 +51,13 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       state.env = spec.servers[0].url;
     }
 
-    if (state.params) {
-      state.params.map((parameter: Parameter) => {
-        state.paramValues[parameter.name] = parameter.example || '';
-      });
-    }
+    state.params.forEach((parameter: Parameter) => {
+      state.paramValues[parameter.name] = parameter.example || '';
+    });
 
     if (this.props.operation.requestBody && this.requirementsMet()) {
-      const properties = this.props.operation.requestBody.content['application/json'].schema
-        .properties;
-      Object.keys(properties).map((propertyName: string) => {
+      const { properties } = this.props.operation.requestBody.content['application/json'].schema;
+      Object.keys(properties).forEach((propertyName: string) => {
         const property = properties[propertyName];
         property.name = propertyName;
         requestBodyProperties.push(property);
@@ -82,12 +80,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       const spec: OpenAPISpecV2 = this.jsonSpec() as OpenAPISpecV2;
       return hasSecurity && !!spec.host;
     } else {
-      const spec: OpenAPISpecV3 = this.jsonSpec() as OpenAPISpecV3;
-      const hasServerBlock =
-        spec.servers !== undefined && this.containsServerInformation();
-      const isFormData =
-        this.props.operation.requestBody &&
-        this.props.operation.requestBody.content['multipart/form-data'];
+      const hasServerBlock = this.containsServerInformation();
+      const isFormData = this.props.operation.requestBody?.content['multipart/form-data'];
       return hasSecurity && hasServerBlock && !isFormData;
     }
   }
@@ -98,10 +92,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public handleInputChange(parameterName: string, value: string): void {
-    this.setState({ 
-      ...this.state,
+    this.setState({
       paramValues: {
-        ... this.state.paramValues,
         [parameterName]: value,
       },
     });
@@ -117,7 +109,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               type="text"
               id={fieldName}
               value={this.state.paramValues[fieldName] || ''}
-              onChange={e => this.handleInputChange(fieldName, e.target.value)}
+              onChange={(e): void => this.handleInputChange(fieldName, e.target.value)}
             />
           </div>
         ))}
@@ -130,7 +122,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     const options = {
       operationId: this.props.operation.operationId,
       parameters: {
-        ... this.state.paramValues,
+        ...this.state.paramValues,
         apiKey: this.state.apiKey,
         bearerToken: this.state.bearerToken,
         env: this.state.env,
@@ -165,11 +157,13 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         : this.state.bearerToken;
       options.securities = {
         authorized: {
-          // support multiple means of passing the bearer token. this is mostly due to swagger-client
-          // not being particularly sophisticated on this front.
-          // Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
-          // OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
-          // https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
+          /**
+           * support multiple means of passing the bearer token. this is mostly due to swagger-client
+           * not being particularly sophisticated on this front.
+           * Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
+           * OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
+           * https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
+           */
           OauthFlow: token ? {
             token: {
               access_token: token,
@@ -187,7 +181,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
 
   public buildRequestBody(): { [key: string]: string | string[] | Record<string, unknown> } {
     const requestBody = {};
-    this.state.requestBodyProperties.map((property: Schema) => {
+    this.state.requestBodyProperties.forEach((property: Schema) => {
       if (property.type === 'array' && this.state.paramValues[property.name]) {
         requestBody[property.name] = this.state.paramValues[property.name].split(',');
       } else if (property.type === 'object') {
@@ -195,7 +189,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
           requestBody[property.name] = JSON.parse(
             this.state.paramValues[property.name],
           ) as Record<string, unknown>;
-        } catch (e) {
+        } catch (e: unknown) {
           requestBody[property.name] = this.state.paramValues[property.name];
         }
       } else {
@@ -206,7 +200,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public parameterContainer(): JSX.Element | null {
-    if (this.state.params) {
+    if (this.state.params.length > 0) {
       return (
         <div>
           <h3> Parameters: </h3>
@@ -249,7 +243,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
             <input
               aria-label="Enter API Key"
               value={this.state.apiKey}
-              onChange={e => {
+              onChange={(e): void => {
                 this.setState({ apiKey: e.target.value });
               }}
             />
@@ -267,7 +261,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
             <input
               aria-label="Enter Bearer Token"
               value={this.state.bearerToken}
-              onChange={e => {
+              onChange={(e): void => {
                 this.setState({ bearerToken: e.target.value });
               }}
             />
@@ -283,19 +277,19 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public environmentOptions(): JSX.Element[] {
     if (this.isSwagger2()) {
       const options = [
-        { value: 'sandbox', display: 'Sandbox' },
-        { value: '', display: 'Production' },
+        { display: 'Sandbox', value: 'sandbox' },
+        { display: 'Production', value: '' },
       ];
-      return options.map((optionValues, i) => (
-        <option value={optionValues.value} key={i}>
+      return options.map(optionValues => (
+        <option value={optionValues.value} key={optionValues.value}>
           {optionValues.display}
         </option>
       ));
     } else {
       const spec: OpenAPISpecV3 = this.jsonSpec() as OpenAPISpecV3;
       return spec.servers.map(
-        (server: Server, i: number): JSX.Element => (
-          <option value={server.url} key={i}>
+        (server: Server): JSX.Element => (
+          <option value={server.url} key={server.url}>
             {server.description}
           </option>
         ),
@@ -316,9 +310,10 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     return (
       <div>
         <h3>Environment:</h3>
-        <select // tslint:disable-next-line:react-a11y-no-onchange
+        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+        <select
           value={this.state.env}
-          onChange={e => {
+          onChange={(e): void => {
             this.setState({ env: e.target.value });
           }}
           aria-label="Select environment"

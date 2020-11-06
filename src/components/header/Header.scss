@@ -4,7 +4,8 @@
   }
 }
 
-.va-api-mobile-menu-button {
+// the [type="button"] selector is required to override some USWDS/VADS styles
+.va-api-mobile-menu-button[type='button'] {
   border-radius: 0;
   height: 4rem;
   text-transform: uppercase;

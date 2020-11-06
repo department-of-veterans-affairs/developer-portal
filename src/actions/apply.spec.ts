@@ -1,3 +1,4 @@
+/* eslint-disable max-lines -- test suite allowed to break file length rule */
 import * as Sentry from '@sentry/browser';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
@@ -72,13 +73,13 @@ describe('submitForm', () => {
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     expect(dispatch).toBeCalledWith({
-      type: constants.SUBMIT_APPLICATION_BEGIN,
+      type: constants.SUBMIT_APPLICATION_BEGIN_VALUE,
     });
     expect(dispatch).toBeCalledWith({
       clientID: 'testid',
       clientSecret: 'test_secret',
       token: 'testtoken',
-      type: constants.SUBMIT_APPLICATION_SUCCESS,
+      type: constants.SUBMIT_APPLICATION_SUCCESS_VALUE,
     });
   });
 
@@ -99,11 +100,11 @@ describe('submitForm', () => {
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     expect(dispatch).toBeCalledWith({
-      type: constants.SUBMIT_APPLICATION_BEGIN,
+      type: constants.SUBMIT_APPLICATION_BEGIN_VALUE,
     });
     expect(dispatch).toBeCalledWith({
       status: 'KABOOM',
-      type: constants.SUBMIT_APPLICATION_ERROR,
+      type: constants.SUBMIT_APPLICATION_ERROR_VALUE,
     });
   });
 
@@ -121,19 +122,19 @@ describe('submitForm', () => {
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-    const scope: any = {
+    const scope: Partial<Sentry.Scope> = {
       setLevel: jest.fn(),
     };
-    sentryCallback(scope);
+    sentryCallback(scope as Sentry.Scope);
     expect(dispatch).toBeCalledWith({
-      type: constants.SUBMIT_APPLICATION_BEGIN,
+      type: constants.SUBMIT_APPLICATION_BEGIN_VALUE,
     });
     expect(mockedSentry.captureException).toBeCalledWith(
       Error('Developer Application validation errors: email must be valid email'),
     );
     expect(dispatch).toBeCalledWith({
       status: 'Developer Application validation errors: email must be valid email',
-      type: constants.SUBMIT_APPLICATION_ERROR,
+      type: constants.SUBMIT_APPLICATION_ERROR_VALUE,
     });
   });
 
@@ -154,15 +155,15 @@ describe('submitForm', () => {
     getState.mockReturnValueOnce(appState);
     await actions.submitForm()(dispatch, getState, undefined);
     const sentryCallback = mockedSentry.withScope.mock.calls[0][0];
-    const scope: any = { setLevel: jest.fn() };
-    sentryCallback(scope);
+    const scope: Partial<Sentry.Scope> = { setLevel: jest.fn() };
+    sentryCallback(scope as Sentry.Scope);
     expect(dispatch).toBeCalledWith({
-      type: constants.SUBMIT_APPLICATION_BEGIN,
+      type: constants.SUBMIT_APPLICATION_BEGIN_VALUE,
     });
     expect(mockedSentry.captureException).toBeCalledWith(Error('bad bad not good'));
     expect(dispatch).toBeCalledWith({
       status: 'bad bad not good',
-      type: constants.SUBMIT_APPLICATION_ERROR,
+      type: constants.SUBMIT_APPLICATION_ERROR_VALUE,
     });
   });
 });
@@ -175,7 +176,7 @@ describe('updateApplicationEmail', () => {
     };
     expect(actions.updateApplicationEmail(newValue)).toEqual({
       newValue,
-      type: constants.UPDATE_APPLICATION_EMAIL,
+      type: constants.UPDATE_APPLY_EMAIL_VALUE,
     });
   });
 
@@ -187,7 +188,7 @@ describe('updateApplicationEmail', () => {
     };
     expect(actions.updateApplicationEmail(newValue)).toEqual({
       newValue,
-      type: constants.UPDATE_APPLICATION_EMAIL,
+      type: constants.UPDATE_APPLY_EMAIL_VALUE,
     });
   });
 
@@ -202,7 +203,7 @@ describe('updateApplicationEmail', () => {
         dirty: false,
         value: newValue.value,
       },
-      type: constants.UPDATE_APPLICATION_EMAIL,
+      type: constants.UPDATE_APPLY_EMAIL_VALUE,
     });
   });
 
@@ -217,7 +218,7 @@ describe('updateApplicationEmail', () => {
         validation: 'Must be a valid email address.',
         value: newValue.value,
       },
-      type: constants.UPDATE_APPLICATION_EMAIL,
+      type: constants.UPDATE_APPLY_EMAIL_VALUE,
     });
   });
 
@@ -234,7 +235,7 @@ describe('updateApplicationEmail', () => {
         ...newValue,
         validation: errorMessage,
       },
-      type: constants.UPDATE_APPLICATION_EMAIL,
+      type: constants.UPDATE_APPLY_EMAIL_VALUE,
     });
   });
 
@@ -262,10 +263,10 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'http://valid.com/redirect',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue,
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_REDIRECT_URI_VALUE,
     });
   });
 
@@ -275,10 +276,10 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'https://',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue,
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_REDIRECT_URI_VALUE,
     });
   });
 
@@ -288,13 +289,13 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'https://valid.com/redirect',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue: {
         dirty: false,
         value: newValue.value,
       },
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_REDIRECT_URI_VALUE,
     });
   });
 
@@ -304,14 +305,14 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'ftp://host:21',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue);
     expect(updateAction).toEqual({
       newValue: {
         dirty: false,
         validation: 'Must be an http or https URI.',
         value: newValue.value,
       },
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_REDIRECT_URI_VALUE,
     });
   });
 
@@ -322,13 +323,13 @@ describe('updateApplicationOAuthRedirectURI', () => {
       value: 'not an HTTP URI',
     };
 
-    const updateAction = actions.updateApplicationOAuthRedirectURI(newValue, errorMessage);
+    const updateAction = actions.updateApplyOAuthRedirectURI(newValue, errorMessage);
     expect(updateAction).toEqual({
       newValue: {
         ...newValue,
         validation: errorMessage,
       },
-      type: constants.UPDATE_APPLICATION_OAUTH_REDIRECT_URI,
+      type: constants.UPDATE_APPLY_REDIRECT_URI_VALUE,
     });
   });
 
@@ -341,11 +342,11 @@ describe('updateApplicationOAuthRedirectURI', () => {
     const mockValidateURI = jest
       .spyOn(validators, 'validateOAuthRedirectURI')
       .mockReturnValue(newValue);
-    actions.updateApplicationOAuthRedirectURI(newValue);
+    actions.updateApplyOAuthRedirectURI(newValue);
     expect(mockValidateURI.mock.calls.length).toBe(0);
 
     newValue.dirty = true;
-    actions.updateApplicationOAuthRedirectURI(newValue);
+    actions.updateApplyOAuthRedirectURI(newValue);
     expect(mockValidateURI.mock.calls.length).toBe(1);
     mockValidateURI.mockRestore();
   });

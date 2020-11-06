@@ -13,18 +13,18 @@ import './AuthorizationDocs.scss';
 export const AuthorizationDocs = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const category = lookupApiCategory(apiCategoryKey);
-  if (category != null) {
-    if (category.apis.some(api => !!api.oAuth) && apiCategoryKey !== 'benefits') {
-      return (
-        <div className="va-api-authorization-docs">
-          <PageHeader halo={category.name} header="Authorization" />
-          <OAuth />
-        </div>
-      );
-    } else {
-      return <ApiKeyAuth apiCategoryKey={apiCategoryKey} />;
-    }
+  if (category == null) {
+    return <Redirect to="/explore" />;
+  }
+
+  if (category.apis.some(api => !!api.oAuth) && apiCategoryKey !== 'benefits') {
+    return (
+      <div className="va-api-authorization-docs">
+        <PageHeader halo={category.name} header="Authorization" />
+        <OAuth />
+      </div>
+    );
   } else {
-    return <Redirect to="/explore/bogus" />;
+    return <ApiKeyAuth apiCategoryKey={apiCategoryKey} />;
   }
 };

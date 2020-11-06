@@ -24,7 +24,7 @@ const Header = (): JSX.Element => {
    */
   const [mobileNavVisible, setMobileNavVisible] = React.useState(false);
 
-  const toggleMenuVisible = () => {
+  const toggleMenuVisible = (): void => {
     setMobileNavVisible((state: boolean) => !state);
   };
 
@@ -98,6 +98,7 @@ const Header = (): JSX.Element => {
                 'vads-u-text-align--center',
               )}
               onClick={toggleMenuVisible}
+              type="button"
             >
               Menu
             </button>

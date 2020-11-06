@@ -6,11 +6,9 @@ import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
-import MarkdownPage from './components/MarkdownPage';
-import ApplyForm from './containers/apply/ApplyForm';
-import ApplySuccess from './containers/apply/ApplySuccess';
-import BetaPage from './containers/Beta';
-import BetaSuccess from './containers/BetaSuccess';
+import { MarkdownPage } from './components';
+import { ApplyForm } from './containers/apply/ApplyForm';
+import { ApplySuccess } from './containers/apply/ApplySuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
@@ -29,34 +27,35 @@ export const SiteRoutes: React.FunctionComponent = () => (
     <Route exact path="/index.html" component={Home} />
 
     {/* Legacy routes that we want to maintain: */}
-    <Route path="/explore/terms-of-service" render={() => <Redirect to="/terms-of-service" />} />
-    <Route path="/whats-new" render={() => <Redirect to="/news" />} />
+    <Route path="/explore/terms-of-service" render={(): JSX.Element => <Redirect to="/terms-of-service" />} />
+    <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
 
     {/* Current routes: */}
-    <Route path="/go-live" render={() => MarkdownPage(PathToProduction)} />
-    <Route path="/terms-of-service" render={() => MarkdownPage(TermsOfService)} />
+    <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
+    <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
     <Route
       path="/apply"
-      render={() => (
+      render={(): JSX.Element => (
         <Flag
           name={['signups_enabled']}
-          component={ApplyForm}
+          render={ApplyForm}
           fallbackComponent={DisabledApplyForm}
         />
       )}
     />
     <Route path="/applied" component={ApplySuccess} />
-    <Route path="/beta" component={BetaPage} />
-    <Route path="/beta-success" component={BetaSuccess} />
     <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
     <Route
       path="/oauth"
-      render={() => <Redirect to="/explore/verification/docs/authorization" />}
+      render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
     />
     <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
     <Route path="/news" component={News} />
     <Route path="/support" component={Support} />
-    <Route path="/providers/integration-guide" render={() => MarkdownPage(ProviderIntegrationGuide)} />
+    <Route
+      path="/providers/integration-guide"
+      render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
+    />
     <Route component={NotFound} />
   </Switch>
 );
@@ -70,10 +69,12 @@ interface SitemapConfig {
   };
 }
 
-/*  When a route is added to or removed from `topLevelRoutes` the sitemap will be automatically updated during the next build.
- *   There are situations when the config for react-router-sitemap needs to be updated for the sitemap to reflect the desired paths:
- *     - a route is included in `topLevelRoutes` that should not be included in the sitemap needs to be added to `pathFilter`
- *     - a route with dynamic subroutes (e.g. `/route/:param`) is added an array of the available params needs to be added to `paramsConfig`
+/**
+ * When a route is added to or removed from `topLevelRoutes` the sitemap will be automatically
+ * updated during the next build. There are situations when the config for react-router-sitemap needs
+ * to be updated for the sitemap to reflect the desired paths:
+ * - a route is included in `topLevelRoutes` that should not be included in the sitemap needs to be added to `pathFilter`
+ * - a route with dynamic subroutes (e.g. `/route/:param`) is added an array of the available params needs to be added to `paramsConfig`
  */
 
 export const sitemapConfig = (): SitemapConfig => {
@@ -115,7 +116,7 @@ export const sitemapConfig = (): SitemapConfig => {
     },
     pathFilter: {
       isValid: false,
-      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/beta-success|\/oauth/],
+      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/oauth/],
     },
     topLevelRoutes: SiteRoutes,
   };

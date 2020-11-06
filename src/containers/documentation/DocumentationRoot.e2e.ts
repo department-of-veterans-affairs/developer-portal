@@ -4,7 +4,7 @@ import { puppeteerHost } from '../../e2eHelpers';
 
 describe('position sticky', () => {
   it('should keep nav element in place after scroll', async () => {
-    await page.goto(`${puppeteerHost}/explore`, { waitUntil: 'networkidle0', timeout: 60000 });
+    await page.goto(`${puppeteerHost}/explore`, { timeout: 60000, waitUntil: 'networkidle0' });
     const originalDistanceFromTop = await page.evaluate(
       () => document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top,
     );
@@ -17,10 +17,10 @@ describe('position sticky', () => {
   });
 
   it('provides 3-level navigation via the sidenav', async () => {
-    const waitScrollClick = async (selector: string) => {
+    const waitScrollClick = async (selector: string): Promise<void> => {
       await page.waitForSelector(selector, { visible: true });
       await page.evaluate(sel => {
-        const elem = document.querySelector(sel) as HTMLElement;
+        const elem = document.querySelector(sel) as HTMLElement | null;
         if (elem) {
           elem.scrollIntoView();
         }
@@ -28,7 +28,7 @@ describe('position sticky', () => {
       await page.click(selector);
     };
 
-    await page.setViewport({ width: 1200, height: 800 });
+    await page.setViewport({ height: 800, width: 1200 });
     await page.goto(`${puppeteerHost}/explore`, {
       waitUntil: ['domcontentloaded', 'networkidle0'],
     });
@@ -45,7 +45,7 @@ describe('position sticky', () => {
   });
 
   it('provides step-wise navigation via in-page cards', async () => {
-    const clickCard = async (caption: string) => {
+    const clickCard = async (caption: string): Promise<void> => {
       await page.evaluate(cap => {
         const elems = Array.from(document.querySelectorAll('a.va-api-card'));
         for (const el of elems) {
@@ -59,7 +59,7 @@ describe('position sticky', () => {
       }, caption);
     };
 
-    await page.setViewport({ width: 1200, height: 800 });
+    await page.setViewport({ height: 800, width: 1200 });
     await page.goto(`${puppeteerHost}/explore`, {
       waitUntil: ['domcontentloaded', 'networkidle0'],
     });
@@ -70,11 +70,12 @@ describe('position sticky', () => {
   });
 });
 
-describe('inavlid cagetories', () => {
-  for (const path of ['', 'docs/quickstart']) {
-    it(`should redirect "explore/invalid/${path}" to "explore"`, async () => {
-      await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
-      expect(page.url()).toEqual(`${puppeteerHost}/explore`);
-    });
-  }
+describe('invalid cagetories', () => {
+  it.each([
+    '',
+    'docs/quickstart',
+  ])('should redirect to /explore from /explore/invalid/%s', async (path: string) => {
+    await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
+    expect(page.url()).toEqual(`${puppeteerHost}/explore`);
+  });
 });

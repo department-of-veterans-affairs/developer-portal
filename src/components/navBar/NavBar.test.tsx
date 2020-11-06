@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 import { NavBar } from './NavBar';
 
-const noop = () => undefined;
+const noop = (): void => undefined;
 
 afterEach(cleanup);
 

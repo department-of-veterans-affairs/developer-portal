@@ -18,8 +18,10 @@ const SideNav = (props: SideNavProps): JSX.Element => {
 
   React.useEffect(() => {
     if (navRef.current) {
-      // Stickyfill lets us use `position: sticky` in browsers that may not
-      // support it. The library requires a dom reference to work, hence the ref.
+      /**
+       * Stickyfill lets us use `position: sticky` in browsers that may not
+       * support it. The library requires a dom reference to work, hence the ref.
+       */
       Stickyfill.addOne(navRef.current);
     }
   }, [navRef]);

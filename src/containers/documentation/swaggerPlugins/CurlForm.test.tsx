@@ -4,6 +4,7 @@
  * form's requirements.
  */
 
+/* eslint-disable max-lines -- exception for test suite */
 import '@testing-library/jest-dom/extend-expect';
 import {
   findByRole,
@@ -21,8 +22,10 @@ import * as decisionReviews from '../../../__mocks__/openAPIData/decisionReviews
 import * as fhirR4 from '../../../__mocks__/openAPIData/fhirR4.test.json';
 import { SwaggerPlugins, System } from './index';
 
-// some tests in this file are long-running because of the expense of rendering Swagger UI,
-// so we double the timeout to 10s from the default 5s.
+/**
+ * some tests in this file are long-running because of the expense of rendering Swagger UI,
+ * so we double the timeout to 10s from the default 5s.
+ */
 jest.setTimeout(10000);
 
 const expandOperation = (operationTag: string, description: string): HTMLElement => {
@@ -40,7 +43,7 @@ const expandOperation = (operationTag: string, description: string): HTMLElement
   return operationTagHeader.nextElementSibling as HTMLElement;
 };
 
-const collapseOperation = (operationContainer: HTMLElement, description: string) => {
+const collapseOperation = (operationContainer: HTMLElement, description: string): void => {
   const operationEl = getByText(operationContainer, description);
   expect(operationEl).toBeInTheDocument();
   fireEvent.click(operationEl);
@@ -78,7 +81,6 @@ const renderDecisionReviews = (): void => {
 };
 
 const renderFHIRR4 = (): void => {
-  // tslint:disable-next-line:no-unused-expression
   SwaggerUI({
     dom_id: '#mount-fhir-r4',
     plugins: [SwaggerPlugins(() => false)],
@@ -137,7 +139,7 @@ describe('CurlForm', () => {
     it('renders a link to the apply page', async () => {
       renderDecisionReviews();
       renderFHIRR4();
-      const testApplyMessage = async () => {
+      const testApplyMessage = async (): Promise<void> => {
         const applyMessage = await findByText(operationContainer, "Don't have an API Key?", {
           exact: false,
         });
@@ -356,7 +358,7 @@ describe('CurlForm', () => {
     });
 
     it('updates the value of each parameter input on change', async () => {
-      const testParamChange = async (param: string, value: string) => {
+      const testParamChange = async (param: string, value: string): Promise<void> => {
         const input = await findByRole(operationContainer, 'textbox', { name: param });
         expect(input).toBeInTheDocument();
         fireEvent.change(input, { target: { value } });
@@ -374,7 +376,7 @@ describe('CurlForm', () => {
     });
 
     it('updates params in the generated curl command', async () => {
-      const updateParam = async (param: string, value: string) => {
+      const updateParam = async (param: string, value: string): Promise<void> => {
         const input = await findByRole(operationContainer, 'textbox', { name: param });
         expect(input).toBeInTheDocument();
         fireEvent.change(input, { target: { value } });
@@ -430,7 +432,7 @@ describe('CurlForm', () => {
     });
 
     it('updates the value of each request body input on change', async () => {
-      const testRequestBodyChange = async (param: string, value: string) => {
+      const testRequestBodyChange = async (param: string, value: string): Promise<void> => {
         const input = await findByRole(operationContainer, 'textbox', { name: param });
         expect(input).toBeInTheDocument();
         fireEvent.change(input, { target: { value } });
@@ -442,7 +444,7 @@ describe('CurlForm', () => {
     });
 
     it('updates the generated curl command when request body inputs change', async () => {
-      const updateRequestBody = async (param: string, value: string) => {
+      const updateRequestBody = async (param: string, value: string): Promise<void> => {
         const input = await findByRole(operationContainer, 'textbox', { name: param });
         expect(input).toBeInTheDocument();
         fireEvent.change(input, { target: { value } });

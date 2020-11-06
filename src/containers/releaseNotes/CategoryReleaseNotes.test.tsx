@@ -1,4 +1,5 @@
-import '@testing-library/jest-dom';
+/* eslint-disable max-lines -- exception for test suite */
+import '@testing-library/jest-dom/extend-expect';
 import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import 'jest';
@@ -26,7 +27,7 @@ describe('ReleaseNotesCollection', () => {
   });
 
   describe('CategoryReleaseNotes', () => {
-    const renderComponent = async (route = '/release-notes/lotr') => {
+    const renderComponent = async (route = '/release-notes/lotr'): Promise<void> => {
       await cleanup(); // clean up beforeEach render if we're testing a different page
       render(
         <FlagsProvider flags={getFlags()}>
@@ -152,7 +153,7 @@ describe('ReleaseNotesCollection', () => {
         const history = createMemoryHistory({ initialEntries: ['/release-notes/fakeCategory'] });
         const { container } = render(
           <Router history={history}>
-            <Route path="/release-notes" exact render={() => <div>/release-notes</div>} />
+            <Route path="/release-notes" exact render={(): JSX.Element => <div>/release-notes</div>} />
             <Route
               path="/release-notes/fakeCategory"
               exact
@@ -166,7 +167,7 @@ describe('ReleaseNotesCollection', () => {
   });
 
   describe('DeactivatedReleaseNotes', () => {
-    const renderComponent = async () => {
+    const renderComponent = async (): Promise<void> => {
       await cleanup();
       render(
         <FlagsProvider flags={getFlags()}>

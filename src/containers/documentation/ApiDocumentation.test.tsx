@@ -35,6 +35,20 @@ const server = setupServer(
   ),
 );
 
+jest.mock('react-router-dom', () => ({
+  useHistory: jest.fn().mockReturnValue({
+    location: { pathname: '/another-route' },
+    push: jest.fn(),
+  }),
+  useLocation: jest.fn().mockReturnValue({
+    hash: '',
+    key: '5nvxpbdafa',
+    pathname: '/another-route',
+    search: '',
+    state: null,
+  }),
+}));
+
 describe('ApiDocumentation', () => {
   const defaultFlags: AppFlags = {
     categories: { category: true },
@@ -50,7 +64,7 @@ describe('ApiDocumentation', () => {
     render(
       <Provider store={store}>
         <FlagsProvider flags={defaultFlags}>
-          <ApiDocumentation apiDefinition={api} categoryKey="fake" location={history.location} />
+          <ApiDocumentation apiDefinition={api} location={history.location} />
         </FlagsProvider>
       </Provider>,
     );
@@ -77,7 +91,7 @@ describe('ApiDocumentation', () => {
     };
 
     it('has a section for each operation', async () => {
-      const assertOperationPresent = async (tag: string, path: RegExp) => {
+      const assertOperationPresent = async (tag: string, path: RegExp): Promise<void> => {
         const containerEl: HTMLElement = await getOperationContainer(tag);
         const methodEl: HTMLElement = getByText(containerEl, 'GET');
         expect(methodEl).toBeInTheDocument();
@@ -90,7 +104,7 @@ describe('ApiDocumentation', () => {
     });
 
     it('has parameters for each operation', async () => {
-      const assertParametersPresent = async (tag: string, path: RegExp) => {
+      const assertParametersPresent = async (tag: string, path: RegExp): Promise<void> => {
         const containerEl: HTMLElement = await getOperationContainer(tag);
         fireEvent.click(getByText(containerEl, path));
         expect(
@@ -103,7 +117,7 @@ describe('ApiDocumentation', () => {
     });
 
     it('has parameters for each operation', async () => {
-      const assertResponsesPresent = async (tag: string, path: RegExp) => {
+      const assertResponsesPresent = async (tag: string, path: RegExp): Promise<void> => {
         const containerEl: HTMLElement = await getOperationContainer(tag);
         fireEvent.click(getByText(containerEl, path));
         expect(await findByRole(containerEl, 'heading', { name: 'Responses' })).toBeInTheDocument();

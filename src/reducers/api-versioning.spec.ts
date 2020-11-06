@@ -5,7 +5,7 @@ import { getDocURL, getVersion } from './api-versioning';
 describe('get doc url', () => {
   it('should return initial doc url when no metadata', () => {
     const state: APIVersioning = {
-      docUrl: 'http://google.com',
+      defaultUrl: 'http://google.com',
       requestedApiVersion: '1.0.0',
       versions: null,
     };
@@ -15,7 +15,7 @@ describe('get doc url', () => {
 
   it('should return specified doc url when metadata is present', () => {
     const state: APIVersioning = {
-      docUrl: 'http://google.com',
+      defaultUrl: 'http://google.com',
       requestedApiVersion: '1.0.0',
       versions: [
         {
@@ -33,9 +33,9 @@ describe('get doc url', () => {
 });
 
 describe('get version', () => {
-  it("should return 'current' when metadata is not present", () => {
+  it('should return "current" when metadata is not present', () => {
     const state: APIVersioning = {
-      docUrl: 'http://google.com',
+      defaultUrl: 'http://google.com',
       requestedApiVersion: '1.0.0',
       versions: null,
     };
@@ -43,9 +43,9 @@ describe('get version', () => {
     expect(getVersion(state)).toEqual('current');
   });
 
-  it("should return 'current' when metadata is present and version is current version", () => {
+  it('should return "current" when metadata is present and version is current version', () => {
     const state: APIVersioning = {
-      docUrl: 'http://google.com',
+      defaultUrl: 'http://google.com',
       requestedApiVersion: '1.0.0',
       versions: [
         {
@@ -63,7 +63,7 @@ describe('get version', () => {
 
   it('should return the version when metadata is present and version is not the current version', () => {
     const state: APIVersioning = {
-      docUrl: 'http://google.com',
+      defaultUrl: 'http://google.com',
       requestedApiVersion: '1.0.0',
       versions: [
         {

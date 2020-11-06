@@ -1,9 +1,9 @@
-/*
-  A module for wrapping common sets of VADS classes used throughout the site. Think of this 
-  module as mixins but in Typescript. The default pattern here is to use the classNames utility
-  to aggregate VADS classes, with optional conditions, but you should feel free to write utilities
-  however you want.
-*/
+/**
+ * A module for wrapping common sets of VADS classes used throughout the site. Think of this
+ * module as mixins but in Typescript. The default pattern here is to use the classNames utility
+ * to aggregate VADS classes, with optional conditions, but you should feel free to write utilities
+ * however you want.
+ */
 
 import classNames from 'classnames';
 

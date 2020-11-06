@@ -8,7 +8,7 @@ import { MainNavItem } from './MainNavItem';
 const mockProps = {
   className: 'mock',
   largeScreenProps: {
-    isActive: () => false,
+    isActive: (): boolean => false,
     onMouseEnter: jest.fn(),
     onMouseLeave: jest.fn(),
   },

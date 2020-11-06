@@ -1,30 +1,27 @@
 import { createSelector } from 'reselect';
-import { SetVersioning, SetRequestedAPIVersion } from '../actions';
+import { ResetVersioning, SetVersioning, SetRequestedAPIVersion } from '../actions';
 import { APIVersioning, VersionMetadata } from '../types';
 import * as constants from '../types/constants';
 
 const currentVersionStatus = 'Current Version';
-const getRequestedApiVersion = (state: APIVersioning) => state.requestedApiVersion;
-const getAPIVersions = (state: APIVersioning) => state.versions;
-const getInitialDocURL = (state: APIVersioning) => state.docUrl;
+const getRequestedApiVersion = (state: APIVersioning): string => state.requestedApiVersion;
+const getAPIVersions = (state: APIVersioning): VersionMetadata[] | null => state.versions;
+const getInitialDocURL = (state: APIVersioning): string => state.defaultUrl;
 
 const getVersionInfo = createSelector(
   getRequestedApiVersion,
   getAPIVersions,
-  (requestedVersion: string, versionMetadata: VersionMetadata[]) => {
+  (requestedVersion: string, versionMetadata: VersionMetadata[] | null) => {
     if (!versionMetadata) {
       return null;
     }
 
-    if (
-      versionMetadata &&
-      (!requestedVersion || requestedVersion === constants.CURRENT_VERSION_IDENTIFIER)
-    ) {
-      const selectCurrentVersion = (versionInfo: VersionMetadata) =>
+    if (!requestedVersion || requestedVersion === constants.CURRENT_VERSION_IDENTIFIER) {
+      const selectCurrentVersion = (versionInfo: VersionMetadata): boolean =>
         versionInfo.status === currentVersionStatus;
       return versionMetadata.find(selectCurrentVersion);
     } else {
-      const selectSpecificVersion = (versionInfo: VersionMetadata) =>
+      const selectSpecificVersion = (versionInfo: VersionMetadata): boolean =>
         versionInfo.version === requestedVersion;
       return versionMetadata.find(selectSpecificVersion);
     }
@@ -34,7 +31,7 @@ const getVersionInfo = createSelector(
 export const getDocURL = createSelector(
   getVersionInfo,
   getInitialDocURL,
-  (versionInfo: VersionMetadata, initialDocUrl: string) => {
+  (versionInfo: VersionMetadata | null, initialDocUrl: string) => {
     if (!versionInfo) {
       return initialDocUrl;
     }
@@ -44,7 +41,7 @@ export const getDocURL = createSelector(
 
 export const getVersion = createSelector(
   getVersionInfo,
-  (versionInfo: VersionMetadata) => {
+  (versionInfo: VersionMetadata | null) => {
     if (!versionInfo) {
       return constants.CURRENT_VERSION_IDENTIFIER;
     }
@@ -56,7 +53,7 @@ export const getVersion = createSelector(
 
 export const getVersionNumber = createSelector(
   getVersionInfo,
-  (versionInfo: VersionMetadata) => {
+  (versionInfo: VersionMetadata | null) => {
     if (!versionInfo) {
       return '';
     }
@@ -64,19 +61,25 @@ export const getVersionNumber = createSelector(
   },
 );
 
+const defaultApiVersioningState = {
+  defaultUrl: '',
+  requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
+  versions: null,
+};
+
 export const apiVersioning = (
-  state = {
-    docUrl: '',
-    requestedApiVersion: constants.CURRENT_VERSION_IDENTIFIER,
-    versions: null,
-  },
-  action: SetVersioning | SetRequestedAPIVersion,
+  state = defaultApiVersioningState,
+  action: ResetVersioning | SetVersioning | SetRequestedAPIVersion,
 ): APIVersioning => {
   switch (action.type) {
-    case constants.SET_REQUESTED_API_VERSION:
+    case constants.RESET_VERSIONING_VALUE:
+      return defaultApiVersioningState;
+    case constants.SET_REQUESTED_API_VERSION_VALUE:
       return { ...state, requestedApiVersion: action.version };
-    case constants.SET_VERSIONING:
-      return { ...state, versions: action.versions, docUrl: action.docUrl };
+    case constants.SET_VERSIONING_VALUE:
+      const requestedApiVersion = action.version || state.requestedApiVersion;
+      const { defaultUrl, versions } = action;
+      return { ...state, defaultUrl, requestedApiVersion, versions };
     default:
       return state;
   }

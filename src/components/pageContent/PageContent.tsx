@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { SiteRoutes } from '../../Routes';
 
-const focusAndScroll = (elementToFocus: HTMLElement | null) => {
+const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
   if (elementToFocus) {
     elementToFocus.focus();
   }
@@ -17,7 +17,7 @@ const PageContent = (): JSX.Element => {
 
   React.useEffect(() => {
     const prevPath: string | null = prevPathRef.current;
-    
+
     if (prevPath !== location.pathname || location.hash) {
       // Only focus and scroll if it's not an initial page load
       if (prevPath) {

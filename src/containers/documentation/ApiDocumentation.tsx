@@ -7,34 +7,32 @@ import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
 import { Flag } from '../../flags';
 import { history } from '../../store';
-import SwaggerDocs from './SwaggerDocs';
+import { SwaggerDocs } from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
 interface ApiDocumentationProps {
   apiDefinition: APIDescription;
-  categoryKey: string;
   location: Location;
 }
 
 const ApiDocumentationPropTypes = {
   apiDefinition: ApiDescriptionPropType.isRequired,
-  categoryKey: PropTypes.string.isRequired,
   // Leave as any for now until we can use the location react hooks
   location: PropTypes.any.isRequired,
 };
 
 const getInitialTabIndex = (searchQuery: string, docSources: APIDocSource[]): number => {
   // Get tab from query string
-  const params = new URLSearchParams(searchQuery ?? undefined);
+  const params = new URLSearchParams(searchQuery || undefined);
   const tabQuery = params.get('tab');
   const queryStringTab = tabQuery ? tabQuery.toLowerCase() : '';
 
   // Get doc source keys
-  const hasKey = (source: APIDocSource) => !!source.key;
+  const hasKey = (source: APIDocSource): boolean => !!source.key;
   const tabKeys = docSources
     .filter(hasKey)
-    .map(source => source.key?.toLowerCase() || '');
+    .map(source => source.key?.toLowerCase() ?? '');
 
   // Return tab index
   const sourceTabIndex = tabKeys.findIndex(sourceKey => sourceKey === queryStringTab);
@@ -42,7 +40,6 @@ const getInitialTabIndex = (searchQuery: string, docSources: APIDocSource[]): nu
 };
 
 const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
-
   const { apiDefinition, location } = props;
 
   /*
@@ -69,13 +66,13 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
    * API Version
    */
   const dispatch = useDispatch();
-  const queryParams = new URLSearchParams(location.search ?? undefined);
+  const queryParams = new URLSearchParams(location.search || undefined);
   const apiVersion = queryParams.get('version');
 
   React.useEffect((): void => {
-    dispatch(actions.setRequstedApiVersion(apiVersion));
+    dispatch(actions.setRequestedApiVersion(apiVersion));
   }, [dispatch, apiVersion, location.pathname]);
-  
+
   /*
    * RENDER
    */
@@ -88,7 +85,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
         />
       ) : (
         <>
-          {apiDefinition.multiOpenAPIIntro && apiDefinition.multiOpenAPIIntro({})}
+          {apiDefinition.multiOpenAPIIntro?.({})}
           <Tabs selectedIndex={tabIndex} onSelect={onTabSelect}>
             <TabList>
               {apiDefinition.docSources.map(apiDocSource => (

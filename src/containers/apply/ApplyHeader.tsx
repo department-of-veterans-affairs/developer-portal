@@ -11,8 +11,8 @@ const ApplyHeader = (): JSX.Element => (
     >
       This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
       credentials you will receive are for sandbox development only. When your app is ready to go
-      live, you may <Link to="/go-live">request production access</Link>. Please submit the form below 
-      and you&apos;ll receive an email with your API key(s) and/or OAuth credentials, as well as 
+      live, you may <Link to="/go-live">request production access</Link>. Please submit the form below
+      and you&apos;ll receive an email with your API key(s) and/or OAuth credentials, as well as
       further instructions. Thank you for being a part of our platform.
     </p>
   </div>
