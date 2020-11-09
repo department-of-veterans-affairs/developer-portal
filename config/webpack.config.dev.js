@@ -334,8 +334,8 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin({
       async: false,
       eslint: {
+        enabled: process.env.LINT !== 'false',
         files: 'src/**/*.{ts,tsx}',
-        memoryLimit: 4096,
         options: {
           configFile: '.eslintrc.dev.js',
         },
