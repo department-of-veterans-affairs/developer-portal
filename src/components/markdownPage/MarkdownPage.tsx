@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type MarkdownComponent from '*.mdx';
+import MarkdownComponent from '*.mdx';
 
 const MarkdownPage = (Component: MarkdownComponent): JSX.Element => (
   <section className="vads-u-padding-y--5">
