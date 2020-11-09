@@ -28,7 +28,6 @@ export enum ResponseType {
 }
 
 // Sends errors to Sentry
-
 const sentryErrorLogger = (error: string, errorID: string, endpointUrl: string): void => {
   const pageName = location.pathname;
 
@@ -41,7 +40,6 @@ const sentryErrorLogger = (error: string, errorID: string, endpointUrl: string):
 };
 
 // Handles non network errors (response not ok and status not 200) and logs them to Sentry
-
 const handleNonNetworkError = async <T extends unknown>(url: string, requestId: string,  type: string, response: Response): Promise<HttpResponse<T>> => {
   // Tries to resolve the response to obtain error details
   let responseBody: { errors: string[] } | null | string;
