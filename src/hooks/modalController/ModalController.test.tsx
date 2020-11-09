@@ -8,13 +8,13 @@ const TestComponent = (): JSX.Element => {
   const { modalVisible, setModalVisible } = useModalController();
 
   // False values are rendered as blank. This helper shows the actual value
-  const displayModalVisibility = () => (modalVisible ? 'true' : 'false');
+  const displayModalVisibility = (): string => (modalVisible ? 'true' : 'false');
 
   return (
     <div>
       <p>Modal Visible: {displayModalVisibility()}</p>
       <div>
-        <input type="button" id="toggle-visible" onClick={() => setModalVisible(!modalVisible)} />
+        <input type="button" id="toggle-visible" onClick={(): void => setModalVisible(!modalVisible)} />
       </div>
     </div>
   );

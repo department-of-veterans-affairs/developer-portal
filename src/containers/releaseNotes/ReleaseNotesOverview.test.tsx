@@ -10,7 +10,7 @@ import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
-const renderComponent = async () => {
+const renderComponent = async (): Promise<void> => {
   await cleanup(); // clean up beforeEach render if we're testing a different page
   render(
     <FlagsProvider flags={getFlags()}>

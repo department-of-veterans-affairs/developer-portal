@@ -13,13 +13,13 @@ const useModalController = (): ModalController => {
    */
   const modalVisibleRef = React.useRef<boolean>(false);
 
-  const setModalVisible = (visible: boolean) => {
+  const setModalVisible = (visible: boolean): void => {
     modalVisibleRef.current = visible;
     setModalVisibleState(visible);
   };
 
   React.useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
+    const handleEscape = (event: KeyboardEvent): void => {
       if (event.key === 'Escape' && modalVisibleRef.current) {
         setModalVisible(false);
       }
@@ -27,7 +27,7 @@ const useModalController = (): ModalController => {
 
     document.addEventListener('keydown', handleEscape, false);
 
-    return () => {
+    return (): void => {
       document.removeEventListener('keydown', handleEscape, false);
     };
   }, []);

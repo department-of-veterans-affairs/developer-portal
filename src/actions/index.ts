@@ -21,11 +21,11 @@ export interface SetVersioning extends Action {
 }
 
 export const resetVersioning: ActionCreator<ResetVersioning> = () => ({
-  type: constants.RESET_VERSIONING,
+  type: constants.RESET_VERSIONING_VALUE,
 });
 
 export const setRequestedApiVersion: ActionCreator<SetRequestedAPIVersion> = (version: string) => ({
-  type: constants.SET_REQUESTED_API_VERSION,
+  type: constants.SET_REQUESTED_API_VERSION_VALUE,
   version,
 });
 
@@ -35,7 +35,7 @@ export const setVersioning: ActionCreator<SetVersioning> = (
   version: string = '',
 ) => ({
   defaultUrl,
-  type: constants.SET_VERSIONING,
+  type: constants.SET_VERSIONING_VALUE,
   version,
   versions,
 });

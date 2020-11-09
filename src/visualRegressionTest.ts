@@ -10,7 +10,7 @@ const viewports = [
   { height: 800, width: 375 },
 ];
 
-const checkScreenshots = async (page: Page, selector: string) => {
+const checkScreenshots = async (page: Page, selector: string): Promise<void> => {
   for (const viewport of viewports) {
     await page.setViewport(viewport);
     // eslint-disable-next-line no-promise-executor-return
@@ -44,19 +44,17 @@ describe('Visual regression test', () => {
     await checkScreenshots(page, 'footer');
   });
 
-  for (const path of paths) {
-    it(`renders ${path} properly`, async () => {
-      // Mock swagger requests on docs pages so those pages aren't blank
-      if (/^\/explore\/[^\/]+\/docs/.test(path)) {
-        await page.setRequestInterception(true);
-        page.removeAllListeners('request');
-        page.on('request', mockSwagger);
-      }
+  it.each(paths)('renders %s properly', async (path: string) => {
+    // Mock swagger requests on docs pages so those pages aren't blank
+    if (/^\/explore\/[^\/]+\/docs/.test(path)) {
+      await page.setRequestInterception(true);
+      page.removeAllListeners('request');
+      page.on('request', mockSwagger);
+    }
 
-      await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
-      // Hide any videos that may be on the page
-      await page.evaluate('document.querySelectorAll("iframe").forEach((e) => { e.style="visibility: hidden;" });');
-      await checkScreenshots(page, 'main');
-    });
-  }
+    await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
+    // Hide any videos that may be on the page
+    await page.evaluate('document.querySelectorAll("iframe").forEach((e) => { e.style="visibility: hidden;" });');
+    await checkScreenshots(page, 'main');
+  });
 });

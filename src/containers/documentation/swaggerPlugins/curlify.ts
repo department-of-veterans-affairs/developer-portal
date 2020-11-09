@@ -11,14 +11,14 @@ export const curlify = (requestOptions: RequestOptions): string => {
   const curlified = [];
   let type = '';
   const newline = ' \\\r\n';
-  const headers = request.get('headers') as Im.Map<string, string>;
+  const headers = request.get('headers') as Im.Map<string, string> | undefined;
   const method = request.get('method') as string;
   const url = request.get('url') as string;
-  const body = request.get('body') as Im.Map<string, SwaggerMapValues>;
+  const body = request.get('body') as Im.Map<string, SwaggerMapValues> | undefined;
 
   curlified.push('curl -X ', `${method} `, `'${url}'`);
 
-  if (headers && headers.size) {
+  if (headers?.size) {
     const headerEntries = Object.entries(headers.toJS() as { [header: string]: string });
     for (const [header, value] of headerEntries) {
       curlified.push(newline, '--header ', `'${header}: ${value}'`);

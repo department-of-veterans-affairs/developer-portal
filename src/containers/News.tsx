@@ -14,14 +14,14 @@ export interface DataSection {
   title: string;
   description: string;
   media: boolean;
-  items: NewsItem[];
+  items: NewsItemData[];
 }
 
 interface NewsSection extends DataSection {
   id: string;
 }
 
-export interface NewsItem {
+export interface NewsItemData {
   date: string;
   title: string;
   url: string;
@@ -37,10 +37,18 @@ const sections = data.sections.map((section: DataSection) => ({
   id: toHtmlId(section.title),
 }));
 
-const NewsItem = ({ item, media }: { item: NewsItem; media: boolean }) =>
-  (media ? <MediaItem item={item} /> : <ItemDescription item={item} />);
+const ItemDescription = ({ item }: { item: NewsItemData }): JSX.Element => (
+  <p>
+    <a href={item.url}>{item.title}</a>
+    <br />
+    <strong>
+      {item.date}
+      {item.source ? ` | ${item.source}` : null}
+    </strong>
+  </p>
+);
 
-const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
+const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
   const description = <ItemDescription item={item} />;
   if (item.url.includes('www.youtube.com')) {
     return (
@@ -66,16 +74,8 @@ const MediaItem = ({ item }: { item: NewsItem }): JSX.Element => {
   );
 };
 
-const ItemDescription = ({ item }: { item: NewsItem }): JSX.Element => (
-  <p>
-    <a href={item.url}>{item.title}</a>
-    <br />
-    <strong>
-      {item.date}
-      {item.source ? ` | ${item.source}` : null}
-    </strong>
-  </p>
-);
+const NewsItem = ({ item, media }: { item: NewsItemData; media: boolean }): JSX.Element =>
+  (media ? <MediaItem item={item} /> : <ItemDescription item={item} />);
 
 const News = (): JSX.Element => {
   const pageDescription =
@@ -119,7 +119,7 @@ const News = (): JSX.Element => {
                   <h2 id={section.id} tabIndex={-1}>
                     {section.title}
                   </h2>
-                  {section.items.map((item: NewsItem) => (
+                  {section.items.map((item: NewsItemData) => (
                     <NewsItem key={item.url} item={item} media={section.media} />
                   ))}
                 </section>

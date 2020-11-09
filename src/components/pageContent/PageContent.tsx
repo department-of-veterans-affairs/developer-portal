@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { SiteRoutes } from '../../Routes';
 
-const focusAndScroll = (elementToFocus: HTMLElement | null) => {
+const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
   if (elementToFocus) {
     elementToFocus.focus();
   }

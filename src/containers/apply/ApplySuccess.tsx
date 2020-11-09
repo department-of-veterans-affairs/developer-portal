@@ -9,7 +9,7 @@ import sentenceJoin from '../../sentenceJoin';
 import { ApplySuccessResult, RootState } from '../../types';
 import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS, PAGE_HEADER_ID } from '../../types/constants';
 
-const AssistanceTrailer = () => (
+const AssistanceTrailer = (): JSX.Element => (
   <p>
     If you would like to report a bug or make a feature request, please open an issue through our{' '}
     <Link to="/support">Support page</Link>.
@@ -47,7 +47,7 @@ const apisToEnglishApiKeyList = (): Record<string, string> => {
   };
 };
 
-const OAuthCredentialsNotice = ({
+const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProps> = ({
   clientID,
   clientSecret,
   email,
@@ -76,7 +76,11 @@ const OAuthCredentialsNotice = ({
   );
 };
 
-const ApiKeyNotice = ({ token, email, selectedApis }: APIKeyNoticeProps) => {
+const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
+  token,
+  email,
+  selectedApis,
+}: APIKeyNoticeProps) => {
   const apiNameList = selectedApis.map(k => apisToEnglishApiKeyList()[k]);
   const apiListSnippet = sentenceJoin(apiNameList);
 

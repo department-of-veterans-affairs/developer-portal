@@ -26,10 +26,11 @@ const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean =>
     apiDesc.urlFragment === apiKey;
   const apiResult = getAllApis().find(hasMatchingIdentifier);
-  return apiResult || null;
+  return apiResult ?? null;
 };
 
-const lookupApiCategory = (categoryKey: string): APICategory | null => apiDefs[categoryKey] || null;
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- should check category existence
+const lookupApiCategory = (categoryKey: string): APICategory | null => apiDefs[categoryKey] ?? null;
 
 const apisFor = (apiList: string[]): APIDescription[] => {
   const allApis = getAllApis();

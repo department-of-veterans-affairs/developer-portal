@@ -8,7 +8,7 @@ export const WrapParameters = {
     Original: React.ComponentType<ParametersProps>,
     system: System,
   ): React.ComponentType<ParametersProps> => {
-    const Parameters = (props: ParametersProps) => (
+    const Parameters: React.FunctionComponent<ParametersProps> = (props: ParametersProps) => (
       <div>
         <CurlForm system={system} operation={props.operation.toJS() as Operation} />
         <Original {...props} />

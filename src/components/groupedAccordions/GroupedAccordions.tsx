@@ -4,7 +4,7 @@ import * as React from 'react';
 
 import './GroupedAccordions.scss';
 
-declare const window: { VetsGov: Record<string, unknown> };
+declare const window: { VetsGov?: Record<string, unknown> };
 
 export interface AccordionPanelContent {
   readonly body: string | JSX.Element;
@@ -34,12 +34,12 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
       window.VetsGov = { scroll: null };
     }
 
-    return () => {
+    return (): void => {
       setPanelRefs([]);
     };
   }, []);
 
-  const handleExpandCollapse = (event: React.MouseEvent<HTMLElement>) => {
+  const handleExpandCollapse = (event: React.MouseEvent<HTMLElement>): void => {
     event.preventDefault();
     panelRefs
       .filter(ref => ref.current && ref.current.state.open === allExpanded)
@@ -71,7 +71,7 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
             'vads-u-font-weight--normal',
             'vads-u-width--auto',
           )}
-          onClick={event => handleExpandCollapse(event)}
+          onClick={(event): void => handleExpandCollapse(event)}
           type="button"
         >
           {allExpanded ? 'Collapse all' : 'Expand all'}

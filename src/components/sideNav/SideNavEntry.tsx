@@ -27,7 +27,7 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
    * implementation.
    */
   const navHashLinkIsActive = (pathMatch: Match | null, location: Location): boolean => {
-    const withoutTrailingSlash = (path: string) => path.replace(/\/$/, '');
+    const withoutTrailingSlash = (path: string): string => path.replace(/\/$/, '');
 
     let pathname: string;
     let hash: string;
@@ -42,8 +42,8 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
       } = url);
     } else {
       // object
-      pathname = to.pathname || '';
-      hash = to.hash || '';
+      pathname = to.pathname ?? '';
+      hash = to.hash ?? '';
     }
 
     to = withoutTrailingSlash(pathname) + hash;
