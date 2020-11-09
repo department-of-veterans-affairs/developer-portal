@@ -62,7 +62,6 @@ const handleNonNetworkError = async <T extends unknown>(url: string, requestId: 
     sentryErrorLogger(`Server Error: ${response.status}`, requestId, url);
   }
 
-  // All http codes outside the 200 range will be rejected
   return Promise.reject({
     body: responseBody,
     ok: response.ok,
