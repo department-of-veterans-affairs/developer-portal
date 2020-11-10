@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import { CardLink } from '../../components';
-import PageHeader from '../../components/PageHeader';
+import { CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 

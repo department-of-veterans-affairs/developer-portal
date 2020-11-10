@@ -4,7 +4,7 @@ import * as React from 'react';
 import videoPlayerIcon from '../assets/video-player.png';
 import videoPlayerHoverIcon from '../assets/video-player-hover.png';
 import { CardLink, EmbeddedYoutubeVideo, HoverImage, SideNav, SideNavEntry } from '../components';
-import PageHeader from '../components/PageHeader';
+import { PageHeader } from '../components';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';

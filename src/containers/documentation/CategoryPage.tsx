@@ -4,7 +4,7 @@ import { Flag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { AuthorizationCard, CardLink, OnlyTags } from '../../components';
-import PageHeader from '../../components/PageHeader';
+import { PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';

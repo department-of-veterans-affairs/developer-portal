@@ -14,7 +14,7 @@ import {
   Server,
   SwaggerSpecObject,
 } from 'swagger-ui';
-import CodeWrapper from '../../../components/CodeWrapper';
+import { CodeWrapper } from '../../../components';
 import { System } from './types';
 
 import './CurlForm.scss';

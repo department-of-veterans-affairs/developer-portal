@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { CardLink } from '../../components';
-import PageHeader from '../../components/PageHeader';
+import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { PAGE_HEADER_ID } from '../../types/constants';
 import { SupportSection } from './Support';
