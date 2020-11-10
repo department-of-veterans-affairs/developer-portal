@@ -11,7 +11,6 @@ const envVars = [
   'USE_LOCAL=false',
   'PORT=4444',
   'BROWSER=false',
-  'LINT=false',
 ];
 
 if(!process.env.TEST_HOST) {

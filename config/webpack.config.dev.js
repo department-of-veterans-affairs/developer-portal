@@ -334,11 +334,9 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin({
       async: false,
       eslint: {
-        enabled: process.env.LINT !== 'false',
+        // we've explicitly decided not to lint in the dev server
+        enabled: false,
         files: 'src/**/*.{ts,tsx}',
-        options: {
-          configFile: '.eslintrc.dev.js',
-        },
       },
       typescript: true,
     }),
