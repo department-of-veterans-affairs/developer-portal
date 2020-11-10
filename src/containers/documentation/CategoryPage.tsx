@@ -7,7 +7,7 @@ import {
   AuthorizationCard,
   CardLink,
   OnlyTags,
-  PageHeader
+  PageHeader,
 } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PAGE_HEADER_ID } from '../../types/constants';
-import { PageHeader } from '.. ';
+import { PageHeader } from '..';
 
 interface QuickstartWrapperProps {
   halo: string;

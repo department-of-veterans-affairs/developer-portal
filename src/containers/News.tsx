@@ -9,7 +9,7 @@ import {
   HoverImage,
   PageHeader,
   SideNav,
-  SideNavEntry
+  SideNavEntry,
 } from '../components';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
