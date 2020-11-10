@@ -94,6 +94,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public handleInputChange(parameterName: string, value: string): void {
     this.setState({
       paramValues: {
+        ...this.state.paramValues,
         [parameterName]: value,
       },
     });
