@@ -64,6 +64,7 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
       <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
           <HoverImage
+            imageAlt={item.title}
             imagePath={videoPlayerIcon}
             hoverImagePath={videoPlayerHoverIcon}
           />
