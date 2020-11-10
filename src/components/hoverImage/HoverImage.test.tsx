@@ -9,20 +9,21 @@ afterEach(cleanup);
 
 const props = {
   hoverImagePath: 'hover',
+  imageAlt: 'United States',
   imagePath: 'image',
 };
 
 describe('HoverImage', () => {
   it('should render base image', () => {
     const { getByRole } = render(
-      <HoverImage imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
+      <HoverImage imagePath={props.imagePath} imageAlt={props.imageAlt} hoverImagePath={props.hoverImagePath} />,
     );
     expect(getByRole('presentation').getAttribute('src')).toEqual(props.imagePath);
   });
 
   it('should render hover image when hovered over', () => {
     const { getByRole } = render(
-      <HoverImage imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
+      <HoverImage imagePath={props.imagePath} imageAlt={props.imageAlt} hoverImagePath={props.hoverImagePath} />,
     );
     const image = getByRole('presentation');
     userEvent.hover(image);
