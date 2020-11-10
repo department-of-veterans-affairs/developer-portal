@@ -65,4 +65,4 @@ const DeveloperInfo = (): JSX.Element => {
   );
 };
 
-export default DeveloperInfo;
+export { DeveloperInfo };

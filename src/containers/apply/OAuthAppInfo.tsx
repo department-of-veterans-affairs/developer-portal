@@ -68,4 +68,4 @@ const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => {
   );
 };
 
-export default OAuthAppInfo;
+export { OAuthAppInfo };
