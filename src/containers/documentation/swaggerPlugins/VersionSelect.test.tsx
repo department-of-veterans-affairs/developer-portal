@@ -67,6 +67,7 @@ describe('VersionSelect', () => {
   it('has the options passed by the version metadata', () => {
     const options = screen.getAllByRole('option') as HTMLOptionElement[];
 
+    expect(options.length).toBe(2);
     expect(options[0].value).toBe('1.0.0');
     expect(options[1].value).toBe('0.0.1');
   });
