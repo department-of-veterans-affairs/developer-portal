@@ -21,7 +21,7 @@ const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => {
   const updateOAuthRedirectURI = (oldValidation?: string) => (value: ErrorableInput): void => {
     dispatch(actions.updateApplyOAuthRedirectURI(value, oldValidation));
   };
-  
+
   return (
     <>
       <div className="vads-u-margin-top--4">
