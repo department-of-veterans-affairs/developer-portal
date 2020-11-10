@@ -10,14 +10,14 @@ import { ErrorableInput, RootState } from '../../types';
 type OAuthAppInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateApplicationAction>;
 
 const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => {
-  const oAuthApplicationType = useSelector((state: RootState) => state.application.inputs.oAuthApplicationType);
-  const oAuthRedirectURI = useSelector((state: RootState) => state.application.inputs.oAuthRedirectURI);
   const dispatch = useDispatch<OAuthAppInfoDispatch>();
 
+  const oAuthApplicationType = useSelector((state: RootState) => state.application.inputs.oAuthApplicationType);
   const updateOAuthApplicationType = (value: ErrorableInput): void => {
     dispatch(actions.updateApplyOAuthApplicationType(value));
   };
 
+  const oAuthRedirectURI = useSelector((state: RootState) => state.application.inputs.oAuthRedirectURI);
   const updateOAuthRedirectURI = (oldValidation?: string) => (value: ErrorableInput): void => {
     dispatch(actions.updateApplyOAuthRedirectURI(value, oldValidation));
   };
