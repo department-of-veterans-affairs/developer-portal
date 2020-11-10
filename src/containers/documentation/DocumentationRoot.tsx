@@ -6,9 +6,9 @@ import { Route, Switch, useParams } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
 import { SideNav, SideNavEntry } from '../../components';
-import { Flag } from '../../flags';
+import { Flag, getFlags } from '../../flags';
 import { APINameParam } from '../../types';
-import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
+import { CURRENT_VERSION_IDENTIFIER, FLAG_AUTH_DOCS_V2 } from '../../types/constants';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
 import CategoryPage from './CategoryPage';
@@ -72,6 +72,9 @@ const ExploreSideNav = (): JSX.Element => {
   return (
     <SideNav ariaLabel="API Docs Side Nav">
       <SideNavEntry key="all" exact to="/explore" name="Overview" />
+      <Flag name={[FLAG_AUTH_DOCS_V2]}>
+        <SideNavEntry key="authorization" exact to="/explore/authorization" name="Authorization" />
+      </Flag>
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
         return (
@@ -92,6 +95,7 @@ const ExploreSideNav = (): JSX.Element => {
               )}
               {categoryKey !== 'benefits' &&
                 apiCategory.apis.some(api => !!api.oAuth) &&
+                !getFlags()[FLAG_AUTH_DOCS_V2] &&
                 OAuthSideNavEntry(categoryKey)}
               {apiCategory.apis.map((api: APIDescription) => SideNavApiEntry(categoryKey, api))}
             </SideNavEntry>

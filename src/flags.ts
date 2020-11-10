@@ -5,6 +5,7 @@ import { getAllApis } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 
 export interface AppFlags {
+  auth_docs_v2: boolean;
   categories: { [categoryId: string]: boolean };
   deactivated_apis: { [apiId: string]: boolean };
   enabled: { [apiId: string]: boolean };
@@ -27,6 +28,7 @@ const getFlags = (): AppFlags => {
   }, {});
 
   return {
+    auth_docs_v2: process.env.REACT_APP_AUTH_DOCS_V2 === 'true',
     categories: apiCategories,
     deactivated_apis: deactivatedFlags,
     enabled: envFlags,
