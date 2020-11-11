@@ -140,14 +140,6 @@ module.exports = {
           },
           {
             test: /\.(js|jsx|mjs)$/,
-            include: paths.appSrc,
-            loader: require.resolve('babel-loader'),
-            options: {
-              compact: true,
-            },
-          },
-          {
-            test: /\.(js|jsx|mjs)$/,
             loader: require.resolve('babel-loader'),
             options: {
               babelrc: false,
@@ -342,6 +334,8 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin({
       async: false,
       eslint: {
+        // we've explicitly decided not to lint in the dev server
+        enabled: false,
         files: 'src/**/*.{ts,tsx}',
       },
       typescript: true,
