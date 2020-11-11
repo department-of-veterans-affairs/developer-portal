@@ -2,6 +2,7 @@ import {
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
+  ClaimsAttributesReleaseNotes,
 } from '../../content/apiDocs/benefits';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import { APIDescription } from '../schema';
@@ -50,6 +51,20 @@ const benefitsApis: APIDescription[] = [
     releaseNotes: LoanGuarantyReleaseNotes,
     trustedPartnerOnly: true,
     urlFragment: 'loan_guaranty',
+    vaInternalOnly: false,
+  },
+  {
+    description: 'Identify special attributes of claims',
+    docSources: [
+      {
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/loan_guaranty/docs/v1/api`,
+      },
+    ],
+    enabledByDefault: false,
+    name: 'Claims Attributes',
+    releaseNotes: ClaimsAttributesReleaseNotes,
+    trustedPartnerOnly: false,
+    urlFragment: 'claims_attributes',
     vaInternalOnly: false,
   },
 ];
