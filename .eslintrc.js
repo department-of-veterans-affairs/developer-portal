@@ -8,8 +8,9 @@
  *  1. The Typescript ESLint plugin has several rules that extend rules in the core ESLint module. In
  *  general, we prefer to use the Typescript ESLint version. You can see a list of the extended rules
  *  here: https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#extension-rules
- *  2. If any rule should apply to committed code but is painful in development, it should be included
- *  as a warning in this file and marked as an error in .eslintrc.ci.js.
+ *  2. Some rules can have a higher cost performance than others. To test performance of the rule set,
+ *  run "TIMING=1 npm run lint". The TIMING flag causes ESLint to print out metrics on time to process
+ *  each rule. https://eslint.org/docs/developer-guide/working-with-rules#per-rule-performance
  * 
  * Presets included
  *  - Typescript ESLint: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.ts
@@ -72,14 +73,14 @@ const coreESLintRules = {
   'max-nested-callbacks': ['error', 3], // default max is 10 callbacks
   'max-params': ['error', 4],
   'max-statements-per-line': 'error',
-  'multiline-comment-style': 'warn',
+  'multiline-comment-style': 'error',
   'new-parens': 'error',
   'newline-per-chained-call': 'error',
   'no-alert': 'error',
   'no-bitwise': 'error',
   'no-caller': 'error',
   'no-confusing-arrow': 'error',
-  'no-console': 'warn',
+  'no-console': 'error',
   'no-constructor-return': 'error',
   'no-div-regex': 'error',
   'no-eval': 'error',
@@ -94,7 +95,7 @@ const coreESLintRules = {
   'no-lonely-if': 'error',
   'no-mixed-operators': 'error',
   'no-multi-assign': 'error',
-  'no-multiple-empty-lines': ['warn', { max: 1 }],
+  'no-multiple-empty-lines': ['error', { max: 1 }],
   'no-negated-condition': 'error',
   'no-nested-ternary': 'error',
   'no-new': 'error',
@@ -111,7 +112,7 @@ const coreESLintRules = {
   'no-self-compare': 'error',
   'no-sequences': 'error',
   'no-tabs': 'error',
-  'no-trailing-spaces': 'warn',
+  'no-trailing-spaces': 'error',
   'no-undef-init': 'error',
   'no-underscore-dangle': 'error',
   'no-unmodified-loop-condition': 'error',
@@ -156,12 +157,12 @@ const typescriptESLintRules = {
   // can be removed soon - leave for a bit after TSLint removal
   '@typescript-eslint/ban-tslint-comment': 'error',
   '@typescript-eslint/brace-style': 'error',
-  '@typescript-eslint/comma-dangle': ['warn', 'always-multiline'],
+  '@typescript-eslint/comma-dangle': ['error', 'always-multiline'],
   '@typescript-eslint/comma-spacing': 'error',
   '@typescript-eslint/dot-notation': 'error',
   '@typescript-eslint/consistent-type-assertions': 'error',
   '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-  '@typescript-eslint/explicit-function-return-type': 'warn',
+  '@typescript-eslint/explicit-function-return-type': 'error',
   '@typescript-eslint/explicit-member-accessibility': 'error',
   '@typescript-eslint/func-call-spacing': 'error',
   /**

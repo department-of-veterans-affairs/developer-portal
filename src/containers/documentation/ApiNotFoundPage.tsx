@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import PageHeader from '../../components/PageHeader';
+import { PageHeader } from '../../components';
 import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 

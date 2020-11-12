@@ -61,7 +61,7 @@ lint:
 		--user ${UNAME}:${GNAME} \
 		--volume "${PWD}:/application" \
 		--volume "/application/node_modules" \
-		developer-portal npm run-script lint:ci
+		developer-portal npm run lint
 
 ## visual:	runs visual regression tests 
 .PHONY: visual
