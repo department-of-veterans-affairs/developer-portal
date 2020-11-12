@@ -16,4 +16,4 @@ const CodeWrapper = (props: CodeWrapperProps): JSX.Element => (
   </div>
 );
 
-export default CodeWrapper;
+export { CodeWrapper };

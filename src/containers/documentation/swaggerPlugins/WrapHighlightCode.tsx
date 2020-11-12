@@ -1,5 +1,5 @@
 import * as React from 'react';
-import CodeWrapper from '../../../components/CodeWrapper';
+import { CodeWrapper } from '../../../components';
 
 export const WrapHighlightCode = {
   highlightCode: (Original: React.ComponentType): React.ComponentType => {

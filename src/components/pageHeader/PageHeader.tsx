@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import { PAGE_HEADER_ID } from '../types/constants';
+import { PAGE_HEADER_ID } from '../../types/constants';
 import './PageHeader.scss';
 
 interface PageHeaderProps {
@@ -30,4 +30,4 @@ const PageHeader = (props: PageHeaderProps): JSX.Element => (
   </div>
 );
 
-export default PageHeader;
+export { PageHeader };

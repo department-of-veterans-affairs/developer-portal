@@ -1,7 +1,7 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-import PageHeader from '../../components/PageHeader';
+import { PageHeader } from '../../components';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
 import SupportContactUsForm from './SupportContactUsForm';
 

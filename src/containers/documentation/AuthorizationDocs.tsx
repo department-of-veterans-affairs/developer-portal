@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
 import { lookupApiCategory } from '../../apiDefs/query';
-import PageHeader from '../../components/PageHeader';
+import { PageHeader } from '../../components';
 import OAuth from '../../content/apiDocs/oauthTechnical.mdx';
 import { APINameParam } from '../../types';
 import { useFlag } from '../../flags';
