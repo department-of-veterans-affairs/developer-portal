@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import PageHeader from '../../components/PageHeader';
+import { PageHeader } from '../../components';
 import ExplorePage from '../../content/explorePage.mdx';
 import { Flag } from '../../flags';
 import { APINameParam } from '../../types';

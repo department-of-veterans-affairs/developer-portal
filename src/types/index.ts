@@ -32,7 +32,6 @@ export interface APIVersioning {
 export interface RootState {
   apiVersioning: APIVersioning;
   application: DevApplication;
-  router: RouterState;
 }
 
 export interface SerializedState {

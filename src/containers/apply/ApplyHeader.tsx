@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import PageHeader from '../../components/PageHeader';
+import { PageHeader } from '../../components';
 
 const ApplyHeader = (): JSX.Element => (
   <div>
