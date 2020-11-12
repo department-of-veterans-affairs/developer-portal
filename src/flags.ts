@@ -14,7 +14,8 @@ export interface AppFlags {
   signups_enabled: boolean;
 }
 
-const { Flag, FlagsProvider } = createFlags<AppFlags>();
+// eslint-disable-next-line @typescript-eslint/unbound-method
+const { Flag, FlagsProvider, useFlag } = createFlags<AppFlags>();
 const getFlags = (): AppFlags => {
   const deactivatedFlags = getDeactivatedFlags();
   const envFlags = getEnvFlags();
@@ -38,4 +39,4 @@ const getFlags = (): AppFlags => {
   };
 };
 
-export { Flag, FlagsProvider, getFlags };
+export { Flag, FlagsProvider, getFlags, useFlag };

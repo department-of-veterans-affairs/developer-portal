@@ -6,7 +6,7 @@ import { Route, Switch, useParams } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
 import { SideNav, SideNavEntry } from '../../components';
-import { Flag, getFlags } from '../../flags';
+import { Flag, useFlag } from '../../flags';
 import { APINameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER, FLAG_AUTH_DOCS_V2 } from '../../types/constants';
 import ApiPage from './ApiPage';
@@ -66,6 +66,7 @@ const OAuthSideNavEntry = (apiCategoryKey: string): JSX.Element => (
 );
 
 const ExploreSideNav = (): JSX.Element => {
+  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
   const apiCategoryOrder: string[] = getApiCategoryOrder();
   const apiDefinitions = getApiDefinitions();
 
@@ -95,7 +96,7 @@ const ExploreSideNav = (): JSX.Element => {
               )}
               {categoryKey !== 'benefits' &&
                 apiCategory.apis.some(api => !!api.oAuth) &&
-                !getFlags()[FLAG_AUTH_DOCS_V2] &&
+                !authDocsV2 &&
                 OAuthSideNavEntry(categoryKey)}
               {apiCategory.apis.map((api: APIDescription) => SideNavApiEntry(categoryKey, api))}
             </SideNavEntry>
@@ -122,6 +123,7 @@ const oldRouteToNew = [
 ];
 
 const DocumentationRoot = (): JSX.Element => {
+  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
   const { apiCategoryKey } = useParams<APINameParam>();
   const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
 
@@ -135,7 +137,10 @@ const DocumentationRoot = (): JSX.Element => {
               {oldRouteToNew.map(routes => (
                 <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
-              {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
+              <Route path="/explore/authorization" component={AuthorizationDocs} exact />
+              {!shouldRouteCategory && !authDocsV2 && (
+                <Redirect from="/explore/:apiCategoryKey" to="/explore" />
+              )}
               <Route exact path="/explore/" component={DocumentationOverview} />
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
               <Route
