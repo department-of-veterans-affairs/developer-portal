@@ -22,6 +22,7 @@ interface NewsSection extends DataSection {
 }
 
 export interface NewsItemData {
+  alt: string;
   date: string;
   title: string;
   url: string;
@@ -64,7 +65,7 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
       <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
           <HoverImage
-            imageAlt={item.title}
+            alt={item.alt}
             imagePath={videoPlayerIcon}
             hoverImagePath={videoPlayerHoverIcon}
           />
