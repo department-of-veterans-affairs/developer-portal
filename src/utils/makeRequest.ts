@@ -18,7 +18,7 @@ type HttpResponse<T> = HttpErrorResponse | HttpSuccessResponse<T>;
 export interface HttpErrorResponse {
   ok: boolean;
   status: number;
-  body: string;
+  body: Record<string, unknown>;
 }
 
 export enum ResponseType {
