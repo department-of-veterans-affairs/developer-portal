@@ -12,14 +12,23 @@ type OAuthAppInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateAp
 const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => {
   const dispatch = useDispatch<OAuthAppInfoDispatch>();
 
-  const oAuthApplicationType = useSelector((state: RootState) => state.application.inputs.oAuthApplicationType);
+  const oAuthApplicationType = useSelector((state: RootState) => (
+    state.application.inputs.oAuthApplicationType)
+  );
   const updateOAuthApplicationType = (value: ErrorableInput): void => {
     dispatch(actions.updateApplyOAuthApplicationType(value));
   };
 
-  const oAuthRedirectURI = useSelector((state: RootState) => state.application.inputs.oAuthRedirectURI);
-  const updateOAuthRedirectURI = (oldValidation?: string) => (value: ErrorableInput): void => {
-    dispatch(actions.updateApplyOAuthRedirectURI(value, oldValidation));
+  const oAuthRedirectURI = useSelector((state: RootState) => (
+    state.application.inputs.oAuthRedirectURI)
+  );
+  const updateOAuthRedirectURI = (value: ErrorableInput): void => {
+    dispatch(
+      actions.updateApplyOAuthRedirectURI(
+        value,
+        oAuthRedirectURI.validation,
+      )
+    );
   };
 
   return (
@@ -61,7 +70,7 @@ const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => {
         errorMessage={oAuthRedirectURI.validation}
         label="OAuth Redirect URI"
         field={oAuthRedirectURI}
-        onValueChange={updateOAuthRedirectURI(oAuthRedirectURI.validation)}
+        onValueChange={updateOAuthRedirectURI}
         required
       />
     </>

@@ -12,8 +12,8 @@ const DeveloperInfo = (): JSX.Element => {
   const dispatch = useDispatch<DeveloperInfoDispatch>();
 
   const email = useSelector((state: RootState) => state.application.inputs.email);
-  const updateEmail = (oldValidation?: string) => (value: ErrorableInput): void => {
-    dispatch(actions.updateApplicationEmail(value, oldValidation));
+  const updateEmail = (value: ErrorableInput): void => {
+    dispatch(actions.updateApplicationEmail(value, email.validation));
   };
 
   const firstName = useSelector((state: RootState) => state.application.inputs.firstName);
@@ -51,7 +51,7 @@ const DeveloperInfo = (): JSX.Element => {
         errorMessage={email.validation}
         label="Email"
         field={email}
-        onValueChange={updateEmail(email.validation)}
+        onValueChange={updateEmail}
         required
       />
 
