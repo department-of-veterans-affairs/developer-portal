@@ -1,4 +1,3 @@
-import { connectRouter, routerMiddleware } from 'connected-react-router';
 import { createBrowserHistory, History } from 'history';
 import debounce from 'lodash.debounce';
 import isEqual from 'lodash.isequal';
@@ -51,12 +50,11 @@ const store = createStore(
   combineReducers<RootState>({
     apiVersioning,
     application,
-    router: connectRouter(history),
   }),
   {
     application: loadApplicationState().application,
   },
-  compose(applyMiddleware(routerMiddleware(history), thunk as ThunkMiddleware<RootState>)),
+  compose(applyMiddleware(thunk as ThunkMiddleware<RootState>)),
 );
 
 store.subscribe(

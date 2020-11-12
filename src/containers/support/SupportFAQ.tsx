@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { AccordionPanelContent, GroupedAccordions } from '../../components';
-import PageHeader from '../../components/PageHeader';
+import {
+  AccordionPanelContent,
+  GroupedAccordions,
+  PageHeader,
+} from '../../components';
 
 const generalQuestions: SupportQuestion[] = [
   {
