@@ -1,11 +1,9 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
-import { ConnectedRouter } from 'connected-react-router';
-import { Route } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import { Footer, Header, PageContent } from './components';
 import { FlagsProvider, getFlags } from './flags';
-import { history } from './store';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/base.scss';
@@ -17,7 +15,7 @@ import './styles/base.scss';
  */
 const App = (): JSX.Element => (
   <FlagsProvider flags={getFlags()}>
-    <ConnectedRouter history={history}>
+    <BrowserRouter>
       <div className="vads-u-display--flex">
         <div
           className={classNames(
@@ -32,7 +30,7 @@ const App = (): JSX.Element => (
           <Footer />
         </div>
       </div>
-    </ConnectedRouter>
+    </BrowserRouter>
   </FlagsProvider>
 );
 
