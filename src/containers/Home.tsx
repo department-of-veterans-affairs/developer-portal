@@ -77,38 +77,9 @@ const ApiList = (): JSX.Element => (
   </section>
 );
 
-const VeteransNotice = (): JSX.Element => (
-  <section
-    className="vads-u-display--none medium-screen:vads-u-display--block"
-    aria-label="Veterans Notice"
-  >
-    <div
-      className={classNames(
-        'vads-u-background-color--primary',
-        'vads-u-font-size--lg',
-        'vads-u-padding-y--0p5',
-        'vads-u-text-align--center',
-        'vads-u-color--white',
-      )}
-    >
-      <div className="vads-u-margin-y--2p5">
-        Are you a Veteran looking to submit a claim, manage benefits or access your health data?
-        &nbsp;
-        <a
-          className={classNames('vads-u-font-weight--bold', 'vads-u-color--white')}
-          href="https://www.va.gov/"
-        >
-          Visit VA.gov
-        </a>
-      </div>
-    </div>
-  </section>
-);
-
 const Home = (): JSX.Element => (
   <div className="home">
     <Hero />
-    <VeteransNotice />
     <HomeSection
       ariaLabel="An API platform"
       imageSrc={padlockImg}
