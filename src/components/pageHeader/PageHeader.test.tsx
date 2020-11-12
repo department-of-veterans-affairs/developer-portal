@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import 'jest';
 import * as React from 'react';
 
-import PageHeader from './PageHeader';
+import { PageHeader } from './PageHeader';
 
 describe('PageHeader', () => {
   it('renders the halo', () => {

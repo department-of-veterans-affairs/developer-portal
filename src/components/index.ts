@@ -1,4 +1,6 @@
 export * from './authorizationCard/AuthorizationCard';
+export * from './codeWrapper/CodeWrapper';
+export * from './pageHeader/PageHeader';
 export * from './groupedAccordions/GroupedAccordions';
 export * from './header/Header';
 export * from './hoverImage/HoverImage';
@@ -17,3 +19,4 @@ export * from './embeddedYoutubeVideo/EmbeddedYoutubeVideo';
 export * from './hero/Hero';
 export * from './markdownPage/MarkdownPage';
 export * from './quickStartWrapper/QuickstartWrapper';
+
