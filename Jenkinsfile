@@ -169,7 +169,7 @@ node('vetsgov-general-purpose') {
   stage('ESLint') {
     try {
       dockerImage.inside(args) {
-        sh 'cd /application && npm run-script lint:ci'
+        sh 'cd /application && npm run lint'
       }
     } catch (error) {
       notify()
