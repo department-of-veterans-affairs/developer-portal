@@ -2,7 +2,6 @@ config/**/*
 scripts/**/*
 
 .eslintrc.js
-.eslintrc.ci.js
 *.jest.config.js
 jest-puppeteer.config.js
 setupJest.ts

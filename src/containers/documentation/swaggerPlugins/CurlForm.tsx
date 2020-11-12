@@ -14,7 +14,7 @@ import {
   Server,
   SwaggerSpecObject,
 } from 'swagger-ui';
-import CodeWrapper from '../../../components/CodeWrapper';
+import { CodeWrapper } from '../../../components';
 import { System } from './types';
 
 import './CurlForm.scss';
@@ -94,6 +94,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public handleInputChange(parameterName: string, value: string): void {
     this.setState({
       paramValues: {
+        ...this.state.paramValues,
         [parameterName]: value,
       },
     });
