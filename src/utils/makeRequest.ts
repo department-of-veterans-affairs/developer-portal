@@ -44,14 +44,14 @@ const handleNonNetworkError =  async (url: string, requestId: string,  type: str
   // Tries to resolve the response to obtain error details
   let responseBody:  Record<string, unknown> | null | string = null;
 
-  if(response.headers.get('Content-type')?.includes('application/json')){
-    responseBody = await response.json();
+  if (response.headers.get('Content-type')?.includes('application/json')) {
+    responseBody = await response.json() as Record<string, unknown>;
   } else {
     responseBody = await response.text();
   }
 
   // Create sentry errors based on status
-  if (response.status === 400 && typeof responseBody === 'object' && responseBody?.errors) {
+  if (response.status === 400 && typeof responseBody === 'object' && responseBody.errors) {
     const content = responseBody as { errors: string[] };
     sentryErrorLogger(`Validation errors: ${content.errors.join(', ')}`, requestId, url);
   } else if (response.status === 404) {
@@ -68,23 +68,15 @@ const handleNonNetworkError =  async (url: string, requestId: string,  type: str
 };
 
 // Fetch common logic
-export const makeRequest = async <T extends unknown>(url: string, requestInit: RequestInit, config: CallFetchConfig = { responseType: ResponseType.JSON }): Promise<HttpResponse<T>> => {
+export const makeRequest = <T extends unknown>(url: string, requestInit: RequestInit, config: CallFetchConfig = { responseType: ResponseType.JSON }): Promise<HttpResponse<T>> => new Promise((resolve, reject) => {
+  const request = new Request(url, requestInit);
+  const requestId: string = uuidv4();
 
-  return new Promise(async (resolve,reject) => {
-    const request = new Request(url, requestInit);
-    const requestId: string = uuidv4();
+  // Common Headers
+  request.headers.append('X-Request-ID', requestId);
 
-    // Common Headers
-    request.headers.append('X-Request-ID', requestId);
-
-    try {
-      const response = await fetch(request);
-
-      if (!response.ok) {
-        const errorResponse =  await handleNonNetworkError(url, requestId, config.responseType,  response);
-        return reject(errorResponse);
-      }
-
+  fetch(request).then(async response => {
+    if (response.ok) {
       const httpResponse: Partial<HttpResponse<T>> = {
         ok: response.ok,
         status: response.status,
@@ -103,9 +95,13 @@ export const makeRequest = async <T extends unknown>(url: string, requestInit: R
       }
 
       return resolve(httpResponse as HttpResponse<T>);
-    } catch (error) {
+    } else {
+      const errorResponse =  await handleNonNetworkError(url, requestId, config.responseType,  response);
+      return reject(errorResponse);
+    }
+  })
+    .catch(error => {
       sentryErrorLogger(error, requestId, url);
       return reject(new Error(error));
-    }
-  });
-};
+    });
+});
