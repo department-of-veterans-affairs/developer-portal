@@ -18,7 +18,7 @@ type HttpResponse<T> = HttpErrorResponse | HttpSuccessResponse<T>;
 export interface HttpErrorResponse {
   ok: boolean;
   status: number;
-  body: Record<string, unknown>;
+  body: Record<string, unknown> | string | null;
 }
 
 export enum ResponseType {
@@ -40,69 +40,72 @@ const sentryErrorLogger = (error: string, errorID: string, endpointUrl: string):
 };
 
 // Handles non network errors (response not ok and status not 200) and logs them to Sentry
-const handleNonNetworkError = async <T extends unknown>(url: string, requestId: string,  type: string, response: Response): Promise<HttpResponse<T>> => {
+const handleNonNetworkError =  async (url: string, requestId: string,  type: string, response: Response): Promise<HttpErrorResponse> => {
   // Tries to resolve the response to obtain error details
-  let responseBody: { errors: string[] } | null | string;
+  let responseBody:  Record<string, unknown> | null | string = null;
 
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    responseBody = (response.headers.get('Content-type')?.includes('application/json')) ? await response.json() : await response.text();
-  } catch (e: unknown) {
-    responseBody = null;
+  if(response.headers.get('Content-type')?.includes('application/json')){
+    responseBody = await response.json();
+  } else {
+    responseBody = await response.text();
   }
 
   // Create sentry errors based on status
   if (response.status === 400 && typeof responseBody === 'object' && responseBody?.errors) {
-    sentryErrorLogger(`Validation errors: ${responseBody.errors.join(', ')}`, requestId, url);
+    const content = responseBody as { errors: string[] };
+    sentryErrorLogger(`Validation errors: ${content.errors.join(', ')}`, requestId, url);
   } else if (response.status === 404) {
     sentryErrorLogger(`Route not found: ${response.status}`, requestId, url);
   } else if (response.status >= 500 && response.status <= 599) {
     sentryErrorLogger(`Server Error: ${response.status}`, requestId, url);
   }
 
-  return Promise.reject({
+  return {
     body: responseBody,
     ok: response.ok,
     status: response.status,
-  } as HttpErrorResponse);
+  };
 };
 
 // Fetch common logic
 export const makeRequest = async <T extends unknown>(url: string, requestInit: RequestInit, config: CallFetchConfig = { responseType: ResponseType.JSON }): Promise<HttpResponse<T>> => {
-  const request = new Request(url, requestInit);
-  const requestId: string = uuidv4();
 
-  // Common Headers
-  request.headers.append('X-Request-ID', requestId);
+  return new Promise(async (resolve,reject) => {
+    const request = new Request(url, requestInit);
+    const requestId: string = uuidv4();
 
-  try {
-    const response = await fetch(request);
+    // Common Headers
+    request.headers.append('X-Request-ID', requestId);
 
-    if (!response.ok) {
-      return await handleNonNetworkError(url, requestId, config.responseType,  response);
+    try {
+      const response = await fetch(request);
+
+      if (!response.ok) {
+        const errorResponse =  await handleNonNetworkError(url, requestId, config.responseType,  response);
+        return reject(errorResponse);
+      }
+
+      const httpResponse: Partial<HttpResponse<T>> = {
+        ok: response.ok,
+        status: response.status,
+      };
+
+      if (config.responseType === ResponseType.JSON) {
+        httpResponse.body = await response.json() as T;
+      }
+
+      if (config.responseType === ResponseType.TEXT) {
+        httpResponse.body = await response.text() as T;
+      }
+
+      if (config.responseType === ResponseType.BLOB) {
+        httpResponse.body = await response.blob() as T;
+      }
+
+      return resolve(httpResponse as HttpResponse<T>);
+    } catch (error) {
+      sentryErrorLogger(error, requestId, url);
+      return reject(new Error(error));
     }
-
-    const httpResponse: Partial<HttpResponse<T>> = {
-      ok: response.ok,
-      status: response.status,
-    };
-
-    if (config.responseType === ResponseType.JSON) {
-      httpResponse.body = await response.json() as T;
-    }
-
-    if (config.responseType === ResponseType.TEXT) {
-      httpResponse.body = await response.text() as T;
-    }
-
-    if (config.responseType === ResponseType.BLOB) {
-      httpResponse.body = await response.blob() as T;
-    }
-
-    return httpResponse as HttpResponse<T>;
-  // eslint-disable-next-line @typescript-eslint/no-implicit-any-catch
-  } catch (error) {
-    sentryErrorLogger(error, requestId, url);
-    throw new Error(error);
-  }
+  });
 };
