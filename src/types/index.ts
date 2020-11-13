@@ -1,4 +1,3 @@
-import { RouterState } from 'connected-react-router';
 import { DevApplication } from './apply';
 
 export * from './apply';
