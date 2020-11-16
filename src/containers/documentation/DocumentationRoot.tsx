@@ -11,6 +11,7 @@ import { APINameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER, FLAG_AUTH_DOCS_V2 } from '../../types/constants';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
+import { AuthorizationDocsLegacy } from './AuthorizationDocsLegacy';
 import CategoryPage from './CategoryPage';
 import DocumentationOverview from './DocumentationOverview';
 import QuickstartPage from './QuickstartPage';
@@ -146,7 +147,7 @@ const DocumentationRoot = (): JSX.Element => {
               <Route
                 exact
                 path="/explore/:apiCategoryKey/docs/authorization"
-                component={AuthorizationDocs}
+                component={AuthorizationDocsLegacy}
               />
               <Route
                 exact
