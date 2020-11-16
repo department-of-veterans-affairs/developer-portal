@@ -17,7 +17,7 @@ export const AuthorizationDocsLegacy = (): JSX.Element => {
     return <Redirect to="/explore" />;
   }
 
-  if (category?.apis.some(api => !!api.oAuth) && apiCategoryKey !== 'benefits') {
+  if (category.apis.some(api => !!api.oAuth) && apiCategoryKey !== 'benefits') {
     return (
       <div className="va-api-authorization-docs-legacy">
         <PageHeader halo={category.name} header="Authorization" />
