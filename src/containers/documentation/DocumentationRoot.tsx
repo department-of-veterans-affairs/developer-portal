@@ -124,7 +124,6 @@ const oldRouteToNew = [
 ];
 
 const DocumentationRoot = (): JSX.Element => {
-  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
   const { apiCategoryKey } = useParams<APINameParam>();
   const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
 
@@ -139,9 +138,7 @@ const DocumentationRoot = (): JSX.Element => {
                 <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
               <Route path="/explore/authorization" component={AuthorizationDocs} exact />
-              {!shouldRouteCategory && !authDocsV2 && (
-                <Redirect from="/explore/:apiCategoryKey" to="/explore" />
-              )}
+              {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
               <Route exact path="/explore/" component={DocumentationOverview} />
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
               <Route
