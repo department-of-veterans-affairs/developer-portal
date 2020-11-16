@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThunkDispatch } from 'redux-thunk';
 
 import ErrorableRadioButtons from '@department-of-veterans-affairs/formation-react/ErrorableRadioButtons';
@@ -7,38 +7,32 @@ import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/
 import * as actions from '../../actions';
 import { ErrorableInput, RootState } from '../../types';
 
-interface OAuthAppInfoProps {
-  oAuthApplicationType: ErrorableInput;
-  oAuthRedirectURI: ErrorableInput;
-  updateOAuthApplicationType: (value: ErrorableInput) => void;
-  updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput) => void;
-}
-
-const mapStateToProps = (
-  state: RootState,
-): Pick<OAuthAppInfoProps, 'oAuthApplicationType' | 'oAuthRedirectURI'> => ({
-  oAuthApplicationType: state.application.inputs.oAuthApplicationType,
-  oAuthRedirectURI: state.application.inputs.oAuthRedirectURI,
-});
-
 type OAuthAppInfoDispatch = ThunkDispatch<RootState, undefined, actions.UpdateApplicationAction>;
 
-const mapDispatchToProps = (
-  dispatch: OAuthAppInfoDispatch,
-): Pick<OAuthAppInfoProps, 'updateOAuthApplicationType' | 'updateOAuthRedirectURI'> => ({
-  updateOAuthApplicationType: (value: ErrorableInput): void => {
-    dispatch(actions.updateApplyOAuthApplicationType(value));
-  },
-  updateOAuthRedirectURI: (oldValidation?: string) => (value: ErrorableInput): void => {
-    dispatch(actions.updateApplyOAuthRedirectURI(value, oldValidation));
-  },
-});
+const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => {
+  const dispatch = useDispatch<OAuthAppInfoDispatch>();
 
-const OAuthAppInfo: React.FunctionComponent<OAuthAppInfoProps> = (props: OAuthAppInfoProps) => {
-  const { oAuthApplicationType, oAuthRedirectURI } = props;
+  const oAuthApplicationType = useSelector((state: RootState) => (
+    state.application.inputs.oAuthApplicationType)
+  );
+  const updateOAuthApplicationType = (value: ErrorableInput): void => {
+    dispatch(actions.updateApplyOAuthApplicationType(value));
+  };
+
+  const oAuthRedirectURI = useSelector((state: RootState) => (
+    state.application.inputs.oAuthRedirectURI)
+  );
+  const updateOAuthRedirectURI = (value: ErrorableInput): void => {
+    dispatch(
+      actions.updateApplyOAuthRedirectURI(
+        value,
+        oAuthRedirectURI.validation,
+      )
+    );
+  };
 
   return (
-    <React.Fragment>
+    <>
       <div className="vads-u-margin-top--4">
         Please specify whether your app can securely hide a client secret. Apps that can hide a
         secret will use the&nbsp;
@@ -55,7 +49,7 @@ const OAuthAppInfo: React.FunctionComponent<OAuthAppInfoProps> = (props: OAuthAp
       </div>
       <ErrorableRadioButtons
         label="Can your application securely hide a client secret?"
-        onValueChange={props.updateOAuthApplicationType}
+        onValueChange={updateOAuthApplicationType}
         options={[
           {
             label: 'Yes',
@@ -76,14 +70,11 @@ const OAuthAppInfo: React.FunctionComponent<OAuthAppInfoProps> = (props: OAuthAp
         errorMessage={oAuthRedirectURI.validation}
         label="OAuth Redirect URI"
         field={oAuthRedirectURI}
-        onValueChange={props.updateOAuthRedirectURI(oAuthRedirectURI.validation)}
+        onValueChange={updateOAuthRedirectURI}
         required
       />
-    </React.Fragment>
+    </>
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OAuthAppInfo);
+export { OAuthAppInfo };

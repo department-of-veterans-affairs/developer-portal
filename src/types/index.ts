@@ -1,4 +1,3 @@
-import { RouterState } from 'connected-react-router';
 import { DevApplication } from './apply';
 
 export * from './apply';
@@ -32,7 +31,6 @@ export interface APIVersioning {
 export interface RootState {
   apiVersioning: APIVersioning;
   application: DevApplication;
-  router: RouterState;
 }
 
 export interface SerializedState {

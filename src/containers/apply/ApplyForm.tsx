@@ -15,8 +15,8 @@ import { includesOAuthAPI } from '../../apiDefs/query';
 import { DevApplication, ErrorableInput, RootState } from '../../types';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS, PAGE_HEADER_ID } from '../../types/constants';
 import ApplyHeader from './ApplyHeader';
-import DeveloperInfo from './DeveloperInfo';
-import OAuthAppInfo from './OAuthAppInfo';
+import { DeveloperInfo } from './DeveloperInfo';
+import { OAuthAppInfo } from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
 
 /* eslint-disable @typescript-eslint/indent */
