@@ -4,6 +4,7 @@ import BenefitsIntro from './benefitsIntro.mdx';
 import BenefitsOverview from './benefitsOverview.mdx';
 import ClaimsReleaseNotes from './claimsReleaseNotes.mdx';
 import LoanGuarantyReleaseNotes from './loanGuarantyReleaseNotes.mdx';
+import ClaimsAttributesReleaseNotes from './claimsAttributesReleaseNotes.mdx';
 
 const benefitsContent: APICategoryContent = {
   intro: BenefitsIntro,
@@ -18,4 +19,5 @@ export {
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
+  ClaimsAttributesReleaseNotes,
 };
