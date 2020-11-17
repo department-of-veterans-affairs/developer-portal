@@ -3,14 +3,8 @@ import * as React from 'react';
 
 import videoPlayerIcon from '../assets/video-player.png';
 import videoPlayerHoverIcon from '../assets/video-player-hover.png';
-import {
-  CardLink,
-  EmbeddedYoutubeVideo,
-  HoverImage,
-  PageHeader,
-  SideNav,
-  SideNavEntry,
-} from '../components';
+import { CardLink, EmbeddedYoutubeVideo, HoverImage, SideNav, SideNavEntry } from '../components';
+import PageHeader from '../components/PageHeader';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
@@ -28,7 +22,6 @@ interface NewsSection extends DataSection {
 }
 
 export interface NewsItemData {
-  alt: string;
   date: string;
   title: string;
   url: string;
@@ -71,7 +64,6 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
       <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
           <HoverImage
-            alt={item.alt}
             imagePath={videoPlayerIcon}
             hoverImagePath={videoPlayerHoverIcon}
           />
