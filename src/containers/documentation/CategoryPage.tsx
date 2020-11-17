@@ -1,19 +1,15 @@
 import * as React from 'react';
 import { useParams } from 'react-router';
-import { Flag } from '../../flags';
+import { Flag, useFlag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import {
-  AuthorizationCard,
-  CardLink,
-  OnlyTags,
-  PageHeader,
-} from '../../components';
+import { AuthorizationCard, CardLink, OnlyTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
-import { PAGE_HEADER_ID } from '../../types/constants';
+import { FLAG_AUTH_DOCS_V2, PAGE_HEADER_ID } from '../../types/constants';
 
 const CategoryPage = (): JSX.Element => {
+  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
   const { apiCategoryKey } = useParams<APINameParam>();
 
   const {
@@ -46,7 +42,7 @@ const CategoryPage = (): JSX.Element => {
     });
 
     const authCard =
-      apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' ? (
+      apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' && !authDocsV2 ? (
         <AuthorizationCard categoryKey={apiCategoryKey} />
       ) : null;
 

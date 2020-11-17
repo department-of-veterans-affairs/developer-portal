@@ -6,11 +6,12 @@ import { Route, Switch, useParams } from 'react-router-dom';
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
 import { SideNav, SideNavEntry } from '../../components';
-import { Flag } from '../../flags';
+import { Flag, useFlag } from '../../flags';
 import { APINameParam } from '../../types';
-import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
+import { CURRENT_VERSION_IDENTIFIER, FLAG_AUTH_DOCS_V2 } from '../../types/constants';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
+import { AuthorizationDocsLegacy } from './AuthorizationDocsLegacy';
 import CategoryPage from './CategoryPage';
 import DocumentationOverview from './DocumentationOverview';
 import QuickstartPage from './QuickstartPage';
@@ -66,12 +67,16 @@ const OAuthSideNavEntry = (apiCategoryKey: string): JSX.Element => (
 );
 
 const ExploreSideNav = (): JSX.Element => {
+  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
   const apiCategoryOrder: string[] = getApiCategoryOrder();
   const apiDefinitions = getApiDefinitions();
 
   return (
     <SideNav ariaLabel="API Docs Side Nav">
       <SideNavEntry key="all" exact to="/explore" name="Overview" />
+      <Flag name={[FLAG_AUTH_DOCS_V2]}>
+        <SideNavEntry key="authorization" exact to="/explore/authorization" name="Authorization" />
+      </Flag>
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
         return (
@@ -92,6 +97,7 @@ const ExploreSideNav = (): JSX.Element => {
               )}
               {categoryKey !== 'benefits' &&
                 apiCategory.apis.some(api => !!api.oAuth) &&
+                !authDocsV2 &&
                 OAuthSideNavEntry(categoryKey)}
               {apiCategory.apis.map((api: APIDescription) => SideNavApiEntry(categoryKey, api))}
             </SideNavEntry>
@@ -131,13 +137,14 @@ const DocumentationRoot = (): JSX.Element => {
               {oldRouteToNew.map(routes => (
                 <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
+              <Route path="/explore/authorization" component={AuthorizationDocs} exact />
               {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
               <Route exact path="/explore/" component={DocumentationOverview} />
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
               <Route
                 exact
                 path="/explore/:apiCategoryKey/docs/authorization"
-                component={AuthorizationDocs}
+                component={AuthorizationDocsLegacy}
               />
               <Route
                 exact
