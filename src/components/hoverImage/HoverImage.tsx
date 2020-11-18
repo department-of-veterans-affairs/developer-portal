@@ -12,7 +12,6 @@ const HoverImage = ({ alt = '', imagePath, hoverImagePath }: HoverImageProps): J
   return (
     <img
       alt={alt}
-      role="presentation"
       onMouseEnter={(): void => setSrc(hoverImagePath)}
       onMouseLeave={(): void => setSrc(imagePath)}
       src={src}
