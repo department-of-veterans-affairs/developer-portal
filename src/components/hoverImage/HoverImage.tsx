@@ -1,20 +1,20 @@
 import * as React from 'react';
 
 interface HoverImageProps {
-  alt: string;
+  alt?: string;
   imagePath: string;
   hoverImagePath: string;
 }
 
-const HoverImage = (props: HoverImageProps): JSX.Element => {
-  const [src, setSrc] = React.useState(props.imagePath);
+const HoverImage = ({ alt = '', imagePath, hoverImagePath }: HoverImageProps): JSX.Element => {
+  const [src, setSrc] = React.useState(imagePath);
 
   return (
     <img
-      alt={props.alt ? props.alt : ''}
+      alt={alt}
       role="presentation"
-      onMouseEnter={(): void => setSrc(props.hoverImagePath)}
-      onMouseLeave={(): void => setSrc(props.imagePath)}
+      onMouseEnter={(): void => setSrc(hoverImagePath)}
+      onMouseLeave={(): void => setSrc(imagePath)}
       src={src}
     />
   );
