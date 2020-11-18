@@ -16,6 +16,7 @@ const envVars = [
 if(!process.env.TEST_HOST) {
   puppeteerConfig.server = {
     command: `${envVars.join(' ')} npm run start`,
+    protocol: 'http',
     port: 4444,
     launchTimeout: 120000,
   };

@@ -27,7 +27,10 @@ export const SiteRoutes: React.FunctionComponent = () => (
     <Route exact path="/index.html" component={Home} />
 
     {/* Legacy routes that we want to maintain: */}
-    <Route path="/explore/terms-of-service" render={(): JSX.Element => <Redirect to="/terms-of-service" />} />
+    <Route
+      path="/explore/terms-of-service"
+      render={(): JSX.Element => <Redirect to="/terms-of-service" />}
+    />
     <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
 
     {/* Current routes: */}
@@ -36,11 +39,7 @@ export const SiteRoutes: React.FunctionComponent = () => (
     <Route
       path="/apply"
       render={(): JSX.Element => (
-        <Flag
-          name={['signups_enabled']}
-          render={ApplyForm}
-          fallbackComponent={DisabledApplyForm}
-        />
+        <Flag name={['signups_enabled']} render={ApplyForm} fallbackComponent={DisabledApplyForm} />
       )}
     />
     <Route path="/applied" component={ApplySuccess} />

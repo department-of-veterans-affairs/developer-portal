@@ -4,7 +4,7 @@ import { puppeteerHost } from '../../e2eHelpers';
 
 describe('position sticky', () => {
   it('should keep nav element in place after scroll', async () => {
-    await page.goto(`${puppeteerHost}/explore`, { timeout: 60000, waitUntil: 'networkidle0' });
+    await page.goto(`${puppeteerHost}/explore`, { waitUntil: 'networkidle0' });
     const originalDistanceFromTop = await page.evaluate(
       () => document.querySelectorAll('.va-api-side-nav')[0].getBoundingClientRect().top,
     );
