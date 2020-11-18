@@ -15,18 +15,18 @@ const props = {
 
 describe('HoverImage', () => {
   it('should render base image', () => {
-    const { getByRole } = render(
+    const { getByTestId } = render(
       <HoverImage alt={props.alt} imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
     );
-    expect(getByRole('presentation').getAttribute('src')).toEqual(props.imagePath);
-    expect(getByRole('presentation').getAttribute('alt')).toEqual(props.alt);
+    expect(getByTestId('hoverImage').getAttribute('src')).toEqual(props.imagePath);
+    expect(getByTestId('hoverImage').getAttribute('alt')).toEqual(props.alt);
   });
 
   it('should render hover image when hovered over', () => {
-    const { getByRole } = render(
+    const { getByTestId } = render(
       <HoverImage alt={props.alt} imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
     );
-    const image = getByRole('presentation');
+    const image = getByTestId('hoverImage');
     userEvent.hover(image);
     expect(image.getAttribute('src')).toEqual(props.hoverImagePath);
     userEvent.unhover(image);

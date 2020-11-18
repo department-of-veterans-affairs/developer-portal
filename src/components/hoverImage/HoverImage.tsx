@@ -11,6 +11,7 @@ const HoverImage = ({ alt = '', imagePath, hoverImagePath }: HoverImageProps): J
 
   return (
     <img
+      data-testid="hoverImage"
       alt={alt}
       onMouseEnter={(): void => setSrc(hoverImagePath)}
       onMouseLeave={(): void => setSrc(imagePath)}
