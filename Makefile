@@ -13,6 +13,8 @@ AUDIT_LEVEL?= high
 BRANCH ?= notmaster
 # Sets default env 
 ENVIRONMENT ?= dev
+# Sets image name - useful locally if you want an image with a unique name
+IMAGE_NAME ?= developer-portal
 
 # the sed command in the help target will echo any comment preceded two #'s when make or make help is run 
 .PHONY: help
@@ -22,7 +24,7 @@ help : Makefile
 ## build:		** RUN FIRST ** builds developer-portal container environment 
 .PHONY: build
 build:
-	docker build -t developer-portal .
+	docker build -t ${IMAGE_NAME} .
 
 ## test:		runs all tests
 .PHONY: test 
@@ -40,7 +42,7 @@ security:
 		--user ${UNAME}:${GNAME} \
 		--volume "/application/node_modules" \
 		--volume "${PWD}:/application" \
-		developer-portal npm audit --audit-level ${AUDIT_LEVEL}
+		${IMAGE_NAME} npm audit --audit-level ${AUDIT_LEVEL}
 
 
 ## unit:		runs unit test script 
@@ -51,7 +53,7 @@ unit:
 		--user ${UNAME}:${GNAME} \
 		--volume "/application/node_modules" \
 		--volume "${PWD}:/application" \
-		developer-portal npm run-script test:unit:ci \
+		${IMAGE_NAME} npm run-script test:unit:ci \
 	 
 ## lint:		runs linting 
 .PHONY: lint
@@ -61,7 +63,7 @@ lint:
 		--user ${UNAME}:${GNAME} \
 		--volume "${PWD}:/application" \
 		--volume "/application/node_modules" \
-		developer-portal npm run lint
+		${IMAGE_NAME} npm run lint
 
 ## visual:	runs visual regression tests 
 .PHONY: visual
@@ -71,7 +73,7 @@ visual:
 		--user ${UNAME}:${GNAME} \
 		--volume "${PWD}:/application" \
 		--volume "/application/node_modules" \
-		developer-portal npm run test:visual
+		${IMAGE_NAME} npm run test:visual
 	 
 ## e2e:		runs end to end tests
 .PHONY: e2e
@@ -81,7 +83,7 @@ e2e:
 		--user ${UNAME}:${GNAME} \
 		--volume "${PWD}:/application" \
 		--volume "/application/node_modules" \
-		developer-portal npm run-script test:e2e:ci
+		${IMAGE_NAME} npm run-script test:e2e:ci
 
 ## accessibility:	runs accessibility tests
 .PHONY: accessibility
@@ -91,7 +93,7 @@ accessibility:
 		--user ${UNAME}:${GNAME} \
 		--volume "${PWD}:/application" \
 		--volume "/application/node_modules" \
-		developer-portal npm run-script test:accessibility:ci
+		${IMAGE_NAME} npm run-script test:accessibility:ci
 
 ## build_app:	builds the developer-portal website, and copies to host
 .PHONY: build_app
@@ -103,4 +105,4 @@ build_app:
 		--volume "/application/node_modules" \
 		--env NODE_ENV=production \
 		--env BUILD_ENV=${ENVIRONMENT} \
-		developer-portal npm run-script build ${ENVIRONMENT}
+		${IMAGE_NAME} npm run-script build ${ENVIRONMENT}

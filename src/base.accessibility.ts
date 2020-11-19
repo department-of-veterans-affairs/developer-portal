@@ -10,7 +10,7 @@ describe('Accessibility tests', () => {
       page.on('request', mockSwagger);
     }
 
-    await page.goto(`${puppeteerHost}${path}`, { timeout: 60000, waitUntil: 'networkidle0' });
+    await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
     await page.addScriptTag({ path: require.resolve('axe-core') });
 
     /**

@@ -18,8 +18,13 @@
     }
 
     a {
-      color: #4c565c;
+      color: #004795;
       transition: none;
+      font-size: 1.7rem;
+
+      &:visited {
+        color: #4c2c92
+      }
     }
 
     h2.title {
