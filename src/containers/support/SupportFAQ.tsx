@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import {
   AccordionPanelContent,
@@ -186,6 +187,9 @@ const SupportQuestions = (props: SupportQuestionsProps): JSX.Element => {
 
 const SupportFAQ: () => JSX.Element = () => (
   <section aria-label="Support FAQ">
+    <Helmet>
+      <title>FAQ</title>
+    </Helmet>
     <PageHeader {...headerProps} />
     <div>
       <SupportQuestions title="General" questions={generalQuestions} />

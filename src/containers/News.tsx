@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import Helmet from 'react-helmet';
 
 import videoPlayerIcon from '../assets/video-player.png';
 import videoPlayerHoverIcon from '../assets/video-player-hover.png';
@@ -104,6 +105,9 @@ const News = (): JSX.Element => {
           </SideNav>
           <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
             <section aria-label="News">
+              <Helmet>
+                <title>News</title>
+              </Helmet>
               <PageHeader
                 description={pageDescription}
                 header="News"
