@@ -35,13 +35,21 @@
   }
 
   ul {
-    background-color: $color-white;
-    border: 1px solid $color-gray;
-    border-radius: 5px;
-    padding: 2rem 2rem 2rem 4rem; // larger padding-left accounts for list-style
+    padding-left: 4rem; // larger padding-left accounts for list-style
   }
 
   td ul {
     border: none;
   }
+
+  hr {
+    margin: 1rem 0;
+  }
+
+  span {
+    border: solid #222935 1px;
+    border-radius: 3px;
+    padding: 0.2rem 0.4rem;
+  }
+
 }
