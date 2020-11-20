@@ -7,6 +7,7 @@ import { FlagsProvider, getFlags } from './flags';
 import { history } from './store';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
+import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
 
 /**

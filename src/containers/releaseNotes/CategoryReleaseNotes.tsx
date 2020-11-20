@@ -1,6 +1,7 @@
 import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import classNames from 'classnames';
 import * as React from 'react';
+import Helmet from 'react-helmet';
 import { Redirect, useParams } from 'react-router';
 
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
@@ -92,6 +93,9 @@ const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProp
   props: ReleaseNotesCollectionProps,
 ) => (
   <section aria-labelledby={`${props.categoryKey}-release-notes`}>
+    <Helmet>
+      <title>{props.apiCategory.name} Release Notes</title>
+    </Helmet>
     <PageHeader
       halo={props.apiCategory.name}
       header="Release Notes"

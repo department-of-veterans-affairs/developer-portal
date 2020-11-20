@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import Helmet from 'react-helmet';
 import notFoundImage from '../assets/404.svg';
 import './NotFound.scss';
 
@@ -43,6 +44,9 @@ const NotFound: React.FunctionComponent = () => {
               'vads-u-order--last',
             )}
           >
+            <Helmet>
+              <title>Page Not Found</title>
+            </Helmet>
             <h1>Page not found.</h1>
             <p className="vads-u-font-size--lg vads-u-font-weight--bold">
               Try using these links or the search bar to find your way forward.
