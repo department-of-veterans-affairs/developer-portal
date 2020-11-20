@@ -14,8 +14,8 @@ describe('Accessibility tests', () => {
     await page.addScriptTag({ path: require.resolve('axe-core') });
 
     /**
-     * Code highlighting on the Authorization page has issue with colo contrast
-     * so we have it disabled for the moment.
+     * Code highlighting on the Authorization page has a false-positive color
+     * contrast error, so we have it disabled for the moment.
      *
      * This appears to be due to the axe plugin not scrolling content before
      * validating color contrast in the code blocks, causing it to compare the
