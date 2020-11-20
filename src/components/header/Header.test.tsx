@@ -19,17 +19,20 @@ describe('Header', () => {
 
   it('should render the header', () => {
     expect(screen.getByText(/Lighthouse/)).toBeInTheDocument();
+    expect(screen.getByText(/Veterans Crisis Line/)).toBeInTheDocument();
+    expect(screen.getByText('Skip to main content')).toBeInTheDocument();
+    expect(screen.getAllByText('Request an API Key')[0]).toBeInTheDocument();
   });
 
   describe('when the menu button is clicked', () => {
-    it('displays the mobile menu', () => {
-      const mobileNav = screen.getByRole('navigation');
+    it('displays the menu on mobile', () => {
+      const navigation = screen.getByRole('navigation');
 
-      expect(mobileNav.classList.contains('va-api-mobile-nav-visible')).toBeFalsy();
+      expect(navigation.classList.contains('va-api-mobile-nav-visible')).toBeFalsy();
 
       userEvent.click(screen.getByText('Menu'));
 
-      expect(mobileNav.classList.contains('va-api-mobile-nav-visible')).toBeTruthy();
+      expect(navigation.classList.contains('va-api-mobile-nav-visible')).toBeTruthy();
     });
   });
 });
