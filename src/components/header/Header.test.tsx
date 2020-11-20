@@ -19,9 +19,27 @@ describe('Header', () => {
 
   it('should render the header', () => {
     expect(screen.getByText(/Lighthouse/)).toBeInTheDocument();
+  });
+
+  it('should contain a the Veterans Crisis Line modal', () => {
     expect(screen.getByText(/Veterans Crisis Line/)).toBeInTheDocument();
-    expect(screen.getByText('Skip to main content')).toBeInTheDocument();
-    expect(screen.getAllByText('Request an API Key')[0]).toBeInTheDocument();
+  });
+
+  it('should contain a link to skip to the main content', () => {
+    const mainContentLink: HTMLAnchorElement = screen.getByRole('link', {
+      name: 'Skip to main content',
+    }) as HTMLAnchorElement;
+
+    expect(mainContentLink.getAttribute('href')).toBe('/#main');
+  });
+
+  it('should contain a link to skip to request an API key', () => {
+    const requestAPIKeyLinks: HTMLAnchorElement[] = screen.getAllByRole('link', {
+      name: 'Request an API Key',
+    }) as HTMLAnchorElement[];
+
+    expect(requestAPIKeyLinks.length).toBe(2);
+    expect(requestAPIKeyLinks[0].getAttribute('href')).toBe('/apply');
   });
 
   describe('when the menu button is clicked', () => {
