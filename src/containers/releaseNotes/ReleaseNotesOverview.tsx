@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { getDeactivatedCategory } from '../../apiDefs/deprecated';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { CardLink, PageHeader } from '../../components';
@@ -10,6 +11,9 @@ const ReleaseNotesOverview = (): JSX.Element => {
   const deactivatedCategory = getDeactivatedCategory();
   return (
     <div>
+      <Helmet>
+        <title>Release Notes</title>
+      </Helmet>
       <PageHeader halo="Overview" header="Release Notes" />
       <div className="vads-u-font-size--lg">
         <p>
