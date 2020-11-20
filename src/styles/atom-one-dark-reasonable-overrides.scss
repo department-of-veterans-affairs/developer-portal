@@ -1,0 +1,10 @@
+/*
+ * Override $F92672 pink colors to meet accessibility requirements with the
+ * background color
+ */
+.hljs-keyword, .hljs-operator {
+  color: #F96080;
+}
+.hljs-pattern-match {
+  color: #F96080;
+}

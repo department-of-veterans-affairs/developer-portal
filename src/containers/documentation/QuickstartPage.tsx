@@ -19,7 +19,7 @@ const QuickstartPage = (): JSX.Element => {
   } = getApiDefinitions()[apiCategoryKey];
 
   if (quickstartContent) {
-    return <QuickstartWrapper halo={name} quickstartContent={quickstartContent} />;
+    return <QuickstartWrapper categoryName={name} quickstartContent={quickstartContent} />;
   } else {
     return <Redirect to={`/explore/${apiCategoryKey}`} />;
   }

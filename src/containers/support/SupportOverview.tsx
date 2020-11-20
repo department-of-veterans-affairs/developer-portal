@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Helmet from 'react-helmet';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { PAGE_HEADER_ID } from '../../types/constants';
@@ -18,6 +19,9 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
   props: SupportOverviewProps,
 ): JSX.Element => (
   <section aria-labelledby={PAGE_HEADER_ID}>
+    <Helmet>
+      <title>Support</title>
+    </Helmet>
     <PageHeader {...headerProps} />
     <div className={defaultFlexContainer()}>
       {props.sections.map((section: SupportSection) => (

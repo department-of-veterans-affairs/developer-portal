@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Helmet from 'react-helmet';
 import { useParams } from 'react-router';
 import { Flag, useFlag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
@@ -58,6 +59,9 @@ const CategoryPage = (): JSX.Element => {
 
   return (
     <section aria-labelledby={PAGE_HEADER_ID} className="va-api-api-overview">
+      <Helmet>
+        <title>{categoryName}</title>
+      </Helmet>
       <PageHeader header={categoryName} />
       {intro({})}
       {cardSection}
