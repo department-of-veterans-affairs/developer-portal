@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import classNames from 'classnames';
+import Helmet from 'react-helmet';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -113,6 +114,9 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
       aria-labelledby={PAGE_HEADER_ID}
       className={classNames('vads-l-grid-container', 'vads-u-padding--4')}
     >
+      <Helmet>
+        <title>Welcome to the VA API Platform</title>
+      </Helmet>
       <p>
         <strong>Thank you for signing up!</strong>
       </p>
@@ -131,7 +135,12 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
 };
 
 const ApplySuccessError = (): JSX.Element => (
-  <div>Error! Unable to render apply success</div>
+  <>
+    <Helmet>
+      <title>Error</title>
+    </Helmet>
+    <div>Error! Unable to render apply success</div>
+  </>
 );
 
 const ApplySuccess = (): JSX.Element => {

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { AuthorizationCard, CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
@@ -11,6 +12,9 @@ const DocumentationOverview = (): JSX.Element => {
 
   return (
     <div>
+      <Helmet>
+        <title>Documentation</title>
+      </Helmet>
       <PageHeader
         header="Documentation"
         description="Explore usage policies and technical details about VA's API offerings."

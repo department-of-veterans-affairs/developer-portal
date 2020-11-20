@@ -1,11 +1,16 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 
+const headerText = 'Apply for VA Lighthouse Developer Access';
 const ApplyHeader = (): JSX.Element => (
   <div>
-    <PageHeader header="Apply for VA Lighthouse Developer Access" />
+    <Helmet>
+      <title>{headerText}</title>
+    </Helmet>
+    <PageHeader header={headerText} />
     <p
       className={classNames('usa-font-lead', 'vads-u-font-family--sans', 'vads-u-margin-bottom--2')}
     >
