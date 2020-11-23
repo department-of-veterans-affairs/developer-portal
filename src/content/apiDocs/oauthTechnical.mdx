@@ -1,6 +1,8 @@
 ---
 imports:
-  '{ CodeWrapper, HeadingWrapper }': ../../components
+  '{ CodeWrapper, HeadingWrapper }': ../../components 
+  '{ HashLink }' : 'react-router-hash-link'
+  '{ onHashAnchorClick }' : '../../utils/clickHandlers'
 ---
 
 This page walks you through the steps toward authorization and authentication for using OAuth APIs on the Lighthouse platform. We provide examples throughout this document that you can copy and use to get started. 
@@ -9,11 +11,11 @@ They are shown with generic cURL commands. Select your API from the drop-down ne
 
 ## On this Page: {tabIndex="-1"}
 
-- [Getting Started, Initiating the Authorization Code Flow](#getting-started)
-- [Building OpenID Connect Applications](#building-openid)
-- [Scopes](#scopes)
-- [ID Token](#id-token)
-- [Test Users](#test-users)
+- <HashLink to="#getting-started" onClick={onHashAnchorClick}>Getting Started, Initiating the Authorization Code Flow</HashLink>
+- <HashLink to="#building-openid" onClick={onHashAnchorClick}>Building OpenID Connect Applications</HashLink>
+- <HashLink to="#scopes" onClick={onHashAnchorClick}>Scopes</HashLink>
+- <HashLink to="#id-token" onClick={onHashAnchorClick}>ID Token</HashLink>
+- <HashLink to="#test-users" onClick={onHashAnchorClick}>Test Users</HashLink>
 
 ### It’s also good to know that: 
 - The access credentials we supply are for the sandbox environment only and will not work in the production environment. 

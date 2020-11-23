@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { HashLink } from 'react-router-hash-link';
+import { onHashAnchorClick } from '../../utils/clickHandlers';
 
 import './HeadingWrapper.scss';
 
@@ -9,9 +11,15 @@ interface HeadingWrapperProps {
 
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex -- required for keyboard scrolling */
 const HeadingWrapper = (props: HeadingWrapperProps): JSX.Element => (
-  <div className="auth-heading-wrapper" tabIndex={-1}>
-    <h2 id={props.id}>{props.heading}</h2>
-    <a href="#page-header">Return to top</a>
+  <div className="auth-heading-wrapper">
+    <h2 id={props.id} tabIndex={-1}>{props.heading}</h2>
+    <HashLink
+      to="#page-header"
+      className="page-link"
+      onClick={onHashAnchorClick}
+    >
+      Return to top
+    </HashLink>
   </div>
 );
 
