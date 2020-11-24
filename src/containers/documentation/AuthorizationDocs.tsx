@@ -2,7 +2,7 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 
 import { PageHeader } from '../../components';
-import OAuth from '../../content/apiDocs/oauthTechnical.mdx';
+import OAuth from '../../content/apiDocs/oauth/oauthTechnical.mdx';
 
 import './AuthorizationDocs.scss';
 

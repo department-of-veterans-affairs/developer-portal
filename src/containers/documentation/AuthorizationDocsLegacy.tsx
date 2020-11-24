@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 import { lookupApiCategory } from '../../apiDefs/query';
 import { PageHeader } from '../../components';
-import OAuth from '../../content/apiDocs/oauthTechnicalLegacy.mdx';
+import OAuth from '../../content/apiDocs/oauth/oauthTechnicalLegacy.mdx';
 import { APINameParam } from '../../types';
 import ApiKeyAuth from './ApiKeyAuth';
 
