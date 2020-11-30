@@ -14,9 +14,22 @@ describe('Accessibility tests', () => {
     await page.addScriptTag({ path: require.resolve('axe-core') });
 
     /**
-     * THIS IS BAD. code highlighting on the Authorization page has several color contrast
-     * issues. upgrading axe-core from 3.3.1 to 4.0.2 and jest-axe from 3.2.0 to 4.0.0 introduced
-     * stricter rules, which is good, but we can't resolve this issue without UX input.
+     * Code highlighting on the Authorization page has a false-positive color
+     * contrast error, so we have it disabled for the moment.
+     *
+     * This appears to be due to the axe plugin not scrolling content before
+     * validating color contrast in the code blocks, causing it to compare the
+     * wrong background color.
+     *
+     * The releate notes for axe-core 4.1.0 show that this is resolved, but
+     * jest-axe has its own version declared for axe-core, so we need to wait
+     * for a version of jest-axe that has axe-core 4.1.0 as a downstream
+     * dependency, before re-enabling the contrast checks on the authorization
+     * page.
+     *
+     * TLDR: We can enable color contrast checks on the authorization page once
+     * a new version of jest-axe has axe-core 4.1.0 as a downstream dependency,
+     * and we upgrade to it.
      */
     if (path === '/explore/health/docs/authorization') {
       await page.evaluate(() => {

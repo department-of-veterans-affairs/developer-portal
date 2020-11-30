@@ -8,23 +8,25 @@ import { HoverImage } from './HoverImage';
 afterEach(cleanup);
 
 const props = {
+  alt: 'United States',
   hoverImagePath: 'hover',
   imagePath: 'image',
 };
 
 describe('HoverImage', () => {
   it('should render base image', () => {
-    const { getByRole } = render(
-      <HoverImage imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
+    const { getByTestId } = render(
+      <HoverImage alt={props.alt} imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
     );
-    expect(getByRole('presentation').getAttribute('src')).toEqual(props.imagePath);
+    expect(getByTestId('hoverImage').getAttribute('src')).toEqual(props.imagePath);
+    expect(getByTestId('hoverImage').getAttribute('alt')).toEqual(props.alt);
   });
 
   it('should render hover image when hovered over', () => {
-    const { getByRole } = render(
-      <HoverImage imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
+    const { getByTestId } = render(
+      <HoverImage alt={props.alt} imagePath={props.imagePath} hoverImagePath={props.hoverImagePath} />,
     );
-    const image = getByRole('presentation');
+    const image = getByTestId('hoverImage');
     userEvent.hover(image);
     expect(image.getAttribute('src')).toEqual(props.hoverImagePath);
     userEvent.unhover(image);
