@@ -87,7 +87,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
         <>
           {apiDefinition.multiOpenAPIIntro?.({})}
           <Tabs selectedIndex={tabIndex} onSelect={onTabSelect}>
-            <TabList>
+            <TabList aria-label={`${apiDefinition.name} implementations`}>
               {apiDefinition.docSources.map(apiDocSource => (
                 <Tab key={apiDocSource.label}>{apiDocSource.label}</Tab>
               ))}
