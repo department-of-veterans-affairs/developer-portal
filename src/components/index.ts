@@ -19,5 +19,5 @@ export * from './embeddedYoutubeVideo/EmbeddedYoutubeVideo';
 export * from './hero/Hero';
 export * from './markdownPage/MarkdownPage';
 export * from './quickStartWrapper/QuickstartWrapper';
-export * from './headingWrapper/HeadingWrapper';
+export * from './sectionHeaderWrapper/SectionHeaderWrapper';
 

@@ -1,6 +1,6 @@
 ---
 imports:
-  '{ CodeWrapper, HeadingWrapper }': ../../../components 
+  '{ CodeWrapper, SectionHeaderWrapper }': ../../../components 
   '{ HashLink }' : 'react-router-hash-link'
   '{ onHashAnchorClick }' : '../../../utils/clickHandlers'
   'GettingStarted': ./oauthTechnicalGettingStarted.mdx
@@ -18,6 +18,8 @@ They are shown with generic cURL commands. Select your API from the drop-down ne
 
 - <HashLink to="#getting-started" onClick={onHashAnchorClick}>Getting Started, Initiating the Authorization Code Flow</HashLink>
 - <HashLink to="#building-openid" onClick={onHashAnchorClick}>Building OpenID Connect Applications</HashLink>
+    - <HashLink to="#initiating-the-authorization-code-flow" onClick={onHashAnchorClick}>Initiating the Authorization Code Flow</HashLink>
+    - <HashLink to="#pkce-(proof-key-for-code-exchange)-authorization" onClick={onHashAnchorClick}>PKCE (Proof Key for Code Exchange) Authorization</HashLink>
 - <HashLink to="#scopes" onClick={onHashAnchorClick}>Scopes</HashLink>
 - <HashLink to="#id-token" onClick={onHashAnchorClick}>ID Token</HashLink>
 - <HashLink to="#test-users" onClick={onHashAnchorClick}>Test Users</HashLink>
