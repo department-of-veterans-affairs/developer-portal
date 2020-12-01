@@ -85,7 +85,7 @@ const Home = (): JSX.Element => (
       imageSrc={padlockImg}
       title="A secure API platform to service Veterans."
     >
-      <p className="vads-u-margin--0">
+      <p>
         Lighthouse is an API platform that gives developers secure access to the VA data they need
         to build helpful tools and services for Veterans. Streamlined and accessible, we designed a
         modern API development experience to easily build services that provide Veterans with
@@ -94,13 +94,12 @@ const Home = (): JSX.Element => (
       </p>
     </HomeSection>
     <HomeSection ariaLabel="reliable API" imageSrc={apiImg} title="A modern, reliable API library.">
-      <p className="vads-u-margin--0">
+      <p>
         Our library consists of APIs for Benefits, Health, Facilities, and Veteran Verification
         information. These APIs allow approved individuals and organizations to access VA
         information systems at no cost.
       </p>
-      <p className="vads-u-display--none medium-screen:vads-u-display--block vads-u-margin--0">
-        <br />
+      <p className="vads-u-display--none medium-screen:vads-u-display--block">
         API Consumers can immediately request API key access to sandbox data to explore how they can
         use VA APIs to create tools that serve Veterans. Leveraging RESTful API, Open API and OAuth
         2.0 standards, our APIs enable Veterans and service providers to achieve the following
