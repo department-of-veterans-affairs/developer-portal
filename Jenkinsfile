@@ -153,7 +153,7 @@ node('vetsgov-general-purpose') {
   stage('Security') {
     try {
       dockerImage.inside(args) {
-        sh "cd /application && npm config set audit-level critical && npm audit"
+        sh "cd /application && npm audit --audit-level low"
       }
     } catch (error) {
       if (!onDeployableBranch()) {
