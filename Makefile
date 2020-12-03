@@ -8,7 +8,7 @@ UNAME ?= root
 # Sets group, this is helpful to run locally as you most likely do not have a jenkins group on your machine.
 GNAME ?= root
 # Sets default audit level for security scans
-AUDIT_LEVEL?= high
+AUDIT_LEVEL?= low
 # Sets Branch
 BRANCH ?= notmaster
 # Sets default env 
