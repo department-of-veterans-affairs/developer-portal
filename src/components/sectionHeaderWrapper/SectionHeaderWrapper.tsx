@@ -11,7 +11,7 @@ interface SectionHeaderWrapperProps {
 }
 
 const SectionHeaderWrapper = (props: SectionHeaderWrapperProps): JSX.Element => (
-  <div className="auth-heading-wrapper">
+  <div className="section-heading-wrapper">
     <h2 id={props.id} tabIndex={-1}>{props.heading}</h2>
     <HashLink
       to={`#${PAGE_HEADER_ID}`}

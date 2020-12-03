@@ -20,5 +20,5 @@ export * from './hero/Hero';
 export * from './markdownPage/MarkdownPage';
 export * from './quickStartWrapper/QuickstartWrapper';
 export * from './sectionHeaderWrapper/SectionHeaderWrapper';
-export * from './oauthBuildingOpenIdContent/OAuthBuildingOpenIdContent';
+export * from './oauthDocs/BuildingOpenIdContent';
 

@@ -2,11 +2,6 @@
 imports:
   '{ HashLink }' : 'react-router-hash-link'
   '{ onHashAnchorClick }' : '../../../utils/clickHandlers'
-  'GettingStarted': ./oauthTechnicalGettingStarted.mdx
-  'BuildingOpenId': ./oauthTechnicalBuildingOpenId.mdx
-  'Scopes': ./oauthTechnicalScopes.mdx
-  'IdToken': ./oauthTechnicalIdToken.mdx
-  'TestUsers': ./oauthTechnicalTestUsers.mdx
 ---
 
 This page walks you through the steps toward authorization and authentication for using OAuth APIs on the Lighthouse platform. We provide examples throughout this document that you can copy and use to get started. 
@@ -17,8 +12,8 @@ They are shown with generic cURL commands. Select your API from the drop-down ne
 
 - <HashLink to="#getting-started" onClick={onHashAnchorClick}>Getting Started, Initiating the Authorization Code Flow</HashLink>
 - <HashLink to="#building-openid" onClick={onHashAnchorClick}>Building OpenID Connect Applications</HashLink>
-    - <HashLink to="#initiating-the-authorization-code-flow" onClick={onHashAnchorClick}>Initiating the Authorization Code Flow</HashLink>
-    - <HashLink to="#pkce-(proof-key-for-code-exchange)-authorization" onClick={onHashAnchorClick}>PKCE (Proof Key for Code Exchange) Authorization</HashLink>
+    - <HashLink to="#authorization-code-flow" onClick={onHashAnchorClick}>Initiating the Authorization Code Flow</HashLink>
+    - <HashLink to="#pkce-authorization" onClick={onHashAnchorClick}>PKCE (Proof Key for Code Exchange) Authorization</HashLink>
 - <HashLink to="#scopes" onClick={onHashAnchorClick}>Scopes</HashLink>
 - <HashLink to="#id-token" onClick={onHashAnchorClick}>ID Token</HashLink>
 - <HashLink to="#test-users" onClick={onHashAnchorClick}>Test Users</HashLink>
