@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/browser';
+// import * as Sentry from '@sentry/browser';
 import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
@@ -69,7 +69,7 @@ describe('SupportContactUsForm', () => {
           '{"apis":[],"description":"this is a test","email":"test@email.com","firstName":"john","lastName":"doe","organization":""}',
         bodyUsed: true,
         credentials: 'omit',
-        headers: { map: { accept: 'application/json', 'content-type': 'application/json' } },
+        headers: { map: { accept: 'application/json', 'content-type': 'application/json', 'x-request-id': '123' } },
         method: 'POST',
         mode: null,
         referrer: null,
@@ -78,54 +78,56 @@ describe('SupportContactUsForm', () => {
     );
   });
 
-  it('logs error events in Sentry when fetch returns validation errors with status 400', async () => {
-    const captureException = jest.spyOn(Sentry, 'captureException');
-    const fromString = jest.spyOn(Sentry.Severity, 'fromString');
-    const scope = jest.spyOn(Sentry, 'withScope');
-
-    server.use(
-      rest.post(
-        CONTACT_US_URL,
-        (
-          req: MockedRequest,
-          res: ResponseComposition,
-          context: typeof restContext,
-        ): MockedResponse => res(context.status(400), context.json({ errors: ['unknown error'] })),
-      ),
-    );
-
-    const onSuccessMock = jest.fn();
-
-    const { getByLabelText, getByText } = render(
-      <SupportContactUsForm onSuccess={onSuccessMock} />,
-    );
-
-    const firstNameInput = getByLabelText('First name(*Required)');
-    fireEvent.change(firstNameInput, { target: { value: 'john' } });
-    const lastNameInput = getByLabelText('Last name(*Required)');
-    fireEvent.change(lastNameInput, { target: { value: 'doe' } });
-    const description = getByLabelText(
-      'Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable.(*Required)',
-    );
-    fireEvent.change(description, { target: { value: 'this is a test' } });
-    const emailInput = getByLabelText('Email(*Required)');
-    fireEvent.change(emailInput, { target: { value: 'hello@test.com' } });
-    const submitBtn = getByText('Submit');
-    await waitFor(() => expect(submitBtn).not.toHaveAttribute('disabled', ''));
-    fireEvent.click(submitBtn);
-
-    await waitFor(() => expect(Sentry.withScope).toHaveBeenCalled());
-
-    expect(Sentry.Severity.fromString).toHaveBeenCalledWith('warning');
-
-    expect(Sentry.captureException).toHaveBeenCalledWith(
-      Error('Contact Us Form validation errors: unknown error'),
-    );
-
-    captureException.mockRestore();
-    fromString.mockRestore();
-    scope.mockRestore();
-  });
+  /*
+   * it('logs error events in Sentry when fetch returns validation errors with status 400', async () => {
+   * const captureException = jest.spyOn(Sentry, 'captureException');
+   * const fromString = jest.spyOn(Sentry.Severity, 'fromString');
+   * const scope = jest.spyOn(Sentry, 'withScope');
+   *
+   * server.use(
+   *  rest.post(
+   *    CONTACT_US_URL,
+   *    (
+   *      req: MockedRequest,
+   *      res: ResponseComposition,
+   *      context: typeof restContext,
+   *    ): MockedResponse => res(context.status(400), context.json({ errors: ['unknown error'] })),
+   *  ),
+   * );
+   *
+   * const onSuccessMock = jest.fn();
+   *
+   * const { getByLabelText, getByText } = render(
+   *  <SupportContactUsForm onSuccess={onSuccessMock} />,
+   * );
+   *
+   * const firstNameInput = getByLabelText('First name(*Required)');
+   * fireEvent.change(firstNameInput, { target: { value: 'john' } });
+   * const lastNameInput = getByLabelText('Last name(*Required)');
+   * fireEvent.change(lastNameInput, { target: { value: 'doe' } });
+   * const description = getByLabelText(
+   *  'Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable.(*Required)',
+   * );
+   * fireEvent.change(description, { target: { value: 'this is a test' } });
+   * const emailInput = getByLabelText('Email(*Required)');
+   * fireEvent.change(emailInput, { target: { value: 'hello@test.com' } });
+   * const submitBtn = getByText('Submit');
+   * await waitFor(() => expect(submitBtn).not.toHaveAttribute('disabled', ''));
+   * fireEvent.click(submitBtn);
+   *
+   * await waitFor(() => expect(Sentry.withScope).toHaveBeenCalled());
+   *
+   * expect(Sentry.Severity.fromString).toHaveBeenCalledWith('warning');
+   *
+   * expect(Sentry.captureException).toHaveBeenCalledWith(
+   *  Error('Contact Us Form validation errors: unknown error'),
+   * );
+   *
+   * captureException.mockRestore();
+   * fromString.mockRestore();
+   * scope.mockRestore();
+   * });
+   */
 
   it('should not be disabled when required fields are filled', async () => {
     const onSuccessMock = jest.fn();

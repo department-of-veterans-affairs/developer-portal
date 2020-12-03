@@ -1,7 +1,6 @@
 import ErrorableCheckboxGroup from '@department-of-veterans-affairs/formation-react/ErrorableCheckboxGroup';
 import ErrorableTextArea from '@department-of-veterans-affairs/formation-react/ErrorableTextArea';
 import ErrorableTextInput from '@department-of-veterans-affairs/formation-react/ErrorableTextInput';
-import * as Sentry from '@sentry/browser';
 import classNames from 'classnames';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
@@ -11,6 +10,7 @@ import { getApiDefinitions } from '../../apiDefs/query';
 import { Form } from '../../components';
 import { ErrorableInput } from '../../types';
 import { CONTACT_US_URL } from '../../types/constants';
+import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import { validateEmail, validatePresence } from '../../utils/validators';
 
 import './SupportContactUsForm.scss';
@@ -124,37 +124,20 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
     organization: formState.organization.value,
   });
 
-  const formSubmission = (): Promise<void> => {
-    const request = new Request(CONTACT_US_URL, {
+  const formSubmission = async (): Promise<void> =>
+    makeRequest(CONTACT_US_URL, {
       body: JSON.stringify(processedData()),
       headers: {
         accept: 'application/json',
         'content-type': 'application/json',
       },
       method: 'POST',
-    });
-
-    return fetch(request)
-      .then(response => {
-        // The developer-portal-backend sends a 400 status, along with an array of validation error strings, when validation errors are present on the form.
-        if (!response.ok && response.status !== 400) {
-          throw Error(response.statusText);
-        }
-        return response;
-      })
-      .then(response => response.json())
-      .then((json: { errors?: string[] }) => {
-        if (json.errors) {
-          throw Error(`Contact Us Form validation errors: ${json.errors.join(', ')}`);
-        }
-      })
+    }, { responseType: ResponseType.TEXT }).then(() => {
+      // do nothing and return void
+    })
       .catch(error => {
-        Sentry.withScope(scope => {
-          scope.setLevel(Sentry.Severity.fromString('warning'));
-          Sentry.captureException(error);
-        });
+        throw error;
       });
-  };
 
   const toggleApis = (input: ErrorableInput, checked: boolean): void => {
     const name = input.value;
