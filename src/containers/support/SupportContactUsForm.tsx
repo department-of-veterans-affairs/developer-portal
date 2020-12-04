@@ -124,7 +124,7 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
     organization: formState.organization.value,
   });
 
-  const formSubmission = async (): Promise<void> =>
+  const formSubmission = (): Promise<void> =>
     makeRequest(CONTACT_US_URL, {
       body: JSON.stringify(processedData()),
       headers: {
