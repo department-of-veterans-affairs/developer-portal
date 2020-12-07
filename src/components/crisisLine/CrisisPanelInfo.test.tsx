@@ -14,22 +14,22 @@ describe('CrisisPanelInfo', () => {
   const target = 'panel_target';
 
   it('checks that target and id properties are correctly applied.', () => {
-    const { container } = render(<CrisisPanelInfo target={target} id={id} icon={icon} />);
-    const anchorElement = container.querySelector('a');
+    const { getByRole } = render(<CrisisPanelInfo target={target} id={id} icon={icon} />);
+    const anchorElement = getByRole('link');
     expect(anchorElement).toHaveAttribute('href', target);
     expect(anchorElement).toHaveAttribute('id', id);
   });
 
   it('checks that anchor element does not contain an id attribute when the id prop is not passed.', () => {
-    const { container } = render(<CrisisPanelInfo target={target} icon={icon} />);
-    const anchorElement = container.querySelector('a');
+    const { getByRole } = render(<CrisisPanelInfo target={target} icon={icon} />);
+    const anchorElement = getByRole('link');
     expect(anchorElement).not.toHaveAttribute('id');
   });
 
   it('checks that when component has inner content it displays successfully.', () => {
     const innerContent = 'I am the inner content :).';
-    const { container } = render(<CrisisPanelInfo target={target} icon={icon} >{innerContent}</CrisisPanelInfo>);
-    const anchorElement = container.querySelector('a');
+    const { getByRole } = render(<CrisisPanelInfo target={target} icon={icon} >{innerContent}</CrisisPanelInfo>);
+    const anchorElement = getByRole('link');
     expect(anchorElement).toHaveTextContent(innerContent);
   });
 });
