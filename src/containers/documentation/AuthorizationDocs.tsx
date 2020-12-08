@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
 
-import { PageHeader, BuildingOpenIdContent } from '../../components';
+import { PageHeader, BuildingOIDCContent } from '../../components';
 import OAuthPageLinks from '../../content/apiDocs/oauth/oauthTechnicalPageLinks.mdx';
 import OAuthGettingStarted from '../../content/apiDocs/oauth/oauthTechnicalGettingStarted.mdx';
 import OAuthScopes from '../../content/apiDocs/oauth/oauthTechnicalScopes.mdx';
@@ -18,7 +18,7 @@ export const AuthorizationDocs = (): JSX.Element => (
     <PageHeader header="Authorization" />
     <OAuthPageLinks />
     <OAuthGettingStarted />
-    <BuildingOpenIdContent />
+    <BuildingOIDCContent />
     <OAuthScopes />
     <OAuthIdToken />
     <OAuthTestUsers />

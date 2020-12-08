@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { SectionHeaderWrapper } from '../index';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
 import AuthCodeFlowCodeBlock from './AuthCodeFlowCodeBlock.mdx';
 import AuthCodeFlowTableContent from './OauthInitiatingAuthCodeFlowTable.mdx';
@@ -12,39 +11,9 @@ import AuthCodeGrantRefreshCodeBlock from './AuthCodeGrantRefreshCodeBlock.mdx';
 import ManageAccountCodeBlock from './ManageAccountCodeBlock.mdx';
 import RevokeTokenCodeBlock from './RevokeTokenCodeBlock.mdx';
 import RevokeGrantsCodeBlock from './RevokeGrantsCodeBlock.mdx';
-import PKCECodeBlock from './PKCECodeBlock.mdx';
-import PKCETableContent from './OauthPKCETable.mdx';
-import PKCEAuthCodeGrantCodeBlock from './PKCEAuthCodeGrantCodeBlock.mdx';
-import PKCEPostCodeBlock from './PKCEPostCodeBlock.mdx';
-import PKCEToken400CodeBlock from './PKCEToken400CodeBlock.mdx';
-import PKCERefreshTokenCodeBlock from './PKCERefreshTokenCodeBlock.mdx';
 
-const BuildingOpenIdContent = (): JSX.Element => (
-  <div>
-    <SectionHeaderWrapper heading="Building OpenID Connect Applications" id="building-openid" />
-    <p>After being approved to use OpenID Connect, you&#39;ll receive a client id.</p>
-    <ul>
-      <li>
-        If you are building a <strong>server-based application</strong>, you’ll also receive a
-        client secret and will use the{' '}
-        <HashLink to="#initiating-the-authorization-code-flow" onClick={onHashAnchorClick}>
-          authorization code flow
-        </HashLink>{' '}
-        to complete authentication.
-      </li>
-      <li>
-        If you are unable to <strong>safely store a client secret</strong> such as a native mobile
-        app, you will{' '}
-        <HashLink
-          to="#pkce-(proof-key-for-code-exchange)-authorization"
-          onClick={onHashAnchorClick}
-        >
-          use PKCE
-        </HashLink>
-        to complete authentication.
-      </li>
-    </ul>
-
+const AuthCodeFlowContent = (): JSX.Element => (
+  <section aria-labelledby="authorization-code-flow">
     <h3 id="authorization-code-flow" tabIndex={-1}>
       Initiating the Authorization Code Flow
     </h3>
@@ -73,7 +42,7 @@ const BuildingOpenIdContent = (): JSX.Element => (
       Veteran to the URL above. The Veteran is taken through an authentication flow by VA.gov and
       asked to consent to your application accessing their data. The data that can be accessed is
       defined by your scopes. After the Veteran gives permission, your application will receive a
-      response based on the <code>response_type</code> you requested
+      response based on the <code>response_type</code> you requested.
     </p>
 
     <h4 id="authorization-code-grant">Authorization Code Grant</h4>
@@ -178,99 +147,9 @@ const BuildingOpenIdContent = (): JSX.Element => (
     </p>
 
     <RevokeGrantsCodeBlock />
-
-    <h3 tabIndex={-1} id="pkce-authorization">
-      PKCE (Proof Key for Code Exchange) Authorization
-    </h3>
-
-    <p>
-      <strong>NOTE:</strong> We provide a{' '}
-      <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/tree/master/samples/oauth_pkce_cli">
-        sample CLI application
-      </a>{' '}
-      for getting started using PKCE.
-      <br />
-      Begin the OpenID Connect authorization by using the authorization endpoint, query parameters,
-      and scopes listed below.
-    </p>
-    <PKCECodeBlock />
-
-    <PKCETableContent />
-
-    <p>
-      The Veteran will need to grant your application access permission. To do this, direct the
-      Veteran to the URL above. The Veteran is taken through an authentication flow by VA.gov and
-      asked to consent to your application accessing their data. The data that can be accessed is
-      defined by your scopes. After the Veteran gives permission, your application will receive an
-      authorization code.
-    </p>
-
-    <h3 id="authorization-code-grant-2">Authorization Code Grant</h3>
-
-    <p>
-      After the Veteran consents to authorize your application, their browser will redirect to your
-      application with the response shown below, which returns the <code>code</code> and{' '}
-      <code>state</code> parameters you must use to make a request to our authorization service and
-      the <code>code_verifier</code> used to create the <code>code_challenge</code> in the previous
-      step.
-    </p>
-
-    <PKCEAuthCodeGrantCodeBlock />
-
-    <p>Use the following format, in HTTP basic authentication, for your request.</p>
-
-    <ul>
-      <li>
-        Use the <code>code</code> and <code>state</code> parameters that were returned in the
-        previous step.
-      </li>
-      <li>
-        Be sure to replace <code>&lt; yourRedirectURL &gt;</code> with the redirect URL that you
-        provided during registration.
-      </li>
-    </ul>
-
-    <PKCEPostCodeBlock />
-
-    <p>
-      The authorization server will send a 200 response with an{' '}
-      <HashLink to="#id-token" onClick={onHashAnchorClick}>
-        access token
-      </HashLink>
-      . If you requested the <code>offline_access</code> scope, you will also receive a{' '}
-      <code>refresh_token</code>. The response body will look like this, where{' '}
-      <code>expires_in</code> is the time in seconds before the token expires:
-    </p>
-
-    <PKCEToken400CodeBlock />
-
-    <p>
-      Use the returned <code>access_token</code> to authorize requests to our platform by including
-      it in the header of HTTP requests as <code>Authorization: Bearer {'{access_token}'}</code>.
-    </p>
-
-    <p>
-      <strong>NOTE:</strong> the{' '}
-      <HashLink to="#id-token" onClick={onHashAnchorClick}>
-        access token
-      </HashLink>{' '}
-      will only work for the API and scopes for which you have previously initiated authorization.
-    </p>
-
-    <p>
-      Use the <code>refresh_token</code> to obtain a new <code>access_token</code> after its expiry
-      by sending the following request.
-    </p>
-
-    <PKCERefreshTokenCodeBlock />
-
-    <p>
-      The response will return a new <code>access_token</code> and <code>refresh_token</code>, if
-      you requested the <code>offline_access</code> scope.
-    </p>
-  </div>
+  </section>
 );
 
-BuildingOpenIdContent.propTypes = {};
+AuthCodeFlowContent.propTypes = {};
 
-export { BuildingOpenIdContent };
+export { AuthCodeFlowContent };
