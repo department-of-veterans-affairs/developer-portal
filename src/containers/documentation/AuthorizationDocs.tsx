@@ -3,8 +3,12 @@ import Helmet from 'react-helmet';
 import ReactMarkdown from 'react-markdown';
 import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
 
-import { CodeWrapper, PageHeader } from '../../components';
-import OAuth from '../../content/apiDocs/oauthTechnical.mdx';
+import { PageHeader, BuildingOIDCContent, CodeWrapper } from '../../components';
+import PageLinks from '../../content/apiDocs/oauth/PageLinks.mdx';
+import GettingStarted from '../../content/apiDocs/oauth/GettingStarted.mdx';
+import Scopes from '../../content/apiDocs/oauth/Scopes.mdx';
+import IdToken from '../../content/apiDocs/oauth/IdToken.mdx';
+import TestUsers from '../../content/apiDocs/oauth/TestUsers.mdx';
 
 import './AuthorizationDocs.scss';
 
@@ -24,10 +28,16 @@ export const AuthorizationDocs = (): JSX.Element => {
         <title>Authorization</title>
       </Helmet>
       <PageHeader header="Authorization" />
+      <PageLinks />
+      <GettingStarted />
       <CodeWrapper options={oAuthDefs} selectedOption={selectedApi} onSelectionChange={changeSelectedApi}>
         <ReactMarkdown>{authUrl}</ReactMarkdown>
       </CodeWrapper>
-      <OAuth />
+
+      <BuildingOIDCContent />
+      <Scopes />
+      <IdToken />
+      <TestUsers />
     </div>
   );
 };
