@@ -22,6 +22,11 @@ const getApiCategoryOrder = (): string[] => apiCategoryOrder;
 const getAllApis = (): APIDescription[] =>
   Object.values(getApiDefinitions()).flatMap((category: APICategory) => category.apis);
 
+const getAllOauthApis = (): APIDescription[] =>
+  getAllApis()
+    .filter((item: APIDescription) => !!item.oAuth)
+    .map((item: APIDescription) => item);
+
 const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean =>
     apiDesc.urlFragment === apiKey;
@@ -42,6 +47,7 @@ const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(a
 
 export {
   getAllApis,
+  getAllOauthApis,
   getApiCategoryOrder,
   getApiDefinitions,
   lookupApiByFragment,

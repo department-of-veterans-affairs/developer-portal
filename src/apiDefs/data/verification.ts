@@ -17,6 +17,10 @@ const verificationApis: APIDescription[] = [
     enabledByDefault: true,
     name: 'Address Validation API',
     oAuth: true,
+    oAuthDocs: {
+      authorizationUrl:
+        'https://sandbox-api.va.gov/oauth2/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=openid offline_access profile email veteran_status.read launch/patient\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy',
+    },
     releaseNotes: AddressValidationReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'address_validation',
