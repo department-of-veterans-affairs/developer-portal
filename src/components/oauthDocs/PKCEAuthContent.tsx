@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
-import PKCECodeBlock from './PKCECodeBlock.mdx';
-import PKCETableContent from './OauthPKCETable.mdx';
-import PKCEAuthCodeGrantCodeBlock from './PKCEAuthCodeGrantCodeBlock.mdx';
-import PKCEPostCodeBlock from './PKCEPostCodeBlock.mdx';
-import PKCEToken400CodeBlock from './PKCEToken400CodeBlock.mdx';
-import PKCERefreshTokenCodeBlock from './PKCERefreshTokenCodeBlock.mdx';
+import PKCEAuthRequestURL from './PKCEAuthRequestURL.mdx';
+import PKCEQueryParamsTable from './PKCEQueryParamsTable.mdx';
+import PKCEAuthorizationRedirect from './PKCEAuthorizationRedirect.mdx';
+import PKCEPostTokenRequest from './PKCEPostTokenRequest.mdx';
+import PKCEPostTokenResponses from './PKCEPostTokenResponses.mdx';
+import PKCEPostRefreshToken from './PKCEPostRefreshToken.mdx';
 
 const PKCEAuthContent = (): JSX.Element => (
   <section aria-labelledby="pkce-authorizations">
@@ -24,9 +24,10 @@ const PKCEAuthContent = (): JSX.Element => (
       Begin the OpenID Connect authorization by using the authorization endpoint, query parameters,
       and scopes listed below.
     </p>
-    <PKCECodeBlock />
 
-    <PKCETableContent />
+    <PKCEAuthRequestURL />
+
+    <PKCEQueryParamsTable />
 
     <p>
       The Veteran will need to grant your application access permission. To do this, direct the
@@ -46,7 +47,7 @@ const PKCEAuthContent = (): JSX.Element => (
       step.
     </p>
 
-    <PKCEAuthCodeGrantCodeBlock />
+    <PKCEAuthorizationRedirect />
 
     <p>Use the following format, in HTTP basic authentication, for your request.</p>
 
@@ -61,7 +62,7 @@ const PKCEAuthContent = (): JSX.Element => (
       </li>
     </ul>
 
-    <PKCEPostCodeBlock />
+    <PKCEPostTokenRequest />
 
     <p>
       The authorization server will send a 200 response with an{' '}
@@ -73,7 +74,7 @@ const PKCEAuthContent = (): JSX.Element => (
       <code>expires_in</code> is the time in seconds before the token expires:
     </p>
 
-    <PKCEToken400CodeBlock />
+    <PKCEPostTokenResponses />
 
     <p>
       Use the returned <code>access_token</code> to authorize requests to our platform by including
@@ -93,7 +94,7 @@ const PKCEAuthContent = (): JSX.Element => (
       by sending the following request.
     </p>
 
-    <PKCERefreshTokenCodeBlock />
+    <PKCEPostRefreshToken />
 
     <p>
       The response will return a new <code>access_token</code> and <code>refresh_token</code>, if

@@ -38,20 +38,9 @@
     border: none;
   }
 
-  span {
-    border: solid #222935 1px;
-    border-radius: 3px;
-    padding: 0.2rem 0.4rem;
-  }
-
-  div:nth-child(2) {
-    ul:nth-child(4) {
-      border-left: 2px solid $color-gray-light;
-      list-style-type: none;
-      ul {
-        list-style-type: none;
-      }
-    }
+  .auth-page-links {
+    border-left: 2px solid $color-gray-light;
+    list-style-type: none;
   }
 
 }

@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
-import AuthCodeFlowCodeBlock from './AuthCodeFlowCodeBlock.mdx';
-import AuthCodeFlowTableContent from './OauthInitiatingAuthCodeFlowTable.mdx';
-import AuthCodeGrantCodeBlock from './AuthCodeGrantCodeBlock.mdx';
-import AuthCodeGrantPostCodeBlock from './AuthCodeGrantPostCodeBlock.mdx';
-import AuthCodeGrant200CodeBlock from './AuthCodeGrant200CodeBlock.mdx';
-import AuthCodeGrant400CodeBlock from './AuthCodeGrant400CodeBlock.mdx';
-import AuthCodeGrantRefreshCodeBlock from './AuthCodeGrantRefreshCodeBlock.mdx';
-import ManageAccountCodeBlock from './ManageAccountCodeBlock.mdx';
-import RevokeTokenCodeBlock from './RevokeTokenCodeBlock.mdx';
-import RevokeGrantsCodeBlock from './RevokeGrantsCodeBlock.mdx';
+import AuthCodeFlowAuthRequestURL from './AuthCodeFlowAuthRequestURL.mdx';
+import AuthCodeFlowQueryParamsTable from './AuthCodeFlowQueryParamsTable.mdx';
+import AuthCodeAuthorizationRedirect from './AuthCodeAuthorizationRedirect.mdx';
+import AuthCodePostTokenRequest from './AuthCodePostTokenRequest.mdx';
+import AuthCodePostTokenResponse200 from './AuthCodePostTokenResponse200.mdx';
+import AuthCodePostTokenResponse400 from './AuthCodePostTokenResponse400.mdx';
+import AuthCodePostRefreshTokenRequest from './AuthCodePostRefreshTokenRequest.mdx';
+import AuthCodePostManageRequest from './AuthCodePostManageRequest.mdx';
+import AuthCodePostRevokeTokenRequest from './AuthCodePostRevokeTokenRequest.mdx';
+import AuthCodeDeleteGrantRequest from './AuthCodeDeleteGrantRequest.mdx';
 
 const AuthCodeFlowContent = (): JSX.Element => (
   <section aria-labelledby="authorization-code-flow">
@@ -33,9 +33,9 @@ const AuthCodeFlowContent = (): JSX.Element => (
       and scopes listed below.
     </p>
 
-    <AuthCodeFlowCodeBlock />
+    <AuthCodeFlowAuthRequestURL />
 
-    <AuthCodeFlowTableContent />
+    <AuthCodeFlowQueryParamsTable />
 
     <p>
       The Veteran will need to grant your application access permission. To do this, direct the
@@ -54,7 +54,7 @@ const AuthCodeFlowContent = (): JSX.Element => (
       authorization service. We require the state parameter for all authorization code grant flows.
     </p>
 
-    <AuthCodeGrantCodeBlock />
+    <AuthCodeAuthorizationRedirect />
 
     <p>
       Use the following format, in HTTP basic authentication, for your request using the returned
@@ -71,7 +71,7 @@ const AuthCodeFlowContent = (): JSX.Element => (
       </li>
     </ul>
 
-    <AuthCodeGrantPostCodeBlock />
+    <AuthCodePostTokenRequest />
 
     <p>
       The authorization server will respond with an{' '}
@@ -82,11 +82,11 @@ const AuthCodeFlowContent = (): JSX.Element => (
       <code>refresh_token</code>. The response will look like this:
     </p>
 
-    <AuthCodeGrant200CodeBlock />
+    <AuthCodePostTokenResponse200 />
 
     <p>If an error occurs, you will instead receive a response like this:</p>
 
-    <AuthCodeGrant400CodeBlock />
+    <AuthCodePostTokenResponse400 />
 
     <p>
       Use the returned <code>access_token</code> to authorize requests to our platform by including
@@ -108,7 +108,7 @@ const AuthCodeFlowContent = (): JSX.Element => (
       by sending the following request.
     </p>
 
-    <AuthCodeGrantRefreshCodeBlock />
+    <AuthCodePostRefreshTokenRequest />
 
     <p>
       The response will return a new <code>access_token</code> and <code>refresh_token</code>, if
@@ -122,7 +122,7 @@ const AuthCodeFlowContent = (): JSX.Element => (
       currently have access to their data and can make adjustments to these access rights (grants).
     </p>
 
-    <ManageAccountCodeBlock />
+    <AuthCodePostManageRequest />
 
     <h4 id="revoking-tokens">Revoking Tokens</h4>
 
@@ -131,7 +131,7 @@ const AuthCodeFlowContent = (): JSX.Element => (
       the revoke endpoint. Once revoked, the introspection endpoint will see the token as inactive.
     </p>
 
-    <RevokeTokenCodeBlock />
+    <AuthCodePostRevokeTokenRequest />
 
     <h4 id="revoking-grants">Revoking Grants</h4>
 
@@ -146,7 +146,7 @@ const AuthCodeFlowContent = (): JSX.Element => (
       are revoked in the sandbox environment using the below endpoint.
     </p>
 
-    <RevokeGrantsCodeBlock />
+    <AuthCodeDeleteGrantRequest />
   </section>
 );
 
