@@ -49,6 +49,11 @@ const ApiPage = (): JSX.Element => {
   }
 
   const category = lookupApiCategory(params.apiCategoryKey);
+  const categoryHasApi = category?.apis.includes(api);
+
+  if (!categoryHasApi) {
+    return <ApiNotFoundPage />;
+  }
 
   return (
     <Flag name={['enabled', api.urlFragment]} fallbackRender={(): JSX.Element => <ExplorePage />}>
