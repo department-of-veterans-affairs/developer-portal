@@ -8,10 +8,28 @@ import { Hero } from './Hero';
 
 describe('Hero', () => {
   it('checks image source', () => {
-    render(<Router><Hero /></Router>);
+    render(
+      <Router>
+        <Hero />
+      </Router>
+    );
+
     const heroImage = screen.getByRole('presentation');
 
     expect(heroImage).toBeInTheDocument();
     expect(heroImage).toHaveAttribute('src', (logoImage.default));
+  });
+
+  it('checks api key url', () => {
+    render(
+      <Router>
+        <Hero />
+      </Router>
+    );
+
+    const apiLink = screen.getByRole('link');
+
+    expect(apiLink).toBeInTheDocument();
+    expect(apiLink).toHaveAttribute('href', ('/apply'));
   });
 });
