@@ -15,7 +15,6 @@ describe('Hero', () => {
     );
 
     const heroImage = screen.getByRole('presentation');
-
     expect(heroImage).toBeInTheDocument();
     expect(heroImage).toHaveAttribute('src', (logoImage.default));
   });
@@ -27,9 +26,23 @@ describe('Hero', () => {
       </Router>
     );
 
-    const apiLink = screen.getByRole('link');
-
+    const apiLink = screen.getByText('Request an API Key');
     expect(apiLink).toBeInTheDocument();
     expect(apiLink).toHaveAttribute('href', ('/apply'));
+  });
+
+  it('checks h1 text', () => {
+    render(
+      <Router>
+        <Hero />
+      </Router>
+    );
+
+    const desiredText = 'A Veteran-centered API platform for securely accessing VA data.';
+    const heroText = screen.getByText(desiredText);
+    expect(heroText).toBeInTheDocument();
+    expect(heroText).toHaveClass('vads-u-color--white',
+      'vads-u-font-size--h2',
+      'small-desktop-screen:vads-u-font-size--h1');
   });
 });
