@@ -44,14 +44,9 @@ const ApiPage = (): JSX.Element => {
   const params = useParams<APINameParam>();
 
   const api = getApi(params.apiName);
-  if (api === null) {
-    return <ApiNotFoundPage />;
-  }
-
   const category = lookupApiCategory(params.apiCategoryKey);
-  const categoryHasApi = category?.apis.includes(api);
 
-  if (!categoryHasApi) {
+  if (api === null || !category?.apis.includes(api)) {
     return <ApiNotFoundPage />;
   }
 
@@ -61,7 +56,7 @@ const ApiPage = (): JSX.Element => {
         <Helmet>
           <title>{api.name} Documentation</title>
         </Helmet>
-        <PageHeader halo={category?.name} header={api.name} />
+        <PageHeader halo={category.name} header={api.name} />
         <DeactivationMessage api={api} />
         {!isApiDeactivated(api) && (
           <ApiDocumentation
