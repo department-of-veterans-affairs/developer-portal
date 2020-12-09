@@ -37,7 +37,6 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
             id="hero-request-key"
             to="/apply"
             className="usa-button vads-u-width--full medium-screen:vads-u-width--auto"
-            role="link"
           >
             Request an API Key
           </Link>
