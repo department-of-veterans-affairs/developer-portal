@@ -9,7 +9,7 @@ import PKCEPostTokenResponses from './PKCEPostTokenResponses.mdx';
 import PKCEPostRefreshToken from './PKCEPostRefreshToken.mdx';
 
 const PKCEAuthContent = (): JSX.Element => (
-  <section aria-labelledby="pkce-authorizations">
+  <section aria-labelledby="pkce-authorization">
     <h3 tabIndex={-1} id="pkce-authorization">
       PKCE (Proof Key for Code Exchange) Authorization
     </h3>

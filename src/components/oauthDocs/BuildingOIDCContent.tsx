@@ -6,8 +6,8 @@ import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
 
 const BuildingOIDCContent = (): JSX.Element => (
-  <section aria-labelledby="Building OpenID Connect Applications">
-    <SectionHeaderWrapper heading="Building OpenID Connect Applications" id="building-openid" />
+  <section aria-labelledby="building-oidc-apps">
+    <SectionHeaderWrapper heading="Building OpenID Connect Applications" id="building-oidc-apps" />
     <p>After being approved to use OpenID Connect, you&#39;ll receive a client id.</p>
     <ul>
       <li>
@@ -22,7 +22,7 @@ const BuildingOIDCContent = (): JSX.Element => (
         If you are unable to <strong>safely store a client secret</strong> such as a native mobile
         app, you will{' '}
         <HashLink
-          to="#pkce-(proof-key-for-code-exchange)-authorization"
+          to="#pkce-authorization"
           onClick={onHashAnchorClick}
         >
           use PKCE
