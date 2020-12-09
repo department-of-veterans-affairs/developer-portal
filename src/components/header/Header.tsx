@@ -83,6 +83,9 @@ const Header = (): JSX.Element => {
                 <Link to="/apply" className={buttonClassnames}>
                   Request an API Key
                 </Link>
+                <Link to="/login" className={buttonClassnames}>
+                  Login
+                </Link>
                 <Search />
               </div>
             </div>

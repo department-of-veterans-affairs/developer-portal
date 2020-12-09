@@ -15,8 +15,10 @@ Next, create a `.env.local` file with the following contents (don't worry about 
 ```
 PORT=3001
 REACT_APP_VETSGOV_SWAGGER_API=https://dev-api.va.gov
+REACT_APP_VETSGOV_SECONDARY_SWAGGER_API=https://dev-api.va.gov
 REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=https://dev-api.va.gov
 REACT_APP_SALESFORCE_ENV=VICDEV
+HTTPS=true
 ```
 
 Now start the app:

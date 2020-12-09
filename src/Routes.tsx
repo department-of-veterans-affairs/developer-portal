@@ -2,11 +2,17 @@ import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
+import { GuardedRoute, GuardFunction, GuardProvider } from 'react-router-guards';
+import {
+  GuardFunctionRouteProps,
+  GuardToRoute,
+  Next,
+} from 'react-router-guards/dist/types';
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
-import { MarkdownPage } from './components';
+import { Login, MarkdownPage } from './components';
 import { ApplyForm } from './containers/apply/ApplyForm';
 import { ApplySuccess } from './containers/apply/ApplySuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
@@ -20,43 +26,69 @@ import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
 import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag } from './flags';
+import { Profile } from './components/private';
+import { Callback } from './components/login/Callback';
+
+// TODO: Implement real validation
+const tokenisValid = (token: string): boolean => !!token;
+
+const requireAuth: GuardFunction = (
+  to: GuardToRoute,
+  from: GuardFunctionRouteProps,
+  next: Next
+) => {
+  const accessToken = localStorage.getItem('access_token');
+  if (accessToken && tokenisValid(accessToken)) {
+    next();
+  } else {
+    next.redirect('/login');
+  }
+};
 
 export const SiteRoutes: React.FunctionComponent = () => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/index.html" component={Home} />
+  <GuardProvider guards={[requireAuth]} loading="Loading" error={NotFound}>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/index.html" component={Home} />
 
-    {/* Legacy routes that we want to maintain: */}
-    <Route
-      path="/explore/terms-of-service"
-      render={(): JSX.Element => <Redirect to="/terms-of-service" />}
-    />
-    <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
+      {/* Legacy routes that we want to maintain: */}
+      <Route
+        path="/explore/terms-of-service"
+        render={(): JSX.Element => <Redirect to="/terms-of-service" />}
+      />
+      <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
 
-    {/* Current routes: */}
-    <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
-    <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
-    <Route
-      path="/apply"
-      render={(): JSX.Element => (
-        <Flag name={['signups_enabled']} render={ApplyForm} fallbackComponent={DisabledApplyForm} />
-      )}
-    />
-    <Route path="/applied" component={ApplySuccess} />
-    <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
-    <Route
-      path="/oauth"
-      render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
-    />
-    <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-    <Route path="/news" component={News} />
-    <Route path="/support" component={Support} />
-    <Route
-      path="/providers/integration-guide"
-      render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
-    />
-    <Route component={NotFound} />
-  </Switch>
+      {/* Current routes: */}
+      <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
+      <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
+      <Route
+        path="/apply"
+        render={(): JSX.Element => (
+          <Flag name={['signups_enabled']} render={ApplyForm} fallbackComponent={DisabledApplyForm} />
+        )}
+      />
+      <Route path="/applied" component={ApplySuccess} />
+      <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
+      <Route
+        path="/oauth"
+        render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
+      />
+      <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
+      <Route path="/news" component={News} />
+      <Route path="/support" component={Support} />
+      <Route
+        path="/providers/integration-guide"
+        render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
+      />
+      <Route path="/login" component={Login} />
+      <Route path="/callback" component={Callback} />
+      <GuardedRoute
+        path="/profile"
+        component={Profile}
+      />
+      <Route component={NotFound} />
+    </Switch>
+  </GuardProvider>
 );
 
 interface SitemapConfig {

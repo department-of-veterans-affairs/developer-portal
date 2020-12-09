@@ -13,8 +13,6 @@ export interface HttpSuccessResponse<T> {
   body: T;
 }
 
-type HttpResponse<T> = HttpErrorResponse | HttpSuccessResponse<T>;
-
 export interface HttpErrorResponse {
   ok: boolean;
   status: number;
@@ -68,7 +66,7 @@ const handleNonNetworkError =  async (url: string, requestId: string,  type: str
 };
 
 // Fetch common logic
-export const makeRequest = <T extends unknown>(url: string, requestInit: RequestInit, config: CallFetchConfig = { responseType: ResponseType.JSON }): Promise<HttpResponse<T>> => new Promise((resolve, reject) => {
+export const makeRequest = <T extends unknown>(url: string, requestInit: RequestInit, config: CallFetchConfig = { responseType: ResponseType.JSON }): Promise<HttpSuccessResponse<T>> => new Promise((resolve, reject) => {
   const request = new Request(url, requestInit);
   const requestId: string = uuidv4();
 
@@ -77,7 +75,7 @@ export const makeRequest = <T extends unknown>(url: string, requestInit: Request
 
   fetch(request).then(async response => {
     if (response.ok) {
-      const httpResponse: Partial<HttpResponse<T>> = {
+      const httpResponse: Partial<HttpSuccessResponse<T>> = {
         ok: response.ok,
         status: response.status,
       };
@@ -94,7 +92,7 @@ export const makeRequest = <T extends unknown>(url: string, requestInit: Request
         httpResponse.body = await response.blob() as T;
       }
 
-      return resolve(httpResponse as HttpResponse<T>);
+      return resolve(httpResponse as HttpSuccessResponse<T>);
     } else {
       const errorResponse =  await handleNonNetworkError(url, requestId, config.responseType,  response);
       return reject(errorResponse);

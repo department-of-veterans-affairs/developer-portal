@@ -276,6 +276,13 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             >
               Request an API Key
             </Link>
+            <Link
+              onClick={props.onMobileNavClose}
+              to="/login"
+              className={classNames('usa-button', 'vads-u-width--full')}
+            >
+              Login
+            </Link>
           </div>
         </div>
       </div>
