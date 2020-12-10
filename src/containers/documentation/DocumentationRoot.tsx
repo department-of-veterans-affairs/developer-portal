@@ -144,7 +144,13 @@ const DocumentationRoot = (): JSX.Element => {
               <Route
                 exact
                 path="/explore/:apiCategoryKey/docs/authorization"
-                component={AuthorizationDocsLegacy}
+                render={(): JSX.Element => (
+                  <Flag
+                    name={['auth_docs_v2']}
+                    render={AuthorizationDocs}
+                    fallbackComponent={AuthorizationDocsLegacy}
+                  />
+                )}
               />
               <Route
                 exact
