@@ -56,4 +56,20 @@ describe('Authorization Card', () => {
 
     expect(Stickyfill.addOne).toHaveBeenCalled();
   });
+
+  /*
+   * it('checks stickyfilljs library is properly setup.', () => {
+   *const useRefSpy =  jest.spyOn(React, 'useRef').mockReturnValue({ current: undefined });
+   *render(
+   *  <MemoryRouter>
+   *    <SideNav ariaLabel={ariaLabel} className={customClass}>
+   *      {getNavItems()}
+   *    </SideNav>
+   *  </MemoryRouter>,
+   *);
+   *
+   *expect(Stickyfill.addOne).not.toHaveBeenCalled();
+   *useRefSpy.mockRestore();
+   *});
+   */
 });

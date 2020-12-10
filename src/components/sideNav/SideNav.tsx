@@ -14,7 +14,7 @@ interface SideNavProps {
 }
 
 const SideNav = (props: SideNavProps): JSX.Element => {
-  const navRef = React.createRef<HTMLDivElement>();
+  const navRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (navRef.current) {
