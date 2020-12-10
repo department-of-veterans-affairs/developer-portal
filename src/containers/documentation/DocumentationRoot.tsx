@@ -139,7 +139,6 @@ const DocumentationRoot = (): JSX.Element => {
                 <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
               <Route path="/explore/authorization" component={AuthorizationDocs} exact />
-
               {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
               <Route exact path="/explore/" component={DocumentationOverview} />
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
