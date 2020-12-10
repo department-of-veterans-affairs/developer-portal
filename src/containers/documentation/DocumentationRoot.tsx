@@ -126,6 +126,7 @@ const oldRouteToNew = [
 const DocumentationRoot = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
+  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
 
   return (
     <div className={classNames('documentation', 'vads-u-padding-y--5')}>
@@ -138,20 +139,21 @@ const DocumentationRoot = (): JSX.Element => {
                 <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
               <Route path="/explore/authorization" component={AuthorizationDocs} exact />
+
               {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
               <Route exact path="/explore/" component={DocumentationOverview} />
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
-              <Route
-                exact
-                path="/explore/:apiCategoryKey/docs/authorization"
-                render={(): JSX.Element => (
-                  <Flag
-                    name={['auth_docs_v2']}
-                    render={AuthorizationDocs}
-                    fallbackComponent={AuthorizationDocsLegacy}
+              <Route exact path="/explore/:apiCategoryKey/docs/authorization">
+                {authDocsV2 ? (
+                  <Redirect
+                    exact
+                    from="/explore/:apiCategoryKey/docs/quickstart"
+                    to="/explore/authorization"
                   />
+                ) : (
+                  <AuthorizationDocsLegacy />
                 )}
-              />
+              </Route>
               <Route
                 exact
                 path="/explore/:apiCategoryKey/docs/quickstart"
