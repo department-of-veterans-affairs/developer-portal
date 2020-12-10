@@ -144,11 +144,7 @@ const DocumentationRoot = (): JSX.Element => {
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
               <Route exact path="/explore/:apiCategoryKey/docs/authorization">
                 {authDocsV2 ? (
-                  <Redirect
-                    exact
-                    from="/explore/:apiCategoryKey/docs/quickstart"
-                    to="/explore/authorization"
-                  />
+                  <Redirect to="/explore/authorization" />
                 ) : (
                   <AuthorizationDocsLegacy />
                 )}
