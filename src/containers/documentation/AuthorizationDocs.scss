@@ -48,4 +48,12 @@
     list-style-type: square;
   }
 
+  h2#on-this-page + ul {
+    border-left: 2px solid $color-gray-light;
+    list-style-type: none;
+    ul {
+      list-style-type: square;
+    }   
+  }
+
 }
