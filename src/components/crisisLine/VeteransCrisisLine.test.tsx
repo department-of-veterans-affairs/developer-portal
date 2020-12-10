@@ -2,14 +2,14 @@ import * as React from 'react';
 
 import 'jest';
 import '@testing-library/jest-dom/extend-expect';
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, render, waitFor, screen } from '@testing-library/react';
 
 import VeteransCrisisLine from './VeteransCrisisLine';
 
 describe('VeteransCrisisLine', () => {
   it('checks that modal button displays with correct information.', () => {
-    const { queryByRole } = render(<VeteransCrisisLine />);
-    const modalButton = queryByRole('button');
+    render(<VeteransCrisisLine />);
+    const modalButton = screen.queryByRole('button');
 
     expect(modalButton).toBeInTheDocument();
     expect(modalButton).toHaveTextContent('Talk to the Veterans Crisis Line now');
@@ -17,16 +17,16 @@ describe('VeteransCrisisLine', () => {
   });
 
   it('checks open/close functionality of dialog works correctly.', async () => {
-    const { getByRole, queryByRole, queryAllByRole } = render(<VeteransCrisisLine />);
+    render(<VeteransCrisisLine />);
 
-    expect(queryByRole('alertdialog')).not.toBeInTheDocument();
+    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
 
-    const modalButton = getByRole('button');
+    const modalButton = screen.getByRole('button');
     fireEvent.click(modalButton);
-    await waitFor(() => expect(queryByRole('alertdialog')).toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByRole('alertdialog')).toBeInTheDocument());
 
-    const dialogCloseBtn = queryAllByRole('button')[1];
+    const dialogCloseBtn = screen.queryAllByRole('button')[1];
     fireEvent.click(dialogCloseBtn);
-    await waitFor(() => expect(queryByRole('alertdialog')).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument());
   });
 });

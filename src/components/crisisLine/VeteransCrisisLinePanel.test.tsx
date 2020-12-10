@@ -2,22 +2,22 @@ import * as React from 'react';
 
 import 'jest';
 import '@testing-library/jest-dom/extend-expect';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import VeteransCrisisLinePanel from './VeteransCrisisLinePanel';
 
 describe('VeteransCrisisLine', () => {
   it('checks that panel displays with correct information.', () => {
-    const { getByRole, queryByText, queryAllByRole } = render(<VeteransCrisisLinePanel />);
-    const title = getByRole('heading');
+    render(<VeteransCrisisLinePanel />);
+    const title = screen.getByRole('heading');
     expect(title).toHaveTextContent("We're here anytime, day or night - 24/7");
     expect(
-      queryByText(
+      screen.queryByText(
         'If you are a Veteran in crisis or concerned about one, connect with our caring, qualified responders for confidential help. Many of them are Veterans themselves.',
       ),
     ).toBeInTheDocument();
 
-    const listItems = queryAllByRole('link');
+    const listItems = screen.queryAllByRole('link');
     expect(listItems.length).toBe(5);
     expect(listItems[0]).toHaveTextContent('Call 1-800-273-8255 and press 1');
     expect(listItems[0]).toHaveAttribute('href', 'tel:18002738255');
