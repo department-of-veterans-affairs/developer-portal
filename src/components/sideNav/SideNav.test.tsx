@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import 'jest';
-import * as React from 'react';
+import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import * as Stickyfill from 'stickyfilljs';
-import { SideNav } from './SideNav';
+import { SideNav, applyStickiness } from './SideNav';
 
 jest.mock('stickyfilljs', () => ({
   addOne: jest.fn(),
@@ -21,6 +21,11 @@ describe('Authorization Card', () => {
       <li data-testid="item3">item three</li>
     </>
   );
+
+  it('checks stickyfilljs library is not setup setup when ref to nav is null or undefined.', () => {
+    applyStickiness(null);
+    expect(Stickyfill.addOne).not.toHaveBeenCalled();
+  });
 
   it('checks props are properly reflected and skip to content link is present.', () => {
     render(
@@ -56,20 +61,4 @@ describe('Authorization Card', () => {
 
     expect(Stickyfill.addOne).toHaveBeenCalled();
   });
-
-  /*
-   * it('checks stickyfilljs library is properly setup.', () => {
-   *const useRefSpy =  jest.spyOn(React, 'useRef').mockReturnValue({ current: undefined });
-   *render(
-   *  <MemoryRouter>
-   *    <SideNav ariaLabel={ariaLabel} className={customClass}>
-   *      {getNavItems()}
-   *    </SideNav>
-   *  </MemoryRouter>,
-   *);
-   *
-   *expect(Stickyfill.addOne).not.toHaveBeenCalled();
-   *useRefSpy.mockRestore();
-   *});
-   */
 });
