@@ -1,13 +1,11 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import Helmet from 'react-helmet';
+import './News.scss';
 
-import videoPlayerIcon from '../assets/video-player.png';
-import videoPlayerHoverIcon from '../assets/video-player-hover.png';
 import {
   CardLink,
   EmbeddedYoutubeVideo,
-  HoverImage,
   PageHeader,
   SideNav,
   SideNavEntry,
@@ -70,10 +68,7 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
     <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
       <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
-          <HoverImage
-            imagePath={videoPlayerIcon}
-            hoverImagePath={videoPlayerHoverIcon}
-          />
+          <div className="hover-image" />
         </a>
       </div>
       <div className="vads-u-margin-left--2p5 va-api-media-row-description">{description}</div>
