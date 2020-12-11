@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.section-heading-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid $color-gray-light 2px;
+  
+  .page-link {
+    font-size: 1.5rem;
+  }
+
+}
