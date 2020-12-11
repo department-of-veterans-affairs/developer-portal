@@ -10,7 +10,7 @@ jest.mock('stickyfilljs', () => ({
   addOne: jest.fn(),
 }));
 
-describe('Authorization Card', () => {
+describe('SideNav', () => {
   const ariaLabel = 'navigation';
   const customClass = 'custom-class';
 
