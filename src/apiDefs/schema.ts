@@ -69,7 +69,17 @@ export interface APIDescription {
 }
 
 export interface OAuthCodeExamples {
-  readonly authorizationUrl: string;
+  readonly authCodeGrant: string;
+  readonly authManageAccount: string;
+  readonly authPostToken: string;
+  readonly authPostTokenRefresh: string;
+  readonly authPostTokenResponse200: string;
+  readonly authPostTokenResponse400: string;
+  readonly authRevokeGrant: string;
+  readonly authRevokeGrantError: string;
+  readonly authRevokeTokenAccess: string;
+  readonly authRevokeTokenRefresh: string;
+  readonly authUrl: string;
 }
 
 export const ApiDescriptionPropType = PropTypes.shape({

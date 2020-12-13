@@ -18,7 +18,24 @@ const verificationApis: APIDescription[] = [
     name: 'Address Validation API',
     oAuth: true,
     oAuthDocs: {
-      authorizationUrl:
+      authCodeGrant: '',
+      authManageAccount: 'POST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov',
+      authPostToken: '',
+      authPostTokenRefresh:
+        "POST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ngrant_type=refresh_token&refresh_token={your refresh_token}&scope={space separated scopes}",
+      authPostTokenResponse200:
+        'HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "openid profile email offline_access",\n  "patient": "1558538470",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}',
+      authPostTokenResponse400:
+        'HTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}',
+      authRevokeGrant:
+        'DELETE /oauth2/grants HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\n{\n  "client_id": {client_id},\n  "email": {test account email}\n}',
+      authRevokeGrantError:
+        'HTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request",\n  "error_description": "Invalid email address."\n}',
+      authRevokeTokenAccess:
+        "POST /oauth2/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\ntoken={your access token}&token_type_hint=access_token",
+      authRevokeTokenRefresh:
+        "POST /oauth2/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ntoken={your refresh token}&token_type_hint=refresh_token",
+      authUrl:
         'https://sandbox-api.va.gov/oauth2/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=openid offline_access profile email veteran_status.read launch/patient\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy',
     },
     releaseNotes: AddressValidationReleaseNotes,

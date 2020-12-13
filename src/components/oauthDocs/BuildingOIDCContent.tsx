@@ -1,11 +1,22 @@
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable no-console */
+import PropTypes from 'prop-types';
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { SectionHeaderWrapper } from '../index';
+import { APIDescription } from '../../apiDefs/schema';
 import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
 
-const BuildingOIDCContent = (): JSX.Element => (
+interface BuildingOIDContentProps {
+  apiDef: APIDescription | null;
+  options: APIDescription[];
+  selectedOption: string;
+  onSelectionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const BuildingOIDCContent = (props: BuildingOIDContentProps): JSX.Element => (
   <section aria-labelledby="Building OpenID Connect Applications">
     <SectionHeaderWrapper heading="Building OpenID Connect Applications" id="building-openid" />
     <p>After being approved to use OpenID Connect, you&#39;ll receive a client id.</p>
@@ -31,12 +42,16 @@ const BuildingOIDCContent = (): JSX.Element => (
       </li>
     </ul>
 
-    <AuthCodeFlowContent />
+    <AuthCodeFlowContent {...props} />
 
     <PKCEAuthContent />
   </section>
 );
 
-BuildingOIDCContent.propTypes = {};
+BuildingOIDCContent.propTypes = {
+  onSelectionChange: PropTypes.func,
+  options: PropTypes.array,
+  selectedOption: PropTypes.string,
+};
 
 export { BuildingOIDCContent };
