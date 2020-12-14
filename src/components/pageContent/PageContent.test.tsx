@@ -2,8 +2,10 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../flags';
+import store from '../../store';
 import { PageContent } from './PageContent';
 
 const spyScrollTo: jest.Mock<never, []> = jest.fn<never, []>();
@@ -14,11 +16,13 @@ describe('PageContent', () => {
     spyScrollTo.mockClear();
 
     render(
-      <FlagsProvider flags={getFlags()}>
-        <MemoryRouter>
-          <PageContent />
-        </MemoryRouter>
-      </FlagsProvider>,
+      <Provider store={store}>
+        <FlagsProvider flags={getFlags()}>
+          <MemoryRouter>
+            <PageContent />
+          </MemoryRouter>
+        </FlagsProvider>
+      </Provider>,
     );
   });
 
@@ -29,19 +33,20 @@ describe('PageContent', () => {
   it('loads new page content after navigating to a different route', async () => {
     expect(screen.getByText(/A Veteran-centered API platform/)).toBeInTheDocument();
 
-    const documentationLink = screen.getByText('Read our documentation');
-    userEvent.click(documentationLink);
+    const applyLink = screen.getByRole('link', { name: 'Request an API Key' });
+    userEvent.click(applyLink);
 
-    const documentationPageDescription = await screen.findByText('Documentation');
+    const applyPageHeader = await screen.findByRole('heading', {
+      name: 'Apply for VA Lighthouse Developer Access',
+    });
 
-    expect(documentationPageDescription).toBeInTheDocument();
+    expect(applyPageHeader).toBeInTheDocument();
   });
 
   it('scrolls the window to the top position after navigation', async () => {
-    const documentationLink = screen.getByText('Read our documentation');
-    userEvent.click(documentationLink);
+    userEvent.click(screen.getByRole('link', { name: 'Request an API Key' }));
 
-    await screen.findByText('Documentation');
+    await screen.findByRole('heading', { name: 'Apply for VA Lighthouse Developer Access' });
 
     expect(window.scrollTo).toHaveBeenCalledTimes(1);
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
