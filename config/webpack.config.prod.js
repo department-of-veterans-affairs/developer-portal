@@ -309,7 +309,7 @@ module.exports = envName => {
                       [
                         require('markdown-it-attrs'),
                         {
-                          allowedAttributes: ['id', 'tabIndex'],
+                          allowedAttributes: ['id', 'tabIndex', 'class'],
                         },
                       ],
                       [
