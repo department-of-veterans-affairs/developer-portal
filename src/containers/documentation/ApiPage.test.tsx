@@ -179,7 +179,7 @@ describe('ApiPage', () => {
   describe('given invalid url params', () => {
     describe('when there is no api given', () => {
       beforeEach(() => {
-        ((useParams as unknown) as jest.Mock<unknown, unknown[]>).mockReturnValue({
+        mockedComponents.useParams.mockReturnValue({
           apiCategoryKey: 'lotr',
           // we leave apiName undefined here on purpose since it is not present in the 'url'
         });
@@ -207,7 +207,7 @@ describe('ApiPage', () => {
 
     describe('when the api does not exist', () => {
       beforeEach(() => {
-        ((useParams as unknown) as jest.Mock<unknown, unknown[]>).mockReturnValue({
+        mockedComponents.useParams.mockReturnValue({
           apiCategoryKey: 'lotr',
           apiName: 'api that does not exist',
         });
@@ -235,7 +235,7 @@ describe('ApiPage', () => {
 
     describe('when the api is not found within the given api category', () => {
       beforeEach(() => {
-        ((useParams as unknown) as jest.Mock<unknown, unknown[]>).mockReturnValue({
+        mockedComponents.useParams.mockReturnValue({
           apiCategoryKey: 'sports',
           apiName: 'silmarils',
         });
