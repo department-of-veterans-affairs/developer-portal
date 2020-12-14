@@ -3,11 +3,13 @@ import Helmet from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
+
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import ExplorePage from '../../content/explorePage.mdx';
 import { Flag } from '../../flags';
+
 import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 import ApiDocumentation from './ApiDocumentation';
@@ -21,9 +23,22 @@ const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | nu
     return null;
   }
 
-  const content = isDeactivated
-    ? (api.deactivationInfo?.deactivationContent ?? ((): string => 'Deactivated API'))
-    : (api.deactivationInfo?.deprecationContent ?? ((): string => 'Deprecated API'));
+  /*
+   * This should be unreachable, but the ts compiler is unable to pick up that api deactivation
+   * info must be defined in order to get past the previou if statement that returns null.
+   * In order to prevent errors where we responds with the deactivation info div we need this code.
+   * Previously, there were non-null assertions for this, but since those are dangerous our linter
+   * no longer allows them. Note that if logic changes, if something is weird with displaying the
+   * deactivation info, this will be a good line to check, especially if it returns blank when it
+   * should be returning some kind of content.
+   */
+  if (api.deactivationInfo === undefined) {
+    return null;
+  }
+
+  const { deactivationContent, deprecationContent } = api.deactivationInfo;
+  const content = isDeactivated ? deactivationContent : deprecationContent;
+
   return (
     <div className={classNames('usa-alert', 'usa-alert-info', 'va-api-alert-box')}>
       <div className={classNames('usa-alert-body')}>{content({})}</div>
