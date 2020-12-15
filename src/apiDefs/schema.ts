@@ -62,23 +62,26 @@ export interface APIDescription {
   readonly vaInternalOnly: boolean;
   readonly trustedPartnerOnly: boolean;
   readonly oAuth?: boolean;
-  readonly oAuthDocs?: OAuthCodeExamples;
+  readonly openidDocs?: OpenIDCodeExamples;
+  readonly pkceDocs?: PKCECodeExamples;
   readonly releaseNotes: React.FunctionComponent;
   readonly deactivationInfo?: APIDeactivationInfo;
   readonly multiOpenAPIIntro?: React.FunctionComponent;
 }
 
-export interface OAuthCodeExamples {
-  readonly authCodeGrant: string;
+export interface OpenIDCodeExamples {
   readonly authManageAccount: string;
-  readonly authPostToken: string;
   readonly authPostTokenRefresh: string;
   readonly authPostTokenResponse200: string;
-  readonly authPostTokenResponse400: string;
   readonly authRevokeGrant: string;
   readonly authRevokeGrantError: string;
   readonly authRevokeTokenAccess: string;
   readonly authRevokeTokenRefresh: string;
+  readonly authUrl: string;
+}
+
+export interface PKCECodeExamples {
+  readonly authPostToken: string;
   readonly authUrl: string;
 }
 

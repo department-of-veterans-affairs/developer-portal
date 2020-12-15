@@ -20,17 +20,17 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
     options: props.options,
     selectedOption: props.selectedOption,
   };
-  const authUrl = `\`\`\`plaintext\n${props.apiDef?.oAuthDocs?.authUrl ?? ''}\n\`\`\``;
+  const authUrl = `\`\`\`plaintext\n${props.apiDef?.openidDocs?.authUrl ?? ''}\n\`\`\``;
   const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';
   const postToken = "\`\`\`http\nPOST /oauth2/token HTTP/1.1\n  Host: sandbox-api.va.gov\n  Content-Type: application/x-www-form-urlencoded\n  Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\n  grant_type=authorization_code&code=z92dapo5&state=af0ifjsldkj&redirect_uri=<yourRedirectURL>\n\`\`\`";
-  const postTokenResponse200 = `\`\`\`http\n${props.apiDef?.oAuthDocs?.authPostTokenResponse200 ?? ''}\n\`\`\``;
+  const postTokenResponse200 = `\`\`\`http\n${props.apiDef?.openidDocs?.authPostTokenResponse200 ?? ''}\n\`\`\``;
   const postTokenResponse400 = '\`\`\`http\nHTTP/1.1\n400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}\n\`\`\`';
-  const postTokenRefresh = `\`\`\`http\n${props.apiDef?.oAuthDocs?.authPostTokenRefresh ?? ''}\n\`\`\``;
-  const authManageAccount = `\`\`\`http\n${props.apiDef?.oAuthDocs?.authManageAccount ?? ''}\n\`\`\``;
-  const authRevokeTokenAccess = `\`\`\`http\n${props.apiDef?.oAuthDocs?.authRevokeTokenAccess ?? ''}\n\`\`\``;
-  const authRevokeTokenRefresh = `\`\`\`http\n${props.apiDef?.oAuthDocs?.authRevokeTokenRefresh ?? ''}\n\`\`\``;
-  const authRevokeGrant = `\`\`\`http\n${props.apiDef?.oAuthDocs?.authRevokeGrant ?? ''}\n\`\`\``;
-  const authRevokeGrantError = `\`\`\`http\n${props.apiDef?.oAuthDocs?.authRevokeGrantError ?? ''}\n\`\`\``;
+  const postTokenRefresh = `\`\`\`http\n${props.apiDef?.openidDocs?.authPostTokenRefresh ?? ''}\n\`\`\``;
+  const authManageAccount = `\`\`\`http\n${props.apiDef?.openidDocs?.authManageAccount ?? ''}\n\`\`\``;
+  const authRevokeTokenAccess = `\`\`\`http\n${props.apiDef?.openidDocs?.authRevokeTokenAccess ?? ''}\n\`\`\``;
+  const authRevokeTokenRefresh = `\`\`\`http\n${props.apiDef?.openidDocs?.authRevokeTokenRefresh ?? ''}\n\`\`\``;
+  const authRevokeGrant = `\`\`\`http\n${props.apiDef?.openidDocs?.authRevokeGrant ?? ''}\n\`\`\``;
+  const authRevokeGrantError = `\`\`\`http\n${props.apiDef?.openidDocs?.authRevokeGrantError ?? ''}\n\`\`\``;
 
   return (
     <section aria-labelledby="authorization-code-flow">
@@ -53,9 +53,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         and scopes listed below.
       </p>
 
-      <CodeWrapper
-        {...wrapperProps}
-      >
+      <CodeWrapper {...wrapperProps}>
         <ReactMarkdown>{authUrl}</ReactMarkdown>
       </CodeWrapper>
 
@@ -110,9 +108,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         <code>refresh_token</code>. The response will look like this:
       </p>
 
-      <CodeWrapper
-        {...wrapperProps}
-      >
+      <CodeWrapper {...wrapperProps}>
         <ReactMarkdown>{postTokenResponse200}</ReactMarkdown>
       </CodeWrapper>
 
@@ -142,9 +138,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         by sending the following request.
       </p>
 
-      <CodeWrapper
-        {...wrapperProps}
-      >
+      <CodeWrapper {...wrapperProps}>
         <ReactMarkdown>{postTokenRefresh}</ReactMarkdown>
       </CodeWrapper>
 
@@ -160,9 +154,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         currently have access to their data and can make adjustments to these access rights (grants).
       </p>
 
-      <CodeWrapper
-        {...wrapperProps}
-      >
+      <CodeWrapper {...wrapperProps}>
         <ReactMarkdown>{authManageAccount}</ReactMarkdown>
       </CodeWrapper>
 
@@ -173,14 +165,10 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         the revoke endpoint. Once revoked, the introspection endpoint will see the token as inactive.
       </p>
 
-      <CodeWrapper
-        {...wrapperProps}
-      >
+      <CodeWrapper {...wrapperProps}>
         <ReactMarkdown>{authRevokeTokenAccess}</ReactMarkdown>
       </CodeWrapper>
-      <CodeWrapper
-        {...wrapperProps}
-      >
+      <CodeWrapper {...wrapperProps}>
         <ReactMarkdown>{authRevokeTokenRefresh}</ReactMarkdown>
       </CodeWrapper>
 
@@ -197,9 +185,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         are revoked in the sandbox environment using the below endpoint.
       </p>
 
-      <CodeWrapper
-        {...wrapperProps}
-      >
+      <CodeWrapper {...wrapperProps}>
         <ReactMarkdown>{authRevokeGrant}</ReactMarkdown>
       </CodeWrapper>
 

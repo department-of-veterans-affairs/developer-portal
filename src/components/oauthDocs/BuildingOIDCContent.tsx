@@ -44,7 +44,7 @@ const BuildingOIDCContent = (props: BuildingOIDContentProps): JSX.Element => (
 
     <AuthCodeFlowContent {...props} />
 
-    <PKCEAuthContent />
+    <PKCEAuthContent {...props} />
   </section>
 );
 
