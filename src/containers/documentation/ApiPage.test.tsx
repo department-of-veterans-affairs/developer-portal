@@ -1,13 +1,9 @@
 import React from 'react';
 
 import { render, screen } from '@testing-library/react';
-import { MockedRequest, rest, restContext, MockedResponse } from 'msw';
-import { setupServer } from 'msw/node';
-import { ResponseComposition } from 'msw/lib/types/response';
 import { MemoryRouter } from 'react-router';
 import { useParams } from 'react-router-dom';
 import { AppFlags, FlagsProvider } from '../../flags';
-import * as openAPIData from '../../__mocks__/openAPIData/openAPIData.test.json';
 import { fakeCategories } from '../../__mocks__/fakeCategories';
 import * as apiDefs from '../../apiDefs/query';
 import ApiPage from './ApiPage';
@@ -38,14 +34,6 @@ jest.mock('./ApiDocumentation', () => {
   };
 });
 
-const server = setupServer(
-  rest.get(
-    'https://example.com/my/openapi/spec',
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse =>
-      res(context.status(200), context.json(openAPIData)),
-  ),
-);
-
 // Test
 describe('ApiPage', () => {
   // Convenience object for accessing mocked components as their correct type without casting each time
@@ -66,7 +54,6 @@ describe('ApiPage', () => {
   const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiByFragment');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
 
-  beforeAll(() => server.listen());
   beforeEach(() => {
     mockedComponents.useParams.mockReturnValue({
       apiCategoryKey: 'lotr',
@@ -78,9 +65,7 @@ describe('ApiPage', () => {
   });
   afterEach(() => {
     jest.resetAllMocks();
-    server.resetHandlers();
   });
-  afterAll(() => server.close());
 
   describe('given valid url params', () => {
     beforeEach(() => {
