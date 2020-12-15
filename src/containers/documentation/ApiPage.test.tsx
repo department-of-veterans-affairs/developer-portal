@@ -1,4 +1,3 @@
-/* eslint-disable max-nested-callbacks */
 import React from 'react';
 
 import { render, screen } from '@testing-library/react';
@@ -15,8 +14,7 @@ import ApiPage from './ApiPage';
 
 // Mocks
 jest.mock('react-router-dom', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
+  ...jest.requireActual<Record<string, unknown>>('react-router-dom'),
   useParams: jest.fn(),
 }));
 
@@ -70,7 +68,6 @@ describe('ApiPage', () => {
 
   beforeAll(() => server.listen());
   beforeEach(() => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     mockedComponents.useParams.mockReturnValue({
       apiCategoryKey: 'lotr',
       apiName: 'rings',
@@ -176,89 +173,87 @@ describe('ApiPage', () => {
     });
   });
 
-  describe('given invalid url params', () => {
-    describe('when there is no api given', () => {
-      beforeEach(() => {
-        mockedComponents.useParams.mockReturnValue({
-          apiCategoryKey: 'lotr',
-          // we leave apiName undefined here on purpose since it is not present in the 'url'
-        });
-        lookupApiByFragmentMock.mockReturnValue(null);
-
-        render(
-          <FlagsProvider flags={defaultFlags}>
-            <MemoryRouter>
-              <ApiPage />
-            </MemoryRouter>
-          </FlagsProvider>,
-        );
+  describe('given url params with no api', () => {
+    beforeEach(() => {
+      mockedComponents.useParams.mockReturnValue({
+        apiCategoryKey: 'lotr',
+        // we leave apiName undefined here on purpose since it is not present in the 'url'
       });
+      lookupApiByFragmentMock.mockReturnValue(null);
 
-      it('calls lookupApi methods with correct parameters', () => {
-        expect(lookupApiByFragmentMock).toHaveBeenCalledTimes(0);
-        expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
-      });
-
-      it('renders the not API Not Found Page', () => {
-        expect(screen.getByText('Page not found.')).toBeDefined();
-        expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
-      });
+      render(
+        <FlagsProvider flags={defaultFlags}>
+          <MemoryRouter>
+            <ApiPage />
+          </MemoryRouter>
+        </FlagsProvider>,
+      );
     });
 
-    describe('when the api does not exist', () => {
-      beforeEach(() => {
-        mockedComponents.useParams.mockReturnValue({
-          apiCategoryKey: 'lotr',
-          apiName: 'api that does not exist',
-        });
-        lookupApiByFragmentMock.mockReturnValue(null);
-
-        render(
-          <FlagsProvider flags={defaultFlags}>
-            <MemoryRouter>
-              <ApiPage />
-            </MemoryRouter>
-          </FlagsProvider>,
-        );
-      });
-
-      it('calls lookupApi methods with correct parameters', () => {
-        expect(lookupApiByFragmentMock).toHaveBeenCalledWith('api that does not exist');
-        expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
-      });
-
-      it('renders the not API Not Found Page', () => {
-        expect(screen.getByText('Page not found.')).toBeDefined();
-        expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
-      });
+    it('calls lookupApi methods with correct parameters', () => {
+      expect(lookupApiByFragmentMock).toHaveBeenCalledTimes(0);
+      expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
-    describe('when the api is not found within the given api category', () => {
-      beforeEach(() => {
-        mockedComponents.useParams.mockReturnValue({
-          apiCategoryKey: 'sports',
-          apiName: 'silmarils',
-        });
-        lookupApiCategoryMock.mockReturnValue(fakeCategories.sports);
+    it('renders the api not found page', () => {
+      expect(screen.getByText('Page not found.')).toBeDefined();
+      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
+    });
+  });
 
-        render(
-          <FlagsProvider flags={defaultFlags}>
-            <MemoryRouter>
-              <ApiPage />
-            </MemoryRouter>
-          </FlagsProvider>,
-        );
+  describe('given url with api that does not exist', () => {
+    beforeEach(() => {
+      mockedComponents.useParams.mockReturnValue({
+        apiCategoryKey: 'lotr',
+        apiName: 'api that does not exist',
       });
+      lookupApiByFragmentMock.mockReturnValue(null);
 
-      it('calls lookupApi methods with correct parameters', () => {
-        expect(lookupApiByFragmentMock).toHaveBeenCalledWith('silmarils');
-        expect(lookupApiCategoryMock).toHaveBeenCalledWith('sports');
-      });
+      render(
+        <FlagsProvider flags={defaultFlags}>
+          <MemoryRouter>
+            <ApiPage />
+          </MemoryRouter>
+        </FlagsProvider>,
+      );
+    });
 
-      it('renders the not API Not Found Page', () => {
-        expect(screen.getByText('Page not found.')).toBeDefined();
-        expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
+    it('calls lookupApi methods with correct parameters', () => {
+      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('api that does not exist');
+      expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
+    });
+
+    it('renders the api not found page', () => {
+      expect(screen.getByText('Page not found.')).toBeDefined();
+      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
+    });
+  });
+
+  describe('given url with api that does not exist within the given api category', () => {
+    beforeEach(() => {
+      mockedComponents.useParams.mockReturnValue({
+        apiCategoryKey: 'sports',
+        apiName: 'silmarils',
       });
+      lookupApiCategoryMock.mockReturnValue(fakeCategories.sports);
+
+      render(
+        <FlagsProvider flags={defaultFlags}>
+          <MemoryRouter>
+            <ApiPage />
+          </MemoryRouter>
+        </FlagsProvider>,
+      );
+    });
+
+    it('calls lookupApi methods with correct parameters', () => {
+      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('silmarils');
+      expect(lookupApiCategoryMock).toHaveBeenCalledWith('sports');
+    });
+
+    it('renders the api not found page', () => {
+      expect(screen.getByText('Page not found.')).toBeDefined();
+      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
     });
   });
 });
