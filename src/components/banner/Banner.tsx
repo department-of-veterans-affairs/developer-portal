@@ -103,7 +103,7 @@ const Banner = (): JSX.Element => {
                     'small-desktop-screen:vads-u-margin-left--1',
                     'small-desktop-screen:vads-u-margin-top--0',
                   )}
-                  aria-label="Read more information on how to know this is an official website"
+                  aria-label="Here&apos;s how you know. Read more information on how to know this is an official website"
                   onClick={toggleAccordionVisible}
                   aria-expanded={accordionVisible ? 'true' : 'false'}
                   type="button"
