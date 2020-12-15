@@ -5,7 +5,6 @@ import { HashLink } from 'react-router-hash-link';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
-import { onHashAnchorClick } from '../../utils/clickHandlers';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
 import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
@@ -43,7 +42,6 @@ const Header = (): JSX.Element => {
         <HashLink
           to="#main"
           className={classNames('va-api-skipnav', 'vads-u-padding-x--2', 'vads-u-padding-y--1')}
-          onClick={onHashAnchorClick}
         >
           Skip to main content
         </HashLink>

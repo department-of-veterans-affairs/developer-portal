@@ -16,7 +16,7 @@
     "test:accessibility": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --runInBand",
     "test:accessibility:ci": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --ci --testResultsProcessor='./node_modules/jest-junit-reporter' --forceExit --runInBand",
     "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand",
-    "test:coverage":"node scripts/test.js --coverage "
+    "test:coverage": "node scripts/test.js --coverage "
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.3",
@@ -51,7 +51,7 @@
     "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-router-hash-link": "^2.1.0",
+    "react-router-hash-link": "^2.3.1",
     "react-router-sitemap": "github:department-of-veterans-affairs/react-router-sitemap#0683f69f552ad06193158aca83f911326bf216dd",
     "react-scroll": "^1.7.16",
     "react-tabs": "^3.1.1",
@@ -154,6 +154,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "6.0.6",
     "postcss-safe-parser": "4.0.1",
+    "pptr-testing-library": "^0.6.4",
     "prettier": "^1.16.4",
     "pretty-format": "^26.4.2",
     "puppeteer": "^2.1.1",
