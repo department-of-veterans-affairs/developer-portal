@@ -192,7 +192,7 @@ describe('makeRequest', () => {
     // const SentryMockScope = { setTag: jest.fn() };
     const withScope = jest.spyOn(Sentry, 'withScope');
 
-    const testErrorMessage = 'THIS IS A TEST FAILURE';
+    const testErrorMessage = ['Your input is detrimental to the health of this API', 'Invalid Request'];
 
     server.use(
       rest.post(
@@ -218,7 +218,10 @@ describe('makeRequest', () => {
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       //   expect(Sentry.captureException).toHaveBeenCalledWith('Route not found: 400');
-      expect(error).toEqual({ 'body': { 'message': 'THIS IS A TEST FAILURE' }, 'ok': false, 'status': 400 });
+      expect(error).toEqual({ 'body': { 'errors': [
+        'Your input is detrimental to the health of this API',
+        'Invalid Request',
+      ] }, 'ok': false, 'status': 400 });
     });
 
     captureException.mockRestore();
