@@ -64,6 +64,7 @@ export interface APIDescription {
   readonly oAuth?: boolean;
   readonly openidDocs?: OpenIDCodeExamples;
   readonly pkceDocs?: PKCECodeExamples;
+  readonly scopes?: string[];
   readonly releaseNotes: React.FunctionComponent;
   readonly deactivationInfo?: APIDeactivationInfo;
   readonly multiOpenAPIIntro?: React.FunctionComponent;

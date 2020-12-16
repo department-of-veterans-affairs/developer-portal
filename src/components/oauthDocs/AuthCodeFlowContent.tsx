@@ -22,7 +22,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
   };
   const authUrl = `\`\`\`plaintext\n${props.apiDef?.openidDocs?.authUrl ?? ''}\n\`\`\``;
   const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';
-  const postToken = "\`\`\`http\nPOST /oauth2/token HTTP/1.1\n  Host: sandbox-api.va.gov\n  Content-Type: application/x-www-form-urlencoded\n  Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\n  grant_type=authorization_code&code=z92dapo5&state=af0ifjsldkj&redirect_uri=<yourRedirectURL>\n\`\`\`";
+  const postToken = "\`\`\`http\nPOST /oauth2/token HTTP/1.1\n  Host: sandbox-api.va.gov\n  Content-Type: application/x-www-form-urlencoded\n  Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\n  grant_type=authorization_code\n  &code=z92dapo5&state=af0ifjsldkj\n  &redirect_uri=<yourRedirectURL>\n\`\`\`";
   const postTokenResponse200 = `\`\`\`http\n${props.apiDef?.openidDocs?.authPostTokenResponse200 ?? ''}\n\`\`\``;
   const postTokenResponse400 = '\`\`\`http\nHTTP/1.1\n400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}\n\`\`\`';
   const postTokenRefresh = `\`\`\`http\n${props.apiDef?.openidDocs?.authPostTokenRefresh ?? ''}\n\`\`\``;

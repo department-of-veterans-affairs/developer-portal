@@ -2,10 +2,10 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
 
-import { PageHeader, BuildingOIDCContent } from '../../components';
+import { PageHeader, BuildingOIDCContent, ScopesContent } from '../../components';
 import PageLinks from '../../content/apiDocs/oauth/PageLinks.mdx';
 import GettingStarted from '../../content/apiDocs/oauth/GettingStarted.mdx';
-import Scopes from '../../content/apiDocs/oauth/Scopes.mdx';
+
 import IdToken from '../../content/apiDocs/oauth/IdToken.mdx';
 import TestUsers from '../../content/apiDocs/oauth/TestUsers.mdx';
 
@@ -14,7 +14,7 @@ import { APIDescription } from '../../apiDefs/schema';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 
 export const AuthorizationDocs = (): JSX.Element => {
-  const [selectedApi, setSelectedApi] = React.useState('address_validation');
+  const [selectedApi, setSelectedApi] = React.useState('fhir');
   const changeSelectedApi = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     setSelectedApi(event.currentTarget.value);
   };
@@ -36,7 +36,12 @@ export const AuthorizationDocs = (): JSX.Element => {
         onSelectionChange={changeSelectedApi}
         apiDef={apiDef}
       />
-      <Scopes />
+      <ScopesContent
+        options={oAuthDefs}
+        selectedOption={selectedApi}
+        onSelectionChange={changeSelectedApi}
+        apiDef={apiDef}
+      />
       <IdToken />
       <TestUsers />
     </div>

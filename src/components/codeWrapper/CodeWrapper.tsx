@@ -11,10 +11,10 @@ interface CodeWrapperProps {
 }
 
 /* eslint-disable jsx-a11y/no-noninteractive-tabindex -- required for keyboard scrolling */
-/* eslint-disable jsx-a11y/no-onchange */
 const CodeWrapper = (props: CodeWrapperProps): JSX.Element => (
   <div className="code-wrapper" tabIndex={0}>
     {props.options && props.selectedOption && (
+      // eslint-disable-next-line jsx-a11y/no-onchange
       <select onChange={props.onSelectionChange} value={props.selectedOption}>
         {props.options.map(item => (
           <option value={item.urlFragment} key={item.urlFragment}>

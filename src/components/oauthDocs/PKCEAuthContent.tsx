@@ -23,9 +23,9 @@ const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
   const authUrl = `\`\`\`plaintext\n${props.apiDef?.pkceDocs?.authUrl ?? ''}\n\`\`\``;
   const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';
   const postToken = `\`\`\`plaintext\n${props.apiDef?.pkceDocs?.authPostToken ?? ''}\n\`\`\``;
-  const postTokenResponse200 = '\`\`\`plaintext\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "openid profile email offline_access",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}\`\`\`';
+  const postTokenResponse200 = '\`\`\`plaintext\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "openid profile email offline_access",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}\n\`\`\`';
   const postTokenResponse400 = '\`\`\`http\nHTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}\n\`\`\`';
-  const postTokenRefresh = '\`\`\`http\nPOST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=refresh_token&refresh_token={your refresh_token}&client_id={client_id}&scope={space separated scopes}\n\`\`\`';
+  const postTokenRefresh = '\`\`\`http\nPOST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=refresh_token\n&refresh_token={your refresh_token}\n&client_id={client_id}\n&scope={space separated scopes}\n\`\`\`';
 
   return (
     <section aria-labelledby="pkce-authorizations">
