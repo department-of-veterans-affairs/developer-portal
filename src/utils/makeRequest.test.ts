@@ -188,12 +188,9 @@ describe('makeRequest', () => {
 
   it('checks handling of 400 error', async () => {
     const captureException = jest.spyOn(Sentry, 'captureException');
-
     // const SentryMockScope = { setTag: jest.fn() };
     const withScope = jest.spyOn(Sentry, 'withScope');
-
-    const testErrorMessage = ['Your input is detrimental to the health of this API', 'Invalid Request'];
-
+    const messages = ['Invalid input.', 'Invalid request.'];
     server.use(
       rest.post(
         errorUrl,
@@ -201,10 +198,9 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.status(400), context.json({ message: testErrorMessage })),
+        ): MockedResponse => res(context.status(400), context.json({ errors: messages })),
       ),
     );
-
     const init = {
       body: 'json for you',
       headers: {
@@ -213,17 +209,15 @@ describe('makeRequest', () => {
       },
       method: 'POST',
     };
-
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
-      //   expect(Sentry.captureException).toHaveBeenCalledWith('Route not found: 400');
-      expect(error).toEqual({ 'body': { 'errors': [
-        'Your input is detrimental to the health of this API',
-        'Invalid Request',
+      expect(Sentry.captureException).toHaveBeenCalledWith('Validation errors: Invalid input., Invalid request.');
+      expect(error).toEqual({ 'body': {  'errors': [
+        'Invalid input.',
+        'Invalid request.',
       ] }, 'ok': false, 'status': 400 });
     });
-
     captureException.mockRestore();
     withScope.mockRestore();
   });
