@@ -84,16 +84,16 @@ describe('ApiPage', () => {
     });
 
     it('renders region', () => {
-      expect(screen.getByRole('region')).toBeDefined();
+      expect(screen.getByRole('region')).not.toBeNull();
     });
 
     it('renders api page heading', () => {
       expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Rings API');
-      expect(screen.getByText('LOTR API')).toBeDefined();
+      expect(screen.getByText('LOTR API')).not.toBeNull();
     });
 
     it('renders api documentation', () => {
-      expect(screen.getByTestId('api-documentation')).toBeDefined();
+      expect(screen.getByTestId('api-documentation')).not.toBeNull();
     });
   });
 
@@ -126,7 +126,7 @@ describe('ApiPage', () => {
     });
 
     it('renders deactivated message given deactivated api', () => {
-      expect(screen.getByText('Silmarils lost forever')).toBeDefined();
+      expect(screen.getByText('Silmarils lost forever')).not.toBeNull();
     });
   });
 
@@ -154,7 +154,7 @@ describe('ApiPage', () => {
     });
 
     it('renders the explore page', () => {
-      expect(screen.getByTestId('explore-page')).toBeDefined();
+      expect(screen.getByTestId('explore-page')).not.toBeNull();
     });
   });
 
@@ -181,8 +181,8 @@ describe('ApiPage', () => {
     });
 
     it('renders the api not found page', () => {
-      expect(screen.getByText('Page not found.')).toBeDefined();
-      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
+      expect(screen.getByText('Page not found.')).not.toBeNull();
+      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).not.toBeNull();
     });
   });
 
@@ -209,8 +209,8 @@ describe('ApiPage', () => {
     });
 
     it('renders the api not found page', () => {
-      expect(screen.getByText('Page not found.')).toBeDefined();
-      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
+      expect(screen.getByText('Page not found.')).not.toBeNull();
+      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).not.toBeNull();
     });
   });
 
@@ -237,8 +237,8 @@ describe('ApiPage', () => {
     });
 
     it('renders the api not found page', () => {
-      expect(screen.getByText('Page not found.')).toBeDefined();
-      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).toBeDefined();
+      expect(screen.getByText('Page not found.')).not.toBeNull();
+      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).not.toBeNull();
     });
   });
 });
