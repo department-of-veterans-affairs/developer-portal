@@ -10,6 +10,13 @@ jest.mock('stickyfilljs', () => ({
   addOne: jest.fn(),
 }));
 
+describe('applyStickiness', () => {
+  it('checks stickyfilljs library is not setup setup when ref to nav is null or undefined.', () => {
+    applyStickiness(null);
+    expect(Stickyfill.addOne).not.toHaveBeenCalled();
+  });
+});
+
 describe('SideNav', () => {
   const ariaLabel = 'navigation';
   const customClass = 'custom-class';
@@ -21,11 +28,6 @@ describe('SideNav', () => {
       <li data-testid="item3">item three</li>
     </>
   );
-
-  it('checks stickyfilljs library is not setup setup when ref to nav is null or undefined.', () => {
-    applyStickiness(null);
-    expect(Stickyfill.addOne).not.toHaveBeenCalled();
-  });
 
   it('checks props are properly reflected and skip to content link is present.', () => {
     render(
