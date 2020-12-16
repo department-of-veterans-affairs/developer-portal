@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router';
 import store from '../../store';
 import { DeveloperInfo } from './DeveloperInfo';
 
@@ -11,9 +10,7 @@ describe('DeveloperInfo', () => {
   beforeEach(() => {
     render(
       <Provider store={store}>
-        <MemoryRouter>
-          <DeveloperInfo />
-        </MemoryRouter>
+        <DeveloperInfo />
       </Provider>,
     );
   });
