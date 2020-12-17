@@ -17,6 +17,7 @@ interface ScopesContentProps {
 // eslint-disable-next-line arrow-body-style
 const ScopesContent = (props: ScopesContentProps): JSX.Element => {
   const scopes = props.apiDef?.scopes ?? [];
+  const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
 
   return (
@@ -60,6 +61,26 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
                 <td>
                   A permission setting to obtain the patient&apos;s identifier in the token response
                   when the app is launched from an EHR.
+                </td>
+              </tr>
+            )}
+            {hasClaimScope && (
+              <tr>
+                <td>
+                  <code>claim.*</code>
+                </td>
+                <td>
+                  <p>
+                    View a user&apos;s VA Health claims information, see specific scopes below.
+                  </p>
+                  <ul>
+                    {scopes.includes('claim.read') && (
+                      <li><code>claim.read</code></li>
+                    )}
+                    {scopes.includes('claim.write') && (
+                      <li><code>claim.write</code></li>
+                    )}
+                  </ul>
                 </td>
               </tr>
             )}

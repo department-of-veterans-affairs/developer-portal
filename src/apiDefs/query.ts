@@ -24,7 +24,8 @@ const getAllApis = (): APIDescription[] =>
 
 const getAllOauthApis = (): APIDescription[] =>
   getAllApis()
-    .filter((item: APIDescription) => !!item.oAuth)
+    .filter((item: APIDescription) => !!item.oAuth && !item.vaInternalOnly)
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
     .map((item: APIDescription) => item);
 
 const lookupApiByFragment = (apiKey: string): APIDescription | null => {

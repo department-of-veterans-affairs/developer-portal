@@ -14,7 +14,7 @@ import { APIDescription } from '../../apiDefs/schema';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 
 export const AuthorizationDocs = (): JSX.Element => {
-  const [selectedApi, setSelectedApi] = React.useState('fhir');
+  const [selectedApi, setSelectedApi] = React.useState('claims');
   const changeSelectedApi = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     setSelectedApi(event.currentTarget.value);
   };
