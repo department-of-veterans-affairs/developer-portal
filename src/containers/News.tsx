@@ -13,7 +13,6 @@ import {
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
-import { onHashAnchorClick } from '../utils/clickHandlers';
 
 export interface DataSection {
   title: string;
@@ -94,7 +93,6 @@ const News = (): JSX.Element => {
                 key={section.id}
                 to={`#${section.id}`}
                 name={section.title}
-                onClick={onHashAnchorClick}
               />
             ))}
           </SideNav>
