@@ -61,7 +61,7 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
                 </td>
                 <td>
                   <p>
-                    View a user&apos;s VA Health claims information, see specific scopes below.
+                    To view a user&apos;s VA health claims information, use the scopes below.
                   </p>
                   <ul>
                     {scopes.includes('claim.read') && (
