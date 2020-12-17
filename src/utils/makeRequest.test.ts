@@ -54,7 +54,7 @@ describe('makeRequest', () => {
           res(context.status(200), context.json({ test: 'json' })),
       ),
     );
-    const JSONinit = {
+    const init = {
       body: 'json for you',
       headers: {
         accept: 'application/json',
@@ -62,7 +62,7 @@ describe('makeRequest', () => {
       },
       method: 'POST',
     };
-    const testResponse = await makeRequest<ExpectedResponse>(requestUri, JSONinit);
+    const testResponse = await makeRequest<ExpectedResponse>(requestUri, init);
 
     expect(testResponse.body).toEqual({ test: 'json' });
   });
@@ -76,7 +76,7 @@ describe('makeRequest', () => {
       ),
     );
 
-    const textRequestInit = {
+    const init = {
       headers: {
         accept: 'text/plain',
         'content-type': 'text/plain',
@@ -86,7 +86,7 @@ describe('makeRequest', () => {
 
     const testResponse = await makeRequest<string>(
       requestUri,
-      textRequestInit,
+      init,
       { responseType: ResponseType.TEXT },
     );
 
@@ -102,7 +102,7 @@ describe('makeRequest', () => {
           res(context.status(200), context.json(blob)),
       ),
     );
-    const blobRequestInit = {
+    const init = {
       headers: {
         accept: 'application/octet-stream',
         'content-type': 'application/octet-stream',
@@ -112,13 +112,13 @@ describe('makeRequest', () => {
 
     const testResponse = await makeRequest<Blob>(
       requestUri,
-      blobRequestInit,
+      init,
       { responseType: ResponseType.BLOB },
     );
     expect(testResponse.body).toEqual(blob);
   });
 
-  it('checks the throw is handled correctly', async () => {
+  it('checks for non network error throw to be handled correctly', async () => {
     server.use(
       rest.post(
         errorUrl,
@@ -144,6 +144,28 @@ describe('makeRequest', () => {
       init,
       { responseType: ResponseType.TEXT },
     ).catch(e => expect(e).toMatch('error'));
+  });
+
+  it('checks for total fail', async () => {
+    const withScope = jest.spyOn(Sentry, 'withScope');
+    const messages = ['Invalid input.', 'Invalid request.'];
+    server.use(
+      rest.post(
+        errorUrl,
+        (
+          req: MockedRequest,
+          res: ResponseComposition,
+          context: typeof restContext,
+        ): MockedResponse => res(context.json({ errors: messages })),
+      ),
+    );
+    const init = {};
+
+    await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
+      // console.log(error);
+      expect(withScope).toHaveBeenCalled();
+      expect(error).toEqual({ 'body': { 'message': 'THIS IS A TEST FAILURE' }, 'ok': false, 'status': 404 });
+    });
   });
 
   it('checks handling of 500 error', async () => {
@@ -188,7 +210,6 @@ describe('makeRequest', () => {
 
   it('checks handling of 400 error', async () => {
     const captureException = jest.spyOn(Sentry, 'captureException');
-    // const SentryMockScope = { setTag: jest.fn() };
     const withScope = jest.spyOn(Sentry, 'withScope');
     const messages = ['Invalid input.', 'Invalid request.'];
     server.use(
