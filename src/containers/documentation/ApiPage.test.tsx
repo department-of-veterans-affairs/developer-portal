@@ -1,19 +1,14 @@
 import React from 'react';
 
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
-import { useParams } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router';
+import { APICategory } from 'src/apiDefs/schema';
 import { AppFlags, FlagsProvider } from '../../flags';
-import { fakeCategories } from '../../__mocks__/fakeCategories';
+import { fakeCategories, unmetDeactivationInfo } from '../../__mocks__/fakeCategories';
 import * as apiDefs from '../../apiDefs/query';
 import ApiPage from './ApiPage';
 
 // Mocks
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual<Record<string, unknown>>('react-router-dom'),
-  useParams: jest.fn(),
-}));
-
 jest.mock('../../content/explorePage.mdx', () => {
   const ExplorePage = (): JSX.Element => <div data-testid="explore-page">Mock Explore Page</div>;
 
@@ -34,13 +29,22 @@ jest.mock('./ApiDocumentation', () => {
   };
 });
 
+// Test Utils
+const renderApiPage = (flags: AppFlags, initialRoute: string, componentPath?: string): void => {
+  render(
+    <FlagsProvider flags={flags}>
+      <MemoryRouter initialEntries={[initialRoute]}>
+        <Route
+          path={componentPath ? componentPath : '/explore/:apiCategoryKey/docs/:apiName'}
+          component={ApiPage}
+        />
+      </MemoryRouter>
+    </FlagsProvider>,
+  );
+};
+
 // Test
 describe('ApiPage', () => {
-  // Convenience object for accessing mocked components as their correct type without casting each time
-  const mockedComponents = {
-    useParams: (useParams as unknown) as jest.Mock,
-  };
-
   const defaultFlags: AppFlags = {
     auth_docs_v2: false,
     categories: { category: true },
@@ -55,11 +59,6 @@ describe('ApiPage', () => {
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
 
   beforeEach(() => {
-    mockedComponents.useParams.mockReturnValue({
-      apiCategoryKey: 'lotr',
-      apiName: 'rings',
-    });
-
     lookupApiByFragmentMock.mockReturnValue(fakeCategories.lotr.apis[0]);
     lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
   });
@@ -69,13 +68,7 @@ describe('ApiPage', () => {
 
   describe('given valid url params', () => {
     beforeEach(() => {
-      render(
-        <FlagsProvider flags={defaultFlags}>
-          <MemoryRouter>
-            <ApiPage />
-          </MemoryRouter>
-        </FlagsProvider>,
-      );
+      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -99,24 +92,14 @@ describe('ApiPage', () => {
 
   describe('given deactivated api and valid url params', () => {
     beforeEach(() => {
-      mockedComponents.useParams.mockReturnValue({
-        apiCategoryKey: 'lotr',
-        apiName: 'silmarils',
-      });
-
       lookupApiByFragmentMock.mockReturnValue(fakeCategories.lotr.apis[1]);
 
-      render(
-        <FlagsProvider
-          flags={{
-            ...defaultFlags,
-            deactivated_apis: { silmarils: true },
-          }}
-        >
-          <MemoryRouter>
-            <ApiPage />
-          </MemoryRouter>
-        </FlagsProvider>,
+      renderApiPage(
+        {
+          ...defaultFlags,
+          deactivated_apis: { silmarils: true },
+        },
+        '/explore/lotr/docs/silmarils',
       );
     });
 
@@ -132,19 +115,14 @@ describe('ApiPage', () => {
 
   describe('given unenabled api', () => {
     beforeEach(() => {
-      render(
-        <FlagsProvider
-          flags={{
-            ...defaultFlags,
-            enabled: {
-              rings: false,
-            },
-          }}
-        >
-          <MemoryRouter>
-            <ApiPage />
-          </MemoryRouter>
-        </FlagsProvider>,
+      renderApiPage(
+        {
+          ...defaultFlags,
+          enabled: {
+            rings: false,
+          },
+        },
+        '/explore/lotr/docs/rings',
       );
     });
 
@@ -160,19 +138,8 @@ describe('ApiPage', () => {
 
   describe('given url params with no api', () => {
     beforeEach(() => {
-      mockedComponents.useParams.mockReturnValue({
-        apiCategoryKey: 'lotr',
-        // we leave apiName undefined here on purpose since it is not present in the 'url'
-      });
       lookupApiByFragmentMock.mockReturnValue(null);
-
-      render(
-        <FlagsProvider flags={defaultFlags}>
-          <MemoryRouter>
-            <ApiPage />
-          </MemoryRouter>
-        </FlagsProvider>,
-      );
+      renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -182,53 +149,35 @@ describe('ApiPage', () => {
 
     it('renders the api not found page', () => {
       expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).not.toBeNull();
+      expect(
+        screen.getByText('Try using the links below or the search bar to find your way forward.'),
+      ).not.toBeNull();
     });
   });
 
   describe('given url with api that does not exist', () => {
     beforeEach(() => {
-      mockedComponents.useParams.mockReturnValue({
-        apiCategoryKey: 'lotr',
-        apiName: 'api that does not exist',
-      });
       lookupApiByFragmentMock.mockReturnValue(null);
-
-      render(
-        <FlagsProvider flags={defaultFlags}>
-          <MemoryRouter>
-            <ApiPage />
-          </MemoryRouter>
-        </FlagsProvider>,
-      );
+      renderApiPage(defaultFlags, '/explore/lotr/docs/nonexistentapi');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('api that does not exist');
+      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('nonexistentapi');
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
     it('renders the api not found page', () => {
       expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).not.toBeNull();
+      expect(
+        screen.getByText('Try using the links below or the search bar to find your way forward.'),
+      ).not.toBeNull();
     });
   });
 
   describe('given url with api that does not exist within the given api category', () => {
     beforeEach(() => {
-      mockedComponents.useParams.mockReturnValue({
-        apiCategoryKey: 'sports',
-        apiName: 'silmarils',
-      });
       lookupApiCategoryMock.mockReturnValue(fakeCategories.sports);
-
-      render(
-        <FlagsProvider flags={defaultFlags}>
-          <MemoryRouter>
-            <ApiPage />
-          </MemoryRouter>
-        </FlagsProvider>,
-      );
+      renderApiPage(defaultFlags, '/explore/sports/docs/silmarils');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -238,7 +187,36 @@ describe('ApiPage', () => {
 
     it('renders the api not found page', () => {
       expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(screen.getByText('Try using the links below or the search bar to find your way forward.')).not.toBeNull();
+      expect(
+        screen.getByText('Try using the links below or the search bar to find your way forward.'),
+      ).not.toBeNull();
+    });
+  });
+
+  describe('given api with deactivation info that is not yet deactivated', () => {
+    beforeEach(() => {
+      const modifiedRingsApi: APICategory = {
+        ...fakeCategories.lotr,
+        apis: [
+          {
+            ...fakeCategories.lotr.apis[0],
+            deactivationInfo: unmetDeactivationInfo,
+          },
+        ],
+      };
+
+      lookupApiCategoryMock.mockReturnValue(modifiedRingsApi);
+      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+    });
+
+    it('calls lookupApi methods with correct parameters', () => {
+      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('rings');
+      expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
+    });
+
+    it('does not render deactivation message', () => {
+      expect(screen.queryByTestId('deprecation-info')).toBeNull();
+      expect(screen.queryByTestId('deactivation-info')).toBeNull();
     });
   });
 });

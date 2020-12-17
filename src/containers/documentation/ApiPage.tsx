@@ -16,23 +16,21 @@ import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
 
 const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | null => {
+  /*
+   * This code should theoretically be unneeded - isApiDeprecated and isApiDeactivated
+   * return fase if deactivationInfo is undefined, which causes this to return null.
+   * However, this isn't detected and we get errors without this if statement.
+   * This code is placed before the calls to 'isApiDeprecated' and 'isApiDeactivated'
+   * in order to make it reachable in our tests.
+   */
+  if (!api.deactivationInfo) {
+    return null;
+  }
+
   const isDeprecated = isApiDeprecated(api);
   const isDeactivated = isApiDeactivated(api);
 
   if (!isDeprecated && !isDeactivated) {
-    return null;
-  }
-
-  /*
-   * This should be unreachable, but the ts compiler is unable to pick up that api deactivation
-   * info must be defined in order to get past the previou if statement that returns null.
-   * In order to prevent errors where we responds with the deactivation info div we need this code.
-   * Previously, there were non-null assertions for this, but since those are dangerous our linter
-   * no longer allows them. Note that if logic changes, if something is weird with displaying the
-   * deactivation info, this will be a good line to check, especially if it returns blank when it
-   * should be returning some kind of content.
-   */
-  if (api.deactivationInfo === undefined) {
     return null;
   }
 
