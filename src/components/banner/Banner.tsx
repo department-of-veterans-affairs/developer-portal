@@ -37,8 +37,9 @@ const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
       alt={props.icon_alt ?? undefined}
     />
     <div className="vads-u-margin-bottom--1p5">
-      <div><strong>{props.title}</strong>
-      </div>
+      <p className="vads-u-font-weight--bold vads-u-margin--0">
+        {props.title}
+      </p>
       <div>{props.children}</div>
     </div>
   </div>
@@ -124,14 +125,16 @@ const Banner = (): JSX.Element => {
             >
               <div className="vads-l-row">
                 <GuidanceBox id="dot-gov-guidance" icon={dotGovIcon} icon_alt="Government icon" title="The .gov means it's official">
-                  Federal government websites often end in .gov or .mil. Before sharing sensitive
-                  information, make sure you&apos;re on a federal government site.
+                  <p className="vads-u-margin--0">
+                    Federal government websites often end in .gov or .mil. Before sharing sensitive
+                    information, make sure you&apos;re on a federal government site.
+                  </p>
                 </GuidanceBox>
                 <GuidanceBox id="https-guidance" icon={httpsIcon} icon_alt="HTTPS browser icon" title="The site is secure.">
-                  <span>
+                  <p className="vads-u-margin--0">
                     The <strong>https://</strong> ensures that you&apos;re connecting to the official website
                     and that any information you provide is encrypted and sent securely.
-                  </span>
+                  </p>
                 </GuidanceBox>
               </div>
             </div>

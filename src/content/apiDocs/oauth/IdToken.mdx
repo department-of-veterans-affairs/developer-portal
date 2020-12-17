@@ -13,14 +13,13 @@ Your application must validate JWT signatures. This allows your application to v
 
 ### Header
 
-The JWT's header has two fields, `alg` and `kid`. `alg` indicates the algorithm that was used to sign the JWT, and `kid` identifies the key that was used to sign the JWT. Signing keys and associated metadata are accessible from 
-https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration.
+The JWT's header has two fields, `alg` and `kid`. `alg` indicates the algorithm that was used to sign the JWT, and `kid` identifies the key that was used to sign the JWT. Signing keys and associated metadata are accessible from https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration.
 
 ### Signature
 
 The signature is a cryptographically generated signature of the JWT's header and payload used to confirm the JWT's authenticity. Your application must validate this signature using the `alg` and the `kid` from the JWT's header. You may want use one of the JWT libraries listed at [jwt.io](https://jwt.io) to help make this process easier.
 
-### Payload
+### Payload {tabIndex="-1"}
 
 The payload is a JSON object containing identity and authentication-related `claims`. There are a couple claims in the JWT that are important for your application to consider:
 - `nonce` - should match the `nonce` you initiated authorization with.

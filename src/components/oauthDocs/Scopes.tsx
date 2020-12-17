@@ -5,7 +5,6 @@ import * as React from 'react';
 import { APIDescription } from '../../apiDefs/schema';
 
 import DefaultScopes from '../../content/apiDocs/oauth/Scopes.mdx';
-import { SectionHeaderWrapper } from '../sectionHeaderWrapper/SectionHeaderWrapper';
 
 interface ScopesContentProps {
   apiDef: APIDescription | null;
@@ -22,17 +21,8 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
 
   return (
     <>
-      <SectionHeaderWrapper heading="Scopes" id="scopes" />
-      <p>
-        Scopes define the API endpoint your application is allowed to access. We suggest requesting
-        the fewest number of scopes for which you require a Veteran to provide consent. You can
-        always request access to additional scopes if a Veteran or VSO needs the data while using
-        your application.
-      </p>
-      <p>
-        <strong>Existing Scopes are:</strong>
-      </p>
       <DefaultScopes />
+
       {props.selectedOption && (
         // eslint-disable-next-line jsx-a11y/no-onchange
         <select onChange={props.onSelectionChange} value={props.selectedOption}>

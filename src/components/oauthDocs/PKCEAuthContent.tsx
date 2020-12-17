@@ -28,7 +28,7 @@ const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
   const postTokenRefresh = '\`\`\`http\nPOST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=refresh_token\n&refresh_token={your refresh_token}\n&client_id={client_id}\n&scope={space separated scopes}\n\`\`\`';
 
   return (
-    <section aria-labelledby="pkce-authorizations">
+    <section aria-labelledby="pkce-authorization">
       <h3 tabIndex={-1} id="pkce-authorization">
         PKCE (Proof Key for Code Exchange) Authorization
       </h3>
