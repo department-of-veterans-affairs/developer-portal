@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { HashLink } from 'react-router-hash-link';
 import * as Stickyfill from 'stickyfilljs';
 
-import { onHashAnchorClick } from '../../utils/clickHandlers';
 import './SideNav.scss';
 
 interface SideNavProps {
@@ -45,7 +44,6 @@ const SideNav = (props: SideNavProps): JSX.Element => {
           'vads-u-color--white',
         )}
         to="#page-header"
-        onClick={onHashAnchorClick}
       >
         Skip Page Navigation
       </HashLink>
