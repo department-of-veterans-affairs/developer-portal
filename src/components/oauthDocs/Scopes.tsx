@@ -25,7 +25,7 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
 
       {props.selectedOption && (
         // eslint-disable-next-line jsx-a11y/no-onchange
-        <select onChange={props.onSelectionChange} value={props.selectedOption}>
+        <select onChange={props.onSelectionChange} value={props.selectedOption} aria-label="Select an API">
           {props.options.map(item => (
             <option value={item.urlFragment} key={item.urlFragment}>
               {item.name}
