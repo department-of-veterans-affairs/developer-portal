@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { HashLink } from 'react-router-hash-link';
 import ReactMarkdown from 'react-markdown';
 import { APIDescription } from '../../apiDefs/schema';
-import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { CodeWrapper } from '../codeWrapper/CodeWrapper';
 import AuthCodeFlowQueryParamsTable from './AuthCodeFlowQueryParamsTable.mdx';
 
@@ -101,7 +100,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
 
       <p>
         The authorization server will respond with an{' '}
-        <HashLink to="#id-token" onClick={onHashAnchorClick}>
+        <HashLink to="#id-token">
           access token
         </HashLink>
         . If you requested the <code>offline_access</code> scope, you will also receive a{' '}
@@ -125,7 +124,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
 
       <p>
         <strong>NOTE:</strong> the{' '}
-        <HashLink to="#id-token" onClick={onHashAnchorClick}>
+        <HashLink to="#id-token">
           access token
         </HashLink>{' '}
         will only work for the API and scopes for which you have previously initiated authorization.

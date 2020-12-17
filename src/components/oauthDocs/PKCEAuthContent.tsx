@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { HashLink } from 'react-router-hash-link';
 import { CodeWrapper } from '../codeWrapper/CodeWrapper';
 import { APIDescription } from '../../apiDefs/schema';
-import { onHashAnchorClick } from '../../utils/clickHandlers';
 import PKCEQueryParamsTable from './PKCEQueryParamsTable.mdx';
 
 interface PKCEAuthContentProps {
@@ -91,7 +90,7 @@ const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
 
       <p>
         The authorization server will send a 200 response with an{' '}
-        <HashLink to="#id-token" onClick={onHashAnchorClick}>
+        <HashLink to="#id-token">
           access token
         </HashLink>
         . If you requested the <code>offline_access</code> scope, you will also receive a{' '}
@@ -117,7 +116,7 @@ const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
 
       <p>
         <strong>NOTE:</strong> the{' '}
-        <HashLink to="#id-token" onClick={onHashAnchorClick}>
+        <HashLink to="#id-token">
           access token
         </HashLink>{' '}
         will only work for the API and scopes for which you have previously initiated authorization.

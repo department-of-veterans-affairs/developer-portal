@@ -1,11 +1,9 @@
 /* eslint-disable react/no-unused-prop-types */
-/* eslint-disable no-console */
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { SectionHeaderWrapper } from '../index';
 import { APIDescription } from '../../apiDefs/schema';
-import { onHashAnchorClick } from '../../utils/clickHandlers';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
 
@@ -24,18 +22,13 @@ const BuildingOIDCContent = (props: BuildingOIDContentProps): JSX.Element => (
       <li>
         If you are building a <strong>server-based application</strong>, you’ll also receive a
         client secret and will use the{' '}
-        <HashLink to="#authorization-code-flow" onClick={onHashAnchorClick}>
-          authorization code flow
-        </HashLink>{' '}
-        to complete authentication.
+        <HashLink to="#authorization-code-flow">authorization code flow</HashLink> to complete
+        authentication.
       </li>
       <li>
         If you are unable to <strong>safely store a client secret</strong> such as a native mobile
-        app, you will{' '}
-        <HashLink to="#pkce-authorization" onClick={onHashAnchorClick}>
-          use PKCE
-        </HashLink>{' '}
-        to complete authentication.
+        app, you will <HashLink to="#pkce-authorization">use PKCE</HashLink> to complete
+        authentication.
       </li>
     </ul>
 

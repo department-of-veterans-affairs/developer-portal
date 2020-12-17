@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { Location, LocationDescriptor } from 'history';
 import { match as Match } from 'react-router';
 import { NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
-import { onHashAnchorClick } from '../../utils/clickHandlers';
 import './SideNav.scss';
 
 export interface SideNavEntryProps extends NavHashLinkProps {
@@ -101,7 +100,6 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
           'vads-u-border-left--5px': subNavLevel === 0,
         })}
         isActive={navHashLinkIsActive}
-        onClick={onHashAnchorClick}
         {...navLinkProps}
       >
         {name}
