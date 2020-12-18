@@ -1,5 +1,6 @@
 import React from 'react';
 
+import moment from 'moment';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router';
 import { APICategory } from 'src/apiDefs/schema';
@@ -195,7 +196,7 @@ describe('ApiPage', () => {
 
   describe('given api with deactivation info that is not yet deactivated', () => {
     beforeEach(() => {
-      const modifiedRingsApi: APICategory = {
+      const modifiedLotrApi: APICategory = {
         ...fakeCategories.lotr,
         apis: [
           {
@@ -205,7 +206,8 @@ describe('ApiPage', () => {
         ],
       };
 
-      lookupApiCategoryMock.mockReturnValue(modifiedRingsApi);
+      lookupApiCategoryMock.mockReturnValue(modifiedLotrApi);
+      lookupApiByFragmentMock.mockReturnValue(modifiedLotrApi.apis[0]);
       renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
     });
 
@@ -216,6 +218,37 @@ describe('ApiPage', () => {
 
     it('does not render deactivation message', () => {
       expect(screen.queryByTestId('deprecation-info')).toBeNull();
+      expect(screen.queryByTestId('deactivation-info')).toBeNull();
+    });
+  });
+
+  describe('given api with deactivation info that is deprecated but not deactivated', () => {
+    beforeEach(() => {
+      const modifiedLotrApi: APICategory = {
+        ...fakeCategories.lotr,
+        apis: [
+          {
+            ...fakeCategories.lotr.apis[0],
+            deactivationInfo: {
+              ...unmetDeactivationInfo,
+              deprecationDate: moment().subtract(1, 'year'),
+            },
+          },
+        ],
+      };
+
+      lookupApiCategoryMock.mockReturnValue(modifiedLotrApi);
+      lookupApiByFragmentMock.mockReturnValue(modifiedLotrApi.apis[0]);
+      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+    });
+
+    it('calls lookupApi methods with correct parameters', () => {
+      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('rings');
+      expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
+    });
+
+    it('does not render deactivation message', () => {
+      expect(screen.queryByTestId('deprecation-info')).not.toBeNull();
       expect(screen.queryByTestId('deactivation-info')).toBeNull();
     });
   });
