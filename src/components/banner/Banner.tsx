@@ -37,12 +37,12 @@ const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
       alt={props.icon_alt ?? undefined}
       aria-hidden="true"
     />
-    <article className="vads-u-margin-bottom--1p5" >
-      <header className="vads-u-font-weight--bold vads-u-margin--0">
+    <div className="vads-u-margin-bottom--1p5" >
+      <p className="vads-u-font-weight--bold vads-u-margin--0">
         {props.title}
-      </header>
+      </p>
       <div>{props.children}</div>
-    </article>
+    </div>
   </div>
 );
 
@@ -103,7 +103,7 @@ const Banner = (): JSX.Element => {
                     'small-desktop-screen:vads-u-margin-left--1',
                     'small-desktop-screen:vads-u-margin-top--0',
                   )}
-                  aria-label="Here&apos;s how you know. Read more information on how to know this is an official website"
+                  aria-label="Here&apos;s how you know this is an official website"
                   onClick={toggleAccordionVisible}
                   aria-expanded={accordionVisible ? 'true' : 'false'}
                   type="button"
@@ -126,7 +126,7 @@ const Banner = (): JSX.Element => {
                 'vads-l-grid-container',
                 'vads-u-background-color--gray-dark')}
               aria-hidden={accordionVisible ? 'false' : 'true'}
-              aria-labelledby="toggle-how-you-know-dropdown"
+              aria-label="Here&apos;s how you know this is an official website"
               role="region"
             >
               <div className="vads-l-row" >
