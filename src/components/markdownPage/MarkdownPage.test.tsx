@@ -14,11 +14,18 @@ describe('Markdown Page', () => {
   it('should render the given markdown', () => {
     // The markdown is a react component, so we pass a regular/non-markdown component to the MarkdownPage for testing
     render(MarkdownPage(markdownComponent));
-    const markdownComp = screen.getByTestId(markdownComponentTestId);
+    const markdownComp = screen.queryByTestId(markdownComponentTestId);
     expect(markdownComp).toBeDefined();
   });
 
   it('should render section with proper styling and elements', () => {
+    /*
+     * There isn't a good way to get the section tag with the testing library
+     * besides maybe adding a test id. But I don't think we want those in prod
+     * unless necessary. By piggybacking the usual DOM query methods we can
+     * test the styling on otherwise unreachable elements.
+     * This is why we obtain container in this test.
+     */
     const { container } = render(MarkdownPage(markdownComponent));
 
     const sectionList = container.getElementsByTagName('section');
