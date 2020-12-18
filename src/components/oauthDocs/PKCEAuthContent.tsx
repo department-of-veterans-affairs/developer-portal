@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { onHashAnchorClick } from '../../utils/clickHandlers';
 import PKCEAuthRequestURL from './PKCEAuthRequestURL.mdx';
 import PKCEQueryParamsTable from './PKCEQueryParamsTable.mdx';
 import PKCEAuthorizationRedirect from './PKCEAuthorizationRedirect.mdx';
@@ -66,7 +65,7 @@ const PKCEAuthContent = (): JSX.Element => (
 
     <p>
       The authorization server will send a 200 response with an{' '}
-      <HashLink to="#id-token" onClick={onHashAnchorClick}>
+      <HashLink to="#id-token">
         access token
       </HashLink>
       . If you requested the <code>offline_access</code> scope, you will also receive a{' '}
@@ -83,7 +82,7 @@ const PKCEAuthContent = (): JSX.Element => (
 
     <p>
       <strong>NOTE:</strong> the{' '}
-      <HashLink to="#id-token" onClick={onHashAnchorClick}>
+      <HashLink to="#id-token">
         access token
       </HashLink>{' '}
       will only work for the API and scopes for which you have previously initiated authorization.
