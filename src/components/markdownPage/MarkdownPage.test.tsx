@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 import 'jest';
 import React from 'react';
 import { MarkdownPage } from './MarkdownPage';
@@ -15,5 +16,20 @@ describe('Markdown Page', () => {
     render(MarkdownPage(markdownComponent));
     const markdownComp = screen.getByTestId(markdownComponentTestId);
     expect(markdownComp).toBeDefined();
+  });
+
+  it('should render section with proper styling and elements', () => {
+    const { container } = render(MarkdownPage(markdownComponent));
+
+    const sectionList = container.getElementsByTagName('section');
+    expect(sectionList.length).toBe(1);
+
+    const sectionElement = sectionList.item(0);
+    expect(sectionElement).not.toBeNull();
+    expect(sectionElement).toHaveClass('vads-u-padding-y--5');
+
+    const sectionChild = sectionElement?.firstChild;
+    expect(sectionChild).not.toBeNull();
+    expect(sectionChild).toHaveClass('vads-l-grid-container');
   });
 });
