@@ -71,11 +71,45 @@ describe('position sticky', () => {
 });
 
 describe('invalid cagetories', () => {
-  it.each([
-    '',
-    'docs/quickstart',
-  ])('should redirect to /explore from /explore/invalid/%s', async (path: string) => {
-    await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
-    expect(page.url()).toEqual(`${puppeteerHost}/explore`);
-  });
+  it.each(['', 'docs/quickstart'])(
+    'should redirect to /explore from /explore/invalid/%s',
+    async (path: string) => {
+      await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
+      expect(page.url()).toEqual(`${puppeteerHost}/explore`);
+    },
+  );
+});
+
+/**
+ * test to make sure the route does not redirect when the environment variable is set to false
+ */
+
+describe('auth docs route does not redirect', () => {
+  it.each(['health', 'verification'])(
+    'should not redirect to /explore/authorization from /explore/:apiCategoryKey/docs/authorization',
+    async (path: string) => {
+      await page.goto(`${puppeteerHost}/explore/${path}/docs/authorization`, {
+        waitUntil: 'networkidle0',
+      });
+      expect(page.url()).toEqual(`${puppeteerHost}/explore/${path}/docs/authorization`);
+    },
+  );
+});
+
+/**
+ * have to skip because the new auth docs are off by default, including in the Jest Puppeteer
+ * server. to run this test, remove the .skip and add the correct environment variable in
+ * jest-puppeteer.config.js.
+ */
+
+describe.skip('auth docs route redirect', () => {
+  it.each(['health', 'verification'])(
+    'should redirect to /explore/authorization from /explore/:apiCategoryKey/docs/authorization',
+    async (path: string) => {
+      await page.goto(`${puppeteerHost}/explore/${path}/docs/authorization`, {
+        waitUntil: 'networkidle0',
+      });
+      expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization`);
+    },
+  );
 });
