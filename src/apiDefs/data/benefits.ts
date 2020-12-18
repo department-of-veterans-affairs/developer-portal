@@ -43,7 +43,7 @@ const benefitsApis: APIDescription[] = [
         'https://sandbox-api.va.gov/oauth2/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=profile openid offline_access launch/patient claim.read claim.write\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &code_challenge_method=S256\n  &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw',
     },
     releaseNotes: ClaimsReleaseNotes,
-    scopes: ['profile', 'openid', 'offline_access', 'launch/patient', 'claim.read', 'claim.write'],
+    scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
     trustedPartnerOnly: false,
     urlFragment: 'claims',
     vaInternalOnly: false,
