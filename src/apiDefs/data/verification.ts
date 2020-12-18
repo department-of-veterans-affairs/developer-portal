@@ -45,7 +45,6 @@ const verificationApis: APIDescription[] = [
       'profile',
       'openid',
       'offline_access',
-      'launch/patient',
       'service_history.read',
       'disability_rating.read',
       'veteran_status.read',
