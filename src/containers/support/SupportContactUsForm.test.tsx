@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/browser';
-import '@testing-library/jest-dom/extend-expect';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
 import 'jest';
