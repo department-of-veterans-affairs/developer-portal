@@ -1,10 +1,9 @@
+/* eslint-disable max-lines */
 import * as Sentry from '@sentry/browser';
 import 'jest';
-// import { AssertionsResult } from 'jest-axe';
 import {  MockedRequest, rest, restContext  } from 'msw';
 import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
-// import { waitFor } from '@testing-library/react';
 import { makeRequest, ResponseType } from './makeRequest';
 
 interface ExpectedResponse {
@@ -24,18 +23,12 @@ const headerDataError = { _bodyInit: 'json for you',
   method: 'POST',
   mode: null,
   referrer: null,
-  url: errorUrl };
+  url: errorUrl,
+};
 
-/*
- * jest.mock('@sentry/browser');
- * const mockedSentry = Sentry as jest.Mocked<typeof Sentry>;
- */
-
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: need to mock fetch on global
 const spyFetch = jest.spyOn(global, 'fetch');
-/* eslint-enable @typescript-eslint/ban-ts-comment */
-
 jest.mock('uuid', () => ({
   __esModule: true,
   v4: jest.fn(() => '123'),
@@ -146,9 +139,7 @@ describe('makeRequest', () => {
     ).catch(e => expect(e).toMatch('error'));
   });
 
-  it('checks for total fail', async () => {
-    const withScope = jest.spyOn(Sentry, 'withScope');
-    const messages = ['Invalid input.', 'Invalid request.'];
+  it('checks handling non network text error', async () => {
     server.use(
       rest.post(
         errorUrl,
@@ -156,24 +147,63 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.json({ errors: messages })),
+        ): MockedResponse => res(context.json('error')),
       ),
     );
-    const init = {};
 
-    await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      // console.log(error);
+    const init = {
+      body: 'text for you',
+      headers: {
+        accept: 'text/plain',
+      },
+      method: 'POST',
+    };
+
+    await makeRequest(
+      errorUrl,
+      init,
+      { responseType: ResponseType.TEXT },
+    ).catch(e => expect(e).toMatch('error'));
+  });
+
+  it('checks for total fail', async () => {
+    const captureException = jest.spyOn(Sentry, 'captureException');
+    const withScope = jest.spyOn(Sentry, 'withScope');
+    server.use(
+      rest.post(
+        errorUrl,
+        (
+          req: MockedRequest,
+          res: ResponseComposition,
+          context: typeof restContext,
+        ): MockedResponse => res(context.status(200), context.text('')),
+      ),
+    );
+
+    const init = {
+      body: 'json for you',
+      headers: {
+        accept: 'application/json',
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+    };
+
+    await makeRequest<ExpectedResponse>(errorUrl, init).catch(() => {
+      expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
-      expect(error).toEqual({ 'body': { 'message': 'THIS IS A TEST FAILURE' }, 'ok': false, 'status': 404 });
+      expect(Sentry.captureException).toHaveBeenCalledWith(expect.objectContaining({
+        message: 'Unexpected end of JSON input',
+      }));
     });
+
+    captureException.mockRestore();
+    withScope.mockRestore();
   });
 
   it('checks handling of 500 error', async () => {
     const captureException = jest.spyOn(Sentry, 'captureException');
-
-    // const SentryMockScope = { setTag: jest.fn() };
     const withScope = jest.spyOn(Sentry, 'withScope');
-
     const testErrorMessage = 'THIS IS A TEST FAILURE';
 
     server.use(
@@ -197,7 +227,6 @@ describe('makeRequest', () => {
     };
 
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      // console.log(error);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Server Error: 500');
