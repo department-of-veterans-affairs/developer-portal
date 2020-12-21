@@ -36,6 +36,8 @@ const server = setupServer(
 );
 
 jest.mock('react-router-dom', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useHistory: jest.fn().mockReturnValue({
     location: { pathname: '/another-route' },
     push: jest.fn(),
