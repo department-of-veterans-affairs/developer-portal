@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
 import { MockedRequest, rest, restContext } from 'msw';
 import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
