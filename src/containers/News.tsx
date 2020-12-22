@@ -67,7 +67,7 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
     <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
       <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
-          <div className="hover-image" />
+          <div className="hover-image-videoplayer" />
         </a>
       </div>
       <div className="vads-u-margin-left--2p5 va-api-media-row-description">{description}</div>
