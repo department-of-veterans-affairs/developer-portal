@@ -101,7 +101,7 @@ describe('ApplySuccess with results', () => {
 
       it('displays the provided email address', () => {
         expect(
-          screen.getByText(/You should receive an email at gimli@eredluin\.com/gm),
+          screen.getByText(/You should receive an email at gimli@eredluin\.com/m),
         ).toBeInTheDocument();
       });
 
