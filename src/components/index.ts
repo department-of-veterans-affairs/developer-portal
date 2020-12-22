@@ -3,7 +3,6 @@ export * from './codeWrapper/CodeWrapper';
 export * from './pageHeader/PageHeader';
 export * from './groupedAccordions/GroupedAccordions';
 export * from './header/Header';
-export * from './hoverImage/HoverImage';
 export * from './navBar/NavBar';
 export * from './pageContent/PageContent';
 export * from './search/Search';
