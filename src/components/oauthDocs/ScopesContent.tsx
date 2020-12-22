@@ -1,6 +1,8 @@
 /* eslint-disable complexity */
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { isApiDeactivated } from '../../apiDefs/deprecated';
+import { getAllOauthApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 
 import DefaultScopes from '../../content/apiDocs/oauth/Scopes.mdx';
@@ -8,13 +10,13 @@ import { APISelector } from '../index';
 
 interface ScopesContentProps {
   apiDef: APIDescription | null;
-  options: APIDescription[];
   selectedOption: string;
   onSelectionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const ScopesContent = (props: ScopesContentProps): JSX.Element => {
   const scopes = props.apiDef?.oAuthInfo?.scopes ?? [];
+  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
 
@@ -24,7 +26,7 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
 
       <APISelector
         onSelectionChange={props.onSelectionChange}
-        options={props.options}
+        options={options}
         selectedOption={props.selectedOption}
       />
 
@@ -159,7 +161,6 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
 
 ScopesContent.propTypes = {
   onSelectionChange: PropTypes.func,
-  options: PropTypes.array,
   selectedOption: PropTypes.string,
 };
 

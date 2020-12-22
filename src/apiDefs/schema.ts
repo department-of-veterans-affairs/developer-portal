@@ -69,7 +69,7 @@ export interface APIDescription {
 }
 
 export interface OAuthInfo {
-  readonly basePath: string;
+  readonly baseAuthPath: string;
   readonly scopes: string[];
 }
 

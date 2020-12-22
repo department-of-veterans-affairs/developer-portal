@@ -47,7 +47,7 @@ const verificationApis: APIDescription[] = [
     name: 'Veteran Verification API',
     oAuth: true,
     oAuthInfo: {
-      basePath: '/services/veteran_verification/v0',
+      baseAuthPath: '/oauth2/veteran-verification/v1',
       scopes: [
         'profile',
         'openid',

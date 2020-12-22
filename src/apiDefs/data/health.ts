@@ -38,7 +38,7 @@ const healthApis: APIDescription[] = [
     name: 'Community Care Eligibility API',
     oAuth: true,
     oAuthInfo: {
-      basePath: '/services/community-care/v0',
+      baseAuthPath: '/oauth2/community-care/v1',
       scopes: [
         'profile',
         'openid',
@@ -102,7 +102,7 @@ const healthApis: APIDescription[] = [
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
     oAuthInfo: {
-      basePath: '/services/fhir/v0',
+      baseAuthPath: '/oauth2/health/v1',
       scopes: [
         'profile',
         'openid',

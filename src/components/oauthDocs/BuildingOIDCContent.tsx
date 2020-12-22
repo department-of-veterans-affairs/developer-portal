@@ -8,7 +8,6 @@ import { PKCEAuthContent } from './PKCEAuthContent';
 
 interface BuildingOIDContentProps {
   apiDef: APIDescription | null;
-  options: APIDescription[];
   selectedOption: string;
   onSelectionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
@@ -39,7 +38,6 @@ const BuildingOIDCContent = (props: BuildingOIDContentProps): JSX.Element => (
 
 BuildingOIDCContent.propTypes = {
   onSelectionChange: PropTypes.func,
-  options: PropTypes.array,
   selectedOption: PropTypes.string,
 };
 
