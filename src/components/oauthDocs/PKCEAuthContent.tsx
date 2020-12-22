@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
 import PropTypes from 'prop-types';
 import { HashLink } from 'react-router-hash-link';
-import { CodeWrapper } from '../codeWrapper/CodeWrapper';
+import { APISelector, CodeWrapper } from '../index';
 import { APIDescription } from '../../apiDefs/schema';
 import PKCEQueryParamsTable from './PKCEQueryParamsTable.mdx';
 
@@ -14,17 +14,17 @@ interface PKCEAuthContentProps {
 }
 
 const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
-  const wrapperProps = {
+  const selectorProps = {
     onSelectionChange: props.onSelectionChange,
     options: props.options,
     selectedOption: props.selectedOption,
   };
-  const authUrl = `\`\`\`plaintext\n${props.apiDef?.pkceDocs?.authUrl ?? ''}\n\`\`\``;
+  const authUrl = `\`\`\`plaintext\nhttps://sandbox-api.va.gov/oauth2/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? ''}\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &code_challenge_method=S256\n  &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw\n\`\`\``;
   const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';
-  const postToken = `\`\`\`plaintext\n${props.apiDef?.pkceDocs?.authPostToken ?? ''}\n\`\`\``;
-  const postTokenResponse200 = '\`\`\`plaintext\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "openid profile email offline_access",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}\n\`\`\`';
+  const postToken = '\`\`\`plaintext\nPOST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=authorization_code\n&code=z92dapo5\n&state=af0ifjsldkj\n&redirect_uri=<yourRedirectURL>\n&code_verifier=ccec_bace_d453_e31c_eb86_2ad1_9a1b_0a89_a584_c068_2c96\n\`\`\`';
+  const postTokenResponse200 = `\`\`\`plaintext\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? ''}",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}\n\`\`\``;
   const postTokenResponse400 = '\`\`\`http\nHTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}\n\`\`\`';
-  const postTokenRefresh = '\`\`\`http\nPOST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=refresh_token\n&refresh_token={your refresh_token}\n&client_id={client_id}\n&scope={space separated scopes}\n\`\`\`';
+  const postTokenRefresh = `\`\`\`http\nPOST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=refresh_token\n&refresh_token={your refresh_token}\n&client_id={client_id}\n&scope={${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? ''}}\n\`\`\``;
 
   return (
     <section aria-labelledby="pkce-authorization">
@@ -43,7 +43,8 @@ const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
         parameters, and scopes listed below.
       </p>
 
-      <CodeWrapper {...wrapperProps}>
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{authUrl}</ReactMarkdown>
       </CodeWrapper>
 
@@ -84,7 +85,8 @@ const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
         </li>
       </ul>
 
-      <CodeWrapper {...wrapperProps}>
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{postToken}</ReactMarkdown>
       </CodeWrapper>
 

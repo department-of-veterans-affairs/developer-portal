@@ -62,28 +62,15 @@ export interface APIDescription {
   readonly vaInternalOnly: boolean;
   readonly trustedPartnerOnly: boolean;
   readonly oAuth?: boolean;
-  readonly openidDocs?: OpenIDCodeExamples;
-  readonly pkceDocs?: PKCECodeExamples;
-  readonly scopes?: string[];
+  readonly oAuthInfo?: OAuthInfo;
   readonly releaseNotes: React.FunctionComponent;
   readonly deactivationInfo?: APIDeactivationInfo;
   readonly multiOpenAPIIntro?: React.FunctionComponent;
 }
 
-export interface OpenIDCodeExamples {
-  readonly authManageAccount: string;
-  readonly authPostTokenRefresh: string;
-  readonly authPostTokenResponse200: string;
-  readonly authRevokeGrant: string;
-  readonly authRevokeGrantError: string;
-  readonly authRevokeTokenAccess: string;
-  readonly authRevokeTokenRefresh: string;
-  readonly authUrl: string;
-}
-
-export interface PKCECodeExamples {
-  readonly authPostToken: string;
-  readonly authUrl: string;
+export interface OAuthInfo {
+  readonly basePath: string;
+  readonly scopes: string[];
 }
 
 export const ApiDescriptionPropType = PropTypes.shape({

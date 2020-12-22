@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-prop-types */
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';

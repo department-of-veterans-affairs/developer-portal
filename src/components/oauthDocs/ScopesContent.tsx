@@ -1,10 +1,10 @@
 /* eslint-disable complexity */
-/* eslint-disable react/no-unused-prop-types */
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { APIDescription } from '../../apiDefs/schema';
 
 import DefaultScopes from '../../content/apiDocs/oauth/Scopes.mdx';
+import { APISelector } from '../index';
 
 interface ScopesContentProps {
   apiDef: APIDescription | null;
@@ -13,9 +13,8 @@ interface ScopesContentProps {
   onSelectionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-// eslint-disable-next-line arrow-body-style
 const ScopesContent = (props: ScopesContentProps): JSX.Element => {
-  const scopes = props.apiDef?.scopes ?? [];
+  const scopes = props.apiDef?.oAuthInfo?.scopes ?? [];
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
 
@@ -23,16 +22,11 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
     <>
       <DefaultScopes />
 
-      {props.selectedOption && (
-        // eslint-disable-next-line jsx-a11y/no-onchange
-        <select onChange={props.onSelectionChange} value={props.selectedOption} aria-label="Select an API">
-          {props.options.map(item => (
-            <option value={item.urlFragment} key={item.urlFragment}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-      )}
+      <APISelector
+        onSelectionChange={props.onSelectionChange}
+        options={props.options}
+        selectedOption={props.selectedOption}
+      />
 
       {scopes.length > 0 && (
         <table>

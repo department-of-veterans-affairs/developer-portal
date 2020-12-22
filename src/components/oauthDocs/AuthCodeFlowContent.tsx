@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { HashLink } from 'react-router-hash-link';
 import ReactMarkdown from 'react-markdown';
 import { APIDescription } from '../../apiDefs/schema';
-import { CodeWrapper } from '../codeWrapper/CodeWrapper';
+import { APISelector, CodeWrapper } from '../index';
 import AuthCodeFlowQueryParamsTable from './AuthCodeFlowQueryParamsTable.mdx';
 
 interface AuthCodeFlowContentProps {
@@ -14,22 +14,22 @@ interface AuthCodeFlowContentProps {
 }
 
 const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
-  const wrapperProps = {
+  const selectorProps = {
     onSelectionChange: props.onSelectionChange,
     options: props.options,
     selectedOption: props.selectedOption,
   };
-  const authUrl = `\`\`\`plaintext\n${props.apiDef?.openidDocs?.authUrl ?? ''}\n\`\`\``;
+  const authUrl = `\`\`\`plaintext\nhttps://sandbox-api.va.gov/oauth2/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? ''}\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy\n\`\`\``;
   const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';
   const postToken = "\`\`\`http\nPOST /oauth2/token HTTP/1.1\n  Host: sandbox-api.va.gov\n  Content-Type: application/x-www-form-urlencoded\n  Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\n  grant_type=authorization_code\n  &code=z92dapo5&state=af0ifjsldkj\n  &redirect_uri=<yourRedirectURL>\n\`\`\`";
-  const postTokenResponse200 = `\`\`\`http\n${props.apiDef?.openidDocs?.authPostTokenResponse200 ?? ''}\n\`\`\``;
+  const postTokenResponse200 = `\`\`\`http\nHTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? ''}",\n  "patient": "1558538470",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}\n\`\`\``;
   const postTokenResponse400 = '\`\`\`http\nHTTP/1.1\n400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}\n\`\`\`';
-  const postTokenRefresh = `\`\`\`http\n${props.apiDef?.openidDocs?.authPostTokenRefresh ?? ''}\n\`\`\``;
-  const authManageAccount = `\`\`\`http\n${props.apiDef?.openidDocs?.authManageAccount ?? ''}\n\`\`\``;
-  const authRevokeTokenAccess = `\`\`\`http\n${props.apiDef?.openidDocs?.authRevokeTokenAccess ?? ''}\n\`\`\``;
-  const authRevokeTokenRefresh = `\`\`\`http\n${props.apiDef?.openidDocs?.authRevokeTokenRefresh ?? ''}\n\`\`\``;
-  const authRevokeGrant = `\`\`\`http\n${props.apiDef?.openidDocs?.authRevokeGrant ?? ''}\n\`\`\``;
-  const authRevokeGrantError = `\`\`\`http\n${props.apiDef?.openidDocs?.authRevokeGrantError ?? ''}\n\`\`\``;
+  const postTokenRefresh = "\`\`\`http\nPOST /oauth2/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ntoken={your refresh token}&token_type_hint=refresh_token\n\`\`\`";
+  const authManageAccount = '\`\`\`http\nPOST /oauth2/token HTTP/1.1\nHost: sandbox-api.va.gov\n\`\`\`';
+  const authRevokeTokenAccess = "\`\`\`http\nPOST /oauth2/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\ntoken={your access token}&token_type_hint=access_token\n\`\`\`";
+  const authRevokeTokenRefresh = "\`\`\`http\nPOST /oauth2/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ntoken={your refresh token}&token_type_hint=refresh_token\n\`\`\`";
+  const authRevokeGrant = '\`\`\`http\nDELETE /oauth2/grants HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\n{\n  "client_id": {client_id},\n  "email": {test account email}\n}\n\`\`\`';
+  const authRevokeGrantError = '\`\`\`http\nHTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request",\n  "error_description": "Invalid email address."\n}\n\`\`\`';
 
   return (
     <section aria-labelledby="authorization-code-flow">
@@ -52,7 +52,8 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         and scopes listed below.
       </p>
 
-      <CodeWrapper {...wrapperProps}>
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{authUrl}</ReactMarkdown>
       </CodeWrapper>
 
@@ -107,7 +108,8 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         <code>refresh_token</code>. The response will look like this:
       </p>
 
-      <CodeWrapper {...wrapperProps}>
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{postTokenResponse200}</ReactMarkdown>
       </CodeWrapper>
 
@@ -137,7 +139,8 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         by sending the following request.
       </p>
 
-      <CodeWrapper {...wrapperProps}>
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{postTokenRefresh}</ReactMarkdown>
       </CodeWrapper>
 
@@ -153,7 +156,8 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         currently have access to their data and can make adjustments to these access rights (grants).
       </p>
 
-      <CodeWrapper {...wrapperProps}>
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{authManageAccount}</ReactMarkdown>
       </CodeWrapper>
 
@@ -164,10 +168,13 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         the revoke endpoint. Once revoked, the introspection endpoint will see the token as inactive.
       </p>
 
-      <CodeWrapper {...wrapperProps}>
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{authRevokeTokenAccess}</ReactMarkdown>
       </CodeWrapper>
-      <CodeWrapper {...wrapperProps}>
+
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{authRevokeTokenRefresh}</ReactMarkdown>
       </CodeWrapper>
 
@@ -184,7 +191,8 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         are revoked in the sandbox environment using the below endpoint.
       </p>
 
-      <CodeWrapper {...wrapperProps}>
+      <APISelector {...selectorProps} />
+      <CodeWrapper>
         <ReactMarkdown>{authRevokeGrant}</ReactMarkdown>
       </CodeWrapper>
 
