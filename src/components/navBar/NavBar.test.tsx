@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import { cleanup, render } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
