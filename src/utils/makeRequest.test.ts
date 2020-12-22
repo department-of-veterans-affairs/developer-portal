@@ -139,7 +139,10 @@ describe('makeRequest', () => {
     ).catch(e => expect(e).toMatch('error'));
   });
 
-  it('checks handling non network text error', async () => {
+  it('checks non network error text', async () => {
+    const captureException = jest.spyOn(Sentry, 'captureException');
+    const withScope = jest.spyOn(Sentry, 'withScope');
+
     server.use(
       rest.post(
         errorUrl,
@@ -147,23 +150,27 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.json('error')),
+        ): MockedResponse => res(context.status(501), context.text('testErrorMessage')),
       ),
     );
 
     const init = {
-      body: 'text for you',
+      body: 'json for you',
       headers: {
-        accept: 'text/plain',
+        accept: 'application/json',
+        'content-type': 'application/json',
       },
       method: 'POST',
     };
 
-    await makeRequest(
-      errorUrl,
-      init,
-      { responseType: ResponseType.TEXT },
-    ).catch(e => expect(e).toMatch('error'));
+    await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
+      expect(spyFetch).toHaveBeenCalledWith(headerDataError);
+      expect(withScope).toHaveBeenCalled();
+      expect(Sentry.captureException).toHaveBeenCalledWith('Server Error: 501');
+    });
+
+    captureException.mockRestore();
+    withScope.mockRestore();
   });
 
   it('checks for total fail', async () => {
@@ -275,7 +282,6 @@ describe('makeRequest', () => {
   it('checks handling of 404 error', async () => {
     const captureException = jest.spyOn(Sentry, 'captureException');
 
-    // const SentryMockScope = { setTag: jest.fn() };
     const withScope = jest.spyOn(Sentry, 'withScope');
 
     const testErrorMessage = 'THIS IS A TEST FAILURE';
@@ -301,7 +307,6 @@ describe('makeRequest', () => {
     };
 
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      // console.log(error);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Route not found: 404');
