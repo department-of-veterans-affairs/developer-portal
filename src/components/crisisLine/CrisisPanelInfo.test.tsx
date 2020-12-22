@@ -3,7 +3,6 @@ import * as React from 'react';
 import {  faPhone } from '@fortawesome/free-solid-svg-icons';
 
 import 'jest';
-import '@testing-library/jest-dom/extend-expect';
 import {  render } from '@testing-library/react';
 
 import CrisisPanelInfo from './CrisisPanelInfo';

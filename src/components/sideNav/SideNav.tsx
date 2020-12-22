@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 
 import classNames from 'classnames';
 import { HashLink } from 'react-router-hash-link';
@@ -12,17 +12,21 @@ interface SideNavProps {
   children: React.ReactNode;
 }
 
+/**
+ * Stickyfill lets us use `position: sticky` in browsers that may not
+ * support it. The library requires a dom reference to work, hence the ref.
+ */
+export const applyStickiness = (objRef: Stickyfill.SingleOrMany<HTMLElement> | null): void => {
+  if (objRef) {
+    Stickyfill.addOne(objRef);
+  }
+};
+
 const SideNav = (props: SideNavProps): JSX.Element => {
-  const navRef = React.createRef<HTMLDivElement>();
+  const navRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    if (navRef.current) {
-      /**
-       * Stickyfill lets us use `position: sticky` in browsers that may not
-       * support it. The library requires a dom reference to work, hence the ref.
-       */
-      Stickyfill.addOne(navRef.current);
-    }
+    applyStickiness(navRef.current);
   }, [navRef]);
 
   return (
