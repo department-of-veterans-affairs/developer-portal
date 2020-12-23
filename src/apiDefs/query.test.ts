@@ -73,7 +73,7 @@ describe('query module', () => {
       const verificationApi = lookupApiCategory('verification');
       expect(verificationApi).not.toBeNull();
       expect(verificationApi?.apis.length).toBeGreaterThanOrEqual(3);
-      expect(verificationApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
+      expect(verificationApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(1);
     });
 
     it('returns null for an API that does not exist', () => {
