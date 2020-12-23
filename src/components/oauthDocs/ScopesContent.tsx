@@ -1,17 +1,12 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
-import { getAllOauthApis } from '../../apiDefs/query';
+import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { RootState } from '../../types';
 import { APISelector } from '../index';
 
 import DefaultScopes from '../../content/apiDocs/oauth/Scopes.mdx';
-
-interface ScopesContentProps {
-  apiDef: APIDescription | null;
-}
 
 /*
  * This is designed to be a single place of truth for the scopes descriptions.
@@ -20,9 +15,10 @@ interface ScopesContentProps {
  * conditions based on the scope names themselves prior to getting a CMS.
  * Scopes are listed in each API's respective file in apiDefs folder.
  */
-const ScopesContent = (props: ScopesContentProps): JSX.Element => {
-  const scopes = props.apiDef?.oAuthInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
+const ScopesContent = (): JSX.Element => {
   const selectedApi = useSelector((state: RootState) => state.apiSelection.selectedApi);
+  const apiDef = lookupApiByFragment(selectedApi);
+  const scopes = apiDef?.oAuthInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
   const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
@@ -126,8 +122,6 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
   );
 };
 
-ScopesContent.propTypes = {
-  apiDef: PropTypes.object,
-};
+ScopesContent.propTypes = {};
 
 export { ScopesContent };

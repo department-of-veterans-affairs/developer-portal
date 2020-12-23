@@ -1,21 +1,16 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { resetApiSelection, ResetAPISelection } from '../../actions';
-import { lookupApiByFragment } from '../../apiDefs/query';
 import { PageHeader, BuildingOIDCContent, ScopesContent } from '../../components';
 import PageLinks from '../../content/apiDocs/oauth/PageLinks.mdx';
 import GettingStarted from '../../content/apiDocs/oauth/GettingStarted.mdx';
 import IdToken from '../../content/apiDocs/oauth/IdToken.mdx';
 import TestUsers from '../../content/apiDocs/oauth/TestUsers.mdx';
-import { RootState } from '../../types';
 
 import './AuthorizationDocs.scss';
 
 export const AuthorizationDocs = (): JSX.Element => {
-  const selectedApi = useSelector((state: RootState) => state.apiSelection.selectedApi);
-  const apiDef = lookupApiByFragment(selectedApi);
-
   const dispatch: React.Dispatch<ResetAPISelection> = useDispatch();
 
   /**
@@ -36,8 +31,8 @@ export const AuthorizationDocs = (): JSX.Element => {
       <PageHeader header="Authorization" />
       <PageLinks />
       <GettingStarted />
-      <BuildingOIDCContent apiDef={apiDef} />
-      <ScopesContent apiDef={apiDef} />
+      <BuildingOIDCContent />
+      <ScopesContent />
       <IdToken />
       <TestUsers />
     </div>

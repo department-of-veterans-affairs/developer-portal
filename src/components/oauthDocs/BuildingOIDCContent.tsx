@@ -1,16 +1,10 @@
-import PropTypes from 'prop-types';
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { SectionHeaderWrapper } from '../index';
-import { APIDescription } from '../../apiDefs/schema';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
 
-interface BuildingOIDContentProps {
-  apiDef: APIDescription | null;
-}
-
-const BuildingOIDCContent = (props: BuildingOIDContentProps): JSX.Element => (
+const BuildingOIDCContent = (): JSX.Element => (
   <section aria-labelledby="building-oidc-apps">
     <SectionHeaderWrapper heading="Building OpenID Connect Applications" id="building-oidc-apps" />
     <p>After being approved to use OpenID Connect, you&#39;ll receive a client id.</p>
@@ -28,14 +22,12 @@ const BuildingOIDCContent = (props: BuildingOIDContentProps): JSX.Element => (
       </li>
     </ul>
 
-    <AuthCodeFlowContent {...props} />
+    <AuthCodeFlowContent />
 
-    <PKCEAuthContent {...props} />
+    <PKCEAuthContent />
   </section>
 );
 
-BuildingOIDCContent.propTypes = {
-  apiDef: PropTypes.object,
-};
+BuildingOIDCContent.propTypes = {};
 
 export { BuildingOIDCContent };
