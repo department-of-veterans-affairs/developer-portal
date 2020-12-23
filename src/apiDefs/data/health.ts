@@ -93,7 +93,7 @@ const healthApis: APIDescription[] = [
     oAuth: true,
     releaseNotes: FhirApiReleaseNotes,
     trustedPartnerOnly: false,
-    urlFragment: 'fhir?tab=r4',
+    urlFragment: 'fhir',
     vaInternalOnly: false,
   },
   {
