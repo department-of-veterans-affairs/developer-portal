@@ -70,6 +70,11 @@ const healthApis: APIDescription[] = [
       'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
     docSources: [
       {
+        key: 'r4',
+        label: 'R4',
+        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
+      },
+      {
         apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
@@ -80,11 +85,6 @@ const healthApis: APIDescription[] = [
         key: 'dstu2',
         label: 'DSTU2',
         openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
-      },
-      {
-        key: 'r4',
-        label: 'R4',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
       },
     ],
     enabledByDefault: true,
