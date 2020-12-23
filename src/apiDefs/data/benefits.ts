@@ -20,7 +20,7 @@ const benefitsApis: APIDescription[] = [
     name: 'Benefits Claims',
     oAuth: true,
     oAuthInfo: {
-      baseAuthPath: '/oauth2/benefits/v1',
+      baseAuthPath: '/oauth2/claims/v1',
       scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
     },
     releaseNotes: ClaimsReleaseNotes,
