@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import PropTypes from 'prop-types';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
@@ -14,6 +13,13 @@ interface ScopesContentProps {
   apiDef: APIDescription | null;
 }
 
+/*
+ * This is designed to be a single place of truth for the scopes descriptions.
+ * In the future this may be prime for rework as the scopes list expands.
+ * There are logical groups of scopes by API, at this point we decided to stay with
+ * conditions based on the scope names themselves prior to getting a CMS.
+ * Scopes are listed in each API's respective file in apiDefs folder.
+ */
 const ScopesContent = (props: ScopesContentProps): JSX.Element => {
   const scopes = props.apiDef?.oAuthInfo?.scopes ?? [];
   const selectedApi = useSelector((state: RootState) => state.apiSelection.selectedApi);
@@ -60,12 +66,9 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
                     To view a user&apos;s VA health claims information, use the scopes below.
                   </p>
                   <ul>
-                    {scopes.includes('claim.read') && (
-                      <li><code>claim.read</code></li>
-                    )}
-                    {scopes.includes('claim.write') && (
-                      <li><code>claim.write</code></li>
-                    )}
+                    {scopes.filter(element => element.startsWith('claim.')).map((scope: string) => (
+                      <li key={scope}><code>{scope}</code></li>
+                    ))}
                   </ul>
                 </td>
               </tr>
@@ -81,45 +84,9 @@ const ScopesContent = (props: ScopesContentProps): JSX.Element => {
                     scopes below.
                   </p>
                   <ul>
-                    {scopes.includes('patient/AllergyIntolerance.read') && (
-                      <li><code>patient/AllergyIntolerance.read</code></li>
-                    )}
-                    {scopes.includes('patient/Condition.read') && (
-                      <li><code>patient/Condition.read</code></li>
-                    )}
-                    {scopes.includes('patient/CoverageEligibilityResponse.read') && (
-                      <li><code>patient/CoverageEligibilityResponse.read</code></li>
-                    )}
-                    {scopes.includes('patient/CommunityCareEligibility.read') && (
-                      <li><code>patient/CommunityCareEligibility.read</code></li>
-                    )}
-                    {scopes.includes('patient/DiagnosticReport.read') && (
-                      <li><code>patient/DiagnosticReport.read</code></li>
-                    )}
-                    {scopes.includes('patient/Immunization.read') && (
-                      <li><code>patient/Immunization.read</code></li>
-                    )}
-                    {scopes.includes('patient/Medication.read') && (
-                      <li><code>patient/Medication.read</code></li>
-                    )}
-                    {scopes.includes('patient/MedicationOrder.read') && (
-                      <li><code>patient/MedicationOrder.read</code></li>
-                    )}
-                    {scopes.includes('patient/MedicationRequest.read') && (
-                      <li><code>patient/MedicationRequest.read</code></li>
-                    )}
-                    {scopes.includes('patient/MedicationStatement.read') && (
-                      <li><code>patient/MedicationStatement.read</code></li>
-                    )}
-                    {scopes.includes('patient/Observation.read') && (
-                      <li><code>patient/Observation.read</code></li>
-                    )}
-                    {scopes.includes('patient/Patient.read') && (
-                      <li><code>patient/Patient.read</code></li>
-                    )}
-                    {scopes.includes('patient/Procedure.read') && (
-                      <li><code>patient/Procedure.read</code></li>
-                    )}
+                    {scopes.filter(element => element.startsWith('patient/')).map((scope: string) => (
+                      <li key={scope}><code>{scope}</code></li>
+                    ))}
                   </ul>
                 </td>
               </tr>
