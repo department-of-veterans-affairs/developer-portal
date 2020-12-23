@@ -5,7 +5,6 @@
  */
 
 /* eslint-disable max-lines -- exception for test suite */
-import '@testing-library/jest-dom/extend-expect';
 import {
   findByRole,
   findByText,

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Helmet from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
@@ -52,6 +53,9 @@ const ApiPage = (): JSX.Element => {
   return (
     <Flag name={['enabled', api.urlFragment]} fallbackRender={(): JSX.Element => <ExplorePage />}>
       <div role="region" aria-labelledby={PAGE_HEADER_ID}>
+        <Helmet>
+          <title>{api.name} Documentation</title>
+        </Helmet>
         <PageHeader halo={category?.name} header={api.name} />
         <DeactivationMessage api={api} />
         {!isApiDeactivated(api) && (

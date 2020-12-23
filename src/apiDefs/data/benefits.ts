@@ -57,8 +57,7 @@ const benefitsApis: APIDescription[] = [
     description: 'Improve claim routing',
     docSources: [
       {
-        openApiUrl:
-          'https://gist.githubusercontent.com/rtravitz/599f6d35e4a763d85e2a1f49f8d031a3/raw/e0470da0ef1b6cb1e5d3a99f09c9d60638f29211/claims-attributes.json',
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/claims-attributes/v1/docs/openapi.json`,
       },
     ],
     enabledByDefault: false,

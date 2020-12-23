@@ -363,4 +363,12 @@ module.exports = {
       version: 'detect',
     },
   },
+  overrides: [
+    {
+      files: ['*.test.ts', '*.spec.ts', '*.test.tsx', '*.e2e.ts'],
+      rules: {
+        'max-nested-callbacks': 'off',
+      },
+    },
+  ],
 };

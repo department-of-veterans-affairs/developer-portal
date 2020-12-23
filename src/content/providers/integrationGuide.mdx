@@ -1,12 +1,15 @@
 ---
 imports:
   '{CodeWrapper, PageHeader}': ../../components
+  Helmet: react-helmet
 ---
 
+<Helmet>
+  <title>Provider Integration Guide</title>
+</Helmet>
 <PageHeader header="Lighthouse API Provider Integration Guide" />
 
 The Lighthouse platform offers an API gateway that VA teams can use to publish their API, exposing it to the internet. This can be an effective way to allow external applications to consume your VA API. This document will explain how to integrate with the API gateway as part of this publishing process.
-
 
 ## Authentication and Authorization
 
@@ -22,12 +25,11 @@ Every developer that signs up for an API key through developer.va.gov receives a
 
 If you're planning to secure your API by requiring requests to be secured by an API key, your backend should expect to receive a few custom HTTP headers. These are added to the request by the API gateway after the caller is authenticated and authorized.
 
-| Header Name          | Purpose |
-| -------------------- | ------- |
-| x-consumer-id        | A unique identifier for the consumer. Generally you should ignore this. |
+| Header Name          | Purpose                                                                                               |
+| -------------------- | ----------------------------------------------------------------------------------------------------- |
+| x-consumer-id        | A unique identifier for the consumer. Generally you should ignore this.                               |
 | x-consumer-username  | This is an identifier for the API caller that you can use to correlate requests from the same caller. |
-| x-anonymous-consumer | Indicates that the request has not been authenticated. Boolean, either `true` or `false`. |
-
+| x-anonymous-consumer | Indicates that the request has not been authenticated. Boolean, either `true` or `false`.             |
 
 ### OAuth 2.0
 
@@ -43,8 +45,7 @@ Authorization: Bearer eyJraWQiOiJUdWZhS3pDWlNENlZiN25Xclg3U1VzUkZXQTRQQkJKZGpodH
 
 </CodeWrapper>
 
-The OAuth access token should be validated by submitting it to the Lighthouse token validation service. For details on how to use that service, you can consult the [OpenAPI specification](https://sandbox-api.va.gov/internal/auth/docs/v0/validation.json) for the service API.
-
+The OAuth access token should be validated by submitting it to the Lighthouse token validation service. For details on how to use that service, you can consult the [OpenAPI specification](https://sandbox-api.va.gov/internal/auth/docs/v1/validation.json) for the service API.
 
 ### Mixed Authorization
 
@@ -55,6 +56,3 @@ This approach requires you to be thoughtful about how API requests are served by
 ## Next Steps
 
 If you're interested in publishing an API on the Lighthouse platform, get in touch by emailing us at api@va.gov.
-
-
-
