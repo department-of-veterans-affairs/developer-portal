@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-onchange */
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { ResetAPISelection, SetAPISelection, setApiSelection } from '../../actions';
@@ -19,20 +20,14 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
 
   return (
     <div className="api-selector">
-      {props.selectedOption && (
-        // eslint-disable-next-line jsx-a11y/no-onchange
-        <select
-          onChange={onSelectionChange}
-          value={props.selectedOption}
-          aria-label="Select an API"
-        >
-          {props.options.map(item => (
-            <option value={item.urlFragment} key={item.urlFragment}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-      )}
+      <select onChange={onSelectionChange} value={props.selectedOption} aria-label="Select an API">
+        <option value="">Select an API</option>
+        {props.options.map(item => (
+          <option value={item.urlFragment} key={item.urlFragment}>
+            {item.name}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };

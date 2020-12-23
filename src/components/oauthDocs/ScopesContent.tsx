@@ -21,7 +21,7 @@ interface ScopesContentProps {
  * Scopes are listed in each API's respective file in apiDefs folder.
  */
 const ScopesContent = (props: ScopesContentProps): JSX.Element => {
-  const scopes = props.apiDef?.oAuthInfo?.scopes ?? [];
+  const scopes = props.apiDef?.oAuthInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
   const selectedApi = useSelector((state: RootState) => state.apiSelection.selectedApi);
   const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
