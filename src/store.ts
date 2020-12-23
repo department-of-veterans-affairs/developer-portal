@@ -5,6 +5,7 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 
 import { application, initialApplicationState } from './reducers';
+import { apiSelection } from './reducers/api-selection';
 import { apiVersioning } from './reducers/api-versioning';
 import { DevApplication, RootState, SerializedState } from './types';
 
@@ -48,6 +49,7 @@ const saveApplicationState = (state: RootState): void => {
 
 const store = createStore(
   combineReducers<RootState>({
+    apiSelection,
     apiVersioning,
     application,
   }),

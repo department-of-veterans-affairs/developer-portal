@@ -1,24 +1,23 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { HashLink } from 'react-router-hash-link';
 import { APISelector, CodeWrapper } from '../index';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { getAllOauthApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
+import { RootState } from '../../types';
 import PKCEQueryParamsTable from './PKCEQueryParamsTable.mdx';
 
 interface PKCEAuthContentProps {
   apiDef: APIDescription | null;
-  selectedOption: string;
-  onSelectionChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
   const selectorProps = {
-    onSelectionChange: props.onSelectionChange,
     options: getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)),
-    selectedOption: props.selectedOption,
+    selectedOption: useSelector((state: RootState) => state.apiSelection.selectedApi),
   };
   const authUrl = `\`\`\`plaintext\nhttps://sandbox-api.va.gov${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? ''}\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &code_challenge_method=S256\n  &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw\n\`\`\``;
   const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';
@@ -86,6 +85,7 @@ const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
         </li>
       </ul>
 
+      <APISelector {...selectorProps} />
       <CodeWrapper>
         <ReactMarkdown>{postToken}</ReactMarkdown>
       </CodeWrapper>
@@ -144,8 +144,6 @@ const PKCEAuthContent = (props: PKCEAuthContentProps): JSX.Element => {
 };
 PKCEAuthContent.propTypes = {
   apiDef: PropTypes.object,
-  onSelectionChange: PropTypes.func,
-  selectedOption: PropTypes.string,
 };
 
 export { PKCEAuthContent };

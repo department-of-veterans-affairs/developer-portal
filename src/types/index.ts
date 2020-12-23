@@ -28,7 +28,12 @@ export interface APIVersioning {
   requestedApiVersion: string;
 }
 
+export interface APISelection {
+  selectedApi: string;
+}
+
 export interface RootState {
+  apiSelection: APISelection;
   apiVersioning: APIVersioning;
   application: DevApplication;
 }
