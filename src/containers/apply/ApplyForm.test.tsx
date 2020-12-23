@@ -8,8 +8,8 @@ import { createStore, combineReducers, compose, applyMiddleware, AnyAction, Stor
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import * as applyActions from '../../actions/apply';
 import { application, initialApplicationState } from '../../reducers';
-import { apiSelection } from '../../reducers/api-selection';
-import { apiVersioning } from '../../reducers/api-versioning';
+import { apiSelection } from '../../reducers/apiSelection';
+import { apiVersioning } from '../../reducers/apiVersioning';
 import { RootState } from '../../types';
 
 import { ApplyForm } from './ApplyForm';

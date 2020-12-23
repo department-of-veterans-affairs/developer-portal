@@ -15,7 +15,7 @@ export const apiSelection = (
       return defaultApiSelectionState;
     case constants.SET_API_SELECTION_VALUE:
       const { selectedApi } = action;
-      return { ...state, selectedApi };
+      return { selectedApi };
     default:
       return state;
   }

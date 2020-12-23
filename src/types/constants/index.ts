@@ -1,5 +1,5 @@
 export * from './actions/apply';
-export * from './actions/selection';
+export * from './actions/apiSelection';
 export * from './actions/version';
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';

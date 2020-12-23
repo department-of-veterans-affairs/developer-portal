@@ -5,8 +5,8 @@ import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 
 import { application, initialApplicationState } from './reducers';
-import { apiSelection } from './reducers/api-selection';
-import { apiVersioning } from './reducers/api-versioning';
+import { apiSelection } from './reducers/apiSelection';
+import { apiVersioning } from './reducers/apiVersioning';
 import { DevApplication, RootState, SerializedState } from './types';
 
 export const history: History = createBrowserHistory({
