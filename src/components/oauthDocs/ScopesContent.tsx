@@ -16,8 +16,8 @@ import DefaultScopes from '../../content/apiDocs/oauth/Scopes.mdx';
  * Scopes are listed in each API's respective file in apiDefs folder.
  */
 const ScopesContent = (): JSX.Element => {
-  const selectedApi = useSelector((state: RootState) => state.apiSelection.selectedApi);
-  const apiDef = lookupApiByFragment(selectedApi);
+  const selectedOAuthApi = useSelector((state: RootState) => state.oAuthApiSelection.selectedOAuthApi);
+  const apiDef = lookupApiByFragment(selectedOAuthApi);
   const scopes = apiDef?.oAuthInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
   const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
@@ -29,7 +29,7 @@ const ScopesContent = (): JSX.Element => {
 
       <APISelector
         options={options}
-        selectedOption={selectedApi}
+        selectedOption={selectedOAuthApi}
       />
 
       {scopes.length > 0 && (

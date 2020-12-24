@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { ResetAPISelection, SetAPISelection, setApiSelection } from '../../actions';
+import { SetOAuthAPISelection, setOAuthApiSelection } from '../../actions';
 import { APIDescription } from '../../apiDefs/schema';
 
 import './APISelector.scss';
@@ -12,10 +12,10 @@ interface APISelectorProps {
 }
 
 const APISelector = (props: APISelectorProps): JSX.Element => {
-  const dispatch: React.Dispatch<ResetAPISelection | SetAPISelection> = useDispatch();
+  const dispatch: React.Dispatch<SetOAuthAPISelection> = useDispatch();
 
   const onSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    dispatch(setApiSelection(event.currentTarget.value));
+    dispatch(setOAuthApiSelection(event.currentTarget.value));
   };
 
   return (

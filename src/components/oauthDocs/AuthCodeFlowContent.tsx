@@ -10,11 +10,11 @@ import { APISelector, CodeWrapper } from '../index';
 import AuthCodeFlowQueryParamsTable from './AuthCodeFlowQueryParamsTable.mdx';
 
 const AuthCodeFlowContent = (): JSX.Element => {
-  const selectedApi = useSelector((state: RootState) => state.apiSelection.selectedApi);
-  const apiDef = lookupApiByFragment(selectedApi);
+  const selectedOAuthApi = useSelector((state: RootState) => state.oAuthApiSelection.selectedOAuthApi);
+  const apiDef = lookupApiByFragment(selectedOAuthApi);
   const selectorProps = {
     options: getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)),
-    selectedOption: selectedApi,
+    selectedOption: selectedOAuthApi,
   };
   const authUrl = `\`\`\`plaintext\nhttps://sandbox-api.va.gov${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy\n\`\`\``;
   const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';

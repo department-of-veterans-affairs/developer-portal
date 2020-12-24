@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { useDispatch } from 'react-redux';
-import { resetApiSelection, ResetAPISelection } from '../../actions';
+import { resetOAuthApiSelection, ResetOAuthAPISelection } from '../../actions';
 import { PageHeader, BuildingOIDCContent, ScopesContent } from '../../components';
 import PageLinks from '../../content/apiDocs/oauth/PageLinks.mdx';
 import GettingStarted from '../../content/apiDocs/oauth/GettingStarted.mdx';
@@ -11,14 +11,14 @@ import TestUsers from '../../content/apiDocs/oauth/TestUsers.mdx';
 import './AuthorizationDocs.scss';
 
 export const AuthorizationDocs = (): JSX.Element => {
-  const dispatch: React.Dispatch<ResetAPISelection> = useDispatch();
+  const dispatch: React.Dispatch<ResetOAuthAPISelection> = useDispatch();
 
   /**
    * CLEAR REDUX STATE ON UNMOUNT
    */
   React.useEffect(
     () => (): void => {
-      dispatch(resetApiSelection());
+      dispatch(resetOAuthApiSelection());
     },
     [], // eslint-disable-line react-hooks/exhaustive-deps
   );
