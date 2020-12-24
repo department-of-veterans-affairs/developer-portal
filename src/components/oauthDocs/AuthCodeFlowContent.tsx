@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { HashLink } from 'react-router-hash-link';
-import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
@@ -16,17 +17,19 @@ const AuthCodeFlowContent = (): JSX.Element => {
     options: getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)),
     selectedOption: selectedOAuthApi,
   };
-  const authUrl = `\`\`\`plaintext\nhttps://sandbox-api.va.gov${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy\n\`\`\``;
-  const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';
-  const postToken = `\`\`\`http\nPOST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/token HTTP/1.1\n  Host: sandbox-api.va.gov\n  Content-Type: application/x-www-form-urlencoded\n  Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\n  grant_type=authorization_code\n  &code=z92dapo5&state=af0ifjsldkj\n  &redirect_uri=<yourRedirectURL>\n\`\`\``;
-  const postTokenResponse200 = `\`\`\`http\nHTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}",\n  "patient": "1558538470",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}\n\`\`\``;
-  const postTokenResponse400 = '\`\`\`http\nHTTP/1.1\n400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}\n\`\`\`';
-  const postTokenRefresh = `\`\`\`http\nPOST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ntoken={your refresh token}&token_type_hint=refresh_token\n\`\`\``;
-  const authManageAccount = `\`\`\`http\nPOST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/token HTTP/1.1\nHost: sandbox-api.va.gov\n\`\`\``;
-  const authRevokeTokenAccess = `\`\`\`http\nPOST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\ntoken={your access token}&token_type_hint=access_token\n\`\`\``;
-  const authRevokeTokenRefresh = `\`\`\`http\nPOST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ntoken={your refresh token}&token_type_hint=refresh_token\n\`\`\``;
-  const authRevokeGrant = `\`\`\`http\nDELETE ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/grants HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\n{\n  "client_id": {client_id},\n  "email": {test account email}\n}\n\`\`\``;
-  const authRevokeGrantError = '\`\`\`http\nHTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request",\n  "error_description": "Invalid email address."\n}\n\`\`\`';
+  const authUrl = `https://sandbox-api.va.gov${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy`;
+  const codeGrant = 'GET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>';
+  const postToken = `POST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/token HTTP/1.1\n  Host: sandbox-api.va.gov\n  Content-Type: application/x-www-form-urlencoded\n  Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\n  grant_type=authorization_code\n  &code=z92dapo5&state=af0ifjsldkj\n  &redirect_uri=<yourRedirectURL>`;
+  const postTokenResponse200 = `HTTP/1.1 200 OK\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}",\n  "patient": "1558538470",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}`;
+  const postTokenResponse400 = 'HTTP/1.1\n400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}';
+  const postTokenRefresh = `POST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ntoken={your refresh token}&token_type_hint=refresh_token`;
+  const authManageAccount = `POST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/token HTTP/1.1\nHost: sandbox-api.va.gov`;
+  const authRevokeTokenAccess = `POST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\ntoken={your access token}&token_type_hint=access_token`;
+  const authRevokeTokenRefresh = `POST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ntoken={your refresh token}&token_type_hint=refresh_token`;
+  const authRevokeGrant = `DELETE ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/grants HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\n{\n  "client_id": {client_id},\n  "email": {test account email}\n}`;
+  const authRevokeGrantError = 'HTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request",\n  "error_description": "Invalid email address."\n}';
+  /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
+  const style: unknown = a11yDark;
 
   return (
     <section aria-labelledby="authorization-code-flow">
@@ -51,7 +54,9 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{authUrl}</ReactMarkdown>
+        <SyntaxHighlighter language="plaintext" style={style}>
+          {authUrl}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <AuthCodeFlowQueryParamsTable />
@@ -74,7 +79,9 @@ const AuthCodeFlowContent = (): JSX.Element => {
       </p>
 
       <CodeWrapper>
-        <ReactMarkdown>{codeGrant}</ReactMarkdown>
+        <SyntaxHighlighter language="plaintext" style={style}>
+          {codeGrant}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>
@@ -94,7 +101,9 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{postToken}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {postToken}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>
@@ -108,13 +117,17 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{postTokenResponse200}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {postTokenResponse200}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>If an error occurs, you will instead receive a response like this:</p>
 
       <CodeWrapper>
-        <ReactMarkdown>{postTokenResponse400}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {postTokenResponse400}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>
@@ -139,7 +152,9 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{postTokenRefresh}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {postTokenRefresh}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>
@@ -155,7 +170,9 @@ const AuthCodeFlowContent = (): JSX.Element => {
       </p>
 
       <CodeWrapper>
-        <ReactMarkdown>{authManageAccount}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {authManageAccount}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <h4 id="revoking-tokens">Revoking Tokens</h4>
@@ -167,12 +184,16 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{authRevokeTokenAccess}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {authRevokeTokenAccess}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{authRevokeTokenRefresh}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {authRevokeTokenRefresh}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <h4 id="revoking-grants">Revoking Grants</h4>
@@ -190,13 +211,17 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{authRevokeGrant}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {authRevokeGrant}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>The client ID is your application client ID (`client_id`) and the email is the user’s email, which must be passed into the body of the request. Bad requests will be returned with an error response and description of the error.</p>
 
       <CodeWrapper>
-        <ReactMarkdown>{authRevokeGrantError}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={style}>
+          {authRevokeGrantError}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
     </section>
