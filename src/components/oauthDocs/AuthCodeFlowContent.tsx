@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { HashLink } from 'react-router-hash-link';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import Prism from 'react-syntax-highlighter/dist/cjs/prism';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
@@ -28,8 +28,8 @@ const AuthCodeFlowContent = (): JSX.Element => {
   const authRevokeTokenRefresh = `POST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/revoke HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\nAuthorization: Basic {base64 encoded *client id* + ':' + *client secret*}\n\ntoken={your refresh token}&token_type_hint=refresh_token`;
   const authRevokeGrant = `DELETE ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/grants HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\n{\n  "client_id": {client_id},\n  "email": {test account email}\n}`;
   const authRevokeGrantError = 'HTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request",\n  "error_description": "Invalid email address."\n}';
-  /* eslint-disable-next-line @typescript-eslint/no-unsafe-assignment */
-  const style: unknown = a11yDark;
+
+  const syntaxColor = Prism;
 
   return (
     <section aria-labelledby="authorization-code-flow">
@@ -54,7 +54,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="plaintext" style={style}>
+        <SyntaxHighlighter language="plaintext" style={syntaxColor}>
           {authUrl}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -79,7 +79,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
       </p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="plaintext" style={style}>
+        <SyntaxHighlighter language="plaintext" style={syntaxColor}>
           {codeGrant}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -101,7 +101,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {postToken}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -117,7 +117,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {postTokenResponse200}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -125,7 +125,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
       <p>If an error occurs, you will instead receive a response like this:</p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {postTokenResponse400}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -152,7 +152,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {postTokenRefresh}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -170,7 +170,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
       </p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {authManageAccount}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -184,14 +184,14 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {authRevokeTokenAccess}
         </SyntaxHighlighter>
       </CodeWrapper>
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {authRevokeTokenRefresh}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -211,7 +211,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {authRevokeGrant}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -219,7 +219,7 @@ const AuthCodeFlowContent = (): JSX.Element => {
       <p>The client ID is your application client ID (`client_id`) and the email is the user’s email, which must be passed into the body of the request. Bad requests will be returned with an error response and description of the error.</p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={style}>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
           {authRevokeGrantError}
         </SyntaxHighlighter>
       </CodeWrapper>
