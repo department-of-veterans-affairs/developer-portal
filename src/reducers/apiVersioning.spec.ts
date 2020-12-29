@@ -1,6 +1,6 @@
 import 'jest';
 import { APIVersioning } from '../types';
-import { getDocURL, getVersion } from './api-versioning';
+import { getDocURL, getVersion } from './apiVersioning';
 
 describe('get doc url', () => {
   it('should return initial doc url when no metadata', () => {
