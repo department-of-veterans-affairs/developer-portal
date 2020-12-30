@@ -138,7 +138,9 @@ const DocumentationRoot = (): JSX.Element => {
               {oldRouteToNew.map(routes => (
                 <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
-              {authDocsV2 && <Route path="/explore/authorization" component={AuthorizationDocs} exact />}
+              {authDocsV2 && (
+                <Route path="/explore/authorization" component={AuthorizationDocs} exact />
+              )}
               {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
               <Route exact path="/explore/" component={DocumentationOverview} />
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
