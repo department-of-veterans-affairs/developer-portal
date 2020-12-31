@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -6,7 +5,8 @@ import { MemoryRouter } from 'react-router';
 import { createStore, combineReducers, compose, applyMiddleware, Store } from 'redux';
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { application, initialApplicationState } from '../../reducers';
-import { apiVersioning } from '../../reducers/api-versioning';
+import { apiVersioning } from '../../reducers/apiVersioning';
+import { oAuthApiSelection } from '../../reducers/oAuthApiSelection';
 import defaultStore from '../../store';
 import { RootState, ApplySuccessResult } from '../../types';
 
@@ -19,6 +19,7 @@ const createStoreWithResult = (result: ApplySuccessResult): Store =>
     combineReducers<RootState>({
       apiVersioning,
       application,
+      oAuthApiSelection,
     }),
     {
       application: {
