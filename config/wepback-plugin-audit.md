@@ -3,7 +3,7 @@
 
 ## webpack.config.dev.js
 
-Plugin             | Link  | Use it?  | To date?| Evil?   | 
+Plugin             | Link  | Use it?  | To date?| Security bad?   | 
 -----------------|---------|----------|---------|---------|
 autoprefixer     |[NPM](https://www.npmjs.com/package/autoprefixer) |    Yes |   No |No |                   
 path     |[NPM](https://www.npmjs.com/package/path) |    Yes |   Yes |   No |     
