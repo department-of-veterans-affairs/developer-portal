@@ -3,7 +3,6 @@ export * from './codeWrapper/CodeWrapper';
 export * from './pageHeader/PageHeader';
 export * from './groupedAccordions/GroupedAccordions';
 export * from './header/Header';
-export * from './hoverImage/HoverImage';
 export * from './navBar/NavBar';
 export * from './pageContent/PageContent';
 export * from './search/Search';
@@ -21,4 +20,5 @@ export * from './markdownPage/MarkdownPage';
 export * from './quickStartWrapper/QuickstartWrapper';
 export * from './sectionHeaderWrapper/SectionHeaderWrapper';
 export * from './oauthDocs/BuildingOIDCContent';
-
+export * from './oauthDocs/ScopesContent';
+export * from './apiSelector/APISelector';

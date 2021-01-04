@@ -14,7 +14,7 @@ import {
   SetRequestedAPIVersion,
 } from '../../actions';
 import { APIDocSource } from '../../apiDefs/schema';
-import { getDocURL, getVersion, getVersionNumber } from '../../reducers/api-versioning';
+import { getDocURL, getVersion, getVersionNumber } from '../../reducers/apiVersioning';
 import { APIMetadata, RootState, VersionMetadata } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
 import { SwaggerPlugins, System } from './swaggerPlugins';

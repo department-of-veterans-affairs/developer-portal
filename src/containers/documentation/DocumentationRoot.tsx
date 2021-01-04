@@ -75,7 +75,7 @@ const ExploreSideNav = (): JSX.Element => {
     <SideNav ariaLabel="API Docs Side Nav">
       <SideNavEntry key="all" exact to="/explore" name="Overview" />
       <Flag name={[FLAG_AUTH_DOCS_V2]}>
-        <SideNavEntry key="authorization" exact to="/explore/authorization" name="Authorization" />
+        <SideNavEntry key="authorization" to="/explore/authorization" name="Authorization" />
       </Flag>
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
