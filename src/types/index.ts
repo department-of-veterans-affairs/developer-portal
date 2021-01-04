@@ -28,7 +28,12 @@ export interface APIVersioning {
   requestedApiVersion: string;
 }
 
+export interface OAuthAPISelection {
+  selectedOAuthApi: string;
+}
+
 export interface RootState {
+  oAuthApiSelection: OAuthAPISelection;
   apiVersioning: APIVersioning;
   application: DevApplication;
 }
