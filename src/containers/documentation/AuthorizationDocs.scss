@@ -6,12 +6,10 @@
     line-height: 1.6;
   }
 
-  code,
-  .code-wrapper {
+  code {
     // Needs both due to covering of both code blocks and inline formatted code/parameter names
     background-color: #222935;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-radius: 6px;
   }
 
   code {
@@ -29,6 +27,8 @@
     padding: 2rem;
     margin: 0;
     white-space: pre;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 
     &:focus {
       border: 1px solid $color-gray;
@@ -58,18 +58,21 @@
   }
 
   .api-selector {
+    background-color:$color-gray;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
     select {
-        background-color:$color-gray;
-        option {
-            background-color: $color-white;
-            color: $color-black;
-        }
+      option {
+          background-color: $color-white;
+          color: $color-black;
+      }
     }
   }
 
   .scopes-content {
     .api-selector {
       select {
+        border: 1px solid $color-black;
         background-color:$color-white;
         border-radius: 0;
         color: $color-black;

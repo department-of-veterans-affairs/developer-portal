@@ -2,14 +2,17 @@
 
 .api-selector {
     select {
+        border: none;
         min-width: 100%;
         padding: 1rem 1.5rem;
         margin-bottom: 0;
         margin-top: 2rem;
         color: $color-white;
         font-family: 'Source Code Pro', monospace;
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAcCAYAAABh2p9gAAABkElEQVRIS+XWzUsCQRQA8LdKdimCoINRUFAHL1061EmJqOPq5Q2SK2iuUPr3aIErCu6CzFy0YxFRJzt06eKhoKDAQxB0bNM2Vpww8yN1bu1x573fDvNm5q0EA55EQvWkUpkTOyyZjMvptFbtlyL1G4zFYiuapl0BgLsVV1NV1ZvNZu975fUEIweRpdxRzsYWO5KfoodRb/44/9gN7QqG1NCCntFtbLnHTB6UuOI1NOO5c/wXqCiKu1AoXALA6oDlvQuHwz5d12vtcT9ARJyjlNqYZ1CxWuNVQoiPMfbC479BRJyllF4AwNofMR52SwjZYoy92i+aICLOUErPAWB9SIyH3xBCthljb5Isy9PlcvkUADZHxHhaxe/370oNq244wLk3JtZMb3x+GJJlWRUA2BABAsC1FNwPzgcDGHC5Jl3joKb5bhZLrNT36I3ygf8ICi+K8G1Tb5i60zERGqWinTnNjY2IU5TSMxFHjxCyI/5y4NMWen21oeIuWI4KbQEcFdqkOCq0jXJUaKPn6LC/Il9msMUvBa4myAAAAABJRU5ErkJggg==');
-        border-top-left-radius: 6px;
-        border-top-right-radius: 6px;
+        background: none;
+        background-repeat: no-repeat;
+        background-size: 1rem;
+        background-position: 98% center;
+        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAcCAYAAABh2p9gAAABkElEQVRIS+XWzUsCQRQA8LdKdimCoINRUFAHL1061EmJqOPq5Q2SK2iuUPr3aIErCu6CzFy0YxFRJzt06eKhoKDAQxB0bNM2Vpww8yN1bu1x573fDvNm5q0EA55EQvWkUpkTOyyZjMvptFbtlyL1G4zFYiuapl0BgLsVV1NV1ZvNZu975fUEIweRpdxRzsYWO5KfoodRb/44/9gN7QqG1NCCntFtbLnHTB6UuOI1NOO5c/wXqCiKu1AoXALA6oDlvQuHwz5d12vtcT9ARJyjlNqYZ1CxWuNVQoiPMfbC479BRJyllF4AwNofMR52SwjZYoy92i+aICLOUErPAWB9SIyH3xBCthljb5Isy9PlcvkUADZHxHhaxe/370oNq244wLk3JtZMb3x+GJJlWRUA2BABAsC1FNwPzgcDGHC5Jl3joKb5bhZLrNT36I3ygf8ICi+K8G1Tb5i60zERGqWinTnNjY2IU5TSMxFHjxCyI/5y4NMWen21oeIuWI4KbQEcFdqkOCq0jXJUaKPn6LC/Il9msMUvBa4myAAAAABJRU5ErkJggg==');   
     }
 }
