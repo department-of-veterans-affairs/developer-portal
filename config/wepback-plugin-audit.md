@@ -8,7 +8,7 @@ Plugin             | Link  | Use it?  | To date?| Security bad?   |
 autoprefixer     |[NPM](https://www.npmjs.com/package/autoprefixer) |    Yes |   No |No |                   
 path     |[NPM](https://www.npmjs.com/package/path) |    Yes |   Yes |   No |     
 webpack     |[NPM](https://www.npmjs.com/package/webpack) |    Yes |   No |   No |
-CaseSensitivePathsPlugin     |[NPM](https://www.npmjs.com/package/case-sensitive-paths-webpack-plugin) |    N/A |   N/A |   N/A |
+CaseSensitivePathsPlugin     |[NPM](https://www.npmjs.com/package/case-sensitive-paths-webpack-plugin) |    Yes |   Yes |   No |
 InterpolateHtmlPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    N/A |   N/A |   N/A |
 WatchMissingNodeModulesPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    N/A |   N/A |   N/A |
 ModuleScopePlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    N/A |   N/A |   N/A |
