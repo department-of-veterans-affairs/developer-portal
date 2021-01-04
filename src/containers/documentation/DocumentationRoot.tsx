@@ -75,7 +75,7 @@ const ExploreSideNav = (): JSX.Element => {
     <SideNav ariaLabel="API Docs Side Nav">
       <SideNavEntry key="all" exact to="/explore" name="Overview" />
       <Flag name={[FLAG_AUTH_DOCS_V2]}>
-        <SideNavEntry key="authorization" exact to="/explore/authorization" name="Authorization" />
+        <SideNavEntry key="authorization" to="/explore/authorization" name="Authorization" />
       </Flag>
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
@@ -126,6 +126,7 @@ const oldRouteToNew = [
 const DocumentationRoot = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
+  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
 
   return (
     <div className={classNames('documentation', 'vads-u-padding-y--5')}>
@@ -137,15 +138,17 @@ const DocumentationRoot = (): JSX.Element => {
               {oldRouteToNew.map(routes => (
                 <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
-              <Route path="/explore/authorization" component={AuthorizationDocs} exact />
+              {authDocsV2 && <Route path="/explore/authorization" component={AuthorizationDocs} exact />}
               {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
               <Route exact path="/explore/" component={DocumentationOverview} />
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
-              <Route
-                exact
-                path="/explore/:apiCategoryKey/docs/authorization"
-                component={AuthorizationDocsLegacy}
-              />
+              <Route exact path="/explore/:apiCategoryKey/docs/authorization">
+                {authDocsV2 ? (
+                  <Redirect to="/explore/authorization" />
+                ) : (
+                  <AuthorizationDocsLegacy />
+                )}
+              </Route>
               <Route
                 exact
                 path="/explore/:apiCategoryKey/docs/quickstart"

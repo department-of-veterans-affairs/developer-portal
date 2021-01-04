@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
 import { MockedRequest, rest, restContext } from 'msw';
 import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
@@ -36,6 +35,8 @@ const server = setupServer(
 );
 
 jest.mock('react-router-dom', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useHistory: jest.fn().mockReturnValue({
     location: { pathname: '/another-route' },
     push: jest.fn(),

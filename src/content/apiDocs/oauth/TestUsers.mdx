@@ -1,0 +1,12 @@
+---
+imports:
+  '{ SectionHeaderWrapper }': ../../../components 
+---
+
+<SectionHeaderWrapper heading="Test Users" id="test-users"/>
+
+Some APIs require test users and test data. Most of the test data provided from the Lighthouse platform comes from internal VA systems, is not real data, and are reset based upon new recordings of underlying services. We provide [test accounts](https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts.md) for you to use while developing your Lighthouse-based application, and you must be able to log in to access this data. These test accounts are API-specific, and contain data that is geared toward each API. 
+
+### HTTPS
+
+Outside of local development environments, all redirect endpoints must use the `https` protocol for communication. The `https` protocol provides a secure encrypted connection between the user's client, your application, and the Lighthouse platform and authorization servers. This mitigates the risk of some types of man-in-the-middle attacks and prevents third-parties from intercepting user's authorization credentials.

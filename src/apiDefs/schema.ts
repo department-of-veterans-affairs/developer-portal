@@ -62,9 +62,15 @@ export interface APIDescription {
   readonly vaInternalOnly: boolean;
   readonly trustedPartnerOnly: boolean;
   readonly oAuth?: boolean;
+  readonly oAuthInfo?: OAuthInfo;
   readonly releaseNotes: React.FunctionComponent;
   readonly deactivationInfo?: APIDeactivationInfo;
   readonly multiOpenAPIIntro?: React.FunctionComponent;
+}
+
+export interface OAuthInfo {
+  readonly baseAuthPath: string;
+  readonly scopes: string[];
 }
 
 export const ApiDescriptionPropType = PropTypes.shape({

@@ -1,12 +1,11 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import Helmet from 'react-helmet';
+import './News.scss';
 
-import videoPlayerIcon from '../assets/video-player.png';
-import videoPlayerHoverIcon from '../assets/video-player-hover.png';
 import {
   CardLink,
   EmbeddedYoutubeVideo,
-  HoverImage,
   PageHeader,
   SideNav,
   SideNavEntry,
@@ -14,7 +13,6 @@ import {
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
-import { onHashAnchorClick } from '../utils/clickHandlers';
 
 export interface DataSection {
   title: string;
@@ -69,10 +67,7 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
     <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
       <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
-          <HoverImage
-            imagePath={videoPlayerIcon}
-            hoverImagePath={videoPlayerHoverIcon}
-          />
+          <div className="hover-image-videoplayer" />
         </a>
       </div>
       <div className="vads-u-margin-left--2p5 va-api-media-row-description">{description}</div>
@@ -98,12 +93,14 @@ const News = (): JSX.Element => {
                 key={section.id}
                 to={`#${section.id}`}
                 name={section.title}
-                onClick={onHashAnchorClick}
               />
             ))}
           </SideNav>
           <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
             <section aria-label="News">
+              <Helmet>
+                <title>News</title>
+              </Helmet>
               <PageHeader
                 description={pageDescription}
                 header="News"

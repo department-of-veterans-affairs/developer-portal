@@ -34,14 +34,25 @@
     }
   }
 
-  ul {
-    background-color: $color-white;
-    border: 1px solid $color-gray;
-    border-radius: 5px;
-    padding: 2rem 2rem 2rem 4rem; // larger padding-left accounts for list-style
-  }
-
   td ul {
     border: none;
+  }
+
+  .auth-page-links {
+    border-left: 2px solid $color-gray-light;
+    list-style-type: none;
+  }
+
+  .auth-page-indent-link {
+    margin-left: 2rem;
+    list-style-type: square;
+  }
+
+  h2#on-this-page + ul {
+    border-left: 2px solid $color-gray-light;
+    list-style-type: none;
+    ul {
+      list-style-type: square;
+    }
   }
 }

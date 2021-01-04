@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
+import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 
 import App from './App';
@@ -19,6 +19,11 @@ if (REACT_APP_SENTRY_DSN) {
 try {
   ReactDOM.render(
     <Provider store={store}>
+      {/*
+        default title matching index.html in case child doesn't define one. if omitted, will
+        use the most recent Helmet title, not the index.html one.
+      */}
+      <Helmet titleTemplate="VA API Platform | %s" defaultTitle="VA API Platform" />
       <App />
     </Provider>,
     document.getElementById('root') as HTMLElement,
