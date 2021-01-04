@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import * as Sentry from '@sentry/browser';
 import 'jest';
-import {  MockedRequest, rest, restContext  } from 'msw';
+import { MockedRequest, rest, restContext } from 'msw';
 import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import { makeRequest, ResponseType } from './makeRequest';
