@@ -323,8 +323,15 @@ module.exports = {
     // to restart the development server for Webpack to discover it. This plugin
     // makes the discovery automatic so you don't have to restart.
     // See https://github.com/facebookincubator/create-react-app/issues/186
+    // Moment.js is an extremely popular library that bundles large locale files
+    // by default due to how Webpack interprets its code. This is a practical
+    // solution that requires the user to opt into importing specific locales.
+    // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
+    // You can remove this if you don't use Moment.js:
+    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     new WatchMissingNodeModulesPlugin(paths.appNodeModules),
     // Perform type checking and linting in a separate process to speed up compilation
+    
     new ForkTsCheckerWebpackPlugin({
       async: false,
       eslint: {
