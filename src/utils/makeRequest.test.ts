@@ -56,7 +56,6 @@ describe('makeRequest', () => {
       method: 'POST',
     };
     const testResponse = await makeRequest<ExpectedResponse>(requestUri, init);
-
     expect(testResponse.body).toEqual({ test: 'json' });
   });
 
@@ -82,7 +81,6 @@ describe('makeRequest', () => {
       init,
       { responseType: ResponseType.TEXT },
     );
-    expect.assertions(1);
     expect(testResponse.body).toEqual('you got mail');
   });
 
@@ -108,7 +106,6 @@ describe('makeRequest', () => {
       init,
       { responseType: ResponseType.BLOB },
     );
-    expect.assertions(1);
     expect(testResponse.body).toEqual(blob);
   });
 
@@ -163,9 +160,8 @@ describe('makeRequest', () => {
       },
       method: 'POST',
     };
-
+    expect.assertions(2);
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(() => {
-      expect.assertions(3);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Server Error: 501');
