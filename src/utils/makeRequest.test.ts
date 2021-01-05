@@ -82,7 +82,7 @@ describe('makeRequest', () => {
       init,
       { responseType: ResponseType.TEXT },
     );
-
+    expect.assertions(1);
     expect(testResponse.body).toEqual('you got mail');
   });
 
@@ -108,6 +108,7 @@ describe('makeRequest', () => {
       init,
       { responseType: ResponseType.BLOB },
     );
+    expect.assertions(1);
     expect(testResponse.body).toEqual(blob);
   });
 
@@ -163,7 +164,8 @@ describe('makeRequest', () => {
       method: 'POST',
     };
 
-    await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
+    await makeRequest<ExpectedResponse>(errorUrl, init).catch(() => {
+      expect.assertions(3);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Server Error: 501');
@@ -197,6 +199,7 @@ describe('makeRequest', () => {
     };
 
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(() => {
+      expect.assertions(3);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith(expect.objectContaining({
@@ -234,6 +237,7 @@ describe('makeRequest', () => {
     };
 
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
+      expect.assertions(4);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Server Error: 500');
@@ -267,6 +271,7 @@ describe('makeRequest', () => {
       method: 'POST',
     };
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
+      expect.assertions(4);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Validation errors: Invalid input., Invalid request.');
@@ -307,6 +312,7 @@ describe('makeRequest', () => {
     };
 
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
+      expect.assertions(4);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Route not found: 404');
