@@ -5,14 +5,19 @@
   td {
     line-height: 1.6;
   }
-  
-  code {
+
+  code,
+  .code-wrapper {
+    // Needs both due to covering of both code blocks and inline formatted code/parameter names
     background-color: #222935;
-    border-radius: 6px;
+  }
+
+  code {
     color: $color-white;
     font-family: 'Source Code Pro', monospace;
     padding: 0.2rem 0.4rem;
     margin: auto 0.2rem;
+    border-radius: 6px;
 
     // this may look ugly but there's no padding at line end/start when text wraps
     white-space: nowrap;
@@ -23,9 +28,7 @@
     padding: 2rem;
     margin: 0;
     white-space: pre;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-
+    
     &:focus {
       border: 1px solid $color-gray;
     }
@@ -60,22 +63,29 @@
     border-top-right-radius: 6px;
 
     select {
+      color: $color-white;
       option {
-          background-color: $color-white;
-          color: $color-black;
+          color: $color-base;
       }
     }
   }
 
   .scopes-content {
     .api-selector {
+      background-color: $color-white;
       select {
-        border: 1px solid $color-black;
-        background-color: $color-white;
-        border-radius: 0;
-        color: $color-black;
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAcCAYAAABh2p9gAAAAAXNSR0IArs4c6QAAAPFJREFUSA3tlr0OAUEUhZdCRSQSBVFsQuNtPCS9t7CFRqNAFAoPoeE7m72FiTHWXp2THPN3z7eJ3Z3ZLEtrTsmxsvqNNCN9xffK6mvuK+WkLthg1mpOa7U0ofqMDRK2WlPNRxpRdcAhJByrRrVvNWR1j8NwbKxaZV5qwOwOx8KxeWWUfVKf0RbHQql5ZcUo1eN3g1Oh1LoYYmUrB5hdbNkGNhXVSbMWoDFe4E5D6I38uiHjH+cf+MlNKQDbc9S0LfQcnhzvVcnqAvR69cQq5bo5GNR1+zKo6wZrUNcjwKCuh5RBczpux6hBXQ96g9b6FHkA0+zeRS2oYfAAAAAASUVORK5CYII=');
+        border: 1px solid $color-base;
+        color: $color-base;
+        background-image: url('../../assets/select-arrow-dark.png');
       }
     }
   }
+
+  .api-selector + .code-wrapper {
+    pre > code {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+
 }
