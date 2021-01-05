@@ -8,7 +8,8 @@ import { createStore, combineReducers, compose, applyMiddleware, AnyAction, Stor
 import thunk, { ThunkMiddleware } from 'redux-thunk';
 import * as applyActions from '../../actions/apply';
 import { application, initialApplicationState } from '../../reducers';
-import { apiVersioning } from '../../reducers/api-versioning';
+import { oAuthApiSelection } from '../../reducers/oAuthApiSelection';
+import { apiVersioning } from '../../reducers/apiVersioning';
 import { RootState } from '../../types';
 
 import { ApplyForm } from './ApplyForm';
@@ -22,6 +23,7 @@ describe('ApplyForm', () => {
       combineReducers<RootState>({
         apiVersioning,
         application,
+        oAuthApiSelection,
       }),
       {
         application: initialApplicationState,
