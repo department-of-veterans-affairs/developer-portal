@@ -1,9 +1,13 @@
 .code-wrapper {
   margin: 0;
   overflow-x: auto;
-  
+
   & > pre {
     margin: 0;
     overflow: visible;
   }
+}
+
+.code-wrapper + .code-wrapper {
+  margin-top: 16px;
 }
