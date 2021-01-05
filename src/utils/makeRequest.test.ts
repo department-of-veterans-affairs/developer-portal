@@ -160,7 +160,7 @@ describe('makeRequest', () => {
       },
       method: 'POST',
     };
-    expect.assertions(2);
+    expect.assertions(3);
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(() => {
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
@@ -194,8 +194,8 @@ describe('makeRequest', () => {
       method: 'POST',
     };
 
+    expect.assertions(3);
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(() => {
-      expect.assertions(3);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith(expect.objectContaining({
@@ -232,8 +232,8 @@ describe('makeRequest', () => {
       method: 'POST',
     };
 
+    expect.assertions(4);
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      expect.assertions(4);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Server Error: 500');
@@ -266,8 +266,9 @@ describe('makeRequest', () => {
       },
       method: 'POST',
     };
+
+    expect.assertions(4);
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      expect.assertions(4);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Validation errors: Invalid input., Invalid request.');
@@ -306,9 +307,8 @@ describe('makeRequest', () => {
       },
       method: 'POST',
     };
-
+    expect.assertions(4);
     await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      expect.assertions(4);
       expect(spyFetch).toHaveBeenCalledWith(headerDataError);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Route not found: 404');
