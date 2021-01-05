@@ -17,11 +17,13 @@ import ApiNotFoundPage from './ApiNotFoundPage';
 
 const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | null => {
   /*
-   * This code should theoretically be unneeded - isApiDeprecated and isApiDeactivated
-   * return fase if deactivationInfo is undefined, which causes this to return null.
-   * However, this isn't detected and we get errors without this if statement.
-   * This code is placed before the calls to 'isApiDeprecated' and 'isApiDeactivated'
-   * in order to make it reachable in our tests.
+   * This code should be unneeded but is required for the linter. Without this
+   * code DeactivationMessage will still return null (isApiDeprecated and
+   * isApiDeactivated will both return false when api.deactivationInfo is
+   * undefined, resulting in a null return on DeactivationMessage).
+   * The linter does not catch this and thinks that api.deactivationInfo could
+   * be undefined further down, even though the DeactionMessage would return
+   * null before hitting that code.
    */
   if (!api.deactivationInfo) {
     return null;
