@@ -9,6 +9,10 @@ import { fakeCategories, unmetDeactivationInfo } from '../../__mocks__/fakeCateg
 import * as apiDefs from '../../apiDefs/query';
 import ApiPage from './ApiPage';
 
+// Convenience variables to try and keep the index values out of the test
+const lotrRingsApi = fakeCategories.lotr.apis[0];
+const lotrSilmarilsApi = fakeCategories.lotr.apis[1];
+
 // Mocks
 jest.mock('../../content/explorePage.mdx', () => {
   const ExplorePage = (): JSX.Element => <div data-testid="explore-page">Mock Explore Page</div>;
@@ -59,16 +63,14 @@ describe('ApiPage', () => {
   const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiByFragment');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
 
-  beforeEach(() => {
-    lookupApiByFragmentMock.mockReturnValue(fakeCategories.lotr.apis[0]);
-    lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-  });
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   describe('given valid url params', () => {
     beforeEach(() => {
+      lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
+      lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
       renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
     });
 
@@ -93,8 +95,8 @@ describe('ApiPage', () => {
 
   describe('given deactivated api and valid url params', () => {
     beforeEach(() => {
-      lookupApiByFragmentMock.mockReturnValue(fakeCategories.lotr.apis[1]);
-
+      lookupApiByFragmentMock.mockReturnValue(lotrSilmarilsApi);
+      lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
       renderApiPage(
         {
           ...defaultFlags,
@@ -116,6 +118,8 @@ describe('ApiPage', () => {
 
   describe('given unenabled api', () => {
     beforeEach(() => {
+      lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
+      lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
       renderApiPage(
         {
           ...defaultFlags,
@@ -159,6 +163,7 @@ describe('ApiPage', () => {
   describe('given url with api that does not exist', () => {
     beforeEach(() => {
       lookupApiByFragmentMock.mockReturnValue(null);
+      lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
       renderApiPage(defaultFlags, '/explore/lotr/docs/nonexistentapi');
     });
 
@@ -177,6 +182,7 @@ describe('ApiPage', () => {
 
   describe('given url with api that does not exist within the given api category', () => {
     beforeEach(() => {
+      lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.sports);
       renderApiPage(defaultFlags, '/explore/sports/docs/silmarils');
     });
@@ -200,7 +206,7 @@ describe('ApiPage', () => {
         ...fakeCategories.lotr,
         apis: [
           {
-            ...fakeCategories.lotr.apis[0],
+            ...lotrRingsApi,
             deactivationInfo: unmetDeactivationInfo,
           },
         ],
@@ -228,7 +234,7 @@ describe('ApiPage', () => {
         ...fakeCategories.lotr,
         apis: [
           {
-            ...fakeCategories.lotr.apis[0],
+            ...lotrRingsApi,
             deactivationInfo: {
               ...unmetDeactivationInfo,
               deprecationDate: moment().subtract(1, 'year'),
@@ -247,7 +253,7 @@ describe('ApiPage', () => {
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
-    it('does not render deactivation message', () => {
+    it('renders deprecation info', () => {
       expect(screen.queryByTestId('deprecation-info')).not.toBeNull();
       expect(screen.queryByTestId('deactivation-info')).toBeNull();
     });
