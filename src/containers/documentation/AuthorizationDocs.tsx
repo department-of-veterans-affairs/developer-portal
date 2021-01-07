@@ -53,9 +53,7 @@ const AuthorizationDocs = (): JSX.Element => {
    * UPDATES URL WITH CORRECT API PARAM
    */
   React.useEffect(() => {
-    if (prevApi !== api) {
-      setSearchParam(history, location.search, api);
-    }
+    setSearchParam(history, location.search, api);
   }, [history, location.search, prevApi, api]);
 
   /**
