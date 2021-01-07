@@ -3,7 +3,12 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import { resetOAuthApiSelection, ResetOAuthAPISelection } from '../../actions';
+import {
+  resetOAuthApiSelection,
+  ResetOAuthAPISelection,
+  setOAuthApiSelection,
+  SetOAuthAPISelection,
+} from '../../actions';
 import { PageHeader, BuildingOIDCContent, ScopesContent } from '../../components';
 import PageLinks from '../../content/apiDocs/oauth/PageLinks.mdx';
 import GettingStarted from '../../content/apiDocs/oauth/GettingStarted.mdx';
@@ -32,7 +37,7 @@ const setSearchParam = (history: History, queryString: string, api: string): voi
 const AuthorizationDocs = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
-  const dispatch: React.Dispatch<ResetOAuthAPISelection> = useDispatch();
+  const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
   const initializing = React.useRef(true);
   let api = useSelector((state: RootState) => state.oAuthApiSelection.selectedOAuthApi);
   const prevApi = usePrevious(api);
@@ -41,10 +46,11 @@ const AuthorizationDocs = (): JSX.Element => {
     initializing.current = false;
 
     api = getInitialApi(location.search);
+    dispatch(setOAuthApiSelection(api));
   }
 
   /**
-   * UPDATES URL WITH CORRECT VERSION PARAM
+   * UPDATES URL WITH CORRECT API PARAM
    */
   React.useEffect(() => {
     if (prevApi !== api) {
