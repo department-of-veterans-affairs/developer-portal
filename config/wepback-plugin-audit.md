@@ -13,6 +13,6 @@ react-dev-utils/InterpolateHtmlPlugin     |[NPM](https://www.npmjs.com/package/r
 react-dev-utils/WatchMissingNodeModulesPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
 react-dev-utils/ModuleScopePlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
 ForkTsCheckerWebpackPlugin     |[NPM](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) |    Yes |   Yes |   No |  N/A |
-TsconfigPathsPlugin     |[NPM](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin) |    N/A |   N/A | N/A
+TsconfigPathsPlugin     |[NPM](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin) |    Yes |   Yes | No
 CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    N/A |   N/A |   N/A |
 
