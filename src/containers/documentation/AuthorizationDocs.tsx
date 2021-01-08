@@ -20,10 +20,14 @@ import { DEFAULT_OAUTH_API_SELECTION } from '../../types/constants';
 
 import './AuthorizationDocs.scss';
 
-const getInitialApi = (searchQuery: string): string => {
+const setInitialApi = (
+  searchQuery: string,
+  dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection>,
+): void => {
   const params = new URLSearchParams(searchQuery || undefined);
   const apiQuery = params.get('api');
-  return apiQuery ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
+  const api = apiQuery ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
+  dispatch(setOAuthApiSelection(api));
 };
 
 const setSearchParam = (history: History, queryString: string, api: string): void => {
@@ -39,15 +43,16 @@ const AuthorizationDocs = (): JSX.Element => {
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
   const initializing = React.useRef(true);
-  let api = useSelector((state: RootState) => state.oAuthApiSelection.selectedOAuthApi);
+  const api = useSelector((state: RootState) => state.oAuthApiSelection.selectedOAuthApi);
   const prevApi = usePrevious(api);
 
-  if (initializing.current) {
-    initializing.current = false;
+  React.useEffect(() => {
+    if (initializing.current) {
+      initializing.current = false;
 
-    api = getInitialApi(location.search);
-    dispatch(setOAuthApiSelection(api));
-  }
+      setInitialApi(location.search, dispatch);
+    }
+  }, [dispatch, location]);
 
   /**
    * UPDATES URL WITH CORRECT API PARAM
