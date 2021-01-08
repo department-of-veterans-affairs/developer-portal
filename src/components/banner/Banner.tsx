@@ -35,8 +35,9 @@ const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
       className={classNames('va-api-banner-icon', 'vads-u-margin-right--1', 'vads-u-margin-top--0p5')}
       src={props.icon}
       alt={props.icon_alt ?? undefined}
+      aria-hidden="true"
     />
-    <div className="vads-u-margin-bottom--1p5">
+    <div className="vads-u-margin-bottom--1p5" >
       <p className="vads-u-font-weight--bold vads-u-margin--0">
         {props.title}
       </p>
@@ -53,9 +54,9 @@ const Banner = (): JSX.Element => {
   const toggleAccordionVisible = (): void => setAccordionVisible(!accordionVisible);
 
   return (
-    <section>
+    <div>
       <div className={classNames('site-guidance', 'vads-u-background-color--gray-dark')}>
-        <header className={classNames('va-api-banner-header')}>
+        <div className={classNames('va-api-banner-header')}>
           <div
             className={classNames(
               'va-api-banner-inner',
@@ -77,6 +78,7 @@ const Banner = (): JSX.Element => {
                     'medium-screen:vads-u-margin-left--0',
                     'medium-screen:vads-u-margin-top--0',
                   )}
+                  aria-hidden="true"
                 />
               </div>
               <div
@@ -88,7 +90,7 @@ const Banner = (): JSX.Element => {
                   'small-desktop-screen:vads-u-max-width--none',
                 )}
               >
-                <div>An official website of the United States government.</div>
+                <p>An official website of the United States government.</p>
                 <button
                   id="toggle-how-you-know-dropdown"
                   className={classNames(
@@ -101,11 +103,13 @@ const Banner = (): JSX.Element => {
                     'small-desktop-screen:vads-u-margin-left--1',
                     'small-desktop-screen:vads-u-margin-top--0',
                   )}
+                  aria-label="Here&apos;s how you know this is an official website"
                   onClick={toggleAccordionVisible}
                   aria-expanded={accordionVisible ? 'true' : 'false'}
                   type="button"
                 >
                   <span
+                    aria-hidden="true"
                     className={classNames(
                       'vads-u-font-weight--normal',
                       'vads-u-text-decoration--underline',
@@ -122,8 +126,10 @@ const Banner = (): JSX.Element => {
                 'vads-l-grid-container',
                 'vads-u-background-color--gray-dark')}
               aria-hidden={accordionVisible ? 'false' : 'true'}
+              aria-label="Here&apos;s how you know this is an official website"
+              role="region"
             >
-              <div className="vads-l-row">
+              <div className="vads-l-row" >
                 <GuidanceBox id="dot-gov-guidance" icon={dotGovIcon} icon_alt="Government icon" title="The .gov means it's official">
                   <p className="vads-u-margin--0">
                     Federal government websites often end in .gov or .mil. Before sharing sensitive
@@ -139,9 +145,9 @@ const Banner = (): JSX.Element => {
               </div>
             </div>
           </div>
-        </header>
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 

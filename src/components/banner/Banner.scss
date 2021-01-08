@@ -3,6 +3,11 @@
 .site-notice-text {
   max-width: 350px;
 
+  p {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
   @include media($small-desktop-screen) {
     max-width: none;
     margin-left: 0;
