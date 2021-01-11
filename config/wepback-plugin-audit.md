@@ -26,8 +26,8 @@ react-dev-utils/ModuleScopePlugin     |[NPM](https://www.npmjs.com/package/react
 HtmlWebpackPlugin     |[NPM](https://www.npmjs.com/package/html-webpack-plugin) |   Yes |   Yes | No
 react-dev-utils/InlineChunkHtmlPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1)
 MiniCssExtractPlugin     |[NPM](https://www.npmjs.com/package/mini-css-extract-plugin) |    Yes |   Yes | No
-resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
-resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
+OptimizeCSSAssetsPlugin     |[NPM](https://www.npmjs.com/package/resolve) |    Yes |   Yes | [No](https://snyk.io/advisor/npm-package/optimize-css-assets-webpack-plugin)
+ManifestPlugin     |[NPM](https://www.npmjs.com/package/resolve) |    Yes |   Yes | [No](https://snyk.io/advisor/npm-package/webpack-manifest-plugin)
 resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
 resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
 resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
