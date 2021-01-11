@@ -1,5 +1,6 @@
 import * as React from 'react';
-import ReactMarkdown from 'react-markdown';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import Prism from 'react-syntax-highlighter/dist/cjs/prism';
 import { useSelector } from 'react-redux';
 import { HashLink } from 'react-router-hash-link';
 import { APISelector, CodeWrapper } from '../index';
@@ -16,12 +17,14 @@ const PKCEAuthContent = (): JSX.Element => {
     options: getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)),
     selectedOption: selectedOAuthApi,
   };
-  const authUrl = `\`\`\`plaintext\nhttps://sandbox-api.va.gov${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &code_challenge_method=S256\n  &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw\n\`\`\``;
-  const codeGrant = '\`\`\`plaintext\nGET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\n  Host: <yourRedirectHost>\n\`\`\`';
-  const postToken = `\`\`\`plaintext\nPOST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=authorization_code\n&code=z92dapo5\n&state=af0ifjsldkj\n&redirect_uri=<yourRedirectURL>\n&code_verifier=ccec_bace_d453_e31c_eb86_2ad1_9a1b_0a89_a584_c068_2c96\n\`\`\``;
-  const postTokenResponse200 = `\`\`\`plaintext\n{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}\n\`\`\``;
-  const postTokenResponse400 = '\`\`\`http\nHTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}\n\`\`\`';
-  const postTokenRefresh = `\`\`\`http\nPOST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=refresh_token\n&refresh_token={your refresh_token}\n&client_id={client_id}\n&scope={${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}}\n\`\`\``;
+  const authUrl = `https://sandbox-api.va.gov${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/authorization?\n  client_id=0oa1c01m77heEXUZt2p7\n  &redirect_uri=<yourRedirectURL>\n  &response_type=code\n  &scope=${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}\n  &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ\n  &code_challenge_method=S256\n  &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw`;
+  const codeGrant = 'GET <yourRedirectURL>?\n  code=z92dapo5\n  &state=af0ifjsldkj\nHost: <yourRedirectHost>';
+  const postToken = `POST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=authorization_code\n&code=z92dapo5\n&state=af0ifjsldkj\n&redirect_uri=<yourRedirectURL>\n&code_verifier=ccec_bace_d453_e31c_eb86_2ad1_9a1b_0a89_a584_c068_2c96`;
+  const postTokenResponse200 = `{\n  "access_token": "SlAV32hkKG",\n  "expires_in": 3600,\n  "refresh_token": "8xLOxBtZp8",\n  "scope": "${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}",\n  "state": "af0ifjsldkj",\n  "token_type": "Bearer",\n}`;
+  const postTokenResponse400 = 'HTTP/1.1 400 Bad Request\nContent-Type: application/json\nCache-Control: no-store\nPragma: no-cache\n\n{\n  "error": "invalid_request"\n}';
+  const postTokenRefresh = `POST ${apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2'}/token HTTP/1.1\nHost: sandbox-api.va.gov\nContent-Type: application/x-www-form-urlencoded\n\ngrant_type=refresh_token\n&refresh_token={your refresh_token}\n&client_id={client_id}\n&scope={${apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}}`;
+
+  const syntaxColor = Prism;
 
   return (
     <section aria-labelledby="pkce-authorization">
@@ -42,7 +45,9 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{authUrl}</ReactMarkdown>
+        <SyntaxHighlighter language="plaintext" style={syntaxColor}>
+          {authUrl}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <PKCEQueryParamsTable />
@@ -66,7 +71,9 @@ const PKCEAuthContent = (): JSX.Element => {
       </p>
 
       <CodeWrapper>
-        <ReactMarkdown>{codeGrant}</ReactMarkdown>
+        <SyntaxHighlighter language="plaintext" style={syntaxColor}>
+          {codeGrant}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>Use the following format, in HTTP basic authentication, for your request.</p>
@@ -84,7 +91,9 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{postToken}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
+          {postToken}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>
@@ -99,13 +108,17 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{postTokenResponse200}</ReactMarkdown>
+        <SyntaxHighlighter language="json" style={syntaxColor}>
+          {postTokenResponse200}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>If an error occurs, you will instead receive a 400 response, like this:</p>
 
       <CodeWrapper>
-        <ReactMarkdown>{postTokenResponse400}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
+          {postTokenResponse400}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>
@@ -129,7 +142,9 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <ReactMarkdown>{postTokenRefresh}</ReactMarkdown>
+        <SyntaxHighlighter language="http" style={syntaxColor}>
+          {postTokenRefresh}
+        </SyntaxHighlighter>
       </CodeWrapper>
 
       <p>
