@@ -16,7 +16,19 @@ react-dev-utils/WatchMissingNodeModulesPlugin     |[NPM](https://www.npmjs.com/p
 react-dev-utils/ModuleScopePlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
 ForkTsCheckerWebpackPlugin     |[NPM](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) |    Yes |   Yes |   No |  N/A |
 TsconfigPathsPlugin     |[NPM](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin) |    Yes |   Yes | No
-CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    Yes |   Yes |   [No](https://snyk.io/vuln/npm:copy-webpack-plugin) |
-
-#
+CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    Yes |   No |   [No](https://snyk.io/vuln/npm:copy-webpack-plugin) |
+--------------------------
 ## webpack.config.prod.js
+Plugin             | Link  | Use it?  | To date?| Security bad?   | 
+-----------------|---------|----------|---------|---------|
+resolve     |[NPM](https://www.npmjs.com/package/resolve) |    Yes |   No | No
+react-dev-utils/ModuleScopePlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) 
+HtmlWebpackPlugin     |[NPM](https://www.npmjs.com/package/html-webpack-plugin) |   Yes |   Yes | No
+react-dev-utils/InlineChunkHtmlPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1)
+MiniCssExtractPlugin     |[NPM](https://www.npmjs.com/package/mini-css-extract-plugin) |    Yes |   Yes | No
+resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
+resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
+resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
+resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
+resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
+CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    Yes |   No |   [No](https://snyk.io/vuln/npm:copy-webpack-plugin) |
