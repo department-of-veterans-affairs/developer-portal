@@ -3,17 +3,32 @@ import Helmet from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
+
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import ExplorePage from '../../content/explorePage.mdx';
 import { Flag } from '../../flags';
+
 import { APINameParam } from '../../types';
 import { PAGE_HEADER_ID } from '../../types/constants';
 import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
 
 const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | null => {
+  /*
+   * This code should be unneeded but is required for the linter. Without this
+   * code DeactivationMessage will still return null (isApiDeprecated and
+   * isApiDeactivated will both return false when api.deactivationInfo is
+   * undefined, resulting in a null return on DeactivationMessage).
+   * The linter does not catch this and thinks that api.deactivationInfo could
+   * be undefined further down, even though the DeactionMessage would return
+   * null before hitting that code.
+   */
+  if (!api.deactivationInfo) {
+    return null;
+  }
+
   const isDeprecated = isApiDeprecated(api);
   const isDeactivated = isApiDeactivated(api);
 
@@ -21,9 +36,9 @@ const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | nu
     return null;
   }
 
-  const content = isDeactivated
-    ? (api.deactivationInfo?.deactivationContent ?? ((): string => 'Deactivated API'))
-    : (api.deactivationInfo?.deprecationContent ?? ((): string => 'Deprecated API'));
+  const { deactivationContent, deprecationContent } = api.deactivationInfo;
+  const content = isDeactivated ? deactivationContent : deprecationContent;
+
   return (
     <div className={classNames('usa-alert', 'usa-alert-info', 'va-api-alert-box')}>
       <div className={classNames('usa-alert-body')}>{content({})}</div>
@@ -44,11 +59,11 @@ const ApiPage = (): JSX.Element => {
   const params = useParams<APINameParam>();
 
   const api = getApi(params.apiName);
-  if (api === null) {
+  const category = lookupApiCategory(params.apiCategoryKey);
+
+  if (api === null || !category?.apis.includes(api)) {
     return <ApiNotFoundPage />;
   }
-
-  const category = lookupApiCategory(params.apiCategoryKey);
 
   return (
     <Flag name={['enabled', api.urlFragment]} fallbackRender={(): JSX.Element => <ExplorePage />}>
@@ -56,7 +71,7 @@ const ApiPage = (): JSX.Element => {
         <Helmet>
           <title>{api.name} Documentation</title>
         </Helmet>
-        <PageHeader halo={category?.name} header={api.name} />
+        <PageHeader halo={category.name} header={api.name} />
         <DeactivationMessage api={api} />
         {!isApiDeactivated(api) && (
           <ApiDocumentation

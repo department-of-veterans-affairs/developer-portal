@@ -24,7 +24,7 @@ const ScopesContent = (): JSX.Element => {
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
 
   return (
-    <>
+    <section className="scopes-content">
       <DefaultScopes />
 
       <APISelector
@@ -118,7 +118,7 @@ const ScopesContent = (): JSX.Element => {
           </tbody>
         </table>
       )}
-    </>
+    </section>
   );
 };
 
