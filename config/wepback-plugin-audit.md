@@ -37,3 +37,10 @@ CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    Ye
 TsconfigPathsPlugin     |[NPM](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin) |    Yes |   Yes | No
 TsconfigPathsPlugin (custom plugin)     | N/A |    Yes |   N/A | N/A |
 CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    Yes |   No |   [No](https://snyk.io/vuln/npm:copy-webpack-plugin) |
+-----
+## webpackDevServer.config.js
+Plugin             | Link  | Use it?  | To date?| Security bad?   | 
+-----------------|---------|----------|---------|---------|
+react-dev-utils/errorOverlayMiddleware     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1)|
+react-dev-utils/noopServiceWorkerMiddleware |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1)|
+react-dev-utils/ignoredFiles |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1)|
