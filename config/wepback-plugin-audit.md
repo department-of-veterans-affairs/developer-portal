@@ -14,7 +14,7 @@ react-dev-utils/CaseSensitivePathsPlugin     |[NPM](https://www.npmjs.com/packag
 react-dev-utils/InterpolateHtmlPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
 react-dev-utils/WatchMissingNodeModulesPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
 react-dev-utils/ModuleScopePlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
-ForkTsCheckerWebpackPlugin     |[NPM](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) |    Yes |   Yes |   No |  N/A |
+ForkTsCheckerWebpackPlugin     |[NPM](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) |    Yes |   Yes |   No |
 TsconfigPathsPlugin     |[NPM](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin) |    Yes |   Yes | No
 CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    Yes |   No |   [No](https://snyk.io/vuln/npm:copy-webpack-plugin) |
 --------------------------
@@ -28,7 +28,12 @@ react-dev-utils/InlineChunkHtmlPlugin     |[NPM](https://www.npmjs.com/package/r
 MiniCssExtractPlugin     |[NPM](https://www.npmjs.com/package/mini-css-extract-plugin) |    Yes |   Yes | No
 OptimizeCSSAssetsPlugin     |[NPM](https://www.npmjs.com/package/resolve) |    Yes |   Yes | [No](https://snyk.io/advisor/npm-package/optimize-css-assets-webpack-plugin)
 ManifestPlugin     |[NPM](https://www.npmjs.com/package/resolve) |    Yes |   Yes | [No](https://snyk.io/advisor/npm-package/webpack-manifest-plugin)
-resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
-resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
-resolve     |[NPM](https://www.npmjs.com/package/resolve) |    N/A |   N/A | N/A
+react-dev-utils/InterpolateHtmlPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
+WorkboxWebpackPlugin     |[NPM](https://www.npmjs.com/package/workbox-webpack-plugin) |   Yes |   Yes | [No](https://snyk.io/advisor/npm-package/workbox-webpack-plugin)
+getCSSModuleLocalIdent     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
+ForkTsCheckerWebpackPlugin     |[NPM](https://www.npmjs.com/package/fork-ts-checker-webpack-plugin) |    Yes |   Yes |   No |
+react-dev-utils/InlineChunkHtmlPlugin     |[NPM](https://www.npmjs.com/package/react-dev-utils) |    Yes |   No |   [Yes](https://snyk.io/test/npm/react-dev-utils/6.1.1) |
+CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    Yes |   No |   [No](https://snyk.io/vuln/npm:copy-webpack-plugin) |
+TsconfigPathsPlugin     |[NPM](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin) |    Yes |   Yes | No
+TsconfigPathsPlugin (custom plugin)     | N/A |    Yes |   N/A | N/A |
 CopyPlugin     |[NPM](https://www.npmjs.com/package/copy-webpack-plugin) |    Yes |   No |   [No](https://snyk.io/vuln/npm:copy-webpack-plugin) |
