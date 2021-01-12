@@ -9,6 +9,9 @@ import {
   setOAuthApiSelection,
   SetOAuthAPISelection,
 } from '../../actions';
+import { getAllOauthApis } from '../../apiDefs/query';
+import { isApiDeactivated } from '../../apiDefs/deprecated';
+import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader, BuildingOIDCContent, ScopesContent } from '../../components';
 import PageLinks from '../../content/apiDocs/oauth/PageLinks.mdx';
 import GettingStarted from '../../content/apiDocs/oauth/GettingStarted.mdx';
@@ -26,7 +29,9 @@ const setInitialApi = (
 ): void => {
   const params = new URLSearchParams(searchQuery || undefined);
   const apiQuery = params.get('api');
-  const api = apiQuery ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
+  const availableApis = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
+  const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
+  const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
 };
 
