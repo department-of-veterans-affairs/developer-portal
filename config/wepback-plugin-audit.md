@@ -1,7 +1,7 @@
 # Webpack Plugin Audit
 ### This is a check to see which plugins are being used, need updated, or are severely exploitable.
 
-Plugins moved to latest release where done so only if there were no issues with the upgrade. Therefore the plugins that are not up to date are due to various issues with the latest release and other parts of the Dev Portal.
+Plugins moved to latest release were done so only if there were no issues with the upgrade. Therefore the plugins that are not up to date are due to various issues with the latest release and other parts of the Dev Portal.
 
 ## webpack.config.dev.js
 
