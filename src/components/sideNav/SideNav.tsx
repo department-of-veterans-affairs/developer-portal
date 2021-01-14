@@ -47,7 +47,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
           'vads-u-display--block',
           'vads-u-color--white',
         )}
-        to="#page-header"
+        to={{ ...location, hash: '#page-header' }}
       >
         Skip Page Navigation
       </HashLink>
