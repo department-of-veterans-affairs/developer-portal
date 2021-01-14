@@ -75,7 +75,7 @@ const ExploreSideNav = (): JSX.Element => {
     <SideNav ariaLabel="API Docs Side Nav">
       <SideNavEntry key="all" exact to="/explore" name="Overview" />
       <Flag name={[FLAG_AUTH_DOCS_V2]}>
-        <SideNavEntry key="authorization" exact to="/explore/authorization" name="Authorization" />
+        <SideNavEntry key="authorization" to="/explore/authorization" name="Authorization" />
       </Flag>
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
@@ -138,7 +138,9 @@ const DocumentationRoot = (): JSX.Element => {
               {oldRouteToNew.map(routes => (
                 <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
               ))}
-              {authDocsV2 && <Route path="/explore/authorization" component={AuthorizationDocs} exact />}
+              {authDocsV2 && (
+                <Route path="/explore/authorization" component={AuthorizationDocs} exact />
+              )}
               {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
               <Route exact path="/explore/" component={DocumentationOverview} />
               <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />

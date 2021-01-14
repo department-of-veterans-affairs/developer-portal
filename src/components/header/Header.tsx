@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
@@ -23,6 +23,7 @@ const Header = (): JSX.Element => {
    */
   const [mobileNavVisible, setMobileNavVisible] = React.useState(false);
 
+  const location = useLocation();
   const toggleMenuVisible = (): void => {
     setMobileNavVisible((state: boolean) => !state);
   };
@@ -40,7 +41,7 @@ const Header = (): JSX.Element => {
         className={classNames('va-api-header', 'vads-u-background-color--primary-darkest')}
       >
         <HashLink
-          to="#main"
+          to={{ ...location, hash: '#main' }}
           className={classNames('va-api-skipnav', 'vads-u-padding-x--2', 'vads-u-padding-y--1')}
         >
           Skip to main content

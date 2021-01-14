@@ -20,4 +20,5 @@ export * from './markdownPage/MarkdownPage';
 export * from './quickStartWrapper/QuickstartWrapper';
 export * from './sectionHeaderWrapper/SectionHeaderWrapper';
 export * from './oauthDocs/BuildingOIDCContent';
-
+export * from './oauthDocs/ScopesContent';
+export * from './apiSelector/APISelector';

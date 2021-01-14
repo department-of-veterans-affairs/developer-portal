@@ -2,19 +2,20 @@
 imports:
   '{ SectionHeaderWrapper }': ../../../components 
   '{ HashLink }' : 'react-router-hash-link'
+  '{ Link }' : 'react-router-dom'
 ---
 
-<SectionHeaderWrapper heading="Getting Started" id="getting-started"/>
+<SectionHeaderWrapper heading="Getting Started" id="getting-started" />
 
 The VA Lighthouse APIs platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications or Veteran Service Organizations (VSOs) to access data on their behalf. The kind of access granted, process for authorization, and third party being authorized depends on the API. 
 
-The first step toward authorization is to [fill out our application](/apply) and make sure to select the right OAuth API for your needs. To complete the form, you will need: 
+The first step toward authorization is to <Link to="/apply">fill out our application</Link> and make sure to select the right OAuth API for your needs. To complete the form, you will need: 
 - Your organization name
 - To know which OAuth APIs you want to access
 - To know whether your app can securely hide a client secret
 - Your OAuth redirect URI
 
-After you submit the form, we send you a client ID and secret, depending on whether you can safely store a client secret. If you cannot safely store a client secret, we will send you a client ID and you will use the <HashLink to="#pkce-authorization">Proof Key for Code Exchange</HashLink> (PKCE) flow ([RFC 7636](https://tools.ietf.org/html/rfc7636)) for authorization. 
+After you submit the form, we send you a client ID and secret, depending on whether you can safely store a client secret. If you cannot safely store a client secret, we will send you a client ID and you will use the <HashLink to={{ ...location, hash: '#pkce-authorization' }}>Proof Key for Code Exchange</HashLink> (PKCE) flow ([RFC 7636](https://tools.ietf.org/html/rfc7636)) for authorization. 
 
 ### Support
-If you have any questions please feel free to reach out to the VA API Platform team at [api@va.gov](mailto:api.va.gov). If you would like to report a bug or make a feature request, please open an issue through our [Support page](/support).
+If you have any questions please feel free to reach out to the VA API Platform team at [api@va.gov](mailto:api.va.gov). If you would like to report a bug or make a feature request, please open an issue through our <Link to="/support">Support page</Link>.

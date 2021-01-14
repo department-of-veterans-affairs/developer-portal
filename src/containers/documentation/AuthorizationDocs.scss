@@ -10,7 +10,6 @@
   .code-wrapper {
     // Needs both due to covering of both code blocks and inline formatted code/parameter names
     background-color: #222935;
-    border-radius: 3px;
   }
 
   code {
@@ -18,6 +17,7 @@
     font-family: 'Source Code Pro', monospace;
     padding: 0.2rem 0.4rem;
     margin: auto 0.2rem;
+    border-radius: 6px;
 
     // this may look ugly but there's no padding at line end/start when text wraps
     white-space: nowrap;
@@ -28,7 +28,7 @@
     padding: 2rem;
     margin: 0;
     white-space: pre;
-
+    
     &:focus {
       border: 1px solid $color-gray;
     }
@@ -51,9 +51,41 @@
   h2#on-this-page + ul {
     border-left: 2px solid $color-gray-light;
     list-style-type: none;
+
     ul {
       list-style-type: square;
-    }   
+    }
+  }
+
+  .api-selector {
+    background-color: $color-gray;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+
+    select {
+      color: $color-white;
+      option {
+          color: $color-base;
+      }
+    }
+  }
+
+  .scopes-content {
+    .api-selector {
+      background-color: $color-white;
+      select {
+        border: 1px solid $color-gray;
+        color: $color-base;
+        background-image: url('../../assets/select-arrow-dark.png');
+      }
+    }
+  }
+
+  .api-selector + .code-wrapper {
+    pre > code {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
   }
 
 }
