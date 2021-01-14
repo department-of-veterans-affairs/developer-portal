@@ -1,8 +1,8 @@
- ######################################################################
-#  Developer Portal CodeBuild Deploy 
-#  
-# ***  Maintenance Request Needed for Production deployments   *** 
-# 
+######################################################################
+#  Developer Portal CodeBuild Deploy
+#
+# ***  Maintenance Request Needed for Production deployments   ***
+#
 # Maintenance Request Documentation:
 #  - https://github.com/department-of-veterans-affairs/lighthouse-maintenance
 #  - https://community.max.gov/pages/viewpage.action?pageId=2172170301
@@ -13,27 +13,27 @@
 #  - CodeBuild Environmental Variables - https://docs.aws.amazon.com/codebuild/latest/userguide/build-env-ref-env-vars.html
 #  - CodeBuild Source Image - ecs-deployer - https://github.com/department-of-veterans-affairs/lighthouse-codebuild-containers/tree/main/ecs-deployer
 #  - AWS CLI 2.0 - https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
-# 
-# All Custom scripts are on the CodeBuild Environment container. 
+#
+# All Custom scripts are on the CodeBuild Environment container.
 # https://github.com/department-of-veterans-affairs/lighthouse-codebuild-containers/tree/main/
 #
 # Custom Scripts:
 #  - slackpost.sh
 #
-######################################################################     
+######################################################################
 version: 0.2
 env:
   variables:
     # These are the default deploy environments
-    ENVIRONMENTS: "dev staging"
-    S3_DEV_BUCKET: "dev-developer.va.gov"
-    S3_STAGING_BUCKET: "staging-developer.va.gov"
-    S3_PRODUCTION_BUCKET: "developer.va.gov"
-    S3_ARCHIVE_BUCKET: "developer-portal-builds-s3-upload"
+    ENVIRONMENTS: 'dev staging'
+    S3_DEV_BUCKET: 'dev-developer.va.gov'
+    S3_STAGING_BUCKET: 'staging-developer.va.gov'
+    S3_PRODUCTION_BUCKET: 'developer.va.gov'
+    S3_ARCHIVE_BUCKET: 'developer-portal-builds-s3-upload'
   parameter-store:
-    GITHUB_TOKEN: "/dvp/devops/va_bot_github_token"
+    GITHUB_TOKEN: '/dvp/devops/va_bot_github_token'
     # LIGHTHOUSE SLACK_WEBHOOK
-    SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook_lighthouse"
+    SLACK_WEBHOOK: '/dvp/devops/codebuild_slack_webhook_lighthouse'
 phases:
   pre_build:
     commands:
@@ -45,31 +45,28 @@ phases:
   build:
     commands:
       # Set release to latest if release and commit hash is not set.
-      - | 
+      - |
         if [[ ! ${RELEASE} ]] && [[ ! ${COMMIT_HASH} ]]; then
-          RELEASE=$(git tag --sort=-creatordate | grep cb- | head -1)
+          RELEASE=$(git tag --sort=-creatordate | head -1)
           echo "Release set to ${RELEASE}"
         fi
-      # Download and prepare release assets if deploying from release.
+      # If deploying from release: download and prepare release assets from Github.
+      # If deploying from commit hash: download and prepare S3 assets.
       - |
         if [[ ${RELEASE} ]]; then 
           echo "Downloading assets for ${RELEASE}"
           gh release download ${RELEASE} -p "*.bz2"
-          # The cb- prefix is used until Jenkins pipeline is decommissioned.
           # strip release string from asset name
-          VERSION=${RELEASE#"cb-developer-portal/v"}
+          VERSION=${RELEASE#"developer-portal/v"}
           for f in *.bz2; do
             mv ${f} "${f%-${VERSION}.tar.bz2}.tar.bz2"
           done
-        fi
-      # Download and prepare S3 assets if deploying from commit hash.
-      - |
-        if [[ ${COMMIT_HASH} ]]; then 
+        elif [[ ${COMMIT_HASH} ]]; then 
           aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7}/ . 
         fi
       # Deploy environments
       - echo "Begining deployments to ${ENVIRONMENTS}"
-      - | 
+      - |
         for env in ${ENVIRONMENTS}; do
           # Production deploys will require a MR number be set. This MR will not be check for validity but will serve as small safety measure for production deploys and reminder to enforce the process.
           if [[ "${env}" == "production" ]] && [[ ! ${MR} ]]; then
