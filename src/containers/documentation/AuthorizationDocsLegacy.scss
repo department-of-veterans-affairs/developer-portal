@@ -44,4 +44,8 @@
   td ul {
     border: none;
   }
+
+  .code-wrapper + .code-wrapper {
+    margin-top: 16px;
+  }
 }
