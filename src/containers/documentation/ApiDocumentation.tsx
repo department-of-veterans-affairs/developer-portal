@@ -3,13 +3,17 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { Link } from 'react-router-dom';
 import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
-import { Flag } from '../../flags';
+import { Flag, useFlag } from '../../flags';
 import { history } from '../../store';
+import { FLAG_AUTH_DOCS_V2 } from '../../types/constants';
 import { SwaggerDocs } from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
+
+import './ApiDocumentation.scss';
 
 interface ApiDocumentationProps {
   apiDefinition: APIDescription;
@@ -68,6 +72,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(location.search || undefined);
   const apiVersion = queryParams.get('version');
+  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
 
   React.useEffect((): void => {
     dispatch(actions.setRequestedApiVersion(apiVersion));
@@ -78,6 +83,14 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
    */
   return (
     <Flag name={['hosted_apis', apiDefinition.urlFragment]}>
+      {(apiDefinition.oAuth && authDocsV2) && (
+        <div role="region" aria-labelledby="oauth-info-heading" className="api-docs-oauth-link">
+          <h2 id="oauth-info-heading" className="usa-alert-heading">Authentication and Authorization</h2>
+          <Link to={`/explore/authorization?api=${apiDefinition.urlFragment}`}>
+            View our OAuth documentation
+          </Link>
+        </div>
+      )}
       {apiDefinition.docSources.length === 1 ? (
         <SwaggerDocs
           docSource={apiDefinition.docSources[0]}
