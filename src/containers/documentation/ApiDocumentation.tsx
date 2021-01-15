@@ -84,8 +84,8 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   return (
     <Flag name={['hosted_apis', apiDefinition.urlFragment]}>
       {(apiDefinition.oAuth && authDocsV2) && (
-        <div className="api-docs-oauth-link">
-          <h2 className="usa-alert-heading">Authentication and Authorization</h2>
+        <div role="region" aria-labelledby="oauth-info-heading" className="api-docs-oauth-link">
+          <h2 id="oauth-info-heading" className="usa-alert-heading">Authentication and Authorization</h2>
           <Link to={`/explore/authorization?api=${apiDefinition.urlFragment}`}>
             View our OAuth documentation
           </Link>
