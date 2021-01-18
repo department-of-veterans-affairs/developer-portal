@@ -98,7 +98,7 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <p>
         The authorization server will send a 200 response with an{' '}
-        <HashLink to="#id-token">
+        <HashLink to={{ ...location, hash: '#id-token' }}>
           access token
         </HashLink>
         . If you requested the <code>offline_access</code> scope, you will also receive a{' '}
@@ -129,7 +129,7 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <p>
         <strong>NOTE:</strong> the{' '}
-        <HashLink to="#id-token">
+        <HashLink to={{ ...location, hash: '#id-token' }}>
           access token
         </HashLink>{' '}
         will only work for the API and scopes for which you have previously initiated authorization.
