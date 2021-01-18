@@ -47,7 +47,8 @@ phases:
       # Set release to latest if release and commit hash is not set.
       - |
         if [[ ! ${RELEASE} ]] && [[ ! ${COMMIT_HASH} ]]; then
-          RELEASE=$(git tag --sort=-creatordate | head -1)
+          # temporarily need to ensure we're deploying the main release, not the cb- one
+          RELEASE=$(git tag --sort=-creatordate | grep ^developer-portal | head -1)
           echo "Release set to ${RELEASE}"
         fi
       # If deploying from release: download and prepare release assets from Github.
