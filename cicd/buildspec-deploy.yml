@@ -55,14 +55,16 @@ phases:
       - |
         if [[ ${RELEASE} ]]; then 
           echo "Downloading assets for ${RELEASE}"
-          gh release download ${RELEASE} -p "*.bz2"
+          gh release download ${RELEASE} -p "*.bz2" || exit 1
           # strip release string from asset name
           VERSION=${RELEASE#"developer-portal/v"}
           for f in *.bz2; do
             mv ${f} "${f%-${VERSION}.tar.bz2}.tar.bz2"
           done
         elif [[ ${COMMIT_HASH} ]]; then 
-          aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7}/ . 
+          # confirm that commit has an archived build
+          aws s3 ls s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7}/ || exit 1
+          aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7}/ .
         fi
       # Deploy environments
       - echo "Begining deployments to ${ENVIRONMENTS}"
@@ -82,7 +84,7 @@ phases:
           mkdir -p ${env}
           tar xf developer-portal-${env}.tar.bz2 -C ${env}
           # eval is used for variable subsitution.
-          eval aws s3 sync --no-progress --delete --acl public-read ${env}/ s3://\${$S3_BUCKET}/
+          eval aws s3 sync --no-progress --delete --acl public-read ${env}/ s3://\${$S3_BUCKET}/ || exit 1
           slackpost.sh -t success "Deployment of ${RELEASE}${COMMIT_HASH} to ${env} was completed."
         done
   post_build:
