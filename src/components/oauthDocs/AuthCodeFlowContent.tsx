@@ -54,7 +54,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="plaintext" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="plaintext"
+          style={syntaxColor}
+          key={`authUrl-${selectedOAuthApi}`}
+        >
           {authUrl}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -79,7 +83,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
       </p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="plaintext" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="plaintext"
+          style={syntaxColor}
+          key={`codeGrant-${selectedOAuthApi}`}
+        >
           {codeGrant}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -101,7 +109,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`postToken-${selectedOAuthApi}`}
+        >
           {postToken}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -117,7 +129,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`postTokenResponse200-${selectedOAuthApi}`}
+        >
           {postTokenResponse200}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -125,7 +141,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
       <p>If an error occurs, you will instead receive a response like this:</p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`postTokenResponse400-${selectedOAuthApi}`}
+        >
           {postTokenResponse400}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -152,7 +172,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`postTokenRefresh-${selectedOAuthApi}`}
+        >
           {postTokenRefresh}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -170,7 +194,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
       </p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`authManageAccount-${selectedOAuthApi}`}
+        >
           {authManageAccount}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -184,14 +212,22 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`authRevokeTokenAccess-${selectedOAuthApi}`}
+        >
           {authRevokeTokenAccess}
         </SyntaxHighlighter>
       </CodeWrapper>
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`authRevokeTokenRefresh-${selectedOAuthApi}`}
+        >
           {authRevokeTokenRefresh}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -211,7 +247,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`authRevokeGrant-${selectedOAuthApi}`}
+        >
           {authRevokeGrant}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -219,7 +259,11 @@ const AuthCodeFlowContent = (): JSX.Element => {
       <p>The client ID is your application client ID (<code>client_id</code>) and the email is the user’s email, which must be passed into the body of the request. Bad requests will be returned with an error response and description of the error.</p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`authRevokeGrantError-${selectedOAuthApi}`}
+        >
           {authRevokeGrantError}
         </SyntaxHighlighter>
       </CodeWrapper>
