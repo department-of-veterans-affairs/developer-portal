@@ -10,12 +10,7 @@ import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
 import './Header.scss';
 
-const buttonClassnames = classNames(
-  'usa-button',
-  'vads-u-background-color--white',
-  'vads-u-color--primary-darkest',
-  'vads-u-margin-right--2',
-);
+const buttonClassnames = classNames('usa-button', 'usa-button-default', 'vads-u-margin-right--2');
 
 const Header = (): JSX.Element => {
   /**

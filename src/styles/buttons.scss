@@ -1,0 +1,53 @@
+// Variables
+// ==========
+@import './variables';
+
+$button-stroke: inset 0 0 0 2px;
+
+/* stylelint-disable selector-no-qualifying-type */
+.usa-button,
+.usa-button-primary,
+.usa-button:visited,
+.usa-button-primary:visited,
+button,
+[type='button'],
+[type='submit'],
+[type='reset'] {
+  &.usa-button-default {
+    background-color: $color-white;
+    color: $color-primary;
+
+    &:hover,
+    &.usa-button-hover {
+      background-color: $color-primary-alt-lightest;
+      box-shadow: $button-stroke $color-white;
+      color: $color-primary-darker;
+    }
+
+    &:active,
+    &.usa-button-active {
+      background-color: $color-primary-alt-lightest;
+      box-shadow: $button-stroke $color-white;
+    }
+  }
+
+  &.usa-button-secondary {
+    background-color: $color-primary;
+    box-shadow: $button-stroke $color-white;
+    color: $color-white;
+
+    &:hover,
+    &.usa-button-hover {
+      background-color: $color-primary-darker;
+      box-shadow: $button-stroke $color-white;
+      color: $color-white;
+    }
+
+    &:active,
+    &.usa-button-active {
+      background-color: $color-primary-darker;
+      box-shadow: $button-stroke $color-white;
+      color: $color-white;
+    }
+  }
+}
