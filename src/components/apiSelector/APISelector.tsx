@@ -21,7 +21,6 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   return (
     <div className="api-selector">
       <select onChange={onSelectionChange} value={props.selectedOption} aria-label="Select an API">
-        <option value="">Select an API</option>
         {props.options.map(item => (
           <option value={item.urlFragment} key={item.urlFragment}>
             {item.name}
