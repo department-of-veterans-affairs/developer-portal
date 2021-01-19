@@ -20,12 +20,14 @@ button,
     &:hover,
     &.usa-button-hover {
       background-color: $color-primary-alt-lightest;
+      box-shadow: $button-stroke $color-white;
       color: $color-primary-darker;
     }
 
     &:active,
     &.usa-button-active {
       background-color: $color-primary-alt-lightest;
+      box-shadow: $button-stroke $color-white;
     }
   }
 
