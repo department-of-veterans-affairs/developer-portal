@@ -32,20 +32,22 @@ describe('PageContent', () => {
   it('loads new page content after navigating to a different route', async () => {
     expect(screen.getByText(/A Veteran-centered API platform/)).toBeInTheDocument();
 
-    const applyLink = screen.getByRole('link', { name: 'Request an API Key' });
-    userEvent.click(applyLink);
+    const documentationLink = screen.getByRole('link', { name: 'Read the Docs' });
+    userEvent.click(documentationLink);
 
-    const applyPageHeader = await screen.findByRole('heading', {
-      name: 'Apply for VA Lighthouse Developer Access',
+    const documentationPageHeader = await screen.findByRole('heading', {
+      name: "Explore usage policies and technical details about VA's API offerings.",
     });
 
-    expect(applyPageHeader).toBeInTheDocument();
+    expect(documentationPageHeader).toBeInTheDocument();
   });
 
   it('scrolls the window to the top position after navigation', async () => {
-    userEvent.click(screen.getByRole('link', { name: 'Request an API Key' }));
+    userEvent.click(screen.getByRole('link', { name: 'Read the Docs' }));
 
-    await screen.findByRole('heading', { name: 'Apply for VA Lighthouse Developer Access' });
+    await screen.findByRole('heading', {
+      name: "Explore usage policies and technical details about VA's API offerings.",
+    });
 
     expect(window.scrollTo).toHaveBeenCalledTimes(1);
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
