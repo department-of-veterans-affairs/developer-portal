@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Flag } from '../../flags';
+import { FLAG_API_PUBLISHING } from '../../types/constants';
 
 import logo from '../../assets/hero-logo.svg';
 
@@ -36,7 +37,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
           </h1>
           <Link
             id="hero-read-api-docs"
-            to="/apply"
+            to="/explore"
             className={classNames(
               'usa-button',
               'usa-button-default',
@@ -48,7 +49,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
           >
             Read the Docs
           </Link>
-          <Flag name={['api_publishing']}>
+          <Flag name={[FLAG_API_PUBLISHING]}>
             <Link
               id="hero-api-publishing"
               to="/api-publishing"
