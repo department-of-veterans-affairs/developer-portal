@@ -301,19 +301,6 @@ node('vetsgov-general-purpose') {
         // Deploy to review bucket
         sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${reviewBucketPath()}/"
         commentAfterDeploy()
-      } else {
-        if (env.BRANCH_NAME == devBranch) {
-          build job: 'deploys/developer-portal-dev', parameters: [
-            booleanParam(name: 'notify_slack', value: true),
-            stringParam(name: 'ref', value: ref),
-          ], wait: false
-        }
-        if (env.BRANCH_NAME == stagingBranch) {
-          build job: 'deploys/developer-portal-staging', parameters: [
-            booleanParam(name: 'notify_slack', value: true),
-            stringParam(name: 'ref', value: ref),
-          ], wait: false
-        }
       }
     } catch (error) {
       notify()
