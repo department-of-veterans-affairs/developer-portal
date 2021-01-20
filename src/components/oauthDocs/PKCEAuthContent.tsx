@@ -45,7 +45,11 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="plaintext" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="plaintext"
+          style={syntaxColor}
+          key={`pkce-authUrl-${selectedOAuthApi}`}
+        >
           {authUrl}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -71,7 +75,11 @@ const PKCEAuthContent = (): JSX.Element => {
       </p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="plaintext" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="plaintext"
+          style={syntaxColor}
+          key={`pkce-codeGrant-${selectedOAuthApi}`}
+        >
           {codeGrant}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -91,7 +99,11 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`pkce-postToken-${selectedOAuthApi}`}
+        >
           {postToken}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -108,7 +120,11 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="json" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="json"
+          style={syntaxColor}
+          key={`pkce-postTokenResponse200-${selectedOAuthApi}`}
+        >
           {postTokenResponse200}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -116,7 +132,11 @@ const PKCEAuthContent = (): JSX.Element => {
       <p>If an error occurs, you will instead receive a 400 response, like this:</p>
 
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`pkce-postTokenResponse400-${selectedOAuthApi}`}
+        >
           {postTokenResponse400}
         </SyntaxHighlighter>
       </CodeWrapper>
@@ -142,7 +162,11 @@ const PKCEAuthContent = (): JSX.Element => {
 
       <APISelector {...selectorProps} />
       <CodeWrapper>
-        <SyntaxHighlighter language="http" style={syntaxColor}>
+        <SyntaxHighlighter
+          language="http"
+          style={syntaxColor}
+          key={`pkce-postTokenRefresh-${selectedOAuthApi}`}
+        >
           {postTokenRefresh}
         </SyntaxHighlighter>
       </CodeWrapper>
