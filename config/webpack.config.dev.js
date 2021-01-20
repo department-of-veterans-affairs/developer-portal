@@ -106,7 +106,7 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-      // This module helps us get past the need alias entries in the webpack.config file we don't use.
+      // This module helps us get past the 'need alias' entries in the webpack.config file.
       new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
     ],
   },
