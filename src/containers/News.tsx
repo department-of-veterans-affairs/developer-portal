@@ -3,6 +3,7 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import './News.scss';
 
+import TwoColumnLayout from '../components/twoColumnLayout';
 import {
   CardLink,
   EmbeddedYoutubeVideo,
@@ -83,55 +84,53 @@ const News = (): JSX.Element => {
     'This page is where you’ll find interesting press releases, articles, or media that relate to the VA Lighthouse program and the Developer Portal.';
 
   return (
-    <div className="vads-u-padding-y--5">
-      <div className="vads-l-grid-container">
-        <div className="vads-l-row">
-          <SideNav ariaLabel="News Side Nav">
-            <SideNavEntry key="all" exact to="/news" name="Overview" />
+    <TwoColumnLayout
+      left={
+        <SideNav ariaLabel="News Side Nav">
+          <SideNavEntry key="all" exact to="/news" name="Overview" />
+          {sections.map((section: NewsSection) => (
+            <SideNavEntry
+              key={section.id}
+              to={`#${section.id}`}
+              name={section.title}
+            />
+          ))}
+        </SideNav>
+      }
+      right={
+        <>
+          <Helmet>
+            <title>News</title>
+          </Helmet>
+          <PageHeader
+            description={pageDescription}
+            header="News"
+            className="vads-u-margin-bottom--4"
+          />
+          <div className={classNames(defaultFlexContainer(), 'vads-u-margin-bottom--4')}>
             {sections.map((section: NewsSection) => (
-              <SideNavEntry
-                key={section.id}
-                to={`#${section.id}`}
-                name={section.title}
-              />
+              <CardLink key={section.id} url={`#${section.id}`} name={section.title}>
+                {section.description}
+              </CardLink>
             ))}
-          </SideNav>
-          <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-            <section aria-label="News">
-              <Helmet>
-                <title>News</title>
-              </Helmet>
-              <PageHeader
-                description={pageDescription}
-                header="News"
-                className="vads-u-margin-bottom--4"
-              />
-              <div className={classNames(defaultFlexContainer(), 'vads-u-margin-bottom--4')}>
-                {sections.map((section: NewsSection) => (
-                  <CardLink key={section.id} url={`#${section.id}`} name={section.title}>
-                    {section.description}
-                  </CardLink>
-                ))}
-              </div>
-              {sections.map((section: NewsSection) => (
-                <section
-                  aria-label={section.title}
-                  key={section.id}
-                  className="vads-u-margin-bottom--4"
-                >
-                  <h2 id={section.id} tabIndex={-1}>
-                    {section.title}
-                  </h2>
-                  {section.items.map((item: NewsItemData) => (
-                    <NewsItem key={item.url} item={item} media={section.media} />
-                  ))}
-                </section>
+          </div>
+          {sections.map((section: NewsSection) => (
+            <section
+              aria-label={section.title}
+              key={section.id}
+              className="vads-u-margin-bottom--4"
+            >
+              <h2 id={section.id} tabIndex={-1}>
+                {section.title}
+              </h2>
+              {section.items.map((item: NewsItemData) => (
+                <NewsItem key={item.url} item={item} media={section.media} />
               ))}
             </section>
-          </div>
-        </div>
-      </div>
-    </div>
+          ))}
+        </>
+      }
+    />
   );
 };
 

@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import TwoColumnLayout from '../../components/twoColumnLayout';
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
@@ -76,39 +76,35 @@ const ReleaseNotes = (): JSX.Element => {
   );
 
   return (
-    <div className={classNames('vads-u-padding-y--5')}>
-      <section>
-        <div className="vads-l-grid-container">
-          <div className="vads-l-row">
-            <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
-              <SideNavEntry key="all" exact to="/release-notes" name="Overview" />
-              {categoryOrder.map((key: string) => (
-                <SideNavCategoryEntry categoryKey={key} apiCategory={apiDefs[key]} key={key} />
-              ))}
-              {deactivatedApis.length > 0 && (
-                <SideNavEntry to="/release-notes/deactivated" name={deactivatedCategory.name}>
-                  {deactivatedApis.length > 1 &&
-                    deactivatedApis.map(api => (
-                      <SideNavAPIEntry api={api} key={api.urlFragment} categoryKey="deactivated" />
-                    ))}
-                </SideNavEntry>
-              )}
-            </SideNav>
-            <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-              <Switch>
-                <Route exact path="/release-notes/" component={ReleaseNotesOverview} />
-                <Route
-                  exact
-                  path="/release-notes/deactivated"
-                  component={DeactivatedReleaseNotes}
-                />
-                <Route path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotes} />
-              </Switch>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+    <TwoColumnLayout
+      left={
+        <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
+          <SideNavEntry key="all" exact to="/release-notes" name="Overview" />
+          {categoryOrder.map((key: string) => (
+            <SideNavCategoryEntry categoryKey={key} apiCategory={apiDefs[key]} key={key} />
+          ))}
+          {deactivatedApis.length > 0 && (
+            <SideNavEntry to="/release-notes/deactivated" name={deactivatedCategory.name}>
+              {deactivatedApis.length > 1 &&
+        deactivatedApis.map(api => (
+          <SideNavAPIEntry api={api} key={api.urlFragment} categoryKey="deactivated" />
+        ))}
+            </SideNavEntry>
+          )}
+        </SideNav>
+      }
+      right={
+        <Switch>
+          <Route exact path="/release-notes/" component={ReleaseNotesOverview} />
+          <Route
+            exact
+            path="/release-notes/deactivated"
+            component={DeactivatedReleaseNotes}
+          />
+          <Route path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotes} />
+        </Switch>
+      }
+    />
   );
 };
 

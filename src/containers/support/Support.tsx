@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import * as React from 'react';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
+import TwoColumnLayout from '../../components/twoColumnLayout';
 
 import { SideNav, SideNavEntry } from '../../components';
 import SupportContactUs from './SupportContactUs';
@@ -32,29 +32,29 @@ const sections: SupportSection[] = [
 ];
 
 const Support: React.FunctionComponent = (): JSX.Element => (
-  <div className="vads-u-padding-y--5">
-    <div className="vads-l-grid-container">
-      <div className="vads-l-row">
-        <SideNav ariaLabel="Support page side nav">
-          <SideNavEntry key="all" exact to="/support" name="Overview" />
-          {sections.map(section => (
-            <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />
-          ))}
-        </SideNav>
-        <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
-          <Route exact path="/support/" render={(): JSX.Element => <SupportOverview sections={sections} />} />
-          {sections.map(section => (
-            <Route
-              key={section.id}
-              exact
-              path={`/support/${section.id}`}
-              component={section.component}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  </div>
+  <TwoColumnLayout
+    left={
+      <SideNav ariaLabel="Support page side nav">
+        <SideNavEntry key="all" exact to="/support" name="Overview" />
+        {sections.map(section => (
+          <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />
+        ))}
+      </SideNav>
+    }
+    right={
+      <Switch>
+        <Route exact path="/support/" render={(): JSX.Element => <SupportOverview sections={sections} />} />
+        {sections.map(section => (
+          <Route
+            key={section.id}
+            exact
+            path={`/support/${section.id}`}
+            component={section.component}
+          />
+        ))}
+      </Switch>
+    }
+  />
 );
 
 export default Support;

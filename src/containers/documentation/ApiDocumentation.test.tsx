@@ -52,6 +52,7 @@ jest.mock('react-router-dom', () => ({
 
 describe('ApiDocumentation', () => {
   const defaultFlags: AppFlags = {
+    api_publishing_enabled: true,
     auth_docs_v2: false,
     categories: { category: true },
     deactivated_apis: { my_api: false },

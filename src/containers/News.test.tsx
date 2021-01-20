@@ -40,23 +40,14 @@ describe('News', () => {
     });
   });
 
-  it('has the main news region', () => {
-    const mainSection = screen.getByRole('region', { name: 'News' });
-    expect(mainSection).toBeInTheDocument();
-  });
-
   it('has a card link for each section', () => {
-    const mainSection = screen.getByRole('region', { name: 'News' });
-    // headers, card links, news sections - relevant for getting card links
-    expect(mainSection.children.length).toBeGreaterThanOrEqual(2);
+    const newsReleasesCard = screen.getByRole('link', { name: 'News releases' });
+    const articlesCard = screen.getByRole('link', { name: 'Articles' });
+    const digitalMediaCard = screen.getByRole('link', { name: 'Digital media' });
 
-    const cardLinks = getAllByRole(mainSection.children[1] as HTMLElement, 'link');
-    expect(cardLinks).toHaveLength(data.sections.length);
-    data.sections.forEach((section: DataSection, index: number) => {
-      expect(cardLinks[index].getAttribute('href')).toBe(`/news#${toHtmlId(section.title)}`);
-      expect(cardLinks[index].children[0]).toHaveTextContent(section.title);
-      expect(cardLinks[index].children[1]).toHaveTextContent(section.description);
-    });
+    expect(newsReleasesCard).toBeInTheDocument();
+    expect(articlesCard).toBeInTheDocument();
+    expect(digitalMediaCard).toBeInTheDocument();
   });
 
   describe('sections', () => {
