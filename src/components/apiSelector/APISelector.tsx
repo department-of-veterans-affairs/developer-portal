@@ -9,6 +9,7 @@ import './APISelector.scss';
 interface APISelectorProps {
   options: APIDescription[];
   selectedOption: string;
+  selectLabel?: string;
 }
 
 const APISelector = (props: APISelectorProps): JSX.Element => {
@@ -17,11 +18,13 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   const onSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     dispatch(setOAuthApiSelection(event.currentTarget.value));
   };
+  const { selectedOption, options } = props;
+  const selectLabel = props.selectLabel ?? 'Select an API to update the code snippet';
 
   return (
     <div className="api-selector">
-      <select onChange={onSelectionChange} value={props.selectedOption} aria-label="Select an API">
-        {props.options.map(item => (
+      <select onChange={onSelectionChange} value={selectedOption} aria-label={selectLabel}>
+        {options.map(item => (
           <option value={item.urlFragment} key={item.urlFragment}>
             {item.name}
           </option>
