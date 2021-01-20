@@ -162,7 +162,6 @@
     "puppeteer": "^2.1.1",
     "react-dev-utils": "^6.1.1",
     "react-test-renderer": "^16.14.0",
-    "resolve": "1.6.0",
     "sass-loader": "7.1.0",
     "source-map-loader": "^0.2.1",
     "style-loader": "0.23.0",
