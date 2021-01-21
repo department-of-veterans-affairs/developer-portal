@@ -7,7 +7,7 @@ interface SectionWithIconProps {
 
 const SectionWithIcon: FC<SectionWithIconProps> = ({ children, imageFile, header }) => (
   <section className="vads-u-display--flex vads-u-align-items--flex-start">
-    <div className="vads-u-display--flex vads-u-flex--1 vads-u-justify-content--center">
+    <div className="vads-u-display--flex vads-u-justify-content--center vads-u-flex--1">
       <img src={imageFile} alt="" role="presentation" />
     </div>
     <div className="vads-u-flex--3">

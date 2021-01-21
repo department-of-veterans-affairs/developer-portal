@@ -1,6 +1,9 @@
 import React, { FC } from 'react';
+import classNames from 'classnames';
 import { Helmet } from 'react-helmet';
-import { PageHeader } from '../../../../components';
+import { PUBLISHING_CONTACT_PATH, PUBLISHING_EXPECTATIONS_PATH, PUBLISHING_ONBOARDING_PATH } from '../../../../paths';
+import { defaultFlexContainer } from '../../../../styles/vadsUtils';
+import { CardLink, PageHeader } from '../../../../components';
 import SectionWithIcon from '../sectionWithIcon';
 import integrateImage from '../../../../assets/integrate.svg';
 import docsImage from '../../../../assets/docs.svg';
@@ -38,7 +41,7 @@ const PublishingIntroduction: FC = () => (
       We act as your API partner and consultant and are invested in your team’s success. The benefits of working
       with us are far-reaching for both you and your consumers, including:
     </p>
-    <div className="vads-u-display--flex vads-u-flex-direction--column">
+    <div className="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--7">
       <SectionWithIcon header="Streamlined integration" imageFile={integrateImage}>
         <p>
           Be part of the secure, reliable Lighthouse program with easy integration for your consumers.
@@ -81,6 +84,17 @@ const PublishingIntroduction: FC = () => (
           thriving API ecosystem.
         </p>
       </SectionWithIcon>
+    </div>
+    <div className={classNames(defaultFlexContainer(), 'vads-u-justify-content--space-evenly')}>
+      <CardLink name="How onboarding works" url={PUBLISHING_ONBOARDING_PATH}>
+        Curious about our publishing process? Learn more about the steps toward publishing with Lighthouse.
+      </CardLink>
+      <CardLink name="Expectations of Lighthouse APIs" url={PUBLISHING_EXPECTATIONS_PATH}>
+        Is your API ready to be published on the Lighthouse developer portal? Learn more about our requirements and expectations.
+      </CardLink>
+      <CardLink name="Contact us" url={PUBLISHING_CONTACT_PATH}>
+        Ready to take the leap and publish your API with us? Start the process by contacting us here.
+      </CardLink>
     </div>
 
   </>
