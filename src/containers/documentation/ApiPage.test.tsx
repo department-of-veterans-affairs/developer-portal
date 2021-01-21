@@ -51,7 +51,7 @@ const renderApiPage = (flags: AppFlags, initialRoute: string, componentPath?: st
 // Test
 describe('ApiPage', () => {
   const defaultFlags: AppFlags = {
-    api_publishing_enabled: true,
+    api_publishing: false,
     auth_docs_v2: false,
     categories: { category: true },
     deactivated_apis: {},

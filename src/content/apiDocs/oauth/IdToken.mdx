@@ -1,6 +1,6 @@
 ---
 imports:
-  '{ SectionHeaderWrapper }': ../../../components 
+  '{ SectionHeaderWrapper }': ../../../components
 ---
 
 <SectionHeaderWrapper heading="ID Token" id="id-token" />
@@ -13,7 +13,7 @@ Your application must validate JWT signatures. This allows your application to v
 
 ### Header
 
-The JWT's header has two fields, `alg` and `kid`. `alg` indicates the algorithm that was used to sign the JWT, and `kid` identifies the key that was used to sign the JWT. Signing keys and associated metadata are accessible from https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration.
+The JWT's header has two fields, `alg` and `kid`. `alg` indicates the algorithm that was used to sign the JWT, and `kid` identifies the key that was used to sign the JWT. Signing keys and associated metadata are accessible from [https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration](https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration).
 
 ### Signature
 

@@ -30,6 +30,7 @@ const ScopesContent = (): JSX.Element => {
       <APISelector
         options={options}
         selectedOption={selectedOAuthApi}
+        selectLabel="Select an API to show and describe the related scopes"
       />
 
       {scopes.length > 0 && (

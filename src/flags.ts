@@ -5,6 +5,7 @@ import { getAllApis } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 
 export interface AppFlags {
+  api_publishing: boolean;
   auth_docs_v2: boolean;
   categories: { [categoryId: string]: boolean };
   deactivated_apis: { [apiId: string]: boolean };
@@ -12,7 +13,6 @@ export interface AppFlags {
   hosted_apis: { [apiId: string]: boolean };
   show_testing_notice: boolean;
   signups_enabled: boolean;
-  api_publishing_enabled: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -30,7 +30,7 @@ const getFlags = (): AppFlags => {
   }, {});
 
   return {
-    api_publishing_enabled: process.env.REACT_APP_API_PUBLISHING_ENABLED === 'true',
+    api_publishing: process.env.REACT_APP_API_PUBLISHING === 'true',
     auth_docs_v2: process.env.REACT_APP_AUTH_DOCS_V2 === 'true',
     categories: apiCategories,
     deactivated_apis: deactivatedFlags,

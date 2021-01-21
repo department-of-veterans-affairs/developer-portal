@@ -185,7 +185,7 @@ phases:
       # Output build times
       - printf '%b\n' "${time}"
       # Handle comments.
-      # - |
-      #   if [[ ${PR_NUM} ]]; then
-      #     prcomment.sh ${REPO} ${PR_NUM} "${comment:-"CI Job has finished without comment."}"
-      #  fi
+      - |
+        if [[ ${PR_NUM} ]]; then
+          prcomment.sh ${REPO} ${PR_NUM} "${comment:-"CI Job has finished successfully."}"
+        fi
