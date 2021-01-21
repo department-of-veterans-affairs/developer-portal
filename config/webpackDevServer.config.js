@@ -101,7 +101,8 @@ module.exports = function(proxy, allowedHost) {
       // We do this in development to avoid hitting the production cache if
       // it used the same host and port.
       // https://github.com/facebookincubator/create-react-app/issues/2272#issuecomment-302832432
-      app.use(noopServiceWorkerMiddleware());
+      const servedPath = '.';
+      app.use(noopServiceWorkerMiddleware(servedPath));
     },
   };
 };
