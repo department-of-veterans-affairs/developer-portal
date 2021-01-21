@@ -3,11 +3,8 @@
 
 'use strict';
 
-const fs = require('fs');
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
-const resolve = require('resolve');
 
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
