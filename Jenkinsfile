@@ -293,18 +293,4 @@ node('vetsgov-general-purpose') {
       throw error
     }
   }
-
-  stage('Deploy') {
-    if (supercededByConcurrentBuild()) { return }
-    try {
-      if (prNum) {
-        // Deploy to review bucket
-        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${reviewBucketPath()}/"
-        commentAfterDeploy()
-      }
-    } catch (error) {
-      notify()
-      throw error
-    }
-  }
 }
