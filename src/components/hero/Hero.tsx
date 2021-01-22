@@ -40,7 +40,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
             to="/explore"
             className={classNames(
               'usa-button',
-              'usa-button-default',
+              'va-api-button-default',
               'vads-u-margin-right--3',
               'vads-u-padding-x--4',
               'vads-u-width--full',
@@ -55,7 +55,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
               to="/api-publishing"
               className={classNames(
                 'usa-button',
-                'usa-button-secondary',
+                'va-api-button-secondary',
                 'vads-u-padding-x--4',
                 'vads-u-width--full',
                 'medium-screen:vads-u-width--auto',
