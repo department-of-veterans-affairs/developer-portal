@@ -70,16 +70,6 @@ def getPullRequestNumber() {
   }
 }
 
-def commentAfterDeploy() {
-  def linksSnippet = envNames.collect{ envName ->
-    "https://s3-us-gov-west-1.amazonaws.com/${reviewBucketPath()}/${envName}/index.html"
-  }.join(" <br> ")
-
-  pullRequestComment(
-    "These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${linksSnippet} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
-  )
-}
-
 def reviewBucketPath() {
   return "${review_s3_bucket_name}/${shortRef}"
 }
