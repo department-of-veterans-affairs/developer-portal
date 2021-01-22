@@ -157,6 +157,7 @@ const DocumentationRoot = (): JSX.Element => {
           <Route exact path="/explore/:apiCategoryKey/docs/:apiName" component={ApiPage} />
         </Switch>
       }
+      className="documentation"
     />
   );
 };

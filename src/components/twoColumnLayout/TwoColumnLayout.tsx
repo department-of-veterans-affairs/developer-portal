@@ -4,10 +4,11 @@ import classNames from 'classnames';
 interface TwoColumnLayoutProps {
   left: React.ReactNode;
   right: React.ReactNode;
+  className?: string;
 }
 
-const TwoColumnLayout: FC<TwoColumnLayoutProps> = ({ left, right }) => (
-  <div className={classNames('vads-u-padding-y--5')}>
+const TwoColumnLayout: FC<TwoColumnLayoutProps> = ({ left, right, className }) => (
+  <div className={classNames('vads-u-padding-y--5', className)}>
     <div className="vads-l-grid-container">
       <div className="vads-l-row">
         {left}
