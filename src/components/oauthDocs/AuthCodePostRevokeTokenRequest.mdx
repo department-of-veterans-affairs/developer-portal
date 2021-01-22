@@ -9,9 +9,9 @@ imports:
 POST /oauth2/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
+Authorization: Basic {base64 encoded *client_id* + ':' + *client_secret*}
 
-token={your access token}&token_type_hint=access_token
+token={ *access_token* }&token_type_hint=access_token
 ```
 
 </CodeWrapper>
@@ -22,9 +22,9 @@ token={your access token}&token_type_hint=access_token
 POST /oauth2/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic {base64 encoded *client id* + ':' + *client secret*}
+Authorization: Basic {base64 encoded *client_id* + ':' + *client_secret*}
 
-token={your refresh token}&token_type_hint=refresh_token
+token={ *refresh_token* }&token_type_hint=refresh_token
 ```
 
 </CodeWrapper>

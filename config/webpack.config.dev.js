@@ -106,6 +106,7 @@ module.exports = {
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
       new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      // This module helps us get past the 'need alias' entries in the webpack.config file.
       new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
     ],
   },
@@ -330,6 +331,7 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
     // Perform type checking and linting in a separate process to speed up compilation
     new ForkTsCheckerWebpackPlugin({
       async: false,
