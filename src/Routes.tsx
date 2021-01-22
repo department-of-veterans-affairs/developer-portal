@@ -58,7 +58,7 @@ export const SiteRoutes: React.FunctionComponent = () => (
       render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
     />
     {
-      getFlags().api_publishing_enabled &&
+      getFlags().api_publishing &&
       <Route path={PUBLISHING_PATH} component={Publishing} />
     }
     <Route component={NotFound} />

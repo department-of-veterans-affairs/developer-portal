@@ -10,7 +10,7 @@ const SectionWithIcon: FC<SectionWithIconProps> = ({ children, imageFile, header
     <div className="vads-u-display--flex vads-u-justify-content--center vads-u-flex--1">
       <img src={imageFile} alt="" role="presentation" />
     </div>
-    <div className="vads-u-flex--3">
+    <div className="vads-u-flex--4">
       <h3>{header}</h3>
       {children}
     </div>

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { Helmet } from 'react-helmet';
-import { PUBLISHING_CONTACT_PATH, PUBLISHING_EXPECTATIONS_PATH, PUBLISHING_ONBOARDING_PATH } from '../../../../paths';
+import { SUPPORT_CONTACT_PATH, PUBLISHING_EXPECTATIONS_PATH, PUBLISHING_ONBOARDING_PATH } from '../../../../paths';
 import { defaultFlexContainer } from '../../../../styles/vadsUtils';
 import { CardLink, PageHeader } from '../../../../components';
 import SectionWithIcon from '../sectionWithIcon';
@@ -92,7 +92,7 @@ const PublishingIntroduction: FC = () => (
       <CardLink name="Expectations of Lighthouse APIs" url={PUBLISHING_EXPECTATIONS_PATH}>
         Is your API ready to be published on the Lighthouse developer portal? Learn more about our requirements and expectations.
       </CardLink>
-      <CardLink name="Contact us" url={PUBLISHING_CONTACT_PATH}>
+      <CardLink name="Contact us" url={SUPPORT_CONTACT_PATH}>
         Ready to take the leap and publish your API with us? Start the process by contacting us here.
       </CardLink>
     </div>
