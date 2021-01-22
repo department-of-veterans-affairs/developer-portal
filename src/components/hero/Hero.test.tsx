@@ -18,6 +18,7 @@ describe('Hero', () => {
       </FlagsProvider>,
     );
   });
+
   it('checks image source', () => {
     const heroImage = screen.getByRole('presentation');
     expect(heroImage).toBeInTheDocument();

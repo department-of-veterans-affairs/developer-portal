@@ -7,7 +7,6 @@ import { APIDescription } from './apiDefs/schema';
 export interface AppFlags {
   api_publishing: boolean;
   auth_docs_v2: boolean;
-  api_publishing: boolean;
   categories: { [categoryId: string]: boolean };
   deactivated_apis: { [apiId: string]: boolean };
   enabled: { [apiId: string]: boolean };
