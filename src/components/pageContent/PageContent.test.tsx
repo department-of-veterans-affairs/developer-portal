@@ -35,19 +35,14 @@ describe('PageContent', () => {
     const documentationLink = screen.getByRole('link', { name: 'Read the Docs' });
     userEvent.click(documentationLink);
 
-    const documentationPageHeader = await screen.findByRole('heading', {
-      name: "Explore usage policies and technical details about VA's API offerings.",
-    });
-
+    const documentationPageHeader = await screen.findByRole('heading', { name: 'Documentation' });
     expect(documentationPageHeader).toBeInTheDocument();
   });
 
   it('scrolls the window to the top position after navigation', async () => {
     userEvent.click(screen.getByRole('link', { name: 'Read the Docs' }));
 
-    await screen.findByRole('heading', {
-      name: "Explore usage policies and technical details about VA's API offerings.",
-    });
+    await screen.findByRole('heading', { name: 'Documentation' });
 
     expect(window.scrollTo).toHaveBeenCalledTimes(1);
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
