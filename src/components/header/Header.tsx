@@ -73,7 +73,7 @@ const Header = (): JSX.Element => {
                 'medium-screen:vads-u-font-size--2xl',
               )}
             >
-              <span className="vads-u-font-weight--bold">VA</span> | Lighthouse
+              <span className="vads-u-font-weight--bold">VA</span> | Lighthouse APIs
             </Link>
           </div>
           <div className={desktopOnly()}>
