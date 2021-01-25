@@ -12,8 +12,7 @@ import './Header.scss';
 
 const buttonClassnames = classNames(
   'usa-button',
-  'vads-u-background-color--white',
-  'vads-u-color--primary-darkest',
+  'va-api-button-default',
   'vads-u-margin-right--2',
 );
 
