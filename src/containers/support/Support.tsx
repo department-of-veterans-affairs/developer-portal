@@ -43,7 +43,11 @@ const Support: React.FunctionComponent = (): JSX.Element => (
     }
     right={
       <Switch>
-        <Route exact path="/support/" render={(): JSX.Element => <SupportOverview sections={sections} />} />
+        <Route
+          exact
+          path="/support/"
+          render={(): JSX.Element => <SupportOverview sections={sections} />}
+        />
         {sections.map(section => (
           <Route
             key={section.id}

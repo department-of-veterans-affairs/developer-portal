@@ -8,7 +8,7 @@ describe('SectionWithIcon', () => {
     render(
       <SectionWithIcon imageFile={checkImage} header="Test">
         This is a child.
-      </SectionWithIcon>
+      </SectionWithIcon>,
     );
   });
 

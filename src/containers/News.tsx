@@ -4,13 +4,7 @@ import Helmet from 'react-helmet';
 import './News.scss';
 
 import TwoColumnLayout from '../components/twoColumnLayout';
-import {
-  CardLink,
-  EmbeddedYoutubeVideo,
-  PageHeader,
-  SideNav,
-  SideNavEntry,
-} from '../components';
+import { CardLink, EmbeddedYoutubeVideo, PageHeader, SideNav, SideNavEntry } from '../components';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
@@ -76,8 +70,9 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
   );
 };
 
+// eslint-disable-next-line no-confusing-arrow
 const NewsItem = ({ item, media }: { item: NewsItemData; media: boolean }): JSX.Element =>
-  (media ? <MediaItem item={item} /> : <ItemDescription item={item} />);
+  media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
 
 const News = (): JSX.Element => {
   const pageDescription =
@@ -89,11 +84,7 @@ const News = (): JSX.Element => {
         <SideNav ariaLabel="News Side Nav">
           <SideNavEntry key="all" exact to="/news" name="Overview" />
           {sections.map((section: NewsSection) => (
-            <SideNavEntry
-              key={section.id}
-              to={`#${section.id}`}
-              name={section.title}
-            />
+            <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />
           ))}
         </SideNav>
       }

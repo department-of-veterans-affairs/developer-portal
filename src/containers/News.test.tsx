@@ -35,7 +35,9 @@ describe('News', () => {
 
       data.sections.forEach((dataSection: DataSection, index: number) => {
         expect(navLinks[index + 1]).toHaveTextContent(dataSection.title);
-        expect(navLinks[index + 1].getAttribute('href')).toBe(`/news#${toHtmlId(dataSection.title)}`);
+        expect(navLinks[index + 1].getAttribute('href')).toBe(
+          `/news#${toHtmlId(dataSection.title)}`,
+        );
       });
     });
   });

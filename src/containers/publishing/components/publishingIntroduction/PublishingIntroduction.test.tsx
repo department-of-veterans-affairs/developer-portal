@@ -8,7 +8,7 @@ describe('PublishingIntroduction', () => {
     render(
       <MemoryRouter initialEntries={['/api-publishing']}>
         <PublishingIntroduction />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 

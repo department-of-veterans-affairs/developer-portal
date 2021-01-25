@@ -31,7 +31,7 @@ const SideNavAPIEntry = (props: SideNavAPIEntryProps): JSX.Element => {
               <small>Internal VA use only.</small>
             </span>
           )}
-          {(api.vaInternalOnly && api.trustedPartnerOnly) ? <br /> : null}
+          {api.vaInternalOnly && api.trustedPartnerOnly ? <br /> : null}
           {api.trustedPartnerOnly && (
             <span>
               <small>Internal VA use only.{/* Trusted Partner use only. */}</small>
@@ -86,9 +86,9 @@ const ReleaseNotes = (): JSX.Element => {
           {deactivatedApis.length > 0 && (
             <SideNavEntry to="/release-notes/deactivated" name={deactivatedCategory.name}>
               {deactivatedApis.length > 1 &&
-        deactivatedApis.map(api => (
-          <SideNavAPIEntry api={api} key={api.urlFragment} categoryKey="deactivated" />
-        ))}
+                deactivatedApis.map(api => (
+                  <SideNavAPIEntry api={api} key={api.urlFragment} categoryKey="deactivated" />
+                ))}
             </SideNavEntry>
           )}
         </SideNav>
@@ -96,11 +96,7 @@ const ReleaseNotes = (): JSX.Element => {
       right={
         <Switch>
           <Route exact path="/release-notes/" component={ReleaseNotesOverview} />
-          <Route
-            exact
-            path="/release-notes/deactivated"
-            component={DeactivatedReleaseNotes}
-          />
+          <Route exact path="/release-notes/deactivated" component={DeactivatedReleaseNotes} />
           <Route path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotes} />
         </Switch>
       }

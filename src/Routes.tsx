@@ -57,10 +57,7 @@ export const SiteRoutes: React.FunctionComponent = () => (
       path="/providers/integration-guide"
       render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
     />
-    {
-      getFlags().api_publishing &&
-      <Route path={PUBLISHING_PATH} component={Publishing} />
-    }
+    {getFlags().api_publishing && <Route path={PUBLISHING_PATH} component={Publishing} />}
     <Route component={NotFound} />
   </Switch>
 );

@@ -12,7 +12,10 @@ const TwoColumnLayout: FC<TwoColumnLayoutProps> = ({ left, right, className }) =
     <div className="vads-l-grid-container">
       <div className="vads-l-row">
         {left}
-        <section aria-label="content" className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}>
+        <section
+          aria-label="content"
+          className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}
+        >
           {right}
         </section>
       </div>
