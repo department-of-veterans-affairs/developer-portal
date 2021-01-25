@@ -83,9 +83,8 @@ choosePort(HOST, DEFAULT_PORT)
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
 
-    // prepareProxy takes a servedPathname but whether it exists or not it does
-    // not seem to cause errors with or without. Leaving it here because the
-    // docs say it should be there
+    // We don't currently use a proxy in our configuration, but this is based on
+    // the original Create-React-App configuration, so we leave it here.
     const servedPathname = '';
     const proxyConfig = prepareProxy(
       proxySetting,
