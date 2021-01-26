@@ -136,10 +136,10 @@ phases:
           time="${time}\n${phase} - $(date +%r) started"
           links=""
           for env in ${ENVIRONMENTS}; do
-            links="${links}[${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}/index.html) <br>"
+            links="${links} - [${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}/index.html) <br>"
           done
           aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/
-          comment="These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${links} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly." 
+          comment="These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${links} <br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly." 
         fi
       # Call the release job if this is running on master branch.
       - phase=release
