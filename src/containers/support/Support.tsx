@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
-import TwoColumnLayout from '../../components/twoColumnLayout';
 
-import { SideNav, SideNavEntry } from '../../components';
+import { ContentWithNav, SideNav, SideNavEntry } from '../../components';
 import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
@@ -32,16 +31,16 @@ const sections: SupportSection[] = [
 ];
 
 const Support: React.FunctionComponent = (): JSX.Element => (
-  <TwoColumnLayout
-    left={
-      <SideNav ariaLabel="Support page side nav">
+  <ContentWithNav
+    nav={
+      <SideNav>
         <SideNavEntry key="all" exact to="/support" name="Overview" />
         {sections.map(section => (
           <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />
         ))}
       </SideNav>
     }
-    right={
+    content={
       <Switch>
         <Route
           exact
@@ -58,6 +57,7 @@ const Support: React.FunctionComponent = (): JSX.Element => (
         ))}
       </Switch>
     }
+    navAriaLabel="Support page side nav"
   />
 );
 

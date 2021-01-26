@@ -8,7 +8,6 @@ import './SideNav.scss';
 
 interface SideNavProps {
   className?: string;
-  ariaLabel: string;
   children: React.ReactNode;
 }
 
@@ -30,13 +29,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
   }, [navRef]);
 
   return (
-    <div
-      className={classNames(
-        'vads-l-col--12',
-        'vads-u-padding-right--5',
-        'medium-screen:vads-l-col--4',
-      )}
-    >
+    <>
       <HashLink
         className={classNames(
           'va-api-secondary-skip-nav',
@@ -51,14 +44,13 @@ const SideNav = (props: SideNavProps): JSX.Element => {
       >
         Skip Page Navigation
       </HashLink>
-      <nav
+      <div
         className={classNames(
           'va-api-side-nav',
           'vads-u-display--none',
           'medium-screen:vads-u-display--block',
           props.className,
         )}
-        aria-label={props.ariaLabel}
         ref={navRef}
       >
         <ul
@@ -74,8 +66,8 @@ const SideNav = (props: SideNavProps): JSX.Element => {
         >
           {props.children}
         </ul>
-      </nav>
-    </div>
+      </div>
+    </>
   );
 };
 

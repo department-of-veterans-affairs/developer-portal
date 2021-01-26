@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import TwoColumnLayout from '../../components/twoColumnLayout';
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { isHostedApiEnabled } from '../../apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
-import { SideNav, SideNavEntry } from '../../components';
+import { ContentWithNav, SideNav, SideNavEntry } from '../../components';
 import { Flag } from '../../flags';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
@@ -76,9 +75,9 @@ const ReleaseNotes = (): JSX.Element => {
   );
 
   return (
-    <TwoColumnLayout
-      left={
-        <SideNav ariaLabel="Release Notes Side Nav" className="vads-u-margin-bottom--2">
+    <ContentWithNav
+      nav={
+        <SideNav>
           <SideNavEntry key="all" exact to="/release-notes" name="Overview" />
           {categoryOrder.map((key: string) => (
             <SideNavCategoryEntry categoryKey={key} apiCategory={apiDefs[key]} key={key} />
@@ -93,13 +92,14 @@ const ReleaseNotes = (): JSX.Element => {
           )}
         </SideNav>
       }
-      right={
+      content={
         <Switch>
           <Route exact path="/release-notes/" component={ReleaseNotesOverview} />
           <Route exact path="/release-notes/deactivated" component={DeactivatedReleaseNotes} />
           <Route path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotes} />
         </Switch>
       }
+      navAriaLabel="Release Notes Side Nav"
     />
   );
 };

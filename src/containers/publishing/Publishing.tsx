@@ -1,19 +1,18 @@
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router';
-import TwoColumnLayout from '../../components/twoColumnLayout';
 import {
   SUPPORT_CONTACT_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
-} from '../../paths';
-import { SideNav, SideNavEntry } from '../../components';
-import PublishingIntroduction from './components/publishingIntroduction';
+} from '../../types/constants/paths';
+import { ContentWithNav, SideNav, SideNavEntry } from '../../components';
+import { PublishingIntroduction } from './components/publishingIntroduction';
 
 const Publishing: FC = () => (
-  <TwoColumnLayout
-    left={
-      <SideNav ariaLabel="API Publishing Side Nav" className="vads-u-margin-bottom--2">
+  <ContentWithNav
+    nav={
+      <SideNav>
         <SideNavEntry key="intro" exact to={PUBLISHING_PATH} name="API Publishing" />
         <SideNavEntry
           key="onboarding"
@@ -30,12 +29,13 @@ const Publishing: FC = () => (
         <SideNavEntry key="contact" exact to={SUPPORT_CONTACT_PATH} name="Contact Us" />
       </SideNav>
     }
-    right={
+    content={
       <Switch>
         <Route exact path={PUBLISHING_PATH} component={PublishingIntroduction} />
       </Switch>
     }
+    navAriaLabel="API Publishing Side Nav"
   />
 );
 
-export default Publishing;
+export { Publishing };

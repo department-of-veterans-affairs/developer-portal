@@ -33,7 +33,7 @@ describe('News', () => {
       'should move focus to the %s section',
       async (sectionName: string) => {
         const doc = await getDocument(page);
-        const contentSection = await queries.getByRole(doc, 'region', { name: 'content' });
+        const contentSection = await queries.getByRole(doc, 'region', { name: 'News' });
         const cardLink = await queries.getByRole(contentSection, 'link', {
           name: new RegExp(`^${sectionName}`),
         });

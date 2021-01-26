@@ -11,7 +11,6 @@ import ExplorePage from '../../content/explorePage.mdx';
 import { Flag } from '../../flags';
 
 import { APINameParam } from '../../types';
-import { PAGE_HEADER_ID } from '../../types/constants';
 import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
 
@@ -67,19 +66,17 @@ const ApiPage = (): JSX.Element => {
 
   return (
     <Flag name={['enabled', api.urlFragment]} fallbackRender={(): JSX.Element => <ExplorePage />}>
-      <div role="region" aria-labelledby={PAGE_HEADER_ID}>
-        <Helmet>
-          <title>{api.name} Documentation</title>
-        </Helmet>
-        <PageHeader halo={category.name} header={api.name} />
-        <DeactivationMessage api={api} />
-        {!isApiDeactivated(api) && (
-          <ApiDocumentation
-            apiDefinition={api}
-            location={location}
-          />
-        )}
-      </div>
+      <Helmet>
+        <title>{api.name} Documentation</title>
+      </Helmet>
+      <PageHeader halo={category.name} header={api.name} />
+      <DeactivationMessage api={api} />
+      {!isApiDeactivated(api) && (
+        <ApiDocumentation
+          apiDefinition={api}
+          location={location}
+        />
+      )}
     </Flag>
   );
 };

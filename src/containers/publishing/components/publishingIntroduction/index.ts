@@ -1,1 +1,1 @@
-export { default } from './PublishingIntroduction';
+export * from './PublishingIntroduction';

@@ -1,11 +1,7 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import {
-  AccordionPanelContent,
-  GroupedAccordions,
-  PageHeader,
-} from '../../components';
+import { AccordionPanelContent, GroupedAccordions, PageHeader } from '../../components';
 
 const generalQuestions: SupportQuestion[] = [
   {
@@ -186,7 +182,7 @@ const SupportQuestions = (props: SupportQuestionsProps): JSX.Element => {
 };
 
 const SupportFAQ: () => JSX.Element = () => (
-  <section aria-label="Support FAQ">
+  <>
     <Helmet>
       <title>FAQ</title>
     </Helmet>
@@ -196,7 +192,7 @@ const SupportFAQ: () => JSX.Element = () => (
       <SupportQuestions title="Development" questions={developmentQuestions} />
       <SupportQuestions title="Troubleshooting/Support" questions={supportQuestions} />
     </div>
-  </section>
+  </>
 );
 
 export default SupportFAQ;

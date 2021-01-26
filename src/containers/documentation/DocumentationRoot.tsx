@@ -2,10 +2,9 @@ import * as React from 'react';
 import { Redirect } from 'react-router';
 import { Route, Switch, useParams } from 'react-router-dom';
 
-import TwoColumnLayout from '../../components/twoColumnLayout';
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
-import { SideNav, SideNavEntry } from '../../components';
+import { ContentWithNav, SideNav, SideNavEntry } from '../../components';
 import { Flag, useFlag } from '../../flags';
 import { APINameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER, FLAG_AUTH_DOCS_V2 } from '../../types/constants';
@@ -72,7 +71,7 @@ const ExploreSideNav = (): JSX.Element => {
   const apiDefinitions = getApiDefinitions();
 
   return (
-    <SideNav ariaLabel="API Docs Side Nav">
+    <SideNav>
       <SideNavEntry key="all" exact to="/explore" name="Overview" />
       <Flag name={[FLAG_AUTH_DOCS_V2]}>
         <SideNavEntry key="authorization" to="/explore/authorization" name="Authorization" />
@@ -129,9 +128,9 @@ const DocumentationRoot = (): JSX.Element => {
   const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
 
   return (
-    <TwoColumnLayout
-      left={<ExploreSideNav />}
-      right={
+    <ContentWithNav
+      nav={<ExploreSideNav />}
+      content={
         <Switch>
           {oldRouteToNew.map(routes => (
             <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
@@ -149,6 +148,7 @@ const DocumentationRoot = (): JSX.Element => {
           <Route exact path="/explore/:apiCategoryKey/docs/:apiName" component={ApiPage} />
         </Switch>
       }
+      navAriaLabel="API Docs Side Nav"
       className="documentation"
     />
   );

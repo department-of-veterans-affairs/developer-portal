@@ -26,30 +26,38 @@ describe('News', () => {
 
   describe('side nav', () => {
     it('has the expected side nav entries', () => {
-      const sideNav = screen.getByRole('navigation', { name: 'News Side Nav' });
+      const sideNav = screen.getByRole('navigation');
       const navLinks = getAllByRole(sideNav, 'link');
-      expect(navLinks).toHaveLength(data.sections.length + 1);
+      // add 2 to data.sections.length, 1 for Overview and 1 for Skip Page Navigation
+      expect(navLinks).toHaveLength(data.sections.length + 2);
 
-      expect(navLinks[0]).toHaveTextContent('Overview');
-      expect(navLinks[0].getAttribute('href')).toBe('/news');
+      const overviewLink = getByRole(sideNav, 'link', { name: 'Overview' });
+      expect(overviewLink).toHaveAttribute('href', '/news');
 
-      data.sections.forEach((dataSection: DataSection, index: number) => {
-        expect(navLinks[index + 1]).toHaveTextContent(dataSection.title);
-        expect(navLinks[index + 1].getAttribute('href')).toBe(
-          `/news#${toHtmlId(dataSection.title)}`,
-        );
+      data.sections.forEach((dataSection: DataSection) => {
+        const link = getByRole(sideNav, 'link', { name: dataSection.title });
+        expect(link).toHaveAttribute('href', `/news#${toHtmlId(dataSection.title)}`);
       });
     });
   });
 
-  it('has a card link for each section', () => {
-    const newsReleasesCard = screen.getByRole('link', { name: 'News releases' });
-    const articlesCard = screen.getByRole('link', { name: 'Articles' });
-    const digitalMediaCard = screen.getByRole('link', { name: 'Digital media' });
+  it('has the main news region', () => {
+    const mainSection = screen.getByRole('region', { name: 'News' });
+    expect(mainSection).toBeInTheDocument();
+  });
 
-    expect(newsReleasesCard).toBeInTheDocument();
-    expect(articlesCard).toBeInTheDocument();
-    expect(digitalMediaCard).toBeInTheDocument();
+  it('has a card link for each section', () => {
+    const mainSection = screen.getByRole('region', { name: 'News' });
+    // headers, card links, news sections - relevant for getting card links
+    expect(mainSection.children.length).toBeGreaterThanOrEqual(2);
+
+    const cardLinks = getAllByRole(mainSection.children[1] as HTMLElement, 'link');
+    expect(cardLinks).toHaveLength(data.sections.length);
+    data.sections.forEach((section: DataSection, index: number) => {
+      expect(cardLinks[index].getAttribute('href')).toBe(`/news#${toHtmlId(section.title)}`);
+      expect(cardLinks[index].children[0]).toHaveTextContent(section.title);
+      expect(cardLinks[index].children[1]).toHaveTextContent(section.description);
+    });
   });
 
   describe('sections', () => {

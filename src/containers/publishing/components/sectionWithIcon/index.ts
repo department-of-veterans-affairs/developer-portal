@@ -1,1 +1,1 @@
-export { default } from './SectionWithIcon';
+export * from './SectionWithIcon';

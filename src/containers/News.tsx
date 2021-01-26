@@ -3,8 +3,14 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import './News.scss';
 
-import TwoColumnLayout from '../components/twoColumnLayout';
-import { CardLink, EmbeddedYoutubeVideo, PageHeader, SideNav, SideNavEntry } from '../components';
+import {
+  CardLink,
+  ContentWithNav,
+  EmbeddedYoutubeVideo,
+  PageHeader,
+  SideNav,
+  SideNavEntry,
+} from '../components';
 import * as NewsData from '../content/news.yml';
 import { defaultFlexContainer } from '../styles/vadsUtils';
 import toHtmlId from '../toHtmlId';
@@ -79,16 +85,16 @@ const News = (): JSX.Element => {
     'This page is where you’ll find interesting press releases, articles, or media that relate to the VA Lighthouse program and the Developer Portal.';
 
   return (
-    <TwoColumnLayout
-      left={
-        <SideNav ariaLabel="News Side Nav">
+    <ContentWithNav
+      nav={
+        <SideNav>
           <SideNavEntry key="all" exact to="/news" name="Overview" />
           {sections.map((section: NewsSection) => (
             <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />
           ))}
         </SideNav>
       }
-      right={
+      content={
         <>
           <Helmet>
             <title>News</title>
@@ -121,6 +127,7 @@ const News = (): JSX.Element => {
           ))}
         </>
       }
+      navAriaLabel="News Side Nav"
     />
   );
 };
