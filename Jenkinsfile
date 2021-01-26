@@ -70,16 +70,6 @@ def getPullRequestNumber() {
   }
 }
 
-def commentAfterDeploy() {
-  def linksSnippet = envNames.collect{ envName ->
-    "https://s3-us-gov-west-1.amazonaws.com/${reviewBucketPath()}/${envName}/index.html"
-  }.join(" <br> ")
-
-  pullRequestComment(
-    "These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${linksSnippet} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
-  )
-}
-
 def reviewBucketPath() {
   return "${review_s3_bucket_name}/${shortRef}"
 }
@@ -286,33 +276,6 @@ node('vetsgov-general-purpose') {
         envNames.each{ envName ->
           sh "tar -C build/${envName} -cf build/${envName}.tar.bz2 ."
           sh "aws --region us-gov-west-1 s3 cp --no-progress --acl public-read build/${envName}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envName}.tar.bz2"
-        }
-      }
-    } catch (error) {
-      notify()
-      throw error
-    }
-  }
-
-  stage('Deploy') {
-    if (supercededByConcurrentBuild()) { return }
-    try {
-      if (prNum) {
-        // Deploy to review bucket
-        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${reviewBucketPath()}/"
-        commentAfterDeploy()
-      } else {
-        if (env.BRANCH_NAME == devBranch) {
-          build job: 'deploys/developer-portal-dev', parameters: [
-            booleanParam(name: 'notify_slack', value: true),
-            stringParam(name: 'ref', value: ref),
-          ], wait: false
-        }
-        if (env.BRANCH_NAME == stagingBranch) {
-          build job: 'deploys/developer-portal-staging', parameters: [
-            booleanParam(name: 'notify_slack', value: true),
-            stringParam(name: 'ref', value: ref),
-          ], wait: false
         }
       }
     } catch (error) {

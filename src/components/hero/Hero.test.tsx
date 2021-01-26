@@ -1,47 +1,50 @@
 import * as React from 'react';
 import 'jest';
-import {  render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { FlagsProvider, getFlags } from '../../flags';
 import * as logoImage from '../../__mocks__/fakeImage';
 import { Hero } from './Hero';
 
-describe('Hero', () => {
-  it('checks image source', () => {
-    render(
-      <Router>
-        <Hero />
-      </Router>
-    );
+const flags = { ...getFlags(), api_publishing: true };
 
-    const heroImage = screen.getByRole('presentation');
-    expect(heroImage).toBeInTheDocument();
-    expect(heroImage).toHaveAttribute('src', (logoImage.default));
+describe('Hero', () => {
+  beforeEach(() => {
+    render(
+      <FlagsProvider flags={flags}>
+        <Router>
+          <Hero />
+        </Router>
+      </FlagsProvider>,
+    );
   });
 
-  it('checks api key url', () => {
-    render(
-      <Router>
-        <Hero />
-      </Router>
-    );
+  it('checks image source', () => {
+    const heroImage = screen.getByRole('presentation');
+    expect(heroImage).toBeInTheDocument();
+    expect(heroImage).toHaveAttribute('src', logoImage.default);
+  });
 
-    const apiLink = screen.getByText('Request an API Key');
+  it('contains a link to documentation', () => {
+    const apiLink = screen.getByRole('link', { name: 'Read the Docs' });
     expect(apiLink).toBeInTheDocument();
-    expect(apiLink).toHaveAttribute('href', ('/apply'));
+    expect(apiLink).toHaveAttribute('href', '/explore');
+  });
+
+  it('contains a link to API Publishing', () => {
+    const apiLink = screen.getByRole('link', { name: 'API Publishing' });
+    expect(apiLink).toBeInTheDocument();
+    expect(apiLink).toHaveAttribute('href', '/api-publishing');
   });
 
   it('checks h1 text', () => {
-    render(
-      <Router>
-        <Hero />
-      </Router>
-    );
-
     const desiredText = 'A Veteran-centered API platform for securely accessing VA data.';
     const heroText = screen.getByText(desiredText);
     expect(heroText).toBeInTheDocument();
-    expect(heroText).toHaveClass('vads-u-color--white',
+    expect(heroText).toHaveClass(
+      'vads-u-color--white',
       'vads-u-font-size--h2',
-      'small-desktop-screen:vads-u-font-size--h1');
+      'small-desktop-screen:vads-u-font-size--h1',
+    );
   });
 });

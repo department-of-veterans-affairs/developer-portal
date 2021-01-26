@@ -160,7 +160,7 @@
     "prettier": "^1.16.4",
     "pretty-format": "^26.4.2",
     "puppeteer": "^2.1.1",
-    "react-dev-utils": "^6.1.1",
+    "react-dev-utils": "^11.0.1",
     "react-test-renderer": "^16.14.0",
     "sass-loader": "7.1.0",
     "source-map-loader": "^0.2.1",
