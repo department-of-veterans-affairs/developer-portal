@@ -8,7 +8,6 @@ import {
   ContentWithNav,
   EmbeddedYoutubeVideo,
   PageHeader,
-  SideNav,
   SideNavEntry,
 } from '../components';
 import * as NewsData from '../content/news.yml';
@@ -76,7 +75,6 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
   );
 };
 
-// eslint-disable-next-line no-confusing-arrow
 const NewsItem = ({ item, media }: { item: NewsItemData; media: boolean }): JSX.Element =>
   media ? <MediaItem item={item} /> : <ItemDescription item={item} />;
 
@@ -87,12 +85,12 @@ const News = (): JSX.Element => {
   return (
     <ContentWithNav
       nav={
-        <SideNav>
+        <>
           <SideNavEntry key="all" exact to="/news" name="Overview" />
           {sections.map((section: NewsSection) => (
             <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />
           ))}
-        </SideNav>
+        </>
       }
       content={
         <>

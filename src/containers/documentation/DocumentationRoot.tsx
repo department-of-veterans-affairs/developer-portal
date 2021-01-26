@@ -4,7 +4,7 @@ import { Route, Switch, useParams } from 'react-router-dom';
 
 import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
-import { ContentWithNav, SideNav, SideNavEntry } from '../../components';
+import { ContentWithNav, SideNavEntry } from '../../components';
 import { Flag, useFlag } from '../../flags';
 import { APINameParam } from '../../types';
 import { CURRENT_VERSION_IDENTIFIER, FLAG_AUTH_DOCS_V2 } from '../../types/constants';
@@ -71,7 +71,7 @@ const ExploreSideNav = (): JSX.Element => {
   const apiDefinitions = getApiDefinitions();
 
   return (
-    <SideNav>
+    <>
       <SideNavEntry key="all" exact to="/explore" name="Overview" />
       <Flag name={[FLAG_AUTH_DOCS_V2]}>
         <SideNavEntry key="authorization" to="/explore/authorization" name="Authorization" />
@@ -103,7 +103,7 @@ const ExploreSideNav = (): JSX.Element => {
           </Flag>
         );
       })}
-    </SideNav>
+    </>
   );
 };
 

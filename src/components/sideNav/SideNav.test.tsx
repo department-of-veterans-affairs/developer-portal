@@ -17,6 +17,7 @@ describe('applyStickiness', () => {
 });
 
 describe('SideNav', () => {
+  const ariaLabel = 'navigation';
   const customClass = 'custom-class';
 
   const getNavItems = (): JSX.Element => (
@@ -30,13 +31,20 @@ describe('SideNav', () => {
   it('checks props are properly reflected and skip to content link is present.', () => {
     render(
       <MemoryRouter>
-        <SideNav className={customClass}>{getNavItems()}</SideNav>
+        <SideNav ariaLabel={ariaLabel} className={customClass}>
+          {getNavItems()}
+        </SideNav>
       </MemoryRouter>,
     );
 
     const skipContentLink = screen.queryByText('Skip Page Navigation');
     expect(skipContentLink).toBeInTheDocument();
     expect(skipContentLink).toHaveAttribute('href', '/#page-header');
+
+    const navigation = screen.queryByRole('navigation');
+    expect(navigation?.className).toContain('custom-class');
+    expect(navigation).toBeInTheDocument();
+    expect(navigation).toHaveAttribute('aria-label', ariaLabel);
 
     expect(screen.getByTestId('item1')).toBeInTheDocument();
     expect(screen.getByTestId('item2')).toBeInTheDocument();
@@ -46,7 +54,9 @@ describe('SideNav', () => {
   it('checks stickyfilljs library is properly setup.', () => {
     render(
       <MemoryRouter>
-        <SideNav className={customClass}>{getNavItems()}</SideNav>
+        <SideNav ariaLabel={ariaLabel} className={customClass}>
+          {getNavItems()}
+        </SideNav>
       </MemoryRouter>,
     );
 

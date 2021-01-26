@@ -35,8 +35,6 @@ describe('ReleaseNotesOverview', () => {
   it('renders the heading', () => {
     const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
     expect(heading1).toBeInTheDocument();
-    expect(heading1.previousElementSibling).not.toBeNull();
-    expect(heading1.previousElementSibling).toHaveTextContent('Overview');
   });
 
   it('renders the contact us link', () => {

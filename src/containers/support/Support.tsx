@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
-import { ContentWithNav, SideNav, SideNavEntry } from '../../components';
+import { ContentWithNav, SideNavEntry } from '../../components';
 import SupportContactUs from './SupportContactUs';
 import SupportFAQ from './SupportFAQ';
 import SupportOverview from './SupportOverview';
@@ -33,12 +33,12 @@ const sections: SupportSection[] = [
 const Support: React.FunctionComponent = (): JSX.Element => (
   <ContentWithNav
     nav={
-      <SideNav>
+      <>
         <SideNavEntry key="all" exact to="/support" name="Overview" />
         {sections.map(section => (
           <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />
         ))}
-      </SideNav>
+      </>
     }
     content={
       <Switch>

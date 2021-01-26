@@ -20,8 +20,7 @@ describe('Publishing', () => {
   it('side nav contains expected entries', () => {
     const sideNav = screen.getByRole('navigation', { name: 'API Publishing Side Nav' });
     const navLinks = getAllByRole(sideNav, 'link');
-    // expect an extra link for 'Skip Page Navigation'
-    expect(navLinks.length).toEqual(5);
+    expect(navLinks.length).toEqual(4);
 
     const publishingLink = getByRole(sideNav, 'link', { name: 'API Publishing' });
     expect(publishingLink).toHaveAttribute('href', '/api-publishing');

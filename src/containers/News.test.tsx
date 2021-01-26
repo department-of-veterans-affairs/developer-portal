@@ -28,8 +28,7 @@ describe('News', () => {
     it('has the expected side nav entries', () => {
       const sideNav = screen.getByRole('navigation', { name: 'News Side Nav' });
       const navLinks = getAllByRole(sideNav, 'link');
-      // add 2 to data.sections.length, 1 for Overview and 1 for Skip Page Navigation
-      expect(navLinks).toHaveLength(data.sections.length + 2);
+      expect(navLinks).toHaveLength(data.sections.length + 1);
 
       const overviewLink = getByRole(sideNav, 'link', { name: 'Overview' });
       expect(overviewLink).toHaveAttribute('href', '/news');

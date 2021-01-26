@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import { PAGE_HEADER_ID } from '../../types/constants';
+import { PAGE_HEADER_AND_HALO_ID, PAGE_HEADER_ID } from '../../types/constants';
 import './PageHeader.scss';
 
 interface PageHeaderProps {
@@ -9,11 +9,10 @@ interface PageHeaderProps {
   description?: string;
   halo?: string;
   header: string;
-  containerId?: string;
 }
 
 const PageHeader = (props: PageHeaderProps): JSX.Element => (
-  <div id={props.containerId} className={props.className}>
+  <div id={PAGE_HEADER_AND_HALO_ID} className={props.className}>
     {props.halo && (
       <div className={classNames('header-halo', 'vads-u-color--gray')}>{props.halo}</div>
     )}
