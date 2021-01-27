@@ -61,7 +61,7 @@ const PublishingOnboarding: FC = () => (
           <th>Both teams</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style={{ verticalAlign: 'top' }}>
         <tr>
           <td>
             <ul>
@@ -105,7 +105,7 @@ const PublishingOnboarding: FC = () => (
           <th>Together, we’ll...</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody style={{ verticalAlign: 'top' }}>
         <tr>
           <td>
             <ul>
