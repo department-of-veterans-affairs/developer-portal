@@ -1,1 +1,1 @@
-export { default } from './PublishingOnboarding';
+export * from './PublishingOnboarding';

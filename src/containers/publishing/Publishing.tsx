@@ -8,7 +8,7 @@ import {
 } from '../../types/constants/paths';
 import { ContentWithNav, SideNavEntry } from '../../components';
 import { PublishingIntroduction } from './components/publishingIntroduction';
-import PublishingOnboarding from './components/publishingOnboarding';
+import { PublishingOnboarding } from './components/publishingOnboarding';
 
 const Publishing: FC = () => (
   <ContentWithNav

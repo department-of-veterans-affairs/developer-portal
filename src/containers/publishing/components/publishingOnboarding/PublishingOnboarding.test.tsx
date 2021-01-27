@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import PublishingOnboarding from './PublishingOnboarding';
+import { PublishingOnboarding } from './PublishingOnboarding';
 
 describe('PublishingOnboarding', () => {
   beforeEach(() => {

@@ -1,9 +1,9 @@
 import React, { FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { PageHeader } from 'src/components';
+import { PageHeader } from '../../../../components';
 
-const PublishingOnboarding: FC = () => (
+export const PublishingOnboarding: FC = () => (
   <>
     <Helmet>
       <title>API Publishing | Onboarding</title>
@@ -150,5 +150,3 @@ const PublishingOnboarding: FC = () => (
     </p>
   </>
 );
-
-export default PublishingOnboarding;

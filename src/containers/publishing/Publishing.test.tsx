@@ -26,7 +26,7 @@ describe('Publishing', () => {
     const publishingLink = getByRole(sideNav, 'link', { name: 'API Publishing' });
     expect(publishingLink).toHaveAttribute('href', '/api-publishing');
 
-    const onBoardingLink = getByRole(sideNav, 'link', { name: 'How onboarding works' });
+    const onBoardingLink = getByRole(sideNav, 'link', { name: 'How publishing works' });
     expect(onBoardingLink).toHaveAttribute('href', '/api-publishing/process');
 
     const expectationsLink = getByRole(sideNav, 'link', { name: 'Expectations for APIs' });
