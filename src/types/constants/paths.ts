@@ -7,3 +7,5 @@ export const RELEASE_NOTES_DEACTIVATED_PATH = `${RELEASE_NOTES_PATH}/deactivated
 export const RELEASE_NOTES_CATEGORY_PATH = `${RELEASE_NOTES_PATH}/:apiCategoryKey`;
 
 export const SUPPORT_CONTACT_PATH = '/support/contact-us';
+
+export const TERMS_OF_SERVICE_PATH = '/terms-of-service';

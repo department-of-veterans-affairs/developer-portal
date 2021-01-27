@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import './Footer.scss';
 
-import { SUPPORT_CONTACT_PATH } from '../../paths';
+import { SUPPORT_CONTACT_PATH, TERMS_OF_SERVICE_PATH } from '../../types/constants/paths';
 import logo from '../../assets/lighthouseVaLogo.png';
 
 const footerLinkStyles = classNames('vads-u-font-size--sm', 'vads-u-color--white');
@@ -28,7 +28,7 @@ const Footer: React.FunctionComponent = (): JSX.Element => (
         'vads-u-margin-x--2',
         'vads-u-flex-direction--column',
         'medium-screen:vads-u-margin-x--4',
-        'medium-screen:vads-u-flex-direction--row'
+        'medium-screen:vads-u-flex-direction--row',
       )}
     >
       <div
@@ -67,7 +67,7 @@ const Footer: React.FunctionComponent = (): JSX.Element => (
             </Link>
           </li>
           <li className={listItemStyles}>
-            <Link to="/terms-of-service" className={footerLinkStyles}>
+            <Link to={TERMS_OF_SERVICE_PATH} className={footerLinkStyles}>
               Terms of Service
             </Link>
           </li>
