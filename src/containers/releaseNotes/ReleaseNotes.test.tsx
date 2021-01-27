@@ -40,8 +40,6 @@ describe('ReleaseNotes', () => {
   it('renders successfully, on the Overview page by default', () => {
     const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
     expect(heading1).toBeInTheDocument();
-    expect(heading1.previousElementSibling).not.toBeNull();
-    expect(heading1.previousElementSibling).toHaveTextContent('Overview');
   });
 
   it('renders the route for the category release note page', async () => {

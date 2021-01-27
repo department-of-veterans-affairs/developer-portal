@@ -14,7 +14,7 @@ const ReleaseNotesOverview = (): JSX.Element => {
       <Helmet>
         <title>Release Notes</title>
       </Helmet>
-      <PageHeader halo="Overview" header="Release Notes" />
+      <PageHeader header="Release Notes" />
       <div className="vads-u-font-size--lg">
         <p>
           The VA Lighthouse product teams periodically update these APIs in order to deliver new
@@ -32,7 +32,8 @@ const ReleaseNotesOverview = (): JSX.Element => {
           To view user-requested features and known issues or report a bug, please visit our{' '}
           <a href="https://github.com/department-of-veterans-affairs/vets-api-clients">
             GitHub repo
-          </a>.
+          </a>
+          .
         </p>
       </div>
       <div className={defaultFlexContainer()}>

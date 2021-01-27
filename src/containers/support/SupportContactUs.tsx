@@ -4,7 +4,6 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import { PageHeader } from '../../components';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
-import { PAGE_HEADER_ID } from '../../types/constants';
 import SupportContactUsForm from './SupportContactUsForm';
 
 const GitHubSnippet = (): JSX.Element => (
@@ -40,14 +39,14 @@ const SupportContactUs = (): JSX.Element => {
     <>
       {sent && <SupportConfirmation />}
       {!sent && (
-        <section aria-labelledby={PAGE_HEADER_ID}>
+        <>
           <Helmet>
             <title>Contact Us</title>
           </Helmet>
           <PageHeader {...headerProps} />
           <GitHubSnippet />
           <SupportContactUsForm onSuccess={onSuccess} />
-        </section>
+        </>
       )}
     </>
   );

@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { Flag } from '../../flags';
+import { FLAG_API_PUBLISHING } from '../../types/constants';
 
 import logo from '../../assets/hero-logo.svg';
 
@@ -8,7 +10,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
   <section
     aria-label="Page Hero"
     className={classNames(
-      'vads-u-background-color--primary-darkest',
+      'vads-u-background-color--primary',
       'vads-u-padding-y--5',
       'vads-u-padding-x--0',
     )}
@@ -34,12 +36,34 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
             A Veteran-centered API platform for securely accessing VA data.
           </h1>
           <Link
-            id="hero-request-key"
-            to="/apply"
-            className="usa-button vads-u-width--full medium-screen:vads-u-width--auto"
+            id="hero-read-api-docs"
+            to="/explore"
+            className={classNames(
+              'usa-button',
+              'va-api-button-default',
+              'vads-u-margin-right--3',
+              'vads-u-padding-x--4',
+              'vads-u-width--full',
+              'medium-screen:vads-u-width--auto',
+            )}
           >
-            Request an API Key
+            Read the Docs
           </Link>
+          <Flag name={[FLAG_API_PUBLISHING]}>
+            <Link
+              id="hero-api-publishing"
+              to="/api-publishing"
+              className={classNames(
+                'usa-button',
+                'va-api-button-secondary',
+                'vads-u-padding-x--4',
+                'vads-u-width--full',
+                'medium-screen:vads-u-width--auto',
+              )}
+            >
+              API Publishing
+            </Link>
+          </Flag>
         </div>
       </div>
       <div

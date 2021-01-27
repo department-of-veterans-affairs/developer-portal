@@ -30,12 +30,12 @@ describe('News', () => {
       const navLinks = getAllByRole(sideNav, 'link');
       expect(navLinks).toHaveLength(data.sections.length + 1);
 
-      expect(navLinks[0]).toHaveTextContent('Overview');
-      expect(navLinks[0].getAttribute('href')).toBe('/news');
+      const overviewLink = getByRole(sideNav, 'link', { name: 'Overview' });
+      expect(overviewLink).toHaveAttribute('href', '/news');
 
-      data.sections.forEach((dataSection: DataSection, index: number) => {
-        expect(navLinks[index + 1]).toHaveTextContent(dataSection.title);
-        expect(navLinks[index + 1].getAttribute('href')).toBe(`/news#${toHtmlId(dataSection.title)}`);
+      data.sections.forEach((dataSection: DataSection) => {
+        const link = getByRole(sideNav, 'link', { name: dataSection.title });
+        expect(link).toHaveAttribute('href', `/news#${toHtmlId(dataSection.title)}`);
       });
     });
   });
