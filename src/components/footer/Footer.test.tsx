@@ -21,7 +21,7 @@ describe('Footer', () => {
           <Router>
             <Footer />
           </Router>
-        </FlagsProvider>
+        </FlagsProvider>,
       );
     });
 
@@ -34,18 +34,23 @@ describe('Footer', () => {
 
       const contactLink = screen.getByRole('link', { name: 'Contact Us' });
       expect(contactLink).toBeInTheDocument();
+      expect(contactLink).toHaveAttribute('href', '/support/contact-us');
 
       const termsLink = screen.getByRole('link', { name: 'Terms of Service' });
       expect(termsLink).toBeInTheDocument();
+      expect(termsLink).toHaveAttribute('href', '/terms-of-service');
 
       const accessibilityLink = screen.getByRole('link', { name: 'Accessibility' });
       expect(accessibilityLink).toBeInTheDocument();
+      expect(accessibilityLink).toHaveAttribute('href', 'https://www.section508.va.gov/');
 
       const policiesLink = screen.getByRole('link', { name: 'Web Policies' });
       expect(policiesLink).toBeInTheDocument();
+      expect(policiesLink).toHaveAttribute('href', 'https://www.va.gov/webpolicylinks.asp');
 
       const privacyLink = screen.getByRole('link', { name: 'Privacy' });
       expect(privacyLink).toBeInTheDocument();
+      expect(privacyLink).toHaveAttribute('href', 'https://www.va.gov/privacy/');
     });
   });
 });
