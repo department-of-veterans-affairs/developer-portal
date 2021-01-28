@@ -1,0 +1,16 @@
+<div className="feature">
+
+### What we provide
+
+- Clarity regarding our API requirements
+- Guidance for how to build modern APIs that meet our requirements
+
+### What we need from you
+
+- [APIs should be RESTful](https://restfulapi.net/soap-vs-rest-apis/). They should not use antiquated request and response formats. Ideal APIs leverage the REST architecture (not SOAP), use simple formats like JSON, and do not demand special tooling.
+- [APIs should be stateless](https://restfulapi.net/statelessness/#:~:text=Being%20stateless%20makes%20REST%20APIs,easy%20to%20cache%20as%20well.&text=The%20server%20never%20loses%20track,necessary%20information%20with%20each%20request.). Each API call should include the necessary details required to process it. Session management should not be required.
+- [APIs should be versioned](https://restfulapi.net/versioning/). Backward-incompatible changes should be published as a separate version. Changes between versions should be documented.
+- [APIs should be cache-compatible](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-caching.html). Lighthouse will not necessarily cache API responses, but client applications must be able to rely on appropriate cache behavior.
+- [APIs must be compatible with a layered architecture](https://apiacademy.co/2015/04/api-design-202-architectural-layers/) since they will be behind the API Gateway.
+
+</div>

@@ -8,6 +8,7 @@ import {
 } from '../../types/constants/paths';
 import { ContentWithNav, SideNavEntry } from '../../components';
 import { PublishingIntroduction } from './components/publishingIntroduction';
+import { PublishingExpectations } from './components/publishingExpecations';
 import { PublishingOnboarding } from './components/publishingOnboarding';
 
 const Publishing: FC = () => (
@@ -33,6 +34,7 @@ const Publishing: FC = () => (
     content={
       <Switch>
         <Route exact path={PUBLISHING_PATH} component={PublishingIntroduction} />
+        <Route exact path={PUBLISHING_EXPECTATIONS_PATH} component={PublishingExpectations} />
         <Route exact path={PUBLISHING_ONBOARDING_PATH} component={PublishingOnboarding} />
       </Switch>
     }
