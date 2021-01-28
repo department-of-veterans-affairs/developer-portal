@@ -11,6 +11,7 @@ import TestingNotice from '../TestingNotice';
 import './Header.scss';
 
 const buttonClassnames = classNames(
+  'va-api-apply-button',
   'usa-button',
   'va-api-button-default',
   'vads-u-margin-right--2',
@@ -58,6 +59,7 @@ const Header = (): JSX.Element => {
           <div
             className={classNames(
               'va-api-logo',
+              'vads-u-margin-right--2',
               'vads-u-margin-left--2',
               'medium-screen:vads-u-margin-left--0',
             )}
