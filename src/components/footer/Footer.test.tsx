@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import 'jest';
-
 import { shallow } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../flags';
@@ -30,6 +28,7 @@ describe('Footer', () => {
       expect(links.length).toEqual(6);
 
       const logoLink = screen.getByAltText('Department of Veterans Affairs').closest('a');
+      expect(logoLink).toBeInTheDocument();
       expect(logoLink).toHaveAttribute('href', 'https://www.va.gov');
 
       const contactLink = screen.getByRole('link', { name: 'Contact Us' });
