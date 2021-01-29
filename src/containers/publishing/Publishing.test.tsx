@@ -1,6 +1,7 @@
 import React from 'react';
 import { getAllByRole, getByRole, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
+import userEvent from '@testing-library/user-event';
 import { Publishing } from './Publishing';
 
 describe('Publishing', () => {
@@ -12,7 +13,7 @@ describe('Publishing', () => {
     );
   });
 
-  it('renders successfully', () => {
+  it('renders the introduction page initially', () => {
     const header = screen.getByRole('heading', { name: 'Publishing your API on Lighthouse' });
     expect(header).toBeInTheDocument();
   });
@@ -25,7 +26,7 @@ describe('Publishing', () => {
     const publishingLink = getByRole(sideNav, 'link', { name: 'API Publishing' });
     expect(publishingLink).toHaveAttribute('href', '/api-publishing');
 
-    const onBoardingLink = getByRole(sideNav, 'link', { name: 'How onboarding works' });
+    const onBoardingLink = getByRole(sideNav, 'link', { name: 'How publishing works' });
     expect(onBoardingLink).toHaveAttribute('href', '/api-publishing/process');
 
     const expectationsLink = getByRole(sideNav, 'link', { name: 'Expectations for APIs' });
@@ -33,5 +34,18 @@ describe('Publishing', () => {
 
     const contactUsLink = getByRole(sideNav, 'link', { name: 'Contact Us' });
     expect(contactUsLink).toHaveAttribute('href', '/support/contact-us');
+  });
+
+  describe('using sidenav', () => {
+    describe('clicking How publishing works link', () => {
+      it('shows the how publishing works page', async () => {
+        expect(screen.queryByRole('heading', { name: 'How publishing works' })).not.toBeInTheDocument();
+        const navLink = screen.getByRole('link', { name: 'How publishing works' });
+        userEvent.click(navLink);
+
+        const newHeader = await screen.findByRole('heading', { name: 'How publishing works' });
+        expect(newHeader).toBeInTheDocument();
+      });
+    });
   });
 });

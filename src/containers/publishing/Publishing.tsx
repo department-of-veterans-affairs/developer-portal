@@ -8,6 +8,7 @@ import {
 } from '../../types/constants/paths';
 import { ContentWithNav, SideNavEntry } from '../../components';
 import { PublishingIntroduction } from './components/publishingIntroduction';
+import { PublishingOnboarding } from './components/publishingOnboarding';
 
 const Publishing: FC = () => (
   <ContentWithNav
@@ -18,7 +19,7 @@ const Publishing: FC = () => (
           key="onboarding"
           exact
           to={PUBLISHING_ONBOARDING_PATH}
-          name="How onboarding works"
+          name="How publishing works"
         />
         <SideNavEntry
           key="expectations"
@@ -32,6 +33,7 @@ const Publishing: FC = () => (
     content={
       <Switch>
         <Route exact path={PUBLISHING_PATH} component={PublishingIntroduction} />
+        <Route exact path={PUBLISHING_ONBOARDING_PATH} component={PublishingOnboarding} />
       </Switch>
     }
     navAriaLabel="API Publishing Side Nav"
