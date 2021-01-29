@@ -59,7 +59,6 @@ const Header = (): JSX.Element => {
           <div
             className={classNames(
               'va-api-logo',
-              'vads-u-margin-right--2',
               'vads-u-margin-left--2',
               'medium-screen:vads-u-margin-left--0',
             )}
@@ -71,7 +70,8 @@ const Header = (): JSX.Element => {
                 'vads-u-color--white',
                 'vads-u-font-size--lg',
                 'vads-u-text-decoration--none',
-                'medium-screen:vads-u-font-size--2xl',
+                'medium-screen:vads-u-font-size--xl',
+                'small-desktop-screen:vads-u-font-size--2xl',
               )}
             >
               <span className="vads-u-font-weight--bold">VA</span> | Lighthouse APIs
