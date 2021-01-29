@@ -15,7 +15,7 @@
     "test:monitoring": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/App.e2e.ts'",
     "test:accessibility": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --runInBand",
     "test:accessibility:ci": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --ci --testResultsProcessor='./node_modules/jest-junit-reporter' --forceExit --runInBand",
-    "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand",
+    "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand --ci",
     "test:coverage": "node scripts/test.js --coverage "
   },
   "dependencies": {
