@@ -16,7 +16,6 @@ import { FLAG_AUTH_DOCS_V2 } from '../../../../types/constants';
 
 const PublishingExpectations = (): JSX.Element => {
   const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
-  console.log(authDocsV2);
   const authenticationUrl = authDocsV2
     ? '/explore/authorization'
     : '/explore/verification/docs/authorization';
