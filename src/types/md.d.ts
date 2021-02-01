@@ -7,6 +7,7 @@ declare module '*.mdx' {
    * preference to limit our use the component loader to its basic functionality.
    */
   interface MarkdownComponentProps {
+    [x: string]: unknown;
     className?: string;
     style?: string;
   }

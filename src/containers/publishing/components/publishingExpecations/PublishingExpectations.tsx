@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import CollapsiblePanel from '@department-of-veterans-affairs/formation-react/CollapsiblePanel';
 import { PageHeader } from '../../../../components';
+import { useFlag } from '../../../../flags';
 import {
   AuthenticationMarkdown,
   DocumentationMarkdown,
@@ -11,16 +12,14 @@ import {
   SupportMarkdown,
   VersioningMarkdown,
 } from '../../../../content/publishing/expectations';
-
-declare const window: { VetsGov?: Record<string, unknown> };
+import { FLAG_AUTH_DOCS_V2 } from '../../../../types/constants';
 
 const PublishingExpectations = (): JSX.Element => {
-  React.useEffect(() => {
-    // CollapsiblePanel expects a VetsGov object on the global window
-    if (!window.VetsGov) {
-      window.VetsGov = { scroll: null };
-    }
-  }, []);
+  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
+  console.log(authDocsV2);
+  const authenticationUrl = authDocsV2
+    ? '/explore/authorization'
+    : '/explore/verification/docs/authorization';
 
   return (
     <>
@@ -38,7 +37,7 @@ const PublishingExpectations = (): JSX.Element => {
 
       <h2>Security</h2>
       <CollapsiblePanel panelName="We follow industry best practices regarding security and privacy to ensure the data is safe and secure.">
-        <SecurityMarkdown />
+        <SecurityMarkdown authenticationUrl={authenticationUrl} />
       </CollapsiblePanel>
 
       <h2>Documentation</h2>
