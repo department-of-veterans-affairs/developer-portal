@@ -2,13 +2,16 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { PublishingExpectations } from './PublishingExpectations';
+import { FlagsProvider, getFlags } from '../../../../flags';
 
 describe('PublishingExpectations', () => {
   beforeEach(() => {
     render(
-      <MemoryRouter initialEntries={['/api-publishing/expectations']}>
-        <PublishingExpectations />
-      </MemoryRouter>,
+      <FlagsProvider flags={getFlags()}>
+        <MemoryRouter initialEntries={['/api-publishing/expectations']}>
+          <PublishingExpectations />
+        </MemoryRouter>
+      </FlagsProvider>,
     );
   });
 
@@ -25,47 +28,17 @@ describe('PublishingExpectations', () => {
     });
   });
 
-  describe('security', () => {
+  describe.each([
+    ['Security'],
+    ['Documentation'],
+    ['Versioning'],
+    ['Monitoring'],
+    ['Support'],
+    ['Modernization'],
+    ['Authentication and Authorization'],
+  ])('%s', name => {
     it('renders succesfully', () => {
-      expect(screen.getByRole('heading', { name: 'Security' })).toBeInTheDocument();
-    });
-  });
-
-  describe('documentation', () => {
-    it('renders succesfully', () => {
-      expect(screen.getByRole('heading', { name: 'Documentation' })).toBeInTheDocument();
-    });
-  });
-
-  describe('versioning', () => {
-    it('renders succesfully', () => {
-      expect(screen.getByRole('heading', { name: 'Versioning' })).toBeInTheDocument();
-    });
-  });
-
-  describe('monitoring', () => {
-    it('renders succesfully', () => {
-      expect(screen.getByRole('heading', { name: 'Monitoring' })).toBeInTheDocument();
-    });
-  });
-
-  describe('support', () => {
-    it('renders succesfully', () => {
-      expect(screen.getByRole('heading', { name: 'Support' })).toBeInTheDocument();
-    });
-  });
-
-  describe('modernization', () => {
-    it('renders succesfully', () => {
-      expect(screen.getByRole('heading', { name: 'Modernization' })).toBeInTheDocument();
-    });
-  });
-
-  describe('authentication and authorization', () => {
-    it('renders succesfully', () => {
-      expect(
-        screen.getByRole('heading', { name: 'Authentication and Authorization' }),
-      ).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name })).toBeInTheDocument();
     });
   });
 });
