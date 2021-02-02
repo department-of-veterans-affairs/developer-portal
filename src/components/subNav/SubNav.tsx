@@ -47,7 +47,7 @@ const SubNav: FC<SubNavProps> = ({ children, name }) => {
         <img src={subNavVisible ? minusIcon : plusIcon} alt="" className="va-api-expand-nav-icon" />
       </button>
       {subNavVisible && (
-        <ul className={listStyles} id={`${name}-sub-nav`}>
+        <ul className={listStyles} id={toHtmlId(`${name}-sub-nav`)}>
           {children}
         </ul>
       )}
