@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
+import toHtmlId from '../../toHtmlId';
 import { mobileOnly } from '../../styles/vadsUtils';
 import minusIcon from '../../../node_modules/uswds/src/img/minus.png';
 import plusIcon from '../../../node_modules/uswds/src/img/plus.png';
@@ -39,8 +40,8 @@ const SubNav: FC<SubNavProps> = ({ children, name }) => {
         className={expandNavButtonStyles}
         onClick={(): void => toggleSubNav()}
         type="button"
-        aria-expanded={!!subNavVisible}
-        aria-controls={`${name}-sub-nav`}
+        aria-expanded={subNavVisible}
+        aria-controls={toHtmlId(`${name}-sub-nav`)}
       >
         <span>{name}</span>
         <img src={subNavVisible ? minusIcon : plusIcon} alt="" className="va-api-expand-nav-icon" />
