@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
-import { PublishingExpectations } from './PublishingExpectations';
 import { FlagsProvider, getFlags } from '../../../../flags';
+import { PublishingExpectations } from './PublishingExpectations';
 
 describe('PublishingExpectations', () => {
   beforeEach(() => {
