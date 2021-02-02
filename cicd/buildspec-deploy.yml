@@ -64,9 +64,9 @@ phases:
           done
         elif [[ ${COMMIT_HASH} ]]; then 
           # confirm that commit has an archived build
-          aws s3 ls s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7}/ || exit 1
+          aws s3 ls s3://${S3_ARCHIVE_BUCKET}/${COMMIT_HASH:0:7}/ || exit 1
           echo "Downloading assets for commit ${COMMIT_HASH}"
-          aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7}/ .
+          aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/${COMMIT_HASH:0:7}/ .
         fi
       # Deploy environments
       - echo "Begining deployments to ${ENVIRONMENTS}"
