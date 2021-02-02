@@ -140,8 +140,8 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             >
               Documentation
             </MainNavItem>
-            <SubNav name="Documentation" alt="Expand Documentation">
-              <SubNavEntry onClick={props.onMobileNavClose} to="/explore" key="all">
+            <SubNav name="Documentation">
+              <SubNavEntry onClick={props.onMobileNavClose} to="/explore" id="all">
                 Overview
               </SubNavEntry>
               {apiCategoryOrder.map(apiKey => (
@@ -149,7 +149,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                   <SubNavEntry
                     onClick={props.onMobileNavClose}
                     to={`/explore/${apiKey}`}
-                    key={apiKey}
+                    id={apiKey}
                   >
                     {apiDefs[apiKey].name}
                   </SubNavEntry>
@@ -197,28 +197,28 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               >
                 API Publishing
               </MainNavItem>
-              <SubNav name="API Publishing" alt="Expand API Publishing">
-                <SubNavEntry onClick={props.onMobileNavClose} to={PUBLISHING_PATH} key="overview">
+              <SubNav name="API Publishing">
+                <SubNavEntry onClick={props.onMobileNavClose} to={PUBLISHING_PATH} id="overview">
                   Overview
                 </SubNavEntry>
                 <SubNavEntry
                   onClick={props.onMobileNavClose}
                   to={PUBLISHING_ONBOARDING_PATH}
-                  key="process"
+                  id="process"
                 >
                   How publishing works
                 </SubNavEntry>
                 <SubNavEntry
                   onClick={props.onMobileNavClose}
                   to={PUBLISHING_EXPECTATIONS_PATH}
-                  key="expectations"
+                  id="expectations"
                 >
                   Expectations for APIs
                 </SubNavEntry>
                 <SubNavEntry
                   onClick={props.onMobileNavClose}
                   to={SUPPORT_CONTACT_PATH}
-                  key="contact"
+                  id="contact"
                 >
                   Contact Us
                 </SubNavEntry>

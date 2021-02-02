@@ -18,13 +18,14 @@ const linkStyles = classNames(
 );
 
 interface SubNavEntryProps {
+  // the onClick prop is used to close the mobile nav, not for anything related to the native link behavior
   onClick: () => void;
   to: string;
-  key: string;
+  id: string;
 }
 
-const SubNavEntry: FC<SubNavEntryProps> = ({ children, onClick, to, key }) => (
-  <li className={itemStyles} key={key}>
+const SubNavEntry: FC<SubNavEntryProps> = ({ children, onClick, to, id }) => (
+  <li className={itemStyles} key={id}>
     <NavLink
       onClick={onClick}
       exact

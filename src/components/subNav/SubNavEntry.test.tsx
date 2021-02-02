@@ -10,7 +10,7 @@ describe('SubNavEntry', () => {
   beforeEach(() => {
     render(
       <Router>
-        <SubNavEntry onClick={onClick} to="/mordor" key="mordor">
+        <SubNavEntry onClick={onClick} to="/mordor" id="mordor">
           Walk into Mordor
         </SubNavEntry>
       </Router>,

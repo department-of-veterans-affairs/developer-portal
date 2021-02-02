@@ -11,14 +11,14 @@ describe('SubNav', () => {
   beforeEach(() => {
     render(
       <Router>
-        <SubNav name="Elves" alt="Expand Elves">
-          <SubNavEntry onClick={noop} to="/legolas" key="legolas">
+        <SubNav name="Elves">
+          <SubNavEntry onClick={noop} to="/legolas" id="legolas">
             Legolas
           </SubNavEntry>
-          <SubNavEntry onClick={noop} to="/elrond" key="elrond">
+          <SubNavEntry onClick={noop} to="/elrond" id="elrond">
             Elrond
           </SubNavEntry>
-          <SubNavEntry onClick={noop} to="/galadriel" key="galadriel">
+          <SubNavEntry onClick={noop} to="/galadriel" id="galadriel">
             Galadriel
           </SubNavEntry>
         </SubNav>
@@ -27,19 +27,19 @@ describe('SubNav', () => {
   });
 
   it('renders', () => {
-    const button = screen.getByRole('button', { name: 'Elves Expand Elves' });
+    const button = screen.getByRole('button', { name: 'Elves' });
     expect(button).toBeInTheDocument();
 
-    const img = screen.getByRole('img', { name: 'Expand Elves' });
+    const img = screen.getByRole('img');
     expect(img).toBeInTheDocument();
   });
 
-  it('expands and hides the SubNavEntrys', () => {
+  it('expands and hides the SubNavEntries', () => {
     expect(screen.queryByRole('link', { name: 'Legolas' })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Elrond' })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Galadriel' })).not.toBeInTheDocument();
 
-    const button = screen.getByRole('button', { name: 'Elves Expand Elves' });
+    const button = screen.getByRole('button', { name: 'Elves' });
     userEvent.click(button);
 
     const legolasLink = screen.getByRole('link', { name: 'Legolas' });
