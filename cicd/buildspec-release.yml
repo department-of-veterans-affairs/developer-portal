@@ -54,7 +54,7 @@ phases:
           exit 1
         fi
       - mkdir -p release
-      - aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7} release/.
+      - aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/${COMMIT_HASH:0:7} release/.
       # Check that all files exist
       - |
         for env in ${ENVS}; do
@@ -64,17 +64,15 @@ phases:
           fi
         done
       # Create new tag
-      # The cb- prefix is used to test functionalty of CodeBuild without interfering with Jenkins
-      # the cb- prefix should be removed once we migrate releases to CodeBuild
-      - OLD_TAG=$(git tag --sort=-creatordate | grep cb- | head -1)
-      # Migration Code
-      #- OLD_TAG=$(git tag --sort=-creatordate | head -1)
+      # 'grep ^developer-portal' is necessary during the transition since a cb-developer-portal
+      # release might be most recent at the time of the cutover
+      - OLD_TAG=$(git tag --sort=-creatordate | grep ^developer-portal | head -1)
       - echo "Found ${OLD_TAG} - incrementing..."
       - NEW_TAG=$(increment.sh ${OLD_TAG})
       - echo "Creating ${NEW_TAG} release"
       - gh release create ${NEW_TAG}
       - echo "Uploading artifacts"
-      - VERSION=${NEW_TAG#"cb-developer-portal/v"}
+      - VERSION=${NEW_TAG#"developer-portal/v"}
       # Upload artifacts to release after adding version number to file.
       # gh tool utilizes # to define the display name for the uploaded asset
       # <file#display_name> i.e. developer-portal-dev-v0.0.1.tar.bz2#Developer_Portal_v0.0.1_dev.tar.bz2
@@ -86,12 +84,10 @@ phases:
           echo "${env} artifact uploaded"
         done
       # This is will kick off a a deployment to dev and staging deployments
-      # Temporarily deploying by commit during the transition, will switch back to release once
-      # CodeBuild controls the main release
       - |
         if [[ ${DEPLOY} == "true" ]]; then
           echo "Initiating build for ${NEW_TAG} (commit ${COMMIT_HASH})"
-          aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=COMMIT_HASH,value=${COMMIT_HASH}
+          aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,value=${NEW_TAG}
         fi
   post_build:
     commands:
