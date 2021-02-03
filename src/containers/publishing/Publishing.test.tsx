@@ -23,7 +23,7 @@ describe('Publishing', () => {
     const navLinks = getAllByRole(sideNav, 'link');
     expect(navLinks.length).toEqual(4);
 
-    const publishingLink = getByRole(sideNav, 'link', { name: 'API Publishing' });
+    const publishingLink = getByRole(sideNav, 'link', { name: 'Overview' });
     expect(publishingLink).toHaveAttribute('href', '/api-publishing');
 
     const onBoardingLink = getByRole(sideNav, 'link', { name: 'How publishing works' });
@@ -39,7 +39,9 @@ describe('Publishing', () => {
   describe('using sidenav', () => {
     describe('clicking How publishing works link', () => {
       it('shows the how publishing works page', async () => {
-        expect(screen.queryByRole('heading', { name: 'How publishing works' })).not.toBeInTheDocument();
+        expect(
+          screen.queryByRole('heading', { name: 'How publishing works' }),
+        ).not.toBeInTheDocument();
         const navLink = screen.getByRole('link', { name: 'How publishing works' });
         userEvent.click(navLink);
 

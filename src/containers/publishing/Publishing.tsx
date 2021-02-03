@@ -14,7 +14,7 @@ const Publishing: FC = () => (
   <ContentWithNav
     nav={
       <>
-        <SideNavEntry key="intro" exact to={PUBLISHING_PATH} name="API Publishing" />
+        <SideNavEntry key="intro" exact to={PUBLISHING_PATH} name="Overview" />
         <SideNavEntry
           key="onboarding"
           exact
