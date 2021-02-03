@@ -33,6 +33,7 @@ const SupportContactUs = (): JSX.Element => {
   const [sent, setSent] = React.useState(false);
   const [defaultType, setDefaultType] = useState<FormType>();
   const { search } = useLocation();
+
   useEffect(() => {
     const query = new URLSearchParams(search);
     if (query.has('default') && query.get('default') === 'publishing') {
