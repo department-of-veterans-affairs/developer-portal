@@ -23,11 +23,18 @@ import { DEFAULT_OAUTH_API_SELECTION } from '../../types/constants';
 
 import './AuthorizationDocs.scss';
 
-const setSearchParam = (history: History, queryString: string, api: string): void => {
+const setSearchParam = (
+  history: History,
+  queryString: string,
+  api: string,
+  historyPush: boolean,
+): void => {
   const params = new URLSearchParams(queryString);
   if (params.get('api') !== api) {
     params.set('api', api);
-    history.push(`${history.location.pathname}?${params.toString()}`);
+    if (historyPush) {
+      history.push(`${history.location.pathname}?${params.toString()}`);
+    }
   }
 };
 
@@ -42,7 +49,7 @@ const setInitialApi = (
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
-  setSearchParam(history, searchQuery, api);
+  setSearchParam(history, searchQuery, api, false);
 };
 
 const AuthorizationDocs = (): JSX.Element => {
@@ -61,7 +68,7 @@ const AuthorizationDocs = (): JSX.Element => {
       setInitialApi(history, location.search, dispatch);
     } else {
       // Do this on all subsequent re-renders
-      setSearchParam(history, location.search, api);
+      setSearchParam(history, location.search, api, true);
     }
   }, [dispatch, location, history, prevApi, api]);
 
