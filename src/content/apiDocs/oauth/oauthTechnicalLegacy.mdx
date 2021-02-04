@@ -3,7 +3,6 @@ imports:
   '{ CodeWrapper }': ../../../components
 ---
 
-
 ## Getting Started {tabIndex="-1"}
 
 The VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf. The platform also allows some users, such as officers working at Veteran Service Organizations (VSO), to access data on behalf of a Veteran who has granted them approval.
@@ -207,10 +206,7 @@ DELETE /oauth2/grants HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 
-{
-	"client_id": {client_id},
-	"email": {test account email}
-}
+client_id={client_id}&email={test account email}
 ```
 
 </CodeWrapper>

@@ -45,11 +45,11 @@ After the Veteran consents to authorize your application, their browser will red
 
 <CodeWrapper>
 
-```plaintext
-GET <yourRedirectURL>?
+```http
+HTTP/1.1 302 Found
+Location: <yourRedirectURL>?
   code=z92dapo5
   &state=af0ifjsldkj
-  Host: <yourRedirectHost>
 ```
 
 </CodeWrapper>

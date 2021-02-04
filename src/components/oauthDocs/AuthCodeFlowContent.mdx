@@ -44,8 +44,9 @@ After a Veteran gives authorization for you to access their data, their browser 
 
 <CodeWrapper>
 
-```plaintext
-GET <yourRedirectURL>?
+```http
+HTTP/1.1 302 Found
+Location: <yourRedirectURL>?
   code=z92dapo5
   &state=af0ifjsldkj
 ```
@@ -73,7 +74,7 @@ grant_type=authorization_code
 
 </CodeWrapper>
 
-The authorization server will respond with an <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink>. If you requested the `offline_access` scope, you will also receive a`refresh_token`. The response will look like this:
+The authorization server will respond with an <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink>. If you requested the `offline_access` scope, you will also receive a `refresh_token`. The response will look like this:
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
 <CodeWrapper>
@@ -185,7 +186,7 @@ token={ *refresh_token* }&token_type_hint=refresh_token
 
 **NOTE:** This endpoint is not available in the production environment and excludes identity provider grants.
 
-A user will be prompted only once to consent to each client&#39;s use of their data. Such a grant will remain in effect unless and until revoked. Grants for a specific user and client are revoked in the sandbox environment using the below endpoint.
+A user will be prompted only once to consent to each client's use of their data. Such a grant will remain in effect unless and until revoked. Grants for a specific user and client are revoked in the sandbox environment using the below endpoint.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
 <CodeWrapper>
@@ -195,10 +196,7 @@ DELETE {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/grants HT
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 
-{
-    "client_id": {client_id},
-    "email": {test account email}
-}
+client_id={client_id}&email={test account email}
 ```
 
 </CodeWrapper>
