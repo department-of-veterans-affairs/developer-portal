@@ -28,7 +28,7 @@ const Publishing: FC = () => (
           to={PUBLISHING_EXPECTATIONS_PATH}
           name="Expectations for APIs"
         />
-        <SideNavEntry key="contact" exact to={SUPPORT_CONTACT_PATH} name="Contact Us" />
+        <SideNavEntry key="contact" exact to={{ pathname: SUPPORT_CONTACT_PATH, search: '?default=publishing' }} name="Contact Us" />
       </>
     }
     content={
