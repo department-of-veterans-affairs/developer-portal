@@ -1,5 +1,5 @@
-export interface ErrorableInput<T = string> {
+export interface ErrorableInput{
   dirty: boolean;
-  value: T;
+  value: string;
   validation?: string;
 }
