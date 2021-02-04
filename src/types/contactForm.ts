@@ -43,6 +43,7 @@ type PublishingFormData = {
   apiDetails: string;
   apiDescription: string;
   apiInternalOnly: boolean;
+  apiInternalOnlyDetails: string;
   apiOtherInfo: string;
 } & ContactDetailsFormData;
 

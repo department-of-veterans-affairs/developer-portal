@@ -30,6 +30,7 @@ const processedData = (values: SupportContactUsFormState): FormData => {
       apiDescription: values.apiDescription ?? '',
       apiDetails: values.apiDetails,
       apiInternalOnly: values.apiInternalOnly === 'yes',
+      apiInternalOnlyDetails: values.apiInternalOnlyDetails,
       apiOtherInfo: values.apiOtherInfo ?? '',
       type: values.type,
     };
@@ -63,10 +64,10 @@ const SupportContactUsFormPublishing = ({ onSuccess, defaultType }: SupportConta
   return (
     <Formik initialValues={initialValues} onSubmit={formSubmission} validate={validateForm}>
       {({ values, isSubmitting, isValid, dirty }): ReactNode => (
-        <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-y--2')}>
+        <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')}>
           <ContactDetailsFormFields />
 
-          <fieldset className="vads-u-margin-top--5">
+          <fieldset className="vads-u-margin-top--6">
             <legend className="vads-u-font-size--lg">What can we help you with?</legend>
             <Field id="formTypeDefault" type="radio" name="type" value={FormType.DEFAULT} />
             <label htmlFor="formTypeDefault">
