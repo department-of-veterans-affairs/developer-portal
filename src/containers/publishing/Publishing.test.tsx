@@ -33,7 +33,7 @@ describe('Publishing', () => {
     expect(expectationsLink).toHaveAttribute('href', '/api-publishing/expectations');
 
     const contactUsLink = getByRole(sideNav, 'link', { name: 'Contact Us' });
-    expect(contactUsLink).toHaveAttribute('href', '/support/contact-us');
+    expect(contactUsLink).toHaveAttribute('href', '/support/contact-us?default=publishing');
   });
 
   describe('using sidenav', () => {
