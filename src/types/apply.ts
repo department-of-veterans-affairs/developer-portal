@@ -25,11 +25,13 @@ export interface ApplyInputs {
 }
 
 export interface ApplySuccessResult {
-  email: string;
-  token: string;
+  apis: APIList;
   clientID: string;
   clientSecret: string;
-  apis: APIList;
+  email: string;
+  kongConsumerId: string;
+  token: string;
+  redirectURI: string;
 }
 
 export interface DevApplication {
@@ -52,8 +54,10 @@ export interface DevApplicationRequest {
 }
 
 export interface DevApplicationResponse {
-  token?: string;
-  clientID?: string;
-  clientSecret?: string;
+  token: string;
+  clientID: string;
+  clientSecret: string;
+  redirectURI: string;
+  kongConsumerId: string;
   errors?: string[];
 }

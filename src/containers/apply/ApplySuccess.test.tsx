@@ -49,6 +49,8 @@ describe('ApplySuccess with results', () => {
           clientID: 'gimli',
           clientSecret: 'sonofgloin',
           email: 'gimli@eredluin.com',
+          kongConsumerId: 'jfdkljadsfj',
+          redirectURI: 'http://localhost:3000',
           token: 'elffriend',
         });
 
@@ -83,6 +85,8 @@ describe('ApplySuccess with results', () => {
           clientID: 'gimli',
           clientSecret: 'sonofgloin',
           email: 'gimli@eredluin.com',
+          kongConsumerId: 'jfdkljadsfj',
+          redirectURI: 'http://localhost:3000',
           token: 'elf-friend',
         });
 
@@ -138,6 +142,8 @@ describe('ApplySuccess with results', () => {
           clientID: 'gimli',
           clientSecret: 'sonofgloin',
           email: 'gimli@eredluin.com',
+          kongConsumerId: 'jfdkljadsfj',
+          redirectURI: 'http://localhost:3000',
           token: 'elf-friend',
         });
 

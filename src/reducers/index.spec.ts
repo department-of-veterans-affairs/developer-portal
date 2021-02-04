@@ -133,6 +133,8 @@ describe('application', () => {
       application(newApp, {
         clientID: 'clientID',
         clientSecret: 'clientSecret',
+        kongConsumerId: '2ca7acf1-4bb2-442a-9df6-036f317d204c',
+        redirectURI: 'http://localhost:3000',
         token: 'test-token',
         type: constants.SUBMIT_APPLICATION_SUCCESS_VALUE,
       }),
@@ -143,6 +145,8 @@ describe('application', () => {
           clientID: 'clientID',
           clientSecret: 'clientSecret',
           email: newApp.inputs.email.value,
+          kongConsumerId: '2ca7acf1-4bb2-442a-9df6-036f317d204c',
+          redirectURI: 'http://localhost:3000',
           token: 'test-token',
         }) as ApplySuccessResult,
         sending: false,

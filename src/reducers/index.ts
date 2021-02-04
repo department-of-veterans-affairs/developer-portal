@@ -86,6 +86,8 @@ export const application = (
           clientID: action.clientID,
           clientSecret: action.clientSecret,
           email: state.inputs.email.value,
+          kongConsumerId: action.kongConsumerId,
+          redirectURI: action.redirectURI,
           token: action.token,
         },
         sending: false,
