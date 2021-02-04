@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import Helmet from 'react-helmet';
-import { FormType } from 'src/types/contactForm';
+import { FormType } from '../../types/contactForm';
+import { FLAG_API_PUBLISHING } from '../../types/constants';
 import { Flag } from '../../flags';
 import { PageHeader } from '../../components';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
@@ -36,7 +37,7 @@ const SupportContactUs = (): JSX.Element => {
 
   useEffect(() => {
     const query = new URLSearchParams(search);
-    if (query.has('default') && query.get('default') === 'publishing') {
+    if (query.get('default') === 'publishing') {
       setDefaultType(FormType.PUBLISHING);
     } else {
       setDefaultType(FormType.DEFAULT);
@@ -61,7 +62,7 @@ const SupportContactUs = (): JSX.Element => {
           <PageHeader {...headerProps} />
           <GitHubSnippet />
           <Flag
-            name={['api_publishing']}
+            name={[FLAG_API_PUBLISHING]}
             render={(): ReactNode => (
               <>
                 <p>From this page, you can ask us questions, get help or support, or get started with publishing your API. You can also find answers to many common questions on our FAQ page.</p>
