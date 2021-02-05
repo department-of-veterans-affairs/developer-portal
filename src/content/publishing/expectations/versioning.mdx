@@ -1,0 +1,41 @@
+---
+imports:
+  '{ Link }': 'react-router-dom'
+---
+
+<div className="feature" role="region" aria-label="Versioning Expectations Summary">
+
+### What we provide {#versioning-what-we-provide}
+
+- Clear guidance through identifying and publishing breaking and non-breaking changes to your API
+- Support with communication to consumers regarding new versions of your API
+- Help so that consumers use the latest version of your API, while the old version is deprecated and deactivated
+
+### What we need from you {#versioning-what-we-need-from-you}
+
+Good communication regarding changes to ensure updated API documentation and versioning as defined in our policy.
+
+### Key policy highlights {#versioning-key-policy-highlights}
+
+- We’ll work with you on a versioning policy.
+- Any breaking changes to your API must be published as a new version.
+- We’ll work with you to manage communication of new versions and to deprecate and deactivate previous versions.
+
+</div>
+
+Breaking changes to published API versions can be disruptive to consumers, so our policy is to ensure breaking changes aren’t published without a major version change.
+
+We define a breaking change as any change that might adversely impact a consumer’s use of an API. For example, removing an endpoint or field would be classified as a breaking change. A non-breaking change is one that does not adversely impact current users of an API, such as adding an endpoint or field. Non-breaking changes do not require a new version, but changes that could impact consumers’ experience or use of an API must have an accompanying <Link to="/release-notes">release note</Link>.
+
+Our release notes adhere as closely as possible to the following format. Examples are available on our <Link to="/release-notes">release note page</Link>.
+
+\[API NAME\] \[action, such as deprecated, updated parameters, endpoint added, etc\]
+
+\[Month DD, YYYY for date posted\]
+
+Detailed description of the changes being made. Include the following whenever applicable:
+
+- Use terms deprecation and deactivation
+- Link to any related policies
+- Link to code changes
+- List date change will be effective. This can be an exact date, such as Month DD, YYYY or an anticipated timeframe (such as 1st quarter YYYY or two weeks after a certain action is completed. Such as, “Two resources will be added to the Eligibility API two weeks after the v0.2 upgrade is released.”)

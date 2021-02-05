@@ -1,0 +1,54 @@
+---
+imports:
+  '{ Link }': 'react-router-dom'
+---
+
+<div className="feature" role="region" aria-label="Security Expectations Summary">
+
+### What we provide {#security-what-we-provide}
+
+We work hard to ensure your API is secure on Lighthouse by providing:
+
+- High availability times
+- Monitoring to mitigate security attacks
+- Multiple levels of authorization to ensure data stays safe (review our page on authentication and authorization for more)
+- Adherence to VA security protocols that comply with industry best practices
+
+### What we need from you {#security-what-we-need-from-you}
+
+- Review our policies and ask us any questions you might have
+- Work with us to determine the appropriate authorization approach for your API
+
+### Key policy highlights {#security-key-policy-highlights}
+
+- We rely on mature software such as: Kong (nginx), PostgreSQL, and Okta, which are used in other security-sensitive environments.
+- Our software runs in VA's [FISMA-compatible](https://www.cisa.gov/federal-information-security-modernization-act) Amazon Web Services (AWS) data center, which is subject to [VA Handbook](https://www.va.gov/vapubs/viewPublication.asp?Pub_ID=733&FType=2) 6500.3 continuous monitoring requirements.
+- We use a variety of methods to provide authentication and security.
+
+</div>
+
+Lighthouse has a full authorization to operate (ATO) at the FISMA Moderate level. We also complete a privacy impact assessment and privacy threshold analysis whenever the API gateway sends new kinds of data to new systems.
+
+Our [production](https://api.va.gov) and [sandbox](https://sandbox-api.va.gov) environments are deployed in the VA Enterprise Cloud's AWS GovCloud region, sitting behind the VA Trusted Internet Connection (TIC), and in compliance with VA’s external system network requirements.
+
+We rely on mature software that is used in other security-sensitive environments: Kong (nginx), PostgreSQL, and Okta. These are all running in VA's [FISMA-compatible](https://www.cisa.gov/federal-information-security-modernization-act) AWS data center and are subject to [VA Handbook](https://www.va.gov/vapubs/viewPublication.asp?Pub_ID=733&FType=2) 6500.3 continuous monitoring requirements.
+
+### Addressing Security Risks
+
+If you have a simple API that publishes shared information about VA, there are very few security risks to address, and we use a variety of methods to provide authentication and security. You can read more about this on our <Link to={props.authenticationUrl}>Authentication and Authorization</Link> page, but to start, here are some of the ways our authentication offers additional security:
+
+- We use a vetted, commercial-identity proofing solution, ID.me, to verify the identities of Veterans and their representatives.
+- We use a vetted, commercial-identity management service ([Okta](https://www.okta.com/)) to authorize API access.
+- For APIs that expose Veteran protected health information or personal identifiable information (PHI or PII), we issue authorization tokens through our OAuth flow, with Okta serving as a broker between ID.me and Master Person Index (MPI).
+- If your API provides access to Veteran PHI/PII **and** interaction with VA system users, but **does not** provide Veteran-facing interaction, the API Gateway will provide a mechanism to integrate with VA Single Sign-on internal (SSOi).
+- For APIs that do not expose PII/PHI, we issue unique API keys.
+- We are currently in the process of integrating with VA single sign-on to provide authentication for VA employees and internal system-to-system API integrations.
+
+By using the API Gateway, you are broadening the reach of your API. With that benefit comes the cost of potentially higher system load, but this can be mitigated. For example:
+
+- The API Gateway only supports HTTPS. This means that if your API has not yet been upgraded to use HTTPS, you can expose it through the API Gateway while being compatible with [the OMB policy to require secure connections](https://www.whitehouse.gov/sites/whitehouse.gov/files/omb/memoranda/2015/m-15-13.pdf), which protects Veterans from having their traffic monitored.
+- The API Gateway is intended to be incorporated into a layered system. This means that while the API Gateway cannot mitigate all of the threats faced by your API, it works with other intermediary servers that provide more security-focused features.
+- The operational security of your organization could be bolstered by the greater availability of your API. Some attacks rely on an attacker overloading an automated system, forcing staff to rely on error-prone manual backup processes. The rate limiting and high availability offered by the API Gateway can reduce the effectiveness of such an attack.
+- You may choose to make your API reject requests coming from the API Gateway, or work with us to disable your API Gateway integration. Either of these options will allow you to limit the attack surface of your API while leaving your API operational for internal consumers.
+
+The API Gateway is a shared system. If the availability target for your API is higher than the availability target for the API Gateway (99.9%), then you will need to mitigate the risk of lower-than-expected availability.
