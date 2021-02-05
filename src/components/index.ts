@@ -22,3 +22,6 @@ export * from './sectionHeaderWrapper/SectionHeaderWrapper';
 export * from './oauthDocs/BuildingOIDCContent';
 export * from './oauthDocs/ScopesContent';
 export * from './apiSelector/APISelector';
+export * from './contentWithNav/ContentWithNav';
+export * from './subNav/SubNavEntry';
+export * from './subNav/SubNav';

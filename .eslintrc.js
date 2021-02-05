@@ -3,7 +3,7 @@
  * the conversion from TSLint to ESLint in API-1323. The rules in this file should be considered
  * flexible and can be extended or relaxed as necessary. Feel free to add rules that would be helpful
  * and remove rules that are overly strict.
- * 
+ *
  * Notes
  *  1. The Typescript ESLint plugin has several rules that extend rules in the core ESLint module. In
  *  general, we prefer to use the Typescript ESLint version. You can see a list of the extended rules
@@ -11,7 +11,7 @@
  *  2. Some rules can have a higher cost performance than others. To test performance of the rule set,
  *  run "TIMING=1 npm run lint". The TIMING flag causes ESLint to print out metrics on time to process
  *  each rule. https://eslint.org/docs/developer-guide/working-with-rules#per-rule-performance
- * 
+ *
  * Presets included
  *  - Typescript ESLint: https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/src/configs/recommended.ts
  *    - ESLint via Typescript ESLint: https://github.com/eslint/eslint/blob/master/conf/eslint-recommended.js
@@ -79,7 +79,7 @@ const coreESLintRules = {
   'no-alert': 'error',
   'no-bitwise': 'error',
   'no-caller': 'error',
-  'no-confusing-arrow': 'error',
+  'no-confusing-arrow': 'off',
   'no-console': 'error',
   'no-constructor-return': 'error',
   'no-div-regex': 'error',
@@ -165,7 +165,7 @@ const typescriptESLintRules = {
   '@typescript-eslint/explicit-member-accessibility': 'error',
   '@typescript-eslint/func-call-spacing': 'error',
   /**
-   * note that there are some issues with Typescript ESLint's indent rule: 
+   * note that there are some issues with Typescript ESLint's indent rule:
    * https://github.com/typescript-eslint/typescript-eslint/issues/1824
    * ESLint's indent rule will not work for Typescript either, though. feel free to disable this
    * rule with a comment wherever you run into issues.
@@ -270,17 +270,23 @@ const importRules = {
 const reactRules = {
   'react/button-has-type': 'error',
   'react/default-props-match-prop-types': 'error',
-  'react/function-component-definition': ['error', {
-    namedComponents: 'arrow-function',
-    unnamedComponents: 'arrow-function',
-  }],
+  'react/function-component-definition': [
+    'error',
+    {
+      namedComponents: 'arrow-function',
+      unnamedComponents: 'arrow-function',
+    },
+  ],
   'react/jsx-boolean-value': 'error',
   'react/jsx-closing-bracket-location': 'error',
   'react/jsx-closing-tag-location': 'error',
-  'react/jsx-curly-brace-presence': ['error', {
-    children: 'never',
-    props: 'never',
-  }],
+  'react/jsx-curly-brace-presence': [
+    'error',
+    {
+      children: 'never',
+      props: 'never',
+    },
+  ],
   'react/jsx-curly-newline': 'error',
   'react/jsx-curly-spacing': 'error',
   'react/jsx-equals-spacing': 'error',
@@ -307,6 +313,7 @@ const reactRules = {
   'react/no-unused-state': 'error',
   'react/prefer-es6-class': 'error', // class extends React.Component vs createReactClass
   'react/prefer-stateless-function': 'error',
+  'react/prop-types': 'off',
   'react/self-closing-comp': 'error',
   'react/sort-prop-types': 'error',
   'react/state-in-constructor': 'error',
@@ -331,10 +338,10 @@ module.exports = {
     '@typescript-eslint',
     'import',
     /**
-     * NEVER disable JSX accessibility rules globally. If you need to disable them locally, either 
+     * NEVER disable JSX accessibility rules globally. If you need to disable them locally, either
      * because the code in question has been confirmed to be an exception to the rule or because the
      * work to fix the issue is pending, leave the inline disabling comment there so that other devs
-     * are aware of the issue and issues elsewhere still get flagged. If you have confirmed an 
+     * are aware of the issue and issues elsewhere still get flagged. If you have confirmed an
      * exception to the linting rules, please document that in a comment, including links to external
      * long-form documentation as necessary.
      */

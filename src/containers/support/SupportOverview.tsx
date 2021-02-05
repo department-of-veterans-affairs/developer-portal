@@ -2,7 +2,6 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
-import { PAGE_HEADER_ID } from '../../types/constants';
 import { SupportSection } from './Support';
 
 const headerProps = {
@@ -18,7 +17,7 @@ interface SupportOverviewProps {
 const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
   props: SupportOverviewProps,
 ): JSX.Element => (
-  <section aria-labelledby={PAGE_HEADER_ID}>
+  <>
     <Helmet>
       <title>Support</title>
     </Helmet>
@@ -30,7 +29,7 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
         </CardLink>
       ))}
     </div>
-  </section>
+  </>
 );
 
 export default SupportOverview;

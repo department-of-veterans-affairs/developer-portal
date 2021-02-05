@@ -11,6 +11,7 @@ import TestingNotice from '../TestingNotice';
 import './Header.scss';
 
 const buttonClassnames = classNames(
+  'va-api-apply-button',
   'usa-button',
   'va-api-button-default',
   'vads-u-margin-right--2',
@@ -69,10 +70,11 @@ const Header = (): JSX.Element => {
                 'vads-u-color--white',
                 'vads-u-font-size--lg',
                 'vads-u-text-decoration--none',
-                'medium-screen:vads-u-font-size--2xl',
+                'medium-screen:vads-u-font-size--xl',
+                'small-desktop-screen:vads-u-font-size--2xl',
               )}
             >
-              <span className="vads-u-font-weight--bold">VA</span> | Lighthouse
+              <span className="vads-u-font-weight--bold">VA</span> | Lighthouse APIs
             </Link>
           </div>
           <div className={desktopOnly()}>

@@ -80,10 +80,6 @@ describe('ApiPage', () => {
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
-    it('renders region', () => {
-      expect(screen.getByRole('region')).not.toBeNull();
-    });
-
     it('renders api page heading', () => {
       expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Rings API');
       expect(screen.getByText('LOTR API')).not.toBeNull();

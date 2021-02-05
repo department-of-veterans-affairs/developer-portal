@@ -17,7 +17,7 @@ describe('Header', () => {
   });
 
   it('should render the header', () => {
-    expect(screen.getByText(/Lighthouse/)).toBeInTheDocument();
+    expect(screen.getByText(/Lighthouse APIs/)).toBeInTheDocument();
   });
 
   it('should contain a the Veterans Crisis Line modal', () => {

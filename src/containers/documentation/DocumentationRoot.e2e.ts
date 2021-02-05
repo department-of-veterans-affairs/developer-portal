@@ -103,13 +103,20 @@ describe('auth docs route does not redirect', () => {
  */
 
 describe.skip('auth docs route redirect', () => {
-  it.each(['health', 'verification'])(
-    'should redirect to /explore/authorization from /explore/:apiCategoryKey/docs/authorization',
-    async (path: string) => {
-      await page.goto(`${puppeteerHost}/explore/${path}/docs/authorization`, {
+  it('should redirect to /explore/authorization from /explore/health/docs/authorization',
+    async () => {
+      await page.goto(`${puppeteerHost}/explore/health/docs/authorization`, {
         waitUntil: 'networkidle0',
       });
-      expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization`);
+      expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization?api=claims`);
+    },
+  );
+  it('should redirect to /explore/authorization?api=veteran_verification from /explore/verification/docs/authorization',
+    async () => {
+      await page.goto(`${puppeteerHost}/explore/verification/docs/authorization`, {
+        waitUntil: 'networkidle0',
+      });
+      expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization?api=veteran_verification`);
     },
   );
 });

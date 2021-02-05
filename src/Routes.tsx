@@ -20,6 +20,9 @@ import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
 import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag } from './flags';
+import { Publishing } from './containers/publishing';
+import { PUBLISHING_PATH } from './types/constants/paths';
+import { FLAG_API_PUBLISHING } from './types/constants';
 
 export const SiteRoutes: React.FunctionComponent = () => (
   <Switch>
@@ -55,6 +58,9 @@ export const SiteRoutes: React.FunctionComponent = () => (
       path="/providers/integration-guide"
       render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
     />
+    <Flag name={[FLAG_API_PUBLISHING]}>
+      <Route path={PUBLISHING_PATH} component={Publishing} />
+    </Flag>
     <Route component={NotFound} />
   </Switch>
 );

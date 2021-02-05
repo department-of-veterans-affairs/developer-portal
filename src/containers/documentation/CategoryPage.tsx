@@ -58,7 +58,7 @@ const CategoryPage = (): JSX.Element => {
   }
 
   return (
-    <section aria-labelledby={PAGE_HEADER_ID} className="va-api-api-overview">
+    <div className="va-api-api-overview">
       <Helmet>
         <title>{categoryName}</title>
       </Helmet>
@@ -67,7 +67,7 @@ const CategoryPage = (): JSX.Element => {
       {cardSection}
       <div className="vads-u-width--full">{overview({})}</div>
       <hr />
-    </section>
+    </div>
   );
 };
 
