@@ -20,7 +20,7 @@ const AssistanceTrailer = (): JSX.Element => (
 interface APIKeyNoticeProps {
   token: string;
   email: string;
-  kongConsumerId: string;
+  kongUsername: string;
   selectedApis: string[];
 }
 
@@ -88,7 +88,7 @@ const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProp
 const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
   token,
   email,
-  kongConsumerId,
+  kongUsername,
   selectedApis,
 }: APIKeyNoticeProps) => {
   const apiNameList = selectedApis.map(k => apisToEnglishApiKeyList()[k]);
@@ -100,7 +100,7 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
         <strong>Your VA API key is:</strong> {token}
       </p>
       <p className="usa-font-lead">
-        <strong>Your application id is:</strong> {kongConsumerId}
+        <strong>Your application id is:</strong> {kongUsername}
       </p>
       <p>
         You should receive an email at {email} with the same key. That key is for accessing the{' '}
@@ -112,7 +112,7 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
 };
 
 const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element => {
-  const { apis, email, token, clientID, clientSecret, kongConsumerId, redirectURI } = props.result;
+  const { apis, email, token, clientID, clientSecret, kongUsername, redirectURI } = props.result;
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
   const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis[apiId]);
@@ -132,7 +132,7 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
       <p>
         <strong>Thank you for signing up!</strong>
       </p>
-      {hasStandardAPI && <ApiKeyNotice email={email} token={token} kongConsumerId={kongConsumerId} selectedApis={standardAPIs} />}
+      {hasStandardAPI && <ApiKeyNotice email={email} token={token} kongUsername={kongUsername} selectedApis={standardAPIs} />}
       {hasOAuthAPI && clientID && (
         <OAuthCredentialsNotice
           email={email}

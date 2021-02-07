@@ -29,7 +29,7 @@ export interface ApplySuccessResult {
   clientID: string;
   clientSecret: string;
   email: string;
-  kongConsumerId: string;
+  kongUsername: string;
   token: string;
   redirectURI: string;
 }
@@ -58,6 +58,6 @@ export interface DevApplicationResponse {
   clientID: string;
   clientSecret: string;
   redirectURI: string;
-  kongConsumerId: string;
+  kongUsername: string;
   errors?: string[];
 }

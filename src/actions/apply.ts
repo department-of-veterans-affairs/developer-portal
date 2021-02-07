@@ -76,7 +76,7 @@ export interface SubmitForm extends Action {
 export interface SubmitFormSuccess extends Action {
   clientID: string;
   clientSecret: string;
-  kongConsumerId: string;
+  kongUsername: string;
   redirectURI: string;
   type: constants.SUBMIT_APPLICATION_SUCCESS;
   token: string;
@@ -124,7 +124,7 @@ export const submitFormSuccess: ActionCreator<SubmitFormSuccess> = (
 ) => ({
   clientID: responseData.clientID,
   clientSecret: responseData.clientSecret,
-  kongConsumerId: responseData.kongConsumerId,
+  kongUsername: responseData.kongUsername,
   redirectURI: responseData.redirectURI,
   token: responseData.token,
   type: constants.SUBMIT_APPLICATION_SUCCESS_VALUE,
