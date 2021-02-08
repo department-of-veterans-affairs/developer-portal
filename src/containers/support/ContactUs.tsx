@@ -1,6 +1,6 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router';
 import Helmet from 'react-helmet';
 import { FormType } from '../../types/contactUsForm';
@@ -32,17 +32,12 @@ const headerProps = {
 
 const SupportContactUs = (): JSX.Element => {
   const [sent, setSent] = React.useState(false);
-  const [defaultType, setDefaultType] = useState<FormType>();
   const { search } = useLocation();
-
-  useEffect(() => {
-    const query = new URLSearchParams(search);
-    if (query.get('default') === 'publishing') {
-      setDefaultType(FormType.PUBLISHING);
-    } else {
-      setDefaultType(FormType.CONSUMER);
-    }
-  }, [search]);
+  const query = new URLSearchParams(search);
+  let type = FormType.CONSUMER;
+  if (query.get('type') === 'publishing') {
+    type = FormType.PUBLISHING;
+  }
 
   const onSuccess = (): void => {
     setSent(true);
@@ -66,7 +61,7 @@ const SupportContactUs = (): JSX.Element => {
             render={(): ReactNode => (
               <>
                 <p>From this page, you can ask us questions, get help or support, or get started with publishing your API. You can also find answers to many common questions on our FAQ page.</p>
-                {defaultType && <ContactUsForm onSuccess={onSuccess} defaultType={defaultType} />}
+                <ContactUsForm onSuccess={onSuccess} defaultType={type} />
               </>)}
             fallbackRender={(): ReactNode => <ContactUsFormLegacy onSuccess={onSuccess} />}
           />

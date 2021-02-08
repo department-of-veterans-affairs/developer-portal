@@ -217,7 +217,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                 </SubNavEntry>
                 <SubNavEntry
                   onClick={props.onMobileNavClose}
-                  to={{ pathname: SUPPORT_CONTACT_PATH, search: '?default=publishing' }}
+                  to={{ pathname: SUPPORT_CONTACT_PATH, search: '?type=publishing' }}
                   id="contact"
                 >
                   Contact Us

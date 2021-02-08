@@ -24,7 +24,7 @@ describe('SupportContactUs', () => {
   describe('query params', () => {
     describe('default is set to publishing', () => {
       beforeEach(() => {
-        mockUseLocation.mockImplementation(() => ({ search: '?default=publishing' }));
+        mockUseLocation.mockImplementation(() => ({ search: '?type=publishing' }));
       });
 
       it('sets the default form to publishing', async () => {
@@ -35,7 +35,7 @@ describe('SupportContactUs', () => {
 
     describe('default is not  set to publishing', () => {
       beforeEach(() => {
-        mockUseLocation.mockImplementation(() => ({ search: '?default=default' }));
+        mockUseLocation.mockImplementation(() => ({ search: '?type=default' }));
       });
 
       it('sets the default form to the default support form', async () => {
