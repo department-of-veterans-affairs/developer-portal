@@ -54,7 +54,7 @@ React components that manage state, load remote data, or coordinate between the 
 
 ### Forms
 
-This application uses [formik|https://formik.org/docs/overview] for handling form state. All updates to form state are handled by formik in the background, and only validation and submission logic needs to be written. Use the `src/components/formField` component as a wrapper around formike's default `Field` component that includes stylized error handling and accessibiility standars.
+This application uses [Formik|https://formik.org/docs/overview] for handling form state. All updates to form state are handled by Formik in the background, and only validation and submission logic needs to be written. Use the `src/components/formField` component as a wrapper around Formik's default `Field` component that includes stylized error handling and accessibility standards.
 
 ### Markdown Content
 
