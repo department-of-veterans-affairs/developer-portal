@@ -1,5 +1,5 @@
 import { FormikErrors } from 'formik';
-import { FormType, SupportContactUsFormState } from '../../../types/contactForm';
+import { FormType, SupportContactUsFormState } from '../../../types/contactUsForm';
 import { validateEmailFormik, validatePresenceFormik } from '../../../utils/validators';
 
 const validateForm = (values: SupportContactUsFormState): FormikErrors<SupportContactUsFormState> => {
@@ -20,7 +20,7 @@ const validateForm = (values: SupportContactUsFormState): FormikErrors<SupportCo
     errors.email = emailError;
   }
 
-  if (values.type === FormType.DEFAULT) {
+  if (values.type === FormType.CONSUMER) {
     const descriptionError = validatePresenceFormik('Description', values.description);
     if (descriptionError) {
       errors.description = descriptionError;

@@ -3,13 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import Helmet from 'react-helmet';
-import { FormType } from '../../types/contactForm';
+import { FormType } from '../../types/contactUsForm';
 import { FLAG_API_PUBLISHING } from '../../types/constants';
 import { Flag } from '../../flags';
 import { PageHeader } from '../../components';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
-import SupportContactUsForm from './SupportContactUsForm';
-import SupportContactUsFormPublishing from './supportContactUsFormPublishing/SupportContactUsFormPublishing';
+import ContactUsFormLegacy from './ContactUsFormLegacy';
+import ContactUsForm from './ContactUsForm';
 
 const GitHubSnippet = (): JSX.Element => (
   <div className="vads-u-margin-y--2">
@@ -40,7 +40,7 @@ const SupportContactUs = (): JSX.Element => {
     if (query.get('default') === 'publishing') {
       setDefaultType(FormType.PUBLISHING);
     } else {
-      setDefaultType(FormType.DEFAULT);
+      setDefaultType(FormType.CONSUMER);
     }
   }, [search]);
 
@@ -66,9 +66,9 @@ const SupportContactUs = (): JSX.Element => {
             render={(): ReactNode => (
               <>
                 <p>From this page, you can ask us questions, get help or support, or get started with publishing your API. You can also find answers to many common questions on our FAQ page.</p>
-                {defaultType && <SupportContactUsFormPublishing onSuccess={onSuccess} defaultType={defaultType} />}
+                {defaultType && <ContactUsForm onSuccess={onSuccess} defaultType={defaultType} />}
               </>)}
-            fallbackRender={(): ReactNode => <SupportContactUsForm onSuccess={onSuccess} />}
+            fallbackRender={(): ReactNode => <ContactUsFormLegacy onSuccess={onSuccess} />}
           />
 
         </>

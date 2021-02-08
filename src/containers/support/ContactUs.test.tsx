@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { useLocation } from 'react-router';
 import { FlagsProvider, getFlags } from '../../flags';
-import SupportContactUs from './SupportContactUs';
+import ContactUs from './ContactUs';
 
 jest.mock('react-router', () => ({
   useLocation: jest.fn(() => ({})),
@@ -18,7 +18,7 @@ describe('SupportContactUs', () => {
   const renderComponent = (): void => {
     render(
       <FlagsProvider flags={getFlags()}>
-        <SupportContactUs />
+        <ContactUs />
       </FlagsProvider>);
   };
   describe('query params', () => {
@@ -40,7 +40,18 @@ describe('SupportContactUs', () => {
 
       it('sets the default form to the default support form', async () => {
         renderComponent();
-        expect(await screen.findByLabelText(/Describe your question or issue in as much detail as you can. If your question is about an error, include steps you took to get it and any error messaging you received./)).toBeInTheDocument();
+        expect(await screen.findByLabelText(/Describe your question or issue in as much detail as you can./)).toBeInTheDocument();
+      });
+    });
+
+    describe('no query param is present', () => {
+      beforeEach(() => {
+        mockUseLocation.mockImplementation(() => ({ search: '' }));
+      });
+
+      it('sets the default form to the default support form', async () => {
+        renderComponent();
+        expect(await screen.findByLabelText(/Describe your question or issue in as much detail as you can./)).toBeInTheDocument();
       });
     });
   });

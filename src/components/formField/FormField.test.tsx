@@ -32,7 +32,7 @@ describe('FormField', () => {
   };
   it('renders the input', () => {
     renderComponent({ label: 'Test Input' });
-    expect(screen.getByLabelText('Test Input')).toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Test Input' })).toBeInTheDocument();
   });
 
   describe('required is true', () => {

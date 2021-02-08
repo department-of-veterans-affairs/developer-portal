@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { Field, useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { FormField } from '../../../../components';
-import { SupportContactUsFormState } from '../../../../types/contactForm';
+import { SupportContactUsFormState } from '../../../../types/contactUsForm';
 
 const titleClass = classNames('vads-u-margin-top--4', 'vads-u-margin-bottom--2p5');
 const PublishingFormFields: FC = () => {

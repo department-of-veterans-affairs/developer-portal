@@ -1,16 +1,7 @@
-import PropTypes from 'prop-types';
-
 export const enum FormType {
-  DEFAULT = 'DEFAULT',
+  CONSUMER = 'DEFAULT',
   PUBLISHING = 'PUBLISHING',
 }
-
-export const SupportContactUsFormPropTypes = {
-  defaultType: PropTypes.oneOf([FormType.DEFAULT, FormType.PUBLISHING]).isRequired,
-  onSuccess: PropTypes.func.isRequired,
-};
-
-export type SupportContactUsFormProps = PropTypes.InferProps<typeof SupportContactUsFormPropTypes>;
 
 export interface SupportContactUsFormState {
   firstName: string;
@@ -34,7 +25,7 @@ interface ContactDetailsFormData {
 }
 
 type DefaultFormData = {
-  type: FormType.DEFAULT;
+  type: FormType.CONSUMER;
   description: string;
 } & ContactDetailsFormData;
 

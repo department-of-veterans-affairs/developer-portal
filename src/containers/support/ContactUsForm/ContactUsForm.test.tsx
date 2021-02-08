@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { makeRequest } from '../../../utils/makeRequest';
-import { FormType } from '../../../types/contactForm';
-import SupportContactUsFormPublishing from './SupportContactUsFormPublishing';
+import { FormType } from '../../../types/contactUsForm';
+import ContactUsForm from './ContactUsForm';
 
 jest.mock('../../../utils/makeRequest', () => ({
   ...jest.requireActual<Record<string, string>>('../../../utils/makeRequest'),
@@ -15,12 +15,15 @@ const mockMakeRequest = makeRequest as jest.Mock;
 const jsonSpy = jest.spyOn(JSON, 'stringify');
 
 describe('SupportContactUsFormPublishing', () => {
+  const renderComponent = (defaultType: FormType = FormType.CONSUMER): void => {
+    render(<ContactUsForm onSuccess={mockOnSuccess} defaultType={defaultType} />);
+  };
   beforeEach(() => {
     jest.clearAllMocks();
-    render(<SupportContactUsFormPublishing onSuccess={mockOnSuccess} defaultType={FormType.DEFAULT} />);
   });
 
   it('renders the contact info fields', () => {
+    renderComponent();
     expect(screen.getByLabelText(/First name/)).toBeInTheDocument();
     expect(screen.getByLabelText(/Last name/)).toBeInTheDocument();
     expect(screen.getByLabelText(/Email address/)).toBeInTheDocument();
@@ -28,17 +31,19 @@ describe('SupportContactUsFormPublishing', () => {
   });
 
   describe('form is missing required fields', () => {
+    beforeEach(() => {
+      renderComponent();
+    });
     it('disables the submit button', () => {
       expect(screen.getByRole('button', { name: 'Submit' })).toBeDisabled();
     });
   });
 
-  describe('form type toggle', () => {
-    it('defaults to the consumer contact form', () => {
-      expect(screen.getByRole('group', { name: /What can we help you with\?/ })).toBeInTheDocument();
-    });
-
-    describe('default is selected', () => {
+  describe('form type', () => {
+    describe('default is consumer', () => {
+      beforeEach(() => {
+        renderComponent(FormType.CONSUMER);
+      });
       it('renders the description field', () => {
         expect(screen.getByLabelText(/Describe your question or issue in as much detail as you can./));
       });
@@ -148,10 +153,9 @@ describe('SupportContactUsFormPublishing', () => {
       });
     });
 
-    describe('publishing is selected', () => {
-      beforeEach(async () => {
-        userEvent.click(screen.getByLabelText('Publish your API to Lighthouse - Internal VA use only'));
-        await screen.findByLabelText(/Include as much information about your API as possible/);
+    describe('default is publishing', () => {
+      beforeEach(() => {
+        renderComponent(FormType.PUBLISHING);
       });
 
       it('renders the publishing fields', () => {

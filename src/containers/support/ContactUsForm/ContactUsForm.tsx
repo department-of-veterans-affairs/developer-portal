@@ -1,14 +1,22 @@
 import classNames from 'classnames';
+import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
-import '../SupportContactUsForm.scss';
-import { SupportContactUsFormState, SupportContactUsFormProps, SupportContactUsFormPropTypes, FormType, FormData } from '../../../types/contactForm';
-import DefaultFormFields from './components/DefaultFormFields';
+import './ContactUsForm.scss';
+import { SupportContactUsFormState, FormType, FormData } from '../../../types/contactUsForm';
+import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
 import PublishingFormFields from './components/PublishingFormFields';
 import validateForm from './validateForm';
+
+const SupportContactUsFormPropTypes = {
+  defaultType: PropTypes.oneOf([FormType.CONSUMER, FormType.PUBLISHING]).isRequired,
+  onSuccess: PropTypes.func.isRequired,
+};
+
+type SupportContactUsFormProps = PropTypes.InferProps<typeof SupportContactUsFormPropTypes>;
 
 const processedData = (values: SupportContactUsFormState): FormData => {
   const contactFormData = {
@@ -18,7 +26,7 @@ const processedData = (values: SupportContactUsFormState): FormData => {
     organization: values.organization ?? '',
   };
 
-  if (values.type === FormType.DEFAULT) {
+  if (values.type === FormType.CONSUMER) {
     return {
       ...contactFormData,
       description: values.description,
@@ -69,7 +77,7 @@ const SupportContactUsFormPublishing = ({ onSuccess, defaultType }: SupportConta
 
           <fieldset className="vads-u-margin-top--6">
             <legend className="vads-u-font-size--lg">What can we help you with?</legend>
-            <Field id="formTypeDefault" type="radio" name="type" value={FormType.DEFAULT} />
+            <Field id="formTypeDefault" type="radio" name="type" value={FormType.CONSUMER} />
             <label htmlFor="formTypeDefault">
               Report a problem or ask a question
             </label>
@@ -80,8 +88,8 @@ const SupportContactUsFormPublishing = ({ onSuccess, defaultType }: SupportConta
           </fieldset>
 
           {
-            values.type === FormType.DEFAULT &&
-              <DefaultFormFields />
+            values.type === FormType.CONSUMER &&
+              <ConsumerFormFields />
           }
           {
             values.type === FormType.PUBLISHING &&

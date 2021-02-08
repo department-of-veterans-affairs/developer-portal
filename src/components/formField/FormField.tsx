@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
 import React, { ComponentPropsWithRef, FC, ReactNode } from 'react';
+import toHtmlId from '../../toHtmlId';
 
 type FieldProps = ComponentPropsWithRef<typeof Field>;
 
@@ -23,12 +24,14 @@ export const FormField: FC<FormFieldProps> = ({ label, required = false, name, d
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
   const fieldClass = props.as === 'textarea' ? classNames('vads-u-margin-top--2p5') : '';
 
-  const descriptionId = description ? `formField${name}Description` : '';
-  const errorId = `formField${name}Error`;
+  const idReadyName = toHtmlId(name);
+  const descriptionId = description ? `${idReadyName}FormFieldDescription` : '';
+  const errorId = `${idReadyName}FormFieldError`;
+  const fieldId = `${idReadyName}FormField`;
 
   return (
     <div className={classNames(containerClass, className)}>
-      <label htmlFor={`formField${name}`} className={classNames('vads-u-margin-top--0', labelClass)}>
+      <label htmlFor={fieldId} className={classNames('vads-u-margin-top--0', labelClass)}>
         {label}{required && <span className="form-required-span">(*Required)</span>}
       </label>
       {
@@ -40,7 +43,15 @@ export const FormField: FC<FormFieldProps> = ({ label, required = false, name, d
       <span id={errorId} className={validationClass}>
         <ErrorMessage name={name} />
       </span>
-      <Field id={`formField${name}`} className={fieldClass} name={name} required={required} {...props} aria-describedby={`${errorId} ${descriptionId}`} />
+      <Field
+        id={fieldId}
+        className={fieldClass}
+        name={name}
+        required={required}
+        aria-describedby={`${errorId} ${descriptionId}`}
+        aria-invalid={shouldDisplayErrors}
+        {...props}
+      />
     </div>
   );
 };
