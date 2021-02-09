@@ -27,12 +27,14 @@ const setSearchParam = (
   history: History,
   queryString: string,
   api: string,
-  historyPush: boolean,
+  initialLoad: boolean,
 ): void => {
   const params = new URLSearchParams(queryString);
   if (params.get('api') !== api) {
     params.set('api', api);
-    if (historyPush) {
+    if (initialLoad) {
+      history.replace(`${history.location.pathname}?${params.toString()}${history.location.hash}`);
+    } else {
       history.push(`${history.location.pathname}?${params.toString()}`);
     }
   }
@@ -49,7 +51,7 @@ const setInitialApi = (
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
-  setSearchParam(history, searchQuery, api, false);
+  setSearchParam(history, searchQuery, api, true);
 };
 
 const AuthorizationDocs = (): JSX.Element => {
@@ -68,7 +70,7 @@ const AuthorizationDocs = (): JSX.Element => {
       setInitialApi(history, location.search, dispatch);
     } else {
       // Do this on all subsequent re-renders
-      setSearchParam(history, location.search, api, true);
+      setSearchParam(history, location.search, api, false);
     }
   }, [dispatch, location, history, prevApi, api]);
 
