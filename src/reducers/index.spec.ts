@@ -133,7 +133,7 @@ describe('application', () => {
       application(newApp, {
         clientID: 'clientID',
         clientSecret: 'clientSecret',
-        kongUsername: '2ca7acf1-4bb2-442a-9df6-036f317d204c',
+        kongUsername: 'LighthouseDeveloper',
         redirectURI: 'http://localhost:3000',
         token: 'test-token',
         type: constants.SUBMIT_APPLICATION_SUCCESS_VALUE,
@@ -145,7 +145,7 @@ describe('application', () => {
           clientID: 'clientID',
           clientSecret: 'clientSecret',
           email: newApp.inputs.email.value,
-          kongUsername: '2ca7acf1-4bb2-442a-9df6-036f317d204c',
+          kongUsername: 'LighthouseDeveloper',
           redirectURI: 'http://localhost:3000',
           token: 'test-token',
         }) as ApplySuccessResult,
