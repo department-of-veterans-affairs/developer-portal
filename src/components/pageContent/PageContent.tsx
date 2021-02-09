@@ -7,7 +7,9 @@ const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
     elementToFocus.focus();
   }
 
-  window.scrollTo(0, 0);
+  if (elementToFocus?.id === 'main') {
+    window.scrollTo(0, 0);
+  }
 };
 
 const PageContent = (): JSX.Element => {
@@ -18,7 +20,7 @@ const PageContent = (): JSX.Element => {
   React.useEffect(() => {
     const prevPath: string | null = prevPathRef.current;
 
-    if (prevPath !== location.pathname || location.hash) {
+    if (prevPath !== location.pathname) {
       // Only focus and scroll if it's not an initial page load
       if (prevPath) {
         focusAndScroll(mainRef.current);
