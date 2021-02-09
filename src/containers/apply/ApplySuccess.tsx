@@ -132,8 +132,8 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
       <p>
         <strong>Thank you for signing up!</strong>
       </p>
-      {hasStandardAPI && token && kongUsername && <ApiKeyNotice email={email} token={token} kongUsername={kongUsername} selectedApis={standardAPIs} />}
-      {hasOAuthAPI && clientID && redirectURI && (
+      {hasStandardAPI && <ApiKeyNotice email={email} token={token} kongUsername={kongUsername} selectedApis={standardAPIs} />}
+      {hasOAuthAPI && clientID && (
         <OAuthCredentialsNotice
           email={email}
           clientID={clientID}

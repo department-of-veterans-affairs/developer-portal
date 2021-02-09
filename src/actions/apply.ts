@@ -74,12 +74,12 @@ export interface SubmitForm extends Action {
 }
 
 export interface SubmitFormSuccess extends Action {
-  clientID?: string;
-  clientSecret?: string;
-  kongUsername?: string;
-  redirectURI?: string;
+  clientID: string;
+  clientSecret: string;
+  kongUsername: string;
+  redirectURI: string;
   type: constants.SUBMIT_APPLICATION_SUCCESS;
-  token?: string;
+  token: string;
 }
 
 export interface SubmitFormError extends Action {
