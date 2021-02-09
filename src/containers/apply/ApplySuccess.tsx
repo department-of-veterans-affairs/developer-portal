@@ -70,11 +70,9 @@ const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProp
           <strong>Your VA API OAuth Client Secret:</strong> {clientSecret}
         </p>
       )}
-      {redirectURI && (
-        <p className="usa-font-lead">
-          <strong>Your Redirect URI is :</strong> {redirectURI}
-        </p>
-      )}
+      <p className="usa-font-lead">
+        <strong>Your Redirect URI is :</strong> {redirectURI}
+      </p>
 
       <p>
         You should receive an email at {email} with the same credentials. Those credentials are for
