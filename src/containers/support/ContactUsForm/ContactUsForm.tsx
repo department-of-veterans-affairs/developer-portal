@@ -5,7 +5,7 @@ import { Formik, Form, Field } from 'formik';
 import { CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
-import { ContactUsFormState, FormType, FormData } from '../../../types/contactUsForm';
+import { ContactUsFormState, FormType, SubmissionData } from '../../../types/contactUsForm';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
 import PublishingFormFields from './components/PublishingFormFields';
@@ -18,7 +18,7 @@ const ContactUsFormPropTypes = {
 
 type ContactUsFormProps = PropTypes.InferProps<typeof ContactUsFormPropTypes>;
 
-const processedData = (values: ContactUsFormState): FormData => {
+const processedData = (values: ContactUsFormState): SubmissionData => {
   const contactFormData = {
     email: values.email,
     firstName: values.firstName,

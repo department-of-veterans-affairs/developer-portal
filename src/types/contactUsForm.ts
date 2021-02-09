@@ -24,12 +24,12 @@ interface ContactDetailsFormData {
   organization: string;
 }
 
-type DefaultFormData = {
+type ConsumerSubmissionData = {
   type: FormType.CONSUMER;
   description: string;
 } & ContactDetailsFormData;
 
-type PublishingFormData = {
+type PublishingSubmissionData = {
   type: FormType.PUBLISHING;
   apiDetails: string;
   apiDescription: string;
@@ -38,4 +38,4 @@ type PublishingFormData = {
   apiOtherInfo: string;
 } & ContactDetailsFormData;
 
-export type FormData = DefaultFormData | PublishingFormData;
+export type SubmissionData = ConsumerSubmissionData | PublishingSubmissionData;
