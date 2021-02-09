@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { FC } from 'react';
 import { FormField } from '../../../../components';
 
-const DefaultFormFields: FC = () => (
+const ConsumerFormFields: FC = () => (
   <>
     <h3 className={classNames('vads-u-margin-top--4', 'vads-u-margin-bottom--0')}>Description</h3>
     <FormField
@@ -15,4 +15,4 @@ const DefaultFormFields: FC = () => (
   </>
 );
 
-export default DefaultFormFields;
+export default ConsumerFormFields;

@@ -3,7 +3,7 @@ export const enum FormType {
   PUBLISHING = 'PUBLISHING',
 }
 
-export interface SupportContactUsFormState {
+export interface ContactUsFormState {
   firstName: string;
   lastName: string;
   email: string;

@@ -22,23 +22,23 @@ describe('SupportContactUs', () => {
       </FlagsProvider>);
   };
   describe('query params', () => {
-    describe('default is set to publishing', () => {
+    describe('type is set to publishing', () => {
       beforeEach(() => {
         mockUseLocation.mockImplementation(() => ({ search: '?type=publishing' }));
       });
 
-      it('sets the default form to publishing', async () => {
+      it('sets the form to publishing', async () => {
         renderComponent();
         expect(await screen.findByLabelText(/Include as much information about your API as possible/)).toBeInTheDocument();
       });
     });
 
-    describe('default is not  set to publishing', () => {
+    describe('type is not set to publishing', () => {
       beforeEach(() => {
-        mockUseLocation.mockImplementation(() => ({ search: '?type=default' }));
+        mockUseLocation.mockImplementation(() => ({ search: '?type=consumer' }));
       });
 
-      it('sets the default form to the default support form', async () => {
+      it('sets the form to the consumer support form', async () => {
         renderComponent();
         expect(await screen.findByLabelText(/Describe your question or issue in as much detail as you can./)).toBeInTheDocument();
       });
@@ -49,7 +49,7 @@ describe('SupportContactUs', () => {
         mockUseLocation.mockImplementation(() => ({ search: '' }));
       });
 
-      it('sets the default form to the default support form', async () => {
+      it('sets the form to the consumer support form', async () => {
         renderComponent();
         expect(await screen.findByLabelText(/Describe your question or issue in as much detail as you can./)).toBeInTheDocument();
       });

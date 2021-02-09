@@ -2,11 +2,11 @@ import classNames from 'classnames';
 import { Field, useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { FormField } from '../../../../components';
-import { SupportContactUsFormState } from '../../../../types/contactUsForm';
+import { ContactUsFormState } from '../../../../types/contactUsForm';
 
 const titleClass = classNames('vads-u-margin-top--4', 'vads-u-margin-bottom--2p5');
 const PublishingFormFields: FC = () => {
-  const { values } = useFormikContext<SupportContactUsFormState>();
+  const { values } = useFormikContext<ContactUsFormState>();
   return (
     <>
       <h3 className={titleClass}>Tell us about your API</h3>

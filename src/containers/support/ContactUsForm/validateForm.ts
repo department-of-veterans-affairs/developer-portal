@@ -1,9 +1,9 @@
 import { FormikErrors } from 'formik';
-import { FormType, SupportContactUsFormState } from '../../../types/contactUsForm';
+import { FormType, ContactUsFormState } from '../../../types/contactUsForm';
 import { validateEmailFormik, validatePresenceFormik } from '../../../utils/validators';
 
-const validateForm = (values: SupportContactUsFormState): FormikErrors<SupportContactUsFormState> => {
-  const errors: FormikErrors<SupportContactUsFormState> = {};
+const validateForm = (values: ContactUsFormState): FormikErrors<ContactUsFormState> => {
+  const errors: FormikErrors<ContactUsFormState> = {};
   const firstNameError = validatePresenceFormik('First name', values.firstName);
   const lastNameError = validatePresenceFormik('Last name', values.lastName);
   const emailError = validateEmailFormik(values.email);

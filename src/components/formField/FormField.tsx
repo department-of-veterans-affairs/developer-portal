@@ -31,7 +31,7 @@ export const FormField: FC<FormFieldProps> = ({ label, required = false, name, d
 
   return (
     <div className={classNames(containerClass, className)}>
-      <label htmlFor={fieldId} className={classNames('vads-u-margin-top--0', labelClass)}>
+      <label htmlFor={fieldId} className={classNames(labelClass)}>
         {label}{required && <span className="form-required-span">(*Required)</span>}
       </label>
       {

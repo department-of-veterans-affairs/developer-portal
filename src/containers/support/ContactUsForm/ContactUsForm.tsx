@@ -5,20 +5,20 @@ import { Formik, Form, Field } from 'formik';
 import { CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
-import { SupportContactUsFormState, FormType, FormData } from '../../../types/contactUsForm';
+import { ContactUsFormState, FormType, FormData } from '../../../types/contactUsForm';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
 import PublishingFormFields from './components/PublishingFormFields';
 import validateForm from './validateForm';
 
-const SupportContactUsFormPropTypes = {
+const ContactUsFormPropTypes = {
   defaultType: PropTypes.oneOf([FormType.CONSUMER, FormType.PUBLISHING]).isRequired,
   onSuccess: PropTypes.func.isRequired,
 };
 
-type SupportContactUsFormProps = PropTypes.InferProps<typeof SupportContactUsFormPropTypes>;
+type ContactUsFormProps = PropTypes.InferProps<typeof ContactUsFormPropTypes>;
 
-const processedData = (values: SupportContactUsFormState): FormData => {
+const processedData = (values: ContactUsFormState): FormData => {
   const contactFormData = {
     email: values.email,
     firstName: values.firstName,
@@ -45,19 +45,22 @@ const processedData = (values: SupportContactUsFormState): FormData => {
   }
 };
 
-const SupportContactUsFormPublishing = ({ onSuccess, defaultType }: SupportContactUsFormProps): JSX.Element => {
-  const initialValues: SupportContactUsFormState = {
+const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps): JSX.Element => {
+  const initialValues: ContactUsFormState = {
+    apiDescription: '',
     apiDetails: '',
     apiInternalOnly: 'no',
     apiInternalOnlyDetails: '',
+    apiOtherInfo: '',
     description: '',
     email: '',
     firstName: '',
     lastName: '',
+    organization: '',
     type: defaultType,
   };
 
-  const formSubmission = async (values: SupportContactUsFormState): Promise<void> => {
+  const formSubmission = async (values: ContactUsFormState): Promise<void> => {
     await makeRequest(CONTACT_US_URL, {
       body: JSON.stringify(processedData(values)),
       headers: {
@@ -103,6 +106,6 @@ const SupportContactUsFormPublishing = ({ onSuccess, defaultType }: SupportConta
   );
 };
 
-SupportContactUsFormPublishing.propTypes = SupportContactUsFormPropTypes;
+ContactUsFormPublishing.propTypes = ContactUsFormPropTypes;
 
-export default SupportContactUsFormPublishing;
+export default ContactUsFormPublishing;
