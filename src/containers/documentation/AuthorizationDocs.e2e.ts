@@ -21,7 +21,9 @@ describe('AuthorizationDocs', () => {
         name: 'On this Page:',
       });
 
-      contentsList = await contentsHeading.evaluateHandle(headingEl => headingEl.nextElementSibling) as ElementHandle;
+      contentsList = (await contentsHeading.evaluateHandle(
+        headingEl => headingEl.nextElementSibling,
+      )) as ElementHandle;
     });
 
     it.each([
@@ -42,6 +44,48 @@ describe('AuthorizationDocs', () => {
         name: sectionName,
       });
       const isFocused = await heading.evaluate(headingEl => headingEl === document.activeElement);
+      expect(isFocused).toBe(true);
+    });
+  });
+
+  /**
+   * have to skip because the new auth docs are off by default, including in the Jest Puppeteer
+   * server. to run this test, remove the .skip and add the correct environment variable in
+   * jest-puppeteer.config.js.
+   */
+  describe.skip('Leaving focus after changing APIs', () => {
+    let doc: ElementHandle;
+    let contentsList: ElementHandle;
+    beforeAll(async () => {
+      doc = await getDocument(page);
+      const contentsHeading = await queries.getByRole(doc, 'heading', {
+        name: 'On this Page:',
+      });
+
+      contentsList = (await contentsHeading.evaluateHandle(
+        headingEl => headingEl.nextElementSibling,
+      )) as ElementHandle;
+    });
+
+    it.each([
+      'Getting Started',
+      'Building OpenID Connect Applications',
+      'Initiating the Authorization Code Flow',
+      'PKCE (Proof Key for Code Exchange) Authorization',
+      'Scopes',
+      'ID Token',
+      'Test Users',
+    ])('remove the focus from the %s section on API change', async (sectionName: string) => {
+      const link = await queries.getByRole(contentsList, 'link', {
+        name: sectionName,
+      });
+      await link.press('Enter');
+
+      const select = await page.$('#main select');
+      await select?.type('Veterans Health API (FHIR)');
+      const isFocused = await select?.evaluate(
+        selectEl => selectEl === document.activeElement,
+      );
       expect(isFocused).toBe(true);
     });
   });

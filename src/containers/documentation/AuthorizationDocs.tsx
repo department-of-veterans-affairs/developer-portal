@@ -23,7 +23,25 @@ import { DEFAULT_OAUTH_API_SELECTION } from '../../types/constants';
 
 import './AuthorizationDocs.scss';
 
+const setSearchParam = (
+  history: History,
+  queryString: string,
+  api: string,
+  initialLoad: boolean,
+): void => {
+  const params = new URLSearchParams(queryString);
+  if (params.get('api') !== api) {
+    params.set('api', api);
+    if (initialLoad) {
+      history.replace(`${history.location.pathname}?${params.toString()}${history.location.hash}`);
+    } else {
+      history.push(`${history.location.pathname}?${params.toString()}`);
+    }
+  }
+};
+
 const setInitialApi = (
+  history: History,
   searchQuery: string,
   dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection>,
 ): void => {
@@ -33,14 +51,7 @@ const setInitialApi = (
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
-};
-
-const setSearchParam = (history: History, queryString: string, api: string): void => {
-  const params = new URLSearchParams(queryString);
-  if (params.get('api') !== api) {
-    params.set('api', api);
-    history.push(`${history.location.pathname}?${params.toString()}`);
-  }
+  setSearchParam(history, searchQuery, api, true);
 };
 
 const AuthorizationDocs = (): JSX.Element => {
@@ -53,18 +64,15 @@ const AuthorizationDocs = (): JSX.Element => {
 
   React.useEffect(() => {
     if (initializing.current) {
+      // Do this on first load
       initializing.current = false;
 
-      setInitialApi(location.search, dispatch);
+      setInitialApi(history, location.search, dispatch);
+    } else {
+      // Do this on all subsequent re-renders
+      setSearchParam(history, location.search, api, false);
     }
-  }, [dispatch, location]);
-
-  /**
-   * UPDATES URL WITH CORRECT API PARAM
-   */
-  React.useEffect(() => {
-    setSearchParam(history, location.search, api);
-  }, [history, location.search, prevApi, api]);
+  }, [dispatch, location, history, prevApi, api]);
 
   /**
    * CLEAR REDUX STATE ON UNMOUNT
