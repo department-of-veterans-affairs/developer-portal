@@ -39,12 +39,13 @@ class SitemapBuilderPlugin {
   }
 
   apply(compiler) {
-    compiler.plugin('emit', (compilation, callback) => {
+    compiler.hooks.emit.tapAsync('SitemapBuilderPlugin', (compilation, callback) => {
       if (this.verbose) {
         console.log('Sitemap Builder Plugin start');
       }
-      // Tapable hooks are not able to be removed (https://github.com/webpack/tapable/issues/71)
-      // so we immediately invoke callback() when this plugin is being called by a compilation it triggers
+
+      // Immediately invoke callback() when this plugin is being called by a
+      // compilation it triggers to avoid error
       if (compiler.options.entry.includes(this.routesFile)) {
         if (this.verbose) {
           console.log('Sitemap Builder Plugin end without compiling', compiler.options.entry);
