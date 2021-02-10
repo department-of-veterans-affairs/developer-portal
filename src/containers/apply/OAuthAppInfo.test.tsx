@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -69,8 +69,8 @@ describe('OAuthAppInfo', () => {
 
     expect(input.value).toBe('');
 
-    await userEvent.type(input, 'http://www.dunedain.com');
+    void userEvent.type(input, 'http://www.dunedain.com');
 
-    expect(input.value).toBe('http://www.dunedain.com');
+    await waitFor(() => expect(input.value).toBe('http://www.dunedain.com'));
   });
 });

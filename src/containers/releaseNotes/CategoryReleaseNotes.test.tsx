@@ -1,5 +1,5 @@
 /* eslint-disable max-lines -- exception for test suite */
-import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
+import { cleanup, getByRole, queryByRole, render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import 'jest';
 import * as React from 'react';
@@ -27,7 +27,7 @@ describe('ReleaseNotesCollection', () => {
 
   describe('CategoryReleaseNotes', () => {
     const renderComponent = async (route = '/release-notes/lotr'): Promise<void> => {
-      await cleanup(); // clean up beforeEach render if we're testing a different page
+      await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
       render(
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={[route]}>
@@ -152,12 +152,12 @@ describe('ReleaseNotesCollection', () => {
         const history = createMemoryHistory({ initialEntries: ['/release-notes/fakeCategory'] });
         const { container } = render(
           <Router history={history}>
-            <Route path="/release-notes" exact render={(): JSX.Element => <div>/release-notes</div>} />
             <Route
-              path="/release-notes/fakeCategory"
+              path="/release-notes"
               exact
-              component={CategoryReleaseNotes}
+              render={(): JSX.Element => <div>/release-notes</div>}
             />
+            <Route path="/release-notes/fakeCategory" exact component={CategoryReleaseNotes} />
           </Router>,
         );
         expect(container.innerHTML).toEqual(expect.stringContaining('/release-notes'));
@@ -167,7 +167,7 @@ describe('ReleaseNotesCollection', () => {
 
   describe('DeactivatedReleaseNotes', () => {
     const renderComponent = async (): Promise<void> => {
-      await cleanup();
+      await waitFor(() => cleanup());
       render(
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={['/release-notes/deactivated']}>
@@ -288,7 +288,8 @@ describe('ReleaseNotesCollection', () => {
         expect(silmarilsHeading.nextElementSibling).not.toBeNull();
         expect(silmarilsHeading.nextElementSibling?.nextElementSibling).not.toBeNull();
 
-        const notesContainer = silmarilsHeading.nextElementSibling?.nextElementSibling as HTMLElement;
+        const notesContainer = silmarilsHeading.nextElementSibling
+          ?.nextElementSibling as HTMLElement;
         const noteHeading = getByRole(notesContainer, 'heading', {
           name: 'December 1, 0215',
         });
