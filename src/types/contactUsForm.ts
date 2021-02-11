@@ -24,6 +24,11 @@ interface ContactDetailsFormData {
   organization: string;
 }
 
+/*
+ * These SubmissionData types are for the data being submitted to the backend by the form, as such
+ * they are stricter than the form data types and enforce that we only submit data for the version
+ * of the form being submitted (so that you're not submitting api details with the consumer version and such)
+ */
 type ConsumerSubmissionData = {
   type: FormType.CONSUMER;
   description: string;

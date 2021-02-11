@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router';
 import Helmet from 'react-helmet';
 import { FormType } from '../../types/contactUsForm';
-import { FLAG_API_PUBLISHING } from '../../types/constants';
+import { FLAG_API_PUBLISHING, FLAG_API_PUBLISHING_CONTACT_FORM } from '../../types/constants';
 import { Flag } from '../../flags';
 import { PageHeader } from '../../components';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
@@ -59,10 +59,17 @@ const SupportContactUs = (): JSX.Element => {
           <Flag
             name={[FLAG_API_PUBLISHING]}
             render={(): ReactNode => (
-              <>
-                <p>From this page, you can ask us questions, get help or support, or get started with publishing your API. You can also find answers to many common questions on our FAQ page.</p>
-                <ContactUsForm onSuccess={onSuccess} defaultType={type} />
-              </>)}
+              <Flag
+                name={[FLAG_API_PUBLISHING_CONTACT_FORM]}
+                render={(): ReactNode => (
+                  <>
+                    <p>From this page, you can ask us questions, get help or support, or get started with publishing your API. You can also find answers to many common questions on our FAQ page.</p>
+                    <ContactUsForm onSuccess={onSuccess} defaultType={type} />
+                  </>
+                )}
+                fallbackRender={(): ReactNode => <ContactUsFormLegacy onSuccess={onSuccess} />}
+              />
+            )}
             fallbackRender={(): ReactNode => <ContactUsFormLegacy onSuccess={onSuccess} />}
           />
 
