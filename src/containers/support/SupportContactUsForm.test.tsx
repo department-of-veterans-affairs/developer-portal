@@ -2,7 +2,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
-import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
+import { ResponseComposition } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import * as React from 'react';
 
@@ -17,7 +17,7 @@ jest.mock('uuid', () => ({
 const server = setupServer(
   rest.post(
     CONTACT_US_URL,
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse =>
+    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
       res(context.status(200), context.json({})),
   ),
 );
@@ -71,11 +71,18 @@ describe('SupportContactUsForm', () => {
         _bodyText:
           '{"apis":[],"description":"this is a test","email":"test@email.com","firstName":"john","lastName":"doe","organization":""}',
         bodyUsed: true,
-        credentials: 'omit',
-        headers: { map: { accept: 'application/json', 'content-type': 'application/json', 'x-request-id': '123' } },
+        credentials: 'same-origin',
+        headers: {
+          map: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+            'x-request-id': '123',
+          },
+        },
         method: 'POST',
         mode: null,
         referrer: null,
+        signal: undefined,
         url: 'http://fake.va.gov/internal/developer-portal/public/contact-us',
       }),
     );

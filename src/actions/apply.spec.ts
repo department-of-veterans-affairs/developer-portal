@@ -2,7 +2,7 @@
 import * as Sentry from '@sentry/browser';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
-import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
+import { ResponseComposition } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import { ErrorableInput, RootState } from 'src/types';
 import * as constants from '../types/constants';
@@ -91,7 +91,7 @@ describe('submitForm', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.status(500, 'KABOOM')),
+        ) => res(context.status(500, 'KABOOM')),
       ),
     );
 

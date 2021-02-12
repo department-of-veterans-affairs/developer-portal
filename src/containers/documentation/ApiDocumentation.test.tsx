@@ -1,6 +1,6 @@
 import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
 import { MockedRequest, rest, restContext } from 'msw';
-import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
+import { ResponseComposition } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import * as React from 'react';
 import { Provider } from 'react-redux';
@@ -29,7 +29,7 @@ const api: APIDescription = {
 const server = setupServer(
   rest.get(
     'https://example.com/my/openapi/spec',
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse =>
+    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
       res(context.status(200), context.json(openAPIData)),
   ),
 );
