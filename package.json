@@ -190,11 +190,6 @@
     "Firefox ESR",
     "not ie < 9"
   ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
     "./src/**/*.{ts,tsx}": "eslint --ext .ts,.tsx"
   }
