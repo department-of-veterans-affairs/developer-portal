@@ -50,6 +50,9 @@ const setInitialApi = (
   const availableApis = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
+  if (api === DEFAULT_OAUTH_API_SELECTION) {
+    dispatch(setOAuthApiSelection('none'));
+  }
   dispatch(setOAuthApiSelection(api));
   setSearchParam(history, searchQuery, api, true);
 };
@@ -66,8 +69,9 @@ const AuthorizationDocs = (): JSX.Element => {
     if (initializing.current) {
       // Do this on first load
       initializing.current = false;
-
-      setInitialApi(history, location.search, dispatch);
+      setTimeout(() => {
+        setInitialApi(history, location.search, dispatch);
+      }, 0);
     } else {
       // Do this on all subsequent re-renders
       setSearchParam(history, location.search, api, false);
