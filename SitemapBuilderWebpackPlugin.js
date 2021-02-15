@@ -44,8 +44,8 @@ class SitemapBuilderPlugin {
         console.log('Sitemap Builder Plugin start');
       }
 
-      // Immediately invoke callback() when this plugin is being called by a
-      // compilation it triggers to avoid error
+      // To avoid error, immediately invoke callback() when this plugin is being called by a
+      // compilation it triggers
       if (compiler.options.entry.includes(this.routesFile)) {
         if (this.verbose) {
           console.log('Sitemap Builder Plugin end without compiling', compiler.options.entry);
