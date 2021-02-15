@@ -86,6 +86,7 @@ describe('SupportContactUsForm', () => {
         url: 'http://fake.va.gov/internal/developer-portal/public/contact-us',
       }),
     );
+    await waitFor(() => expect(handleSuccess).toHaveBeenCalled());
   });
 
   it('should not be disabled when required fields are filled', async () => {
@@ -122,7 +123,7 @@ describe('SupportContactUsForm', () => {
     await waitFor(() => expect(onSuccessMock).toHaveBeenCalled());
   });
 
-  it('should have an error when entering a non-email', () => {
+  it('should have an error when entering a non-email',  () => {
     const onSuccessMock = jest.fn();
     const component = mount(<SupportContactUsForm onSuccess={onSuccessMock} />);
     const inputs = component.find('input[type="text"]');
