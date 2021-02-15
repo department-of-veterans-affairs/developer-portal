@@ -133,7 +133,7 @@
     "file-loader": "2.0.0",
     "fork-ts-checker-webpack-plugin": "^6.0.8",
     "fs-extra": "3.0.1",
-    "html-loader": "^0.5.5",
+    "html-loader": "^2.0.0",
     "html-webpack-plugin": "^4.5.1",
     "husky": "^5.0.9",
     "jest": "^26.6.3",
