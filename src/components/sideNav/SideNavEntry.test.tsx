@@ -1,5 +1,5 @@
 /* eslint-disable max-lines, max-nested-callbacks -- Jest exceptions */
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 
@@ -30,7 +30,7 @@ const testActive = async ({
   const navLink = screen.getByRole('link', { name: 'Go to Fake Page' });
   expect(navLink).toBeInTheDocument();
   expect(navLink.className.includes(activeClassName)).toBe(expectation);
-  await cleanup(); // used multiple times in one test
+  await waitFor(() => cleanup()); // used multiple times in one test
 };
 
 describe('SideNavEntry', () => {

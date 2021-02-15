@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -53,10 +53,10 @@ describe('ApplyForm', () => {
         name: 'Submit',
       }) as HTMLButtonElement;
 
-      await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Samwise');
-      await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Gamgee');
-      await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'sam@theshire.net');
-      await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship');
+      void userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Samwise');
+      void userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Gamgee');
+      void userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'sam@theshire.net');
+      void userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship');
       userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
       userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
 
@@ -67,12 +67,13 @@ describe('ApplyForm', () => {
       expect(submitButton).toBeDisabled();
 
       userEvent.click(screen.getByRole('radio', { name: 'Yes' }));
-      await userEvent.type(
+
+      void userEvent.type(
         screen.getByRole('textbox', { name: /OAuth Redirect URI/ }),
         'http://prancingpony.pub/',
       );
 
-      expect(submitButton).not.toBeDisabled();
+      await waitFor(() => expect(submitButton).not.toBeDisabled());
     });
   });
 
@@ -94,9 +95,9 @@ describe('ApplyForm', () => {
         name: 'Briefly describe how your organization will use VA APIs:',
       }) as HTMLInputElement;
 
-      await userEvent.type(descriptionTextarea, 'One Ring to rule them all');
+      void userEvent.type(descriptionTextarea, 'One Ring to rule them all');
 
-      expect(descriptionTextarea.value).toBe('One Ring to rule them all');
+      await waitFor(() => expect(descriptionTextarea.value).toBe('One Ring to rule them all'));
     });
   });
 
@@ -131,13 +132,13 @@ describe('ApplyForm', () => {
       expect(submitButton).toBeInTheDocument();
       expect(submitButton).toBeDisabled();
 
-      await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin');
-      await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took');
-      await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@theshire.net');
-      await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship');
+      void userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin');
+      void userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took');
+      void userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@theshire.net');
+      void userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship');
       userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
 
-      expect(submitButton).toBeDisabled();
+      await waitFor(() => expect(submitButton).toBeDisabled());
 
       userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
 
@@ -153,10 +154,18 @@ describe('ApplyForm', () => {
     });
 
     it('submits the form when all required fields are filled', async () => {
-      await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc');
-      await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck');
-      await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'merry@theshire.net');
-      await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship');
+      await waitFor(() =>
+        userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc'),
+      );
+      await waitFor(() =>
+        userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck'),
+      );
+      await waitFor(() =>
+        userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'merry@theshire.net'),
+      );
+      await waitFor(() =>
+        userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship'),
+      );
       userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
       userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
 

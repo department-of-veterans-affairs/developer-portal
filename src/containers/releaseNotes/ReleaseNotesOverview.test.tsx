@@ -1,5 +1,5 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
@@ -10,7 +10,7 @@ import { FlagsProvider, getFlags } from '../../flags';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 const renderComponent = async (): Promise<void> => {
-  await cleanup(); // clean up beforeEach render if we're testing a different page
+  await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
   render(
     <FlagsProvider flags={getFlags()}>
       <MemoryRouter>

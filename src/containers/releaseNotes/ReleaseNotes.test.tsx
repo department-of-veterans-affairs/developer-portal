@@ -1,5 +1,5 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
-import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
+import { cleanup, getByRole, queryByRole, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
@@ -15,7 +15,7 @@ import { FlagsProvider, getFlags } from '../../flags';
 import ReleaseNotes from './ReleaseNotes';
 
 const renderComponent = async (route = '/release-notes'): Promise<void> => {
-  await cleanup(); // in case we're calling from a test, not beforeEach()
+  await waitFor(() => cleanup()); // in case we're calling from a test, not beforeEach()
   render(
     <FlagsProvider flags={getFlags()}>
       <MemoryRouter initialEntries={[route]}>
@@ -205,7 +205,10 @@ describe('ReleaseNotes', () => {
       it('does not include disabled APIs in the deacivated APIs subnav', async () => {
         allAPIsSpy.mockReturnValue(
           allAPIs.map(
-            (api: APIDescription): APIDescription => ({ ...api, deactivationInfo: extraDeactivationInfo }),
+            (api: APIDescription): APIDescription => ({
+              ...api,
+              deactivationInfo: extraDeactivationInfo,
+            }),
           ),
         );
 
