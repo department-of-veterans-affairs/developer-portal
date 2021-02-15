@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -77,7 +77,7 @@ describe('NavBar', () => {
   describe('isMobileMenuVisible is false', () => {
     beforeEach(async () => {
       // cleanup NavBar rendered with isMobileMenuVisible set to true
-      await cleanup();
+      await waitFor(() => cleanup());
       render(
         <FlagsProvider flags={getFlags()}>
           <Router>
