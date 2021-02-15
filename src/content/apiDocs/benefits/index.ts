@@ -9,9 +9,9 @@ import ClaimsAttributesReleaseNotes from './claimsAttributesReleaseNotes.mdx';
 const benefitsContent: APICategoryContent = {
   intro: BenefitsIntro,
   overview: BenefitsOverview,
-  placardText: 'Submit benefits-related PDFs',
+  placardText: 'Build tools to electronically submit and track the status of benefit claims.',
   shortDescription:
-    'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
+    'Enables Veterans and approved organizations to electronically submit and track the status of benefit claims.',
 };
 
 export {
