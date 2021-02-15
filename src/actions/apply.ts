@@ -76,6 +76,8 @@ export interface SubmitForm extends Action {
 export interface SubmitFormSuccess extends Action {
   clientID: string;
   clientSecret: string;
+  kongUsername: string;
+  redirectURI: string;
   type: constants.SUBMIT_APPLICATION_SUCCESS;
   token: string;
 }
@@ -118,13 +120,13 @@ export const submitFormBegin: ActionCreator<SubmitForm> = () => ({
 });
 
 export const submitFormSuccess: ActionCreator<SubmitFormSuccess> = (
-  token: string,
-  clientID: string,
-  clientSecret: string,
+  responseData: DevApplicationResponse,
 ) => ({
-  clientID,
-  clientSecret,
-  token,
+  clientID: responseData.clientID,
+  clientSecret: responseData.clientSecret,
+  kongUsername: responseData.kongUsername,
+  redirectURI: responseData.redirectURI,
+  token: responseData.token,
   type: constants.SUBMIT_APPLICATION_SUCCESS_VALUE,
 });
 
@@ -166,7 +168,7 @@ export const submitForm: ActionCreator<SubmitFormThunk> = () => (
         );
       }
 
-      const result = dispatch(submitFormSuccess(json.token, json.clientID, json.clientSecret));
+      const result = dispatch(submitFormSuccess(json));
       history.push('/applied');
       return result;
     })

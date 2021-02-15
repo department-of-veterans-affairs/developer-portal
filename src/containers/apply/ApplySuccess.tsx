@@ -20,6 +20,7 @@ const AssistanceTrailer = (): JSX.Element => (
 interface APIKeyNoticeProps {
   token: string;
   email: string;
+  kongUsername: string;
   selectedApis: string[];
 }
 
@@ -28,6 +29,7 @@ interface OAuthCredentialsNoticeProps {
   clientSecret?: string;
   email: string;
   selectedApis: string[];
+  redirectURI: string;
 }
 
 // Mapping from the options on the form to Proper Names for APIs
@@ -53,6 +55,7 @@ const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProp
   clientSecret,
   email,
   selectedApis,
+  redirectURI,
 }: OAuthCredentialsNoticeProps) => {
   const apiNameList = selectedApis.map(k => apisToEnglishOAuthList[k]);
   const apiListSnippet = sentenceJoin(apiNameList);
@@ -67,6 +70,9 @@ const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProp
           <strong>Your VA API OAuth Client Secret:</strong> {clientSecret}
         </p>
       )}
+      <p className="usa-font-lead">
+        <strong>Your Redirect URI is :</strong> {redirectURI}
+      </p>
 
       <p>
         You should receive an email at {email} with the same credentials. Those credentials are for
@@ -80,6 +86,7 @@ const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProp
 const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
   token,
   email,
+  kongUsername,
   selectedApis,
 }: APIKeyNoticeProps) => {
   const apiNameList = selectedApis.map(k => apisToEnglishApiKeyList()[k]);
@@ -89,6 +96,9 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
     <div>
       <p className="usa-font-lead">
         <strong>Your VA API key is:</strong> {token}
+      </p>
+      <p className="usa-font-lead">
+        <strong>Your application id is:</strong> {kongUsername}
       </p>
       <p>
         You should receive an email at {email} with the same key. That key is for accessing the{' '}
@@ -100,7 +110,7 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
 };
 
 const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element => {
-  const { apis, email, token, clientID, clientSecret } = props.result;
+  const { apis, email, token, clientID, clientSecret, kongUsername, redirectURI } = props.result;
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
   const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis[apiId]);
@@ -120,13 +130,14 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
       <p>
         <strong>Thank you for signing up!</strong>
       </p>
-      {hasStandardAPI && <ApiKeyNotice email={email} token={token} selectedApis={standardAPIs} />}
+      {hasStandardAPI && <ApiKeyNotice email={email} token={token} kongUsername={kongUsername} selectedApis={standardAPIs} />}
       {hasOAuthAPI && clientID && (
         <OAuthCredentialsNotice
           email={email}
           clientID={clientID}
           clientSecret={clientSecret}
           selectedApis={oAuthAPIs}
+          redirectURI={redirectURI}
         />
       )}
       <AssistanceTrailer />
