@@ -6,6 +6,7 @@ export const enum FormType {
 }
 
 export const SupportContactUsFormPropTypes = {
+  defaultType: PropTypes.oneOf([FormType.DEFAULT, FormType.PUBLISHING]).isRequired,
   onSuccess: PropTypes.func.isRequired,
 };
 

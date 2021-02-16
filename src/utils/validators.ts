@@ -1,6 +1,7 @@
 import { ErrorableInput } from 'src/types';
 
 const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const PRESENCE_PATTERN = /^(?!\s*$).+/;
 
 export const validateByPattern = (
   newValue: ErrorableInput,
@@ -24,7 +25,22 @@ export const validateOAuthRedirectURI = (newValue: ErrorableInput): ErrorableInp
 };
 
 export const validatePresence = (newValue: ErrorableInput, fieldName: string): ErrorableInput => {
-  const presencePattern = /^(?!\s*$).+/;
-  validateByPattern(newValue, presencePattern, `${fieldName} must not be blank.`);
+  validateByPattern(newValue, PRESENCE_PATTERN, `${fieldName} must not be blank.`);
   return newValue;
+};
+
+export const validatePresenceFormik = (fieldName: string, value: string): string | undefined => {
+  if (!PRESENCE_PATTERN.test(value)) {
+    return `${fieldName} must not be blank.`;
+  }
+
+  return undefined;
+};
+
+export const validateEmailFormik = (value: string): string | undefined => {
+  if (!EMAIL_REGEX.test(value)) {
+    return 'Must be a valid email address.';
+  }
+
+  return undefined;
 };

@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React, { ReactNode } from 'react';
-import { Formik, Form, Field, FormikErrors } from 'formik';
-import Joi, { ValidationError } from 'joi';
+import { Formik, Form, Field } from 'formik';
 import { CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import '../SupportContactUsForm.scss';
@@ -9,37 +8,7 @@ import { SupportContactUsFormState, SupportContactUsFormProps, SupportContactUsF
 import DefaultFormFields from './components/DefaultFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
 import PublishingFormFields from './components/PublishingFormFields';
-import validationSchema from './schema';
-
-const isJoiError = (error: unknown): error is ValidationError => (error as ValidationError).isJoi;
-
-const initialValues: SupportContactUsFormState = {
-  apiDetails: '',
-  apiInternalOnly: 'no',
-  apiInternalOnlyDetails: '',
-  description: '',
-  email: '',
-  firstName: '',
-  lastName: '',
-  type: FormType.DEFAULT,
-};
-
-const validateForm = (values: SupportContactUsFormState): FormikErrors<SupportContactUsFormState> => {
-  try {
-    Joi.assert(values, validationSchema);
-    return {};
-  } catch (error: unknown) {
-    if (isJoiError(error)) {
-      const errors: FormikErrors<SupportContactUsFormState> = {};
-      for (const validationFailure of error.details) {
-        errors[validationFailure.path[0]] = validationFailure.message;
-      }
-      return errors;
-    }
-  }
-
-  return {};
-};
+import validateForm from './validateForm';
 
 const processedData = (values: SupportContactUsFormState): FormData => {
   const contactFormData = {
@@ -67,7 +36,18 @@ const processedData = (values: SupportContactUsFormState): FormData => {
   }
 };
 
-const SupportContactUsFormPublishing = (props: SupportContactUsFormProps): JSX.Element => {
+const SupportContactUsFormPublishing = ({ onSuccess, defaultType }: SupportContactUsFormProps): JSX.Element => {
+  const initialValues: SupportContactUsFormState = {
+    apiDetails: '',
+    apiInternalOnly: 'no',
+    apiInternalOnlyDetails: '',
+    description: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    type: defaultType,
+  };
+
   const formSubmission = async (values: SupportContactUsFormState): Promise<void> => {
     await makeRequest(CONTACT_US_URL, {
       body: JSON.stringify(processedData(values)),
@@ -77,17 +57,17 @@ const SupportContactUsFormPublishing = (props: SupportContactUsFormProps): JSX.E
       },
       method: 'POST',
     }, { responseType: ResponseType.TEXT });
-    props.onSuccess();
+    onSuccess();
   };
 
   return (
     <Formik initialValues={initialValues} onSubmit={formSubmission} validate={validateForm}>
-      {({ values }): ReactNode => (
+      {({ values, isSubmitting, isValid, dirty }): ReactNode => (
         <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-y--2')}>
           <ContactDetailsFormFields />
 
-          <fieldset>
-            <legend className={classNames('vads-u-font-size--lg', 'vads-u-padding-top--7')}>What can we help you with?</legend>
+          <fieldset className="vads-u-margin-top--5">
+            <legend className="vads-u-font-size--lg">What can we help you with?</legend>
             <Field id="formTypeDefault" type="radio" name="type" value={FormType.DEFAULT} />
             <label htmlFor="formTypeDefault">
               Report a problem or ask a question
@@ -107,7 +87,7 @@ const SupportContactUsFormPublishing = (props: SupportContactUsFormProps): JSX.E
               <PublishingFormFields />
           }
 
-          <input type="submit" />
+          <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>{isSubmitting ? 'Sending...' : 'Submit'}</button>
         </Form>
       )}
     </Formik>

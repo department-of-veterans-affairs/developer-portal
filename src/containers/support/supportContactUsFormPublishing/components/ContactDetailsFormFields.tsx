@@ -11,21 +11,21 @@ const textFieldClasses = (paddingDirection: string): string =>
 
 const ContactDetailsFormFields: FC = () => (
   <fieldset className={classNames('vads-l-grid-container', 'vads-u-padding-x--0')}>
-    <legend className={classNames('vads-u-font-size--lg', 'vads-u-padding-top--7')}>Tell us about you</legend>
+    <legend className={classNames('vads-u-font-size--lg')}>Tell us about you</legend>
     <div className="vads-l-row">
       <div className={textFieldClasses('right')}>
-        <FormField label="First Name" name="firstName" required />
+        <FormField label="First name" name="firstName" required className="vads-u-margin-top--3" />
       </div>
       <div className={textFieldClasses('left')}>
-        <FormField label="Last Name" name="lastName" required />
+        <FormField label="Last name" name="lastName" required className="vads-u-margin-top--3" />
       </div>
     </div>
     <div className="vads-l-row">
       <div className={textFieldClasses('right')}>
-        <FormField label="Email" name="email" type="email" required />
+        <FormField label="Email address" name="email" type="email" required className="vads-u-margin-top--3" />
       </div>
       <div className={textFieldClasses('left')}>
-        <FormField label="Organization" name="organization" />
+        <FormField label="Organization" name="organization" className="vads-u-margin-top--3" />
       </div>
     </div>
   </fieldset>

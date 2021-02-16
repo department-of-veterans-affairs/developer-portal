@@ -7,7 +7,7 @@ const DefaultFormFields: FC = () => (
     name="description"
     as="textarea"
     required
-    className="vads-u-padding-top--7"
+    className="vads-u-padding-top--4"
   />
 );
 

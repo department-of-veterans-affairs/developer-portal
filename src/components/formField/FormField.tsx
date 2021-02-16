@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { ErrorMessage, Field, useFormikContext } from 'formik';
-import React, { ComponentPropsWithoutRef, FC, ReactNode } from 'react';
+import React, { ComponentPropsWithRef, FC, ReactNode } from 'react';
 
-type FieldProps = ComponentPropsWithoutRef<typeof Field>;
+type FieldProps = ComponentPropsWithRef<typeof Field>;
 
 interface FormFieldProps {
   label: string;
@@ -27,7 +27,7 @@ export const FormField: FC<FormFieldProps> = ({ label, required = false, name, d
 
   return (
     <div className={classNames(containerClass, className)}>
-      <label htmlFor={`formField${name}`} className={labelClass}>
+      <label htmlFor={`formField${name}`} className={classNames('vads-u-margin-top--1', labelClass)}>
         {label}{required && <span className="form-required-span">(*Required)</span>}
       </label>
       {
@@ -36,7 +36,7 @@ export const FormField: FC<FormFieldProps> = ({ label, required = false, name, d
             {description}
           </div>
       }
-      <span id={`formField${name}Error`} className={validationClass}>
+      <span id={errorId} className={validationClass}>
         <ErrorMessage name={name} />
       </span>
       <Field id={`formField${name}`} name={name} required={required} {...props} aria-describedby={`${errorId} ${descriptionId}`} />
