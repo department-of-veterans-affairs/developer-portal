@@ -32,7 +32,9 @@ const getFlags = (): AppFlags => {
 
   return {
     api_publishing: process.env.REACT_APP_API_PUBLISHING === 'true',
-    api_publishing_contact_form: process.env.REACT_APP_API_PUBLISHING_CONTACT_FORM === 'true',
+    api_publishing_contact_form:
+      process.env.REACT_APP_API_PUBLISHING === 'true' &&
+      process.env.REACT_APP_API_PUBLISHING_CONTACT_FORM === 'true',
     auth_docs_v2: process.env.REACT_APP_AUTH_DOCS_V2 === 'true',
     categories: apiCategories,
     deactivated_apis: deactivatedFlags,
