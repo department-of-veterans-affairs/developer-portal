@@ -18,11 +18,11 @@ import './ContactUsForm/ContactUsForm.scss';
 /**
  * PROP TYPES AND TYPEDEF
  */
-const SupportContactUsFormPropTypes = {
+const ContactUsFormPropTypes = {
   onSuccess: PropTypes.func.isRequired,
 };
 
-type SupportContactUsFormProps = PropTypes.InferProps<typeof SupportContactUsFormPropTypes>;
+type SupportContactUsFormProps = PropTypes.InferProps<typeof ContactUsFormPropTypes>;
 
 interface SupportContactUsFormState {
   apis: { [x: string]: boolean };
@@ -100,7 +100,7 @@ const apiOptions = (): Array<{ label: string; value: string }> => {
 /**
  * COMPONENT
  */
-const SupportContactUsFormLegacy = (props: SupportContactUsFormProps): JSX.Element => {
+const ContactUsFormLegacy = (props: SupportContactUsFormProps): JSX.Element => {
   const [formState, setFormState] = React.useReducer(reducer, initialFormState);
 
   const isFormValid = (): boolean => {
@@ -259,6 +259,6 @@ const SupportContactUsFormLegacy = (props: SupportContactUsFormProps): JSX.Eleme
   );
 };
 
-SupportContactUsFormLegacy.propTypes = SupportContactUsFormPropTypes;
+ContactUsFormLegacy.propTypes = ContactUsFormPropTypes;
 
-export default SupportContactUsFormLegacy;
+export default ContactUsFormLegacy;

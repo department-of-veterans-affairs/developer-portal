@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 import { useLocation } from 'react-router';
 import Helmet from 'react-helmet';
 import { FormType } from '../../types/contactUsForm';
-import { FLAG_API_PUBLISHING, FLAG_API_PUBLISHING_CONTACT_FORM } from '../../types/constants';
+import { FLAG_API_PUBLISHING_CONTACT_FORM } from '../../types/constants';
 import { Flag } from '../../flags';
 import { PageHeader } from '../../components';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
@@ -30,7 +30,7 @@ const headerProps = {
   header: 'Contact Us',
 };
 
-const SupportContactUs = (): JSX.Element => {
+const ContactUs = (): JSX.Element => {
   const [sent, setSent] = React.useState(false);
   const { search } = useLocation();
   const query = new URLSearchParams(search);
@@ -73,4 +73,4 @@ const SupportContactUs = (): JSX.Element => {
   );
 };
 
-export default SupportContactUs;
+export default ContactUs;
