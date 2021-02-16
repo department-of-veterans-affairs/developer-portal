@@ -10,7 +10,7 @@ jest.mock('react-router', () => ({
 
 const mockUseLocation = useLocation as jest.Mock;
 
-describe('SupportContactUs', () => {
+describe('ContactUs', () => {
   beforeEach(() => {
     mockUseLocation.mockClear();
   });
@@ -19,7 +19,8 @@ describe('SupportContactUs', () => {
     render(
       <FlagsProvider flags={getFlags()}>
         <ContactUs />
-      </FlagsProvider>);
+      </FlagsProvider>
+    );
   };
 
   describe('query params', () => {
