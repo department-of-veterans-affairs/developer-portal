@@ -377,5 +377,11 @@ module.exports = {
         'max-nested-callbacks': 'off',
       },
     },
+    {
+      files: ['**/*.tsx'],
+      rules: {
+        'react/prop-types': 'off',
+      }
+    }
   ],
 };
