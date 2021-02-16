@@ -21,6 +21,7 @@ describe('SupportContactUs', () => {
         <ContactUs />
       </FlagsProvider>);
   };
+
   describe('query params', () => {
     describe('type is set to publishing', () => {
       beforeEach(() => {
