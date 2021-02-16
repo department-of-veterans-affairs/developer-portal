@@ -57,22 +57,16 @@ const SupportContactUs = (): JSX.Element => {
           <PageHeader {...headerProps} />
           <GitHubSnippet />
           <Flag
-            name={[FLAG_API_PUBLISHING]}
-            render={(): ReactNode => (
-              <Flag
-                name={[FLAG_API_PUBLISHING_CONTACT_FORM]}
-                render={(): ReactNode => (
-                  <>
-                    <p>From this page, you can ask us questions, get help or support, or get started with publishing your API. You can also find answers to many common questions on our FAQ page.</p>
-                    <ContactUsForm onSuccess={onSuccess} defaultType={type} />
-                  </>
-                )}
-                fallbackRender={(): ReactNode => <ContactUsFormLegacy onSuccess={onSuccess} />}
-              />
-            )}
+            name={[FLAG_API_PUBLISHING_CONTACT_FORM]}
             fallbackRender={(): ReactNode => <ContactUsFormLegacy onSuccess={onSuccess} />}
-          />
-
+          >
+            <p>
+              From this page, you can ask us questions, get help or support, or get started with
+              publishing your API. You can also find answers to many common questions on our FAQ
+              page.
+            </p>
+            <ContactUsForm onSuccess={onSuccess} defaultType={type} />
+          </Flag>
         </>
       )}
     </>
