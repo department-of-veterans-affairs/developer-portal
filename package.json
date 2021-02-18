@@ -70,7 +70,7 @@
     "url-polyfill": "^1.1.12",
     "uswds": "^1.6.13",
     "uuid": "^8.3.2",
-    "whatwg-fetch": "^3.5.0"
+    "whatwg-fetch": "^3.6.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -136,7 +136,7 @@
     "fork-ts-checker-webpack-plugin": "^6.0.8",
     "fs-extra": "^9.1.0",
     "html-loader": "^2.0.0",
-    "html-webpack-plugin": "^4.5.1",
+    "html-webpack-plugin": "^4.5.2",
     "husky": "^5.0.9",
     "jest": "^26.6.3",
     "jest-axe": "^4.1.0",

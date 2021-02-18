@@ -2,7 +2,7 @@ import { fireEvent, render, waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
-import { ResponseComposition } from 'msw/lib/types/response';
+import { ResponseComposition, MockedResponse } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import * as React from 'react';
 
@@ -17,8 +17,11 @@ jest.mock('uuid', () => ({
 const server = setupServer(
   rest.post(
     CONTACT_US_URL,
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
-      res(context.status(200), context.json({})),
+    (
+      req: MockedRequest,
+      res: ResponseComposition,
+      context: typeof restContext,
+    ): MockedResponse | Promise<MockedResponse> => res(context.status(200), context.json({})),
   ),
 );
 
@@ -40,9 +43,7 @@ describe('SupportContactUsForm', () => {
 
   it('Should send proper information on submission', async () => {
     const handleSuccess = jest.fn();
-    const { getByLabelText, getByText } = render(
-      <ContactUsFormLegacy onSuccess={handleSuccess} />,
-    );
+    const { getByLabelText, getByText } = render(<ContactUsFormLegacy onSuccess={handleSuccess} />);
 
     const firstNameInput = getByLabelText('First name(*Required)');
     fireEvent.change(firstNameInput, { target: { value: 'john' } });
@@ -123,7 +124,7 @@ describe('SupportContactUsForm', () => {
     await waitFor(() => expect(onSuccessMock).toHaveBeenCalled());
   });
 
-  it('should have an error when entering a non-email',  () => {
+  it('should have an error when entering a non-email', () => {
     const onSuccessMock = jest.fn();
     const component = mount(<ContactUsFormLegacy onSuccess={onSuccessMock} />);
     const inputs = component.find('input[type="text"]');

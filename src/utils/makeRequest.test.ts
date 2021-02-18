@@ -2,7 +2,7 @@
 import * as Sentry from '@sentry/browser';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
-import { ResponseComposition } from 'msw/lib/types/response';
+import { ResponseComposition, MockedResponse } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import { makeRequest, ResponseType } from './makeRequest';
 
@@ -43,7 +43,7 @@ describe('makeRequest', () => {
     server.use(
       rest.post(
         requestUri,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse | Promise<MockedResponse> =>
           res(context.status(200), context.json({ test: 'json' })),
       ),
     );
@@ -63,7 +63,7 @@ describe('makeRequest', () => {
     server.use(
       rest.post(
         requestUri,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse | Promise<MockedResponse> =>
           res(context.status(200), context.text('you got mail')),
       ),
     );
@@ -89,7 +89,7 @@ describe('makeRequest', () => {
     server.use(
       rest.post(
         requestUri,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse | Promise<MockedResponse> =>
           res(context.status(200), context.json(blob)),
       ),
     );
@@ -117,7 +117,7 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ) => res(context.text('error')),
+        ): MockedResponse | Promise<MockedResponse> => res(context.text('error')),
       ),
     );
 
@@ -148,7 +148,7 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ) => res(context.status(501), context.text('testErrorMessage')),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(501), context.text('testErrorMessage')),
       ),
     );
 
@@ -182,7 +182,7 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ) => res(context.status(200), context.text('')),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(200), context.text('')),
       ),
     );
 
@@ -220,7 +220,7 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ) => res(context.status(500), context.json({ message: testErrorMessage })),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(500), context.json({ message: testErrorMessage })),
       ),
     );
 
@@ -256,7 +256,7 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ) => res(context.status(400), context.json({ errors: messages })),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(400), context.json({ errors: messages })),
       ),
     );
     const init = {
@@ -296,7 +296,7 @@ describe('makeRequest', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ) => res(context.status(404), context.json({ message: testErrorMessage })),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(404), context.json({ message: testErrorMessage })),
       ),
     );
 
