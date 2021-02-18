@@ -5,6 +5,7 @@ import { getAllApis } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 
 export interface AppFlags {
+  api_consumer: boolean;
   api_publishing: boolean;
   api_publishing_contact_form: boolean;
   auth_docs_v2: boolean;
@@ -31,6 +32,7 @@ const getFlags = (): AppFlags => {
   }, {});
 
   return {
+    api_consumer: process.env.REACT_APP_API_CONSUMER === 'true',
     api_publishing: process.env.REACT_APP_API_PUBLISHING === 'true',
     api_publishing_contact_form:
       process.env.REACT_APP_API_PUBLISHING === 'true' &&

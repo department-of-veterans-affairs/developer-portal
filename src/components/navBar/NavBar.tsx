@@ -5,8 +5,9 @@ import * as React from 'react';
 import { match as Match } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { FLAG_API_PUBLISHING } from '../../types/constants';
+import { FLAG_API_CONSUMER, FLAG_API_PUBLISHING } from '../../types/constants';
 import {
+  CONSUMER_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -221,6 +222,23 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                   id="contact"
                 >
                   Contact Us
+                </SubNavEntry>
+              </SubNav>
+            </li>
+          </Flag>
+          <Flag name={[FLAG_API_CONSUMER]}>
+            <li className={navItemStyles()}>
+              <MainNavItem
+                targetUrl={CONSUMER_PATH}
+                largeScreenProps={sharedNavItemProps}
+                excludeSmallScreen
+                className={navLinkStyles}
+              >
+                API Consumers
+              </MainNavItem>
+              <SubNav name="API Consumers">
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="overview">
+                  Overview
                 </SubNavEntry>
               </SubNav>
             </li>
