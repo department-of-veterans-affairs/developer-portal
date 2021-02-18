@@ -51,6 +51,11 @@ const setInitialApi = (
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
   if (api === DEFAULT_OAUTH_API_SELECTION) {
+    /*
+     * We need to trigger a change to the API selection so the key will change and trigger a
+     * re-render of the <CodeWrapper /> component to fix the bug.
+     * Because other APIs besides the default include that change we only need to do it on claims.
+     */
     dispatch(setOAuthApiSelection('none'));
   }
   dispatch(setOAuthApiSelection(api));
@@ -70,6 +75,10 @@ const AuthorizationDocs = (): JSX.Element => {
       // Do this on first load
       initializing.current = false;
       setTimeout(() => {
+        /*
+         * This is needed because the MDX loader will needs to be stepped back from the initial
+         * render to allow that first render to complete (badly) before we do a good render
+         */
         setInitialApi(history, location.search, dispatch);
       }, 0);
     } else {

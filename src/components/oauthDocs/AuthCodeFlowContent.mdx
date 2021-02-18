@@ -42,7 +42,8 @@ The Veteran will need to grant your application access permission. To do this, d
 
 After a Veteran gives authorization for you to access their data, their browser will be redirected to your application with the response shown below, which returns the `code` and `state` parameters you must use to make a request to our authorization service. We require the state parameter for all authorization code grant flows.
 
-<div></div><CodeWrapper key={`snippet-1-${props.selectedOption}`}>
+<div>{/* div needed for mdx renderer when there isn't an <APISelector /> */}</div>
+<CodeWrapper key={`snippet-1-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 302 Found
@@ -100,7 +101,8 @@ Pragma: no-cache
 
 If an error occurs, you will instead receive a response like this:
 
-<div></div><CodeWrapper key={`snippet-4-${props.selectedOption}`}>
+<div>{/* div needed for mdx renderer when there isn't an <APISelector /> */}</div>
+<CodeWrapper key={`snippet-4-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 400 Bad Request
@@ -141,7 +143,8 @@ The response will return a new `access_token` and `refresh_token`, if you reques
 
 The manage endpoint directs end users to a URL where they can view which applications currently have access to their data and can make adjustments to these access rights (grants).
 
-<div></div><CodeWrapper key={`snippet-6-${props.selectedOption}`}>
+<div>{/* div needed for mdx renderer when there isn't an <APISelector /> */}</div>
+<CodeWrapper key={`snippet-6-${props.selectedOption}`}>
 
 ```http
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/manage HTTP/1.1
@@ -203,7 +206,8 @@ client_id={client_id}&email={test account email}
 
 The client ID is your application client ID (`client_id`) and the email is the user’s email, which must be passed into the body of the request. Bad requests will be returned with an error response and description of the error.
 
-<div></div><CodeWrapper key={`snippet-10-${props.selectedOption}`}>
+<div>{/* div needed for mdx renderer when there isn't an <APISelector /> */}</div>
+<CodeWrapper key={`snippet-10-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 400 Bad Request
