@@ -10,6 +10,8 @@ import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
 
+// this is a test
+
 declare const window: { VetsGov?: Record<string, unknown> };
 
 /**
