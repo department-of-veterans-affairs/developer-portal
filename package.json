@@ -70,7 +70,7 @@
     "url-polyfill": "^1.1.12",
     "uswds": "^1.6.13",
     "uuid": "^8.3.2",
-    "whatwg-fetch": "^3.6.0"
+    "whatwg-fetch": "^3.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.17",
@@ -95,7 +95,7 @@
     "@types/lodash.debounce": "^4.0.6",
     "@types/lodash.isequal": "^4.5.5",
     "@types/lodash.noop": "^3.0.6",
-    "@types/node": "^14.14.28",
+    "@types/node": "^14.14.29",
     "@types/puppeteer": "^2.1.5",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",
@@ -191,8 +191,5 @@
     "last 4 versions",
     "Firefox ESR",
     "not ie < 9"
-  ],
-  "lint-staged": {
-    "./src/**/*.{ts,tsx}": "eslint --ext .ts,.tsx"
-  }
+  ]
 }
