@@ -6,7 +6,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import * as openAPIData from '../../__mocks__/openAPIData/openAPIData.test.json';
 import { APIDescription } from '../../apiDefs/schema';
-import { AppFlags, FlagsProvider } from '../../flags';
+import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import store, { history } from '../../store';
 import ApiDocumentation from './ApiDocumentation';
 
@@ -52,14 +52,8 @@ jest.mock('react-router-dom', () => ({
 
 describe('ApiDocumentation', () => {
   const defaultFlags: AppFlags = {
-    api_publishing: false,
-    auth_docs_v2: false,
-    categories: { category: true },
-    deactivated_apis: { my_api: false },
-    enabled: { my_api: true },
+    ...getFlags(),
     hosted_apis: { my_api: true },
-    show_testing_notice: false,
-    signups_enabled: true,
   };
 
   beforeAll(() => server.listen());

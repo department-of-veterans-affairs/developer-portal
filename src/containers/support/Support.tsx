@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Route, Switch } from 'react-router';
 
 import { ContentWithNav, SideNavEntry } from '../../components';
-import SupportContactUs from './SupportContactUs';
-import SupportFAQ from './SupportFAQ';
-import SupportOverview from './SupportOverview';
+import ContactUs from './ContactUs';
+import FAQ from './FAQ';
+import Overview from './Overview';
 
 export interface SupportSection {
   readonly component: React.ComponentType;
@@ -15,14 +15,14 @@ export interface SupportSection {
 
 const sections: SupportSection[] = [
   {
-    component: SupportFAQ,
+    component: FAQ,
     description:
       'Answers to frequently asked questions about the VA API progam and the APIs themselves.',
     id: 'faq',
     name: 'FAQ',
   },
   {
-    component: SupportContactUs,
+    component: ContactUs,
     description:
       'Submit a support request via GitHub or send us a message using the Contact Us form.',
     id: 'contact-us',
@@ -45,7 +45,7 @@ const Support: React.FunctionComponent = (): JSX.Element => (
         <Route
           exact
           path="/support/"
-          render={(): JSX.Element => <SupportOverview sections={sections} />}
+          render={(): JSX.Element => <Overview sections={sections} />}
         />
         {sections.map(section => (
           <Route

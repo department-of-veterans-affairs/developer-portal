@@ -13,16 +13,16 @@ import { CONTACT_US_URL } from '../../types/constants';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import { validateEmail, validatePresence } from '../../utils/validators';
 
-import './SupportContactUsForm.scss';
+import './ContactUsForm/ContactUsForm.scss';
 
 /**
  * PROP TYPES AND TYPEDEF
  */
-const SupportContactUsFormPropTypes = {
+const ContactUsFormPropTypes = {
   onSuccess: PropTypes.func.isRequired,
 };
 
-type SupportContactUsFormProps = PropTypes.InferProps<typeof SupportContactUsFormPropTypes>;
+type SupportContactUsFormProps = PropTypes.InferProps<typeof ContactUsFormPropTypes>;
 
 interface SupportContactUsFormState {
   apis: { [x: string]: boolean };
@@ -100,7 +100,7 @@ const apiOptions = (): Array<{ label: string; value: string }> => {
 /**
  * COMPONENT
  */
-const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => {
+const ContactUsFormLegacy = (props: SupportContactUsFormProps): JSX.Element => {
   const [formState, setFormState] = React.useReducer(reducer, initialFormState);
 
   const isFormValid = (): boolean => {
@@ -259,6 +259,6 @@ const SupportContactUsForm = (props: SupportContactUsFormProps): JSX.Element => 
   );
 };
 
-SupportContactUsForm.propTypes = SupportContactUsFormPropTypes;
+ContactUsFormLegacy.propTypes = ContactUsFormPropTypes;
 
-export default SupportContactUsForm;
+export default ContactUsFormLegacy;

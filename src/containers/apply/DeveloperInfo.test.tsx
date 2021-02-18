@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -26,9 +26,9 @@ describe('DeveloperInfo', () => {
 
       expect(input.value).toBe('');
 
-      await userEvent.type(input, 'Aragorn');
+      void userEvent.type(input, 'Aragorn');
 
-      expect(input.value).toBe('Aragorn');
+      await waitFor(() => expect(input.value).toBe('Aragorn'));
     });
   });
 
@@ -40,9 +40,9 @@ describe('DeveloperInfo', () => {
 
       expect(input.value).toBe('');
 
-      await userEvent.type(input, 'Son of Arathorn');
+      void userEvent.type(input, 'Son of Arathorn');
 
-      expect(input.value).toBe('Son of Arathorn');
+      await waitFor(() => expect(input.value).toBe('Son of Arathorn'));
     });
   });
   describe('email', () => {
@@ -53,20 +53,20 @@ describe('DeveloperInfo', () => {
 
       expect(input.value).toBe('');
 
-      await userEvent.type(input, 'strider@gondor.org');
+      void userEvent.type(input, 'strider@gondor.org');
 
-      expect(input.value).toBe('strider@gondor.org');
+      await waitFor(() => expect(input.value).toBe('strider@gondor.org'));
     });
 
     it('displays an error message when given an invalid email address', async () => {
-      await userEvent.type(
+      void userEvent.type(
         screen.getByRole('textbox', { name: 'Email (*Required)' }),
         'strider@gondor',
       );
       userEvent.tab();
 
       const error = screen.getByRole('alert');
-      expect(error).toHaveTextContent('Must be a valid email address.');
+      await waitFor(() => expect(error).toHaveTextContent('Must be a valid email address.'));
     });
   });
 
@@ -78,9 +78,9 @@ describe('DeveloperInfo', () => {
 
       expect(input.value).toBe('');
 
-      await userEvent.type(input, 'Kingdom of Gondor');
+      void userEvent.type(input, 'Kingdom of Gondor');
 
-      expect(input.value).toBe('Kingdom of Gondor');
+      await waitFor(() => expect(input.value).toBe('Kingdom of Gondor'));
     });
   });
 });

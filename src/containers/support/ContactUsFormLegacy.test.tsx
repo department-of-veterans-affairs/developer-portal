@@ -7,7 +7,7 @@ import { setupServer } from 'msw/node';
 import * as React from 'react';
 
 import { CONTACT_US_URL } from '../../types/constants';
-import SupportContactUsForm from './SupportContactUsForm';
+import ContactUsFormLegacy from './ContactUsFormLegacy';
 
 jest.mock('uuid', () => ({
   __esModule: true,
@@ -34,14 +34,14 @@ describe('SupportContactUsForm', () => {
 
   it('should not be able to submit when required fields are not filled', () => {
     const onSuccessMock = jest.fn();
-    const component = mount(<SupportContactUsForm onSuccess={onSuccessMock} />);
+    const component = mount(<ContactUsFormLegacy onSuccess={onSuccessMock} />);
     expect(component.find('.usa-button-primary').hasClass('usa-button-disabled')).toBe(true);
   });
 
   it('Should send proper information on submission', async () => {
     const handleSuccess = jest.fn();
     const { getByLabelText, getByText } = render(
-      <SupportContactUsForm onSuccess={handleSuccess} />,
+      <ContactUsFormLegacy onSuccess={handleSuccess} />,
     );
 
     const firstNameInput = getByLabelText('First name(*Required)');
@@ -79,11 +79,12 @@ describe('SupportContactUsForm', () => {
         url: 'http://fake.va.gov/internal/developer-portal/public/contact-us',
       }),
     );
+    await waitFor(() => expect(handleSuccess).toHaveBeenCalled());
   });
 
   it('should not be disabled when required fields are filled', async () => {
     const onSuccessMock = jest.fn();
-    const component = mount(<SupportContactUsForm onSuccess={onSuccessMock} />);
+    const component = mount(<ContactUsFormLegacy onSuccess={onSuccessMock} />);
 
     const inputs = component.find('input[type="text"]');
     expect(inputs.length).toEqual(4);
@@ -115,9 +116,9 @@ describe('SupportContactUsForm', () => {
     await waitFor(() => expect(onSuccessMock).toHaveBeenCalled());
   });
 
-  it('should have an error when entering a non-email', () => {
+  it('should have an error when entering a non-email',  () => {
     const onSuccessMock = jest.fn();
-    const component = mount(<SupportContactUsForm onSuccess={onSuccessMock} />);
+    const component = mount(<ContactUsFormLegacy onSuccess={onSuccessMock} />);
     const inputs = component.find('input[type="text"]');
 
     const emailInput = inputs.at(2);

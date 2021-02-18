@@ -16,7 +16,9 @@ describe('Form', () => {
 
   it('should be able to submit when disabled is not set', async () => {
     const onSubmitMock = jest.fn().mockImplementation(successfulSubmitMockImpl);
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
+    const component = mount(
+      <Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />,
+    );
 
     component.find('.usa-button-primary').simulate('click');
 
@@ -39,10 +41,12 @@ describe('Form', () => {
     expect(onSuccessMock.mock.calls.length).toEqual(0);
   });
 
-  it('should display the error alert when in error', async() => {
+  it('should display the error alert when in error', async () => {
     const onSubmitMock = jest.fn().mockImplementation(rejectedSubmitMockImpl);
 
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
+    const component = mount(
+      <Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />,
+    );
     component.find('.usa-button-primary').simulate('click');
 
     await waitFor(() => expect(onSubmitMock).toHaveBeenCalled());
@@ -61,38 +65,24 @@ describe('Form', () => {
      * This is a work around I made so that we can trigger the promises within the test to
      * mock a success response at the time we want.
      */
-    interface PromiseTrigger {
-      reject: () => void;
-      resolve: () => void;
-    }
-    let promiseTrigger: PromiseTrigger = {
-      reject: () => {
-        throw new Error('promise trigger is set to default reject');
-      },
-      resolve: () => {
-        throw new Error('promise trigger is set to default resolve');
-      },
-    };
-    const submitPromise = new Promise((resolve: () => void, reject: () => void) => {
-      promiseTrigger = {
-        reject,
-        resolve,
-      };
-    });
-    const onSubmitMock = jest.fn().mockImplementation(() => submitPromise);
+    const onSubmitMock = jest.fn().mockImplementation(
+      () =>
+        new Promise(resolve => {
+          setTimeout(() => {
+            resolve(new Error('promise trigger is set to default resolve'));
+          }, 500);
+        }),
+    );
 
-    const component = mount(<Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />);
+    const component = mount(
+      <Form onSubmit={onSubmitMock} onSuccess={onSuccessMock} disabled={false} />,
+    );
 
     component.find('.usa-button-primary').simulate('click');
-
     await waitFor(() => expect(onSubmitMock).toHaveBeenCalled());
 
     const submitButton = component.find('.usa-button-primary');
-    expect(submitButton.text()).toEqual('Sending...');
-
-    promiseTrigger.resolve();
-
-    await waitFor(() => expect(onSuccessMock).toHaveBeenCalled());
-    expect(submitButton.text()).toEqual('Submit');
+    await waitFor(() => expect(submitButton.text()).toEqual('Sending...'));
+    await waitFor(() => expect(submitButton.text()).toEqual('Submit'));
   });
 });
