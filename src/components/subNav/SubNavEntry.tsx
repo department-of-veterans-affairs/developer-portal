@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { ComponentPropsWithoutRef, FC } from 'react';
 import classNames from 'classnames';
 import { NavLink } from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const linkStyles = classNames(
 interface SubNavEntryProps {
   // the onClick prop is used to close the mobile nav, not for anything related to the native link behavior
   onClick: () => void;
-  to: string;
+  to: ComponentPropsWithoutRef<NavLink>['to'];
   id: string;
 }
 

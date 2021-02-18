@@ -1,10 +1,15 @@
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as React from 'react';
+import React, { ReactNode } from 'react';
+import { useLocation } from 'react-router';
 import Helmet from 'react-helmet';
+import { FormType } from '../../types/contactUsForm';
+import { FLAG_API_PUBLISHING_CONTACT_FORM } from '../../types/constants';
+import { Flag } from '../../flags';
 import { PageHeader } from '../../components';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
-import SupportContactUsForm from './SupportContactUsForm';
+import ContactUsFormLegacy from './ContactUsFormLegacy';
+import ContactUsForm from './ContactUsForm';
 
 const GitHubSnippet = (): JSX.Element => (
   <div className="vads-u-margin-y--2">
@@ -25,8 +30,14 @@ const headerProps = {
   header: 'Contact Us',
 };
 
-const SupportContactUs = (): JSX.Element => {
+const ContactUs = (): JSX.Element => {
   const [sent, setSent] = React.useState(false);
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
+  let type = FormType.CONSUMER;
+  if (query.get('type') === 'publishing') {
+    type = FormType.PUBLISHING;
+  }
 
   const onSuccess = (): void => {
     setSent(true);
@@ -45,11 +56,21 @@ const SupportContactUs = (): JSX.Element => {
           </Helmet>
           <PageHeader {...headerProps} />
           <GitHubSnippet />
-          <SupportContactUsForm onSuccess={onSuccess} />
+          <Flag
+            name={[FLAG_API_PUBLISHING_CONTACT_FORM]}
+            fallbackRender={(): ReactNode => <ContactUsFormLegacy onSuccess={onSuccess} />}
+          >
+            <p>
+              From this page, you can ask us questions, get help or support, or get started with
+              publishing your API. You can also find answers to many common questions on our FAQ
+              page.
+            </p>
+            <ContactUsForm onSuccess={onSuccess} defaultType={type} />
+          </Flag>
         </>
       )}
     </>
   );
 };
 
-export default SupportContactUs;
+export default ContactUs;
