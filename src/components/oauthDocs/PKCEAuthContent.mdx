@@ -43,7 +43,7 @@ The Veteran will need to grant your application access permission. To do this, d
 
 After the Veteran consents to authorize your application, their browser will redirect to your application with the response shown below, which returns the `code` and `state` parameters you must use to make a request to our authorization service and the `code_verifier` used to create the `code_challenge` in the previous step.
 
-<div>{/* div needed for mdx renderer when there isn't an <APISelector /> */}</div>
+<div>{{/* div needed for mdx renderer when there isn't an <APISelector /> */}}</div>
 <CodeWrapper key={`snippet-1-${props.selectedOption}`}>
 
 ```http
@@ -97,7 +97,7 @@ The authorization server will send a 200 response with an <HashLink to={{ ...loc
 
 If an error occurs, you will instead receive a 400 response, like this:
 
-<div>{/* div needed for mdx renderer when there isn't an <APISelector /> */}</div>
+<div>{{/* div needed for mdx renderer when there isn't an <APISelector /> */}}</div>
 <CodeWrapper key={`snippet-4-${props.selectedOption}`}>
 
 ```http
