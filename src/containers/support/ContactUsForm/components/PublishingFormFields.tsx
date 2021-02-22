@@ -39,7 +39,7 @@ const PublishingFormFields: FC = () => {
 
       <fieldset className="vads-u-margin-top--4">
         <legend className={classNames('vads-u-font-size--lg')}>
-          <h2 className="vads-u-font-size--lg">
+          <h2 className={classNames('vads-u-font-size--lg', 'vads-u-margin-y--0')}>
             Do you have concerns about publishing your API for public use?
           </h2>
         </legend>

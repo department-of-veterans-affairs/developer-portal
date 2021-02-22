@@ -80,7 +80,9 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
 
           <fieldset className="vads-u-margin-top--6">
             <legend>
-              <h2 className="vads-u-font-size--lg">What can we help you with?</h2>
+              <h2 className={classNames('vads-u-font-size--lg', 'vads-u-margin-y--0')}>
+                What can we help you with?
+              </h2>
             </legend>
             <Field id="formTypeDefault" type="radio" name="type" value={FormType.CONSUMER} />
             <label htmlFor="formTypeDefault">
