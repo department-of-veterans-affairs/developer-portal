@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://developer.va.gov/",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "lint": "./node_modules/.bin/eslint --ext .ts,.tsx src",
@@ -17,6 +18,9 @@
     "test:accessibility:ci": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --ci --testResultsProcessor='./node_modules/jest-junit-reporter' --forceExit --runInBand",
     "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand --ci",
     "test:coverage": "node scripts/test.js --coverage "
+  },
+  "resolutions": {
+    "immer": "8.0.1"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
