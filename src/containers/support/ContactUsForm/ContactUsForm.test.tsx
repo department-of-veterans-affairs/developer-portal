@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { makeRequest } from '../../../utils/makeRequest';
 import { FormType } from '../../../types/contactUsForm';
@@ -45,21 +45,25 @@ describe('SupportContactUsFormPublishing', () => {
         renderComponent(FormType.CONSUMER);
       });
       it('renders the description field', () => {
-        expect(screen.getByRole('textbox', { name: /Describe your question or issue in as much detail as you can./ }));
+        expect(screen.getByRole('textbox', { name: /Describe your question or issue in as much detail as you can./ })).toBeInTheDocument();
       });
 
       describe('all fields are valid', () => {
         beforeEach(async () => {
-          await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Frodo', { delay: 0.00001 });
-          await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Baggins', { delay: 0.00001 });
-          await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'fbag@bagend.com', { delay: 0.00001 });
-          await userEvent.type(screen.getByRole('textbox', {
-            name: /Describe your question or issue in as much detail as you can./,
-          }), 'The dark riders are coming', { delay: 0.00001 });
+          await act(async () => {
+            await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Frodo', { delay: 0.01 });
+            await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Baggins', { delay: 0.01 });
+            await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'fbag@bagend.com', { delay: 0.01 });
+            await userEvent.type(screen.getByRole('textbox', {
+              name: /Describe your question or issue in as much detail as you can./,
+            }), 'The dark riders are coming', { delay: 0.01 });
+          });
         });
 
-        it('enables the submit button', () => {
-          expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled();
+        it('enables the submit button', async () => {
+          await waitFor(() => {
+            expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled();
+          });
         });
 
         describe('submitting the form', () => {
@@ -105,7 +109,9 @@ describe('SupportContactUsFormPublishing', () => {
 
           describe('switching back to default', () => {
             beforeEach(async () => {
-              await userEvent.type(screen.getByRole('textbox', { name: /Include as much information about your API as possible/ }), 'fake thing', { delay: 0.00001 });
+              await act(async () => {
+                await userEvent.type(screen.getByRole('textbox', { name: /Include as much information about your API as possible/ }), 'fake thing', { delay: 0.001 });
+              });
               userEvent.click(screen.getByLabelText('Report a problem or ask a question'));
               await waitFor(() => {
                 screen.getByRole('textbox', { name: /Describe your question or issue in as much detail as you can./ });
@@ -142,9 +148,11 @@ describe('SupportContactUsFormPublishing', () => {
 
       describe('some fields are invalid', () => {
         beforeEach(async () => {
-          await userEvent.type(screen.getByRole('textbox', { name: /Email address/ }), 'frodo my boy', { delay: 0.00001 });
-          userEvent.click(screen.getByRole('textbox', { name: /First name/ }));
-          userEvent.tab();
+          await act(async () => {
+            await userEvent.type(screen.getByRole('textbox', { name: /Email address/ }), 'frodo my boy', { delay: 0.01 });
+            userEvent.click(screen.getByRole('textbox', { name: /First name/ }));
+            userEvent.tab();
+          });
         });
         it('displays the validation errors', async () => {
           expect(await screen.findByText('First name must not be blank.')).toBeInTheDocument();
@@ -179,14 +187,16 @@ describe('SupportContactUsFormPublishing', () => {
 
       describe('all fields are valid', () => {
         beforeEach(async () => {
-          await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Frodo', { delay: 0.00001 });
-          await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Baggins', { delay: 0.00001 });
-          await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'fbag@bagend.com', { delay: 0.00001 });
-          await userEvent.type(screen.getByRole('textbox', { name: /Include as much information about your API as possible/ }), 'It takes the ring to mordor', { delay: 0.00001 });
-          await userEvent.type(screen.getByRole('textbox', { name: /Send us your OpenAPI specification. Include a public-facing description of your API./ }), 'www.api.com', { delay: 0.00001 });
-          userEvent.click(screen.getByRole('radio', { name: 'Yes' }));
-          await userEvent.type(screen.getByRole('textbox', { name: /Tell us more about why the API needs to be restricted to internal VA use./ }), 'The enemy has spies everywhere', { delay: 0.00001 });
-          await userEvent.type(screen.getByRole('textbox', { name: /Is there anything else we should know about your API, how it’s used, or what you need from us\?/ }), 'No', { delay: 0.00001 });
+          await act(async () => {
+            await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Frodo', { delay: 0.01 });
+            await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Baggins', { delay: 0.01 });
+            await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'fbag@bagend.com', { delay: 0.01 });
+            await userEvent.type(screen.getByRole('textbox', { name: /Include as much information about your API as possible/ }), 'It takes the ring to mordor', { delay: 0.01 });
+            await userEvent.type(screen.getByRole('textbox', { name: /Send us your OpenAPI specification. Include a public-facing description of your API./ }), 'www.api.com', { delay: 0.01 });
+            userEvent.click(screen.getByRole('radio', { name: 'Yes' }));
+            await userEvent.type(screen.getByRole('textbox', { name: /Tell us more about why the API needs to be restricted to internal VA use./ }), 'The enemy has spies everywhere', { delay: 0.01 });
+            await userEvent.type(screen.getByRole('textbox', { name: /Is there anything else we should know about your API, how it’s used, or what you need from us\?/ }), 'No', { delay: 0.01 });
+          });
         });
 
         it('enables the submit button', () => {
