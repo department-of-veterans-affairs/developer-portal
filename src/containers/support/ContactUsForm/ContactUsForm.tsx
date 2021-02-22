@@ -79,7 +79,9 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
           <ContactDetailsFormFields />
 
           <fieldset className="vads-u-margin-top--6">
-            <legend className="vads-u-font-size--lg">What can we help you with?</legend>
+            <legend>
+              <h2 className="vads-u-font-size--lg">What can we help you with?</h2>
+            </legend>
             <Field id="formTypeDefault" type="radio" name="type" value={FormType.CONSUMER} />
             <label htmlFor="formTypeDefault">
               Report a problem or ask a question
@@ -92,11 +94,11 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
 
           {
             values.type === FormType.CONSUMER &&
-              <ConsumerFormFields />
+            <ConsumerFormFields />
           }
           {
             values.type === FormType.PUBLISHING &&
-              <PublishingFormFields />
+            <PublishingFormFields />
           }
 
           <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>{isSubmitting ? 'Sending...' : 'Submit'}</button>

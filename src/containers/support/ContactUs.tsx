@@ -37,7 +37,7 @@ const ContactUs = (): JSX.Element => {
           <PageHeader halo="Support" header="Contact Us" />
           <p>
             From this page, you can ask us questions, get help or support, or get started with
-            publishing your API. You can also find answers to many common questions on our&nbsp;
+            publishing your API. You can also find answers to many common questions on our{' '}
             <Link to="/support/faq">FAQ</Link> page.
           </p>
           <p>
