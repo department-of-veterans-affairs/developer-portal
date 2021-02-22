@@ -19,10 +19,10 @@ import Support from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
 import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
-import { Flag } from './flags';
+import { Flag, useFlag } from './flags';
 import { Publishing } from './containers/publishing';
 import { CONSUMER_PATH, PUBLISHING_PATH } from './types/constants/paths';
-import { FLAG_API_CONSUMER, FLAG_API_PUBLISHING } from './types/constants';
+import { FLAG_CONSUMER_DOCS, FLAG_API_PUBLISHING } from './types/constants';
 
 export const SiteRoutes: React.FunctionComponent = () => (
   <Switch>
@@ -58,12 +58,10 @@ export const SiteRoutes: React.FunctionComponent = () => (
       path="/providers/integration-guide"
       render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
     />
-    <Flag name={[FLAG_API_PUBLISHING]}>
-      <Route path={PUBLISHING_PATH} component={Publishing} />
-    </Flag>
-    <Flag name={[FLAG_API_CONSUMER]}>
-      <Route path={CONSUMER_PATH} component={NotFound} />
-    </Flag>
+    {useFlag([FLAG_API_PUBLISHING]) && <Route path={PUBLISHING_PATH} component={Publishing} />}
+    {useFlag([FLAG_CONSUMER_DOCS]) && (
+      <Route path={CONSUMER_PATH} render={(): JSX.Element => <h1>Consumer docs page</h1>} />
+    )}
     <Route component={NotFound} />
   </Switch>
 );
