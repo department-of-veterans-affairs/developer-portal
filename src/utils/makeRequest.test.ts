@@ -2,7 +2,7 @@
 import * as Sentry from '@sentry/browser';
 import 'jest';
 import { MockedRequest, rest, restContext } from 'msw';
-import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
+import { ResponseComposition, MockedResponse } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import { makeRequest, ResponseType } from './makeRequest';
 
@@ -12,18 +12,18 @@ interface ExpectedResponse {
   };
 }
 
-const requestUri = '/test';
-const errorUrl = 'http://fake.va.gov/internal/developer-portal/public/error-endpoint';
+const requestUri = 'http://fake.va.gov/internal/developer-portal/public/test';
 
-const headerDataError = { _bodyInit: 'json for you',
+const requestData = { _bodyInit: 'json for you',
   _bodyText: 'json for you',
   bodyUsed: true,
-  credentials: 'omit',
+  credentials: 'same-origin',
   headers: { map: { accept: 'application/json', 'content-type': 'application/json', 'x-request-id': '123' } },
   method: 'POST',
   mode: null,
   referrer: null,
-  url: errorUrl,
+  signal: undefined,
+  url: requestUri,
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -43,7 +43,7 @@ describe('makeRequest', () => {
     server.use(
       rest.post(
         requestUri,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse | Promise<MockedResponse> =>
           res(context.status(200), context.json({ test: 'json' })),
       ),
     );
@@ -63,7 +63,7 @@ describe('makeRequest', () => {
     server.use(
       rest.post(
         requestUri,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse | Promise<MockedResponse> =>
           res(context.status(200), context.text('you got mail')),
       ),
     );
@@ -89,7 +89,7 @@ describe('makeRequest', () => {
     server.use(
       rest.post(
         requestUri,
-        (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+        (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse | Promise<MockedResponse> =>
           res(context.status(200), context.json(blob)),
       ),
     );
@@ -112,12 +112,12 @@ describe('makeRequest', () => {
   it('checks for non network error throw to be handled correctly', async () => {
     server.use(
       rest.post(
-        errorUrl,
+        requestUri,
         (
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.text('error')),
+        ): MockedResponse | Promise<MockedResponse> => res(context.text('error')),
       ),
     );
 
@@ -131,7 +131,7 @@ describe('makeRequest', () => {
     };
 
     await makeRequest(
-      errorUrl,
+      requestUri,
       init,
       { responseType: ResponseType.TEXT },
     ).catch(e => expect(e).toMatch('error'));
@@ -143,12 +143,12 @@ describe('makeRequest', () => {
 
     server.use(
       rest.post(
-        errorUrl,
+        requestUri,
         (
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.status(501), context.text('testErrorMessage')),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(501), context.text('testErrorMessage')),
       ),
     );
 
@@ -160,9 +160,10 @@ describe('makeRequest', () => {
       },
       method: 'POST',
     };
+
     expect.assertions(3);
-    await makeRequest<ExpectedResponse>(errorUrl, init).catch(() => {
-      expect(spyFetch).toHaveBeenCalledWith(headerDataError);
+    await makeRequest<ExpectedResponse>(requestUri, init).catch(() => {
+      expect(spyFetch).toHaveBeenCalledWith(requestData);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Server Error: 501');
     });
@@ -176,12 +177,12 @@ describe('makeRequest', () => {
     const withScope = jest.spyOn(Sentry, 'withScope');
     server.use(
       rest.post(
-        errorUrl,
+        requestUri,
         (
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.status(200), context.text('')),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(200), context.text('')),
       ),
     );
 
@@ -195,8 +196,8 @@ describe('makeRequest', () => {
     };
 
     expect.assertions(3);
-    await makeRequest<ExpectedResponse>(errorUrl, init).catch(() => {
-      expect(spyFetch).toHaveBeenCalledWith(headerDataError);
+    await makeRequest<ExpectedResponse>(requestUri, init).catch(() => {
+      expect(spyFetch).toHaveBeenCalledWith(requestData);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith(expect.objectContaining({
         message: 'Unexpected end of JSON input',
@@ -214,12 +215,12 @@ describe('makeRequest', () => {
 
     server.use(
       rest.post(
-        errorUrl,
+        requestUri,
         (
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.status(500), context.json({ message: testErrorMessage })),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(500), context.json({ message: testErrorMessage })),
       ),
     );
 
@@ -233,8 +234,8 @@ describe('makeRequest', () => {
     };
 
     expect.assertions(4);
-    await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      expect(spyFetch).toHaveBeenCalledWith(headerDataError);
+    await makeRequest<ExpectedResponse>(requestUri, init).catch(error => {
+      expect(spyFetch).toHaveBeenCalledWith(requestData);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Server Error: 500');
       expect(error).toEqual({ 'body': { 'message': 'THIS IS A TEST FAILURE' }, 'ok': false, 'status': 500 });
@@ -250,12 +251,12 @@ describe('makeRequest', () => {
     const messages = ['Invalid input.', 'Invalid request.'];
     server.use(
       rest.post(
-        errorUrl,
+        requestUri,
         (
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.status(400), context.json({ errors: messages })),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(400), context.json({ errors: messages })),
       ),
     );
     const init = {
@@ -268,8 +269,8 @@ describe('makeRequest', () => {
     };
 
     expect.assertions(4);
-    await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      expect(spyFetch).toHaveBeenCalledWith(headerDataError);
+    await makeRequest<ExpectedResponse>(requestUri, init).catch(error => {
+      expect(spyFetch).toHaveBeenCalledWith(requestData);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Validation errors: Invalid input., Invalid request.');
       expect(error).toEqual({ 'body': {  'errors': [
@@ -290,12 +291,12 @@ describe('makeRequest', () => {
 
     server.use(
       rest.post(
-        errorUrl,
+        requestUri,
         (
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.status(404), context.json({ message: testErrorMessage })),
+        ): MockedResponse | Promise<MockedResponse> => res(context.status(404), context.json({ message: testErrorMessage })),
       ),
     );
 
@@ -308,8 +309,8 @@ describe('makeRequest', () => {
       method: 'POST',
     };
     expect.assertions(4);
-    await makeRequest<ExpectedResponse>(errorUrl, init).catch(error => {
-      expect(spyFetch).toHaveBeenCalledWith(headerDataError);
+    await makeRequest<ExpectedResponse>(requestUri, init).catch(error => {
+      expect(spyFetch).toHaveBeenCalledWith(requestData);
       expect(withScope).toHaveBeenCalled();
       expect(Sentry.captureException).toHaveBeenCalledWith('Route not found: 404');
       expect(error).toEqual({ 'body': { 'message': 'THIS IS A TEST FAILURE' }, 'ok': false, 'status': 404 });

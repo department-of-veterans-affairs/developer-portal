@@ -11,7 +11,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
@@ -102,7 +102,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = envName => {
+module.exports = (envName) => {
   return {
     mode: 'production',
     // Don't attempt to continue if there are any errors.
@@ -123,7 +123,7 @@ module.exports = envName => {
       // We inferred the "public path" (such as / or /my-project) from homepage.
       publicPath: publicPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
-      devtoolModuleFilenameTemplate: info =>
+      devtoolModuleFilenameTemplate: (info) =>
         path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
     },
     resolve: {
@@ -313,13 +313,9 @@ module.exports = envName => {
                         require('markdown-it-anchor'),
                         {
                           level: 2,
-                          slugify: s =>
+                          slugify: (s) =>
                             encodeURIComponent(
-                              String(s)
-                                .trim()
-                                .toLowerCase()
-                                .replace(',', '')
-                                .replace(/\s+/g, '-'),
+                              String(s).trim().toLowerCase().replace(',', '').replace(/\s+/g, '-'),
                             ),
                         },
                       ],
@@ -403,7 +399,7 @@ module.exports = envName => {
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
       // having to parse `index.html`.
-      new ManifestPlugin({
+      new WebpackManifestPlugin({
         fileName: 'asset-manifest.json',
         publicPath: publicPath,
       }),
@@ -464,7 +460,7 @@ module.exports = envName => {
       hints: 'error',
       maxAssetSize: 600000,
       maxEntrypointSize: 600000,
-      assetFilter: function(assetFilename) {
+      assetFilter: function (assetFilename) {
         // only check CSS bundle size, as our JS bundle is currently over 2M
         return assetFilename.endsWith('.css');
       },

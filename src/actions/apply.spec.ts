@@ -1,8 +1,8 @@
 /* eslint-disable max-lines -- test suite allowed to break file length rule */
 import * as Sentry from '@sentry/browser';
 import 'jest';
-import { MockedRequest, rest, restContext } from 'msw';
-import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
+import { MockedRequest, rest, restContext  } from 'msw';
+import { ResponseComposition, MockedResponse } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import { ErrorableInput, RootState } from 'src/types';
 import * as constants from '../types/constants';
@@ -15,7 +15,7 @@ const mockedSentry = Sentry as jest.Mocked<typeof Sentry>;
 const server = setupServer(
   rest.post(
     constants.APPLY_URL,
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext) =>
+    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse | Promise<MockedResponse> =>
       res(
         context.status(200),
         context.json({
@@ -91,7 +91,7 @@ describe('submitForm', () => {
           req: MockedRequest,
           res: ResponseComposition,
           context: typeof restContext,
-        ): MockedResponse => res(context.status(500, 'KABOOM')),
+        ) => res(context.status(500, 'KABOOM')),
       ),
     );
 
