@@ -102,6 +102,7 @@ phases:
       # Instead of checking for a combination of CODEBUILD_BUILD_SUCCEDING and some other variable we will assume
       # the phase variable is an indiation of the where the build failed and act accordingly in the POST_BUILD section.
       - phase=test
+      - echo test
       - time="${time}\n${phase} - $(date +%r) - started"
       - |
         for test in ${TESTS}; do
