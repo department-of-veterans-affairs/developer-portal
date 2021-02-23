@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://developer.va.gov/",
   "scripts": {
-    "preinstall": "npx npm-force-resolutions",
+    "preinstall": "npx npm-force-resolutions@0.0.3",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "lint": "./node_modules/.bin/eslint --ext .ts,.tsx src",
