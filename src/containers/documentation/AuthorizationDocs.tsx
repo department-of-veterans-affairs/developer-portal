@@ -54,7 +54,10 @@ const setInitialApi = (
     /*
      * We need to trigger a change to the API selection so the key will change and trigger a
      * re-render of the <CodeWrapper /> component to fix the bug.
-     * Because other APIs besides the default include that change we only need to do it on claims.
+     * Other APIs already include a change because they will default to "claims" and then change to
+     * the requested API. For "claims" we set it to "none" immediately followed by setting it to
+     * "claims" so that the <CodeWrapper /> will have rendered once (badly) for "none" and the
+     * second time for "claims" to render properly.
      */
     dispatch(setOAuthApiSelection('none'));
   }
@@ -76,8 +79,10 @@ const AuthorizationDocs = (): JSX.Element => {
       initializing.current = false;
       setTimeout(() => {
         /*
-         * This is needed because the MDX loader will needs to be stepped back from the initial
-         * render to allow that first render to complete (badly) before we do a good render
+         * This is needed because the MDX loader needs to be fired twice after the component is
+         * loaded. We don't know why the initial render doesn't properly handle multi-line code
+         * snippets but our current solution is to render them twice after the component is intially
+         * ready.
          */
         setInitialApi(history, location.search, dispatch);
       }, 0);
