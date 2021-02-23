@@ -20,7 +20,7 @@ updates:
       - dependency-name: uswds
       # Errorable elements are not available in the latest version. Application would need to be
       # refactored to integrate the new available elements
-      - dependency-name: @department-of-veterans-affairs/formation-react
+      - dependency-name: '@department-of-veterans-affairs/formation-react'
       # The latest versions of our puppeteer supporting libraries in order to use puppeteer with our
       # testing do not support anyting beyond puppeteer 2. We are on the latest version of puppeteer
       # at the current time.
