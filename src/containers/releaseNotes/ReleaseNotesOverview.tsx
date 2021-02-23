@@ -28,13 +28,6 @@ const ReleaseNotesOverview = (): JSX.Element => {
           possible to addresses used to obtain developer keys for each API. Please{' '}
           <a href="/support/contact-us">contact us</a> with any questions or to request support.
         </p>
-        <p>
-          To view user-requested features and known issues or report a bug, please visit our{' '}
-          <a href="https://github.com/department-of-veterans-affairs/vets-api-clients">
-            GitHub repo
-          </a>
-          .
-        </p>
       </div>
       <div className={defaultFlexContainer()}>
         {getApiCategoryOrder().map((apiCategoryKey: string) => {

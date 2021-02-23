@@ -4,7 +4,17 @@ import { FormField } from '../../../../components';
 
 const ConsumerFormFields: FC = () => (
   <>
-    <h3 className={classNames('vads-u-margin-top--4', 'vads-u-margin-bottom--0')}>Description</h3>
+    <legend>
+      <h2
+        className={classNames(
+          'vads-u-margin-top--4',
+          'vads-u-margin-bottom--0',
+          'vads-u-font-size--lg',
+        )}
+      >
+        Description
+      </h2>
+    </legend>
     <FormField
       label="Describe your question or issue in as much detail as you can. If your question is about an error, include steps you took to get it and any error messaging you received."
       name="description"

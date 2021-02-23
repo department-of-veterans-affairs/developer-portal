@@ -164,97 +164,87 @@ const ContactUsFormLegacy = (props: SupportContactUsFormProps): JSX.Element => {
       disabled={!isFormValid()}
       className={classNames('va-api-contact-us-form', 'vads-u-margin-y--2')}
     >
-      <fieldset>
-        <legend className="vads-u-font-size--lg">
-          Contact Us
-          <p className={legendDescClasses}>
-            Have a question? Use the form below to send us an email and we&#39;ll do the best to
-            answer your question and get you headed in the right direction.
-          </p>
-        </legend>
-
-        <div className={classNames('vads-l-grid-container', 'vads-u-padding-x--0')}>
-          <div className="vads-l-row">
-            <div className={textFieldClasses('right')}>
-              <ErrorableTextInput
-                errorMessage={formState.firstName.validation}
-                label="First name"
-                field={formState.firstName}
-                onValueChange={(field: ErrorableInput): void => {
-                  setFormState({
-                    type: 'SET_FIRST_NAME',
-                    value: validatePresence(field, 'First Name'),
-                  });
-                }}
-                required
-              />
-            </div>
-            <div className={textFieldClasses('left')}>
-              <ErrorableTextInput
-                errorMessage={formState.lastName.validation}
-                label="Last name"
-                name="lastName"
-                field={formState.lastName}
-                onValueChange={(field: ErrorableInput): void => {
-                  setFormState({
-                    type: 'SET_LAST_NAME',
-                    value: validatePresence(field, 'Last Name'),
-                  });
-                }}
-                required
-              />
-            </div>
+      <div className={classNames('vads-l-grid-container', 'vads-u-padding-x--0')}>
+        <div className="vads-l-row">
+          <div className={textFieldClasses('right')}>
+            <ErrorableTextInput
+              errorMessage={formState.firstName.validation}
+              label="First name"
+              field={formState.firstName}
+              onValueChange={(field: ErrorableInput): void => {
+                setFormState({
+                  type: 'SET_FIRST_NAME',
+                  value: validatePresence(field, 'First Name'),
+                });
+              }}
+              required
+            />
           </div>
-          <div className="vads-l-row">
-            <div className={textFieldClasses('right')}>
-              <ErrorableTextInput
-                errorMessage={formState.email.validation}
-                label="Email"
-                name="email"
-                field={formState.email}
-                onValueChange={(field: ErrorableInput): void => {
-                  setFormState({ type: 'SET_EMAIL', value: validateEmail(field) });
-                }}
-                required
-              />
-            </div>
-            <div className={textFieldClasses('left')}>
-              <ErrorableTextInput
-                errorMessage={null}
-                label="Organization"
-                name="organization"
-                field={formState.organization}
-                onValueChange={(field: ErrorableInput): void => {
-                  setFormState({ type: 'SET_ORGANIZATION', value: field });
-                }}
-                required={false}
-              />
-            </div>
+          <div className={textFieldClasses('left')}>
+            <ErrorableTextInput
+              errorMessage={formState.lastName.validation}
+              label="Last name"
+              name="lastName"
+              field={formState.lastName}
+              onValueChange={(field: ErrorableInput): void => {
+                setFormState({
+                  type: 'SET_LAST_NAME',
+                  value: validatePresence(field, 'Last Name'),
+                });
+              }}
+              required
+            />
           </div>
         </div>
+        <div className="vads-l-row">
+          <div className={textFieldClasses('right')}>
+            <ErrorableTextInput
+              errorMessage={formState.email.validation}
+              label="Email"
+              name="email"
+              field={formState.email}
+              onValueChange={(field: ErrorableInput): void => {
+                setFormState({ type: 'SET_EMAIL', value: validateEmail(field) });
+              }}
+              required
+            />
+          </div>
+          <div className={textFieldClasses('left')}>
+            <ErrorableTextInput
+              errorMessage={null}
+              label="Organization"
+              name="organization"
+              field={formState.organization}
+              onValueChange={(field: ErrorableInput): void => {
+                setFormState({ type: 'SET_ORGANIZATION', value: field });
+              }}
+              required={false}
+            />
+          </div>
+        </div>
+      </div>
 
-        <ErrorableCheckboxGroup
-          additionalFieldsetClass="vads-u-margin-top--4"
-          additionalLegendClass={legendDescClasses}
-          label="If applicable, please select any of the APIs pertaining to your issue."
-          onValueChange={toggleApis}
-          id="default"
-          required={false}
-          options={apiOptions()}
-          values={{ key: 'value' }}
-        />
+      <ErrorableCheckboxGroup
+        additionalFieldsetClass="vads-u-margin-top--4"
+        additionalLegendClass={legendDescClasses}
+        label="If applicable, please select any of the APIs pertaining to your issue."
+        onValueChange={toggleApis}
+        id="default"
+        required={false}
+        options={apiOptions()}
+        values={{ key: 'value' }}
+      />
 
-        <ErrorableTextArea
-          errorMessage={formState.description.validation}
-          label="Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
-          onValueChange={(field: ErrorableInput): void => {
-            setFormState({ type: 'SET_DESCRIPTION', value: validatePresence(field, 'Description') });
-          }}
-          name="description"
-          field={formState.description}
-          required
-        />
-      </fieldset>
+      <ErrorableTextArea
+        errorMessage={formState.description.validation}
+        label="Please describe your question or issue in as much detail as you can provide. Steps to reproduce or any specific error messages are helpful if applicable."
+        onValueChange={(field: ErrorableInput): void => {
+          setFormState({ type: 'SET_DESCRIPTION', value: validatePresence(field, 'Description') });
+        }}
+        name="description"
+        field={formState.description}
+        required
+      />
     </Form>
   );
 };
