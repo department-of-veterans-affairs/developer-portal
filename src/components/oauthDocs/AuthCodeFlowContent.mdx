@@ -12,7 +12,7 @@ imports:
 Begin the OpenID Connect authorization by using the authorization endpoint, query parameters, and scopes listed below.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-0-${props.selectedOption}`}>
 
 ```plaintext
 https://sandbox-api.va.gov{{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/authorization?
@@ -42,7 +42,8 @@ The Veteran will need to grant your application access permission. To do this, d
 
 After a Veteran gives authorization for you to access their data, their browser will be redirected to your application with the response shown below, which returns the `code` and `state` parameters you must use to make a request to our authorization service. We require the state parameter for all authorization code grant flows.
 
-<CodeWrapper>
+<div>{{/* div needed for mdx renderer when there isn't an <APISelector /> */}}</div>
+<CodeWrapper key={`snippet-1-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 302 Found
@@ -59,7 +60,7 @@ Use the following format, in HTTP basic authentication, for your request using t
 - Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-2-${props.selectedOption}`}>
 
 ```http
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/token HTTP/1.1
@@ -77,7 +78,7 @@ grant_type=authorization_code
 The authorization server will respond with an <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink>. If you requested the `offline_access` scope, you will also receive a `refresh_token`. The response will look like this:
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-3-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 200 OK
@@ -100,7 +101,8 @@ Pragma: no-cache
 
 If an error occurs, you will instead receive a response like this:
 
-<CodeWrapper>
+<div>{{/* div needed for mdx renderer when there isn't an <APISelector /> */}}</div>
+<CodeWrapper key={`snippet-4-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 400 Bad Request
@@ -122,7 +124,7 @@ Use the returned `access_token` to authorize requests to our platform by includi
 Use the `refresh_token` to obtain a new `access_token` after its expiry by sending the following request.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-5-${props.selectedOption}`}>
 
 ```http
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/token HTTP/1.1
@@ -141,7 +143,8 @@ The response will return a new `access_token` and `refresh_token`, if you reques
 
 The manage endpoint directs end users to a URL where they can view which applications currently have access to their data and can make adjustments to these access rights (grants).
 
-<CodeWrapper>
+<div>{{/* div needed for mdx renderer when there isn't an <APISelector /> */}}</div>
+<CodeWrapper key={`snippet-6-${props.selectedOption}`}>
 
 ```http
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/manage HTTP/1.1
@@ -155,7 +158,7 @@ Host: sandbox-api.va.gov
 Clients may revoke their own `access_tokens` and `refresh_tokens` using the revoke endpoint. Once revoked, the introspection endpoint will see the token as inactive.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-7-${props.selectedOption}`}>
 
 ```http
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/revoke HTTP/1.1
@@ -169,7 +172,7 @@ token={ *access_token* }&token_type_hint=access_token
 </CodeWrapper>
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-8-${props.selectedOption}`}>
 
 ```http
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/revoke HTTP/1.1
@@ -189,7 +192,7 @@ token={ *refresh_token* }&token_type_hint=refresh_token
 A user will be prompted only once to consent to each client's use of their data. Such a grant will remain in effect unless and until revoked. Grants for a specific user and client are revoked in the sandbox environment using the below endpoint.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-9-${props.selectedOption}`}>
 
 ```http
 DELETE {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/grants HTTP/1.1
@@ -203,7 +206,8 @@ client_id={client_id}&email={test account email}
 
 The client ID is your application client ID (`client_id`) and the email is the user’s email, which must be passed into the body of the request. Bad requests will be returned with an error response and description of the error.
 
-<CodeWrapper>
+<div>{{/* div needed for mdx renderer when there isn't an <APISelector /> */}}</div>
+<CodeWrapper key={`snippet-10-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 400 Bad Request
