@@ -146,9 +146,9 @@ const supportQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
-        Submit a support request, bug report, documentation or feature request via GitHub on our{' '}
-        <Link to="/support">support portal</Link>, or use the Contact Us form to send an email. We
-        strive to reply with a solution or next steps within one business day.
+        Submit a support request, bug report, documentation or feature request via the{' '}
+        <Link to="/support/contact-us">Contact Us</Link> form. We strive to reply with
+        a solution or next steps within one business day.
       </p>
     ),
     question: 'How do I contact support with any questions or if I need help?',
@@ -157,7 +157,7 @@ const supportQuestions: SupportQuestion[] = [
 
 const headerProps = {
   description:
-    "We've compiled a list of FAQs for the VA API program; our goal is to get your question answered as soon as possible. If you need further help\u2014or have comments or feedback\u2014please contact us via GitHub or use our short 'Contact Us' form. Our customer support team will be happy to help.",
+    "We've compiled a list of FAQs for the VA API program; our goal is to get your question answered as soon as possible. If you need further help\u2014or have comments or feedback\u2014please contact us by using our short 'Contact Us' form. Our customer support team will be happy to help.",
   halo: 'Support',
   header: 'FAQ',
 };

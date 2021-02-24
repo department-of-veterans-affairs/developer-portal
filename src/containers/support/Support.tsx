@@ -24,7 +24,7 @@ const sections: SupportSection[] = [
   {
     component: ContactUs,
     description:
-      'Submit a support request via GitHub or send us a message using the Contact Us form.',
+      'Send us a message using the Contact Us form.',
     id: 'contact-us',
     name: 'Contact Us',
   },
