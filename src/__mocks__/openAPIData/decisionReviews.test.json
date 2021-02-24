@@ -1197,10 +1197,427 @@
         "type": "apiKey",
         "name": "apikey",
         "in": "header"
+      },
+      "openId": {
+        "type": "openIdConnect",
+        "name": "openId",
+        "openIdConnectUrl": "http://not.a.website"
       }
     }
   },
   "paths": {
+    "/higher_level_reviews_two": {
+      "post": {
+        "tags": ["Higher-Level Reviews Two"],
+        "operationId": "postHigherLevelReviewsTwo",
+        "summary": "Create a Higher-Level Review Two",
+        "description": "Submits a Decision Review request of type *Higher-Level Review Two*. This endpoint is analogous to submitting [VA Form 20-0996](https://www.vba.va.gov/pubs/forms/VBA-20-0996-ARE.pdf) via mail or fax.",
+        "parameters": [
+          {
+            "name": "X-VA-SSN",
+            "in": "header",
+            "description": "veteran's SSN",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/X-VA-SSN"
+            }
+          },
+          {
+            "name": "X-VA-First-Name",
+            "in": "header",
+            "description": "veteran's first name",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/X-VA-First-Name"
+            }
+          },
+          {
+            "name": "X-VA-Middle-Initial",
+            "in": "header",
+            "description": "veteran's middle initial",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/X-VA-Middle-Initial"
+            }
+          },
+          {
+            "name": "X-VA-Last-Name",
+            "in": "header",
+            "description": "veteran's last name",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/X-VA-Last-Name"
+            }
+          },
+          {
+            "name": "X-VA-Birth-Date",
+            "in": "header",
+            "description": "veteran's birth date",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/X-VA-Birth-Date"
+            }
+          },
+          {
+            "name": "X-VA-File-Number",
+            "in": "header",
+            "description": "veteran's file number",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/X-VA-File-Number"
+            }
+          },
+          {
+            "name": "X-VA-Service-Number",
+            "in": "header",
+            "description": "veteran's service number",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/X-VA-Service-Number"
+            }
+          },
+          {
+            "name": "X-VA-Insurance-Policy-Number",
+            "in": "header",
+            "description": "veteran's insurance policy number",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/X-VA-Insurance-Policy-Number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/hlrCreate"
+              },
+              "examples": {
+                "all fields used": {
+                  "value": {
+                    "data": {
+                      "type": "higherLevelReview",
+                      "attributes": {
+                        "informalConference": true,
+                        "sameOffice": true,
+                        "benefitType": "compensation",
+                        "veteran": {
+                          "address": {
+                            "zipCode5": "66002"
+                          },
+                          "phone": {
+                            "countryCode": "34",
+                            "areaCode": "555",
+                            "phoneNumber": "8001111",
+                            "phoneNumberExt": "2"
+                          },
+                          "emailAddressText": "josie@example.com",
+                          "timezone": "America/Chicago"
+                        },
+                        "informalConferenceTimes": ["1230-1400 ET", "1400-1630 ET"],
+                        "informalConferenceRep": {
+                          "name": "Helen Holly",
+                          "phone": {
+                            "countryCode": "6",
+                            "areaCode": "555",
+                            "phoneNumber": "8001111",
+                            "phoneNumberExt": "2"
+                          }
+                        }
+                      }
+                    },
+                    "included": [
+                      {
+                        "type": "contestableIssue",
+                        "attributes": {
+                          "issue": "tinnitus",
+                          "decisionDate": "1900-01-01",
+                          "decisionIssueId": 1,
+                          "ratingIssueReferenceId": "2",
+                          "ratingDecisionReferenceId": "3"
+                        }
+                      },
+                      {
+                        "type": "contestableIssue",
+                        "attributes": {
+                          "issue": "left knee",
+                          "decisionDate": "1900-01-02",
+                          "decisionIssueId": 4,
+                          "ratingIssueReferenceId": "5"
+                        }
+                      },
+                      {
+                        "type": "contestableIssue",
+                        "attributes": {
+                          "issue": "right knee",
+                          "decisionDate": "1900-01-03",
+                          "ratingIssueReferenceId": "6",
+                          "ratingDecisionReferenceId": "7"
+                        }
+                      },
+                      {
+                        "type": "contestableIssue",
+                        "attributes": {
+                          "issue": "PTSD",
+                          "decisionDate": "1900-01-04",
+                          "decisionIssueId": 8,
+                          "ratingDecisionReferenceId": "9"
+                        }
+                      },
+                      {
+                        "type": "contestableIssue",
+                        "attributes": {
+                          "issue": "Traumatic Brain Injury",
+                          "decisionDate": "1900-01-05",
+                          "decisionIssueId": 10
+                        }
+                      },
+                      {
+                        "type": "contestableIssue",
+                        "attributes": {
+                          "issue": "right shoulder",
+                          "decisionDate": "1900-01-06"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "minimum fields used": {
+                  "value": {
+                    "data": {
+                      "type": "higherLevelReview",
+                      "attributes": {
+                        "informalConference": false,
+                        "sameOffice": true,
+                        "benefitType": "compensation",
+                        "veteran": {
+                          "address": {
+                            "zipCode5": "66002"
+                          }
+                        }
+                      }
+                    },
+                    "included": [
+                      {
+                        "type": "contestableIssue",
+                        "attributes": {
+                          "issue": "left shoulder",
+                          "decisionDate": "1920-12-01"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Info about a single Higher-Level Review",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "$ref": "#/components/schemas/uuid"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": ["higherLevelReview"]
+                    },
+                    "attributes": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "$ref": "#/components/schemas/hlrStatus"
+                        },
+                        "updatedAt": {
+                          "$ref": "#/components/schemas/timeStamp"
+                        },
+                        "createdAt": {
+                          "$ref": "#/components/schemas/timeStamp"
+                        },
+                        "formData": {
+                          "$ref": "#/components/schemas/hlrCreate"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "HlrFound": {
+                    "value": {
+                      "data": {
+                        "id": "1234567a-89b0-123c-d456-789e01234f56",
+                        "type": "higherLevelReview",
+                        "attributes": {
+                          "status": "processing",
+                          "updatedAt": "2020-04-23T21:06:12.531Z",
+                          "createdAt": "2020-04-23T21:06:12.531Z",
+                          "formData": {
+                            "data": {
+                              "type": "higherLevelReview",
+                              "attributes": {
+                                "informalConference": true,
+                                "sameOffice": true,
+                                "benefitType": "compensation",
+                                "veteran": {
+                                  "address": {
+                                    "zipCode5": "66002"
+                                  },
+                                  "phone": {
+                                    "countryCode": "34",
+                                    "areaCode": "555",
+                                    "phoneNumber": "8001111",
+                                    "phoneNumberExt": "2"
+                                  },
+                                  "emailAddressText": "josie@example.com",
+                                  "timezone": "America/Chicago"
+                                },
+                                "informalConferenceTimes": ["1230-1400 ET", "1400-1630 ET"],
+                                "informalConferenceRep": {
+                                  "name": "Helen Holly",
+                                  "phone": {
+                                    "countryCode": "6",
+                                    "areaCode": "555",
+                                    "phoneNumber": "8001111",
+                                    "phoneNumberExt": "2"
+                                  }
+                                }
+                              }
+                            },
+                            "included": [
+                              {
+                                "type": "contestableIssue",
+                                "attributes": {
+                                  "issue": "tinnitus",
+                                  "decisionDate": "1900-01-01",
+                                  "decisionIssueId": 1,
+                                  "ratingIssueReferenceId": "2",
+                                  "ratingDecisionReferenceId": "3"
+                                }
+                              },
+                              {
+                                "type": "contestableIssue",
+                                "attributes": {
+                                  "issue": "left knee",
+                                  "decisionDate": "1900-01-02",
+                                  "decisionIssueId": 4,
+                                  "ratingIssueReferenceId": "5"
+                                }
+                              },
+                              {
+                                "type": "contestableIssue",
+                                "attributes": {
+                                  "issue": "right knee",
+                                  "decisionDate": "1900-01-03",
+                                  "ratingIssueReferenceId": "6",
+                                  "ratingDecisionReferenceId": "7"
+                                }
+                              },
+                              {
+                                "type": "contestableIssue",
+                                "attributes": {
+                                  "issue": "PTSD",
+                                  "decisionDate": "1900-01-04",
+                                  "decisionIssueId": 8,
+                                  "ratingDecisionReferenceId": "9"
+                                }
+                              },
+                              {
+                                "type": "contestableIssue",
+                                "attributes": {
+                                  "issue": "Traumatic Brain Injury",
+                                  "decisionDate": "1900-01-05",
+                                  "decisionIssueId": 10
+                                }
+                              },
+                              {
+                                "type": "contestableIssue",
+                                "attributes": {
+                                  "issue": "right shoulder",
+                                  "decisionDate": "1900-01-06"
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Error",
+            "content": {
+              "application/vnd.api+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "minItems": 1,
+                      "maxItems": 1,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "status": {
+                            "type": "integer"
+                          },
+                          "detail": {
+                            "type": "string"
+                          },
+                          "source": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "boolean",
+                                "enum": [false]
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "notJsonObject": {
+                    "value": {
+                      "errors": [
+                        {
+                          "status": 422,
+                          "detail": "The request body isn't a JSON object: 9873",
+                          "source": false
+                        }
+                      ]
+                    }
+                  },
+                  "violatesJsonSchema": {
+                    "value": {
+                      "errors": [
+                        {
+                          "status": 422,
+                          "detail": "The property /data/attributes did not contain the required key benefitType",
+                          "source": "/data/attributes"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/higher_level_reviews": {
       "post": {
         "tags": ["Higher-Level Reviews"],
@@ -2471,5 +2888,8 @@
         ]
       }
     }
-  }
+  },
+  "security": [
+    {"openId": []}
+  ]
 }

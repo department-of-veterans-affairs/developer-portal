@@ -37,7 +37,7 @@ declare module 'swagger-client' {
     parameters?: Parameter[];
     requestBody?: RequestBody;
     operationId?: string;
-    security: { [schemeName: string]: string } | Array<{ [schemeName: string]: string }>;
+    security?: SecurityRequirement;
   }
 
   export interface Server {
@@ -45,9 +45,12 @@ declare module 'swagger-client' {
     description: string;
   }
 
+  export type SecurityRequirement = Array<{ [schemeName: string]: string }>;
+
   export interface OpenAPISpecV3 {
     openapi: string;
     servers: Server[];
+    security?: SecurityRequirement;
   }
 
   export interface OpenAPISpecV2 {
@@ -55,6 +58,7 @@ declare module 'swagger-client' {
     host: string;
     basePath: string;
     schemes: string[];
+    security?: SecurityRequirement;
   }
 
   export type OpenAPISpec = OpenAPISpecV3 | OpenAPISpecV2;

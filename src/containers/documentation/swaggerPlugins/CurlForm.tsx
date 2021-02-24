@@ -11,6 +11,7 @@ import {
   Operation,
   Parameter,
   Schema,
+  SecurityRequirement,
   Server,
   SwaggerSpecObject,
 } from 'swagger-ui';
@@ -75,7 +76,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public requirementsMet(): boolean {
-    const hasSecurity = Object.keys(this.props.operation).includes('security');
+    const hasSecurity = this.security() !== null;
     if (this.isSwagger2()) {
       const spec: OpenAPISpecV2 = this.jsonSpec() as OpenAPISpecV2;
       return hasSecurity && !!spec.host;
@@ -89,6 +90,12 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public jsonSpec(): OpenAPISpec {
     const spec = this.props.system.spec().toJS() as SwaggerSpecObject;
     return spec.json;
+  }
+
+  public security(): SecurityRequirement | null {
+    const baseSecurity = this.jsonSpec().security ?? null;
+    const operationSecurity = this.props.operation.security;
+    return operationSecurity ?? baseSecurity;
   }
 
   public handleInputChange(parameterName: string, value: string): void {
@@ -236,7 +243,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public authParameterContainer(): JSX.Element {
-    if (Object.keys(this.props.operation.security[0]).includes('apikey')) {
+    const security = this.security() ?? [];
+    if (Object.keys(security[0]).includes('apikey')) {
       return (
         <div>
           <h3> API Key: </h3>
