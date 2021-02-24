@@ -45,7 +45,7 @@ declare module 'swagger-client' {
     description: string;
   }
 
-  export type SecurityRequirement = Array<{ [schemeName: string]: string }>;
+  export type SecurityRequirement = Array<{ [schemeName: string]: string[] }>;
 
   export interface OpenAPISpecV3 {
     openapi: string;
