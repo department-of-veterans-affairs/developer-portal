@@ -1,10 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, MemoryRouter } from 'react-router';
 import { FlagsProvider, getFlags } from '../../flags';
 import ContactUs from './ContactUs';
 
 jest.mock('react-router', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+  ...(jest.requireActual('react-router') as Record<string, unknown>),
   useLocation: jest.fn(() => ({})),
 }));
 
@@ -18,7 +20,9 @@ describe('ContactUs', () => {
   const renderComponent = (): void => {
     render(
       <FlagsProvider flags={getFlags()}>
-        <ContactUs />
+        <MemoryRouter>
+          <ContactUs />
+        </MemoryRouter>
       </FlagsProvider>
     );
   };

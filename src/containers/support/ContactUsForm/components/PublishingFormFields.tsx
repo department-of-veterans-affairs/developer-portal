@@ -4,12 +4,16 @@ import React, { FC } from 'react';
 import { FormField } from '../../../../components';
 import { ContactUsFormState } from '../../../../types/contactUsForm';
 
-const titleClass = classNames('vads-u-margin-top--4', 'vads-u-margin-bottom--2p5');
+const titleClass = classNames(
+  'vads-u-margin-top--4',
+  'vads-u-margin-bottom--2p5',
+  'vads-u-font-size--lg',
+);
 const PublishingFormFields: FC = () => {
   const { values } = useFormikContext<ContactUsFormState>();
   return (
     <>
-      <h3 className={titleClass}>Tell us about your API</h3>
+      <h2 className={titleClass}>Tell us about your API</h2>
       <FormField
         label="Include as much information about your API as possible"
         name="apiDetails"
@@ -26,7 +30,7 @@ const PublishingFormFields: FC = () => {
         required
       />
 
-      <h3 className={titleClass}>Description</h3>
+      <h2 className={titleClass}>Description</h2>
       <FormField
         label="Send us your OpenAPI specification. Include a public-facing description of your API."
         name="apiDescription"
@@ -34,7 +38,11 @@ const PublishingFormFields: FC = () => {
       />
 
       <fieldset className="vads-u-margin-top--4">
-        <legend className={classNames('vads-u-font-size--lg')}>Do you have concerns about publishing your API for public use?</legend>
+        <legend className={classNames('vads-u-font-size--lg')}>
+          <h2 className={classNames('vads-u-font-size--lg', 'vads-u-margin-y--0')}>
+            Do you have concerns about publishing your API for public use?
+          </h2>
+        </legend>
         <Field id="formApiInternalOnlyYes" type="radio" name="apiInternalOnly" value="yes" />
         <label htmlFor="formApiInternalOnlyYes">
           Yes
@@ -60,7 +68,7 @@ const PublishingFormFields: FC = () => {
         </label>
       </fieldset>
 
-      <h3 className={titleClass}>Other information</h3>
+      <h2 className={titleClass}>Other information</h2>
       <FormField
         label="Is there anything else we should know about your API, how it’s used, or what you need from us?"
         name="apiOtherInfo"
