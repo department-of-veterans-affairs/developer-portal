@@ -2,17 +2,14 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { BrowserRouter as Router } from 'react-router-dom';
-import { FlagsProvider, getFlags } from '../../flags';
 import { Footer } from './Footer';
 
 describe('Footer', () => {
   beforeEach(() => {
     render(
-      <FlagsProvider flags={getFlags()}>
-        <Router>
-          <Footer />
-        </Router>
-      </FlagsProvider>,
+      <Router>
+        <Footer />
+      </Router>,
     );
   });
 
