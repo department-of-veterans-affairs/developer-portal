@@ -80,10 +80,11 @@ phases:
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
       - git lfs pull
       # Resolve PR_NUM
-      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH})
+      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH}) || exit 1
       # Create the required dot files prior to build for proper deployment to review bucket
       - |
-        if [[ ${PR_NUM} ]]; then
+        # check BRANCH as well as PR_NUM to ensure we don't treat the main branch like a PR branch
+        if [[ ${PR_NUM} && ${BRANCH} != "master" ]]; then
           for env in ${ENVIRONMENTS}; do
         cat <<EOF > .env.${env}.local
         PUBLIC_URL=/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}
@@ -132,7 +133,8 @@ phases:
       # Check if we deploy to the review bucket
       - phase=deploy
       - |
-        if [[ ${PR_NUM} ]]; then
+        # check BRANCH as well as PR_NUM to ensure we don't treat the main branch like a PR branch
+        if [[ ${PR_NUM} && ${BRANCH} != "master" ]]; then
           time="${time}\n${phase} - $(date +%r) started"
           links=""
           for env in ${ENVIRONMENTS}; do
