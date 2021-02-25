@@ -63,7 +63,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         path="/providers/integration-guide"
         render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
       />
-      {flags.api_publishing && <Route path={PUBLISHING_PATH} component={Publishing} />}
+      <Route path={PUBLISHING_PATH} component={Publishing} />
       {flags.consumer_docs && (
         <Route path={CONSUMER_PATH} render={(): JSX.Element => <h1>Consumer docs page</h1>} />
       )}
