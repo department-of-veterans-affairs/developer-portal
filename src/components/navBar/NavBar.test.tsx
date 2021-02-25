@@ -2,7 +2,6 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { FlagsProvider, getFlags } from '../../flags';
 
 import { NavBar } from './NavBar';
 
@@ -11,11 +10,9 @@ const noop = (): void => undefined;
 describe('NavBar', () => {
   beforeEach(() => {
     render(
-      <FlagsProvider flags={getFlags()}>
-        <Router>
-          <NavBar isMobileMenuVisible onMobileNavClose={noop} />
-        </Router>
-      </FlagsProvider>,
+      <Router>
+        <NavBar isMobileMenuVisible onMobileNavClose={noop} />
+      </Router>,
     );
   });
 
@@ -79,11 +76,9 @@ describe('NavBar', () => {
       // cleanup NavBar rendered with isMobileMenuVisible set to true
       await waitFor(() => cleanup());
       render(
-        <FlagsProvider flags={getFlags()}>
-          <Router>
-            <NavBar isMobileMenuVisible={false} onMobileNavClose={noop} />
-          </Router>
-        </FlagsProvider>,
+        <Router>
+          <NavBar isMobileMenuVisible={false} onMobileNavClose={noop} />
+        </Router>,
       );
     });
 

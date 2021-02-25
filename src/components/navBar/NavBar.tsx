@@ -5,7 +5,6 @@ import * as React from 'react';
 import { match as Match } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { FLAG_API_PUBLISHING } from '../../types/constants';
 import {
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
@@ -187,44 +186,42 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               Support
             </MainNavItem>
           </li>
-          <Flag name={[FLAG_API_PUBLISHING]}>
-            <li className={navItemStyles()}>
-              <MainNavItem
-                targetUrl={PUBLISHING_PATH}
-                largeScreenProps={sharedNavItemProps}
-                excludeSmallScreen
-                className={navLinkStyles}
+          <li className={navItemStyles()}>
+            <MainNavItem
+              targetUrl={PUBLISHING_PATH}
+              largeScreenProps={sharedNavItemProps}
+              excludeSmallScreen
+              className={navLinkStyles}
+            >
+              API Publishing
+            </MainNavItem>
+            <SubNav name="API Publishing">
+              <SubNavEntry onClick={props.onMobileNavClose} to={PUBLISHING_PATH} id="overview">
+                Overview
+              </SubNavEntry>
+              <SubNavEntry
+                onClick={props.onMobileNavClose}
+                to={PUBLISHING_ONBOARDING_PATH}
+                id="process"
               >
-                API Publishing
-              </MainNavItem>
-              <SubNav name="API Publishing">
-                <SubNavEntry onClick={props.onMobileNavClose} to={PUBLISHING_PATH} id="overview">
-                  Overview
-                </SubNavEntry>
-                <SubNavEntry
-                  onClick={props.onMobileNavClose}
-                  to={PUBLISHING_ONBOARDING_PATH}
-                  id="process"
-                >
-                  How publishing works
-                </SubNavEntry>
-                <SubNavEntry
-                  onClick={props.onMobileNavClose}
-                  to={PUBLISHING_EXPECTATIONS_PATH}
-                  id="expectations"
-                >
-                  Expectations for APIs
-                </SubNavEntry>
-                <SubNavEntry
-                  onClick={props.onMobileNavClose}
-                  to={{ pathname: SUPPORT_CONTACT_PATH, search: '?type=publishing' }}
-                  id="contact"
-                >
-                  Contact Us
-                </SubNavEntry>
-              </SubNav>
-            </li>
-          </Flag>
+                How publishing works
+              </SubNavEntry>
+              <SubNavEntry
+                onClick={props.onMobileNavClose}
+                to={PUBLISHING_EXPECTATIONS_PATH}
+                id="expectations"
+              >
+                Expectations for APIs
+              </SubNavEntry>
+              <SubNavEntry
+                onClick={props.onMobileNavClose}
+                to={{ pathname: SUPPORT_CONTACT_PATH, search: '?type=publishing' }}
+                id="contact"
+              >
+                Contact Us
+              </SubNavEntry>
+            </SubNav>
+          </li>
           <li className={classNames(navItemStyles(), mobileOnly())}>
             <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
               API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
