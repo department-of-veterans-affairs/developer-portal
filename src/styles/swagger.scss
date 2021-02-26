@@ -139,4 +139,11 @@
     width: 0;
     height: 0;
   }
+
+  /* 
+   * Hides lock (authorization button) displayed in the api details
+   */
+  button.authorization__btn {
+    display: none;
+  }
 }
