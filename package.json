@@ -69,7 +69,7 @@
     "stickyfill": "^1.1.1-strict",
     "stickyfilljs": "^2.1.0",
     "swagger-client": "3.13.1",
-    "swagger-ui": "~3.43.0",
+    "swagger-ui": "~3.44.0",
     "swagger-ui-themes": "^3.0.1",
     "url-polyfill": "^1.1.12",
     "uswds": "^1.6.13",
