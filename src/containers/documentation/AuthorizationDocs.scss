@@ -58,7 +58,7 @@
     }
   }
 
-  #building-oidc-apps .api-selector {
+  .building-oidc-apps .api-selector {
     border-top-left-radius: 6px;
     border-top-right-radius: 6px;
   }
@@ -68,7 +68,7 @@
     select {
       color: #80f8a2;
       option {
-          color: #80f8a2;
+          color: $color-base;
       }
     }
   }

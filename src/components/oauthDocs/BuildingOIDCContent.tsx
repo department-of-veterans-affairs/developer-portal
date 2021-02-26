@@ -20,7 +20,7 @@ const BuildingOIDCContent = (): JSX.Element => {
   };
 
   return (
-    <section aria-labelledby="building-oidc-apps" id="building-oidc-apps">
+    <section aria-labelledby="building-oidc-apps" className="building-oidc-apps">
       <SectionHeaderWrapper
         heading="Building OpenID Connect Applications"
         id="building-oidc-apps"
