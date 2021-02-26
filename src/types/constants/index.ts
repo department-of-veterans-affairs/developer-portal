@@ -26,5 +26,6 @@ export const APPLY_STANDARD_APIS = ['benefits', 'facilities', 'vaForms', 'confir
 export const APPLY_OAUTH_APIS = ['claims', 'communityCare', 'health', 'verification'];
 export const PAGE_HEADER_ID = 'page-header';
 export const PAGE_HEADER_AND_HALO_ID = 'header-halo';
+export const FLAG_CONSUMER_DOCS = 'consumer_docs';
 export const FLAG_API_PUBLISHING_CONTACT_FORM = 'api_publishing_contact_form';
 export const FLAG_AUTH_DOCS_V2 = 'auth_docs_v2';

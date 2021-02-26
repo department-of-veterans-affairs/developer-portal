@@ -5,7 +5,9 @@ import * as React from 'react';
 import { match as Match } from 'react-router';
 import { Link } from 'react-router-dom';
 
+import { FLAG_CONSUMER_DOCS } from '../../types/constants';
 import {
+  CONSUMER_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -222,6 +224,23 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               </SubNavEntry>
             </SubNav>
           </li>
+          <Flag name={[FLAG_CONSUMER_DOCS]}>
+            <li className={navItemStyles()}>
+              <MainNavItem
+                targetUrl={CONSUMER_PATH}
+                largeScreenProps={sharedNavItemProps}
+                excludeSmallScreen
+                className={navLinkStyles}
+              >
+                Consumer Docs
+              </MainNavItem>
+              <SubNav name="Consumer Docs">
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="overview">
+                  Overview
+                </SubNavEntry>
+              </SubNav>
+            </li>
+          </Flag>
           <li className={classNames(navItemStyles(), mobileOnly())}>
             <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
               API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
