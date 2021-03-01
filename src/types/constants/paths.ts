@@ -1,3 +1,5 @@
+export const CONSUMER_PATH = '/consumer-docs';
+
 export const PUBLISHING_PATH = '/api-publishing';
 export const PUBLISHING_ONBOARDING_PATH = `${PUBLISHING_PATH}/process`;
 export const PUBLISHING_EXPECTATIONS_PATH = `${PUBLISHING_PATH}/expectations`;

@@ -1,0 +1,55 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+    labels:
+      - npm
+      - dependencies
+      - dependabot
+    ignore:
+      # Version 5.0.0 no longer the LocationDescriptor and locationState types introducing breaking
+      # changes in the react-router-dom and in our application. React-router-dom needs version
+      # 4.10.1
+      - dependency-name: history
+      # @department-of-veterans-affairs/formation library depends on resources that the uswds
+      # library has removed or moved in its latest version. This external dependency breaking
+      # change does not allow us to upgrade to the latest version
+      - dependency-name: uswds
+      # Errorable elements are not available in the latest version. Application would need to be
+      # refactored to integrate the new available elements
+      - dependency-name: '@department-of-veterans-affairs/formation-react'
+      # The latest versions of our puppeteer supporting libraries in order to use puppeteer with our
+      # testing do not support anyting beyond puppeteer 2. We are on the latest version of puppeteer
+      # at the current time.
+      # The two libraries that do not support beyond puppeteer 2 are jest-puppeteer and
+      # pptr-testing-library.
+      - dependency-name: puppeteer
+      # latest version is an RC. Team should wait until the release version becomes official before
+      # upgrading
+      - dependency-name: immutable
+        versions: [4.0.0-rc.x]
+      # -------------------------
+      # WEBPACK 5 RELATED IGNORES
+      # -------------------------
+      # Version 4+ depends on updating webpack to version 5
+      - dependency-name: postcss-loader
+        versions: [4.x]
+      # Version 11.0.1 introduces breaking changes in Webpack build and is not able to load the
+      # options of the loader during the build stage. This dependency can be updated after
+      # postcss-loaders gets update to latest version
+      - dependency-name: sass-loader
+        versions: [11.x]
+      # Version 10+ has a dependency with postcss-loader v5
+      - dependency-name: autoprefixer
+        versions: [10.x]
+      # Version 7+ needs webpack 5
+      - dependency-name: copy-webpack-plugin
+        versions: [7.x]
+      # Version 5+ needs webpack 5
+      - dependency-name: html-webpack-plugin
+        versions: [5.x]
+      # UNUSED PLUGINS
+      - dependency-name: workbox-webpack-plugin
