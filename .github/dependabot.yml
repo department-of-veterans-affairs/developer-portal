@@ -34,9 +34,9 @@ updates:
       # -------------------------
       # WEBPACK 5 RELATED IGNORES
       # -------------------------
-      # Version 5.0.0 depends on updating webpack to version 5
+      # Version 4+ depends on updating webpack to version 5
       - dependency-name: postcss-loader
-        versions: [5.x]
+        versions: [4.x]
       # Version 11.0.1 introduces breaking changes in Webpack build and is not able to load the
       # options of the loader during the build stage. This dependency can be updated after
       # postcss-loaders gets update to latest version
