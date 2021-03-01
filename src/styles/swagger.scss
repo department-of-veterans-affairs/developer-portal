@@ -23,7 +23,7 @@
       font-size: 1.7rem;
 
       &:visited {
-        color: #4c2c92
+        color: #4c2c92;
       }
     }
 
@@ -141,10 +141,12 @@
   }
 
   /* 
+   * Hides lock (authorization button) displayed in the api details
    * If no external docs are defined, swagger renders a link with this class and no href. This
    * is a temporary fix to hide this element and any others like it until swagger provides a fix.
    */
-  a.info__extdocs[href=""] {
+  a.info__extdocs[href=''],
+  button.authorization__btn {
     display: none;
   }
 }
