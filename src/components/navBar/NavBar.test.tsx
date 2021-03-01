@@ -7,11 +7,12 @@ import { FlagsProvider, getFlags } from '../../flags';
 import { NavBar } from './NavBar';
 
 const noop = (): void => undefined;
+const flags = getFlags();
 
 describe('NavBar', () => {
   beforeEach(() => {
     render(
-      <FlagsProvider flags={getFlags()}>
+      <FlagsProvider flags={flags}>
         <Router>
           <NavBar isMobileMenuVisible onMobileNavClose={noop} />
         </Router>
@@ -79,7 +80,7 @@ describe('NavBar', () => {
       // cleanup NavBar rendered with isMobileMenuVisible set to true
       await waitFor(() => cleanup());
       render(
-        <FlagsProvider flags={getFlags()}>
+        <FlagsProvider flags={flags}>
           <Router>
             <NavBar isMobileMenuVisible={false} onMobileNavClose={noop} />
           </Router>

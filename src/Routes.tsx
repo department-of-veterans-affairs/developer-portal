@@ -19,51 +19,58 @@ import Support from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
 import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
-import { Flag } from './flags';
+import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
-import { PUBLISHING_PATH } from './types/constants/paths';
-import { FLAG_API_PUBLISHING } from './types/constants';
+import { CONSUMER_PATH, PUBLISHING_PATH } from './types/constants/paths';
 
-export const SiteRoutes: React.FunctionComponent = () => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/index.html" component={Home} />
+export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
+  const flags = getFlags();
+  return (
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/index.html" component={Home} />
 
-    {/* Legacy routes that we want to maintain: */}
-    <Route
-      path="/explore/terms-of-service"
-      render={(): JSX.Element => <Redirect to="/terms-of-service" />}
-    />
-    <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
+      {/* Legacy routes that we want to maintain: */}
+      <Route
+        path="/explore/terms-of-service"
+        render={(): JSX.Element => <Redirect to="/terms-of-service" />}
+      />
+      <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
 
-    {/* Current routes: */}
-    <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
-    <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
-    <Route
-      path="/apply"
-      render={(): JSX.Element => (
-        <Flag name={['signups_enabled']} render={ApplyForm} fallbackComponent={DisabledApplyForm} />
-      )}
-    />
-    <Route path="/applied" component={ApplySuccess} />
-    <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
-    <Route
-      path="/oauth"
-      render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
-    />
-    <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-    <Route path="/news" component={News} />
-    <Route path="/support" component={Support} />
-    <Route
-      path="/providers/integration-guide"
-      render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
-    />
-    <Flag name={[FLAG_API_PUBLISHING]}>
+      {/* Current routes: */}
+      <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
+      <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
+      <Route
+        path="/apply"
+        render={(): JSX.Element => (
+          <Flag
+            name={['signups_enabled']}
+            render={ApplyForm}
+            fallbackComponent={DisabledApplyForm}
+          />
+        )}
+      />
+      <Route path="/applied" component={ApplySuccess} />
+      <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
+      <Route
+        path="/oauth"
+        render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
+      />
+      <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
+      <Route path="/news" component={News} />
+      <Route path="/support" component={Support} />
+      <Route
+        path="/providers/integration-guide"
+        render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
+      />
       <Route path={PUBLISHING_PATH} component={Publishing} />
-    </Flag>
-    <Route component={NotFound} />
-  </Switch>
-);
+      {flags.consumer_docs && (
+        <Route path={CONSUMER_PATH} render={(): JSX.Element => <h1>Consumer docs page</h1>} />
+      )}
+      <Route component={NotFound} />
+    </Switch>
+  );
+};
 
 interface SitemapConfig {
   topLevelRoutes: React.FunctionComponent;

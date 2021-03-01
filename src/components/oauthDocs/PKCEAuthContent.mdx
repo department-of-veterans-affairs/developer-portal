@@ -11,7 +11,7 @@ imports:
 Begin the OpenID Connect authorization by using the authorization endpoint, query parameters, and scopes listed below.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-0-${props.selectedOption}`}>
 
 ```plaintext
 https://sandbox-api.va.gov{{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/authorization?
@@ -43,7 +43,8 @@ The Veteran will need to grant your application access permission. To do this, d
 
 After the Veteran consents to authorize your application, their browser will redirect to your application with the response shown below, which returns the `code` and `state` parameters you must use to make a request to our authorization service and the `code_verifier` used to create the `code_challenge` in the previous step.
 
-<CodeWrapper>
+<div>{{/* div needed for mdx renderer when there isn't an <APISelector /> */}}</div>
+<CodeWrapper key={`snippet-1-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 302 Found
@@ -60,7 +61,7 @@ Use the following format, in HTTP basic authentication, for your request.
 - Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-2-${props.selectedOption}`}>
 
 ```http
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/token HTTP/1.1
@@ -79,7 +80,7 @@ grant_type=authorization_code
 The authorization server will send a 200 response with an <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink>. If you requested the `offline_access` scope, you will also receive a `refresh_token`. The response body will look like this, where `expires_in` is the time in seconds before the token expires:
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-3-${props.selectedOption}`}>
 
 ```json
 {
@@ -96,7 +97,8 @@ The authorization server will send a 200 response with an <HashLink to={{ ...loc
 
 If an error occurs, you will instead receive a 400 response, like this:
 
-<CodeWrapper>
+<div>{{/* div needed for mdx renderer when there isn't an <APISelector /> */}}</div>
+<CodeWrapper key={`snippet-4-${props.selectedOption}`}>
 
 ```http
 HTTP/1.1 400 Bad Request
@@ -118,7 +120,7 @@ Use the returned `access_token` to authorize requests to our platform by includi
 Use the `refresh_token` to obtain a new `access_token` after its expiry by sending the following request.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
-<CodeWrapper>
+<CodeWrapper key={`snippet-5-${props.selectedOption}`}>
 
 ```http
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/token HTTP/1.1
