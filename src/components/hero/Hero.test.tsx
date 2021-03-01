@@ -2,20 +2,15 @@ import * as React from 'react';
 import 'jest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { FlagsProvider, getFlags } from '../../flags';
 import * as logoImage from '../../__mocks__/fakeImage';
 import { Hero } from './Hero';
-
-const flags = { ...getFlags(), api_publishing: true };
 
 describe('Hero', () => {
   beforeEach(() => {
     render(
-      <FlagsProvider flags={flags}>
-        <Router>
-          <Hero />
-        </Router>
-      </FlagsProvider>,
+      <Router>
+        <Hero />
+      </Router>,
     );
   });
 
