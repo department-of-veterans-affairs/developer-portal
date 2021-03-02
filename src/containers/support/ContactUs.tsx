@@ -1,13 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { FormType } from '../../types/contactUsForm';
-import { FLAG_API_PUBLISHING_CONTACT_FORM } from '../../types/constants';
-import { Flag } from '../../flags';
 import { PageHeader } from '../../components';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
-import ContactUsFormLegacy from './ContactUsFormLegacy';
 import ContactUsForm from './ContactUsForm';
 
 const ContactUs = (): JSX.Element => {
@@ -45,12 +42,7 @@ const ContactUs = (): JSX.Element => {
             other information, visit <a href="https://www.va.gov/">VA.gov</a> or contact your local
             VSO for assistance.
           </p>
-          <Flag
-            name={[FLAG_API_PUBLISHING_CONTACT_FORM]}
-            fallbackRender={(): ReactNode => <ContactUsFormLegacy onSuccess={onSuccess} />}
-          >
-            <ContactUsForm onSuccess={onSuccess} defaultType={type} />
-          </Flag>
+          <ContactUsForm onSuccess={onSuccess} defaultType={type} />
         </>
       )}
     </>
