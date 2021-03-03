@@ -17,8 +17,7 @@
     "test:accessibility": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --runInBand",
     "test:accessibility:ci": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --ci --testResultsProcessor='./node_modules/jest-junit-reporter' --forceExit --runInBand",
     "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand --ci",
-    "test:coverage": "node scripts/test.js --coverage ",
-    "postinstall": "husky install"
+    "test:coverage": "node scripts/test.js --coverage "
   },
   "resolutions": {
     "immer": "8.0.1"
@@ -69,7 +68,7 @@
     "stickyfill": "^1.1.1-strict",
     "stickyfilljs": "^2.1.0",
     "swagger-client": "3.13.1",
-    "swagger-ui": "~3.43.0",
+    "swagger-ui": "~3.44.0",
     "swagger-ui-themes": "^3.0.1",
     "url-polyfill": "^1.1.12",
     "uswds": "^1.6.13",

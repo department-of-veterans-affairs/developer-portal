@@ -72,6 +72,11 @@ const AuthorizationDocs = (): JSX.Element => {
   const initializing = React.useRef(true);
   const api = useSelector((state: RootState) => state.oAuthApiSelection.selectedOAuthApi);
   const prevApi = usePrevious(api);
+  const selectedOAuthApi = useSelector(
+    (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
+  );
+
+  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
 
   React.useEffect(() => {
     if (initializing.current) {
@@ -108,7 +113,7 @@ const AuthorizationDocs = (): JSX.Element => {
         <title>Authorization</title>
       </Helmet>
       <PageHeader header="Authorization" />
-      <PageLinks />
+      <PageLinks options={options} selectedOption={selectedOAuthApi} />
       <GettingStarted />
       <BuildingOIDCContent />
       <ScopesContent />

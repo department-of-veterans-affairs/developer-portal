@@ -2,11 +2,14 @@
 imports:
   '{ HashLink }' : 'react-router-hash-link'
   '{ Link }' : 'react-router-dom'
+  '{ APISelector }': ../../../components/index
 ---
 
 This page walks you through the steps toward authorization and authentication for using OAuth APIs on the Lighthouse platform. We provide examples throughout this document that you can copy and use to get started. 
 
 Select your API from the drop-downs to populate the examples with your API-specific URLs, parameters, and scopes.
+
+<APISelector options={ props.options } selectedOption={ props.selectedOption } />
 
 ## On this Page: {tabIndex="-1" #on-this-page}
 
