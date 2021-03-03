@@ -243,7 +243,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public authParameterContainer(): JSX.Element {
-    const security = this.security() ?? [];
+    const security = this.security() ?? [{}];
     if (Object.keys(security[0]).includes('apikey')) {
       return (
         <div>
