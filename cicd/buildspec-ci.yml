@@ -82,7 +82,7 @@ phases:
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
       - git lfs pull
       # Resolve PR_NUM
-      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH}) || exit 1
+      - PR_NUM=$(prnum.sh ${REPO} ${BRANCH})
       # Create the required dot files prior to build for proper deployment to review bucket
       - |
         # check BRANCH as well as PR_NUM to ensure we don't treat the main branch like a PR branch
