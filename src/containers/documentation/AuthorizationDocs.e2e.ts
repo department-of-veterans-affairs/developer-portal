@@ -2,17 +2,32 @@ import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
 import { puppeteerHost } from '../../e2eHelpers';
 
-describe('AuthorizationDocs', () => {
+/**
+ * have to skip because the new auth docs are off by default, including in the Jest Puppeteer
+ * server. to run this test, remove the .skip and add the correct environment variable in
+ * jest-puppeteer.config.js.
+ */
+describe.skip('AuthorizationDocs', () => {
   beforeAll(async () => {
     await page.goto(`${puppeteerHost}/explore/authorization`, { waitUntil: 'networkidle0' });
   });
 
   /**
-   * have to skip because the new auth docs are off by default, including in the Jest Puppeteer
-   * server. to run this test, remove the .skip and add the correct environment variable in
-   * jest-puppeteer.config.js.
+   * does not include h4s because there are links of the same name under the authorization code
+   * flow and PKCE sections
    */
-  describe.skip('table of contents links', () => {
+  const headings = [
+    'Getting Started',
+    'Building OpenID Connect Applications',
+    'Initiating the Authorization Code Flow',
+    'PKCE (Proof Key for Code Exchange) Authorization',
+    'Scopes',
+    'ID Token',
+    'Test Users',
+    'HTTPS',
+  ];
+
+  describe('table of contents links', () => {
     let doc: ElementHandle;
     let contentsList: ElementHandle;
     beforeAll(async () => {
@@ -26,15 +41,7 @@ describe('AuthorizationDocs', () => {
       )) as ElementHandle;
     });
 
-    it.each([
-      'Getting Started',
-      'Building OpenID Connect Applications',
-      'Initiating the Authorization Code Flow',
-      'PKCE (Proof Key for Code Exchange) Authorization',
-      'Scopes',
-      'ID Token',
-      'Test Users',
-    ])('moves focus to the %s section', async (sectionName: string) => {
+    it.each(headings)('moves focus to the %s section', async (sectionName: string) => {
       const link = await queries.getByRole(contentsList, 'link', {
         name: sectionName,
       });
@@ -48,12 +55,7 @@ describe('AuthorizationDocs', () => {
     });
   });
 
-  /**
-   * have to skip because the new auth docs are off by default, including in the Jest Puppeteer
-   * server. to run this test, remove the .skip and add the correct environment variable in
-   * jest-puppeteer.config.js.
-   */
-  describe.skip('Leaving focus after changing APIs', () => {
+  describe('Leaving focus after changing APIs', () => {
     let doc: ElementHandle;
     let contentsList: ElementHandle;
     beforeAll(async () => {
@@ -67,26 +69,21 @@ describe('AuthorizationDocs', () => {
       )) as ElementHandle;
     });
 
-    it.each([
-      'Getting Started',
-      'Building OpenID Connect Applications',
-      'Initiating the Authorization Code Flow',
-      'PKCE (Proof Key for Code Exchange) Authorization',
-      'Scopes',
-      'ID Token',
-      'Test Users',
-    ])('remove the focus from the %s section on API change', async (sectionName: string) => {
-      const link = await queries.getByRole(contentsList, 'link', {
-        name: sectionName,
-      });
-      await link.press('Enter');
+    it.each(headings)(
+      'remove the focus from the %s section on API change',
+      async (sectionName: string) => {
+        const link = await queries.getByRole(contentsList, 'link', {
+          name: sectionName,
+        });
+        await link.press('Enter');
 
-      const select = await page.$('#main select');
-      await select?.type('Veterans Health API (FHIR)');
-      const isFocused = await select?.evaluate(
-        selectEl => selectEl === document.activeElement,
-      );
-      expect(isFocused).toBe(true);
-    });
+        const select = await page.$('#main select');
+        await select?.type('Veterans Health API (FHIR)');
+        const isFocused = await select?.evaluate(
+          selectEl => selectEl === document.activeElement,
+        );
+        expect(isFocused).toBe(true);
+      },
+    );
   });
 });
