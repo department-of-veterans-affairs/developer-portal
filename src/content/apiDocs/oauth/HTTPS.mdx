@@ -1,0 +1,8 @@
+---
+imports:
+  '{ SectionHeaderWrapper }': ../../../components 
+---
+
+<SectionHeaderWrapper heading="HTTPS" id="https" />
+
+Outside of local development environments, all redirect endpoints must use the `https` protocol for communication. The `https` protocol provides a secure encrypted connection between the user's client, your application, and the Lighthouse platform and authorization servers. This mitigates the risk of some types of man-in-the-middle attacks and prevents third-parties from intercepting user's authorization credentials.
