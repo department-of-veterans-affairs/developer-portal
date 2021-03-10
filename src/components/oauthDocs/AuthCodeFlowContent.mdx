@@ -123,7 +123,7 @@ Use the returned `access_token` to authorize requests to our platform by includi
 
 **NOTE:** the <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink> will only work for the API and scopes for which you have previously initiated authorization. If you need additional scopes in the future, you will need to build a new authorization URL with the additional scopes and have the Veteran grant consent again.
 
-Use the `refresh_token` to obtain a new `access_token` after its expiry by sending the following request.
+Refresh tokens expire if they are not used for a period of 7 days in sandbox and 42 days in production. Use the `refresh_token` to obtain a new `access_token` after its expiry by sending the following request.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
 <CodeWrapper key={`snippet-5-${props.selectedOption}`}>
