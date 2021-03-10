@@ -2,12 +2,7 @@ import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
 import { puppeteerHost } from '../../e2eHelpers';
 
-/**
- * have to skip because the new auth docs are off by default, including in the Jest Puppeteer
- * server. to run this test, remove the .skip and add the correct environment variable in
- * jest-puppeteer.config.js.
- */
-describe.skip('AuthorizationDocs', () => {
+describe('AuthorizationDocs', () => {
   beforeAll(async () => {
     await page.goto(`${puppeteerHost}/explore/authorization`, { waitUntil: 'networkidle0' });
   });
