@@ -12,6 +12,6 @@ describe('AppVersion', () => {
   });
 
   it('should render the hash or undefined', () => {
-    expect(wrapper.find('.app-version').length).toBe(1);
+    expect(wrapper.find('.app-commit').length).toBe(1);
   });
 });
