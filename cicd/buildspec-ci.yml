@@ -80,6 +80,7 @@ phases:
       - S3_BRANCH=$(echo ${BRANCH} | sed 's/\//-/g' | tr -dc [:alnum:]-_)
       # Short Ref to commit hash
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
+        REACT_APP_COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
       - git lfs pull
       # Resolve PR_NUM
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH})
