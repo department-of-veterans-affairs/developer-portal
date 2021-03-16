@@ -17,8 +17,7 @@
     "test:accessibility": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --runInBand",
     "test:accessibility:ci": "node scripts/test.js --projects=e2e.jest.config.js --testMatch='<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)' --ci --testResultsProcessor='./node_modules/jest-junit-reporter' --forceExit --runInBand",
     "test:visual": "node scripts/test.js --projects=visual.jest.config.js --runInBand --ci",
-    "test:coverage": "node scripts/test.js --coverage ",
-    "git-info": "git log -1 --oneline > src/components/appVersion/appInfo.txt"
+    "test:coverage": "node scripts/test.js --coverage "
   },
   "dependencies": {
     "@braintree/sanitize-url": "^5.0.0",
