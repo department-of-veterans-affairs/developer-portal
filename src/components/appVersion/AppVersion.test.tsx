@@ -11,6 +11,6 @@ describe('AppVersion', () => {
       <AppVersion />
     );
 
-    expect(screen.getByTestId('app-commit')).toBeInTheDocument();
+    expect(screen.getByText('Commit Hash: 123456')).toBeInTheDocument();
   });
 });
