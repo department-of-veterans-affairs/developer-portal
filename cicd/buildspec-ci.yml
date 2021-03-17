@@ -22,8 +22,7 @@ env:
   variables:
     GITHUB_USERNAME: 'va-bot'
     # These are the test make targets.
-    # TESTS: 'images lint security unit e2e accessibility visual'
-    TESTS: ''
+    TESTS: 'images lint security unit e2e accessibility visual'
     # These are the build environments
     ENVIRONMENTS: 'dev staging production'
     # Bucket for archiving deployments
@@ -66,8 +65,6 @@ phases:
       - printenv
       # Get usable branch name
       - GET_BRANCH=${CODEBUILD_WEBHOOK_HEAD_REF#"refs/heads/"}
-      # set env var for commit hash in React
-      - export REACT_APP_COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
       # set branch if not set from Webhook
       - |
         if [[ $BRANCH ]]; then
@@ -122,6 +119,7 @@ phases:
       - phase=build_app
       - |
         for env in ${ENVIRONMENTS}; do
+          REACT_APP_COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
           time="${time}\n${phase}-${env} - $(date +%r) - started"
           make build_app ENVIRONMENT=${env} || exit 1
         done
