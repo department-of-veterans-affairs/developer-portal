@@ -120,6 +120,7 @@ phases:
       - phase=build_app
       - |
         for env in ${ENVIRONMENTS}; do
+          REACT_APP_COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:6}
           time="${time}\n${phase}-${env} - $(date +%r) - started"
           make build_app ENVIRONMENT=${env} || exit 1
         done
