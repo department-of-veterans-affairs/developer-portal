@@ -15,8 +15,6 @@ BRANCH ?= notmaster
 ENVIRONMENT ?= dev
 # Sets image name - useful locally if you want an image with a unique name
 IMAGE_NAME ?= developer-portal
-# Sets current application hash - used to see version from the front end
-REACT_APP_COMMIT_HASH ?= REACT_APP_COMMIT_HASH
 
 # the sed command in the help target will echo any comment preceded two #'s when make or make help is run 
 .PHONY: help
