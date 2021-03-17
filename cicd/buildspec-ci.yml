@@ -91,7 +91,7 @@ phases:
         cat <<EOF > .env.${env}.local
         PUBLIC_URL=/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}
         REACT_APP_SENTRY_DSN=${PREVIEW_SENTRY_DSN}
-        REACT_APP_COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:6}
+        REACT_APP_COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
         EOF
           done
         fi
@@ -119,8 +119,8 @@ phases:
       # Run builds if all tests are good.
       - phase=build_app
       - |
+      REACT_APP_COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
         for env in ${ENVIRONMENTS}; do
-          REACT_APP_COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:6}
           time="${time}\n${phase}-${env} - $(date +%r) - started"
           make build_app ENVIRONMENT=${env} || exit 1
         done
