@@ -40,6 +40,8 @@ env:
     # Running the container as root.
     UNAME: root
     GNAME: root
+    # set the main branch name
+    MAIN_BRANCH: master
   parameter-store:
     GITHUB_TOKEN: '/dvp/devops/va_bot_github_token'
     DOCKER_USERNAME: '/dvp/devops/DOCKER_USERNAME'
@@ -83,7 +85,8 @@ phases:
       - PR_NUM=$(prnum.sh ${REPO} ${BRANCH})
       # Create the required dot files prior to build for proper deployment to review bucket
       - |
-        if [[ ${PR_NUM} ]]; then
+        # check BRANCH as well as PR_NUM to ensure we don't treat the main branch like a PR branch
+        if [[ ${PR_NUM} && ${BRANCH} != ${MAIN_BRANCH} ]]; then
           for env in ${ENVIRONMENTS}; do
         cat <<EOF > .env.${env}.local
         PUBLIC_URL=/${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/${env}
@@ -122,7 +125,7 @@ phases:
       # Check if we archive the build
       - phase=archive
       - |
-        if [[ ${BRANCH} == 'master' ]]; then
+        if [[ ${BRANCH} == ${MAIN_BRANCH} ]]; then
           for env in ${ENVIRONMENTS}; do
             time="${time}\n${phase}-${env} - $(date +%r) - started"
             tar -C build/${env} -cf build/${env}.tar.bz2 .
@@ -132,7 +135,8 @@ phases:
       # Check if we deploy to the review bucket
       - phase=deploy
       - |
-        if [[ ${PR_NUM} ]]; then
+        # check BRANCH as well as PR_NUM to ensure we don't treat the main branch like a PR branch
+        if [[ ${PR_NUM} && ${BRANCH} != ${MAIN_BRANCH} ]]; then
           time="${time}\n${phase} - $(date +%r) started"
           links=""
           for env in ${ENVIRONMENTS}; do
@@ -141,10 +145,10 @@ phases:
           aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${S3_BRANCH}/${COMMIT_HASH}/
           comment="These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${links} <br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly." 
         fi
-      # Call the release job if this is running on master branch.
+      # Call the release job if this is running on the main branch.
       - phase=release
       - |
-        if [[ ${BRANCH} == 'master' ]]; then
+        if [[ ${BRANCH} == ${MAIN_BRANCH} ]]; then
           aws codebuild start-build --project-name developer-portal-release --source-version ${CODEBUILD_RESOLVED_SOURCE_VERSION}
         fi
       - phase=success

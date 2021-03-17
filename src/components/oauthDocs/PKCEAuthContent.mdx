@@ -8,6 +8,9 @@ imports:
 ### PKCE (Proof Key for Code Exchange) Authorization {tabIndex="-1" #pkce-authorization}
 
 **NOTE:** We provide a [sample CLI application](https://github.com/department-of-veterans-affairs/vets-api-clients/tree/master/samples/oauth_pkce_cli) for getting started using PKCE.
+
+#### Requesting Authorization {tabIndex="-1" #pkce-requesting-authorization}
+
 Begin the OpenID Connect authorization by using the authorization endpoint, query parameters, and scopes listed below.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
@@ -39,7 +42,7 @@ https://sandbox-api.va.gov{{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{a
 
 The Veteran will need to grant your application access permission. To do this, direct the Veteran to the URL above. The Veteran is taken through an authentication flow by VA.gov and asked to consent to your application accessing their data. The data that can be accessed is defined by your scopes. After the Veteran gives permission, your application will receive an authorization code.
 
-### Authorization Code Grant {#authorization-code-grant-2}
+#### Requesting a Token with an Authorization Code Grant {tabIndex="-1" #pkce-requesting-a-token}
 
 After the Veteran consents to authorize your application, their browser will redirect to your application with the response shown below, which returns the `code` and `state` parameters you must use to make a request to our authorization service and the `code_verifier` used to create the `code_challenge` in the previous step.
 
