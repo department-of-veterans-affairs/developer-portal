@@ -1,10 +1,10 @@
 import * as React from 'react';
 import './AppVersion.scss';
 
-const testCommit = process.env.COMMIT_HASH ?? 'undefined';
+const commitHash = process.env.REACT_APP_COMMIT_HASH ?? 'undefined';
 
 const AppVersion = (): JSX.Element => (
-  <p className="app-commit">{testCommit}</p>
+  <p className="app-commit">{commitHash}</p>
 );
 
 export { AppVersion };
