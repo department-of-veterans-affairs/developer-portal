@@ -106,14 +106,6 @@ const ScopesContent = (): JSX.Element => {
                 </td>
               </tr>
             )}
-            {scopes.includes('system/Appointment.read') && (
-              <tr>
-                <td>
-                  <code>system/Appointment.read</code>
-                </td>
-                <td>View a Veteran&apos;s appointment records</td>
-              </tr>
-            )}
             {scopes.includes('disability_rating.read') && (
               <tr>
                 <td>
