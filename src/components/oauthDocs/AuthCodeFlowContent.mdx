@@ -149,7 +149,8 @@ The manage endpoint directs end users to a URL where they can view which applica
 <CodeWrapper key={`snippet-6-${props.selectedOption}`}>
 
 ```http
-GET {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/manage
+GET {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/manage HTTP/1.1
+Host: sandbox-api.va.gov
 ```
 
 </CodeWrapper>
