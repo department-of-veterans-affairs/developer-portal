@@ -134,7 +134,7 @@ Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
 
-token={ *refresh_token* }&token_type_hint=refresh_token
+grant_type=refresh_token&refresh_token={ *refresh_token* }
 ```
 
 </CodeWrapper>
