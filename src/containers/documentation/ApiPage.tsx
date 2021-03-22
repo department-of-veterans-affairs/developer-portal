@@ -72,7 +72,11 @@ const ApiPage = (): JSX.Element => {
       </Helmet>
       <PageHeader halo={category.name} header={api.name} />
       {api.veteranRedirect &&
-        <AlertBox status="info" key={api.urlFragment} className="vads-u-margin-bottom--2">
+        <AlertBox
+          status="info"
+          key={api.urlFragment}
+          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
+        >
           {api.veteranRedirect.message}
           <a href={api.veteranRedirect.linkUrl}>
             {api.veteranRedirect.linkText}
