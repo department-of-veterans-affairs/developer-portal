@@ -15,6 +15,7 @@ import {
   Server,
   SwaggerSpecObject,
 } from 'swagger-ui';
+import { v4 as uuidv4 } from 'uuid';
 import { CodeWrapper } from '../../../components';
 import { System } from './types';
 
@@ -110,17 +111,21 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public buildInputs(fields: string[]): JSX.Element {
     return (
       <div>
-        {fields.map((fieldName: string) => (
-          <div key={fieldName}>
-            <label htmlFor={fieldName}>{fieldName}</label>
-            <input
-              type="text"
-              id={fieldName}
-              value={this.state.paramValues[fieldName] || ''}
-              onChange={(e): void => this.handleInputChange(fieldName, e.target.value)}
-            />
-          </div>
-        ))}
+        {fields.map((fieldName: string) => {
+          const inputId = uuidv4();
+          return (
+            <div key={fieldName}>
+              <label htmlFor={`${fieldName}-${inputId}`}>{fieldName}</label>
+              <input
+                type="text"
+                id={`${fieldName}-${inputId}`}
+                aria-label={fieldName}
+                value={this.state.paramValues[fieldName] || ''}
+                onChange={(e): void => this.handleInputChange(fieldName, e.target.value)}
+              />
+            </div>
+          );
+        })}
       </div>
     );
   }
