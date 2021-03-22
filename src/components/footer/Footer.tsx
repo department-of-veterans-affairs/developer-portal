@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { AppVersion } from '../../components';
 
 import './Footer.scss';
 
@@ -76,6 +77,7 @@ const Footer: React.FunctionComponent = (): JSX.Element => (
         </a>
       </li>
     </ul>
+    <AppVersion />
   </footer>
 );
 
