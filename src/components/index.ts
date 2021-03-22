@@ -24,4 +24,4 @@ export * from './apiSelector/APISelector';
 export * from './contentWithNav/ContentWithNav';
 export * from './subNav/SubNavEntry';
 export * from './subNav/SubNav';
-export * from './formField/FormField';
+export * from './formField';

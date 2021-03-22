@@ -1,31 +1,32 @@
 import * as React from 'react';
 
-import { FormField } from '../../components';
+import { TextField } from '../../components';
 
 const DeveloperInfo = (): JSX.Element => (
   <>
-    <FormField
+    <TextField
       label="First name"
       name="firstName"
       required
       className="vads-u-margin-top--4"
     />
 
-    <FormField
+    <TextField
       label="Last name"
       name="lastName"
       required
       className="vads-u-margin-top--4"
     />
 
-    <FormField
+    <TextField
       label="Email"
       name="email"
+      type="email"
       required
       className="vads-u-margin-top--4"
     />
 
-    <FormField
+    <TextField
       label="Organization"
       name="organization"
       required

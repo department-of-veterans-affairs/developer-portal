@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { FormField } from '../../components';
+import { CheckboxRadioField, TextField } from '../../components';
 
 const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => (
   <>
@@ -20,14 +20,14 @@ const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => (
     </div>
     <fieldset className="vads-u-margin-top--1">
       <legend className="vads-u-margin-top--0 legend-label">Can your application securely hide a client secret? <span className="form-required-span">(*Required)</span></legend>
-      <FormField
+      <CheckboxRadioField
         type="radio"
         label="Yes"
         value="web"
         name="oAuthApplicationType"
         required
       />
-      <FormField
+      <CheckboxRadioField
         type="radio"
         label="No"
         value="native"
@@ -36,8 +36,7 @@ const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => (
       />
     </fieldset>
 
-    <FormField
-      type="text"
+    <TextField
       label="OAuth Redirect URI"
       name="oAuthRedirectURI"
       required

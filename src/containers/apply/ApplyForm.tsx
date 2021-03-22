@@ -7,7 +7,7 @@ import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 
 import { Form, Formik } from 'formik';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { FormField } from '../../components';
+import { TextField, CheckboxRadioField } from '../../components';
 import { APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../types';
 import { DeveloperInfo } from './DeveloperInfo';
@@ -105,13 +105,13 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
               <SelectedApis />
               {anyOAuthApisSelected(values) && <OAuthAppInfo />}
 
-              <FormField
+              <TextField
                 as="textarea"
                 label="Briefly describe how your organization will use VA APIs:"
                 name="description"
               />
 
-              <FormField
+              <CheckboxRadioField
                 label={
                   <span>
                     I agree to the <Link to="/terms-of-service">Terms of Service</Link> <span className="form-required-span">(*Required)</span>

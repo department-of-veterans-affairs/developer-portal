@@ -1,15 +1,21 @@
 import classNames from 'classnames';
-import { Field } from 'formik';
-import React, { FC } from 'react';
+import { Field, useFormikContext } from 'formik';
+import React, { FC, ReactNode } from 'react';
 import toHtmlId from '../../../toHtmlId';
-import { BaseProps, SubComponentProps } from '../FormField';
 
-export interface CheckBoxRadioFieldProps extends BaseProps {
+export interface CheckboxRadioFieldProps {
+  className?: string;
+  label: ReactNode;
+  name: string;
+  required?: boolean;
   type: 'checkbox' | 'radio';
   value?: string;
 }
 
-const CheckBoxRadioField: FC<CheckBoxRadioFieldProps & SubComponentProps> = ({ name, label, shouldDisplayErrors, type, value, ...props }) => {
+const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({ name, className, label, type, value, ...props }) => {
+  const { errors, touched } = useFormikContext();
+  const shouldDisplayErrors = !!errors[name] && !!touched[name];
+  const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const radioClass = type === 'radio' ? 'vads-u-margin--0 vads-u-padding-y--1 vads-u-padding-x--1p5' : '';
 
@@ -17,7 +23,7 @@ const CheckBoxRadioField: FC<CheckBoxRadioFieldProps & SubComponentProps> = ({ n
   const fieldId = `${idReadyName}FormField${value ?? ''}`;
 
   return (
-    <>
+    <div className={classNames(containerClass, className)}>
       <Field
         id={fieldId}
         name={name}
@@ -27,8 +33,8 @@ const CheckBoxRadioField: FC<CheckBoxRadioFieldProps & SubComponentProps> = ({ n
         {...props}
       />
       <label htmlFor={fieldId} className={classNames(labelClass, radioClass)}>{label}</label>
-    </>
+    </div>
   );
 };
 
-export default CheckBoxRadioField;
+export default CheckboxRadioField;

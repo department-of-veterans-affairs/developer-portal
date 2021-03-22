@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { FormField } from '../../components';
+import { CheckboxRadioField } from '../../components';
 
 interface APICheckbox {
   id: string;
@@ -14,7 +14,7 @@ interface APICheckboxListProps {
 const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => (
   <>
     {apiCheckboxes.map(api => (
-      <FormField
+      <CheckboxRadioField
         type="checkbox"
         key={api.id}
         name="apis"
