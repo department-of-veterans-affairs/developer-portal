@@ -77,7 +77,7 @@ const ApiPage = (): JSX.Element => {
           key={api.urlFragment}
           className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
         >
-          {api.veteranRedirect.message}
+          {api.veteranRedirect.message}&nbsp;
           <a href={api.veteranRedirect.linkUrl}>
             {api.veteranRedirect.linkText}
           </a>

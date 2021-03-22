@@ -11,7 +11,7 @@ const vaFormsContent: APICategoryContent = {
   veteranRedirect: {
     linkText: 'Find the forms you need',
     linkUrl: 'https://www.va.gov/find-forms/',
-    message: 'Are you a Veteran? ',
+    message: 'Are you a Veteran?',
   },
 };
 

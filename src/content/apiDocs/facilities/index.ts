@@ -12,7 +12,7 @@ const facilitiesContent: APICategoryContent = {
   veteranRedirect: {
     linkText: "Find the facility that's right for you",
     linkUrl: 'https://www.va.gov/find-locations/',
-    message: 'Are you a Veteran? ',
+    message: 'Are you a Veteran?',
   },
 };
 

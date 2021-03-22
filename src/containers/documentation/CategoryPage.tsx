@@ -70,7 +70,7 @@ const CategoryPage = (): JSX.Element => {
       <hr />
       {veteranRedirect &&
         <AlertBox status="info" key={apiCategoryKey}>
-          {veteranRedirect.message}
+          {veteranRedirect.message}&nbsp;
           <a href={veteranRedirect.linkUrl}>
             {veteranRedirect.linkText}
           </a>
