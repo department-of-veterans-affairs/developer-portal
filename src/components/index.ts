@@ -25,3 +25,4 @@ export * from './contentWithNav/ContentWithNav';
 export * from './subNav/SubNavEntry';
 export * from './subNav/SubNav';
 export * from './formField';
+export * from './appVersion/AppVersion';
