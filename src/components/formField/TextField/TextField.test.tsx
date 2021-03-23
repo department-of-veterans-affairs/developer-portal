@@ -23,7 +23,7 @@ describe('TextField', () => {
       touched: {},
     }));
   });
-  const renderComponent = ({ label, required = false, type, as, description }: RenderProps): void => {
+  const renderComponent = ({ label, required, type, as, description }: RenderProps): void => {
     render(
       <Formik initialValues={{}} onSubmit={jest.fn()}>
         <TextField name="test" label={label} required={required} type={type} as={as} description={description} />
@@ -35,6 +35,17 @@ describe('TextField', () => {
     const field = screen.getByRole('textbox', { name: 'Test Input' });
     expect(field).toBeInTheDocument();
     expect(field).toHaveAttribute('type', 'text');
+  });
+  describe('required is not set', () => {
+    it('does not include required in the label', () => {
+      renderComponent({ label: 'Test Input' });
+      expect(screen.queryByText('(*Required)')).not.toBeInTheDocument();
+    });
+
+    it('does not mark the input as required', () => {
+      renderComponent({ label: 'Test Input' });
+      expect(screen.getByLabelText(/Test Input/)).not.toHaveAttribute('required');
+    });
   });
 
   describe('required is true', () => {

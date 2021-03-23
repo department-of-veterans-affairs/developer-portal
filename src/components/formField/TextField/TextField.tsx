@@ -15,7 +15,7 @@ export interface TextFieldProps {
   type?: 'text' | 'email' | 'password';
 }
 
-const TextField: FC<TextFieldProps> = ({ description, className, label, name, required, type = 'text', ...props }) => {
+const TextField: FC<TextFieldProps> = ({ description, className, label, name, required = false, type = 'text', ...props }) => {
   const { errors, touched } = useFormikContext();
   const shouldDisplayErrors = !!errors[name] && !!touched[name];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
