@@ -35,6 +35,7 @@ updates:
       # Fails e2e due to missing role reporting due to Webpack build order. It should also be 
       # mentioned that the latest version on NPM is ahead of the latest version in the packages 
       # repo which is failing it's build.
+      - dependency-name: postcss-flexbugs-fixes
       - dependency-name: immutable
         versions: [4.0.0-rc.x]
       # -------------------------
