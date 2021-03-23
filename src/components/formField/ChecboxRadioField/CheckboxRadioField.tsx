@@ -20,7 +20,8 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({ name, className, labe
   const radioClass = type === 'radio' ? 'vads-u-margin--0 vads-u-padding-y--1 vads-u-padding-x--1p5' : '';
 
   const idReadyName = toHtmlId(name);
-  const fieldId = `${idReadyName}FormField${value ?? ''}`;
+  const idReadyValue = toHtmlId(value ?? '');
+  const fieldId = `${idReadyName}FormField${idReadyValue}`;
 
   return (
     <div className={classNames(containerClass, className)}>
