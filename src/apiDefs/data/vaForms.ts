@@ -1,4 +1,4 @@
-import { VAFormsReleaseNotes } from '../../content/apiDocs/vaForms';
+import { vaFormsContent, VAFormsReleaseNotes } from '../../content/apiDocs/vaForms';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import { APIDescription } from '../schema';
 
@@ -17,6 +17,7 @@ const vaFormsApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'vaForms',
     vaInternalOnly: false,
+    veteranRedirect: vaFormsContent.veteranRedirect,
   },
 ];
 
