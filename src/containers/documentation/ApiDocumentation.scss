@@ -2,7 +2,8 @@
 
 .api-docs-oauth-link {
     background-color: $color-gray-lightest;
-    border-left: 6px solid $color-primary-darker;
-    padding: .5rem 0 1.5rem 1.5rem;
+    border-left: 10px solid $color-primary-darker;
+    // 2.4rem as the left padding aligns with AlertBox for pages with a message for veterans
+    padding: .5rem 0 1.5rem 2.4rem;
     margin-bottom: 1.5rem;
 }
