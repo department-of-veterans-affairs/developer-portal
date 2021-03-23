@@ -29,18 +29,21 @@ const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
       'vads-u-display--flex',
       'vads-u-align-content--flex-start',
       'vads-u-line-height--4',
-      'medium-screen:vads-u-padding-x--1p5')}
+      'medium-screen:vads-u-padding-x--1p5',
+    )}
   >
     <img
-      className={classNames('va-api-banner-icon', 'vads-u-margin-right--1', 'vads-u-margin-top--0p5')}
+      className={classNames(
+        'va-api-banner-icon',
+        'vads-u-margin-right--1',
+        'vads-u-margin-top--0p5',
+      )}
       src={props.icon}
       alt={props.icon_alt ?? undefined}
       aria-hidden="true"
     />
-    <div className="vads-u-margin-bottom--1p5" >
-      <p className="vads-u-font-weight--bold vads-u-margin--0">
-        {props.title}
-      </p>
+    <div className="vads-u-margin-bottom--1p5">
+      <p className="vads-u-font-weight--bold vads-u-margin--0">{props.title}</p>
       <div>{props.children}</div>
     </div>
   </div>
@@ -103,7 +106,7 @@ const Banner = (): JSX.Element => {
                     'small-desktop-screen:vads-u-margin-left--1',
                     'small-desktop-screen:vads-u-margin-top--0',
                   )}
-                  aria-label="Here&apos;s how you know this is an official website"
+                  aria-label="Here's how you know this is an official website"
                   onClick={toggleAccordionVisible}
                   aria-expanded={accordionVisible ? 'true' : 'false'}
                   type="button"
@@ -124,22 +127,34 @@ const Banner = (): JSX.Element => {
               className={classNames(
                 'usa-accordion-content',
                 'vads-l-grid-container',
-                'vads-u-background-color--gray-dark')}
+                'vads-u-background-color--gray-dark',
+              )}
               aria-hidden={accordionVisible ? 'false' : 'true'}
-              aria-label="Here&apos;s how you know this is an official website"
+              aria-label="Here's how you know this is an official website"
               role="region"
             >
-              <div className="vads-l-row" >
-                <GuidanceBox id="dot-gov-guidance" icon={dotGovIcon} icon_alt="Government icon" title="The .gov means it's official">
+              <div className="vads-l-row">
+                <GuidanceBox
+                  id="dot-gov-guidance"
+                  icon={dotGovIcon}
+                  icon_alt="Government icon"
+                  title="The .gov means it's official"
+                >
                   <p className="vads-u-margin--0">
                     Federal government websites often end in .gov or .mil. Before sharing sensitive
                     information, make sure you&apos;re on a federal government site.
                   </p>
                 </GuidanceBox>
-                <GuidanceBox id="https-guidance" icon={httpsIcon} icon_alt="HTTPS browser icon" title="The site is secure.">
+                <GuidanceBox
+                  id="https-guidance"
+                  icon={httpsIcon}
+                  icon_alt="HTTPS browser icon"
+                  title="The site is secure."
+                >
                   <p className="vads-u-margin--0">
-                    The <strong>https://</strong> ensures that you&apos;re connecting to the official website
-                    and that any information you provide is encrypted and sent securely.
+                    The <strong>https://</strong> ensures that you&apos;re connecting to the
+                    official website and that any information you provide is encrypted and sent
+                    securely.
                   </p>
                 </GuidanceBox>
               </div>

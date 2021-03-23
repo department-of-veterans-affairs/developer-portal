@@ -1,3 +1,4 @@
+import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
@@ -70,6 +71,18 @@ const ApiPage = (): JSX.Element => {
         <title>{api.name} Documentation</title>
       </Helmet>
       <PageHeader halo={category.name} header={api.name} />
+      {api.veteranRedirect &&
+        <AlertBox
+          status="info"
+          key={api.urlFragment}
+          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
+        >
+          {api.veteranRedirect.message}&nbsp;
+          <a href={api.veteranRedirect.linkUrl}>
+            {api.veteranRedirect.linkText}
+          </a>
+          .
+        </AlertBox>}
       <DeactivationMessage api={api} />
       {!isApiDeactivated(api) && (
         <ApiDocumentation
