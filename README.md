@@ -1,6 +1,6 @@
 # Developer Portal
 
-The Developer Portal is the documentation and help portal for the VA API Platform. The repo hosts the code base that the website it built on.
+Te Developer Portal is the documentation and help portal for the VA API Platform. The repo hosts the code base that the website it built on.
 
 ## Getting Started
 
