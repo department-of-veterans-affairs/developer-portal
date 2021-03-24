@@ -83,13 +83,13 @@
   table {
     thead tr {
       th {
+        background-color: $color-gray-lightest;
         color: $color-gray-dark;
         font-family: $font-sans;
         font-size: $base-font-size;
         font-weight: $font-bold;
       }
 
-      th,
       td {
         background-color: $color-gray-lightest;
       }
