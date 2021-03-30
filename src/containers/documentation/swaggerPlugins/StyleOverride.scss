@@ -1,3 +1,6 @@
+@import '../../../styles/variables';
+@import '~@department-of-veterans-affairs/formation/sass/full';
+
 @mixin table-style {
   padding: 0;
   margin: 0;
@@ -7,12 +10,12 @@
   tr {
     td {
       padding: 1rem;
-      background-color: #EEEEEE;
+      background-color: #eeeeee;
       border: 1px solid #5b616b;
       border-top-style: none;
       border-bottom-style: none;
     }
-    &:last-child{
+    &:last-child {
       td {
         border-bottom: 1px solid #5b616b;
       }
@@ -20,7 +23,8 @@
   }
 }
 
-.opblock-section, .responses-wrapper {
+.opblock-section,
+.responses-wrapper {
   margin: 2em 2em 0;
   padding-bottom: 1em;
 }
@@ -33,7 +37,8 @@
   display: none;
 }
 
-.table-container, .responses-inner {
+.table-container,
+.responses-inner {
   padding: 1em 0 2em !important;
 }
 
@@ -43,7 +48,8 @@
     .opblock-section-header {
       padding: 0 !important;
       box-shadow: none !important;
-      .opblock-title, h4 {
+      .opblock-title,
+      h4 {
         font-size: 3rem !important;
       }
     }
@@ -51,22 +57,46 @@
       padding: 0;
       .parameters {
         @include table-style;
-        input, select {
+        input,
+        select {
           display: none;
         }
       }
     }
     .responses-inner {
       padding: 0;
-      .responses-table{
+      .responses-table {
         @include table-style;
         thead {
           .col_header {
             border: 1px solid #5b616b;
-            border-bottom: 1px solid rgba(59, 65, 81, .2) !important;
+            border-bottom: 1px solid rgba(59, 65, 81, 0.2) !important;
           }
         }
       }
+    }
+  }
+}
+.swagger-ui .renderedMarkdown {
+  @import '~uswds/src/stylesheets/elements/table';
+
+  table {
+    thead tr {
+      th {
+        background-color: $color-gray-lightest;
+        color: $color-gray-dark;
+        font-family: $font-sans;
+        font-size: $base-font-size;
+        font-weight: $font-bold;
+      }
+
+      td {
+        background-color: $color-gray-lightest;
+      }
+    }
+    tbody tr td:first-of-type {
+      padding: 1rem 1.5rem;
+      width: auto;
     }
   }
 }
