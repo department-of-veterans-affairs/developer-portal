@@ -13,7 +13,7 @@ export interface SupportSection {
   readonly name: string;
 }
 
-const sections: SupportSection[] = [
+export const sections: SupportSection[] = [
   {
     component: FAQ,
     description:
@@ -23,8 +23,7 @@ const sections: SupportSection[] = [
   },
   {
     component: ContactUs,
-    description:
-      'Send us a message using the Contact Us form.',
+    description: 'Send us a message using the Contact Us form.',
     id: 'contact-us',
     name: 'Contact Us',
   },
