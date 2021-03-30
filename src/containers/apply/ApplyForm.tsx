@@ -120,6 +120,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
                 name="termsOfService"
                 required
                 type="checkbox"
+                className="form-checkbox"
               />
 
               <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>{isSubmitting ? 'Sending...' : 'Submit'}</button>
