@@ -109,6 +109,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
                 as="textarea"
                 label="Briefly describe how your organization will use VA APIs:"
                 name="description"
+                className="vads-u-margin-top--4"
               />
 
               <CheckboxRadioField
