@@ -12,6 +12,11 @@ const benefitsContent: APICategoryContent = {
   placardText: 'Build tools to electronically submit and track the status of benefit claims.',
   shortDescription:
     'Enables Veterans and approved organizations to electronically submit and track the status of benefit claims.',
+  veteranRedirect: {
+    linkText: 'benefits or appeals claim status',
+    linkUrl: 'https://www.va.gov/claim-or-appeal-status/',
+    message: 'Are you a Veteran? Check your',
+  },
 };
 
 export {

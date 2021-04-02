@@ -105,4 +105,5 @@ build_app:
 		--volume "/application/node_modules" \
 		--env NODE_ENV=production \
 		--env BUILD_ENV=${ENVIRONMENT} \
+		--env REACT_APP_COMMIT_HASH=${COMMIT_HASH} \
 		${IMAGE_NAME} npm run-script build ${ENVIRONMENT}

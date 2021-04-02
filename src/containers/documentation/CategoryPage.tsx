@@ -1,3 +1,4 @@
+import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { useParams } from 'react-router';
@@ -16,7 +17,7 @@ const CategoryPage = (): JSX.Element => {
   const {
     apis,
     name: categoryName,
-    content: { intro, overview },
+    content: { intro, overview, veteranRedirect },
   } = getApiDefinitions()[apiCategoryKey];
 
   let cardSection;
@@ -67,6 +68,14 @@ const CategoryPage = (): JSX.Element => {
       {cardSection}
       <div className="vads-u-width--full">{overview({})}</div>
       <hr />
+      {veteranRedirect &&
+        <AlertBox status="info" key={apiCategoryKey}>
+          {veteranRedirect.message}&nbsp;
+          <a href={veteranRedirect.linkUrl}>
+            {veteranRedirect.linkText}
+          </a>
+          .
+        </AlertBox>}
     </div>
   );
 };
