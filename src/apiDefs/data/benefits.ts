@@ -1,4 +1,5 @@
 import {
+  benefitsContent,
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
@@ -27,6 +28,7 @@ const benefitsApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'claims',
     vaInternalOnly: false,
+    veteranRedirect: benefitsContent.veteranRedirect,
   },
   {
     description: 'Submit PDF claims',
@@ -42,6 +44,7 @@ const benefitsApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'benefits',
     vaInternalOnly: false,
+    veteranRedirect: benefitsContent.veteranRedirect,
   },
   {
     description: 'Manage VA Home Loans',

@@ -11,9 +11,11 @@ import {
   Operation,
   Parameter,
   Schema,
+  SecurityRequirement,
   Server,
   SwaggerSpecObject,
 } from 'swagger-ui';
+import { v4 as uuidv4 } from 'uuid';
 import { CodeWrapper } from '../../../components';
 import { System } from './types';
 
@@ -75,7 +77,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public requirementsMet(): boolean {
-    const hasSecurity = Object.keys(this.props.operation).includes('security');
+    const hasSecurity = this.security() !== null;
     if (this.isSwagger2()) {
       const spec: OpenAPISpecV2 = this.jsonSpec() as OpenAPISpecV2;
       return hasSecurity && !!spec.host;
@@ -91,6 +93,12 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     return spec.json;
   }
 
+  public security(): SecurityRequirement | null {
+    const baseSecurity = this.jsonSpec().security ?? null;
+    const operationSecurity = this.props.operation.security;
+    return operationSecurity ?? baseSecurity;
+  }
+
   public handleInputChange(parameterName: string, value: string): void {
     this.setState({
       paramValues: {
@@ -103,17 +111,21 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public buildInputs(fields: string[]): JSX.Element {
     return (
       <div>
-        {fields.map((fieldName: string) => (
-          <div key={fieldName}>
-            <label htmlFor={fieldName}>{fieldName}</label>
-            <input
-              type="text"
-              id={fieldName}
-              value={this.state.paramValues[fieldName] || ''}
-              onChange={(e): void => this.handleInputChange(fieldName, e.target.value)}
-            />
-          </div>
-        ))}
+        {fields.map((fieldName: string) => {
+          const inputId = uuidv4();
+          return (
+            <div key={fieldName}>
+              <label htmlFor={`${fieldName}-${inputId}`}>{fieldName}</label>
+              <input
+                type="text"
+                id={`${fieldName}-${inputId}`}
+                aria-label={fieldName}
+                value={this.state.paramValues[fieldName] || ''}
+                onChange={(e): void => this.handleInputChange(fieldName, e.target.value)}
+              />
+            </div>
+          );
+        })}
       </div>
     );
   }
@@ -236,7 +248,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public authParameterContainer(): JSX.Element {
-    if (Object.keys(this.props.operation.security[0]).includes('apikey')) {
+    const security = this.security() ?? [{}];
+    if (Object.keys(security[0]).includes('apikey')) {
       return (
         <div>
           <h3> API Key: </h3>
