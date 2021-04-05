@@ -1,3 +1,10 @@
+### March 30, 2021
+(v0) We added a new field, last_sha256_change, to the VA Forms API FormsIndex endpoint. This will allow consumers to know when the pdf file last changed.
+* Added the last sha256 revision to the FormsIndex endpoint [#6292](https://github.com/department-of-veterans-affairs/vets-api/pull/6292)
+  * Example value: "last_sha256_change": "2019-08-01"
+
+---
+
 ### March 16, 2021
 (v0) We added a new field, va_form_administration, to the VA Forms API which will be used to populate the "Related to" field on the [form search results page](https://www.va.gov/find-forms/) when the benefits_category field is not available.
 * Database migration to add column [#6082](https://github.com/department-of-veterans-affairs/vets-api/pull/6082)

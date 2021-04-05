@@ -17,7 +17,12 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
 import 'jest';
 import { FacilitiesReleaseNotes } from '../content/apiDocs/facilities';
-import { includesOAuthAPI, lookupApiByFragment, lookupApiCategory } from './query';
+import {
+  getAllQuickstartCategorySlugs,
+  includesOAuthAPI,
+  lookupApiByFragment,
+  lookupApiCategory,
+} from './query';
 
 describe('query module', () => {
   describe('lookupApiByFragment', () => {
@@ -97,6 +102,12 @@ describe('query module', () => {
 
     it('returns false if the list does not include any OAuth APIs', () => {
       expect(includesOAuthAPI(['benefits', 'facilities'])).toBe(false);
+    });
+  });
+
+  describe('getAllQuickstartCategorySlugs', () => {
+    it('returns the list of all API category slugs that have a quickstart page', () => {
+      expect(getAllQuickstartCategorySlugs()).toStrictEqual(['health']);
     });
   });
 });

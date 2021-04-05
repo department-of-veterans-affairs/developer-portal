@@ -4,7 +4,11 @@ import { Redirect, Route } from 'react-router-dom';
 
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
-import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
+import {
+  getAllQuickstartCategorySlugs,
+  getApiCategoryOrder,
+  getApiDefinitions,
+} from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 import { MarkdownPage } from './components';
 import { ApplyForm } from './containers/apply/ApplyForm';
@@ -15,13 +19,18 @@ import Home from './containers/Home';
 import News from './containers/News';
 import NotFound from './containers/NotFound';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
-import Support from './containers/support/Support';
+import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
 import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
-import { CONSUMER_PATH, PUBLISHING_PATH } from './types/constants/paths';
+import {
+  CONSUMER_PATH,
+  PUBLISHING_EXPECTATIONS_PATH,
+  PUBLISHING_ONBOARDING_PATH,
+  PUBLISHING_PATH,
+} from './types/constants/paths';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
@@ -68,6 +77,14 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         <Route path={CONSUMER_PATH} render={(): JSX.Element => <h1>Consumer docs page</h1>} />
       )}
       <Route component={NotFound} />
+      {/* The below Routes are needed for the sitemap */}
+      <Route path="/explore/:apiCategoryKey/docs/quickstart" />
+      <Route path="/explore/:apiCategoryKey/docs/:apiName" />
+      <Route exact path={PUBLISHING_EXPECTATIONS_PATH} />
+      <Route exact path={PUBLISHING_ONBOARDING_PATH} />
+      {supportSections.map((section: SupportSection) => (
+        <Route path={`/support/${section.id}`} key={section.id} />
+      ))}
     </Switch>
   );
 };
@@ -105,26 +122,22 @@ export const sitemapConfig = (): SitemapConfig => {
       [],
     );
 
-    if (
-      route === '/explore/:apiCategoryKey/docs/:apiName' &&
-      apiDefs[apiCategory].apis.some(api => !!api.oAuth) &&
-      apiCategory !== 'benefits'
-    ) {
-      routeParams.push('authorization');
-    }
-
     return routeParams;
   };
 
   const apiCategoryOrder = getApiCategoryOrder();
+  const apiQuickstartCategories = getAllQuickstartCategorySlugs();
   return {
     paramsConfig: {
       '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => ({
         apiCategoryKey: apiCategory,
         apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
       })),
+      '/explore/:apiCategoryKey/docs/quickstart': [{ apiCategoryKey: apiQuickstartCategories }],
       '/explore/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
-      '/release-notes/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
+      '/release-notes/:apiCategoryKey?': [
+        { 'apiCategoryKey?': [...apiCategoryOrder, 'deactivated'] },
+      ],
     },
     pathFilter: {
       isValid: false,
