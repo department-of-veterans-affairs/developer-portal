@@ -1,7 +1,9 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { FallbackProps } from 'react-error-boundary';
 import Helmet from 'react-helmet';
-import notFoundImage from '../assets/404.svg';
+import { useHistory } from 'react-router';
+import errorBoundaryImage from '../assets/404.svg';
 import './NotFound.scss';
 
 interface LinkTarget {
@@ -9,13 +11,16 @@ interface LinkTarget {
   title: string;
 }
 
-const DummyErrorThrower = (): JSX.Element => {
-  throw new Error('Page not found');
-  return <div></div>;
-};
-
-const NotFound: React.FunctionComponent = () => {
+const ErrorBoundaryPage: React.FunctionComponent<FallbackProps> = ({
+  error,
+  resetErrorBoundary,
+}: FallbackProps) => {
+  const history = useHistory();
+  history.listen(() => {
+    resetErrorBoundary();
+  });
   const lists: LinkTarget[] = [
+    { pathSegment: 'authorization', title: 'Authorization' },
     { pathSegment: 'appeals', title: 'Appeals API' },
     { pathSegment: 'benefits', title: 'Benefits API' },
     { pathSegment: 'facilities', title: 'Facilities API' },
@@ -26,7 +31,6 @@ const NotFound: React.FunctionComponent = () => {
 
   return (
     <>
-      <DummyErrorThrower />
       <div
         className={classNames(
           'vaapi-not-found-header',
@@ -51,11 +55,11 @@ const NotFound: React.FunctionComponent = () => {
             )}
           >
             <Helmet>
-              <title>Page Not Found</title>
+              <title>Error Encountered</title>
             </Helmet>
-            <h1>Page not found.</h1>
+            <h1>An error was encountered.</h1>
             <p className="vads-u-font-size--lg vads-u-font-weight--bold">
-              Try using these links or the search bar to find your way forward.
+              {error.name}: {error.message}
             </p>
           </div>
           <div
@@ -68,7 +72,7 @@ const NotFound: React.FunctionComponent = () => {
               'vads-u-order--first',
             )}
           >
-            <img className="vads-u-width--auto" src={notFoundImage} alt="404 graphic" />
+            <img className="vads-u-width--auto" src={errorBoundaryImage} alt="404 graphic" />
           </div>
         </div>
       </div>
@@ -143,4 +147,4 @@ const NotFound: React.FunctionComponent = () => {
   );
 };
 
-export default NotFound;
+export default ErrorBoundaryPage;
