@@ -17,8 +17,8 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   const errors: FormikErrors<Values> = {
     email: validateEmail(values.email),
     firstName: validatePresence('First name', values.firstName),
-    lastName: validatePresence('First name', values.firstName),
-    organization: validatePresence('First name', values.firstName),
+    lastName: validatePresence('Last name', values.firstName),
+    organization: validatePresence('Organization', values.firstName),
   };
 
   if (!values.termsOfService) {
