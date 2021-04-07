@@ -14,8 +14,8 @@ import {
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
-import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import NotFound from '../NotFound';
+import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
   let apiDefsSpy: jest.SpyInstance<APICategories>;
