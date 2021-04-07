@@ -44,10 +44,10 @@ describe('position sticky', () => {
 
 describe('invalid cagetories', () => {
   it.each(['', 'docs/quickstart'])(
-    'should redirect to /explore from /explore/invalid/%s',
+    'should redirect to /404 from /explore/invalid/%s',
     async (path: string) => {
       await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
-      expect(page.url()).toEqual(`${puppeteerHost}/explore`);
+      expect(page.url()).toEqual(`${puppeteerHost}/404`);
     },
   );
 });
