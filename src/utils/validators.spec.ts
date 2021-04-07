@@ -4,7 +4,7 @@ describe('validateEmail', () => {
   it('should return validation failure message if email is not valid', () => {
     expect(
       validateEmail('bademail(at)example.com'),
-    ).toEqual('Must be a valid email address.');
+    ).toEqual('Enter a valid email address.');
   });
 
   it('should return undefined if the email is valid', () => {
@@ -34,7 +34,7 @@ describe('validatePresence', () => {
   it('should add validation filed to newValue when field is not valid', () => {
     expect(
       validatePresence('email', ''),
-    ).toEqual('email must not be blank.');
+    ).toEqual('Enter your email.');
   });
 
   it('should not add validation if the email is valid', () => {
