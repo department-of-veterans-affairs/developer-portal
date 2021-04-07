@@ -137,7 +137,7 @@ const DocumentationRoot = (): JSX.Element => {
           ))}
           {authDocsV2 && <Route path="/explore/authorization" component={AuthorizationDocs} exact />}
           {authDocsV2 && <Redirect exact from="/explore/verification/docs/authorization" to="/explore/authorization?api=veteran_verification" />}
-          {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/explore" />}
+          {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/404" />}
           <Route exact path="/explore/" component={DocumentationOverview} />
           <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
           <Route exact path="/explore/:apiCategoryKey/docs/authorization">

@@ -120,7 +120,7 @@ export const CategoryReleaseNotes = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const categories = getApiDefinitions();
   if (!(apiCategoryKey in categories)) {
-    return <Redirect to="/release-notes" />;
+    return <Redirect to="/404" />;
   }
 
   return (
