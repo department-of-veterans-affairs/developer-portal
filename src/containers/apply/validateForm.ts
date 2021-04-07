@@ -16,9 +16,9 @@ const anyApiSelected = ({ apis }: Values): boolean => apis.length > 0;
 export const validateForm = (values: Values): FormikErrors<Values> => {
   const errors: FormikErrors<Values> = {
     email: validateEmail(values.email),
-    firstName: validatePresence('First name', values.firstName),
-    lastName: validatePresence('Last name', values.firstName),
-    organization: validatePresence('Organization', values.firstName),
+    firstName: validatePresence('first name', values.firstName),
+    lastName: validatePresence('last name', values.firstName),
+    organization: validatePresence('organization', values.firstName),
   };
 
   if (!values.termsOfService) {

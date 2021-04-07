@@ -4,7 +4,7 @@ const PARTIAL_URL_PATTERN = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
 
 export const validatePresence = (fieldName: string, value: string): string | undefined => {
   if (!PRESENCE_PATTERN.test(value)) {
-    return `${fieldName} must not be blank.`;
+    return `Enter your ${fieldName}.`;
   }
 
   return undefined;
@@ -12,7 +12,7 @@ export const validatePresence = (fieldName: string, value: string): string | und
 
 export const validateEmail = (value: string): string | undefined => {
   if (!EMAIL_PATTERN.test(value)) {
-    return 'Must be a valid email address.';
+    return 'Enter a valid email address.';
   }
 
   return undefined;
@@ -20,7 +20,7 @@ export const validateEmail = (value: string): string | undefined => {
 
 export const validateOAuthRedirectURI = (value: string): string | undefined => {
   if (!PARTIAL_URL_PATTERN.test(value)) {
-    return 'Must be an http or https URI.';
+    return 'Enter an http or https URI.';
   }
 
   return undefined;

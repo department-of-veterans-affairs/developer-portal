@@ -4,8 +4,8 @@ import { validateEmail, validatePresence } from '../../../utils/validators';
 
 const validateForm = (values: ContactUsFormState): FormikErrors<ContactUsFormState> => {
   const errors: FormikErrors<ContactUsFormState> = {};
-  const firstNameError = validatePresence('First name', values.firstName);
-  const lastNameError = validatePresence('Last name', values.lastName);
+  const firstNameError = validatePresence('first name', values.firstName);
+  const lastNameError = validatePresence('last name', values.lastName);
   const emailError = validateEmail(values.email);
 
   if (firstNameError) {
@@ -21,7 +21,7 @@ const validateForm = (values: ContactUsFormState): FormikErrors<ContactUsFormSta
   }
 
   if (values.type === FormType.CONSUMER) {
-    const descriptionError = validatePresence('Description', values.description);
+    const descriptionError = validatePresence('description', values.description);
     if (descriptionError) {
       errors.description = descriptionError;
     }
