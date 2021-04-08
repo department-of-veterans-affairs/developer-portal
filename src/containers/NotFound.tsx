@@ -11,7 +11,7 @@ interface LinkTarget {
 
 const DummyErrorThrower = (): JSX.Element => {
   throw new Error('Page not found');
-  return <div></div>;
+  return <div />;
 };
 
 const NotFound: React.FunctionComponent = () => {
