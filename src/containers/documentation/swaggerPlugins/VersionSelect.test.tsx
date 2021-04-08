@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import Im from 'immutable';
 import 'jest';
 import { SwaggerMapValues } from 'swagger-ui';
-import { VersionMetadata } from 'src/types';
 import React from 'react';
+import { VersionMetadata } from '../../../types';
 import { System } from './types';
 import VersionSelect from './VersionSelect';
 

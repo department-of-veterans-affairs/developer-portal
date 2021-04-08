@@ -1,14 +1,11 @@
 import * as React from 'react';
 
-import classNames from 'classnames';
-import Helmet from 'react-helmet';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { getApiDefinitions } from '../../apiDefs/query';
 import sentenceJoin from '../../sentenceJoin';
-import { ApplySuccessResult, RootState } from '../../types';
-import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS, PAGE_HEADER_ID } from '../../types/constants';
+import { ApplySuccessResult } from '../../types';
+import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS } from '../../types/constants';
 
 const AssistanceTrailer = (): JSX.Element => (
   <p>
@@ -109,24 +106,17 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
   );
 };
 
-const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element => {
+const ApplySuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
   const { apis, email, token, clientID, clientSecret, kongUsername, redirectURI } = props.result;
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
-  const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis[apiId]);
-  const hasStandardAPI = APPLY_STANDARD_APIS.some(apiId => apis[apiId]);
-  const oAuthAPIs = APPLY_OAUTH_APIS.filter(apiId => apis[apiId]);
-  const standardAPIs = APPLY_STANDARD_APIS.filter(apiId => apis[apiId]);
+  const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis.includes(apiId));
+  const hasStandardAPI = APPLY_STANDARD_APIS.some(apiId => apis.includes(apiId));
+  const oAuthAPIs = APPLY_OAUTH_APIS.filter(apiId => apis.includes(apiId));
+  const standardAPIs = APPLY_STANDARD_APIS.filter(apiId => apis.includes(apiId));
 
   return (
-    <div
-      role="region"
-      aria-labelledby={PAGE_HEADER_ID}
-      className={classNames('vads-l-grid-container', 'vads-u-padding--4')}
-    >
-      <Helmet>
-        <title>Welcome to the VA API Platform</title>
-      </Helmet>
+    <>
       <p>
         <strong>Thank you for signing up!</strong>
       </p>
@@ -141,23 +131,8 @@ const ApplySuccessContent = (props: { result: ApplySuccessResult }): JSX.Element
         />
       )}
       <AssistanceTrailer />
-    </div>
+    </>
   );
-};
-
-const ApplySuccessError = (): JSX.Element => (
-  <>
-    <Helmet>
-      <title>Error</title>
-    </Helmet>
-    <div>Error! Unable to render apply success</div>
-  </>
-);
-
-const ApplySuccess = (): JSX.Element => {
-  const result: ApplySuccessResult | undefined = useSelector((state: RootState) => state.application.result);
-
-  return result ? <ApplySuccessContent result={result} /> : <ApplySuccessError />;
 };
 
 export { ApplySuccess };

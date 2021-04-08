@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { Formik, useFormikContext } from 'formik';
-import React, { ReactNode } from 'react';
-import { FormField } from './FormField';
+import React, { ComponentPropsWithRef, ReactNode } from 'react';
+import TextField from './TextField';
 
 interface RenderProps {
   label: string;
   required?: boolean;
-  type?: string;
+  type?: ComponentPropsWithRef<typeof TextField>['type'];
   as?: string;
   description?: ReactNode;
 }
@@ -16,23 +16,36 @@ jest.mock('formik', () => ({
   useFormikContext: jest.fn(),
 }));
 
-describe('FormField', () => {
+describe('TextField', () => {
   beforeEach(() => {
     (useFormikContext as jest.Mock).mockReset().mockImplementation(() => ({
       errors: {},
       touched: {},
     }));
   });
-  const renderComponent = ({ label, required = false, type, as, description }: RenderProps): void => {
+  const renderComponent = ({ label, required, type, as, description }: RenderProps): void => {
     render(
       <Formik initialValues={{}} onSubmit={jest.fn()}>
-        <FormField name="test" label={label} required={required} type={type} as={as} description={description} />
+        <TextField name="test" label={label} required={required} type={type} as={as} description={description} />
       </Formik>
     );
   };
-  it('renders the input', () => {
+  it('defaults the type to text', () => {
     renderComponent({ label: 'Test Input' });
-    expect(screen.getByRole('textbox', { name: 'Test Input' })).toBeInTheDocument();
+    const field = screen.getByRole('textbox', { name: 'Test Input' });
+    expect(field).toBeInTheDocument();
+    expect(field).toHaveAttribute('type', 'text');
+  });
+  describe('required is not set', () => {
+    it('does not include required in the label', () => {
+      renderComponent({ label: 'Test Input' });
+      expect(screen.queryByText('(*Required)')).not.toBeInTheDocument();
+    });
+
+    it('does not mark the input as required', () => {
+      renderComponent({ label: 'Test Input' });
+      expect(screen.getByLabelText(/Test Input/)).not.toHaveAttribute('required');
+    });
   });
 
   describe('required is true', () => {

@@ -1,7 +1,4 @@
-import { DevApplication } from './apply';
-
 export * from './apply';
-export * from './form';
 
 export interface APINameParam {
   apiName?: string;
@@ -35,9 +32,4 @@ export interface OAuthAPISelection {
 export interface RootState {
   oAuthApiSelection: OAuthAPISelection;
   apiVersioning: APIVersioning;
-  application: DevApplication;
-}
-
-export interface SerializedState {
-  application: Pick<DevApplication, 'inputs'>;
 }

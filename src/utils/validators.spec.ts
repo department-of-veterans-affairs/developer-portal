@@ -1,83 +1,45 @@
-import 'jest';
-
-import { validateEmail, validateOAuthRedirectURI, validatePresence } from '../utils/validators';
+import { validateEmail, validateOAuthRedirectURI, validatePresence } from './validators';
 
 describe('validateEmail', () => {
-  it('should add validation filed to newValue when email is not valid', () => {
+  it('should return validation failure message if email is not valid', () => {
     expect(
-      validateEmail({
-        dirty: true,
-        value: 'bademail(at)example.com',
-      }),
-    ).toEqual(expect.objectContaining({ validation: 'Must be a valid email address.' }));
+      validateEmail('bademail(at)example.com'),
+    ).toEqual('Enter a valid email address.');
   });
 
-  it('should not add validation if the email is valid', () => {
+  it('should return undefined if the email is valid', () => {
     expect(
-      validateEmail({
-        dirty: true,
-        value: 'goodemail@example.com',
-      }),
-    ).toEqual(
-      expect.not.objectContaining({
-        validation: 'Must be a valid email address.',
-      }),
-    );
+      validateEmail('goodemail@example.com')).toBeUndefined();
   });
 });
 
 describe('validateOAuthRedirectURI', () => {
   it('should accept localhost urls with ports', () => {
-    const validatedInput = validateOAuthRedirectURI({
-      dirty: true,
-      value: 'http://localhost:8080/',
-    });
-    expect(validatedInput.validation).toBeUndefined();
+    const validationMessage = validateOAuthRedirectURI('http://localhost:8080/');
+    expect(validationMessage).toBeUndefined();
   });
 
   it('should reject URLs with query strings', () => {
-    const validatedInput = validateOAuthRedirectURI({
-      dirty: true,
-      value: 'https://example.com?a=b',
-    });
-    expect(validatedInput.validation).toBeTruthy();
+    const validationMessage = validateOAuthRedirectURI('https://example.com?a=b');
+    expect(validationMessage).toBeTruthy();
   });
 
   it('should reject URLs with fragments', () => {
-    const validatedInput = validateOAuthRedirectURI({
-      dirty: true,
-      value: 'https://example.com/#frag',
-    });
-    expect(validatedInput.validation).toBeTruthy();
+    const validationMessage = validateOAuthRedirectURI('https://example.com/#frag');
+    expect(validationMessage).toBeTruthy();
   });
 });
 
 describe('validatePresence', () => {
   it('should add validation filed to newValue when field is not valid', () => {
     expect(
-      validatePresence(
-        {
-          dirty: true,
-          value: '',
-        },
-        'email',
-      ),
-    ).toEqual(expect.objectContaining({ validation: 'email must not be blank.' }));
+      validatePresence('email', ''),
+    ).toEqual('Enter your email.');
   });
 
   it('should not add validation if the email is valid', () => {
     expect(
-      validatePresence(
-        {
-          dirty: true,
-          value: 'goodemail@example.com',
-        },
-        'email',
-      ),
-    ).toEqual(
-      expect.not.objectContaining({
-        validation: 'email must not be blank.',
-      }),
-    );
+      validatePresence('email', 'goodemail@example.com'),
+    ).toBeUndefined();
   });
 });

@@ -2,8 +2,6 @@ import { Action, ActionCreator } from 'redux';
 import { VersionMetadata } from '../types';
 import * as constants from '../types/constants';
 
-export * from './apply';
-
 export interface ResetVersioning extends Action {
   type: constants.RESET_VERSIONING;
 }
