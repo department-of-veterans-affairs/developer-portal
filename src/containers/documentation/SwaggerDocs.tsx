@@ -115,18 +115,21 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
     dispatch(setVersioning(openApiUrl, metadataVersions, initialVersion));
   };
 
-  /**
-   * CLEAR REDUX STATE ON UNMOUNT
-   */
   React.useEffect(
     () => {
       if (prevApiName !== apiName) {
         void setMetadataAndDocUrl();
       }
+    },
+    [apiName, setMetadataAndDocUrl, prevApiName],
+  );
 
-      return (): void => {
-        dispatch(resetVersioning());
-      };
+  /**
+   * CLEAR REDUX STATE ON UNMOUNT
+   */
+  React.useEffect(
+    () => (): void => {
+      dispatch(resetVersioning());
     },
     [], // eslint-disable-line react-hooks/exhaustive-deps
   );
