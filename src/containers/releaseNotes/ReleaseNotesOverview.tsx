@@ -5,6 +5,7 @@ import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
+import { FLAG_CATEGORIES } from '../../types/constants';
 
 const ReleaseNotesOverview = (): JSX.Element => {
   const apiDefs = getApiDefinitions();
@@ -33,7 +34,7 @@ const ReleaseNotesOverview = (): JSX.Element => {
         {getApiCategoryOrder().map((apiCategoryKey: string) => {
           const { name, content } = apiDefs[apiCategoryKey];
           return (
-            <Flag name={['categories', apiCategoryKey]} key={apiCategoryKey}>
+            <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
               <CardLink name={name} url={`/release-notes/${apiCategoryKey}`}>
                 {content.shortDescription}
               </CardLink>

@@ -7,7 +7,12 @@ import { APICategory, APIDescription } from '../../apiDefs/schema';
 import { ContentWithNav, SideNavEntry } from '../../components';
 import { Flag, useFlag } from '../../flags';
 import { APINameParam } from '../../types';
-import { CURRENT_VERSION_IDENTIFIER, FLAG_AUTH_DOCS_V2 } from '../../types/constants';
+import {
+  CURRENT_VERSION_IDENTIFIER,
+  FLAG_AUTH_DOCS_V2,
+  FLAG_CATEGORIES,
+  FLAG_HOSTED_APIS,
+} from '../../types/constants';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
 import { AuthorizationDocsLegacy } from './AuthorizationDocsLegacy';
@@ -18,13 +23,11 @@ import QuickstartPage from './QuickstartPage';
 import './Documentation.scss';
 
 const SideNavApiEntry = (apiCategoryKey: string, api: APIDescription): JSX.Element => (
-  <Flag key={api.urlFragment} name={['hosted_apis', api.urlFragment]}>
+  <Flag key={api.urlFragment} name={[FLAG_HOSTED_APIS, api.urlFragment]}>
     <SideNavEntry
       key={api.urlFragment}
       exact
-      to={`/explore/${apiCategoryKey}/docs/${
-        api.urlFragment
-      }?version=${CURRENT_VERSION_IDENTIFIER}`}
+      to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}?version=${CURRENT_VERSION_IDENTIFIER}`}
       name={
         <>
           {api.name}
@@ -79,7 +82,7 @@ const ExploreSideNav = (): JSX.Element => {
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
         return (
-          <Flag name={['categories', categoryKey]} key={categoryKey}>
+          <Flag name={[FLAG_CATEGORIES, categoryKey]} key={categoryKey}>
             <SideNavEntry
               to={`/explore/${categoryKey}`}
               id={`side-nav-category-link-${categoryKey}`}
@@ -135,8 +138,16 @@ const DocumentationRoot = (): JSX.Element => {
           {oldRouteToNew.map(routes => (
             <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
           ))}
-          {authDocsV2 && <Route path="/explore/authorization" component={AuthorizationDocs} exact />}
-          {authDocsV2 && <Redirect exact from="/explore/verification/docs/authorization" to="/explore/authorization?api=veteran_verification" />}
+          {authDocsV2 && (
+            <Route path="/explore/authorization" component={AuthorizationDocs} exact />
+          )}
+          {authDocsV2 && (
+            <Redirect
+              exact
+              from="/explore/verification/docs/authorization"
+              to="/explore/authorization?api=veteran_verification"
+            />
+          )}
           {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/404" />}
           <Route exact path="/explore/" component={DocumentationOverview} />
           <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />

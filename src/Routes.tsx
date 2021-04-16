@@ -30,6 +30,7 @@ import {
   PUBLISHING_PATH,
 } from './types/constants/paths';
 import { Apply } from './containers/apply/Apply';
+import { FLAG_SIGNUPS_ENABLED } from './types/constants';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
@@ -52,7 +53,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         path="/apply"
         render={(): JSX.Element => (
           <Flag
-            name={['signups_enabled']}
+            name={[FLAG_SIGNUPS_ENABLED]}
             component={Apply}
             fallbackComponent={DisabledApplyForm}
           />
