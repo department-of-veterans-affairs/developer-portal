@@ -7,6 +7,7 @@ import padlockImg from '../assets/homepage-padlock.svg';
 import apiImg from '../assets/homepage-reliable-api.svg';
 import { CardLink, Hero } from '../components';
 import { Flag } from '../flags';
+import { FLAG_CATEGORIES } from '../types/constants';
 
 const leftColumnClasses = classNames(
   'medium-screen:vads-l-col--4',
@@ -63,7 +64,7 @@ const ApiList = (): JSX.Element => (
             {apiCategoryOrder.map((apiCategoryKey: string) => {
               const { name, content } = apiDefinitions[apiCategoryKey];
               return (
-                <Flag name={['categories', apiCategoryKey]} key={apiCategoryKey}>
+                <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
                   <CardLink name={`VA ${name}`} url={`/explore/${apiCategoryKey}`}>
                     {content.placardText}
                   </CardLink>

@@ -8,7 +8,7 @@ import { APIDescription } from '../../apiDefs/schema';
 import { AuthorizationCard, CardLink, OnlyTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
-import { FLAG_AUTH_DOCS_V2, PAGE_HEADER_ID } from '../../types/constants';
+import { FLAG_AUTH_DOCS_V2, FLAG_HOSTED_APIS, PAGE_HEADER_ID } from '../../types/constants';
 
 const CategoryPage = (): JSX.Element => {
   const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
@@ -25,15 +25,13 @@ const CategoryPage = (): JSX.Element => {
     const apiCards = apis.map((apiDesc: APIDescription) => {
       const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
       return (
-        <Flag key={name} name={['hosted_apis', urlFragment]}>
+        <Flag key={name} name={[FLAG_HOSTED_APIS, urlFragment]}>
           <CardLink
             name={name}
             subhead={
               vaInternalOnly || trustedPartnerOnly ? (
                 <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
-              ) : (
-                undefined
-              )
+              ) : undefined
             }
             url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
           >
@@ -68,14 +66,12 @@ const CategoryPage = (): JSX.Element => {
       {cardSection}
       <div className="vads-u-width--full">{overview({})}</div>
       <hr />
-      {veteranRedirect &&
+      {veteranRedirect && (
         <AlertBox status="info" key={apiCategoryKey}>
           {veteranRedirect.message}&nbsp;
-          <a href={veteranRedirect.linkUrl}>
-            {veteranRedirect.linkText}
-          </a>
-          .
-        </AlertBox>}
+          <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
+        </AlertBox>
+      )}
     </div>
   );
 };

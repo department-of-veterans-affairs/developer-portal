@@ -4,7 +4,7 @@ import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { AuthorizationCard, CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
-import { FLAG_AUTH_DOCS_V2 } from '../../types/constants';
+import { FLAG_AUTH_DOCS_V2, FLAG_CATEGORIES } from '../../types/constants';
 
 const DocumentationOverview = (): JSX.Element => {
   const apiDefinitions = getApiDefinitions();
@@ -26,7 +26,7 @@ const DocumentationOverview = (): JSX.Element => {
         {apiCategoryOrder.map((apiCategoryKey: string) => {
           const { name, content } = apiDefinitions[apiCategoryKey];
           return (
-            <Flag name={['categories', apiCategoryKey]} key={apiCategoryKey}>
+            <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
               <CardLink name={name} url={`/explore/${apiCategoryKey}`}>
                 {content.shortDescription}
               </CardLink>
