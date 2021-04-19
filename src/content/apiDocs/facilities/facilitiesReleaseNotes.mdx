@@ -1,3 +1,57 @@
+### April 15, 2021
+We added a new meta section to the /nearby endpoint with a new `band_version` field.
+* `band_version` represents the data set used in the distance calculation
+* `band_version` value may be up to 6 weeks behind the current date
+* Example value: "FEB2021" with a return date in March, 2021
+
+[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/209)
+
+---
+
+### April 1, 2021
+Service-specific details are now available for the Covid19Vaccine service where applicable.
+* `detailed_services` was added to the facilities API response for all facilities
+* Facilities offering the Covid19Vaccine health service provide detailed service info in this field
+
+[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/198)
+
+---
+
+### January 29, 2021
+Corrected `operationalHoursSpecialInstructions` to `operational_hours_special_instructions`
+
+[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/195)
+
+---
+
+### January 20, 2021
+You can now return additional notes related to operational hours for a facility.
+* New field `operationalhoursspecialinstructions` included in the Facilities API response
+* This field is only applicable to health facilities (vha) and vet centers (vc)
+* Example value: "Administrative hours are Monday-Friday 8:00 a.m. to 4:30 p.m."
+
+[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/172)
+
+---
+
+### January 11, 2021
+You can now see if a facility offers Covid-19 vaccines.
+* `Covid19Vaccine` will return as a new service type for facilities, where available
+* The `Covid19Vaccine` service does not have satisfaction scores or wait times
+
+[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/184)
+
+---
+
+### December 2, 2020
+Location queries now support filtering by mobile status.
+* Added `mobile` filter parameter to facilities endpoint
+* Options for `mobile` are `true` or `false`
+
+[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/169)
+
+---
+
 ### November 16, 2020
 You can now search for facilities by Veterans Integrated Service Network (VISN).
 * Added `visn` search parameter to facilities endpoint

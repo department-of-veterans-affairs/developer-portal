@@ -17,7 +17,12 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
 import 'jest';
 import { FacilitiesReleaseNotes } from '../content/apiDocs/facilities';
-import { includesOAuthAPI, lookupApiByFragment, lookupApiCategory } from './query';
+import {
+  getAllQuickstartCategorySlugs,
+  includesOAuthAPI,
+  lookupApiByFragment,
+  lookupApiCategory,
+} from './query';
 
 describe('query module', () => {
   describe('lookupApiByFragment', () => {
@@ -36,6 +41,11 @@ describe('query module', () => {
         trustedPartnerOnly: false,
         urlFragment: 'facilities',
         vaInternalOnly: false,
+        veteranRedirect: {
+          linkText: "Find the facility that's right for you",
+          linkUrl: 'https://www.va.gov/find-locations/',
+          message: 'Are you a Veteran?',
+        },
       });
     });
 
@@ -73,7 +83,7 @@ describe('query module', () => {
       const verificationApi = lookupApiCategory('verification');
       expect(verificationApi).not.toBeNull();
       expect(verificationApi?.apis.length).toBeGreaterThanOrEqual(3);
-      expect(verificationApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
+      expect(verificationApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(1);
     });
 
     it('returns null for an API that does not exist', () => {
@@ -92,6 +102,12 @@ describe('query module', () => {
 
     it('returns false if the list does not include any OAuth APIs', () => {
       expect(includesOAuthAPI(['benefits', 'facilities'])).toBe(false);
+    });
+  });
+
+  describe('getAllQuickstartCategorySlugs', () => {
+    it('returns the list of all API category slugs that have a quickstart page', () => {
+      expect(getAllQuickstartCategorySlugs()).toStrictEqual(['health']);
     });
   });
 });

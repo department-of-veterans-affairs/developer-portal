@@ -3,6 +3,11 @@ import classNames from 'classnames';
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { Redirect, useParams } from 'react-router';
+import {
+  PAGE_HEADER_AND_HALO_ID,
+  FLAG_API_ENABLED_PROPERTY,
+  FLAG_HOSTED_APIS,
+} from '../../types/constants';
 
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
@@ -29,7 +34,7 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
   }
 
   return (
-    <div role="navigation" aria-labelledby={`${categoryKey}-release-notes`}>
+    <div role="navigation" aria-labelledby={PAGE_HEADER_AND_HALO_ID}>
       <div className={defaultFlexContainer()}>
         {apis.map((apiDesc: APIDescription) => {
           const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
@@ -42,9 +47,7 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
               subhead={
                 vaInternalOnly || trustedPartnerOnly ? (
                   <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
-                ) : (
-                  undefined
-                )
+                ) : undefined
               }
               url={`/release-notes/${categoryKey}#${dashUrlFragment}`}
             >
@@ -92,15 +95,11 @@ interface ReleaseNotesCollectionProps {
 const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProps> = (
   props: ReleaseNotesCollectionProps,
 ) => (
-  <section aria-labelledby={`${props.categoryKey}-release-notes`}>
+  <>
     <Helmet>
       <title>{props.apiCategory.name} Release Notes</title>
     </Helmet>
-    <PageHeader
-      halo={props.apiCategory.name}
-      header="Release Notes"
-      containerId={`${props.categoryKey}-release-notes`}
-    />
+    <PageHeader halo={props.apiCategory.name} header="Release Notes" />
     {props.alertText && (
       <AlertBox status="info" className="vads-u-padding-y--2">
         {props.alertText}
@@ -116,21 +115,21 @@ const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProp
         <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />
       ))}
     </div>
-  </section>
+  </>
 );
 
 export const CategoryReleaseNotes = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const categories = getApiDefinitions();
   if (!(apiCategoryKey in categories)) {
-    return <Redirect to="/release-notes" />;
+    return <Redirect to="/404" />;
   }
 
   return (
     <ReleaseNotesCollection
       categoryKey={apiCategoryKey}
       apiCategory={categories[apiCategoryKey]}
-      apiFlagName="hosted_apis"
+      apiFlagName={FLAG_HOSTED_APIS}
     />
   );
 };
@@ -139,7 +138,7 @@ export const DeactivatedReleaseNotes = (): JSX.Element => (
   <ReleaseNotesCollection
     categoryKey="deactivated"
     apiCategory={getDeactivatedCategory()}
-    apiFlagName="enabled"
+    apiFlagName={FLAG_API_ENABLED_PROPERTY}
     alertText="This is a repository for deactivated APIs and related documentation and release notes."
   />
 );

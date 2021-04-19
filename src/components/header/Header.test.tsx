@@ -1,4 +1,3 @@
-import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
@@ -18,7 +17,7 @@ describe('Header', () => {
   });
 
   it('should render the header', () => {
-    expect(screen.getByText(/Lighthouse/)).toBeInTheDocument();
+    expect(screen.getByText(/Lighthouse APIs/)).toBeInTheDocument();
   });
 
   it('should contain a the Veterans Crisis Line modal', () => {

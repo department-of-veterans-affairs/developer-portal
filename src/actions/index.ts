@@ -2,8 +2,6 @@ import { Action, ActionCreator } from 'redux';
 import { VersionMetadata } from '../types';
 import * as constants from '../types/constants';
 
-export * from './apply';
-
 export interface ResetVersioning extends Action {
   type: constants.RESET_VERSIONING;
 }
@@ -18,6 +16,15 @@ export interface SetVersioning extends Action {
   type: constants.SET_VERSIONING;
   version: string;
   versions: VersionMetadata[] | null;
+}
+
+export interface ResetOAuthAPISelection extends Action {
+  type: constants.RESET_OAUTH_API_SELECTION;
+}
+
+export interface SetOAuthAPISelection extends Action {
+  type: constants.SET_OAUTH_API_SELECTION;
+  selectedOAuthApi: string;
 }
 
 export const resetVersioning: ActionCreator<ResetVersioning> = () => ({
@@ -38,4 +45,15 @@ export const setVersioning: ActionCreator<SetVersioning> = (
   type: constants.SET_VERSIONING_VALUE,
   version,
   versions,
+});
+
+export const resetOAuthApiSelection: ActionCreator<ResetOAuthAPISelection> = () => ({
+  type: constants.RESET_OAUTH_API_SELECTION_VALUE,
+});
+
+export const setOAuthApiSelection: ActionCreator<SetOAuthAPISelection> = (
+  selectedOAuthApi: string,
+) => ({
+  selectedOAuthApi,
+  type: constants.SET_OAUTH_API_SELECTION_VALUE,
 });

@@ -1,30 +1,27 @@
-import { ErrorableInput } from 'src/types';
+const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const PRESENCE_PATTERN = /^(?!\s*$).+/;
+const PARTIAL_URL_PATTERN = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
 
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-export const validateByPattern = (
-  newValue: ErrorableInput,
-  pattern: RegExp,
-  failMsg: string,
-): void => {
-  if (!pattern.test(newValue.value)) {
-    newValue.validation = failMsg;
+export const validatePresence = (fieldName: string, value: string): string | undefined => {
+  if (!PRESENCE_PATTERN.test(value)) {
+    return `Enter your ${fieldName}.`;
   }
+
+  return undefined;
 };
 
-export const validateEmail = (newValue: ErrorableInput): ErrorableInput => {
-  validateByPattern(newValue, EMAIL_REGEX, 'Must be a valid email address.');
-  return newValue;
+export const validateEmail = (value: string): string | undefined => {
+  if (!EMAIL_PATTERN.test(value)) {
+    return 'Enter a valid email address.';
+  }
+
+  return undefined;
 };
 
-export const validateOAuthRedirectURI = (newValue: ErrorableInput): ErrorableInput => {
-  const partialUrlPattern = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
-  validateByPattern(newValue, partialUrlPattern, 'Must be an http or https URI.');
-  return newValue;
-};
+export const validateOAuthRedirectURI = (value: string): string | undefined => {
+  if (!PARTIAL_URL_PATTERN.test(value)) {
+    return 'Enter an http or https URI.';
+  }
 
-export const validatePresence = (newValue: ErrorableInput, fieldName: string): ErrorableInput => {
-  const presencePattern = /^(?!\s*$).+/;
-  validateByPattern(newValue, presencePattern, `${fieldName} must not be blank.`);
-  return newValue;
+  return undefined;
 };

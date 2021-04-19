@@ -7,12 +7,24 @@ export const isApiDeprecated = (api: APIDescription): boolean => {
     return false;
   }
 
+  const deprecatedFF = process.env[`REACT_APP_${api.urlFragment.toUpperCase()}_DEPRECATED`];
+
+  if (deprecatedFF) {
+    return true;
+  }
+
   return moment().isAfter(api.deactivationInfo.deprecationDate);
 };
 
 export const isApiDeactivated = (api: APIDescription): boolean => {
   if (api.deactivationInfo === undefined) {
     return false;
+  }
+
+  const deactivatedFF = process.env[`REACT_APP_${api.urlFragment.toUpperCase()}_DEACTIVATED`];
+
+  if (deactivatedFF) {
+    return true;
   }
 
   return moment().isAfter(api.deactivationInfo.deactivationDate);

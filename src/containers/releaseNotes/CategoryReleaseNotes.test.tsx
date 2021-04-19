@@ -1,6 +1,5 @@
 /* eslint-disable max-lines -- exception for test suite */
-import '@testing-library/jest-dom/extend-expect';
-import { cleanup, getByRole, queryByRole, render, screen } from '@testing-library/react';
+import { cleanup, getByRole, queryByRole, render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import 'jest';
 import * as React from 'react';
@@ -15,6 +14,7 @@ import {
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
+import NotFound from '../NotFound';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
@@ -28,7 +28,7 @@ describe('ReleaseNotesCollection', () => {
 
   describe('CategoryReleaseNotes', () => {
     const renderComponent = async (route = '/release-notes/lotr'): Promise<void> => {
-      await cleanup(); // clean up beforeEach render if we're testing a different page
+      await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
       render(
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={[route]}>
@@ -149,26 +149,27 @@ describe('ReleaseNotesCollection', () => {
         expect(screen.queryByRole('heading', { name: 'Baseball API' })).toBeNull();
       });
 
-      it("redirect to /release-notes when category isn't found", () => {
+      it("redirect to /404 when category isn't found", () => {
         const history = createMemoryHistory({ initialEntries: ['/release-notes/fakeCategory'] });
         const { container } = render(
           <Router history={history}>
-            <Route path="/release-notes" exact render={(): JSX.Element => <div>/release-notes</div>} />
             <Route
-              path="/release-notes/fakeCategory"
+              path="/release-notes"
               exact
-              component={CategoryReleaseNotes}
+              render={(): JSX.Element => <div>/release-notes</div>}
             />
+            <Route path="/release-notes/fakeCategory" exact component={CategoryReleaseNotes} />
+            <Route component={NotFound} />
           </Router>,
         );
-        expect(container.innerHTML).toEqual(expect.stringContaining('/release-notes'));
+        expect(container.innerHTML).toEqual(expect.stringContaining('404'));
       });
     });
   });
 
   describe('DeactivatedReleaseNotes', () => {
     const renderComponent = async (): Promise<void> => {
-      await cleanup();
+      await waitFor(() => cleanup());
       render(
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={['/release-notes/deactivated']}>
@@ -289,7 +290,8 @@ describe('ReleaseNotesCollection', () => {
         expect(silmarilsHeading.nextElementSibling).not.toBeNull();
         expect(silmarilsHeading.nextElementSibling?.nextElementSibling).not.toBeNull();
 
-        const notesContainer = silmarilsHeading.nextElementSibling?.nextElementSibling as HTMLElement;
+        const notesContainer = silmarilsHeading.nextElementSibling
+          ?.nextElementSibling as HTMLElement;
         const noteHeading = getByRole(notesContainer, 'heading', {
           name: 'December 1, 0215',
         });

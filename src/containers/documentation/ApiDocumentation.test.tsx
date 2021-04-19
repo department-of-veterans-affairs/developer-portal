@@ -1,13 +1,12 @@
-import '@testing-library/jest-dom/extend-expect';
 import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
 import { MockedRequest, rest, restContext } from 'msw';
-import { MockedResponse, ResponseComposition } from 'msw/lib/types/response';
+import { ResponseComposition, MockedResponse } from 'msw/lib/types/response';
 import { setupServer } from 'msw/node';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import * as openAPIData from '../../__mocks__/openAPIData/openAPIData.test.json';
 import { APIDescription } from '../../apiDefs/schema';
-import { AppFlags, FlagsProvider } from '../../flags';
+import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import store, { history } from '../../store';
 import ApiDocumentation from './ApiDocumentation';
 
@@ -30,12 +29,18 @@ const api: APIDescription = {
 const server = setupServer(
   rest.get(
     'https://example.com/my/openapi/spec',
-    (req: MockedRequest, res: ResponseComposition, context: typeof restContext): MockedResponse =>
+    (
+      req: MockedRequest,
+      res: ResponseComposition,
+      context: typeof restContext,
+    ): MockedResponse | Promise<MockedResponse> =>
       res(context.status(200), context.json(openAPIData)),
   ),
 );
 
 jest.mock('react-router-dom', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useHistory: jest.fn().mockReturnValue({
     location: { pathname: '/another-route' },
     push: jest.fn(),
@@ -51,13 +56,8 @@ jest.mock('react-router-dom', () => ({
 
 describe('ApiDocumentation', () => {
   const defaultFlags: AppFlags = {
-    auth_docs_v2: false,
-    categories: { category: true },
-    deactivated_apis: { my_api: false },
-    enabled: { my_api: true },
+    ...getFlags(),
     hosted_apis: { my_api: true },
-    show_testing_notice: false,
-    signups_enabled: true,
   };
 
   beforeAll(() => server.listen());

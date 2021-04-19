@@ -4,8 +4,6 @@ import * as React from 'react';
 
 import './GroupedAccordions.scss';
 
-declare const window: { VetsGov?: Record<string, unknown> };
-
 export interface AccordionPanelContent {
   readonly body: string | JSX.Element;
   readonly title: string;
@@ -28,16 +26,12 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
   const [allExpanded, setAllExpanded] = React.useState(false);
   const [panelRefs, setPanelRefs] = React.useState<CollapsiblePanelComponentRef[]>([]);
 
-  React.useEffect(() => {
-    // CollapsiblePanel expects a VetsGov object on the global window
-    if (!window.VetsGov) {
-      window.VetsGov = { scroll: null };
-    }
-
-    return (): void => {
+  React.useEffect(
+    () => (): void => {
       setPanelRefs([]);
-    };
-  }, []);
+    },
+    [],
+  );
 
   const handleExpandCollapse = (event: React.MouseEvent<HTMLElement>): void => {
     event.preventDefault();

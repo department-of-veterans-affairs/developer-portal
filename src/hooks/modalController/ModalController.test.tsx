@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import 'jest';
 import * as React from 'react';
@@ -14,7 +14,11 @@ const TestComponent = (): JSX.Element => {
     <div>
       <p>Modal Visible: {displayModalVisibility()}</p>
       <div>
-        <input type="button" id="toggle-visible" onClick={(): void => setModalVisible(!modalVisible)} />
+        <input
+          type="button"
+          id="toggle-visible"
+          onClick={(): void => setModalVisible(!modalVisible)}
+        />
       </div>
     </div>
   );
@@ -36,37 +40,37 @@ describe('useModalController', () => {
   });
 
   afterEach(async () => {
-    await cleanup();
+    await waitFor(() => cleanup());
   });
 
   it('initializes to be invisible', async () => {
-    expect(await screen.findByText('Modal Visible: false')).toBeDefined();
+    await waitFor(() => expect(screen.findByText('Modal Visible: false')).toBeDefined());
   });
 
   it('turns visible when modal visisble is set to true', async () => {
     userEvent.click(toggleVisibleButton);
-    expect(await screen.findByText('Modal Visible: true')).toBeDefined();
+    await waitFor(() => expect(screen.findByText('Modal Visible: true')).toBeDefined());
   });
 
   describe('when visible', () => {
     beforeEach(() => {
-      // The component initalized as invisible, so we toggle it before these tests
+      // The component initialized as invisible, so we toggle it before these tests
       userEvent.click(toggleVisibleButton);
     });
 
     it('goes invisible when the [Escape] key is pressed', async () => {
-      await userEvent.type(container, '{esc}');
-      expect(await screen.findByText('Modal Visible: false')).toBeDefined();
+      await waitFor(() => userEvent.type(container, '{esc}'));
+      await waitFor(() => expect(screen.findByText('Modal Visible: false')).toBeDefined());
     });
 
     it('does not go invisible when a key other than [Escape] is pressed', async () => {
-      await userEvent.type(container, 'A');
-      expect(await screen.findByText('Modal Visible: true')).toBeDefined();
+      await waitFor(() => userEvent.type(container, 'A'));
+      await waitFor(() => expect(screen.findByText('Modal Visible: true')).toBeDefined());
     });
 
     it('goes invisible when modal visible is set to false', async () => {
       userEvent.click(toggleVisibleButton);
-      expect(await screen.findByText('Modal Visible: false')).toBeDefined();
+      await waitFor(() => expect(screen.findByText('Modal Visible: false')).toBeDefined());
     });
   });
 });

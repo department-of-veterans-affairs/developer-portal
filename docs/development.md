@@ -52,6 +52,10 @@ React components that are (at least hypothetically) generic and re-usable should
 
 React components that manage state, load remote data, or coordinate between the state of the application and the visual components should live in `src/containers/`. Almost all components that correspond to a specific URL should live in `src/containers/`. This pattern is because of an old React app convention that is now generally considered not to be very useful. As a result, we'll likely change this pattern in the future, but the criteria given here for "container components" is still accurate for determining which files belong here.
 
+### Forms
+
+This application uses [Formik|https://formik.org/docs/overview] for handling form state. All updates to form state are handled by Formik in the background, and only validation and submission logic needs to be written. Use the `src/components/formField` component as a wrapper around Formik's default `Field` component that includes stylized error handling and accessibility standards.
+
 ### Markdown Content
 
 The site relies heavily on markdown files to store the textual content of the site. The `src/content/` directory stores `*.mdx` files, which are markdown files that can be loaded as React components.

@@ -152,3 +152,10 @@ export const extraDeactivationInfo: APIDeactivationInfo = {
   deprecationContent: () => <div>deprecated this API</div>,
   deprecationDate: moment().subtract(6, 'months'),
 };
+
+export const unmetDeactivationInfo: APIDeactivationInfo = {
+  deactivationContent: () => <div data-testid="deactivation-info">This API is deactivated</div>,
+  deactivationDate: moment().add(3, 'months'),
+  deprecationContent: () => <div data-testid="deprecation-info">This API is deprecated</div>,
+  deprecationDate: moment().add(1, 'year'),
+};

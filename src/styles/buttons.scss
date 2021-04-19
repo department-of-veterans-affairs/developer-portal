@@ -1,0 +1,45 @@
+// Variables
+// ==========
+@import './variables';
+
+$button-stroke: inset 0 0 0 2px;
+
+/* stylelint-disable selector-no-qualifying-type */
+.usa-button,
+.usa-button:visited,
+button,
+[type='button'],
+[type='submit'],
+[type='reset'] {
+  &.va-api-button-default {
+    background-color: $color-white;
+    color: $color-primary;
+
+    &:hover {
+      background-color: $color-primary-alt-lightest;
+      color: $color-primary-darker;
+    }
+
+    &:active {
+      background-color: $color-primary-alt-lightest;
+    }
+  }
+
+  &.va-api-button-secondary {
+    background-color: $color-primary;
+    box-shadow: $button-stroke $color-white;
+    color: $color-white;
+
+    &:hover {
+      background-color: $color-primary-darker;
+      box-shadow: $button-stroke $color-white;
+      color: $color-white;
+    }
+
+    &:active {
+      background-color: $color-primary-darker;
+      box-shadow: $button-stroke $color-white;
+      color: $color-white;
+    }
+  }
+}

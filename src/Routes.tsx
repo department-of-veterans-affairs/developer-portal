@@ -4,60 +4,89 @@ import { Redirect, Route } from 'react-router-dom';
 
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
-import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
+import {
+  getAllQuickstartCategorySlugs,
+  getApiCategoryOrder,
+  getApiDefinitions,
+} from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 import { MarkdownPage } from './components';
-import { ApplyForm } from './containers/apply/ApplyForm';
-import { ApplySuccess } from './containers/apply/ApplySuccess';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
 import News from './containers/News';
 import NotFound from './containers/NotFound';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
-import Support from './containers/support/Support';
+import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
 import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
-import { Flag } from './flags';
+import { Flag, getFlags } from './flags';
+import { Publishing } from './containers/publishing';
+import {
+  CONSUMER_PATH,
+  PUBLISHING_EXPECTATIONS_PATH,
+  PUBLISHING_ONBOARDING_PATH,
+  PUBLISHING_PATH,
+} from './types/constants/paths';
+import { Apply } from './containers/apply/Apply';
+import { FLAG_SIGNUPS_ENABLED } from './types/constants';
 
-export const SiteRoutes: React.FunctionComponent = () => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/index.html" component={Home} />
+export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
+  const flags = getFlags();
+  return (
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/index.html" component={Home} />
 
-    {/* Legacy routes that we want to maintain: */}
-    <Route
-      path="/explore/terms-of-service"
-      render={(): JSX.Element => <Redirect to="/terms-of-service" />}
-    />
-    <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
+      {/* Legacy routes that we want to maintain: */}
+      <Route
+        path="/explore/terms-of-service"
+        render={(): JSX.Element => <Redirect to="/terms-of-service" />}
+      />
+      <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
 
-    {/* Current routes: */}
-    <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
-    <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
-    <Route
-      path="/apply"
-      render={(): JSX.Element => (
-        <Flag name={['signups_enabled']} render={ApplyForm} fallbackComponent={DisabledApplyForm} />
+      {/* Current routes: */}
+      <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
+      <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
+      <Route
+        path="/apply"
+        render={(): JSX.Element => (
+          <Flag
+            name={[FLAG_SIGNUPS_ENABLED]}
+            component={Apply}
+            fallbackComponent={DisabledApplyForm}
+          />
+        )}
+      />
+      <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
+      <Route
+        path="/oauth"
+        render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
+      />
+      <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
+      <Route path="/news" component={News} />
+      <Route path="/support" component={Support} />
+      <Route
+        path="/providers/integration-guide"
+        render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
+      />
+      <Route path={PUBLISHING_PATH} component={Publishing} />
+      {flags.consumer_docs && (
+        <Route path={CONSUMER_PATH} render={(): JSX.Element => <h1>Consumer docs page</h1>} />
       )}
-    />
-    <Route path="/applied" component={ApplySuccess} />
-    <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
-    <Route
-      path="/oauth"
-      render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
-    />
-    <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
-    <Route path="/news" component={News} />
-    <Route path="/support" component={Support} />
-    <Route
-      path="/providers/integration-guide"
-      render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
-    />
-    <Route component={NotFound} />
-  </Switch>
-);
+      <Route component={NotFound} />
+      {/* The below Routes are needed for the sitemap */}
+      <Route path="/explore/:apiCategoryKey/docs/quickstart" />
+      <Route path="/explore/:apiCategoryKey/docs/:apiName" />
+      <Route exact path={PUBLISHING_EXPECTATIONS_PATH} />
+      <Route exact path={PUBLISHING_ONBOARDING_PATH} />
+      {supportSections.map((section: SupportSection) => (
+        <Route path={`/support/${section.id}`} key={section.id} />
+      ))}
+    </Switch>
+  );
+};
 
 interface SitemapConfig {
   topLevelRoutes: React.FunctionComponent;
@@ -92,26 +121,22 @@ export const sitemapConfig = (): SitemapConfig => {
       [],
     );
 
-    if (
-      route === '/explore/:apiCategoryKey/docs/:apiName' &&
-      apiDefs[apiCategory].apis.some(api => !!api.oAuth) &&
-      apiCategory !== 'benefits'
-    ) {
-      routeParams.push('authorization');
-    }
-
     return routeParams;
   };
 
   const apiCategoryOrder = getApiCategoryOrder();
+  const apiQuickstartCategories = getAllQuickstartCategorySlugs();
   return {
     paramsConfig: {
       '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => ({
         apiCategoryKey: apiCategory,
         apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
       })),
+      '/explore/:apiCategoryKey/docs/quickstart': [{ apiCategoryKey: apiQuickstartCategories }],
       '/explore/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
-      '/release-notes/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
+      '/release-notes/:apiCategoryKey?': [
+        { 'apiCategoryKey?': [...apiCategoryOrder, 'deactivated'] },
+      ],
     },
     pathFilter: {
       isValid: false,

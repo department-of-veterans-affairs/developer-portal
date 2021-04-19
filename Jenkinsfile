@@ -70,23 +70,12 @@ def getPullRequestNumber() {
   }
 }
 
-def commentAfterDeploy() {
-  def linksSnippet = envNames.collect{ envName ->
-    "https://s3-us-gov-west-1.amazonaws.com/${reviewBucketPath()}/${envName}/index.html"
-  }.join(" <br> ")
-
-  pullRequestComment(
-    "These changes have been deployed to an S3 bucket. A build for each environment is available: <br><br> ${linksSnippet} <br><br> Due to S3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
-  )
-}
-
 def reviewBucketPath() {
   return "${review_s3_bucket_name}/${shortRef}"
 }
 
-
 node('vetsgov-general-purpose') {
-  properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]]);
+  properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', daysToKeepStr: '60']]])
   def dockerImage, args, imageTag
 
   // Checkout source, create output directories, build container
@@ -116,7 +105,7 @@ node('vetsgov-general-purpose') {
       shortRef = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
 
       if (prNum) {
-        envNames.each{ envName ->
+        envNames.each { envName ->
           // Set public url so review deploys handle not being at the site root
           // Set sentry DSN to send review deploy errors to the review sentry project
           writeFile(
@@ -129,13 +118,12 @@ node('vetsgov-general-purpose') {
         }
       }
 
-      sh "mkdir -p build"
+      sh 'mkdir -p build'
 
-      imageTag = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", "-")
-
+      imageTag = java.net.URLDecoder.decode(env.BUILD_TAG).replaceAll("[^A-Za-z0-9\\-\\_]", '-')
 
       docker.withRegistry('https://index.docker.io/v1/', 'vasdvdocker') {
-      	dockerImage = docker.build("developer-portal:${imageTag}")
+        dockerImage = docker.build("developer-portal:${imageTag}")
         args = "-v ${pwd()}:/application -v /application/node_modules"
       }
     } catch (error) {
@@ -145,15 +133,15 @@ node('vetsgov-general-purpose') {
   }
 
   stage('Image Prohibition') {
-		if (!onDeployableBranch()) {
-			sh "./prohibit_image_files.sh origin/master HEAD"
-		} 
+    if (!onDeployableBranch()) {
+      sh './prohibit_image_files.sh origin/master HEAD'
+    }
   }
 
   stage('Security') {
     try {
       dockerImage.inside(args) {
-        sh "cd /application && npm config set audit-level critical && npm audit"
+        sh 'cd /application && npm audit --audit-level moderate'
       }
     } catch (error) {
       if (!onDeployableBranch()) {
@@ -205,7 +193,7 @@ node('vetsgov-general-purpose') {
     }
   }
 
-  stage('Accessibility Test'){
+  stage('Accessibility Test') {
     try {
       dockerImage.inside(args) {
         sh 'cd /application && npm run-script test:accessibility:ci'
@@ -227,7 +215,7 @@ node('vetsgov-general-purpose') {
       }
     } catch (error) {
       dir('test/image_snapshots/__diff_output__') {
-        withEnv(["ref=${ref}",'bucket=developer-portal-screenshots']) {
+        withEnv(["ref=${ref}", 'bucket=developer-portal-screenshots']) {
           // Upload diffs to S3
           withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload', usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
             sh 'aws --region us-gov-west-1 s3 sync --no-progress . "s3://${bucket}/${ref}/"'
@@ -254,7 +242,7 @@ node('vetsgov-general-purpose') {
 
     try {
       def builds = [:]
-      envNames.each{ envName ->
+      envNames.each { envName ->
         builds[envName] = {
           dockerImage.inside(args) {
             sh "cd /application && NODE_ENV=production BUILD_ENV=${envName} npm run-script build ${envName}"
@@ -278,43 +266,16 @@ node('vetsgov-general-purpose') {
 
     // This could only happen in the rare case that a PR is opened from master -> another branch,
     // which is unlikely, but potentially disastrous.
-    if (prNum) { return } 
+    if (prNum) { return }
 
     try {
       withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'vetsgov-website-builds-s3-upload',
                         usernameVariable: 'AWS_ACCESS_KEY', passwordVariable: 'AWS_SECRET_KEY']]) {
-        envNames.each{ envName ->
+        envNames.each { envName ->
           sh "tar -C build/${envName} -cf build/${envName}.tar.bz2 ."
-          sh "aws --region us-gov-west-1 s3 cp --no-progress --acl public-read build/${envName}.tar.bz2 s3://developer-portal-builds-s3-upload/${ref}/${envName}.tar.bz2"
+          sh "aws --region us-gov-west-1 s3 cp --no-progress --acl public-read build/${envName}.tar.bz2 s3://developer-portal-builds-s3-upload/jenkins-${ref}/${envName}.tar.bz2"
         }
-      }
-    } catch (error) {
-      notify()
-      throw error
-    }
-  }
-
-  stage('Deploy') {
-    if (supercededByConcurrentBuild()) { return }
-    try {
-      if (prNum) {
-        // Deploy to review bucket
-        sh "aws --region us-gov-west-1 s3 sync --no-progress --acl public-read ./build/ s3://${reviewBucketPath()}/"
-        commentAfterDeploy()
-      } else {
-        if (env.BRANCH_NAME == devBranch) {
-          build job: 'deploys/developer-portal-dev', parameters: [
-            booleanParam(name: 'notify_slack', value: true),
-            stringParam(name: 'ref', value: ref),
-          ], wait: false
-        }
-        if (env.BRANCH_NAME == stagingBranch) {
-          build job: 'deploys/developer-portal-staging', parameters: [
-            booleanParam(name: 'notify_slack', value: true),
-            stringParam(name: 'ref', value: ref),
-          ], wait: false
-        }
-      }
+                        }
     } catch (error) {
       notify()
       throw error

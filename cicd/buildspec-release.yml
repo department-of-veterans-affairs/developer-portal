@@ -1,6 +1,6 @@
 ######################################################################
 #  Developer Portal CodeBuild Release
-#  
+#
 #
 # Tool Links:
 #  - CodeBuild - https://docs.aws.amazon.com/codebuild/index.html
@@ -8,31 +8,31 @@
 #  - CodeBuild Enironment Image - ECS deployer - https://github.com/department-of-veterans-affairs/lighthouse-codebuild-containers/tree/main/ecs-deployer
 #  - AWS CLI 2.0 - https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-welcome.html
 #  - Git Hub CLI - https://github.com/cli/cli
-# 
-# All Custom scripts are on the CodeBuild Environment container. 
+#
+# All Custom scripts are on the CodeBuild Environment container.
 # https://github.com/department-of-veterans-affairs/lighthouse-codebuild-containers/tree/main/
 #
 # Custom Scripts:
 #  - slackpost.sh
 #  - increment.sh
-####################################################################### 
+#######################################################################
 
 version: 0.2
 env:
   variables:
-    ENVS: "dev staging production"
-    S3_ARCHIVE_BUCKET: "developer-portal-builds-s3-upload"
-    DEPLOY: "true"
+    ENVS: 'dev staging production'
+    S3_ARCHIVE_BUCKET: 'developer-portal-builds-s3-upload'
+    DEPLOY: 'true'
   parameter-store:
-    GITHUB_TOKEN: "/dvp/devops/va_bot_github_token"
-    SLACK_WEBHOOK: "/dvp/devops/codebuild_slack_webhook_lighthouse"
+    GITHUB_TOKEN: '/dvp/devops/va_bot_github_token'
+    SLACK_WEBHOOK: '/dvp/devops/codebuild_slack_webhook_lighthouse'
 phases:
   pre_build:
     commands:
       - gh config set prompt disabled
       - gh config set git_protocol ssh
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION}
-      - echo "Generating release for ${COMMIT_HASH}" 
+      - echo "Generating release for ${COMMIT_HASH}"
       - printenv
   build:
     commands:
@@ -54,9 +54,9 @@ phases:
           exit 1
         fi
       - mkdir -p release
-      - aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/cb-${COMMIT_HASH:0:7} release/.
-      # Check that all files exist 
-      - | 
+      - aws s3 sync --no-progress s3://${S3_ARCHIVE_BUCKET}/${COMMIT_HASH:0:7} release/.
+      # Check that all files exist
+      - |
         for env in ${ENVS}; do
           if [[ ! -f release/developer-portal-${env}.tar.bz2 ]]; then
             echo "developer-portal-${env}.tar.bz2 was not found. Aborting release process and sending notification to slack " >&2
@@ -64,17 +64,15 @@ phases:
           fi
         done
       # Create new tag
-      # The cb- prefix is used to test functionalty of CodeBuild without interfering with Jenkins
-      # the cb- prefix should be removed once we migrate releases to CodeBuild
-      - OLD_TAG=$(git tag --sort=-creatordate | grep cb- | head -1)
-      # Migration Code
-      #- OLD_TAG=$(git tag --sort=-creatordate | head -1)
+      # 'grep ^developer-portal' is necessary during the transition since a cb-developer-portal
+      # release might be most recent at the time of the cutover
+      - OLD_TAG=$(git tag --sort=-creatordate | grep ^developer-portal | head -1)
       - echo "Found ${OLD_TAG} - incrementing..."
-      - NEW_TAG=$(increment.sh ${OLD_TAG}) 
+      - NEW_TAG=$(increment.sh ${OLD_TAG})
       - echo "Creating ${NEW_TAG} release"
       - gh release create ${NEW_TAG}
       - echo "Uploading artifacts"
-      - VERSION=${NEW_TAG#"cb-developer-portal/v"}
+      - VERSION=${NEW_TAG#"developer-portal/v"}
       # Upload artifacts to release after adding version number to file.
       # gh tool utilizes # to define the display name for the uploaded asset
       # <file#display_name> i.e. developer-portal-dev-v0.0.1.tar.bz2#Developer_Portal_v0.0.1_dev.tar.bz2
@@ -85,13 +83,12 @@ phases:
           gh release upload ${NEW_TAG} "release/developer-portal-${env}-${VERSION}.tar.bz2#${NEW_TAG}_${env}.tar.bz2"
           echo "${env} artifact uploaded"
         done
-      # This to be uncommented when CodeBuild deployment is transitioned
       # This is will kick off a a deployment to dev and staging deployments
-      # - | 
-      #   if [[ ${DEPLOY} == "true" ]]; then
-      #     echo "Initiating build for ${NEW_TAG}"
-      #     aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,value=${NEW_TAG}
-      #   fi
+      - |
+        if [[ ${DEPLOY} == "true" ]]; then
+          echo "Initiating build for ${NEW_TAG} (commit ${COMMIT_HASH})"
+          aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,value=${NEW_TAG}
+        fi
   post_build:
     commands:
       # Post to Slack.

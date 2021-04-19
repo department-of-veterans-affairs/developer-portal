@@ -1,20 +1,20 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
-import { onHashAnchorClick } from '../../utils/clickHandlers';
+import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
 import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
 import './Header.scss';
 
 const buttonClassnames = classNames(
+  'va-api-apply-button',
   'usa-button',
-  'vads-u-background-color--white',
-  'vads-u-color--primary-darkest',
+  'va-api-button-default',
   'vads-u-margin-right--2',
 );
 
@@ -24,6 +24,7 @@ const Header = (): JSX.Element => {
    */
   const [mobileNavVisible, setMobileNavVisible] = React.useState(false);
 
+  const location = useLocation();
   const toggleMenuVisible = (): void => {
     setMobileNavVisible((state: boolean) => !state);
   };
@@ -33,7 +34,7 @@ const Header = (): JSX.Element => {
    */
   return (
     <>
-      <Flag name={['show_testing_notice']}>
+      <Flag name={[FLAG_SHOW_TESTING_NOTICE]}>
         <TestingNotice />
       </Flag>
       <header
@@ -41,9 +42,8 @@ const Header = (): JSX.Element => {
         className={classNames('va-api-header', 'vads-u-background-color--primary-darkest')}
       >
         <HashLink
-          to="#main"
+          to={{ ...location, hash: '#main' }}
           className={classNames('va-api-skipnav', 'vads-u-padding-x--2', 'vads-u-padding-y--1')}
-          onClick={onHashAnchorClick}
         >
           Skip to main content
         </HashLink>
@@ -71,10 +71,11 @@ const Header = (): JSX.Element => {
                 'vads-u-color--white',
                 'vads-u-font-size--lg',
                 'vads-u-text-decoration--none',
-                'medium-screen:vads-u-font-size--2xl',
+                'medium-screen:vads-u-font-size--xl',
+                'small-desktop-screen:vads-u-font-size--2xl',
               )}
             >
-              <span className="vads-u-font-weight--bold">VA</span> | Lighthouse
+              <span className="vads-u-font-weight--bold">VA</span> | Lighthouse APIs
             </Link>
           </div>
           <div className={desktopOnly()}>

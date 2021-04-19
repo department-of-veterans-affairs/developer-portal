@@ -8,7 +8,7 @@ UNAME ?= root
 # Sets group, this is helpful to run locally as you most likely do not have a jenkins group on your machine.
 GNAME ?= root
 # Sets default audit level for security scans
-AUDIT_LEVEL?= high
+AUDIT_LEVEL?= moderate
 # Sets Branch
 BRANCH ?= notmaster
 # Sets default env 
@@ -105,4 +105,5 @@ build_app:
 		--volume "/application/node_modules" \
 		--env NODE_ENV=production \
 		--env BUILD_ENV=${ENVIRONMENT} \
+		--env REACT_APP_COMMIT_HASH=${COMMIT_HASH} \
 		${IMAGE_NAME} npm run-script build ${ENVIRONMENT}

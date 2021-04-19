@@ -1,6 +1,5 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
-import '@testing-library/jest-dom/extend-expect';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
@@ -11,7 +10,7 @@ import { FlagsProvider, getFlags } from '../../flags';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 const renderComponent = async (): Promise<void> => {
-  await cleanup(); // clean up beforeEach render if we're testing a different page
+  await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
   render(
     <FlagsProvider flags={getFlags()}>
       <MemoryRouter>
@@ -36,8 +35,6 @@ describe('ReleaseNotesOverview', () => {
   it('renders the heading', () => {
     const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
     expect(heading1).toBeInTheDocument();
-    expect(heading1.previousElementSibling).not.toBeNull();
-    expect(heading1.previousElementSibling).toHaveTextContent('Overview');
   });
 
   it('renders the contact us link', () => {

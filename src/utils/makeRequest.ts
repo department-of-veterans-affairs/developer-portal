@@ -96,7 +96,7 @@ export const makeRequest = <T extends unknown>(url: string, requestInit: Request
 
       return resolve(httpResponse as HttpResponse<T>);
     } else {
-      const errorResponse =  await handleNonNetworkError(url, requestId, config.responseType,  response);
+      const errorResponse =  await handleNonNetworkError(url, requestId, config.responseType, response);
       return reject(errorResponse);
     }
   })

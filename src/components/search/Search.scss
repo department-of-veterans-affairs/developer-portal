@@ -2,7 +2,7 @@
 @import '../../styles/mixins.scss';
 
 .va-api-search-wrapper {
-  button[type=submit] {
+  button[type='submit'] {
     width: 4rem;
   }
 
@@ -11,7 +11,7 @@
       width: 240px;
     }
   }
-  
+
   form {
     button.va-api-search-submit {
       border-radius: 0 5px 5px 0;
@@ -28,7 +28,7 @@
 }
 
 .va-api-search-form--transparent-submit {
-  button[type=submit] {
+  button[type='submit'] {
     appearance: none;
     background-color: transparent;
     color: $va-api-color-gray-alt;

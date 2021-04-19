@@ -8,12 +8,19 @@
 import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 
+export interface VeteranRedirectMessage {
+  linkUrl: string;
+  linkText: string;
+  message: string;
+}
+
 export interface APICategoryContent {
   readonly intro: React.FunctionComponent;
   readonly overview: React.FunctionComponent;
   readonly shortDescription: string;
   readonly placardText: string;
   readonly quickstart?: React.FunctionComponent;
+  readonly veteranRedirect?: VeteranRedirectMessage;
 }
 
 export const ApiCategoryContentPropType = PropTypes.shape({
@@ -22,6 +29,7 @@ export const ApiCategoryContentPropType = PropTypes.shape({
   placardText: PropTypes.string.isRequired,
   quickstart: PropTypes.any,
   shortDescription: PropTypes.string.isRequired,
+  veteranRedirect: PropTypes.any,
 });
 
 export interface APIDocSource {
@@ -62,9 +70,16 @@ export interface APIDescription {
   readonly vaInternalOnly: boolean;
   readonly trustedPartnerOnly: boolean;
   readonly oAuth?: boolean;
+  readonly oAuthInfo?: OAuthInfo;
   readonly releaseNotes: React.FunctionComponent;
   readonly deactivationInfo?: APIDeactivationInfo;
   readonly multiOpenAPIIntro?: React.FunctionComponent;
+  readonly veteranRedirect?: VeteranRedirectMessage;
+}
+
+export interface OAuthInfo {
+  readonly baseAuthPath: string;
+  readonly scopes: string[];
 }
 
 export const ApiDescriptionPropType = PropTypes.shape({

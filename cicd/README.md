@@ -10,23 +10,23 @@
 
 ## Overview
 
-This pipeline will utilize a Makefile from the root directory to invoke the testing options. The Makefile gives the developer the opportunity to run the CI process locally in order to get instant feedback on their work. 
+This pipeline will utilize a Makefile from the root directory to invoke the testing options. The Makefile gives the developer the opportunity to run the CI process locally in order to get instant feedback on their work.
 
-## CI 
+## CI
 
-The CI process is triggered on every `PUSH` event and every `PULL REQUEST` event. Depending the variables for each event will dictate which artifacts are produced. 
+The CI process is triggered on every `PUSH` event and every `PULL REQUEST` event. Depending the variables for each event will dictate which artifacts are produced.
 
 ### Makefile
 
 To run tests simply type `make <test>` where <test> is the type of test you would like to run, for example `make lint`. Run `make` to get an output of targets you can run.
 
- The tests are run in a container. This container currently runs as the user __jenkins__ which you most likely do not have on your machine. The tests that are run are also the same test that run in __CI__ , resulting in the tests outputting a report file. This report file most likely will have trouble writing to your local machine as the __jenkins__ user. Therefore, you can export a variable to set the user the container will run as. This user in most all cases will be __root__. To do this you merely have to run `export UNAME=root`. You can also do the same for the group; `export GNAME=root`.
+The tests are run in a container. This container currently runs as the user **jenkins** which you most likely do not have on your machine. The tests that are run are also the same test that run in **CI** , resulting in the tests outputting a report file. This report file most likely will have trouble writing to your local machine as the **jenkins** user. Therefore, you can export a variable to set the user the container will run as. This user in most all cases will be **root**. To do this you merely have to run `export UNAME=root`. You can also do the same for the group; `export GNAME=root`.
 
 ### Feature Branch Push
 
 A feature branch commit will:
 
-1. Run all tests assigned to the `TESTS` variable in the `buildspec-ci.yml` file. 
+1. Run all tests assigned to the `TESTS` variable in the `buildspec-ci.yml` file.
 2. Perform a build for each environment.
 3. On error it will upload the applicable error report to the s3 error bucket listed in the `buildspec-ci.yml` file.
 
@@ -45,24 +45,24 @@ This scenario will run all steps listed in [Feature Branch Push](#feature-branch
 
 ### Master Branch Push
 
-This scenario will run steps listed in [Feature Branch Push](#feature-branch-push) _with following changes:
+This scenario will run steps listed in [Feature Branch Push](#feature-branch-push) \_with following changes:
 
-1. Failed `make security` will fail CI. 
+1. Failed `make security` will fail CI.
 2. Deployment files will be uploaded to the archive bucket as a tar file for deployment.
 
 ## Knobs and Iterations
 
 ### Adding Tests
 
-If you want to add new test script you will also want to incorporate it into the Makefile. You can use the Makefile to iterate on your test and to incorporate it into the CI pipeline in one shot. Here is a breakdown of a process to develop a script that will use `npm run-script test:newtest:ci ` to run locally and in CI.
+If you want to add new test script you will also want to incorporate it into the Makefile. You can use the Makefile to iterate on your test and to incorporate it into the CI pipeline in one shot. Here is a breakdown of a process to develop a script that will use `npm run-script test:newtest:ci` to run locally and in CI.
 
 This is a comment that will show up when `make` or `make help` is run to inform the user what the target does:
 
-`## newtest:		runs a newtest`
+`## newtest: runs a newtest`
 
 This will assign an explicit request to the target
 
-`.PHONY: newtest` 
+`.PHONY: newtest`
 
 This is your target
 
@@ -79,10 +79,10 @@ docker run --rm \
 	--user ${UNAME}:${GNAME} \
 	--volume "/application/node_modules" \
 	--volume "${PWD}:/application" \
-	developer-portal npm run test:newtest:ci 
+	developer-portal npm run test:newtest:ci
 ```
 
-After this is added you can then run `make build` then `make newtest` to run your tests locally. If you need to make changes to your script you can run the same commands in succession. Alternatively, for the iteration process you can add this `newtest: build` and that will run build on every `make newtest`.  
+After this is added you can then run `make build` then `make newtest` to run your tests locally. If you need to make changes to your script you can run the same commands in succession. Alternatively, for the iteration process you can add this `newtest: build` and that will run build on every `make newtest`.
 
 Lastly add your new test to `make test`
 
@@ -92,7 +92,7 @@ Lastly add your new test to `make test`
 test: security unit lint accessibility e2e visual newtest
 ```
 
-Once your test runs on your local machine quite handsomely you can push it to the repo and test if it works in CodeBuild as you expected. For this iteration you can feel free to edit the `buildspec-ci.yml` file to only incorporate your test, this will make your feedback loop much faster. To do this simply edit the `TESTS` variable demonstrated below. As reminder, make sure you change it back prior to merge! 
+Once your test runs on your local machine quite handsomely you can push it to the repo and test if it works in CodeBuild as you expected. For this iteration you can feel free to edit the `buildspec-ci.yml` file to only incorporate your test, this will make your feedback loop much faster. To do this simply edit the `TESTS` variable demonstrated below. As reminder, make sure you change it back prior to merge!
 
 ### Incorporating new test Up CodeBuild
 
@@ -121,23 +121,45 @@ Also set up the error handling for you're test in the post_build section:
           ;;
 ```
 
-
-
 ### Adding PR Comments and Slack posts
 
-Two scripts are available; one for commenting on PRs and one for posting to Slack. 
+Two scripts are available; one for commenting on PRs and one for posting to Slack.
 
-The PR comment script uses a block at the bottom to evaluate if a PR number exsists and then comments on the PR utilizing whatever the `comment` variable is set too. To add a comment merely change the assignment of the comment variable to what you need. 
+The PR comment script uses a block at the bottom to evaluate if a PR number exsists and then comments on the PR utilizing whatever the `comment` variable is set too. To add a comment merely change the assignment of the comment variable to what you need.
 
-For Slack, the web hook is currently set to the DSVA workspace and posts to the Lighthouse deploys channel. There is a To Do item to move that over to lighthouse workspace and add more web hooks to post to appropriate channels based upon the information needed to be communicated. 
+For Slack, the web hook is currently set to the DSVA workspace and posts to the Lighthouse deploys channel. There is a To Do item to move that over to lighthouse workspace and add more web hooks to post to appropriate channels based upon the information needed to be communicated.
 
 ## Releases
 
-Release
+Releases are managed by the [`developer-portal-release`](https://us-gov-west-1.console.amazonaws-us-gov.com/codesuite/codebuild/008577686731/projects/developer-portal-release/history?region=us-gov-west-1) job in CodeBuild. The release job runs on each commit to `master`. It creates a new release in Github using the artifacts from the commit and the [gh](https://cli.github.com/manual/) CLI tool.
+
+The release job also kicks off the deploy job in the dev and staging environments. To deploy changes to production, an engineer must manually run the deploy job for production; see [Deployments](#deployments) for details. Engineers should always plan to deploy changes when they have merged them to `master` to avoid batching together several commits in one deploy and should always communicate exceptions clearly in the Lighthouse Slack.
 
 ## Deployments
 
-Deploying
+Deployments are managed by the [`developer-portal-deploy`](https://us-gov-west-1.console.amazonaws-us-gov.com/codesuite/codebuild/008577686731/projects/developer-portal-deploy/history?region=us-gov-west-1) job in CodeBuild. The deploy job runs automatically for dev and staging for each release; it must be run manually for deploys to production.
+
+To deploy to production, engineers should create a [Maintenance Request (MR)](https://github.com/department-of-veterans-affairs/lighthouse-devops-support/issues/new/choose) in the [`lighthouse-devops-support`](https://github.com/department-of-veterans-affairs/lighthouse-devops-support) repo. You can use the following values for the MR:
+
+```
+Environment: dsva-production
+Product: developer-portal
+Deployment steps:
+- Run the developer-portal-deploy job with ENVIRONMENTS=production and MR=<this issue number>.
+
+Rollback steps:
+- Run the developer-portal-deploy job with ENVIRONMENTS=production, MR=<this issue number>, and RELEASE=<previous release> or COMMIT_HASH=<previous commit>. (Pick one of RELEASE or COMMIT_HASH and fill out the real values you'll use.)
+```
+
+At the scheduled time of the deploy from the MR, follow these steps to deploy.
+
+1. Go to the `developer-portal-deploy` job in CodeBuild.
+2. Click the "Start build with overrides" button.
+3. _Do not modify anything outside of the "Environment variables override" section._
+4. Under the "Environment variables override" section, add the `ENVIRONMENTS` variable and set it to `production`. You may optionally include `dev` or `staging` in the value, separated by spaces, but unless you are rolling back changes, those environments should already have been deployed automatically.
+5. Under the "Environment variables override" section, add the `MR` variable with either the number of the MR issue in the `lighthouse-devops-support` repo or a link to the issue. _The deploy job will fail without this variable set._
+6. _(optional)_ You can optionally set the `RELEASE` variable to the release tag or the `COMMIT_HASH` to the git ref you want to deploy. If neither variable is set, it deploys the latest release, which is usually the correct choice. If both are set, the `RELEASE` variable takes precedence.
+7. Click "Start build" and monitor the deploy job.
 
 ## Build Environment
 

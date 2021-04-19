@@ -23,7 +23,7 @@
       font-size: 1.7rem;
 
       &:visited {
-        color: #4c2c92
+        color: #4c2c92;
       }
     }
 
@@ -138,5 +138,12 @@
     position: absolute;
     width: 0;
     height: 0;
+  }
+
+  /* 
+   * Hides lock (authorization button) displayed in the api details
+   */
+  button.authorization__btn {
+    display: none;
   }
 }

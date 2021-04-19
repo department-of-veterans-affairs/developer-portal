@@ -5,6 +5,7 @@ import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
+import { FLAG_CATEGORIES } from '../../types/constants';
 
 const ReleaseNotesOverview = (): JSX.Element => {
   const apiDefs = getApiDefinitions();
@@ -14,7 +15,7 @@ const ReleaseNotesOverview = (): JSX.Element => {
       <Helmet>
         <title>Release Notes</title>
       </Helmet>
-      <PageHeader halo="Overview" header="Release Notes" />
+      <PageHeader header="Release Notes" />
       <div className="vads-u-font-size--lg">
         <p>
           The VA Lighthouse product teams periodically update these APIs in order to deliver new
@@ -28,18 +29,12 @@ const ReleaseNotesOverview = (): JSX.Element => {
           possible to addresses used to obtain developer keys for each API. Please{' '}
           <a href="/support/contact-us">contact us</a> with any questions or to request support.
         </p>
-        <p>
-          To view user-requested features and known issues or report a bug, please visit our{' '}
-          <a href="https://github.com/department-of-veterans-affairs/vets-api-clients">
-            GitHub repo
-          </a>.
-        </p>
       </div>
       <div className={defaultFlexContainer()}>
         {getApiCategoryOrder().map((apiCategoryKey: string) => {
           const { name, content } = apiDefs[apiCategoryKey];
           return (
-            <Flag name={['categories', apiCategoryKey]} key={apiCategoryKey}>
+            <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
               <CardLink name={name} url={`/release-notes/${apiCategoryKey}`}>
                 {content.shortDescription}
               </CardLink>

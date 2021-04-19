@@ -5,7 +5,6 @@
  */
 
 /* eslint-disable max-lines -- exception for test suite */
-import '@testing-library/jest-dom/extend-expect';
 import {
   findByRole,
   findByText,
@@ -90,6 +89,7 @@ const renderFHIRR4 = (): void => {
 
 describe('CurlForm', () => {
   const createHLRDesc = 'Create a Higher-Level Review';
+  const createHLRTDesc = 'Create a Higher-Level Review Two';
 
   let operationContainer: HTMLElement;
   beforeEach(() => {
@@ -248,6 +248,28 @@ describe('CurlForm', () => {
         const expectedCurl = `curl -X GET 'https://sandbox-api.va.gov/services/fhir/v0/r4/Condition' \\
 --header 'Authorization: Bearer faketoken'`;
         await testCurlText(expectedCurl, operationContainer);
+      });
+    });
+
+    describe('for an operations without security set when default security is openID', () => {
+      beforeEach(() => {
+        renderDecisionReviews();
+        operationContainer = expandOperation('Higher-Level Reviews Two', createHLRTDesc);
+      });
+
+      it('renders the bearer token input', async () => {
+        const bearerTokenH3 = await findByRole(operationContainer, 'heading', {
+          name: 'Bearer Token:',
+        });
+        expect(bearerTokenH3).toBeInTheDocument();
+
+        const bearerTokenInput = await findByRole(operationContainer, 'textbox', {
+          name: 'Enter Bearer Token',
+        });
+        expect(bearerTokenInput).toBeInTheDocument();
+        expect((bearerTokenH3.nextElementSibling as HTMLElement).contains(bearerTokenInput)).toBe(
+          true,
+        );
       });
     });
   });
