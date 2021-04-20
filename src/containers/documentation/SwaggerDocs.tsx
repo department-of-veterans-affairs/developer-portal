@@ -108,12 +108,18 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const prevApiName = usePrevious(apiName);
   const prevVersion = usePrevious(version);
 
-  const setMetadataAndDocUrl = async (): Promise<void> => {
-    const metadataVersions = await getVersionsFromMetadata(metadataUrl);
-    const initialVersion = getInitialVersion(location.search);
+  const setMetadataAndDocUrl = React.useCallback(
+    () => {
+      const doSet = async(): Promise<void> => {
+        const metadataVersions = await getVersionsFromMetadata(metadataUrl);
+        const initialVersion = getInitialVersion(location.search);
 
-    dispatch(setVersioning(openApiUrl, metadataVersions, initialVersion));
-  };
+        dispatch(setVersioning(openApiUrl, metadataVersions, initialVersion));
+      };
+      void doSet();
+    },
+    [dispatch, location.search, metadataUrl, openApiUrl]
+  );
 
   React.useEffect(
     () => {
