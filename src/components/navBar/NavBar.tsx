@@ -5,7 +5,7 @@ import * as React from 'react';
 import { match as Match } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { FLAG_CONSUMER_DOCS } from '../../types/constants';
+import { FLAG_CATEGORIES, FLAG_CONSUMER_DOCS } from '../../types/constants';
 import {
   CONSUMER_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
@@ -146,7 +146,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                 Overview
               </SubNavEntry>
               {apiCategoryOrder.map(apiKey => (
-                <Flag name={['categories', apiKey]} key={apiKey}>
+                <Flag name={[FLAG_CATEGORIES, apiKey]} key={apiKey}>
                   <SubNavEntry
                     onClick={props.onMobileNavClose}
                     to={`/explore/${apiKey}`}

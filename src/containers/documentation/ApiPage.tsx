@@ -12,6 +12,7 @@ import ExplorePage from '../../content/explorePage.mdx';
 import { Flag } from '../../flags';
 
 import { APINameParam } from '../../types';
+import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
 import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
 
@@ -66,30 +67,26 @@ const ApiPage = (): JSX.Element => {
   }
 
   return (
-    <Flag name={['enabled', api.urlFragment]} fallbackRender={(): JSX.Element => <ExplorePage />}>
+    <Flag
+      name={[FLAG_API_ENABLED_PROPERTY, api.urlFragment]}
+      fallbackRender={(): JSX.Element => <ExplorePage />}
+    >
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
       <PageHeader halo={category.name} header={api.name} />
-      {api.veteranRedirect &&
+      {api.veteranRedirect && (
         <AlertBox
           status="info"
           key={api.urlFragment}
           className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
         >
           {api.veteranRedirect.message}&nbsp;
-          <a href={api.veteranRedirect.linkUrl}>
-            {api.veteranRedirect.linkText}
-          </a>
-          .
-        </AlertBox>}
-      <DeactivationMessage api={api} />
-      {!isApiDeactivated(api) && (
-        <ApiDocumentation
-          apiDefinition={api}
-          location={location}
-        />
+          <a href={api.veteranRedirect.linkUrl}>{api.veteranRedirect.linkText}</a>.
+        </AlertBox>
       )}
+      <DeactivationMessage api={api} />
+      {!isApiDeactivated(api) && <ApiDocumentation apiDefinition={api} location={location} />}
     </Flag>
   );
 };

@@ -3,7 +3,11 @@ import classNames from 'classnames';
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { Redirect, useParams } from 'react-router';
-import { PAGE_HEADER_AND_HALO_ID } from '../../types/constants';
+import {
+  PAGE_HEADER_AND_HALO_ID,
+  FLAG_API_ENABLED_PROPERTY,
+  FLAG_HOSTED_APIS,
+} from '../../types/constants';
 
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
@@ -43,9 +47,7 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
               subhead={
                 vaInternalOnly || trustedPartnerOnly ? (
                   <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
-                ) : (
-                  undefined
-                )
+                ) : undefined
               }
               url={`/release-notes/${categoryKey}#${dashUrlFragment}`}
             >
@@ -127,7 +129,7 @@ export const CategoryReleaseNotes = (): JSX.Element => {
     <ReleaseNotesCollection
       categoryKey={apiCategoryKey}
       apiCategory={categories[apiCategoryKey]}
-      apiFlagName="hosted_apis"
+      apiFlagName={FLAG_HOSTED_APIS}
     />
   );
 };
@@ -136,7 +138,7 @@ export const DeactivatedReleaseNotes = (): JSX.Element => (
   <ReleaseNotesCollection
     categoryKey="deactivated"
     apiCategory={getDeactivatedCategory()}
-    apiFlagName="enabled"
+    apiFlagName={FLAG_API_ENABLED_PROPERTY}
     alertText="This is a repository for deactivated APIs and related documentation and release notes."
   />
 );

@@ -1,3 +1,13 @@
+### April 15, 2021
+We added a new meta section to the /nearby endpoint with a new `band_version` field.
+* `band_version` represents the data set used in the distance calculation
+* `band_version` value may be up to 6 weeks behind the current date
+* Example value: "FEB2021" with a return date in March, 2021
+
+[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/209)
+
+---
+
 ### April 1, 2021
 Service-specific details are now available for the Covid19Vaccine service where applicable.
 * `detailed_services` was added to the facilities API response for all facilities
