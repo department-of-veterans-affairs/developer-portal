@@ -41,7 +41,7 @@ const getVersionsFromMetadata = async (metadataUrl?: string): Promise<VersionMet
   }
 };
 
-const getInitialVersion = (searchQuery: string): string => {
+const getVersionFromParams = (searchQuery: string): string => {
   const params = new URLSearchParams(searchQuery || undefined);
   const versionQuery = params.get('version');
   return versionQuery ? versionQuery.toLowerCase() : CURRENT_VERSION_IDENTIFIER;
@@ -96,7 +96,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   if (initializing.current) {
     initializing.current = false;
     // Use the version from the search param only if it's the first render
-    version = getInitialVersion(location.search);
+    version = getVersionFromParams(location.search);
   }
 
   /**
@@ -112,7 +112,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
     () => {
       const doSet = async(): Promise<void> => {
         const metadataVersions = await getVersionsFromMetadata(metadataUrl);
-        const initialVersion = getInitialVersion(location.search);
+        const initialVersion = getVersionFromParams(location.search);
 
         dispatch(setVersioning(openApiUrl, metadataVersions, initialVersion));
       };
