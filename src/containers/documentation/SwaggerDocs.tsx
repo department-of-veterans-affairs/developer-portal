@@ -89,32 +89,29 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const versionNumber = useSelector((state: RootState) => getVersionNumber(state.apiVersioning));
   const versions = useSelector((state: RootState) => state.apiVersioning.versions);
 
+  // Retrieve an initial version from the params so we can compare it under our effects down below
   const initializing = React.useRef(true);
-
   let version = useSelector((state: RootState) => getVersion(state.apiVersioning));
-
   if (initializing.current) {
     initializing.current = false;
     // Use the version from the search param only if it's the first render
     version = getVersionFromParams(location.search);
   }
 
-  /**
-   * RETRIEVE API INFORMATION
+  /*
+   * UPDATE DOCS WHEN API NAME CHANGES
    */
   const { apiName } = props;
   const { openApiUrl, metadataUrl } = props.docSource;
-
   const prevApiName = usePrevious(apiName);
-  const prevVersion = usePrevious(version);
 
   const setMetadataAndDocUrl = React.useCallback(
     () => {
       const doSet = async(): Promise<void> => {
         const metadataVersions = await getVersionsFromMetadata(metadataUrl);
-        const initialVersion = getVersionFromParams(location.search);
+        const paramsVersion = getVersionFromParams(location.search);
 
-        dispatch(setVersioning(openApiUrl, metadataVersions, initialVersion));
+        dispatch(setVersioning(openApiUrl, metadataVersions, paramsVersion));
       };
       void doSet();
     },
@@ -143,6 +140,8 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   /**
    * UPDATES URL WITH CORRECT VERSION PARAM
    */
+  const prevVersion = usePrevious(version);
+
   React.useEffect(() => {
     if (prevVersion !== version) {
       setSearchParam(history, location.search, version);
