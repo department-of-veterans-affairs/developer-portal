@@ -145,6 +145,13 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               <SubNavEntry onClick={props.onMobileNavClose} to="/explore" id="all">
                 Overview
               </SubNavEntry>
+              <SubNavEntry
+                onClick={props.onMobileNavClose}
+                to="/explore/authorization"
+                id="authorization"
+              >
+                Authorization
+              </SubNavEntry>
               {apiCategoryOrder.map(apiKey => (
                 <Flag name={[FLAG_CATEGORIES, apiKey]} key={apiKey}>
                   <SubNavEntry
