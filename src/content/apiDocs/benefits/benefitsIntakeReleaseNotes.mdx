@@ -1,7 +1,8 @@
 ### April 2, 2021
-(v1) We added two new error detail messages that provide additional detail for a small number of submissions returning the DOC202 ERROR code.
+(v1) We added new error detail messages that provide additional detail for a small number of submissions returning the DOC202 ERROR code.
 * Unidentified Mail: We could not associate this submission with a Veteran. Please verify the identifying information and resubmit.
-* Duplicate Submission: This document was already uploaded, faxed, or mailed and was or is being processed. This is a duplicate submission and will not be processed."
+* Duplicate Submission: This document was already uploaded, faxed, or mailed and was or is being processed. This is a duplicate submission and will not be processed.
+* Blank Document: The attachment contains no content. Please verify the attachment and resubmit, if needed.
 
 ---
 
@@ -12,6 +13,19 @@
 
 ### March 1, 2021
 (v1) The Benefits-Intake API now has a new claim/benefit selection option to help ensure submissions reach the correct business line so they can be processed as quickly as possible: [#6037](https://github.com/department-of-veterans-affairs/vets-api/pull/6037)
+
+The existing businessLine metadata field can be empty, or it can contain the code to indicate a document is related to one of these claim/benefit types:
+
+CMP – Compensation requests such as those related to disability, unemployment, and pandemic claims
+PMC – Pension requests including survivor’s pension
+INS – Insurance such as life insurance, disability insurance, and other health insurance
+EDU – Education benefits, programs, and affiliations
+VRE – Veteran Readiness & Employment such as employment questionnaires, employment discrimination, employment verification
+BVA – Board of Veteran Appeals
+FID – Fiduciary/financial appointee, including family member benefits
+OTH – Other (which will be routed to CMP)
+
+This change is currently optional, but may become a required field in a future iteration of the API.
 
 ---
 
