@@ -41,7 +41,7 @@ const getVersionsFromMetadata = async (metadataUrl?: string): Promise<VersionMet
   }
 };
 
-const getInitialVersion = (searchQuery: string): string => {
+const getVersionFromParams = (searchQuery: string): string => {
   const params = new URLSearchParams(searchQuery || undefined);
   const versionQuery = params.get('version');
   return versionQuery ? versionQuery.toLowerCase() : CURRENT_VERSION_IDENTIFIER;
@@ -89,35 +89,43 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const versionNumber = useSelector((state: RootState) => getVersionNumber(state.apiVersioning));
   const versions = useSelector((state: RootState) => state.apiVersioning.versions);
 
+  // Retrieve an initial version from the params so we can compare it under our effects down below
   const initializing = React.useRef(true);
-
   let version = useSelector((state: RootState) => getVersion(state.apiVersioning));
-
   if (initializing.current) {
     initializing.current = false;
     // Use the version from the search param only if it's the first render
-    version = getInitialVersion(location.search);
+    version = getVersionFromParams(location.search);
   }
 
-  /**
-   * RETRIEVE API INFORMATION
+  /*
+   * UPDATE DOCS WHEN API NAME CHANGES
    */
   const { apiName } = props;
   const { openApiUrl, metadataUrl } = props.docSource;
-
   const prevApiName = usePrevious(apiName);
-  const prevVersion = usePrevious(version);
 
-  const setMetadataAndDocUrl = async (): Promise<void> => {
-    const metadataVersions = await getVersionsFromMetadata(metadataUrl);
-    const initialVersion = getInitialVersion(location.search);
+  const setMetadataAndDocUrl = React.useCallback(
+    () => {
+      const doSet = async(): Promise<void> => {
+        const metadataVersions = await getVersionsFromMetadata(metadataUrl);
+        const paramsVersion = getVersionFromParams(location.search);
 
-    dispatch(setVersioning(openApiUrl, metadataVersions, initialVersion));
-  };
+        dispatch(setVersioning(openApiUrl, metadataVersions, paramsVersion));
+      };
+      void doSet();
+    },
+    [dispatch, location.search, metadataUrl, openApiUrl]
+  );
 
-  if (prevApiName !== apiName) {
-    void setMetadataAndDocUrl();
-  }
+  React.useEffect(
+    () => {
+      if (prevApiName !== apiName) {
+        void setMetadataAndDocUrl();
+      }
+    },
+    [apiName, setMetadataAndDocUrl, prevApiName],
+  );
 
   /**
    * CLEAR REDUX STATE ON UNMOUNT
@@ -132,6 +140,8 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   /**
    * UPDATES URL WITH CORRECT VERSION PARAM
    */
+  const prevVersion = usePrevious(version);
+
   React.useEffect(() => {
     if (prevVersion !== version) {
       setSearchParam(history, location.search, version);
