@@ -106,6 +106,7 @@
     "@types/webpack": "^4.41.27",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "autoprefixer": "^9.8.6",
     "axe-core": "^4.1.4",
     "babel-jest": "^26.6.3",
@@ -119,7 +120,6 @@
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
     "enzyme": "^3.11.0",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "eslint": "^7.23.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
@@ -132,7 +132,7 @@
     "fs-extra": "^9.1.0",
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^4.5.2",
-    "husky": "^5.2.0",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "jest-axe": "^4.1.0",
     "jest-environment-puppeteer": "^4.4.0",
@@ -172,6 +172,9 @@
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-manifest-plugin": "^3.1.1"
+  },
+  "resolutions": {
+    "husky": "6.0.0"
   },
   "jest": {
     "projects": [
