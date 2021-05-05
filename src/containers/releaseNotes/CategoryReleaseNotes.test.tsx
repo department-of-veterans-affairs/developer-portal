@@ -14,7 +14,7 @@ import {
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
-import NotFound from '../NotFound';
+import ErrorPage from '../ErrorPage';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
@@ -159,7 +159,7 @@ describe('ReleaseNotesCollection', () => {
               render={(): JSX.Element => <div>/release-notes</div>}
             />
             <Route path="/release-notes/fakeCategory" exact component={CategoryReleaseNotes} />
-            <Route component={NotFound} />
+            <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
           </Router>,
         );
         expect(container.innerHTML).toEqual(expect.stringContaining('404'));
