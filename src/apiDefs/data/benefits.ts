@@ -67,7 +67,7 @@ const benefitsApis: APIDescription[] = [
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/claims-attributes/v1/oas.json`,
       },
     ],
-    enabledByDefault: false,
+    enabledByDefault: true,
     name: 'Claims Attributes',
     releaseNotes: ClaimsAttributesReleaseNotes,
     trustedPartnerOnly: false,
