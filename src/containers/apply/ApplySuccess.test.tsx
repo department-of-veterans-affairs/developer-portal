@@ -21,7 +21,7 @@ describe('ApplySuccess with results', () => {
                 token: 'elf-friend',
               }}
             />
-          </MemoryRouter>
+          </MemoryRouter>,
         );
       });
 
@@ -36,7 +36,7 @@ describe('ApplySuccess with results', () => {
           <MemoryRouter>
             <ApplySuccess
               result={{
-                apis: ['benefits', 'facilities', 'vaForms', 'confirmation'],
+                apis: ['claimsAttributes', 'benefits', 'facilities', 'vaForms', 'confirmation'],
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
@@ -45,7 +45,7 @@ describe('ApplySuccess with results', () => {
                 token: 'elf-friend',
               }}
             />
-          </MemoryRouter>
+          </MemoryRouter>,
         );
       });
 
@@ -63,7 +63,7 @@ describe('ApplySuccess with results', () => {
       it('displays confirmation for only standard APIs', () => {
         expect(
           screen.getByText(
-            /Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
+            /Claims Attributes API, Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
           ),
         ).toBeInTheDocument();
 
@@ -90,7 +90,7 @@ describe('ApplySuccess with results', () => {
                 token: 'elf-friend',
               }}
             />
-          </MemoryRouter>
+          </MemoryRouter>,
         );
       });
 
@@ -113,7 +113,7 @@ describe('ApplySuccess with results', () => {
       it('displays confirmation for only oauth APIs', () => {
         expect(
           screen.queryByText(
-            /Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
+            /Claims Attributes API, Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
           ),
         ).not.toBeInTheDocument();
 

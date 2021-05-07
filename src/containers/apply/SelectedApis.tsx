@@ -15,7 +15,7 @@ interface APICheckboxListProps {
 
 const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => (
   <>
-    {apiCheckboxes.map((api) => (
+    {apiCheckboxes.map(api => (
       <CheckboxRadioField
         type="checkbox"
         key={api.id}

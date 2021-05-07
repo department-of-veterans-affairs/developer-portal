@@ -41,6 +41,7 @@ const apisToEnglishApiKeyList = (): Record<string, string> => {
   const apiDefs = getApiDefinitions();
   return {
     benefits: apiDefs.benefits.properName,
+    claimsAttributes: 'Claims Attributes API',
     confirmation: 'Veteran Confirmation API',
     facilities: apiDefs.facilities.properName,
     vaForms: apiDefs.vaForms.properName,
@@ -120,7 +121,14 @@ const ApplySuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
       <p>
         <strong>Thank you for signing up!</strong>
       </p>
-      {hasStandardAPI && <ApiKeyNotice email={email} token={token} kongUsername={kongUsername} selectedApis={standardAPIs} />}
+      {hasStandardAPI && (
+        <ApiKeyNotice
+          email={email}
+          token={token}
+          kongUsername={kongUsername}
+          selectedApis={standardAPIs}
+        />
+      )}
       {hasOAuthAPI && clientID && (
         <OAuthCredentialsNotice
           email={email}
