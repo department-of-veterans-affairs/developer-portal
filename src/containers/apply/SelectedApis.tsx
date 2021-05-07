@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
+import { getFlags } from '../../flags';
+import { FLAG_HOSTED_APIS } from '../../types/constants';
 import { CheckboxRadioField } from '../../components';
 
 interface APICheckbox {
@@ -13,7 +15,7 @@ interface APICheckboxListProps {
 
 const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => (
   <>
-    {apiCheckboxes.map(api => (
+    {apiCheckboxes.map((api) => (
       <CheckboxRadioField
         type="checkbox"
         key={api.id}
@@ -44,7 +46,14 @@ const oauthInfo = [
   },
 ];
 
+const isClaimsAttributesEnabled = getFlags()[FLAG_HOSTED_APIS].claims_attributes;
+const claimsAttributesInfo = {
+  id: 'claimsAttributes',
+  label: 'Claims Attributes API',
+};
+
 const apiInfo = [
+  ...(isClaimsAttributesEnabled ? [claimsAttributesInfo] : []),
   {
     id: 'benefits',
     label: 'VA Benefits API',

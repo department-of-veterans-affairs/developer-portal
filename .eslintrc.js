@@ -28,7 +28,7 @@ const coreESLintRules = {
   'array-callback-return': 'error',
   'array-element-newline': ['error', 'consistent'],
   'arrow-body-style': 'error',
-  'arrow-parens': ['error', 'as-needed'],
+  'arrow-parens': ['error', 'always'],
   'arrow-spacing': 'error',
   'block-scoped-var': 'error',
   'block-spacing': 'error',
