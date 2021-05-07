@@ -67,6 +67,14 @@
       padding: 0;
       .responses-table {
         @include table-style;
+        table-layout: fixed;
+        width: 100%;
+
+        .response-col_status,
+        .response-col_links {
+          width: 15%;
+        }
+
         thead {
           .col_header {
             border: 1px solid #5b616b;
@@ -74,6 +82,10 @@
           }
         }
       }
+    }
+    select {
+      min-width: unset !important;
+      max-width: 100%;
     }
   }
 }
