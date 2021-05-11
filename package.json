@@ -21,8 +21,8 @@
   },
   "dependencies": {
     "@braintree/sanitize-url": "^5.0.0",
+    "@department-of-veterans-affairs/component-library": "^2.5.1",
     "@department-of-veterans-affairs/formation": "^6.14.0",
-    "@department-of-veterans-affairs/formation-react": "^5.10.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
@@ -40,6 +40,7 @@
     "markdown-it-attrs": "^4.0.0",
     "moment": "^2.29.1",
     "object-assign": "4.1.1",
+    "postcss": "^8.2.14",
     "promise": "^8.1.0",
     "prop-types": "^15.7.2",
     "raf": "^3.4.1",
@@ -65,6 +66,7 @@
     "swagger-client": "3.13.1",
     "swagger-ui": "^3.46.0",
     "swagger-ui-themes": "^3.0.1",
+    "trim": "^1.0.1",
     "url-polyfill": "^1.1.12",
     "uswds": "^1.6.13",
     "uuid": "^8.3.2",
@@ -107,7 +109,7 @@
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.2.5",
     "axe-core": "^4.1.4",
     "babel-jest": "^26.6.3",
     "babel-loader": "^8.2.2",
@@ -116,7 +118,7 @@
     "case-sensitive-paths-webpack-plugin": "^2.4.0",
     "chalk": "^4.1.0",
     "copy-webpack-plugin": "^6.4.1",
-    "css-loader": "^5.2.0",
+    "css-loader": "^5.2.4",
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
     "enzyme": "^3.11.0",
@@ -150,10 +152,10 @@
     "node-sass": "^5.0.0",
     "node-sass-tilde-importer": "^1.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.4",
-    "postcss-flexbugs-fixes": "^4.1.0",
-    "postcss-loader": "^3.0.0",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^4.2.0",
     "postcss-preset-env": "^6.0.6",
-    "postcss-safe-parser": "^4.0.1",
+    "postcss-safe-parser": "^5.0.2",
     "pptr-testing-library": "^0.6.4",
     "prettier": "^2.2.1",
     "pretty-format": "^26.6.2",
@@ -174,7 +176,9 @@
     "webpack-manifest-plugin": "^3.1.1"
   },
   "resolutions": {
-    "husky": "6.0.0"
+    "husky": "6.0.0",
+    "postcss": "8.2.14",
+    "trim": "^1.0.1"
   },
   "jest": {
     "projects": [
