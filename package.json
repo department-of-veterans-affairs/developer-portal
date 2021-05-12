@@ -93,6 +93,7 @@
     "@types/lodash": "^4.14.168",
     "@types/lodash.noop": "^3.0.6",
     "@types/node": "^14.14.37",
+    "@types/postcss-preset-env": "^6.0.6",
     "@types/puppeteer": "^2.1.5",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
@@ -154,7 +155,7 @@
     "optimize-css-assets-webpack-plugin": "^5.0.4",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^4.2.0",
-    "postcss-preset-env": "^6.0.6",
+    "postcss-preset-env": "^6.7.0",
     "postcss-safe-parser": "^5.0.2",
     "pptr-testing-library": "^0.6.4",
     "prettier": "^2.2.1",
@@ -176,6 +177,8 @@
     "webpack-manifest-plugin": "^3.1.1"
   },
   "resolutions": {
+    "autoprefixer": "10.2.5",
+    "cssnano": "5.0.2",
     "husky": "6.0.0",
     "postcss": "8.2.14",
     "trim": "^1.0.1"
