@@ -179,9 +179,10 @@
   "resolutions": {
     "autoprefixer": "10.2.5",
     "cssnano": "5.0.2",
+    "highlight.js": "10.7.2",
     "husky": "6.0.0",
     "postcss": "8.2.14",
-    "trim": "^1.0.1"
+    "trim": "1.0.1"
   },
   "jest": {
     "projects": [
