@@ -1,10 +1,11 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
+import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
+import SupportConfirmation from '../../content/supportConfirmation.mdx';
 import { FormType } from '../../types/contactUsForm';
 import { PageHeader } from '../../components';
-import SupportConfirmation from '../../content/supportConfirmation.mdx';
+import { ContactUsAlertComment } from './ContactUsAlertComment';
 import ContactUsForm from './ContactUsForm';
 
 const ContactUs = (): JSX.Element => {
@@ -32,16 +33,14 @@ const ContactUs = (): JSX.Element => {
             <title>Contact Us</title>
           </Helmet>
           <PageHeader halo="Support" header="Contact Us" />
-          <p>
-            From this page, you can ask us questions, get help or support, or get started with
-            publishing your API. You can also find answers to many common questions on our{' '}
-            <Link to="/support/faq">FAQ</Link> page.
-          </p>
-          <p>
-            <strong>Note:</strong> If you are a Veteran seeking help with claims, health records, or
-            other information, visit <a href="https://www.va.gov/">VA.gov</a> or contact your local
-            VSO for assistance.
-          </p>
+          <p>If you have questions about APIs, development, or related topics, use this form to send us a message.</p>
+          <AlertBox
+            status="info"
+            key="contactus"
+            className="vads-u-margin-bottom--2 vads-u-padding-y--1"
+          >
+            <ContactUsAlertComment />
+          </AlertBox>
           <ContactUsForm onSuccess={onSuccess} defaultType={type} />
         </>
       )}
