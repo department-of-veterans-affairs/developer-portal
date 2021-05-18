@@ -65,6 +65,7 @@
     "swagger-client": "3.13.1",
     "swagger-ui": "^3.46.0",
     "swagger-ui-themes": "^3.0.1",
+    "trim": "^1.0.1",
     "url-polyfill": "^1.1.12",
     "uswds": "^1.6.13",
     "uuid": "^8.3.2",
@@ -174,7 +175,8 @@
     "webpack-manifest-plugin": "^3.1.1"
   },
   "resolutions": {
-    "husky": "6.0.0"
+    "husky": "6.0.0",
+    "trim": "1.0.1"
   },
   "jest": {
     "projects": [
