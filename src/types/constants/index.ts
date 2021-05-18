@@ -15,6 +15,7 @@ export const CONTACT_US_URL = `${BACKEND_BASE_URL}/contact-us`;
 export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
   benefits: 'benefits',
   claims: 'claims',
+  claimsAttributes: 'claims_attributes',
   communityCare: 'community_care',
   confirmation: 'veteran_confirmation',
   facilities: 'facilities',
@@ -23,7 +24,13 @@ export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
   verification: 'veteran_verification',
 } as Record<string, string>;
 
-export const APPLY_STANDARD_APIS = ['benefits', 'facilities', 'vaForms', 'confirmation'];
+export const APPLY_STANDARD_APIS = [
+  'claimsAttributes',
+  'benefits',
+  'facilities',
+  'vaForms',
+  'confirmation',
+];
 export const APPLY_OAUTH_APIS = ['claims', 'communityCare', 'health', 'verification'];
 export const PAGE_HEADER_ID = 'page-header';
 export const PAGE_HEADER_AND_HALO_ID = 'header-halo';
