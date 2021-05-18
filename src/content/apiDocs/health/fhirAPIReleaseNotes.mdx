@@ -1,3 +1,9 @@
+### May 4, 2021
+Added an `identifier` to the `Organization` resource to represent the VA Facility to be consistent with the Facility ID used by the Facilities API. For example a VAMC has an identifier of the form `vha_[stationNumber]` like `vha_673`.
+
+Added an `identifier` to the `Location` resource to represent the VA clinic. This `identifier` has the form `vha_[stationNumber]_[clinic identifier]`.
+
+---
 ### February 24, 2021
 Added the FHIR R4 resource `Appointment`, which includes the ability to search appointments by `Patient` and `Location` references and searching by `_lastUpdated` date.
 
