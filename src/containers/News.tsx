@@ -86,7 +86,7 @@ const News = (): JSX.Element => {
     <ContentWithNav
       nav={
         <>
-          <SideNavEntry key="all" exact to="/news" name="Overview" />
+          <SideNavEntry key="all" exact to="#header-halo" name="Overview" />
           {sections.map((section: NewsSection) => (
             <SideNavEntry key={section.id} to={`#${section.id}`} name={section.title} />
           ))}

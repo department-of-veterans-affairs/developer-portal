@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
-import { FormField } from '../../../../components';
+import { TextField } from '../../../../components';
 
 const textFieldClasses = (paddingDirection: string): string =>
   classNames(
@@ -18,18 +18,18 @@ const ContactDetailsFormFields: FC = () => (
     </legend>
     <div className={classNames('vads-l-row', 'vads-u-margin-top--2p5')}>
       <div className={textFieldClasses('right')}>
-        <FormField label="First name" name="firstName" required />
+        <TextField label="First name" name="firstName" required />
       </div>
       <div className={textFieldClasses('left')}>
-        <FormField label="Last name" name="lastName" required />
+        <TextField label="Last name" name="lastName" required />
       </div>
     </div>
     <div className={classNames('vads-l-row', 'vads-u-margin-top--4')}>
       <div className={textFieldClasses('right')}>
-        <FormField label="Email address" name="email" type="email" required />
+        <TextField label="Email address" name="email" type="email" required />
       </div>
       <div className={textFieldClasses('left')}>
-        <FormField label="Organization" name="organization" />
+        <TextField label="Organization" name="organization" />
       </div>
     </div>
   </fieldset>

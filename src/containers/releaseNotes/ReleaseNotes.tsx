@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { PAGE_HEADER_AND_HALO_ID } from '../../types/constants';
+import { FLAG_CATEGORIES, PAGE_HEADER_AND_HALO_ID } from '../../types/constants';
 import {
   RELEASE_NOTES_CATEGORY_PATH,
   RELEASE_NOTES_DEACTIVATED_PATH,
@@ -61,7 +61,7 @@ const SideNavCategoryEntry = (props: SideNavCategoryEntryProps): JSX.Element => 
   );
 
   return (
-    <Flag name={['categories', categoryKey]} key={categoryKey}>
+    <Flag name={[FLAG_CATEGORIES, categoryKey]} key={categoryKey}>
       <SideNavEntry to={`/release-notes/${categoryKey}`} name={apiCategory.name}>
         {apis.length > 1 &&
           apis.map(api => (

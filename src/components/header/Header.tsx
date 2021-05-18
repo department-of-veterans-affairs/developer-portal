@@ -5,6 +5,7 @@ import { HashLink } from 'react-router-hash-link';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
+import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
 import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
@@ -33,7 +34,7 @@ const Header = (): JSX.Element => {
    */
   return (
     <>
-      <Flag name={['show_testing_notice']}>
+      <Flag name={[FLAG_SHOW_TESTING_NOTICE]}>
         <TestingNotice />
       </Flag>
       <header

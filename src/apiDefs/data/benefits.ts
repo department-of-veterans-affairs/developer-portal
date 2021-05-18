@@ -1,4 +1,5 @@
 import {
+  benefitsContent,
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
@@ -27,6 +28,7 @@ const benefitsApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'claims',
     vaInternalOnly: false,
+    veteranRedirect: benefitsContent.veteranRedirect,
   },
   {
     description: 'Submit PDF claims',
@@ -42,6 +44,7 @@ const benefitsApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'benefits',
     vaInternalOnly: false,
+    veteranRedirect: benefitsContent.veteranRedirect,
   },
   {
     description: 'Manage VA Home Loans',
@@ -61,7 +64,7 @@ const benefitsApis: APIDescription[] = [
     description: 'Improve claim routing',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docserver/api/claims-attributes/1/oas/latest`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/claims-attributes/v1/oas.json`,
       },
     ],
     enabledByDefault: false,

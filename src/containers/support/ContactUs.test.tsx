@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { useLocation, MemoryRouter } from 'react-router';
-import { FlagsProvider, getFlags } from '../../flags';
 import ContactUs from './ContactUs';
 
 jest.mock('react-router', () => ({
@@ -19,11 +18,9 @@ describe('ContactUs', () => {
 
   const renderComponent = (): void => {
     render(
-      <FlagsProvider flags={getFlags()}>
-        <MemoryRouter>
-          <ContactUs />
-        </MemoryRouter>
-      </FlagsProvider>
+      <MemoryRouter>
+        <ContactUs />
+      </MemoryRouter>
     );
   };
 

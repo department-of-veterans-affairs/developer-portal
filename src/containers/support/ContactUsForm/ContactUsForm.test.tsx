@@ -155,8 +155,8 @@ describe('SupportContactUsFormPublishing', () => {
           });
         });
         it('displays the validation errors', async () => {
-          expect(await screen.findByText('First name must not be blank.')).toBeInTheDocument();
-          expect(await screen.findByText('Must be a valid email address.')).toBeInTheDocument();
+          expect(await screen.findByText('Enter your first name.')).toBeInTheDocument();
+          expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
         });
       });
     });

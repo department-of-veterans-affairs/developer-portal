@@ -17,6 +17,7 @@ import PageLinks from '../../content/apiDocs/oauth/PageLinks.mdx';
 import GettingStarted from '../../content/apiDocs/oauth/GettingStarted.mdx';
 import IdToken from '../../content/apiDocs/oauth/IdToken.mdx';
 import TestUsers from '../../content/apiDocs/oauth/TestUsers.mdx';
+import Https from '../../content/apiDocs/oauth/HTTPS.mdx';
 import { usePrevious } from '../../hooks';
 import { RootState } from '../../types';
 import { DEFAULT_OAUTH_API_SELECTION } from '../../types/constants';
@@ -72,6 +73,11 @@ const AuthorizationDocs = (): JSX.Element => {
   const initializing = React.useRef(true);
   const api = useSelector((state: RootState) => state.oAuthApiSelection.selectedOAuthApi);
   const prevApi = usePrevious(api);
+  const selectedOAuthApi = useSelector(
+    (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
+  );
+
+  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
 
   React.useEffect(() => {
     if (initializing.current) {
@@ -108,12 +114,13 @@ const AuthorizationDocs = (): JSX.Element => {
         <title>Authorization</title>
       </Helmet>
       <PageHeader header="Authorization" />
-      <PageLinks />
+      <PageLinks options={options} selectedOption={selectedOAuthApi} />
       <GettingStarted />
       <BuildingOIDCContent />
       <ScopesContent />
       <IdToken />
       <TestUsers />
+      <Https />
     </div>
   );
 };

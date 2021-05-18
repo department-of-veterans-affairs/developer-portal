@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactNode } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
+import { CheckboxRadioField } from '../../../components';
 import { CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
@@ -79,19 +80,13 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
           <ContactDetailsFormFields />
 
           <fieldset className="vads-u-margin-top--6">
-            <legend>
+            <legend className="vads-u-margin-bottom--2p5">
               <h2 className={classNames('vads-u-font-size--lg', 'vads-u-margin-y--0')}>
                 What can we help you with?
               </h2>
             </legend>
-            <Field id="formTypeDefault" type="radio" name="type" value={FormType.CONSUMER} />
-            <label htmlFor="formTypeDefault">
-              Report a problem or ask a question
-            </label>
-            <Field id="formTypePublishing" type="radio" name="type" value={FormType.PUBLISHING} />
-            <label htmlFor="formTypePublishing">
-              Publish your API to Lighthouse - Internal VA use only
-            </label>
+            <CheckboxRadioField type="radio" label="Report a problem or ask a question" name="type" value={FormType.CONSUMER}  />
+            <CheckboxRadioField type="radio" label="Publish your API to Lighthouse - Internal VA use only" name="type" value={FormType.PUBLISHING}  />
           </fieldset>
 
           {

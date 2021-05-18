@@ -14,6 +14,7 @@ import {
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
+import NotFound from '../NotFound';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
@@ -148,7 +149,7 @@ describe('ReleaseNotesCollection', () => {
         expect(screen.queryByRole('heading', { name: 'Baseball API' })).toBeNull();
       });
 
-      it("redirect to /release-notes when category isn't found", () => {
+      it("redirect to /404 when category isn't found", () => {
         const history = createMemoryHistory({ initialEntries: ['/release-notes/fakeCategory'] });
         const { container } = render(
           <Router history={history}>
@@ -158,9 +159,10 @@ describe('ReleaseNotesCollection', () => {
               render={(): JSX.Element => <div>/release-notes</div>}
             />
             <Route path="/release-notes/fakeCategory" exact component={CategoryReleaseNotes} />
+            <Route component={NotFound} />
           </Router>,
         );
-        expect(container.innerHTML).toEqual(expect.stringContaining('/release-notes'));
+        expect(container.innerHTML).toEqual(expect.stringContaining('404'));
       });
     });
   });

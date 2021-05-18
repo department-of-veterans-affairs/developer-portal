@@ -1,23 +1,22 @@
 import classNames from 'classnames';
-import { ErrorMessage, Field, useFormikContext } from 'formik';
+import { Field, ErrorMessage, useFormikContext } from 'formik';
 import React, { ComponentPropsWithRef, FC, ReactNode } from 'react';
-import toHtmlId from '../../toHtmlId';
+import toHtmlId from '../../../toHtmlId';
 
 type FieldProps = ComponentPropsWithRef<typeof Field>;
 
-interface FormFieldProps {
-  label: string;
+export interface TextFieldProps {
+  className?: string;
+  label: ReactNode;
   name: string;
   required?: boolean;
-  type?: FieldProps['type'];
   as?: FieldProps['as'];
   description?: ReactNode;
-  className?: string;
+  type?: 'text' | 'email' | 'password';
 }
 
-export const FormField: FC<FormFieldProps> = ({ label, required = false, name, description, className, ...props }) => {
+const TextField: FC<TextFieldProps> = ({ description, className, label, name, required = false, type = 'text', ...props }) => {
   const { errors, touched } = useFormikContext();
-
   const shouldDisplayErrors = !!errors[name] && !!touched[name];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
@@ -36,13 +35,14 @@ export const FormField: FC<FormFieldProps> = ({ label, required = false, name, d
       </label>
       {
         description &&
-          <div id={descriptionId}>
-            {description}
-          </div>
+        <div id={descriptionId}>
+          {description}
+        </div>
       }
       <span id={errorId} className={validationClass}>
         <ErrorMessage name={name} />
       </span>
+
       <Field
         id={fieldId}
         className={fieldClass}
@@ -50,8 +50,11 @@ export const FormField: FC<FormFieldProps> = ({ label, required = false, name, d
         required={required}
         aria-describedby={`${errorId} ${descriptionId}`}
         aria-invalid={shouldDisplayErrors}
+        type={props.as ? undefined : type}
         {...props}
       />
     </div>
   );
 };
+
+export default TextField;

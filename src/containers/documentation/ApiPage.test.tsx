@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router';
-import { APICategory } from 'src/apiDefs/schema';
+import { APICategory } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import { fakeCategories, unmetDeactivationInfo } from '../../__mocks__/fakeCategories';
 import * as apiDefs from '../../apiDefs/query';

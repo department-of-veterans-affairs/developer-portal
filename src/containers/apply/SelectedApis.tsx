@@ -1,11 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { ThunkDispatch } from 'redux-thunk';
-
-import ErrorableCheckbox from '@department-of-veterans-affairs/formation-react/ErrorableCheckbox';
-import * as actions from '../../actions';
-import { RootState } from '../../types';
+import { CheckboxRadioField } from '../../components';
 
 interface APICheckbox {
   id: string;
@@ -16,25 +11,19 @@ interface APICheckboxListProps {
   apiCheckboxes: APICheckbox[];
 }
 
-type ApiSelectDispatch = ThunkDispatch<RootState, undefined, actions.ToggleSelectedAPI>;
-
-const ApiCheckboxList = (props: APICheckboxListProps): JSX.Element => {
-  const apiInputs = useSelector((state: RootState) => state.application.inputs.apis);
-  const dispatch: ApiSelectDispatch = useDispatch();
-  return (
-    <>
-      {props.apiCheckboxes.map(api => (
-        <ErrorableCheckbox
-          key={api.id}
-          name={api.id}
-          checked={apiInputs[api.id] as boolean}
-          label={api.label}
-          onValueChange={(): void => void dispatch(actions.toggleSelectedApi(api.id))}
-        />
-      ))}
-    </>
-  );
-};
+const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => (
+  <>
+    {apiCheckboxes.map(api => (
+      <CheckboxRadioField
+        type="checkbox"
+        key={api.id}
+        name="apis"
+        label={api.label}
+        value={api.id}
+      />
+    ))}
+  </>
+);
 
 const oauthInfo = [
   {
