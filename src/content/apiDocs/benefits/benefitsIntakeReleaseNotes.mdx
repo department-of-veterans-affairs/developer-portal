@@ -1,6 +1,9 @@
 ### May 17, 2021
-Only allow alpha characters, dashes -, and forward slashes /, (*no numbers or other special characters) in the Veteran First and Last Name fields
-* pull request: https://github.com/department-of-veterans-affairs/vets-api/pull/6882
+(v1) In order to further automate matches of submitted documents with Veterans downstream, the required Veteran First and Last name metadata fields now only allow alpha characters, dashes -, and forward slashes /. Additionally, these fields must be less than or equal to 50 characters. No numbers or other special characters may be submitted in these fields. 
+
+Submissions with invalid characters will receive Error Status DOC102	"Invalid Veteran name (e.g. empty, invalid characters, or too long). Names must match the regular expression /^[a-zA-Z\-\/]{1,50}$/"
+
+[#6882](https://github.com/department-of-veterans-affairs/vets-api/pull/6882)
 
 ---
 
