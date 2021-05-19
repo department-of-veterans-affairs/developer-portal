@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation } from 'react-router-dom';
+import ErrorBoundaryPage from '../../containers/ErrorBoundaryPage';
 import { SiteRoutes } from '../../Routes';
 
 const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
@@ -31,7 +33,9 @@ const PageContent = (): JSX.Element => {
 
   return (
     <main id="main" ref={mainRef} tabIndex={-1}>
-      <SiteRoutes />
+      <ErrorBoundary FallbackComponent={ErrorBoundaryPage}>
+        <SiteRoutes />
+      </ErrorBoundary>
     </main>
   );
 };
