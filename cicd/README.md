@@ -5,7 +5,7 @@
 1. [Overview](#overview)
 2. [CI](#ci)
 3. [Releases](#release)
-4. [Deployments]([#deployments)
+4. [Deployments](#deployments)
 5. [Build Environment](#build-environment)
 
 ## Overview
