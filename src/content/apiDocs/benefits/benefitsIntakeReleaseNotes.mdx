@@ -1,3 +1,10 @@
+### May 20, 2021
+(v1) On May 17, we made changes to Veteran First and Last name field validations for the Benefits Intake API, which are described in a release note below. 
+
+Based on the high number of errors being received, we are temporarily turning off these changes and reverting back to previous field requirements. We are working on updating the new validations to allow spaces and reduce the number of errors returned. 
+
+When those changes are made, we will turn on the new validations, post an updated release note, and send a notification to all consumers. 
+
 ### May 17, 2021
 (v1) In order to further automate matches of submitted documents with Veterans downstream, the required Veteran First and Last name metadata fields now only allow alpha characters, dashes -, and forward slashes /. Additionally, these fields must be less than or equal to 50 characters. No numbers or other special characters may be submitted in these fields. 
 
