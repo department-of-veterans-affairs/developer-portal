@@ -46,6 +46,10 @@ const oauthInfo = [
 
 const apiInfo = [
   {
+    id: 'claimsAttributes',
+    label: 'Claims Attributes API',
+  },
+  {
     id: 'benefits',
     label: 'VA Benefits API',
   },

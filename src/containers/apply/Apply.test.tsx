@@ -18,7 +18,7 @@ describe('Apply', () => {
     render(
       <MemoryRouter>
         <Apply />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 
@@ -33,10 +33,18 @@ describe('Apply', () => {
       const submitButton = screen.getByRole('button', { name: 'Submit' });
       await waitFor(() => expect(submitButton).toBeDisabled());
       await act(async () => {
-        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc', { delay: 0.01 });
-        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck', { delay: 0.01 });
-        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'merry@theshire.net', { delay: 0.01 });
-        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', { delay: 0.01 });
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'merry@theshire.net', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
         userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
@@ -46,6 +54,27 @@ describe('Apply', () => {
       userEvent.click(submitButton);
 
       expect(await screen.findByText('lord-of-moria')).toBeInTheDocument();
+    });
+  });
+
+  describe('rendering', () => {
+    it('displays the expected checkboxes', () => {
+      expect(screen.getByRole('checkbox', { name: /Claims Attributes API/ })).toBeInTheDocument();
+      expect(screen.getByRole('checkbox', { name: /VA Benefits API/ })).toBeInTheDocument();
+      expect(screen.getByRole('checkbox', { name: /VA Facilities API/ })).toBeInTheDocument();
+      expect(screen.getByRole('checkbox', { name: /VA Forms API/ })).toBeInTheDocument();
+      expect(
+        screen.getByRole('checkbox', { name: /VA Veteran Confirmation API/ }),
+      ).toBeInTheDocument();
+
+      expect(screen.getByRole('checkbox', { name: /VA Claims API/ })).toBeInTheDocument();
+      expect(screen.getByRole('checkbox', { name: /VA Health API/ })).toBeInTheDocument();
+      expect(
+        screen.getByRole('checkbox', { name: /Community Care Eligibility API/ }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('checkbox', { name: /VA Veteran Verification API/ }),
+      ).toBeInTheDocument();
     });
   });
 });

@@ -1,3 +1,12 @@
+### May 17, 2021
+(v1) In order to further automate matches of submitted documents with Veterans downstream, the required Veteran First and Last name metadata fields now only allow alpha characters, dashes -, and forward slashes /. Additionally, these fields must be less than or equal to 50 characters. No numbers or other special characters may be submitted in these fields. 
+
+Submissions with invalid characters will receive Error Status DOC102	"Invalid Veteran name (e.g. empty, invalid characters, or too long). Names must match the regular expression /^[a-zA-Z\-\/]{1,50}$/"
+
+[#6882](https://github.com/department-of-veterans-affairs/vets-api/pull/6882)
+
+---
+
 ### April 2, 2021
 (v1) We added new error detail messages that provide additional detail for a small number of submissions returning the DOC202 ERROR code.
 * Unidentified Mail: We could not associate this submission with a Veteran. Please verify the identifying information and resubmit.

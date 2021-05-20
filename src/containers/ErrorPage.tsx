@@ -1,16 +1,24 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import Helmet from 'react-helmet';
-import notFoundImage from '../assets/404.svg';
-import './NotFound.scss';
+import errorImage400 from '../assets/400.svg';
+import errorImage404 from '../assets/404.svg';
+import './ErrorPage.scss';
 
 interface LinkTarget {
   pathSegment: string;
   title: string;
 }
 
-const NotFound: React.FunctionComponent = () => {
+interface ErrorPageProps {
+  errorCode: number;
+  error?: Error;
+}
+
+const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProps) => {
+  const { error, errorCode } = props;
   const lists: LinkTarget[] = [
+    { pathSegment: 'authorization', title: 'Authorization' },
     { pathSegment: 'appeals', title: 'Appeals API' },
     { pathSegment: 'benefits', title: 'Benefits API' },
     { pathSegment: 'facilities', title: 'Facilities API' },
@@ -18,12 +26,17 @@ const NotFound: React.FunctionComponent = () => {
     { pathSegment: 'health', title: 'Health API' },
     { pathSegment: 'verification', title: 'Vereran Verification API' },
   ];
+  const errorImage = errorCode === 404 ? errorImage404 : errorImage400;
+  const errorHeading = errorCode === 404 ? 'Page not found' : 'An error was encountered';
+  const errorMessage = error
+    ? `${error.name}: ${error.message}`
+    : 'Try using these links or the search bar to find your way forward.';
 
   return (
     <>
       <div
         className={classNames(
-          'vaapi-not-found-header',
+          'vaapi-error-page-header',
           'vads-l-grid-container--full',
           'medium-screen:vads-u-padding-y--5',
           'medium-screen:vads-u-padding-x--9',
@@ -45,12 +58,10 @@ const NotFound: React.FunctionComponent = () => {
             )}
           >
             <Helmet>
-              <title>Page Not Found</title>
+              <title>{errorHeading}</title>
             </Helmet>
-            <h1>Page not found.</h1>
-            <p className="vads-u-font-size--lg vads-u-font-weight--bold">
-              Try using these links or the search bar to find your way forward.
-            </p>
+            <h1>{errorHeading}.</h1>
+            <p className="vads-u-font-size--lg vads-u-font-weight--bold">{errorMessage}</p>
           </div>
           <div
             className={classNames(
@@ -62,13 +73,17 @@ const NotFound: React.FunctionComponent = () => {
               'vads-u-order--first',
             )}
           >
-            <img className="vads-u-width--auto" src={notFoundImage} alt="404 graphic" />
+            <img
+              className="vads-u-width--auto"
+              src={errorImage}
+              alt={`Error ${errorCode} graphic`}
+            />
           </div>
         </div>
       </div>
       <div
         className={classNames(
-          'not-found-body',
+          'error-page-body',
           'vads-l-grid-container--full',
           'medium-screen:vads-u-padding-x--9',
           'small-screen:vads-u-padding--5',
@@ -137,4 +152,4 @@ const NotFound: React.FunctionComponent = () => {
   );
 };
 
-export default NotFound;
+export default ErrorPage;
