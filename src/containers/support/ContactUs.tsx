@@ -1,11 +1,10 @@
 import React from 'react';
 import { useLocation } from 'react-router';
 import Helmet from 'react-helmet';
-import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
 import { FormType } from '../../types/contactUsForm';
 import { PageHeader } from '../../components';
-import { ContactUsAlertComment } from './ContactUsAlertComment';
+import { ContactUsAlertBox } from './ContactUsAlertBox';
 import ContactUsForm from './ContactUsForm';
 
 const ContactUs = (): JSX.Element => {
@@ -34,13 +33,7 @@ const ContactUs = (): JSX.Element => {
           </Helmet>
           <PageHeader halo="Support" header="Contact Us" />
           <p>If you have questions about APIs, development, or related topics, use this form to send us a message.</p>
-          <AlertBox
-            status="info"
-            key="contactus"
-            className="vads-u-margin-bottom--2 vads-u-padding-y--1"
-          >
-            <ContactUsAlertComment />
-          </AlertBox>
+          <ContactUsAlertBox />
           <ContactUsForm onSuccess={onSuccess} defaultType={type} />
         </>
       )}
