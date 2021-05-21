@@ -7,7 +7,7 @@ import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { RootState } from '../../types';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
-import PKCEAuthContent from './PKCEAuthContent.mdx';
+import { PKCEAuthContent } from './PKCEAuthContent';
 
 const BuildingOIDCContent = (): JSX.Element => {
   const selectedOAuthApi = useSelector(

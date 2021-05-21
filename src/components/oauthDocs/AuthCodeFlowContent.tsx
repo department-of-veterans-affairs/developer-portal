@@ -3,7 +3,6 @@ import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import ReactMarkdown from 'react-markdown';
 import highlight from 'rehype-highlight';
-// import { Link } from 'react-router-dom';
 import { APISelector, CodeWrapper } from '../index';
 import { APIDescription } from '../../apiDefs/schema';
 
@@ -97,12 +96,12 @@ https://sandbox-api.va.gov${
             <strong>Required</strong>
           </td>
           <td>
-            Specifying a `state` param helps protect against some classes of Cross Site Request
-            Forgery (CSRF) attacks, and applications must include it. The <code>state</code> param
-            will be passed back from the authorization server to your redirect URL unchanged, and
-            your application should verify that it has the expected value. This helps assure that
-            the client receiving the authorization response is the same as the client that initiated
-            the authorization process.{' '}
+            Specifying a <code>state</code> param helps protect against some classes of Cross Site
+            Request Forgery (CSRF) attacks, and applications must include it. The <code>state</code>{' '}
+            param will be passed back from the authorization server to your redirect URL unchanged,
+            and your application should verify that it has the expected value. This helps assure
+            that the client receiving the authorization response is the same as the client that
+            initiated the authorization process.{' '}
           </td>
         </tr>
         <tr>
@@ -113,7 +112,7 @@ https://sandbox-api.va.gov${
             <strong>Required</strong>
           </td>
           <td>
-            Will use your application&pos;s default scopes unless you specify a smaller subset of
+            Will use your application&#39;s default scopes unless you specify a smaller subset of
             scopes separated by a space. Review the{' '}
             <HashLink to={{ ...location, hash: '#scopes' }}>Scopes section</HashLink> for more
             information.
@@ -131,7 +130,7 @@ https://sandbox-api.va.gov${
               impersonate a user of your application.
             </p>
             <p>
-              A nonce should be generated on a per-session basis and stored on the user&pos;s
+              A nonce should be generated on a per-session basis and stored on the user&#39;s
               client. If the user requested an id_token (by including the openid scope in the
               authorization request) then the{' '}
               <HashLink to={{ ...location, hash: '#payload' }}>payload of the id_token</HashLink>{' '}
@@ -191,16 +190,17 @@ https://sandbox-api.va.gov${
       Veteran to the URL above. The Veteran is taken through an authentication flow by VA.gov and
       asked to consent to your application accessing their data. The data that can be accessed is
       defined by your scopes. After the Veteran gives permission, your application will receive a
-      response based on the `response_type` you requested.
+      response based on the <code>response_type</code> you requested.
     </p>
     <h4 id="requesting-a-token" tabIndex={-1}>
       Requesting a Token with an Authorization Code Grant
     </h4>
     <p>
       After a Veteran gives authorization for you to access their data, their browser will be
-      redirected to your application with the response shown below, which returns the `code` and
-      `state` parameters you must use to make a request to our authorization service. We require the
-      state parameter for all authorization code grant flows.
+      redirected to your application with the response shown below, which returns the{' '}
+      <code>code</code> and
+      <code>state</code> parameters you must use to make a request to our authorization service. We
+      require the state parameter for all authorization code grant flows.
     </p>
     <CodeWrapper key={`snippet-1-${props.selectedOption}`}>
       <ReactMarkdown>
@@ -286,9 +286,9 @@ Pragma: no-cache
       it in the header of HTTP requests as <code>{'Authorization: Bearer {access_token}'}</code>.
     </p>
     <p>
-      <strong>Note:</strong>
-      the <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink> will only work
-      for the API and scopes for which you have previously initiated authorization. If you need
+      <strong>Note:</strong> the{' '}
+      <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink> will only work for
+      the API and scopes for which you have previously initiated authorization. If you need
       additional scopes in the future, you will need to build a new authorization URL with the
       additional scopes and have the Veteran grant consent again.
     </p>
@@ -363,12 +363,11 @@ token={ *refresh_token* }&token_type_hint=refresh_token`}
       Revoking Grants
     </h4>
     <p>
-      <strong>NOTE:</strong>
-      This endpoint is not available in the production environment and excludes identity provider
-      grants.
+      <strong>NOTE:</strong> This endpoint is not available in the production environment and
+      excludes identity provider grants.
     </p>
     <p>
-      A user will be prompted only once to consent to each client&pos;s use of their data. Such a
+      A user will be prompted only once to consent to each client&#39;s use of their data. Such a
       grant will remain in effect unless and until revoked. Grants for a specific user and client
       are revoked in the sandbox environment using the below endpoint.
     </p>
