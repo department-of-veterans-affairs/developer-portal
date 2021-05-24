@@ -7,11 +7,13 @@ The Developer Portal is the documentation and help portal for the VA API Platfor
 The Developer Portal was bootstrapped with [create-react-app](https://github.com/facebook/create-react-app) and requires [Node v10+](https://nodejs.org/en/download/).
 
 First install the dependencies:
+
 ```
 npm install
 ```
 
 Next, create a `.env.local` file with the following contents (don't worry about what these mean yet):
+
 ```
 PORT=3001
 REACT_APP_VETSGOV_SWAGGER_API=https://dev-api.va.gov
@@ -20,6 +22,7 @@ REACT_APP_SALESFORCE_ENV=VICDEV
 ```
 
 Now start the app:
+
 ```
 npm start
 ```
@@ -47,11 +50,11 @@ The developer portal sits behind an Nginx reverse proxy. Nginx is configured to 
 
 Adding a new API to the apply page requires changes in a few different places. You'll need to add the API in the following places:
 
- * `actions/index.ts` - To control the toggling of the checkbox when signing up
- * `containers/ApplyForm.ts` - Get the new API's checkbox on the apply page
- * `containers/ApplySuccess.ts` - Show's the new API key if needed after it has been generated
- * `reducers/index.ts` - Controls which APIs have been checked on the apply page
+- `containers/apply/SelectedApis.tsx` - Get the new API's checkbox on the apply page
+- `containers/apply/ApplySuccess.tsx` - Show's the new API key if needed after it has been generated
+- `types/constants/index.ts` - Add the new API to the list of standard or oAuth APIs
+- The `developer-portal-backend` will need to be updated as well. Follow the steps below to get it set up locally
 
 ## Running the Backend Locally
 
-Sometimes you will need to test the apply page locally. To do so you can fire up the backend and point the developer portal at it. Clone the `developer-portal-lambda-backend` repo. Run `docker-compose up` and local DynamoDB, Kong and lambda containers will spin up. If you update `.env.local` with `REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=http://localhost:9000` (You'll need to restart your locally running developer portal) you can test the apply page locally. See the [backend repo](https://github.com/department-of-veterans-affairs/developer-portal-lambda-backend#local-interation) for more information about running the backend locally.
+Sometimes you will need to test the apply page locally. To do so you can fire up the backend and point the developer portal at it. Clone the `developer-portal-backend` repo. Run `docker-compose up` and local DynamoDB, Kong and lambda containers will spin up. If you update `.env.local` with `REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL=http://localhost:9000` (You'll need to restart your locally running developer portal) you can test the apply page locally. See the [backend repo](https://github.com/department-of-veterans-affairs/developer-portal-backend) for more information about running the backend locally.
