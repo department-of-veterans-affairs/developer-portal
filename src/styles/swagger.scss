@@ -146,4 +146,25 @@
   button.authorization__btn {
     display: none;
   }
+
+  button.opblock-summary-control {
+    display: contents;
+    text-align: left;
+    font-weight: normal;
+  }
+  .opblock .opblock-summary-method {
+    color: #fff;
+    line-height: 21px;
+  }
+  .models-control {
+    display: contents;
+    text-align: left;
+
+    & > span {
+      line-height: 20.8px;
+    }
+  }
+  .model-box-control {
+    display: contents;
+  }
 }
