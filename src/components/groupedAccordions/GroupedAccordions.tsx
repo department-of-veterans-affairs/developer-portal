@@ -1,4 +1,4 @@
-import CollapsiblePanel from '@department-of-veterans-affairs/formation-react/CollapsiblePanel';
+import CollapsiblePanel from '@department-of-veterans-affairs/component-library/CollapsiblePanel';
 import classNames from 'classnames';
 import * as React from 'react';
 
@@ -75,7 +75,12 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
         const panelRef: CollapsiblePanelComponentRef = React.createRef<CollapsiblePanelComponent>();
         panelRefs.push(panelRef);
         return (
-          <CollapsiblePanel ref={panelRef} panelName={c.title} startOpen={allExpanded} key={c.title}>
+          <CollapsiblePanel
+            ref={panelRef}
+            panelName={c.title}
+            startOpen={allExpanded}
+            key={c.title}
+          >
             {c.body}
           </CollapsiblePanel>
         );

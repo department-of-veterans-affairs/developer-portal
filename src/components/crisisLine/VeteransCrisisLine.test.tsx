@@ -24,7 +24,7 @@ describe('VeteransCrisisLine', () => {
     fireEvent.click(modalButton);
     await waitFor(() => expect(screen.queryByRole('alertdialog')).toBeInTheDocument());
 
-    const dialogCloseBtn = screen.queryAllByRole('button')[1];
+    const dialogCloseBtn = screen.getByRole('button');
     fireEvent.click(dialogCloseBtn);
     await waitFor(() => expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument());
   });
