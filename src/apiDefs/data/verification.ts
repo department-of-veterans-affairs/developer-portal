@@ -11,7 +11,7 @@ const verificationApis: APIDescription[] = [
     description: 'Provides methods to standardize and validate addresses.',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/address_validation/docs/v1/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/address-validation/v1/openapi.json`,
       },
     ],
     enabledByDefault: true,
