@@ -3,7 +3,7 @@ import React, { FC, useState } from 'react';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
-import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 
 import { Form, Formik } from 'formik';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
@@ -54,14 +54,18 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
     };
 
     try {
-      const response = await makeRequest<DevApplicationResponse>(APPLY_URL, {
-        body: JSON.stringify(applicationBody),
-        headers: {
-          accept: 'application/json',
-          'content-type': 'application/json',
+      const response = await makeRequest<DevApplicationResponse>(
+        APPLY_URL,
+        {
+          body: JSON.stringify(applicationBody),
+          headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+          },
+          method: 'POST',
         },
-        method: 'POST',
-      }, { responseType: ResponseType.JSON });
+        { responseType: ResponseType.JSON },
+      );
 
       const json = response.body as DevApplicationResponse;
 
@@ -84,20 +88,21 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
   return (
     <div className="vads-l-row">
       <p
-        className={classNames('usa-font-lead', 'vads-u-font-family--sans', 'vads-u-margin-bottom--2', 'vads-u-margin-top--0')}
+        className={classNames(
+          'usa-font-lead',
+          'vads-u-font-family--sans',
+          'vads-u-margin-bottom--2',
+          'vads-u-margin-top--0',
+        )}
       >
         This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
         credentials you will receive are for sandbox development only. When your app is ready to go
-        live, you may <Link to="/go-live">request production access</Link>. Please submit the form below
-        and you&apos;ll receive an email with your API key(s) and/or OAuth credentials, as well as
-        further instructions. Thank you for being a part of our platform.
+        live, you may <Link to="/go-live">request production access</Link>. Please submit the form
+        below and you&apos;ll receive an email with your API key(s) and/or OAuth credentials, as
+        well as further instructions. Thank you for being a part of our platform.
       </p>
       <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={submitForm}
-          validate={validateForm}
-        >
+        <Formik initialValues={initialValues} onSubmit={submitForm} validate={validateForm}>
           {({ dirty, isValid, isSubmitting, values }): React.ReactNode => (
             <Form className="usa-form">
               <h2>Application</h2>
@@ -115,7 +120,8 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
               <CheckboxRadioField
                 label={
                   <span>
-                    I agree to the <Link to="/terms-of-service">Terms of Service</Link> <span className="form-required-span">(*Required)</span>
+                    I agree to the <Link to="/terms-of-service">Terms of Service</Link>{' '}
+                    <span className="form-required-span">(*Required)</span>
                   </span>
                 }
                 name="termsOfService"
@@ -124,22 +130,23 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
                 className="form-checkbox"
               />
 
-              <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>{isSubmitting ? 'Sending...' : 'Submit'}</button>
+              <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>
+                {isSubmitting ? 'Sending...' : 'Submit'}
+              </button>
             </Form>
           )}
         </Formik>
-        {
-          submissionError &&
-            <AlertBox
-              status="error"
-              headline="We encountered a server error while saving your form. Please try again later."
-              content={
-                <span>
-                  Need assistance? Create an issue through our <Link to="/support">Support page</Link>
-                </span>
-              }
-            />
-        }
+        {submissionError && (
+          <AlertBox
+            status="error"
+            headline="We encountered a server error while saving your form. Please try again later."
+            content={
+              <span>
+                Need assistance? Create an issue through our <Link to="/support">Support page</Link>
+              </span>
+            }
+          />
+        )}
       </div>
     </div>
   );

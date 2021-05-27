@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -23,17 +23,13 @@ const ApiNotFoundPage = (): JSX.Element => {
         content="Try using the links below or the search bar to find your way forward."
         status="warning"
       />
-      {category?.name && (
-        <PageHeader header={category.name} />
-      )}
+      {category?.name && <PageHeader header={category.name} />}
       <ul>
         {category?.apis
           .filter((item: APIDescription) => !isApiDeactivated(item))
           .map((item: APIDescription) => (
             <li key={item.urlFragment}>
-              <Link to={`/explore/${apiCategoryKey}/docs/${item.urlFragment}`}>
-                {item.name}
-              </Link>
+              <Link to={`/explore/${apiCategoryKey}/docs/${item.urlFragment}`}>{item.name}</Link>
             </li>
           ))}
       </ul>
