@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import CollapsiblePanel from '@department-of-veterans-affairs/formation-react/CollapsiblePanel';
+import CollapsiblePanel from '@department-of-veterans-affairs/component-library/CollapsiblePanel';
 import { PageHeader } from '../../../../components';
 import { useFlag } from '../../../../flags';
 import {

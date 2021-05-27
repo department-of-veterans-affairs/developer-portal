@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Modal from '@department-of-veterans-affairs/formation-react/Modal';
+import Modal from '@department-of-veterans-affairs/component-library/Modal';
 import classNames from 'classnames';
 
 import rightArrow from '../../assets/arrow-right-white.svg';
