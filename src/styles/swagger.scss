@@ -148,21 +148,25 @@
   }
 
   button.opblock-summary-control {
-    display: contents;
-    text-align: left;
+    align-items: inherit;
+    background: none;
+    display: flex;
     font-weight: normal;
-  }
-  .opblock .opblock-summary-method {
-    color: #fff;
-    line-height: 21px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    width: 100%;
   }
   .models-control {
-    display: contents;
+    background: none;
+    display: flex;
+    font-family: Titillium Web, sans-serif;
+    line-height: 1.3;
+    margin: 0;
+    padding: 0;
     text-align: left;
-
-    & > span {
-      line-height: 20.8px;
-    }
+    width: 100%;
   }
   .model-box-control {
     display: contents;
