@@ -148,7 +148,7 @@
   }
 
   button.opblock-summary-control {
-    align-items: inherit;
+    align-items: center;
     background: none;
     display: flex;
     font-weight: normal;
@@ -169,7 +169,11 @@
     width: 100%;
   }
   .model-box-control {
-    display: contents;
+    background: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    text-align: left;
   }
   .model.model-title {
     line-height: 1.5;
