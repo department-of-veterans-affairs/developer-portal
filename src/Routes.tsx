@@ -15,7 +15,7 @@ import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
 import News from './containers/News';
-import NotFound from './containers/NotFound';
+import ErrorPage from './containers/ErrorPage';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
 import PathToProduction from './content/goLive.mdx';
@@ -75,7 +75,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {flags.consumer_docs && (
         <Route path={CONSUMER_PATH} render={(): JSX.Element => <h1>Consumer docs page</h1>} />
       )}
-      <Route component={NotFound} />
+      <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
       {/* The below Routes are needed for the sitemap */}
       <Route path="/explore/:apiCategoryKey/docs/quickstart" />
       <Route path="/explore/:apiCategoryKey/docs/:apiName" />

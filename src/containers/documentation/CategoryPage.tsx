@@ -1,4 +1,4 @@
-import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import * as React from 'react';
 import Helmet from 'react-helmet';
 import { useParams } from 'react-router';

@@ -1,6 +1,5 @@
 import { curlify } from './curlify';
 import ExtendedLayout from './ExtendedLayout';
-import OperationTag from './OperationTag';
 import './StyleOverride.scss';
 import { VersionActions } from './VersionActions';
 import { VersionReducers } from './VersionReducers';
@@ -15,7 +14,6 @@ const allowTryItOutSelector = (): boolean => false;
 const SwaggerPlugins = (versionHandler: (newVersion: string) => void): Plugins => ({
   components: {
     ExtendedLayout,
-    OperationTag,
     ServersContainer: (): null => null,
     authorizeBtn: (): null => null,
   },

@@ -21,13 +21,13 @@
   },
   "dependencies": {
     "@braintree/sanitize-url": "^5.0.0",
+    "@department-of-veterans-affairs/component-library": "^2.5.4",
     "@department-of-veterans-affairs/formation": "^6.14.0",
-    "@department-of-veterans-affairs/formation-react": "^5.10.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "@sentry/browser": "^4.6.6",
+    "@sentry/browser": "^6.4.1",
     "classnames": "^2.3.1",
     "core-js": "^3.9.1",
     "flag": "^4.4.0",
@@ -46,6 +46,7 @@
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.3",
     "react-dom": "^17.0.2",
+    "react-error-boundary": "^3.1.1",
     "react-helmet": "^6.1.0",
     "react-immutable-proptypes": "^2.2.0",
     "react-markdown": "^6.0.2",
@@ -66,8 +67,9 @@
     "stickyfill": "^1.1.1-strict",
     "stickyfilljs": "^2.1.0",
     "swagger-client": "3.13.1",
-    "swagger-ui": "^3.46.0",
+    "swagger-ui": "^3.49.0",
     "swagger-ui-themes": "^3.0.1",
+    "trim": "^1.0.1",
     "url-polyfill": "^1.1.12",
     "uswds": "^1.6.13",
     "uuid": "^8.3.2",
@@ -102,7 +104,6 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-responsive": "^8.0.2",
     "@types/react-router": "^5.1.13",
-    "@types/react-router-dom": "^5.1.7",
     "@types/react-router-hash-link": "^1.2.1",
     "@types/react-tabs": "^2.3.2",
     "@types/uuid": "^8.3.0",
@@ -177,7 +178,9 @@
     "webpack-manifest-plugin": "^3.1.1"
   },
   "resolutions": {
-    "husky": "6.0.0"
+    "dns-packet": "5.2.2",
+    "husky": "6.0.0",
+    "trim": "1.0.1"
   },
   "jest": {
     "projects": [

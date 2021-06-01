@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { SupportSection } from './Support';
+import { ContactUsAlertBox } from './ContactUsAlertBox';
 
 const headerProps = {
   description:
@@ -22,6 +23,7 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
       <title>Support</title>
     </Helmet>
     <PageHeader {...headerProps} />
+    <ContactUsAlertBox />
     <div className={defaultFlexContainer()}>
       {props.sections.map((section: SupportSection) => (
         <CardLink name={section.name} url={`/support/${section.id}`} key={section.id}>

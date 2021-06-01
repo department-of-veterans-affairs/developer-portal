@@ -1,4 +1,4 @@
-import AlertBox from '@department-of-veterans-affairs/formation-react/AlertBox';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import classNames from 'classnames';
 import * as React from 'react';
 import Helmet from 'react-helmet';

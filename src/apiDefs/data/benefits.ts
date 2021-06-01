@@ -64,10 +64,10 @@ const benefitsApis: APIDescription[] = [
     description: 'Improve claim routing',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/claims-attributes/v1/oas.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/claims-attributes/v1/openapi.json`,
       },
     ],
-    enabledByDefault: false,
+    enabledByDefault: true,
     name: 'Claims Attributes',
     releaseNotes: ClaimsAttributesReleaseNotes,
     trustedPartnerOnly: false,
