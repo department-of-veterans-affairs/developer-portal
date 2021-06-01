@@ -140,7 +140,7 @@ https://sandbox-api.va.gov${
             <p>
               The{' '}
               <a href="https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes">
-                OpenID Connect documentation
+                OpenID Connect documentation{' '}
               </a>
               offers the following suggestion for generating nonces:
             </p>

@@ -17,9 +17,9 @@ const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => (
       PKCE (Proof Key for Code Exchange) Authorization
     </h3>
     <p>
-      <strong>NOTE:</strong>We provide a{' '}
+      <strong>NOTE:</strong> We provide a{' '}
       <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/tree/master/samples/oauth_pkce_cli">
-        sample CLI application
+        sample CLI application{' '}
       </a>
       for getting started using PKCE.
     </p>
@@ -262,8 +262,8 @@ Pragma: no-cache
       <code>Authorization: Bearer &#123;access_token&#125;</code>.
     </p>
     <p>
-      <strong>NOTE:</strong>the{' '}
-      <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink> will only work for
+      <strong>NOTE: </strong>the{' '}
+      <HashLink to={{ ...location, hash: '#id-token' }}>access token </HashLink> will only work for
       the API and scopes for which you have previously initiated authorization.
     </p>
     <p>
