@@ -31,11 +31,13 @@ describe('Auth Flow Content', () => {
     expect(heading).toBeInTheDocument();
   });
   it('Oauth base path found ', () => {
-    const x = screen.getAllByText(/\/oauth2\/veteran\-verification\/v1\/authorization\? /i);
-    expect(x.length).toBeGreaterThan(0);
+    const codeWrapperArray = screen.getAllByText(
+      /\/oauth2\/veteran\-verification\/v1\/authorization\? /i,
+    );
+    expect(codeWrapperArray.length).toBeGreaterThan(0);
   });
   it('Corrent number of code wrappers', () => {
-    const x = document.getElementsByClassName('code-wrapper');
-    expect(x.length).toBeGreaterThanOrEqual(11);
+    const codeWrapperArray = document.getElementsByClassName('code-wrapper');
+    expect(codeWrapperArray.length).toBeGreaterThanOrEqual(11);
   });
 });

@@ -61,7 +61,6 @@
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.7",
     "rehype-highlight": "^4.1.0",
-    "remark-highlight.js": "^6.0.0",
     "reselect": "^4.0.0",
     "seamless-immutable": "^7.1.4",
     "stickyfill": "^1.1.1-strict",

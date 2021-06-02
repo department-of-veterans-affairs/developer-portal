@@ -215,7 +215,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         Use the following format, in HTTP basic authentication, for your request using the returned
         code and state parameters.
       </p>
-      <p>
+      <div>
         <ul>
           <li>
             Use your client ID and client secret as the HTTP basic authentication username and
@@ -226,7 +226,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
             provided during registration.
           </li>
         </ul>
-      </p>
+      </div>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper key={`snippet-2-${props.selectedOption}`}>
         <ReactMarkdown rehypePlugins={[highlight]}>
