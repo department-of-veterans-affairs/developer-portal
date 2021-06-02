@@ -215,18 +215,16 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         Use the following format, in HTTP basic authentication, for your request using the returned
         code and state parameters.
       </p>
-      <div>
-        <ul>
-          <li>
-            Use your client ID and client secret as the HTTP basic authentication username and
-            password.
-          </li>
-          <li>
-            Be sure to replace <code>{'<yourRedirectURL>'}</code> with the redirect URL that you
-            provided during registration.
-          </li>
-        </ul>
-      </div>
+      <ul>
+        <li>
+          Use your client ID and client secret as the HTTP basic authentication username and
+          password.
+        </li>
+        <li>
+          Be sure to replace <code>{'<yourRedirectURL>'}</code> with the redirect URL that you
+          provided during registration.
+        </li>
+      </ul>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper key={`snippet-2-${props.selectedOption}`}>
         <ReactMarkdown rehypePlugins={[highlight]}>
