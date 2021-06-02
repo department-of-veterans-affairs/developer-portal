@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-base-to-string */
 import * as React from 'react';
 
 import classNames from 'classnames';
@@ -5,12 +6,14 @@ import { Location, LocationDescriptor } from 'history';
 import { match as Match } from 'react-router';
 import { NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
 import './SideNav.scss';
+import { history } from '../../store';
 
 export interface SideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
   className?: string;
   subNavLevel: number;
   sharedAnchors: string[];
+  forceAriaCurrent?: boolean;
 }
 
 /**
@@ -30,15 +33,11 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
 
     let pathname: string;
     let hash: string;
-    let to: LocationDescriptor =
-      typeof props.to === 'function' ? props.to(location) : props.to;
+    let to: LocationDescriptor = typeof props.to === 'function' ? props.to(location) : props.to;
 
     if (typeof to === 'string') {
       const url = new URL(to, 'http://example.com');
-      ({
-        hash,
-        pathname,
-      } = url);
+      ({ hash, pathname } = url);
     } else {
       // object
       pathname = to.pathname ?? '';
@@ -71,9 +70,27 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
     }
   };
 
+  const navHashLinkIsExact = (
+    to:
+      | LocationDescriptor<unknown>
+      | ((location: Location<unknown>) => LocationDescriptor<unknown>),
+  ): boolean => {
+    const url = to.toString();
+    if (url.startsWith('#')) {
+      // On a hash link match to just the hash because pathname isn't present
+      return url === history.location.hash;
+    } else {
+      /*
+       * On a regular link match to the full pathname and hash to
+       * precent parent links from getting aria-current="page"
+       */
+      return url === history.location.pathname + history.location.search + history.location.hash;
+    }
+  };
+
   // Omit unneeded parent props from NavLink
   /* eslint-disable @typescript-eslint/no-unused-vars -- omit sharedAnchors from navLinkProps */
-  const { name, className, subNavLevel, sharedAnchors, ...navLinkProps } = props;
+  const { name, className, subNavLevel, sharedAnchors, forceAriaCurrent, ...navLinkProps } = props;
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   return (
@@ -100,6 +117,7 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
           'vads-u-border-left--5px': subNavLevel === 0,
         })}
         isActive={navHashLinkIsActive}
+        aria-current={props.forceAriaCurrent || navHashLinkIsExact(props.to) ? 'page' : 'false'}
         {...navLinkProps}
       >
         {name}
