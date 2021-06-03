@@ -33,7 +33,7 @@ const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
         parameters, and scopes listed below.
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-0-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown>
           {`~~~plaintext
 https://sandbox-api.va.gov${baseAuthPath}/authorization?
@@ -185,7 +185,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         and the <code>code_verifier</code> used to create the <code>code_challenge</code> in the
         previous step.
       </p>
-      <CodeWrapper key={`snippet-1-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 HTTP/1.1 302 Found
@@ -206,7 +206,7 @@ Location: <yourRedirectURL>?
         </li>
       </ul>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-2-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
@@ -229,7 +229,7 @@ grant_type=authorization_code
         before the token expires:
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-3-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~json
 {
@@ -243,7 +243,7 @@ grant_type=authorization_code
         </ReactMarkdown>
       </CodeWrapper>
       <p>If an error occurs, you will instead receive a 400 response, like this:</p>
-      <CodeWrapper key={`snippet-4-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 HTTP/1.1 400 Bad Request
@@ -272,7 +272,7 @@ Pragma: no-cache
         after its expiry by sending the following request.
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-5-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1

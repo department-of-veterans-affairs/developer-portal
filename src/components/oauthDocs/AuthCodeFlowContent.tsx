@@ -33,7 +33,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         parameters, and scopes listed below.
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-0-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown>
           {`~~~plaintext
 https://sandbox-api.va.gov${baseAuthPath}/authorization?
@@ -202,7 +202,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         <code>state</code> parameters you must use to make a request to our authorization service.
         We require the state parameter for all authorization code grant flows.
       </p>
-      <CodeWrapper key={`snippet-1-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown>
           {`~~~http
   HTTP/1.1 302 Found
@@ -226,7 +226,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         </li>
       </ul>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-2-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
@@ -246,7 +246,7 @@ grant_type=authorization_code
         The response will look like this:
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-3-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 HTTP/1.1 200 OK
@@ -266,7 +266,7 @@ Pragma: no-cache
         </ReactMarkdown>
       </CodeWrapper>
       <p>If an error occurs, you will instead receive a response like this:</p>
-      <CodeWrapper key={`snippet-4-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 HTTP/1.1 400 Bad Request
@@ -297,7 +297,7 @@ Pragma: no-cache
         after its expiry by sending the following request.
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-5-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
@@ -321,7 +321,7 @@ grant_type=refresh_token&refresh_token={ *refresh_token* }`}
         currently have access to their data and can make adjustments to these access rights
         (grants).
       </p>
-      <CodeWrapper key={`snippet-6-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 GET ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/manage HTTP/1.1
@@ -337,7 +337,7 @@ Host: sandbox-api.va.gov`}
         inactive.
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-7-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
@@ -349,7 +349,7 @@ token={ *access_token* }&token_type_hint=access_token`}
         </ReactMarkdown>
       </CodeWrapper>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-8-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
@@ -373,7 +373,7 @@ token={ *refresh_token* }&token_type_hint=refresh_token`}
         are revoked in the sandbox environment using the below endpoint.
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
-      <CodeWrapper key={`snippet-9-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 DELETE ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/grants HTTP/1.1
@@ -388,7 +388,7 @@ client_id={client_id}&email={test account email}`}
         user’s email, which must be passed into the body of the request. Bad requests will be
         returned with an error response and description of the error.
       </p>
-      <CodeWrapper key={`snippet-10-${props.selectedOption}`}>
+      <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
           {`~~~http
 HTTP/1.1 400 Bad Request
