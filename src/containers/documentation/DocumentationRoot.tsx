@@ -81,7 +81,7 @@ const ExploreSideNav = (): JSX.Element => {
           key="authorization"
           to="/explore/authorization"
           name="Authorization"
-          forceAriaCurrent={true}
+          forceAriaCurrent
         />
       </Flag>
       {apiCategoryOrder.map((categoryKey: string) => {
