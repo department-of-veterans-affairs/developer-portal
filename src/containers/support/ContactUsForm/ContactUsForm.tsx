@@ -34,15 +34,21 @@ const processedData = (values: ContactUsFormState): SubmissionData => {
       type: values.type,
     };
   } else {
-    return {
+    const isInternalOnly = values.apiInternalOnly === 'yes';
+    const data: SubmissionData = {
       ...contactFormData,
       apiDescription: values.apiDescription ?? '',
       apiDetails: values.apiDetails,
-      apiInternalOnly: values.apiInternalOnly === 'yes',
-      apiInternalOnlyDetails: values.apiInternalOnlyDetails,
+      apiInternalOnly: isInternalOnly,
       apiOtherInfo: values.apiOtherInfo ?? '',
       type: values.type,
     };
+
+    if (isInternalOnly) {
+      data.apiInternalOnlyDetails = values.apiInternalOnlyDetails;
+    }
+
+    return data;
   }
 };
 
