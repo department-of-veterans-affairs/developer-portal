@@ -5,7 +5,7 @@ import { Location, LocationDescriptor } from 'history';
 import { match as Match } from 'react-router';
 import { NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
 import './SideNav.scss';
-import { isNavHashLinkExact } from '../../utils/isNavHashLinkExact';
+import { isHashLinkExact } from '../../utils/isNavHashLinkExact';
 
 export interface SideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
@@ -98,7 +98,7 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
           'vads-u-border-left--5px': subNavLevel === 0,
         })}
         isActive={navHashLinkIsActive}
-        aria-current={props.forceAriaCurrent || isNavHashLinkExact(props.to) ? 'page' : 'false'}
+        aria-current={props.forceAriaCurrent || isHashLinkExact(props.to) ? 'page' : 'false'}
         {...navLinkProps}
       >
         {name}
