@@ -45,20 +45,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
               'medium-screen:vads-u-width--auto',
             )}
           >
-            Read the Docs
-          </Link>
-          <Link
-            id="hero-api-publishing"
-            to="/api-publishing"
-            className={classNames(
-              'usa-button',
-              'va-api-button-secondary',
-              'vads-u-padding-x--4',
-              'vads-u-width--full',
-              'medium-screen:vads-u-width--auto',
-            )}
-          >
-            API Publishing
+            Request an API Key
           </Link>
         </div>
       </div>
