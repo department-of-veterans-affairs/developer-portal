@@ -204,16 +204,46 @@ describe('SupportContactUsFormPublishing', () => {
         });
 
         describe('submitting the form', () => {
-          beforeEach(async () => {
+          it('sends the values', async () => {
             userEvent.click(screen.getByRole('button', { name: 'Submit' }));
             expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
-          });
-          it('sends the values', async () => {
             expect(jsonSpy).toHaveBeenCalledWith({
               apiDescription: 'www.api.com',
               apiDetails: 'It takes the ring to mordor',
               apiInternalOnly: true,
               apiInternalOnlyDetails: 'The enemy has spies everywhere',
+              apiOtherInfo: 'No',
+              email: 'fbag@bagend.com',
+              firstName: 'Frodo',
+              lastName: 'Baggins',
+              organization: '',
+              type: 'PUBLISHING',
+            });
+            await waitFor(() => {
+              expect(mockMakeRequest).toHaveBeenCalledWith('http://fake.va.gov/internal/developer-portal/public/contact-us', {
+                body: expect.stringContaining('\"email\":\"fbag@bagend.com\"') as unknown,
+                headers: {
+                  accept: 'application/json',
+                  'content-type': 'application/json',
+                },
+                method: 'POST',
+              }, { responseType: 'TEXT' });
+            });
+            expect(mockOnSuccess).toHaveBeenCalled();
+            expect(await screen.findByRole('button', { name: 'Submit' })).toBeInTheDocument();
+          });
+
+          it('does not send api internal only details if the api is not internal only', async () => {
+            userEvent.click(screen.getByRole('radio', { name: 'No' }));
+            await waitFor(() => {
+              expect(screen.queryByRole('textbox', { name: /Tell us more about why the API needs to be restricted to internal VA use./ })).not.toBeInTheDocument();
+            });
+            userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+            expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
+            expect(jsonSpy).toHaveBeenCalledWith({
+              apiDescription: 'www.api.com',
+              apiDetails: 'It takes the ring to mordor',
+              apiInternalOnly: false,
               apiOtherInfo: 'No',
               email: 'fbag@bagend.com',
               firstName: 'Frodo',
