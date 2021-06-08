@@ -1,9 +1,7 @@
 /* eslint-disable max-lines, max-nested-callbacks -- Jest exceptions */
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, waitFor } from '@testing-library/react';
 import { LocationDescriptor } from 'history';
 import 'jest';
-import * as React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { isHashLinkExact } from './isNavHashLinkExact';
 
 const runTest = async ({
@@ -16,15 +14,7 @@ const runTest = async ({
   expectation: boolean;
 }): Promise<void> => {
   window.history.pushState({}, 'Test page', location);
-  render(
-    <BrowserRouter>
-      <p>{isHashLinkExact(to) ? 'isHashLinkExact:true' : 'isHashLinkExact:false'}</p>
-    </BrowserRouter>,
-  );
-
-  const pTag = screen.getByText(/isHashLinkExact/i);
-  expect(pTag).toBeInTheDocument();
-  expect(pTag.textContent).toBe(`isHashLinkExact:${expectation ? 'true' : 'false'}`);
+  expect(isHashLinkExact(to)).toBe(expectation);
   await waitFor(() => cleanup()); // used multiple times in one test
 };
 
