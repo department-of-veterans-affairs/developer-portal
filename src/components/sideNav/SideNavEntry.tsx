@@ -5,12 +5,14 @@ import { Location, LocationDescriptor } from 'history';
 import { match as Match } from 'react-router';
 import { NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
 import './SideNav.scss';
+import { isHashLinkExact } from '../../utils/isNavHashLinkExact';
 
 export interface SideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
   className?: string;
   subNavLevel: number;
   sharedAnchors: string[];
+  forceAriaCurrent?: boolean;
 }
 
 /**
@@ -30,15 +32,11 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
 
     let pathname: string;
     let hash: string;
-    let to: LocationDescriptor =
-      typeof props.to === 'function' ? props.to(location) : props.to;
+    let to: LocationDescriptor = typeof props.to === 'function' ? props.to(location) : props.to;
 
     if (typeof to === 'string') {
       const url = new URL(to, 'http://example.com');
-      ({
-        hash,
-        pathname,
-      } = url);
+      ({ hash, pathname } = url);
     } else {
       // object
       pathname = to.pathname ?? '';
@@ -73,7 +71,7 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
 
   // Omit unneeded parent props from NavLink
   /* eslint-disable @typescript-eslint/no-unused-vars -- omit sharedAnchors from navLinkProps */
-  const { name, className, subNavLevel, sharedAnchors, ...navLinkProps } = props;
+  const { name, className, subNavLevel, sharedAnchors, forceAriaCurrent, ...navLinkProps } = props;
   /* eslint-enable @typescript-eslint/no-unused-vars */
 
   return (
@@ -100,6 +98,7 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
           'vads-u-border-left--5px': subNavLevel === 0,
         })}
         isActive={navHashLinkIsActive}
+        aria-current={props.forceAriaCurrent || isHashLinkExact(props.to) ? 'page' : 'false'}
         {...navLinkProps}
       >
         {name}
