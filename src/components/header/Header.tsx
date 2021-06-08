@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
+import { HashLink, NavHashLink } from 'react-router-hash-link';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
@@ -81,9 +81,9 @@ const Header = (): JSX.Element => {
           <div className={desktopOnly()}>
             <div className={classNames('vads-u-display--flex', 'vads-u-flex-direction--column')}>
               <div className={defaultFlexContainer(true)}>
-                <Link to="/apply" className={buttonClassnames}>
+                <NavHashLink to="/apply" className={buttonClassnames}>
                   Request an API Key
-                </Link>
+                </NavHashLink>
                 <Search />
               </div>
             </div>
