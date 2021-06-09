@@ -1,9 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import codeImage from '../assets/code-block.svg';
+import documentationImage from '../assets/documentation.svg';
 import rocketImage from '../assets/rocket.svg';
-import prImage from '../assets/pr.svg';
+import branchImage from '../assets/branch.svg';
+import './Home.scss';
 
 // import apiDefinitions, { apiCategoryOrder } from '../apiDefs/data/categories';
 // import padlockImg from '../assets/homepage-padlock.svg';
@@ -31,7 +32,11 @@ const columnContentClasses = classNames(
   'vads-u-padding-bottom--2',
 );
 
-const buttonClasses = classNames('usa-button usa-button-secondary');
+const buttonClasses = classNames(
+  'usa-button',
+  'usa-button-secondary',
+  'vads-u-align-items--center',
+);
 
 const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--200');
 
@@ -47,14 +52,15 @@ export interface ColumnContentProps {
 const ColumnContent = (props: ColumnContentProps): JSX.Element => {
   const { ariaLabel, imageSrc, title, children, buttonText, buttonDestination } = props;
   return (
-    <div className={columnContentClasses}>
+    <div className={columnContentClasses} style={{ maxWidth: '356px' }}>
       <div aria-label={ariaLabel}>
         <div>
           <img className={imageClasses} src={imageSrc} alt="" role="presentation" />
         </div>
         <div>
-          <h2 className="vads-u-border-bottom--5px">{title}</h2>
-          {children}
+          <h2>{title}</h2>
+          <div className="title-border" />
+          <p>{children}</p>
         </div>
         <Link to={buttonDestination} className={buttonClasses}>
           {buttonText}
@@ -91,11 +97,11 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
 const Home = (): JSX.Element => (
   <div className="home">
     <Hero />
-    <section className="vads-u-display--flex">
+    <section className="vads-u-display--flex vads-u-justify-content--center">
       <ColumnContent
         ariaLabel="API Docs"
         title="API Documentation"
-        imageSrc={codeImage}
+        imageSrc={documentationImage}
         buttonDestination="#"
         buttonText="Read The Docs"
       >
@@ -115,7 +121,7 @@ const Home = (): JSX.Element => (
       <ColumnContent
         ariaLabel="API Docs"
         title="API Publishing"
-        imageSrc={prImage}
+        imageSrc={branchImage}
         buttonDestination="#"
         buttonText="Add your API to Lighthouse"
       >

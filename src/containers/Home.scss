@@ -1,0 +1,8 @@
+@import '../styles/variables';
+@import '~@department-of-veterans-affairs/formation/sass/full';
+
+div.title-border {
+  width: 20%;
+  margin: auto;
+  border-bottom: 5px solid #e31c3d;
+}
