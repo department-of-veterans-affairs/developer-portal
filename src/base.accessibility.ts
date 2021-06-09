@@ -31,7 +31,7 @@ describe('Accessibility tests', () => {
      * a new version of jest-axe has axe-core 4.1.0 as a downstream dependency,
      * and we upgrade to it.
      */
-    if (path === '/explore/health/docs/authorization') {
+    if (path === '/explore/authorization') {
       await page.evaluate(() => {
         window.axe.configure({
           checks: [
@@ -42,6 +42,7 @@ describe('Accessibility tests', () => {
               id: 'color-contrast',
             },
           ],
+          rules: [{ enabled: false, id: 'scrollable-region-focusable' }],
         });
       });
     }

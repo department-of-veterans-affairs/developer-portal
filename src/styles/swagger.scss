@@ -146,4 +146,36 @@
   button.authorization__btn {
     display: none;
   }
+
+  button.opblock-summary-control {
+    align-items: center;
+    background: none;
+    display: flex;
+    font-weight: normal;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+  }
+  .models-control {
+    background: none;
+    display: flex;
+    font-family: Titillium Web, sans-serif;
+    line-height: 1.3;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    width: 100%;
+  }
+  .model-box-control {
+    background: none;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+  }
+  .model.model-title {
+    line-height: 1.5;
+  }
 }
