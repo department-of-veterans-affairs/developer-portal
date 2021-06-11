@@ -25,7 +25,11 @@ import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
 import {
+  CONSUMER_APIS_PATH,
+  CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
+  CONSUMER_PROD_PATH,
+  CONSUMER_SANDBOX_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -86,6 +90,14 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {supportSections.map((section: SupportSection) => (
         <Route path={`/support/${section.id}`} key={section.id} />
       ))}
+      {flags.consumer_docs && (
+        <>
+          <Route exact path={CONSUMER_SANDBOX_PATH} />
+          <Route exact path={CONSUMER_PROD_PATH} />
+          <Route exact path={CONSUMER_DEMO_PATH} />
+          <Route exact path={CONSUMER_APIS_PATH} />
+        </>
+      )}
     </Switch>
   );
 };
