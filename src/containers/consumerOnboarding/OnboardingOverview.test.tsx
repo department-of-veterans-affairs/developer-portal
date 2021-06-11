@@ -1,5 +1,11 @@
-import { getAllByRole, render, screen } from '@testing-library/react';
+import { getAllByRole, getByRole, render, screen } from '@testing-library/react';
 import React from 'react';
+import {
+  CONSUMER_APIS_PATH,
+  CONSUMER_DEMO_PATH,
+  CONSUMER_PROD_PATH,
+  CONSUMER_SANDBOX_PATH,
+} from '../../types/constants/paths';
 import OnboardingOverview from './OnboardingOverview';
 
 describe('OnboardingOverview', () => {
@@ -38,17 +44,29 @@ describe('OnboardingOverview', () => {
         expect(steps).toHaveLength(4);
       });
 
-      it.each([
-        ['Start developing', 1],
-        ['Request production access', 2],
-        ['Prepare for and complete a demo', 3],
-        ['Receive production access', 4],
-      ])('includes the "%s" step (step %d)', (stepName: string, stepNumber: number) => {
-        expect(steps[stepNumber - 1]).toBeInTheDocument();
+      describe.each([
+        ['Start developing', 1, CONSUMER_SANDBOX_PATH],
+        ['Request production access', 2, CONSUMER_PROD_PATH],
+        ['Prepare for and complete a demo', 3, CONSUMER_DEMO_PATH],
+        ['Receive production access', 4, CONSUMER_APIS_PATH],
+      ])('includes the "%s" step (step %d)', (
+        stepName: string,
+        stepNumber: number,
+        linkURL: string,
+      ) => {
+        it('with the appropriate step name/title', () => {
+          expect(steps[stepNumber - 1]).toBeInTheDocument();
 
-        const firstChild = steps[stepNumber - 1].children[0];
-        expect(firstChild.tagName).toBe('STRONG');
-        expect(firstChild).toHaveTextContent(stepName);
+          const firstChild = steps[stepNumber - 1].children[0];
+          expect(firstChild.tagName).toBe('STRONG');
+          expect(firstChild).toHaveTextContent(stepName);
+        });
+
+        it('with the appropriate link to the related page', () => {
+          const link = getByRole(steps[stepNumber - 1], 'link');
+          expect(link).toBeInTheDocument();
+          expect(link.getAttribute('href')).toBe(linkURL);
+        });
       });
     });
   });
