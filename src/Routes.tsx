@@ -11,6 +11,7 @@ import {
 } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 import { MarkdownPage } from './components';
+import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
@@ -73,9 +74,10 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       />
       <Route path={PUBLISHING_PATH} component={Publishing} />
       {flags.consumer_docs && (
-        <Route path={CONSUMER_PATH} render={(): JSX.Element => <h1>Consumer docs page</h1>} />
+        <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />
       )}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
+
       {/* The below Routes are needed for the sitemap */}
       <Route path="/explore/:apiCategoryKey/docs/quickstart" />
       <Route path="/explore/:apiCategoryKey/docs/:apiName" />
