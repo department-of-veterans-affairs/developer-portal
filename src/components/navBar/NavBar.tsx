@@ -164,16 +164,23 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               ))}
             </SubNav>
           </li>
-          <li className={navItemStyles()}>
-            <MainNavItem
-              onClick={props.onMobileNavClose}
-              targetUrl="/news"
-              largeScreenProps={sharedNavItemProps}
-              className={navLinkStyles}
-            >
-              News
-            </MainNavItem>
-          </li>
+          <Flag name={[FLAG_CONSUMER_DOCS]}>
+            <li className={navItemStyles()}>
+              <MainNavItem
+                targetUrl={CONSUMER_PATH}
+                largeScreenProps={sharedNavItemProps}
+                excludeSmallScreen
+                className={navLinkStyles}
+              >
+                Onboarding
+              </MainNavItem>
+              <SubNav name="Consumer Docs">
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="overview">
+                  Overview
+                </SubNavEntry>
+              </SubNav>
+            </li>
+          </Flag>
           <li className={navItemStyles()}>
             <MainNavItem
               onClick={props.onMobileNavClose}
@@ -182,6 +189,16 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               className={navLinkStyles}
             >
               Release Notes
+            </MainNavItem>
+          </li>
+          <li className={navItemStyles()}>
+            <MainNavItem
+              onClick={props.onMobileNavClose}
+              targetUrl="/news"
+              largeScreenProps={sharedNavItemProps}
+              className={navLinkStyles}
+            >
+              News
             </MainNavItem>
           </li>
           <li className={navItemStyles()}>
@@ -230,23 +247,6 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               </SubNavEntry>
             </SubNav>
           </li>
-          <Flag name={[FLAG_CONSUMER_DOCS]}>
-            <li className={navItemStyles()}>
-              <MainNavItem
-                targetUrl={CONSUMER_PATH}
-                largeScreenProps={sharedNavItemProps}
-                excludeSmallScreen
-                className={navLinkStyles}
-              >
-                Consumer Docs
-              </MainNavItem>
-              <SubNav name="Consumer Docs">
-                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="overview">
-                  Overview
-                </SubNavEntry>
-              </SubNav>
-            </li>
-          </Flag>
           <li className={classNames(navItemStyles(), mobileOnly())}>
             <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
               API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
