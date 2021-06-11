@@ -210,26 +210,6 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           </li>
           <li className={navItemStyles()}>
             <MainNavItem
-              onClick={props.onMobileNavClose}
-              targetUrl="/news"
-              largeScreenProps={sharedNavItemProps}
-              className={navLinkStyles}
-            >
-              News
-            </MainNavItem>
-          </li>
-          <li className={navItemStyles()}>
-            <MainNavItem
-              onClick={props.onMobileNavClose}
-              targetUrl="/support"
-              largeScreenProps={sharedNavItemProps}
-              className={navLinkStyles}
-            >
-              Support
-            </MainNavItem>
-          </li>
-          <li className={navItemStyles()}>
-            <MainNavItem
               targetUrl={PUBLISHING_PATH}
               largeScreenProps={sharedNavItemProps}
               excludeSmallScreen
@@ -263,6 +243,26 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                 Contact Us
               </SubNavEntry>
             </SubNav>
+          </li>
+          <li className={navItemStyles()}>
+            <MainNavItem
+              onClick={props.onMobileNavClose}
+              targetUrl="/news"
+              largeScreenProps={sharedNavItemProps}
+              className={navLinkStyles}
+            >
+              News
+            </MainNavItem>
+          </li>
+          <li className={navItemStyles()}>
+            <MainNavItem
+              onClick={props.onMobileNavClose}
+              targetUrl="/support"
+              largeScreenProps={sharedNavItemProps}
+              className={navLinkStyles}
+            >
+              Support
+            </MainNavItem>
           </li>
           <li className={classNames(navItemStyles(), mobileOnly())}>
             <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
