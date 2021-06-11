@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -6,7 +7,11 @@ import { match as Match } from 'react-router';
 import { NavHashLink } from 'react-router-hash-link';
 import { FLAG_CATEGORIES, FLAG_CONSUMER_DOCS } from '../../types/constants';
 import {
+  CONSUMER_APIS_PATH,
+  CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
+  CONSUMER_PROD_PATH,
+  CONSUMER_SANDBOX_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -174,9 +179,21 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               >
                 Onboarding
               </MainNavItem>
-              <SubNav name="Consumer Docs">
-                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="overview">
+              <SubNav name="Onboarding">
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="onboarding-overview">
                   Overview
+                </SubNavEntry>
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_SANDBOX_PATH} id="sandbox-access">
+                  Request sandbox access
+                </SubNavEntry>
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PROD_PATH} id="prod-access">
+                  Request production access
+                </SubNavEntry>
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_DEMO_PATH} id="demo">
+                  Prepare for the demo
+                </SubNavEntry>
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_APIS_PATH} id="working-with-apis">
+                  Working with our APIs
                 </SubNavEntry>
               </SubNav>
             </li>
