@@ -6,9 +6,10 @@ import {
   CONSUMER_PROD_PATH,
   CONSUMER_SANDBOX_PATH,
 } from '../../types/constants/paths';
+import './OnboardingOverview.scss';
 
 const ConsumerOnboardingOverview = (): JSX.Element => (
-  <>
+  <div className="consumer-onboarding-overview">
     <PageHeader header="API Consumer Onboarding" />
     <p>
       Our API consumer onboarding process ensures the quality and security of applications integrating
@@ -62,22 +63,22 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       send us the right information. If we require changes, completing them quickly will help you get
       production access sooner.
     </p>
-    <strong>Requesting access to the production environment</strong>
+    <h3>Requesting access to the production environment</h3>
     <p>
       Once you submit the production access form, we’ll review your information and notify you within
       about 1 to 2 weeks if there are any changes we need.
     </p>
-    <strong>Making any needed changes</strong>
+    <h3>Making any needed changes</h3>
     <p>
       The timeline for this step depends on how many changes are needed and the speed at which your team
       can complete them and notify us.
     </p>
-    <strong>Scheduling and completing a demo</strong>
+    <h3>Scheduling and completing a demo</h3>
     <p>
       Once the changes are made, we aim to schedule the demo within a week. Demos generally last from 30
       to 60 minutes. No demo is needed for open data APIs.
     </p>
-    <strong>Getting production access</strong>
+    <h3>Getting production access</h3>
     <p>
       After the demo is complete and any final items are wrapped up, production access is granted within
       a week.
@@ -98,7 +99,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       each step of the way–from <a href={CONSUMER_SANDBOX_PATH}>requesting automatic sandbox access</a>
       &nbsp;to getting approved for production, and from troubleshooting to regular maintenance and beyond.
     </p>
-  </>
+  </div>
 );
 
 export default ConsumerOnboardingOverview;
