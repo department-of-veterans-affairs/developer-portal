@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { CheckboxRadioField } from '../../components';
 import { useFormikContext, ErrorMessage } from 'formik';
+import { CheckboxRadioField } from '../../components';
 import './SelectedApis.scss';
 
 interface APICheckbox {
@@ -71,38 +71,40 @@ const apiInfo = [
 
 const SelectedAPIs = (): JSX.Element => {
   const { errors, touched } = useFormikContext();
-  const shouldDisplayErrors = !!errors['apis'] && !!touched['apis'];
+  const checkboxName = 'apis';
+  const shouldDisplayErrors = !!errors[checkboxName] && !!touched[checkboxName];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
   const selectAPIClass = shouldDisplayErrors ? 'vads-u-font-weight--bold' : 'vads-u-font-weight--normal';
 
   return (
-  <div className="apply-api-select vads-u-margin-top--3">
-    <fieldset className={classNames(containerClass)}>
-      <legend className={classNames(selectAPIClass, 'vads-u-font-size--base', labelClass)}>
-        Select the APIs you want to access. <span className="apply-required">{"(*Required)"}</span>
-      </legend>
-      <span id={`${errors['apis']}`} className={validationClass}>
+    <div className="apply-api-select vads-u-margin-top--3">
+      <fieldset className={classNames(containerClass)}>
+        <legend className={classNames(selectAPIClass, 'vads-u-font-size--base', labelClass)}>
+          Select the APIs you want to access. <span className="apply-required">&#40;*Required&#41;</span>
+        </legend>
+        <span id="api-checkbox-error" className={validationClass}>
           <ErrorMessage name="apis" />
-      </span>
-      <p>You can always request access to more APIs later.</p>
-      <fieldset
-        className="vads-u-margin-top--2"
-        aria-label="Please select all of the Standard APIs you'd like access to:"
-      >
-        <legend className="vads-u-font-size--lg">Standard APIs:</legend>
-        <ApiCheckboxList apiCheckboxes={apiInfo} />
+        </span>
+        <p>You can always request access to more APIs later.</p>
+        <fieldset
+          className="vads-u-margin-top--2"
+          aria-label="Please select all of the Standard APIs you'd like access to:"
+        >
+          <legend className="vads-u-font-size--lg">Standard APIs:</legend>
+          <ApiCheckboxList apiCheckboxes={apiInfo} />
+        </fieldset>
+        <fieldset
+          className="vads-u-margin-top--2"
+          aria-label="Please select all the OAuth APIs you'd like access to:"
+        >
+          <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
+          <ApiCheckboxList apiCheckboxes={oauthInfo} />
+        </fieldset>
       </fieldset>
-      <fieldset
-        className="vads-u-margin-top--2"
-        aria-label="Please select all the OAuth APIs you'd like access to:"
-      >
-        <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
-        <ApiCheckboxList apiCheckboxes={oauthInfo} />
-      </fieldset>
-    </fieldset>
-  </div> 
-)};
+    </div>
+  );
+};
 
 export default SelectedAPIs;
