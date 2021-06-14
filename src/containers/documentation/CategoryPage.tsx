@@ -2,6 +2,8 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import classNames from 'classnames';
 import { Flag, useFlag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
@@ -9,6 +11,7 @@ import { AuthorizationCard, CardLink, OnlyTags, PageHeader } from '../../compone
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { FLAG_AUTH_DOCS_V2, FLAG_HOSTED_APIS, PAGE_HEADER_ID, FLAG_CONSUMER_DOCS } from '../../types/constants';
+import { CONSUMER_PATH } from '../../types/constants/paths';
 
 const CategoryPage = (): JSX.Element => {
   const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
@@ -17,7 +20,7 @@ const CategoryPage = (): JSX.Element => {
   const {
     apis,
     name: categoryName,
-    content: { intro, overview, veteranRedirect },
+    content: { overview, veteranRedirect },
   } = getApiDefinitions()[apiCategoryKey];
 
   let cardSection;
@@ -61,17 +64,18 @@ const CategoryPage = (): JSX.Element => {
       <Helmet>
         <title>{categoryName}</title>
       </Helmet>
-      <PageHeader
-        header={categoryName}
-        veteranRedirect={veteranRedirect}
-        apiCategoryKey={apiCategoryKey}
-      />
-      {intro({})}
+      <PageHeader header={categoryName} />
+      {veteranRedirect && (
+        <AlertBox status="info" key={apiCategoryKey} className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}>
+          {veteranRedirect.message}&nbsp;
+          <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
+        </AlertBox>
+      )}
       <div className="vads-u-width--full">
         {overview({})}
         <Flag name={[FLAG_CONSUMER_DOCS]}>
           <p>
-            <Link to="/consumer-docs">
+            <Link to={CONSUMER_PATH}>
               Read the consumer onboarding guide for getting production access
             </Link>.
           </p>
