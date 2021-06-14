@@ -170,7 +170,7 @@ const typescriptESLintRules = {
    * ESLint's indent rule will not work for Typescript either, though. feel free to disable this
    * rule with a comment wherever you run into issues.
    */
-  '@typescript-eslint/indent': ['error', 2],
+  '@typescript-eslint/indent': ['off', 2],
   '@typescript-eslint/keyword-spacing': 'error',
   '@typescript-eslint/lines-between-class-members': 'error',
   '@typescript-eslint/member-delimiter-style': 'error',
