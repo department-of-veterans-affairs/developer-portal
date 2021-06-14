@@ -1,9 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { CheckboxRadioField } from '../../components';
-import { useFormikContext, 
-  ErrorMessage 
-} from 'formik';
+import { useFormikContext, ErrorMessage } from 'formik';
 import './SelectedApis.scss';
 
 interface APICheckbox {
@@ -78,17 +76,15 @@ const SelectedAPIs = (): JSX.Element => {
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
   const selectAPIClass = shouldDisplayErrors ? 'vads-u-font-weight--bold' : 'vads-u-font-weight--normal';
-  console.log(`select box errors: `, errors);
 
   return (
   <div className="apply-api-select vads-u-margin-top--3">
     <fieldset className={classNames(containerClass)}>
       <legend className={classNames(selectAPIClass, 'vads-u-font-size--base', labelClass)}>
-        Select the APIs you want to access.
+        Select the APIs you want to access. <span className="apply-required">{"(*Required)"}</span>
       </legend>
       <span id={`${errors['apis']}`} className={validationClass}>
-          <ErrorMessage name={`${errors['apis']}`} />
-            <>{`${errors['apis']}`}</>
+          <ErrorMessage name="apis" />
       </span>
       <p>You can always request access to more APIs later.</p>
       <fieldset

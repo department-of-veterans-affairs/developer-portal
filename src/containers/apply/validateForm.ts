@@ -26,7 +26,7 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   }
 
   if (!anyApiSelected(values)) {
-    errors.apis = 'At least one API is required for submission.';
+    errors.apis = 'Choose at least one API.';
   }
 
   if (anyOAuthApisSelected(values)) {
