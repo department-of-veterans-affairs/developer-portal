@@ -1,12 +1,10 @@
 import { APICategoryContent } from '../../../apiDefs/schema';
 import AddressValidationReleaseNotes from './addressValidationReleaseNotes.mdx';
-import VerificationIntro from './verificationIntro.mdx';
 import VerificationOverview from './verificationOverview.mdx';
 import VeteranConfirmationReleaseNotes from './veteranConfirmationReleaseNotes.mdx';
 import VeteranVerificationReleaseNotes from './veteranVerificationReleaseNotes.mdx';
 
 const verificationContent: APICategoryContent = {
-  intro: VerificationIntro,
   overview: VerificationOverview,
   placardText:
     'Verify Veteran status for job sites, e-commerce sites, and third-party benefit sites',
