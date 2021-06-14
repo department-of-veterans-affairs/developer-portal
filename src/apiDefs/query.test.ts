@@ -32,7 +32,7 @@ describe('query module', () => {
         description: 'VA Facilities',
         docSources: [
           {
-            openApiUrl: 'http://localhost:3000/services/va_facilities/docs/v0/api',
+            openApiUrl: 'http://localhost:3000/internal/docs/facilities/v0/openapi.json',
           },
         ],
         enabledByDefault: true,
