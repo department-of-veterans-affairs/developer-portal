@@ -7,7 +7,7 @@ const facilitiesApis: APIDescription[] = [
     description: 'VA Facilities',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/va_facilities/docs/v0/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/facilities/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,
