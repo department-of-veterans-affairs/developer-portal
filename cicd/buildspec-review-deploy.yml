@@ -66,10 +66,17 @@ phases:
       # Create the required dot files prior to build for proper deployment to review bucket
       - |
         for env in ${ENVIRONMENTS}; do
-        cat <<EOF > .env.${env}.local
-        PUBLIC_URL=/${S3_REVIEW_BUCKET}/${COMMIT_HASH}/${env}
-        REACT_APP_SENTRY_DSN=${PREVIEW_SENTRY_DSN}
-        EOF
+          date > ./current-date
+          echo '{' > ${env}/deploy.json
+          echo "  \"environment\": \"${env}\"," >> ${env}/deploy.json
+          echo "  \"date\": \"$( cat current-date )\"," >> ${env}/deploy.json
+          echo "  \"commit\": \"${COMMIT_HASH:0:7}\"" >> ${env}/deploy.json
+          echo '}' >> ${env}/deploy.json
+          rm ./current-date
+          cat <<EOF > .env.${env}.local
+          PUBLIC_URL=/${S3_REVIEW_BUCKET}/${COMMIT_HASH}/${env}
+          REACT_APP_SENTRY_DSN=${PREVIEW_SENTRY_DSN}
+          EOF
         done
       - make build
   build:
@@ -84,5 +91,5 @@ phases:
       # Deploy To s3 review bucket
       - aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${COMMIT_HASH}/
       - |
-          comment="these changes have been deployed to an s3 bucket. a build for each environment is available: <br><br> ${links} <br> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
+        comment="these changes have been deployed to an s3 bucket. a build for each environment is available: <br><br> ${links} <br> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
       - gh pr comment ${PRNUM} --body "${comment}"
