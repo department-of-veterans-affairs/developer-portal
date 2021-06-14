@@ -66,17 +66,10 @@ phases:
       # Create the required dot files prior to build for proper deployment to review bucket
       - |
         for env in ${ENVIRONMENTS}; do
-          date > ./current-date
-          echo '{' > ${env}/deploy.json
-          echo "  \"environment\": \"${env}\"," >> ${env}/deploy.json
-          echo "  \"date\": \"$( cat current-date )\"," >> ${env}/deploy.json
-          echo "  \"commit\": \"${COMMIT_HASH:0:7}\"" >> ${env}/deploy.json
-          echo '}' >> ${env}/deploy.json
-          rm ./current-date
-          cat <<EOF > .env.${env}.local
-          PUBLIC_URL=/${S3_REVIEW_BUCKET}/${COMMIT_HASH}/${env}
-          REACT_APP_SENTRY_DSN=${PREVIEW_SENTRY_DSN}
-          EOF
+        cat <<EOF > .env.${env}.local
+        PUBLIC_URL=/${S3_REVIEW_BUCKET}/${COMMIT_HASH}/${env}
+        REACT_APP_SENTRY_DSN=${PREVIEW_SENTRY_DSN}
+        EOF
         done
       - make build
   build:
@@ -87,6 +80,17 @@ phases:
         for env in ${ENVIRONMENTS}; do
           make build_app ENVIRONMENT=${env} || exit 1
           links="${links} - [${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${COMMIT_HASH}/${env}/index.html) <br>"
+        done
+      # Create deploy.json per environment
+      - |
+        for env in ${ENVIRONMENTS}; do
+          date > ./current-date
+          echo '{' > build/${env}/deploy.json
+          echo "  \"environment\": \"${env}\"," >> build/${env}/deploy.json
+          echo "  \"date\": \"$( cat current-date )\"," >> build/${env}/deploy.json
+          echo "  \"commit\": \"${COMMIT_HASH:0:7}\"" >> build/${env}/deploy.json
+          echo '}' >> build/${env}/deploy.json
+          rm ./current-date
         done
       # Deploy To s3 review bucket
       - aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${COMMIT_HASH}/
