@@ -6,12 +6,10 @@ import rocketImage from '../assets/rocket.svg';
 import branchImage from '../assets/branch.svg';
 import './Home.scss';
 
-// import apiDefinitions, { apiCategoryOrder } from '../apiDefs/data/categories';
-// import padlockImg from '../assets/homepage-padlock.svg';
-// import apiImg from '../assets/homepage-reliable-api.svg';
-import { Hero } from '../components';
-// import { Flag } from '../flags';
-// import { FLAG_CATEGORIES } from '../types/constants';
+import apiDefinitions, { apiCategoryOrder } from '../apiDefs/data/categories';
+import { CardLink, Hero } from '../components';
+import { Flag } from '../flags';
+import { FLAG_CATEGORIES } from '../types/constants';
 
 // const leftColumnClasses = classNames(
 //   'medium-screen:vads-l-col--4',
@@ -70,29 +68,37 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
   );
 };
 
-// const ApiList = (): JSX.Element => (
-//   <section>
-//     <div className={classNames(flexContainer, 'vads-u-margin-bottom--6')}>
-//       <div className="vads-l-row">
-//         <div className="medium-screen:vads-l-col--4" />
-//         <div className="medium-screen:vads-l-col--8">
-//           <div className="vads-l-row">
-//             {apiCategoryOrder.map((apiCategoryKey: string) => {
-//               const { name, content } = apiDefinitions[apiCategoryKey];
-//               return (
-//                 <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-//                   <CardLink name={`VA ${name}`} url={`/explore/${apiCategoryKey}`}>
-//                     {content.placardText}
-//                   </CardLink>
-//                 </Flag>
-//               );
-//             })}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   </section>
-// );
+const ApiList = (): JSX.Element => (
+  <section className="api-list">
+    <div className="vads-l-grid-container">
+      <h2>A modern, reliable API library.</h2>
+      <p>
+        Our API library makes accessing VA data easier and safer across many categories, including
+        appeals, benefits, health, facilities, forms, and Veteran verification. With our APIs,
+        individuals and organizations can securely access the VA data they need to build helpful
+        tools and services for Veterans at no cost. We’re actively expanding our API library to
+        include new categories and APIs, with the goal of better serving those who have served us.
+      </p>
+      <div className="vads-l-row vads-u-justify-content--space-around">
+        {/* <div className="vads-l-col--4" /> */}
+        {apiCategoryOrder.map((apiCategoryKey: string) => {
+          const { name, content } = apiDefinitions[apiCategoryKey];
+          return (
+            <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+              <CardLink
+                name={name}
+                url={`/explore/${apiCategoryKey}`}
+                linkText={`View the ${name}`}
+              >
+                {content.placardText}
+              </CardLink>
+            </Flag>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+);
 
 const Home = (): JSX.Element => (
   <div className="home">
@@ -102,7 +108,7 @@ const Home = (): JSX.Element => (
         ariaLabel="API Docs"
         title="API Documentation"
         imageSrc={documentationImage}
-        buttonDestination="#"
+        buttonDestination="/explore"
         buttonText="Read The Docs"
       >
         A Veteran-centered API platform for securely accessing VA data to build innovative tools for
@@ -112,7 +118,7 @@ const Home = (): JSX.Element => (
         ariaLabel="API Docs"
         title="Consumer Onboarding"
         imageSrc={rocketImage}
-        buttonDestination="#"
+        buttonDestination="/onboarding"
         buttonText="Review the onboarding process"
       >
         Before your app is ready to go live, we review the quality and security of applications
@@ -122,13 +128,14 @@ const Home = (): JSX.Element => (
         ariaLabel="API Docs"
         title="API Publishing"
         imageSrc={branchImage}
-        buttonDestination="#"
+        buttonDestination="/api-publishing"
         buttonText="Add your API to Lighthouse"
       >
         Change the face of VA data by adding your API to the Lighthouse development portal. Find out
         how you can onboard your API and learn what to expect when working with Lighthouse.
       </ColumnContent>
     </section>
+    <ApiList />
   </div>
 );
 

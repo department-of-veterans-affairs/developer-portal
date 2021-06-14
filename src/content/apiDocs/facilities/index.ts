@@ -6,7 +6,7 @@ import FacilitiesReleaseNotes from './facilitiesReleaseNotes.mdx';
 const facilitiesContent: APICategoryContent = {
   intro: FacilitiesIntro,
   overview: FacilitiesOverview,
-  placardText: 'Access information about VA facilities',
+  placardText: 'Use the VA Facility API to find relevant information about a specific VA facility.',
   shortDescription:
     'Use the VA Facility API to find relevant information about a specific VA facility.',
   veteranRedirect: {

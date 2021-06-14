@@ -17,13 +17,13 @@ const apiDefinitions: APICategories = {
   appeals: {
     apis: appealsApis,
     content: appealsContent,
-    name: 'Appeals API',
+    name: 'Appeals APIs',
     properName: 'Appeals API',
   },
   benefits: {
     apis: benefitsApis,
     content: benefitsContent,
-    name: 'Benefits API',
+    name: 'Benefits APIs',
     properName: 'Benefits Intake API',
   },
   facilities: {
@@ -35,7 +35,7 @@ const apiDefinitions: APICategories = {
   health: {
     apis: healthApis,
     content: healthContent,
-    name: 'Health API',
+    name: 'Health APIs',
     properName: 'Health API',
   },
   vaForms: {
@@ -47,7 +47,7 @@ const apiDefinitions: APICategories = {
   verification: {
     apis: verificationApis,
     content: verificationContent,
-    name: 'Veteran Verification API',
+    name: 'Veteran Verification APIs',
     properName: 'Veteran Verification API',
   },
 };

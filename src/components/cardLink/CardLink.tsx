@@ -10,6 +10,7 @@ const CardLinkPropTypes = {
   name: PropTypes.string.isRequired,
   subhead: PropTypes.node,
   url: PropTypes.string.isRequired,
+  linkText: PropTypes.string,
 };
 
 type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
@@ -25,28 +26,18 @@ const CardLink = (props: CardLinkProps): JSX.Element => (
     to={props.url}
     className={classNames(
       'va-api-card',
-      'vads-u-border-top--5px',
-      'vads-u-margin-y--1p5',
-      'vads-u-margin-right--4',
-      'vads-u-width--full',
+      'vads-u-border--1px',
+      'vads-u-padding-top--3',
+      'vads-u-padding-x--2',
+      'vads-u-padding-bottom--2',
       'vads-u-text-decoration--none',
-      'va-api-u-min-height--100',
     )}
   >
-    <div
-      className={classNames(
-        'va-api-name',
-        'vads-u-color--gray-dark',
-        'vads-u-font-size--lg',
-        'vads-u-font-weight--bold',
-        'vads-u-line-height--3',
-        'vads-u-margin-y--2',
-      )}
-    >
-      {props.name}
-    </div>
+    <div className="name-border" />
+    <h3 className={classNames('va-api-name')}>{props.name}</h3>
     {props.subhead}
     <div className={classNames('va-api-description', 'vads-u-color--base')}>{props.children}</div>
+    <div>{props.linkText}</div>
   </NavHashLink>
 );
 

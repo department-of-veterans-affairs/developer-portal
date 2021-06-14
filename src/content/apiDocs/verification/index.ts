@@ -8,8 +8,7 @@ import VeteranVerificationReleaseNotes from './veteranVerificationReleaseNotes.m
 const verificationContent: APICategoryContent = {
   intro: VerificationIntro,
   overview: VerificationOverview,
-  placardText:
-    'Verify Veteran status for job sites, e-commerce sites, and third-party benefit sites',
+  placardText: 'Empowering Veterans to take control of their data and put it to work.',
   shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
 };
 

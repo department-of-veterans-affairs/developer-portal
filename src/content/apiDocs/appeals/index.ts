@@ -7,7 +7,7 @@ import DecisionReviewReleaseNotes from './decisionReviewReleaseNotes.mdx';
 const appealsContent: APICategoryContent = {
   intro: AppealsIntro,
   overview: AppealsOverview,
-  placardText: 'Build tools to help Veterans electronically manage, submit, and track appeals.',
+  placardText: 'Enables managing benefit decision appeals on behalf of a Veteran',
   shortDescription: 'Enables managing benefit decision appeals on behalf of a Veteran.',
 };
 

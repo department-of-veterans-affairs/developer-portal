@@ -31,11 +31,11 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
               'small-desktop-screen:vads-u-font-size--h1',
             )}
           >
-            A Veteran-centered API platform for securely accessing VA data.
+            A Veteran-centered API platform for securely accessing VA data
           </h1>
           <Link
             id="hero-read-api-docs"
-            to="/explore"
+            to="/apply"
             className={classNames(
               'usa-button',
               'va-api-button-default',

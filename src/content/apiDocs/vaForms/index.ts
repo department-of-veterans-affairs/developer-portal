@@ -6,7 +6,7 @@ import VAFormsReleaseNotes from './vaFormsReleaseNotes.mdx';
 const vaFormsContent: APICategoryContent = {
   intro: VAFormsIntro,
   overview: VAFormsOverview,
-  placardText: 'Look up VA forms and check for new versions',
+  placardText: 'Look up VA forms and check for new versions.',
   shortDescription: 'Look up VA forms and check for new versions.',
   veteranRedirect: {
     linkText: 'Find the forms you need',
