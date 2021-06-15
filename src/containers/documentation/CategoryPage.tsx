@@ -20,7 +20,7 @@ const CategoryPage = (): JSX.Element => {
   const {
     apis,
     name: categoryName,
-    content: { overview, veteranRedirect },
+    content: { overview, veteranRedirect, consumerDocsLinkText },
   } = getApiDefinitions()[apiCategoryKey];
 
   let cardSection;
@@ -74,11 +74,13 @@ const CategoryPage = (): JSX.Element => {
       <div className="vads-u-width--full">
         {overview({})}
         <Flag name={[FLAG_CONSUMER_DOCS]}>
-          <p>
-            <Link to={CONSUMER_PATH}>
-              Read the consumer onboarding guide for getting production access
-            </Link>.
-          </p>
+          {consumerDocsLinkText && (
+            <p>
+              <Link to={CONSUMER_PATH}>
+                {consumerDocsLinkText}
+              </Link>.
+            </p>
+          )}
         </Flag>
       </div>
       {cardSection}

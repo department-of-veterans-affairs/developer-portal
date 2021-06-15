@@ -3,6 +3,7 @@ import FacilitiesOverview from './facilitiesOverview.mdx';
 import FacilitiesReleaseNotes from './facilitiesReleaseNotes.mdx';
 
 const facilitiesContent: APICategoryContent = {
+  consumerDocsLinkText: 'Learn about getting production access using open data APIs',
   overview: FacilitiesOverview,
   placardText: 'Access information about VA facilities',
   shortDescription:

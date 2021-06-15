@@ -5,6 +5,7 @@ import VeteranConfirmationReleaseNotes from './veteranConfirmationReleaseNotes.m
 import VeteranVerificationReleaseNotes from './veteranVerificationReleaseNotes.mdx';
 
 const verificationContent: APICategoryContent = {
+  consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
   overview: VerificationOverview,
   placardText:
     'Verify Veteran status for job sites, e-commerce sites, and third-party benefit sites',
