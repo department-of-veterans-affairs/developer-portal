@@ -81,8 +81,19 @@ phases:
           make build_app ENVIRONMENT=${env} || exit 1
           links="${links} - [${env}](https://s3-us-gov-west-1.amazonaws.com/${S3_REVIEW_BUCKET}/${COMMIT_HASH}/${env}/index.html) <br>"
         done
+      # Create deploy.json per environment
+      - |
+        for env in ${ENVIRONMENTS}; do
+          date > ./current-date
+          echo '{' > build/${env}/deploy.json
+          echo "  \"environment\": \"${env}\"," >> build/${env}/deploy.json
+          echo "  \"date\": \"$( cat current-date )\"," >> build/${env}/deploy.json
+          echo "  \"commit\": \"${COMMIT_HASH:0:7}\"" >> build/${env}/deploy.json
+          echo '}' >> build/${env}/deploy.json
+          rm ./current-date
+        done
       # Deploy To s3 review bucket
       - aws s3 sync --no-progress --acl public-read build/ s3://${S3_REVIEW_BUCKET}/${COMMIT_HASH}/
       - |
-          comment="these changes have been deployed to an s3 bucket. a build for each environment is available: <br><br> ${links} <br> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
+        comment="these changes have been deployed to an s3 bucket. a build for each environment is available: <br><br> ${links} <br> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
       - gh pr comment ${PRNUM} --body "${comment}"
