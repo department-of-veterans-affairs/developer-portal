@@ -3,8 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
 import { match as Match } from 'react-router';
-import { Link } from 'react-router-dom';
-
+import { NavHashLink } from 'react-router-hash-link';
 import { FLAG_CATEGORIES, FLAG_CONSUMER_DOCS } from '../../types/constants';
 import {
   CONSUMER_PATH,
@@ -269,13 +268,13 @@ const NavBar = (props: NavBarProps): JSX.Element => {
         </a>
         <div className={mobileOnly()}>
           <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
-            <Link
+            <NavHashLink
               onClick={props.onMobileNavClose}
               to="/apply"
               className={classNames('usa-button', 'vads-u-width--full')}
             >
               Request an API Key
-            </Link>
+            </NavHashLink>
           </div>
         </div>
       </div>

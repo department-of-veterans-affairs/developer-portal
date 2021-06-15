@@ -1,4 +1,5 @@
-import { mount, shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import 'jest';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -18,21 +19,33 @@ const mockProps = {
 
 describe('MainNavItem', () => {
   it('should render the MainNavItem', () => {
-    const Component = shallow(<MainNavItem {...mockProps}>Mock</MainNavItem>);
-    expect(Component).toBeTruthy();
+    render(
+      <Router>
+        <MainNavItem {...mockProps}>Mock</MainNavItem>
+      </Router>
+    );
+    const links = screen.getAllByRole('link', { name: 'Mock' });
+
+    // technically separate links for desktop and mobile
+    expect(links).toHaveLength(2);
+    links.forEach(link => {
+      expect(link.getAttribute('href')).toBe('/mock');
+    });
   });
 
   it('if mobile, should call the onClick prop when its NavLink child has been been clicked', () => {
     // this test is applicable only to mobile
-    const MobileComponentMock = (
+    render(
       <Router>
         <MainNavItem excludeLargeScreen {...mockProps}>
           Mock
         </MainNavItem>
       </Router>
     );
-    const wrapper = mount(MobileComponentMock);
-    wrapper.find('NavLink').simulate('click');
+
+    // only one link since we excluded the desktop link
+    const link = screen.getByRole('link', { name: 'Mock' });
+    userEvent.click(link);
     expect(mockProps.onClick).toHaveBeenCalled();
   });
 });
