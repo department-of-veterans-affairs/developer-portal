@@ -85,6 +85,15 @@ phases:
           S3_BUCKET=S3_${u_env}_BUCKET 
           mkdir -p ${env}
           tar xf developer-portal-${env}.tar.bz2 -C ${env} || exit 1
+          # add deploy.json file with deployment data
+          date > ./current-date
+          echo '{' > ${env}/deploy.json
+          echo "  \"environment\": \"${env}\"," >> ${env}/deploy.json
+          echo "  \"date\": \"$( cat current-date )\"," >> ${env}/deploy.json
+          echo "  \"release\": \"${RELEASE}\"," >> ${env}/deploy.json
+          echo "  \"commit\": \"${COMMIT_HASH:0:7}\"" >> ${env}/deploy.json
+          echo '}' >> ${env}/deploy.json
+          rm ./current-date
           # eval is used for variable subsitution.
           eval aws s3 cp --recursive --no-progress --acl public-read ${env}/ s3://\${$S3_BUCKET}/ || exit 1
           # need to run sync after cp because (1) sync isn't very good at telling when updates have occurred
