@@ -7,10 +7,10 @@ import './CardLink.scss';
 
 const CardLinkPropTypes = {
   children: PropTypes.node,
+  linkText: PropTypes.string,
   name: PropTypes.string.isRequired,
   subhead: PropTypes.node,
   url: PropTypes.string.isRequired,
-  linkText: PropTypes.string,
 };
 
 type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
@@ -22,23 +22,25 @@ type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
  * subhead before its children, which should be a description of the link.
  */
 const CardLink = (props: CardLinkProps): JSX.Element => (
-  <NavHashLink
-    to={props.url}
+  <div
     className={classNames(
       'va-api-card',
       'vads-u-border--1px',
+      'vads-u-border-color--gray-lighter',
       'vads-u-padding-top--3',
       'vads-u-padding-x--2',
       'vads-u-padding-bottom--2',
-      'vads-u-text-decoration--none',
+      'vads-u-background-color--white',
     )}
   >
     <div className="name-border" />
-    <h3 className={classNames('va-api-name')}>{props.name}</h3>
-    {props.subhead}
-    <div className={classNames('va-api-description', 'vads-u-color--base')}>{props.children}</div>
-    <div>{props.linkText}</div>
-  </NavHashLink>
+    <div className="card-content">
+      <h3 className={classNames('va-api-name')}>{props.name}</h3>
+      {props.subhead}
+      <div className={classNames('va-api-description', 'vads-u-color--base')}>{props.children}</div>
+      <NavHashLink to={props.url}>{props.linkText}</NavHashLink>
+    </div>
+  </div>
 );
 
 CardLink.propTypes = CardLinkPropTypes;

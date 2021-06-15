@@ -1,15 +1,43 @@
 @import '../../styles/variables';
 
-a.va-api-card {
+.va-api-card {
   width: 356px;
-  background: #ffff !important;
-  border-color: #d6d7d9 !important;
+  position: relative;
+  &:hover {
+    border-color: #003e73 !important;
+    .name-border {
+      width: 20%;
+      border-bottom: 5px solid #003e73 !important;
+    }
+  }
+  &:active {
+    outline: 2px solid gold;
+    outline-offset: 2px;
+    .name-border {
+      width: 20%;
+      border-bottom: 5px solid #003e73 !important;
+    }
+  }
   .name-border {
     width: 20%;
-    border-bottom: 5px solid #e31c3d;
+    border-bottom: 5px solid #e31c3d !important;
   }
   .va-api-name {
     color: #004795;
+  }
+  a {
+    .text {
+      position: absolute;
+      bottom: 0;
+    }
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+    }
   }
 }
 
