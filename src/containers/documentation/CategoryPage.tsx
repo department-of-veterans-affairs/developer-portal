@@ -74,13 +74,11 @@ const CategoryPage = (): JSX.Element => {
       <div className="vads-u-width--full">
         {overview({})}
         <Flag name={[FLAG_CONSUMER_DOCS]}>
-          {consumerDocsLinkText && (
-            <p>
-              <Link to={CONSUMER_PATH}>
-                {consumerDocsLinkText}
-              </Link>.
-            </p>
-          )}
+          <p>
+            <Link to={CONSUMER_PATH}>
+              {consumerDocsLinkText}
+            </Link>.
+          </p>
         </Flag>
       </div>
       {cardSection}
