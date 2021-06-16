@@ -14,6 +14,7 @@ const mockMakeRequest = makeRequest as jest.Mock;
 
 describe('Apply', () => {
   beforeEach(() => {
+    document.querySelectorAll = jest.fn(() => [{ focus: jest.fn() }] as unknown as NodeList);
     mockMakeRequest.mockReset();
     render(
       <MemoryRouter>
