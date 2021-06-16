@@ -17,8 +17,8 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   const errors: FormikErrors<Values> = {
     email: validateEmail(values.email),
     firstName: validatePresence('first name', values.firstName),
-    lastName: validatePresence('last name', values.firstName),
-    organization: validatePresence('organization', values.firstName),
+    lastName: validatePresence('last name', values.lastName),
+    organization: validatePresence('organization', values.organization),
   };
 
   if (!values.termsOfService) {
@@ -34,17 +34,18 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.oAuthRedirectURI = validateOAuthRedirectURI(values.oAuthRedirectURI);
   }
 
-  let count = 0;
+  setTimeout(() => {
+    const firstError = document.querySelectorAll<HTMLElement>('[aria-invalid=true]')[0];
+
+    firstError.focus();
+  }, 0);
+
   /*
    * This removes any fields that have an 'undefined' error (as returned by validatePresence)
    * This is needed, otherwise formik thinks there is still an error
    */
   return Object.entries(errors).reduce((reducedErrors, [key, value]) => {
     if (value) {
-      if (count === 0) {
-        document.getElementsByName(key)[0].focus();
-        count = count + 1;
-      }
       reducedErrors[key] = value;
     }
     return reducedErrors;

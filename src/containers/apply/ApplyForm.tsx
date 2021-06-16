@@ -46,7 +46,7 @@ interface ApplyFormProps {
 const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
   const [submissionError, setSubmissionError] = useState(false);
 
-  const submitForm = async (values: Values): Promise<void> => {
+  const handleSubmit = async (values: Values): Promise<void> => {
     setSubmissionError(false);
     const applicationBody: DevApplicationRequest = {
       ...values,
@@ -102,8 +102,8 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
         well as further instructions. Thank you for being a part of our platform.
       </p>
       <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
-        <Formik initialValues={initialValues} onSubmit={submitForm} validate={validateForm} validateOnBlur={false} validateOnChange={false}>
-          {({ isSubmitting, values }): React.ReactNode => (
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} validate={validateForm} validateOnBlur={false} validateOnChange={false}>
+          {({ isSubmitting, values, submitForm }): React.ReactNode => (
             <Form className="usa-form">
               <h2>Application</h2>
               <DeveloperInfo />
@@ -130,7 +130,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
                 className="form-checkbox"
               />
 
-              <button type="submit" className="vads-u-width--auto">
+              <button onClick={submitForm} type="button" className="vads-u-width--auto">
                 {isSubmitting ? 'Sending...' : 'Submit'}
               </button>
             </Form>
