@@ -1,6 +1,7 @@
 import CollapsiblePanel from '@department-of-veterans-affairs/component-library/CollapsiblePanel';
 import classNames from 'classnames';
 import * as React from 'react';
+import toHtmlId from '../../toHtmlId';
 
 import './GroupedAccordions.scss';
 
@@ -25,6 +26,7 @@ type CollapsiblePanelComponentRef = React.RefObject<CollapsiblePanelComponent>;
 const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
   const [allExpanded, setAllExpanded] = React.useState(false);
   const [panelRefs, setPanelRefs] = React.useState<CollapsiblePanelComponentRef[]>([]);
+  const headingId = `${toHtmlId(props.title)}-accordions`;
 
   React.useEffect(
     () => (): void => {
@@ -46,7 +48,10 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
   };
 
   return (
-    <section className={classNames('va-grouped-accordion', 'vads-u-margin-bottom--2p5')}>
+    <section
+      className={classNames('va-grouped-accordion', 'vads-u-margin-bottom--2p5')}
+      aria-labelledby={headingId}
+    >
       <div
         className={classNames(
           'vads-u-display--flex',
@@ -54,7 +59,7 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
           'vads-u-align-items--center',
         )}
       >
-        <h3>{props.title}</h3>
+        <h3 id={headingId}>{props.title}</h3>
         <button
           className={classNames(
             'va-api-grouped-accordions-button',
