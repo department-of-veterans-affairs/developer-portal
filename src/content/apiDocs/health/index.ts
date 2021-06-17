@@ -7,7 +7,6 @@ import FhirApiReleaseNotes from './fhirAPIReleaseNotes.mdx';
 import FhirArgonautApiIntro from './fhirArgonautApiIntro.mdx';
 import FhirDSTU2ApiIntro from './fhirDSTU2ApiIntro.mdx';
 import FHIRMultiOpenAPIIntro from './FHIRMultiOpenAPIIntro.mdx';
-import HealthIntro from './healthIntro.mdx';
 import HealthOverview from './healthOverview.mdx';
 import HealthQuickstart from './healthQuickstart.mdx';
 import UrgentCareApiIntro from './urgentCareApiIntro.mdx';
@@ -16,7 +15,7 @@ import UrgentCareDeprecationNotice from './urgentCareDeprecationNotice.mdx';
 import UrgentCareReleaseNotes from './urgentCareReleaseNotes.mdx';
 
 const healthContent: APICategoryContent = {
-  intro: HealthIntro,
+  consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
   overview: HealthOverview,
   placardText: "View medical records and manage Veteran's health",
   quickstart: HealthQuickstart,
