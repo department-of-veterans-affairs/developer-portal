@@ -104,7 +104,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
       <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
         <Formik initialValues={initialValues} onSubmit={submitForm} validate={validateForm}>
           {({ dirty, isValid, isSubmitting, values }): React.ReactNode => (
-            <Form className="usa-form">
+            <Form className="vads-l-col--12 medium-screen:vads-l-col--5">
               <h2>Application</h2>
               <DeveloperInfo />
               <SelectedApis />
@@ -114,7 +114,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
                 as="textarea"
                 label="Briefly describe how your organization will use VA APIs:"
                 name="description"
-                className="vads-u-margin-top--4"
+                className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
               />
 
               <CheckboxRadioField

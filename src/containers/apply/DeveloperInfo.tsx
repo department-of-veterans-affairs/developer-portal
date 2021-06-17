@@ -8,14 +8,14 @@ const DeveloperInfo = (): JSX.Element => (
       label="First name"
       name="firstName"
       required
-      className="vads-u-margin-top--4"
+      className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
     />
 
     <TextField
       label="Last name"
       name="lastName"
       required
-      className="vads-u-margin-top--4"
+      className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
     />
 
     <TextField
@@ -23,14 +23,14 @@ const DeveloperInfo = (): JSX.Element => (
       name="email"
       type="email"
       required
-      className="vads-u-margin-top--4"
+      className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
     />
 
     <TextField
       label="Organization"
       name="organization"
       required
-      className="vads-u-margin-top--4"
+      className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
     />
   </>
 );
