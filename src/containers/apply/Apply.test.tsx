@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { makeRequest } from '../../utils/makeRequest';
@@ -31,7 +31,7 @@ describe('Apply', () => {
         },
       });
       const submitButton = screen.getByRole('button', { name: 'Submit' });
-      await waitFor(() => expect(submitButton).toBeDisabled());
+
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc', {
           delay: 0.01,
@@ -48,8 +48,6 @@ describe('Apply', () => {
         userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
-
-      await waitFor(() => expect(submitButton).toBeEnabled());
 
       userEvent.click(submitButton);
 

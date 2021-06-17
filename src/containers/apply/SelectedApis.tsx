@@ -76,13 +76,16 @@ const SelectedAPIs = (): JSX.Element => {
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
-  const selectAPIClass = shouldDisplayErrors ? 'vads-u-font-weight--bold' : 'vads-u-font-weight--normal';
-  
+  const selectAPIClass = shouldDisplayErrors
+    ? 'vads-u-font-weight--bold'
+    : 'vads-u-font-weight--normal';
+
   return (
     <fieldset className={classNames(containerClass, 'apply-api-select')}>
       <span className="vads-u-margin-top--3 apply-checkbox-labels">
         <legend className={classNames(selectAPIClass, 'vads-u-font-size--base', labelClass)}>
-          Select the APIs you want to access. <span className="apply-required">&#40;*Required&#41;</span>
+          Select the APIs you want to access.{' '}
+          <span className="apply-required">&#40;*Required&#41;</span>
         </legend>
         <span id="api-checkbox-error" className={validationClass}>
           <ErrorMessage name="apis" />

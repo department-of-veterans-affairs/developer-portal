@@ -102,9 +102,15 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
         well as further instructions. Thank you for being a part of our platform.
       </p>
       <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
-        <Formik initialValues={initialValues} onSubmit={submitForm} validate={validateForm}>
-          {({ dirty, isValid, isSubmitting, values }): React.ReactNode => (
-            <Form className="vads-l-col--12 medium-screen:vads-l-col--5">
+        <Formik
+          initialValues={initialValues}
+          onSubmit={submitForm}
+          validate={validateForm}
+          validateOnBlur={false}
+          validateOnChange={false}
+        >
+          {({ isSubmitting, values }): React.ReactNode => (
+            <Form className="usa-form">
               <h2>Application</h2>
               <DeveloperInfo />
               <SelectedApis />
@@ -130,7 +136,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
                 className="form-checkbox"
               />
 
-              <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>
+              <button type="submit" className="vads-u-width--auto">
                 {isSubmitting ? 'Sending...' : 'Submit'}
               </button>
             </Form>
