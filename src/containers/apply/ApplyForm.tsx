@@ -116,7 +116,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
             };
 
             return (
-              <Form className="usa-form">
+              <Form className="usa-form" noValidate>
                 <h2>Application</h2>
                 <DeveloperInfo />
                 <SelectedApis />
@@ -142,7 +142,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
                   className="form-checkbox"
                 />
 
-                <button onClick={handleSubmitButtonClick} type="button" className="vads-u-width--auto">
+                <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
                   {isSubmitting ? 'Sending...' : 'Submit'}
                 </button>
               </Form>
