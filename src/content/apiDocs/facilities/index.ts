@@ -1,10 +1,9 @@
 import { APICategoryContent } from '../../../apiDefs/schema';
-import FacilitiesIntro from './facilitiesIntro.mdx';
 import FacilitiesOverview from './facilitiesOverview.mdx';
 import FacilitiesReleaseNotes from './facilitiesReleaseNotes.mdx';
 
 const facilitiesContent: APICategoryContent = {
-  intro: FacilitiesIntro,
+  consumerDocsLinkText: 'Learn about getting production access using open data APIs',
   overview: FacilitiesOverview,
   placardText: 'Access information about VA facilities',
   shortDescription:
