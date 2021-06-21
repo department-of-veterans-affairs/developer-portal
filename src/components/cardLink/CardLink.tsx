@@ -24,13 +24,14 @@ type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
 const CardLink = (props: CardLinkProps): JSX.Element => (
   <div
     className={classNames(
-      'va-api-card',
       'vads-u-border--1px',
       'vads-u-border-color--gray-lighter',
       'vads-u-padding-top--3',
       'vads-u-padding-x--2',
       'vads-u-padding-bottom--2',
       'vads-u-background-color--white',
+      'vads-u-margin-x--2',
+      'va-api-card',
     )}
   >
     <div className="name-border" />

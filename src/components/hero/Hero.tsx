@@ -9,7 +9,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
     aria-label="Page Hero"
     className={classNames(
       'vads-u-background-color--primary',
-      'vads-u-padding-y--5',
+      'vads-u-padding-y--9',
       'vads-u-padding-x--0',
     )}
   >
@@ -27,7 +27,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
           <h1
             className={classNames(
               'vads-u-color--white',
-              'vads-u-font-size--h2',
+              'vads-u-font-size--h1',
               'small-desktop-screen:vads-u-font-size--h1',
             )}
           >
