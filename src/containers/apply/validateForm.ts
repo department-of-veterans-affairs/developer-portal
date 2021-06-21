@@ -35,9 +35,11 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   }
 
   setTimeout(() => {
-    const firstError = document.querySelectorAll<HTMLElement>('[aria-invalid=true]')[0];
+    const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
 
-    firstError.focus();
+    if (errorElements.length > 0) {
+      errorElements[0].focus();
+    }
   }, 0);
 
   /*
