@@ -34,14 +34,6 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.oAuthRedirectURI = validateOAuthRedirectURI(values.oAuthRedirectURI);
   }
 
-  setTimeout(() => {
-    const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
-
-    if (errorElements.length > 0) {
-      errorElements[0].focus();
-    }
-  }, 0);
-
   /*
    * This removes any fields that have an 'undefined' error (as returned by validatePresence)
    * This is needed, otherwise formik thinks there is still an error
