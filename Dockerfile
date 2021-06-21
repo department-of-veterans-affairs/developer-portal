@@ -28,12 +28,7 @@ RUN mkdir ~/.npm-global && npm config set prefix '~/.npm-global' && export PATH=
 RUN npm install -g npm
 RUN npm install -g @sentry/cli
 
-COPY package.json package-lock.json ./
-
-# Add write permission to package-lock.json so npm resolutions can set the correct dependency version
-USER root
-RUN chmod 666 package-lock.json
-USER jenkins
+COPY --chown=jenkins:jenkins package.json package-lock.json ./
 
 RUN npm install
 
