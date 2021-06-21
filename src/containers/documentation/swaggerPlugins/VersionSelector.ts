@@ -9,7 +9,7 @@ export const VersionSelector = {
     apiVersion: (state: Map<string, unknown>): string => state.get('apiVersion') as string,
     majorVersion: createSelector(
       apiVersion,
-      (version: string): string => (version ? version.substring(0, 1) : '0'),
+      (version: string): string => (version ? version.substring(0, 1) : ''),
     ),
     versionMetadata: (state: Map<string, unknown>): VersionMetadata[] | null =>
       state.get('versionMetadata') as VersionMetadata[] | null,
