@@ -23,9 +23,9 @@ describe('VersionSelector', () => {
       expect(VersionSelector.selectors.majorVersion(state)).toBe('1');
     });
 
-    it('returns 0 when apiVersion exists does not exist in state', () => {
+    it('returns empty when apiVersion exists does not exist in state', () => {
       const state = Map<string, string>({ apiName: 'claims' });
-      expect(VersionSelector.selectors.majorVersion(state)).toBe('0');
+      expect(VersionSelector.selectors.majorVersion(state)).toBe('');
     });
   });
 
