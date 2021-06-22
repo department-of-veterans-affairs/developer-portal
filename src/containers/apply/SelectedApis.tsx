@@ -124,7 +124,6 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legend="Standard APIs:"
           legendClassName="vads-u-font-size--lg"
           name="standardApis"
-          ariaLabel="Please select all of the Standard APIs you'd like access to:"
         >
           <ApiCheckboxList apiCheckboxes={apiInfo} />
         </FieldSet>
@@ -139,7 +138,6 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legend="OAuth APIs:"
           legendClassName="vads-u-font-size--lg"
           name="oauthApis"
-          ariaLabel="Please select all the OAuth APIs you'd like access to:"
         >
           <ApiCheckboxList apiCheckboxes={oauthInfo} />
           {oauthApisSelected && <OAuthAppInfo />}

@@ -10,7 +10,6 @@ export interface FieldSetProps {
   errorClassName?: string;
   name: string;
   required?: boolean;
-  ariaLabel?: string;
   children: ReactNode;
 }
 
@@ -20,22 +19,23 @@ const FieldSet: FC<FieldSetProps> = ({
   legendClassName,
   errorClassName,
   name,
-  ariaLabel,
   required = false,
   children,
 }) => {
-  const { errors, touched } = useFormikContext();
-  const shouldDisplayErrors = !!errors[name] && !!touched[name];
+  const { errors } = useFormikContext();
+  const shouldDisplayErrors = !!errors[name];
   const containerClass = shouldDisplayErrors ? classNames('usa-input-error', errorClassName) : '';
   const legendClass = shouldDisplayErrors ? 'usa-input-error-label' : legendClassName;
   const errorMessageClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
 
-  const errorId = `${toHtmlId(name)}FormFieldError`;
+  const idReadyName = toHtmlId(name);
+  const errorId = `${idReadyName}FormFieldError`;
+  const legendId = `${idReadyName}Legend`;
 
   return (
     <div className={classNames(containerClass, className)}>
-      <fieldset aria-label={ariaLabel}>
-        <legend className={classNames('vads-u-margin-top--0', legendClass)}>
+      <fieldset aria-labelledby={legendId}>
+        <legend id={legendId} className={classNames('vads-u-margin-top--0', legendClass)}>
           {legend}
           {required && <span className="form-required-span">(*Required)</span>}
         </legend>
