@@ -43,6 +43,11 @@ declare module 'swagger-client' {
   export interface Server {
     url: string;
     description: string;
+    variables?: {
+      version?: {
+        default: string;
+      };
+    };
   }
 
   export type SecurityRequirement = Array<{ [schemeName: string]: string[] }>;
