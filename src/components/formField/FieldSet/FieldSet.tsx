@@ -39,7 +39,7 @@ const FieldSet: FC<FieldSetProps> = ({
           {legend}
           {required && <span className="form-required-span">(*Required)</span>}
         </legend>
-        <span id={errorId} className={errorMessageClass}>
+        <span id={errorId} className={errorMessageClass} role="alert">
           <ErrorMessage name={name} />
         </span>
         {children}
