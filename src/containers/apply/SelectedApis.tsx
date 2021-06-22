@@ -76,9 +76,9 @@ interface SelectedApisProps {
 }
 
 const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
-  const { errors, touched } = useFormikContext();
+  const { errors } = useFormikContext();
   const checkboxName = 'apis';
-  const shouldDisplayErrors = !!errors[checkboxName] && !!touched[checkboxName];
+  const shouldDisplayErrors = !!errors[checkboxName];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
@@ -94,9 +94,13 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
     : '';
 
   return (
-    <fieldset className={classNames(containerClass, 'apply-api-select')}>
-      <span className="vads-u-margin-top--3 apply-checkbox-labels">
+    <fieldset
+      aria-labelledby="select-checkbox-api"
+      className={classNames(containerClass, 'apply-api-select')}
+    >
+      <div className="vads-u-margin-top--1 apply-checkbox-labels">
         <legend
+          id="select-checkbox-api"
           className={classNames(
             selectAPIClass,
             labelClass,
@@ -110,6 +114,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
         <span
           id="api-checkbox-error"
           className={classNames(validationClass, errorMessagePaddingClass)}
+          role="alert"
         >
           <ErrorMessage name="apis" />
         </span>
@@ -139,7 +144,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           <ApiCheckboxList apiCheckboxes={oauthInfo} />
           {oauthApisSelected && <OAuthAppInfo />}
         </FieldSet>
-      </span>
+      </div>
     </fieldset>
   );
 };
