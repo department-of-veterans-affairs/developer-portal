@@ -11,9 +11,8 @@ import { TextField, CheckboxRadioField } from '../../components';
 import { APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../types';
 import { DeveloperInfo } from './DeveloperInfo';
-import { OAuthAppInfo } from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
-import { validateForm, anyOAuthApisSelected } from './validateForm';
+import { validateForm } from './validateForm';
 
 export interface Values {
   apis: string[];
@@ -125,8 +124,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
               <Form className="usa-form" noValidate>
                 <h2>Application</h2>
                 <DeveloperInfo />
-                <SelectedApis />
-                {anyOAuthApisSelected(values) && <OAuthAppInfo />}
+                <SelectedApis selectedApis={values.apis} />
 
                 <TextField
                   as="textarea"

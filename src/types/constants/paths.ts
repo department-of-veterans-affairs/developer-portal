@@ -1,3 +1,5 @@
+export const AUTHORIZATION_PKCE_PATH = '/explore/authorization?api=claims#pkce-authorization';
+
 export const CONSUMER_PATH = '/consumer-docs';
 
 export const PUBLISHING_PATH = '/api-publishing';

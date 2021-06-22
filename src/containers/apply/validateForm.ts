@@ -1,13 +1,16 @@
 import { FormikErrors } from 'formik';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
-import { validateEmail, validatePresence, validateOAuthRedirectURI } from '../../utils/validators';
+import {
+  validateEmail,
+  validatePresence,
+  validateOAuthRedirectURI,
+  validateOAuthApplicationType,
+} from '../../utils/validators';
 import { includesOAuthAPI } from '../../apiDefs/query';
 import { Values } from './ApplyForm';
 
-export const anyOAuthApisSelected = ({ apis }: Values): boolean => {
-  const apiIdsByField = apis.flatMap(
-    formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField],
-  );
+export const anyOAuthApisSelected = (apis: string[]): boolean => {
+  const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);
   return includesOAuthAPI(apiIdsByField);
 };
 
@@ -29,8 +32,8 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.apis = 'Choose at least one API.';
   }
 
-  if (anyOAuthApisSelected(values)) {
-    errors.oAuthApplicationType = validatePresence('Application Type', values.oAuthApplicationType);
+  if (anyOAuthApisSelected(values.apis)) {
+    errors.oAuthApplicationType = validateOAuthApplicationType(values.oAuthApplicationType);
     errors.oAuthRedirectURI = validateOAuthRedirectURI(values.oAuthRedirectURI);
   }
 
