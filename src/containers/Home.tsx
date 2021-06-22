@@ -9,7 +9,7 @@ import './Home.scss';
 import apiDefinitions, { apiCategoryOrder } from '../apiDefs/data/categories';
 import { CardLink, Hero } from '../components';
 import { Flag } from '../flags';
-import { FLAG_CATEGORIES } from '../types/constants';
+import { FLAG_CATEGORIES, FLAG_CONSUMER_DOCS } from '../types/constants';
 
 const columnContentClasses = classNames(
   'vads-u-flex--1',
@@ -113,16 +113,18 @@ const Home = (): JSX.Element => (
           A Veteran-centered API platform for securely accessing VA data to build innovative tools
           for Veterans. Explore usage policies and technical details about VA&apos;s API offerings.
         </ColumnContent>
-        <ColumnContent
-          ariaLabel="API Docs"
-          title="Consumer Onboarding"
-          imageSrc={rocketImage}
-          buttonDestination="/onboarding"
-          buttonText="Review the onboarding process"
-        >
-          Before your app is ready to go live, we review the quality and security of applications
-          integrating with our APIs and data.
-        </ColumnContent>
+        <Flag name={[FLAG_CONSUMER_DOCS]}>
+          <ColumnContent
+            ariaLabel="API Docs"
+            title="Consumer Onboarding"
+            imageSrc={rocketImage}
+            buttonDestination="/onboarding"
+            buttonText="Review the onboarding process"
+          >
+            Before your app is ready to go live, we review the quality and security of applications
+            integrating with our APIs and data.
+          </ColumnContent>
+        </Flag>
         <ColumnContent
           ariaLabel="API Docs"
           title="API Publishing"
