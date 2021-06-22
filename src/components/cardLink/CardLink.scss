@@ -27,10 +27,8 @@
     color: #004795;
   }
   a {
-    .text {
-      position: absolute;
-      bottom: 0;
-    }
+    position: absolute;
+    bottom: 0;
     &::after {
       content: '';
       position: absolute;
@@ -41,16 +39,3 @@
     }
   }
 }
-
-// a.va-api-card {
-//   width: 20%;
-//   border-top-color: #e31c3d;
-
-//   &:hover {
-//     border-top-color: $color-gold !important;
-//   }
-
-//   @include media($medium-screen) {
-//     width: 200px !important;
-//   }
-// }

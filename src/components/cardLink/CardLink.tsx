@@ -31,14 +31,15 @@ const CardLink = (props: CardLinkProps): JSX.Element => (
       'vads-u-padding-bottom--2',
       'vads-u-background-color--white',
       'vads-u-margin-x--2',
+      'vads-u-height--full',
       'va-api-card',
     )}
   >
     <div className="name-border" />
-    <div className="card-content">
-      <h3 className={classNames('va-api-name')}>{props.name}</h3>
+    <div className="card-content vads-u-height--full vads-u-padding-bottom--3">
+      <h3 className="va-api-name vads-u-margin-top--1">{props.name}</h3>
       {props.subhead}
-      <div className={classNames('va-api-description', 'vads-u-color--base')}>{props.children}</div>
+      <div className="va-api-description vads-u-color--base">{props.children}</div>
       <NavHashLink to={props.url}>{props.linkText}</NavHashLink>
     </div>
   </div>

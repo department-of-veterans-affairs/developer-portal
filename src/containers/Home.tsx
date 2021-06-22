@@ -17,6 +17,7 @@ const columnContentClasses = classNames(
   'vads-u-padding-top--3',
   'vads-u-padding-x--2',
   'vads-u-padding-bottom--2',
+  '',
 );
 
 const buttonClasses = classNames(
@@ -61,8 +62,8 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
 };
 
 const ApiList = (): JSX.Element => (
-  <section className="api-list">
-    <div>
+  <section className="api-list vads-u-padding-top--3">
+    <div className="vads-u-padding-x--6">
       <h2>A modern, reliable API library.</h2>
       <p>
         Our API library makes accessing VA data easier and safer across many categories, including
@@ -79,7 +80,7 @@ const ApiList = (): JSX.Element => (
               const { name, content } = apiDefinitions[apiCategoryKey];
               return (
                 <div
-                  className="vads-l-col--12 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
+                  className="vads-l-col--12 vads-u-margin-y--2 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
                   key={apiCategoryKey}
                 >
                   <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
@@ -103,10 +104,10 @@ const ApiList = (): JSX.Element => (
 );
 
 const Home = (): JSX.Element => (
-  <div className="home">
+  <div className="home vads-l-grid-container--full">
     <Hero />
-    <div className="vads-l-grid-container vads-u-margin-top--6 vads-u-margin-x--auto">
-      <section className="vads-u-display--flex vads-u-justify-content--space-around">
+    <div className="vads-u-margin-top--6 vads-u-margin-x--auto">
+      <section className="vads-u-display--flex vads-u-justify-content--space-around vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
         <ColumnContent
           ariaLabel="API Docs"
           title="API Documentation"
