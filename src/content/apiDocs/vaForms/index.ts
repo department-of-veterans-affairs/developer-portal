@@ -1,10 +1,9 @@
 import { APICategoryContent } from '../../../apiDefs/schema';
-import VAFormsIntro from './vaFormsIntro.mdx';
 import VAFormsOverview from './vaFormsOverview.mdx';
 import VAFormsReleaseNotes from './vaFormsReleaseNotes.mdx';
 
 const vaFormsContent: APICategoryContent = {
-  intro: VAFormsIntro,
+  consumerDocsLinkText: 'Learn about getting production access using open data APIs',
   overview: VAFormsOverview,
   placardText: 'Look up VA forms and check for new versions',
   shortDescription: 'Look up VA forms and check for new versions.',

@@ -15,7 +15,7 @@ export interface VeteranRedirectMessage {
 }
 
 export interface APICategoryContent {
-  readonly intro: React.FunctionComponent;
+  readonly consumerDocsLinkText: string;
   readonly overview: React.FunctionComponent;
   readonly shortDescription: string;
   readonly placardText: string;
@@ -24,7 +24,7 @@ export interface APICategoryContent {
 }
 
 export const ApiCategoryContentPropType = PropTypes.shape({
-  intro: PropTypes.any.isRequired,
+  consumerDocsLinkText: PropTypes.string,
   overview: PropTypes.any.isRequired,
   placardText: PropTypes.string.isRequired,
   quickstart: PropTypes.any,
