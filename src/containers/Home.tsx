@@ -45,9 +45,8 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
         <div>
           <img className={imageClasses} src={imageSrc} alt="" role="presentation" />
         </div>
-        {/* <div className="vads-u-display--flex vads-u-flex-direction--column vads-u-justify-content--space-between"> */}
         <div className="vads-u-padding-bottom--4">
-          <h2>{title}</h2>
+          <h2 className="vads-u-margin-top--0">{title}</h2>
           <div className="title-border" />
           <p>{children}</p>
         </div>
@@ -56,12 +55,11 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
         </Link>
       </div>
     </div>
-    // </div>
   );
 };
 
 const ApiList = (): JSX.Element => (
-  <section className="api-list vads-u-padding-top--3 vads-u-padding-x--2">
+  <section className="api-list vads-u-padding-top--3 vads-u-padding-x--2  vads-u-padding-bottom--2">
     <div className="vads-u-padding-x--6">
       <h2 className="vads-u-margin-top--0">A modern, reliable API library.</h2>
       <p>
@@ -73,7 +71,6 @@ const ApiList = (): JSX.Element => (
       </p>
       <div className="vads-l-grid-container--full" style={{ maxWidth: '1200px' }}>
         <div className="vads-l-row">
-          {/* <div className="medium-screen:vads-l-col--8"> */}
           <div className="vads-l-row vads-u-justify-content--space-evenly">
             {apiCategoryOrder.map((apiCategoryKey: string) => {
               const { name, content } = apiDefinitions[apiCategoryKey];
@@ -98,7 +95,6 @@ const ApiList = (): JSX.Element => (
         </div>
       </div>
     </div>
-    {/* </div> */}
   </section>
 );
 

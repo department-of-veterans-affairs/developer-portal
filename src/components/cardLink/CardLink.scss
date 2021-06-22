@@ -1,34 +1,27 @@
 @import '../../styles/variables';
 
 .va-api-card {
-  // width: 356px;
-  // margin: 0 auto;
+  + .va-api-card {
+    margin-top: 1.5rem;
+  }
   position: relative;
-  &:hover {
-    border-color: #003e73 !important;
-    .name-border {
-      width: 20%;
-      border-bottom: 5px solid #003e73 !important;
-    }
+
+  .card-content {
+    padding: 1rem;
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
   }
-  &:active {
-    outline: 2px solid gold;
-    outline-offset: 2px;
-    .name-border {
-      width: 20%;
-      border-bottom: 5px solid #003e73 !important;
-    }
-  }
+
   .name-border {
     width: 20%;
-    border-bottom: 5px solid #e31c3d !important;
   }
-  .va-api-name {
-    color: #004795;
+
+  p {
+    max-width: 60ch;
   }
+
   a {
-    position: absolute;
-    bottom: 0;
     &::after {
       content: '';
       position: absolute;
@@ -36,6 +29,34 @@
       top: 0;
       right: 0;
       bottom: 0;
+    }
+  }
+
+  &:hover {
+    border-color: $color-primary-darker !important;
+    .name-border {
+      width: 20%;
+      border-bottom: 5px solid $color-primary-darker !important;
+    }
+  }
+
+  &:active {
+    outline: 2px solid $color-gold;
+    outline-offset: 2px;
+    .name-border {
+      width: 20%;
+      border-bottom: 5px solid $color-primary-darker !important;
+    }
+  }
+
+  .card-content > {
+    * + * {
+      margin-top: 0.75rem;
+    }
+
+    :last-child {
+      margin-top: auto;
+      padding-top: 0.75rem;
     }
   }
 }

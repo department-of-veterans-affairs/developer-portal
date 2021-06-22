@@ -21,9 +21,12 @@ type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
  * in the form of a card. It can optionally render an arbitrary JSX.Element
  * subhead before its children, which should be a description of the link.
  */
+
 const CardLink = (props: CardLinkProps): JSX.Element => (
   <div
     className={classNames(
+      'vads-u-display--flex',
+      'vads-u-flex-direction--column',
       'vads-u-border--1px',
       'vads-u-border-color--gray-lighter',
       'vads-u-padding-top--3',
@@ -35,11 +38,11 @@ const CardLink = (props: CardLinkProps): JSX.Element => (
       'va-api-card',
     )}
   >
-    <div className="name-border" />
-    <div className="card-content vads-u-height--full vads-u-padding-bottom--3">
-      <h3 className="va-api-name vads-u-margin-top--1">{props.name}</h3>
+    <div className="card-content">
+      <div className="name-border vads-u-border-bottom--5px vads-u-border-color--secondary" />
+      <h3 className="va-api-name vads-u-margin-top--2 vads-u-color--link-default">{props.name}</h3>
       {props.subhead}
-      <div className="va-api-description vads-u-color--base">{props.children}</div>
+      <p className="va-api-description vads-u-color--base">{props.children}</p>
       <NavHashLink to={props.url}>{props.linkText}</NavHashLink>
     </div>
   </div>
