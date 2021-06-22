@@ -17,7 +17,6 @@ const columnContentClasses = classNames(
   'vads-u-padding-top--3',
   'vads-u-padding-x--2',
   'vads-u-padding-bottom--2',
-  '',
 );
 
 const buttonClasses = classNames(
@@ -62,9 +61,9 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
 };
 
 const ApiList = (): JSX.Element => (
-  <section className="api-list vads-u-padding-top--3">
+  <section className="api-list vads-u-padding-top--3 vads-u-padding-x--2">
     <div className="vads-u-padding-x--6">
-      <h2>A modern, reliable API library.</h2>
+      <h2 className="vads-u-margin-top--0">A modern, reliable API library.</h2>
       <p>
         Our API library makes accessing VA data easier and safer across many categories, including
         appeals, benefits, health, facilities, forms, and Veteran verification. With our APIs,
@@ -106,8 +105,8 @@ const ApiList = (): JSX.Element => (
 const Home = (): JSX.Element => (
   <div className="home vads-l-grid-container--full">
     <Hero />
-    <div className="vads-u-margin-top--6 vads-u-margin-x--auto">
-      <section className="vads-u-display--flex vads-u-justify-content--space-around vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row">
+    <div className="vads-u-margin-top--4 vads-u-margin-x--auto">
+      <section className="vads-u-display--flex vads-u-justify-content--space-around vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--3">
         <ColumnContent
           ariaLabel="API Docs"
           title="API Documentation"
