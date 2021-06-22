@@ -28,10 +28,9 @@ const FieldSet: FC<FieldSetProps> = ({
   const shouldDisplayErrors = !!errors[name] && !!touched[name];
   const containerClass = shouldDisplayErrors ? classNames('usa-input-error', errorClassName) : '';
   const legendClass = shouldDisplayErrors ? 'usa-input-error-label' : legendClassName;
-  const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
+  const errorMessageClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
 
-  const idReadyName = toHtmlId(name);
-  const errorId = `${idReadyName}FormFieldError`;
+  const errorId = `${toHtmlId(name)}FormFieldError`;
 
   return (
     <div className={classNames(containerClass, className)}>
@@ -40,7 +39,7 @@ const FieldSet: FC<FieldSetProps> = ({
           {legend}
           {required && <span className="form-required-span">(*Required)</span>}
         </legend>
-        <span id={errorId} className={validationClass}>
+        <span id={errorId} className={errorMessageClass}>
           <ErrorMessage name={name} />
         </span>
         {children}
