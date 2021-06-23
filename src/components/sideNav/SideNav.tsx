@@ -69,6 +69,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
             'vads-u-border-bottom--2px',
             'vads-u-border-left--2px',
             'vads-u-border-right--2px',
+            'vads-u-border-top--0',
             'vads-u-border-color--gray-lighter',
           )}
         >
