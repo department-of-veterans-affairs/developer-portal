@@ -1,5 +1,5 @@
 export const mockMetadata = {
-  'http://localhost:3000/services/vba_documents/metadata': {
+  'http://localhost:3000/services/claims/metadata': {
     meta: {
       versions: [
         {
