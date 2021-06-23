@@ -1,18 +1,17 @@
 import { APICategoryContent } from '../../../apiDefs/schema';
 import BenefitsIntakeReleaseNotes from './benefitsIntakeReleaseNotes.mdx';
-import BenefitsIntro from './benefitsIntro.mdx';
 import BenefitsOverview from './benefitsOverview.mdx';
 import ClaimsReleaseNotes from './claimsReleaseNotes.mdx';
 import LoanGuarantyReleaseNotes from './loanGuarantyReleaseNotes.mdx';
 import ClaimsAttributesReleaseNotes from './claimsAttributesReleaseNotes.mdx';
 
 const benefitsContent: APICategoryContent = {
-  intro: BenefitsIntro,
+  consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
   overview: BenefitsOverview,
   placardText:
     'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
   shortDescription:
-    'Enables Veterans and approved organizations to electronically submit and track the status of benefit claims.',
+    'Enables electronic submission and status tracking of non-medical, VA-related benefit claims.',
   veteranRedirect: {
     linkText: 'benefits or appeals claim status',
     linkUrl: 'https://www.va.gov/claim-or-appeal-status/',

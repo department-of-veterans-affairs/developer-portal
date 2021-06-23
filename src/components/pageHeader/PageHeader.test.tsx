@@ -1,41 +1,47 @@
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 
 import { PageHeader } from './PageHeader';
 
 describe('PageHeader', () => {
-  it('renders the halo', () => {
-    const pageHeader = shallow(
+  it('renders the header', () => {
+    render(
       <PageHeader halo="Context" header="Big Idea" description="A great idea" />,
     );
-    expect(pageHeader.find('div.header-halo').length).toBe(1);
-    expect(pageHeader.find('div.header-halo').text()).toBe('Context');
+
+    const heading = screen.getByRole('heading', { level: 1, name: 'Big Idea' });
+    expect(heading).toBeInTheDocument();
+  });
+
+  it('renders the halo', () => {
+    render(
+      <PageHeader halo="Context" header="Big Idea" description="A great idea" />,
+    );
+
+    const halo = screen.getByText('Context');
+    expect(halo).toBeInTheDocument();
   });
 
   it("doesn't render the halo if the halo prop is falsy", () => {
-    const pageHeader = shallow(<PageHeader header="Big Idea" description="A great idea" />);
-    expect(pageHeader.find('div.header-halo').length).toBe(0);
-  });
+    render(<PageHeader header="Big Idea" description="A great idea" />);
 
-  it('renders the header', () => {
-    const pageHeader = shallow(
-      <PageHeader halo="Context" header="Big Idea" description="A great idea" />,
-    );
-    expect(pageHeader.find('h1').length).toBe(1);
-    expect(pageHeader.find('h1').text()).toBe('Big Idea');
+    // find the heading, make sure it doesn't have a previous sibling
+    const heading = screen.getByRole('heading', { level: 1, name: 'Big Idea' });
+    expect(heading.previousElementSibling).toBeNull();
   });
 
   it('renders the description', () => {
-    const pageHeader = shallow(
+    render(
       <PageHeader halo="Context" header="Big Idea" description="A great idea" />,
     );
-    expect(pageHeader.find('h2').length).toBe(1);
-    expect(pageHeader.find('h2').text()).toBe('A great idea');
+
+    const description = screen.getByRole('heading', { level: 2, name: 'A great idea' });
+    expect(description).toBeInTheDocument();
   });
 
   it("doesn't render the description if the description prop is falsy", () => {
-    const pageHeader = shallow(<PageHeader header="Big Idea" />);
-    expect(pageHeader.find('h2').length).toBe(0);
+    render(<PageHeader header="Big Idea" />);
+    expect(screen.queryByRole('heading', { level: 2 })).toBeNull();
   });
 });

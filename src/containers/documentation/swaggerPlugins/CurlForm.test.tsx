@@ -70,13 +70,11 @@ const testCurlText = async (
 };
 
 const renderDecisionReviews = (): void => {
-  const decisionReviewSys = SwaggerUI({
+  SwaggerUI({
     dom_id: '#mount-decision-reviews',
     plugins: [SwaggerPlugins(() => false)],
     spec: decisionReviews,
   }) as System;
-  // test that the form is sensitive to version number
-  decisionReviewSys.versionActions.setApiVersion('1');
 };
 
 const renderFHIRR4 = (): void => {

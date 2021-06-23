@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { match as Match } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { desktopOnly, mobileOnly } from '../../styles/vadsUtils';
+import { isHashLinkExact } from '../../utils/isNavHashLinkExact';
 
 export interface LargeScreenNavItemProps {
   isActive: (match: Match | null) => boolean;
@@ -44,14 +45,22 @@ const MainNavItem = (props: MainNavItemProps): JSX.Element => {
     <>
       {!excludeLargeScreen && (
         <div className={desktopOnly()}>
-          <NavLink {...sharedProps} {...largeScreenProps}>
+          <NavLink
+            aria-current={isHashLinkExact(props.targetUrl) ? 'page' : 'false'}
+            {...sharedProps}
+            {...largeScreenProps}
+          >
             {children}
           </NavLink>
         </div>
       )}
       {!excludeSmallScreen && (
         <div className={mobileOnly()}>
-          <NavLink onClick={onClick} {...sharedProps}>
+          <NavLink
+            aria-current={isHashLinkExact(props.targetUrl) ? 'page' : 'false'}
+            onClick={onClick}
+            {...sharedProps}
+          >
             {children}
           </NavLink>
         </div>

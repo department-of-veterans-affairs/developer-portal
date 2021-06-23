@@ -66,9 +66,7 @@ export const fakeCategories: APICategories = {
       },
     ],
     content: {
-      intro: (): JSX.Element => (
-        <h2>The Lord of the Rings APIs contain info about the world of Middle-earth.</h2>
-      ),
+      consumerDocsLinkText: 'Take me to the consumer docs!',
       overview: (): JSX.Element | null => null,
       placardText: 'Learn more about things in Middle-earth',
       shortDescription: 'Learn more about things in Middle-earth',
@@ -114,7 +112,7 @@ export const fakeCategories: APICategories = {
       },
     ],
     content: {
-      intro: (): JSX.Element => <h2>The Sports APIs are about games and stuff</h2>,
+      consumerDocsLinkText: 'Take me to the consumer docs!',
       overview: (): JSX.Element | null => null,
       placardText: 'Learn more about throwing, running, and hitting',
       shortDescription: 'Learn more about throwing, running, and hitting',

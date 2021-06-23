@@ -6,8 +6,8 @@ import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { RootState } from '../../types';
-import AuthCodeFlowContent from './AuthCodeFlowContent.mdx';
-import PKCEAuthContent from './PKCEAuthContent.mdx';
+import { AuthCodeFlowContent } from './AuthCodeFlowContent';
+import { PKCEAuthContent } from './PKCEAuthContent';
 
 const BuildingOIDCContent = (): JSX.Element => {
   const selectedOAuthApi = useSelector(
@@ -54,7 +54,6 @@ const BuildingOIDCContent = (): JSX.Element => {
         options={selectorProps.options}
         selectedOption={selectorProps.selectedOption}
       />
-
     </section>
   );
 };

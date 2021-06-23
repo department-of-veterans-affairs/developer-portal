@@ -33,6 +33,7 @@ export interface CurlFormState {
   params: Parameter[];
   requestBodyProperties: Schema[];
   paramValues: { [propertyName: string]: string };
+  version: undefined | string;
 }
 
 export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
@@ -46,11 +47,13 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       paramValues: {},
       params: this.props.operation.parameters ?? [],
       requestBodyProperties,
+      version: undefined as undefined | string,
     };
 
     if (!this.isSwagger2() && this.requirementsMet()) {
       const spec: OpenAPISpecV3 = this.jsonSpec() as OpenAPISpecV3;
       state.env = spec.servers[0].url;
+      state.version = spec.servers[0].variables?.version?.default ?? 'v0';
     }
 
     state.params.forEach((parameter: Parameter) => {
@@ -154,7 +157,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       const version = this.props.system.versionSelectors.majorVersion();
       options.server = this.state.env;
       options.serverVariables = {
-        version: `v${version}`,
+        version: version ? `v${version}` : this.state.version,
       };
     }
     options.spec = spec;
