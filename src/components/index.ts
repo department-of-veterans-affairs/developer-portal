@@ -13,6 +13,7 @@ export * from './mainNavItem/MainNavItem';
 export * from './banner/Banner';
 export * from './footer/Footer';
 export * from './cardLink/CardLink';
+export * from './cardLink/CardLinkLegacy';
 export * from './embeddedYoutubeVideo/EmbeddedYoutubeVideo';
 export * from './hero/Hero';
 export * from './markdownPage/MarkdownPage';

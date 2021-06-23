@@ -27,7 +27,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
           <h1
             className={classNames(
               'vads-u-color--white',
-              'vads-u-font-size--h1',
+              'vads-u-font-size--h2',
               'small-desktop-screen:vads-u-font-size--h1',
             )}
           >

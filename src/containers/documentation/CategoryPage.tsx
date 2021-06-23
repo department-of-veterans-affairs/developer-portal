@@ -5,7 +5,7 @@ import { useParams } from 'react-router';
 import { Flag, useFlag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { AuthorizationCard, CardLink, OnlyTags, PageHeader } from '../../components';
+import { AuthorizationCard, CardLinkLegacy, OnlyTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { FLAG_AUTH_DOCS_V2, FLAG_HOSTED_APIS, PAGE_HEADER_ID } from '../../types/constants';
@@ -26,7 +26,7 @@ const CategoryPage = (): JSX.Element => {
       const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
       return (
         <Flag key={name} name={[FLAG_HOSTED_APIS, urlFragment]}>
-          <CardLink
+          <CardLinkLegacy
             name={name}
             subhead={
               vaInternalOnly || trustedPartnerOnly ? (
@@ -36,7 +36,7 @@ const CategoryPage = (): JSX.Element => {
             url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
           >
             {description}
-          </CardLink>
+          </CardLinkLegacy>
         </Flag>
       );
     });

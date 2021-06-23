@@ -20,20 +20,14 @@ describe('Hero', () => {
     expect(heroImage).toHaveAttribute('src', logoImage.default);
   });
 
-  it('contains a link to documentation', () => {
-    const apiLink = screen.getByRole('link', { name: 'Read the Docs' });
+  it('contains a link to apply page', () => {
+    const apiLink = screen.getByRole('link', { name: 'Request an API Key' });
     expect(apiLink).toBeInTheDocument();
-    expect(apiLink).toHaveAttribute('href', '/explore');
-  });
-
-  it('contains a link to API Publishing', () => {
-    const apiLink = screen.getByRole('link', { name: 'API Publishing' });
-    expect(apiLink).toBeInTheDocument();
-    expect(apiLink).toHaveAttribute('href', '/api-publishing');
+    expect(apiLink).toHaveAttribute('href', '/apply');
   });
 
   it('checks h1 text', () => {
-    const desiredText = 'A Veteran-centered API platform for securely accessing VA data.';
+    const desiredText = 'A Veteran-centered API platform for securely accessing VA data';
     const heroText = screen.getByText(desiredText);
     expect(heroText).toBeInTheDocument();
     expect(heroText).toHaveClass(
