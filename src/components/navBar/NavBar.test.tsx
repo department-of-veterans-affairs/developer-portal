@@ -25,46 +25,45 @@ describe('NavBar', () => {
     expect(navbar).toBeInTheDocument();
   });
 
-  it('contains the expected links', () => {
+  describe('links', () => {
     /*
-     * The Documentation and API Publishing navigation items are links in the desktop view
-     * and buttons in the mobile view. Both are rendered even though only one will only be
-     * visible at a time based on the view.
+     * The Documentation, Onboarding, and API Publishing navigation items are links in the
+     * desktop view and buttons in the mobile view. Both are rendered even though only one
+     * will only be visible at a time based on the view.
      */
-    const documentation = screen.getByRole('link', { name: 'Documentation' });
-    expect(documentation).toHaveAttribute('href', '/explore');
-    const documentationButton = screen.getByRole('button', { name: 'Documentation' });
-    expect(documentationButton).toBeInTheDocument();
+    it.each([
+      ['Documentation', '/explore'],
+      ['Onboarding', '/onboarding'],
+      ['API Publishing', '/api-publishing'],
+    ])('contains the %s link with the correct URL (%s) and the corresponding button for the mobile nav', (
+      navItemText: string,
+      linkURL: string,
+    ) => {
+      const link = screen.getByRole('link', { name: navItemText });
+      expect(link).toHaveAttribute('href', linkURL);
+      const button = screen.getByRole('button', { name: navItemText });
+      expect(button).toBeInTheDocument();
+    });
 
     /*
      * The News, Release Notes, Support, and API Status navigation items are links in both
      * the desktop view and mobile view. Both are rendered even though only one will only be
      * visible at a time based on the view.
      */
-    const news = screen.getAllByRole('link', { name: 'News' });
-    expect(news.length).toEqual(2);
-    expect(news[0]).toHaveAttribute('href', '/news');
-    expect(news[1]).toHaveAttribute('href', '/news');
-
-    const releaseNotes = screen.getAllByRole('link', { name: 'Release Notes' });
-    expect(releaseNotes.length).toEqual(2);
-    expect(releaseNotes[0]).toHaveAttribute('href', '/release-notes');
-    expect(releaseNotes[1]).toHaveAttribute('href', '/release-notes');
-
-    const support = screen.getAllByRole('link', { name: 'Support' });
-    expect(support.length).toEqual(2);
-    expect(support[0]).toHaveAttribute('href', '/support');
-    expect(support[1]).toHaveAttribute('href', '/support');
-
-    const publishing = screen.getByRole('link', { name: 'API Publishing' });
-    expect(publishing).toHaveAttribute('href', '/api-publishing');
-    const publishingButton = screen.getByRole('button', { name: 'API Publishing' });
-    expect(publishingButton).toBeInTheDocument();
-
-    const status = screen.getAllByRole('link', { name: 'API Status' });
-    expect(status.length).toEqual(2);
-    expect(status[0]).toHaveAttribute('href', 'https://valighthouse.statuspage.io');
-    expect(status[1]).toHaveAttribute('href', 'https://valighthouse.statuspage.io');
+    it.each([
+      ['News', '/news'],
+      ['Release Notes', '/release-notes'],
+      ['Support', '/support'],
+      ['API Status', 'https://valighthouse.statuspage.io'],
+    ])('contains the %s nav links for desktop and mobile', (
+      navItemText: string,
+      linkURL: string,
+    ) => {
+      const links = screen.getAllByRole('link', { name: navItemText });
+      expect(links.length).toEqual(2);
+      expect(links[0]).toHaveAttribute('href', linkURL);
+      expect(links[1]).toHaveAttribute('href', linkURL);
+    });
   });
 
   describe('isMobileMenuVisible is true', () => {
