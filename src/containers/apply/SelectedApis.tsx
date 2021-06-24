@@ -2,9 +2,9 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
 import { CheckboxRadioField, FieldSet } from '../../components';
-import './SelectedApis.scss';
 import { anyOAuthApisSelected } from './validateForm';
 import { OAuthAppInfo } from './OAuthAppInfo';
+import './SelectedApis.scss';
 
 interface APICheckbox {
   id: string;
@@ -88,7 +88,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
     : 'vads-u-font-weight--normal';
 
   const oauthApisSelected = anyOAuthApisSelected(selectedApis);
-  const oauthApisBorderClass = oauthApisSelected ? 'vads-u-border-left--7px' : '';
+  const oauthApisBorderClass = oauthApisSelected ? 'vads-u-border-left--4px' : '';
   const oauthApisBorderColorClass = oauthApisSelected
     ? 'vads-u-border-color--primary-alt-light'
     : '';

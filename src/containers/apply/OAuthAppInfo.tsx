@@ -4,11 +4,12 @@ import { useFormikContext } from 'formik';
 import { AUTHORIZATION_PKCE_PATH } from '../../types/constants/paths';
 
 import { CheckboxRadioField, TextField, FieldSet } from '../../components';
+import './OAuthAppinfo.scss';
 
 const OAuthAppInfo = (): JSX.Element => {
-  const { errors, touched } = useFormikContext();
+  const { errors } = useFormikContext();
   const redirectUriInputName = 'oAuthRedirectURI';
-  const shouldDisplayUriError = !!errors[redirectUriInputName] && !!touched[redirectUriInputName];
+  const shouldDisplayUriError = !!errors[redirectUriInputName];
   const redirectUriClass = shouldDisplayUriError ? 'vads-u-margin-left--2' : '';
 
   return (
@@ -53,7 +54,7 @@ const OAuthAppInfo = (): JSX.Element => {
         label="OAuth Redirect URI"
         name={redirectUriInputName}
         required
-        className={classNames('vads-u-margin-top--4', redirectUriClass)}
+        className={classNames('vads-u-margin-top--4', 'oauth-uri-input', redirectUriClass)}
       />
     </>
   );
