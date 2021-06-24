@@ -77,9 +77,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
       />
       <Route path={PUBLISHING_PATH} component={Publishing} />
-      {flags.consumer_docs && (
-        <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />
-      )}
+      {flags.consumer_docs && <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
 
       {/* The below Routes are needed for the sitemap */}

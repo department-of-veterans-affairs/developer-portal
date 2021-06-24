@@ -10,6 +10,7 @@ import {
   CONSUMER_SANDBOX_PATH,
 } from '../../types/constants/paths';
 import OnboardingOverview from './OnboardingOverview';
+import WorkingWithOurAPIs from './WorkingWithOurAPIs';
 
 const ConsumerOnboardingRoot = (): JSX.Element => (
   <ContentWithNav
@@ -25,6 +26,7 @@ const ConsumerOnboardingRoot = (): JSX.Element => (
     content={
       <Switch>
         <Route exact path={CONSUMER_PATH} component={OnboardingOverview} />
+        <Route exact path={CONSUMER_APIS_PATH} component={WorkingWithOurAPIs} />
       </Switch>
     }
     navAriaLabel="Consumer Onboarding Page Nav"
