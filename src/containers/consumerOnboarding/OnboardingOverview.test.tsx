@@ -1,5 +1,6 @@
 import { getAllByRole, getByRole, render, screen } from '@testing-library/react';
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import {
   CONSUMER_APIS_PATH,
   CONSUMER_DEMO_PATH,
@@ -10,7 +11,11 @@ import OnboardingOverview from './OnboardingOverview';
 
 describe('OnboardingOverview', () => {
   beforeEach(() => {
-    render(<OnboardingOverview />);
+    render(
+      <Router>
+        <OnboardingOverview />
+      </Router>
+    );
   });
 
   it('renders the main heading', () => {
