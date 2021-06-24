@@ -30,7 +30,7 @@ describe('PageContent', () => {
   });
 
   it('loads new page content after navigating to a different route', async () => {
-    expect(screen.getAllByText(/A Veteran-centered API platform/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/A Veteran-centered API platform/).length).toBeGreaterThanOrEqual(2);
 
     const documentationLink = screen.getByRole('link', { name: 'Request an API Key' });
     userEvent.click(documentationLink);
