@@ -1,0 +1,19 @@
+.request-production-access {
+  h3 {
+    font-size: 1.6rem;
+  }
+
+  tbody {
+    vertical-align: top;
+  }
+
+  ul.checklist {
+    li::marker {
+      content: "\2610";
+    }
+    li {
+      padding-left: 10px;
+      margin-left: -10px;
+    }
+  }
+}
