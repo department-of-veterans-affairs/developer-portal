@@ -1,0 +1,11 @@
+.consumer-onboarding-overview {
+  h3 {
+    font-size: 1.6rem;
+    // VADS uses !important, so unfortunately we have to too
+    margin-bottom: 0.875rem !important;
+  }
+
+  h3 + p {
+    margin-top: 0.875rem;
+  }
+}

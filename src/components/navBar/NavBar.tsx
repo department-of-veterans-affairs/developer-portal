@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -6,7 +7,11 @@ import { match as Match } from 'react-router';
 import { NavHashLink } from 'react-router-hash-link';
 import { FLAG_CATEGORIES, FLAG_CONSUMER_DOCS } from '../../types/constants';
 import {
+  CONSUMER_APIS_PATH,
+  CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
+  CONSUMER_PROD_PATH,
+  CONSUMER_SANDBOX_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -164,16 +169,35 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               ))}
             </SubNav>
           </li>
-          <li className={navItemStyles()}>
-            <MainNavItem
-              onClick={props.onMobileNavClose}
-              targetUrl="/news"
-              largeScreenProps={sharedNavItemProps}
-              className={navLinkStyles}
-            >
-              News
-            </MainNavItem>
-          </li>
+          <Flag name={[FLAG_CONSUMER_DOCS]}>
+            <li className={navItemStyles()}>
+              <MainNavItem
+                targetUrl={CONSUMER_PATH}
+                largeScreenProps={sharedNavItemProps}
+                excludeSmallScreen
+                className={navLinkStyles}
+              >
+                Onboarding
+              </MainNavItem>
+              <SubNav name="Onboarding">
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="onboarding-overview">
+                  Overview
+                </SubNavEntry>
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_SANDBOX_PATH} id="sandbox-access">
+                  Request sandbox access
+                </SubNavEntry>
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PROD_PATH} id="prod-access">
+                  Request production access
+                </SubNavEntry>
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_DEMO_PATH} id="demo">
+                  Prepare for the demo
+                </SubNavEntry>
+                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_APIS_PATH} id="working-with-apis">
+                  Working with our APIs
+                </SubNavEntry>
+              </SubNav>
+            </li>
+          </Flag>
           <li className={navItemStyles()}>
             <MainNavItem
               onClick={props.onMobileNavClose}
@@ -182,16 +206,6 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               className={navLinkStyles}
             >
               Release Notes
-            </MainNavItem>
-          </li>
-          <li className={navItemStyles()}>
-            <MainNavItem
-              onClick={props.onMobileNavClose}
-              targetUrl="/support"
-              largeScreenProps={sharedNavItemProps}
-              className={navLinkStyles}
-            >
-              Support
             </MainNavItem>
           </li>
           <li className={navItemStyles()}>
@@ -230,23 +244,26 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               </SubNavEntry>
             </SubNav>
           </li>
-          <Flag name={[FLAG_CONSUMER_DOCS]}>
-            <li className={navItemStyles()}>
-              <MainNavItem
-                targetUrl={CONSUMER_PATH}
-                largeScreenProps={sharedNavItemProps}
-                excludeSmallScreen
-                className={navLinkStyles}
-              >
-                Consumer Docs
-              </MainNavItem>
-              <SubNav name="Consumer Docs">
-                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="overview">
-                  Overview
-                </SubNavEntry>
-              </SubNav>
-            </li>
-          </Flag>
+          <li className={navItemStyles()}>
+            <MainNavItem
+              onClick={props.onMobileNavClose}
+              targetUrl="/news"
+              largeScreenProps={sharedNavItemProps}
+              className={navLinkStyles}
+            >
+              News
+            </MainNavItem>
+          </li>
+          <li className={navItemStyles()}>
+            <MainNavItem
+              onClick={props.onMobileNavClose}
+              targetUrl="/support"
+              largeScreenProps={sharedNavItemProps}
+              className={navLinkStyles}
+            >
+              Support
+            </MainNavItem>
+          </li>
           <li className={classNames(navItemStyles(), mobileOnly())}>
             <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
               API Status <FontAwesomeIcon icon={faExternalLinkAlt} />

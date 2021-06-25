@@ -1,7 +1,12 @@
 import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
-import { PUBLISHING_ONBOARDING_PATH, PUBLISHING_PATH } from './types/constants/paths';
+import {
+  CONSUMER_DEMO_PATH,
+  CONSUMER_PATH,
+  PUBLISHING_ONBOARDING_PATH,
+  PUBLISHING_PATH,
+} from './types/constants/paths';
 
 import { mockMetadata as metadataMocks } from './__mocks__/mockMetadata';
 import { mockSwagger as mocks } from './__mocks__/mockSwagger';
@@ -26,6 +31,8 @@ export const testPaths = [
   '/support/contact-us',
   PUBLISHING_PATH,
   PUBLISHING_ONBOARDING_PATH,
+  CONSUMER_PATH,
+  CONSUMER_DEMO_PATH,
 ];
 
 export const metadataTestPaths = [''];
