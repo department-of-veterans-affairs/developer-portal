@@ -2,6 +2,7 @@ import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
 import {
+  CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -31,6 +32,7 @@ export const testPaths = [
   PUBLISHING_PATH,
   PUBLISHING_ONBOARDING_PATH,
   CONSUMER_PATH,
+  CONSUMER_DEMO_PATH,
 ];
 
 export const metadataTestPaths = [''];
