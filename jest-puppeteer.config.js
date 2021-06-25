@@ -13,7 +13,7 @@ const envVars = [
   'BROWSER=false',
 ];
 
-if(!process.env.TEST_HOST) {
+if (!process.env.TEST_HOST) {
   puppeteerConfig.server = {
     command: `${envVars.join(' ')} npm run start`,
     protocol: 'http',
