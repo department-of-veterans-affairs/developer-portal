@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { CONSUMER_APIS_PATH } from '../../types/constants/paths';
@@ -7,6 +8,9 @@ import './DemoPrep.scss';
 
 const DemoPrep: React.FunctionComponent = () => (
   <div className="demo-prep">
+    <Helmet>
+      <title>Prepare for a Demo</title>
+    </Helmet>
     <PageHeader header="Prepare for and complete a demo" />
     <p>
       Once any required changes are made, we aim to schedule the demo within a week. Demos

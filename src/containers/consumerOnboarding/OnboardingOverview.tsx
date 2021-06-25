@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import {
@@ -11,6 +12,9 @@ import './OnboardingOverview.scss';
 
 const ConsumerOnboardingOverview = (): JSX.Element => (
   <div className="consumer-onboarding-overview">
+    <Helmet>
+      <title>Consumer Onboarding</title>
+    </Helmet>
     <PageHeader header="API Consumer Onboarding" />
     <p>
       Our API consumer onboarding process ensures the quality and security of applications integrating
