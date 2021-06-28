@@ -150,7 +150,7 @@ const RequestProductionAccess = (): JSX.Element => (
         </tbody>
       </table>
     </CollapsiblePanel>
-    <p>If you have questions for us, let us know by contacting us through our <Link to={SUPPORT_CONTACT_PATH}>support page</Link>.</p>
+    <p className="vads-u-padding-top--3">If you have questions for us, let us know by contacting us through our <Link to={SUPPORT_CONTACT_PATH}>support page</Link>.</p>
   </div>
 );
 
