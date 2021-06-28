@@ -60,7 +60,7 @@ Location: <yourRedirectURL>?
 
 Use the following format, in HTTP basic authentication, for your request.
 
-- Use the `code` and `state` parameters that were returned in the previous step.
+- Use the `code` that was returned in the previous step.
 - Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
@@ -74,7 +74,6 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=authorization_code
 &code=z92dapo5
 &client_id=0oa1c01m77heEXUZt2p7
-&state=af0ifjsldkj
 &redirect_uri=<yourRedirectURL>
 &code_verifier=ccec_bace_d453_e31c_eb86_2ad1_9a1b_0a89_a584_c068_2c96
 ```
