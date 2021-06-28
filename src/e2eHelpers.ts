@@ -4,6 +4,7 @@ import { Request } from 'puppeteer';
 import {
   CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
+  CONSUMER_SANDBOX_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
 } from './types/constants/paths';
@@ -32,6 +33,7 @@ export const testPaths = [
   PUBLISHING_PATH,
   PUBLISHING_ONBOARDING_PATH,
   CONSUMER_PATH,
+  CONSUMER_SANDBOX_PATH,
   CONSUMER_DEMO_PATH,
 ];
 
