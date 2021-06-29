@@ -8,12 +8,8 @@
   }
 
   ul.checklist {
-    li::marker {
-      content: "\2610";
-    }
     li {
-      padding-left: 10px;
-      margin-left: -10px;
+      list-style-image: url('../../assets/checklist-checkbox.svg');
     }
   }
 }
