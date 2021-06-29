@@ -17,6 +17,7 @@ const vaFormsApis: APIDescription[] = [
     urlFragment: 'vaForms',
     vaInternalOnly: false,
     veteranRedirect: vaFormsContent.veteranRedirect,
+    altID: 'vaForms',
   },
 ];
 

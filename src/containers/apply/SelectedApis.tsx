@@ -2,6 +2,10 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { CheckboxRadioField } from '../../components';
 
+import { isApiDeactivated } from '../../apiDefs/deprecated';
+import { getAllOauthApis, getAllApis } from '../../apiDefs/query';
+import { APIDescription } from '../../apiDefs/schema';
+
 interface APICheckbox {
   id: string;
   label: string;
@@ -25,68 +29,47 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
   </>
 );
 
-const oauthInfo = [
-  {
-    id: 'claims',
-    label: 'VA Claims API',
-  },
-  {
-    id: 'health',
-    label: 'VA Health API',
-  },
-  {
-    id: 'communityCare',
-    label: 'Community Care Eligibility API',
-  },
-  {
-    id: 'verification',
-    label: 'VA Veteran Verification API',
-  },
-];
+const oauthInfo = getAllOauthApis()
+  .filter((api: APIDescription) => api.altID && !isApiDeactivated(api))
+  .map((api: APIDescription) => (
+      {
+        id: api.altID || '', 
+        label: api.name,
+      }
+  ));
 
-const apiInfo = [
-  {
-    id: 'claimsAttributes',
-    label: 'Claims Attributes API',
-  },
-  {
-    id: 'benefits',
-    label: 'VA Benefits API',
-  },
-  {
-    id: 'facilities',
-    label: 'VA Facilities API',
-  },
-  {
-    id: 'vaForms',
-    label: 'VA Forms API',
-  },
-  {
-    id: 'confirmation',
-    label: 'VA Veteran Confirmation API',
-  },
-];
 
-const SelectedAPIs = (): JSX.Element => (
-  <fieldset className="vads-u-margin-top--3">
-    <legend className={classNames('vads-u-font-weight--normal', 'vads-u-font-size--base')}>
-      Please select all of the APIs you&apos;d like access to:
-    </legend>
-    <fieldset
-      className="vads-u-margin-top--2"
-      aria-label="Please select all of the Standard APIs you'd like access to:"
-    >
-      <legend className="vads-u-font-size--lg">Standard APIs:</legend>
-      <ApiCheckboxList apiCheckboxes={apiInfo} />
+const standardApi = getAllApis()
+.filter((api: APIDescription) => api.altID && !api.oAuth && !isApiDeactivated(api))
+.map((api: APIDescription) => (
+  {
+    id: api.altID || '',
+    label: api.name,
+  }
+));
+
+const SelectedAPIs = (): JSX.Element => {
+
+  return (
+    <fieldset className="vads-u-margin-top--3">
+      <legend className={classNames('vads-u-font-weight--normal', 'vads-u-font-size--base')}>
+        Please select all of the APIs you&apos;d like access to:
+      </legend>
+      <fieldset
+        className="vads-u-margin-top--2"
+        aria-label="Please select all of the Standard APIs you'd like access to:"
+      >
+        <legend className="vads-u-font-size--lg">Standard APIs:</legend>
+        <ApiCheckboxList apiCheckboxes={standardApi} />
+      </fieldset>
+      <fieldset
+        className="vads-u-margin-top--2"
+        aria-label="Please select all the OAuth APIs you'd like access to:"
+      >
+        <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
+        <ApiCheckboxList apiCheckboxes={oauthInfo} />
+      </fieldset>
     </fieldset>
-    <fieldset
-      className="vads-u-margin-top--2"
-      aria-label="Please select all the OAuth APIs you'd like access to:"
-    >
-      <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
-      <ApiCheckboxList apiCheckboxes={oauthInfo} />
-    </fieldset>
-  </fieldset>
-);
+)};
 
 export default SelectedAPIs;

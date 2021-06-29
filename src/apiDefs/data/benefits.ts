@@ -29,6 +29,7 @@ const benefitsApis: APIDescription[] = [
     urlFragment: 'claims',
     vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
+    altID: 'claims',
   },
   {
     description: 'Submit PDF claims',
@@ -45,6 +46,7 @@ const benefitsApis: APIDescription[] = [
     urlFragment: 'benefits',
     vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
+    altID: 'benefits',
   },
   {
     description: 'Manage VA Home Loans',
@@ -73,6 +75,7 @@ const benefitsApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'claims_attributes',
     vaInternalOnly: false,
+    altID: 'claimsAttributes',
   },
 ];
 

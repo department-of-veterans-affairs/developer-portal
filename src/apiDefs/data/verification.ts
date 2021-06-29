@@ -35,6 +35,7 @@ const verificationApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'veteran_confirmation',
     vaInternalOnly: false,
+    altID: 'confirmation',
   },
   {
     description:
@@ -62,6 +63,7 @@ const verificationApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'veteran_verification',
     vaInternalOnly: false,
+    altID: 'verification',
   },
 ];
 

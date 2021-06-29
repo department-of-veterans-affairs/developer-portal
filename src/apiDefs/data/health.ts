@@ -51,6 +51,7 @@ const healthApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'community_care',
     vaInternalOnly: false,
+    altID: 'communityCare'
   },
   {
     deactivationInfo: {
@@ -131,6 +132,7 @@ const healthApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'fhir',
     vaInternalOnly: false,
+    altID: 'health',
   },
   {
     deactivationInfo: {

@@ -46,6 +46,7 @@ describe('query module', () => {
           linkUrl: 'https://www.va.gov/find-locations/',
           message: 'Are you a Veteran?',
         },
+        altID: 'facilities',
       });
     });
 
