@@ -10,6 +10,7 @@ import { APIDescription } from '../schema';
 
 const benefitsApis: APIDescription[] = [
   {
+    altID: 'claims',
     description: 'Submit and track claims',
     docSources: [
       {
@@ -29,9 +30,9 @@ const benefitsApis: APIDescription[] = [
     urlFragment: 'claims',
     vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
-    altID: 'claims',
   },
   {
+    altID: 'benefits',
     description: 'Submit PDF claims',
     docSources: [
       {
@@ -46,7 +47,6 @@ const benefitsApis: APIDescription[] = [
     urlFragment: 'benefits',
     vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
-    altID: 'benefits',
   },
   {
     description: 'Manage VA Home Loans',
@@ -63,6 +63,7 @@ const benefitsApis: APIDescription[] = [
     vaInternalOnly: false,
   },
   {
+    altID: 'claimsAttributes',
     description: 'Improve claim routing',
     docSources: [
       {
@@ -75,7 +76,6 @@ const benefitsApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'claims_attributes',
     vaInternalOnly: false,
-    altID: 'claimsAttributes',
   },
 ];
 

@@ -4,6 +4,7 @@ import { APIDescription } from '../schema';
 
 const vaFormsApis: APIDescription[] = [
   {
+    altID: 'vaForms',
     description: 'Look up VA forms and check for new versions.',
     docSources: [
       {
@@ -17,7 +18,6 @@ const vaFormsApis: APIDescription[] = [
     urlFragment: 'vaForms',
     vaInternalOnly: false,
     veteranRedirect: vaFormsContent.veteranRedirect,
-    altID: 'vaForms',
   },
 ];
 

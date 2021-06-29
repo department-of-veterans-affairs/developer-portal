@@ -23,6 +23,7 @@ const verificationApis: APIDescription[] = [
     vaInternalOnly: true,
   },
   {
+    altID: 'confirmation',
     description: 'Confirm Veteran status for a given person with an api key.',
     docSources: [
       {
@@ -35,9 +36,9 @@ const verificationApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'veteran_confirmation',
     vaInternalOnly: false,
-    altID: 'confirmation',
   },
   {
+    altID: 'verification',
     description:
       'Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.',
     docSources: [
@@ -63,7 +64,6 @@ const verificationApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'veteran_verification',
     vaInternalOnly: false,
-    altID: 'verification',
   },
 ];
 

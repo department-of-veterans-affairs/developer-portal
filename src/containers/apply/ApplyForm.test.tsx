@@ -19,12 +19,11 @@ const mockMakeRequest = makeRequest as jest.Mock;
 
 const allOauthApis = getAllOauthApis()
   .filter((api: APIDescription) => api.altID && !isApiDeactivated(api))
-  .map((api: APIDescription) => api.name );
-
+  .map((api: APIDescription) => api.name);
 
 const allStandardApis = getAllApis()
-.filter((api: APIDescription) => api.altID && !api.oAuth && !isApiDeactivated(api))
-.map((api: APIDescription) => api.name );
+  .filter((api: APIDescription) => api.altID && !api.oAuth && !isApiDeactivated(api))
+  .map((api: APIDescription) => api.name);
 
 describe('ApplyForm', () => {
   beforeEach(() => {

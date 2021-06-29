@@ -4,6 +4,7 @@ import { APIDescription } from '../schema';
 
 const facilitiesApis: APIDescription[] = [
   {
+    altID: 'facilities',
     description: 'VA Facilities',
     docSources: [
       {
@@ -17,7 +18,6 @@ const facilitiesApis: APIDescription[] = [
     urlFragment: 'facilities',
     vaInternalOnly: false,
     veteranRedirect: facilitiesContent.veteranRedirect,
-    altID: 'facilities',
   },
 ];
 

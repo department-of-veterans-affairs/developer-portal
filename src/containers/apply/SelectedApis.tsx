@@ -31,45 +31,38 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
 
 const oauthInfo = getAllOauthApis()
   .filter((api: APIDescription) => api.altID && !isApiDeactivated(api))
-  .map((api: APIDescription) => (
-      {
-        id: api.altID || '', 
-        label: api.name,
-      }
-  ));
-
+  .map((api: APIDescription) => ({
+    id: api.altID ?? '',
+    label: api.name,
+  }));
 
 const standardApi = getAllApis()
-.filter((api: APIDescription) => api.altID && !api.oAuth && !isApiDeactivated(api))
-.map((api: APIDescription) => (
-  {
-    id: api.altID || '',
+  .filter((api: APIDescription) => api.altID && !api.oAuth && !isApiDeactivated(api))
+  .map((api: APIDescription) => ({
+    id: api.altID ?? '',
     label: api.name,
-  }
-));
+  }));
 
-const SelectedAPIs = (): JSX.Element => {
-
-  return (
-    <fieldset className="vads-u-margin-top--3">
-      <legend className={classNames('vads-u-font-weight--normal', 'vads-u-font-size--base')}>
-        Please select all of the APIs you&apos;d like access to:
-      </legend>
-      <fieldset
-        className="vads-u-margin-top--2"
-        aria-label="Please select all of the Standard APIs you'd like access to:"
-      >
-        <legend className="vads-u-font-size--lg">Standard APIs:</legend>
-        <ApiCheckboxList apiCheckboxes={standardApi} />
-      </fieldset>
-      <fieldset
-        className="vads-u-margin-top--2"
-        aria-label="Please select all the OAuth APIs you'd like access to:"
-      >
-        <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
-        <ApiCheckboxList apiCheckboxes={oauthInfo} />
-      </fieldset>
+const SelectedAPIs = (): JSX.Element => (
+  <fieldset className="vads-u-margin-top--3">
+    <legend className={classNames('vads-u-font-weight--normal', 'vads-u-font-size--base')}>
+      Please select all of the APIs you&apos;d like access to:
+    </legend>
+    <fieldset
+      className="vads-u-margin-top--2"
+      aria-label="Please select all of the Standard APIs you'd like access to:"
+    >
+      <legend className="vads-u-font-size--lg">Standard APIs:</legend>
+      <ApiCheckboxList apiCheckboxes={standardApi} />
     </fieldset>
-)};
+    <fieldset
+      className="vads-u-margin-top--2"
+      aria-label="Please select all the OAuth APIs you'd like access to:"
+    >
+      <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
+      <ApiCheckboxList apiCheckboxes={oauthInfo} />
+    </fieldset>
+  </fieldset>
+);
 
 export default SelectedAPIs;

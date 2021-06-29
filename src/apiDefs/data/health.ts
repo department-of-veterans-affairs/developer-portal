@@ -27,6 +27,7 @@ import { APIDescription } from '../schema';
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API ?? '';
 const healthApis: APIDescription[] = [
   {
+    altID: 'communityCare',
     description:
       "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
@@ -51,7 +52,6 @@ const healthApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'community_care',
     vaInternalOnly: false,
-    altID: 'communityCare'
   },
   {
     deactivationInfo: {
@@ -77,6 +77,7 @@ const healthApis: APIDescription[] = [
     vaInternalOnly: false,
   },
   {
+    altID: 'health',
     description:
       'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
     docSources: [
@@ -132,7 +133,6 @@ const healthApis: APIDescription[] = [
     trustedPartnerOnly: false,
     urlFragment: 'fhir',
     vaInternalOnly: false,
-    altID: 'health',
   },
   {
     deactivationInfo: {

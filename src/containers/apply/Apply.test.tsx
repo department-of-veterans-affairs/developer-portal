@@ -3,10 +3,10 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { makeRequest } from '../../utils/makeRequest';
-import { Apply } from './Apply';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
+import { Apply } from './Apply';
 
 jest.mock('../../utils/makeRequest', () => ({
   ...jest.requireActual<Record<string, string>>('../../utils/makeRequest'),
