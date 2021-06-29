@@ -96,7 +96,12 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
   return (
     <fieldset
       aria-labelledby="select-checkbox-api"
-      className={classNames(containerClass, 'apply-api-select')}
+      className={classNames(
+        containerClass,
+        'apply-api-select',
+        'vads-u-background-color--gray-lightest',
+        'vads-u-margin-top--2p5',
+        )}
     >
       <div className="vads-u-margin-top--1 apply-checkbox-labels">
         <legend
@@ -109,7 +114,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           )}
         >
           Select the APIs you want to access.{' '}
-          <span className="apply-required">&#40;*Required&#41;</span>
+          <span className="vads-u-color--secondary-dark">&#40;*Required&#41;</span>
         </legend>
         <span
           id="api-checkbox-error"
