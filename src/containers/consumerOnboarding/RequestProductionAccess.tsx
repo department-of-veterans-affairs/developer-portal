@@ -16,7 +16,7 @@ const RequestProductionAccess = (): JSX.Element => (
       <li>All consumers must be US-based.</li>
       <li>We do not allow monetizing or selling Veteran data.</li>
       <li>Getting production access can take less than a week to more than a month, depending on the API.</li>
-      <li>All apps and websites must be <a href="https://section508.gov/">Section 508</a> compliant.</li>
+      <li>All apps and websites must be <a href="https://section508.gov/" target="_blank" rel="noreferrer">Section 508</a> compliant.</li>
       <li>Our rate limiting is 60 requests per minute. View our rate limiting policy for more information.</li>
     </ul>
     <h3>We use the data you submit to determine whether to schedule a demo or request technical or policy-related changes. If we need changes, we’ll send you an email.</h3>
