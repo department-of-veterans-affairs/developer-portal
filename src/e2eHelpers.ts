@@ -22,7 +22,7 @@ export const testPaths = [
   '/explore/health',
   '/explore/benefits',
   '/explore/health/docs/quickstart',
-  '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
+  '/explore/benefits/docs/claims', // Only include a few swagger pages since they're all pretty similar
   '/explore/benefits/docs/appeals',
   '/release-notes',
   '/news',
