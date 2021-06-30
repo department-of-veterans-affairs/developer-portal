@@ -3,9 +3,6 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { makeRequest } from '../../utils/makeRequest';
-import { isApiDeactivated } from '../../apiDefs/deprecated';
-import { getAllApis } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
 import { Apply } from './Apply';
 
 jest.mock('../../utils/makeRequest', () => ({
@@ -14,10 +11,6 @@ jest.mock('../../utils/makeRequest', () => ({
 }));
 
 const mockMakeRequest = makeRequest as jest.Mock;
-
-const allCheckboxApis = getAllApis()
-  .filter((api: APIDescription) => api.altID && !isApiDeactivated(api))
-  .map((api: APIDescription) => api.name);
 
 describe('Apply', () => {
   beforeEach(() => {
@@ -61,12 +54,6 @@ describe('Apply', () => {
       userEvent.click(submitButton);
 
       expect(await screen.findByText('lord-of-moria')).toBeInTheDocument();
-    });
-  });
-
-  describe('rendering', () => {
-    it.each(allCheckboxApis)('displays the expected checkboxes', name => {
-      expect(screen.getByRole('checkbox', { name })).toBeInTheDocument();
     });
   });
 });

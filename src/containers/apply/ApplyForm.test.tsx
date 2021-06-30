@@ -3,8 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { makeRequest } from '../../utils/makeRequest';
-import { isApiDeactivated } from '../../apiDefs/deprecated';
-import { getAllApis, getAllOauthApis } from '../../apiDefs/query';
+import { getAllCurrentStandardApis, getAllCurrentOauthApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 
 import { ApplyForm } from './ApplyForm';
@@ -17,13 +16,9 @@ jest.mock('../../utils/makeRequest', () => ({
 const mockOnSuccess = jest.fn();
 const mockMakeRequest = makeRequest as jest.Mock;
 
-const allOauthApis = getAllOauthApis()
-  .filter((api: APIDescription) => api.altID && !isApiDeactivated(api))
-  .map((api: APIDescription) => api.name);
+const allOauthApis = getAllCurrentOauthApis().map((api: APIDescription) => api.name);
 
-const allStandardApis = getAllApis()
-  .filter((api: APIDescription) => api.altID && !api.oAuth && !isApiDeactivated(api))
-  .map((api: APIDescription) => api.name);
+const allStandardApis = getAllCurrentStandardApis().map((api: APIDescription) => api.name);
 
 describe('ApplyForm', () => {
   beforeEach(() => {
