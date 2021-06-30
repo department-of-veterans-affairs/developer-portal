@@ -2,8 +2,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { CheckboxRadioField } from '../../components';
 
-import { isApiDeactivated } from '../../apiDefs/deprecated';
-import { getAllOauthApis, getAllApis } from '../../apiDefs/query';
+import { getAllCurrentOauthApis, getAllCurrentStandardApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 
 interface APICheckbox {
@@ -29,15 +28,13 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
   </>
 );
 
-const oauthInfo = getAllOauthApis()
-  .filter((api: APIDescription) => api.altID && !isApiDeactivated(api))
+const oauthInfo = getAllCurrentOauthApis()
   .map((api: APIDescription) => ({
     id: api.altID ?? '',
     label: api.name,
   }));
 
-const standardApi = getAllApis()
-  .filter((api: APIDescription) => api.altID && !api.oAuth && !isApiDeactivated(api))
+const standardApi = getAllCurrentStandardApis()
   .map((api: APIDescription) => ({
     id: api.altID ?? '',
     label: api.name,
