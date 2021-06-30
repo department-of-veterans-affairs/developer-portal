@@ -131,5 +131,4 @@ describe('query module', () => {
       expect(api.enabledByDefault).toBe(true);
     });
   });
-
 });

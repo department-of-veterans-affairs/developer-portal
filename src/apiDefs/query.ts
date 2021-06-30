@@ -51,10 +51,10 @@ const apisFor = (apiList: string[]): APIDescription[] => {
 
 const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(api => !!api.oAuth);
 
-const getAllCurrentOauthApis = (): APIDescription[] => 
+const getAllCurrentOauthApis = (): APIDescription[] =>
   getAllOauthApis().filter((api: APIDescription) => api.enabledByDefault && api.altID && !isApiDeactivated(api));
 
-const getAllCurrentStandardApis = (): APIDescription[] => 
+const getAllCurrentStandardApis = (): APIDescription[] =>
   getAllApis().filter((api: APIDescription) => api.enabledByDefault && api.altID && !api.oAuth && !isApiDeactivated(api));
 
 export {
