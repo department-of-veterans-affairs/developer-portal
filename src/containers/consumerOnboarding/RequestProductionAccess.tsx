@@ -45,7 +45,7 @@ const RequestProductionAccess = (): JSX.Element => (
       <p className="vads-u-margin-bottom--0">
         For VA Facilities API:\
       </p>
-      <p className="vads-u-margin-top--0">If your app uses the PatientWaitTime resource, a screenshot showing it displays this or a similar message: To read the FAQ on how wait times are calculated, click the &quot;For more information&quot; link on this Access To Care page.</p>
+      <p className="vads-u-margin-top--0">If your app uses the <code>PatientWaitTime</code> resource, a screenshot showing it displays this or a similar message: To read the FAQ on how wait times are calculated, click the &quot;For more information&quot; link on <a href="https://www.accesstocare.va.gov/PWT/SearchWaitTimes">this Access To Care page</a>.</p>
     </CollapsiblePanel>
     <CollapsiblePanel panelName="Technical information">
       <ul className="checklist">
