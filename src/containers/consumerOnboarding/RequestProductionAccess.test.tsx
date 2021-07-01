@@ -27,12 +27,4 @@ describe('RequestProductionAccess', () => {
     });
     expect(heading).toBeInTheDocument();
   });
-
-  it('renders the h3 subheading', () => {
-    const heading = screen.getByRole('heading', {
-      level: 3,
-      name: 'We use the data you submit to determine whether to schedule a demo or request technical or policy-related changes. If we need changes, we’ll send you an email.',
-    });
-    expect(heading).toBeInTheDocument();
-  });
 });
