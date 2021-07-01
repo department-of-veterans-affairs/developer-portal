@@ -8,6 +8,7 @@
  */
 
 import moment from 'moment';
+import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import {
   ArgonautReleaseNotes,
   CommunityCareReleaseNotes,
@@ -82,19 +83,19 @@ const healthApis: APIDescription[] = [
       {
         key: 'r4',
         label: 'R4',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/v0/openapi.json`,
       },
       {
         apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/argonaut/data-query/openapi.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-argonaut/v0/openapi.json`,
       },
       {
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-dstu2/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,
