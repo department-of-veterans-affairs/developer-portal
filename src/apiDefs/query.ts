@@ -27,6 +27,9 @@ const getAllOauthApis = (): APIDescription[] =>
     .filter((item: APIDescription) => !!item.oAuth)
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
+const getAllCategorySlugs = (): string[] =>
+  Object.entries(getApiDefinitions()).map((item: [string, APICategory]) => item[0]);
+
 const getAllQuickstartCategorySlugs = (): string[] =>
   Object.entries(getApiDefinitions())
     .filter((item: [string, APICategory]) => !!item[1].content.quickstart)
@@ -53,6 +56,7 @@ const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(a
 export {
   getAllApis,
   getAllOauthApis,
+  getAllCategorySlugs,
   getAllQuickstartCategorySlugs,
   getApiCategoryOrder,
   getApiDefinitions,

@@ -18,6 +18,7 @@
 import 'jest';
 import { FacilitiesReleaseNotes } from '../content/apiDocs/facilities';
 import {
+  getAllCategorySlugs,
   getAllQuickstartCategorySlugs,
   includesOAuthAPI,
   lookupApiByFragment,
@@ -102,6 +103,19 @@ describe('query module', () => {
 
     it('returns false if the list does not include any OAuth APIs', () => {
       expect(includesOAuthAPI(['benefits', 'facilities'])).toBe(false);
+    });
+  });
+
+  describe('getAllCategorySlugs', () => {
+    it('returns the list of all API category slugs', () => {
+      expect(getAllCategorySlugs()).toStrictEqual([
+        'appeals',
+        'benefits',
+        'facilities',
+        'health',
+        'vaForms',
+        'verification',
+      ]);
     });
   });
 
