@@ -293,7 +293,6 @@ const reactRules = {
   'react/jsx-first-prop-new-line': ['error', 'multiline'],
   'react/jsx-indent': ['error', 2],
   'react/jsx-indent-props': ['error', 2],
-  'react/jsx-max-depth': ['error', { max: 8 }],
   'react/jsx-max-props-per-line': ['error', { when: 'multiline' }],
   // inline arrow functions are not very expensive, and React.useCallback can be
   // if it's overused https://kentcdodds.com/blog/usememo-and-usecallback

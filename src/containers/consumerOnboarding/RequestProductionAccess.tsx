@@ -90,11 +90,11 @@ const RequestProductionAccess = (): JSX.Element => (
                 <li>Are the policies free of obvious typos?</li>
                 <li>Does the text formatting meet the following requirements?
                   <ul>
-                  <li>Font size is 14px or larger</li>
-                  <li>No long, unbroken paragraphs</li>
-                  <li>No ALL-CAPS paragraphs (a sentence or two is OK)</li>
-                  <li>No run-on sentences</li>
-                  <li>No narrow column widths</li>
+                    <li>Font size is 14px or larger</li>
+                    <li>No long, unbroken paragraphs</li>
+                    <li>No ALL-CAPS paragraphs (a sentence or two is OK)</li>
+                    <li>No run-on sentences</li>
+                    <li>No narrow column widths</li>
                   </ul>
                 </li>
                 <li>Do text and background colors meet minimum <a href="https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=143#contrast-minimum">WCAG contrast requirements</a> of at least 4.5:1?</li>
@@ -144,8 +144,8 @@ const RequestProductionAccess = (): JSX.Element => (
                 <li>Include instructions for how the user can permanently delete their data stored with your app/company.</li>
                 <li>Specify what will happen to a user’s data if there is a transfer of ownership or if your company ends or sells its business. You must clearly indicate in your policy that the new company’s policies will align with yours, or provide the user one of these options:
                   <ul>
-                  <li>Securely dispose of, transmit, or download their health information.</li>
-                  <li>Close their account.</li>
+                    <li>Securely dispose of, transmit, or download their health information.</li>
+                    <li>Close their account.</li>
                   </ul>
                 </li>
                 <li>Indicate that you will notify your users of changes in ownership.</li>
