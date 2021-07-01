@@ -1,6 +1,6 @@
 /* eslint-disable id-length, max-lines, sort-keys -- mock data */
 export const mockSwagger = {
-  'http://localhost:3000/services/vba_documents/docs/v0/api': {
+  'http://localhost:3000/services/claims/docs/v0/api': {
     openapi: '3.0.0',
     info: {
       version: '0.0.0',
