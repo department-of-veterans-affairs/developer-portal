@@ -16,6 +16,7 @@ const mockMakeRequest = makeRequest as jest.Mock;
 
 describe('ApplyForm', () => {
   beforeEach(() => {
+    document.querySelectorAll = jest.fn(() => [{ focus: jest.fn() }] as unknown as NodeList);
     mockOnSuccess.mockReset();
     mockMakeRequest.mockReset();
     render(
@@ -27,9 +28,6 @@ describe('ApplyForm', () => {
 
   describe('ouath apis', () => {
     it('adds required fields if selected', async () => {
-      const submitButton: HTMLButtonElement = screen.getByRole('button', {
-        name: 'Submit',
-      }) as HTMLButtonElement;
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Samwise', { delay: 0.01 });
         await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Gamgee', { delay: 0.01 });
@@ -39,24 +37,11 @@ describe('ApplyForm', () => {
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
-      await waitFor(() => {
-        expect(submitButton).not.toBeDisabled();
-      });
-
       userEvent.click(screen.getByRole('checkbox', { name: /VA Claims API/ }));
-
-      await waitFor(() => {
-        expect(submitButton).toBeDisabled();
-      });
 
       userEvent.click(await screen.findByRole('radio', { name: 'Yes' }));
 
-      void userEvent.type(
-        screen.getByRole('textbox', { name: /OAuth Redirect URI/ }),
-        'http://prancingpony.pub/',
-      );
-
-      await waitFor(() => expect(submitButton).not.toBeDisabled());
+      expect(await screen.findByRole('textbox', { name: /OAuth Redirect URI/ })).toBeInTheDocument();
     });
   });
 
@@ -116,25 +101,23 @@ describe('ApplyForm', () => {
       });
     });
 
-    it('is disabled when not all required fields are filled in', async () => {
-      const submitButton: HTMLButtonElement = screen.getByRole('button', {
-        name: 'Submit',
-      }) as HTMLButtonElement;
+    it('triggers validation when clicked', async () => {
+      expect(screen.queryByRole('button', { name: 'Sending...' })).not.toBeInTheDocument();
 
-      expect(submitButton).toBeInTheDocument();
-      expect(submitButton).toBeDisabled();
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', { delay: 0.01 });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took', { delay: 0.01 });
 
-      userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin');
-      userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took');
-      userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@theshire.net');
-      userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship');
-      userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        // invalid email
+        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@theshire', { delay: 0.01 });
 
-      await waitFor(() => expect(submitButton).toBeDisabled());
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', { delay: 0.01 });
+        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+      });
+      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
-      userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
-
-      await waitFor(() => expect(submitButton).not.toBeDisabled());
+      expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
     });
 
     it('displays `Sending...` during form submission', async () => {
@@ -155,7 +138,7 @@ describe('ApplyForm', () => {
 
     it('submits the form when all required fields are filled', async () => {
       const submitButton = screen.getByRole('button', { name: 'Submit' });
-      await waitFor(() => expect(submitButton).toBeDisabled());
+
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc', { delay: 0.01 });
         await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck', { delay: 0.01 });
@@ -164,8 +147,6 @@ describe('ApplyForm', () => {
         userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
-
-      await waitFor(() => expect(submitButton).toBeEnabled());
 
       userEvent.click(submitButton);
 
@@ -189,7 +170,7 @@ describe('ApplyForm', () => {
       ).not.toBeInTheDocument();
 
       const submitButton = screen.getByRole('button', { name: 'Submit' });
-      await waitFor(() => expect(submitButton).toBeDisabled());
+
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc', { delay: 0.01 });
         await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck', { delay: 0.01 });
@@ -198,8 +179,6 @@ describe('ApplyForm', () => {
         userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
-
-      await waitFor(() => expect(submitButton).toBeEnabled());
 
       userEvent.click(submitButton);
       expect(
@@ -211,7 +190,6 @@ describe('ApplyForm', () => {
 
     it('contains a link to the support page', async () => {
       const submitButton = screen.getByRole('button', { name: 'Submit' });
-      await waitFor(() => expect(submitButton).toBeDisabled());
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc', { delay: 0.01 });
         await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck', { delay: 0.01 });
@@ -220,8 +198,6 @@ describe('ApplyForm', () => {
         userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
-
-      await waitFor(() => expect(submitButton).toBeEnabled());
 
       userEvent.click(submitButton);
 
