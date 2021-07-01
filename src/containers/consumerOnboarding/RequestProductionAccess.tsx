@@ -29,55 +29,55 @@ const RequestProductionAccess = (): JSX.Element => (
     </div>
     <h2 id="form-requirements-production-access">Learn what’s needed on the form</h2>
     <CollapsiblePanel panelName="Basic information">
-      <ol className="checklist">
+      <ul className="checklist">
         <li>Company contacts and information</li>
         <li>Notification email address for API status updates</li>
         <li>Information about your app and its use cases, including the value it provides to Veterans</li>
         <li>Description of your business model and how your company generates the income to provide its service</li>
         <li>If your app is Veteran-facing:
-          <ol>
+          <ul>
             <li>Information for the app directory, such as key URLs, a brief app description, and a list of compatible devices and browsers</li>
             <li>An app icon with a transparent background (1024x1024 pixel image, in PNG, JPG, or GIF file format)</li>
-          </ol>
+          </ul>
         </li>
         <li>For internal-only APIs, the VASI system name of the application which will consume the API</li>
-      </ol>
+      </ul>
       <p className="vads-u-margin-bottom--0">
         For VA Facilities API:\
       </p>
       <p className="vads-u-margin-top--0">If your app uses the PatientWaitTime resource, a screenshot showing it displays this or a similar message: To read the FAQ on how wait times are calculated, click the &quot;For more information&quot; link on this Access To Care page.</p>
     </CollapsiblePanel>
     <CollapsiblePanel panelName="Technical information">
-      <ol className="checklist">
+      <ul className="checklist">
         <li>Description of how and where you will provide secure storage of your access credentials, such as an API key or client secret and ID</li>
         <li>Details about why and how your application securely stores or exposes any PHI/PII, if applicable</li>
         <li>Information about security and related procedures, including:
-          <ol>
+          <ul>
             <li>Safeguards against unauthorized or duplicate requests</li>
             <li>Breach response processes</li>
             <li>Vulnerability management and patch processes</li>
-          </ol>
+          </ul>
         </li>
         <li>For OAuth APIs, the scopes your application will request</li>
         <li>For the Benefits Intake API:
-          <ol>
+          <ul>
             <li>Information about customer’s naming conventions for the source field, if applicable</li>
             <li>Information about whether you maintain a centralized back-end log for submissions</li>
-          </ol>
+          </ul>
         </li>
         <li>For the Veterans Health API (FHIR):
-          <ol>
+          <ul>
             <li>Screenshots showing your app has appropriate medical advice disclaimers for Veterans</li>
             <li>Confirmation that your app is listed on MyHealthApplication.com. (We strongly recommend you <a href="https://myhealthapplication.com/list-your-app">register and publish</a> your app on this website to show you attest to the <a href="https://www.carinalliance.com/our-work/trust-framework-and-code-of-conduct/">CARIN Alliance Code of Conduct</a>. Registration is free, and prior to your demo, we will check this website to see if your app is listed.)</li>
-          </ol>
+          </ul>
         </li>
-      </ol>
+      </ul>
     </CollapsiblePanel>
     <CollapsiblePanel panelName="Privacy policy and terms of service (OAuth APIs only)">
-      <ol className="checklist">
+      <ul className="checklist">
         <li>URL for your application’s terms of service</li>
         <li>URL for your application’s privacy policy</li>
-      </ol>
+      </ul>
       <p>If your application uses OAuth or the Veteran Confirmation API, we will review your terms of service and privacy policies to make sure they meet our quality, plain language, and content standards. We may require you to make changes to your policies before your demo.</p>
       <p>Our requirements for privacy policies and terms of service are listed below. We strongly suggest you review your policies to make sure they meet these requirements before you upload them.</p>
       <table>
@@ -88,14 +88,15 @@ const RequestProductionAccess = (): JSX.Element => (
               <ul className="vads-u-margin-y--0">
                 <li>Do the policies have a grade reading level of 12 or below?</li>
                 <li>Are the policies free of obvious typos?</li>
-                <li>Does the text formatting meet the following requirements?</li>
-                <ul>
-                  <li>Font size is 14px or larger</li>
-                  <li>No long, unbroken paragraphs</li>
-                  <li>No ALL-CAPS paragraphs (a sentence or two is OK)</li>
-                  <li>No run-on sentences</li>
-                  <li>No narrow column widths</li>
-                </ul>
+                <li>Does the text formatting meet the following requirements?
+                  <ul>
+                    <li>Font size is 14px or larger</li>
+                    <li>No long, unbroken paragraphs</li>
+                    <li>No ALL-CAPS paragraphs (a sentence or two is OK)</li>
+                    <li>No run-on sentences</li>
+                    <li>No narrow column widths</li>
+                  </ul>
+                </li>
                 <li>Do text and background colors meet minimum <a href="https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=143#contrast-minimum">WCAG contrast requirements</a> of at least 4.5:1?</li>
               </ul>
             </td>
@@ -141,11 +142,12 @@ const RequestProductionAccess = (): JSX.Element => (
                 <li>Specify that if there is a data breach, you will notify the user and provide instructions for further actions they may take, if any.</li>
                 <li>Specify your data retention policy, including how long you will hold onto data (including non-VA data) if the account is dormant.</li>
                 <li>Include instructions for how the user can permanently delete their data stored with your app/company.</li>
-                <li>Specify what will happen to a user’s data if there is a transfer of ownership or if your company ends or sells its business. You must clearly indicate in your policy that the new company’s policies will align with yours, or provide the user one of these options:</li>
-                <ul>
-                  <li>Securely dispose of, transmit, or download their health information.</li>
-                  <li>Close their account.</li>
-                </ul>
+                <li>Specify what will happen to a user’s data if there is a transfer of ownership or if your company ends or sells its business. You must clearly indicate in your policy that the new company’s policies will align with yours, or provide the user one of these options:
+                  <ul>
+                    <li>Securely dispose of, transmit, or download their health information.</li>
+                    <li>Close their account.</li>
+                  </ul>
+                </li>
                 <li>Indicate that you will notify your users of changes in ownership.</li>
                 <li>Specify that you will get active consent from users when changes are made to privacy policies and terms of service.</li>
                 <li>Clearly state how you will get active consent for policy changes and provide users with plain-language summaries of what has changed.</li>

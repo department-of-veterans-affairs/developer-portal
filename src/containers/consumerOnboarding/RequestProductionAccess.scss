@@ -3,15 +3,11 @@
     vertical-align: top;
   }
 
-  ol.checklist {
-    list-style: decimal outside url('../../assets/checklist-checkbox.svg');
-    margin-left: 0;
-    padding-left: 2rem;
+  ul.checklist {
+    list-style: url('../../assets/checklist-checkbox.svg');
 
-    li > ol {
-      list-style: lower-alpha outside url('../../assets/checklist-checkbox.svg');
-      margin-left: 0;
-      padding-left: 2rem;
+    li > ul {
+      list-style: url('../../assets/checklist-checkbox.svg');
     }
   }
 }
