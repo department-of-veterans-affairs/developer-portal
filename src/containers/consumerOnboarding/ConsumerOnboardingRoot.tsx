@@ -27,7 +27,7 @@ const ConsumerOnboardingRoot = (): JSX.Element => (
     content={
       <Switch>
         <Route exact path={CONSUMER_PATH} component={OnboardingOverview} />
-        <Route exact path={CONSUMER_PROD_PATH} component={RequestProductionAccess} />
+        <Route path={CONSUMER_PROD_PATH} component={RequestProductionAccess} />
         <Route path={CONSUMER_DEMO_PATH} component={DemoPrep} />
       </Switch>
     }
