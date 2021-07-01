@@ -34,8 +34,7 @@ const benefitsApis: APIDescription[] = [
     description: 'Submit PDF claims',
     docSources: [
       {
-        metadataUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/metadata`,
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/docs/v0/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-intake/v1/openapi.json`,
       },
     ],
     enabledByDefault: true,
