@@ -43,7 +43,7 @@ const RequestProductionAccess = (): JSX.Element => (
         <li>For internal-only APIs, the VASI system name of the application which will consume the API</li>
       </ul>
       <p className="vads-u-margin-bottom--0">
-        For VA Facilities API:\
+        <strong>For VA Facilities API:</strong>
       </p>
       <p className="vads-u-margin-top--0">If your app uses the <code>PatientWaitTime</code> resource, a screenshot showing it displays this or a similar message: To read the FAQ on how wait times are calculated, click the &quot;For more information&quot; link on <a href="https://www.accesstocare.va.gov/PWT/SearchWaitTimes">this Access To Care page</a>.</p>
     </CollapsiblePanel>
@@ -78,7 +78,7 @@ const RequestProductionAccess = (): JSX.Element => (
         <li>URL for your application’s terms of service</li>
         <li>URL for your application’s privacy policy</li>
       </ul>
-      <p>If your application uses OAuth or the Veteran Confirmation API, we will review your terms of service and privacy policies to make sure they meet our quality, plain language, and content standards. We may require you to make changes to your policies before your demo.</p>
+      <p>If your application <strong>uses OAuth</strong> or the <strong>Veteran Confirmation API</strong>, we will review your terms of service and privacy policies to make sure they meet our quality, plain language, and content standards. We may require you to make changes to your policies before your demo.</p>
       <p>Our requirements for privacy policies and terms of service are listed below. We strongly suggest you review your policies to make sure they meet these requirements before you upload them.</p>
       <table>
         <tbody>
