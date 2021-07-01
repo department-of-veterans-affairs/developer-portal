@@ -1,7 +1,8 @@
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { Formik, Form } from 'formik';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { CheckboxRadioField } from '../../../components';
 import { CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
@@ -53,6 +54,7 @@ const processedData = (values: ContactUsFormState): SubmissionData => {
 };
 
 const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps): JSX.Element => {
+  const [submissionError, setSubmissionError] = useState(false);
   const initialValues: ContactUsFormState = {
     apiDescription: '',
     apiDetails: '',
@@ -68,15 +70,20 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
   };
 
   const formSubmission = async (values: ContactUsFormState): Promise<void> => {
-    await makeRequest(CONTACT_US_URL, {
-      body: JSON.stringify(processedData(values)),
-      headers: {
-        accept: 'application/json',
-        'content-type': 'application/json',
-      },
-      method: 'POST',
-    }, { responseType: ResponseType.TEXT });
-    onSuccess();
+    setSubmissionError(false);
+    try {
+      await makeRequest(CONTACT_US_URL, {
+        body: JSON.stringify(processedData(values)),
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+      }, { responseType: ResponseType.TEXT });
+      onSuccess();
+    } catch {
+      setSubmissionError(true);
+    }
   };
 
   return (
@@ -105,9 +112,16 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
           }
 
           <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>{isSubmitting ? 'Sending...' : 'Submit'}</button>
+          {submissionError && (
+            <AlertBox
+              status="error"
+              headline="We encountered a server error while saving your form. Please try again later."
+            />
+          )}
         </Form>
       )}
     </Formik>
+
   );
 };
 
