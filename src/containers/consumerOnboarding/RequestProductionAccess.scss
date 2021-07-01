@@ -7,9 +7,15 @@
     vertical-align: top;
   }
 
-  ul.checklist {
-    li {
-      list-style-image: url('../../assets/checklist-checkbox.svg');
+  ol.checklist {
+    list-style: decimal outside url('../../assets/checklist-checkbox.svg');
+    margin-left: 0;
+    padding-left: 2rem;
+
+    li > ol {
+      list-style: lower-alpha outside url('../../assets/checklist-checkbox.svg');
+      margin-left: 0;
+      padding-left: 2rem;
     }
   }
 }

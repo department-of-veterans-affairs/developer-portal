@@ -28,51 +28,55 @@ const RequestProductionAccess = (): JSX.Element => (
     </div>
     <h2 id="form-requirements-production-access">Learn what’s needed on the form</h2>
     <CollapsiblePanel panelName="Basic information">
-      <ul className="checklist">
+      <ol className="checklist">
         <li>Company contacts and information</li>
         <li>Notification email address for API status updates</li>
         <li>Information about your app and its use cases, including the value it provides to Veterans</li>
         <li>Description of your business model and how your company generates the income to provide its service</li>
-        <li>If your app is Veteran-facing:</li>
-        <ul>
-          <li>Information for the app directory, such as key URLs, a brief app description, and a list of compatible devices and browsers</li>
-          <li>An app icon with a transparent background (1024x1024 pixel image, in PNG, JPG, or GIF file format)</li>
-        </ul>
+        <li>If your app is Veteran-facing:
+          <ol>
+            <li>Information for the app directory, such as key URLs, a brief app description, and a list of compatible devices and browsers</li>
+            <li>An app icon with a transparent background (1024x1024 pixel image, in PNG, JPG, or GIF file format)</li>
+          </ol>
+        </li>
         <li>For internal-only APIs, the VASI system name of the application which will consume the API</li>
-      </ul>
+      </ol>
       <p>
         For VA Facilities API:<br />
         If your app uses the PatientWaitTime resource, a screenshot showing it displays this or a similar message: To read the FAQ on how wait times are calculated, click the &quot;For more information&quot; link on this Access To Care page.
       </p>
     </CollapsiblePanel>
     <CollapsiblePanel panelName="Technical information">
-      <ul className="checklist">
+      <ol className="checklist">
         <li>Description of how and where you will provide secure storage of your access credentials, such as an API key or client secret and ID</li>
         <li>Details about why and how your application securely stores or exposes any PHI/PII, if applicable</li>
-        <li>Information about security and related procedures, including:</li>
-        <ul>
-          <li>Safeguards against unauthorized or duplicate requests</li>
-          <li>Breach response processes</li>
-          <li>Vulnerability management and patch processes</li>
-        </ul>
+        <li>Information about security and related procedures, including:
+          <ol>
+            <li>Safeguards against unauthorized or duplicate requests</li>
+            <li>Breach response processes</li>
+            <li>Vulnerability management and patch processes</li>
+          </ol>
+        </li>
         <li>For OAuth APIs, the scopes your application will request</li>
-        <li>For the Benefits Intake API:</li>
-        <ul>
-          <li>Information about customer’s naming conventions for the source field, if applicable</li>
-          <li>Information about whether you maintain a centralized back-end log for submissions</li>
-        </ul>
-        <li>For the Veterans Health API (FHIR):</li>
-        <ul>
-          <li>Screenshots showing your app has appropriate medical advice disclaimers for Veterans</li>
-          <li>Confirmation that your app is listed on MyHealthApplication.com. (We strongly recommend you <a href="https://myhealthapplication.com/list-your-app">register and publish</a> your app on this website to show you attest to the <a href="https://www.carinalliance.com/our-work/trust-framework-and-code-of-conduct/">CARIN Alliance Code of Conduct</a>. Registration is free, and prior to your demo, we will check this website to see if your app is listed.)</li>
-        </ul>
-      </ul>
+        <li>For the Benefits Intake API:
+          <ol>
+            <li>Information about customer’s naming conventions for the source field, if applicable</li>
+            <li>Information about whether you maintain a centralized back-end log for submissions</li>
+          </ol>
+        </li>
+        <li>For the Veterans Health API (FHIR):
+          <ol>
+            <li>Screenshots showing your app has appropriate medical advice disclaimers for Veterans</li>
+            <li>Confirmation that your app is listed on MyHealthApplication.com. (We strongly recommend you <a href="https://myhealthapplication.com/list-your-app">register and publish</a> your app on this website to show you attest to the <a href="https://www.carinalliance.com/our-work/trust-framework-and-code-of-conduct/">CARIN Alliance Code of Conduct</a>. Registration is free, and prior to your demo, we will check this website to see if your app is listed.)</li>
+          </ol>
+        </li>
+      </ol>
     </CollapsiblePanel>
     <CollapsiblePanel panelName="Privacy policy and terms of service (OAuth APIs only)">
-      <ul className="checklist">
+      <ol className="checklist">
         <li>URL for your application’s terms of service</li>
         <li>URL for your application’s privacy policy</li>
-      </ul>
+      </ol>
       <p>If your application uses OAuth or the Veteran Confirmation API, we will review your terms of service and privacy policies to make sure they meet our quality, plain language, and content standards. We may require you to make changes to your policies before your demo.</p>
       <p>Our requirements for privacy policies and terms of service are listed below. We strongly suggest you review your policies to make sure they meet these requirements before you upload them.</p>
       <table>
