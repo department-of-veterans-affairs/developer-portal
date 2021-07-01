@@ -42,7 +42,9 @@ const RequestProductionAccess = (): JSX.Element => (
         </li>
         <li>For internal-only APIs, the VASI system name of the application which will consume the API</li>
       </ol>
-      <p className="vads-u-margin-bottom--0">For VA Facilities API:</p>
+      <p className="vads-u-margin-bottom--0">
+        For VA Facilities API:\
+      </p>
       <p className="vads-u-margin-top--0">If your app uses the PatientWaitTime resource, a screenshot showing it displays this or a similar message: To read the FAQ on how wait times are calculated, click the &quot;For more information&quot; link on this Access To Care page.</p>
     </CollapsiblePanel>
     <CollapsiblePanel panelName="Technical information">
@@ -136,7 +138,7 @@ const RequestProductionAccess = (): JSX.Element => (
                 <li>Address how data sharing could have an impact on others, such as the impact of sharing genetic or family history information.</li>
                 <li>Clearly state that third-party use or disclosure of user information (including de-identified, anonymized, or pseudonymized data) is prohibited for any reason without active consent from the user.</li>
                 <li>Indicate that third parties are bound to the terms and conditions in your privacy policy.</li>
-                <li>Specify that if there is a data breach of , you will notify the user and provide instructions for further actions they may take, if any.</li>
+                <li>Specify that if there is a data breach, you will notify the user and provide instructions for further actions they may take, if any.</li>
                 <li>Specify your data retention policy, including how long you will hold onto data (including non-VA data) if the account is dormant.</li>
                 <li>Include instructions for how the user can permanently delete their data stored with your app/company.</li>
                 <li>Specify what will happen to a user’s data if there is a transfer of ownership or if your company ends or sells its business. You must clearly indicate in your policy that the new company’s policies will align with yours, or provide the user one of these options:</li>
