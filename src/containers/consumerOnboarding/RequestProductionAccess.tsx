@@ -5,6 +5,7 @@ import { PageHeader } from '../../components';
 import './RequestProductionAccess.scss';
 import {
   CONSUMER_APPLICATION_PATH,
+  CONSUMER_RATE_LIMIT_PATH,
   SUPPORT_CONTACT_PATH,
 } from '../../types/constants/paths';
 
@@ -17,7 +18,7 @@ const RequestProductionAccess = (): JSX.Element => (
       <li>We do not allow monetizing or selling Veteran data.</li>
       <li>Getting production access can take less than a week to more than a month, depending on the API.</li>
       <li>All apps and websites must be <a href="https://section508.gov/" target="_blank" rel="noreferrer">Section 508</a> compliant.</li>
-      <li>Our rate limiting is 60 requests per minute. View our rate limiting policy for more information.</li>
+      <li>Our rate limiting is 60 requests per minute. View <Link to={CONSUMER_RATE_LIMIT_PATH}>our rate limiting policy</Link> for more information.</li>
     </ul>
     <h3>We use the data you submit to determine whether to schedule a demo or request technical or policy-related changes. If we need changes, we’ll send you an email.</h3>
     <div className="vads-l-grid-container">
