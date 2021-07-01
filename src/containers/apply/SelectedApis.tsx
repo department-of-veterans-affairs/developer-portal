@@ -28,13 +28,13 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
   </>
 );
 
-const oauthInfo = getAllCurrentOauthApis()
+const oauthApis = getAllCurrentOauthApis()
   .map((api: APIDescription) => ({
     id: api.altID ?? '',
     label: api.name,
   }));
 
-const standardApi = getAllCurrentStandardApis()
+const standardApis = getAllCurrentStandardApis()
   .map((api: APIDescription) => ({
     id: api.altID ?? '',
     label: api.name,
@@ -50,14 +50,14 @@ const SelectedAPIs = (): JSX.Element => (
       aria-label="Please select all of the Standard APIs you'd like access to:"
     >
       <legend className="vads-u-font-size--lg">Standard APIs:</legend>
-      <ApiCheckboxList apiCheckboxes={standardApi} />
+      <ApiCheckboxList apiCheckboxes={standardApis} />
     </fieldset>
     <fieldset
       className="vads-u-margin-top--2"
       aria-label="Please select all the OAuth APIs you'd like access to:"
     >
       <legend className="vads-u-font-size--lg">OAuth APIs:</legend>
-      <ApiCheckboxList apiCheckboxes={oauthInfo} />
+      <ApiCheckboxList apiCheckboxes={oauthApis} />
     </fieldset>
   </fieldset>
 );
