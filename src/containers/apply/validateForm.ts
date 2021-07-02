@@ -17,8 +17,8 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   const errors: FormikErrors<Values> = {
     email: validateEmail(values.email),
     firstName: validatePresence('first name', values.firstName),
-    lastName: validatePresence('last name', values.firstName),
-    organization: validatePresence('organization', values.firstName),
+    lastName: validatePresence('last name', values.lastName),
+    organization: validatePresence('organization', values.organization),
   };
 
   if (!values.termsOfService) {
@@ -26,7 +26,7 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   }
 
   if (!anyApiSelected(values)) {
-    errors.apis = 'At least one API is required for submission.';
+    errors.apis = 'Choose at least one API.';
   }
 
   if (anyOAuthApisSelected(values)) {
