@@ -2,17 +2,9 @@
 @import '~@department-of-veterans-affairs/formation/sass/full';
 
 .apply-api-select {
-  background-color: $color-gray-lightest;
-  padding: 1.5rem;
-  margin-top: 2rem;
-  
-    .apply-checkbox-labels {
-      label {
-        margin-top: 2.5rem;
-      }
+  .apply-checkbox-labels {
+    label {
+      margin-top: 2.5rem;
     }
-
-    .apply-required {
-      color: $color-secondary-dark;
-    }
+  }
 }

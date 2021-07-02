@@ -11,9 +11,8 @@ import { TextField, CheckboxRadioField } from '../../components';
 import { APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../types';
 import { DeveloperInfo } from './DeveloperInfo';
-import { OAuthAppInfo } from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
-import { validateForm, anyOAuthApisSelected } from './validateForm';
+import { validateForm } from './validateForm';
 
 export interface Values {
   apis: string[];
@@ -102,7 +101,13 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
         well as further instructions. Thank you for being a part of our platform.
       </p>
       <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit} validate={validateForm} validateOnBlur={false} validateOnChange={false}>
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validate={validateForm}
+          validateOnBlur={false}
+          validateOnChange={false}
+        >
           {({ isSubmitting, values, submitForm }): React.ReactNode => {
             const handleSubmitButtonClick = async (): Promise<void> => {
               await submitForm();
@@ -119,8 +124,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
               <Form className="usa-form" noValidate>
                 <h2>Application</h2>
                 <DeveloperInfo />
-                <SelectedApis />
-                {anyOAuthApisSelected(values) && <OAuthAppInfo />}
+                <SelectedApis selectedApis={values.apis} />
 
                 <TextField
                   as="textarea"
@@ -135,19 +139,23 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
                       I agree to the <Link to="/terms-of-service">Terms of Service</Link>{' '}
                       <span className="form-required-span">(*Required)</span>
                     </span>
-                }
+                  }
                   name="termsOfService"
                   required
                   type="checkbox"
                   className="form-checkbox"
                 />
 
-                <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
+                <button
+                  onClick={handleSubmitButtonClick}
+                  type="submit"
+                  className="vads-u-width--auto"
+                >
                   {isSubmitting ? 'Sending...' : 'Submit'}
                 </button>
               </Form>
-          );
- }}
+            );
+          }}
         </Formik>
         {submissionError && (
           <AlertBox
