@@ -61,7 +61,7 @@ const healthApis: APIDescription[] = [
       "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/services/clinical-fhir/v0/r4/openapi.json`,
+        openApiUrl: `${swaggerHost}/services/community-care/v0/eligibility/openapi.json`,
       },
     ],
     enabledByDefault: true,
