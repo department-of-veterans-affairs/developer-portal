@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
@@ -39,6 +40,8 @@ import { FLAG_SIGNUPS_ENABLED } from './types/constants';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
+  const apiDefinitions = getApiDefinitions();
+  console.log(apiDefinitions);
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -64,7 +67,37 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
           />
         )}
       />
-      <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
+      <Route exact path="/explore" component={DocumentationRoot} />
+      <Route path="/explore/:apiCategory(authorization)" component={DocumentationRoot} />
+      {Object.entries(apiDefinitions).map(
+        ([key, value]): JSX.Element => (
+          <Route key={key} path={`/explore/${key}`}>
+            <Switch>
+              {value.content.quickstart && (
+                <Route
+                  exact
+                  key={`${key}-quickstart`}
+                  path={`/explore/:apiCategory(${key})/docs/quickstart`}
+                  component={DocumentationRoot}
+                />
+              )}
+              <Route
+                key={`${key}-definitions`}
+                path={`/explore/:apiCategory(${key})/docs/:apiName`}
+                component={DocumentationRoot}
+              />
+              <Route
+                exact
+                key={`${key}-root`}
+                path={`/explore/:apiCategory(${key})`}
+                component={DocumentationRoot}
+              />
+              {/* This 404 is here to catch missed paths within this route grouping */}
+              <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
+            </Switch>
+          </Route>
+        ),
+      )}
       <Route
         path="/oauth"
         render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
@@ -77,9 +110,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
       />
       <Route path={PUBLISHING_PATH} component={Publishing} />
-      {flags.consumer_docs && (
-        <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />
-      )}
+      {flags.consumer_docs && <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
 
       {/* The below Routes are needed for the sitemap */}
@@ -88,7 +119,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       <Route exact path={PUBLISHING_EXPECTATIONS_PATH} />
       <Route exact path={PUBLISHING_ONBOARDING_PATH} />
       {supportSections.map((section: SupportSection) => (
-        <Route path={`/support/${section.id}`} key={section.id} />
+        <Route path={`/support/${section.id}`} key={`${section.id}-support`} />
       ))}
       {flags.consumer_docs && (
         <>
