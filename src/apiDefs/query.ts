@@ -15,7 +15,6 @@
 
 import apiDefs, { apiCategoryOrder } from './data/categories';
 import { APICategories, APICategory, APIDescription } from './schema';
-import { isApiDeactivated } from './deprecated';
 
 const getApiDefinitions = (): APICategories => apiDefs;
 const getApiCategoryOrder = (): string[] => apiCategoryOrder;
@@ -26,6 +25,11 @@ const getAllApis = (): APIDescription[] =>
 const getAllOauthApis = (): APIDescription[] =>
   getAllApis()
     .filter((item: APIDescription) => !!item.oAuth)
+    .sort((a, b) => (a.name > b.name ? 1 : -1));
+
+const getAllKeyAuthApis = (): APIDescription[] =>
+  getAllApis()
+    .filter((item: APIDescription) => !item.oAuth)
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
 const getAllQuickstartCategorySlugs = (): string[] =>
@@ -51,12 +55,6 @@ const apisFor = (apiList: string[]): APIDescription[] => {
 
 const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(api => !!api.oAuth);
 
-const getAllCurrentOauthApis = (): APIDescription[] =>
-  getAllOauthApis().filter((api: APIDescription) => api.enabledByDefault && api.altID && !isApiDeactivated(api));
-
-const getAllCurrentStandardApis = (): APIDescription[] =>
-  getAllApis().filter((api: APIDescription) => api.enabledByDefault && api.altID && !api.oAuth && !isApiDeactivated(api));
-
 export {
   getAllApis,
   getAllOauthApis,
@@ -66,6 +64,5 @@ export {
   lookupApiByFragment,
   lookupApiCategory,
   includesOAuthAPI,
-  getAllCurrentOauthApis,
-  getAllCurrentStandardApis,
+  getAllKeyAuthApis,
 };

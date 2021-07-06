@@ -10,6 +10,7 @@ import { APIDescription } from '../schema';
 
 const benefitsApis: APIDescription[] = [
   {
+    //adding an altID to match keys need on the backend for signup
     altID: 'claims',
     description: 'Submit and track claims',
     docSources: [

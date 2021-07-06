@@ -3,6 +3,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { makeRequest } from '../../utils/makeRequest';
+import { FlagsProvider, getFlags } from '../../flags';
 import { Apply } from './Apply';
 
 jest.mock('../../utils/makeRequest', () => ({
@@ -17,9 +18,11 @@ describe('Apply', () => {
     document.querySelectorAll = jest.fn(() => [{ focus: jest.fn() }] as unknown as NodeList);
     mockMakeRequest.mockReset();
     render(
-      <MemoryRouter>
-        <Apply />
-      </MemoryRouter>,
+      <FlagsProvider flags={getFlags()}>
+        <MemoryRouter>
+          <Apply />
+        </MemoryRouter>
+      </FlagsProvider>,
     );
   });
 

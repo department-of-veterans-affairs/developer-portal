@@ -4,9 +4,9 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { makeRequest } from '../../utils/makeRequest';
-import { getAllCurrentStandardApis, getAllCurrentOauthApis } from '../../apiDefs/query';
+import { getAllKeyAuthApis, getAllOauthApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-
+import { FlagsProvider, getFlags } from '../../flags';
 import { ApplyForm } from './ApplyForm';
 
 jest.mock('../../utils/makeRequest', () => ({
@@ -17,9 +17,9 @@ jest.mock('../../utils/makeRequest', () => ({
 const mockOnSuccess = jest.fn();
 const mockMakeRequest = makeRequest as jest.Mock;
 
-const allOauthApis = getAllCurrentOauthApis().map((api: APIDescription) => api.name);
+const allOauthApis = getAllOauthApis().map((api: APIDescription) => api.name);
 
-const allStandardApis = getAllCurrentStandardApis().map((api: APIDescription) => api.name);
+const allStandardApis = getAllKeyAuthApis().map((api: APIDescription) => api.name);
 
 describe('ApplyForm', () => {
   beforeEach(() => {
@@ -27,9 +27,11 @@ describe('ApplyForm', () => {
     mockOnSuccess.mockReset();
     mockMakeRequest.mockReset();
     render(
-      <MemoryRouter>
-        <ApplyForm onSuccess={mockOnSuccess} />
-      </MemoryRouter>,
+      <FlagsProvider flags={getFlags()}>
+        <MemoryRouter>
+          <ApplyForm onSuccess={mockOnSuccess} />
+        </MemoryRouter>
+      </FlagsProvider>,
     );
   });
 
@@ -48,11 +50,11 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
-      userEvent.click(screen.getByRole('checkbox', { name: /VA Claims API/ }));
+      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
 
       expect(await screen.findByRole('radio', { name: 'Yes' })).toBeInTheDocument();
       expect(await screen.findByRole('radio', { name: 'No' })).toBeInTheDocument();
@@ -63,7 +65,7 @@ describe('ApplyForm', () => {
 
     it('loads the OAuthAppInfo component links when an OAuth API is selected', () => {
       expect(screen.queryByRole('link', { name: /PKCE/ })).not.toBeInTheDocument();
-      userEvent.click(screen.getByRole('checkbox', { name: /VA Claims API/ }));
+      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
       expect(screen.getAllByRole('link', { name: /PKCE/ })).toHaveLength(2);
     });
   });
@@ -130,7 +132,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -158,7 +160,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Claims API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -185,7 +187,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -209,7 +211,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
@@ -249,7 +251,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
@@ -276,7 +278,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 

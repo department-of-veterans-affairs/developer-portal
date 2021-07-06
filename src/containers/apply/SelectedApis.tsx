@@ -4,45 +4,37 @@ import { ErrorMessage, useFormikContext } from 'formik';
 import { CheckboxRadioField, FieldSet } from '../../components';
 import { anyOAuthApisSelected } from './validateForm';
 import { OAuthAppInfo } from './OAuthAppInfo';
+import { getAllOauthApis, getAllKeyAuthApis } from '../../apiDefs/query';
+import { APIDescription } from '../../apiDefs/schema';
+import { Flag } from '../../flags';
+import { FLAG_HOSTED_APIS } from '../../types/constants';
 import './SelectedApis.scss';
 
-import { getAllCurrentOauthApis, getAllCurrentStandardApis } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
-
-interface APICheckbox {
-  id: string;
-  label: string;
-}
-
 interface APICheckboxListProps {
-  apiCheckboxes: APICheckbox[];
+  apiCheckboxes: APIDescription[];
 }
 
-const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => (
-  <>
-    {apiCheckboxes.map(api => (
-      <CheckboxRadioField
-        type="checkbox"
-        key={api.id}
-        name="apis"
-        label={api.label}
-        value={api.id}
-      />
-    ))}
-  </>
-);
+const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => {
+  //we will need to change this filter when we allow internal apis on the appy page
+  const hostedApis = apiCheckboxes.filter(api => !api.vaInternalOnly && !api.trustedPartnerOnly);
+  return (
+    <>
+      {hostedApis.map(api => (
+        <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]}>
+          <CheckboxRadioField
+            type="checkbox"
+            key={api.urlFragment}
+            name="apis"
+            label={api.name}
+            value={api.altID || api.urlFragment}
+            />
+        </Flag>
+      ))}
+    </>
+)};
 
-const oauthApis = getAllCurrentOauthApis()
-  .map((api: APIDescription) => ({
-    id: api.altID ?? '',
-    label: api.name,
-  }));
-
-const standardApis = getAllCurrentStandardApis()
-  .map((api: APIDescription) => ({
-    id: api.altID ?? '',
-    label: api.name,
-  }));
+const oauthApis = getAllOauthApis();
+const keyAuthApis = getAllKeyAuthApis();
 
 interface SelectedApisProps {
   selectedApis: string[];
@@ -103,7 +95,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legendClassName="vads-u-font-size--lg"
           name="standardApis"
         >
-          <ApiCheckboxList apiCheckboxes={standardApis} />
+          <ApiCheckboxList apiCheckboxes={keyAuthApis} />
         </FieldSet>
         <FieldSet
           className={classNames(

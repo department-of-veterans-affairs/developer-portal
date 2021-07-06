@@ -22,8 +22,6 @@ import {
   includesOAuthAPI,
   lookupApiByFragment,
   lookupApiCategory,
-  getAllCurrentOauthApis,
-  getAllCurrentStandardApis,
 } from './query';
 
 describe('query module', () => {
@@ -111,24 +109,6 @@ describe('query module', () => {
   describe('getAllQuickstartCategorySlugs', () => {
     it('returns the list of all API category slugs that have a quickstart page', () => {
       expect(getAllQuickstartCategorySlugs()).toStrictEqual(['health']);
-    });
-  });
-
-  describe('getAllCurrentOauthApis', () => {
-    it.each(getAllCurrentOauthApis())('get all current and active oauth apis', api => {
-      expect(api).toHaveProperty('altID');
-      expect(api).toHaveProperty('oAuth');
-      expect(api).not.toHaveProperty('deactivationInfo');
-      expect(api.enabledByDefault).toBe(true);
-    });
-  });
-
-  describe('getAllCurrentStandardApis', () => {
-    it.each(getAllCurrentStandardApis())('get all current and active standard apis', api => {
-      expect(api).toHaveProperty('altID');
-      expect(api).not.toHaveProperty('deactivationInfo');
-      expect(api).not.toHaveProperty('oAuth');
-      expect(api.enabledByDefault).toBe(true);
     });
   });
 });
