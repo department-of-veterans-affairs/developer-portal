@@ -69,7 +69,7 @@ const ApiList = (): JSX.Element => (
         tools and services for Veterans at no cost. We’re actively expanding our API library to
         include new categories and APIs, with the goal of better serving those who have served us.
       </p>
-      <div className="vads-l-grid-container--full" style={{ maxWidth: '1200px' }}>
+      <div className="vads-l-grid-container--full">
         <div className="vads-l-row">
           <div className="vads-l-row vads-u-justify-content--space-evenly">
             {apiCategoryOrder.map((apiCategoryKey: string) => {
@@ -83,7 +83,7 @@ const ApiList = (): JSX.Element => (
                     <CardLink
                       name={name}
                       url={`/explore/${apiCategoryKey}`}
-                      linkText={`View the ${name}`}
+                      callToAction={`View the ${name}`}
                     >
                       {content.placardText}
                     </CardLink>

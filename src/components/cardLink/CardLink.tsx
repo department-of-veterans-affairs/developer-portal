@@ -6,8 +6,8 @@ import { NavHashLink } from 'react-router-hash-link';
 import './CardLink.scss';
 
 const CardLinkPropTypes = {
+  callToAction: PropTypes.string,
   children: PropTypes.node,
-  linkText: PropTypes.string,
   name: PropTypes.string.isRequired,
   subhead: PropTypes.node,
   url: PropTypes.string.isRequired,
@@ -40,10 +40,25 @@ const CardLink = (props: CardLinkProps): JSX.Element => (
   >
     <div className="card-content">
       <div className="name-border vads-u-border-bottom--5px vads-u-border-color--secondary" />
-      <h3 className="va-api-name vads-u-margin-top--2 vads-u-color--link-default">{props.name}</h3>
+      <h3 className="va-api-name vads-u-margin-top--2 vads-u-color--link-default">
+        <NavHashLink
+          className="vads-u-text-decoration--none"
+          aria-describedby={props.callToAction ? props.callToAction : undefined}
+          to={props.url}
+        >
+          {' '}
+          {props.name}
+        </NavHashLink>
+      </h3>
       {props.subhead}
       <p className="va-api-description vads-u-color--base">{props.children}</p>
-      <NavHashLink to={props.url}>{props.linkText}</NavHashLink>
+      <p
+        className="vads-u-text-decoration--underline vads-u-color--link-default"
+        aria-hidden="true"
+        id={props.callToAction ? props.callToAction : undefined}
+      >
+        {props.callToAction}
+      </p>
     </div>
   </div>
 );
