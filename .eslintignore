@@ -4,5 +4,4 @@ scripts/**/*
 .eslintrc.js
 *.jest.config.js
 jest-puppeteer.config.js
-setupJest.ts
 SitemapBuilderWebpackPlugin.js

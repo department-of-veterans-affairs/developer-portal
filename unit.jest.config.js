@@ -5,7 +5,6 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
   setupFiles: [
     '<rootDir>/config/polyfills.js',
-    '<rootDir>/setupJest.ts',
     '<rootDir>/config/jest/testEnv.js', // only necessary when running Jest directly
   ],
   setupFilesAfterEnv: ['<rootDir>/config/jest/setupJestPostEnv.js'],

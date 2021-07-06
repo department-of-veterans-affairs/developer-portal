@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { NavHashLink } from 'react-router-hash-link';
 import { AppVersion } from '../../components';
 
 import './Footer.scss';
@@ -52,14 +52,14 @@ const Footer: React.FunctionComponent = (): JSX.Element => (
     </a>
     <ul className={footerListStyles}>
       <li className={listItemStyles}>
-        <Link to={SUPPORT_CONTACT_PATH} className={footerLinkStyles}>
+        <NavHashLink to={SUPPORT_CONTACT_PATH} className={footerLinkStyles}>
           Contact Us
-        </Link>
+        </NavHashLink>
       </li>
       <li className={listItemStyles}>
-        <Link to={TERMS_OF_SERVICE_PATH} className={footerLinkStyles}>
+        <NavHashLink to={TERMS_OF_SERVICE_PATH} className={footerLinkStyles}>
           Terms of Service
-        </Link>
+        </NavHashLink>
       </li>
       <li className={listItemStyles}>
         <a href="https://www.section508.va.gov/" className={footerLinkStyles}>

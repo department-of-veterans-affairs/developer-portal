@@ -11,6 +11,7 @@ const verificationApis: APIDescription[] = [
     description: 'Provides methods to standardize and validate addresses.',
     docSources: [
       {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/address-validation/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/address-validation/v1/openapi.json`,
       },
     ],
@@ -25,7 +26,7 @@ const verificationApis: APIDescription[] = [
     description: 'Confirm Veteran status for a given person with an api key.',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran_confirmation/docs/v0/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-confirmation/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,

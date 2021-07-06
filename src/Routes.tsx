@@ -11,6 +11,7 @@ import {
 } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 import { MarkdownPage } from './components';
+import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
@@ -24,7 +25,11 @@ import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
 import {
+  CONSUMER_APIS_PATH,
+  CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
+  CONSUMER_PROD_PATH,
+  CONSUMER_SANDBOX_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -73,9 +78,10 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       />
       <Route path={PUBLISHING_PATH} component={Publishing} />
       {flags.consumer_docs && (
-        <Route path={CONSUMER_PATH} render={(): JSX.Element => <h1>Consumer docs page</h1>} />
+        <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />
       )}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
+
       {/* The below Routes are needed for the sitemap */}
       <Route path="/explore/:apiCategoryKey/docs/quickstart" />
       <Route path="/explore/:apiCategoryKey/docs/:apiName" />
@@ -84,6 +90,14 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {supportSections.map((section: SupportSection) => (
         <Route path={`/support/${section.id}`} key={section.id} />
       ))}
+      {flags.consumer_docs && (
+        <>
+          <Route exact path={CONSUMER_SANDBOX_PATH} />
+          <Route exact path={CONSUMER_PROD_PATH} />
+          <Route exact path={CONSUMER_DEMO_PATH} />
+          <Route exact path={CONSUMER_APIS_PATH} />
+        </>
+      )}
     </Switch>
   );
 };
