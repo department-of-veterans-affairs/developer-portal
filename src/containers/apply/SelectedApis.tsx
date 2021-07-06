@@ -2,12 +2,12 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
 import { CheckboxRadioField, FieldSet } from '../../components';
-import { anyOAuthApisSelected } from './validateForm';
-import { OAuthAppInfo } from './OAuthAppInfo';
 import { getAllOauthApis, getAllKeyAuthApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { Flag } from '../../flags';
 import { FLAG_HOSTED_APIS } from '../../types/constants';
+import { anyOAuthApisSelected } from './validateForm';
+import { OAuthAppInfo } from './OAuthAppInfo';
 import './SelectedApis.scss';
 
 interface APICheckboxListProps {
@@ -15,23 +15,23 @@ interface APICheckboxListProps {
 }
 
 const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => {
-  //we will need to change this filter when we allow internal apis on the appy page
+  // we will need to change this filter when we allow internal apis on the appy page
   const hostedApis = apiCheckboxes.filter(api => !api.vaInternalOnly && !api.trustedPartnerOnly);
   return (
     <>
       {hostedApis.map(api => (
-        <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]}>
+        <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
           <CheckboxRadioField
             type="checkbox"
-            key={api.urlFragment}
             name="apis"
             label={api.name}
-            value={api.altID || api.urlFragment}
-            />
+            value={api.altID ?? api.urlFragment}
+          />
         </Flag>
-      ))}
+      ))};
     </>
-)};
+  );
+};
 
 const oauthApis = getAllOauthApis();
 const keyAuthApis = getAllKeyAuthApis();
@@ -66,7 +66,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
         'apply-api-select',
         'vads-u-background-color--gray-lightest',
         'vads-u-margin-top--2p5',
-        )}
+      )}
     >
       <div className="vads-u-margin-top--1 apply-checkbox-labels">
         <legend

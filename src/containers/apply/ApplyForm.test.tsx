@@ -17,9 +17,13 @@ jest.mock('../../utils/makeRequest', () => ({
 const mockOnSuccess = jest.fn();
 const mockMakeRequest = makeRequest as jest.Mock;
 
-const allOauthApis = getAllOauthApis().map((api: APIDescription) => api.name);
+const allOauthApis = getAllOauthApis()
+  .filter(api => api.altID)
+  .map((api: APIDescription) => api.name);
 
-const allStandardApis = getAllKeyAuthApis().map((api: APIDescription) => api.name);
+const allKeyAuthApis = getAllKeyAuthApis()
+  .filter(api => api.altID)
+  .map((api: APIDescription) => api.name);
 
 describe('ApplyForm', () => {
   beforeEach(() => {
@@ -293,7 +297,7 @@ describe('ApplyForm', () => {
 
   describe('SelectedApis', () => {
     describe('Standard APIs', () => {
-      it.each(allStandardApis)('toggles the %s checkbox on click', name => {
+      it.each(allKeyAuthApis)('toggles the %s checkbox on click', name => {
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
           name,
         }) as HTMLInputElement;

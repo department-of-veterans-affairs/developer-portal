@@ -23,6 +23,7 @@ const verificationApis: APIDescription[] = [
     vaInternalOnly: true,
   },
   {
+    // adding an altID to match keys need on the backend for signup
     altID: 'confirmation',
     description: 'Confirm Veteran status for a given person with an api key.',
     docSources: [
