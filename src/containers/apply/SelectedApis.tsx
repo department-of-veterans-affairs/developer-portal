@@ -28,7 +28,7 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
             value={api.altID ?? api.urlFragment}
           />
         </Flag>
-      ))};
+      ))}
     </>
   );
 };
