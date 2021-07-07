@@ -4,7 +4,7 @@ import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { AuthorizationCard, CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
-import { FLAG_AUTH_DOCS_V2, FLAG_CATEGORIES } from '../../types/constants';
+import { FLAG_CATEGORIES } from '../../types/constants';
 
 const DocumentationOverview = (): JSX.Element => {
   const apiDefinitions = getApiDefinitions();
@@ -20,9 +20,7 @@ const DocumentationOverview = (): JSX.Element => {
         description="Explore usage policies and technical details about VA's API offerings."
       />
       <div className={defaultFlexContainer()}>
-        <Flag name={[FLAG_AUTH_DOCS_V2]}>
-          <AuthorizationCard />
-        </Flag>
+        <AuthorizationCard />
         {apiCategoryOrder.map((apiCategoryKey: string) => {
           const { name, content } = apiDefinitions[apiCategoryKey];
           return (

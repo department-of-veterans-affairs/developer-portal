@@ -1,3 +1,5 @@
+export const AUTHORIZATION_PKCE_PATH = '/explore/authorization?api=claims#pkce-authorization';
+
 export const CONSUMER_PATH = '/onboarding';
 export const CONSUMER_SANDBOX_PATH = `${CONSUMER_PATH}/request-sandbox-access`;
 export const CONSUMER_PROD_PATH = `${CONSUMER_PATH}/request-prod-access`;
