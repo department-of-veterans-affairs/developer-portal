@@ -29,6 +29,7 @@ describe('query module', () => {
     it('finds the API if it is defined', () => {
       const api = lookupApiByFragment('facilities');
       expect(api).toEqual({
+        altID: 'facilities',
         description: 'VA Facilities',
         docSources: [
           {
