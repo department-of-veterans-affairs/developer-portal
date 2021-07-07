@@ -41,4 +41,3 @@ export const FLAG_CONSUMER_DOCS = 'consumer_docs';
 export const FLAG_HOSTED_APIS = 'hosted_apis';
 export const FLAG_SHOW_TESTING_NOTICE = 'show_testing_notice';
 export const FLAG_SIGNUPS_ENABLED = 'signups_enabled';
-export const FLAG_AUTH_DOCS_V2 = 'auth_docs_v2';

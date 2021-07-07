@@ -1,48 +1,63 @@
 import * as React from 'react';
+import classNames from 'classnames';
+import { useFormikContext } from 'formik';
+import { AUTHORIZATION_PKCE_PATH } from '../../types/constants/paths';
 
-import { CheckboxRadioField, TextField } from '../../components';
+import { CheckboxRadioField, TextField, FieldSet } from '../../components';
+import './OAuthAppinfo.scss';
 
-const OAuthAppInfo: React.FunctionComponent = (): JSX.Element => (
-  <>
-    <div className="vads-u-margin-top--4">
-      Please specify whether your app can securely hide a client secret. Apps that can hide a
-      secret will use the{' '}
-      <a
-        href="https://www.oauth.com/oauth2-servers/server-side-apps/authorization-code/"
-        target="_blank"
-        rel="noreferrer"
+const OAuthAppInfo = (): JSX.Element => {
+  const { errors } = useFormikContext();
+  const redirectUriInputName = 'oAuthRedirectURI';
+  const shouldDisplayUriError = !!errors[redirectUriInputName];
+  const redirectUriClass = shouldDisplayUriError ? 'vads-u-margin-left--2' : '';
+
+  return (
+    <>
+      <div className="vads-u-margin-top--4">
+        Apps that cannot securely hide a client secret must use the{' '}
+        <a href="https://oauth.net/2/pkce/" target="_blank" rel="noreferrer">
+          PKCE
+        </a>{' '}
+        OAuth flow. If your app is a native or mobile app, or if it uses the same client secret for
+        all users, you&apos;ll get credentials for{' '}
+        <a href={AUTHORIZATION_PKCE_PATH} target="_blank" rel="noreferrer">
+          our PKCE OAuth flow
+        </a>
+        .
+      </div>
+      <FieldSet
+        className="vads-u-margin-top--4"
+        legend="Can your application securely hide a client secret?"
+        legendClassName="legend-label"
+        errorClassName="vads-u-margin-left--2"
+        name="oAuthApplicationType"
+        required
       >
-        authorization code flow
-      </a>, and apps that cannot will use the{' '}
-      <a href="https://www.oauth.com/oauth2-servers/pkce/" target="_blank" rel="noreferrer">
-        PKCE flow
-      </a>.
-    </div>
-    <fieldset className="vads-u-margin-top--1">
-      <legend className="vads-u-margin-top--0 legend-label">Can your application securely hide a client secret? <span className="form-required-span">(*Required)</span></legend>
-      <CheckboxRadioField
-        type="radio"
-        label="Yes"
-        value="web"
-        name="oAuthApplicationType"
-        required
-      />
-      <CheckboxRadioField
-        type="radio"
-        label="No"
-        value="native"
-        name="oAuthApplicationType"
-        required
-      />
-    </fieldset>
+        <CheckboxRadioField
+          type="radio"
+          label="Yes"
+          value="web"
+          name="oAuthApplicationType"
+          required
+        />
+        <CheckboxRadioField
+          type="radio"
+          label="No"
+          value="native"
+          name="oAuthApplicationType"
+          required
+        />
+      </FieldSet>
 
-    <TextField
-      label="OAuth Redirect URI"
-      name="oAuthRedirectURI"
-      required
-      className="vads-u-margin-top--4"
-    />
-  </>
-);
+      <TextField
+        label="OAuth Redirect URI"
+        name={redirectUriInputName}
+        required
+        className={classNames('vads-u-margin-top--4', 'oauth-uri-input', redirectUriClass)}
+      />
+    </>
+  );
+};
 
 export { OAuthAppInfo };

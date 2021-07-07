@@ -15,7 +15,15 @@ export interface TextFieldProps {
   type?: 'text' | 'email' | 'password';
 }
 
-const TextField: FC<TextFieldProps> = ({ description, className, label, name, required = false, type = 'text', ...props }) => {
+const TextField: FC<TextFieldProps> = ({
+  description,
+  className,
+  label,
+  name,
+  required = false,
+  type = 'text',
+  ...props
+}) => {
   const { errors, touched } = useFormikContext();
   const shouldDisplayErrors = !!errors[name] && !!touched[name];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
@@ -31,15 +39,11 @@ const TextField: FC<TextFieldProps> = ({ description, className, label, name, re
   return (
     <div className={classNames(containerClass, className)}>
       <label htmlFor={fieldId} className={classNames('vads-u-margin-top--0', labelClass)}>
-        {label}{required && <span className="form-required-span">(*Required)</span>}
+        {label}
+        {required && <span className="form-required-span">(*Required)</span>}
       </label>
-      {
-        description &&
-        <div id={descriptionId}>
-          {description}
-        </div>
-      }
-      <span id={errorId} className={validationClass}>
+      {description && <div id={descriptionId}>{description}</div>}
+      <span id={errorId} className={validationClass} role="alert">
         <ErrorMessage name={name} />
       </span>
 

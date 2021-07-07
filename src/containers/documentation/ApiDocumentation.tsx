@@ -6,9 +6,9 @@ import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 import { Link } from 'react-router-dom';
 import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType, APIDocSource } from '../../apiDefs/schema';
-import { Flag, useFlag } from '../../flags';
+import { Flag } from '../../flags';
 import { history } from '../../store';
-import { FLAG_AUTH_DOCS_V2, FLAG_HOSTED_APIS } from '../../types/constants';
+import { FLAG_HOSTED_APIS } from '../../types/constants';
 import { SwaggerDocs } from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
@@ -67,7 +67,6 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(location.search || undefined);
   const apiVersion = queryParams.get('version');
-  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
 
   React.useEffect((): void => {
     dispatch(actions.setRequestedApiVersion(apiVersion));
@@ -78,7 +77,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
    */
   return (
     <Flag name={[FLAG_HOSTED_APIS, apiDefinition.urlFragment]}>
-      {apiDefinition.oAuth && authDocsV2 && (
+      {apiDefinition.oAuth && (
         <div role="region" aria-labelledby="oauth-info-heading" className="api-docs-oauth-link">
           <h2 id="oauth-info-heading" className="usa-alert-heading">
             Authentication and Authorization
