@@ -30,7 +30,7 @@ const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API 
 const healthApis: APIDescription[] = [
   {
     // adding an altID to match keys need on the backend for signup
-    altID: 'communityCare',
+    altID: 'clinicalHealth',
     description:
       'Use to develop clinical-facing applications that improve access to and management of patient health data.',
     docSources: [
@@ -60,6 +60,7 @@ const healthApis: APIDescription[] = [
     vaInternalOnly: true,
   },
   {
+    altID: 'communityCare',
     description:
       "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [

@@ -15,7 +15,7 @@ interface APICheckboxListProps {
 }
 
 const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => {
-  // we will need to change this filter when we allow internal apis on the appy page
+  // we will need to change this filter when we allow internal apis on the apply page
   const hostedApis = apiCheckboxes.filter(api => !api.vaInternalOnly && !api.trustedPartnerOnly);
   return (
     <>
