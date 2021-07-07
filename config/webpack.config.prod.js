@@ -101,7 +101,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = (envName) => {
+module.exports = envName => {
   return {
     mode: 'production',
     // Don't attempt to continue if there are any errors.
@@ -122,7 +122,7 @@ module.exports = (envName) => {
       // We inferred the "public path" (such as / or /my-project) from homepage.
       publicPath: publicPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
-      devtoolModuleFilenameTemplate: (info) =>
+      devtoolModuleFilenameTemplate: info =>
         path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
     },
     resolve: {
@@ -312,7 +312,7 @@ module.exports = (envName) => {
                         require('markdown-it-anchor'),
                         {
                           level: 2,
-                          slugify: (s) =>
+                          slugify: s =>
                             encodeURIComponent(
                               String(s).trim().toLowerCase().replace(',', '').replace(/\s+/g, '-'),
                             ),
@@ -428,6 +428,7 @@ module.exports = (envName) => {
       new SitemapBuilderPlugin({
         routesFile: path.join(paths.appSrc, 'Routes.tsx'),
         polyfillsFile: path.join(paths.appConfigScripts, 'polyfills.js'),
+        verbose: true,
       }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
