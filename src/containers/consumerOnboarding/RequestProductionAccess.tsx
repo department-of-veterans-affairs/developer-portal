@@ -83,7 +83,7 @@ const RequestProductionAccess = (): JSX.Element => (
       <table>
         <tbody>
           <tr>
-            <th scope="row">Desktop readability</th>
+            <td>Desktop readability</td>
             <td>
               <ul className="vads-u-margin-y--0">
                 <li>Do the policies have a grade reading level of 12 or below?</li>
@@ -102,7 +102,7 @@ const RequestProductionAccess = (): JSX.Element => (
             </td>
           </tr>
           <tr>
-            <th scope="row">Mobile readability</th>
+            <td>Mobile readability</td>
             <td>
               <p className="vads-u-margin-top--0">Does the text formatting meet all of the following requirements for mobile readability?</p>
               <ul className="vads-u-margin-bottom--0">
@@ -115,7 +115,7 @@ const RequestProductionAccess = (): JSX.Element => (
             </td>
           </tr>
           <tr>
-            <th scope="row">Data retention and deletion</th>
+            <td>Data retention and deletion</td>
             <td>
               <p className="vads-u-margin-top--0">Do your terms of service and/or privacy policies:</p>
               <ul className="vads-u-margin-bottom--0">
@@ -126,7 +126,7 @@ const RequestProductionAccess = (): JSX.Element => (
             </td>
           </tr>
           <tr>
-            <th scope="row">Privacy and data practices</th>
+            <td>Privacy and data practices</td>
             <td>
               <p className="vads-u-margin-top--0">Do your terms of service and/or privacy policies:</p>
               <ul className="vads-u-margin-bottom--0">
