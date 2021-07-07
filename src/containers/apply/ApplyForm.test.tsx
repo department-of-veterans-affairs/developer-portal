@@ -4,7 +4,9 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 import { makeRequest } from '../../utils/makeRequest';
-
+import { getAllKeyAuthApis, getAllOauthApis } from '../../apiDefs/query';
+import { APIDescription } from '../../apiDefs/schema';
+import { FlagsProvider, getFlags } from '../../flags';
 import { ApplyForm } from './ApplyForm';
 
 jest.mock('../../utils/makeRequest', () => ({
@@ -15,15 +17,25 @@ jest.mock('../../utils/makeRequest', () => ({
 const mockOnSuccess = jest.fn();
 const mockMakeRequest = makeRequest as jest.Mock;
 
+const allOauthApis = getAllOauthApis()
+  .filter(api => api.altID)
+  .map((api: APIDescription) => api.name);
+
+const allKeyAuthApis = getAllKeyAuthApis()
+  .filter(api => api.altID)
+  .map((api: APIDescription) => api.name);
+
 describe('ApplyForm', () => {
   beforeEach(() => {
     document.querySelectorAll = jest.fn(() => ([{ focus: jest.fn() }] as unknown) as NodeList);
     mockOnSuccess.mockReset();
     mockMakeRequest.mockReset();
     render(
-      <MemoryRouter>
-        <ApplyForm onSuccess={mockOnSuccess} />
-      </MemoryRouter>,
+      <FlagsProvider flags={getFlags()}>
+        <MemoryRouter>
+          <ApplyForm onSuccess={mockOnSuccess} />
+        </MemoryRouter>
+      </FlagsProvider>,
     );
   });
 
@@ -42,11 +54,11 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
-      userEvent.click(screen.getByRole('checkbox', { name: /VA Claims API/ }));
+      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
 
       expect(await screen.findByRole('radio', { name: 'Yes' })).toBeInTheDocument();
       expect(await screen.findByRole('radio', { name: 'No' })).toBeInTheDocument();
@@ -57,7 +69,7 @@ describe('ApplyForm', () => {
 
     it('loads the OAuthAppInfo component links when an OAuth API is selected', () => {
       expect(screen.queryByRole('link', { name: /PKCE/ })).not.toBeInTheDocument();
-      userEvent.click(screen.getByRole('checkbox', { name: /VA Claims API/ }));
+      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
       expect(screen.getAllByRole('link', { name: /PKCE/ })).toHaveLength(2);
     });
   });
@@ -124,7 +136,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -152,7 +164,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Claims API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -179,7 +191,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -203,7 +215,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
@@ -243,7 +255,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
@@ -270,7 +282,7 @@ describe('ApplyForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
@@ -285,18 +297,7 @@ describe('ApplyForm', () => {
 
   describe('SelectedApis', () => {
     describe('Standard APIs', () => {
-      const standardApis = [
-        'VA Benefits API',
-        'VA Facilities API',
-        'VA Forms API',
-        'VA Veteran Confirmation API',
-      ];
-
-      it.each(standardApis)('contains the %s checkbox', name => {
-        expect(screen.getByRole('checkbox', { name })).toBeInTheDocument();
-      });
-
-      it.each(standardApis)('toggles the %s checkbox on click', name => {
+      it.each(allKeyAuthApis)('toggles the %s checkbox on click', name => {
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
           name,
         }) as HTMLInputElement;
@@ -309,18 +310,7 @@ describe('ApplyForm', () => {
     });
 
     describe('OAuth APIs', () => {
-      const oauthApis = [
-        'VA Claims API',
-        'VA Health API',
-        'Community Care Eligibility API',
-        'VA Veteran Verification API',
-      ];
-
-      it.each(oauthApis)('contains the %s checkbox', name => {
-        expect(screen.getByRole('checkbox', { name })).toBeInTheDocument();
-      });
-
-      it.each(oauthApis)('toggles the %s checkbox on click', name => {
+      it.each(allOauthApis)('toggles the %s checkbox on click', name => {
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
           name,
         }) as HTMLInputElement;
