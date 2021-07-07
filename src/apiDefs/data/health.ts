@@ -29,6 +29,8 @@ import { APIDescription } from '../schema';
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API ?? '';
 const healthApis: APIDescription[] = [
   {
+    // adding an altID to match keys need on the backend for signup
+    altID: 'communityCare',
     description:
       'Use to develop clinical-facing applications that improve access to and management of patient health data.',
     docSources: [
@@ -107,6 +109,7 @@ const healthApis: APIDescription[] = [
     vaInternalOnly: false,
   },
   {
+    altID: 'health',
     description:
       'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
     docSources: [
