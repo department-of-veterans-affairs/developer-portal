@@ -79,7 +79,7 @@ describe('query module', () => {
       const healthApi = lookupApiCategory('health');
       expect(healthApi).not.toBeNull();
       expect(healthApi?.apis.length).toBeGreaterThanOrEqual(4);
-      expect(healthApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(4);
+      expect(healthApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(5);
 
       const verificationApi = lookupApiCategory('verification');
       expect(verificationApi).not.toBeNull();
