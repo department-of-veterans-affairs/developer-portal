@@ -17,6 +17,7 @@ const columnContentClasses = classNames(
   'vads-u-padding-top--3',
   'vads-u-padding-x--2',
   'vads-u-padding-bottom--2',
+  'va-api-u-max-width--350',
 );
 
 const buttonClasses = classNames(
@@ -29,7 +30,6 @@ const buttonClasses = classNames(
 const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--200');
 
 export interface ColumnContentProps {
-  ariaLabel: string;
   imageSrc: string;
   title: string;
   children: React.ReactNode;
@@ -38,10 +38,10 @@ export interface ColumnContentProps {
 }
 
 const ColumnContent = (props: ColumnContentProps): JSX.Element => {
-  const { ariaLabel, imageSrc, title, children, buttonText, buttonDestination } = props;
+  const { imageSrc, title, children, buttonText, buttonDestination } = props;
   return (
-    <div className={columnContentClasses} style={{ maxWidth: '356px' }}>
-      <div aria-label={ariaLabel} className="vads-u-height--full va-column-content-text">
+    <div className={columnContentClasses}>
+      <div className="vads-u-height--full va-column-content-text">
         <div>
           <img className={imageClasses} src={imageSrc} alt="" role="presentation" />
         </div>
@@ -75,20 +75,20 @@ const ApiList = (): JSX.Element => (
             {apiCategoryOrder.map((apiCategoryKey: string) => {
               const { name, content } = apiDefinitions[apiCategoryKey];
               return (
-                <div
-                  className="vads-l-col--12 vads-u-margin-y--2 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
-                  key={apiCategoryKey}
-                >
-                  <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+                <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+                  <div
+                    className="vads-l-col--12 vads-u-margin-y--2 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
+                    key={apiCategoryKey}
+                  >
                     <CardLink
                       name={name}
                       url={`/explore/${apiCategoryKey}`}
                       callToAction={`View the ${name}`}
                     >
-                      {content.placardText}
+                      {content.shortDescription}
                     </CardLink>
-                  </Flag>
-                </div>
+                  </div>
+                </Flag>
               );
             })}
           </div>
@@ -101,10 +101,9 @@ const ApiList = (): JSX.Element => (
 const Home = (): JSX.Element => (
   <div className="home vads-l-grid-container--full">
     <Hero />
-    <div className="vads-u-margin-top--4 vads-u-margin-x--auto">
+    <div className="vads-l-grid-container vads-u-margin-top--4 vads-u-margin-x--auto va-api-u-max-width--1200">
       <section className="vads-u-display--flex vads-u-justify-content--space-around vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--3">
         <ColumnContent
-          ariaLabel="API Docs"
           title="API Documentation"
           imageSrc={documentationImage}
           buttonDestination="/explore"
@@ -115,7 +114,6 @@ const Home = (): JSX.Element => (
         </ColumnContent>
         <Flag name={[FLAG_CONSUMER_DOCS]}>
           <ColumnContent
-            ariaLabel="API Docs"
             title="Consumer Onboarding"
             imageSrc={rocketImage}
             buttonDestination="/onboarding"
@@ -126,7 +124,6 @@ const Home = (): JSX.Element => (
           </ColumnContent>
         </Flag>
         <ColumnContent
-          ariaLabel="API Docs"
           title="API Publishing"
           imageSrc={branchImage}
           buttonDestination="/api-publishing"
