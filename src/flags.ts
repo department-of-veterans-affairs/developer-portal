@@ -6,7 +6,6 @@ import { APIDescription } from './apiDefs/schema';
 
 export interface AppFlags {
   consumer_docs: boolean;
-  auth_docs_v2: boolean;
   categories: { [categoryId: string]: boolean };
   deactivated_apis: { [apiId: string]: boolean };
   enabled: { [apiId: string]: boolean };
@@ -21,16 +20,21 @@ const getFlags = (): AppFlags => {
   const deactivatedFlags = getDeactivatedFlags();
   const envFlags = getEnvFlags();
   const apiCategories = getCategoryFlags();
-  const apiFlags = getAllApis().reduce((result, api: APIDescription): {
-    [key: string]: boolean;
-  } => {
-    const isApiAvailable = envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment];
-    result[api.urlFragment] = isApiAvailable;
-    return result;
-  }, {});
+  const apiFlags = getAllApis().reduce(
+    (
+      result,
+      api: APIDescription,
+    ): {
+      [key: string]: boolean;
+    } => {
+      const isApiAvailable = envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment];
+      result[api.urlFragment] = isApiAvailable;
+      return result;
+    },
+    {},
+  );
 
   return {
-    auth_docs_v2: process.env.REACT_APP_AUTH_DOCS_V2 === 'true',
     categories: apiCategories,
     consumer_docs: process.env.REACT_APP_CONSUMER_DOCS === 'true',
     deactivated_apis: deactivatedFlags,
