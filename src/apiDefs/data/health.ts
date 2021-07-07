@@ -33,7 +33,7 @@ const healthApis: APIDescription[] = [
       'Use to develop clinical-facing applications that improve access to and management of patient health data.',
     docSources: [
       {
-        openApiUrl: `${swaggerHost}/internal/docs/fhir-clinical-health/v0/openapi.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-clinical-health/v0/openapi.json`,
       },
     ],
     enabledByDefault: process.env.REACT_APP_CLINICAL_HEALTH_API === 'true',
