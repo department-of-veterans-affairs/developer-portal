@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import CollapsiblePanel from '@department-of-veterans-affairs/component-library/CollapsiblePanel';
 import { PageHeader } from '../../components';
 
@@ -26,7 +27,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         that could impact your experience or use of an API will have an accompanying release note.
       </p>
       <p>
-        See our <a href="/release-notes">release notes</a>.
+        See our <Link to="/release-notes">release notes</Link>.
       </p>
     </CollapsiblePanel>
     <h2>Deprecation and deactivation</h2>
@@ -45,7 +46,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         When authentication fails, or for the few unauthenticated APIs like health checks, rate
         limiting is by IP address. Our default rate limit is 60 requests per minute. If you exceed
         this quota, your request will return a 429 status code. You may petition for increased rate
-        limits by emailing us at <a href="api@va.gov">api@va.gov</a> with the following:
+        limits by emailing us at <a href="mailto:api@va.gov">api@va.gov</a> with the following:
         <ul>
           <li>Documentation of 429 errors in your logs</li>
           <li>Explanation of why you need to make more than 60 requests/min</li>
@@ -62,19 +63,19 @@ const WorkingWithOurAPIs = (): JSX.Element => (
     <CollapsiblePanel panelName="Testing and production environments with robust uptime SLAs.">
       <h3>Sandbox</h3>
       <p>
-        Our <a href="https://dev-api.va.gov">sandbox environment</a> is deployed in the VA
+        Our <a href="https://sandbox-api.va.gov">sandbox environment</a> is deployed in the VA
         Enterprise Cloud&apos;s AWS GovCloud region, sitting behind the VA Trusted Internet
         Connection (TIC), and is in compliance with VA’s external system network requirements.
       </p>
       <p>
         Getting access to the sandbox environment is easy and automatic. Apply for an API key by
-        filling out the form on <a href="/apply">our apply page</a>, or submit the form to receive a
-        client secret and ID for OAuth. Submitting the form will require you to agree to our terms
-        of service.
+        filling out the form on <Link to="/apply">our apply page</Link>, or submit the form to
+        receive a client secret and ID for OAuth. Submitting the form will require you to agree to
+        our terms of service.
       </p>
       <h3>Production</h3>
       <p>
-        Our <a href="https://api.va.gov">production environment </a>is deployed in the VA Enterprise
+        Our <a href="https://api.va.gov">production environment</a> is deployed in the VA Enterprise
         Cloud&apos;s AWS GovCloud region, sitting behind the VA Trusted Internet Connection (TIC),
         and is in compliance with VA’s external system network requirements.
       </p>
@@ -88,8 +89,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
     <h2>Status alerts, uptime, and issue reporting</h2>
     <CollapsiblePanel panelName="Alerts and notifications when you need them most.">
       <p>
-        We post status updates about scheduled maintenance, unscheduled downtime, and more on our
-        <a href="https://valighthouse.statuspage.io/"> status page</a>.
+        We post status updates about scheduled maintenance, unscheduled downtime, and more on our{' '}
+        <a href="https://valighthouse.statuspage.io/">status page</a>.
       </p>
       <p>
         Expected availability varies by environment and whether the API is internal or external.
@@ -117,7 +118,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
     <CollapsiblePanel panelName="We’re here for you whenever you have questions.">
       <p>
         If you find an issue that may impact an API’s status, let us know through our{' '}
-        <a href="/support/contact-us">support page </a>
+        <Link to="/support/contact-us">support page </Link>
         and we will get back to you within one business day.
       </p>
       <p>
