@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import {
   CONSUMER_APIS_PATH,
@@ -22,7 +23,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
         <strong id="start-developing">Start developing</strong>
         <p>
           Access to our sandbox environment is automatic when you&nbsp;
-          <a href={CONSUMER_SANDBOX_PATH}>request an API key</a>.
+          <Link to={CONSUMER_SANDBOX_PATH}>request an API key</Link>.
         </p>
       </li>
       <li className="process-step list-two" aria-labelledby="request-prod-access">
@@ -31,21 +32,21 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
           Getting production access can take less than a week to more than a month, depending on the API.
         </p>
         <p>
-          <a href={CONSUMER_PROD_PATH}>Learn what’s needed on the production access form.</a>
+          <Link to={CONSUMER_PROD_PATH}>Learn what’s needed on the production access form.</Link>
         </p>
       </li>
       <li className="process-step list-three" aria-labelledby="demo">
         <strong id="demo">Prepare for and complete a demo</strong>
         <p>
           We’ll review your production access request. Any changes we require must be made before&nbsp;
-          <a href={CONSUMER_DEMO_PATH}>your demo</a>. Open data APIs don’t require a demo.
+          <Link to={CONSUMER_DEMO_PATH}>your demo</Link>. Open data APIs don’t require a demo.
         </p>
       </li>
       <li className="process-step list-four" aria-labelledby="receive-prod-access">
         <strong id="receive-prod-access">Receive production access</strong>
         <p>
           After a successful demo, you’ll get production access. Learn more about&nbsp;
-          <a href={CONSUMER_APIS_PATH}>working with our APIs</a>.
+          <Link to={CONSUMER_APIS_PATH}>working with our APIs</Link>.
         </p>
       </li>
     </ol>
@@ -96,7 +97,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
     </p>
     <p>
       The consumer onboarding pages describe how to get started using our APIs so you know what to expect
-      each step of the way–from <a href={CONSUMER_SANDBOX_PATH}>requesting automatic sandbox access</a>
+      each step of the way–from <Link to={CONSUMER_SANDBOX_PATH}>requesting automatic sandbox access</Link>
       &nbsp;to getting approved for production, and from troubleshooting to regular maintenance and beyond.
     </p>
   </div>

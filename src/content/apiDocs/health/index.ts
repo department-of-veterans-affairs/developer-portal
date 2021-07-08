@@ -2,6 +2,7 @@ import { APICategoryContent } from '../../../apiDefs/schema';
 import HealthArgonautDeactivationNotice from './argonautDeactivationNotice.mdx';
 import HealthArgonautDeprecationNotice from './argonautDeprecationNotice.mdx';
 import ArgonautReleaseNotes from './argonautReleaseNotes.mdx';
+import ClinicalHealthReleaseNotes from './clinicalHealthReleaseNotes.mdx';
 import CommunityCareReleaseNotes from './communityCareReleaseNotes.mdx';
 import FhirApiReleaseNotes from './fhirAPIReleaseNotes.mdx';
 import FhirArgonautApiIntro from './fhirArgonautApiIntro.mdx';
@@ -24,6 +25,7 @@ const healthContent: APICategoryContent = {
 export {
   healthContent,
   ArgonautReleaseNotes,
+  ClinicalHealthReleaseNotes,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
