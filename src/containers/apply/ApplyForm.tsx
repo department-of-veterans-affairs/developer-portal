@@ -12,9 +12,8 @@ import { TextField, CheckboxRadioField } from '../../components';
 import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../types/constants';
 import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../types';
 import { DeveloperInfo } from './DeveloperInfo';
-import { OAuthAppInfo } from './OAuthAppInfo';
 import SelectedApis from './SelectedApis';
-import { validateForm, anyOAuthApisSelected } from './validateForm';
+import { validateForm } from './validateForm';
 
 export interface Values {
   apis: string[];
@@ -48,7 +47,7 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
   const [submissionError, setSubmissionError] = useState(false);
   const consumerDocsEnabled = useFlag([FLAG_CONSUMER_DOCS]);
 
-  const submitForm = async (values: Values): Promise<void> => {
+  const handleSubmit = async (values: Values): Promise<void> => {
     setSubmissionError(false);
     const applicationBody: DevApplicationRequest = {
       ...values,
@@ -110,39 +109,61 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
           { 'vads-u-padding-x--2p5': !consumerDocsEnabled },
         )}
       >
-        <Formik initialValues={initialValues} onSubmit={submitForm} validate={validateForm}>
-          {({ dirty, isValid, isSubmitting, values }): React.ReactNode => (
-            <Form className="usa-form">
-              <h2>Application</h2>
-              <DeveloperInfo />
-              <SelectedApis />
-              {anyOAuthApisSelected(values) && <OAuthAppInfo />}
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validate={validateForm}
+          validateOnBlur={false}
+          validateOnChange={false}
+        >
+          {({ isSubmitting, values, submitForm }): React.ReactNode => {
+            const handleSubmitButtonClick = async (): Promise<void> => {
+              await submitForm();
+              setTimeout(() => {
+                const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
 
-              <TextField
-                as="textarea"
-                label="Briefly describe how your organization will use VA APIs:"
-                name="description"
-                className="vads-u-margin-top--4"
-              />
-
-              <CheckboxRadioField
-                label={
-                  <span>
-                    I agree to the <Link to="/terms-of-service">Terms of Service</Link>{' '}
-                    <span className="form-required-span">(*Required)</span>
-                  </span>
+                if (errorElements.length > 0) {
+                  errorElements[0].focus();
                 }
-                name="termsOfService"
-                required
-                type="checkbox"
-                className="form-checkbox"
-              />
+              }, 0);
+            };
 
-              <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>
-                {isSubmitting ? 'Sending...' : 'Submit'}
-              </button>
-            </Form>
-          )}
+            return (
+              <Form className="usa-form" noValidate>
+                <h2>Application</h2>
+                <DeveloperInfo />
+                <SelectedApis selectedApis={values.apis} />
+
+                <TextField
+                  as="textarea"
+                  label="Briefly describe how your organization will use VA APIs:"
+                  name="description"
+                  className="vads-u-margin-top--4"
+                />
+
+                <CheckboxRadioField
+                  label={
+                    <span>
+                      I agree to the <Link to="/terms-of-service">Terms of Service</Link>{' '}
+                      <span className="form-required-span">(*Required)</span>
+                    </span>
+                  }
+                  name="termsOfService"
+                  required
+                  type="checkbox"
+                  className="form-checkbox"
+                />
+
+                <button
+                  onClick={handleSubmitButtonClick}
+                  type="submit"
+                  className="vads-u-width--auto"
+                >
+                  {isSubmitting ? 'Sending...' : 'Submit'}
+                </button>
+              </Form>
+            );
+          }}
         </Formik>
         {submissionError && (
           <AlertBox

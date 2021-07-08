@@ -8,8 +8,10 @@
  */
 
 import moment from 'moment';
+import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import {
   ArgonautReleaseNotes,
+  ClinicalHealthReleaseNotes,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
@@ -27,6 +29,38 @@ import { APIDescription } from '../schema';
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API ?? '';
 const healthApis: APIDescription[] = [
   {
+    // adding an altID to match keys need on the backend for signup
+    altID: 'clinicalHealth',
+    description:
+      'Use to develop clinical-facing applications that improve access to and management of patient health data.',
+    docSources: [
+      {
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-clinical-health/v0/openapi.json`,
+      },
+    ],
+    enabledByDefault: process.env.REACT_APP_CLINICAL_HEALTH_API === 'true',
+    name: 'Clinical Health API (FHIR)',
+    oAuth: true,
+    oAuthInfo: {
+      baseAuthPath: '/oauth2/clinical-health/v1',
+      scopes: [
+        'profile',
+        'openid',
+        'offline_access',
+        'launch/patient',
+        'patient/Condition.read',
+        'patient/Observation.read',
+        'patient/Patient.read',
+        'patient/Practitioner.read',
+      ],
+    },
+    releaseNotes: ClinicalHealthReleaseNotes,
+    trustedPartnerOnly: false,
+    urlFragment: 'clinical_health',
+    vaInternalOnly: true,
+  },
+  {
+    altID: 'communityCare',
     description:
       "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
@@ -76,25 +110,26 @@ const healthApis: APIDescription[] = [
     vaInternalOnly: false,
   },
   {
+    altID: 'health',
     description:
       'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
     docSources: [
       {
         key: 'r4',
         label: 'R4',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/r4/openapi.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/v0/openapi.json`,
       },
       {
         apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/argonaut/data-query/openapi.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-argonaut/v0/openapi.json`,
       },
       {
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
-        openApiUrl: `${swaggerHost}/services/fhir/v0/dstu2/openapi.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-dstu2/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,

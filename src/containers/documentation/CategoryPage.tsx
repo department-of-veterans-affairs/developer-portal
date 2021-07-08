@@ -4,17 +4,16 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import classNames from 'classnames';
-import { Flag, useFlag } from '../../flags';
+import { Flag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { AuthorizationCard, CardLink, OnlyTags, PageHeader } from '../../components';
+import { CardLink, OnlyTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
-import { FLAG_AUTH_DOCS_V2, FLAG_HOSTED_APIS, PAGE_HEADER_ID, FLAG_CONSUMER_DOCS } from '../../types/constants';
+import { FLAG_HOSTED_APIS, PAGE_HEADER_ID, FLAG_CONSUMER_DOCS } from '../../types/constants';
 import { CONSUMER_PATH } from '../../types/constants/paths';
 
 const CategoryPage = (): JSX.Element => {
-  const authDocsV2 = useFlag([FLAG_AUTH_DOCS_V2]);
   const { apiCategoryKey } = useParams<APINameParam>();
 
   const {
@@ -44,17 +43,9 @@ const CategoryPage = (): JSX.Element => {
       );
     });
 
-    const authCard =
-      apis.some(api => !!api.oAuth) && categoryName !== 'Benefits API' && !authDocsV2 ? (
-        <AuthorizationCard categoryKey={apiCategoryKey} />
-      ) : null;
-
     cardSection = (
       <div role="navigation" aria-labelledby={PAGE_HEADER_ID}>
-        <div className={defaultFlexContainer()}>
-          {authCard}
-          {apiCards}
-        </div>
+        <div className={defaultFlexContainer()}>{apiCards}</div>
       </div>
     );
   }
@@ -66,7 +57,11 @@ const CategoryPage = (): JSX.Element => {
       </Helmet>
       <PageHeader header={categoryName} />
       {veteranRedirect && (
-        <AlertBox status="info" key={apiCategoryKey} className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}>
+        <AlertBox
+          status="info"
+          key={apiCategoryKey}
+          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
+        >
           {veteranRedirect.message}&nbsp;
           <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
         </AlertBox>
@@ -75,9 +70,7 @@ const CategoryPage = (): JSX.Element => {
         {overview({})}
         <Flag name={[FLAG_CONSUMER_DOCS]}>
           <p>
-            <Link to={CONSUMER_PATH}>
-              {consumerDocsLinkText}
-            </Link>.
+            <Link to={CONSUMER_PATH}>{consumerDocsLinkText}</Link>.
           </p>
         </Flag>
       </div>

@@ -1,0 +1,10 @@
+@import '../../styles/variables.scss';
+@import '~@department-of-veterans-affairs/formation/sass/full';
+
+.apply-api-select {
+  .apply-checkbox-labels {
+    label {
+      margin-top: 2.5rem;
+    }
+  }
+}
