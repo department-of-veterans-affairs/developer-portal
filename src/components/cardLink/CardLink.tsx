@@ -8,19 +8,10 @@ import './CardLink.scss';
 const CardLinkPropTypes = {
   callToAction: PropTypes.string,
   children: PropTypes.node,
-  level: PropTypes.number,
+  level: PropTypes.oneOf([1, 2, 3, 4, 5, 6]),
   name: PropTypes.string.isRequired,
   subhead: PropTypes.node,
   url: PropTypes.string.isRequired,
-};
-
-const headings = {
-  1: 'h1',
-  2: 'h2',
-  3: 'h3',
-  4: 'h4',
-  5: 'h5',
-  6: 'h6',
 };
 
 type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
@@ -31,9 +22,8 @@ type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
  * in the form of a card. It can optionally render an arbitrary JSX.Element
  * subhead before its children, which should be a description of the link.
  */
-
-const CardLink = (props: CardLinkProps): JSX.Element => {
-  const Heading = headings[props.level ?? 3];
+const CardLink: React.FC<CardLinkProps> = (props: CardLinkProps) => {
+  const Heading = `h${props.level ?? 3}` as keyof JSX.IntrinsicElements;
   return (
     <div
       className={classNames(
@@ -77,4 +67,5 @@ const CardLink = (props: CardLinkProps): JSX.Element => {
 };
 
 CardLink.propTypes = CardLinkPropTypes;
+
 export { CardLink };

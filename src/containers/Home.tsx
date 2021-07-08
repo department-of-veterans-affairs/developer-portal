@@ -60,7 +60,7 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
 
 const ApiList = (): JSX.Element => (
   <section className="api-list vads-u-padding-top--3 vads-u-padding-x--2  vads-u-padding-bottom--2">
-    <div className="vads-u-padding-x--6">
+    <div className="vads-l-grid-container--full vads-u-padding-x--6 va-api-u-max-width--1200">
       <h2 className="vads-u-margin-top--0">A modern, reliable API library.</h2>
       <p>
         Our API library makes accessing VA data easier and safer across many categories, including
@@ -101,8 +101,8 @@ const ApiList = (): JSX.Element => (
 const Home = (): JSX.Element => (
   <div className="home vads-l-grid-container--full">
     <Hero />
-    <div className="vads-l-grid-container vads-u-margin-top--4 vads-u-margin-x--auto va-api-u-max-width--1200">
-      <section className="vads-u-display--flex vads-u-justify-content--space-around vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--3">
+    <div className="vads-u-margin-top--4 vads-u-margin-x--auto">
+      <section className="vads-l-grid-container--full vads-u-display--flex vads-u-justify-content--space-around vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--3 va-api-u-max-width--1200">
         <ColumnContent
           title="API Documentation"
           imageSrc={documentationImage}
