@@ -141,7 +141,7 @@ export const sitemapConfig = (): SitemapConfig => {
   return {
     paramsConfig: {
       '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder
-        .filter(apiCategory => getApiRouteParams(apiCategory) !== [])
+        .filter(apiCategory => getApiRouteParams(apiCategory).length > 0)
         .map(apiCategory => ({
           apiCategoryKey: apiCategory,
           apiName: getApiRouteParams(apiCategory),
