@@ -12,7 +12,7 @@ const appealsApis: APIDescription[] = [
     docSources: [
       {
         metadataUrl: `${OPEN_API_SPEC_HOST}/services/appeals/appeals_status/metadata`,
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/appeals/docs/v0/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/appeals-status/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,
