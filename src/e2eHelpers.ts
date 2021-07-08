@@ -2,6 +2,7 @@ import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
 import {
+  CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -22,7 +23,7 @@ export const testPaths = [
   '/explore/health',
   '/explore/benefits',
   '/explore/health/docs/quickstart',
-  '/explore/benefits/docs/benefits', // Only include a few swagger pages since they're all pretty similar
+  '/explore/benefits/docs/claims', // Only include a few swagger pages since they're all pretty similar
   '/explore/benefits/docs/appeals',
   '/release-notes',
   '/news',
@@ -33,6 +34,7 @@ export const testPaths = [
   PUBLISHING_ONBOARDING_PATH,
   CONSUMER_PATH,
   CONSUMER_APIS_PATH,
+  CONSUMER_DEMO_PATH,
 ];
 
 export const metadataTestPaths = [''];

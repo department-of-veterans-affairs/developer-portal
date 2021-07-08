@@ -268,4 +268,28 @@ describe('SupportContactUsFormPublishing', () => {
       });
     });
   });
+
+  it('displays a message when the server returns an error', async () => {
+    mockMakeRequest.mockRejectedValue({ message: 'there was an error' });
+
+    renderComponent();
+
+    await act(async () => {
+      await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Frodo', { delay: 0.01 });
+      await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Baggins', { delay: 0.01 });
+      await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'fbag@bagend.com', { delay: 0.01 });
+      await userEvent.type(screen.getByRole('textbox', {
+        name: /Describe your question or issue in as much detail as you can./,
+      }), 'The dark riders are coming', { delay: 0.01 });
+    });
+
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled();
+    });
+
+    userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+    expect(await screen.findByText('We encountered a server error while saving your form. Please try again later.')).toBeInTheDocument();
+    expect(mockOnSuccess).not.toHaveBeenCalled();
+  });
 });
