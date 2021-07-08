@@ -6,11 +6,11 @@ import { Link } from 'react-router-dom';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 
 import { Form, Formik } from 'formik';
-import { useFlag } from '../../flags';
-import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { TextField, CheckboxRadioField } from '../../components';
-import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../types/constants';
-import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../types';
+import { useFlag } from '../../../../flags';
+import { makeRequest, ResponseType } from '../../../../utils/makeRequest';
+import { TextField, CheckboxRadioField } from '../../../../components';
+import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../../../types/constants';
+import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../../../types';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
@@ -39,11 +39,11 @@ const initialValues = {
   termsOfService: false,
 };
 
-interface ApplyFormProps {
+interface SandboxAccessFormProps {
   onSuccess: (results: ApplySuccessResult) => void;
 }
 
-const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
+const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
   const [submissionError, setSubmissionError] = useState(false);
   const consumerDocsEnabled = useFlag([FLAG_CONSUMER_DOCS]);
 
@@ -181,4 +181,4 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
   );
 };
 
-export { ApplyForm };
+export { SandboxAccessForm };

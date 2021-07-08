@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { PageHeader } from '../../components';
 import { ApplySuccessResult } from '../../types';
-import { ApplyForm } from '../apply/ApplyForm';
-import { ApplySuccess } from '../apply/ApplySuccess';
+import { SandboxAccessForm, SandboxAccessSuccess } from './components/sandbox';
 
 const RequestSandboxAccess: React.FunctionComponent = () => {
   const [successResults, setSuccessResults] = useState<ApplySuccessResult>();
@@ -17,7 +16,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
         description="Your first step towards developing with VA Lighthouse APIs."
       />
       {successResults ?
-        <ApplySuccess result={successResults} /> :
+        <SandboxAccessSuccess result={successResults} /> :
         <>
           <p>
             Get automatic sandbox access to VA Lighthouse APIs by completing our access form. When your
@@ -35,7 +34,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
               and over a month for APIs that require a demo.
             </li>
           </ul>
-          <ApplyForm onSuccess={setSuccessResults} />
+          <SandboxAccessForm onSuccess={setSuccessResults} />
         </>}
     </>
   );

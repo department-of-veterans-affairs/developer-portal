@@ -36,7 +36,7 @@ describe('PageHeader', () => {
       <PageHeader halo="Context" header="Big Idea" description="A great idea" />,
     );
 
-    const description = screen.getByRole('heading', { level: 2, name: 'A great idea' });
+    const description = screen.getByText('A great idea');
     expect(description).toBeInTheDocument();
   });
 
