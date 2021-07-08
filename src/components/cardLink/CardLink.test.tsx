@@ -66,4 +66,16 @@ describe('CardLink', () => {
     expect(card?.children[2]).toHaveTextContent('Test subhead');
     expect(card?.children[3]).toHaveTextContent('Use this to manage something!');
   });
+  it('correct heading level rendered', () => {
+    render(
+      <Router>
+        <CardLink name="Special API" url="/special" callToAction="View Special API" level={1}>
+          Use this to manage something!
+        </CardLink>
+      </Router>,
+    );
+
+    const cardHeading = screen.getByRole('heading', { level: 1 });
+    expect(cardHeading).toBeInTheDocument();
+  });
 });

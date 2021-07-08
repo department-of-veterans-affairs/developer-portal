@@ -29,6 +29,18 @@ const buttonClasses = classNames(
 
 const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--200');
 
+const columnContentSectionClasses = classNames(
+  'vads-l-grid-container--full',
+  'vads-u-display--flex',
+  'vads-u-justify-content--space-around',
+  'vads-u-flex-direction--column',
+  'medium-screen:vads-u-flex-direction--row',
+  'vads-u-margin-bottom--3',
+  'va-api-u-max-width--1200',
+  'vads-u-align-items--center',
+  'medium-screen:vads-u-align-items--stretch',
+);
+
 export interface ColumnContentProps {
   imageSrc: string;
   title: string;
@@ -69,29 +81,27 @@ const ApiList = (): JSX.Element => (
         tools and services for Veterans at no cost. We’re actively expanding our API library to
         include new categories and APIs, with the goal of better serving those who have served us.
       </p>
-      <div className="vads-l-grid-container--full">
-        <div className="vads-l-row">
-          <div className="vads-l-row vads-u-justify-content--space-evenly">
-            {apiCategoryOrder.map((apiCategoryKey: string) => {
-              const { name, content } = apiDefinitions[apiCategoryKey];
-              return (
-                <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-                  <div
-                    className="vads-l-col--12 vads-u-margin-y--2 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
-                    key={apiCategoryKey}
+      <div className="vads-l-row">
+        <div className="vads-l-row vads-u-justify-content--space-evenly">
+          {apiCategoryOrder.map((apiCategoryKey: string) => {
+            const { name, content } = apiDefinitions[apiCategoryKey];
+            return (
+              <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+                <div
+                  className="vads-l-col--12 vads-u-margin-y--2 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
+                  key={apiCategoryKey}
+                >
+                  <CardLink
+                    name={name}
+                    url={`/explore/${apiCategoryKey}`}
+                    callToAction={`View the ${name}`}
                   >
-                    <CardLink
-                      name={name}
-                      url={`/explore/${apiCategoryKey}`}
-                      callToAction={`View the ${name}`}
-                    >
-                      {content.shortDescription}
-                    </CardLink>
-                  </div>
-                </Flag>
-              );
-            })}
-          </div>
+                    {content.shortDescription}
+                  </CardLink>
+                </div>
+              </Flag>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -102,7 +112,7 @@ const Home = (): JSX.Element => (
   <div className="home vads-l-grid-container--full">
     <Hero />
     <div className="vads-u-margin-top--4 vads-u-margin-x--auto">
-      <section className="vads-l-grid-container--full vads-u-display--flex vads-u-justify-content--space-around vads-u-flex-direction--column medium-screen:vads-u-flex-direction--row vads-u-margin-bottom--3 va-api-u-max-width--1200">
+      <section className={columnContentSectionClasses}>
         <ColumnContent
           title="API Documentation"
           imageSrc={documentationImage}
