@@ -23,6 +23,8 @@ const verificationApis: APIDescription[] = [
     vaInternalOnly: true,
   },
   {
+    // adding an altID to match keys need on the backend for signup
+    altID: 'confirmation',
     description: 'Confirm Veteran status for a given person with an api key.',
     docSources: [
       {
@@ -37,11 +39,12 @@ const verificationApis: APIDescription[] = [
     vaInternalOnly: false,
   },
   {
+    altID: 'verification',
     description:
       'Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran_verification/docs/v0/veteran_verification`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-verification/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,

@@ -27,6 +27,11 @@ const getAllOauthApis = (): APIDescription[] =>
     .filter((item: APIDescription) => !!item.oAuth)
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
+const getAllKeyAuthApis = (): APIDescription[] =>
+  getAllApis()
+    .filter((item: APIDescription) => !item.oAuth)
+    .sort((a, b) => (a.name > b.name ? 1 : -1));
+
 const getAllQuickstartCategorySlugs = (): string[] =>
   Object.entries(getApiDefinitions())
     .filter((item: [string, APICategory]) => !!item[1].content.quickstart)
@@ -59,4 +64,5 @@ export {
   lookupApiByFragment,
   lookupApiCategory,
   includesOAuthAPI,
+  getAllKeyAuthApis,
 };

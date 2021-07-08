@@ -10,6 +10,14 @@ export const validatePresence = (fieldName: string, value: string): string | und
   return undefined;
 };
 
+export const validateOAuthApplicationType = (value: string): string | undefined => {
+  if (!PRESENCE_PATTERN.test(value)) {
+    return 'Choose an option.';
+  }
+
+  return undefined;
+};
+
 export const validateEmail = (value: string): string | undefined => {
   if (!EMAIL_PATTERN.test(value)) {
     return 'Enter a valid email address.';

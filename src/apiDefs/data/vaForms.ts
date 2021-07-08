@@ -4,6 +4,8 @@ import { APIDescription } from '../schema';
 
 const vaFormsApis: APIDescription[] = [
   {
+    // adding an altID to match keys need on the backend for signup
+    altID: 'vaForms',
     description: 'Look up VA forms and check for new versions.',
     docSources: [
       {

@@ -73,6 +73,7 @@ export interface APIDescription {
   readonly deactivationInfo?: APIDeactivationInfo;
   readonly multiOpenAPIIntro?: React.FunctionComponent;
   readonly veteranRedirect?: VeteranRedirectMessage;
+  readonly altID?: string;
 }
 
 export interface OAuthInfo {
