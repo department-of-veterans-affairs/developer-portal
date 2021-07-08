@@ -4,6 +4,8 @@ import { APIDescription } from '../schema';
 
 const facilitiesApis: APIDescription[] = [
   {
+    // adding an altID to match keys need on the backend for signup
+    altID: 'facilities',
     description: 'VA Facilities',
     docSources: [
       {

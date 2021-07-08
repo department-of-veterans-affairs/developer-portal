@@ -3,6 +3,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router';
 import { makeRequest } from '../../utils/makeRequest';
+import { FlagsProvider, getFlags } from '../../flags';
 import { Apply } from './Apply';
 
 jest.mock('../../utils/makeRequest', () => ({
@@ -17,9 +18,11 @@ describe('Apply', () => {
     document.querySelectorAll = jest.fn(() => [{ focus: jest.fn() }] as unknown as NodeList);
     mockMakeRequest.mockReset();
     render(
-      <MemoryRouter>
-        <Apply />
-      </MemoryRouter>,
+      <FlagsProvider flags={getFlags()}>
+        <MemoryRouter>
+          <Apply />
+        </MemoryRouter>
+      </FlagsProvider>,
     );
   });
 
@@ -46,34 +49,13 @@ describe('Apply', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /VA Benefits API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
       userEvent.click(submitButton);
 
       expect(await screen.findByText('lord-of-moria')).toBeInTheDocument();
-    });
-  });
-
-  describe('rendering', () => {
-    it('displays the expected checkboxes', () => {
-      expect(screen.getByRole('checkbox', { name: /Claims Attributes API/ })).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: /VA Benefits API/ })).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: /VA Facilities API/ })).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: /VA Forms API/ })).toBeInTheDocument();
-      expect(
-        screen.getByRole('checkbox', { name: /VA Veteran Confirmation API/ }),
-      ).toBeInTheDocument();
-
-      expect(screen.getByRole('checkbox', { name: /VA Claims API/ })).toBeInTheDocument();
-      expect(screen.getByRole('checkbox', { name: /VA Health API/ })).toBeInTheDocument();
-      expect(
-        screen.getByRole('checkbox', { name: /Community Care Eligibility API/ }),
-      ).toBeInTheDocument();
-      expect(
-        screen.getByRole('checkbox', { name: /VA Veteran Verification API/ }),
-      ).toBeInTheDocument();
     });
   });
 });
