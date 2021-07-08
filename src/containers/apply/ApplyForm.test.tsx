@@ -18,7 +18,7 @@ const mockOnSuccess = jest.fn();
 const mockMakeRequest = makeRequest as jest.Mock;
 
 const allOauthApis = getAllOauthApis()
-  .filter(api => api.altID)
+  .filter(api => api.altID && !api.vaInternalOnly)
   .map((api: APIDescription) => api.name);
 
 const allKeyAuthApis = getAllKeyAuthApis()
@@ -27,7 +27,7 @@ const allKeyAuthApis = getAllKeyAuthApis()
 
 describe('ApplyForm', () => {
   beforeEach(() => {
-    document.querySelectorAll = jest.fn(() => ([{ focus: jest.fn() }] as unknown) as NodeList);
+    document.querySelectorAll = jest.fn(() => [{ focus: jest.fn() }] as unknown as NodeList);
     mockOnSuccess.mockReset();
     mockMakeRequest.mockReset();
     render(

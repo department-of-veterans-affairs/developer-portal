@@ -11,6 +11,7 @@ import moment from 'moment';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import {
   ArgonautReleaseNotes,
+  ClinicalHealthReleaseNotes,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
   FhirArgonautApiIntro,
@@ -29,6 +30,36 @@ const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API 
 const healthApis: APIDescription[] = [
   {
     // adding an altID to match keys need on the backend for signup
+    altID: 'clinicalHealth',
+    description:
+      'Use to develop clinical-facing applications that improve access to and management of patient health data.',
+    docSources: [
+      {
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-clinical-health/v0/openapi.json`,
+      },
+    ],
+    enabledByDefault: process.env.REACT_APP_CLINICAL_HEALTH_API === 'true',
+    name: 'Clinical Health API (FHIR)',
+    oAuth: true,
+    oAuthInfo: {
+      baseAuthPath: '/oauth2/clinical-health/v1',
+      scopes: [
+        'profile',
+        'openid',
+        'offline_access',
+        'launch/patient',
+        'patient/Condition.read',
+        'patient/Observation.read',
+        'patient/Patient.read',
+        'patient/Practitioner.read',
+      ],
+    },
+    releaseNotes: ClinicalHealthReleaseNotes,
+    trustedPartnerOnly: false,
+    urlFragment: 'clinical_health',
+    vaInternalOnly: true,
+  },
+  {
     altID: 'communityCare',
     description:
       "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
