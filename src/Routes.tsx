@@ -124,7 +124,7 @@ export const sitemapConfig = (): SitemapConfig => {
   const deactivatedFlags = getDeactivatedFlags();
   const envFlags = getEnvFlags();
 
-  const getApiRouteParams = (route: string, apiCategory: string): string[] => {
+  const getApiRouteParams = (apiCategory: string): string[] => {
     const routeParams = apiDefs[apiCategory].apis.reduce(
       (result: string[], api: APIDescription) => {
         if (envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment]) {
@@ -142,10 +142,12 @@ export const sitemapConfig = (): SitemapConfig => {
   const apiQuickstartCategories = getAllQuickstartCategorySlugs();
   return {
     paramsConfig: {
-      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => ({
-        apiCategoryKey: apiCategory,
-        apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
-      })),
+      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder
+        .filter(apiCategory => getApiRouteParams(apiCategory).length > 0)
+        .map(apiCategory => ({
+          apiCategoryKey: apiCategory,
+          apiName: getApiRouteParams(apiCategory),
+        })),
       '/explore/:apiCategoryKey/docs/quickstart': [{ apiCategoryKey: apiQuickstartCategories }],
       '/explore/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
       '/release-notes/:apiCategoryKey?': [
