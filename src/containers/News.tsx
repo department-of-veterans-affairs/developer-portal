@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import './News.scss';
 
 import {
-  CardLink,
+  CardLinkLegacy,
   ContentWithNav,
   EmbeddedYoutubeVideo,
   PageHeader,
@@ -104,9 +104,9 @@ const News = (): JSX.Element => {
           />
           <div className={classNames(defaultFlexContainer(), 'vads-u-margin-bottom--4')}>
             {sections.map((section: NewsSection) => (
-              <CardLink key={section.id} url={`#${section.id}`} name={section.title}>
+              <CardLinkLegacy key={section.id} url={`#${section.id}`} name={section.title}>
                 {section.description}
-              </CardLink>
+              </CardLinkLegacy>
             ))}
           </div>
           {sections.map((section: NewsSection) => (

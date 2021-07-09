@@ -68,7 +68,6 @@ export const fakeCategories: APICategories = {
     content: {
       consumerDocsLinkText: 'Take me to the consumer docs!',
       overview: (): JSX.Element | null => null,
-      placardText: 'Learn more about things in Middle-earth',
       shortDescription: 'Learn more about things in Middle-earth',
     },
     name: 'LOTR API',
@@ -114,7 +113,6 @@ export const fakeCategories: APICategories = {
     content: {
       consumerDocsLinkText: 'Take me to the consumer docs!',
       overview: (): JSX.Element | null => null,
-      placardText: 'Learn more about throwing, running, and hitting',
       shortDescription: 'Learn more about throwing, running, and hitting',
     },
     name: 'Sports API',

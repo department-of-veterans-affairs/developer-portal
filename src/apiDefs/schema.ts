@@ -18,7 +18,6 @@ export interface APICategoryContent {
   readonly consumerDocsLinkText: string;
   readonly overview: React.FunctionComponent;
   readonly shortDescription: string;
-  readonly placardText: string;
   readonly quickstart?: React.FunctionComponent;
   readonly veteranRedirect?: VeteranRedirectMessage;
 }
@@ -26,7 +25,6 @@ export interface APICategoryContent {
 export const ApiCategoryContentPropType = PropTypes.shape({
   consumerDocsLinkText: PropTypes.string,
   overview: PropTypes.any.isRequired,
-  placardText: PropTypes.string.isRequired,
   quickstart: PropTypes.any,
   shortDescription: PropTypes.string.isRequired,
   veteranRedirect: PropTypes.any,

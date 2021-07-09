@@ -8,9 +8,8 @@ import ClaimsAttributesReleaseNotes from './claimsAttributesReleaseNotes.mdx';
 const benefitsContent: APICategoryContent = {
   consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
   overview: BenefitsOverview,
-  placardText: 'Build tools to electronically submit and track the status of benefit claims.',
   shortDescription:
-    'Enables electronic submission and status tracking of non-medical, VA-related benefit claims.',
+    'Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.',
   veteranRedirect: {
     linkText: 'benefits or appeals claim status',
     linkUrl: 'https://www.va.gov/claim-or-appeal-status/',

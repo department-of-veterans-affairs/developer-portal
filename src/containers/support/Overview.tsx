@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
-import { CardLink, PageHeader } from '../../components';
+import { CardLinkLegacy, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { SupportSection } from './Support';
 import { ContactUsAlertBox } from './ContactUsAlertBox';
@@ -26,9 +26,9 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
     <ContactUsAlertBox />
     <div className={defaultFlexContainer()}>
       {props.sections.map((section: SupportSection) => (
-        <CardLink name={section.name} url={`/support/${section.id}`} key={section.id}>
+        <CardLinkLegacy name={section.name} url={`/support/${section.id}`} key={section.id}>
           {section.description}
-        </CardLink>
+        </CardLinkLegacy>
       ))}
     </div>
   </>

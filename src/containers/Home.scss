@@ -1,0 +1,25 @@
+@import '../styles/variables';
+@import '~@department-of-veterans-affairs/formation/sass/full';
+
+div.title-border {
+  width: 20%;
+  margin: auto;
+  border-bottom: 5px solid #e31c3d;
+}
+
+section.api-list {
+  background-color: #e5e5e5;
+  margin: auto;
+}
+
+a.va-home-button {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: 0;
+}
+
+div.va-column-content-text {
+  position: relative;
+}

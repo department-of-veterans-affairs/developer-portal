@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import { AuthorizationCard, CardLink, PageHeader } from '../../components';
+import { AuthorizationCard, CardLinkLegacy, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { FLAG_CATEGORIES } from '../../types/constants';
@@ -25,9 +25,9 @@ const DocumentationOverview = (): JSX.Element => {
           const { name, content } = apiDefinitions[apiCategoryKey];
           return (
             <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-              <CardLink name={name} url={`/explore/${apiCategoryKey}`}>
+              <CardLinkLegacy name={name} url={`/explore/${apiCategoryKey}`}>
                 {content.shortDescription}
-              </CardLink>
+              </CardLinkLegacy>
             </Flag>
           );
         })}
