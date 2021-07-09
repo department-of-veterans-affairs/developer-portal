@@ -3,14 +3,14 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-import { makeRequest } from '../../utils/makeRequest';
-import { getAllKeyAuthApis, getAllOauthApis } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
-import { FlagsProvider, getFlags } from '../../flags';
-import { ApplyForm } from './ApplyForm';
+import { makeRequest } from '../../../../utils/makeRequest';
+import { getAllKeyAuthApis, getAllOauthApis } from '../../../../apiDefs/query';
+import { APIDescription } from '../../../../apiDefs/schema';
+import { FlagsProvider, getFlags } from '../../../../flags';
+import { SandboxAccessForm } from './SandboxAccessForm';
 
-jest.mock('../../utils/makeRequest', () => ({
-  ...jest.requireActual<Record<string, string>>('../../utils/makeRequest'),
+jest.mock('../../../../utils/makeRequest', () => ({
+  ...jest.requireActual<Record<string, string>>('../../../../utils/makeRequest'),
   makeRequest: jest.fn(),
 }));
 
@@ -25,7 +25,7 @@ const allKeyAuthApis = getAllKeyAuthApis()
   .filter(api => api.altID)
   .map((api: APIDescription) => api.name);
 
-describe('ApplyForm', () => {
+describe('SandboxAccessForm', () => {
   beforeEach(() => {
     document.querySelectorAll = jest.fn(() => [{ focus: jest.fn() }] as unknown as NodeList);
     mockOnSuccess.mockReset();
@@ -33,7 +33,7 @@ describe('ApplyForm', () => {
     render(
       <FlagsProvider flags={getFlags()}>
         <MemoryRouter>
-          <ApplyForm onSuccess={mockOnSuccess} />
+          <SandboxAccessForm onSuccess={mockOnSuccess} />
         </MemoryRouter>
       </FlagsProvider>,
     );

@@ -1,13 +1,13 @@
 import { FormikErrors } from 'formik';
-import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
+import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../../../types/constants';
 import {
   validateEmail,
   validatePresence,
   validateOAuthRedirectURI,
   validateOAuthApplicationType,
-} from '../../utils/validators';
-import { includesOAuthAPI } from '../../apiDefs/query';
-import { Values } from './ApplyForm';
+} from '../../../../utils/validators';
+import { includesOAuthAPI } from '../../../../apiDefs/query';
+import { Values } from './SandboxAccessForm';
 
 export const anyOAuthApisSelected = (apis: string[]): boolean => {
   const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);

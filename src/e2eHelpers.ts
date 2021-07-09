@@ -2,8 +2,10 @@ import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
 import {
+  CONSUMER_PROD_PATH,
   CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
+  CONSUMER_SANDBOX_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
   CONSUMER_APIS_PATH,
@@ -34,6 +36,8 @@ export const testPaths = [
   PUBLISHING_ONBOARDING_PATH,
   CONSUMER_PATH,
   CONSUMER_APIS_PATH,
+  CONSUMER_SANDBOX_PATH,
+  CONSUMER_PROD_PATH,
   CONSUMER_DEMO_PATH,
 ];
 

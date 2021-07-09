@@ -1,10 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
-import { AUTHORIZATION_PKCE_PATH } from '../../types/constants/paths';
+import { AUTHORIZATION_PKCE_PATH } from '../../../../types/constants/paths';
 
-import { CheckboxRadioField, TextField, FieldSet } from '../../components';
-import './OAuthAppinfo.scss';
+import { CheckboxRadioField, TextField, FieldSet } from '../../../../components';
+import './OAuthAppInfo.scss';
 
 const OAuthAppInfo = (): JSX.Element => {
   const { errors } = useFormikContext();

@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { CheckboxRadioField, FieldSet } from '../../components';
-import { getAllOauthApis, getAllKeyAuthApis } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
-import { Flag } from '../../flags';
-import { FLAG_HOSTED_APIS } from '../../types/constants';
+import { CheckboxRadioField, FieldSet } from '../../../../components';
+import { getAllOauthApis, getAllKeyAuthApis } from '../../../../apiDefs/query';
+import { APIDescription } from '../../../../apiDefs/schema';
+import { Flag } from '../../../../flags';
+import { FLAG_HOSTED_APIS } from '../../../../types/constants';
 import { anyOAuthApisSelected } from './validateForm';
 import { OAuthAppInfo } from './OAuthAppInfo';
 import './SelectedApis.scss';

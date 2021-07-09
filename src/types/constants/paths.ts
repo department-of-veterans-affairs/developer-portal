@@ -5,6 +5,8 @@ export const CONSUMER_SANDBOX_PATH = `${CONSUMER_PATH}/request-sandbox-access`;
 export const CONSUMER_PROD_PATH = `${CONSUMER_PATH}/request-prod-access`;
 export const CONSUMER_DEMO_PATH = `${CONSUMER_PATH}/prepare-for-and-complete-a-demo`;
 export const CONSUMER_APIS_PATH = `${CONSUMER_PATH}/working-with-lighthouse-apis`;
+export const CONSUMER_APPLICATION_PATH = `${CONSUMER_PATH}/production-access-application`;
+export const CONSUMER_RATE_LIMIT_PATH = `${CONSUMER_APIS_PATH}#rate-limiting`;
 
 export const PUBLISHING_PATH = '/api-publishing';
 export const PUBLISHING_ONBOARDING_PATH = `${PUBLISHING_PATH}/process`;
