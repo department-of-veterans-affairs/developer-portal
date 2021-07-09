@@ -9,6 +9,7 @@ import {
   CONSUMER_RATE_LIMIT_PATH,
   SUPPORT_CONTACT_PATH,
 } from '../../types/constants/paths';
+
 const RequestProductionAccess = (): JSX.Element => (
   <div className="request-production-access">
     <PageHeader header="Request production access" />
