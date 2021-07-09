@@ -8,9 +8,11 @@ import {
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
   CONSUMER_SANDBOX_PATH,
+  CONSUMER_PROD_ACCESS_FORM_PATH,
 } from '../../types/constants/paths';
 import DemoPrep from './DemoPrep';
 import OnboardingOverview from './OnboardingOverview';
+import { ProductionAccess } from './ProductionAccess';
 
 const ConsumerOnboardingRoot = (): JSX.Element => (
   <ContentWithNav
@@ -27,6 +29,7 @@ const ConsumerOnboardingRoot = (): JSX.Element => (
       <Switch>
         <Route exact path={CONSUMER_PATH} component={OnboardingOverview} />
         <Route path={CONSUMER_DEMO_PATH} component={DemoPrep} />
+        <Route path={CONSUMER_PROD_ACCESS_FORM_PATH} component={ProductionAccess} />
       </Switch>
     }
     navAriaLabel="Consumer Onboarding Page Nav"

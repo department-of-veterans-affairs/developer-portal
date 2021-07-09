@@ -30,6 +30,7 @@ import {
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
   CONSUMER_SANDBOX_PATH,
+  CONSUMER_PROD_ACCESS_FORM_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -77,9 +78,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
       />
       <Route path={PUBLISHING_PATH} component={Publishing} />
-      {flags.consumer_docs && (
-        <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />
-      )}
+      {flags.consumer_docs && <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
 
       {/* The below Routes are needed for the sitemap */}
@@ -96,6 +95,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
           <Route exact path={CONSUMER_PROD_PATH} />
           <Route exact path={CONSUMER_DEMO_PATH} />
           <Route exact path={CONSUMER_APIS_PATH} />
+          <Route exact path={CONSUMER_PROD_ACCESS_FORM_PATH} />
         </>
       )}
     </Switch>
