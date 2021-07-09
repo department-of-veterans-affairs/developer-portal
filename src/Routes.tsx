@@ -54,16 +54,18 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {/* Current routes: */}
       <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
       <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
-      <Route
-        path="/apply"
-        render={(): JSX.Element => (
-          <Flag
-            name={[FLAG_SIGNUPS_ENABLED]}
-            component={Apply}
-            fallbackComponent={DisabledApplyForm}
-          />
-        )}
-      />
+      {flags.consumer_docs ?
+        <Redirect from="/apply" to={CONSUMER_SANDBOX_PATH} /> :
+        <Route
+          path="/apply"
+          render={(): JSX.Element => (
+            <Flag
+              name={[FLAG_SIGNUPS_ENABLED]}
+              component={Apply}
+              fallbackComponent={DisabledApplyForm}
+            />
+          )}
+        />}
       <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
       <Route
         path="/oauth"
