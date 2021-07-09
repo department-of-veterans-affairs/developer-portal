@@ -36,7 +36,7 @@ describe('PageContent', () => {
     userEvent.click(documentationLink);
 
     const documentationPageHeader = await screen.findByRole('heading', {
-      name: 'Apply for VA Lighthouse Developer Access',
+      name: 'Request Sandbox Access',
     });
     expect(documentationPageHeader).toBeInTheDocument();
   });
@@ -44,9 +44,11 @@ describe('PageContent', () => {
   it('scrolls the window to the top position after navigation', async () => {
     userEvent.click(screen.getByRole('link', { name: 'Request an API Key' }));
 
-    await screen.findByRole('heading', { name: 'Apply for VA Lighthouse Developer Access' });
+    await screen.findByRole('heading', {
+      name: 'Request Sandbox Access',
+    });
 
-    expect(window.scrollTo).toHaveBeenCalledTimes(1);
+    expect(window.scrollTo).toHaveBeenCalledTimes(2);
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 });
