@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CollapsiblePanel from '@department-of-veterans-affairs/component-library/CollapsiblePanel';
 import { PageHeader } from '../../components';
+import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 
 const WorkingWithOurAPIs = (): JSX.Element => (
   <div>
@@ -12,7 +13,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       Lighthouse APIs, including information about rate limiting, feature requests, status updates,
       and more.
     </p>
-    <h2>Versioning</h2>
+    <h2 id="versioning">Versioning</h2>
     <CollapsiblePanel panelName="Thoughtful, consistent versioning to reduce the impact of changes.">
       <p>
         Breaking changes to published API versions can be disruptive to using APIs, so our policy is
@@ -30,7 +31,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         See our <Link to="/release-notes">release notes</Link>.
       </p>
     </CollapsiblePanel>
-    <h2>Deprecation and deactivation</h2>
+    <h2 id="deprecation-and-deactivation">Deprecation and deactivation</h2>
     <CollapsiblePanel panelName="The right notifications at the right time about deprecated functionality.">
       <p>
         We occasionally deactivate features and versions of APIs based on updates and new
@@ -39,7 +40,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         changes as possible and to let you know as far in advance as possible.
       </p>
     </CollapsiblePanel>
-    <h2>Rate limiting</h2>
+    <h2 id="rate-limiting">Rate limiting</h2>
     <CollapsiblePanel panelName="Consistent rate limiting at 60 requests per minute.">
       <p>
         We enforce rate limiting per consumer so that there is a limit across all APIs we provide.
@@ -59,9 +60,9 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </p>
       <p>Rate limiting that doesn&apos;t have a consumer is tracked by IP address.</p>
     </CollapsiblePanel>
-    <h2>Environments</h2>
+    <h2 id="environments">Environments</h2>
     <CollapsiblePanel panelName="Testing and production environments with robust uptime SLAs.">
-      <h3>Sandbox</h3>
+      <h3 id="sandbox">Sandbox</h3>
       <p>
         Our <a href="https://sandbox-api.va.gov">sandbox environment</a> is deployed in the VA
         Enterprise Cloud&apos;s AWS GovCloud region, sitting behind the VA Trusted Internet
@@ -69,11 +70,11 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </p>
       <p>
         Getting access to the sandbox environment is easy and automatic. Apply for an API key by
-        filling out the form on <Link to="/apply">our apply page</Link>, or submit the form to
-        receive a client secret and ID for OAuth. Submitting the form will require you to agree to
-        our terms of service.
+        filling out the form on <Link to={CONSUMER_SANDBOX_PATH}>our apply page</Link>, or submit
+        the form to receive a client secret and ID for OAuth. Submitting the form will require you
+        to agree to our terms of service.
       </p>
-      <h3>Production</h3>
+      <h3 id="production">Production</h3>
       <p>
         Our <a href="https://api.va.gov">production environment</a> is deployed in the VA Enterprise
         Cloud&apos;s AWS GovCloud region, sitting behind the VA Trusted Internet Connection (TIC),
@@ -86,7 +87,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </p>
       <p>The production environment has a 99.9% uptime SLA. Its hostname is api.va.gov.</p>
     </CollapsiblePanel>
-    <h2>Status alerts, uptime, and issue reporting</h2>
+    <h2 id="status-alerts">Status alerts, uptime, and issue reporting</h2>
     <CollapsiblePanel panelName="Alerts and notifications when you need them most.">
       <p>
         We post status updates about scheduled maintenance, unscheduled downtime, and more on our{' '}
@@ -114,7 +115,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         </ul>
       </p>
     </CollapsiblePanel>
-    <h2>Support</h2>
+    <h2 id="support">Support</h2>
     <CollapsiblePanel panelName="We’re here for you whenever you have questions.">
       <p>
         If you find an issue that may impact an API’s status, let us know through our{' '}
@@ -136,7 +137,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         directly to the API provider as needed.
       </p>
     </CollapsiblePanel>
-    <h2>Managing feature requests</h2>
+    <h2 id="managing-feature-requests">Managing feature requests</h2>
     <CollapsiblePanel panelName="Improving your experience and getting you the functionality you need.">
       <p>
         We look to our consumers for feature requests, such as suggestions for improvements to
@@ -148,7 +149,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         know the status of your request at least once a month until it is complete.
       </p>
     </CollapsiblePanel>
-    <h2>Auditing process and guidelines</h2>
+    <h2 id="auditing-process">Auditing process and guidelines</h2>
     <CollapsiblePanel panelName="Robust and secure auditing to protect you and VA data.">
       <p>
         We periodically perform auditing to remove inactive API keys and OAuth credentials, and to
@@ -166,7 +167,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         changes to your terms of service, or if there are updates to the API.
       </p>
     </CollapsiblePanel>
-    <h2>Security</h2>
+    <h2 id="security">Security</h2>
     <CollapsiblePanel panelName="The highest security standards based on industry best practices.">
       <p>
         Lighthouse has full authorization to operate (ATO) at the FISMA Moderate level. We also
@@ -215,7 +216,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         </ul>
       </p>
     </CollapsiblePanel>
-    <h2>API Documentation Standards</h2>
+    <h2 id="api-documentation-standards">API Documentation Standards</h2>
     <CollapsiblePanel panelName="Consistent and thorough API documentation.">
       <p>
         To be added to Lighthouse, an API needs reference material in the form of{' '}
@@ -226,7 +227,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         development portal, making it easier for you to integrate with our APIs.
       </p>
     </CollapsiblePanel>
-    <h2>Authentication and authorization</h2>
+    <h2 id="authentication-and-authorization">Authentication and authorization</h2>
     <CollapsiblePanel panelName="Methods of authentication and authorization for all your consumers’ needs.">
       <p>
         Unifying API access through the API Gateway benefits our API providers and those who consume
@@ -239,7 +240,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
           <li>VA backend system authentication</li>
         </ul>
       </p>
-      <h3>OAuth</h3>
+      <h3 id="oauth">OAuth</h3>
       <p>
         <a href="https://oauth.net/">OAuth</a> is short for Open Authorization and is an open-source
         protocol that allows a user to grant third-party access to their personal information.
@@ -261,7 +262,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         Consumers whose application cannot securely hide a client secret will use our{' '}
         <a href="https://oauth.net/2/pkce/">PKCE</a> OAuth flow.
       </p>
-      <h3>API Key</h3>
+      <h3 id="api-key">API Key</h3>
       <p>
         APIs that don&apos;t include PII/PHI are secured using an API key, an authentication
         mechanism relying on the generation of a secret key, which is shared with each unique API
@@ -274,7 +275,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         facilitates the update on their end with no downtime. The information passed to the API
         provider does not change when the key is updated for the consumer.
       </p>
-      <h3>SSO</h3>
+      <h3 id="sso">SSO</h3>
       <p>
         We are in the process of an integration with the VA single sign-on platform, which will
         offer:
