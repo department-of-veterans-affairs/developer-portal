@@ -43,24 +43,20 @@ const CardLink: React.FC<CardLinkProps> = (props: CardLinkProps) => {
       <div className="card-content">
         <div className="name-border vads-u-border-bottom--5px vads-u-border-color--secondary" />
         <Heading className="va-api-name vads-u-margin-top--2 vads-u-color--link-default">
-          <NavHashLink
-            className="vads-u-text-decoration--none"
-            aria-describedby={props.callToAction ? props.callToAction : undefined}
-            to={props.url}
-          >
-            {' '}
+          <NavHashLink className="vads-u-text-decoration--none" to={props.url}>
             {props.name}
           </NavHashLink>
         </Heading>
         {props.subhead}
         <p className="va-api-description vads-u-color--base">{props.children}</p>
-        <p
-          className="vads-u-text-decoration--underline vads-u-color--link-default"
-          aria-hidden="true"
-          id={props.callToAction ? props.callToAction : undefined}
-        >
-          {props.callToAction}
-        </p>
+        {props.callToAction && (
+          <p
+            className="vads-u-text-decoration--underline vads-u-color--link-default"
+            aria-hidden="true"
+          >
+            {props.callToAction}
+          </p>
+        )}
       </div>
     </div>
   );

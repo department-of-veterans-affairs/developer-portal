@@ -58,7 +58,8 @@ describe('CardLink', () => {
       </Router>,
     );
 
-    const card = screen.getByRole('link', { name: 'Special API' }).closest('div > div');
+    const card = screen.getByRole('heading', { name: 'Special API' }).parentElement;
+
     expect(card).toBeInTheDocument();
     expect(card?.childElementCount).toBe(5);
 
@@ -75,7 +76,7 @@ describe('CardLink', () => {
       </Router>,
     );
 
-    const cardHeading = screen.getByRole('heading', { level: 1 });
+    const cardHeading = screen.getByRole('heading', { level: 1, name: 'Special API' });
     expect(cardHeading).toBeInTheDocument();
   });
 });
