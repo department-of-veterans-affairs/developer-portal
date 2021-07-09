@@ -24,7 +24,15 @@ const PageHeader = (props: PageHeaderProps): JSX.Element => (
       {props.header}
     </h1>
     {props.description && (
-      <h2 className={classNames('vads-u-font-size--lg')}>{props.description}</h2>
+      <p
+        className={classNames(
+          'vads-u-font-size--lg',
+          'vads-u-font-weight--bold',
+          'vads-u-margin-y--2',
+        )}
+      >
+        {props.description}
+      </p>
     )}
   </div>
 );

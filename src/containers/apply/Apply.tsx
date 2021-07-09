@@ -4,8 +4,7 @@ import { Helmet } from 'react-helmet';
 import { PAGE_HEADER_ID } from '../../types/constants';
 import { ApplySuccessResult } from '../../types';
 import { PageHeader } from '../../components';
-import { ApplyForm } from './ApplyForm';
-import { ApplySuccess } from './ApplySuccess';
+import { SandboxAccessForm, SandboxAccessSuccess } from '../consumerOnboarding/components/sandbox';
 
 const headerText = 'Apply for VA Lighthouse Developer Access';
 export const Apply: FC = () => {
@@ -21,8 +20,8 @@ export const Apply: FC = () => {
       </div>
       {
         successResults ?
-          <ApplySuccess result={successResults} /> :
-          <ApplyForm onSuccess={setSuccessResults} />
+          <SandboxAccessSuccess result={successResults} /> :
+          <SandboxAccessForm onSuccess={setSuccessResults} />
       }
     </div>
   );

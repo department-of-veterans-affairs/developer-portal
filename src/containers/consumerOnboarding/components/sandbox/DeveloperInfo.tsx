@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { TextField } from '../../components';
+import { TextField } from '../../../../components';
 
 const classNames = 'vads-u-margin-top--4 medium-screen:vads-l-col--10';
 

@@ -59,7 +59,7 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
           'vads-u-align-items--center',
         )}
       >
-        <h3 id={headingId}>{props.title}</h3>
+        <h2 id={headingId} className="vads-u-font-size--lg">{props.title}</h2>
         <button
           className={classNames(
             'va-api-grouped-accordions-button',
