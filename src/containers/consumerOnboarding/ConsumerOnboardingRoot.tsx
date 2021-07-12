@@ -12,7 +12,7 @@ import {
 } from '../../types/constants/paths';
 import DemoPrep from './DemoPrep';
 import OnboardingOverview from './OnboardingOverview';
-import { ProductionAccess } from './ProductionAccess';
+import ProductionAccess from './ProductionAccess';
 
 const ConsumerOnboardingRoot = (): JSX.Element => (
   <ContentWithNav
