@@ -2,15 +2,15 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
 
-import { ApplySuccess } from './ApplySuccess';
+import { SandboxAccessSuccess } from './SandboxAccessSuccess';
 
-describe('ApplySuccess with results', () => {
+describe('SandboxAccessSuccess with results', () => {
   describe('with results', () => {
     describe('all apis', () => {
       beforeEach(() => {
         render(
           <MemoryRouter>
-            <ApplySuccess
+            <SandboxAccessSuccess
               result={{
                 apis: ['benefits', 'facilities', 'vaForms', 'confirmation'],
                 clientID: 'gimli',
@@ -34,7 +34,7 @@ describe('ApplySuccess with results', () => {
       beforeEach(() => {
         render(
           <MemoryRouter>
-            <ApplySuccess
+            <SandboxAccessSuccess
               result={{
                 apis: ['claimsAttributes', 'benefits', 'facilities', 'vaForms', 'confirmation'],
                 clientID: 'gimli',
@@ -79,7 +79,7 @@ describe('ApplySuccess with results', () => {
       beforeEach(() => {
         render(
           <MemoryRouter>
-            <ApplySuccess
+            <SandboxAccessSuccess
               result={{
                 apis: ['claims', 'communityCare', 'health', 'verification'],
                 clientID: 'gimli',

@@ -2,10 +2,10 @@ import * as React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { getApiDefinitions } from '../../apiDefs/query';
-import sentenceJoin from '../../sentenceJoin';
-import { ApplySuccessResult } from '../../types';
-import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS } from '../../types/constants';
+import { getApiDefinitions } from '../../../../apiDefs/query';
+import sentenceJoin from '../../../../sentenceJoin';
+import { ApplySuccessResult } from '../../../../types';
+import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS } from '../../../../types/constants';
 
 const AssistanceTrailer = (): JSX.Element => (
   <p>
@@ -107,7 +107,7 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
   );
 };
 
-const ApplySuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
+const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
   const { apis, email, token, clientID, clientSecret, kongUsername, redirectURI } = props.result;
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
@@ -143,4 +143,4 @@ const ApplySuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
   );
 };
 
-export { ApplySuccess };
+export { SandboxAccessSuccess };

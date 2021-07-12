@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { CheckboxRadioField, FieldSet } from '../../components';
-import { getAllOauthApis, getAllKeyAuthApis } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
-import { Flag } from '../../flags';
-import { FLAG_HOSTED_APIS } from '../../types/constants';
+import { CheckboxRadioField, FieldSet } from '../../../../components';
+import { getAllOauthApis, getAllKeyAuthApis } from '../../../../apiDefs/query';
+import { APIDescription } from '../../../../apiDefs/schema';
+import { Flag } from '../../../../flags';
+import { FLAG_HOSTED_APIS } from '../../../../types/constants';
 import { anyOAuthApisSelected } from './validateForm';
 import { OAuthAppInfo } from './OAuthAppInfo';
 import './SelectedApis.scss';
@@ -15,7 +15,7 @@ interface APICheckboxListProps {
 }
 
 const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => {
-  // we will need to change this filter when we allow internal apis on the appy page
+  // we will need to change this filter when we allow internal apis on the apply page
   const hostedApis = apiCheckboxes.filter(api => !api.vaInternalOnly && !api.trustedPartnerOnly);
   return (
     <>
@@ -28,7 +28,7 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
             value={api.altID ?? api.urlFragment}
           />
         </Flag>
-      ))};
+      ))}
     </>
   );
 };
