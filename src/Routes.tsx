@@ -1,15 +1,10 @@
-/* eslint-disable no-console */
 import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getEnvFlags } from './apiDefs/env';
-import {
-  getAllQuickstartCategorySlugs,
-  getApiCategoryOrder,
-  getApiDefinitions,
-} from './apiDefs/query';
+import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
@@ -41,7 +36,6 @@ import { FLAG_SIGNUPS_ENABLED } from './types/constants';
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
   const apiDefinitions = getApiDefinitions();
-  console.log(apiDefinitions);
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -53,6 +47,10 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => <Redirect to="/terms-of-service" />}
       />
       <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
+      <Route
+        path="/oauth"
+        render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
+      />
 
       {/* Current routes: */}
       <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
@@ -67,68 +65,85 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
           />
         )}
       />
+
+      {/* API Documentation */}
       <Route exact path="/explore" component={DocumentationRoot} />
-      <Route path="/explore/:apiCategory(authorization)" component={DocumentationRoot} />
+      <Route exact path="/explore/authorization" component={DocumentationRoot} />
+      {Object.entries(apiDefinitions)
+        .filter(value => value[1].content.quickstart)
+        .map(
+          ([key]): JSX.Element => (
+            <Route
+              exact
+              key={`${key}-quickstart`}
+              path={`/explore/${key}/docs/quickstart`}
+              component={DocumentationRoot}
+            />
+          ),
+        )}
       {Object.entries(apiDefinitions).map(
-        ([key, value]): JSX.Element => (
-          <Route key={key} path={`/explore/${key}`}>
-            <Switch>
-              {value.content.quickstart && (
-                <Route
-                  exact
-                  key={`${key}-quickstart`}
-                  path={`/explore/:apiCategory(${key})/docs/quickstart`}
-                  component={DocumentationRoot}
-                />
-              )}
-              <Route
-                key={`${key}-definitions`}
-                path={`/explore/:apiCategory(${key})/docs/:apiName`}
-                component={DocumentationRoot}
-              />
-              <Route
-                exact
-                key={`${key}-root`}
-                path={`/explore/:apiCategory(${key})`}
-                component={DocumentationRoot}
-              />
-              {/* This 404 is here to catch missed paths within this route grouping */}
-              <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
-            </Switch>
-          </Route>
+        ([key]): JSX.Element => (
+          <Route
+            key={`${key}-definitions`}
+            path={`/explore/${key}/docs/:apiName`}
+            component={DocumentationRoot}
+          />
         ),
       )}
-      <Route
-        path="/oauth"
-        render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
-      />
-      <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
+      {Object.entries(apiDefinitions).map(
+        ([key]): JSX.Element => (
+          <Route exact key={`${key}-docs`} path={`/explore/${key}`} component={DocumentationRoot} />
+        ),
+      )}
+
+      {/* Release Notes */}
+      <Route exact path="/release-notes" component={ReleaseNotes} />
+      {Object.entries(apiDefinitions).map(
+        ([key]): JSX.Element => (
+          <Route
+            exact
+            key={`${key}-release-notes`}
+            path={`/release-notes/${key}`}
+            component={ReleaseNotes}
+          />
+        ),
+      )}
+      <Route exact path="/release-notes/deactivated" component={ReleaseNotes} />
+
+      {/* News */}
       <Route path="/news" component={News} />
-      <Route path="/support" component={Support} />
+
+      {/* Support */}
+      <Route exact path="/support" component={Support} />
+      {supportSections.map((section: SupportSection) => (
+        <Route path={`/support/${section.id}`} key={`${section.id}-support`} component={Support} />
+      ))}
+
+      {/* Integration Guide */}
       <Route
         path="/providers/integration-guide"
         render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
       />
-      <Route path={PUBLISHING_PATH} component={Publishing} />
-      {flags.consumer_docs && <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />}
-      <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
 
-      {/* The below Routes are needed for the sitemap */}
-      <Route path="/explore/:apiCategoryKey/docs/quickstart" />
-      <Route path="/explore/:apiCategoryKey/docs/:apiName" />
-      <Route exact path={PUBLISHING_EXPECTATIONS_PATH} />
-      <Route exact path={PUBLISHING_ONBOARDING_PATH} />
-      {supportSections.map((section: SupportSection) => (
-        <Route path={`/support/${section.id}`} key={`${section.id}-support`} />
-      ))}
+      {/* API Publishing */}
+      <Route exact path={PUBLISHING_PATH} component={Publishing} />
+      <Route exact path={PUBLISHING_EXPECTATIONS_PATH} component={Publishing} />
+      <Route exact path={PUBLISHING_ONBOARDING_PATH} component={Publishing} />
+
+      {/* Consumer Docs */}
       {flags.consumer_docs && (
         <>
-          <Route exact path={CONSUMER_SANDBOX_PATH} />
-          <Route exact path={CONSUMER_PROD_PATH} />
-          <Route exact path={CONSUMER_DEMO_PATH} />
-          <Route exact path={CONSUMER_APIS_PATH} />
+          <Route exact path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />
+          <Route exact path={CONSUMER_SANDBOX_PATH} component={ConsumerOnboardingRoot} />
+          <Route exact path={CONSUMER_PROD_PATH} component={ConsumerOnboardingRoot} />
+          <Route exact path={CONSUMER_DEMO_PATH} component={ConsumerOnboardingRoot} />
+          <Route exact path={CONSUMER_APIS_PATH} component={ConsumerOnboardingRoot} />
         </>
       )}
+      <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
+
+      {/* The below Route is needed for the sitemap */}
+      <Route path="/explore/:apiCategoryKey/docs/:apiName" />
     </Switch>
   );
 };
@@ -170,22 +185,19 @@ export const sitemapConfig = (): SitemapConfig => {
   };
 
   const apiCategoryOrder = getApiCategoryOrder();
-  const apiQuickstartCategories = getAllQuickstartCategorySlugs();
   return {
     paramsConfig: {
       '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => ({
         apiCategoryKey: apiCategory,
         apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
       })),
-      '/explore/:apiCategoryKey/docs/quickstart': [{ apiCategoryKey: apiQuickstartCategories }],
-      '/explore/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
-      '/release-notes/:apiCategoryKey?': [
-        { 'apiCategoryKey?': [...apiCategoryOrder, 'deactivated'] },
-      ],
     },
     pathFilter: {
       isValid: false,
-      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/oauth/],
+      rules: [
+        /index.html|\/explore\/terms-of-service|\/applied|\/oauth/,
+        ...apiCategoryOrder.map((item): RegExp => new RegExp(`${item}\\\/docs\\\/:apiName`)),
+      ],
     },
     topLevelRoutes: SiteRoutes,
   };
