@@ -11,6 +11,8 @@ import {
 } from '../../types/constants/paths';
 import DemoPrep from './DemoPrep';
 import OnboardingOverview from './OnboardingOverview';
+import RequestSandboxAccess from './RequestSandboxAccess';
+import RequestProductionAccess from './RequestProductionAccess';
 
 const ConsumerOnboardingRoot = (): JSX.Element => (
   <ContentWithNav
@@ -26,6 +28,8 @@ const ConsumerOnboardingRoot = (): JSX.Element => (
     content={
       <Switch>
         <Route exact path={CONSUMER_PATH} component={OnboardingOverview} />
+        <Route exact path={CONSUMER_SANDBOX_PATH} component={RequestSandboxAccess} />
+        <Route path={CONSUMER_PROD_PATH} component={RequestProductionAccess} />
         <Route path={CONSUMER_DEMO_PATH} component={DemoPrep} />
       </Switch>
     }

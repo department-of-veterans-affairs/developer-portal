@@ -54,16 +54,18 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {/* Current routes: */}
       <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
       <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
-      <Route
-        path="/apply"
-        render={(): JSX.Element => (
-          <Flag
-            name={[FLAG_SIGNUPS_ENABLED]}
-            component={Apply}
-            fallbackComponent={DisabledApplyForm}
-          />
-        )}
-      />
+      {flags.consumer_docs ?
+        <Redirect from="/apply" to={CONSUMER_SANDBOX_PATH} /> :
+        <Route
+          path="/apply"
+          render={(): JSX.Element => (
+            <Flag
+              name={[FLAG_SIGNUPS_ENABLED]}
+              component={Apply}
+              fallbackComponent={DisabledApplyForm}
+            />
+          )}
+        />}
       <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
       <Route
         path="/oauth"
@@ -77,9 +79,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
       />
       <Route path={PUBLISHING_PATH} component={Publishing} />
-      {flags.consumer_docs && (
-        <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />
-      )}
+      {flags.consumer_docs && <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
 
       {/* The below Routes are needed for the sitemap */}
@@ -124,7 +124,7 @@ export const sitemapConfig = (): SitemapConfig => {
   const deactivatedFlags = getDeactivatedFlags();
   const envFlags = getEnvFlags();
 
-  const getApiRouteParams = (route: string, apiCategory: string): string[] => {
+  const getApiRouteParams = (apiCategory: string): string[] => {
     const routeParams = apiDefs[apiCategory].apis.reduce(
       (result: string[], api: APIDescription) => {
         if (envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment]) {
@@ -142,10 +142,12 @@ export const sitemapConfig = (): SitemapConfig => {
   const apiQuickstartCategories = getAllQuickstartCategorySlugs();
   return {
     paramsConfig: {
-      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder.map(apiCategory => ({
-        apiCategoryKey: apiCategory,
-        apiName: getApiRouteParams('/explore/:apiCategoryKey/docs/:apiName', apiCategory),
-      })),
+      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder
+        .filter(apiCategory => getApiRouteParams(apiCategory).length > 0)
+        .map(apiCategory => ({
+          apiCategoryKey: apiCategory,
+          apiName: getApiRouteParams(apiCategory),
+        })),
       '/explore/:apiCategoryKey/docs/quickstart': [{ apiCategoryKey: apiQuickstartCategories }],
       '/explore/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
       '/release-notes/:apiCategoryKey?': [
