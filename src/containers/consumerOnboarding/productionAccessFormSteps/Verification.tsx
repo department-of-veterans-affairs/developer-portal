@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { CheckboxRadioField } from '../../../components';
 import SelectedApis from './SelectedApis';
 
@@ -21,6 +22,18 @@ const Verification: FC = () => {
         <CheckboxRadioField type="radio" label="No" name="type" value="no" />
       </fieldset>
       <SelectedApis selectedApis={[]} />
+      <CheckboxRadioField
+        label={
+          <span>
+            I agree to the <Link to="/terms-of-service">Terms of Service</Link>{' '}
+            <span className="form-required-span">(*Required)</span>
+          </span>
+        }
+        name="termsOfService"
+        required
+        type="checkbox"
+        className="form-checkbox"
+      />
     </>
   );
 };
