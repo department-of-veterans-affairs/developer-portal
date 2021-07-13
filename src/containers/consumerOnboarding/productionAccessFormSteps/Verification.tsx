@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { CheckboxRadioField } from '../../../components';
-import SelectedApis from '../../apply/SelectedApis';
+import SelectedApis from './SelectedApis';
 
 const Verification: FC = () => {
   return (
