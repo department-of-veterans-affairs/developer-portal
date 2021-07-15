@@ -24,16 +24,18 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
       <div className={className}>
         {description}
         <FieldArray name={name}>
-          {({ insert, remove, push }) =>
-            data.map((values, index) => (
-              <div key={index}>
-                <TextField name={`${name}.${index}`} label="Email" />
-                <button type="button" onClick={() => push('')}>
-                  {buttonText}
-                </button>
-              </div>
-            ))
-          }
+          {({ insert, remove, push }) => (
+            <div>
+              {data.map((values, index) => (
+                <div key={index}>
+                  <TextField name={`${name}.${index}`} label="Email" />
+                </div>
+              ))}
+              <button type="button" onClick={() => push('')}>
+                {buttonText}
+              </button>
+            </div>
+          )}
         </FieldArray>
       </div>
     </>
