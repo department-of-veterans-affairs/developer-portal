@@ -11,15 +11,15 @@ const Verification: FC = () => {
         <legend className="vads-u-font-weight--normal vads-u-font-size--base">
           Are you a US-based company?
         </legend>
-        <CheckboxRadioField type="radio" label="Yes" name="type" value="yes" />
-        <CheckboxRadioField type="radio" label="No" name="type" value="no" />
+        <CheckboxRadioField type="radio" label="Yes" name="isUSBasedCompany" value="yes" />
+        <CheckboxRadioField type="radio" label="No" name="isUSBasedCompany" value="no" />
       </fieldset>
       <fieldset>
         <legend className="vads-u-font-weight--normal vads-u-font-size--base">
           Is your application and website <a href="http://section508.gov">Section 508</a> compliant?
         </legend>
-        <CheckboxRadioField type="radio" label="Yes" name="type" value="yes" />
-        <CheckboxRadioField type="radio" label="No" name="type" value="no" />
+        <CheckboxRadioField type="radio" label="Yes" name="is508Compliant" value="yes" />
+        <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" />
       </fieldset>
       <SelectedApis selectedApis={[]} />
       <CheckboxRadioField

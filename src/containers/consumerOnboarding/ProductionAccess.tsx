@@ -10,11 +10,40 @@ import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-s
 const headerText = 'Production access form';
 // const steps = ['Verification', 'Basic information', 'Technical information', 'Policy governance'];
 
+export interface Values {
+  apis: string[];
+  is508Compliant: string;
+  isUSBasedCompany: string;
+  termsOfService: boolean;
+  primaryContact: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  secondaryContact: {
+    firstName: string;
+    lastName: string;
+    email: string;
+  };
+  companyName: string;
+  phoneNumber: string;
+  applicationName: string;
+  notificationEmail: string[];
+  termsOfServiceEmail: string[];
+}
+
 const initialValues = {
   apis: [],
-  is508Compliant: false,
-  isUSBasedCompany: false,
+  applicationName: '',
+  companyName: '',
+  is508Compliant: '',
+  isUSBasedCompany: '',
+  notificationEmail: [''],
+  phoneNumber: '',
+  primaryContact: null,
+  secondaryContact: null,
   termsOfService: false,
+  termsOfServiceEmail: [],
 };
 
 const renderStepContent = (step: number) => {
