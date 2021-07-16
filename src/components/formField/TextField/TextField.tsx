@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { Field, ErrorMessage, useFormikContext } from 'formik';
-import React, { ComponentPropsWithRef, FC, ReactNode } from 'react';
+import React, { ComponentPropsWithRef, FC, ReactNode, KeyboardEvent } from 'react';
 import toHtmlId from '../../../toHtmlId';
 
 type FieldProps = ComponentPropsWithRef<typeof Field>;
@@ -13,6 +13,8 @@ export interface TextFieldProps {
   as?: FieldProps['as'];
   description?: ReactNode;
   type?: 'text' | 'email' | 'password';
+  disabled?: boolean;
+  onKeyDown?: (event: KeyboardEvent) => void;
 }
 
 const TextField: FC<TextFieldProps> = ({
@@ -22,6 +24,8 @@ const TextField: FC<TextFieldProps> = ({
   name,
   required = false,
   type = 'text',
+  disabled = false,
+  onKeyDown,
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
@@ -55,6 +59,8 @@ const TextField: FC<TextFieldProps> = ({
         aria-describedby={`${errorId} ${descriptionId}`}
         aria-invalid={shouldDisplayErrors}
         type={props.as ? undefined : type}
+        disabled={disabled}
+        onKeyDown={onKeyDown}
         {...props}
       />
     </div>
