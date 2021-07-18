@@ -30,12 +30,18 @@ export interface Values {
   applicationName: string;
   notificationEmail: string[];
   termsOfServiceEmail: string[];
+  appValue: string;
+  businessModel: string;
+  hasMonetized: string;
 }
 
 const initialValues = {
   apis: [],
+  appValue: '',
   applicationName: '',
+  businessModel: '',
   companyName: '',
+  hasMonetized: '',
   is508Compliant: '',
   isUSBasedCompany: '',
   notificationEmail: [''],

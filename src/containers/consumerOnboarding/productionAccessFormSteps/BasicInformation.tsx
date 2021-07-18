@@ -1,8 +1,16 @@
 import React, { FC } from 'react';
-import { TextField, ListOfTextEntries } from '../../../components';
-// import { Values } from '../ProductionAccess';
+import { TextField, ListOfTextEntries, CheckboxRadioField, FieldSet } from '../../../components';
+import { useFormikContext } from 'formik';
+import { Values } from '../ProductionAccess';
+import classNames from 'classnames';
 
 const BasicInformation: FC = () => {
+  const { values } = useFormikContext<Values>();
+  const { hasMonetized } = values;
+  const hasMonetizedBorderClass = hasMonetized === 'yes' ? 'vads-u-border-left--4px' : '';
+  const hasMonetizedsBorderColorClass =
+    hasMonetized === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+
   return (
     <>
       <h3>Primary Contact</h3>
@@ -82,6 +90,43 @@ const BasicInformation: FC = () => {
         type="email"
         buttonText=" Add another email"
       />
+      <h3>About your app</h3>
+      <TextField
+        as="textarea"
+        label="Describe the value of your app or service to Veterans and provide your app’s use case."
+        name="appValue"
+        className="vads-u-margin-top--4"
+      />
+      <TextField
+        as="textarea"
+        label="Describe your business model. Explain how you generate the income to provide your service to users."
+        name="businessModel"
+        className="vads-u-margin-top--4"
+      />
+      <FieldSet
+        className={classNames(
+          'vads-u-margin-top--2',
+          'vads-u-padding-x--1p5',
+          'vads-u-padding-bottom--1p5',
+          hasMonetizedBorderClass,
+          hasMonetizedsBorderColorClass,
+        )}
+        legend="Have you ever monetized Veteran data?"
+        legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
+        name="hasMonetized"
+      >
+        <CheckboxRadioField type="radio" label="Yes" name="hasMonetized" value="yes" />
+        {hasMonetized === 'yes' && (
+          <TextField
+            as="textarea"
+            label="If yes, explain."
+            name="businessModel"
+            className="vads-u-margin-top--4"
+          />
+        )}
+
+        <CheckboxRadioField type="radio" label="No" name="hasMonetized" value="no" />
+      </FieldSet>
     </>
   );
 };

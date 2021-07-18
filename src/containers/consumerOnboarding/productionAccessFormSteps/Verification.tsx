@@ -16,7 +16,11 @@ const Verification: FC = () => {
       </fieldset>
       <fieldset>
         <legend className="vads-u-font-weight--normal vads-u-font-size--base">
-          Is your application and website <a href="http://section508.gov">Section 508</a> compliant?
+          Is your application and website{' '}
+          <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+            Section 508
+          </a>{' '}
+          compliant?
         </legend>
         <CheckboxRadioField type="radio" label="Yes" name="is508Compliant" value="yes" />
         <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" />

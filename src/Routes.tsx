@@ -30,13 +30,14 @@ import {
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
   CONSUMER_SANDBOX_PATH,
-  CONSUMER_PROD_ACCESS_FORM_PATH,
+  // CONSUMER_PROD_ACCESS_FORM_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
 } from './types/constants/paths';
 import { Apply } from './containers/apply/Apply';
 import { FLAG_SIGNUPS_ENABLED } from './types/constants';
+import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
@@ -95,7 +96,11 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
           <Route exact path={CONSUMER_PROD_PATH} />
           <Route exact path={CONSUMER_DEMO_PATH} />
           <Route exact path={CONSUMER_APIS_PATH} />
-          <Route exact path={CONSUMER_PROD_ACCESS_FORM_PATH} />
+          <Route
+            exact
+            path="/onboarding/production-access-application"
+            component={ProductionAccess}
+          />
         </>
       )}
     </Switch>
