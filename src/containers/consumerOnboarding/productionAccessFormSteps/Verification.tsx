@@ -18,17 +18,26 @@ const Verification: FC = () => {
         <CheckboxRadioField type="radio" label="Yes" name="isUSBasedCompany" value="yes" required />
         <CheckboxRadioField type="radio" label="No" name="isUSBasedCompany" value="no" required />
       </FieldSet>
-      <fieldset>
-        <legend className="vads-u-font-weight--normal vads-u-font-size--base">
-          Is your application and website{' '}
-          <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
-            Section 508
-          </a>{' '}
-          compliant?
-        </legend>
-        <CheckboxRadioField type="radio" label="Yes" name="is508Compliant" value="yes" />
-        <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" />
-      </fieldset>
+      <FieldSet
+        className="vads-u-margin-top--4"
+        legend={
+          <span>
+            Is your application and website{' '}
+            <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+              Section 508
+            </a>{' '}
+            compliant?
+          </span>
+        }
+        legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
+        errorClassName="vads-u-margin-left--2"
+        name="is508Compliant"
+        required
+      >
+        <CheckboxRadioField type="radio" label="Yes" name="is508Compliant" value="yes" required />
+        <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" required />
+      </FieldSet>
+
       <SelectedApis selectedApis={[]} />
       <CheckboxRadioField
         label={

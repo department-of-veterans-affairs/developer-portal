@@ -12,10 +12,10 @@ const headerText = 'Production access form';
 const steps = ['Verification', 'Basic information', 'Technical information', 'Policy governance'];
 
 export interface Values {
-  apis?: string[];
-  is508Compliant?: string;
+  apis: string[];
+  is508Compliant: string;
   isUSBasedCompany: string;
-  termsOfService?: boolean;
+  termsOfService: boolean;
   primaryContact?: {
     firstName?: string;
     lastName?: string;
@@ -96,6 +96,8 @@ const ProductionAccess: FC = () => {
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validate={validateProductionAccessForm}
+            validateOnBlur={false}
+            validateOnChange={false}
           >
             <Form>
               {renderStepContent(activeStep)}
@@ -107,7 +109,7 @@ const ProductionAccess: FC = () => {
                 >
                   <FontAwesomeIcon icon={faAngleDoubleLeft} /> Back
                 </button>
-                <button type="submit">
+                <button type="submit" className="usa-button vads-u-width--auto">
                   Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
                 </button>
               </div>
