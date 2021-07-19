@@ -142,6 +142,15 @@ const ProductionAccess: FC = () => {
                 >
                   The information you entered will not be saved.
                 </Modal>
+                <Modal
+                  id="no-us-based-modal"
+                  title="Thank you for your interest!"
+                  visible={modalVisible}
+                  onClose={(): void => setModalVisible(false)}
+                >
+                  We currently only grant access to US-based companies. You may contact us if you
+                  have any questions.
+                </Modal>
               </div>
             </Form>
           </Formik>
