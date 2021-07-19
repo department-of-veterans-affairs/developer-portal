@@ -1,38 +1,39 @@
 import React, { FC, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikValues } from 'formik';
 import classNames from 'classnames';
 import { PageHeader } from '../../components';
 import Verification from './productionAccessFormSteps/Verification';
 import BasicInformation from './productionAccessFormSteps/BasicInformation';
+import { validateProductionAccessForm } from './validateProductionAccessForm';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 
 const headerText = 'Production access form';
-// const steps = ['Verification', 'Basic information', 'Technical information', 'Policy governance'];
+const steps = ['Verification', 'Basic information', 'Technical information', 'Policy governance'];
 
 export interface Values {
-  apis: string[];
-  is508Compliant: string;
+  apis?: string[];
+  is508Compliant?: string;
   isUSBasedCompany: string;
-  termsOfService: boolean;
-  primaryContact: {
-    firstName: string;
-    lastName: string;
-    email: string;
+  termsOfService?: boolean;
+  primaryContact?: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
   };
-  secondaryContact: {
-    firstName: string;
-    lastName: string;
-    email: string;
+  secondaryContact?: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
   };
-  companyName: string;
-  phoneNumber: string;
-  applicationName: string;
-  notificationEmail: string[];
-  termsOfServiceEmail: string[];
-  appValue: string;
-  businessModel: string;
-  hasMonetized: string;
+  companyName?: string;
+  phoneNumber?: string;
+  applicationName?: string;
+  notificationEmail?: string[];
+  termsOfServiceEmail?: string[];
+  appValue?: string;
+  businessModel?: string;
+  hasMonetized?: string;
 }
 
 const initialValues = {
@@ -46,8 +47,8 @@ const initialValues = {
   isUSBasedCompany: '',
   notificationEmail: [''],
   phoneNumber: '',
-  primaryContact: null,
-  secondaryContact: null,
+  primaryContact: undefined,
+  secondaryContact: undefined,
   termsOfService: false,
   termsOfServiceEmail: [],
 };
@@ -67,22 +68,35 @@ const renderStepContent = (step: number) => {
 
 const ProductionAccess: FC = () => {
   const [activeStep, setActiveStep] = useState(0);
-  // const isLastStep = activeStep === steps.length - 1;
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
+  // const { setTouched, setSubmitting } = useFormikContext();
+  const isLastStep = activeStep === steps.length - 1;
+  // const handleNext = () => {
+  //   setTouched({});
+  //   setSubmitting(false);
+  //   setActiveStep(activeStep + 1);
+  // };
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const handleSubmit = () => {
-    console.log('Submitied Form');
+  const handleSubmit = (values: any, actions: FormikValues) => {
+    if (isLastStep) {
+      console.log('Submitied Form');
+    } else {
+      setActiveStep(activeStep + 1);
+      actions.setTouched({});
+      actions.setSubmitting(false);
+    }
   };
   return (
     <div className={classNames('vads-l-grid-container', 'vads-u-padding--4')}>
       <PageHeader header={headerText} />
       <div className="vads-l-row">
         <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validate={validateProductionAccessForm}
+          >
             <Form>
               {renderStepContent(activeStep)}
               <div>
@@ -93,7 +107,7 @@ const ProductionAccess: FC = () => {
                 >
                   <FontAwesomeIcon icon={faAngleDoubleLeft} /> Back
                 </button>
-                <button type="button" onClick={handleNext}>
+                <button type="submit">
                   Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
                 </button>
               </div>

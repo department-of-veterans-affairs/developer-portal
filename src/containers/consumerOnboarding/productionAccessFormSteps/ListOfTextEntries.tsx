@@ -39,7 +39,7 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
         <FieldArray name={name}>
           {({ insert, remove, push }) => (
             <div>
-              {data.map((values, index) => (
+              {data?.map((values, index) => (
                 <div key={index}>
                   <TextField name={`${name}.${index}`} label="Email" onKeyDown={handleKeyDown} />
                 </div>

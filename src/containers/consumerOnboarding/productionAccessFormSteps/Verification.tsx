@@ -1,19 +1,23 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckboxRadioField } from '../../../components';
+import { CheckboxRadioField, FieldSet } from '../../../components';
 import SelectedApis from './SelectedApis';
 
 const Verification: FC = () => {
   return (
     <>
       <h3>Confirm</h3>
-      <fieldset>
-        <legend className="vads-u-font-weight--normal vads-u-font-size--base">
-          Are you a US-based company?
-        </legend>
-        <CheckboxRadioField type="radio" label="Yes" name="isUSBasedCompany" value="yes" />
-        <CheckboxRadioField type="radio" label="No" name="isUSBasedCompany" value="no" />
-      </fieldset>
+      <FieldSet
+        className="vads-u-margin-top--4"
+        legend="Are you a US-based company?"
+        legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
+        errorClassName="vads-u-margin-left--2"
+        name="isUSBasedCompany"
+        required
+      >
+        <CheckboxRadioField type="radio" label="Yes" name="isUSBasedCompany" value="yes" required />
+        <CheckboxRadioField type="radio" label="No" name="isUSBasedCompany" value="no" required />
+      </FieldSet>
       <fieldset>
         <legend className="vads-u-font-weight--normal vads-u-font-size--base">
           Is your application and website{' '}

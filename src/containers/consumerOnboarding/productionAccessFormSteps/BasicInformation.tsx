@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { TextField, ListOfTextEntries, CheckboxRadioField, FieldSet } from '../../../components';
-import { useFormikContext } from 'formik';
-import { Values } from '../ProductionAccess';
 import classNames from 'classnames';
+import { useFormikContext } from 'formik';
+import { TextField, ListOfTextEntries, CheckboxRadioField, FieldSet } from '../../../components';
+import { Values } from '../ProductionAccess';
 
 const BasicInformation: FC = () => {
   const { values } = useFormikContext<Values>();
