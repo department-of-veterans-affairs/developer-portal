@@ -7,6 +7,9 @@ import Verification from './productionAccessFormSteps/Verification';
 import BasicInformation from './productionAccessFormSteps/BasicInformation';
 import { validateProductionAccessForm } from './validateProductionAccessForm';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import { useModalController } from '../../hooks';
+import Modal from '@department-of-veterans-affairs/component-library/Modal';
+import { Redirect } from 'react-router';
 
 const headerText = 'Production access form';
 const steps = ['Verification', 'Basic information', 'Technical information', 'Policy governance'];
@@ -68,6 +71,7 @@ const renderStepContent = (step: number) => {
 
 const ProductionAccess: FC = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const { modalVisible, setModalVisible } = useModalController();
   // const { setTouched, setSubmitting } = useFormikContext();
   const isLastStep = activeStep === steps.length - 1;
   // const handleNext = () => {
@@ -114,9 +118,30 @@ const ProductionAccess: FC = () => {
                 </button>
               </div>
               <div>
-                <button className="vads-u-display--block" type="button">
+                <button
+                  className="vads-u-display--block"
+                  type="button"
+                  data-show="#cancellation-modal"
+                  onClick={(): void => setModalVisible(true)}
+                >
                   Cancel
                 </button>
+                <Modal
+                  id="cancellation-modal"
+                  title="Are you sure you want to leave?"
+                  visible={modalVisible}
+                  onClose={(): void => setModalVisible(false)}
+                  primaryButton={{
+                    action: (): JSX.Element => <Redirect push to="/" />,
+                    text: 'Yes Leave',
+                  }}
+                  secondaryButton={{
+                    action: (): void => setModalVisible(false),
+                    text: 'No stay on form',
+                  }}
+                >
+                  The information you entered will not be saved.
+                </Modal>
               </div>
             </Form>
           </Formik>
