@@ -10,7 +10,11 @@ import { useFlag } from '../../../../flags';
 import { makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, CheckboxRadioField } from '../../../../components';
 import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../../../types/constants';
-import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../../../types';
+import {
+  ApplySuccessResult,
+  DevApplicationRequest,
+  DevApplicationResponse,
+} from '../../../../types';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
@@ -88,7 +92,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
 
   return (
     <div className="vads-l-row">
-      {!consumerDocsEnabled &&
+      {!consumerDocsEnabled && (
         <p
           className={classNames(
             'usa-font-lead',
@@ -98,16 +102,14 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
           )}
         >
           This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
-          credentials you will receive are for sandbox development only. When your app is ready to go
-          live, you may <Link to="/go-live">request production access</Link>. Please submit the form
-          below and you&apos;ll receive an email with your API key(s) and/or OAuth credentials, as
-          well as further instructions. Thank you for being a part of our platform.
-        </p>}
+          credentials you will receive are for sandbox development only. When your app is ready to
+          go live, you may <Link to="/go-live">request production access</Link>. Please submit the
+          form below and you&apos;ll receive an email with your API key(s) and/or OAuth credentials,
+          as well as further instructions. Thank you for being a part of our platform.
+        </p>
+      )}
       <div
-        className={classNames(
-          'vads-l-col--12',
-          { 'vads-u-padding-x--2p5': !consumerDocsEnabled },
-        )}
+        className={classNames('vads-l-col--12', { 'vads-u-padding-x--2p5': !consumerDocsEnabled })}
       >
         <Formik
           initialValues={initialValues}
@@ -116,9 +118,8 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
           validateOnBlur={false}
           validateOnChange={false}
         >
-          {({ isSubmitting, values, submitForm }): React.ReactNode => {
-            const handleSubmitButtonClick = async (): Promise<void> => {
-              await submitForm();
+          {({ isSubmitting, values }): React.ReactNode => {
+            const handleSubmitButtonClick = (): void => {
               setTimeout(() => {
                 const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
 
