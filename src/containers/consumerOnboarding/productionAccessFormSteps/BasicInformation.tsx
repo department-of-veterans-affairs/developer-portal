@@ -78,7 +78,10 @@ const BasicInformation: FC = () => {
       <ListOfTextEntries
         description={
           <>
-            <p>Notification email for API status updates</p>
+            <p>
+              Notification email for API status updates{' '}
+              <span className="form-required-span">(*Required)</span>
+            </p>
             <p>
               A distribution list email is preferred. You may enter more than one email address, and
               this information can be updated later.

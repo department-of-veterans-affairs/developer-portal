@@ -35,6 +35,10 @@ const validationSchema = [
     phoneNumber: Yup.string()
       .matches(phoneRegex, { message: 'Enter a company phone number.' })
       .required('Enter a company phone number.'),
+    notificationEmail: Yup.array()
+      .of(Yup.string().email('Enter a valid email address.'))
+      .min(1)
+      .required('Enter a valid email address. '),
   }),
 ];
 export default validationSchema;

@@ -1,5 +1,6 @@
 import React, { FC, ReactNode, KeyboardEvent } from 'react';
-import { FieldArray, useFormikContext } from 'formik';
+import { FieldArray, useFormikContext, ErrorMessage } from 'formik';
+import classNames from 'classnames';
 import { Values } from '../ProductionAccess';
 import { TextField } from '../../../components';
 
@@ -16,9 +17,14 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
   type,
   buttonText,
 }) => {
-  const { values } = useFormikContext<Values>();
+  const { values, errors } = useFormikContext<Values>();
   const name = type === 'email' ? 'notificationEmail' : 'termsOfServiceEmail';
   const data = type === 'email' ? values.notificationEmail : values.termsOfServiceEmail;
+  const shouldDisplayErrors = !!errors[name];
+  const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
+  // const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
+  const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
+  const errorMessagePaddingClass = shouldDisplayErrors ? 'vads-u-padding-x--1p5' : '';
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
     if (event.key === 'Enter') {
       if ((event.target as HTMLInputElement).value === '') {
@@ -34,14 +40,26 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
   // };
   return (
     <>
-      <div className={className}>
+      <div className={classNames(containerClass, className)}>
         {description}
+        <span
+          id="api-checkbox-error"
+          className={classNames(validationClass, errorMessagePaddingClass)}
+          role="alert"
+        >
+          <ErrorMessage name={name} />
+        </span>
         <FieldArray name={name}>
           {({ insert, remove, push }) => (
             <div>
               {data?.map((values, index) => (
                 <div key={index}>
-                  <TextField name={`${name}.${index}`} label="Email" onKeyDown={handleKeyDown} />
+                  <TextField
+                    name={`${name}.${index}`}
+                    label="Email"
+                    onKeyDown={handleKeyDown}
+                    required
+                  />
                 </div>
               ))}
               <button type="button" onClick={() => push('')}>
