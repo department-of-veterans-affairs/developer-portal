@@ -40,6 +40,11 @@ const validationSchema = [
       .min(1)
       .required('Enter a valid email address. '),
     valueProvided: Yup.string().required('Describe the value of your app.'),
+    businessModel: Yup.string().when('apis', {
+      is: (value: string[]) => value.some(api => ['vaForms', 'facilities'].includes(api)),
+      then: Yup.string().required('Describe your business model.'),
+      otherwise: Yup.string(),
+    }),
   }),
 ];
 export default validationSchema;
