@@ -1,7 +1,7 @@
 import { FormikErrors } from 'formik';
 import { includesOAuthAPI } from '../../apiDefs/query';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../types/constants';
-import { validateYesOrNo } from '../../utils/validators';
+import { validateYesOrNo, validatePresence } from '../../utils/validators';
 import { Values } from './ProductionAccess';
 
 export const anyOAuthApisSelected = (apis: string[]): boolean => {
@@ -15,6 +15,11 @@ export const validateProductionAccessForm = (values: Values): FormikErrors<Value
   const errors: FormikErrors<Values> = {
     is508Compliant: validateYesOrNo(values.is508Compliant),
     isUSBasedCompany: validateYesOrNo(values.isUSBasedCompany),
+    primaryContact: {
+      email: validatePresence('email', values.primaryContact.email),
+      firstName: validatePresence('first name', values.primaryContact.firstName),
+      lastName: validatePresence('last name', values.primaryContact.lastName),
+    },
   };
 
   if (!anyApiSelected(values)) {
