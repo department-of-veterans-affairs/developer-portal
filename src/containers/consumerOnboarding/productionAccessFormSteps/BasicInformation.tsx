@@ -121,18 +121,20 @@ const BasicInformation: FC = () => {
         legend="Have you ever monetized Veteran data?"
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
         name="hasMonetized"
+        required
       >
-        <CheckboxRadioField type="radio" label="Yes" name="hasMonetized" value="yes" />
+        <CheckboxRadioField type="radio" label="Yes" name="hasMonetized" value="yes" required />
+
+        <CheckboxRadioField type="radio" label="No" name="hasMonetized" value="no" required />
         {hasMonetized === 'yes' && (
           <TextField
             as="textarea"
             label="If yes, explain."
-            name="businessModel"
+            name="monetizationExplination"
             className="vads-u-margin-top--4"
+            required
           />
         )}
-
-        <CheckboxRadioField type="radio" label="No" name="hasMonetized" value="no" />
       </FieldSet>
     </>
   );

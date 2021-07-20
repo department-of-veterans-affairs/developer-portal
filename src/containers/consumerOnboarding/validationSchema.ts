@@ -45,6 +45,14 @@ const validationSchema = [
       then: Yup.string().required('Describe your business model.'),
       otherwise: Yup.string(),
     }),
+    hasMonetized: Yup.string()
+      .matches(/^(?:yes|no)$/)
+      .required('Select yes or no.'),
+    monetizationExplination: Yup.string().when('hasMonetized', {
+      is: (value: string) => value === 'yes',
+      then: Yup.string().required(' Enter an explanation.'),
+      otherwise: Yup.string(),
+    }),
   }),
 ];
 export default validationSchema;

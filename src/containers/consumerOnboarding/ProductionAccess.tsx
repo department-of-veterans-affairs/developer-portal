@@ -37,7 +37,8 @@ export interface Values {
   termsOfServiceEmail: string[];
   valueProvided: string;
   businessModel?: string;
-  hasMonetized?: string;
+  hasMonetized: string;
+  monetizationExplination?: string;
 }
 
 const initialValues = {
