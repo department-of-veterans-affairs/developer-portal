@@ -30,7 +30,7 @@ export interface Values {
     lastName?: string;
     email?: string;
   };
-  companyName?: string;
+  organization: string;
   phoneNumber?: string;
   applicationName?: string;
   notificationEmail?: string[];
@@ -45,22 +45,14 @@ const initialValues = {
   appValue: '',
   applicationName: '',
   businessModel: '',
-  companyName: '',
+  organization: '',
   hasMonetized: '',
   is508Compliant: '',
   isUSBasedCompany: '',
   notificationEmail: [''],
   phoneNumber: '',
-  primaryContact: {
-    email: '',
-    firstName: '',
-    lastName: '',
-  },
-  secondaryContact: {
-    email: '',
-    firstName: '',
-    lastName: '',
-  },
+  primaryContact: null,
+  secondaryContact: null,
   termsOfService: false,
   termsOfServiceEmail: [],
 };

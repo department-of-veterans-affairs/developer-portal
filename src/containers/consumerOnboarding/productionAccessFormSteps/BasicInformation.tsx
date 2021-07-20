@@ -60,7 +60,7 @@ const BasicInformation: FC = () => {
       <h3>About your company or organization</h3>
       <TextField
         label="Company or organization name"
-        name="companyName"
+        name="organization"
         required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
       />
@@ -73,7 +73,6 @@ const BasicInformation: FC = () => {
       <TextField
         label="Front-end name of application (if different from organization name)"
         name="applicationName"
-        required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
       />
       <ListOfTextEntries
