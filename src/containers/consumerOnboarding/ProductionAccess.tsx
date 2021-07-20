@@ -25,31 +25,31 @@ export interface Values {
     lastName: string;
     email: string;
   };
-  secondaryContact?: {
-    firstName?: string;
-    lastName?: string;
-    email?: string;
+  secondaryContact: {
+    firstName: string;
+    lastName: string;
+    email: string;
   };
   organization: string;
-  phoneNumber?: string;
+  phoneNumber: string;
   applicationName?: string;
-  notificationEmail?: string[];
-  termsOfServiceEmail?: string[];
-  appValue?: string;
+  statusUpdateEmails: string[];
+  termsOfServiceEmail: string[];
+  valueProvided: string;
   businessModel?: string;
   hasMonetized?: string;
 }
 
 const initialValues = {
   apis: [],
-  appValue: '',
+  valueProvided: '',
   applicationName: '',
   businessModel: '',
   organization: '',
   hasMonetized: '',
   is508Compliant: '',
   isUSBasedCompany: '',
-  notificationEmail: [''],
+  statusUpdateEmails: [''],
   phoneNumber: '',
   primaryContact: null,
   secondaryContact: null,

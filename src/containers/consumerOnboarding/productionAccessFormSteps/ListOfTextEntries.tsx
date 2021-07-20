@@ -18,8 +18,8 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
   buttonText,
 }) => {
   const { values, errors } = useFormikContext<Values>();
-  const name = type === 'email' ? 'notificationEmail' : 'termsOfServiceEmail';
-  const data = type === 'email' ? values.notificationEmail : values.termsOfServiceEmail;
+  const name = type === 'email' ? 'statusUpdateEmails' : 'termsOfServiceEmail';
+  const data = type === 'email' ? values.statusUpdateEmails : values.termsOfServiceEmail;
   const shouldDisplayErrors = !!errors[name];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   // const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';

@@ -96,15 +96,20 @@ const BasicInformation: FC = () => {
       <TextField
         as="textarea"
         label="Describe the value of your app or service to Veterans and provide your app’s use case."
-        name="appValue"
+        name="valueProvided"
         className="vads-u-margin-top--4"
+        required
       />
-      <TextField
-        as="textarea"
-        label="Describe your business model. Explain how you generate the income to provide your service to users."
-        name="businessModel"
-        className="vads-u-margin-top--4"
-      />
+      {values.apis.some(api => ['vaForms', 'facilities'].includes(api)) && (
+        <TextField
+          as="textarea"
+          label="Describe your business model. Explain how you generate the income to provide your service to users."
+          name="businessModel"
+          className="vads-u-margin-top--4"
+          required
+        />
+      )}
+
       <FieldSet
         className={classNames(
           'vads-u-margin-top--2',
