@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'jest';
 
 import { puppeteerHost } from '../../e2eHelpers';
@@ -44,10 +45,14 @@ describe('position sticky', () => {
 
 describe('invalid cagetories', () => {
   it.each(['', 'docs/quickstart'])(
-    'should redirect to /404 from /explore/invalid/%s',
+    'should show the 404 page on /explore/invalid/%s',
     async (path: string) => {
       await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
-      expect(page.url()).toEqual(`${puppeteerHost}/404`);
+      const pageNotFound = await page.evaluate(() => document.querySelector('h1')?.innerHTML);
+      // Check page contents
+      expect(pageNotFound).toBe('Page not found.');
+      // Ensure there was no redirect
+      expect(page.url()).toEqual(`${puppeteerHost}/explore/invalid/${path}`);
     },
   );
 });
