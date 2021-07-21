@@ -1,11 +1,9 @@
+/* eslint-disable no-console */
 import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
-import { getDeactivatedFlags } from './apiDefs/deprecated';
-import { getEnvFlags } from './apiDefs/env';
 import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
-import { APIDescription } from './apiDefs/schema';
 import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DisabledApplyForm from './containers/DisabledApplyForm';
@@ -21,17 +19,13 @@ import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
 import {
-  CONSUMER_APIS_PATH,
-  CONSUMER_DEMO_PATH,
-  CONSUMER_PATH,
-  CONSUMER_PROD_PATH,
+  CONSUMER_ROUTER_PATHS,
   CONSUMER_SANDBOX_PATH,
-  PUBLISHING_EXPECTATIONS_PATH,
-  PUBLISHING_ONBOARDING_PATH,
-  PUBLISHING_PATH,
+  PUBLISHING_ROUTER_PATHS,
 } from './types/constants/paths';
 import { Apply } from './containers/apply/Apply';
 import { FLAG_SIGNUPS_ENABLED } from './types/constants';
+import { buildApiDetailRoutes } from './utils/routesHelper';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
@@ -47,10 +41,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => <Redirect to="/terms-of-service" />}
       />
       <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
-      <Route
-        path="/oauth"
-        render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
-      />
+      <Route path="/oauth" render={(): JSX.Element => <Redirect to="/explore/authorization" />} />
 
       {/* Current routes: */}
       <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
@@ -74,30 +65,9 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {/* API Documentation */}
       <Route exact path="/explore" component={DocumentationRoot} />
       <Route exact path="/explore/authorization" component={DocumentationRoot} />
-      {Object.entries(apiDefinitions)
-        .filter(value => value[1].content.quickstart)
-        .map(
-          ([key]): JSX.Element => (
-            <Route
-              exact
-              key={`${key}-quickstart`}
-              path={`/explore/${key}/docs/quickstart`}
-              component={DocumentationRoot}
-            />
-          ),
-        )}
-      {Object.entries(apiDefinitions).map(
-        ([key]): JSX.Element => (
-          <Route
-            key={`${key}-definitions`}
-            path={`/explore/${key}/docs/:apiName`}
-            component={DocumentationRoot}
-          />
-        ),
-      )}
-      {Object.entries(apiDefinitions).map(
-        ([key]): JSX.Element => (
-          <Route exact key={`${key}-docs`} path={`/explore/${key}`} component={DocumentationRoot} />
+      {buildApiDetailRoutes(apiDefinitions).map(
+        (path: string): JSX.Element => (
+          <Route exact key={path} path={path} component={DocumentationRoot} />
         ),
       )}
 
@@ -131,24 +101,18 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       />
 
       {/* API Publishing */}
-      <Route exact path={PUBLISHING_PATH} component={Publishing} />
-      <Route exact path={PUBLISHING_EXPECTATIONS_PATH} component={Publishing} />
-      <Route exact path={PUBLISHING_ONBOARDING_PATH} component={Publishing} />
+      {PUBLISHING_ROUTER_PATHS.map((path: string) => (
+        <Route exact path={path} component={Publishing} key={path} />
+      ))}
 
       {/* Consumer Docs */}
-      {flags.consumer_docs && (
-        <>
-          <Route exact path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />
-          <Route exact path={CONSUMER_SANDBOX_PATH} component={ConsumerOnboardingRoot} />
-          <Route exact path={CONSUMER_PROD_PATH} component={ConsumerOnboardingRoot} />
-          <Route exact path={CONSUMER_DEMO_PATH} component={ConsumerOnboardingRoot} />
-          <Route exact path={CONSUMER_APIS_PATH} component={ConsumerOnboardingRoot} />
-        </>
-      )}
-      <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
+      {flags.consumer_docs &&
+        CONSUMER_ROUTER_PATHS.map((path: string) => (
+          <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
+        ))}
 
-      {/* The below Route is needed for the sitemap */}
-      <Route path="/explore/:apiCategoryKey/docs/:apiName" />
+      {/* Catch the rest with the 404 */}
+      <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
     </Switch>
   );
 };
@@ -171,34 +135,9 @@ interface SitemapConfig {
  */
 
 export const sitemapConfig = (): SitemapConfig => {
-  const apiDefs = getApiDefinitions();
-  const deactivatedFlags = getDeactivatedFlags();
-  const envFlags = getEnvFlags();
-
-  const getApiRouteParams = (apiCategory: string): string[] => {
-    const routeParams = apiDefs[apiCategory].apis.reduce(
-      (result: string[], api: APIDescription) => {
-        if (envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment]) {
-          result.push(api.urlFragment);
-        }
-        return result;
-      },
-      [],
-    );
-
-    return routeParams;
-  };
-
   const apiCategoryOrder = getApiCategoryOrder();
   return {
-    paramsConfig: {
-      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder
-        .filter(apiCategory => getApiRouteParams(apiCategory).length > 0)
-        .map(apiCategory => ({
-          apiCategoryKey: apiCategory,
-          apiName: getApiRouteParams(apiCategory),
-        })),
-    },
+    paramsConfig: {},
     pathFilter: {
       isValid: false,
       rules: [
