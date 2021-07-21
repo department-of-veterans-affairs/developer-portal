@@ -222,8 +222,8 @@ describe('SandboxAccessForm', () => {
       userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(mockMakeRequest).toHaveBeenCalled();
-        expect(mockOnSuccess).toHaveBeenCalled();
+        expect(mockMakeRequest).toHaveBeenCalledTimes(1);
+        expect(mockOnSuccess).toHaveBeenCalledTimes(1);
       });
     });
   });

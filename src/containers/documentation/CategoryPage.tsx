@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Flag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { CardLink, OnlyTags, PageHeader } from '../../components';
+import { CardLinkLegacy, OnlyTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { FLAG_HOSTED_APIS, PAGE_HEADER_ID, FLAG_CONSUMER_DOCS } from '../../types/constants';
@@ -28,7 +28,7 @@ const CategoryPage = (): JSX.Element => {
       const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
       return (
         <Flag key={name} name={[FLAG_HOSTED_APIS, urlFragment]}>
-          <CardLink
+          <CardLinkLegacy
             name={name}
             subhead={
               vaInternalOnly || trustedPartnerOnly ? (
@@ -38,7 +38,7 @@ const CategoryPage = (): JSX.Element => {
             url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
           >
             {description}
-          </CardLink>
+          </CardLinkLegacy>
         </Flag>
       );
     });

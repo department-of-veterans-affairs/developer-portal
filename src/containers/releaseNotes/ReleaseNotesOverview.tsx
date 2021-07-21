@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { getDeactivatedCategory } from '../../apiDefs/deprecated';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import { CardLink, PageHeader } from '../../components';
+import { CardLinkLegacy, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { FLAG_CATEGORIES } from '../../types/constants';
@@ -35,16 +35,16 @@ const ReleaseNotesOverview = (): JSX.Element => {
           const { name, content } = apiDefs[apiCategoryKey];
           return (
             <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-              <CardLink name={name} url={`/release-notes/${apiCategoryKey}`}>
+              <CardLinkLegacy name={name} url={`/release-notes/${apiCategoryKey}`}>
                 {content.shortDescription}
-              </CardLink>
+              </CardLinkLegacy>
             </Flag>
           );
         })}
         {deactivatedCategory.apis.length > 0 && (
-          <CardLink name={deactivatedCategory.name} url="/release-notes/deactivated">
+          <CardLinkLegacy name={deactivatedCategory.name} url="/release-notes/deactivated">
             This is a repository for deactivated APIs and related documentation and release notes.
-          </CardLink>
+          </CardLinkLegacy>
         )}
       </div>
     </div>

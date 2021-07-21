@@ -5,7 +5,6 @@ import VAFormsReleaseNotes from './vaFormsReleaseNotes.mdx';
 const vaFormsContent: APICategoryContent = {
   consumerDocsLinkText: 'Learn about getting production access using open data APIs',
   overview: VAFormsOverview,
-  placardText: 'Look up VA forms and check for new versions',
   shortDescription: 'Look up VA forms and check for new versions.',
   veteranRedirect: {
     linkText: 'Find the forms you need',

@@ -1,13 +1,50 @@
 @import '../../styles/variables';
+// The stylings here are based off of patterns found here: https://inclusive-components.design/cards/
 
-a.va-api-card {
-  border-top-color: #c4c4c4 !important;
+.va-api-card {
+  position: relative;
 
-  &:hover {
-    border-top-color: $color-gold !important;
+  .card-content {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
   }
 
-  @include media($medium-screen) {
-    width: 200px !important;
+  .name-border {
+    width: 20%;
+  }
+
+  a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  &:hover {
+    border-color: $color-primary-darker !important;
+    .name-border {
+      border-bottom: 5px solid $color-primary-darker !important;
+    }
+  }
+
+  &:active {
+    outline: 2px solid $color-gold;
+    outline-offset: 2px;
+    .name-border {
+      border-bottom: 5px solid $color-primary-darker !important;
+    }
+  }
+  .card-content > {
+    * + * {
+      margin-top: 0.75rem;
+    }
+
+    :last-child {
+      margin-top: auto;
+      padding-top: 0.75rem;
+    }
   }
 }

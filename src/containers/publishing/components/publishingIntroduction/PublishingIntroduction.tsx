@@ -7,7 +7,7 @@ import {
   PUBLISHING_ONBOARDING_PATH,
 } from '../../../../types/constants/paths';
 import { defaultFlexContainer } from '../../../../styles/vadsUtils';
-import { CardLink, PageHeader } from '../../../../components';
+import { CardLinkLegacy, PageHeader } from '../../../../components';
 import { SectionWithIcon } from '../sectionWithIcon';
 import integrateImage from '../../../../assets/integrate.svg';
 import docsImage from '../../../../assets/docs.svg';
@@ -115,18 +115,18 @@ const PublishingIntroduction: FC = () => (
       </SectionWithIcon>
     </div>
     <div className={classNames(defaultFlexContainer(), 'vads-u-justify-content--space-evenly')}>
-      <CardLink name="How onboarding works" url={PUBLISHING_ONBOARDING_PATH}>
+      <CardLinkLegacy name="How onboarding works" url={PUBLISHING_ONBOARDING_PATH}>
         Curious about our publishing process? Learn more about the steps toward publishing with
         Lighthouse.
-      </CardLink>
-      <CardLink name="Expectations of Lighthouse APIs" url={PUBLISHING_EXPECTATIONS_PATH}>
+      </CardLinkLegacy>
+      <CardLinkLegacy name="Expectations of Lighthouse APIs" url={PUBLISHING_EXPECTATIONS_PATH}>
         Is your API ready to be published on the Lighthouse developer portal? Learn more about our
         requirements and expectations.
-      </CardLink>
-      <CardLink name="Contact us" url={SUPPORT_CONTACT_PATH}>
+      </CardLinkLegacy>
+      <CardLinkLegacy name="Contact us" url={SUPPORT_CONTACT_PATH}>
         Ready to take the leap and publish your API with us? Start the process by contacting us
         here.
-      </CardLink>
+      </CardLinkLegacy>
     </div>
   </>
 );

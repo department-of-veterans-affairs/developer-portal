@@ -35,10 +35,10 @@ describe('position sticky', () => {
     await page.goto(`${puppeteerHost}/explore`, {
       waitUntil: ['domcontentloaded', 'networkidle0'],
     });
-    await clickCard('Health API');
+    await clickCard('Health APIs');
     await clickCard('Community Care Eligibility API');
     const haloText = await page.$eval('.header-halo', elem => elem.textContent);
-    expect(haloText).toEqual('Health API');
+    expect(haloText).toEqual('Health APIs');
   });
 });
 
@@ -53,20 +53,16 @@ describe('invalid cagetories', () => {
 });
 
 describe('auth docs route redirect', () => {
-  it('should redirect to /explore/authorization from /explore/health/docs/authorization',
-    async () => {
-      await page.goto(`${puppeteerHost}/explore/health/docs/authorization`, {
-        waitUntil: 'networkidle0',
-      });
-      expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization?api=claims`);
-    },
-  );
-  it('should redirect to /explore/authorization?api=veteran_verification from /explore/verification/docs/authorization',
-    async () => {
-      await page.goto(`${puppeteerHost}/explore/verification/docs/authorization`, {
-        waitUntil: 'networkidle0',
-      });
-      expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization?api=veteran_verification`);
-    },
-  );
+  it('should redirect to /explore/authorization from /explore/health/docs/authorization', async () => {
+    await page.goto(`${puppeteerHost}/explore/health/docs/authorization`, {
+      waitUntil: 'networkidle0',
+    });
+    expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization?api=claims`);
+  });
+  it('should redirect to /explore/authorization?api=veteran_verification from /explore/verification/docs/authorization', async () => {
+    await page.goto(`${puppeteerHost}/explore/verification/docs/authorization`, {
+      waitUntil: 'networkidle0',
+    });
+    expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization?api=veteran_verification`);
+  });
 });
