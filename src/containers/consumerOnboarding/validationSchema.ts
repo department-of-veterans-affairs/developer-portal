@@ -50,9 +50,19 @@ const validationSchema = [
       .required('Select yes or no.'),
     monetizationExplination: Yup.string().when('hasMonetized', {
       is: (value: string) => value === 'yes',
-      then: Yup.string().required(' Enter an explanation.'),
+      then: Yup.string().required('Enter an explanation.'),
       otherwise: Yup.string(),
     }),
+    isVetFacing: Yup.string()
+      .matches(/^(?:yes|no)$/)
+      .required('Select yes or no.'),
+    website: Yup.string()
+      .url()
+      .when('isVetFacing', {
+        is: (value: string) => value === 'yes',
+        then: Yup.string().url().required('Add a link.'),
+        otherwise: Yup.string().url(),
+      }),
   }),
 ];
 export default validationSchema;

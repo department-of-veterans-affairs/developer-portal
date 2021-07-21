@@ -39,6 +39,8 @@ export interface Values {
   businessModel?: string;
   hasMonetized: string;
   monetizationExplination?: string;
+  isVetFacing: string;
+  website?: string;
 }
 
 const initialValues = {
@@ -56,6 +58,7 @@ const initialValues = {
   secondaryContact: null,
   termsOfService: false,
   termsOfServiceEmail: [],
+  isVetFacing: '',
 };
 
 const renderStepContent = (step: number) => {

@@ -6,10 +6,13 @@ import { Values } from '../ProductionAccess';
 
 const BasicInformation: FC = () => {
   const { values } = useFormikContext<Values>();
-  const { hasMonetized } = values;
+  const { hasMonetized, isVetFacing } = values;
   const hasMonetizedBorderClass = hasMonetized === 'yes' ? 'vads-u-border-left--4px' : '';
   const hasMonetizedsBorderColorClass =
     hasMonetized === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+  const isVetFacingBorderClass = isVetFacing === 'yes' ? 'vads-u-border-left--4px' : '';
+  const isVetFacingBorderColorClass =
+    isVetFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
 
   return (
     <>
@@ -118,7 +121,7 @@ const BasicInformation: FC = () => {
           hasMonetizedBorderClass,
           hasMonetizedsBorderColorClass,
         )}
-        legend="Have you ever monetized Veteran data?"
+        legend="Select yes or no."
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
         name="hasMonetized"
         required
@@ -131,6 +134,31 @@ const BasicInformation: FC = () => {
             as="textarea"
             label="If yes, explain."
             name="monetizationExplination"
+            className="vads-u-margin-top--4"
+            required
+          />
+        )}
+      </FieldSet>
+      <FieldSet
+        className={classNames(
+          'vads-u-margin-top--2',
+          'vads-u-padding-x--1p5',
+          'vads-u-padding-bottom--1p5',
+          isVetFacingBorderClass,
+          isVetFacingBorderColorClass,
+        )}
+        legend="Have you ever monetized Veteran data?"
+        legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
+        name="isVetFacing"
+        required
+      >
+        <CheckboxRadioField type="radio" label="Yes" name="isVetFacing" value="yes" required />
+
+        <CheckboxRadioField type="radio" label="No" name="isVetFacing" value="no" required />
+        {isVetFacing === 'yes' && (
+          <TextField
+            label="Provide a link to your app’s primary webpage."
+            name="website"
             className="vads-u-margin-top--4"
             required
           />
