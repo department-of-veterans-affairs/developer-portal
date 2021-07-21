@@ -41,6 +41,8 @@ export interface Values {
   monetizationExplination?: string;
   isVetFacing: string;
   website?: string;
+  signUpLink?: string[];
+  supportLink?: string[];
 }
 
 const initialValues = {
@@ -59,6 +61,8 @@ const initialValues = {
   termsOfService: false,
   termsOfServiceEmail: [],
   isVetFacing: '',
+  signUpLink: [''],
+  supportLink: [''],
 };
 
 const renderStepContent = (step: number) => {

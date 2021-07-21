@@ -7,19 +7,20 @@ import { TextField } from '../../../components';
 export interface ListOfTextEntriesProps {
   description: ReactNode;
   className?: string;
-  type: 'email' | 'url';
+  name: string;
   buttonText: string;
+  label?: string;
 }
 
 const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
   description,
   className,
-  type,
+  name,
   buttonText,
+  label,
 }) => {
   const { values, errors } = useFormikContext<Values>();
-  const name = type === 'email' ? 'statusUpdateEmails' : 'termsOfServiceEmail';
-  const data = type === 'email' ? values.statusUpdateEmails : values.termsOfServiceEmail;
+  const data = values[name] as string[];
   const shouldDisplayErrors = !!errors[name];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   // const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
@@ -56,7 +57,7 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
                 <div key={index}>
                   <TextField
                     name={`${name}.${index}`}
-                    label="Email"
+                    label={label}
                     onKeyDown={handleKeyDown}
                     required
                   />

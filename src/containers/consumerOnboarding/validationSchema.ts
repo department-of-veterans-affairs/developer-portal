@@ -63,6 +63,20 @@ const validationSchema = [
         then: Yup.string().url().required('Add a link.'),
         otherwise: Yup.string().url(),
       }),
+    signUpLink: Yup.array()
+      .of(Yup.string().url())
+      .when('isVetFacing', {
+        is: (value: string) => value === 'yes',
+        then: Yup.array().of(Yup.string().url('Add a link.')).min(1).required('Add a link.'),
+        otherwise: Yup.array().of(Yup.string().url()),
+      }),
+    supportLink: Yup.array()
+      .of(Yup.string().url())
+      .when('isVetFacing', {
+        is: (value: string) => value === 'yes',
+        then: Yup.array().of(Yup.string().url('Add a link.')).min(1).required('Add a link.'),
+        otherwise: Yup.array().of(Yup.string().url()),
+      }),
   }),
 ];
 export default validationSchema;

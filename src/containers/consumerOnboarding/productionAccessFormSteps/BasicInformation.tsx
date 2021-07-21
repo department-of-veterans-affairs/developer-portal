@@ -92,7 +92,7 @@ const BasicInformation: FC = () => {
           </>
         }
         className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
-        type="email"
+        name="statusUpdateEmails"
         buttonText=" Add another email"
       />
       <h3>About your app</h3>
@@ -156,12 +156,38 @@ const BasicInformation: FC = () => {
 
         <CheckboxRadioField type="radio" label="No" name="isVetFacing" value="no" required />
         {isVetFacing === 'yes' && (
-          <TextField
-            label="Provide a link to your app’s primary webpage."
-            name="website"
-            className="vads-u-margin-top--4"
-            required
-          />
+          <>
+            <TextField
+              label="Provide a link to your app’s primary webpage."
+              name="website"
+              className="vads-u-margin-top--4"
+              required
+            />
+            <ListOfTextEntries
+              description={
+                <p>
+                  Provide a link to a page describing how to sign up for your app.{' '}
+                  <span className="form-required-span">(*Required)</span>
+                </p>
+              }
+              className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
+              name="signUpLink"
+              label="URL"
+              buttonText="Add another URL"
+            />
+            <ListOfTextEntries
+              description={
+                <p>
+                  Provide a link to your FAQs and/or support page.{' '}
+                  <span className="form-required-span">(*Required)</span>
+                </p>
+              }
+              className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
+              name="supportLink"
+              label="URL"
+              buttonText="Add another URL"
+            />
+          </>
         )}
       </FieldSet>
     </>
