@@ -13,7 +13,6 @@ import {
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
-import { puppeteerHost } from '../../e2eHelpers';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
@@ -147,15 +146,6 @@ describe('ReleaseNotesCollection', () => {
       it('does not include release notes for disabled APIs', async () => {
         await renderComponent('/release-notes/sports');
         expect(screen.queryByRole('heading', { name: 'Baseball API' })).toBeNull();
-      });
-
-      it('should show the 404 page on /release-notes/invalid', async () => {
-        await page.goto(`${puppeteerHost}/release-notes/invalid`, { waitUntil: 'networkidle0' });
-        const pageNotFound = await page.evaluate(() => document.querySelector('h1')?.innerHTML);
-        // Check page contents
-        expect(pageNotFound).toBe('Page not found.');
-        // Ensure there was no redirect
-        expect(page.url()).toEqual(`${puppeteerHost}/release-notes/invalid`);
       });
     });
   });
