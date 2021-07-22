@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { includesInternalOnlyAPI } from '../../apiDefs/query';
 
 const phoneRegex = /^(?:\+?1[-.●]?)?\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/;
 
@@ -77,6 +78,25 @@ const validationSchema = [
         then: Yup.array().of(Yup.string().url('Add a link.')).min(1).required('Add a link.'),
         otherwise: Yup.array().of(Yup.string().url()),
       }),
+    platforms: Yup.string()
+      .url()
+      .when('isVetFacing', {
+        is: (value: string) => value === 'yes',
+        then: Yup.string().required('Enter a list of devices/platforms.'),
+        otherwise: Yup.string(),
+      }),
+    appDescription: Yup.string()
+      .url()
+      .when('isVetFacing', {
+        is: (value: string) => value === 'yes',
+        then: Yup.string().required('Enter a description.'),
+        otherwise: Yup.string(),
+      }),
+    vasiSystemName: Yup.string().when('apis', {
+      is: (value: string[]) => includesInternalOnlyAPI(value),
+      then: Yup.string().required('Enter the VASI system name.'),
+      otherwise: Yup.string(),
+    }),
   }),
 ];
 export default validationSchema;

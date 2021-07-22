@@ -3,16 +3,22 @@ import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import { TextField, ListOfTextEntries, CheckboxRadioField, FieldSet } from '../../../components';
 import { Values } from '../ProductionAccess';
+import { includesInternalOnlyAPI } from '../../../apiDefs/query';
+// import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../../types/constants';
 
 const BasicInformation: FC = () => {
   const { values } = useFormikContext<Values>();
-  const { hasMonetized, isVetFacing } = values;
+  const { hasMonetized, isVetFacing, apis } = values;
   const hasMonetizedBorderClass = hasMonetized === 'yes' ? 'vads-u-border-left--4px' : '';
   const hasMonetizedsBorderColorClass =
     hasMonetized === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
   const isVetFacingBorderClass = isVetFacing === 'yes' ? 'vads-u-border-left--4px' : '';
   const isVetFacingBorderColorClass =
     isVetFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+  // const anyInternalOpenAPISelected = () => {
+  //   const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);
+  //   return includesInternalOnlyAPI(apiIdsByField);
+  // };
 
   return (
     <>
@@ -121,7 +127,7 @@ const BasicInformation: FC = () => {
           hasMonetizedBorderClass,
           hasMonetizedsBorderColorClass,
         )}
-        legend="Select yes or no."
+        legend="Have you ever monetized Veteran data? "
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
         name="hasMonetized"
         required
@@ -147,7 +153,7 @@ const BasicInformation: FC = () => {
           isVetFacingBorderClass,
           isVetFacingBorderColorClass,
         )}
-        legend="Have you ever monetized Veteran data?"
+        legend="Is your app Veteran-facing?"
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
         name="isVetFacing"
         required
@@ -187,9 +193,56 @@ const BasicInformation: FC = () => {
               label="URL"
               buttonText="Add another URL"
             />
+            <TextField
+              label="List of devices/platforms on which this app is available (eg. iOS, iPhone, iPad, Android tablet, Android phone, web browser, etc.)"
+              name="platforms"
+              className="vads-u-margin-top--4"
+              required
+            />
+            <TextField
+              label={
+                <>
+                  <p>Provide a brief description of your application.</p>
+                  <p>
+                    This will be used for the{' '}
+                    <a href="http://va.gov/" target="_blank" rel="noopener noreferrer">
+                      VA.gov
+                    </a>{' '}
+                    App Directory and should tell Veterans how your app can help them. Your
+                    description should:
+                    <ul>
+                      <li>Be 415 characters or fewer</li>
+                      <li>
+                        Use VA guidelines for{' '}
+                        <a
+                          href="https://www.va.gov/web/management/content-plain-language.cfm"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          plain language
+                        </a>{' '}
+                        to encourage Veteran engagement
+                      </li>
+                      <li>Capitalize “Veteran” whenever used</li>
+                    </ul>
+                  </p>
+                </>
+              }
+              name="appDescription"
+              className="vads-u-margin-top--4"
+              required
+            />
           </>
         )}
       </FieldSet>
+      {includesInternalOnlyAPI(apis) && (
+        <TextField
+          label="Enter the VASI system name of the application which will consume the API."
+          name="vasiSystemName"
+          className="vads-u-margin-top--4"
+          required
+        />
+      )}
     </>
   );
 };

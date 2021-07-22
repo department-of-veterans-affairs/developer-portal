@@ -43,6 +43,9 @@ export interface Values {
   website?: string;
   signUpLink?: string[];
   supportLink?: string[];
+  platforms?: string;
+  appDescription?: string;
+  vasiSystemName?: string;
 }
 
 const initialValues = {
