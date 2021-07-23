@@ -4,7 +4,8 @@ import { Formik, Form, FormikValues } from 'formik';
 import classNames from 'classnames';
 import { PageHeader } from '../../components';
 import Verification from './productionAccessFormSteps/Verification';
-import BasicInformation from './productionAccessFormSteps/BasicInformation';
+// import BasicInformation from './productionAccessFormSteps/BasicInformation';
+import TechnicalInformation from './productionAccessFormSteps/TechnicalInformation';
 // import { validateProductionAccessForm } from './validateProductionAccessForm';
 import validationSchema from './validationSchema';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
@@ -46,6 +47,19 @@ export interface Values {
   platforms?: string;
   appDescription?: string;
   vasiSystemName?: string;
+  credentialStorage: string;
+  storePIIOrPHI: string;
+  piiStorageMethod?: string;
+  multipleReqSafeguards?: string;
+  breachManagementProcess?: string;
+  vulnerabilityManagement?: string;
+  exposesToThirdParties: string;
+  thirdPartyInfoDescription?: string;
+  scopesAccessRequested?: string;
+  distributingAPIKeysToCustomers?: string;
+  namingConvention?: string;
+  centralizedBackendLog?: string;
+  listedOnMyHealthApplication?: string;
 }
 
 const initialValues = {
@@ -66,6 +80,9 @@ const initialValues = {
   isVetFacing: '',
   signUpLink: [''],
   supportLink: [''],
+  credentialStorage: '',
+  storePIIOrPHI: '',
+  exposesToThirdParties: '',
 };
 
 const renderStepContent = (step: number) => {
@@ -73,9 +90,9 @@ const renderStepContent = (step: number) => {
     case 0:
       return <Verification />;
     case 1:
-      return <BasicInformation />;
+      return <TechnicalInformation />;
     // case 2:
-    //   return <ReviewOrder />;
+    //   return <TechnicalInformation />;
     default:
       return <div>Not Found</div>;
   }
