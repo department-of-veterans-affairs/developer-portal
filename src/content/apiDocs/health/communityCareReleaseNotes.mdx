@@ -1,5 +1,7 @@
 ### July 23, 2021
-CCE now presents and accounts for a veterans PACT status (Patient Aligned Care Team) when determining eligibility 
+The CCE API now presents and accounts for a veteran's PACT status (Patient Aligned Care Team) when determining eligibility.
+-PACT status is only consulted for PrimaryCare requests. A veteran with an active PACT is ineligible for community care for Primary Care appointments.  
+-The new field 'pactStatus' has been added to the API response when it has been used in the eligibility determination.
 
 [View code changes(s)](https://github.com/department-of-veterans-affairs/health-apis-community-care-eligibility/pull/131)
 
