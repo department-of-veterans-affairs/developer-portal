@@ -218,7 +218,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
       <ul>
         <li>
           Use your client ID and client secret as the HTTP basic authentication username and
-          password.
+          password, encoded using base64.
         </li>
         <li>
           Be sure to replace <code>{'<yourRedirectURL>'}</code> with the redirect URL that you
@@ -232,7 +232,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
+Authorization: Basic base64(client_id:client_secret)
 
 grant_type=authorization_code
 &code=z92dapo5&state=af0ifjsldkj
@@ -303,7 +303,7 @@ Pragma: no-cache
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
+Authorization: Basic base64(client_id:client_secret)
 
 grant_type=refresh_token&refresh_token={ *refresh_token* }`}
         </ReactMarkdown>
@@ -343,7 +343,7 @@ Host: sandbox-api.va.gov`}
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
+Authorization: Basic base64(client_id:client_secret)
 
 token={ *access_token* }&token_type_hint=access_token`}
         </ReactMarkdown>
@@ -355,7 +355,7 @@ token={ *access_token* }&token_type_hint=access_token`}
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
+Authorization: Basic base64(client_id:client_secret)
 
 token={ *refresh_token* }&token_type_hint=refresh_token`}
         </ReactMarkdown>
