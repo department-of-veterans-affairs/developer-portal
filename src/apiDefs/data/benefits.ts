@@ -38,7 +38,7 @@ const benefitsApis: APIDescription[] = [
     docSources: [
       {
         metadataUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/metadata`,
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/docs/v1/decision_reviews`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/docs/v2/api`,
       },
     ],
     enabledByDefault: true,
