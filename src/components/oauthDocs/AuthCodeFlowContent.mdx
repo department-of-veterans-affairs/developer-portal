@@ -58,7 +58,7 @@ Location: <yourRedirectURL>?
 
 Use the following format, in HTTP basic authentication, for your request using the returned code and state parameters.
 
-- Use your client ID and client secret as the HTTP basic authentication username and password.
+- Use your client ID and client secret as the HTTP basic authentication username and password, encoded using base64.
 - Be sure to replace `<yourRedirectURL>` with the redirect URL that you provided during registration.
 
 <APISelector options={ props.options } selectedOption={ props.selectedOption } />
@@ -68,7 +68,7 @@ Use the following format, in HTTP basic authentication, for your request using t
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
+Authorization: Basic base64(client_id:client_secret)
 
 grant_type=authorization_code
 &code=z92dapo5
@@ -132,7 +132,7 @@ Refresh tokens expire if they are not used for a period of 7 days in sandbox and
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
+Authorization: Basic base64(client_id:client_secret)
 
 grant_type=refresh_token&refresh_token={ *refresh_token* }
 ```
@@ -166,7 +166,7 @@ Clients may revoke their own `access_tokens` and `refresh_tokens` using the revo
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
+Authorization: Basic base64(client_id:client_secret)
 
 token={ *access_token* }&token_type_hint=access_token
 ```
@@ -180,7 +180,7 @@ token={ *access_token* }&token_type_hint=access_token
 POST {{props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
-Authorization: Basic { base64 encoded *client_id* + ':' + *client_secret* }
+Authorization: Basic base64(client_id:client_secret)
 
 token={ *refresh_token* }&token_type_hint=refresh_token
 ```
