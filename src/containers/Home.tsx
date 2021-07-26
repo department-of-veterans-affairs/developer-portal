@@ -117,7 +117,7 @@ const Home = (): JSX.Element => (
           title="API Documentation"
           imageSrc={documentationImage}
           buttonDestination="/explore"
-          buttonText="Read The Docs"
+          buttonText="Read the Docs"
         >
           A Veteran-centered API platform for securely accessing VA data to build innovative tools
           for Veterans. Explore usage policies and technical details about VA&apos;s API offerings.
