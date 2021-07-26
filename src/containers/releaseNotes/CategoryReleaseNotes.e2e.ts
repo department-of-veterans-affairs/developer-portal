@@ -25,13 +25,4 @@ describe('CategoryReleaseNotes', () => {
       },
     );
   });
-
-  it('should show the 404 page on /release-notes/invalid', async () => {
-    await page.goto(`${puppeteerHost}/release-notes/invalid`, { waitUntil: 'networkidle0' });
-    const pageNotFound = await page.evaluate(() => document.querySelector('h1')?.innerHTML);
-    // Check page contents
-    expect(pageNotFound).toBe('Page not found.');
-    // Ensure there was no redirect
-    expect(page.url()).toEqual(`${puppeteerHost}/release-notes/invalid`);
-  });
 });

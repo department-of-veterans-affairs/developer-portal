@@ -43,20 +43,6 @@ describe('position sticky', () => {
   });
 });
 
-describe('invalid cagetories', () => {
-  it.each(['', 'docs/quickstart'])(
-    'should show the 404 page on /explore/invalid/%s',
-    async (path: string) => {
-      await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
-      const pageNotFound = await page.evaluate(() => document.querySelector('h1')?.innerHTML);
-      // Check page contents
-      expect(pageNotFound).toBe('Page not found.');
-      // Ensure there was no redirect
-      expect(page.url()).toEqual(`${puppeteerHost}/explore/invalid/${path}`);
-    },
-  );
-});
-
 describe('auth docs route redirect', () => {
   it('should redirect to /explore/authorization from /explore/health/docs/authorization', async () => {
     await page.goto(`${puppeteerHost}/explore/health/docs/authorization`, {
