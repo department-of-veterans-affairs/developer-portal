@@ -5,7 +5,8 @@ import classNames from 'classnames';
 import { PageHeader } from '../../components';
 import Verification from './productionAccessFormSteps/Verification';
 // import BasicInformation from './productionAccessFormSteps/BasicInformation';
-import TechnicalInformation from './productionAccessFormSteps/TechnicalInformation';
+// import TechnicalInformation from './productionAccessFormSteps/TechnicalInformation';
+import PolicyGovernance from './productionAccessFormSteps/PolicyGovernance';
 // import { validateProductionAccessForm } from './validateProductionAccessForm';
 import validationSchema from './validationSchema';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
@@ -60,6 +61,7 @@ export interface Values {
   namingConvention?: string;
   centralizedBackendLog?: string;
   listedOnMyHealthApplication?: string;
+  policyDocuments?: string[];
 }
 
 const initialValues = {
@@ -90,7 +92,7 @@ const renderStepContent = (step: number) => {
     case 0:
       return <Verification />;
     case 1:
-      return <TechnicalInformation />;
+      return <PolicyGovernance />;
     // case 2:
     //   return <TechnicalInformation />;
     default:

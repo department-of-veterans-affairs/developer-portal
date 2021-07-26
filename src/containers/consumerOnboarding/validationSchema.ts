@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { includesInternalOnlyAPI } from '../../apiDefs/query';
+import { includesInternalOnlyAPI, includesOAuthAPI } from '../../apiDefs/query';
 
 const phoneRegex = /^(?:\+?1[-.●]?)?\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/;
 
@@ -39,7 +39,7 @@ const validationSchema = [
     statusUpdateEmails: Yup.array()
       .of(Yup.string().email('Enter a valid email address.'))
       .min(1)
-      .required('Enter a valid email address. '),
+      .required('Enter a valid email address.'),
     valueProvided: Yup.string().required('Describe the value of your app.'),
     businessModel: Yup.string().when('apis', {
       is: (value: string[]) => value.some(api => ['vaForms', 'facilities'].includes(api)),
@@ -97,6 +97,81 @@ const validationSchema = [
       then: Yup.string().required('Enter the VASI system name.'),
       otherwise: Yup.string(),
     }),
+  }),
+  Yup.object().shape({
+    credentialStorage: Yup.string().required('Enter a description.'),
+    storePIIOrPHI: Yup.string()
+      .matches(/^(?:yes|no)$/)
+      .required('Select yes or no.'),
+    piiStorageMethod: Yup.string().when('storePIIOrPHI', {
+      is: (value: string) => value === 'yes',
+      then: Yup.string().required('Enter a description.'),
+      otherwise: Yup.string(),
+    }),
+    multipleReqSafeguards: Yup.string().when('storePIIOrPHI', {
+      is: (value: string) => value === 'yes',
+      then: Yup.string().required('Enter a description.'),
+      otherwise: Yup.string(),
+    }),
+    breachManagementProcess: Yup.string().when('storePIIOrPHI', {
+      is: (value: string) => value === 'yes',
+      then: Yup.string().required('Enter a description.'),
+      otherwise: Yup.string(),
+    }),
+    vulnerabilityManagement: Yup.string().when('storePIIOrPHI', {
+      is: (value: string) => value === 'yes',
+      then: Yup.string().required('Enter a description.'),
+      otherwise: Yup.string(),
+    }),
+    exposesToThirdParties: Yup.string().when('apis', {
+      is: (value: string[]) => includesOAuthAPI(value),
+      then: Yup.string()
+        .matches(/^(?:yes|no)$/)
+        .required('Select yes or no.'),
+      otherwise: Yup.string().matches(/^(?:yes|no)$/),
+    }),
+    thirdPartyInfoDescription: Yup.string().when('exposesToThirdParties', {
+      is: (value: string) => value === 'yes',
+      then: Yup.string().required('Enter a description.'),
+      otherwise: Yup.string(),
+    }),
+
+    scopesAccessRequested: Yup.string().when('apis', {
+      is: (value: string[]) => includesOAuthAPI(value),
+      then: Yup.string().required('Enter a list of scopes.'),
+      otherwise: Yup.string(),
+    }),
+
+    distributingAPIKeysToCustomers: Yup.string().when('apis', {
+      is: (value: string[]) => value.includes('benefits'),
+      then: Yup.string()
+        .matches(/^(?:yes|no)$/)
+        .required('Select yes or no.'),
+      otherwise: Yup.string().matches(/^(?:yes|no)$/),
+    }),
+    namingConvention: Yup.string().when('distributingAPIKeysToCustomers', {
+      is: (value: string) => value === 'yes',
+      then: Yup.string().required('Provide the naming convention.'),
+      otherwise: Yup.string(),
+    }),
+    centralizedBackendLog: Yup.string().when('distributingAPIKeysToCustomers', {
+      is: (value: string) => value === 'yes',
+      then: Yup.string().required('Provide the naming convention.'),
+      otherwise: Yup.string(),
+    }),
+    listedOnMyHealthApplication: Yup.string().when('apis', {
+      is: (value: string[]) => value.includes('health'),
+      then: Yup.string()
+        .matches(/^(?:yes|no)$/)
+        .required('Select yes or no.'),
+      otherwise: Yup.string().matches(/^(?:yes|no)$/),
+    }),
+  }),
+  Yup.object().shape({
+    policyDocuments: Yup.array()
+      .of(Yup.string().url('Add a link to your terms of service and privacy policies.'))
+      .min(1)
+      .required('Add a link to your terms of service and privacy policies.'),
   }),
 ];
 export default validationSchema;
