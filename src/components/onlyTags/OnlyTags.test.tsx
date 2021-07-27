@@ -4,11 +4,24 @@ import * as React from 'react';
 import { OnlyTags } from './OnlyTags';
 
 describe('OnlyTags', () => {
-  it.each([[0, 0], [0, 1], [1, 0], [1, 1]])(
+  it.each([
+    [0, 0, 0],
+    [0, 1, 0],
+    [0, 0, 1],
+    [0, 1, 1],
+    [1, 0, 0],
+    [1, 0, 1],
+    [1, 1, 0],
+    [1, 1, 1],
+  ])(
     'shows and hides OnlyTags correctly (%i, %i)',
-    (vaInternalOnly, trustedPartnerOnly) => {
+    (vaInternalOnly, trustedPartnerOnly, openData) => {
       render(
-        <OnlyTags vaInternalOnly={!!vaInternalOnly} trustedPartnerOnly={!!trustedPartnerOnly} />,
+        <OnlyTags
+          openData={!!openData}
+          vaInternalOnly={!!vaInternalOnly}
+          trustedPartnerOnly={!!trustedPartnerOnly}
+        />,
       );
 
       /**
@@ -16,7 +29,7 @@ describe('OnlyTags', () => {
        * so this actually tests the logic even though it reads strangely
        */
       expect(screen.queryAllByText('Internal VA use only')).toHaveLength(
-        vaInternalOnly + trustedPartnerOnly
+        vaInternalOnly + trustedPartnerOnly,
       );
     },
   );

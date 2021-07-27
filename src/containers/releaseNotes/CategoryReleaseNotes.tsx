@@ -37,7 +37,8 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
     <div role="navigation" aria-labelledby={PAGE_HEADER_AND_HALO_ID}>
       <div className={defaultFlexContainer()}>
         {apis.map((apiDesc: APIDescription) => {
-          const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
+          const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly, openData } =
+            apiDesc;
           const dashUrlFragment = urlFragment.replace('_', '-');
 
           return (
@@ -46,7 +47,7 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
               name={name}
               subhead={
                 vaInternalOnly || trustedPartnerOnly ? (
-                  <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
+                  <OnlyTags {...{ openData, trustedPartnerOnly, vaInternalOnly }} />
                 ) : undefined
               }
               url={`/release-notes/${categoryKey}#${dashUrlFragment}`}

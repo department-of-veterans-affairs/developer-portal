@@ -25,14 +25,15 @@ const CategoryPage = (): JSX.Element => {
   let cardSection;
   if (apis.length > 0) {
     const apiCards = apis.map((apiDesc: APIDescription) => {
-      const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
+      const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly, openData } =
+        apiDesc;
       return (
         <Flag key={name} name={[FLAG_HOSTED_APIS, urlFragment]}>
           <CardLink
             name={name}
             subhead={
               vaInternalOnly || trustedPartnerOnly ? (
-                <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
+                <OnlyTags {...{ openData, trustedPartnerOnly, vaInternalOnly }} />
               ) : undefined
             }
             url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
