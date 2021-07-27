@@ -12,6 +12,7 @@ export const fakeCategories: APICategories = {
         docSources: [], // doesn't matter yet
         enabledByDefault: true,
         name: 'Rings API',
+        openData: false,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>March 25, 2020</h3>
@@ -35,6 +36,7 @@ export const fakeCategories: APICategories = {
         docSources: [],
         enabledByDefault: true,
         name: 'Silmarils API',
+        openData: false,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>April 3, 1005</h3>
@@ -52,6 +54,7 @@ export const fakeCategories: APICategories = {
         docSources: [], // doesn't matter here
         enabledByDefault: true,
         name: 'Hobbits API',
+        openData: false,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 22, 2019</h3>
@@ -81,6 +84,7 @@ export const fakeCategories: APICategories = {
         docSources: [], // doesn't matter here
         enabledByDefault: true,
         name: 'Basketball API',
+        openData: false,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 21, 2019</h3>
@@ -98,6 +102,7 @@ export const fakeCategories: APICategories = {
         docSources: [], // doesn't matter here
         enabledByDefault: false,
         name: 'Baseball API',
+        openData: false,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 22, 2019</h3>
@@ -131,6 +136,7 @@ export const extraAPI: APIDescription = {
   docSources: [],
   enabledByDefault: true,
   name: 'Soccer API',
+  openData: false,
   releaseNotes: () => (
     <div>
       <h3>October 22, 2019</h3>

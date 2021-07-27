@@ -1,20 +1,18 @@
 import React, { FC, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Formik, Form, FormikValues } from 'formik';
+import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
+import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
+import Modal from '@department-of-veterans-affairs/component-library/Modal';
+import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
+import { Redirect } from 'react-router';
 import { PageHeader } from '../../components';
+import { useModalController } from '../../hooks';
 import Verification from './productionAccessFormSteps/Verification';
 import BasicInformation from './productionAccessFormSteps/BasicInformation';
 import TechnicalInformation from './productionAccessFormSteps/TechnicalInformation';
 import PolicyGovernance from './productionAccessFormSteps/PolicyGovernance';
-// import { validateProductionAccessForm } from './validateProductionAccessForm';
 import validationSchema from './validationSchema';
-import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
-import { useModalController } from '../../hooks';
-import Modal from '@department-of-veterans-affairs/component-library/Modal';
-import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
-
-import { Redirect } from 'react-router';
 
 const headerText = 'Production access form';
 const possibleSteps = [
@@ -73,28 +71,28 @@ export interface Values {
 
 const initialValues = {
   apis: [],
-  valueProvided: '',
   applicationName: '',
   businessModel: '',
-  organization: '',
+  credentialStorage: '',
+  exposesToThirdParties: '',
   hasMonetized: '',
   is508Compliant: '',
   isUSBasedCompany: '',
-  statusUpdateEmails: [''],
+  isVetFacing: '',
+  organization: '',
   phoneNumber: '',
-  primaryContact: null,
-  secondaryContact: null,
+  primaryContact: { email: '', firstName: '', lastName: '' },
+  secondaryContact: { email: '', firstName: '', lastName: '' },
+  signUpLink: [''],
+  statusUpdateEmails: [''],
+  storePIIOrPHI: '',
+  supportLink: [''],
   termsOfService: false,
   termsOfServiceEmail: [],
-  isVetFacing: '',
-  signUpLink: [''],
-  supportLink: [''],
-  credentialStorage: '',
-  storePIIOrPHI: '',
-  exposesToThirdParties: '',
+  valueProvided: '',
 };
 
-const renderStepContent = (step: number) => {
+const renderStepContent = (step: number): JSX.Element => {
   switch (step) {
     case 0:
       return <Verification />;
@@ -123,7 +121,7 @@ const ProductionAccess: FC = () => {
   //   setActiveStep(activeStep + 1);
   // };
 
-  const calculateSteps = (values: any) => {
+  const calculateSteps = (values: Values): void => {
     const { apis } = values;
     if (
       !apis.some((api: string) =>
@@ -147,10 +145,10 @@ const ProductionAccess: FC = () => {
     }
   };
 
-  const handleBack = () => {
+  const handleBack = (): void => {
     setActiveStep(activeStep - 1);
   };
-  const handleSubmit = (values: any, actions: FormikValues) => {
+  const handleSubmit = (values: Values, actions: FormikHelpers<Values>): void => {
     // if (isLastStep) {
     //   console.log('Submitied Form');
     // } else {
