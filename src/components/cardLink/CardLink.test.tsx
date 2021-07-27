@@ -70,7 +70,7 @@ describe('CardLink', () => {
   it('correct heading level rendered', () => {
     render(
       <Router>
-        <CardLink name="Special API" url="/special" callToAction="View Special API" level={1}>
+        <CardLink name="Special API" url="/special" callToAction="View Special API" headingLevel={1}>
           Use this to manage something!
         </CardLink>
       </Router>,

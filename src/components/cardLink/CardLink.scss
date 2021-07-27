@@ -38,7 +38,8 @@
     }
   }
   .card-content > {
-    * + * {
+    * + *,
+    .va-api-description:last-child {
       margin-top: 0.75rem;
     }
 

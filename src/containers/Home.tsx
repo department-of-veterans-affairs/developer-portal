@@ -87,18 +87,13 @@ const ApiList = (): JSX.Element => (
             const { name, content } = apiDefinitions[apiCategoryKey];
             return (
               <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-                <div
-                  className="vads-l-col--12 vads-u-margin-y--2 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
-                  key={apiCategoryKey}
+                <CardLink
+                  name={name}
+                  url={`/explore/${apiCategoryKey}`}
+                  callToAction={`View the ${name}`}
                 >
-                  <CardLink
-                    name={name}
-                    url={`/explore/${apiCategoryKey}`}
-                    callToAction={`View the ${name}`}
-                  >
-                    {content.shortDescription}
-                  </CardLink>
-                </div>
+                  {content.shortDescription}
+                </CardLink>
               </Flag>
             );
           })}
