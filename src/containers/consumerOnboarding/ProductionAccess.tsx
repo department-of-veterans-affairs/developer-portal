@@ -4,14 +4,16 @@ import { Formik, Form, FormikValues } from 'formik';
 import classNames from 'classnames';
 import { PageHeader } from '../../components';
 import Verification from './productionAccessFormSteps/Verification';
-// import BasicInformation from './productionAccessFormSteps/BasicInformation';
-// import TechnicalInformation from './productionAccessFormSteps/TechnicalInformation';
+import BasicInformation from './productionAccessFormSteps/BasicInformation';
+import TechnicalInformation from './productionAccessFormSteps/TechnicalInformation';
 import PolicyGovernance from './productionAccessFormSteps/PolicyGovernance';
 // import { validateProductionAccessForm } from './validateProductionAccessForm';
 import validationSchema from './validationSchema';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { useModalController } from '../../hooks';
 import Modal from '@department-of-veterans-affairs/component-library/Modal';
+import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
+
 import { Redirect } from 'react-router';
 
 const headerText = 'Production access form';
@@ -92,9 +94,11 @@ const renderStepContent = (step: number) => {
     case 0:
       return <Verification />;
     case 1:
+      return <BasicInformation />;
+    case 2:
+      return <TechnicalInformation />;
+    case 3:
       return <PolicyGovernance />;
-    // case 2:
-    //   return <TechnicalInformation />;
     default:
       return <div>Not Found</div>;
   }
@@ -150,6 +154,7 @@ const ProductionAccess: FC = () => {
               };
               return (
                 <Form>
+                  <SegmentedProgressBar current={1} total={10} />
                   {renderStepContent(activeStep)}
                   <div>
                     <button

@@ -30,7 +30,7 @@ import {
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
   CONSUMER_SANDBOX_PATH,
-  // CONSUMER_PROD_ACCESS_FORM_PATH,
+  CONSUMER_PROD_ACCESS_FORM_PATH,
   PUBLISHING_EXPECTATIONS_PATH,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
@@ -79,6 +79,9 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
       />
       <Route path={PUBLISHING_PATH} component={Publishing} />
+      {flags.consumer_docs && (
+        <Route path={CONSUMER_PROD_ACCESS_FORM_PATH} component={ProductionAccess} />
+      )}
       {flags.consumer_docs && <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
 
