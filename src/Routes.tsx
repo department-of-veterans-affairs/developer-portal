@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
-import { getApiCategoryOrder, getApiDefinitions } from './apiDefs/query';
+import { getActiveApiDefinitions, getApiCategoryOrder } from './apiDefs/query';
 import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DisabledApplyForm from './containers/DisabledApplyForm';
@@ -29,7 +29,7 @@ import { buildApiDetailRoutes } from './utils/routesHelper';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
-  const apiDefinitions = getApiDefinitions();
+  const apiDefinitions = getActiveApiDefinitions();
   return (
     <Switch>
       <Route exact path="/" component={Home} />

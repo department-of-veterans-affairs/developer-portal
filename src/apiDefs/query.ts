@@ -14,10 +14,31 @@
  */
 
 import apiDefs, { apiCategoryOrder } from './data/categories';
+import { isApiDeactivated } from './deprecated';
+import { isHostedApiEnabled } from './env';
 import { APICategories, APICategory, APIDescription } from './schema';
 
 const getApiDefinitions = (): APICategories => apiDefs;
 const getApiCategoryOrder = (): string[] => apiCategoryOrder;
+
+const getActiveApiDefinitions = (): APICategories => {
+  const output: APICategories = {};
+  const definitions = getApiDefinitions();
+  Object.keys(definitions).forEach((key: string) => {
+    const apis: APIDescription[] = definitions[key].apis.filter(
+      (api: APIDescription) =>
+        isHostedApiEnabled(api.urlFragment, api.enabledByDefault) && !isApiDeactivated(api),
+    );
+    output[key] = {
+      apis,
+      content: definitions[key].content,
+      name: definitions[key].name,
+      properName: definitions[key].properName,
+    };
+  });
+
+  return output;
+};
 
 const getAllApis = (): APIDescription[] =>
   Object.values(getApiDefinitions()).flatMap((category: APICategory) => category.apis);
@@ -61,6 +82,7 @@ export {
   getAllQuickstartCategorySlugs,
   getApiCategoryOrder,
   getApiDefinitions,
+  getActiveApiDefinitions,
   lookupApiByFragment,
   lookupApiCategory,
   includesOAuthAPI,
