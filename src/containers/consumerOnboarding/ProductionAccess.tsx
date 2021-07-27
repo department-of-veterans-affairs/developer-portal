@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from '@department-of-veterans-affairs/component-library/Modal';
 import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
-import { Redirect } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { useModalController } from '../../hooks';
 import Verification from './productionAccessFormSteps/Verification';
@@ -111,7 +111,20 @@ const ProductionAccess: FC = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
-  const { modalVisible, setModalVisible } = useModalController();
+
+  const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
+  const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
+  const { modalVisible: modal3Visible, setModalVisible: setModal3Visible } = useModalController();
+  const history = useHistory();
+  // const {
+  //   modalVisible as modal1Visible,
+  //   setModalVisible as setModal1Visible,
+  // } = useModalController();
+  // const {
+  //   modalVisible as modal2Visible,
+  //   setModalVisible as setModal2Visible,
+  // } = useModalController();
+
   // const { setTouched, setSubmitting } = useFormikContext();
   // const isLastStep = activeStep === steps.length - 1;
   // const handleNext = () => {
@@ -152,10 +165,21 @@ const ProductionAccess: FC = () => {
     // if (isLastStep) {
     //   console.log('Submitied Form');
     // } else {
+    if (values.isUSBasedCompany === 'no') {
+      setModal2Visible(true);
+      return;
+    }
+
+    if (values.is508Compliant === 'no') {
+      setModal3Visible(true);
+      return;
+    }
+
     calculateSteps(values);
     setActiveStep(activeStep + 1);
     actions.setTouched({});
     actions.setSubmitting(false);
+
     // }
   };
   return (
@@ -212,34 +236,51 @@ const ProductionAccess: FC = () => {
                       className="vads-u-display--block"
                       type="button"
                       data-show="#cancellation-modal"
-                      onClick={(): void => setModalVisible(true)}
+                      onClick={(): void => setModal1Visible(true)}
                     >
                       Cancel
                     </button>
                     <Modal
                       id="cancellation-modal"
                       title="Are you sure you want to leave?"
-                      visible={modalVisible}
-                      onClose={(): void => setModalVisible(false)}
+                      visible={modal1Visible}
+                      onClose={(): void => setModal1Visible(false)}
                       primaryButton={{
-                        action: (): JSX.Element => <Redirect push to="/" />,
+                        action: (): void => history.goBack(),
                         text: 'Yes Leave',
                       }}
                       secondaryButton={{
-                        action: (): void => setModalVisible(false),
+                        action: (): void => setModal1Visible(false),
                         text: 'No stay on form',
                       }}
                     >
                       The information you entered will not be saved.
                     </Modal>
                     <Modal
-                      id="no-us-based-modal"
+                      id="non-us-based-modal"
                       title="Thank you for your interest!"
-                      visible={modalVisible}
-                      onClose={(): void => setModalVisible(false)}
+                      visible={modal2Visible}
+                      onClose={(): void => setModal2Visible(false)}
                     >
                       We currently only grant access to US-based companies. You may contact us if
                       you have any questions.
+                    </Modal>
+                    <Modal
+                      id="warning-508-complicance-modal"
+                      title="Must be Section 508 Compliant"
+                      visible={modal3Visible}
+                      onClose={(): void => setModal3Visible(false)}
+                      primaryButton={{
+                        action: (): void => setModal3Visible(false),
+                        text: 'Continue',
+                      }}
+                    >
+                      Consumer websites and applications must be Section 508 compliant to get
+                      production access. Learn about becoming{' '}
+                      <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+                        Section 508 Compliant
+                      </a>{' '}
+                      or contact us with questions.
                     </Modal>
                   </div>
                 </Form>

@@ -61,6 +61,8 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
                     onKeyDown={handleKeyDown}
                     required
                   />
+
+                  <button type="button">Edit</button>
                 </div>
               ))}
               <button type="button" onClick={() => push('')}>

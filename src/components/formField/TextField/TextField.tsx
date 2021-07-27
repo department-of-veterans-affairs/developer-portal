@@ -15,6 +15,7 @@ export interface TextFieldProps {
   type?: 'text' | 'email' | 'password';
   disabled?: boolean;
   onKeyDown?: (event: KeyboardEvent) => void;
+  ref?: React.RefObject<React.FC>;
 }
 
 const TextField: FC<TextFieldProps> = ({
