@@ -37,7 +37,7 @@ const Verification: FC = () => (
       <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" required />
     </FieldSet>
 
-    <SelectedApis selectedApis={[]} />
+    <SelectedApis />
     <CheckboxRadioField
       label={
         <span>

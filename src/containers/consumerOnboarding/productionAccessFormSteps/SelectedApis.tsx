@@ -6,8 +6,6 @@ import { getAllApis } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { Flag } from '../../../flags';
 import { FLAG_HOSTED_APIS } from '../../../types/constants';
-// import { anyOAuthApisSelected } from './validateForm';
-// import { OAuthAppInfo } from './OAuthAppInfo';
 
 interface APICheckboxListProps {
   apiCheckboxes: APIDescription[];
@@ -41,11 +39,8 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
   </>
 );
 const allApis = getAllApis();
-interface SelectedApisProps {
-  selectedApis: string[];
-}
 
-const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
+const SelectedAPIs = (): JSX.Element => {
   const { errors } = useFormikContext();
   const checkboxName = 'apis';
   const shouldDisplayErrors = !!errors[checkboxName];
@@ -56,12 +51,6 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
   const selectAPIClass = shouldDisplayErrors
     ? 'vads-u-font-weight--bold'
     : 'vads-u-font-weight--normal';
-
-  // const oauthApisSelected = anyOAuthApisSelected(selectedApis);
-  // const oauthApisBorderClass = oauthApisSelected ? 'vads-u-border-left--4px' : '';
-  // const oauthApisBorderColorClass = oauthApisSelected
-  //   ? 'vads-u-border-color--primary-alt-light'
-  //   : '';
   return (
     <fieldset
       aria-labelledby="select-checkbox-api"

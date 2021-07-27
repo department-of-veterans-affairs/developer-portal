@@ -4,7 +4,6 @@ import { useFormikContext } from 'formik';
 import { TextField, ListOfTextEntries, CheckboxRadioField, FieldSet } from '../../../components';
 import { Values } from '../ProductionAccess';
 import { includesInternalOnlyAPI } from '../../../apiDefs/query';
-// import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../../types/constants';
 
 const BasicInformation: FC = () => {
   const { values } = useFormikContext<Values>();
@@ -15,10 +14,6 @@ const BasicInformation: FC = () => {
   const isVetFacingBorderClass = isVetFacing === 'yes' ? 'vads-u-border-left--4px' : '';
   const isVetFacingBorderColorClass =
     isVetFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
-  // const anyInternalOpenAPISelected = () => {
-  //   const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);
-  //   return includesInternalOnlyAPI(apiIdsByField);
-  // };
 
   return (
     <>
