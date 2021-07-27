@@ -17,7 +17,12 @@ import SegmentedProgressBar from '@department-of-veterans-affairs/component-libr
 import { Redirect } from 'react-router';
 
 const headerText = 'Production access form';
-const steps = ['Verification', 'Basic information', 'Technical information', 'Policy governance'];
+const possibleSteps = [
+  'Verification',
+  'Basic information',
+  'Technical information',
+  'Policy governance',
+];
 
 export interface Values {
   apis: string[];
@@ -106,27 +111,54 @@ const renderStepContent = (step: number) => {
 
 const ProductionAccess: FC = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
   const { modalVisible, setModalVisible } = useModalController();
   // const { setTouched, setSubmitting } = useFormikContext();
-  const isLastStep = activeStep === steps.length - 1;
+  // const isLastStep = activeStep === steps.length - 1;
   // const handleNext = () => {
   //   console.log('Next Pls!!!!');
   //   // setTouched({});
   //   // setSubmitting(false);
   //   setActiveStep(activeStep + 1);
   // };
+
+  const calculateSteps = (values: any) => {
+    const { apis } = values;
+    if (
+      !apis.some((api: string) =>
+        ['claims', 'communityCare', 'health', 'confirmation', 'verification'].includes(api),
+      )
+    ) {
+      setSteps([...possibleSteps.slice(0, 3)]);
+      if (
+        !apis.some((api: string) =>
+          [
+            'appeals',
+            'decision_reviews',
+            'benefits',
+            'loan_guaranty',
+            'address_validation',
+          ].includes(api),
+        )
+      ) {
+        setSteps([...possibleSteps.slice(0, 2)]);
+      }
+    }
+  };
+
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
   const handleSubmit = (values: any, actions: FormikValues) => {
-    if (isLastStep) {
-      console.log('Submitied Form');
-    } else {
-      setActiveStep(activeStep + 1);
-      actions.setTouched({});
-      actions.setSubmitting(false);
-    }
+    // if (isLastStep) {
+    //   console.log('Submitied Form');
+    // } else {
+    calculateSteps(values);
+    setActiveStep(activeStep + 1);
+    actions.setTouched({});
+    actions.setSubmitting(false);
+    // }
   };
   return (
     <div className={classNames('vads-l-grid-container', 'vads-u-padding--4')}>
@@ -154,7 +186,12 @@ const ProductionAccess: FC = () => {
               };
               return (
                 <Form>
-                  <SegmentedProgressBar current={1} total={10} />
+                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
+                  {activeStep === 0 ? (
+                    <h4>Step 1: Verification</h4>
+                  ) : (
+                    <h4>{`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}</h4>
+                  )}
                   {renderStepContent(activeStep)}
                   <div>
                     <button
