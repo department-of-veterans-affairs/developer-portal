@@ -33,8 +33,8 @@ const SideNav = (props: SideNavProps): JSX.Element => {
     <div
       className={classNames(
         'vads-l-col--12',
-        'vads-u-padding-right--5',
-        'medium-screen:vads-l-col--4',
+        // 'vads-u-padding-right--5',
+        'medium-screen:vads-l-col--3',
       )}
     >
       <HashLink

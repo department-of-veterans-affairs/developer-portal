@@ -91,6 +91,7 @@ const ApiList = (): JSX.Element => (
                   name={name}
                   url={`/explore/${apiCategoryKey}`}
                   callToAction={`View the ${name}`}
+                  centered
                 >
                   {content.shortDescription}
                 </CardLink>

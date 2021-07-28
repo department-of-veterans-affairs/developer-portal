@@ -7,6 +7,7 @@ import './CardLink.scss';
 
 const CardLinkPropTypes = {
   callToAction: PropTypes.string.isRequired,
+  centered: PropTypes.bool,
   children: PropTypes.node,
   name: PropTypes.string.isRequired,
   subhead: PropTypes.node,
@@ -42,11 +43,12 @@ const CardLink: React.FC<CardLinkProps> = (props: CardLinkProps) => {
           'vads-u-padding-x--2',
           'vads-u-padding-bottom--2',
           'vads-u-background-color--white',
-          'vads-u-margin-right--4',
           'vads-u-height--full',
           'va-api-card',
           {
             'va-api-card-link-focused': isLinkFocused,
+            'vads-u-margin-right--4': !props.centered,
+            'vads-u-margin-x--2': props.centered,
           },
         )}
       >
