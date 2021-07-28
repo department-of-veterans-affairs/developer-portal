@@ -3,6 +3,7 @@ import { FieldArray, useFormikContext, ErrorMessage } from 'formik';
 import classNames from 'classnames';
 import { Values } from '../ProductionAccess';
 import { TextField } from '../../../components';
+import './ListOfTextEntries.scss';
 
 export interface ListOfTextEntriesProps {
   description: ReactNode;
@@ -60,9 +61,33 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
                     label={label}
                     onKeyDown={handleKeyDown}
                     required
-                  />
-
-                  <button type="button">Edit</button>
+                    className={classNames(
+                      'vads-u-display--flex',
+                      'vads-u-flex-direction--row',
+                      'vads-u-flex-wrap--nowrap',
+                      'vads-u-align-items--center',
+                      'va-text-entry-field',
+                    )}
+                    customFieldClass={classNames(
+                      'va-api-search-autocomplete',
+                      'vads-u-margin-y--0',
+                      'vads-u-padding--1',
+                    )}
+                  >
+                    <button
+                      type="button"
+                      name="edit"
+                      className={classNames(
+                        'usa-button-secondary',
+                        'vads-u-margin-bottom--0',
+                        'vads-u-margin-left--neg9',
+                        'vads-u-margin-right--0',
+                        'vads-u-margin-top--0',
+                      )}
+                    >
+                      Edit
+                    </button>
+                  </TextField>
                 </div>
               ))}
               <button type="button" onClick={() => push('')}>

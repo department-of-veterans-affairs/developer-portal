@@ -16,6 +16,8 @@ export interface TextFieldProps {
   disabled?: boolean;
   onKeyDown?: (event: KeyboardEvent) => void;
   ref?: React.RefObject<React.FC>;
+  customFieldClass?: string;
+  children?: ReactNode;
 }
 
 const TextField: FC<TextFieldProps> = ({
@@ -27,6 +29,8 @@ const TextField: FC<TextFieldProps> = ({
   type = 'text',
   disabled = false,
   onKeyDown,
+  customFieldClass,
+  children,
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
@@ -54,7 +58,7 @@ const TextField: FC<TextFieldProps> = ({
 
       <Field
         id={fieldId}
-        className={fieldClass}
+        className={classNames(fieldClass, customFieldClass)}
         name={name}
         required={required}
         aria-describedby={`${errorId} ${descriptionId}`}
@@ -64,6 +68,7 @@ const TextField: FC<TextFieldProps> = ({
         onKeyDown={onKeyDown}
         {...props}
       />
+      {children}
     </div>
   );
 };
