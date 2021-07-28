@@ -9,6 +9,7 @@ interface TextEntryProps {
   name: string;
   index: number;
   label?: string;
+  value: string;
 }
 
 export interface ListOfTextEntriesProps {
@@ -19,7 +20,7 @@ export interface ListOfTextEntriesProps {
   label?: string;
 }
 
-const TextEntry = ({ name, index, label }: TextEntryProps): JSX.Element => {
+const TextEntry = ({ name, index, label, value }: TextEntryProps): JSX.Element => {
   // const [editing, setEditing] = useState(false);
   const [disabled, setDisabled] = useState(false);
   // let viewMode = {};
@@ -40,7 +41,7 @@ const TextEntry = ({ name, index, label }: TextEntryProps): JSX.Element => {
   //   setEditing(true);
   // };
   const handleUpdatedDone = (event: KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && value !== '') {
       setDisabled(true);
     }
   };
@@ -68,6 +69,7 @@ const TextEntry = ({ name, index, label }: TextEntryProps): JSX.Element => {
         <button
           type="button"
           name="edit"
+          onClick={() => setDisabled(false)}
           className={classNames(
             'usa-button-secondary',
             'vads-u-margin-bottom--0',
@@ -124,14 +126,18 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
         <FieldArray name={name}>
           {({ insert, remove, push }) => (
             <div>
-              {data?.map((values, index) => (
+              {data?.map((value, index) => (
                 <div key={index}>
-                  <TextEntry name={name} index={index} label={label} />
+                  <TextEntry name={name} index={index} label={label} value={value} />
                 </div>
               ))}
-              <button type="button" onClick={() => push('')}>
-                {buttonText}
-              </button>
+              {data[data.length - 1] === '' ? (
+                <button type="button">Remove</button>
+              ) : (
+                <button type="button" onClick={() => push('')}>
+                  {buttonText}
+                </button>
+              )}
             </div>
           )}
         </FieldArray>
