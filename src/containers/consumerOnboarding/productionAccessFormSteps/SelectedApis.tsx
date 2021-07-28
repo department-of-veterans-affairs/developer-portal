@@ -59,17 +59,13 @@ const SelectedAPIs = (): JSX.Element => {
         'apply-api-select',
         'vads-u-background-color--gray-lightest',
         'vads-u-margin-top--2p5',
+        'vads-u-padding-x--1p5',
       )}
     >
       <div className="vads-u-margin-top--1 apply-checkbox-labels">
         <legend
           id="select-checkbox-api"
-          className={classNames(
-            selectAPIClass,
-            labelClass,
-            'vads-u-font-size--base',
-            'vads-u-padding-x--1p5',
-          )}
+          className={classNames(selectAPIClass, labelClass, 'vads-u-font-size--base')}
         >
           Select the APIs for which you are requesting production access.{' '}
           <span className="vads-u-color--secondary-dark">&#40;*Required&#41;</span>
@@ -81,11 +77,7 @@ const SelectedAPIs = (): JSX.Element => {
         >
           <ErrorMessage name="apis" />
         </span>
-        {/* <FieldSet
-          className={classNames('vads-u-margin-top--2', 'vads-u-padding-x--1p5')}
-        > */}
         <ApiCheckboxList apiCheckboxes={allApis} />
-        {/* </FieldSet> */}
       </div>
     </fieldset>
   );

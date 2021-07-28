@@ -41,7 +41,6 @@ export interface Values {
   phoneNumber: string;
   applicationName?: string;
   statusUpdateEmails: string[];
-  termsOfServiceEmail: string[];
   valueProvided: string;
   businessModel?: string;
   hasMonetized: string;
@@ -88,8 +87,8 @@ const initialValues = {
   storePIIOrPHI: '',
   supportLink: [''],
   termsOfService: false,
-  termsOfServiceEmail: [],
   valueProvided: '',
+  policyDocuments: [''],
 };
 
 const renderStepContent = (step: number): JSX.Element => {
@@ -111,28 +110,12 @@ const ProductionAccess: FC = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
+  const isLastStep = activeStep === steps.length - 1;
 
   const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
   const { modalVisible: modal3Visible, setModalVisible: setModal3Visible } = useModalController();
   const history = useHistory();
-  // const {
-  //   modalVisible as modal1Visible,
-  //   setModalVisible as setModal1Visible,
-  // } = useModalController();
-  // const {
-  //   modalVisible as modal2Visible,
-  //   setModalVisible as setModal2Visible,
-  // } = useModalController();
-
-  // const { setTouched, setSubmitting } = useFormikContext();
-  // const isLastStep = activeStep === steps.length - 1;
-  // const handleNext = () => {
-  //   console.log('Next Pls!!!!');
-  //   // setTouched({});
-  //   // setSubmitting(false);
-  //   setActiveStep(activeStep + 1);
-  // };
 
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
@@ -162,25 +145,24 @@ const ProductionAccess: FC = () => {
     setActiveStep(activeStep - 1);
   };
   const handleSubmit = (values: Values, actions: FormikHelpers<Values>): void => {
-    // if (isLastStep) {
-    //   console.log('Submitied Form');
-    // } else {
-    if (values.isUSBasedCompany === 'no') {
-      setModal2Visible(true);
-      return;
+    if (isLastStep) {
+      console.log('Submitied Form');
+    } else {
+      if (values.isUSBasedCompany === 'no') {
+        setModal2Visible(true);
+        return;
+      }
+
+      if (values.is508Compliant === 'no') {
+        setModal3Visible(true);
+        return;
+      }
+
+      calculateSteps(values);
+      setActiveStep(activeStep + 1);
+      actions.setTouched({});
+      actions.setSubmitting(false);
     }
-
-    if (values.is508Compliant === 'no') {
-      setModal3Visible(true);
-      return;
-    }
-
-    calculateSteps(values);
-    setActiveStep(activeStep + 1);
-    actions.setTouched({});
-    actions.setSubmitting(false);
-
-    // }
   };
   return (
     <div className={classNames('vads-l-grid-container', 'vads-u-padding--4')}>
@@ -223,13 +205,23 @@ const ProductionAccess: FC = () => {
                     >
                       <FontAwesomeIcon icon={faAngleDoubleLeft} /> Back
                     </button>
-                    <button
-                      type="submit"
-                      className="usa-button vads-u-width--auto"
-                      onClick={handleSubmitButtonClick}
-                    >
-                      Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
-                    </button>
+                    {isLastStep ? (
+                      <button
+                        type="submit"
+                        className="usa-button-primary va-button-primary vads-u-width--auto"
+                        onClick={handleSubmitButtonClick}
+                      >
+                        Submit your application
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="usa-button vads-u-width--auto"
+                        onClick={handleSubmitButtonClick}
+                      >
+                        Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
+                      </button>
+                    )}
                   </div>
                   <div>
                     <button

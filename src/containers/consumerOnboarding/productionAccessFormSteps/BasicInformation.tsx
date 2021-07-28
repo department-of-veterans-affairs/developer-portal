@@ -82,7 +82,7 @@ const BasicInformation: FC = () => {
       <ListOfTextEntries
         description={
           <>
-            <p>
+            <p className="vads-u-font-weight--bold">
               Notification email for API status updates{' '}
               <span className="form-required-span">(*Required)</span>
             </p>
@@ -94,7 +94,7 @@ const BasicInformation: FC = () => {
         }
         className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
         name="statusUpdateEmails"
-        buttonText=" Add another email"
+        buttonText="Add another email"
       />
       <h3>About your app</h3>
       <TextField
@@ -166,26 +166,24 @@ const BasicInformation: FC = () => {
             />
             <ListOfTextEntries
               description={
-                <p>
+                <p className="vads-u-font-weight--bold">
                   Provide a link to a page describing how to sign up for your app.{' '}
                   <span className="form-required-span">(*Required)</span>
                 </p>
               }
               className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
               name="signUpLink"
-              label="URL"
               buttonText="Add another URL"
             />
             <ListOfTextEntries
               description={
-                <p>
+                <p className="vads-u-font-weight--bold">
                   Provide a link to your FAQs and/or support page.{' '}
                   <span className="form-required-span">(*Required)</span>
                 </p>
               }
               className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
               name="supportLink"
-              label="URL"
               buttonText="Add another URL"
             />
             <TextField

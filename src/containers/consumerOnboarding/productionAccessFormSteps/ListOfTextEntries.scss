@@ -1,23 +1,5 @@
 .va-text-entry-field {
-  button[name='edit'] {
-    width: auto;
-    overflow: hidden;
+  button[name='remove'] {
+    margin-left: -10%;
   }
 }
-
-// .entry-text-box {
-//   display: flex;
-// }
-
-// input[type='text'] {
-//   flex-grow: 2;
-// }
-// .entry-text-box input[type='text'] {
-//   // display: inline-block;
-//   position: relative;
-// }
-
-// button[name='edit'] {
-//   display: inline-block;
-//   margin-left: -25px;
-// }
