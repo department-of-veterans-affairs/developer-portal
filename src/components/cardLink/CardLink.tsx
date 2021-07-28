@@ -6,7 +6,7 @@ import { NavHashLink } from 'react-router-hash-link';
 import './CardLink.scss';
 
 const CardLinkPropTypes = {
-  callToAction: PropTypes.string,
+  callToAction: PropTypes.string.isRequired,
   children: PropTypes.node,
   name: PropTypes.string.isRequired,
   subhead: PropTypes.node,
@@ -68,14 +68,12 @@ const CardLink: React.FC<CardLinkProps> = (props: CardLinkProps) => {
           </NavHashLink>
           {props.subhead}
           <p className="va-api-description vads-u-color--base">{props.children}</p>
-          {props.callToAction && (
-            <p
-              className="vads-u-text-decoration--underline vads-u-color--link-default"
-              aria-hidden="true"
-            >
-              {props.callToAction}
-            </p>
-          )}
+          <p
+            className="vads-u-text-decoration--underline vads-u-color--link-default"
+            aria-hidden="true"
+          >
+            {props.callToAction}
+          </p>
         </div>
       </div>
     </div>

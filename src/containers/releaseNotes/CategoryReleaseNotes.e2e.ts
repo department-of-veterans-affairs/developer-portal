@@ -4,9 +4,9 @@ import { puppeteerHost } from '../../e2eHelpers';
 describe('CategoryReleaseNotes', () => {
   describe('API card links', () => {
     it.each([
-      'Benefits Claims',
-      'Benefits Intake',
-      'Loan Guaranty',
+      'Benefits Claims API',
+      'Benefits Intake API',
+      'Loan Guaranty API',
     ])(
       'should move focus to the target %s API section',
       async (apiName: string) => {

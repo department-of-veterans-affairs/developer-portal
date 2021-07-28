@@ -20,7 +20,7 @@ const DocumentationOverview = (): JSX.Element => {
         description="Explore usage policies and technical details about VA's API offerings."
       />
       <div className={defaultFlexContainer()}>
-        <CardLink name="Authorization" url="/explore/authorization">
+        <CardLink name="Authorization" url="/explore/authorization" callToAction="Learn more about OAuth">
           Use the OpenID Connect standard to allow Veterans to authorize third-party application to
           access data on their behalf.
         </CardLink>

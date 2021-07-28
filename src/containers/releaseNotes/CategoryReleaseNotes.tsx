@@ -50,6 +50,7 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
                 ) : undefined
               }
               url={`/release-notes/${categoryKey}#${dashUrlFragment}`}
+              callToAction={`View the release notes for the ${name}`}
             >
               {description}
             </CardLink>
