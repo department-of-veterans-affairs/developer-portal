@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useState, KeyboardEvent } from 'react';
+import React, { FC, ReactNode, useState, KeyboardEvent, MouseEvent } from 'react';
 import { FieldArray, useFormikContext, ErrorMessage } from 'formik';
 import classNames from 'classnames';
 import { Values } from '../ProductionAccess';
@@ -10,6 +10,7 @@ interface TextEntryProps {
   index: number;
   label?: string;
   value: string;
+  onClick: (event: MouseEvent) => void;
 }
 
 export interface ListOfTextEntriesProps {
@@ -20,9 +21,10 @@ export interface ListOfTextEntriesProps {
   label?: string;
 }
 
-const TextEntry = ({ name, index, label, value }: TextEntryProps): JSX.Element => {
+const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.Element => {
   // const [editing, setEditing] = useState(false);
   const [disabled, setDisabled] = useState(false);
+  const { touched } = useFormikContext();
   // let viewMode = {};
   // let editMode = {};
 
@@ -81,6 +83,17 @@ const TextEntry = ({ name, index, label, value }: TextEntryProps): JSX.Element =
           Edit
         </button>
       )}
+
+      {!disabled && value !== '' && !touched[`${name}.${index}`] && (
+        <button
+          type="button"
+          name="remove"
+          onClick={onClick}
+          className={classNames('usa-button-secondary')}
+        >
+          Remove
+        </button>
+      )}
     </TextField>
   );
 };
@@ -128,11 +141,19 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
             <div>
               {data?.map((value, index) => (
                 <div key={index}>
-                  <TextEntry name={name} index={index} label={label} value={value} />
+                  <TextEntry
+                    name={name}
+                    index={index}
+                    label={label}
+                    value={value}
+                    onClick={() => remove(index)}
+                  />
                 </div>
               ))}
-              {data[data.length - 1] === '' ? (
-                <button type="button">Remove</button>
+              {data[data.length - 1] === '' && data.length > 1 ? (
+                <button type="button" onClick={() => remove(data.length - 1)}>
+                  Remove
+                </button>
               ) : (
                 <button type="button" onClick={() => push('')}>
                   {buttonText}
