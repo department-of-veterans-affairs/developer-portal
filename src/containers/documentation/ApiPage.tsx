@@ -8,8 +8,7 @@ import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
-import ExplorePage from '../../content/explorePage.mdx';
-import { Flag } from '../../flags';
+import { useFlag } from '../../flags';
 
 import { APINameParam } from '../../types';
 import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
@@ -58,19 +57,17 @@ const getApi = (apiName?: string): APIDescription | null => {
 const ApiPage = (): JSX.Element => {
   const location = useLocation();
   const params = useParams<APINameParam>();
+  const enabledApisFlags = useFlag([FLAG_API_ENABLED_PROPERTY]);
 
   const api = getApi(params.apiName);
   const category = lookupApiCategory(params.apiCategoryKey);
 
-  if (api === null || !category?.apis.includes(api)) {
+  if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlFragment]) {
     return <ApiNotFoundPage />;
   }
 
   return (
-    <Flag
-      name={[FLAG_API_ENABLED_PROPERTY, api.urlFragment]}
-      fallbackRender={(): JSX.Element => <ExplorePage />}
-    >
+    <>
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
@@ -87,7 +84,7 @@ const ApiPage = (): JSX.Element => {
       )}
       <DeactivationMessage api={api} />
       {!isApiDeactivated(api) && <ApiDocumentation apiDefinition={api} location={location} />}
-    </Flag>
+    </>
   );
 };
 

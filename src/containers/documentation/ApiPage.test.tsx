@@ -14,15 +14,6 @@ const lotrRingsApi = fakeCategories.lotr.apis[0];
 const lotrSilmarilsApi = fakeCategories.lotr.apis[1];
 
 // Mocks
-jest.mock('../../content/explorePage.mdx', () => {
-  const ExplorePage = (): JSX.Element => <div data-testid="explore-page">Mock Explore Page</div>;
-
-  return {
-    __esModule: true,
-    default: ExplorePage,
-  };
-});
-
 jest.mock('./ApiDocumentation', () => {
   const ApiDocumentation = (): JSX.Element => (
     <div data-testid="api-documentation">API Documentation</div>
@@ -125,10 +116,6 @@ describe('ApiPage', () => {
     it('calls lookupApi methods with correct parameters', () => {
       expect(lookupApiByFragmentMock).toHaveBeenCalledWith('rings');
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
-    });
-
-    it('renders the explore page', () => {
-      expect(screen.getByTestId('explore-page')).not.toBeNull();
     });
   });
 

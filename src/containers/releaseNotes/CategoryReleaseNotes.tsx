@@ -2,7 +2,7 @@ import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox
 import classNames from 'classnames';
 import * as React from 'react';
 import Helmet from 'react-helmet';
-import { Redirect, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import {
   PAGE_HEADER_AND_HALO_ID,
   FLAG_API_ENABLED_PROPERTY,
@@ -121,9 +121,6 @@ const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProp
 export const CategoryReleaseNotes = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const categories = getApiDefinitions();
-  if (!(apiCategoryKey in categories)) {
-    return <Redirect to="/404" />;
-  }
 
   return (
     <ReleaseNotesCollection

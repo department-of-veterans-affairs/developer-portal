@@ -2,14 +2,7 @@ import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
-import { getDeactivatedFlags } from './apiDefs/deprecated';
-import { getEnvFlags } from './apiDefs/env';
-import {
-  getAllQuickstartCategorySlugs,
-  getApiCategoryOrder,
-  getApiDefinitions,
-} from './apiDefs/query';
-import { APIDescription } from './apiDefs/schema';
+import { getActiveApiDefinitions, getApiCategoryOrder } from './apiDefs/query';
 import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DisabledApplyForm from './containers/DisabledApplyForm';
@@ -25,20 +18,17 @@ import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
 import {
-  CONSUMER_APIS_PATH,
-  CONSUMER_DEMO_PATH,
-  CONSUMER_PATH,
-  CONSUMER_PROD_PATH,
+  CONSUMER_ROUTER_PATHS,
   CONSUMER_SANDBOX_PATH,
-  PUBLISHING_EXPECTATIONS_PATH,
-  PUBLISHING_ONBOARDING_PATH,
-  PUBLISHING_PATH,
+  PUBLISHING_ROUTER_PATHS,
 } from './types/constants/paths';
 import { Apply } from './containers/apply/Apply';
 import { FLAG_SIGNUPS_ENABLED } from './types/constants';
+import { buildApiDetailRoutes } from './utils/routesHelper';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
+  const apiDefinitions = getActiveApiDefinitions();
   return (
     <Switch>
       <Route exact path="/" component={Home} />
@@ -50,12 +40,15 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         render={(): JSX.Element => <Redirect to="/terms-of-service" />}
       />
       <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
+      <Route path="/oauth" render={(): JSX.Element => <Redirect to="/explore/authorization" />} />
 
       {/* Current routes: */}
       <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />
       <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
-      {flags.consumer_docs ?
-        <Redirect from="/apply" to={CONSUMER_SANDBOX_PATH} /> :
+
+      {flags.consumer_docs ? (
+        <Redirect from="/apply" to={CONSUMER_SANDBOX_PATH} />
+      ) : (
         <Route
           path="/apply"
           render={(): JSX.Element => (
@@ -65,39 +58,60 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
               fallbackComponent={DisabledApplyForm}
             />
           )}
-        />}
-      <Route path="/explore/:apiCategoryKey?" component={DocumentationRoot} />
-      <Route
-        path="/oauth"
-        render={(): JSX.Element => <Redirect to="/explore/verification/docs/authorization" />}
-      />
-      <Route path="/release-notes/:apiCategoryKey?" component={ReleaseNotes} />
+        />
+      )}
+
+      {/* API Documentation */}
+      <Route exact path="/explore" component={DocumentationRoot} />
+      <Route exact path="/explore/authorization" component={DocumentationRoot} />
+      {buildApiDetailRoutes(apiDefinitions).map(
+        (path: string): JSX.Element => (
+          <Route exact key={path} path={path} component={DocumentationRoot} />
+        ),
+      )}
+
+      {/* Release Notes */}
+      <Route exact path="/release-notes" component={ReleaseNotes} />
+      {Object.entries(apiDefinitions).map(
+        ([key]): JSX.Element => (
+          <Route
+            exact
+            key={`${key}-release-notes`}
+            path={`/release-notes/${key}`}
+            component={ReleaseNotes}
+          />
+        ),
+      )}
+      <Route exact path="/release-notes/deactivated" component={ReleaseNotes} />
+
+      {/* News */}
       <Route path="/news" component={News} />
-      <Route path="/support" component={Support} />
+
+      {/* Support */}
+      <Route exact path="/support" component={Support} />
+      {supportSections.map((section: SupportSection) => (
+        <Route path={`/support/${section.id}`} key={`${section.id}-support`} component={Support} />
+      ))}
+
+      {/* Integration Guide */}
       <Route
         path="/providers/integration-guide"
         render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
       />
-      <Route path={PUBLISHING_PATH} component={Publishing} />
-      {flags.consumer_docs && <Route path={CONSUMER_PATH} component={ConsumerOnboardingRoot} />}
-      <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
 
-      {/* The below Routes are needed for the sitemap */}
-      <Route path="/explore/:apiCategoryKey/docs/quickstart" />
-      <Route path="/explore/:apiCategoryKey/docs/:apiName" />
-      <Route exact path={PUBLISHING_EXPECTATIONS_PATH} />
-      <Route exact path={PUBLISHING_ONBOARDING_PATH} />
-      {supportSections.map((section: SupportSection) => (
-        <Route path={`/support/${section.id}`} key={section.id} />
+      {/* API Publishing */}
+      {PUBLISHING_ROUTER_PATHS.map((path: string) => (
+        <Route exact path={path} component={Publishing} key={path} />
       ))}
-      {flags.consumer_docs && (
-        <>
-          <Route exact path={CONSUMER_SANDBOX_PATH} />
-          <Route exact path={CONSUMER_PROD_PATH} />
-          <Route exact path={CONSUMER_DEMO_PATH} />
-          <Route exact path={CONSUMER_APIS_PATH} />
-        </>
-      )}
+
+      {/* Consumer Docs */}
+      {flags.consumer_docs &&
+        CONSUMER_ROUTER_PATHS.map((path: string) => (
+          <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
+        ))}
+
+      {/* Catch the rest with the 404 */}
+      <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
     </Switch>
   );
 };
@@ -120,43 +134,15 @@ interface SitemapConfig {
  */
 
 export const sitemapConfig = (): SitemapConfig => {
-  const apiDefs = getApiDefinitions();
-  const deactivatedFlags = getDeactivatedFlags();
-  const envFlags = getEnvFlags();
-
-  const getApiRouteParams = (apiCategory: string): string[] => {
-    const routeParams = apiDefs[apiCategory].apis.reduce(
-      (result: string[], api: APIDescription) => {
-        if (envFlags[api.urlFragment] && !deactivatedFlags[api.urlFragment]) {
-          result.push(api.urlFragment);
-        }
-        return result;
-      },
-      [],
-    );
-
-    return routeParams;
-  };
-
   const apiCategoryOrder = getApiCategoryOrder();
-  const apiQuickstartCategories = getAllQuickstartCategorySlugs();
   return {
-    paramsConfig: {
-      '/explore/:apiCategoryKey/docs/:apiName': apiCategoryOrder
-        .filter(apiCategory => getApiRouteParams(apiCategory).length > 0)
-        .map(apiCategory => ({
-          apiCategoryKey: apiCategory,
-          apiName: getApiRouteParams(apiCategory),
-        })),
-      '/explore/:apiCategoryKey/docs/quickstart': [{ apiCategoryKey: apiQuickstartCategories }],
-      '/explore/:apiCategoryKey?': [{ 'apiCategoryKey?': apiCategoryOrder }],
-      '/release-notes/:apiCategoryKey?': [
-        { 'apiCategoryKey?': [...apiCategoryOrder, 'deactivated'] },
-      ],
-    },
+    paramsConfig: {},
     pathFilter: {
       isValid: false,
-      rules: [/index.html|\/explore\/terms-of-service|\/applied|\/oauth/],
+      rules: [
+        /index.html|\/explore\/terms-of-service|\/applied|\/oauth/,
+        ...apiCategoryOrder.map((item): RegExp => new RegExp(`${item}\\\/docs\\\/:apiName`)),
+      ],
     },
     topLevelRoutes: SiteRoutes,
   };
