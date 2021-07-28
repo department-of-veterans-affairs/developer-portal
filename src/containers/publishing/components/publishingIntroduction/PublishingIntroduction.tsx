@@ -119,7 +119,6 @@ const PublishingIntroduction: FC = () => (
         name="How onboarding works"
         url={PUBLISHING_ONBOARDING_PATH}
         callToAction="Learn about API publishing"
-        headingLevel={2}
       >
         Curious about our publishing process? Learn more about the steps toward publishing with
         Lighthouse.
@@ -128,7 +127,6 @@ const PublishingIntroduction: FC = () => (
         name="Expectations of Lighthouse APIs"
         url={PUBLISHING_EXPECTATIONS_PATH}
         callToAction="View our API requirements"
-        headingLevel={2}
       >
         Is your API ready to be published on the Lighthouse developer portal? Learn more about our
         requirements and expectations.
@@ -137,7 +135,6 @@ const PublishingIntroduction: FC = () => (
         name="Contact us"
         url={SUPPORT_CONTACT_PATH}
         callToAction="Contact us for API publishing"
-        headingLevel={2}
       >
         Ready to take the leap and publish your API with us? Start the process by contacting us
         here.

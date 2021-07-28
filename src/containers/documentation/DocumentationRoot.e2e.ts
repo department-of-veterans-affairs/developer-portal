@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import 'jest';
+import { getDocument, queries } from 'pptr-testing-library';
 
 import { puppeteerHost } from '../../e2eHelpers';
 
@@ -18,26 +19,20 @@ describe('position sticky', () => {
   });
 
   it('provides step-wise navigation via in-page cards', async () => {
-    const clickCard = async (caption: string): Promise<void> => {
-      await page.evaluate(cap => {
-        const elems = Array.from(document.querySelectorAll('a.va-api-card'));
-        for (const el of elems) {
-          const hdr = el.querySelector('.va-api-name');
-          if (hdr && hdr.textContent === cap) {
-            el.scrollIntoView();
-            (el as HTMLElement).click();
-            return;
-          }
-        }
-      }, caption);
+    const clickCard = async (caption: string, regionName: string): Promise<void> => {
+      const $document = await getDocument(page);
+      // get the main content, i.e. not the side nav
+      const mainContentRegion = await queries.getByRole($document, 'region', { name: regionName });
+      const cardLink = await queries.getByRole(mainContentRegion, 'link', { name: caption });
+      await cardLink.click();
     };
 
     await page.setViewport({ height: 800, width: 1200 });
     await page.goto(`${puppeteerHost}/explore`, {
       waitUntil: ['domcontentloaded', 'networkidle0'],
     });
-    await clickCard('Health APIs');
-    await clickCard('Community Care Eligibility API');
+    await clickCard('Health APIs', 'Documentation');
+    await clickCard('Community Care Eligibility API', 'Health APIs');
     const haloText = await page.$eval('.header-halo', elem => elem.textContent);
     expect(haloText).toEqual('Health APIs');
   });

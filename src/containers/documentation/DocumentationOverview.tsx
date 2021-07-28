@@ -20,7 +20,7 @@ const DocumentationOverview = (): JSX.Element => {
         description="Explore usage policies and technical details about VA's API offerings."
       />
       <div className={defaultFlexContainer()}>
-        <CardLink name="Authorization" url="/explore/authorization" headingLevel={2}>
+        <CardLink name="Authorization" url="/explore/authorization">
           Use the OpenID Connect standard to allow Veterans to authorize third-party application to
           access data on their behalf.
         </CardLink>
@@ -32,7 +32,6 @@ const DocumentationOverview = (): JSX.Element => {
                 name={name}
                 url={`/explore/${apiCategoryKey}`}
                 callToAction={`View the ${name}`}
-                headingLevel={2}
               >
                 {content.shortDescription}
               </CardLink>

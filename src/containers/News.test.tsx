@@ -50,16 +50,12 @@ describe('News', () => {
     // headers, card links, news sections - relevant for getting card links
     expect(mainSection.children.length).toBeGreaterThanOrEqual(2);
 
-    const cardHeadings = getAllByRole(mainSection.children[1] as HTMLElement, 'heading', {
-      level: 2,
-    });
-    expect(cardHeadings).toHaveLength(data.sections.length);
+    const cardLinks = getAllByRole(mainSection.children[1] as HTMLElement, 'link');
+    expect(cardLinks).toHaveLength(data.sections.length);
     data.sections.forEach((section: DataSection, index: number) => {
-      expect(cardHeadings[index]).toHaveTextContent(section.title);
-
-      const cardLink = getByRole(cardHeadings[index], 'link');
-      expect(cardLink).toHaveAttribute('href', `/news#${toHtmlId(section.title)}`);
-      expect(cardHeadings[index].nextElementSibling).toHaveTextContent(section.description);
+      expect(cardLinks[index]).toHaveTextContent(section.title);
+      expect(cardLinks[index]).toHaveAttribute('href', `/news#${toHtmlId(section.title)}`);
+      expect(cardLinks[index].nextElementSibling).toHaveTextContent(section.description);
     });
   });
 

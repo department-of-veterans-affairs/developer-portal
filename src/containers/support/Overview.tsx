@@ -31,7 +31,6 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
           url={`/support/${section.id}`}
           key={section.id}
           callToAction={section.callToAction}
-          headingLevel={2}
         >
           {section.description}
         </CardLink>

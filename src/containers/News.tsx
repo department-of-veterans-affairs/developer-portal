@@ -110,7 +110,6 @@ const News = (): JSX.Element => {
                 url={`#${section.id}`}
                 name={section.title}
                 callToAction={section.callToAction}
-                headingLevel={2}
               >
                 {section.description}
               </CardLink>

@@ -39,7 +39,6 @@ const ReleaseNotesOverview = (): JSX.Element => {
                 name={name}
                 url={`/release-notes/${apiCategoryKey}`}
                 callToAction={`View release notes for the ${name}`}
-                headingLevel={2}
               >
                 {content.shortDescription}
               </CardLink>
@@ -51,7 +50,6 @@ const ReleaseNotesOverview = (): JSX.Element => {
             name={deactivatedCategory.name}
             url="/release-notes/deactivated"
             callToAction="View release notes for deactivated APIs"
-            headingLevel={2}
           >
             This is a repository for deactivated APIs and related documentation and release notes.
           </CardLink>

@@ -37,7 +37,6 @@ const CategoryPage = (): JSX.Element => {
             }
             url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
             callToAction={`View the ${name}`}
-            headingLevel={2}
           >
             {description}
           </CardLink>
