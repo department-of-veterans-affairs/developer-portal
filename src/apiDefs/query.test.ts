@@ -112,10 +112,6 @@ describe('query module', () => {
       expect(includesInternalOnlyAPI(['appeals', 'decision_reviews', 'loan_guaranty'])).toBe(true);
     });
 
-    // it('returns true if the list includes an API that is marked as OAuth at the API level', () => {
-    //   expect(includesInternalOnlyAPI(['benefits', 'claims', 'facilities'])).toBe(true);
-    // });
-
     it('returns false if the list does not include any VA Internal Only APIs', () => {
       expect(includesInternalOnlyAPI(['benefits', 'facilities', 'appeals'])).toBe(false);
     });

@@ -80,15 +80,23 @@ const initialValues = {
   isVetFacing: '',
   organization: '',
   phoneNumber: '',
-  primaryContact: { email: '', firstName: '', lastName: '' },
-  secondaryContact: { email: '', firstName: '', lastName: '' },
+  policyDocuments: [''],
+  primaryContact: {
+    email: '',
+    firstName: '',
+    lastName: '',
+  },
+  secondaryContact: {
+    email: '',
+    firstName: '',
+    lastName: '',
+  },
   signUpLink: [''],
   statusUpdateEmails: [''],
   storePIIOrPHI: '',
   supportLink: [''],
   termsOfService: false,
   valueProvided: '',
-  policyDocuments: [''],
 };
 
 const renderStepContent = (step: number): JSX.Element => {
@@ -146,6 +154,8 @@ const ProductionAccess: FC = () => {
   };
   const handleSubmit = (values: Values, actions: FormikHelpers<Values>): void => {
     if (isLastStep) {
+      // TODO: In API-8236 the acutal submission of the form will be handled
+      // eslint-disable-next-line no-console
       console.log('Submitied Form');
     } else {
       if (values.isUSBasedCompany === 'no') {
