@@ -71,7 +71,6 @@ const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.
             className={classNames(
               'usa-button-secondary',
               'vads-u-margin-bottom--0',
-              // 'vads-u-margin-left--neg5',
               'vads-u-margin-right--0',
               'vads-u-margin-top--0',
             )}
@@ -111,6 +110,7 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
         {({ remove, push }): ReactNode => (
           <div className="vads-u-padding-y--1p5">
             {data.map((value, index) => (
+              // eslint-disable-next-line react/no-array-index-key
               <div key={index}>
                 <TextEntry
                   name={name}
