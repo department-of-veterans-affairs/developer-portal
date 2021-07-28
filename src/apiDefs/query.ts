@@ -30,10 +30,8 @@ const getActiveApiDefinitions = (): APICategories => {
         isHostedApiEnabled(api.urlFragment, api.enabledByDefault) && !isApiDeactivated(api),
     );
     output[key] = {
+      ...definitions[key],
       apis,
-      content: definitions[key].content,
-      name: definitions[key].name,
-      properName: definitions[key].properName,
     };
   });
 

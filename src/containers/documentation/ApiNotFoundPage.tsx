@@ -4,7 +4,6 @@ import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
@@ -28,7 +27,7 @@ const ApiNotFoundPage = (): JSX.Element => {
       {category?.name && <PageHeader header={category.name} />}
       <ul>
         {category?.apis
-          .filter((item: APIDescription) => !isApiDeactivated(item) && flags[item.urlFragment])
+          .filter((item: APIDescription) => flags[item.urlFragment])
           .map((item: APIDescription) => (
             <li key={item.urlFragment}>
               <Link to={`/explore/${apiCategoryKey}/docs/${item.urlFragment}`}>{item.name}</Link>

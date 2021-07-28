@@ -5,6 +5,7 @@ describe('Routes Wildcard handling', () => {
   it.each([
     '/api-publishing/invalid',
     '/explore/invalid',
+    '/explore/invalid/docs',
     '/explore/invalid/docs/quickstart',
     '/onboarding/invalid',
     '/release-notes/invalid',

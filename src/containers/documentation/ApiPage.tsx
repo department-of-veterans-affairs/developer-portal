@@ -57,12 +57,12 @@ const getApi = (apiName?: string): APIDescription | null => {
 const ApiPage = (): JSX.Element => {
   const location = useLocation();
   const params = useParams<APINameParam>();
-  const flags = useFlag([FLAG_API_ENABLED_PROPERTY]);
+  const enabledApisFlags = useFlag([FLAG_API_ENABLED_PROPERTY]);
 
   const api = getApi(params.apiName);
   const category = lookupApiCategory(params.apiCategoryKey);
 
-  if (api === null || !category?.apis.includes(api) || !flags[api.urlFragment]) {
+  if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlFragment]) {
     return <ApiNotFoundPage />;
   }
 
