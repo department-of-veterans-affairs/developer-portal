@@ -1,9 +1,15 @@
-import React, { FC, ReactNode, KeyboardEvent } from 'react';
+import React, { FC, ReactNode, useState, KeyboardEvent } from 'react';
 import { FieldArray, useFormikContext, ErrorMessage } from 'formik';
 import classNames from 'classnames';
 import { Values } from '../ProductionAccess';
 import { TextField } from '../../../components';
 import './ListOfTextEntries.scss';
+
+interface TextEntryProps {
+  name: string;
+  index: number;
+  label?: string;
+}
 
 export interface ListOfTextEntriesProps {
   description: ReactNode;
@@ -12,6 +18,70 @@ export interface ListOfTextEntriesProps {
   buttonText: string;
   label?: string;
 }
+
+const TextEntry = ({ name, index, label }: TextEntryProps): JSX.Element => {
+  // const [editing, setEditing] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  // let viewMode = {};
+  // let editMode = {};
+
+  // if (editing) {
+  //   viewMode.display = 'none';
+  // } else {
+  //   editMode.display = 'none';
+  // }
+  // useEffect(() => {
+  //   return () => {
+  //     console.log('Cleaning up...');
+  //   };
+  // }, []);
+
+  // const handleEditing = () => {
+  //   setEditing(true);
+  // };
+  const handleUpdatedDone = (event: KeyboardEvent<HTMLInputElement>): void => {
+    if (event.key === 'Enter') {
+      setDisabled(true);
+    }
+  };
+  return (
+    <TextField
+      name={`${name}.${index}`}
+      label={label}
+      onKeyDown={handleUpdatedDone}
+      required
+      disabled={disabled}
+      className={classNames(
+        'vads-u-display--flex',
+        'vads-u-flex-direction--row',
+        'vads-u-flex-wrap--nowrap',
+        'vads-u-align-items--center',
+        'va-text-entry-field',
+      )}
+      customFieldClass={classNames(
+        'va-api-search-autocomplete',
+        'vads-u-margin-y--0',
+        'vads-u-padding--1',
+      )}
+    >
+      {disabled && (
+        <button
+          type="button"
+          name="edit"
+          className={classNames(
+            'usa-button-secondary',
+            'vads-u-margin-bottom--0',
+            'vads-u-margin-left--neg9',
+            'vads-u-margin-right--0',
+            'vads-u-margin-top--0',
+          )}
+        >
+          Edit
+        </button>
+      )}
+    </TextField>
+  );
+};
 
 const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
   description,
@@ -27,15 +97,15 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
   // const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
   const errorMessagePaddingClass = shouldDisplayErrors ? 'vads-u-padding-x--1p5' : '';
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter') {
-      if ((event.target as HTMLInputElement).value === '') {
-        return;
-      }
-      (event.target as HTMLInputElement).blur();
-      (event.target as HTMLInputElement).disabled = true;
-    }
-  };
+  // const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>): void => {
+  //   if (event.key === 'Enter') {
+  //     if ((event.target as HTMLInputElement).value === '') {
+  //       return;
+  //     }
+  //     (event.target as HTMLInputElement).blur();
+  //     (event.target as HTMLInputElement).disabled = true;
+  //   }
+  // };
   // const [disabled, setDisabled] = useState(false);
   // const handleOnBlur = () => {
   //   setDisabled(!disabled);
@@ -56,38 +126,7 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
             <div>
               {data?.map((values, index) => (
                 <div key={index}>
-                  <TextField
-                    name={`${name}.${index}`}
-                    label={label}
-                    onKeyDown={handleKeyDown}
-                    required
-                    className={classNames(
-                      'vads-u-display--flex',
-                      'vads-u-flex-direction--row',
-                      'vads-u-flex-wrap--nowrap',
-                      'vads-u-align-items--center',
-                      'va-text-entry-field',
-                    )}
-                    customFieldClass={classNames(
-                      'va-api-search-autocomplete',
-                      'vads-u-margin-y--0',
-                      'vads-u-padding--1',
-                    )}
-                  >
-                    <button
-                      type="button"
-                      name="edit"
-                      className={classNames(
-                        'usa-button-secondary',
-                        'vads-u-margin-bottom--0',
-                        'vads-u-margin-left--neg9',
-                        'vads-u-margin-right--0',
-                        'vads-u-margin-top--0',
-                      )}
-                    >
-                      Edit
-                    </button>
-                  </TextField>
+                  <TextEntry name={name} index={index} label={label} />
                 </div>
               ))}
               <button type="button" onClick={() => push('')}>
