@@ -1,9 +1,8 @@
 /* eslint-disable max-lines -- exception for test suite */
 import { cleanup, getByRole, queryByRole, render, screen, waitFor } from '@testing-library/react';
-import { createMemoryHistory } from 'history';
 import 'jest';
 import * as React from 'react';
-import { MemoryRouter, Route, Router } from 'react-router';
+import { MemoryRouter, Route } from 'react-router';
 import {
   extraAPI,
   extraDeactivationInfo,
@@ -14,7 +13,6 @@ import {
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
-import ErrorPage from '../ErrorPage';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
@@ -135,7 +133,8 @@ describe('ReleaseNotesCollection', () => {
         expect(hobbitsNoteHeading).toBeInTheDocument();
         expect(hobbitsNoteHeading.tagName).toBe('H3');
         expect(hobbitsNoteHeading.nextElementSibling).not.toBeNull();
-        const hobbitsNoteContent: HTMLElement = hobbitsNoteHeading.nextElementSibling as HTMLElement;
+        const hobbitsNoteContent: HTMLElement =
+          hobbitsNoteHeading.nextElementSibling as HTMLElement;
         expect(hobbitsNoteContent.tagName).toBe('P');
         expect(hobbitsNoteContent).toHaveTextContent('Bilbo disappeared');
       });
@@ -147,22 +146,6 @@ describe('ReleaseNotesCollection', () => {
       it('does not include release notes for disabled APIs', async () => {
         await renderComponent('/release-notes/sports');
         expect(screen.queryByRole('heading', { name: 'Baseball API' })).toBeNull();
-      });
-
-      it("redirect to /404 when category isn't found", () => {
-        const history = createMemoryHistory({ initialEntries: ['/release-notes/fakeCategory'] });
-        const { container } = render(
-          <Router history={history}>
-            <Route
-              path="/release-notes"
-              exact
-              render={(): JSX.Element => <div>/release-notes</div>}
-            />
-            <Route path="/release-notes/fakeCategory" exact component={CategoryReleaseNotes} />
-            <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
-          </Router>,
-        );
-        expect(container.innerHTML).toEqual(expect.stringContaining('404'));
       });
     });
   });

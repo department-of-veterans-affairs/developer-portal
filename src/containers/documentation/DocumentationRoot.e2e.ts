@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'jest';
 
 import { puppeteerHost } from '../../e2eHelpers';
@@ -40,16 +41,6 @@ describe('position sticky', () => {
     const haloText = await page.$eval('.header-halo', elem => elem.textContent);
     expect(haloText).toEqual('Health APIs');
   });
-});
-
-describe('invalid cagetories', () => {
-  it.each(['', 'docs/quickstart'])(
-    'should redirect to /404 from /explore/invalid/%s',
-    async (path: string) => {
-      await page.goto(`${puppeteerHost}/explore/invalid/${path}`, { waitUntil: 'networkidle0' });
-      expect(page.url()).toEqual(`${puppeteerHost}/404`);
-    },
-  );
 });
 
 describe('auth docs route redirect', () => {
