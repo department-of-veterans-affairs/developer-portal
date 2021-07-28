@@ -6,10 +6,15 @@ import { Link } from 'react-router-dom';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 
 import { Form, Formik } from 'formik';
-import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { TextField, CheckboxRadioField } from '../../components';
-import { APPLY_URL } from '../../types/constants';
-import { ApplySuccessResult, DevApplicationRequest, DevApplicationResponse } from '../../types';
+import { useFlag } from '../../../../flags';
+import { makeRequest, ResponseType } from '../../../../utils/makeRequest';
+import { TextField, CheckboxRadioField } from '../../../../components';
+import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../../../types/constants';
+import {
+  ApplySuccessResult,
+  DevApplicationRequest,
+  DevApplicationResponse,
+} from '../../../../types';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
@@ -38,12 +43,13 @@ const initialValues = {
   termsOfService: false,
 };
 
-interface ApplyFormProps {
+interface SandboxAccessFormProps {
   onSuccess: (results: ApplySuccessResult) => void;
 }
 
-const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
+const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
   const [submissionError, setSubmissionError] = useState(false);
+  const consumerDocsEnabled = useFlag([FLAG_CONSUMER_DOCS]);
 
   const handleSubmit = async (values: Values): Promise<void> => {
     setSubmissionError(false);
@@ -86,21 +92,25 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
 
   return (
     <div className="vads-l-row">
-      <p
-        className={classNames(
-          'usa-font-lead',
-          'vads-u-font-family--sans',
-          'vads-u-margin-bottom--2',
-          'vads-u-margin-top--0',
-        )}
+      {!consumerDocsEnabled && (
+        <p
+          className={classNames(
+            'usa-font-lead',
+            'vads-u-font-family--sans',
+            'vads-u-margin-bottom--2',
+            'vads-u-margin-top--0',
+          )}
+        >
+          This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
+          credentials you will receive are for sandbox development only. When your app is ready to
+          go live, you may <Link to="/go-live">request production access</Link>. Please submit the
+          form below and you&apos;ll receive an email with your API key(s) and/or OAuth credentials,
+          as well as further instructions. Thank you for being a part of our platform.
+        </p>
+      )}
+      <div
+        className={classNames('vads-l-col--12', { 'vads-u-padding-x--2p5': !consumerDocsEnabled })}
       >
-        This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
-        credentials you will receive are for sandbox development only. When your app is ready to go
-        live, you may <Link to="/go-live">request production access</Link>. Please submit the form
-        below and you&apos;ll receive an email with your API key(s) and/or OAuth credentials, as
-        well as further instructions. Thank you for being a part of our platform.
-      </p>
-      <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -108,9 +118,8 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
           validateOnBlur={false}
           validateOnChange={false}
         >
-          {({ isSubmitting, values, submitForm }): React.ReactNode => {
-            const handleSubmitButtonClick = async (): Promise<void> => {
-              await submitForm();
+          {({ isSubmitting, values }): React.ReactNode => {
+            const handleSubmitButtonClick = (): void => {
               setTimeout(() => {
                 const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
 
@@ -173,4 +182,4 @@ const ApplyForm: FC<ApplyFormProps> = ({ onSuccess }) => {
   );
 };
 
-export { ApplyForm };
+export { SandboxAccessForm };

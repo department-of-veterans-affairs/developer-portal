@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { CardLink } from '../../components';
+import { CardLinkLegacy } from '../../components';
 
 const AuthorizationCardPropTypes = {
   categoryKey: PropTypes.string,
@@ -14,10 +14,10 @@ const AuthorizationCard = (props: AuthorizationCardProps): JSX.Element => {
     url = `/explore/${props.categoryKey}/docs/authorization`;
   }
   return (
-    <CardLink name="Authorization" url={url}>
+    <CardLinkLegacy name="Authorization" url={url}>
       Use the OpenID Connect standard to allow Veterans to authorize third-party application to
       access data on their behalf.
-    </CardLink>
+    </CardLinkLegacy>
   );
 };
 

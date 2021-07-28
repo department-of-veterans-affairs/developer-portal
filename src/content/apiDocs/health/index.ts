@@ -18,7 +18,6 @@ import UrgentCareReleaseNotes from './urgentCareReleaseNotes.mdx';
 const healthContent: APICategoryContent = {
   consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
   overview: HealthOverview,
-  placardText: "View medical records and manage Veteran's health",
   quickstart: HealthQuickstart,
   shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
 };

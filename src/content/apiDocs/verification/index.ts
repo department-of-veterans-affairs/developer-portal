@@ -7,8 +7,6 @@ import VeteranVerificationReleaseNotes from './veteranVerificationReleaseNotes.m
 const verificationContent: APICategoryContent = {
   consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
   overview: VerificationOverview,
-  placardText:
-    'Verify Veteran status for job sites, e-commerce sites, and third-party benefit sites',
   shortDescription: 'Empowering Veterans to take control of their data and put it to work.',
 };
 

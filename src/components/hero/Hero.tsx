@@ -9,7 +9,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
     aria-label="Page Hero"
     className={classNames(
       'vads-u-background-color--primary',
-      'vads-u-padding-y--5',
+      'vads-u-padding-y--9',
       'vads-u-padding-x--0',
     )}
   >
@@ -31,11 +31,11 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
               'small-desktop-screen:vads-u-font-size--h1',
             )}
           >
-            A Veteran-centered API platform for securely accessing VA data.
+            A Veteran-centered API platform for securely accessing VA data
           </h1>
           <Link
             id="hero-read-api-docs"
-            to="/explore"
+            to="/apply"
             className={classNames(
               'usa-button',
               'va-api-button-default',
@@ -45,20 +45,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
               'medium-screen:vads-u-width--auto',
             )}
           >
-            Read the Docs
-          </Link>
-          <Link
-            id="hero-api-publishing"
-            to="/api-publishing"
-            className={classNames(
-              'usa-button',
-              'va-api-button-secondary',
-              'vads-u-padding-x--4',
-              'vads-u-width--full',
-              'medium-screen:vads-u-width--auto',
-            )}
-          >
-            API Publishing
+            Request an API Key
           </Link>
         </div>
       </div>
