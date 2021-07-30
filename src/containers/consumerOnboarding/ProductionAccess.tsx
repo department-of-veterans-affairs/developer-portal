@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { FC, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, FormikHelpers } from 'formik';
@@ -13,6 +14,7 @@ import BasicInformation from './productionAccessFormSteps/BasicInformation';
 import TechnicalInformation from './productionAccessFormSteps/TechnicalInformation';
 import PolicyGovernance from './productionAccessFormSteps/PolicyGovernance';
 import validationSchema from './validationSchema';
+import './ProductionAccess.scss';
 
 const headerText = 'Production access form';
 const possibleSteps = [
@@ -150,7 +152,11 @@ const ProductionAccess: FC = () => {
   };
 
   const handleBack = (): void => {
-    setActiveStep(activeStep - 1);
+    if (activeStep === 0) {
+      setModal1Visible(true);
+    } else {
+      setActiveStep(activeStep - 1);
+    }
   };
   const handleSubmit = (values: Values, actions: FormikHelpers<Values>): void => {
     if (isLastStep) {
@@ -200,11 +206,16 @@ const ProductionAccess: FC = () => {
               };
               return (
                 <Form>
-                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
                   {activeStep === 0 ? (
-                    <h4>Step 1: Verification</h4>
+                    <>
+                      <SegmentedProgressBar current={1} total={4} />
+                      <h4>Step 1: Verification</h4>
+                    </>
                   ) : (
-                    <h4>{`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}</h4>
+                    <>
+                      <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
+                      <h4>{`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}</h4>
+                    </>
                   )}
                   {renderStepContent(activeStep)}
                   <div>
@@ -234,14 +245,16 @@ const ProductionAccess: FC = () => {
                     )}
                   </div>
                   <div>
-                    <button
-                      className="vads-u-display--block"
-                      type="button"
-                      data-show="#cancellation-modal"
-                      onClick={(): void => setModal1Visible(true)}
-                    >
-                      Cancel
-                    </button>
+                    {activeStep > 0 && (
+                      <button
+                        className="vads-u-display--block"
+                        type="button"
+                        data-show="#cancellation-modal"
+                        onClick={(): void => setModal1Visible(true)}
+                      >
+                        Cancel
+                      </button>
+                    )}
                     <Modal
                       id="cancellation-modal"
                       title="Are you sure you want to leave?"
