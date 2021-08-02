@@ -45,15 +45,11 @@ describe('ReleaseNotesOverview', () => {
 
   describe('card links', () => {
     it('renders a card for each category', () => {
-      let cardLink = screen.getByRole('link', {
-        name: 'LOTR API Learn more about things in Middle-earth',
-      });
+      let cardLink = screen.getByRole('link', { name: 'LOTR API' });
       expect(cardLink).toBeInTheDocument();
       expect(cardLink.getAttribute('href')).toBe('/release-notes/lotr');
 
-      cardLink = screen.getByRole('link', {
-        name: 'Sports API Learn more about throwing, running, and hitting',
-      });
+      cardLink = screen.getByRole('link', { name: 'Sports API' });
       expect(cardLink).toBeInTheDocument();
       expect(cardLink.getAttribute('href')).toBe('/release-notes/sports');
     });
@@ -75,18 +71,13 @@ describe('ReleaseNotesOverview', () => {
       });
 
       await renderComponent();
-      expect(
-        screen.queryByRole('link', {
-          name: `Sports API ${fakeCategories.sports.content.shortDescription}`,
-        }),
-      ).toBeNull();
+      expect(screen.queryByRole('link', {
+        name: 'Sports API',
+      })).toBeNull();
     });
 
     it('has a card link for deactivated APIs if there is at least one deactivated API', () => {
-      const cardLink = screen.getByRole('link', {
-        name:
-          'Deactivated APIs This is a repository for deactivated APIs and related documentation and release notes.',
-      });
+      const cardLink = screen.getByRole('link', { name: 'Deactivated APIs' });
 
       expect(cardLink).toBeInTheDocument();
       expect(cardLink.getAttribute('href')).toBe('/release-notes/deactivated');
@@ -97,12 +88,7 @@ describe('ReleaseNotesOverview', () => {
       allAPIsSpy.mockReturnValue(apis);
       await renderComponent();
 
-      expect(
-        screen.queryByRole('link', {
-          name:
-            'Deactivated APIs This is a repository for deactivated APIs and related documentation and release notes.',
-        }),
-      ).toBeNull();
+      expect(screen.queryByRole('link', { name: 'Deactivated APIs' })).toBeNull();
     });
   });
 });

@@ -53,9 +53,9 @@ describe('News', () => {
     const cardLinks = getAllByRole(mainSection.children[1] as HTMLElement, 'link');
     expect(cardLinks).toHaveLength(data.sections.length);
     data.sections.forEach((section: DataSection, index: number) => {
-      expect(cardLinks[index].getAttribute('href')).toBe(`/news#${toHtmlId(section.title)}`);
-      expect(cardLinks[index].children[0]).toHaveTextContent(section.title);
-      expect(cardLinks[index].children[1]).toHaveTextContent(section.description);
+      expect(cardLinks[index]).toHaveTextContent(section.title);
+      expect(cardLinks[index]).toHaveAttribute('href', `/news#${toHtmlId(section.title)}`);
+      expect(cardLinks[index].nextElementSibling).toHaveTextContent(section.description);
     });
   });
 

@@ -7,10 +7,23 @@ export const CONSUMER_DEMO_PATH = `${CONSUMER_PATH}/prepare-for-and-complete-a-d
 export const CONSUMER_APIS_PATH = `${CONSUMER_PATH}/working-with-lighthouse-apis`;
 export const CONSUMER_APPLICATION_PATH = `${CONSUMER_PATH}/production-access-application`;
 export const CONSUMER_RATE_LIMIT_PATH = `${CONSUMER_APIS_PATH}#rate-limiting`;
+export const CONSUMER_ROUTER_PATHS: string[] = [
+  CONSUMER_PATH,
+  CONSUMER_SANDBOX_PATH,
+  CONSUMER_PROD_PATH,
+  CONSUMER_DEMO_PATH,
+  CONSUMER_APIS_PATH,
+  CONSUMER_APPLICATION_PATH,
+];
 
 export const PUBLISHING_PATH = '/api-publishing';
 export const PUBLISHING_ONBOARDING_PATH = `${PUBLISHING_PATH}/process`;
 export const PUBLISHING_EXPECTATIONS_PATH = `${PUBLISHING_PATH}/expectations`;
+export const PUBLISHING_ROUTER_PATHS: string[] = [
+  PUBLISHING_PATH,
+  PUBLISHING_ONBOARDING_PATH,
+  PUBLISHING_EXPECTATIONS_PATH,
+];
 
 export const RELEASE_NOTES_PATH = '/release-notes';
 export const RELEASE_NOTES_DEACTIVATED_PATH = `${RELEASE_NOTES_PATH}/deactivated`;

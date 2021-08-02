@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Redirect } from 'react-router';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
-import { getApiCategoryOrder, getApiDefinitions, lookupApiCategory } from '../../apiDefs/query';
+import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
 import { ContentWithNav, SideNavEntry } from '../../components';
 import { Flag } from '../../flags';
-import { APINameParam } from '../../types';
 import {
   CURRENT_VERSION_IDENTIFIER,
   FLAG_CATEGORIES,
@@ -103,33 +102,27 @@ const oldRouteToNew = [
   },
 ];
 
-const DocumentationRoot = (): JSX.Element => {
-  const { apiCategoryKey } = useParams<APINameParam>();
-  const shouldRouteCategory = !apiCategoryKey || lookupApiCategory(apiCategoryKey) != null;
-
-  return (
-    <ContentWithNav
-      nav={<ExploreSideNav />}
-      content={
-        <Switch>
-          {oldRouteToNew.map(routes => (
-            <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
-          ))}
-          <Route path="/explore/authorization" component={AuthorizationDocs} exact />
-          {!shouldRouteCategory && <Redirect from="/explore/:apiCategoryKey" to="/404" />}
-          <Route exact path="/explore/" component={DocumentationOverview} />
-          <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
-          <Route exact path="/explore/:apiCategoryKey/docs/authorization">
-            <Redirect to="/explore/authorization" />
-          </Route>
-          <Route exact path="/explore/:apiCategoryKey/docs/quickstart" component={QuickstartPage} />
-          <Route exact path="/explore/:apiCategoryKey/docs/:apiName" component={ApiPage} />
-        </Switch>
-      }
-      navAriaLabel="API Docs Side Nav"
-      className="documentation"
-    />
-  );
-};
+const DocumentationRoot = (): JSX.Element => (
+  <ContentWithNav
+    nav={<ExploreSideNav />}
+    content={
+      <Switch>
+        {oldRouteToNew.map(routes => (
+          <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
+        ))}
+        <Route path="/explore/authorization" component={AuthorizationDocs} exact />
+        <Route exact path="/explore/" component={DocumentationOverview} />
+        <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
+        <Route exact path="/explore/:apiCategoryKey/docs/authorization">
+          <Redirect to="/explore/authorization" />
+        </Route>
+        <Route exact path="/explore/:apiCategoryKey/docs/quickstart" component={QuickstartPage} />
+        <Route exact path="/explore/:apiCategoryKey/docs/:apiName" component={ApiPage} />
+      </Switch>
+    }
+    navAriaLabel="API Docs Side Nav"
+    className="documentation"
+  />
+);
 
 export default DocumentationRoot;

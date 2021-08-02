@@ -1,2 +1,27 @@
 ### June 6, 2020
 Initial release of the Decision Review API
+
+---
+
+### July 26th, 2021
+Decision Reviews API version 2 Release Notes
+
+Version 2 of the Decision Reviews API is now released with the following changes:
+
+We've added a new key, `informalConferenceContact` (required when an informal conference is requested), which will allow us to support both Veteran and representative contacts for informal conferences.
+We've updated the possible responses enum of `informalConferenceTime` to reflect the above  changes.
+`socOptIn` is now required.
+For the representative name, we've split `name` into `firstName` and `lastName` to be more flexible and allow more accurate entries.
+The Veteran email field `emailAddressText` has been changed to `email`.
+
+Added hlrCreateAddress to now accept an address for this API. This change follows NOD format:
+-`addressLine1`
+-`addressLine2`
+-`addressLine3`
+-`city`
+-`stateCode` - enum of all 2-character state codes (see the documentation for more info)
+-`countryCodeISO2`
+-`zipCode5`
+
+
+

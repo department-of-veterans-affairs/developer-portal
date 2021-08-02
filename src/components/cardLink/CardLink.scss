@@ -3,6 +3,7 @@
 
 .va-api-card {
   position: relative;
+  border-radius: 4px;
 
   .card-content {
     flex: 1 0 auto;
@@ -22,8 +23,13 @@
     right: 0;
     bottom: 0;
   }
+  
+  a:visited {
+    color: $color-link-default;
+  }
 
-  &:hover {
+  &:hover,
+  &.va-api-card-link-focused {
     border-color: $color-primary-darker !important;
     .name-border {
       border-bottom: 5px solid $color-primary-darker !important;
@@ -37,8 +43,11 @@
       border-bottom: 5px solid $color-primary-darker !important;
     }
   }
+
+
   .card-content > {
-    * + * {
+    * + *,
+    .va-api-description:last-child {
       margin-top: 0.75rem;
     }
 

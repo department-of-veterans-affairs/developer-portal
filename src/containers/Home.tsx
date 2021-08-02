@@ -35,7 +35,7 @@ const columnContentSectionClasses = classNames(
   'vads-u-justify-content--space-around',
   'vads-u-flex-direction--column',
   'medium-screen:vads-u-flex-direction--row',
-  'vads-u-margin-bottom--3',
+  'vads-u-padding-bottom--3',
   'va-api-u-max-width--1200',
   'vads-u-align-items--center',
   'medium-screen:vads-u-align-items--stretch',
@@ -72,7 +72,7 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
 
 const ApiList = (): JSX.Element => (
   <section className="api-list vads-u-padding-top--3 vads-u-padding-x--2  vads-u-padding-bottom--2">
-    <div className="vads-l-grid-container--full vads-u-padding-x--6 va-api-u-max-width--1200">
+    <div className="vads-l-grid-container--full vads-u-padding-x--4 va-api-u-max-width--1200">
       <h2 className="vads-u-margin-top--0">A modern, reliable API library.</h2>
       <p>
         Our API library makes accessing VA data easier and safer across many categories, including
@@ -87,18 +87,14 @@ const ApiList = (): JSX.Element => (
             const { name, content } = apiDefinitions[apiCategoryKey];
             return (
               <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-                <div
-                  className="vads-l-col--12 vads-u-margin-y--2 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
-                  key={apiCategoryKey}
+                <CardLink
+                  name={name}
+                  url={`/explore/${apiCategoryKey}`}
+                  callToAction={`View the ${name}`}
+                  centered
                 >
-                  <CardLink
-                    name={name}
-                    url={`/explore/${apiCategoryKey}`}
-                    callToAction={`View the ${name}`}
-                  >
-                    {content.shortDescription}
-                  </CardLink>
-                </div>
+                  {content.shortDescription}
+                </CardLink>
               </Flag>
             );
           })}
@@ -111,13 +107,13 @@ const ApiList = (): JSX.Element => (
 const Home = (): JSX.Element => (
   <div className="home vads-l-grid-container--full">
     <Hero />
-    <div className="vads-u-margin-top--4 vads-u-margin-x--auto">
-      <section className={columnContentSectionClasses}>
+    <section className="vads-u-background-color--white">
+      <div className={columnContentSectionClasses}>
         <ColumnContent
           title="API Documentation"
           imageSrc={documentationImage}
           buttonDestination="/explore"
-          buttonText="Read The Docs"
+          buttonText="Read the Docs"
         >
           A Veteran-centered API platform for securely accessing VA data to build innovative tools
           for Veterans. Explore usage policies and technical details about VA&apos;s API offerings.
@@ -142,9 +138,9 @@ const Home = (): JSX.Element => (
           Change the face of VA data by adding your API to the Lighthouse development portal. Find
           out how you can onboard your API and learn what to expect when working with Lighthouse.
         </ColumnContent>
-      </section>
-      <ApiList />
-    </div>
+      </div>
+    </section>
+    <ApiList />
   </div>
 );
 

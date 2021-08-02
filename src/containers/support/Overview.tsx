@@ -1,13 +1,13 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
-import { CardLinkLegacy, PageHeader } from '../../components';
+import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { SupportSection } from './Support';
 import { ContactUsAlertBox } from './ContactUsAlertBox';
 
 const headerProps = {
   description:
-    "Welcome to support for the VA Lighthouse API program. You can visit our FAQ page for answers to common questions. For support or general feedback, use our 'Contact Us' form. Our customer support team is happy to help and will respond within one business day.",
+    'Welcome to support for VA Lighthouse APIs. You can visit our FAQ page for answers to common questions, or use the Contact Us form to report a problem or ask a question. Our customer support team is happy to help and will respond within one business day.',
   header: 'Support',
 };
 
@@ -26,9 +26,14 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
     <ContactUsAlertBox />
     <div className={defaultFlexContainer()}>
       {props.sections.map((section: SupportSection) => (
-        <CardLinkLegacy name={section.name} url={`/support/${section.id}`} key={section.id}>
+        <CardLink
+          name={section.name}
+          url={`/support/${section.id}`}
+          key={section.id}
+          callToAction={section.callToAction}
+        >
           {section.description}
-        </CardLinkLegacy>
+        </CardLink>
       ))}
     </div>
   </>

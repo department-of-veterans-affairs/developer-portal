@@ -18,7 +18,11 @@ const ContentWithNav: FC<ContentWithNavProps> = ({ nav, content, navAriaLabel, c
         <SideNav ariaLabel={navAriaLabel}>{nav}</SideNav>
         <section
           aria-labelledby={contentAriaLabelledBy ?? PAGE_HEADER_ID}
-          className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--8')}
+          className={classNames(
+            'vads-l-col--12',
+            'medium-screen:vads-l-col--9',
+            'vads-u-padding-left--5',
+          )}
         >
           {content}
         </section>
