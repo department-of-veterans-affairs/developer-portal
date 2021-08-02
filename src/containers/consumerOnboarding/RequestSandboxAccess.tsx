@@ -13,11 +13,11 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
       </Helmet>
       <PageHeader
         header="Request Sandbox Access"
-        description="Your first step towards developing with VA Lighthouse APIs."
       />
       {successResults ?
         <SandboxAccessSuccess result={successResults} /> :
         <>
+          <p>Your first step towards developing with VA Lighthouse APIs.</p>
           <p>
             Get automatic sandbox access to VA Lighthouse APIs by completing our access form. When your
             app is ready, request production access.
