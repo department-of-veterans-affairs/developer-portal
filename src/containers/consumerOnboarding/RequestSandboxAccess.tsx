@@ -26,8 +26,8 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
           <ul>
             <li>
               Our rate limiting is 60 requests per minute. If you exceed this quota, your request will return
-              a 429 status code. You may petition for increased rate limits by emailing us. Approval will be
-              decided on a case by case basis.
+              a 429 status code. You may petition for increased rate limits 
+              by <a href="mailto:api@va.gov">emailing us</a>. Approval will be decided on a case by case basis.
             </li>
             <li>
               Getting production access requires multiple steps and can take under a week for open data APIs,
