@@ -1,5 +1,5 @@
-import React, { FC, ReactNode, useState, KeyboardEvent, MouseEvent } from 'react';
-import { FieldArray, useFormikContext, ErrorMessage } from 'formik';
+import React, { FC, ReactNode, useState, MouseEvent } from 'react';
+import { FieldArray, useFormikContext, ErrorMessage, Field, useField } from 'formik';
 import classNames from 'classnames';
 import { Values } from '../ProductionAccess';
 import { TextField } from '../../../components';
@@ -23,34 +23,73 @@ export interface ListOfTextEntriesProps {
 
 const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.Element => {
   const [disabled, setDisabled] = useState(false);
-  const { touched } = useFormikContext();
+  const [isEditing, setIsEditing] = useState(false);
+  // const { touched } = useFormikContext();
+  const [, , helpers] = useField(`${name}.${index}`);
+  const containerClass = isEditing
+    ? classNames(
+        'vads-u-background-color--gray-cool-light',
+        'va-text-entry-container',
+        'vads-u-display--flex',
+        'vads-u-padding--2',
+        'vads-u-margin--4',
+        // 'vads-u-align-items--center',
+        // 'vads-u-justify-content--space-evenly',
+        'vads-u-flex-direction--column',
+        // 'vads-u-justify-content--flex-end',
+      )
+    : classNames('');
 
-  const handleUpdatedDone = (event: KeyboardEvent<HTMLInputElement>): void => {
-    if (event.key === 'Enter' && value !== '') {
-      setDisabled(true);
-    }
-  };
+  const fieldClass = isEditing
+    ? classNames(
+        'va-text-entry-field',
+        'va-text-entry-field-edit',
+        // 'vads-u-padding--2',
+        // 'medium-screen:vads-l-col--10',
+        // 'vads-u-margin--2',
+      )
+    : classNames(
+        'vads-u-display--flex',
+        'vads-u-flex-direction--row',
+        'vads-u-flex-wrap--nowrap',
+        'vads-u-align-items--center',
+        'va-text-entry-field',
+        'medium-screen:vads-l-col--10',
+        'vads-u-margin--2',
+      );
+  //   const handleUpdatedDone = (event: KeyboardEvent<HTMLInputElement>): void => {
+  //     if (event.key === 'Enter' && value !== '') {
+  //       setDisabled(true);
+  //     }
+  //   };
+
+  // const handleBlur = (): void => {
+
+  // }
+
   return (
-    <div className="vads-u-margin-y--2">
-      <TextField
+    <div className={containerClass}>
+      <Field
+        as={TextField}
         name={`${name}.${index}`}
         label={label}
-        onKeyDown={handleUpdatedDone}
+        onBlur={() => {
+          helpers.setTouched(true);
+          setDisabled(true);
+          setIsEditing(false);
+        }}
         disabled={disabled}
-        className={classNames(
-          'vads-u-display--flex',
-          'vads-u-flex-direction--row',
-          'vads-u-flex-wrap--nowrap',
-          'vads-u-align-items--center',
-          'va-text-entry-field',
-        )}
-        customFieldClass={classNames('vads-u-margin-y--0', 'vads-u-padding--1')}
+        className={fieldClass}
+        customFieldClass={classNames('vads-u-margin-right--0')}
       >
         {disabled && (
           <button
             type="button"
             name="edit"
-            onClick={(): void => setDisabled(false)}
+            onClick={(): void => {
+              setDisabled(false);
+              setIsEditing(true);
+            }}
             className={classNames(
               'usa-button-secondary',
               'vads-u-margin-bottom--0',
@@ -62,24 +101,28 @@ const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.
             Edit
           </button>
         )}
-
-        {!disabled && value !== '' && !touched[`${name}.${index}`] && (
-          <button
-            type="button"
-            name="remove"
-            onClick={onClick}
-            className={classNames(
-              'usa-button-secondary',
-              'vads-u-margin-bottom--0',
-              'vads-u-margin-right--0',
-              'vads-u-margin-top--0',
-            )}
-          >
-            Remove
-          </button>
-        )}
-      </TextField>
+      </Field>
+      {isEditing && (
+        <button
+          type="button"
+          name="remove"
+          onClick={onClick}
+          className={classNames(
+            'usa-button-secondary',
+            // 'vads-u-margin-left--auto',
+            // 'vads-u-text-align--right',
+            // 'vads-u-margin-bottom--0',
+            // 'vads-u-margin-left--5',
+            // 'vads-u-margin-top--0',
+          )}
+        >
+          Remove
+        </button>
+      )}
     </div>
+
+    //   </Field>
+    // </div>
   );
 };
 
@@ -97,7 +140,9 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
   const errorMessagePaddingClass = shouldDisplayErrors ? 'vads-u-padding-x--1p5' : '';
   return (
-    <div className={classNames(containerClass, className)}>
+    <div
+      className={classNames(containerClass, 'vads-u-background-color--gray-lightest', className)}
+    >
       {description}
       <span
         id="api-checkbox-error"

@@ -92,7 +92,7 @@ const BasicInformation: FC = () => {
             </p>
           </>
         }
-        className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
+        className="vads-u-margin-top--2p5"
         name="statusUpdateEmails"
         buttonText="Add another email"
       />
