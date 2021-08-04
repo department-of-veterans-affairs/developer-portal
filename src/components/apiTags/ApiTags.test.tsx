@@ -31,12 +31,6 @@ describe('OnlyTags', () => {
       expect(screen.queryAllByText('Internal VA use only')).toHaveLength(
         vaInternalOnly + trustedPartnerOnly,
       );
-
-      if (openData === 1) {
-        expect(screen.queryAllByAltText('Open Data')).toHaveLength(1);
-      } else {
-        expect(screen.queryAllByAltText('Open Data')).toHaveLength(0);
-      }
     },
   );
 });

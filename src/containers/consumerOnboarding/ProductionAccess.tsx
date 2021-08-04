@@ -199,28 +199,18 @@ const ProductionAccess: FC = () => {
             validateOnBlur={false}
             validateOnChange={false}
           >
-            {/* {({}): React.ReactNode => {
-              const handleSubmitButtonClick = (): void => {
-                setTimeout(() => {
-                  const errorElements =
-                    document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
-
-                  if (errorElements.length > 0) {
-                    errorElements[0].focus();
-                  }
-                }, 0);
-              }; */}
-            {/* return ( */}
             <Form noValidate>
               {activeStep === 0 ? (
                 <>
                   <SegmentedProgressBar current={1} total={4} />
-                  <h4>Step 1: Verification</h4>
+                  <h2 className="vads-u-font-size--h4">Step 1: Verification</h2>
                 </>
               ) : (
                 <>
                   <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
-                  <h4>{`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}</h4>
+                  <h2 className="vads-u-font-size--h4">
+                    {`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}
+                  </h2>
                 </>
               )}
               {renderStepContent(activeStep)}
@@ -236,7 +226,6 @@ const ProductionAccess: FC = () => {
                   <button
                     type="submit"
                     className="usa-button-primary va-button-primary vads-u-width--auto"
-                    // onClick={handleSubmitButtonClick}
                   >
                     Submit your application
                   </button>

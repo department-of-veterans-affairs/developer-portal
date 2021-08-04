@@ -9,7 +9,6 @@ interface TextEntryProps {
   name: string;
   index: number;
   label?: string;
-  value: string;
   onClick: (event: MouseEvent) => void;
 }
 
@@ -21,10 +20,9 @@ export interface ListOfTextEntriesProps {
   label?: string;
 }
 
-const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.Element => {
+const TextEntry = ({ name, index, label, onClick }: TextEntryProps): JSX.Element => {
   const [disabled, setDisabled] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  // const { touched } = useFormikContext();
   const [, , helpers] = useField(`${name}.${index}`);
   const containerClass = isEditing
     ? classNames(
@@ -33,21 +31,12 @@ const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.
         'vads-u-display--flex',
         'vads-u-padding--2',
         'vads-u-margin--4',
-        // 'vads-u-align-items--center',
-        // 'vads-u-justify-content--space-evenly',
         'vads-u-flex-direction--column',
-        // 'vads-u-justify-content--flex-end',
       )
     : classNames('');
 
   const fieldClass = isEditing
-    ? classNames(
-        'va-text-entry-field',
-        'va-text-entry-field-edit',
-        // 'vads-u-padding--2',
-        // 'medium-screen:vads-l-col--10',
-        // 'vads-u-margin--2',
-      )
+    ? classNames('va-text-entry-field', 'va-text-entry-field-edit')
     : classNames(
         'vads-u-display--flex',
         'vads-u-flex-direction--row',
@@ -57,15 +46,6 @@ const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.
         'medium-screen:vads-l-col--10',
         'vads-u-margin--2',
       );
-  //   const handleUpdatedDone = (event: KeyboardEvent<HTMLInputElement>): void => {
-  //     if (event.key === 'Enter' && value !== '') {
-  //       setDisabled(true);
-  //     }
-  //   };
-
-  // const handleBlur = (): void => {
-
-  // }
 
   return (
     <div className={containerClass}>
@@ -73,7 +53,7 @@ const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.
         as={TextField}
         name={`${name}.${index}`}
         label={label}
-        onBlur={() => {
+        onBlur={(): void => {
           helpers.setTouched(true);
           setDisabled(true);
           setIsEditing(false);
@@ -107,22 +87,12 @@ const TextEntry = ({ name, index, label, value, onClick }: TextEntryProps): JSX.
           type="button"
           name="remove"
           onClick={onClick}
-          className={classNames(
-            'usa-button-secondary',
-            // 'vads-u-margin-left--auto',
-            // 'vads-u-text-align--right',
-            // 'vads-u-margin-bottom--0',
-            // 'vads-u-margin-left--5',
-            // 'vads-u-margin-top--0',
-          )}
+          className={classNames('usa-button-secondary')}
         >
           Remove
         </button>
       )}
     </div>
-
-    //   </Field>
-    // </div>
   );
 };
 
@@ -161,7 +131,6 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
                   name={name}
                   index={index}
                   label={label}
-                  value={value}
                   onClick={(): void => remove(index)}
                 />
               </div>
