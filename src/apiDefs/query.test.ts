@@ -113,7 +113,7 @@ describe('query module', () => {
     });
 
     it('returns false if the list does not include any VA Internal Only APIs', () => {
-      expect(includesInternalOnlyAPI(['benefits', 'facilities', 'appeals'])).toBe(false);
+      expect(includesInternalOnlyAPI(['benefits', 'facilities', 'vaForms'])).toBe(false);
     });
   });
 
