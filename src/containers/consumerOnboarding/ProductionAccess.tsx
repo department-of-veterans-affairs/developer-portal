@@ -159,6 +159,13 @@ const ProductionAccess: FC = () => {
     }
   };
   const handleSubmit = (values: Values, actions: FormikHelpers<Values>): void => {
+    setTimeout(() => {
+      const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
+
+      if (errorElements.length > 0) {
+        errorElements[0].focus();
+      }
+    }, 0);
     if (isLastStep) {
       // TODO: In API-8236 the acutal submission of the form will be handled
       // eslint-disable-next-line no-console
@@ -192,9 +199,8 @@ const ProductionAccess: FC = () => {
             validateOnBlur={false}
             validateOnChange={false}
           >
-            {({ submitForm }): React.ReactNode => {
-              const handleSubmitButtonClick = async (): Promise<void> => {
-                await submitForm();
+            {/* {({}): React.ReactNode => {
+              const handleSubmitButtonClick = (): void => {
                 setTimeout(() => {
                   const errorElements =
                     document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
@@ -203,104 +209,104 @@ const ProductionAccess: FC = () => {
                     errorElements[0].focus();
                   }
                 }, 0);
-              };
-              return (
-                <Form>
-                  {activeStep === 0 ? (
-                    <>
-                      <SegmentedProgressBar current={1} total={4} />
-                      <h4>Step 1: Verification</h4>
-                    </>
-                  ) : (
-                    <>
-                      <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
-                      <h4>{`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}</h4>
-                    </>
-                  )}
-                  {renderStepContent(activeStep)}
-                  <div>
-                    <button
-                      className="usa-button va-api-button-default vads-u-border--2px vads-u-border-color--primary"
-                      type="button"
-                      onClick={handleBack}
-                    >
-                      <FontAwesomeIcon icon={faAngleDoubleLeft} /> Back
-                    </button>
-                    {isLastStep ? (
-                      <button
-                        type="submit"
-                        className="usa-button-primary va-button-primary vads-u-width--auto"
-                        onClick={handleSubmitButtonClick}
-                      >
-                        Submit your application
-                      </button>
-                    ) : (
-                      <button
-                        type="submit"
-                        className="usa-button vads-u-width--auto"
-                        onClick={handleSubmitButtonClick}
-                      >
-                        Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
-                      </button>
-                    )}
-                  </div>
-                  <div>
-                    {activeStep > 0 && (
-                      <button
-                        className="vads-u-display--block"
-                        type="button"
-                        data-show="#cancellation-modal"
-                        onClick={(): void => setModal1Visible(true)}
-                      >
-                        Cancel
-                      </button>
-                    )}
-                    <Modal
-                      id="cancellation-modal"
-                      title="Are you sure you want to leave?"
-                      visible={modal1Visible}
-                      onClose={(): void => setModal1Visible(false)}
-                      primaryButton={{
-                        action: (): void => history.goBack(),
-                        text: 'Yes Leave',
-                      }}
-                      secondaryButton={{
-                        action: (): void => setModal1Visible(false),
-                        text: 'No stay on form',
-                      }}
-                    >
-                      The information you entered will not be saved.
-                    </Modal>
-                    <Modal
-                      id="non-us-based-modal"
-                      title="Thank you for your interest!"
-                      visible={modal2Visible}
-                      onClose={(): void => setModal2Visible(false)}
-                    >
-                      We currently only grant access to US-based companies. You may contact us if
-                      you have any questions.
-                    </Modal>
-                    <Modal
-                      id="warning-508-complicance-modal"
-                      title="Must be Section 508 Compliant"
-                      visible={modal3Visible}
-                      onClose={(): void => setModal3Visible(false)}
-                      primaryButton={{
-                        action: (): void => setModal3Visible(false),
-                        text: 'Continue',
-                      }}
-                    >
-                      Consumer websites and applications must be Section 508 compliant to get
-                      production access. Learn about becoming{' '}
-                      <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
-                        Section 508 Compliant
-                      </a>{' '}
-                      or contact us with questions.
-                    </Modal>
-                  </div>
-                </Form>
-              );
-            }}
+              }; */}
+            {/* return ( */}
+            <Form noValidate>
+              {activeStep === 0 ? (
+                <>
+                  <SegmentedProgressBar current={1} total={4} />
+                  <h4>Step 1: Verification</h4>
+                </>
+              ) : (
+                <>
+                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
+                  <h4>{`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}</h4>
+                </>
+              )}
+              {renderStepContent(activeStep)}
+              <div>
+                <button
+                  className="usa-button va-api-button-default vads-u-border--2px vads-u-border-color--primary"
+                  type="button"
+                  onClick={handleBack}
+                >
+                  <FontAwesomeIcon icon={faAngleDoubleLeft} /> Back
+                </button>
+                {isLastStep ? (
+                  <button
+                    type="submit"
+                    className="usa-button-primary va-button-primary vads-u-width--auto"
+                    // onClick={handleSubmitButtonClick}
+                  >
+                    Submit your application
+                  </button>
+                ) : (
+                  <button
+                    type="submit"
+                    className="usa-button vads-u-width--auto"
+                    // onClick={handleSubmitButtonClick}
+                  >
+                    Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
+                  </button>
+                )}
+              </div>
+              <div>
+                {activeStep > 0 && (
+                  <button
+                    className="vads-u-display--block"
+                    type="button"
+                    data-show="#cancellation-modal"
+                    onClick={(): void => setModal1Visible(true)}
+                  >
+                    Cancel
+                  </button>
+                )}
+                <Modal
+                  id="cancellation-modal"
+                  title="Are you sure you want to leave?"
+                  visible={modal1Visible}
+                  onClose={(): void => setModal1Visible(false)}
+                  primaryButton={{
+                    action: (): void => history.goBack(),
+                    text: 'Yes Leave',
+                  }}
+                  secondaryButton={{
+                    action: (): void => setModal1Visible(false),
+                    text: 'No stay on form',
+                  }}
+                >
+                  The information you entered will not be saved.
+                </Modal>
+                <Modal
+                  id="non-us-based-modal"
+                  title="Thank you for your interest!"
+                  visible={modal2Visible}
+                  onClose={(): void => setModal2Visible(false)}
+                >
+                  We currently only grant access to US-based companies. You may contact us if you
+                  have any questions.
+                </Modal>
+                <Modal
+                  id="warning-508-complicance-modal"
+                  title="Must be Section 508 Compliant"
+                  visible={modal3Visible}
+                  onClose={(): void => setModal3Visible(false)}
+                  primaryButton={{
+                    action: (): void => setModal3Visible(false),
+                    text: 'Continue',
+                  }}
+                >
+                  Consumer websites and applications must be Section 508 compliant to get production
+                  access. Learn about becoming{' '}
+                  <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+                    Section 508 Compliant
+                  </a>{' '}
+                  or contact us with questions.
+                </Modal>
+              </div>
+            </Form>
+            {/* ); */}
+            {/* }} */}
           </Formik>
         </div>
       </div>
