@@ -22,32 +22,29 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
         'vads-u-margin-x--auto',
       )}
     >
-      <div className={classNames('va-api-u-margin-y--auto')}>
-        <div className="vads-u-max-width--100">
-          <h1
-            className={classNames(
-              'vads-u-color--white',
-              'vads-u-font-size--h2',
-              'small-desktop-screen:vads-u-font-size--h1',
-            )}
-          >
-            A Veteran-centered API platform for securely accessing VA data
-          </h1>
-          <Link
-            id="hero-read-api-docs"
-            to="/apply"
-            className={classNames(
-              'usa-button',
-              'va-api-button-default',
-              'vads-u-margin-right--3',
-              'vads-u-padding-x--4',
-              'vads-u-width--full',
-              'medium-screen:vads-u-width--auto',
-            )}
-          >
-            Request an API Key
-          </Link>
-        </div>
+      <div className={classNames('va-api-u-margin-y--auto', 'vads-u-max-width--100')}>
+        <h1
+          className={classNames(
+            'vads-u-color--white',
+            'vads-u-font-size--h2',
+            'small-desktop-screen:vads-u-font-size--h1',
+          )}
+        >
+          A Veteran-centered API platform for securely accessing VA data
+        </h1>
+        <Link
+          id="hero-read-api-docs"
+          to="/apply"
+          className={classNames(
+            'usa-button',
+            'va-api-button-default',
+            'vads-u-padding-x--4',
+            'vads-u-width--full',
+            'medium-screen:vads-u-width--auto',
+          )}
+        >
+          Request an API Key
+        </Link>
       </div>
       <div
         className={classNames(

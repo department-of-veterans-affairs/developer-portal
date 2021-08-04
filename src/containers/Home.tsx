@@ -27,7 +27,7 @@ const buttonClasses = classNames(
   'va-home-button',
 );
 
-const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--200');
+const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--100');
 
 const columnContentSectionClasses = classNames(
   'vads-l-grid-container--full',
