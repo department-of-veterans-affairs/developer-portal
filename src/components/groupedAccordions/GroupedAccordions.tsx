@@ -1,4 +1,3 @@
-import CollapsiblePanel from '@department-of-veterans-affairs/component-library/CollapsiblePanel';
 import classNames from 'classnames';
 import * as React from 'react';
 import toHtmlId from '../../toHtmlId';
@@ -15,12 +14,8 @@ interface GroupedAccordionsProps {
   readonly title: string;
 }
 
-interface CollapsiblePanelStates {
-  open: boolean;
-}
-
 // Convenience types purely for code readability
-type CollapsiblePanelComponent = React.Component<unknown, CollapsiblePanelStates>;
+type CollapsiblePanelComponent = React.Component<unknown>;
 type CollapsiblePanelComponentRef = React.RefObject<CollapsiblePanelComponent>;
 
 const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
@@ -37,13 +32,13 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
 
   const handleExpandCollapse = (event: React.MouseEvent<HTMLElement>): void => {
     event.preventDefault();
-    panelRefs
-      .filter(ref => ref.current && ref.current.state.open === allExpanded)
-      .forEach(ref => {
-        if (ref.current) {
-          ref.current.setState({ open: !allExpanded });
+    event.currentTarget.parentElement?.nextElementSibling?.childNodes.forEach(
+      (element: HTMLElement) => {
+        if (!!element.getAttribute('open') === allExpanded) {
+          element.setAttribute('open', allExpanded ? 'false' : 'true');
         }
-      });
+      },
+    );
     setAllExpanded(!allExpanded);
   };
 
@@ -59,7 +54,9 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
           'vads-u-align-items--center',
         )}
       >
-        <h2 id={headingId} className="vads-u-font-size--lg">{props.title}</h2>
+        <h2 id={headingId} className="vads-u-font-size--lg">
+          {props.title}
+        </h2>
         <button
           className={classNames(
             'va-api-grouped-accordions-button',
@@ -76,20 +73,18 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
           {allExpanded ? 'Collapse all' : 'Expand all'}
         </button>
       </div>
-      {props.panelContents.map((c: AccordionPanelContent) => {
-        const panelRef: CollapsiblePanelComponentRef = React.createRef<CollapsiblePanelComponent>();
-        panelRefs.push(panelRef);
-        return (
-          <CollapsiblePanel
-            ref={panelRef}
-            panelName={c.title}
-            startOpen={allExpanded}
-            key={c.title}
-          >
-            {c.body}
-          </CollapsiblePanel>
-        );
-      })}
+      <va-accordion>
+        {props.panelContents.map((c: AccordionPanelContent) => {
+          const panelRef: CollapsiblePanelComponentRef =
+            React.createRef<CollapsiblePanelComponent>();
+          panelRefs.push(panelRef);
+          return (
+            <va-accordion-item ref={panelRef} header={c.title} open={allExpanded} key={c.title}>
+              {c.body}
+            </va-accordion-item>
+          );
+        })}
+      </va-accordion>
     </section>
   );
 };
