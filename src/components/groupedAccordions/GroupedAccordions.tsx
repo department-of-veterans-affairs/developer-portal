@@ -20,13 +20,13 @@ const GroupedAccordions = (props: GroupedAccordionsProps): JSX.Element => {
 
   const handleExpandCollapse = (event: React.MouseEvent<HTMLElement>): void => {
     event.preventDefault();
-    event.currentTarget.parentElement?.nextElementSibling?.childNodes.forEach(
-      (element: HTMLElement) => {
+    event.currentTarget.parentElement?.parentElement
+      ?.querySelectorAll('va-accordion-item')
+      .forEach((element: HTMLElement) => {
         if (!!element.getAttribute('open') === allExpanded) {
           element.setAttribute('open', allExpanded ? 'false' : 'true');
         }
-      },
-    );
+      });
     setAllExpanded(!allExpanded);
   };
 
