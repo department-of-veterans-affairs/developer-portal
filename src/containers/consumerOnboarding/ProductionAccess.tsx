@@ -9,14 +9,15 @@ import SegmentedProgressBar from '@department-of-veterans-affairs/component-libr
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { useModalController } from '../../hooks';
-import Verification from './productionAccessFormSteps/Verification';
-import BasicInformation from './productionAccessFormSteps/BasicInformation';
-import TechnicalInformation from './productionAccessFormSteps/TechnicalInformation';
-import PolicyGovernance from './productionAccessFormSteps/PolicyGovernance';
+import {
+  BasicInformation,
+  PolicyGovernance,
+  TechnicalInformation,
+  Verification,
+} from './components/productionAccessForm';
 import validationSchema from './validationSchema';
 import './ProductionAccess.scss';
 
-const headerText = 'Production access form';
 const possibleSteps = [
   'Verification',
   'Basic information',
@@ -189,7 +190,7 @@ const ProductionAccess: FC = () => {
   };
   return (
     <div className={classNames('vads-l-grid-container', 'vads-u-padding--4')}>
-      <PageHeader header={headerText} />
+      <PageHeader header="Production access form" />
       <div className="vads-l-row">
         <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
           <Formik

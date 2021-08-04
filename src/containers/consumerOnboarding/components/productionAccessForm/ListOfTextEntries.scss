@@ -1,4 +1,4 @@
-@import '../../../styles/variables.scss';
+@import '../../../../styles/variables.scss';
 .va-text-entry-container {
   max-width: 50%;
   button[name='remove'] {
@@ -9,16 +9,10 @@
   }
   input {
     max-width: none;
-    // margin-right: 0;
   }
 }
 .va-text-entry-field {
   input:disabled {
     background-color: $color-gray-lighter;
   }
-}
-.va-text-entry-field-edit {
-  // margin-right: 0 !important;
-  // width: 90% !important;
-  // margin-left: auto;
 }

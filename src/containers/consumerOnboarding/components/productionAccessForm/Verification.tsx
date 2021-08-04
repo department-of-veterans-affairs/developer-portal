@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { CheckboxRadioField, FieldSet } from '../../../components';
-import SelectedApis from './SelectedApis';
+import { CheckboxRadioField, FieldSet } from '../../../../components';
+import { SelectedAPIs } from './SelectedApis';
 
 const Verification: FC = () => (
   <>
@@ -37,7 +37,7 @@ const Verification: FC = () => (
       <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" required />
     </FieldSet>
 
-    <SelectedApis />
+    <SelectedAPIs />
     <CheckboxRadioField
       label={
         <span>
@@ -53,4 +53,4 @@ const Verification: FC = () => (
   </>
 );
 
-export default Verification;
+export { Verification };

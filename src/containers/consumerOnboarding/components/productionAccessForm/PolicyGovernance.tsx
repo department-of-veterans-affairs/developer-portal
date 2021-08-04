@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { ListOfTextEntries } from '../../../components';
+import ListOfTextEntries from './ListOfTextEntries';
 
 const PolicyGovernance: FC = () => (
   <>
@@ -24,4 +24,4 @@ const PolicyGovernance: FC = () => (
   </>
 );
 
-export default PolicyGovernance;
+export { PolicyGovernance };

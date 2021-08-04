@@ -1,8 +1,8 @@
 import React, { FC, ReactNode, useState, MouseEvent } from 'react';
 import { FieldArray, useFormikContext, ErrorMessage, Field, useField } from 'formik';
 import classNames from 'classnames';
-import { Values } from '../ProductionAccess';
-import { TextField } from '../../../components';
+import { Values } from '../../ProductionAccess';
+import { TextField } from '../../../../components';
 import './ListOfTextEntries.scss';
 
 interface TextEntryProps {

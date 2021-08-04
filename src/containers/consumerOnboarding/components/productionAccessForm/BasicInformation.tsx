@@ -1,9 +1,10 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
-import { TextField, ListOfTextEntries, CheckboxRadioField, FieldSet } from '../../../components';
-import { Values } from '../ProductionAccess';
-import { includesInternalOnlyAPI } from '../../../apiDefs/query';
+import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
+import { Values } from '../../ProductionAccess';
+import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
+import ListOfTextEntries from './ListOfTextEntries';
 
 const BasicInformation: FC = () => {
   const { values } = useFormikContext<Values>();
@@ -240,4 +241,4 @@ const BasicInformation: FC = () => {
   );
 };
 
-export default BasicInformation;
+export { BasicInformation };

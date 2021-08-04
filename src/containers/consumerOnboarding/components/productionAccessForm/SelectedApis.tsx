@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { CheckboxRadioField, ApiTags } from '../../../components';
-import { getAllApis } from '../../../apiDefs/query';
-import { APIDescription } from '../../../apiDefs/schema';
-import { Flag } from '../../../flags';
-import { FLAG_HOSTED_APIS } from '../../../types/constants';
+import { CheckboxRadioField, ApiTags } from '../../../../components';
+import { getAllApis } from '../../../../apiDefs/query';
+import { APIDescription } from '../../../../apiDefs/schema';
+import { Flag } from '../../../../flags';
+import { FLAG_HOSTED_APIS } from '../../../../types/constants';
 
 interface APICheckboxListProps {
   apiCheckboxes: APIDescription[];
@@ -83,4 +83,4 @@ const SelectedAPIs = (): JSX.Element => {
   );
 };
 
-export default SelectedAPIs;
+export { SelectedAPIs };
