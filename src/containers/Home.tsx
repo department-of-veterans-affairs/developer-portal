@@ -87,18 +87,14 @@ const ApiList = (): JSX.Element => (
             const { name, content } = apiDefinitions[apiCategoryKey];
             return (
               <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-                <div
-                  className="vads-l-col--12 vads-u-margin-y--2 medium-screen:vads-l-col--6 large-screen:vads-l-col--4"
-                  key={apiCategoryKey}
+                <CardLink
+                  name={name}
+                  url={`/explore/${apiCategoryKey}`}
+                  callToAction={`View the ${name}`}
+                  centered
                 >
-                  <CardLink
-                    name={name}
-                    url={`/explore/${apiCategoryKey}`}
-                    callToAction={`View the ${name}`}
-                  >
-                    {content.shortDescription}
-                  </CardLink>
-                </div>
+                  {content.shortDescription}
+                </CardLink>
               </Flag>
             );
           })}
@@ -129,8 +125,8 @@ const Home = (): JSX.Element => (
             buttonDestination="/onboarding"
             buttonText="Review the onboarding process"
           >
-            Before your app is ready to go live, we review the quality and security of applications
-            integrating with our APIs and data.
+            We review the quality and security of all applications integrating with our APIs and
+            data before they go live.
           </ColumnContent>
         </Flag>
         <ColumnContent

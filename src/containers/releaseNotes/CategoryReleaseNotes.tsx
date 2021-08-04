@@ -12,7 +12,7 @@ import {
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
-import { CardLinkLegacy, OnlyTags, PageHeader } from '../../components';
+import { CardLink, OnlyTags, PageHeader } from '../../components';
 import { Flag, getFlags } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
@@ -41,7 +41,7 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
           const dashUrlFragment = urlFragment.replace('_', '-');
 
           return (
-            <CardLinkLegacy
+            <CardLink
               key={name}
               name={name}
               subhead={
@@ -50,9 +50,10 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
                 ) : undefined
               }
               url={`/release-notes/${categoryKey}#${dashUrlFragment}`}
+              callToAction={`View the release notes for the ${name}`}
             >
               {description}
-            </CardLinkLegacy>
+            </CardLink>
           );
         })}
       </div>

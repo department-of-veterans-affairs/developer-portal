@@ -62,9 +62,7 @@ const DemoPrep: React.FunctionComponent = () => (
     <h3>Loan Guaranty (internal VA only)</h3>
     <p>No special topics.</p>
     <h3>Address Validation (internal VA only)</h3>
-    <ul>
-      <li>Confirm internal VA or AWS GovCloud application</li>
-    </ul>
+    <p>Confirm internal VA or AWS GovCloud application.</p>
     <h2
       id="post-demo-tasks"
       className={classNames(

@@ -11,10 +11,12 @@ export interface SupportSection {
   readonly description: string;
   readonly id: string;
   readonly name: string;
+  readonly callToAction: string;
 }
 
 export const sections: SupportSection[] = [
   {
+    callToAction: 'Read our FAQs',
     component: FAQ,
     description:
       'Answers to frequently asked questions about the VA API progam and the APIs themselves.',
@@ -22,6 +24,7 @@ export const sections: SupportSection[] = [
     name: 'FAQ',
   },
   {
+    callToAction: 'Send us a message',
     component: ContactUs,
     description: 'Send us a message using the Contact Us form.',
     id: 'contact-us',

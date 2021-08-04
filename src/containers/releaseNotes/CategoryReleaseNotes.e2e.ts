@@ -4,16 +4,20 @@ import { puppeteerHost } from '../../e2eHelpers';
 describe('CategoryReleaseNotes', () => {
   describe('API card links', () => {
     it.each([
-      ['Benefits Claims', 'Submit and track claims'],
-      ['Benefits Intake', 'Submit PDF claims'],
-      ['Loan Guaranty', 'Internal VA use only Manage VA Home Loans'],
+      'Benefits Claims API',
+      'Benefits Intake API',
+      'Loan Guaranty API',
     ])(
       'should move focus to the target %s API section',
-      async (apiName: string, description: string) => {
+      async (apiName: string) => {
         await page.goto(`${puppeteerHost}/release-notes/benefits`, { waitUntil: 'networkidle0' });
         const doc = await getDocument(page);
-        const cardLink = await queries.getByRole(doc, 'link', {
-          name: `${apiName} ${description}`,
+
+        const mainContentRegion = await queries.getByRole(doc, 'region', {
+          name: 'Benefits APIs Release Notes',
+        });
+        const cardLink = await queries.getByRole(mainContentRegion, 'link', {
+          name: apiName,
         });
 
         await cardLink.press('Enter');

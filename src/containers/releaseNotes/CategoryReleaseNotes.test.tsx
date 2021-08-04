@@ -56,13 +56,13 @@ describe('ReleaseNotesCollection', () => {
       it('has a card link for each active and enabled API if there is more than one', () => {
         const cardLinks = screen.getByRole('navigation', { name: 'LOTR API Release Notes' });
         const ringsLink = getByRole(cardLinks, 'link', {
-          name: 'Rings API One Ring to rule them all',
+          name: 'Rings API',
         });
         expect(ringsLink).toBeInTheDocument();
         expect(ringsLink.getAttribute('href')).toBe('/release-notes/lotr#rings');
 
         const hobbitsLink = getByRole(cardLinks, 'link', {
-          name: 'Hobbits API Hobbits of the Shire',
+          name: 'Hobbits API',
         });
         expect(hobbitsLink).toBeInTheDocument();
         expect(hobbitsLink.getAttribute('href')).toBe('/release-notes/lotr#hobbits');
@@ -212,12 +212,12 @@ describe('ReleaseNotesCollection', () => {
         });
 
         const silmarilsLink = getByRole(cardLinks, 'link', {
-          name: 'Silmarils API Three pretty gems',
+          name: 'Silmarils API',
         });
         expect(silmarilsLink).toBeInTheDocument();
         expect(silmarilsLink.getAttribute('href')).toBe('/release-notes/deactivated#silmarils');
 
-        const soccerLink = getByRole(cardLinks, 'link', { name: 'Soccer API the beautiful game' });
+        const soccerLink = getByRole(cardLinks, 'link', { name: 'Soccer API' });
         expect(soccerLink).toBeInTheDocument();
         expect(soccerLink.getAttribute('href')).toBe('/release-notes/deactivated#soccer');
       });

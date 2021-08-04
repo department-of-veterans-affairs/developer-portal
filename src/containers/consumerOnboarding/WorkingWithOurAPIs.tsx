@@ -98,11 +98,11 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         <ul>
           <li>
             In the production environment, the API Gateway has a service level objective of 99.9%.
-            This means it can be unavailable for no more than 8 and 9 hours per year.
+            This means it can be unavailable for no more than 8 to 9 hours per year.
           </li>
           <li>
             In the sandbox environment, the API Gateway has a service level objective of 99.0%. This
-            means it can be unavailable for no more than 7 and 8 hours per month.
+            means it can be unavailable for no more than 8 to 9 hours per month.
           </li>
           <li>
             There is no scheduled maintenance on the API Gateway in either environment, as the API
@@ -145,7 +145,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         experience and lives of Veterans is our primary concern.
       </p>
       <p>
-        If you have a feature request for us, let us know through our Contact Us page. We’ll let you
+        If you have a feature request for us, let us know through our <Link to="/support/contact-us">contact us</Link> page. We’ll let you
         know the status of your request at least once a month until it is complete.
       </p>
     </CollapsiblePanel>
@@ -180,11 +180,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         <a href="https://www.cisa.gov/federal-information-security-modernization-act">
           FISMA-compatible
         </a>{' '}
-        AWS data center and are subject to{' '}
-        <a href="https://www.va.gov/vapubs/viewPublication.asp?Pub_ID=733&amp;FType=2">
-          VA Handbook
-        </a>{' '}
-        6500.3 continuous monitoring requirements.
+        AWS data center and are subject to VA Handbook’s continuous monitoring requirements.
       </p>
       <p>
         Here are some of the ways our authentication offers additional security:
