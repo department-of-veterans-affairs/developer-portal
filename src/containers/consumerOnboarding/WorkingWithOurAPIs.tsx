@@ -145,7 +145,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         experience and lives of Veterans is our primary concern.
       </p>
       <p>
-        If you have a feature request for us, let us know through our <a href="/support/contact-us">Contact Us</a> page. We’ll let you
+        If you have a feature request for us, let us know through our <a href="/support/contact-us">contact us</a> page. We’ll let you
         know the status of your request at least once a month until it is complete.
       </p>
     </CollapsiblePanel>
