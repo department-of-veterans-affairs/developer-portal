@@ -18,7 +18,7 @@ import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
 import {
-  CONSUMER_PROD_ACCESS_FORM_PATH,
+  CONSUMER_APPLICATION_PATH,
   CONSUMER_ROUTER_PATHS,
   CONSUMER_SANDBOX_PATH,
   PUBLISHING_ROUTER_PATHS,
@@ -112,7 +112,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
           <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
         ))}
       {flags.consumer_docs && (
-        <Route path={CONSUMER_PROD_ACCESS_FORM_PATH} component={ProductionAccess} />
+        <Route path={CONSUMER_APPLICATION_PATH} component={ProductionAccess} />
       )}
 
       {/* Catch the rest with the 404 */}

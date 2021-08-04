@@ -8,11 +8,9 @@ import {
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
   CONSUMER_SANDBOX_PATH,
-  CONSUMER_PROD_ACCESS_FORM_PATH,
 } from '../../types/constants/paths';
 import DemoPrep from './DemoPrep';
 import OnboardingOverview from './OnboardingOverview';
-import ProductionAccess from './ProductionAccess';
 import WorkingWithOurAPIs from './WorkingWithOurAPIs';
 import RequestSandboxAccess from './RequestSandboxAccess';
 import RequestProductionAccess from './RequestProductionAccess';
@@ -35,7 +33,6 @@ const ConsumerOnboardingRoot = (): JSX.Element => (
         <Route exact path={CONSUMER_SANDBOX_PATH} component={RequestSandboxAccess} />
         <Route path={CONSUMER_PROD_PATH} component={RequestProductionAccess} />
         <Route path={CONSUMER_DEMO_PATH} component={DemoPrep} />
-        <Route path={CONSUMER_PROD_ACCESS_FORM_PATH} component={ProductionAccess} />
       </Switch>
     }
     navAriaLabel="Consumer Onboarding Page Nav"
