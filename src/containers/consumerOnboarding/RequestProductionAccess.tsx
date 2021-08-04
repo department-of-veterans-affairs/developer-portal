@@ -83,7 +83,14 @@ const RequestProductionAccess = (): JSX.Element => (
         If your app uses the <code>PatientWaitTime</code> resource, a screenshot showing it displays
         this or a similar message: To read the FAQ on how wait times are calculated, click the
         &quot;For more information&quot; link on{' '}
-        <a href="https://www.accesstocare.va.gov/PWT/SearchWaitTimes">this Access To Care page</a>.
+        <a
+          href="https://www.accesstocare.va.gov/PWT/SearchWaitTimes"
+          target="_blank"
+          rel="noreferrer"
+        >
+          this Access To Care page
+        </a>
+        .
       </p>
     </CollapsiblePanel>
     <CollapsiblePanel panelName="Technical information">
@@ -125,9 +132,19 @@ const RequestProductionAccess = (): JSX.Element => (
             <li>
               Confirmation that your app is listed on MyHealthApplication.com. (We strongly
               recommend you{' '}
-              <a href="https://myhealthapplication.com/list-your-app">register and publish</a> your
-              app on this website to show you attest to the{' '}
-              <a href="https://www.carinalliance.com/our-work/trust-framework-and-code-of-conduct/">
+              <a
+                href="https://myhealthapplication.com/list-your-app"
+                target="_blank"
+                rel="noreferrer"
+              >
+                register and publish
+              </a>{' '}
+              your app on this website to show you attest to the{' '}
+              <a
+                href="https://www.carinalliance.com/our-work/trust-framework-and-code-of-conduct/"
+                target="_blank"
+                rel="noreferrer"
+              >
                 CARIN Alliance Code of Conduct
               </a>
               . Registration is free, and prior to your demo, we will check this website to see if
@@ -173,7 +190,11 @@ const RequestProductionAccess = (): JSX.Element => (
                 </li>
                 <li>
                   Do text and background colors meet minimum{' '}
-                  <a href="https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=143#contrast-minimum">
+                  <a
+                    href="https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=143#contrast-minimum"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     WCAG contrast requirements
                   </a>{' '}
                   of at least 4.5:1?

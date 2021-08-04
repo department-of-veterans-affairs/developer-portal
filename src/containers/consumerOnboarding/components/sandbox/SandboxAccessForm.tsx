@@ -145,7 +145,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
                 <CheckboxRadioField
                   label={
                     <span>
-                      I agree to the <Link to="/terms-of-service">Terms of Service</Link>{' '}
+                      I agree to the <Link target="_blank" to="/terms-of-service">Terms of Service</Link>{' '}
                       <span className="form-required-span">(*Required)</span>
                     </span>
                   }
