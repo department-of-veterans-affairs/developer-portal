@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { CheckboxRadioField, OnlyTags } from '../../../components';
+import { CheckboxRadioField, ApiTags } from '../../../components';
 import { getAllApis } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { Flag } from '../../../flags';
@@ -23,7 +23,7 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
               <span>{api.name}</span>
               <span className="vads-u-display--inline-block vads-u-margin-left--1">
                 {api.vaInternalOnly || api.trustedPartnerOnly || api.openData ? (
-                  <OnlyTags
+                  <ApiTags
                     openData={api.openData}
                     trustedPartnerOnly={api.trustedPartnerOnly}
                     vaInternalOnly={api.vaInternalOnly}

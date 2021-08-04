@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
-import { OnlyTags } from './OnlyTags';
+import { ApiTags } from './ApiTags';
 
 describe('OnlyTags', () => {
   it.each([
@@ -14,10 +14,10 @@ describe('OnlyTags', () => {
     [1, 1, 0],
     [1, 1, 1],
   ])(
-    'shows and hides OnlyTags correctly (%i, %i)',
+    'shows and hides OnlyTags correctly (vaInternalOnly: %i, trustedPartyOnly: %i, openData: %i)',
     (vaInternalOnly, trustedPartnerOnly, openData) => {
       render(
-        <OnlyTags
+        <ApiTags
           openData={!!openData}
           vaInternalOnly={!!vaInternalOnly}
           trustedPartnerOnly={!!trustedPartnerOnly}
@@ -31,6 +31,12 @@ describe('OnlyTags', () => {
       expect(screen.queryAllByText('Internal VA use only')).toHaveLength(
         vaInternalOnly + trustedPartnerOnly,
       );
+
+      if (openData === 1) {
+        expect(screen.queryAllByAltText('Open Data')).toHaveLength(1);
+      } else {
+        expect(screen.queryAllByAltText('Open Data')).toHaveLength(0);
+      }
     },
   );
 });

@@ -4,14 +4,14 @@ import TrustedPartnerOnlyTag from './TrustedPartnerOnlyTag';
 import VAInternalOnlyTag from './VAInternalOnlyTag';
 import OpenDataTag from './OpenDataTag';
 
-const OnlyTagsPropTypes = {
+const ApiTagsPropTypes = {
   openData: PropTypes.bool.isRequired,
   trustedPartnerOnly: PropTypes.bool.isRequired,
   vaInternalOnly: PropTypes.bool.isRequired,
 };
 
-type OnlyTagsProps = PropTypes.InferProps<typeof OnlyTagsPropTypes>;
-const OnlyTags: React.FunctionComponent<OnlyTagsProps> = (props: OnlyTagsProps): JSX.Element => (
+type ApiTagsProps = PropTypes.InferProps<typeof ApiTagsPropTypes>;
+const ApiTags: React.FunctionComponent<ApiTagsProps> = (props: ApiTagsProps): JSX.Element => (
   <>
     {props.vaInternalOnly ? <VAInternalOnlyTag /> : null}
     {props.trustedPartnerOnly ? <TrustedPartnerOnlyTag /> : null}
@@ -19,5 +19,5 @@ const OnlyTags: React.FunctionComponent<OnlyTagsProps> = (props: OnlyTagsProps):
   </>
 );
 
-OnlyTags.propTypes = OnlyTagsPropTypes;
-export { OnlyTags };
+ApiTags.propTypes = ApiTagsPropTypes;
+export { ApiTags };

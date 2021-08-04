@@ -12,7 +12,7 @@ import {
 import { getDeactivatedCategory, isApiDeactivated } from '../../apiDefs/deprecated';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription, BaseAPICategory } from '../../apiDefs/schema';
-import { CardLink, OnlyTags, PageHeader } from '../../components';
+import { CardLink, ApiTags, PageHeader } from '../../components';
 import { Flag, getFlags } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
@@ -47,7 +47,7 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
               name={name}
               subhead={
                 vaInternalOnly || trustedPartnerOnly ? (
-                  <OnlyTags {...{ openData, trustedPartnerOnly, vaInternalOnly }} />
+                  <ApiTags {...{ openData, trustedPartnerOnly, vaInternalOnly }} />
                 ) : undefined
               }
               url={`/release-notes/${categoryKey}#${dashUrlFragment}`}

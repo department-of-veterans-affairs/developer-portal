@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import './OpenDataTag.scss';
+import './ApiTags.scss';
 
 const OpenDataTag = (): JSX.Element => (
-  <div className={classNames('open-data-tag', 'vads-u-margin-bottom--1p5', 'vads-u-font-size--sm')}>
+  <div className={classNames('api-tags', 'vads-u-margin-bottom--1p5', 'vads-u-font-size--sm')}>
     <span
       className={classNames(
         'vads-u-padding-y--0p5',
