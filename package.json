@@ -180,7 +180,8 @@
     "trim-newlines": "4.0.1",
     "css-what": "5.0.1",
     "normalize-url": "6.0.1",
-    "prismjs": "1.24.0"
+    "prismjs": "1.24.0",
+    "tar": ">=6.1.2"
   },
   "jest": {
     "projects": [
