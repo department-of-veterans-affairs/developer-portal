@@ -20,7 +20,7 @@ const benefitsApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
-    name: 'Benefits Claims',
+    name: 'Benefits Claims API',
     oAuth: true,
     oAuthInfo: {
       baseAuthPath: '/oauth2/claims/v1',
@@ -38,11 +38,12 @@ const benefitsApis: APIDescription[] = [
     description: 'Submit PDF claims',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-intake/v1/openapi.json`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/metadata`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/vba_documents/docs/v2/api`,
       },
     ],
     enabledByDefault: true,
-    name: 'Benefits Intake',
+    name: 'Benefits Intake API',
     openData: false,
     releaseNotes: BenefitsIntakeReleaseNotes,
     trustedPartnerOnly: false,
@@ -58,7 +59,7 @@ const benefitsApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
-    name: 'Loan Guaranty',
+    name: 'Loan Guaranty API',
     openData: false,
     releaseNotes: LoanGuarantyReleaseNotes,
     trustedPartnerOnly: true,
@@ -73,8 +74,9 @@ const benefitsApis: APIDescription[] = [
       },
     ],
     enabledByDefault: false,
-    name: 'Claims Attributes',
+    name: 'Claims Attributes API',
     openData: false,
+
     releaseNotes: ClaimsAttributesReleaseNotes,
     trustedPartnerOnly: false,
     urlFragment: 'claims_attributes',

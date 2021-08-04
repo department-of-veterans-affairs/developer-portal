@@ -2,6 +2,7 @@ sections:
   - title: News releases
     description: Press releases from the Department of Veterans Affairs related to Lighthouse.
     media: false
+    callToAction: Read the news releases
     items:
       - date: April 2020
         title: VA health app now available to Veterans across all mobile and web platforms
@@ -27,6 +28,7 @@ sections:
   - title: Articles
     description: Articles related to developers, APIs, the Developer Portal, and Veterans.
     media: false
+    callToAction: Read the articles
     items:
       - date: November 2019
         title: End User in Focus for Evolving Digital Services at VA
@@ -83,6 +85,7 @@ sections:
   - title: Digital media
     description: Audio and video related to developers, APIs, Veterans, and the Department of Veterans Affairs.
     media: true
+    callToAction: Access digital media
     items:
       - date: January 2020
         source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)

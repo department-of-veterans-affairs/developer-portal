@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { getDeactivatedCategory } from '../../apiDefs/deprecated';
 import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import { CardLinkLegacy, PageHeader } from '../../components';
+import { CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { FLAG_CATEGORIES } from '../../types/constants';
@@ -35,16 +35,24 @@ const ReleaseNotesOverview = (): JSX.Element => {
           const { name, content } = apiDefs[apiCategoryKey];
           return (
             <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-              <CardLinkLegacy name={name} url={`/release-notes/${apiCategoryKey}`}>
+              <CardLink
+                name={name}
+                url={`/release-notes/${apiCategoryKey}`}
+                callToAction={`View release notes for the ${name}`}
+              >
                 {content.shortDescription}
-              </CardLinkLegacy>
+              </CardLink>
             </Flag>
           );
         })}
         {deactivatedCategory.apis.length > 0 && (
-          <CardLinkLegacy name={deactivatedCategory.name} url="/release-notes/deactivated">
+          <CardLink
+            name={deactivatedCategory.name}
+            url="/release-notes/deactivated"
+            callToAction="View release notes for deactivated APIs"
+          >
             This is a repository for deactivated APIs and related documentation and release notes.
-          </CardLinkLegacy>
+          </CardLink>
         )}
       </div>
     </div>

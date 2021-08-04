@@ -9,11 +9,13 @@ import { lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { APINameParam } from '../../types';
-import { PAGE_HEADER_ID } from '../../types/constants';
+import { FLAG_API_ENABLED_PROPERTY, PAGE_HEADER_ID } from '../../types/constants';
+import { useFlag } from '../../flags';
 
 const ApiNotFoundPage = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
   const category = lookupApiCategory(apiCategoryKey);
+  const flags = useFlag([FLAG_API_ENABLED_PROPERTY]);
 
   return (
     <div role="region" aria-labelledby={PAGE_HEADER_ID}>
@@ -26,7 +28,7 @@ const ApiNotFoundPage = (): JSX.Element => {
       {category?.name && <PageHeader header={category.name} />}
       <ul>
         {category?.apis
-          .filter((item: APIDescription) => !isApiDeactivated(item))
+          .filter((item: APIDescription) => !isApiDeactivated(item) && flags[item.urlFragment])
           .map((item: APIDescription) => (
             <li key={item.urlFragment}>
               <Link to={`/explore/${apiCategoryKey}/docs/${item.urlFragment}`}>{item.name}</Link>

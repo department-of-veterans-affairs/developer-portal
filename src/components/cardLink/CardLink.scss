@@ -28,7 +28,8 @@
     color: $color-link-default;
   }
 
-  &:hover {
+  &:hover,
+  &.va-api-card-link-focused {
     border-color: $color-primary-darker !important;
     .name-border {
       border-bottom: 5px solid $color-primary-darker !important;
@@ -45,7 +46,8 @@
 
 
   .card-content > {
-    * + * {
+    * + *,
+    .va-api-description:last-child {
       margin-top: 0.75rem;
     }
 
