@@ -150,7 +150,13 @@ const TechnicalInformation: FC = () => {
           {distributingAPIKeysToCustomers === 'yes' && (
             <>
               <TextField
-                label="Provide the naming convention you will have each customer use for the `source` field to distinguish them in case there are issues after upload."
+                label={
+                  <p>
+                    Provide the naming convention you will have each customer use for the{' '}
+                    <code>source</code> field to distinguish them in case there are issues after
+                    upload.
+                  </p>
+                }
                 name="namingConvention"
                 className="vads-u-margin-top--4"
                 required

@@ -3,7 +3,7 @@ import 'jest';
 import * as React from 'react';
 import { ApiTags } from './ApiTags';
 
-describe('OnlyTags', () => {
+describe('ApiTags', () => {
   it.each([
     [0, 0, 0],
     [0, 1, 0],
@@ -14,7 +14,7 @@ describe('OnlyTags', () => {
     [1, 1, 0],
     [1, 1, 1],
   ])(
-    'shows and hides OnlyTags correctly (vaInternalOnly: %i, trustedPartyOnly: %i, openData: %i)',
+    'shows and hides ApiTags correctly (vaInternalOnly: %i, trustedPartyOnly: %i, openData: %i)',
     (vaInternalOnly, trustedPartnerOnly, openData) => {
       render(
         <ApiTags
@@ -31,6 +31,11 @@ describe('OnlyTags', () => {
       expect(screen.queryAllByText('Internal VA use only')).toHaveLength(
         vaInternalOnly + trustedPartnerOnly,
       );
+      if (openData) {
+        expect(screen.queryByText('Open Data')).toBeInTheDocument();
+      } else {
+        expect(screen.queryByText('Open Data')).not.toBeInTheDocument();
+      }
     },
   );
 });

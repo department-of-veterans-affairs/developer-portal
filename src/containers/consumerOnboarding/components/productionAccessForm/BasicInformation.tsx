@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
@@ -7,14 +7,19 @@ import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import ListOfTextEntries from './ListOfTextEntries';
 
 const BasicInformation: FC = () => {
-  const { values } = useFormikContext<Values>();
-  const { hasMonetized, isVetFacing, apis } = values;
+  const {
+    values: { hasMonetized, isVetFacing, apis },
+  } = useFormikContext<Values>();
   const hasMonetizedBorderClass = hasMonetized === 'yes' ? 'vads-u-border-left--4px' : '';
   const hasMonetizedsBorderColorClass =
     hasMonetized === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
   const isVetFacingBorderClass = isVetFacing === 'yes' ? 'vads-u-border-left--4px' : '';
   const isVetFacingBorderColorClass =
     isVetFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+  const firstInputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    firstInputRef.current?.focus();
+  }, []);
 
   return (
     <>
@@ -24,6 +29,7 @@ const BasicInformation: FC = () => {
         name="primaryContact.firstName"
         required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+        innerRef={firstInputRef}
       />
 
       <TextField
@@ -105,7 +111,7 @@ const BasicInformation: FC = () => {
         className="vads-u-margin-top--4"
         required
       />
-      {values.apis.some(api => ['vaForms', 'facilities'].includes(api)) && (
+      {apis.some(api => ['vaForms', 'facilities'].includes(api)) && (
         <TextField
           as="textarea"
           label="Describe your business model. Explain how you generate the income to provide your service to users."

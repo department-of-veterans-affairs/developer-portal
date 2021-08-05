@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Field, ErrorMessage, useFormikContext } from 'formik';
+import { Field, ErrorMessage, useFormikContext, getIn } from 'formik';
 import React, { ComponentPropsWithRef, FC, ReactNode, KeyboardEvent } from 'react';
 import toHtmlId from '../../../toHtmlId';
 
@@ -15,7 +15,7 @@ export interface TextFieldProps {
   type?: 'text' | 'email' | 'password';
   disabled?: boolean;
   onKeyDown?: (event: KeyboardEvent) => void;
-  ref?: React.RefObject<React.FC>;
+  innerRef?: React.RefObject<HTMLElement>;
   customFieldClass?: string;
   children?: ReactNode;
 }
@@ -31,10 +31,12 @@ const TextField: FC<TextFieldProps> = ({
   onKeyDown,
   customFieldClass,
   children,
+  innerRef,
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
-  const shouldDisplayErrors = !!errors[name] && !!touched[name];
+  const shouldDisplayErrors =
+    (!!errors[name] && !!touched[name]) || (!!getIn(errors, name) && !!getIn(touched, name));
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
@@ -66,6 +68,7 @@ const TextField: FC<TextFieldProps> = ({
         type={props.as ? undefined : type}
         disabled={disabled}
         onKeyDown={onKeyDown}
+        innerRef={innerRef}
         {...props}
       />
       {children}
