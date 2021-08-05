@@ -22,13 +22,13 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
             <>
               <span>{api.name}</span>
               <span className="vads-u-display--inline-block vads-u-margin-left--1">
-                {api.vaInternalOnly || api.trustedPartnerOnly || api.openData ? (
+                {(api.vaInternalOnly || api.trustedPartnerOnly || api.openData) && (
                   <ApiTags
                     openData={api.openData}
                     trustedPartnerOnly={api.trustedPartnerOnly}
                     vaInternalOnly={api.vaInternalOnly}
                   />
-                ) : undefined}
+                )}
               </span>
             </>
           }
@@ -44,13 +44,27 @@ const SelectedAPIs = (): JSX.Element => {
   const { errors } = useFormikContext();
   const checkboxName = 'apis';
   const shouldDisplayErrors = !!errors[checkboxName];
-  const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
-  const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
-  const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
-  const errorMessagePaddingClass = shouldDisplayErrors ? 'vads-u-padding-x--1p5' : '';
-  const selectAPIClass = shouldDisplayErrors
-    ? 'vads-u-font-weight--bold'
-    : 'vads-u-font-weight--normal';
+  const containerClass = classNames({
+    'usa-input-error': shouldDisplayErrors,
+  });
+
+  const labelClass = classNames({
+    'usa-input-error-label': shouldDisplayErrors,
+  });
+
+  const validationClass = classNames({
+    'usa-input-error-message': shouldDisplayErrors,
+  });
+
+  const errorMessagePaddingClass = classNames({
+    'vads-u-padding-x--1p5': shouldDisplayErrors,
+  });
+
+  const selectAPIClass = classNames({
+    'vads-u-font-weight--bold': shouldDisplayErrors,
+    'vads-u-font-weight--normal': !shouldDisplayErrors,
+  });
+
   return (
     <fieldset
       aria-labelledby="select-checkbox-api"
