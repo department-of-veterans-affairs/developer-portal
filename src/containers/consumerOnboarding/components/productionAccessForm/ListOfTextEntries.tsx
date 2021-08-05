@@ -18,6 +18,7 @@ export interface ListOfTextEntriesProps {
   name: string;
   buttonText: string;
   label?: string;
+  innerRef?: React.RefObject<HTMLElement>;
 }
 
 const TextEntry = ({ name, index, label, onClick }: TextEntryProps): JSX.Element => {

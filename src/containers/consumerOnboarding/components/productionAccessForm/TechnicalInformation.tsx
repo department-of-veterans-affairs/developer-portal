@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { TextField, FieldSet, CheckboxRadioField } from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { includesOAuthAPI } from '../../../../apiDefs/query';
@@ -19,6 +19,11 @@ const TechnicalInformation: FC = () => {
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-left--4px' : '';
   const keysToCustomersBorderColorClass =
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+  const firstInputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    firstInputRef.current?.focus();
+  }, []);
+
   return (
     <>
       <h3>Technical information</h3>
@@ -28,6 +33,7 @@ const TechnicalInformation: FC = () => {
         name="credentialStorage"
         required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+        innerRef={firstInputRef}
       />
       <FieldSet
         className={classNames(

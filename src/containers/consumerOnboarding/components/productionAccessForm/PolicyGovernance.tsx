@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import ListOfTextEntries from './ListOfTextEntries';
 
 const PolicyGovernance: FC = () => {
@@ -25,6 +25,7 @@ const PolicyGovernance: FC = () => {
         className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
         name="policyDocuments"
         buttonText="Add a URL"
+        innerRef={firstInputRef}
       />
     </>
   );
