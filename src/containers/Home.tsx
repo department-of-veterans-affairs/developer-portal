@@ -12,12 +12,11 @@ import { Flag } from '../flags';
 import { FLAG_CATEGORIES, FLAG_CONSUMER_DOCS } from '../types/constants';
 
 const columnContentClasses = classNames(
-  'vads-u-flex--1',
   'vads-u-text-align--center',
   'vads-u-padding-top--3',
-  'vads-u-padding-x--2',
   'vads-u-padding-bottom--2',
   'va-api-u-max-width--350',
+  'flex-basis-32',
 );
 
 const buttonClasses = classNames(
@@ -30,9 +29,8 @@ const buttonClasses = classNames(
 const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--100');
 
 const columnContentSectionClasses = classNames(
-  'vads-l-grid-container--full',
   'vads-u-display--flex',
-  'vads-u-justify-content--space-around',
+  'vads-u-justify-content--space-between',
   'vads-u-flex-direction--column',
   'medium-screen:vads-u-flex-direction--row',
   'vads-u-padding-bottom--3',
@@ -108,36 +106,39 @@ const Home = (): JSX.Element => (
   <div className="home vads-l-grid-container--full">
     <Hero />
     <section className="vads-u-background-color--white">
-      <div className={columnContentSectionClasses}>
-        <ColumnContent
-          title="API Documentation"
-          imageSrc={documentationImage}
-          buttonDestination="/explore"
-          buttonText="Read the Docs"
-        >
-          A Veteran-centered API platform for securely accessing VA data to build innovative tools
-          for Veterans. Explore usage policies and technical details about VA&apos;s API offerings.
-        </ColumnContent>
-        <Flag name={[FLAG_CONSUMER_DOCS]}>
+      <div className={classNames('vads-l-grid-container', 'vads-u-margin-x--auto')}>
+        <div className={columnContentSectionClasses}>
           <ColumnContent
-            title="Consumer Onboarding"
-            imageSrc={rocketImage}
-            buttonDestination="/onboarding"
-            buttonText="Review the onboarding process"
+            title="API Documentation"
+            imageSrc={documentationImage}
+            buttonDestination="/explore"
+            buttonText="Read the Docs"
           >
-            We review the quality and security of all applications integrating with our APIs and
-            data before they go live.
+            A Veteran-centered API platform for securely accessing VA data to build innovative tools
+            for Veterans. Explore usage policies and technical details about VA&apos;s API
+            offerings.
           </ColumnContent>
-        </Flag>
-        <ColumnContent
-          title="API Publishing"
-          imageSrc={branchImage}
-          buttonDestination="/api-publishing"
-          buttonText="Add your API to Lighthouse"
-        >
-          Change the face of VA data by adding your API to the Lighthouse development portal. Find
-          out how you can onboard your API and learn what to expect when working with Lighthouse.
-        </ColumnContent>
+          <Flag name={[FLAG_CONSUMER_DOCS]}>
+            <ColumnContent
+              title="Consumer Onboarding"
+              imageSrc={rocketImage}
+              buttonDestination="/onboarding"
+              buttonText="Review the onboarding process"
+            >
+              We review the quality and security of all applications integrating with our APIs and
+              data before they go live.
+            </ColumnContent>
+          </Flag>
+          <ColumnContent
+            title="API Publishing"
+            imageSrc={branchImage}
+            buttonDestination="/api-publishing"
+            buttonText="Add your API to Lighthouse"
+          >
+            Change the face of VA data by adding your API to the Lighthouse development portal. Find
+            out how you can onboard your API and learn what to expect when working with Lighthouse.
+          </ColumnContent>
+        </div>
       </div>
     </section>
     <ApiList />
