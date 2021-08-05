@@ -125,8 +125,8 @@ const Home = (): JSX.Element => (
             buttonDestination="/onboarding"
             buttonText="Review the onboarding process"
           >
-            Before your app is ready to go live, we review the quality and security of applications
-            integrating with our APIs and data.
+            We review the quality and security of all applications integrating with our APIs and
+            data before they go live.
           </ColumnContent>
         </Flag>
         <ColumnContent
