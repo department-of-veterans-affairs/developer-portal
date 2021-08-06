@@ -39,6 +39,7 @@ describe('query module', () => {
         ],
         enabledByDefault: true,
         name: 'VA Facilities API',
+        openData: true,
         releaseNotes: FacilitiesReleaseNotes,
         trustedPartnerOnly: false,
         urlFragment: 'facilities',
