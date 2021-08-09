@@ -26,7 +26,7 @@ sections:
         title: VA Secretary Announces VA Open Application Programming Interface Pledge
         url: https://www.va.gov/opa/pressrel/pressrelease.cfm?id=4022
   - title: Articles
-    description: Articles related to developers, APIs, the Developer Portal, and Veterans.
+    description: Articles related to developers, APIs, the developer portal, and Veterans.
     media: false
     callToAction: Read the articles
     items:

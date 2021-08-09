@@ -6,7 +6,7 @@ const facilitiesContent: APICategoryContent = {
   consumerDocsLinkText: 'Learn about getting production access using open data APIs',
   overview: FacilitiesOverview,
   shortDescription:
-    'Use the VA Facility API to find relevant information about a specific VA facility.',
+    'Use the VA Facilities API to find relevant information about a specific VA facility.',
   veteranRedirect: {
     linkText: "Find the facility that's right for you",
     linkUrl: 'https://www.va.gov/find-locations/',
