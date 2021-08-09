@@ -1,5 +1,7 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import { Flag } from '../../flags';
+import { FLAG_CONSUMER_DOCS } from '../../types/constants';
 import TrustedPartnerOnlyTag from './TrustedPartnerOnlyTag';
 import VAInternalOnlyTag from './VAInternalOnlyTag';
 import OpenDataTag from './OpenDataTag';
@@ -15,7 +17,7 @@ const ApiTags: React.FunctionComponent<ApiTagsProps> = (props: ApiTagsProps): JS
   <>
     {props.vaInternalOnly ? <VAInternalOnlyTag /> : null}
     {props.trustedPartnerOnly ? <TrustedPartnerOnlyTag /> : null}
-    {props.openData ? <OpenDataTag /> : null}
+    <Flag name={[FLAG_CONSUMER_DOCS]}>{props.openData ? <OpenDataTag /> : null}</Flag>
   </>
 );
 

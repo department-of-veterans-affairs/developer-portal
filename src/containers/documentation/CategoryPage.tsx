@@ -31,11 +31,7 @@ const CategoryPage = (): JSX.Element => {
         <Flag key={name} name={[FLAG_HOSTED_APIS, urlFragment]}>
           <CardLink
             name={name}
-            subhead={
-              vaInternalOnly || trustedPartnerOnly ? (
-                <ApiTags {...{ openData, trustedPartnerOnly, vaInternalOnly }} />
-              ) : undefined
-            }
+            subhead={<ApiTags {...{ openData, trustedPartnerOnly, vaInternalOnly }} />}
             url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
             callToAction={`View the ${name}`}
           >

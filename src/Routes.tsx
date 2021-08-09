@@ -107,13 +107,13 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       ))}
 
       {/* Consumer Docs */}
+      {flags.consumer_docs && (
+        <Route path={CONSUMER_APPLICATION_PATH} component={ProductionAccess} />
+      )}
       {flags.consumer_docs &&
         CONSUMER_ROUTER_PATHS.map((path: string) => (
           <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
         ))}
-      {flags.consumer_docs && (
-        <Route path={CONSUMER_APPLICATION_PATH} component={ProductionAccess} />
-      )}
 
       {/* Catch the rest with the 404 */}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />

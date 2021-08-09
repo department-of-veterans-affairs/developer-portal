@@ -115,11 +115,7 @@ const ListOfTextEntries: FC<ListOfTextEntriesProps> = ({
       className={classNames(containerClass, 'vads-u-background-color--gray-lightest', className)}
     >
       {description}
-      <span
-        id="api-checkbox-error"
-        className={classNames(validationClass, errorMessagePaddingClass)}
-        role="alert"
-      >
+      <span className={classNames(validationClass, errorMessagePaddingClass)} role="alert">
         <ErrorMessage name={name} />
       </span>
       <FieldArray name={name}>

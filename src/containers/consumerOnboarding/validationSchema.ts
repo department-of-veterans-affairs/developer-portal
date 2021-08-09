@@ -7,13 +7,12 @@ const phoneRegex = /^(?:\+?1[-.●]?)?\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?
 
 const validationSchema = [
   Yup.object().shape({
-    apis: Yup.array().of(Yup.string()).min(1).required('Choose at least one API.'),
-    is508Compliant: Yup.string()
-      .matches(/^(?:yes|no)$/)
-      .required('Select yes or no.'),
-    isUSBasedCompany: Yup.string()
-      .matches(/^(?:yes|no)$/)
-      .required('Select yes or no.'),
+    apis: Yup.array()
+      .of(Yup.string())
+      .min(1, 'Choose at least one API.')
+      .required('Choose at least one API.'),
+    is508Compliant: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
+    isUSBasedCompany: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
 
     termsOfService: Yup.boolean()
       .oneOf([true], { message: 'Agree to the Terms of Service to continue.' })
@@ -30,12 +29,8 @@ const validationSchema = [
       otherwise: Yup.string(),
       then: Yup.string().required('Describe your business model.'),
     }),
-    hasMonetized: Yup.string()
-      .matches(/^(?:yes|no)$/)
-      .required('Select yes or no.'),
-    isVetFacing: Yup.string()
-      .matches(/^(?:yes|no)$/)
-      .required('Select yes or no.'),
+    hasMonetized: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
+    isVetFacing: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     monetizationExplination: Yup.string().when('hasMonetized', {
       is: (value: string) => value === 'yes',
       otherwise: Yup.string(),
@@ -44,7 +39,7 @@ const validationSchema = [
     organization: Yup.string().required('Enter the company or organization name.'),
     phoneNumber: Yup.string()
       .matches(phoneRegex, {
-        message: 'Enter a company phone number.',
+        message: 'Enter a valid company phone number.',
       })
       .required('Enter a company phone number.'),
     platforms: Yup.string().when('isVetFacing', {
@@ -54,14 +49,18 @@ const validationSchema = [
     }),
     primaryContact: Yup.object()
       .shape({
-        email: Yup.string().email().required('Enter a valid email address.'),
+        email: Yup.string()
+          .email('Enter a valid email address.')
+          .required('Enter a valid email address.'),
         firstName: Yup.string().required('Enter a first name.'),
         lastName: Yup.string().required('Enter a last name.'),
       })
       .required(),
     secondaryContact: Yup.object()
       .shape({
-        email: Yup.string().email().required('Enter a valid email address.'),
+        email: Yup.string()
+          .email('Enter a valid email address.')
+          .required('Enter a valid email address.'),
         firstName: Yup.string().required('Enter a first name.'),
         lastName: Yup.string().required('Enter a last name.'),
       })
@@ -112,24 +111,18 @@ const validationSchema = [
     credentialStorage: Yup.string().required('Enter a description.'),
     distributingAPIKeysToCustomers: Yup.string().when('apis', {
       is: (value: string[]) => value.includes('benefits'),
-      otherwise: Yup.string().matches(/^(?:yes|no)$/),
-      then: Yup.string()
-        .matches(/^(?:yes|no)$/)
-        .required('Select yes or no.'),
+      otherwise: Yup.string().oneOf(['yes', 'no']),
+      then: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     }),
     exposesToThirdParties: Yup.string().when('apis', {
       is: (value: string[]) => includesOAuthAPI(value),
-      otherwise: Yup.string().matches(/^(?:yes|no)$/),
-      then: Yup.string()
-        .matches(/^(?:yes|no)$/)
-        .required('Select yes or no.'),
+      otherwise: Yup.string().oneOf(['yes', 'no']),
+      then: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     }),
     listedOnMyHealthApplication: Yup.string().when('apis', {
       is: (value: string[]) => value.includes('health'),
-      otherwise: Yup.string().matches(/^(?:yes|no)$/),
-      then: Yup.string()
-        .matches(/^(?:yes|no)$/)
-        .required('Select yes or no.'),
+      otherwise: Yup.string().oneOf(['yes', 'no']),
+      then: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     }),
     multipleReqSafeguards: Yup.string().when('storePIIOrPHI', {
       is: (value: string) => value === 'yes',
@@ -151,9 +144,7 @@ const validationSchema = [
       otherwise: Yup.string(),
       then: Yup.string().required('Enter a list of scopes.'),
     }),
-    storePIIOrPHI: Yup.string()
-      .matches(/^(?:yes|no)$/)
-      .required('Select yes or no.'),
+    storePIIOrPHI: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     thirdPartyInfoDescription: Yup.string().when('exposesToThirdParties', {
       is: (value: string) => value === 'yes',
       otherwise: Yup.string(),

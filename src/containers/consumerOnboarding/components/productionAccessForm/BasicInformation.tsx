@@ -200,33 +200,31 @@ const BasicInformation: FC = () => {
               required
             />
             <TextField
-              label={
-                <>
-                  <p>Provide a brief description of your application.</p>
-                  <p>
-                    This will be used for the{' '}
-                    <a href="http://va.gov/" target="_blank" rel="noopener noreferrer">
-                      VA.gov
-                    </a>{' '}
-                    App Directory and should tell Veterans how your app can help them. Your
-                    description should:
-                    <ul>
-                      <li>Be 415 characters or fewer</li>
-                      <li>
-                        Use VA guidelines for{' '}
-                        <a
-                          href="https://www.va.gov/web/management/content-plain-language.cfm"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          plain language
-                        </a>{' '}
-                        to encourage Veteran engagement
-                      </li>
-                      <li>Capitalize “Veteran” whenever used</li>
-                    </ul>
-                  </p>
-                </>
+              label="Provide a brief description of your application."
+              description={
+                <p>
+                  This will be used for the{' '}
+                  <a href="http://va.gov/" target="_blank" rel="noopener noreferrer">
+                    VA.gov
+                  </a>{' '}
+                  App Directory and should tell Veterans how your app can help them. Your
+                  description should:
+                  <ul>
+                    <li>Be 415 characters or fewer</li>
+                    <li>
+                      Use VA guidelines for{' '}
+                      <a
+                        href="https://www.va.gov/web/management/content-plain-language.cfm"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        plain language
+                      </a>{' '}
+                      to encourage Veteran engagement
+                    </li>
+                    <li>Capitalize “Veteran” whenever used</li>
+                  </ul>
+                </p>
               }
               name="appDescription"
               className="vads-u-margin-top--4"

@@ -80,52 +80,54 @@ const TechnicalInformation: FC = () => {
         )}
       </FieldSet>
       {includesOAuthAPI(apis) && (
-        <FieldSet
-          className={classNames(
-            'vads-u-margin-top--2',
-            'vads-u-padding-x--1p5',
-            'vads-u-padding-bottom--1p5',
-            veteransInfoBorderClass,
-            veteransInfoBorderColorClass,
-          )}
-          legend="Does your application expose Veterans’ health, claims, disabilities, or service history data to any third parties, through its own APIs or otherwise?"
-          legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-          name="exposeVeteranInformationToThirdParties"
-          required
-        >
-          <CheckboxRadioField
-            type="radio"
-            label="Yes"
-            name="exposesToThirdParties"
-            value="yes"
+        <>
+          <FieldSet
+            className={classNames(
+              'vads-u-margin-top--2',
+              'vads-u-padding-x--1p5',
+              'vads-u-padding-bottom--1p5',
+              veteransInfoBorderClass,
+              veteransInfoBorderColorClass,
+            )}
+            legend="Does your application expose Veterans’ health, claims, disabilities, or service history data to any third parties, through its own APIs or otherwise?"
+            legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
+            name="exposeVeteranInformationToThirdParties"
             required
-          />
-          <CheckboxRadioField
-            type="radio"
-            label="No"
-            name="exposesToThirdParties"
-            value="no"
-            required
-          />
-          {exposesToThirdParties === 'yes' && (
-            <TextField
-              label="Enter a description."
-              name="thirdPartyInfoDescription"
-              className="vads-u-margin-top--4"
+          >
+            <CheckboxRadioField
+              type="radio"
+              label="Yes"
+              name="exposesToThirdParties"
+              value="yes"
               required
             />
-          )}
-        </FieldSet>
+            <CheckboxRadioField
+              type="radio"
+              label="No"
+              name="exposesToThirdParties"
+              value="no"
+              required
+            />
+            {exposesToThirdParties === 'yes' && (
+              <TextField
+                label="Enter a description."
+                name="thirdPartyInfoDescription"
+                className="vads-u-margin-top--4"
+                required
+              />
+            )}
+          </FieldSet>
+
+          <TextField
+            label="List the scopes for which you are requesting access."
+            name="scopesAccessRequested"
+            className="vads-u-margin-top--4"
+            required
+          />
+        </>
       )}
-      {includesOAuthAPI(apis) && (
-        <TextField
-          label="List the scopes for which you are requesting access."
-          name="scopesAccessRequested"
-          className="vads-u-margin-top--4"
-          required
-        />
-      )}
-      {values.apis.some(api => ['benefits'].includes(api)) && (
+
+      {values.apis.includes('benefits') && (
         <FieldSet
           className={classNames(
             'vads-u-margin-top--2',
@@ -186,9 +188,24 @@ const TechnicalInformation: FC = () => {
           )}
           legend={
             <span>
-              We strongly recommend you <u>register and publish</u> your app on this website to show
-              you attest to the <u>CARIN Alliance Code of Conduct.</u> Registration is free, and
-              prior to your demo, we will check this website to see if your app is listed.
+              We strongly recommend you{' '}
+              <a
+                href="https://myhealthapplication.com/list-your-app"
+                target="_blank"
+                rel="noreferrer"
+              >
+                register and publish
+              </a>{' '}
+              your app on this website to show you attest to the{' '}
+              <a
+                href="https://www.carinalliance.com/our-work/trust-framework-and-code-of-conduct/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                CARIN Alliance Code of Conduct.
+              </a>{' '}
+              Registration is free, and prior to your demo, we will check this website to see if
+              your app is listed.
             </span>
           }
           name="listedOnMyHealthApplication"
