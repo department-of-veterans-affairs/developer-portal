@@ -2,6 +2,7 @@ import { FormikErrors } from 'formik';
 import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../../../types/constants';
 import {
   validateEmail,
+  validateVAEmail,
   validatePresence,
   validateOAuthRedirectURI,
   validateOAuthApplicationType,
@@ -20,6 +21,11 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   const errors: FormikErrors<Values> = {
     email: validateEmail(values.email),
     firstName: validatePresence('first name', values.firstName),
+    internalApiInfo: {
+      programName: validatePresence('program name', values.internalApiInfo.programName),
+      sponsorEmail: validateEmail(values.internalApiInfo.sponsorEmail),
+      vaEmail: validateVAEmail(values.internalApiInfo.vaEmail),
+    },
     lastName: validatePresence('last name', values.lastName),
     organization: validatePresence('organization', values.organization),
   };

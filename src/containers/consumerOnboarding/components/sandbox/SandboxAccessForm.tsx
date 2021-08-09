@@ -19,12 +19,19 @@ import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
 
+export interface InternalApi {
+  programName: string;
+  sponsorEmail: string;
+  vaEmail: string;
+}
+
 export interface Values {
   apis: string[];
   description: string;
   email: string;
   firstName: string;
   lastName: string;
+  internalApiInfo: InternalApi;
   oAuthApplicationType: string;
   oAuthRedirectURI: string;
   organization: string;
@@ -36,6 +43,11 @@ const initialValues = {
   description: '',
   email: '',
   firstName: '',
+  internalApiInfo: {
+    programName: '',
+    sponsorEmail: '',
+    vaEmail: '',
+  },
   lastName: '',
   oAuthApplicationType: '',
   oAuthRedirectURI: '',

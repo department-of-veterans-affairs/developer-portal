@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { Field, ErrorMessage, useFormikContext } from 'formik';
+import { Field, ErrorMessage, useFormikContext, getIn } from 'formik';
 import React, { ComponentPropsWithRef, FC, ReactNode } from 'react';
 import toHtmlId from '../../../toHtmlId';
 
@@ -25,7 +25,7 @@ const TextField: FC<TextFieldProps> = ({
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
-  const shouldDisplayErrors = !!errors[name] && !!touched[name];
+  const shouldDisplayErrors = !!getIn(errors, name) && !!getIn(touched, name);
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';

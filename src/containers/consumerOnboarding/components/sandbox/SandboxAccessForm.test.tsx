@@ -74,6 +74,38 @@ describe('SandboxAccessForm', () => {
     });
   });
 
+  describe('internal apis', () => {
+    it('adds required fields if selected', async () => {
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Samwise', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Gamgee', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'sam@theshire.net', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+      });
+
+      userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
+
+      expect(
+        await screen.findByRole('textbox', { name: /Program Name/ }),
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByRole('textbox', { name: /Business\/OIT sponsor email/ }),
+      ).toBeInTheDocument();
+      expect(
+        await screen.findByRole('textbox', { name: /Your VA issued email/ }),
+      ).toBeInTheDocument();
+    });
+  });
+
   describe('description textarea', () => {
     it('should update input on typing', async () => {
       const descriptionTextarea: HTMLInputElement = screen.getByRole('textbox', {
@@ -171,6 +203,66 @@ describe('SandboxAccessForm', () => {
 
       expect(await screen.findByText('Choose an option.')).toBeInTheDocument();
       expect(await screen.findByText('Enter an http or https URI.')).toBeInTheDocument();
+    });
+
+    it('validates internal api fields when clicked', async () => {
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(
+          screen.getByRole('textbox', { name: /Email/ }),
+          'pippin@theshire.com',
+          {
+            delay: 0.01,
+          },
+        );
+
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+      });
+      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
+      expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
+      expect(await screen.findByText('Enter a valid VA-issued email address.')).toBeInTheDocument();
+    });
+
+    it('validates internal api fields when clicked and does not ask for VA email', async () => {
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(
+          screen.getByRole('textbox', { name: /Email/ }),
+          'pippin@va.gov',
+          {
+            delay: 0.01,
+          },
+        );
+
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+      });
+      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
+      expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
+      expect(await screen.findByText('Enter a valid VA-issued email address.')).not.toBeInTheDocument();
     });
 
     it('displays `Sending...` during form submission', async () => {

@@ -8,6 +8,7 @@ import { APIDescription } from '../schema';
 
 const verificationApis: APIDescription[] = [
   {
+    altID: 'addressValidation',
     description: 'Provides methods to standardize and validate addresses.',
     docSources: [
       {

@@ -10,11 +10,11 @@ const OAuthAppInfo = (): JSX.Element => {
   const { errors } = useFormikContext();
   const redirectUriInputName = 'oAuthRedirectURI';
   const shouldDisplayUriError = !!errors[redirectUriInputName];
-  const redirectUriClass = shouldDisplayUriError ? 'vads-u-margin-left--2' : '';
+  const redirectUriClass = shouldDisplayUriError ? 'vads-u-margin-left--4' : '';
 
   return (
     <>
-      <div className="vads-u-margin-top--4">
+      <div className="vads-u-margin-top--4, vads-u-padding-left--1p5">
         Apps that cannot securely hide a client secret must use the{' '}
         <a href="https://oauth.net/2/pkce/" target="_blank" rel="noreferrer">
           PKCE
@@ -27,7 +27,7 @@ const OAuthAppInfo = (): JSX.Element => {
         .
       </div>
       <FieldSet
-        className="vads-u-margin-top--4"
+        className={classNames('vads-u-margin-top--4', 'vads-u-padding-left--1p5', redirectUriClass)}
         legend="Can your application securely hide a client secret?"
         legendClassName="legend-label"
         errorClassName="vads-u-margin-left--2"
@@ -54,7 +54,12 @@ const OAuthAppInfo = (): JSX.Element => {
         label="OAuth Redirect URI"
         name={redirectUriInputName}
         required
-        className={classNames('vads-u-margin-top--4', 'oauth-uri-input', redirectUriClass)}
+        className={classNames(
+          'vads-u-margin-top--4',
+          'oauth-uri-input',
+          'vads-u-padding-left--1p5',
+          redirectUriClass
+        )}
       />
     </>
   );
