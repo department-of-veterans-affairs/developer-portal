@@ -14,16 +14,11 @@ import {
   ApplySuccessResult,
   DevApplicationRequest,
   DevApplicationResponse,
+  InternalApi
 } from '../../../../types';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
-
-export interface InternalApi {
-  programName: string;
-  sponsorEmail: string;
-  vaEmail: string;
-}
 
 export interface Values {
   apis: string[];
