@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
+import { FlagsProvider, getFlags } from '../../flags';
 import { ApiTags } from './ApiTags';
 
 describe('ApiTags', () => {
@@ -17,11 +18,13 @@ describe('ApiTags', () => {
     'shows and hides ApiTags correctly (vaInternalOnly: %i, trustedPartyOnly: %i, openData: %i)',
     (vaInternalOnly, trustedPartnerOnly, openData) => {
       render(
-        <ApiTags
-          openData={!!openData}
-          vaInternalOnly={!!vaInternalOnly}
-          trustedPartnerOnly={!!trustedPartnerOnly}
-        />,
+        <FlagsProvider flags={getFlags()}>
+          <ApiTags
+            openData={!!openData}
+            vaInternalOnly={!!vaInternalOnly}
+            trustedPartnerOnly={!!trustedPartnerOnly}
+          />
+        </FlagsProvider>,
       );
 
       /**
