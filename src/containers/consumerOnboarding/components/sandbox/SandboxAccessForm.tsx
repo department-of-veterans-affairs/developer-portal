@@ -14,7 +14,7 @@ import {
   ApplySuccessResult,
   DevApplicationRequest,
   DevApplicationResponse,
-  InternalApi
+  InternalApi,
 } from '../../../../types';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
