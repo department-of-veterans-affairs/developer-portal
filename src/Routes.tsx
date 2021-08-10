@@ -18,6 +18,7 @@ import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
 import {
+  CONSUMER_APPLICATION_PATH,
   CONSUMER_ROUTER_PATHS,
   CONSUMER_SANDBOX_PATH,
   PUBLISHING_ROUTER_PATHS,
@@ -25,6 +26,7 @@ import {
 import { Apply } from './containers/apply/Apply';
 import { FLAG_SIGNUPS_ENABLED } from './types/constants';
 import { buildApiDetailRoutes } from './utils/routesHelper';
+import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const flags = getFlags();
@@ -105,6 +107,9 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       ))}
 
       {/* Consumer Docs */}
+      {flags.consumer_docs && (
+        <Route path={CONSUMER_APPLICATION_PATH} component={ProductionAccess} />
+      )}
       {flags.consumer_docs &&
         CONSUMER_ROUTER_PATHS.map((path: string) => (
           <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />

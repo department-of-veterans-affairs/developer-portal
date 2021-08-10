@@ -7,7 +7,7 @@ export * from './pageContent/PageContent';
 export * from './search/Search';
 export * from './sideNav/SideNav';
 export * from './sideNav/SideNavEntry';
-export * from './onlyTags/OnlyTags';
+export * from './apiTags/ApiTags';
 export * from './mainNavItem/MainNavItem';
 export * from './banner/Banner';
 export * from './footer/Footer';

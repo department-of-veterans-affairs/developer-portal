@@ -1,0 +1,9 @@
+.progress-bar-segmented[aria-valuenow='1'] {
+  .progress-segment {
+    display: none;
+  }
+  .progress-segment-complete {
+    display: block;
+    max-width: 25%;
+  }
+}
