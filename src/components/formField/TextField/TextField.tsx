@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { Field, ErrorMessage, useFormikContext } from 'formik';
-import React, { ComponentPropsWithRef, FC, ReactNode } from 'react';
+import { Field, ErrorMessage, useFormikContext, getIn } from 'formik';
+import React, { ComponentPropsWithRef, FC, ReactNode, KeyboardEvent } from 'react';
 import toHtmlId from '../../../toHtmlId';
 
 type FieldProps = ComponentPropsWithRef<typeof Field>;
@@ -13,6 +13,11 @@ export interface TextFieldProps {
   as?: FieldProps['as'];
   description?: ReactNode;
   type?: 'text' | 'email' | 'password';
+  disabled?: boolean;
+  onKeyDown?: (event: KeyboardEvent) => void;
+  innerRef?: React.RefObject<HTMLElement>;
+  customFieldClass?: string;
+  children?: ReactNode;
 }
 
 const TextField: FC<TextFieldProps> = ({
@@ -22,10 +27,16 @@ const TextField: FC<TextFieldProps> = ({
   name,
   required = false,
   type = 'text',
+  disabled = false,
+  onKeyDown,
+  customFieldClass,
+  children,
+  innerRef,
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
-  const shouldDisplayErrors = !!errors[name] && !!touched[name];
+  const shouldDisplayErrors =
+    (!!errors[name] && !!touched[name]) || (!!getIn(errors, name) && !!getIn(touched, name));
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
   const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
@@ -49,14 +60,18 @@ const TextField: FC<TextFieldProps> = ({
 
       <Field
         id={fieldId}
-        className={fieldClass}
+        className={classNames(fieldClass, customFieldClass)}
         name={name}
         required={required}
         aria-describedby={`${errorId} ${descriptionId}`}
         aria-invalid={shouldDisplayErrors}
         type={props.as ? undefined : type}
+        disabled={disabled}
+        onKeyDown={onKeyDown}
+        innerRef={innerRef}
         {...props}
       />
+      {children}
     </div>
   );
 };

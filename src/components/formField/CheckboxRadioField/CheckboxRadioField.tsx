@@ -9,10 +9,20 @@ export interface CheckboxRadioFieldProps {
   required?: boolean;
   type: 'checkbox' | 'radio';
   value?: string;
+  innerRef?: React.RefObject<HTMLElement>;
 }
 
-const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({ name, className, label, type, value, ...props }) => {
-  const radioClass = type === 'radio' ? 'vads-u-margin--0 vads-u-padding-y--1 vads-u-padding-x--1p5' : '';
+const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
+  name,
+  className,
+  label,
+  type,
+  innerRef,
+  value,
+  ...props
+}) => {
+  const radioClass =
+    type === 'radio' ? 'vads-u-margin--0 vads-u-padding-y--1 vads-u-padding-x--1p5' : '';
 
   const idReadyName = toHtmlId(name);
   const idReadyValue = toHtmlId(value ?? '');
@@ -20,14 +30,10 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({ name, className, labe
 
   return (
     <div className={className}>
-      <Field
-        id={fieldId}
-        name={name}
-        type={type}
-        value={value}
-        {...props}
-      />
-      <label htmlFor={fieldId} className={radioClass}>{label}</label>
+      <Field id={fieldId} name={name} type={type} value={value} innerRef={innerRef} {...props} />
+      <label htmlFor={fieldId} className={radioClass}>
+        {label}
+      </label>
     </div>
   );
 };
