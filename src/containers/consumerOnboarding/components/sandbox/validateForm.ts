@@ -7,7 +7,7 @@ import {
   validateOAuthRedirectURI,
   validateOAuthApplicationType,
 } from '../../../../utils/validators';
-import { includesOAuthAPI, includesInternalAPI } from '../../../../apiDefs/query';
+import { includesOAuthAPI, includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { Values } from './SandboxAccessForm';
 
 export const anyOAuthApisSelected = (apis: string[]): boolean => {
@@ -17,7 +17,7 @@ export const anyOAuthApisSelected = (apis: string[]): boolean => {
 
 export const anyInternalApisSelected = (apis: string[]): boolean => {
   const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);
-  return includesInternalAPI(apiIdsByField);
+  return includesInternalOnlyAPI(apiIdsByField);
 };
 
 const anyApiSelected = ({ apis }: Values): boolean => apis.length > 0;

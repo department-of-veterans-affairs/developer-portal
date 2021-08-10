@@ -13,7 +13,6 @@ export const CONSUMER_ROUTER_PATHS: string[] = [
   CONSUMER_PROD_PATH,
   CONSUMER_DEMO_PATH,
   CONSUMER_APIS_PATH,
-  CONSUMER_APPLICATION_PATH,
 ];
 
 export const PUBLISHING_PATH = '/api-publishing';

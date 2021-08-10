@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import { Flag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { CardLink, OnlyTags, PageHeader } from '../../components';
+import { CardLink, ApiTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { FLAG_HOSTED_APIS, PAGE_HEADER_ID, FLAG_CONSUMER_DOCS } from '../../types/constants';
@@ -25,16 +25,13 @@ const CategoryPage = (): JSX.Element => {
   let cardSection;
   if (apis.length > 0) {
     const apiCards = apis.map((apiDesc: APIDescription) => {
-      const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly } = apiDesc;
+      const { description, name, urlFragment, vaInternalOnly, trustedPartnerOnly, openData } =
+        apiDesc;
       return (
         <Flag key={name} name={[FLAG_HOSTED_APIS, urlFragment]}>
           <CardLink
             name={name}
-            subhead={
-              vaInternalOnly || trustedPartnerOnly ? (
-                <OnlyTags {...{ trustedPartnerOnly, vaInternalOnly }} />
-              ) : undefined
-            }
+            subhead={<ApiTags {...{ openData, trustedPartnerOnly, vaInternalOnly }} />}
             url={`/explore/${apiCategoryKey}/docs/${urlFragment}`}
             callToAction={`View the ${name}`}
           >

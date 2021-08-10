@@ -67,6 +67,7 @@ export interface APIDescription {
   readonly enabledByDefault: boolean;
   readonly vaInternalOnly: boolean;
   readonly trustedPartnerOnly: boolean;
+  readonly openData: boolean;
   readonly oAuth?: boolean;
   readonly oAuthInfo?: OAuthInfo;
   readonly releaseNotes: React.FunctionComponent;

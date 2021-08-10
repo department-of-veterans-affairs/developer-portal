@@ -1,16 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
 
-import './TrustedPartnerOnlyTag.scss';
+import './ApiTags.scss';
 
 const TrustedPartnerOnlyTag = (): JSX.Element => (
-  <div
-    className={classNames(
-      'trusted-partner-only-tag',
-      'vads-u-margin-bottom--1p5',
-      'vads-u-font-size--sm',
-    )}
-  >
+  <div className={classNames('api-tags', 'vads-u-margin-bottom--1p5', 'vads-u-font-size--sm')}>
     <span
       className={classNames(
         'vads-u-padding-y--0p5',

@@ -73,7 +73,8 @@ const apisFor = (apiList: string[]): APIDescription[] => {
 };
 
 const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(api => !!api.oAuth);
-const includesInternalAPI = (apiList: string[]): boolean => apisFor(apiList).some(api => !!api.vaInternalOnly);
+const includesInternalOnlyAPI = (apiList: string[]): boolean =>
+  apisFor(apiList).some(api => !!api.vaInternalOnly);
 
 export {
   getAllApis,
@@ -86,5 +87,5 @@ export {
   lookupApiCategory,
   includesOAuthAPI,
   getAllKeyAuthApis,
-  includesInternalAPI
+  includesInternalOnlyAPI,
 };
