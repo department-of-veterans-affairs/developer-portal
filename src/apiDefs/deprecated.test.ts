@@ -13,6 +13,7 @@ describe('deprecated API module', () => {
     enabledByDefault: true,
     name: 'My API',
     oAuth: false,
+    openData: false,
     releaseNotes: UrgentCareDeprecationNotice,
     trustedPartnerOnly: false,
     urlFragment: 'my_api',
@@ -39,7 +40,7 @@ describe('deprecated API module', () => {
     it('returns true if the FF is set', () => {
       process.env = {
         ...oldEnv,
-        'REACT_APP_MY_API_DEPRECATED': 'true',
+        REACT_APP_MY_API_DEPRECATED: 'true',
       };
       const api: APIDescription = {
         ...apiValues,
@@ -102,7 +103,7 @@ describe('deprecated API module', () => {
     it('returns true if the FF is set', () => {
       process.env = {
         ...oldEnv,
-        'REACT_APP_MY_API_DEACTIVATED': 'true',
+        REACT_APP_MY_API_DEACTIVATED: 'true',
       };
       const api: APIDescription = {
         ...apiValues,
