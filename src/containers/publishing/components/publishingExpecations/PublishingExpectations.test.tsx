@@ -21,13 +21,6 @@ describe('PublishingExpectations', () => {
     ).toBeInTheDocument();
   });
 
-  it('renders all accordions in a closed state', () => {
-    const buttons = screen.getAllByRole('button');
-    buttons.forEach(button => {
-      expect(button.getAttribute('aria-expanded')).toBe('false');
-    });
-  });
-
   describe.each([
     ['Security'],
     ['Documentation'],

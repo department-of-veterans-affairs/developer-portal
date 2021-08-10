@@ -1,10 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
 import WorkingWithOurAPIs from './WorkingWithOurAPIs';
 
 describe('WorkingWithOurAPIs', () => {
   beforeEach(() => {
-    render(<WorkingWithOurAPIs />);
+    render(
+      <Router>
+        <WorkingWithOurAPIs />
+      </Router>,
+    );
   });
   it('renders the main heading', () => {
     const heading = screen.getByRole('heading', { level: 1, name: 'Working with Lighthouse APIs' });
@@ -26,11 +31,5 @@ describe('WorkingWithOurAPIs', () => {
   ])('renders the "%s" heading', (headingText: string) => {
     const heading = screen.getByRole('heading', { level: 2, name: headingText });
     expect(heading).toBeInTheDocument();
-  });
-  it('renders all accordions in a closed state', () => {
-    const buttons = screen.getAllByRole('button');
-    buttons.forEach(button => {
-      expect(button.getAttribute('aria-expanded')).toBe('false');
-    });
   });
 });
