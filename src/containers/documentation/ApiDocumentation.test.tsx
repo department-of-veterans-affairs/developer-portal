@@ -20,6 +20,7 @@ const api: APIDescription = {
   ],
   enabledByDefault: true,
   name: 'My API',
+  openData: false,
   releaseNotes: ReleaseNotes,
   trustedPartnerOnly: false,
   urlFragment: 'my_api',
