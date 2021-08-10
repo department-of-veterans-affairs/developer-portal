@@ -258,11 +258,11 @@ const ProductionAccess: FC = () => {
                   onClose={(): void => setModal1Visible(false)}
                   primaryButton={{
                     action: (): void => history.goBack(),
-                    text: 'Yes Leave',
+                    text: 'Yes, leave',
                   }}
                   secondaryButton={{
                     action: (): void => setModal1Visible(false),
-                    text: 'No stay on form',
+                    text: 'No, stay on form',
                   }}
                 >
                   The information you entered will not be saved.
