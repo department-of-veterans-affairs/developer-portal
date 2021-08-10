@@ -130,7 +130,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
             };
 
             return (
-              <Form className="usa-form" noValidate>
+              <Form noValidate>
                 <h2>Application</h2>
                 <DeveloperInfo />
                 <SelectedApis selectedApis={values.apis} />
@@ -145,7 +145,10 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
                 <CheckboxRadioField
                   label={
                     <span>
-                      I agree to the <Link target="_blank" to="/terms-of-service">Terms of Service</Link>{' '}
+                      I agree to the{' '}
+                      <Link target="_blank" to="/terms-of-service">
+                        Terms of Service
+                      </Link>{' '}
                       <span className="form-required-span">(*Required)</span>
                     </span>
                   }
