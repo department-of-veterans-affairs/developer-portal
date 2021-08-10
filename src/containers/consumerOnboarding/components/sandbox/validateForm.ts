@@ -7,12 +7,17 @@ import {
   validateOAuthRedirectURI,
   validateOAuthApplicationType,
 } from '../../../../utils/validators';
-import { includesOAuthAPI } from '../../../../apiDefs/query';
+import { includesOAuthAPI, includesInternalAPI } from '../../../../apiDefs/query';
 import { Values } from './SandboxAccessForm';
 
 export const anyOAuthApisSelected = (apis: string[]): boolean => {
   const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);
   return includesOAuthAPI(apiIdsByField);
+};
+
+export const anyInternalApisSelected = (apis: string[]): boolean => {
+  const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);
+  return includesInternalAPI(apiIdsByField);
 };
 
 const anyApiSelected = ({ apis }: Values): boolean => apis.length > 0;
@@ -21,11 +26,6 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   const errors: FormikErrors<Values> = {
     email: validateEmail(values.email),
     firstName: validatePresence('first name', values.firstName),
-    internalApiInfo: {
-      programName: validatePresence('program name', values.internalApiInfo.programName),
-      sponsorEmail: validateEmail(values.internalApiInfo.sponsorEmail),
-      vaEmail: validateVAEmail(values.internalApiInfo.vaEmail),
-    },
     lastName: validatePresence('last name', values.lastName),
     organization: validatePresence('organization', values.organization),
   };
@@ -41,6 +41,22 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   if (anyOAuthApisSelected(values.apis)) {
     errors.oAuthApplicationType = validateOAuthApplicationType(values.oAuthApplicationType);
     errors.oAuthRedirectURI = validateOAuthRedirectURI(values.oAuthRedirectURI);
+  }
+
+  if (anyInternalApisSelected(values.apis)) {
+    const vaEmailPattern = /^[A-Za-z0-9._%+-]+@va.gov$/;
+
+    errors.internalApiInfo = {
+      programName: validatePresence('program name', values.internalApiInfo.programName),
+      sponsorEmail: validateEmail(values.internalApiInfo.sponsorEmail),
+      vaEmail: !vaEmailPattern.test(values.email) ? validateVAEmail(values.internalApiInfo.vaEmail) : undefined,
+    };
+
+    const internalInfoErrors = errors.internalApiInfo;
+
+    if (!internalInfoErrors.programName && !internalInfoErrors.sponsorEmail && !internalInfoErrors.vaEmail) {
+      delete errors.internalApiInfo
+    }
   }
 
   /*

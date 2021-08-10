@@ -13,6 +13,7 @@ export const APPLY_URL = `${BACKEND_BASE_URL}/developer_application`;
 export const CONTACT_US_URL = `${BACKEND_BASE_URL}/contact-us`;
 
 export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
+  addressValidation: 'address_validation',
   benefits: 'benefits',
   claims: 'claims',
   claimsAttributes: 'claims_attributes',
