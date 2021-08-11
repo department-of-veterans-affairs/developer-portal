@@ -19,13 +19,11 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
             <>
               <span>{api.name}</span>
               <span className="vads-u-display--inline-block vads-u-margin-left--1">
-                {(api.vaInternalOnly || api.trustedPartnerOnly || api.openData) && (
-                  <ApiTags
-                    openData={api.openData}
-                    trustedPartnerOnly={api.trustedPartnerOnly}
-                    vaInternalOnly={api.vaInternalOnly}
-                  />
-                )}
+                <ApiTags
+                  openData={api.openData}
+                  trustedPartnerOnly={api.trustedPartnerOnly}
+                  vaInternalOnly={api.vaInternalOnly}
+                />
               </span>
             </>
           }
