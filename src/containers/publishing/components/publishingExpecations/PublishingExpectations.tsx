@@ -1,6 +1,5 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import CollapsiblePanel from '@department-of-veterans-affairs/component-library/CollapsiblePanel';
 import { PageHeader } from '../../../../components';
 import {
   AuthenticationMarkdown,
@@ -27,39 +26,53 @@ const PublishingExpectations = (): JSX.Element => (
     </p>
 
     <h2>Security</h2>
-    <CollapsiblePanel panelName="We follow industry best practices regarding security and privacy to ensure the data is safe and secure.">
-      <SecurityMarkdown authenticationUrl="/explore/authorization" />
-    </CollapsiblePanel>
+    <va-accordion>
+      <va-accordion-item header="We follow industry best practices regarding security and privacy to ensure the data is safe and secure.">
+        <SecurityMarkdown authenticationUrl="/explore/authorization" />
+      </va-accordion-item>
+    </va-accordion>
 
     <h2>Documentation</h2>
-    <CollapsiblePanel panelName="API documentation on Lighthouse adheres to strict quality standards.">
-      <DocumentationMarkdown />
-    </CollapsiblePanel>
+    <va-accordion>
+      <va-accordion-item header="API documentation on Lighthouse adheres to strict quality standards.">
+        <DocumentationMarkdown />
+      </va-accordion-item>
+    </va-accordion>
 
     <h2>Versioning</h2>
-    <CollapsiblePanel panelName="Thoughtful and consistent versioning is key to API functionality and availability.">
-      <VersioningMarkdown />
-    </CollapsiblePanel>
+    <va-accordion>
+      <va-accordion-item header="Thoughtful and consistent versioning is key to API functionality and availability.">
+        <VersioningMarkdown />
+      </va-accordion-item>
+    </va-accordion>
 
     <h2>Monitoring</h2>
-    <CollapsiblePanel panelName="We monitor APIs closely to ensure they are available when your consumers needs them most.">
-      <MonitoringMarkdown />
-    </CollapsiblePanel>
+    <va-accordion>
+      <va-accordion-item header="We monitor APIs closely to ensure they are available when your consumers needs them most.">
+        <MonitoringMarkdown />
+      </va-accordion-item>
+    </va-accordion>
 
     <h2>Support</h2>
-    <CollapsiblePanel panelName="Before launching your API, we will work with you to define the details of a robust support plan.">
-      <SupportMarkdown />
-    </CollapsiblePanel>
+    <va-accordion>
+      <va-accordion-item header="Before launching your API, we will work with you to define the details of a robust support plan.">
+        <SupportMarkdown />
+      </va-accordion-item>
+    </va-accordion>
 
     <h2>Modernization</h2>
-    <CollapsiblePanel panelName="We provide only RESTful APIs that meet modern API standards for versioning, compatibility, and more.">
-      <ModernizationMarkdown />
-    </CollapsiblePanel>
+    <va-accordion>
+      <va-accordion-item header="We provide only RESTful APIs that meet modern API standards for versioning, compatibility, and more.">
+        <ModernizationMarkdown />
+      </va-accordion-item>
+    </va-accordion>
 
     <h2>Authentication and Authorization</h2>
-    <CollapsiblePanel panelName="We handle authentication and authorization for streamlined and robust security measures.">
-      <AuthenticationMarkdown />
-    </CollapsiblePanel>
+    <va-accordion>
+      <va-accordion-item header="We handle authentication and authorization for streamlined and robust security measures.">
+        <AuthenticationMarkdown />
+      </va-accordion-item>
+    </va-accordion>
   </>
 );
 
