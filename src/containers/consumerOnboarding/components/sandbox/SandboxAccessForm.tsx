@@ -116,7 +116,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
         </p>
       )}
       <div
-        className={classNames('vads-l-col--12', { 'vads-u-padding-x--2p5': !consumerDocsEnabled })}
+        className={classNames({ 'vads-u-padding-x--2p5': !consumerDocsEnabled })}
       >
         <Formik
           initialValues={initialValues}

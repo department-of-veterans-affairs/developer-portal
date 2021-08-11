@@ -58,6 +58,7 @@ const OAuthAppInfo = (): JSX.Element => {
           'vads-u-margin-top--4',
           'oauth-uri-input',
           'vads-u-padding-left--1p5',
+          'large-screen:vads-l-col--8',
           redirectUriClass
         )}
       />

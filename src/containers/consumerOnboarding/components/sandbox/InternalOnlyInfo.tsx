@@ -11,6 +11,7 @@ const InternalOnlyInfo = (): JSX.Element => {
   const internalApiInfoName = 'internalApiInfo';
   const shouldDisplayInputError = !!errors[internalApiInfoName];
   const internalApiInfoClass = shouldDisplayInputError ? 'vads-u-margin-left--3' : '';
+  const internalInputClassNames = 'vads-u-margin-top--2 large-screen:vads-l-col--8';
 
   return (
     <div className={classNames('vads-u-padding-left--1p5')}>
@@ -25,7 +26,7 @@ const InternalOnlyInfo = (): JSX.Element => {
         label="Program name"
         name="internalApiInfo.programName"
         required
-        className={classNames('vads-u-margin-top--2', internalApiInfoClass)}
+        className={classNames(internalInputClassNames, internalApiInfoClass)}
       />
 
       <TextField
@@ -33,7 +34,7 @@ const InternalOnlyInfo = (): JSX.Element => {
         name="internalApiInfo.sponsorEmail"
         required
         type="email"
-        className={classNames('vads-u-margin-top--2', internalApiInfoClass)}
+        className={classNames(internalInputClassNames, internalApiInfoClass)}
       />
 
       {!vaEmailPattern.test(formValues.email) && (
@@ -42,7 +43,7 @@ const InternalOnlyInfo = (): JSX.Element => {
           name="internalApiInfo.vaEmail"
           required
           type="email"
-          className={classNames('vads-u-margin-top--2', internalApiInfoClass)}
+          className={classNames(internalInputClassNames, internalApiInfoClass)}
         />
       )}
     </div>
