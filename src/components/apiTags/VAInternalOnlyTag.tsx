@@ -4,7 +4,7 @@ import * as React from 'react';
 import './ApiTags.scss';
 
 const VAInternalOnlyTag = (): JSX.Element => (
-  <div className={classNames('api-tags', 'vads-u-margin-bottom--1p5', 'vads-u-font-size--sm')}>
+  <div className={classNames('api-tags', 'vads-u-font-size--sm')}>
     <span
       className={classNames(
         'vads-u-padding-y--0p5',
