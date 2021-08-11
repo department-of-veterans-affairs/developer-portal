@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import { Route, Router } from 'react-router-dom';
+import { applyPolyfills, defineCustomElements } from 'web-components/loader';
 import { Footer, Header, PageContent } from './components';
 import { FlagsProvider, getFlags } from './flags';
 import { history } from './store';
@@ -11,6 +12,11 @@ import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
 
 declare const window: { VetsGov?: Record<string, unknown> };
+
+// Apply Polyfills for IE11 for custom web-components
+void applyPolyfills().then(() => {
+  void defineCustomElements();
+});
 
 /**
  * the double flex container only exists and is flexed to
