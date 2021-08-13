@@ -21,7 +21,7 @@ const IdToken = (): JSX.Element => (
     <p>
       The JWT&quot;s header has two fields, <code>alg</code> and <code>kid</code>. <code>alg</code>{' '}
       indicates the algorithm that was used to sign the JWT, and <code>kid</code> identifies the key
-      that was used to sign the JWT. Signing keys and associated metadata are accessible from
+      that was used to sign the JWT. Signing keys and associated metadata are accessible from{' '}
       <a href="https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration">
         https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration
       </a>

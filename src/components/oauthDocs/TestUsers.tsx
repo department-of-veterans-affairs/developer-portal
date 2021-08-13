@@ -10,7 +10,7 @@ const TestUsers = (): JSX.Element => (
       recordings of underlying services. We provide{' '}
       <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts.md">
         test accounts
-      </a>
+      </a>{' '}
       for you to use while developing your Lighthouse-based application, and you must be able to log
       in to access this data. These test accounts are API-specific, and contain data that is geared
       toward each API.

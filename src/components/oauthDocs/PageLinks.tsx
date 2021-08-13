@@ -54,22 +54,22 @@ const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
               </li>
             </ul>
           </li>
-        </ul>
-      </li>
-      <li>
-        <HashLink to={{ ...location, hash: '#pkce-authorization' }}>
-          PKCE (Proof Key for Code Exchange) Authorization
-        </HashLink>
-        <ul>
           <li>
-            <HashLink to={{ ...location, hash: '#pkce-requesting-authorization' }}>
-              Requesting Authorization
+            <HashLink to={{ ...location, hash: '#pkce-authorization' }}>
+              PKCE (Proof Key for Code Exchange) Authorization
             </HashLink>
-          </li>
-          <li>
-            <HashLink to={{ ...location, hash: '#pkce-requesting-a-token' }}>
-              Requesting a Token with an Authorization Code Grant
-            </HashLink>
+            <ul>
+              <li>
+                <HashLink to={{ ...location, hash: '#pkce-requesting-authorization' }}>
+                  Requesting Authorization
+                </HashLink>
+              </li>
+              <li>
+                <HashLink to={{ ...location, hash: '#pkce-requesting-a-token' }}>
+                  Requesting a Token with an Authorization Code Grant
+                </HashLink>
+              </li>
+            </ul>
           </li>
         </ul>
       </li>
