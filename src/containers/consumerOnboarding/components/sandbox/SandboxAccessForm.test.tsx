@@ -173,7 +173,7 @@ describe('SandboxAccessForm', () => {
       expect(await screen.findByText('Enter an http or https URI.')).toBeInTheDocument();
     });
 
-    it('validates internal api fields when clicked', async () => {
+    it('validates internal api fields when selected', async () => {
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
           delay: 0.01,
@@ -203,7 +203,7 @@ describe('SandboxAccessForm', () => {
       expect(await screen.findByText('Enter a valid VA-issued email address.')).toBeInTheDocument();
     });
 
-    it('validates internal api fields when clicked and does not ask for VA email', async () => {
+    it('validates internal api fields when clicked and does not ask for VA email if a VA email exists in the dev info email field', async () => {
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
           delay: 0.01,
@@ -230,6 +230,7 @@ describe('SandboxAccessForm', () => {
 
       expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
       expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
+      expect(screen.queryByRole('textbox', { name: 'Enter a valid VA-issued email address.' })).not.toBeInTheDocument();
     });
 
     it('displays `Sending...` during form submission', async () => {
