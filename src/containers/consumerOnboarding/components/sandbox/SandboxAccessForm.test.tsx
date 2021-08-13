@@ -196,6 +196,7 @@ describe('SandboxAccessForm', () => {
         userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
+      
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
