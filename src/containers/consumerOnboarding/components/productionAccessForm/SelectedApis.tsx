@@ -57,7 +57,7 @@ const SelectedAPIs = (): JSX.Element => {
         >
           <ErrorMessage name="apis" />
         </span>
-        <ApiCheckboxList apiCheckboxes={allApis} />
+        <ApiCheckboxList apis={allApis} />
       </div>
     </fieldset>
   );

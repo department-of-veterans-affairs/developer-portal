@@ -5,12 +5,12 @@ import { Flag } from '../../flags';
 import { FLAG_HOSTED_APIS } from '../../types/constants';
 
 interface APICheckboxListProps {
-  apiCheckboxes: APIDescription[];
+  apis: APIDescription[];
 }
 
-const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => (
+const ApiCheckboxList = ({ apis }: APICheckboxListProps): JSX.Element => (
   <>
-    {apiCheckboxes.map(api => (
+    {apis.map(api => (
       <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
         <CheckboxRadioField
           type="checkbox"
