@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { CheckboxRadioField, FieldSet } from '../../../../components';
+import { CheckboxRadioField, FieldSet, ApiTags } from '../../../../components';
 import { getAllOauthApis, getAllKeyAuthApis } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
 import { Flag } from '../../../../flags';
@@ -24,7 +24,18 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
           <CheckboxRadioField
             type="checkbox"
             name="apis"
-            label={api.name}
+            label={
+              <>
+                <span>{api.name}</span>
+                <span className="vads-u-display--inline-block vads-u-margin-left--1">
+                  <ApiTags
+                    openData={api.openData}
+                    trustedPartnerOnly={api.trustedPartnerOnly}
+                    vaInternalOnly={api.vaInternalOnly}
+                  />
+                </span>
+              </>
+            }
             value={api.altID ?? api.urlFragment}
           />
         </Flag>
