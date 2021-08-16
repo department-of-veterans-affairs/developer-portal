@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { CheckboxRadioField, FieldSet } from '../../../../components';
+import { CheckboxRadioField, FieldSet, ApiTags } from '../../../../components';
 import { getAllOauthApis, getAllKeyAuthApis } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
 import { Flag } from '../../../../flags';
@@ -36,13 +36,22 @@ const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): 
               <CheckboxRadioField
                 type="checkbox"
                 name="apis"
-                label={api.name}
+                label={
+                  <>
+                    <span>{api.name}</span>
+                    <span className="vads-u-display--inline-block vads-u-margin-left--1">
+                      <ApiTags
+                        openData={api.openData}
+                        trustedPartnerOnly={api.trustedPartnerOnly}
+                        vaInternalOnly={api.vaInternalOnly}
+                      />
+                    </span>
+                  </>
+                }
                 value={apiCheckboxName}
                 className="vads-u-padding-left--1p5"
               />
-              {internalApiSelected && (
-                <InternalOnlyInfo />
-              )}
+              {internalApiSelected && <InternalOnlyInfo />}
             </div>
           </Flag>
         );
@@ -86,7 +95,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
         'vads-u-background-color--gray-lightest',
         'vads-u-margin-top--2p5',
         'vads-u-padding-right--2',
-        'vads-l-col--12'
+        'vads-l-col--12',
       )}
     >
       <div className="vads-u-margin-top--1 apply-checkbox-labels">
