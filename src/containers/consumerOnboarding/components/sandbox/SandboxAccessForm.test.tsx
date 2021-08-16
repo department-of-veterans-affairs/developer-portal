@@ -23,9 +23,7 @@ const allOauthApis = getAllOauthApis()
 
 const allKeyAuthApis = getAllKeyAuthApis()
   .filter(api => api.altID)
-  .map((api: APIDescription) =>
- api.openData ? `${api.name} Open Data` : api.name
- );
+  .map((api: APIDescription) => (api.openData ? `${api.name} Open Data` : api.name));
 
 describe('SandboxAccessForm', () => {
   beforeEach(() => {
@@ -213,13 +211,9 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
 
-        await userEvent.type(
-          screen.getByRole('textbox', { name: /Email/ }),
-          'pippin@va.gov',
-          {
-            delay: 0.01,
-          },
-        );
+        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@va.gov', {
+          delay: 0.01,
+        });
 
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
@@ -359,9 +353,9 @@ describe('SandboxAccessForm', () => {
   describe('SelectedApis', () => {
     describe('Standard APIs', () => {
       it.each(allKeyAuthApis)('toggles the %s checkbox on click', name => {
-        const checkboxName = RegExp( name, 'g');
+        const checkboxName = RegExp(name, 'g');
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
-          name: checkboxName
+          name: checkboxName,
         }) as HTMLInputElement;
         expect(checkbox.checked).toBeFalsy();
 
