@@ -49,7 +49,7 @@ describe('Apply', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
