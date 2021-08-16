@@ -3,6 +3,9 @@ import * as React from 'react';
 
 import './ApiTags.scss';
 
+/**
+ * Tag Types
+ */
 export enum tagTypes {
     OpenData = 0,
     TrustedPartner = 1,
@@ -13,45 +16,47 @@ interface ApiTagProps  {
     type: number;
 }
 
-const ApiTag = ({ type }: ApiTagProps): JSX.Element => {
-    let label = '';
-    let background = '';
+interface APITagConfiguration{
+    label: string;
+    background: string;
+}
 
-    switch (type) {
-        case tagTypes.OpenData:
-            label = 'Open Data';
-            background = 'vads-u-background-color--primary-alt-light';
-            break;
+/**
+ * Tag Configuration
+ */
+const apiTagConfig: APITagConfiguration[] = [];
 
-        case tagTypes.TrustedPartner:
-            label = 'Internal VA use only';
-            background = 'vads-u-background-color--gold';
-            break;
+apiTagConfig[tagTypes.OpenData] = {
+    background: 'vads-u-background-color--primary-alt-light',
+    label: 'Open Data',
+};
 
-        case tagTypes.VAInternalOnly:
-            label = 'Internal VA use only';
-            background = 'vads-u-background-color--gold';
-            break;
-        default:
-            label = 'Internal VA use only';
-            background = 'vads-u-background-color--gold';
-            break;
-    }
+apiTagConfig[tagTypes.TrustedPartner] = {
+    background: 'vads-u-background-color--gold',
+    label: 'Internal VA use only',
+};
 
-    return (
-      <div className={classNames('api-tags', 'vads-u-font-size--sm')}>
-        <span
-          className={classNames(
+apiTagConfig[tagTypes.VAInternalOnly] = {
+    background: 'vads-u-background-color--gold',
+    label: 'Internal VA use only',
+};
+
+/**
+ *  APITag Component
+ */
+const ApiTag = ({ type }: ApiTagProps): JSX.Element => (
+  <div className={classNames('api-tags', 'vads-u-font-size--sm')}>
+    <span
+      className={classNames(
         'vads-u-padding-y--0p5',
         'vads-u-padding-x--1',
-        background,
+        apiTagConfig[type].background,
         'vads-u-color--black',
       )}
-        >
-          {label}
-        </span>
-      </div>
+    >
+      {apiTagConfig[type].label}
+    </span>
+  </div>
 );
- };
 
 export default ApiTag;
