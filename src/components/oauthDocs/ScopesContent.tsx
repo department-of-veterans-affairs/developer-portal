@@ -51,7 +51,7 @@ const ScopesContent = (): JSX.Element => {
               <code>profile</code>
             </td>
             <td>
-              Granted by default, allows access to a user&quot;s first and last name and email.
+              Granted by default, allows access to a user&apos;s first and last name and email.
             </td>
           </tr>
           <tr>
@@ -70,7 +70,7 @@ const ScopesContent = (): JSX.Element => {
             </td>
             <td>
               An <code>id_token</code> is available in the authorization code flow (response_type =
-              code) token response when the <code>openid</code> scope is used.
+              code) token response when the &apos;openid&apos; scope is used.
             </td>
           </tr>
         </tbody>

@@ -19,7 +19,7 @@ const IdToken = (): JSX.Element => (
     </p>
     <h3>Header</h3>
     <p>
-      The JWT&quot;s header has two fields, <code>alg</code> and <code>kid</code>. <code>alg</code>{' '}
+      The JWT&apos;s header has two fields, <code>alg</code> and <code>kid</code>. <code>alg</code>{' '}
       indicates the algorithm that was used to sign the JWT, and <code>kid</code> identifies the key
       that was used to sign the JWT. Signing keys and associated metadata are accessible from{' '}
       <a href="https://sandbox-api.va.gov/oauth2/.well-known/openid-configuration">
@@ -29,9 +29,9 @@ const IdToken = (): JSX.Element => (
     </p>
     <h3>Signature</h3>
     <p>
-      The signature is a cryptographically generated signature of the JWT&quot;s header and payload
-      used to confirm the JWT&quot;s authenticity. Your application must validate this signature
-      using the <code>alg</code> and the <code>kid</code> from the JWT&quot;s header. You may want
+      The signature is a cryptographically generated signature of the JWT&apos;s header and payload
+      used to confirm the JWT&apos;s authenticity. Your application must validate this signature
+      using the <code>alg</code> and the <code>kid</code> from the JWT&apos;s header. You may want
       use one of the JWT libraries listed at <a href="https://jwt.io">jwt.io</a> to help make this
       process easier.
     </p>
