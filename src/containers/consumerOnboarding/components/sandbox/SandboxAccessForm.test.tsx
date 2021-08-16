@@ -201,8 +201,7 @@ describe('SandboxAccessForm', () => {
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
-      expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
-      expect(await screen.findByText('Enter a valid VA-issued email address.')).toBeInTheDocument();
+      expect(await screen.findAllByText('Enter a valid VA-issued email address.')).toHaveLength(2);
     });
 
     it('validates internal api fields when clicked and does not ask for VA email if a VA email exists in the dev info email field', async () => {
@@ -231,8 +230,8 @@ describe('SandboxAccessForm', () => {
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
       expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
-      expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
-      expect(screen.queryByRole('textbox', { name: 'Enter a valid VA-issued email address.' })).not.toBeInTheDocument();
+      expect(await screen.findByText('Enter a valid VA-issued email address.')).toBeInTheDocument();
+      expect(screen.queryByLabelText('Your VA issued email')).not.toBeInTheDocument();
     });
 
     it('displays `Sending...` during form submission', async () => {
@@ -360,8 +359,9 @@ describe('SandboxAccessForm', () => {
   describe('SelectedApis', () => {
     describe('Standard APIs', () => {
       it.each(allKeyAuthApis)('toggles the %s checkbox on click', name => {
+        const checkboxName = RegExp( name, 'g');
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
-          name,
+          name: checkboxName
         }) as HTMLInputElement;
         expect(checkbox.checked).toBeFalsy();
 
