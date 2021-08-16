@@ -48,7 +48,7 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
 
     errors.internalApiInfo = {
       programName: validatePresence('program name', values.internalApiInfo.programName),
-      sponsorEmail: validateEmail(values.internalApiInfo.sponsorEmail),
+      sponsorEmail: validateVAEmail(values.internalApiInfo.sponsorEmail),
       // eslint-disable-next-line no-negated-condition
       vaEmail: !vaEmailPattern.test(values.email) ? validateVAEmail(values.internalApiInfo.vaEmail) : '',
     };
