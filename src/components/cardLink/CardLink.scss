@@ -23,7 +23,7 @@
     right: 0;
     bottom: 0;
   }
-  
+
   a:visited {
     color: $color-link-default;
   }
@@ -44,16 +44,7 @@
     }
   }
 
-
-  .card-content > {
-    * + *,
-    .va-api-description:last-child {
-      margin-top: 0.75rem;
-    }
-
-    :last-child {
-      margin-top: auto;
-      padding-top: 0.75rem;
-    }
+  .card-content p:last-child {
+    margin-top: auto;
   }
 }
