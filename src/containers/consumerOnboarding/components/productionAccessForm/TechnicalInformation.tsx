@@ -128,6 +128,7 @@ const TechnicalInformation: FC = () => {
           </FieldSet>
 
           <TextField
+            as="textarea"
             label="List the scopes for which you are requesting access."
             name="scopesAccessRequested"
             className="vads-u-margin-top--4"
