@@ -1,43 +1,9 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { CheckboxRadioField, ApiTags } from '../../../../components';
+import { ApiCheckboxList } from '../../../../components';
 import { getAllApis } from '../../../../apiDefs/query';
-import { APIDescription } from '../../../../apiDefs/schema';
-import { Flag } from '../../../../flags';
-import { FLAG_HOSTED_APIS } from '../../../../types/constants';
 
-interface APICheckboxListProps {
-  apiCheckboxes: APIDescription[];
-}
-
-const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => (
-  <>
-    {apiCheckboxes.map(api => (
-      <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
-        <CheckboxRadioField
-          type="checkbox"
-          name="apis"
-          label={
-            <>
-              <span>{api.name}</span>
-              <span className="vads-u-display--inline-block vads-u-margin-left--1">
-                {(api.vaInternalOnly || api.trustedPartnerOnly || api.openData) && (
-                  <ApiTags
-                    openData={api.openData}
-                    trustedPartnerOnly={api.trustedPartnerOnly}
-                    vaInternalOnly={api.vaInternalOnly}
-                  />
-                )}
-              </span>
-            </>
-          }
-          value={api.altID ?? api.urlFragment}
-        />
-      </Flag>
-    ))}
-  </>
-);
 const allApis = getAllApis();
 
 const SelectedAPIs = (): JSX.Element => {
@@ -91,7 +57,7 @@ const SelectedAPIs = (): JSX.Element => {
         >
           <ErrorMessage name="apis" />
         </span>
-        <ApiCheckboxList apiCheckboxes={allApis} />
+        <ApiCheckboxList apis={allApis} />
       </div>
     </fieldset>
   );
