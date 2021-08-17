@@ -235,9 +235,16 @@ const ProductionAccess: FC = () => {
                 </>
               )}
               {renderStepContent(activeStep)}
-              <div>
+              <div className="vads-u-margin-y--5">
                 <button
-                  className="usa-button va-api-button-default vads-u-border--2px vads-u-border-color--primary"
+                  className={classNames(
+                    'usa-button',
+                    'va-api-button-default',
+                    'vads-u-border--2px',
+                    'vads-u-color--primary',
+                    'vads-u-margin-right--3',
+                  )}
+                  // className="usa-button va-api-button-default vads-u-border--2px vads-u-border-color--primary"
                   type="button"
                   onClick={handleBack}
                 >

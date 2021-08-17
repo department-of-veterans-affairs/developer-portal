@@ -11,7 +11,7 @@ const PolicyGovernance: FC = () => {
   }, []);
   return (
     <>
-      <h3>Terms of service and privacy policies</h3>
+      <h3 className="vads-u-margin-bottom--3">Terms of service and privacy policies</h3>
       <Flag
         name={[FLAG_LIST_AND_LOOP]}
         fallbackRender={(): JSX.Element => (
