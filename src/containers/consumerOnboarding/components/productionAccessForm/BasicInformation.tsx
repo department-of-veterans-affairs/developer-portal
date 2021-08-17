@@ -8,14 +8,15 @@ import ListOfTextEntries from './ListOfTextEntries';
 
 const BasicInformation: FC = () => {
   const {
-    values: { hasMonetized, isVetFacing, apis },
+    values: { monitizedVeteranInformation, veteranFacing, apis },
   } = useFormikContext<Values>();
-  const hasMonetizedBorderClass = hasMonetized === 'yes' ? 'vads-u-border-left--4px' : '';
+  const hasMonetizedBorderClass =
+    monitizedVeteranInformation === 'yes' ? 'vads-u-border-left--4px' : '';
   const hasMonetizedsBorderColorClass =
-    hasMonetized === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
-  const isVetFacingBorderClass = isVetFacing === 'yes' ? 'vads-u-border-left--4px' : '';
+    monitizedVeteranInformation === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+  const isVetFacingBorderClass = veteranFacing === 'yes' ? 'vads-u-border-left--4px' : '';
   const isVetFacingBorderColorClass =
-    isVetFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+    veteranFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
   const firstInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     firstInputRef.current?.focus();
@@ -83,7 +84,7 @@ const BasicInformation: FC = () => {
       />
       <TextField
         label="Front-end name of application (if different from organization name)"
-        name="applicationName"
+        name="appName"
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
       />
       <ListOfTextEntries
@@ -131,17 +132,29 @@ const BasicInformation: FC = () => {
         )}
         legend="Have you ever monetized Veteran data? "
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-        name="hasMonetized"
+        name="monitizedVeteranInformation"
         required
       >
-        <CheckboxRadioField type="radio" label="Yes" name="hasMonetized" value="yes" required />
+        <CheckboxRadioField
+          type="radio"
+          label="Yes"
+          name="monitizedVeteranInformation"
+          value="yes"
+          required
+        />
 
-        <CheckboxRadioField type="radio" label="No" name="hasMonetized" value="no" required />
-        {hasMonetized === 'yes' && (
+        <CheckboxRadioField
+          type="radio"
+          label="No"
+          name="monitizedVeteranInformation"
+          value="no"
+          required
+        />
+        {monitizedVeteranInformation === 'yes' && (
           <TextField
             as="textarea"
             label="If yes, explain."
-            name="monetizationExplination"
+            name="monitizationExplanation"
             className="vads-u-margin-top--4"
             required
           />
@@ -157,13 +170,13 @@ const BasicInformation: FC = () => {
         )}
         legend="Is your app Veteran-facing?"
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-        name="isVetFacing"
+        name="veteranFacing"
         required
       >
-        <CheckboxRadioField type="radio" label="Yes" name="isVetFacing" value="yes" required />
+        <CheckboxRadioField type="radio" label="Yes" name="veteranFacing" value="yes" required />
 
-        <CheckboxRadioField type="radio" label="No" name="isVetFacing" value="no" required />
-        {isVetFacing === 'yes' && (
+        <CheckboxRadioField type="radio" label="No" name="veteranFacing" value="no" required />
+        {veteranFacing === 'yes' && (
           <>
             <TextField
               label="Provide a link to your app’s primary webpage."

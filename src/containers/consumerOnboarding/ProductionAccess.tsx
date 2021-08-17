@@ -1,3 +1,4 @@
+/* eslint-disable id-length */
 /* eslint-disable max-lines */
 import React, { FC, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,9 +7,13 @@ import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from '@department-of-veterans-affairs/component-library/Modal';
 import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
-import { useHistory } from 'react-router-dom';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import { Link, useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { useModalController } from '../../hooks';
+import { ProductionAccessRequest } from '../../types/productionAccess';
+import { makeRequest, ResponseType } from '../../utils/makeRequest';
+import { PRODUCTION_ACCESS_URL } from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -27,9 +32,9 @@ const possibleSteps = [
 
 export interface Values {
   apis: string[];
-  is508Compliant: string;
-  isUSBasedCompany: string;
-  termsOfService: boolean;
+  is508Compliant?: string;
+  isUSBasedCompany?: string;
+  termsOfService?: boolean;
   primaryContact: {
     firstName: string;
     lastName: string;
@@ -42,51 +47,51 @@ export interface Values {
   };
   organization: string;
   phoneNumber: string;
-  applicationName?: string;
+  appName: string;
   statusUpdateEmails: string[];
   valueProvided: string;
-  businessModel?: string;
-  hasMonetized: string;
-  monetizationExplination?: string;
-  isVetFacing: string;
-  website?: string;
-  signUpLink?: string[];
-  supportLink?: string[];
-  platforms?: string;
-  appDescription?: string;
-  vasiSystemName?: string;
-  credentialStorage: string;
+  businessModel: string;
+  monitizedVeteranInformation: string;
+  monitizationExplanation?: string;
+  veteranFacing: string;
+  website: string;
+  signUpLink: string[];
+  supportLink: string[];
+  platforms: string;
+  appDescription: string;
+  vasiSystemName: string;
   storePIIOrPHI: string;
-  piiStorageMethod?: string;
-  multipleReqSafeguards?: string;
-  breachManagementProcess?: string;
-  vulnerabilityManagement?: string;
-  exposesToThirdParties: string;
-  thirdPartyInfoDescription?: string;
+  piiStorageMethod: string;
+  multipleReqSafeguards: string;
+  breachManagementProcess: string;
+  vulnerabilityManagement: string;
+  exposeVeteranInformationToThirdParties: string;
+  thirdPartyInfoDescription: string;
   scopesAccessRequested?: string;
-  distributingAPIKeysToCustomers?: string;
-  namingConvention?: string;
-  centralizedBackendLog?: string;
-  listedOnMyHealthApplication?: string;
-  policyDocuments?: string[];
+  distributingAPIKeysToCustomers: string;
+  namingConvention: string;
+  centralizedBackendLog: string;
+  listedOnMyHealthApplication: string;
+  policyDocuments: string[];
+  productionKeyCredentialStorage: string;
+  productionOrOAuthKeyCredentialStorage: string;
+  veteranFacingDescription: string;
 }
 
 const initialValues = {
   apis: [],
   appDescription: '',
-  applicationName: '',
+  appName: '',
   breachManagementProcess: '',
   businessModel: '',
   centralizedBackendLog: '',
-  credentialStorage: '',
   distributingAPIKeysToCustomers: '',
-  exposesToThirdParties: '',
-  hasMonetized: '',
+  exposeVeteranInformationToThirdParties: '',
   is508Compliant: '',
   isUSBasedCompany: '',
-  isVetFacing: '',
   listedOnMyHealthApplication: '',
-  monetizationExplination: '',
+  monitizationExplanation: '',
+  monitizedVeteranInformation: '',
   multipleReqSafeguards: '',
   namingConvention: '',
   organization: '',
@@ -99,6 +104,8 @@ const initialValues = {
     firstName: '',
     lastName: '',
   },
+  productionKeyCredentialStorage: '',
+  productionOrOAuthKeyCredentialStorage: '',
   scopesAccessRequested: '',
   secondaryContact: {
     email: '',
@@ -113,6 +120,8 @@ const initialValues = {
   thirdPartyInfoDescription: '',
   valueProvided: '',
   vasiSystemName: '',
+  veteranFacing: '',
+  veteranFacingDescription: '',
   vulnerabilityManagement: '',
   website: '',
 };
@@ -133,6 +142,7 @@ const renderStepContent = (step: number): JSX.Element => {
 };
 
 const ProductionAccess: FC = () => {
+  const [submissionError, setSubmissionError] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
@@ -141,6 +151,8 @@ const ProductionAccess: FC = () => {
   const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
   const { modalVisible: modal3Visible, setModalVisible: setModal3Visible } = useModalController();
+  const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
+
   const history = useHistory();
 
   const calculateSteps = (values: Values): void => {
@@ -174,7 +186,7 @@ const ProductionAccess: FC = () => {
       setActiveStep(activeStep - 1);
     }
   };
-  const handleSubmit = (values: Values, actions: FormikHelpers<Values>): void => {
+  const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
     setTimeout(() => {
       const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
 
@@ -183,9 +195,49 @@ const ProductionAccess: FC = () => {
       }
     }, 0);
     if (isLastStep) {
-      // TODO: In API-8236 the acutal submission of the form will be handled
-      // eslint-disable-next-line no-console
-      console.log('Submitied Form');
+      setSubmissionError(false);
+      delete values.is508Compliant;
+      delete values.isUSBasedCompany;
+      delete values.termsOfService;
+      const filteredValues = JSON.parse(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        JSON.stringify(values, (k, v) => (v === '' ? null : v)),
+      ) as Values;
+      Object.keys(filteredValues).forEach(
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        key => filteredValues[key] == null && delete filteredValues[key],
+      );
+      const applicationBody: ProductionAccessRequest = {
+        ...filteredValues,
+        apis: filteredValues.apis.join(','),
+        distributingAPIKeysToCustomers: filteredValues.distributingAPIKeysToCustomers === 'yes',
+        exposeVeteranInformationToThirdParties:
+          filteredValues.exposeVeteranInformationToThirdParties === 'yes',
+        listedOnMyHealthApplication: filteredValues.listedOnMyHealthApplication === 'yes',
+        monitizedVeteranInformation: filteredValues.monitizedVeteranInformation === 'yes',
+        storePIIOrPHI: filteredValues.storePIIOrPHI === 'yes',
+        veteranFacing: filteredValues.veteranFacing === 'yes',
+      };
+      try {
+        const response = await makeRequest(
+          PRODUCTION_ACCESS_URL,
+          {
+            body: JSON.stringify(applicationBody),
+            headers: {
+              accept: 'application/json',
+              'content-type': 'application/json',
+            },
+            method: 'POST',
+          },
+          { responseType: ResponseType.TEXT },
+        );
+        if (!response.ok) {
+          throw Error();
+        }
+        setModal4Visible(true);
+      } catch (error: unknown) {
+        setSubmissionError(true);
+      }
     } else {
       if (values.isUSBasedCompany === 'no') {
         setModal2Visible(true);
@@ -308,11 +360,46 @@ const ProductionAccess: FC = () => {
                   </a>{' '}
                   or contact us with questions.
                 </Modal>
+                <Modal
+                  id="submission-complete-modal"
+                  title="Thanks for submitting!"
+                  visible={modal4Visible}
+                  onClose={(): void => setModal4Visible(false)}
+                  primaryButton={{
+                    action: (): void => setModal4Visible(false),
+                    text: 'Close',
+                  }}
+                >
+                  <p>
+                    We’ve received your production access request and have sent you an email
+                    confirmation. We’ll be in touch with next steps or required changes within 1-2
+                    weeks, depending on the API.
+                  </p>
+                  <p>
+                    It’s good to remember that getting production access can take over a month. For
+                    open data APIs, this takes a week or less. Learn more about the production
+                    access timelines.
+                  </p>
+                  <p>
+                    In the meantime, you may <Link to="/support/contact-us">contact us</Link>if you
+                    have any questions or learn more about working with our APIs
+                  </p>
+                </Modal>
               </div>
             </Form>
-            {/* ); */}
-            {/* }} */}
           </Formik>
+          {submissionError && (
+            <AlertBox
+              status="error"
+              headline="We encountered a server error while saving your form. Please try again later."
+              content={
+                <span>
+                  Need assistance? Create an issue through our{' '}
+                  <Link to="/support">Support page</Link>
+                </span>
+              }
+            />
+          )}
         </div>
       </div>
     </div>

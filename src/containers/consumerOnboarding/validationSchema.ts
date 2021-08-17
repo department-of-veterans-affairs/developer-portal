@@ -1,3 +1,4 @@
+/* eslint-disable id-length */
 /* eslint-disable newline-per-chained-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { includesInternalOnlyAPI, includesOAuthAPI } from '../../apiDefs/query';
@@ -25,7 +26,7 @@ const validationSchema = [
     appDescription: yup
       .string()
       .isNotATestString()
-      .when('isVetFacing', {
+      .when('veteranFacing', {
         is: (value: string) => value === 'yes',
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
@@ -38,16 +39,15 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Describe your business model.'),
       }),
-    hasMonetized: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-    isVetFacing: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-    monetizationExplination: yup
+    monitizationExplanation: yup
       .string()
       .isNotATestString()
-      .when('hasMonetized', {
+      .when('monitizedVeteranInformation', {
         is: (value: string) => value === 'yes',
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter an explanation.'),
       }),
+    monitizedVeteranInformation: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     organization: yup
       .string()
       .isNotATestString()
@@ -61,7 +61,7 @@ const validationSchema = [
     platforms: yup
       .string()
       .isNotATestString()
-      .when('isVetFacing', {
+      .when('veteranFacing', {
         is: (value: string) => value === 'yes',
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a list of devices/platforms.'),
@@ -93,7 +93,7 @@ const validationSchema = [
     signUpLink: yup
       .array()
       .of(yup.string().isNotATestString().url())
-      .when('isVetFacing', {
+      .when('veteranFacing', {
         is: (value: string) => value === 'yes',
         otherwise: yup.array().of(yup.string().isNotATestString().url()),
         then: yup
@@ -110,7 +110,7 @@ const validationSchema = [
     supportLink: yup
       .array()
       .of(yup.string().isNotATestString().url())
-      .when('isVetFacing', {
+      .when('veteranFacing', {
         is: (value: string) => value === 'yes',
         otherwise: yup.array().of(yup.string().isNotATestString().url()),
         then: yup
@@ -128,11 +128,12 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter the VASI system name.'),
       }),
+    veteranFacing: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     website: yup
       .string()
       .isNotATestString()
       .url()
-      .when('isVetFacing', {
+      .when('veteranFacing', {
         is: (value: string) => value === 'yes',
         otherwise: yup.string().isNotATestString().url(),
         then: yup.string().isNotATestString().url().required('Add a link.'),
@@ -155,13 +156,12 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Provide the naming convention.'),
       }),
-    credentialStorage: yup.string().isNotATestString().required('Enter a description.'),
     distributingAPIKeysToCustomers: yup.string().when('apis', {
       is: (value: string[]) => value.includes('benefits'),
       otherwise: yup.string().oneOf(['yes', 'no']),
       then: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     }),
-    exposesToThirdParties: yup.string().when('apis', {
+    exposeVeteranInformationToThirdParties: yup.string().when('apis', {
       is: (value: string[]) => includesOAuthAPI(value),
       otherwise: yup.string().oneOf(['yes', 'no']),
       then: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
@@ -195,6 +195,10 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
       }),
+    productionKeyCredentialStorage: yup
+      .string()
+      .isNotATestString()
+      .required('Enter a description.'),
     scopesAccessRequested: yup
       .string()
       .isNotATestString()
@@ -207,7 +211,7 @@ const validationSchema = [
     thirdPartyInfoDescription: yup
       .string()
       .isNotATestString()
-      .when('exposesToThirdParties', {
+      .when('exposeVeteranInformationToThirdParties', {
         is: (value: string) => value === 'yes',
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
