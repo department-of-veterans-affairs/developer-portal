@@ -1,7 +1,7 @@
 /* eslint-disable id-length */
 /* eslint-disable newline-per-chained-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { includesInternalOnlyAPI, includesOAuthAPI } from '../../apiDefs/query';
+import { includesInternalOnlyAPI, includesOAuthAPI, onlyOpenDataAPIs } from '../../apiDefs/query';
 import yup from './yup-extended';
 
 const phoneRegex =
@@ -78,6 +78,14 @@ const validationSchema = [
         lastName: yup.string().isNotATestString().required('Enter a last name.'),
       })
       .required(),
+    productionKeyCredentialStorage: yup
+      .string()
+      .isNotATestString()
+      .when('apis', {
+        is: (value: string[]) => onlyOpenDataAPIs(value),
+        otherwise: yup.string().isNotATestString(),
+        then: yup.string().isNotATestString().required('Enter a description.'),
+      }),
     secondaryContact: yup
       .object()
       .shape({
@@ -195,7 +203,7 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
       }),
-    productionKeyCredentialStorage: yup
+    productionOrOAuthKeyCredentialStorage: yup
       .string()
       .isNotATestString()
       .required('Enter a description.'),

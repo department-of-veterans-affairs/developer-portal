@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
 import { Values } from '../../ProductionAccess';
-import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
+import { includesInternalOnlyAPI, onlyOpenDataAPIs } from '../../../../apiDefs/query';
 import ListOfTextEntries from './ListOfTextEntries';
 
 const BasicInformation: FC = () => {
@@ -250,6 +250,15 @@ const BasicInformation: FC = () => {
         <TextField
           label="Enter the VASI system name of the application which will consume the API."
           name="vasiSystemName"
+          className="vads-u-margin-top--4"
+          required
+        />
+      )}
+      {onlyOpenDataAPIs(apis) && (
+        <TextField
+          as="textarea"
+          label="We require you to store your production key securely so as not to risk unauthorized exposure. How and where do you provide this?"
+          name="productionKeyCredentialStorage"
           className="vads-u-margin-top--4"
           required
         />

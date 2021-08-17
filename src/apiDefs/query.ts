@@ -76,6 +76,9 @@ const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(a
 const includesInternalOnlyAPI = (apiList: string[]): boolean =>
   apisFor(apiList).some(api => !!api.vaInternalOnly);
 
+const onlyOpenDataAPIs = (apiList: string[]): boolean =>
+  apisFor(apiList).every(api => !!api.openData);
+
 export {
   getAllApis,
   getAllOauthApis,
@@ -88,4 +91,5 @@ export {
   includesOAuthAPI,
   getAllKeyAuthApis,
   includesInternalOnlyAPI,
+  onlyOpenDataAPIs,
 };
