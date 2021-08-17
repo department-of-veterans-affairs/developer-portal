@@ -3,6 +3,16 @@ import { getDeactivatedFlags } from './apiDefs/deprecated';
 import { getCategoryFlags, getEnvFlags } from './apiDefs/env';
 import { getAllApis } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
+import {
+  FLAG_CATEGORIES,
+  FLAG_CONSUMER_DOCS,
+  FLAG_DEACTIVATED_APIS,
+  FLAG_ENABLED_APIS,
+  FLAG_HOSTED_APIS,
+  FLAG_LIST_AND_LOOP,
+  FLAG_SHOW_TESTING_NOTICE,
+  FLAG_SIGNUPS_ENABLED,
+} from './types/constants';
 
 export interface AppFlags {
   consumer_docs: boolean;
@@ -12,6 +22,7 @@ export interface AppFlags {
   hosted_apis: { [apiId: string]: boolean };
   show_testing_notice: boolean;
   signups_enabled: boolean;
+  list_and_loop_enabled: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -35,13 +46,14 @@ const getFlags = (): AppFlags => {
   );
 
   return {
-    categories: apiCategories,
-    consumer_docs: process.env.REACT_APP_CONSUMER_DOCS === 'true',
-    deactivated_apis: deactivatedFlags,
-    enabled: envFlags,
-    hosted_apis: apiFlags,
-    show_testing_notice: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
-    signups_enabled: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
+    [FLAG_CATEGORIES]: apiCategories,
+    [FLAG_CONSUMER_DOCS]: process.env.REACT_APP_CONSUMER_DOCS === 'true',
+    [FLAG_DEACTIVATED_APIS]: deactivatedFlags,
+    [FLAG_ENABLED_APIS]: envFlags,
+    [FLAG_HOSTED_APIS]: apiFlags,
+    [FLAG_LIST_AND_LOOP]: process.env.REACT_APP_LIST_AND_LOOP_ENABLED === 'true',
+    [FLAG_SHOW_TESTING_NOTICE]: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
+    [FLAG_SIGNUPS_ENABLED]: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
   };
 };
 

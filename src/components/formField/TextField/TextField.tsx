@@ -53,7 +53,7 @@ const TextField: FC<TextFieldProps> = ({
         {label}
         {required && <span className="form-required-span">(*Required)</span>}
       </label>
-      {description && <div id={descriptionId}>{description}</div>}
+      {description && <div id={descriptionId} className="vads-u-color--gray">{description}</div>}
       <span id={errorId} className={validationClass} role="alert">
         <ErrorMessage name={name} />
       </span>
