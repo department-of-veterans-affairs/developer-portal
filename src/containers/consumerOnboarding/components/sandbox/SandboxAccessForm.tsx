@@ -81,7 +81,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
 
       const json = response.body as DevApplicationResponse;
 
-      if (!json.token && !json.clientID) {
+      if (!json.token && !json.clientID && !json.email) {
         throw Error(
           'Developer Application endpoint returned 200 response with a valid response body',
         );
@@ -90,7 +90,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
       onSuccess({
         ...json,
         apis: values.apis,
-        email: values.email,
+        email: json.email ?? values.email,
       });
     } catch (error: unknown) {
       setSubmissionError(true);

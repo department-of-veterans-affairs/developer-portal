@@ -33,6 +33,7 @@ export const APPLY_STANDARD_APIS = [
   'confirmation',
 ];
 export const APPLY_OAUTH_APIS = ['claims', 'communityCare', 'health', 'verification'];
+export const APPLY_INTERNAL_APIS = ['addressValidation'];
 export const PAGE_HEADER_ID = 'page-header';
 export const PAGE_HEADER_AND_HALO_ID = 'header-halo';
 
