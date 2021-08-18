@@ -32,6 +32,7 @@ describe('Apply', () => {
         body: {
           clientID: 1234,
           token: 'lord-of-moria',
+          kongUsername: 'lordOfMoria'
         },
       });
       const submitButton = screen.getByRole('button', { name: 'Submit' });
