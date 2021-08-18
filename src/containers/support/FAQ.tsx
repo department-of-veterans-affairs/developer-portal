@@ -44,7 +44,7 @@ const developmentQuestions: SupportQuestion[] = [
     answer: (
       <p>
         Click to <Link to="/apply">Get Started</Link> by applying for an API key. Note that you will
-        need to provide your <Link to="/oauth">OAuth</Link> Redirect URL if you are applying for a
+        need to provide your <Link to="/oauth">OAuth</Link> Redirect URI if you are applying for a
         key to the Health, Claims, or Veteran Verification APIs. You are also required to agree to
         the <Link to="/terms-of-service">VA API Terms of Service</Link> in order to obtain a key.
       </p>
