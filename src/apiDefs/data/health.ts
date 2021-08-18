@@ -38,7 +38,7 @@ const healthApis: APIDescription[] = [
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-clinical-health/v0/openapi.json`,
       },
     ],
-    enabledByDefault: process.env.REACT_APP_CLINICAL_HEALTH_API === 'true',
+    enabledByDefault: true,
     name: 'Clinical Health API (FHIR)',
     oAuth: true,
     oAuthInfo: {

@@ -23,7 +23,9 @@ const allOauthApis = getAllOauthApis()
 
 const allKeyAuthApis = getAllKeyAuthApis()
   .filter(api => api.altID)
-  .map((api: APIDescription) => api.name);
+  .map((api: APIDescription) =>
+ api.openData ? `${api.name} Open Data` : api.name
+ );
 
 describe('SandboxAccessForm', () => {
   beforeEach(() => {
@@ -54,11 +56,11 @@ describe('SandboxAccessForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
       });
 
-      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
+      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims API/ }));
 
       expect(await screen.findByRole('radio', { name: 'Yes' })).toBeInTheDocument();
       expect(await screen.findByRole('radio', { name: 'No' })).toBeInTheDocument();

@@ -10,10 +10,11 @@ import SegmentedProgressBar from '@department-of-veterans-affairs/component-libr
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { Link, useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components';
+import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { PRODUCTION_ACCESS_URL } from '../../types/constants';
+import { FLAG_LIST_AND_LOOP, PRODUCTION_ACCESS_URL } from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -48,18 +49,21 @@ export interface Values {
   organization: string;
   phoneNumber: string;
   appName: string;
-  statusUpdateEmails: string[];
-  valueProvided: string;
-  businessModel: string;
   monitizedVeteranInformation: string;
   monitizationExplanation?: string;
   veteranFacing: string;
   website: string;
-  signUpLink: string[];
-  supportLink: string[];
   platforms: string;
   appDescription: string;
   vasiSystemName: string;
+  applicationName?: string;
+  // statusUpdateEmails, signUpLink, supportLink, policyDocuments can be either a single value or
+  // an array until the list and loop component is created
+  statusUpdateEmails: string | string[];
+  valueProvided: string;
+  businessModel?: string;
+  signUpLink: string | string[];
+  supportLink?: string | string[];
   storePIIOrPHI: string;
   piiStorageMethod: string;
   multipleReqSafeguards: string;
@@ -72,13 +76,13 @@ export interface Values {
   namingConvention: string;
   centralizedBackendLog: string;
   listedOnMyHealthApplication: string;
-  policyDocuments: string[];
   productionKeyCredentialStorage: string;
   productionOrOAuthKeyCredentialStorage: string;
   veteranFacingDescription: string;
+  policyDocuments: string | string[];
 }
 
-const initialValues = {
+const initialValues: Values = {
   apis: [],
   appDescription: '',
   appName: '',
@@ -98,7 +102,7 @@ const initialValues = {
   phoneNumber: '',
   piiStorageMethod: '',
   platforms: '',
-  policyDocuments: [],
+  policyDocuments: '',
   primaryContact: {
     email: '',
     firstName: '',
@@ -112,10 +116,10 @@ const initialValues = {
     firstName: '',
     lastName: '',
   },
-  signUpLink: [],
-  statusUpdateEmails: [],
+  signUpLink: '',
+  statusUpdateEmails: '',
   storePIIOrPHI: '',
-  supportLink: [],
+  supportLink: '',
   termsOfService: false,
   thirdPartyInfoDescription: '',
   valueProvided: '',
@@ -124,6 +128,21 @@ const initialValues = {
   veteranFacingDescription: '',
   vulnerabilityManagement: '',
   website: '',
+};
+
+// temporary until the list and loop component is done
+const getInitialValues = (isListAndLoopEnabled: boolean): Values => {
+  if (isListAndLoopEnabled) {
+    return {
+      ...initialValues,
+      policyDocuments: [''],
+      signUpLink: [''],
+      statusUpdateEmails: [''],
+      supportLink: [''],
+    };
+  }
+
+  return initialValues;
 };
 
 const renderStepContent = (step: number): JSX.Element => {
@@ -154,6 +173,8 @@ const ProductionAccess: FC = () => {
   const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
 
   const history = useHistory();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const isListAndLoopEnabled = useFlag([FLAG_LIST_AND_LOOP]);
 
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
@@ -261,7 +282,7 @@ const ProductionAccess: FC = () => {
       <div className="vads-l-row">
         <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
           <Formik
-            initialValues={initialValues}
+            initialValues={getInitialValues(isListAndLoopEnabled)}
             onSubmit={handleSubmit}
             validationSchema={currentValidationSchema}
             validateOnBlur={false}
@@ -282,9 +303,15 @@ const ProductionAccess: FC = () => {
                 </>
               )}
               {renderStepContent(activeStep)}
-              <div>
+              <div className="vads-u-margin-y--5">
                 <button
-                  className="usa-button va-api-button-default vads-u-border--2px vads-u-border-color--primary"
+                  className={classNames(
+                    'usa-button',
+                    'va-api-button-default',
+                    'vads-u-border--2px',
+                    'vads-u-color--primary',
+                    'vads-u-margin-right--3',
+                  )}
                   type="button"
                   onClick={handleBack}
                 >
@@ -325,11 +352,11 @@ const ProductionAccess: FC = () => {
                   onClose={(): void => setModal1Visible(false)}
                   primaryButton={{
                     action: (): void => history.goBack(),
-                    text: 'Yes Leave',
+                    text: 'Yes, leave',
                   }}
                   secondaryButton={{
                     action: (): void => setModal1Visible(false),
-                    text: 'No stay on form',
+                    text: 'No, stay on form',
                   }}
                 >
                   The information you entered will not be saved.

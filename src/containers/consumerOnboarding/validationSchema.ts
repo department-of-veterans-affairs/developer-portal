@@ -6,6 +6,7 @@ import yup from './yup-extended';
 
 const phoneRegex =
   /^(?:\([2-9]\d{2}\)\ ?|[2-9]\d{2}(?:\-?|\ ?|\.?))[2-9]\d{2}[- .]?\d{4}((\ )?(\()?(ext|x|extension)([- .:])?\d{1,6}(\))?)?$/;
+const isListAndLoopEnabled = process.env.REACT_APP_LIST_AND_LOOP_ENABLED === 'true';
 
 const validationSchema = [
   yup.object().shape({
@@ -16,7 +17,6 @@ const validationSchema = [
       .required('Choose at least one API.'),
     is508Compliant: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     isUSBasedCompany: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-
     termsOfService: yup
       .boolean()
       .oneOf([true], { message: 'Agree to the Terms of Service to continue.' })
@@ -98,35 +98,59 @@ const validationSchema = [
         lastName: yup.string().isNotATestString().required('Enter a last name.'),
       })
       .required(),
-    signUpLink: yup
-      .array()
-      .of(yup.string().isNotATestString().url())
-      .when('veteranFacing', {
-        is: (value: string) => value === 'yes',
-        otherwise: yup.array().of(yup.string().isNotATestString().url()),
-        then: yup
+    signUpLink: isListAndLoopEnabled
+      ? yup
           .array()
-          .of(yup.string().isNotATestString().url('Add a link.'))
-          .min(1)
-          .required('Add a link.'),
-      }),
-    statusUpdateEmails: yup
-      .array()
-      .of(yup.string().isNotATestString().email('Enter a valid email address.'))
-      .min(1)
-      .required('Enter a valid email address.'),
-    supportLink: yup
-      .array()
-      .of(yup.string().isNotATestString().url())
-      .when('veteranFacing', {
-        is: (value: string) => value === 'yes',
-        otherwise: yup.array().of(yup.string().isNotATestString().url()),
-        then: yup
+          .of(yup.string().isNotATestString().url())
+          .when('isVetFacing', {
+            is: (value: string) => value === 'yes',
+            otherwise: yup.array().of(yup.string().isNotATestString().url()),
+            then: yup
+              .array()
+              .of(yup.string().isNotATestString().url('Add a link.'))
+              .min(1)
+              .required('Add a link.'),
+          })
+      : yup
+          .string()
+          .url()
+          .when('isVetFacing', {
+            is: (value: string) => value === 'yes',
+            otherwise: yup.string().url(),
+            then: yup.string().url('Add a link.').required('Add a link.'),
+          }),
+    statusUpdateEmails: isListAndLoopEnabled
+      ? yup
           .array()
-          .of(yup.string().isNotATestString().url('Add a link.'))
+          .of(yup.string().isNotATestString().email('Enter a valid email address.'))
           .min(1)
-          .required('Add a link.'),
-      }),
+          .required('Enter a valid email address.')
+      : yup
+          .string()
+          .isNotATestString()
+          .email('Enter a valid email address.')
+          .required('Enter a valid email address.'),
+    supportLink: isListAndLoopEnabled
+      ? yup
+          .array()
+          .of(yup.string().isNotATestString().url())
+          .when('isVetFacing', {
+            is: (value: string) => value === 'yes',
+            otherwise: yup.array().of(yup.string().isNotATestString().url()),
+            then: yup
+              .array()
+              .of(yup.string().isNotATestString().url('Add a link.'))
+              .min(1)
+              .required('Add a link.'),
+          })
+      : yup
+          .string()
+          .url()
+          .when('isVetFacing', {
+            is: (value: string) => value === 'yes',
+            otherwise: yup.string().url(),
+            then: yup.string().url('Add a link.').required('Add a link.'),
+          }),
     valueProvided: yup.string().isNotATestString().required('Describe the value of your app.'),
     vasiSystemName: yup
       .string()
@@ -139,7 +163,6 @@ const validationSchema = [
     veteranFacing: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     website: yup
       .string()
-      .isNotATestString()
       .url()
       .when('veteranFacing', {
         is: (value: string) => value === 'yes',
@@ -234,16 +257,22 @@ const validationSchema = [
       }),
   }),
   yup.object().shape({
-    policyDocuments: yup
-      .array()
-      .of(
-        yup
+    policyDocuments: isListAndLoopEnabled
+      ? yup
+          .array()
+          .of(
+            yup
+              .string()
+              .isNotATestString()
+              .url('Add a link to your terms of service and privacy policies.'),
+          )
+          .min(1)
+          .required('Add a link to your terms of service and privacy policies.')
+      : yup
           .string()
           .isNotATestString()
-          .url('Add a link to your terms of service and privacy policies.'),
-      )
-      .min(1)
-      .required('Add a link to your terms of service and privacy policies.'),
+          .url('Add a link to your terms of service and privacy policies.')
+          .required('Add a link to your terms of service and privacy policies.'),
   }),
 ];
 export default validationSchema;
