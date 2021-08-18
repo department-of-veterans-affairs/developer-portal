@@ -9,7 +9,7 @@ const generalQuestions: SupportQuestion[] = [
       <p>
         No - this is a support page for software developers utilizing the Veterans Affairs (VA)
         Application Programming Interface (API). If you are a Veteran seeking assistance, please
-        visit the <a href="http://www.va.gov">US Department of Veterans Affairs website</a> to
+        visit the <a href="http://www.va.gov">U.S. Department of Veterans Affairs website</a> to
         access and manage your VA benefits and health care. There are also helpful reference links
         and Q&amp;A at the VA Inquiry Routing &amp; Information System{' '}
         <a href="https://iris.custhelp.va.gov/app/answers/list">(IRIS)</a>.
