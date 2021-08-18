@@ -131,5 +131,40 @@ describe('SandboxAccessSuccess with results', () => {
         expect(oauthDocumentationLink.getAttribute('href')).toBe('/oauth');
       });
     });
+
+    describe('internal apis', () => {
+      beforeEach(() => {
+        render(
+          <MemoryRouter>
+            <SandboxAccessSuccess
+              result={{
+                apis: ['addressValidation', 'communityCare', 'health', 'verification', 'claims', 'benefits', 'facilities', 'vaForms', 'confirmation'],
+                email: 'gimli@va.gov'
+              }}
+            />
+          </MemoryRouter>,
+        );
+      });
+
+      it('displays the provided email address', () => {
+        expect(
+          screen.getByText(/You should receive an email at gimli@va\.gov/gm),
+        ).toBeInTheDocument();
+      });
+
+      it('does not list selected apis when an internal api is selected', () => {
+        expect(
+          screen.queryByText(
+            /Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
+          ),
+        ).not.toBeInTheDocument();
+
+        expect(
+          screen.queryByText(
+            /Benefits Claims API, Community Care API, VA Health API, and Veteran Verification API/,
+          ),
+        ).not.toBeInTheDocument();
+      });
+    });
   });
 });
