@@ -15,7 +15,7 @@ const generalQuestions: SupportQuestion[] = [
         <a href="https://iris.custhelp.va.gov/app/answers/list">(IRIS)</a>.
       </p>
     ),
-    question: 'Is this where I apply for VA Benefits and access to my health records?',
+    question: 'Is this where I apply for VA benefits and access to my health records?',
   },
   {
     answer: (
