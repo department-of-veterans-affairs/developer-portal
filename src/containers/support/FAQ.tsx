@@ -8,7 +8,7 @@ const generalQuestions: SupportQuestion[] = [
     answer: (
       <p>
         No - this is a support page for software developers utilizing the Veterans Affairs (VA)
-        Application Programming Interface (API). If you are a veteran seeking assistance, please
+        Application Programming Interface (API). If you are a Veteran seeking assistance, please
         visit the <a href="http://www.va.gov">US Department of Veterans Affairs website</a> to
         access and manage your VA benefits and health care. There are also helpful reference links
         and Q&amp;A at the VA Inquiry Routing &amp; Information System{' '}
@@ -21,7 +21,7 @@ const generalQuestions: SupportQuestion[] = [
     answer: (
       <p>
         The APIs are the &quot;front door&quot; or &quot;wall outlet&quot; to VA health records,
-        benefits eligibility, facility locations, and veteran status verification. Developers may
+        benefits eligibility, facility locations, and Veteran status verification. Developers may
         create applications to securely access this information via mobile devices and web browsers,
         across a variety of platforms.
       </p>
@@ -32,7 +32,7 @@ const generalQuestions: SupportQuestion[] = [
     answer: (
       <p>
         Access to all VA APIs is free of charge, with the goal of making access to federal
-        government data easier for veterans.
+        government data easier for Veterans.
       </p>
     ),
     question: 'What is the cost of using VA APIs?',
