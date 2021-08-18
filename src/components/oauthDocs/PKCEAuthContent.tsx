@@ -21,8 +21,8 @@ const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
       <p>
         <strong>NOTE:</strong> We provide a{' '}
         <a href="https://github.com/department-of-veterans-affairs/vets-api-clients/tree/master/samples/oauth_pkce_cli">
-          sample CLI application{' '}
-        </a>
+          sample CLI application
+        </a>{' '}
         for getting started using PKCE.
       </p>
       <h4 tabIndex={-1} id="pkce-requesting-authorization">
