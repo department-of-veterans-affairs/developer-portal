@@ -23,39 +23,25 @@ void applyPolyfills().then(() => {
  * address a bug in IE11 where min-height is only respected
  * if the parent of a flex container is also a flex container.
  */
-const App = (): JSX.Element => {
-  React.useEffect(() => {
-    /**
-     * The Formation component CollapsiblePanel used in the developer portal expects a VetsGov object
-     * on the global window. This component is currently used by `GroupedAccordions` and
-     * `PublishingExpectations`. We are providing the object here so we don't need to duplicate the
-     * declaration throughout the app.
-     */
-    if (!window.VetsGov) {
-      window.VetsGov = { scroll: null };
-    }
-  }, []);
-
-  return (
-    <FlagsProvider flags={getFlags()}>
-      <Router history={history}>
-        <div className="vads-u-display--flex">
-          <div
-            className={classNames(
-              'vads-u-display--flex',
-              'vads-u-flex-direction--column',
-              'vads-u-min-height--viewport',
-              'vads-u-width--full',
-            )}
-          >
-            <Header />
-            <Route path="/" component={PageContent} />
-            <Footer />
-          </div>
+const App = (): JSX.Element => (
+  <FlagsProvider flags={getFlags()}>
+    <Router history={history}>
+      <div className="vads-u-display--flex">
+        <div
+          className={classNames(
+            'vads-u-display--flex',
+            'vads-u-flex-direction--column',
+            'vads-u-min-height--viewport',
+            'vads-u-width--full',
+          )}
+        >
+          <Header />
+          <Route path="/" component={PageContent} />
+          <Footer />
         </div>
-      </Router>
-    </FlagsProvider>
-  );
-};
+      </div>
+    </Router>
+  </FlagsProvider>
+);
 
 export default App;
