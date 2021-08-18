@@ -86,7 +86,15 @@ const developmentQuestions: SupportQuestion[] = [
       <p>
         Yes, we have implemented basic rate limiting of 60 requests per minute. If you exceed this
         quota, your request will return a 429 status code. You may petition for increased rate
-        limits by emailing api@va.gov and requests will be decided on a case-by-case basis.
+        limits by emailing{' '}
+          <a
+            href="mailto:api@va.gov?subject=Request%20for%20Increased%20Rate%20Limit"
+            target="_BLANK"
+            rel="noopener noreferrer"
+          >
+            api@va.gov
+          </a>{' '}
+          and requests will be decided on a case-by-case basis.
       </p>
     ),
     question: 'Are there any rate limits on the APIs?',
