@@ -16,8 +16,8 @@ describe('SandboxAccessSuccess with results', () => {
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
-                kongUsername: '',
-                redirectURI: '',
+                kongUsername: 'Onering',
+                redirectURI: 'http://theshire.com',
                 token: 'elf-friend',
               }}
             />
@@ -40,8 +40,8 @@ describe('SandboxAccessSuccess with results', () => {
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
-                kongUsername: '',
-                redirectURI: '',
+                kongUsername: 'Onering',
+                redirectURI: 'http://theshire.com',
                 token: 'elf-friend',
               }}
             />
@@ -85,8 +85,8 @@ describe('SandboxAccessSuccess with results', () => {
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
-                kongUsername: '',
-                redirectURI: '',
+                kongUsername: 'Onering',
+                redirectURI: 'http://theshire.com',
                 token: 'elf-friend',
               }}
             />
