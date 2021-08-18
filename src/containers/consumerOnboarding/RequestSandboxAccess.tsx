@@ -40,9 +40,10 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
   return (
     <>
       <Helmet>
-        <title>Request Sandbox Access</title>
+        { successResults ? <title>Your submission was successful.</title> :
+        <title>Request Sandbox Access</title> }
       </Helmet>
-      <PageHeader header="Request Sandbox Access" />
+      <PageHeader header={successResults ? 'Your submission was successful.' : 'Request Sandbox Access'} />
       {successResults ? (
         <>
           <SandboxAccessSuccess result={successResults} />

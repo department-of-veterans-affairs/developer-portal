@@ -139,7 +139,7 @@ describe('SandboxAccessSuccess with results', () => {
             <SandboxAccessSuccess
               result={{
                 apis: ['addressValidation', 'communityCare', 'health', 'verification', 'claims', 'benefits', 'facilities', 'vaForms', 'confirmation'],
-                email: 'gimli@va.gov'
+                email: 'gimli@va.gov',
               }}
             />
           </MemoryRouter>,
