@@ -366,7 +366,7 @@ const ProductionAccess: FC = () => {
                   visible={modal4Visible}
                   onClose={(): void => setModal4Visible(false)}
                   primaryButton={{
-                    action: (): void => setModal4Visible(false),
+                    action: (): void => history.goBack(),
                     text: 'Close',
                   }}
                 >
