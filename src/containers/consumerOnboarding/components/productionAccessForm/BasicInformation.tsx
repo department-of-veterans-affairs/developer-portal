@@ -4,6 +4,8 @@ import { useFormikContext } from 'formik';
 import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
+import { Flag } from '../../../../flags';
+import { FLAG_LIST_AND_LOOP } from '../../../../types/constants';
 import ListOfTextEntries from './ListOfTextEntries';
 
 const BasicInformation: FC = () => {
@@ -86,23 +88,40 @@ const BasicInformation: FC = () => {
         name="applicationName"
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
       />
-      <ListOfTextEntries
-        description={
-          <>
-            <p className="vads-u-font-weight--bold">
-              Notification email for API status updates{' '}
-              <span className="form-required-span">(*Required)</span>
-            </p>
-            <p>
-              A distribution list email is preferred. You may enter more than one email address, and
-              this information can be updated later.
-            </p>
-          </>
-        }
-        className="vads-u-margin-top--2p5"
-        name="statusUpdateEmails"
-        buttonText="Add another email"
-      />
+      <Flag
+        name={[FLAG_LIST_AND_LOOP]}
+        fallbackRender={(): JSX.Element => (
+          <TextField
+            name="statusUpdateEmails"
+            label={
+              <>
+                Notification email for API status updates{' '}
+                <span className="form-required-span">(*Required)</span>
+              </>
+            }
+            description="A distribution list email is preferred. This email can be updated later if you need."
+            className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          />
+        )}
+      >
+        <ListOfTextEntries
+          description={
+            <>
+              <p className="vads-u-font-weight--bold">
+                Notification email for API status updates{' '}
+                <span className="form-required-span">(*Required)</span>
+              </p>
+              <p>
+                A distribution list email is preferred. You may enter more than one email address, and
+                this information can be updated later.
+              </p>
+            </>
+          }
+          className="vads-u-margin-top--2p5"
+          name="statusUpdateEmails"
+          buttonText="Add another email"
+        />
+      </Flag>
       <h3>About your app</h3>
       <TextField
         as="textarea"
@@ -171,28 +190,56 @@ const BasicInformation: FC = () => {
               className="vads-u-margin-top--4"
               required
             />
-            <ListOfTextEntries
-              description={
-                <p className="vads-u-font-weight--bold">
-                  Provide a link to a page describing how to sign up for your app.{' '}
-                  <span className="form-required-span">(*Required)</span>
-                </p>
-              }
-              className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
-              name="signUpLink"
-              buttonText="Add another URL"
-            />
-            <ListOfTextEntries
-              description={
-                <p className="vads-u-font-weight--bold">
-                  Provide a link to your FAQs and/or support page.{' '}
-                  <span className="form-required-span">(*Required)</span>
-                </p>
-              }
-              className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
-              name="supportLink"
-              buttonText="Add another URL"
-            />
+            <Flag
+              name={[FLAG_LIST_AND_LOOP]}
+              fallbackRender={(): JSX.Element => (
+                <>
+                  <TextField
+                    name="signUpLink"
+                    label={
+                      <>
+                        Provide a link to a page describing how to sign up for your app.{' '}
+                        <span className="form-required-span">(*Required)</span>
+                      </>
+                    }
+                    className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+                  />
+                  <TextField
+                    name="supportLink"
+                    label={
+                      <>
+                        Provide a link to your FAQs and/or support page.{' '}
+                        <span className="form-required-span">(*Required)</span>
+                      </>
+                    }
+                    className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+                  />
+                </>
+              )}
+            >
+              <ListOfTextEntries
+                description={
+                  <p className="vads-u-font-weight--bold">
+                    Provide a link to a page describing how to sign up for your app.{' '}
+                    <span className="form-required-span">(*Required)</span>
+                  </p>
+                }
+                className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
+                name="signUpLink"
+                buttonText="Add another URL"
+              />
+              <ListOfTextEntries
+                description={
+                  <p className="vads-u-font-weight--bold">
+                    Provide a link to your FAQs and/or support page.{' '}
+                    <span className="form-required-span">(*Required)</span>
+                  </p>
+                }
+                className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
+                name="supportLink"
+                buttonText="Add another URL"
+              />
+            </Flag>
             <TextField
               label="List of devices/platforms on which this app is available (eg. iOS, iPhone, iPad, Android tablet, Android phone, web browser, etc.)"
               name="platforms"
@@ -202,13 +249,15 @@ const BasicInformation: FC = () => {
             <TextField
               label="Provide a brief description of your application."
               description={
-                <p>
-                  This will be used for the{' '}
-                  <a href="http://va.gov/" target="_blank" rel="noopener noreferrer">
-                    VA.gov
-                  </a>{' '}
-                  App Directory and should tell Veterans how your app can help them. Your
-                  description should:
+                <>
+                  <p>
+                    This will be used for the{' '}
+                    <a href="http://va.gov/" target="_blank" rel="noopener noreferrer">
+                      VA.gov
+                    </a>{' '}
+                    App Directory and should tell Veterans how your app can help them. Your
+                    description should:
+                  </p>
                   <ul>
                     <li>Be 415 characters or fewer</li>
                     <li>
@@ -224,7 +273,7 @@ const BasicInformation: FC = () => {
                     </li>
                     <li>Capitalize “Veteran” whenever used</li>
                   </ul>
-                </p>
+                </>
               }
               name="appDescription"
               className="vads-u-margin-top--4"

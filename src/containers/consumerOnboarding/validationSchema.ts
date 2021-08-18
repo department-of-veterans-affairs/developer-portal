@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import { includesInternalOnlyAPI, includesOAuthAPI } from '../../apiDefs/query';
 
 const phoneRegex = /^(?:\+?1[-.●]?)?\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/;
+const isListAndLoopEnabled = process.env.REACT_APP_LIST_AND_LOOP_ENABLED === 'true';
 
 const validationSchema = [
   Yup.object().shape({
@@ -13,7 +14,6 @@ const validationSchema = [
       .required('Choose at least one API.'),
     is508Compliant: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     isUSBasedCompany: Yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-
     termsOfService: Yup.boolean()
       .oneOf([true], { message: 'Agree to the Terms of Service to continue.' })
       .required(),
@@ -65,24 +65,37 @@ const validationSchema = [
         lastName: Yup.string().required('Enter a last name.'),
       })
       .required(),
-    signUpLink: Yup.array()
-      .of(Yup.string().url())
-      .when('isVetFacing', {
-        is: (value: string) => value === 'yes',
-        otherwise: Yup.array().of(Yup.string().url()),
-        then: Yup.array().of(Yup.string().url('Add a link.')).min(1).required('Add a link.'),
-      }),
-    statusUpdateEmails: Yup.array()
-      .of(Yup.string().email('Enter a valid email address.'))
-      .min(1)
-      .required('Enter a valid email address.'),
-    supportLink: Yup.array()
-      .of(Yup.string().url())
-      .when('isVetFacing', {
-        is: (value: string) => value === 'yes',
-        otherwise: Yup.array().of(Yup.string().url()),
-        then: Yup.array().of(Yup.string().url('Add a link.')).min(1).required('Add a link.'),
-      }),
+    signUpLink: isListAndLoopEnabled ?
+      Yup.array().of(Yup.string().url())
+        .when('isVetFacing', {
+          is: (value: string) => value === 'yes',
+          otherwise: Yup.array().of(Yup.string().url()),
+          then: Yup.array().of(Yup.string().url('Add a link.')).min(1).required('Add a link.'),
+        }) :
+      Yup.string().url()
+        .when('isVetFacing', {
+          is: (value: string) => value === 'yes',
+          otherwise: Yup.string().url(),
+          then: Yup.string().url('Add a link.').required('Add a link.'),
+        }),
+    statusUpdateEmails: isListAndLoopEnabled ?
+      Yup.array().of(Yup.string().email('Enter a valid email address.'))
+        .min(1)
+        .required('Enter a valid email address.') :
+      Yup.string().email('Enter a valid email address.').required('Enter a valid email address.'),
+    supportLink: isListAndLoopEnabled ?
+      Yup.array().of(Yup.string().url())
+        .when('isVetFacing', {
+          is: (value: string) => value === 'yes',
+          otherwise: Yup.array().of(Yup.string().url()),
+          then: Yup.array().of(Yup.string().url('Add a link.')).min(1).required('Add a link.'),
+        }) :
+      Yup.string().url()
+        .when('isVetFacing', {
+          is: (value: string) => value === 'yes',
+          otherwise: Yup.string().url(),
+          then: Yup.string().url('Add a link.').required('Add a link.'),
+        }),
     valueProvided: Yup.string().required('Describe the value of your app.'),
     vasiSystemName: Yup.string().when('apis', {
       is: (value: string[]) => includesInternalOnlyAPI(value),
@@ -157,10 +170,12 @@ const validationSchema = [
     }),
   }),
   Yup.object().shape({
-    policyDocuments: Yup.array()
-      .of(Yup.string().url('Add a link to your terms of service and privacy policies.'))
-      .min(1)
-      .required('Add a link to your terms of service and privacy policies.'),
+    policyDocuments: isListAndLoopEnabled ?
+      Yup.array().of(Yup.string().url('Add a link to your terms of service and privacy policies.'))
+        .min(1)
+        .required('Add a link to your terms of service and privacy policies.') :
+      Yup.string().url('Add a link to your terms of service and privacy policies.')
+        .required('Add a link to your terms of service and privacy policies.'),
   }),
 ];
 export default validationSchema;
