@@ -8,7 +8,9 @@ import Modal from '@department-of-veterans-affairs/component-library/Modal';
 import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
 import { useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components';
+import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
+import { FLAG_LIST_AND_LOOP } from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -43,15 +45,17 @@ export interface Values {
   organization: string;
   phoneNumber: string;
   applicationName?: string;
-  statusUpdateEmails: string[];
+  statusUpdateEmails: string | string[];
   valueProvided: string;
   businessModel?: string;
   hasMonetized: string;
   monetizationExplination?: string;
   isVetFacing: string;
   website?: string;
-  signUpLink?: string[];
-  supportLink?: string[];
+  // statusUpdateEmails, signUpLink, supportLink, policyDocuments can be either a single value or
+  // an array until the list and loop component is created
+  signUpLink?: string | string[];
+  supportLink?: string | string[];
   platforms?: string;
   appDescription?: string;
   vasiSystemName?: string;
@@ -68,10 +72,10 @@ export interface Values {
   namingConvention?: string;
   centralizedBackendLog?: string;
   listedOnMyHealthApplication?: string;
-  policyDocuments?: string[];
+  policyDocuments?: string | string[];
 }
 
-const initialValues = {
+const initialValues: Values = {
   apis: [],
   applicationName: '',
   businessModel: '',
@@ -83,7 +87,7 @@ const initialValues = {
   isVetFacing: '',
   organization: '',
   phoneNumber: '',
-  policyDocuments: [''],
+  policyDocuments: '',
   primaryContact: {
     email: '',
     firstName: '',
@@ -94,12 +98,27 @@ const initialValues = {
     firstName: '',
     lastName: '',
   },
-  signUpLink: [''],
-  statusUpdateEmails: [''],
+  signUpLink: '',
+  statusUpdateEmails: '',
   storePIIOrPHI: '',
-  supportLink: [''],
+  supportLink: '',
   termsOfService: false,
   valueProvided: '',
+};
+
+// temporary until the list and loop component is done
+const getInitialValues = (isListAndLoopEnabled: boolean): Values => {
+  if (isListAndLoopEnabled) {
+    return {
+      ...initialValues,
+      policyDocuments: [''],
+      signUpLink: [''],
+      statusUpdateEmails: [''],
+      supportLink: [''],
+    };
+  }
+
+  return initialValues;
 };
 
 const renderStepContent = (step: number): JSX.Element => {
@@ -127,6 +146,7 @@ const ProductionAccess: FC = () => {
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
   const { modalVisible: modal3Visible, setModalVisible: setModal3Visible } = useModalController();
   const history = useHistory();
+  const isListAndLoopEnabled = useFlag([FLAG_LIST_AND_LOOP]);
 
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
@@ -194,7 +214,7 @@ const ProductionAccess: FC = () => {
       <div className="vads-l-row">
         <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
           <Formik
-            initialValues={initialValues}
+            initialValues={getInitialValues(isListAndLoopEnabled)}
             onSubmit={handleSubmit}
             validationSchema={currentValidationSchema}
             validateOnBlur={false}
@@ -215,9 +235,15 @@ const ProductionAccess: FC = () => {
                 </>
               )}
               {renderStepContent(activeStep)}
-              <div>
+              <div className="vads-u-margin-y--5">
                 <button
-                  className="usa-button va-api-button-default vads-u-border--2px vads-u-border-color--primary"
+                  className={classNames(
+                    'usa-button',
+                    'va-api-button-default',
+                    'vads-u-border--2px',
+                    'vads-u-color--primary',
+                    'vads-u-margin-right--3',
+                  )}
                   type="button"
                   onClick={handleBack}
                 >
@@ -234,7 +260,7 @@ const ProductionAccess: FC = () => {
                   <button
                     type="submit"
                     className="usa-button vads-u-width--auto"
-                    // onClick={handleSubmitButtonClick}
+                  // onClick={handleSubmitButtonClick}
                   >
                     Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
                   </button>
