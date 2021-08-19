@@ -12,9 +12,13 @@ import { Link, useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
-import { ProductionAccessRequest } from '../../types/productionAccess';
+import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { FLAG_LIST_AND_LOOP, PRODUCTION_ACCESS_URL } from '../../types/constants';
+import {
+  FLAG_LIST_AND_LOOP,
+  PRODUCTION_ACCESS_URL,
+  YES_OR_NO_RADIO_BUTTON_VALUES,
+} from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -231,11 +235,15 @@ const ProductionAccess: FC = () => {
       const applicationBody: ProductionAccessRequest = {
         ...filteredValues,
         apis: filteredValues.apis.join(','),
-        distributingAPIKeysToCustomers: filteredValues.distributingAPIKeysToCustomers === 'yes',
+        distributingAPIKeysToCustomers:
+          filteredValues.distributingAPIKeysToCustomers === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
         exposeVeteranInformationToThirdParties:
-          filteredValues.exposeVeteranInformationToThirdParties === 'yes',
-        listedOnMyHealthApplication: filteredValues.listedOnMyHealthApplication === 'yes',
-        monitizedVeteranInformation: filteredValues.monitizedVeteranInformation === 'yes',
+          filteredValues.exposeVeteranInformationToThirdParties ===
+          YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+        listedOnMyHealthApplication:
+          filteredValues.listedOnMyHealthApplication === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+        monitizedVeteranInformation:
+          filteredValues.monitizedVeteranInformation === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
         policyDocuments: Array.isArray(filteredValues.policyDocuments)
           ? filteredValues.policyDocuments
           : [filteredValues.policyDocuments],
@@ -245,11 +253,11 @@ const ProductionAccess: FC = () => {
         statusUpdateEmails: Array.isArray(filteredValues.statusUpdateEmails)
           ? filteredValues.statusUpdateEmails
           : [filteredValues.statusUpdateEmails],
-        storePIIOrPHI: filteredValues.storePIIOrPHI === 'yes',
+        storePIIOrPHI: filteredValues.storePIIOrPHI === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
         supportLink: Array.isArray(filteredValues.supportLink)
           ? filteredValues.supportLink
           : [filteredValues.supportLink],
-        veteranFacing: filteredValues.veteranFacing === 'yes',
+        veteranFacing: filteredValues.veteranFacing === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
       };
       Object.keys(applicationBody).forEach(key => {
         if (Array.isArray(applicationBody[key])) {
@@ -280,12 +288,12 @@ const ProductionAccess: FC = () => {
         setSubmissionError(true);
       }
     } else {
-      if (values.isUSBasedCompany === 'no') {
+      if (values.isUSBasedCompany === YES_OR_NO_RADIO_BUTTON_VALUES.No) {
         setModal2Visible(true);
         return;
       }
 
-      if (values.is508Compliant === 'no') {
+      if (values.is508Compliant === YES_OR_NO_RADIO_BUTTON_VALUES.No) {
         setModal3Visible(true);
         return;
       }

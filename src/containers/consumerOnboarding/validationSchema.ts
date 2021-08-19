@@ -2,7 +2,7 @@
 /* eslint-disable newline-per-chained-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { includesInternalOnlyAPI, includesOAuthAPI, onlyOpenDataAPIs } from '../../apiDefs/query';
-import yup from './yup-extended';
+import yup from '../../utils/yup-extended';
 
 const phoneRegex =
   /^(?:\([2-9]\d{2}\)\ ?|[2-9]\d{2}(?:\-?|\ ?|\.?))[2-9]\d{2}[- .]?\d{4}((\ )?(\()?(ext|x|extension)([- .:])?\d{1,6}(\))?)?$/;
