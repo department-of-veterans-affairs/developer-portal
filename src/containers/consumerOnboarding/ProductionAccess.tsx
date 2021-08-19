@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-dynamic-delete */
 /* eslint-disable id-length */
 /* eslint-disable max-lines */
 import React, { FC, useState } from 'react';
@@ -63,7 +64,7 @@ export interface Values {
   valueProvided: string;
   businessModel?: string;
   signUpLink: string | string[];
-  supportLink?: string | string[];
+  supportLink: string | string[];
   storePIIOrPHI: string;
   piiStorageMethod: string;
   multipleReqSafeguards: string;
@@ -236,9 +237,29 @@ const ProductionAccess: FC = () => {
           filteredValues.exposeVeteranInformationToThirdParties === 'yes',
         listedOnMyHealthApplication: filteredValues.listedOnMyHealthApplication === 'yes',
         monitizedVeteranInformation: filteredValues.monitizedVeteranInformation === 'yes',
+        policyDocuments: Array.isArray(filteredValues.policyDocuments)
+          ? filteredValues.policyDocuments
+          : [filteredValues.policyDocuments],
+        signUpLink: Array.isArray(filteredValues.signUpLink)
+          ? filteredValues.signUpLink
+          : [filteredValues.signUpLink],
+        statusUpdateEmails: Array.isArray(filteredValues.statusUpdateEmails)
+          ? filteredValues.statusUpdateEmails
+          : [filteredValues.statusUpdateEmails],
         storePIIOrPHI: filteredValues.storePIIOrPHI === 'yes',
+        supportLink: Array.isArray(filteredValues.supportLink)
+          ? filteredValues.supportLink
+          : [filteredValues.supportLink],
         veteranFacing: filteredValues.veteranFacing === 'yes',
       };
+      Object.keys(applicationBody).forEach(key => {
+        if (Array.isArray(applicationBody[key])) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          if (applicationBody[key][0] == null) {
+            delete applicationBody[key];
+          }
+        }
+      });
       try {
         const response = await makeRequest(
           PRODUCTION_ACCESS_URL,
