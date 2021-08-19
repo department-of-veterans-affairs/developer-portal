@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-dynamic-delete */
-/* eslint-disable id-length */
-/* eslint-disable max-lines */
+/* eslint-disable @typescript-eslint/no-dynamic-delete, id-length, max-lines */
+
 import React, { FC, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, FormikHelpers } from 'formik';
@@ -430,7 +429,7 @@ const ProductionAccess: FC = () => {
                   </p>
                   <p>
                     In the meantime, you may <Link to="/support/contact-us">contact us</Link>if you
-                    have any questions or learn more about working with our APIs
+                    have any questions or learn more about working with our APIs.
                   </p>
                 </Modal>
               </div>
@@ -443,7 +442,7 @@ const ProductionAccess: FC = () => {
               content={
                 <span>
                   Need assistance? Create an issue through our{' '}
-                  <Link to="/support">Support page</Link>
+                  <Link to="/support">Support page.</Link>
                 </span>
               }
             />

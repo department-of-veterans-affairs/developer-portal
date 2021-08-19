@@ -101,23 +101,24 @@ const validationSchema = [
     signUpLink: isListAndLoopEnabled
       ? yup
           .array()
-          .of(yup.string().isNotATestString().url())
+          .of(yup.string().isNotATestString().url('Add a valid link.'))
           .when('veteranFacing', {
             is: (value: string) => value === 'yes',
-            otherwise: yup.array().of(yup.string().isNotATestString().url()),
+            otherwise: yup.array().of(yup.string().isNotATestString().url('Add a valid link.')),
             then: yup
               .array()
-              .of(yup.string().isNotATestString().url('Add a link.'))
+              .of(yup.string().isNotATestString().url('Add a valid link.'))
               .min(1)
               .required('Add a link.'),
           })
       : yup
           .string()
-          .url()
+          .isNotATestString()
+          .url('Add a valid link.')
           .when('veteranFacing', {
             is: (value: string) => value === 'yes',
-            otherwise: yup.string().url(),
-            then: yup.string().url('Add a link.').required('Add a link.'),
+            otherwise: yup.string().isNotATestString().url('Add a valid link.'),
+            then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
           }),
     statusUpdateEmails: isListAndLoopEnabled
       ? yup
@@ -133,23 +134,24 @@ const validationSchema = [
     supportLink: isListAndLoopEnabled
       ? yup
           .array()
-          .of(yup.string().isNotATestString().url())
+          .of(yup.string().isNotATestString().url('Add a valid link.'))
           .when('veteranFacing', {
             is: (value: string) => value === 'yes',
-            otherwise: yup.array().of(yup.string().isNotATestString().url()),
+            otherwise: yup.array().of(yup.string().isNotATestString().url('Add a valid link.')),
             then: yup
               .array()
-              .of(yup.string().isNotATestString().url('Add a link.'))
+              .of(yup.string().isNotATestString().url('Add a valid link.'))
               .min(1)
               .required('Add a link.'),
           })
       : yup
           .string()
-          .url()
+          .isNotATestString()
+          .url('Add a valid link.')
           .when('veteranFacing', {
             is: (value: string) => value === 'yes',
-            otherwise: yup.string().url(),
-            then: yup.string().url('Add a link.').required('Add a link.'),
+            otherwise: yup.string().isNotATestString().url('Add a valid link.'),
+            then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
           }),
     valueProvided: yup.string().isNotATestString().required('Describe the value of your app.'),
     vasiSystemName: yup
@@ -163,11 +165,12 @@ const validationSchema = [
     veteranFacing: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     website: yup
       .string()
-      .url()
+      .isNotATestString()
+      .url('Add a valid link.')
       .when('veteranFacing', {
         is: (value: string) => value === 'yes',
-        otherwise: yup.string().isNotATestString().url(),
-        then: yup.string().isNotATestString().url().required('Add a link.'),
+        otherwise: yup.string().isNotATestString().url('Add a valid link.'),
+        then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
       }),
   }),
   yup.object().shape({

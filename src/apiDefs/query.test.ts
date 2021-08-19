@@ -121,7 +121,7 @@ describe('query module', () => {
 
   describe('onlyOpenDataApis', () => {
     it('returns true if the list includes only Open Data APIs', () => {
-      expect(onlyOpenDataAPIs(['vaforms', 'facilities'])).toBe(true);
+      expect(onlyOpenDataAPIs(['vaForms', 'facilities'])).toBe(true);
     });
 
     it('returns false if the list does not include any VA Internal Only APIs', () => {
