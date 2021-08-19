@@ -428,7 +428,7 @@ const ProductionAccess: FC = () => {
                     access timelines.
                   </p>
                   <p>
-                    In the meantime, you may <Link to="/support/contact-us">contact us</Link>if you
+                    In the meantime, you may <Link to="/support/contact-us">contact us </Link>if you
                     have any questions or learn more about working with our APIs.
                   </p>
                 </Modal>
