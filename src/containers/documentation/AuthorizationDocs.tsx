@@ -12,17 +12,28 @@ import {
 import { getAllOauthApis } from '../../apiDefs/query';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { APIDescription } from '../../apiDefs/schema';
-import { PageHeader, BuildingOIDCContent, ScopesContent } from '../../components';
-import PageLinks from '../../content/apiDocs/oauth/PageLinks.mdx';
-import GettingStarted from '../../content/apiDocs/oauth/GettingStarted.mdx';
-import IdToken from '../../content/apiDocs/oauth/IdToken.mdx';
-import TestUsers from '../../content/apiDocs/oauth/TestUsers.mdx';
-import Https from '../../content/apiDocs/oauth/HTTPS.mdx';
+import {
+  PageHeader,
+  BuildingOIDCContent,
+  ScopesContent,
+  GettingStarted,
+  PageLinks,
+  IdToken,
+  TestUsers,
+  Https,
+} from '../../components';
+
 import { usePrevious } from '../../hooks';
 import { RootState } from '../../types';
 import { DEFAULT_OAUTH_API_SELECTION } from '../../types/constants';
 
 import './AuthorizationDocs.scss';
+
+interface AuthCodeFlowContentProps {
+  options: APIDescription[];
+  selectedOption: string;
+  apiDef?: APIDescription | null;
+}
 
 const setSearchParam = (
   history: History,
@@ -106,4 +117,4 @@ const AuthorizationDocs = (): JSX.Element => {
   );
 };
 
-export { AuthorizationDocs };
+export { AuthorizationDocs, AuthCodeFlowContentProps };

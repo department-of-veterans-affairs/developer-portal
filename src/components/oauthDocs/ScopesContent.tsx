@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
+import { HashLink } from 'react-router-hash-link';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { RootState } from '../../types';
 import { APISelector } from '../index';
 
-import DefaultScopes from '../../content/apiDocs/oauth/Scopes.mdx';
+import { SectionHeaderWrapper } from '../sectionHeaderWrapper/SectionHeaderWrapper';
 
 /*
  * This is designed to be a single place of truth for the scopes descriptions.
@@ -27,7 +28,53 @@ const ScopesContent = (): JSX.Element => {
 
   return (
     <section className="scopes-content">
-      <DefaultScopes />
+      <SectionHeaderWrapper heading="Scopes" id="scopes" />
+      <p>
+        Scopes define the API endpoint your application is allowed to access. We suggest requesting
+        the fewest number of scopes for which you require a Veteran to provide consent. You can
+        always request access to additional scopes if a Veteran or VSO needs the data while using
+        your application.
+      </p>
+      <p>
+        <strong>Existing Scopes are:</strong>
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Scope</th>
+            <th>Values and description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <code>profile</code>
+            </td>
+            <td>
+              Granted by default, allows access to a user&apos;s first and last name and email.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>offline_access</code>
+            </td>
+            <td>
+              This scope causes the authorization server to provide a refresh token when the{' '}
+              <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink> is
+              requested.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>openid</code>
+            </td>
+            <td>
+              An <code>id_token</code> is available in the authorization code flow (response_type =
+              code) token response when the &apos;openid&apos; scope is used.
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <APISelector
         options={options}
