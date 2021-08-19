@@ -102,7 +102,7 @@ const validationSchema = [
       ? yup
           .array()
           .of(yup.string().isNotATestString().url())
-          .when('isVetFacing', {
+          .when('veteranFacing', {
             is: (value: string) => value === 'yes',
             otherwise: yup.array().of(yup.string().isNotATestString().url()),
             then: yup
@@ -114,7 +114,7 @@ const validationSchema = [
       : yup
           .string()
           .url()
-          .when('isVetFacing', {
+          .when('veteranFacing', {
             is: (value: string) => value === 'yes',
             otherwise: yup.string().url(),
             then: yup.string().url('Add a link.').required('Add a link.'),
@@ -134,7 +134,7 @@ const validationSchema = [
       ? yup
           .array()
           .of(yup.string().isNotATestString().url())
-          .when('isVetFacing', {
+          .when('veteranFacing', {
             is: (value: string) => value === 'yes',
             otherwise: yup.array().of(yup.string().isNotATestString().url()),
             then: yup
@@ -146,7 +146,7 @@ const validationSchema = [
       : yup
           .string()
           .url()
-          .when('isVetFacing', {
+          .when('veteranFacing', {
             is: (value: string) => value === 'yes',
             otherwise: yup.string().url(),
             then: yup.string().url('Add a link.').required('Add a link.'),
