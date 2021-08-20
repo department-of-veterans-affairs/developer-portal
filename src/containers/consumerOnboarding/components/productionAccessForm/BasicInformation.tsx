@@ -132,7 +132,7 @@ const BasicInformation: FC = () => {
         className="vads-u-margin-top--4"
         required
       />
-      {apis.some(api => ['vaForms', 'facilities'].includes(api)) && (
+      {!onlyOpenDataAPIs(apis) && (
         <TextField
           as="textarea"
           label="Describe your business model. Explain how you generate the income to provide your service to users."

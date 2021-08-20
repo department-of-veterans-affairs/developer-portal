@@ -35,7 +35,7 @@ const validationSchema = [
       .string()
       .isNotATestString()
       .when('apis', {
-        is: (value: string[]) => value.some(api => ['vaForms', 'facilities'].includes(api)),
+        is: (value: string[]) => !onlyOpenDataAPIs(value),
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Describe your business model.'),
       }),
