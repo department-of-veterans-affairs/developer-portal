@@ -45,7 +45,7 @@ export const FLAG_HOSTED_APIS = 'hosted_apis';
 export const FLAG_SHOW_TESTING_NOTICE = 'show_testing_notice';
 export const FLAG_SIGNUPS_ENABLED = 'signups_enabled';
 export const FLAG_LIST_AND_LOOP = 'list_and_loop_enabled';
-export enum YES_OR_NO_RADIO_BUTTON_VALUES {
+export enum yesOrNoValues {
   Yes = 'yes',
   No = 'no',
 }

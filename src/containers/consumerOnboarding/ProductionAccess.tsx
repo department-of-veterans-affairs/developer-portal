@@ -14,11 +14,7 @@ import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import {
-  FLAG_LIST_AND_LOOP,
-  PRODUCTION_ACCESS_URL,
-  YES_OR_NO_RADIO_BUTTON_VALUES,
-} from '../../types/constants';
+import { FLAG_LIST_AND_LOOP, PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -177,7 +173,6 @@ const ProductionAccess: FC = () => {
   const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
 
   const history = useHistory();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const isListAndLoopEnabled = useFlag([FLAG_LIST_AND_LOOP]);
 
   const calculateSteps = (values: Values): void => {
@@ -224,6 +219,7 @@ const ProductionAccess: FC = () => {
       delete values.is508Compliant;
       delete values.isUSBasedCompany;
       delete values.termsOfService;
+      // Remvoing the blank optional values from the request body
       const filteredValues = JSON.parse(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         JSON.stringify(values, (k, v) => (v === '' ? null : v)),
@@ -236,14 +232,13 @@ const ProductionAccess: FC = () => {
         ...filteredValues,
         apis: filteredValues.apis.join(','),
         distributingAPIKeysToCustomers:
-          filteredValues.distributingAPIKeysToCustomers === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+          filteredValues.distributingAPIKeysToCustomers === yesOrNoValues.Yes,
         exposeVeteranInformationToThirdParties:
-          filteredValues.exposeVeteranInformationToThirdParties ===
-          YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+          filteredValues.exposeVeteranInformationToThirdParties === yesOrNoValues.Yes,
         listedOnMyHealthApplication:
-          filteredValues.listedOnMyHealthApplication === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+          filteredValues.listedOnMyHealthApplication === yesOrNoValues.Yes,
         monitizedVeteranInformation:
-          filteredValues.monitizedVeteranInformation === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+          filteredValues.monitizedVeteranInformation === yesOrNoValues.Yes,
         policyDocuments: Array.isArray(filteredValues.policyDocuments)
           ? filteredValues.policyDocuments
           : [filteredValues.policyDocuments],
@@ -253,22 +248,21 @@ const ProductionAccess: FC = () => {
         statusUpdateEmails: Array.isArray(filteredValues.statusUpdateEmails)
           ? filteredValues.statusUpdateEmails
           : [filteredValues.statusUpdateEmails],
-        storePIIOrPHI: filteredValues.storePIIOrPHI === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+        storePIIOrPHI: filteredValues.storePIIOrPHI === yesOrNoValues.Yes,
         supportLink: Array.isArray(filteredValues.supportLink)
           ? filteredValues.supportLink
           : [filteredValues.supportLink],
-        veteranFacing: filteredValues.veteranFacing === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+        veteranFacing: filteredValues.veteranFacing === yesOrNoValues.Yes,
       };
+      // The backend cannont accept null values, so this is to remove blank optional fields that are null because of the filtering above
       Object.keys(applicationBody).forEach(key => {
-        if (Array.isArray(applicationBody[key])) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          if (applicationBody[key][0] == null) {
-            delete applicationBody[key];
-          }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (Array.isArray(applicationBody[key]) && applicationBody[key][0] == null) {
+          delete applicationBody[key];
         }
       });
       try {
-        const response = await makeRequest(
+        await makeRequest(
           PRODUCTION_ACCESS_URL,
           {
             body: JSON.stringify(applicationBody),
@@ -280,20 +274,17 @@ const ProductionAccess: FC = () => {
           },
           { responseType: ResponseType.TEXT },
         );
-        if (!response.ok) {
-          throw Error();
-        }
         setModal4Visible(true);
       } catch (error: unknown) {
         setSubmissionError(true);
       }
     } else {
-      if (values.isUSBasedCompany === YES_OR_NO_RADIO_BUTTON_VALUES.No) {
+      if (values.isUSBasedCompany === yesOrNoValues.No) {
         setModal2Visible(true);
         return;
       }
 
-      if (values.is508Compliant === YES_OR_NO_RADIO_BUTTON_VALUES.No) {
+      if (values.is508Compliant === yesOrNoValues.No) {
         setModal3Visible(true);
         return;
       }
@@ -353,11 +344,7 @@ const ProductionAccess: FC = () => {
                     Submit your application
                   </button>
                 ) : (
-                  <button
-                    type="submit"
-                    className="usa-button vads-u-width--auto"
-                    // onClick={handleSubmitButtonClick}
-                  >
+                  <button type="submit" className="usa-button vads-u-width--auto">
                     Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
                   </button>
                 )}
