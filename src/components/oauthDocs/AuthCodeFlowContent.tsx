@@ -4,13 +4,7 @@ import { HashLink } from 'react-router-hash-link';
 import ReactMarkdown from 'react-markdown';
 import highlight from 'rehype-highlight';
 import { APISelector, CodeWrapper } from '../index';
-import { APIDescription } from '../../apiDefs/schema';
-
-interface AuthCodeFlowContentProps {
-  options: APIDescription[];
-  selectedOption: string;
-  apiDef: APIDescription | null;
-}
+import { AuthCodeFlowContentProps } from '../../containers/documentation/AuthorizationDocs';
 
 const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
   const baseAuthPath = props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
@@ -27,7 +21,9 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
           GitHub
         </a>
       </p>
-      <h4 tabIndex={-1}>Requesting Authorization</h4>
+      <h4 id="requesting-authorization" tabIndex={-1}>
+        Requesting Authorization
+      </h4>
       <p>
         Begin the OpenID Connect authorization by using the authorization endpoint, query
         parameters, and scopes listed below.
