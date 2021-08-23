@@ -360,79 +360,79 @@ const ProductionAccess: FC = () => {
                     Cancel
                   </button>
                 )}
-                <Modal
-                  id="cancellation-modal"
-                  title="Are you sure you want to leave?"
-                  visible={modal1Visible}
-                  onClose={(): void => setModal1Visible(false)}
-                  primaryButton={{
-                    action: (): void => history.goBack(),
-                    text: 'Yes, leave',
-                  }}
-                  secondaryButton={{
-                    action: (): void => setModal1Visible(false),
-                    text: 'No, stay on form',
-                  }}
-                >
-                  The information you entered will not be saved.
-                </Modal>
-                <Modal
-                  id="non-us-based-modal"
-                  title="Thank you for your interest!"
-                  visible={modal2Visible}
-                  onClose={(): void => setModal2Visible(false)}
-                >
-                  We currently only grant access to US-based companies. You may contact us if you
-                  have any questions.
-                </Modal>
-                <Modal
-                  id="warning-508-complicance-modal"
-                  title="Must be Section 508 Compliant"
-                  visible={modal3Visible}
-                  onClose={(): void => setModal3Visible(false)}
-                  primaryButton={{
-                    action: (): void => setModal3Visible(false),
-                    text: 'Continue',
-                  }}
-                >
-                  Consumer websites and applications must be Section 508 compliant to get production
-                  access. Learn about becoming{' '}
-                  <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
-                    Section 508 Compliant
-                  </a>{' '}
-                  or contact us with questions.
-                </Modal>
-                <Modal
-                  id="submission-complete-modal"
-                  title="Thanks for submitting!"
-                  visible={modal4Visible}
-                  onClose={(): void => {
-                    setModal4Visible(false);
-                    history.goBack();
-                  }}
-                  primaryButton={{
-                    action: (): void => history.goBack(),
-                    text: 'Close',
-                  }}
-                >
-                  <p>
-                    We’ve received your production access request and have sent you an email
-                    confirmation. We’ll be in touch with next steps or required changes within 1-2
-                    weeks, depending on the API.
-                  </p>
-                  <p>
-                    It’s good to remember that getting production access can take over a month. For
-                    open data APIs, this takes a week or less. Learn more about the production
-                    access timelines.
-                  </p>
-                  <p>
-                    In the meantime, you may <Link to="/support/contact-us">contact us </Link>if you
-                    have any questions or learn more about working with our APIs.
-                  </p>
-                </Modal>
               </div>
             </Form>
           </Formik>
+          <Modal
+            id="cancellation-modal"
+            title="Are you sure you want to leave?"
+            visible={modal1Visible}
+            onClose={(): void => setModal1Visible(false)}
+            primaryButton={{
+              action: (): void => history.goBack(),
+              text: 'Yes, leave',
+            }}
+            secondaryButton={{
+              action: (): void => setModal1Visible(false),
+              text: 'No, stay on form',
+            }}
+          >
+            The information you entered will not be saved.
+          </Modal>
+          <Modal
+            id="non-us-based-modal"
+            title="Thank you for your interest!"
+            visible={modal2Visible}
+            onClose={(): void => setModal2Visible(false)}
+          >
+            We currently only grant access to US-based companies. You may contact us if you have any
+            questions.
+          </Modal>
+          <Modal
+            id="warning-508-complicance-modal"
+            title="Must be Section 508 Compliant"
+            visible={modal3Visible}
+            onClose={(): void => setModal3Visible(false)}
+            primaryButton={{
+              action: (): void => setModal3Visible(false),
+              text: 'Continue',
+            }}
+          >
+            Consumer websites and applications must be Section 508 compliant to get production
+            access. Learn about becoming{' '}
+            <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+              Section 508 Compliant
+            </a>{' '}
+            or contact us with questions.
+          </Modal>
+          <Modal
+            id="submission-complete-modal"
+            title="Thanks for submitting!"
+            visible={modal4Visible}
+            onClose={(): void => {
+              setModal4Visible(false);
+              history.goBack();
+            }}
+            primaryButton={{
+              action: (): void => history.goBack(),
+              text: 'Close',
+            }}
+          >
+            <p>
+              We’ve received your production access request and have sent you an email confirmation.
+              We’ll be in touch with next steps or required changes within 1-2 weeks, depending on
+              the API.
+            </p>
+            <p>
+              It’s good to remember that getting production access can take over a month. For open
+              data APIs, this takes a week or less. Learn more about the production access
+              timelines.
+            </p>
+            <p>
+              In the meantime, you may <Link to="/support/contact-us">contact us </Link>if you have
+              any questions or learn more about working with our APIs.
+            </p>
+          </Modal>
           {submissionError && (
             <AlertBox
               status="error"
