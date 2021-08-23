@@ -406,7 +406,10 @@ const ProductionAccess: FC = () => {
                   id="submission-complete-modal"
                   title="Thanks for submitting!"
                   visible={modal4Visible}
-                  onClose={(): void => setModal4Visible(false)}
+                  onClose={(): void => {
+                    setModal4Visible(false);
+                    history.goBack();
+                  }}
                   primaryButton={{
                     action: (): void => history.goBack(),
                     text: 'Close',
