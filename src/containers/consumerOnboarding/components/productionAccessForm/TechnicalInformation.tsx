@@ -1,3 +1,4 @@
+/* eslint-disable id-length */
 /* eslint-disable complexity */
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
@@ -8,13 +9,21 @@ import { includesOAuthAPI } from '../../../../apiDefs/query';
 
 const TechnicalInformation: FC = () => {
   const { values } = useFormikContext<Values>();
-  const { storePIIOrPHI, apis, exposesToThirdParties, distributingAPIKeysToCustomers } = values;
+  const {
+    storePIIOrPHI,
+    apis,
+    exposeVeteranInformationToThirdParties,
+    distributingAPIKeysToCustomers,
+  } = values;
   const storePIIOrPHIBorderClass = storePIIOrPHI === 'yes' ? 'vads-u-border-left--4px' : '';
   const storePIIOrPHIBorderColorClass =
     storePIIOrPHI === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
-  const veteransInfoBorderClass = exposesToThirdParties === 'yes' ? 'vads-u-border-left--4px' : '';
+  const veteransInfoBorderClass =
+    exposeVeteranInformationToThirdParties === 'yes' ? 'vads-u-border-left--4px' : '';
   const veteransInfoBorderColorClass =
-    exposesToThirdParties === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+    exposeVeteranInformationToThirdParties === 'yes'
+      ? 'vads-u-border-color--primary-alt-light'
+      : '';
   const keysToCustomersBorderClass =
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-left--4px' : '';
   const keysToCustomersBorderColorClass =
@@ -30,7 +39,7 @@ const TechnicalInformation: FC = () => {
       <TextField
         as="textarea"
         label="We require you to store your production key and/or OAuth credentials securely so as not to risk unauthorized exposure. How and where do you provide this?"
-        name="credentialStorage"
+        name="productionOrOAuthKeyCredentialStorage"
         required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         innerRef={firstInputRef}
@@ -97,18 +106,18 @@ const TechnicalInformation: FC = () => {
             <CheckboxRadioField
               type="radio"
               label="Yes"
-              name="exposesToThirdParties"
+              name="exposeVeteranInformationToThirdParties"
               value="yes"
               required
             />
             <CheckboxRadioField
               type="radio"
               label="No"
-              name="exposesToThirdParties"
+              name="exposeVeteranInformationToThirdParties"
               value="no"
               required
             />
-            {exposesToThirdParties === 'yes' && (
+            {exposeVeteranInformationToThirdParties === 'yes' && (
               <TextField
                 label="Enter a description."
                 name="thirdPartyInfoDescription"
@@ -119,6 +128,7 @@ const TechnicalInformation: FC = () => {
           </FieldSet>
 
           <TextField
+            as="textarea"
             label="List the scopes for which you are requesting access."
             name="scopesAccessRequested"
             className="vads-u-margin-top--4"
