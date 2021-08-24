@@ -25,7 +25,9 @@ describe('Authorization Docs', () => {
   });
 
   it('Building OpenId header', () => {
-    const heading = screen.getByText('Building OpenID Connect Applications');
-    expect(heading).toBeInTheDocument();
+    const heading = screen.getAllByText('Building OpenID Connect Applications');
+    expect(heading).toHaveLength(2);
+    expect(heading[0]).toBeInTheDocument();
+    expect(heading[1]).toBeInTheDocument();
   });
 });

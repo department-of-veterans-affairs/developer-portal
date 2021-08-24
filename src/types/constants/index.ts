@@ -10,6 +10,7 @@ const BACKEND_BASE_URL = `${
   process.env.REACT_APP_DEVELOPER_PORTAL_SELF_SERVICE_URL ?? ''
 }/internal/developer-portal/public`;
 export const APPLY_URL = `${BACKEND_BASE_URL}/developer_application`;
+export const PRODUCTION_ACCESS_URL = `${BACKEND_BASE_URL}/production_request`;
 export const CONTACT_US_URL = `${BACKEND_BASE_URL}/contact-us`;
 
 export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
@@ -38,6 +39,13 @@ export const PAGE_HEADER_AND_HALO_ID = 'header-halo';
 export const FLAG_API_ENABLED_PROPERTY = 'enabled';
 export const FLAG_CATEGORIES = 'categories';
 export const FLAG_CONSUMER_DOCS = 'consumer_docs';
+export const FLAG_DEACTIVATED_APIS = 'deactivated_apis';
+export const FLAG_ENABLED_APIS = 'enabled';
 export const FLAG_HOSTED_APIS = 'hosted_apis';
 export const FLAG_SHOW_TESTING_NOTICE = 'show_testing_notice';
 export const FLAG_SIGNUPS_ENABLED = 'signups_enabled';
+export const FLAG_LIST_AND_LOOP = 'list_and_loop_enabled';
+export enum yesOrNoValues {
+  Yes = 'yes',
+  No = 'no',
+}
