@@ -13,11 +13,7 @@ import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import {
-  FLAG_LIST_AND_LOOP,
-  PRODUCTION_ACCESS_URL,
-  YES_OR_NO_RADIO_BUTTON_VALUES,
-} from '../../types/constants';
+import { FLAG_LIST_AND_LOOP, PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -226,6 +222,7 @@ const ProductionAccess: FC = () => {
       delete values.is508Compliant;
       delete values.isUSBasedCompany;
       delete values.termsOfService;
+      // Remvoing the blank optional values from the request body
       const filteredValues = JSON.parse(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         JSON.stringify(values, (k, v) => (v === '' ? null : v)),
@@ -238,14 +235,13 @@ const ProductionAccess: FC = () => {
         ...filteredValues,
         apis: filteredValues.apis.join(','),
         distributingAPIKeysToCustomers:
-          filteredValues.distributingAPIKeysToCustomers === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+          filteredValues.distributingAPIKeysToCustomers === yesOrNoValues.Yes,
         exposeVeteranInformationToThirdParties:
-          filteredValues.exposeVeteranInformationToThirdParties ===
-          YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+          filteredValues.exposeVeteranInformationToThirdParties === yesOrNoValues.Yes,
         listedOnMyHealthApplication:
-          filteredValues.listedOnMyHealthApplication === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+          filteredValues.listedOnMyHealthApplication === yesOrNoValues.Yes,
         monitizedVeteranInformation:
-          filteredValues.monitizedVeteranInformation === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+          filteredValues.monitizedVeteranInformation === yesOrNoValues.Yes,
         policyDocuments: Array.isArray(filteredValues.policyDocuments)
           ? filteredValues.policyDocuments
           : [filteredValues.policyDocuments],
@@ -255,22 +251,21 @@ const ProductionAccess: FC = () => {
         statusUpdateEmails: Array.isArray(filteredValues.statusUpdateEmails)
           ? filteredValues.statusUpdateEmails
           : [filteredValues.statusUpdateEmails],
-        storePIIOrPHI: filteredValues.storePIIOrPHI === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+        storePIIOrPHI: filteredValues.storePIIOrPHI === yesOrNoValues.Yes,
         supportLink: Array.isArray(filteredValues.supportLink)
           ? filteredValues.supportLink
           : [filteredValues.supportLink],
-        veteranFacing: filteredValues.veteranFacing === YES_OR_NO_RADIO_BUTTON_VALUES.Yes,
+        veteranFacing: filteredValues.veteranFacing === yesOrNoValues.Yes,
       };
+      // The backend cannont accept null values, so this is to remove blank optional fields that are null because of the filtering above
       Object.keys(applicationBody).forEach(key => {
-        if (Array.isArray(applicationBody[key])) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          if (applicationBody[key][0] == null) {
-            delete applicationBody[key];
-          }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (Array.isArray(applicationBody[key]) && applicationBody[key][0] == null) {
+          delete applicationBody[key];
         }
       });
       try {
-        const response = await makeRequest(
+        await makeRequest(
           PRODUCTION_ACCESS_URL,
           {
             body: JSON.stringify(applicationBody),
@@ -282,20 +277,17 @@ const ProductionAccess: FC = () => {
           },
           { responseType: ResponseType.TEXT },
         );
-        if (!response.ok) {
-          throw Error();
-        }
         setModal4Visible(true);
       } catch (error: unknown) {
         setSubmissionError(true);
       }
     } else {
-      if (values.isUSBasedCompany === YES_OR_NO_RADIO_BUTTON_VALUES.No) {
+      if (values.isUSBasedCompany === yesOrNoValues.No) {
         setModal2Visible(true);
         return;
       }
 
-      if (values.is508Compliant === YES_OR_NO_RADIO_BUTTON_VALUES.No) {
+      if (values.is508Compliant === yesOrNoValues.No) {
         setModal3Visible(true);
         return;
       }
@@ -376,91 +368,96 @@ const ProductionAccess: FC = () => {
                     Cancel
                   </button>
                 )}
-                <Modal
-                  id="cancellation-modal"
-                  title="Are you sure you want to leave?"
-                  visible={modal1Visible}
-                  onClose={(): void => setModal1Visible(false)}
-                  primaryButton={{
-                    action: (): void => history.goBack(),
-                    text: 'Yes, leave',
-                  }}
-                  secondaryButton={{
-                    action: (): void => setModal1Visible(false),
-                    text: 'No, stay on form',
-                  }}
-                >
-                  The information you entered will not be saved.
-                </Modal>
-                <Modal
-                  id="non-us-based-modal"
-                  title="Thank you for your interest!"
-                  visible={modal2Visible}
-                  onClose={(): void => setModal2Visible(false)}
-                >
-                  We currently only grant access to US-based companies. You may contact us if you
-                  have any questions.
-                </Modal>
-                <Modal
-                  id="warning-508-complicance-modal"
-                  title="Must be Section 508 Compliant"
-                  visible={modal3Visible}
-                  onClose={(): void => setModal3Visible(false)}
-                  primaryButton={{
-                    action: (): void => setModal3Visible(false),
-                    text: 'Continue',
-                  }}
-                >
-                  Consumer websites and applications must be Section 508 compliant to get production
-                  access. Learn about becoming{' '}
-                  <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
-                    Section 508 Compliant
-                  </a>{' '}
-                  or contact us with questions.
-                </Modal>
-                <Modal
-                  id="submission-complete-modal"
-                  title="Thanks for submitting!"
-                  visible={modal4Visible}
-                  onClose={(): void => setModal4Visible(false)}
-                  primaryButton={{
-                    action: (): void => history.goBack(),
-                    text: 'Close',
-                  }}
-                >
-                  <p>
-                    We’ve received your production access request and have sent you an email
-                    confirmation. We’ll be in touch with next steps or required changes within 1-2
-                    weeks, depending on the API.
-                  </p>
-                  <p>
-                    It’s good to remember that getting production access can take over a month. For
-                    open data APIs, this takes a week or less. Learn more about the production
-                    access timelines.
-                  </p>
-                  <p>
-                    In the meantime, you may <Link to="/support/contact-us">contact us </Link>if you
-                    have any questions or learn more about working with our APIs.
-                  </p>
-                </Modal>
               </div>
             </Form>
-          </Formik>
-          {submissionError && (
-            <AlertBox
-              status="error"
-              headline="We encountered a server error while saving your form. Please try again later."
-              content={
-                <span>
-                  Need assistance? Create an issue through our{' '}
-                  <Link to="/support">Support page.</Link>
-                </span>
-              }
-            />
-          )}
-        </div>
-      </div>
-    </div>
+          </Formik >
+          <Modal
+            id="cancellation-modal"
+            title="Are you sure you want to leave?"
+            visible={modal1Visible}
+            onClose={(): void => setModal1Visible(false)}
+            primaryButton={{
+              action: (): void => history.goBack(),
+              text: 'Yes, leave',
+            }}
+            secondaryButton={{
+              action: (): void => setModal1Visible(false),
+              text: 'No, stay on form',
+            }}
+          >
+            The information you entered will not be saved.
+          </Modal>
+          <Modal
+            id="non-us-based-modal"
+            title="Thank you for your interest!"
+            visible={modal2Visible}
+            onClose={(): void => setModal2Visible(false)}
+          >
+            We currently only grant access to US-based companies. You may contact us if you have any
+            questions.
+          </Modal>
+          <Modal
+            id="warning-508-complicance-modal"
+            title="Must be Section 508 Compliant"
+            visible={modal3Visible}
+            onClose={(): void => setModal3Visible(false)}
+            primaryButton={{
+              action: (): void => setModal3Visible(false),
+              text: 'Continue',
+            }}
+          >
+            Consumer websites and applications must be Section 508 compliant to get production
+            access. Learn about becoming{' '}
+            <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+              Section 508 Compliant
+            </a>{' '}
+            or contact us with questions.
+          </Modal>
+          <Modal
+            id="submission-complete-modal"
+            title="Thanks for submitting!"
+            visible={modal4Visible}
+            onClose={(): void => {
+              setModal4Visible(false);
+              history.goBack();
+            }}
+            primaryButton={{
+              action: (): void => history.goBack(),
+              text: 'Close',
+            }}
+          >
+            <p>
+              We’ve received your production access request and have sent you an email confirmation.
+              We’ll be in touch with next steps or required changes within 1-2 weeks, depending on
+              the API.
+            </p>
+            <p>
+              It’s good to remember that getting production access can take over a month. For open
+              data APIs, this takes a week or less. Learn more about the production access
+              timelines.
+            </p>
+            <p>
+              In the meantime, you may <Link to="/support/contact-us">contact us </Link>if you have
+              any questions or learn more about working with our APIs.
+            </p>
+          </Modal>
+          {
+            submissionError && (
+              <AlertBox
+                status="error"
+                headline="We encountered a server error while saving your form. Please try again later."
+                content={
+                  <span>
+                    Need assistance? Create an issue through our{' '}
+                    <Link to="/support">Support page.</Link>
+                  </span>
+                }
+              />
+            )
+          }
+        </div >
+      </div >
+    </div >
   );
 };
 
