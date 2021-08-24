@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete, id-length, max-lines */
-
 import React, { FC, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, FormikHelpers } from 'formik';
@@ -160,6 +159,16 @@ const renderStepContent = (step: number): JSX.Element => {
   }
 };
 
+const handleSubmitButtonClick = (): void => {
+  setTimeout(() => {
+    const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
+
+    if (errorElements.length > 0) {
+      errorElements[0].focus();
+    }
+  }, 0);
+};
+
 const ProductionAccess: FC = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
@@ -207,13 +216,6 @@ const ProductionAccess: FC = () => {
     }
   };
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
-    setTimeout(() => {
-      const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
-
-      if (errorElements.length > 0) {
-        errorElements[0].focus();
-      }
-    }, 0);
     if (isLastStep) {
       setSubmissionError(false);
       delete values.is508Compliant;
@@ -340,11 +342,16 @@ const ProductionAccess: FC = () => {
                   <button
                     type="submit"
                     className="usa-button-primary va-button-primary vads-u-width--auto"
+                    onClick={handleSubmitButtonClick}
                   >
                     Submit your application
                   </button>
                 ) : (
-                  <button type="submit" className="usa-button vads-u-width--auto">
+                  <button
+                    type="submit"
+                    className="usa-button vads-u-width--auto"
+                    onClick={handleSubmitButtonClick}
+                  >
                     Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
                   </button>
                 )}
