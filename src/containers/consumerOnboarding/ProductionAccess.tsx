@@ -182,7 +182,6 @@ const ProductionAccess: FC = () => {
   const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
 
   const history = useHistory();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const isListAndLoopEnabled = useFlag([FLAG_LIST_AND_LOOP]);
 
   const calculateSteps = (values: Values): void => {
@@ -370,7 +369,7 @@ const ProductionAccess: FC = () => {
                 )}
               </div>
             </Form>
-          </Formik >
+          </Formik>
           <Modal
             id="cancellation-modal"
             title="Are you sure you want to leave?"
@@ -441,20 +440,18 @@ const ProductionAccess: FC = () => {
               any questions or learn more about working with our APIs.
             </p>
           </Modal>
-          {
-            submissionError && (
-              <AlertBox
-                status="error"
-                headline="We encountered a server error while saving your form. Please try again later."
-                content={
-                  <span>
-                    Need assistance? Create an issue through our{' '}
-                    <Link to="/support">Support page.</Link>
-                  </span>
-                }
-              />
-            )
-          }
+          {submissionError && (
+            <AlertBox
+              status="error"
+              headline="We encountered a server error while saving your form. Please try again later."
+              content={
+                <span>
+                  Need assistance? Create an issue through our{' '}
+                  <Link to="/support">Support page.</Link>
+                </span>
+              }
+            />
+          )}
         </div >
       </div >
     </div >
