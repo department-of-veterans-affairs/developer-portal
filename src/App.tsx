@@ -11,8 +11,6 @@ import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
 
-declare const window: { VetsGov?: Record<string, unknown> };
-
 // Apply Polyfills for IE11 for custom web-components
 void applyPolyfills().then(() => {
   void defineCustomElements();
