@@ -369,7 +369,7 @@ describe('SandboxAccessForm', () => {
       const filteredKeyAuthApis = allKeyAuthApis.filter(api => api !== 'Claims Attributes API');
       it.each(filteredKeyAuthApis)('toggles the %s checkbox on click', name => {
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
-          name: name,
+          name,
         }) as HTMLInputElement;
         expect(checkbox.checked).toBeFalsy();
 
