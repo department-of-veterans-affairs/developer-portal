@@ -22,10 +22,6 @@ const SelectedAPIs = (): JSX.Element => {
     'usa-input-error-message': shouldDisplayErrors,
   });
 
-  const errorMessagePaddingClass = classNames({
-    'vads-u-padding-x--1p5': shouldDisplayErrors,
-  });
-
   const selectAPIClass = classNames({
     'vads-u-font-weight--bold': shouldDisplayErrors,
     'vads-u-font-weight--normal': !shouldDisplayErrors,
@@ -52,7 +48,7 @@ const SelectedAPIs = (): JSX.Element => {
         </legend>
         <span
           id="api-checkbox-error"
-          className={classNames(validationClass, errorMessagePaddingClass)}
+          className={validationClass}
           role="alert"
         >
           <ErrorMessage name="apis" />
