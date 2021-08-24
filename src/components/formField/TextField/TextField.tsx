@@ -3,6 +3,8 @@ import { Field, ErrorMessage, useFormikContext, getIn } from 'formik';
 import React, { ComponentPropsWithRef, FC, ReactNode, KeyboardEvent } from 'react';
 import toHtmlId from '../../../toHtmlId';
 
+import './TextField.scss';
+
 type FieldProps = ComponentPropsWithRef<typeof Field>;
 
 export interface TextFieldProps {
@@ -51,7 +53,7 @@ const TextField: FC<TextFieldProps> = ({
   const fieldId = `${idReadyName}FormField`;
 
   return (
-    <div className={classNames(containerClass, className)}>
+    <div className={classNames('va-api-text-field', containerClass, className)}>
       <label htmlFor={fieldId} className={classNames('vads-u-margin-top--0', labelClass)}>
         {label}
         {required && <span className="form-required-span">(*Required)</span>}
