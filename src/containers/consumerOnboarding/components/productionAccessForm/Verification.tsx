@@ -3,11 +3,17 @@ import { Link } from 'react-router-dom';
 import { CheckboxRadioField, FieldSet } from '../../../../components';
 import { SelectedAPIs } from './SelectedApis';
 
-const Verification: FC = () => {
+interface VerificationProps {
+  hasPassedStep: boolean;
+}
+
+const Verification: FC<VerificationProps> = props => {
   const firstInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
-    firstInputRef.current?.focus();
-  }, []);
+    if (props.hasPassedStep) {
+      firstInputRef.current?.focus();
+    }
+  }, [props.hasPassedStep]);
 
   return (
     <>
