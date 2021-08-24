@@ -23,6 +23,7 @@ import {
   lookupApiByFragment,
   lookupApiCategory,
   includesInternalOnlyAPI,
+  onlyOpenDataAPIs,
 } from './query';
 
 describe('query module', () => {
@@ -115,6 +116,16 @@ describe('query module', () => {
 
     it('returns false if the list does not include any VA Internal Only APIs', () => {
       expect(includesInternalOnlyAPI(['benefits', 'facilities', 'vaForms'])).toBe(false);
+    });
+  });
+
+  describe('onlyOpenDataApis', () => {
+    it('returns true if the list includes only Open Data APIs', () => {
+      expect(onlyOpenDataAPIs(['vaForms', 'facilities'])).toBe(true);
+    });
+
+    it('returns false if the list does not include any VA Internal Only APIs', () => {
+      expect(onlyOpenDataAPIs(['benefits', 'facilities', 'vaForms'])).toBe(false);
     });
   });
 

@@ -1,23 +1,25 @@
+/* eslint-disable max-lines */
 import React, { FC, useEffect, useRef } from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
 import { Values } from '../../ProductionAccess';
-import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
+import { includesInternalOnlyAPI, onlyOpenDataAPIs } from '../../../../apiDefs/query';
 import { Flag } from '../../../../flags';
 import { FLAG_LIST_AND_LOOP } from '../../../../types/constants';
 import ListOfTextEntries from './ListOfTextEntries';
 
 const BasicInformation: FC = () => {
   const {
-    values: { hasMonetized, isVetFacing, apis },
+    values: { monitizedVeteranInformation, veteranFacing, apis },
   } = useFormikContext<Values>();
-  const hasMonetizedBorderClass = hasMonetized === 'yes' ? 'vads-u-border-left--4px' : '';
+  const hasMonetizedBorderClass =
+    monitizedVeteranInformation === 'yes' ? 'vads-u-border-left--4px' : '';
   const hasMonetizedsBorderColorClass =
-    hasMonetized === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
-  const isVetFacingBorderClass = isVetFacing === 'yes' ? 'vads-u-border-left--4px' : '';
+    monitizedVeteranInformation === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+  const isVetFacingBorderClass = veteranFacing === 'yes' ? 'vads-u-border-left--4px' : '';
   const isVetFacingBorderColorClass =
-    isVetFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
+    veteranFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
   const firstInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     firstInputRef.current?.focus();
@@ -85,7 +87,7 @@ const BasicInformation: FC = () => {
       />
       <TextField
         label="Front-end name of application (if different from organization name)"
-        name="applicationName"
+        name="appName"
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
       />
       <Flag
@@ -112,8 +114,8 @@ const BasicInformation: FC = () => {
                 <span className="form-required-span">(*Required)</span>
               </p>
               <p>
-                A distribution list email is preferred. You may enter more than one email address, and
-                this information can be updated later.
+                A distribution list email is preferred. You may enter more than one email address,
+                and this information can be updated later.
               </p>
             </>
           }
@@ -130,7 +132,7 @@ const BasicInformation: FC = () => {
         className="vads-u-margin-top--4"
         required
       />
-      {apis.some(api => ['vaForms', 'facilities'].includes(api)) && (
+      {!onlyOpenDataAPIs(apis) && (
         <TextField
           as="textarea"
           label="Describe your business model. Explain how you generate the income to provide your service to users."
@@ -150,17 +152,29 @@ const BasicInformation: FC = () => {
         )}
         legend="Have you ever monetized Veteran data? "
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-        name="hasMonetized"
+        name="monitizedVeteranInformation"
         required
       >
-        <CheckboxRadioField type="radio" label="Yes" name="hasMonetized" value="yes" required />
+        <CheckboxRadioField
+          type="radio"
+          label="Yes"
+          name="monitizedVeteranInformation"
+          value="yes"
+          required
+        />
 
-        <CheckboxRadioField type="radio" label="No" name="hasMonetized" value="no" required />
-        {hasMonetized === 'yes' && (
+        <CheckboxRadioField
+          type="radio"
+          label="No"
+          name="monitizedVeteranInformation"
+          value="no"
+          required
+        />
+        {monitizedVeteranInformation === 'yes' && (
           <TextField
             as="textarea"
             label="If yes, explain."
-            name="monetizationExplination"
+            name="monitizationExplanation"
             className="vads-u-margin-top--4"
             required
           />
@@ -176,13 +190,13 @@ const BasicInformation: FC = () => {
         )}
         legend="Is your app Veteran-facing?"
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-        name="isVetFacing"
+        name="veteranFacing"
         required
       >
-        <CheckboxRadioField type="radio" label="Yes" name="isVetFacing" value="yes" required />
+        <CheckboxRadioField type="radio" label="Yes" name="veteranFacing" value="yes" required />
 
-        <CheckboxRadioField type="radio" label="No" name="isVetFacing" value="no" required />
-        {isVetFacing === 'yes' && (
+        <CheckboxRadioField type="radio" label="No" name="veteranFacing" value="no" required />
+        {veteranFacing === 'yes' && (
           <>
             <TextField
               label="Provide a link to your app’s primary webpage."
@@ -286,6 +300,15 @@ const BasicInformation: FC = () => {
         <TextField
           label="Enter the VASI system name of the application which will consume the API."
           name="vasiSystemName"
+          className="vads-u-margin-top--4"
+          required
+        />
+      )}
+      {onlyOpenDataAPIs(apis) && (
+        <TextField
+          as="textarea"
+          label="We require you to store your production key securely so as not to risk unauthorized exposure. How and where do you provide this?"
+          name="productionKeyCredentialStorage"
           className="vads-u-margin-top--4"
           required
         />

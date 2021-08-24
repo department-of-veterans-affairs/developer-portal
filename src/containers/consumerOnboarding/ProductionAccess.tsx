@@ -1,4 +1,5 @@
-/* eslint-disable max-lines */
+/* eslint-disable @typescript-eslint/no-dynamic-delete, id-length, max-lines */
+
 import React, { FC, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, FormikHelpers } from 'formik';
@@ -6,11 +7,14 @@ import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from '@department-of-veterans-affairs/component-library/Modal';
 import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
-import { useHistory } from 'react-router-dom';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import { Link, useHistory } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
-import { FLAG_LIST_AND_LOOP } from '../../types/constants';
+import { ProductionAccessRequest } from '../../types/forms/productionAccess';
+import { makeRequest, ResponseType } from '../../utils/makeRequest';
+import { FLAG_LIST_AND_LOOP, PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -29,9 +33,9 @@ const possibleSteps = [
 
 export interface Values {
   apis: string[];
-  is508Compliant: string;
-  isUSBasedCompany: string;
-  termsOfService: boolean;
+  is508Compliant?: string;
+  isUSBasedCompany?: string;
+  termsOfService?: boolean;
   primaryContact: {
     firstName: string;
     lastName: string;
@@ -44,55 +48,69 @@ export interface Values {
   };
   organization: string;
   phoneNumber: string;
+  appName: string;
+  monitizedVeteranInformation: string;
+  monitizationExplanation?: string;
+  veteranFacing: string;
+  website: string;
+  platforms: string;
+  appDescription: string;
+  vasiSystemName: string;
   applicationName?: string;
+  // statusUpdateEmails, signUpLink, supportLink, policyDocuments can be either a single value or
+  // an array until the list and loop component is created
   statusUpdateEmails: string | string[];
   valueProvided: string;
   businessModel?: string;
-  hasMonetized: string;
-  monetizationExplination?: string;
-  isVetFacing: string;
-  website?: string;
-  // statusUpdateEmails, signUpLink, supportLink, policyDocuments can be either a single value or
-  // an array until the list and loop component is created
-  signUpLink?: string | string[];
-  supportLink?: string | string[];
-  platforms?: string;
-  appDescription?: string;
-  vasiSystemName?: string;
-  credentialStorage: string;
+  signUpLink: string | string[];
+  supportLink: string | string[];
   storePIIOrPHI: string;
-  piiStorageMethod?: string;
-  multipleReqSafeguards?: string;
-  breachManagementProcess?: string;
-  vulnerabilityManagement?: string;
-  exposesToThirdParties: string;
-  thirdPartyInfoDescription?: string;
+  piiStorageMethod: string;
+  multipleReqSafeguards: string;
+  breachManagementProcess: string;
+  vulnerabilityManagement: string;
+  exposeVeteranInformationToThirdParties: string;
+  thirdPartyInfoDescription: string;
   scopesAccessRequested?: string;
-  distributingAPIKeysToCustomers?: string;
-  namingConvention?: string;
-  centralizedBackendLog?: string;
-  listedOnMyHealthApplication?: string;
-  policyDocuments?: string | string[];
+  distributingAPIKeysToCustomers: string;
+  namingConvention: string;
+  centralizedBackendLog: string;
+  listedOnMyHealthApplication: string;
+  productionKeyCredentialStorage: string;
+  productionOrOAuthKeyCredentialStorage: string;
+  veteranFacingDescription: string;
+  policyDocuments: string | string[];
 }
 
 const initialValues: Values = {
   apis: [],
-  applicationName: '',
+  appDescription: '',
+  appName: '',
+  breachManagementProcess: '',
   businessModel: '',
-  credentialStorage: '',
-  exposesToThirdParties: '',
-  hasMonetized: '',
+  centralizedBackendLog: '',
+  distributingAPIKeysToCustomers: '',
+  exposeVeteranInformationToThirdParties: '',
   is508Compliant: '',
   isUSBasedCompany: '',
-  isVetFacing: '',
+  listedOnMyHealthApplication: '',
+  monitizationExplanation: '',
+  monitizedVeteranInformation: '',
+  multipleReqSafeguards: '',
+  namingConvention: '',
   organization: '',
   phoneNumber: '',
+  piiStorageMethod: '',
+  platforms: '',
   policyDocuments: '',
   primaryContact: {
     email: '',
     firstName: '',
     lastName: '',
   },
+  productionKeyCredentialStorage: '',
+  productionOrOAuthKeyCredentialStorage: '',
+  scopesAccessRequested: '',
   secondaryContact: {
     email: '',
     firstName: '',
@@ -103,7 +121,13 @@ const initialValues: Values = {
   storePIIOrPHI: '',
   supportLink: '',
   termsOfService: false,
+  thirdPartyInfoDescription: '',
   valueProvided: '',
+  vasiSystemName: '',
+  veteranFacing: '',
+  veteranFacingDescription: '',
+  vulnerabilityManagement: '',
+  website: '',
 };
 
 // temporary until the list and loop component is done
@@ -137,6 +161,7 @@ const renderStepContent = (step: number): JSX.Element => {
 };
 
 const ProductionAccess: FC = () => {
+  const [submissionError, setSubmissionError] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
@@ -145,6 +170,8 @@ const ProductionAccess: FC = () => {
   const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
   const { modalVisible: modal3Visible, setModalVisible: setModal3Visible } = useModalController();
+  const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
+
   const history = useHistory();
   const isListAndLoopEnabled = useFlag([FLAG_LIST_AND_LOOP]);
 
@@ -179,7 +206,7 @@ const ProductionAccess: FC = () => {
       setActiveStep(activeStep - 1);
     }
   };
-  const handleSubmit = (values: Values, actions: FormikHelpers<Values>): void => {
+  const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
     setTimeout(() => {
       const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
 
@@ -188,16 +215,76 @@ const ProductionAccess: FC = () => {
       }
     }, 0);
     if (isLastStep) {
-      // TODO: In API-8236 the acutal submission of the form will be handled
-      // eslint-disable-next-line no-console
-      console.log('Submitied Form');
+      setSubmissionError(false);
+      delete values.is508Compliant;
+      delete values.isUSBasedCompany;
+      delete values.termsOfService;
+      // Remvoing the blank optional values from the request body
+      const filteredValues = JSON.parse(
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        JSON.stringify(values, (k, v) => (v === '' ? null : v)),
+      ) as Values;
+      Object.keys(filteredValues).forEach(
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        key => filteredValues[key] == null && delete filteredValues[key],
+      );
+      const applicationBody: ProductionAccessRequest = {
+        ...filteredValues,
+        apis: filteredValues.apis.join(','),
+        distributingAPIKeysToCustomers:
+          filteredValues.distributingAPIKeysToCustomers === yesOrNoValues.Yes,
+        exposeVeteranInformationToThirdParties:
+          filteredValues.exposeVeteranInformationToThirdParties === yesOrNoValues.Yes,
+        listedOnMyHealthApplication:
+          filteredValues.listedOnMyHealthApplication === yesOrNoValues.Yes,
+        monitizedVeteranInformation:
+          filteredValues.monitizedVeteranInformation === yesOrNoValues.Yes,
+        policyDocuments: Array.isArray(filteredValues.policyDocuments)
+          ? filteredValues.policyDocuments
+          : [filteredValues.policyDocuments],
+        signUpLink: Array.isArray(filteredValues.signUpLink)
+          ? filteredValues.signUpLink
+          : [filteredValues.signUpLink],
+        statusUpdateEmails: Array.isArray(filteredValues.statusUpdateEmails)
+          ? filteredValues.statusUpdateEmails
+          : [filteredValues.statusUpdateEmails],
+        storePIIOrPHI: filteredValues.storePIIOrPHI === yesOrNoValues.Yes,
+        supportLink: Array.isArray(filteredValues.supportLink)
+          ? filteredValues.supportLink
+          : [filteredValues.supportLink],
+        veteranFacing: filteredValues.veteranFacing === yesOrNoValues.Yes,
+      };
+      // The backend cannont accept null values, so this is to remove blank optional fields that are null because of the filtering above
+      Object.keys(applicationBody).forEach(key => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if (Array.isArray(applicationBody[key]) && applicationBody[key][0] == null) {
+          delete applicationBody[key];
+        }
+      });
+      try {
+        await makeRequest(
+          PRODUCTION_ACCESS_URL,
+          {
+            body: JSON.stringify(applicationBody),
+            headers: {
+              accept: 'application/json',
+              'content-type': 'application/json',
+            },
+            method: 'POST',
+          },
+          { responseType: ResponseType.TEXT },
+        );
+        setModal4Visible(true);
+      } catch (error: unknown) {
+        setSubmissionError(true);
+      }
     } else {
-      if (values.isUSBasedCompany === 'no') {
+      if (values.isUSBasedCompany === yesOrNoValues.No) {
         setModal2Visible(true);
         return;
       }
 
-      if (values.is508Compliant === 'no') {
+      if (values.is508Compliant === yesOrNoValues.No) {
         setModal3Visible(true);
         return;
       }
@@ -257,11 +344,7 @@ const ProductionAccess: FC = () => {
                     Submit your application
                   </button>
                 ) : (
-                  <button
-                    type="submit"
-                    className="usa-button vads-u-width--auto"
-                  // onClick={handleSubmitButtonClick}
-                  >
+                  <button type="submit" className="usa-button vads-u-width--auto">
                     Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
                   </button>
                 )}
@@ -277,53 +360,91 @@ const ProductionAccess: FC = () => {
                     Cancel
                   </button>
                 )}
-                <Modal
-                  id="cancellation-modal"
-                  title="Are you sure you want to leave?"
-                  visible={modal1Visible}
-                  onClose={(): void => setModal1Visible(false)}
-                  primaryButton={{
-                    action: (): void => history.goBack(),
-                    text: 'Yes, leave',
-                  }}
-                  secondaryButton={{
-                    action: (): void => setModal1Visible(false),
-                    text: 'No, stay on form',
-                  }}
-                >
-                  The information you entered will not be saved.
-                </Modal>
-                <Modal
-                  id="non-us-based-modal"
-                  title="Thank you for your interest!"
-                  visible={modal2Visible}
-                  onClose={(): void => setModal2Visible(false)}
-                >
-                  We currently only grant access to US-based companies. You may contact us if you
-                  have any questions.
-                </Modal>
-                <Modal
-                  id="warning-508-complicance-modal"
-                  title="Must be Section 508 Compliant"
-                  visible={modal3Visible}
-                  onClose={(): void => setModal3Visible(false)}
-                  primaryButton={{
-                    action: (): void => setModal3Visible(false),
-                    text: 'Continue',
-                  }}
-                >
-                  Consumer websites and applications must be Section 508 compliant to get production
-                  access. Learn about becoming{' '}
-                  <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
-                    Section 508 Compliant
-                  </a>{' '}
-                  or contact us with questions.
-                </Modal>
               </div>
             </Form>
-            {/* ); */}
-            {/* }} */}
           </Formik>
+          <Modal
+            id="cancellation-modal"
+            title="Are you sure you want to leave?"
+            visible={modal1Visible}
+            onClose={(): void => setModal1Visible(false)}
+            primaryButton={{
+              action: (): void => history.goBack(),
+              text: 'Yes, leave',
+            }}
+            secondaryButton={{
+              action: (): void => setModal1Visible(false),
+              text: 'No, stay on form',
+            }}
+          >
+            The information you entered will not be saved.
+          </Modal>
+          <Modal
+            id="non-us-based-modal"
+            title="Thank you for your interest!"
+            visible={modal2Visible}
+            onClose={(): void => setModal2Visible(false)}
+          >
+            We currently only grant access to US-based companies. You may contact us if you have any
+            questions.
+          </Modal>
+          <Modal
+            id="warning-508-complicance-modal"
+            title="Must be Section 508 Compliant"
+            visible={modal3Visible}
+            onClose={(): void => setModal3Visible(false)}
+            primaryButton={{
+              action: (): void => setModal3Visible(false),
+              text: 'Continue',
+            }}
+          >
+            Consumer websites and applications must be Section 508 compliant to get production
+            access. Learn about becoming{' '}
+            <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+              Section 508 Compliant
+            </a>{' '}
+            or contact us with questions.
+          </Modal>
+          <Modal
+            id="submission-complete-modal"
+            title="Thanks for submitting!"
+            visible={modal4Visible}
+            onClose={(): void => {
+              setModal4Visible(false);
+              history.goBack();
+            }}
+            primaryButton={{
+              action: (): void => history.goBack(),
+              text: 'Close',
+            }}
+          >
+            <p>
+              We’ve received your production access request and have sent you an email confirmation.
+              We’ll be in touch with next steps or required changes within 1-2 weeks, depending on
+              the API.
+            </p>
+            <p>
+              It’s good to remember that getting production access can take over a month. For open
+              data APIs, this takes a week or less. Learn more about the production access
+              timelines.
+            </p>
+            <p>
+              In the meantime, you may <Link to="/support/contact-us">contact us </Link>if you have
+              any questions or learn more about working with our APIs.
+            </p>
+          </Modal>
+          {submissionError && (
+            <AlertBox
+              status="error"
+              headline="We encountered a server error while saving your form. Please try again later."
+              content={
+                <span>
+                  Need assistance? Create an issue through our{' '}
+                  <Link to="/support">Support page.</Link>
+                </span>
+              }
+            />
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-export * from './apply';
+export * from './forms/apply';
 
 export interface APINameParam {
   apiName?: string;

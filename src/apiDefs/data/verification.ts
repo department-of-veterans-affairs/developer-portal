@@ -8,6 +8,7 @@ import { APIDescription } from '../schema';
 
 const verificationApis: APIDescription[] = [
   {
+    altID: 'addressValidation',
     description: 'Provides methods to standardize and validate addresses.',
     docSources: [
       {
@@ -26,7 +27,7 @@ const verificationApis: APIDescription[] = [
   {
     // adding an altID to match keys need on the backend for signup
     altID: 'confirmation',
-    description: 'Confirm Veteran status for a given person with an api key.',
+    description: 'Confirm Veteran status for a given person with an API key.',
     docSources: [
       {
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-confirmation/v0/openapi.json`,
