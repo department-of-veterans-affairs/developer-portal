@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router';
 import Helmet from 'react-helmet';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
-import { FormType } from '../../types/contactUsForm';
+import { FormType } from '../../types/forms/contactUsForm';
 import { PageHeader } from '../../components';
 import { ContactUsAlertBox } from './ContactUsAlertBox';
 import ContactUsForm from './ContactUsForm';
@@ -32,7 +32,10 @@ const ContactUs = (): JSX.Element => {
             <title>Contact Us</title>
           </Helmet>
           <PageHeader halo="Support" header="Contact Us" />
-          <p>If you have questions about APIs, development, or related topics, use this form to send us a message.</p>
+          <p>
+            If you have questions about APIs, development, or related topics, use this form to send
+            us a message.
+          </p>
           <ContactUsAlertBox />
           <ContactUsForm onSuccess={onSuccess} defaultType={type} />
         </>

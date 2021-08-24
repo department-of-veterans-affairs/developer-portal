@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import React, { FC } from 'react';
 import { TextField, CheckboxRadioField } from '../../../../components';
-import { ContactUsFormState } from '../../../../types/contactUsForm';
+import { ContactUsFormState } from '../../../../types/forms/contactUsForm';
 
 const titleClass = classNames(
   'vads-u-margin-top--4',
@@ -45,10 +45,11 @@ const PublishingFormFields: FC = () => {
         </legend>
         <CheckboxRadioField type="radio" name="apiInternalOnly" value="yes" label="Yes" />
 
-        {
-          values.apiInternalOnly === 'yes' &&
+        {values.apiInternalOnly === 'yes' && (
           <div className={classNames('vads-u-margin-left--4', 'feature', 'vads-u-padding-top--2')}>
-            <h3 className={classNames('vads-u-margin-top--0', 'vads-u-margin-bottom-2p5')}>Internal to VA only:</h3>
+            <h3 className={classNames('vads-u-margin-top--0', 'vads-u-margin-bottom-2p5')}>
+              Internal to VA only:
+            </h3>
             <TextField
               label="Tell us more about why the API needs to be restricted to internal VA use."
               name="apiInternalOnlyDetails"
@@ -57,7 +58,7 @@ const PublishingFormFields: FC = () => {
               className={classNames()}
             />
           </div>
-        }
+        )}
 
         <CheckboxRadioField type="radio" name="apiInternalOnly" value="no" label="No" />
       </fieldset>

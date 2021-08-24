@@ -67,6 +67,7 @@ const benefitsApis: APIDescription[] = [
     vaInternalOnly: false,
   },
   {
+    altID: 'claimsAttributes',
     description: 'Improve claim routing',
     docSources: [
       {

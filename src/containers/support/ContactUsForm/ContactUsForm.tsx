@@ -7,7 +7,7 @@ import { CheckboxRadioField } from '../../../components';
 import { CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
-import { ContactUsFormState, FormType, SubmissionData } from '../../../types/contactUsForm';
+import { ContactUsFormState, FormType, SubmissionData } from '../../../types/forms/contactUsForm';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
 import PublishingFormFields from './components/PublishingFormFields';
@@ -72,14 +72,18 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
   const formSubmission = async (values: ContactUsFormState): Promise<void> => {
     setSubmissionError(false);
     try {
-      await makeRequest(CONTACT_US_URL, {
-        body: JSON.stringify(processedData(values)),
-        headers: {
-          accept: 'application/json',
-          'content-type': 'application/json',
+      await makeRequest(
+        CONTACT_US_URL,
+        {
+          body: JSON.stringify(processedData(values)),
+          headers: {
+            accept: 'application/json',
+            'content-type': 'application/json',
+          },
+          method: 'POST',
         },
-        method: 'POST',
-      }, { responseType: ResponseType.TEXT });
+        { responseType: ResponseType.TEXT },
+      );
       onSuccess();
     } catch {
       setSubmissionError(true);
@@ -98,20 +102,26 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
                 What can we help you with?
               </h2>
             </legend>
-            <CheckboxRadioField type="radio" label="Report a problem or ask a question" name="type" value={FormType.CONSUMER}  />
-            <CheckboxRadioField type="radio" label="Publish your API to Lighthouse - Internal VA use only" name="type" value={FormType.PUBLISHING}  />
+            <CheckboxRadioField
+              type="radio"
+              label="Report a problem or ask a question"
+              name="type"
+              value={FormType.CONSUMER}
+            />
+            <CheckboxRadioField
+              type="radio"
+              label="Publish your API to Lighthouse - Internal VA use only"
+              name="type"
+              value={FormType.PUBLISHING}
+            />
           </fieldset>
 
-          {
-            values.type === FormType.CONSUMER &&
-            <ConsumerFormFields />
-          }
-          {
-            values.type === FormType.PUBLISHING &&
-            <PublishingFormFields />
-          }
+          {values.type === FormType.CONSUMER && <ConsumerFormFields />}
+          {values.type === FormType.PUBLISHING && <PublishingFormFields />}
 
-          <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>{isSubmitting ? 'Sending...' : 'Submit'}</button>
+          <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>
+            {isSubmitting ? 'Sending...' : 'Submit'}
+          </button>
           {submissionError && (
             <AlertBox
               status="error"
@@ -121,7 +131,6 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
         </Form>
       )}
     </Formik>
-
   );
 };
 
