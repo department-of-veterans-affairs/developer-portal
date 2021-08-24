@@ -14,7 +14,7 @@ import './SelectedApis.scss';
 
 interface APICheckboxListProps {
   apiCheckboxes: APIDescription[];
-  checkedApis?: Values;
+  checkedApis: Values;
 }
 
 const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): JSX.Element => {
@@ -26,13 +26,12 @@ const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): 
         const apiCheckboxName = api.altID ?? api.urlFragment;
         const internalApiSelected =
           checkedApis?.apis.includes(apiCheckboxName) && api.vaInternalOnly;
-        const internalApisBorderClass = internalApiSelected ? 'vads-u-border-left--4px' : '';
-        const internalApisBorderColorClass = internalApiSelected
-          ? 'vads-u-border-color--primary-alt-light'
-          : '';
         return (
           <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
-            <div className={classNames(internalApisBorderClass, internalApisBorderColorClass)}>
+            <div className={classNames(
+              internalApiSelected ? 'vads-u-border-left--4px' : '',
+              internalApiSelected ? 'vads-u-border-color--primary-alt-light' : ''
+            )}>
               <CheckboxRadioField
                 type="checkbox"
                 name="apis"
@@ -68,7 +67,7 @@ interface SelectedApisProps {
 }
 
 const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
-  const { errors, values } = useFormikContext();
+  const { errors, values } = useFormikContext<Values>();
   const checkboxName = 'apis';
   const shouldDisplayErrors = !!errors[checkboxName];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
@@ -80,7 +79,6 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
     : 'vads-u-font-weight--normal';
 
   const oauthApisSelected = anyOAuthApisSelected(selectedApis);
-  const apisSelected = values as Values;
   const oauthApisBorderClass = oauthApisSelected ? 'vads-u-border-left--4px' : '';
   const oauthApisBorderColorClass = oauthApisSelected
     ? 'vads-u-border-color--primary-alt-light'
@@ -125,7 +123,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="standardApis"
         >
-          <ApiCheckboxList apiCheckboxes={keyAuthApis} checkedApis={apisSelected} />
+          <ApiCheckboxList apiCheckboxes={keyAuthApis} checkedApis={values} />
         </FieldSet>
         <FieldSet
           className={classNames(
@@ -138,7 +136,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="oauthApis"
         >
-          <ApiCheckboxList apiCheckboxes={oauthApis} />
+          <ApiCheckboxList apiCheckboxes={oauthApis} checkedApis={values} />
           {oauthApisSelected && <OAuthAppInfo />}
         </FieldSet>
       </div>
