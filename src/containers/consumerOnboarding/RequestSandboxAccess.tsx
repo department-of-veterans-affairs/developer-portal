@@ -37,6 +37,7 @@ const RequestSandboxAccessGoodToKnow: React.FunctionComponent<RequestGoodToKnowP
 
 const RequestSandboxAccess: React.FunctionComponent = () => {
   const [successResults, setSuccessResults] = useState<ApplySuccessResult>();
+  const vaEmailPattern = /^[A-Za-z0-9._%+-]+@va.gov$/;
   return (
     <>
       <Helmet>
@@ -47,7 +48,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
       {successResults ? (
         <>
           <SandboxAccessSuccess result={successResults} />
-          {!successResults.clientID && !successResults.token && (
+          {vaEmailPattern.test(successResults.email) && (
             <RequestSandboxAccessGoodToKnow confirmation={!!successResults.email} />
           )}
         </>
