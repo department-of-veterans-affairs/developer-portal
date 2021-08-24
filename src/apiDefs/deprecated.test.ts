@@ -15,7 +15,6 @@ describe('deprecated API module', () => {
     oAuth: false,
     openData: false,
     releaseNotes: UrgentCareDeprecationNotice,
-    trustedPartnerOnly: false,
     urlFragment: 'my_api',
     vaInternalOnly: false,
   };
