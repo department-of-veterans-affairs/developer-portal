@@ -23,7 +23,6 @@ const allOauthApis = getAllOauthApis()
   .filter(
     api =>
       !api.vaInternalOnly &&
-      !api.trustedPartnerOnly &&
       !isApiDeactivated(api) &&
       isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
   )
@@ -33,7 +32,6 @@ const allKeyAuthApis = getAllKeyAuthApis()
   .filter(
     api =>
       !api.vaInternalOnly &&
-      !api.trustedPartnerOnly &&
       !isApiDeactivated(api) &&
       isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
   )

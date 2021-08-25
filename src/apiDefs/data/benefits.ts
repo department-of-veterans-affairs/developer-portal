@@ -28,7 +28,6 @@ const benefitsApis: APIDescription[] = [
     },
     openData: false,
     releaseNotes: ClaimsReleaseNotes,
-    trustedPartnerOnly: false,
     urlFragment: 'claims',
     vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
@@ -46,7 +45,6 @@ const benefitsApis: APIDescription[] = [
     name: 'Benefits Intake API',
     openData: false,
     releaseNotes: BenefitsIntakeReleaseNotes,
-    trustedPartnerOnly: false,
     urlFragment: 'benefits',
     vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
@@ -62,9 +60,16 @@ const benefitsApis: APIDescription[] = [
     name: 'Loan Guaranty API',
     openData: false,
     releaseNotes: LoanGuarantyReleaseNotes,
-    trustedPartnerOnly: true,
     urlFragment: 'loan_guaranty',
-    vaInternalOnly: false,
+    /**
+     * technically Loan Guaranty is what's known as "trusted partner only", but the business case
+     * + UI for trusted partner only APIs is currently not developed and has the same functionality
+     * as internal only APIs, so we use the same property.
+     *
+     * see this commit for when trusted partner only was represented in the source code:
+     * https://github.com/department-of-veterans-affairs/developer-portal/tree/742c629534dc9ee17bb9ba73a20406a3a05cd59d
+     */
+    vaInternalOnly: true,
   },
   {
     altID: 'claimsAttributes',
@@ -79,7 +84,6 @@ const benefitsApis: APIDescription[] = [
     openData: false,
 
     releaseNotes: ClaimsAttributesReleaseNotes,
-    trustedPartnerOnly: false,
     urlFragment: 'claims_attributes',
     vaInternalOnly: false,
   },

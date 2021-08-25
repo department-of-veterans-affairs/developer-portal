@@ -16,7 +16,7 @@ interface APICheckboxListProps {
 
 const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => {
   // we will need to change this filter when we allow internal apis on the apply page
-  const hostedApis = apiCheckboxes.filter(api => !api.vaInternalOnly && !api.trustedPartnerOnly);
+  const hostedApis = apiCheckboxes.filter(api => !api.vaInternalOnly);
   return (
     <>
       {hostedApis.map(api => (
@@ -28,11 +28,7 @@ const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element =
               <>
                 <span>{api.name}</span>
                 <span className="vads-u-display--inline-block vads-u-margin-left--1">
-                  <ApiTags
-                    openData={api.openData}
-                    trustedPartnerOnly={api.trustedPartnerOnly}
-                    vaInternalOnly={api.vaInternalOnly}
-                  />
+                  <ApiTags openData={api.openData} vaInternalOnly={api.vaInternalOnly} />
                 </span>
               </>
             }

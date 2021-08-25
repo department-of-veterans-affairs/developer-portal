@@ -31,11 +31,6 @@ const SideNavApiEntry = (apiCategoryKey: string, api: APIDescription): JSX.Eleme
           {api.vaInternalOnly && (
             <small className="vads-u-display--block">Internal VA use only.</small>
           )}
-          {api.trustedPartnerOnly && (
-            <small className="vads-u-display--block">
-              Internal VA use only.{/* Trusted Partner use only.*/}
-            </small>
-          )}
         </>
       }
       subNavLevel={1}

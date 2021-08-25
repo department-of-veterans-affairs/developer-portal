@@ -16,7 +16,6 @@ const vaFormsApis: APIDescription[] = [
     name: 'VA Forms API',
     openData: true,
     releaseNotes: VAFormsReleaseNotes,
-    trustedPartnerOnly: false,
     urlFragment: 'vaForms',
     vaInternalOnly: false,
     veteranRedirect: vaFormsContent.veteranRedirect,

@@ -4,41 +4,63 @@ import * as React from 'react';
 import { FlagsProvider, getFlags } from '../../flags';
 import { ApiTags } from './ApiTags';
 
-describe('ApiTags', () => {
-  it.each([
-    [0, 0, 0],
-    [0, 1, 0],
-    [0, 0, 1],
-    [0, 1, 1],
-    [1, 0, 0],
-    [1, 0, 1],
-    [1, 1, 0],
-    [1, 1, 1],
-  ])(
-    'shows and hides ApiTags correctly (vaInternalOnly: %i, trustedPartyOnly: %i, openData: %i)',
-    (vaInternalOnly, trustedPartnerOnly, openData) => {
-      render(
-        <FlagsProvider flags={getFlags()}>
-          <ApiTags
-            openData={!!openData}
-            vaInternalOnly={!!vaInternalOnly}
-            trustedPartnerOnly={!!trustedPartnerOnly}
-          />
-        </FlagsProvider>,
-      );
+const internalOnlyText = 'Internal VA use only';
+const openDataText = 'Open Data';
 
-      /**
-       * both have the same text right now (see TrustedPartnerOnlyTag),
-       * so this actually tests the logic even though it reads strangely
-       */
-      expect(screen.queryAllByText('Internal VA use only')).toHaveLength(
-        vaInternalOnly + trustedPartnerOnly,
-      );
-      if (openData) {
-        expect(screen.queryByText('Open Data')).toBeInTheDocument();
-      } else {
-        expect(screen.queryByText('Open Data')).not.toBeInTheDocument();
-      }
-    },
-  );
+describe('ApiTags', () => {
+  it('renders the VA internal only tag and not the open data tag', () => {
+    render(
+      <FlagsProvider flags={getFlags()}>
+        <ApiTags
+          openData={false}
+          vaInternalOnly
+        />
+      </FlagsProvider>,
+    );
+
+    expect(screen.queryByText(internalOnlyText)).toBeInTheDocument();
+    expect(screen.queryByText(openDataText)).not.toBeInTheDocument();
+  });
+
+  it('renders the open data tag and not the VA internal only tag', () => {
+    render(
+      <FlagsProvider flags={getFlags()}>
+        <ApiTags
+          openData
+          vaInternalOnly={false}
+        />
+      </FlagsProvider>,
+    );
+
+    expect(screen.queryByText(internalOnlyText)).not.toBeInTheDocument();
+    expect(screen.queryByText(openDataText)).toBeInTheDocument();
+  });
+
+  it('renders neither tag', () => {
+    render(
+      <FlagsProvider flags={getFlags()}>
+        <ApiTags
+          openData={false}
+          vaInternalOnly={false}
+        />
+      </FlagsProvider>,
+    );
+
+    expect(screen.queryByText(internalOnlyText)).not.toBeInTheDocument();
+    expect(screen.queryByText(openDataText)).not.toBeInTheDocument();
+  });
+
+  it('renders both tags', () => {
+    render(
+      <FlagsProvider flags={getFlags()}>
+        <ApiTags
+          openData
+          vaInternalOnly
+        />
+      </FlagsProvider>,
+    );
+
+    expect(screen.queryByText(internalOnlyText)).toBeInTheDocument();
+    expect(screen.queryByText(openDataText)).toBeInTheDocument();
+  });
 });

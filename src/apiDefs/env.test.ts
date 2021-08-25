@@ -42,7 +42,6 @@ describe('env module', () => {
       name: 'My API',
       openData: false,
       releaseNotes: ClaimsReleaseNotes,
-      trustedPartnerOnly: false,
       vaInternalOnly: false,
     };
 
