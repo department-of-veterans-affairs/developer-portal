@@ -1,3 +1,4 @@
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -5,7 +6,7 @@ import { HashLink, NavHashLink } from 'react-router-hash-link';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
-import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
+import { FLAG_PLATFORM_OUTAGE, FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
 import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
@@ -106,6 +107,22 @@ const Header = (): JSX.Element => {
           </div>
         </div>
         <NavBar isMobileMenuVisible={mobileNavVisible} onMobileNavClose={toggleMenuVisible} />
+        <Flag name={[FLAG_PLATFORM_OUTAGE]}>
+          <AlertBox
+            status="error"
+            content={
+              <section aria-label="Network issue alert">
+                {/* message written for specific issue on 8/25/21, update next time it needs to be used */}
+                There were recent network issues affecting all VA sites and usage of VA Lighthouse APIs in
+                sandbox and production environments from 9:56 am to 10:44 am EDT. Please review the&nbsp;
+                <a href="https://valighthouse.statuspage.io/" target="_blank" rel="noreferrer">Status Page</a>
+                &nbsp;for details and reach out to <Link to="/support/contact-us">Support</Link> if you
+                have any questions.
+              </section>
+            }
+            className="vads-u-margin-top--0"
+          />
+        </Flag>
       </header>
     </>
   );
