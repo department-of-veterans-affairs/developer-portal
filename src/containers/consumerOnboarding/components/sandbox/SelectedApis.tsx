@@ -5,7 +5,7 @@ import { CheckboxRadioField, FieldSet, ApiTags } from '../../../../components';
 import { getAllOauthApis, getAllKeyAuthApis } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
 import { Flag } from '../../../../flags';
-import { FLAG_HOSTED_APIS } from '../../../../types/constants';
+import { FLAG_HOSTED_APIS, APPLY_INTERNAL_APIS } from '../../../../types/constants';
 import { anyOAuthApisSelected } from './validateForm';
 import { OAuthAppInfo } from './OAuthAppInfo';
 import { InternalOnlyInfo } from './InternalOnlyInfo';
@@ -18,20 +18,26 @@ interface APICheckboxListProps {
 }
 
 const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): JSX.Element => {
-  const hostedApis = apiCheckboxes.filter(api => api.altID);
+  const hostedApis = apiCheckboxes.filter(
+    api =>
+      (!api.vaInternalOnly && !api.trustedPartnerOnly) ||
+      APPLY_INTERNAL_APIS.includes(api.urlFragment),
+  );
 
   return (
     <>
       {hostedApis.map(api => {
         const apiCheckboxName = api.altID ?? api.urlFragment;
         const internalApiSelected =
-          checkedApis?.apis.includes(apiCheckboxName) && api.vaInternalOnly;
+          checkedApis.apis.includes(apiCheckboxName) && api.vaInternalOnly;
         return (
           <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
-            <div className={classNames(
-              internalApiSelected ? 'vads-u-border-left--4px' : '',
-              internalApiSelected ? 'vads-u-border-color--primary-alt-light' : ''
-            )}>
+            <div
+              className={classNames(
+                internalApiSelected ? 'vads-u-border-left--4px' : '',
+                internalApiSelected ? 'vads-u-border-color--primary-alt-light' : '',
+              )}
+            >
               <CheckboxRadioField
                 type="checkbox"
                 name="apis"
