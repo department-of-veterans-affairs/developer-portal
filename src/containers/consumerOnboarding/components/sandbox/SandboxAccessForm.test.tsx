@@ -35,7 +35,7 @@ const allKeyAuthApis = getAllKeyAuthApis()
       !isApiDeactivated(api) &&
       isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
   )
-  .map((api: APIDescription) => (api.openData ? `${api.name} Open Data` : api.name));
+  .map((api: APIDescription) => RegExp(api.name, 'g'));
 
 describe('SandboxAccessForm', () => {
   beforeEach(() => {
@@ -364,11 +364,10 @@ describe('SandboxAccessForm', () => {
 
   describe('SelectedApis', () => {
     describe('Standard APIs', () => {
-      const filteredKeyAuthApis = allKeyAuthApis.filter(api => api !== 'Claims Attributes API');
+      const filteredKeyAuthApis = allKeyAuthApis.filter(api => api !== /Claims Attributes API/);
       it.each(filteredKeyAuthApis)('toggles the %s checkbox on click', name => {
-        const checkboxName = RegExp(name, 'g');
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
-          name: checkboxName,
+          name,
         }) as HTMLInputElement;
         expect(checkbox.checked).toBeFalsy();
 
