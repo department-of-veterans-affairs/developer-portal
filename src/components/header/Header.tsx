@@ -111,14 +111,14 @@ const Header = (): JSX.Element => {
           <AlertBox
             status="error"
             content={
-              <>
+              <section aria-label="Network issue alert">
                 {/* message written for specific issue on 8/25/21, update next time it needs to be used */}
                 There were recent network issues affecting all VA sites and usage of VA Lighthouse APIs in
                 sandbox and production environments from 9:56 am to 10:44 am EDT. Please review the&nbsp;
                 <a href="https://valighthouse.statuspage.io/" target="_blank" rel="noreferrer">Status Page</a>
                 &nbsp;for details and reach out to <Link to="/support/contact-us">Support</Link> if you
                 have any questions.
-              </>
+              </section>
             }
             className="vads-u-margin-top--0"
           />
