@@ -1,4 +1,5 @@
-import { Field, getIn, useFormikContext } from 'formik';
+import classNames from 'classnames';
+import { Field, getIn, useFormikContext, ErrorMessage } from 'formik';
 import React, { FC, ReactNode } from 'react';
 import toHtmlId from '../../../toHtmlId';
 
@@ -10,6 +11,7 @@ export interface CheckboxRadioFieldProps {
   type: 'checkbox' | 'radio';
   value?: string;
   innerRef?: React.RefObject<HTMLElement>;
+  showError?: boolean;
 }
 
 const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
@@ -19,6 +21,7 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
   type,
   innerRef,
   value,
+  showError = false,
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
@@ -27,11 +30,14 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
 
   const idReadyName = toHtmlId(name);
   const idReadyValue = toHtmlId(value ?? '');
+  const shouldDisplayErrors = showError && !!getIn(errors, name) && !!getIn(touched, name);
+  const errorId = `${idReadyName}FormFieldError`;
   const fieldId = `${idReadyName}FormField${idReadyValue}`;
-  const shouldDisplayErrors = !!getIn(errors, name) && !!getIn(touched, name);
+  const validationClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
+  const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
 
   return (
-    <div className={className}>
+    <div className={classNames(containerClass, className)}>
       <Field
         id={fieldId}
         name={name}
@@ -44,6 +50,11 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
       <label htmlFor={fieldId} className={radioClass}>
         {label}
       </label>
+      {showError && (
+        <span id={errorId} className={validationClass} role="alert">
+          <ErrorMessage name={name} />
+        </span>
+      )}
     </div>
   );
 };

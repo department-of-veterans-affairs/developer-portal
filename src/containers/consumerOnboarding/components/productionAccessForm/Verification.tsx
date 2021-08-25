@@ -49,6 +49,7 @@ const Verification: FC = () => (
       required
       type="checkbox"
       className="form-checkbox"
+      showError
     />
   </>
 );
