@@ -10,6 +10,7 @@ import {
   FLAG_ENABLED_APIS,
   FLAG_HOSTED_APIS,
   FLAG_LIST_AND_LOOP,
+  FLAG_PLATFORM_OUTAGE,
   FLAG_SHOW_TESTING_NOTICE,
   FLAG_SIGNUPS_ENABLED,
 } from './types/constants';
@@ -23,6 +24,7 @@ export interface AppFlags {
   show_testing_notice: boolean;
   signups_enabled: boolean;
   list_and_loop_enabled: boolean;
+  platform_outage: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -52,6 +54,7 @@ const getFlags = (): AppFlags => {
     [FLAG_ENABLED_APIS]: envFlags,
     [FLAG_HOSTED_APIS]: apiFlags,
     [FLAG_LIST_AND_LOOP]: process.env.REACT_APP_LIST_AND_LOOP_ENABLED === 'true',
+    [FLAG_PLATFORM_OUTAGE]: process.env.REACT_APP_PLATFORM_OUTAGE === 'true',
     [FLAG_SHOW_TESTING_NOTICE]: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
     [FLAG_SIGNUPS_ENABLED]: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
   };
