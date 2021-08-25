@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete, id-length, max-lines */
-
 import React, { FC, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, FormikHelpers } from 'formik';
@@ -145,10 +144,10 @@ const getInitialValues = (isListAndLoopEnabled: boolean): Values => {
   return initialValues;
 };
 
-const renderStepContent = (step: number): JSX.Element => {
+const renderStepContent = (step: number, hasPassedStep1: boolean): JSX.Element => {
   switch (step) {
     case 0:
-      return <Verification />;
+      return <Verification hasPassedStep={hasPassedStep1} />;
     case 1:
       return <BasicInformation />;
     case 2:
@@ -160,9 +159,20 @@ const renderStepContent = (step: number): JSX.Element => {
   }
 };
 
+const handleSubmitButtonClick = (): void => {
+  setTimeout(() => {
+    const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
+
+    if (errorElements.length > 0) {
+      errorElements[0].focus();
+    }
+  }, 0);
+};
+
 const ProductionAccess: FC = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
+  const [passedStep1, setPassedStep1] = useState(false); // for focus handling of step 1
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
@@ -207,13 +217,6 @@ const ProductionAccess: FC = () => {
     }
   };
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
-    setTimeout(() => {
-      const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
-
-      if (errorElements.length > 0) {
-        errorElements[0].focus();
-      }
-    }, 0);
     if (isLastStep) {
       setSubmissionError(false);
       delete values.is508Compliant;
@@ -291,6 +294,7 @@ const ProductionAccess: FC = () => {
 
       calculateSteps(values);
       setActiveStep(activeStep + 1);
+      setPassedStep1(true); // any time we submit successfully we know we've been through step 1
       actions.setTouched({});
       actions.setSubmitting(false);
     }
@@ -321,7 +325,7 @@ const ProductionAccess: FC = () => {
                   </h2>
                 </>
               )}
-              {renderStepContent(activeStep)}
+              {renderStepContent(activeStep, passedStep1)}
               <div className="vads-u-margin-y--5">
                 <button
                   className={classNames(
@@ -340,11 +344,16 @@ const ProductionAccess: FC = () => {
                   <button
                     type="submit"
                     className="usa-button-primary va-button-primary vads-u-width--auto"
+                    onClick={handleSubmitButtonClick}
                   >
                     Submit your application
                   </button>
                 ) : (
-                  <button type="submit" className="usa-button vads-u-width--auto">
+                  <button
+                    type="submit"
+                    className="usa-button vads-u-width--auto"
+                    onClick={handleSubmitButtonClick}
+                  >
                     Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
                   </button>
                 )}

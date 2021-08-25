@@ -21,7 +21,6 @@ export const fakeCategories: APICategories = {
             <p>One Ring discovered by Bilbo in Misty Mountains</p>
           </div>
         ),
-        trustedPartnerOnly: false,
         urlFragment: 'rings',
         vaInternalOnly: false,
       },
@@ -45,7 +44,6 @@ export const fakeCategories: APICategories = {
             <p>Feanor created the jewels</p>
           </div>
         ),
-        trustedPartnerOnly: false,
         urlFragment: 'silmarils',
         vaInternalOnly: false,
       },
@@ -63,7 +61,6 @@ export const fakeCategories: APICategories = {
             <p>Bilbo disappeared</p>
           </div>
         ),
-        trustedPartnerOnly: false,
         urlFragment: 'hobbits',
         vaInternalOnly: false,
       },
@@ -92,7 +89,6 @@ export const fakeCategories: APICategories = {
             <p>Released our API</p>
           </div>
         ),
-        trustedPartnerOnly: false,
         urlFragment: 'basketball',
         vaInternalOnly: false,
       },
@@ -110,7 +106,6 @@ export const fakeCategories: APICategories = {
             <p>Gerrit Cole strikes out 80</p>
           </div>
         ),
-        trustedPartnerOnly: false,
         urlFragment: 'baseball',
         vaInternalOnly: false,
       },
@@ -143,7 +138,6 @@ export const extraAPI: APIDescription = {
       <p>champions league</p>
     </div>
   ),
-  trustedPartnerOnly: false,
   urlFragment: 'soccer',
   vaInternalOnly: false,
 };
