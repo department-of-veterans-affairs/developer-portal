@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
 import { CheckboxRadioField, FieldSet } from '../../../../components';
 import { SelectedAPIs } from './SelectedApis';
 
@@ -31,17 +30,16 @@ const Verification: FC = () => (
       legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
       errorClassName="vads-u-margin-left--2"
       name="is508Compliant"
-      required
     >
-      <CheckboxRadioField type="radio" label="Yes" name="is508Compliant" value="yes" required />
-      <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" required />
+      <CheckboxRadioField type="radio" label="Yes" name="is508Compliant" value="yes"  />
+      <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no"  />
     </FieldSet>
 
     <SelectedAPIs />
     <CheckboxRadioField
       label={
         <span>
-          I agree to the <Link to="/terms-of-service">Terms of Service</Link>{' '}
+          I agree to the <a href="/terms-of-service" target="_blank" rel="noreferrer noopener">Terms of Service</a>{' '}
           <span className="form-required-span">(*Required)</span>
         </span>
       }
