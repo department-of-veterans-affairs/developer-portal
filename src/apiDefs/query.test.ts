@@ -42,7 +42,6 @@ describe('query module', () => {
         name: 'VA Facilities API',
         openData: true,
         releaseNotes: FacilitiesReleaseNotes,
-        trustedPartnerOnly: false,
         urlFragment: 'facilities',
         vaInternalOnly: false,
         veteranRedirect: {
