@@ -3,8 +3,8 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { ApplySuccessResult } from '../../types';
-import { SandboxAccessForm, SandboxAccessSuccess } from './components/sandbox';
 import { VA_EMAIL_PATTERN } from '../../utils/validators';
+import { SandboxAccessForm, SandboxAccessSuccess } from './components/sandbox';
 
 interface RequestGoodToKnowProps {
   confirmation: boolean;

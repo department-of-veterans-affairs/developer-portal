@@ -2,8 +2,8 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import { TextField } from '../../../../components';
+import { VA_EMAIL_PATTERN } from '../../../../utils/validators';
 import { Values } from './SandboxAccessForm';
-import { VA_EMAIL_PATTERN } from '../../../../utils/validators'
 
 const InternalOnlyInfo = (): JSX.Element => {
   const { errors, values } = useFormikContext();

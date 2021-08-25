@@ -6,7 +6,7 @@ import { getApiDefinitions } from '../../../../apiDefs/query';
 import sentenceJoin from '../../../../sentenceJoin';
 import { ApplySuccessResult } from '../../../../types';
 import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS } from '../../../../types/constants';
-import { VA_EMAIL_PATTERN } from '../../../../utils/validators'
+import { VA_EMAIL_PATTERN } from '../../../../utils/validators';
 
 const AssistanceTrailer = (): JSX.Element => (
   <p>
@@ -134,7 +134,7 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
     <>
       <p>
         <strong>Thank you for signing up!</strong>
-      </p> 
+      </p>
       {hasStandardAPI && token && kongUsername && !hasInternalAPI && (
         <ApiKeyNotice
           email={email}
