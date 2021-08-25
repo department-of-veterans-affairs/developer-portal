@@ -20,7 +20,7 @@ interface APICheckboxListProps {
 const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): JSX.Element => {
   const hostedApis = apiCheckboxes.filter(
     api =>
-      (!api.vaInternalOnly && !api.trustedPartnerOnly) ||
+      !api.vaInternalOnly  ||
       APPLY_INTERNAL_APIS.includes(api.urlFragment),
   );
 
@@ -47,7 +47,6 @@ const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): 
                     <span className="vads-u-display--inline-block vads-u-margin-left--1">
                       <ApiTags
                         openData={api.openData}
-                        trustedPartnerOnly={api.trustedPartnerOnly}
                         vaInternalOnly={api.vaInternalOnly}
                       />
                     </span>

@@ -7,6 +7,8 @@ import { makeRequest } from '../../../../utils/makeRequest';
 import { getAllKeyAuthApis, getAllOauthApis } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../../../flags';
+import { isApiDeactivated } from '../../../../apiDefs/deprecated';
+import { isHostedApiEnabled } from '../../../../apiDefs/env';
 import { SandboxAccessForm } from './SandboxAccessForm';
 
 jest.mock('../../../../utils/makeRequest', () => ({
@@ -18,11 +20,21 @@ const mockOnSuccess = jest.fn();
 const mockMakeRequest = makeRequest as jest.Mock;
 
 const allOauthApis = getAllOauthApis()
-  .filter(api => api.altID && !api.vaInternalOnly)
+  .filter(
+    api =>
+      !api.vaInternalOnly &&
+      !isApiDeactivated(api) &&
+      isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  )
   .map((api: APIDescription) => api.name);
 
 const allKeyAuthApis = getAllKeyAuthApis()
-  .filter(api => api.altID)
+  .filter(
+    api =>
+      !api.vaInternalOnly &&
+      !isApiDeactivated(api) &&
+      isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  )
   .map((api: APIDescription) => (api.openData ? `${api.name} Open Data` : api.name));
 
 describe('SandboxAccessForm', () => {
@@ -352,7 +364,8 @@ describe('SandboxAccessForm', () => {
 
   describe('SelectedApis', () => {
     describe('Standard APIs', () => {
-      it.each(allKeyAuthApis)('toggles the %s checkbox on click', name => {
+      const filteredKeyAuthApis = allKeyAuthApis.filter(api => api !== 'Claims Attributes API');
+      it.each(filteredKeyAuthApis)('toggles the %s checkbox on click', name => {
         const checkboxName = RegExp(name, 'g');
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
           name: checkboxName,

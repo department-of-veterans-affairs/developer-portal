@@ -8,20 +8,20 @@ const generalQuestions: SupportQuestion[] = [
     answer: (
       <p>
         No - this is a support page for software developers utilizing the Veterans Affairs (VA)
-        Application Programming Interface (API). If you are a veteran seeking assistance, please
-        visit the <a href="http://www.va.gov">US Department of Veterans Affairs website</a> to
+        Application Programming Interface (API). If you are a Veteran seeking assistance, please
+        visit the <a href="http://www.va.gov">U.S. Department of Veterans Affairs website</a> to
         access and manage your VA benefits and health care. There are also helpful reference links
         and Q&amp;A at the VA Inquiry Routing &amp; Information System{' '}
         <a href="https://iris.custhelp.va.gov/app/answers/list">(IRIS)</a>.
       </p>
     ),
-    question: 'Is this where I apply for VA Benefits and access to my health records?',
+    question: 'Is this where I apply for VA benefits and access to my health records?',
   },
   {
     answer: (
       <p>
         The APIs are the &quot;front door&quot; or &quot;wall outlet&quot; to VA health records,
-        benefits eligibility, facility locations, and veteran status verification. Developers may
+        benefits eligibility, facility locations, and Veteran status verification. Developers may
         create applications to securely access this information via mobile devices and web browsers,
         across a variety of platforms.
       </p>
@@ -32,7 +32,7 @@ const generalQuestions: SupportQuestion[] = [
     answer: (
       <p>
         Access to all VA APIs is free of charge, with the goal of making access to federal
-        government data easier for veterans.
+        government data easier for Veterans.
       </p>
     ),
     question: 'What is the cost of using VA APIs?',
@@ -44,7 +44,7 @@ const developmentQuestions: SupportQuestion[] = [
     answer: (
       <p>
         Click to <Link to="/apply">Get Started</Link> by applying for an API key. Note that you will
-        need to provide your <Link to="/oauth">OAuth</Link> Redirect URL if you are applying for a
+        need to provide your <Link to="/oauth">OAuth</Link> Redirect URI if you are applying for a
         key to the Health, Claims, or Veteran Verification APIs. You are also required to agree to
         the <Link to="/terms-of-service">VA API Terms of Service</Link> in order to obtain a key.
       </p>
@@ -86,7 +86,15 @@ const developmentQuestions: SupportQuestion[] = [
       <p>
         Yes, we have implemented basic rate limiting of 60 requests per minute. If you exceed this
         quota, your request will return a 429 status code. You may petition for increased rate
-        limits by emailing api@va.gov and requests will be decided on a case-by-case basis.
+        limits by emailing{' '}
+        <a
+          href="mailto:api@va.gov?subject=Request%20for%20Increased%20Rate%20Limit"
+          target="_BLANK"
+          rel="noopener noreferrer"
+        >
+          api@va.gov
+        </a>{' '}
+        and requests will be decided on a case-by-case basis.
       </p>
     ),
     question: 'Are there any rate limits on the APIs?',
@@ -147,8 +155,8 @@ const supportQuestions: SupportQuestion[] = [
     answer: (
       <p>
         Submit a support request, bug report, documentation or feature request via the{' '}
-        <Link to="/support/contact-us">Contact Us</Link> form. We strive to reply with
-        a solution or next steps within one business day.
+        <Link to="/support/contact-us">Contact Us</Link> form. We strive to reply with a solution or
+        next steps within one business day.
       </p>
     ),
     question: 'How do I contact support with any questions or if I need help?',

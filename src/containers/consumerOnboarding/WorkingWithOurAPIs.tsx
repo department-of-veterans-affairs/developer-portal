@@ -113,8 +113,10 @@ const WorkingWithOurAPIs = (): JSX.Element => (
             This means it can be unavailable for no more than 8 to 9 hours per year.
           </li>
           <li>
-            In the sandbox environment, the API Gateway has a service level objective of 99.0%. This
-            means it can be unavailable for no more than 8 to 9 hours per month.
+            In the sandbox environment, the API Gateway has a service level objective of 99.0%
+            availability Monday through Friday, from 7:00 a.m. to 9:00 p.m. ET (excluding holidays).
+            This means the gateway can be unavailable for up to no more than about 3 hours a month
+            during these VA business hours.
           </li>
           <li>
             There is no scheduled maintenance on the API Gateway in either environment, as the API

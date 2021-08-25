@@ -66,7 +66,6 @@ export interface APIDescription {
   readonly description: string;
   readonly enabledByDefault: boolean;
   readonly vaInternalOnly: boolean;
-  readonly trustedPartnerOnly: boolean;
   readonly openData: boolean;
   readonly oAuth?: boolean;
   readonly oAuthInfo?: OAuthInfo;
@@ -91,7 +90,6 @@ export const ApiDescriptionPropType = PropTypes.shape({
   name: PropTypes.string.isRequired,
   oAuth: PropTypes.bool,
   releaseNotes: PropTypes.any.isRequired,
-  trustedPartnerOnly: PropTypes.bool.isRequired,
   urlFragment: PropTypes.string.isRequired,
 });
 

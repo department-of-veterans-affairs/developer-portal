@@ -22,7 +22,6 @@ const api: APIDescription = {
   name: 'My API',
   openData: false,
   releaseNotes: ReleaseNotes,
-  trustedPartnerOnly: false,
   urlFragment: 'my_api',
   vaInternalOnly: false,
 };
