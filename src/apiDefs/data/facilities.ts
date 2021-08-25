@@ -16,7 +16,6 @@ const facilitiesApis: APIDescription[] = [
     name: 'VA Facilities API',
     openData: true,
     releaseNotes: FacilitiesReleaseNotes,
-    trustedPartnerOnly: false,
     urlFragment: 'facilities',
     vaInternalOnly: false,
     veteranRedirect: facilitiesContent.veteranRedirect,
