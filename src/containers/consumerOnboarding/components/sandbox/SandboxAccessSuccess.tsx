@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import { getApiDefinitions } from '../../../../apiDefs/query';
 import sentenceJoin from '../../../../sentenceJoin';
 import { ApplySuccessResult } from '../../../../types';
-import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS, APPLY_INTERNAL_APIS } from '../../../../types/constants';
+import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS } from '../../../../types/constants';
+import { VA_EMAIL_PATTERN } from '../../../../utils/validators'
 
 const AssistanceTrailer = (): JSX.Element => (
   <p>
@@ -125,7 +126,7 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
   const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis.includes(apiId));
   const hasStandardAPI = APPLY_STANDARD_APIS.some(apiId => apis.includes(apiId));
-  const hasInternalAPI = APPLY_INTERNAL_APIS.some(apiId => apis.includes(apiId));
+  const hasInternalAPI = VA_EMAIL_PATTERN.test(email);
   const oAuthAPIs = APPLY_OAUTH_APIS.filter(apiId => apis.includes(apiId));
   const standardAPIs = APPLY_STANDARD_APIS.filter(apiId => apis.includes(apiId));
 
@@ -133,7 +134,7 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
     <>
       <p>
         <strong>Thank you for signing up!</strong>
-      </p>
+      </p> 
       {hasStandardAPI && token && kongUsername && !hasInternalAPI && (
         <ApiKeyNotice
           email={email}

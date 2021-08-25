@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { ApplySuccessResult } from '../../types';
 import { SandboxAccessForm, SandboxAccessSuccess } from './components/sandbox';
+import { VA_EMAIL_PATTERN } from '../../utils/validators';
 
 interface RequestGoodToKnowProps {
   confirmation: boolean;
@@ -37,7 +38,7 @@ const RequestSandboxAccessGoodToKnow: React.FunctionComponent<RequestGoodToKnowP
 
 const RequestSandboxAccess: React.FunctionComponent = () => {
   const [successResults, setSuccessResults] = useState<ApplySuccessResult>();
-  const vaEmailPattern = /^[A-Za-z0-9._%+-]+@va.gov$/;
+
   return (
     <>
       <Helmet>
@@ -48,7 +49,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
       {successResults ? (
         <>
           <SandboxAccessSuccess result={successResults} />
-          {vaEmailPattern.test(successResults.email) && (
+          {VA_EMAIL_PATTERN.test(successResults.email) && (
             <RequestSandboxAccessGoodToKnow confirmation={!!successResults.email} />
           )}
         </>

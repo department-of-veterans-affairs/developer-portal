@@ -3,11 +3,11 @@ import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import { TextField } from '../../../../components';
 import { Values } from './SandboxAccessForm';
+import { VA_EMAIL_PATTERN } from '../../../../utils/validators'
 
 const InternalOnlyInfo = (): JSX.Element => {
   const { errors, values } = useFormikContext();
   const formValues = values as Values;
-  const vaEmailPattern = /^[A-Za-z0-9._%+-]+@va.gov$/;
   const internalApiInfoName = 'internalApiInfo';
   const shouldDisplayInputError = !!errors[internalApiInfoName];
   const internalApiInfoClass = shouldDisplayInputError ? 'vads-u-margin-left--3' : '';
@@ -37,7 +37,7 @@ const InternalOnlyInfo = (): JSX.Element => {
         className={classNames(internalInputClassNames, internalApiInfoClass)}
       />
 
-      {!vaEmailPattern.test(formValues.email) && (
+      {!VA_EMAIL_PATTERN.test(formValues.email) && (
         <TextField
           label="Your VA issued email"
           name="internalApiInfo.vaEmail"
