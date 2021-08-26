@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { ApplySuccessResult } from '../../types';
-import { VA_EMAIL_PATTERN } from '../../utils/validators';
+import { isVaEmail } from '../../utils/validators';
 import { SandboxAccessForm, SandboxAccessSuccess } from './components/sandbox';
 
 interface RequestGoodToKnowProps {
@@ -49,7 +49,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
       {successResults ? (
         <>
           <SandboxAccessSuccess result={successResults} />
-          {VA_EMAIL_PATTERN.test(successResults.email) && (
+          {isVaEmail(successResults.email) && (
             <RequestSandboxAccessGoodToKnow confirmation={!!successResults.email} />
           )}
         </>

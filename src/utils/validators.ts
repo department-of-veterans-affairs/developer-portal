@@ -1,5 +1,5 @@
 const EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-export const VA_EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@va.gov$/;
+const VA_EMAIL_PATTERN = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@va.gov$/;
 const PRESENCE_PATTERN = /^(?!\s*$).+/;
 const PARTIAL_URL_PATTERN = /^http[s]?:[/][/][^/:?#]+(:[0-9]+)?([/][^?#]*)?$/;
 
@@ -42,3 +42,5 @@ export const validateOAuthRedirectURI = (value: string): string | undefined => {
 
   return undefined;
 };
+
+export const isVaEmail = (value: string): boolean => VA_EMAIL_PATTERN.test(value);

@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import { TextField } from '../../../../components';
-import { VA_EMAIL_PATTERN } from '../../../../utils/validators';
+import { isVaEmail } from '../../../../utils/validators';
 import { Values } from './SandboxAccessForm';
 
 const InternalOnlyInfo = (): JSX.Element => {
@@ -37,7 +37,7 @@ const InternalOnlyInfo = (): JSX.Element => {
         className={classNames(internalInputClassNames, internalApiInfoClass)}
       />
 
-      {!VA_EMAIL_PATTERN.test(formValues.email) && (
+      {!isVaEmail(formValues.email) && (
         <TextField
           label="Your VA issued email"
           name="internalApiInfo.vaEmail"

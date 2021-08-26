@@ -6,7 +6,7 @@ import {
   validatePresence,
   validateOAuthRedirectURI,
   validateOAuthApplicationType,
-  VA_EMAIL_PATTERN,
+  isVaEmail,
 } from '../../../../utils/validators';
 import { includesOAuthAPI, includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { Values } from './SandboxAccessForm';
@@ -49,7 +49,7 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
       programName: validatePresence('program name', values.internalApiInfo.programName),
       sponsorEmail: validateVAEmail(values.internalApiInfo.sponsorEmail),
       // eslint-disable-next-line no-negated-condition
-      vaEmail: !VA_EMAIL_PATTERN.test(values.email)
+      vaEmail: !isVaEmail(values.email)
         ? validateVAEmail(values.internalApiInfo.vaEmail)
         : '',
     };
