@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete, id-length, max-lines */
 import React, { FC, useState } from 'react';
+import Helmet from 'react-helmet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
@@ -301,6 +302,9 @@ const ProductionAccess: FC = () => {
   };
   return (
     <div className={classNames('vads-l-grid-container', 'vads-u-padding--4')}>
+      <Helmet>
+        <title>Production access form</title>
+      </Helmet>
       <PageHeader header="Production access form" />
       <div className="vads-l-row">
         <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
