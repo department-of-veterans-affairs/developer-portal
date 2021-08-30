@@ -188,24 +188,21 @@ const ProductionAccess: FC = () => {
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
     if (
-      !apis.some((api: string) =>
+      apis.some((api: string) =>
         ['claims', 'communityCare', 'health', 'confirmation', 'verification'].includes(api),
       )
     ) {
+      setSteps([...possibleSteps.slice(0, 4)]);
+    } else if (
+      apis.some((api: string) =>
+        ['appeals', 'decision_reviews', 'benefits', 'loan_guaranty', 'address_validation'].includes(
+          api,
+        ),
+      )
+    ) {
       setSteps([...possibleSteps.slice(0, 3)]);
-      if (
-        !apis.some((api: string) =>
-          [
-            'appeals',
-            'decision_reviews',
-            'benefits',
-            'loan_guaranty',
-            'address_validation',
-          ].includes(api),
-        )
-      ) {
-        setSteps([...possibleSteps.slice(0, 2)]);
-      }
+    } else {
+      setSteps([...possibleSteps.slice(0, 2)]);
     }
   };
 
@@ -217,14 +214,7 @@ const ProductionAccess: FC = () => {
     }
   };
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
-    if (activeStep === 0) {
-      setSteps(possibleSteps);
-      calculateSteps(values);
-      setActiveStep(activeStep + 1);
-      setPassedStep1(true); // any time we submit successfully we know we've been through step 1
-      actions.setTouched({});
-      actions.setSubmitting(false);
-    } else if (isLastStep) {
+    if (isLastStep) {
       setSubmissionError(false);
       delete values.is508Compliant;
       delete values.isUSBasedCompany;
@@ -298,7 +288,10 @@ const ProductionAccess: FC = () => {
         setModal3Visible(true);
         return;
       }
+
+      calculateSteps(values);
       setActiveStep(activeStep + 1);
+      setPassedStep1(true); // any time we submit successfully we know we've been through step 1
       actions.setTouched({});
       actions.setSubmitting(false);
     }
