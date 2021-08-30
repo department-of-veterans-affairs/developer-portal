@@ -51,8 +51,8 @@ const Verification: FC<VerificationProps> = props => {
         name="is508Compliant"
         required
       >
-        <CheckboxRadioField type="radio" label="Yes" name="is508Compliant" value="yes"  />
-        <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no"  />
+        <CheckboxRadioField type="radio" label="Yes" name="is508Compliant" value="yes" required />
+        <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" required />
       </FieldSet>
 
       <SelectedAPIs />
