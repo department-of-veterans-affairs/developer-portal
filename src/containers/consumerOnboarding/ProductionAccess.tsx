@@ -232,7 +232,7 @@ const ProductionAccess: FC = () => {
       }}
     >
       <>
-        <img src={Icon508} aria-hidden="true" alt="508 compliant icon" className={classNames('va-modal-icon')} />
+        <img src={Icon508} aria-hidden="true" alt="" className={classNames('va-modal-icon')} />
         <p>Consumer websites and applications must be Section 508 compliant to get production
           access.
         </p>
