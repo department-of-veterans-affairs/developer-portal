@@ -17,14 +17,12 @@ const FieldSet: FC<FieldSetProps> = ({
   className,
   legend,
   legendClassName,
-  errorClassName,
   name,
   required = false,
   children,
 }) => {
   const { errors } = useFormikContext();
   const shouldDisplayErrors = !!errors[name];
-  const containerClass = shouldDisplayErrors ? classNames('usa-input-error', errorClassName) : '';
   const legendClass = shouldDisplayErrors ? 'usa-input-error-label' : legendClassName;
   const errorMessageClass = shouldDisplayErrors ? 'usa-input-error-message' : '';
 
@@ -33,7 +31,11 @@ const FieldSet: FC<FieldSetProps> = ({
   const legendId = `${idReadyName}Legend`;
 
   return (
-    <div className={classNames(containerClass, className)}>
+    <div
+      className={classNames({
+        'usa-input-error': shouldDisplayErrors,
+      }, className)}
+    >
       <fieldset aria-labelledby={legendId}>
         <legend id={legendId} className={classNames('vads-u-margin-top--0', legendClass)}>
           {legend}

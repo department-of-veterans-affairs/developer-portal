@@ -107,3 +107,8 @@ input:focus::placeholder {
     margin: 0;
   }
 }
+
+// default is position: relative and right: 1.9rem (moving it 19px left)
+.usa-input-error {
+  position: static;
+}

@@ -22,7 +22,6 @@ const Verification: FC<VerificationProps> = props => {
         className="vads-u-margin-top--4"
         legend="Are you a US-based company?"
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-        errorClassName="vads-u-margin-left--2"
         name="isUSBasedCompany"
         required
       >
@@ -48,7 +47,6 @@ const Verification: FC<VerificationProps> = props => {
           </span>
         }
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-        errorClassName="vads-u-margin-left--2"
         name="is508Compliant"
         required
       >
