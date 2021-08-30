@@ -8,6 +8,7 @@ import { APIDescription } from '../schema';
 
 const verificationApis: APIDescription[] = [
   {
+    altID: 'addressValidation',
     description: 'Provides methods to standardize and validate addresses.',
     docSources: [
       {
@@ -19,14 +20,13 @@ const verificationApis: APIDescription[] = [
     name: 'Address Validation API',
     openData: false,
     releaseNotes: AddressValidationReleaseNotes,
-    trustedPartnerOnly: false,
     urlFragment: 'address_validation',
     vaInternalOnly: true,
   },
   {
     // adding an altID to match keys need on the backend for signup
     altID: 'confirmation',
-    description: 'Confirm Veteran status for a given person with an api key.',
+    description: 'Confirm Veteran status for a given person with an API key.',
     docSources: [
       {
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-confirmation/v0/openapi.json`,
@@ -36,7 +36,6 @@ const verificationApis: APIDescription[] = [
     name: 'Veteran Confirmation API',
     openData: false,
     releaseNotes: VeteranConfirmationReleaseNotes,
-    trustedPartnerOnly: false,
     urlFragment: 'veteran_confirmation',
     vaInternalOnly: false,
   },
@@ -65,7 +64,6 @@ const verificationApis: APIDescription[] = [
     },
     openData: false,
     releaseNotes: VeteranVerificationReleaseNotes,
-    trustedPartnerOnly: false,
     urlFragment: 'veteran_verification',
     vaInternalOnly: false,
   },

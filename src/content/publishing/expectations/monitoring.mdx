@@ -29,6 +29,6 @@ Each API should have a health check endpoint that returns a 200 response if the 
 Expected availability varies by environment and whether the API is internal or external.
 
 - In the production environment, the API Gateway has a service level objective of 99.9%. This means it can be unavailable for no more than 8 and 9 hours per year.
-- In the sandbox environment, the API Gateway has a service level objective of 99.0%. This means it can be unavailable for no more than 7 and 8 hours per month.
+- In the sandbox environment, the API Gateway has a service level objective of 99.0% availability Monday through Friday, from 7:00 a.m. to 9:00 p.m. ET (excluding holidays). This means the gateway can be unavailable for up to no more than about 3 hours a month during these VA business hours.
 - There is no scheduled maintenance on the API Gateway in either environment, as the API Gateway has zero-downtime deployments.
 - Every effort should be made for internal APIs to have 99.9% availability in production and 99.0% availability in the sandbox environment. The Lighthouse team is willing to help work through any technical or policy barriers to achieve this.

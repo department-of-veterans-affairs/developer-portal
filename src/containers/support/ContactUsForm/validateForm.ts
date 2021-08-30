@@ -1,5 +1,5 @@
 import { FormikErrors } from 'formik';
-import { FormType, ContactUsFormState } from '../../../types/contactUsForm';
+import { FormType, ContactUsFormState } from '../../../types/forms/contactUsForm';
 import { validateEmail, validatePresence } from '../../../utils/validators';
 
 const validateForm = (values: ContactUsFormState): FormikErrors<ContactUsFormState> => {
@@ -36,7 +36,10 @@ const validateForm = (values: ContactUsFormState): FormikErrors<ContactUsFormSta
       errors.apiInternalOnly = apiInternalOnlyError;
     }
     if (values.apiInternalOnly === 'yes') {
-      const apiInternalOnlyDetailsError = validatePresence('API internal-only details', values.apiInternalOnlyDetails);
+      const apiInternalOnlyDetailsError = validatePresence(
+        'API internal-only details',
+        values.apiInternalOnlyDetails,
+      );
       if (apiInternalOnlyDetailsError) {
         errors.apiInternalOnlyDetails = apiInternalOnlyDetailsError;
       }
