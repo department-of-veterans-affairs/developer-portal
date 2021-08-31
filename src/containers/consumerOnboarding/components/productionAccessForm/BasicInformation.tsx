@@ -175,7 +175,7 @@ const BasicInformation: FC = () => {
             as="textarea"
             label="If yes, explain."
             name="monitizationExplanation"
-            className="vads-u-margin-top--4"
+            className="vads-u-margin-top--4 vads-u-margin-left--4"
             required
           />
         )}
@@ -197,7 +197,7 @@ const BasicInformation: FC = () => {
 
         <CheckboxRadioField type="radio" label="No" name="veteranFacing" value="no" required />
         {veteranFacing === 'yes' && (
-          <>
+          <div className="vads-u-margin-left--4">
             <TextField
               label="Provide a link to your app’s primary webpage."
               name="website"
@@ -293,7 +293,7 @@ const BasicInformation: FC = () => {
               className="vads-u-margin-top--4"
               required
             />
-          </>
+          </div>
         )}
       </FieldSet>
       {includesInternalOnlyAPI(apis) && (
