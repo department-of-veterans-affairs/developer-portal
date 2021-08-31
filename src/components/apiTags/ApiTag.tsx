@@ -7,18 +7,17 @@ import './ApiTags.scss';
  * Tag Types
  */
 export enum tagTypes {
-    OpenData = 0,
-    TrustedPartner = 1,
-    VAInternalOnly = 2,
+  OpenData = 0,
+  VAInternalOnly = 1,
 }
 
-interface ApiTagProps  {
-    type: number;
+interface ApiTagProps {
+  type: number;
 }
 
-interface APITagConfiguration{
-    label: string;
-    background: string;
+interface APITagConfiguration {
+  label: string;
+  background: string;
 }
 
 /**
@@ -27,18 +26,13 @@ interface APITagConfiguration{
 const apiTagConfig: APITagConfiguration[] = [];
 
 apiTagConfig[tagTypes.OpenData] = {
-    background: 'vads-u-background-color--primary-alt-light',
-    label: 'Open Data',
-};
-
-apiTagConfig[tagTypes.TrustedPartner] = {
-    background: 'vads-u-background-color--gold',
-    label: 'Internal VA use only',
+  background: 'vads-u-background-color--primary-alt-light',
+  label: 'Open Data',
 };
 
 apiTagConfig[tagTypes.VAInternalOnly] = {
-    background: 'vads-u-background-color--gold',
-    label: 'Internal VA use only',
+  background: 'vads-u-background-color--gold',
+  label: 'Internal VA use only',
 };
 
 /**
