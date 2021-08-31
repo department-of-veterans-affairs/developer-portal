@@ -55,6 +55,8 @@ const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): 
                 value={apiCheckboxName}
                 className="vads-u-padding-left--1p5"
               />
+              {/* Request model will need an update to support multiple internal only APIs
+              with separate VA info when we add the next internal only api */}
               {internalApiSelected && <InternalOnlyInfo />}
             </div>
           </Flag>
