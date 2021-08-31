@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete, id-length, max-lines */
 import React, { FC, useState } from 'react';
+import Helmet from 'react-helmet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
@@ -209,12 +210,12 @@ const ProductionAccess: FC = () => {
     }
   };
 
-/**
- * 508 COMPLIANT MODAL
- */
+  /**
+   * 508 COMPLIANT MODAL
+   */
 
- const { modalVisible: modal508Visible, setModalVisible: setModal508Visible } = useModalController();
- const [acknowledge508, setAcknowledge508] = useState(false);
+  const { modalVisible: modal508Visible, setModalVisible: setModal508Visible } = useModalController();
+  const [acknowledge508, setAcknowledge508] = useState(false);
 
   const Modal508Compliant = (): JSX.Element =>
     <Modal
@@ -245,9 +246,9 @@ const ProductionAccess: FC = () => {
       </>
     </Modal>;
 
-/**
- * FORM HANDLERS
- */
+  /**
+   * FORM HANDLERS
+   */
   const handleBack = (): void => {
     if (activeStep === 0) {
       setModal1Visible(true);
@@ -343,6 +344,9 @@ const ProductionAccess: FC = () => {
    */
   return (
     <div className={classNames('vads-l-grid-container', 'vads-u-padding--4', 'prod-access-form')}>
+      <Helmet>
+        <title>Production access form</title>
+      </Helmet>
       <PageHeader header="Production access form" />
       <div className="vads-l-row">
         <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
