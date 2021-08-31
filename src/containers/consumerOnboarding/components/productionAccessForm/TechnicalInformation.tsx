@@ -60,7 +60,7 @@ const TechnicalInformation: FC = () => {
         <CheckboxRadioField type="radio" label="Yes" name="storePIIOrPHI" value="yes" required />
         <CheckboxRadioField type="radio" label="No" name="storePIIOrPHI" value="no" required />
         {storePIIOrPHI === 'yes' && (
-          <>
+          <div className="vads-u-margin-left--4">
             <TextField
               label="Describe why this information is stored, and how it is securely stored/encrypted."
               name="piiStorageMethod"
@@ -85,7 +85,7 @@ const TechnicalInformation: FC = () => {
               className="vads-u-margin-top--4"
               required
             />
-          </>
+          </div>
         )}
       </FieldSet>
       {includesOAuthAPI(apis) && (
@@ -121,7 +121,7 @@ const TechnicalInformation: FC = () => {
               <TextField
                 label="Enter a description."
                 name="thirdPartyInfoDescription"
-                className="vads-u-margin-top--4"
+                className="vads-u-margin-top--4 vads-u-margin-left--4"
                 required
               />
             )}
@@ -166,7 +166,7 @@ const TechnicalInformation: FC = () => {
             required
           />
           {distributingAPIKeysToCustomers === 'yes' && (
-            <>
+            <div className="vads-u-margin-left--4">
               <TextField
                 label={
                   <p>
@@ -185,11 +185,11 @@ const TechnicalInformation: FC = () => {
                 className="vads-u-margin-top--4"
                 required
               />
-            </>
+            </div>
           )}
         </FieldSet>
       )}
-      {values.apis.some(api => ['health'].includes(api)) && (
+      {values.apis.includes('health') && (
         <FieldSet
           className={classNames(
             'vads-u-margin-top--2',

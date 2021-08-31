@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { CheckboxRadioField, FieldSet } from '../../../../components';
 import { SelectedAPIs } from './SelectedApis';
 
@@ -22,7 +21,6 @@ const Verification: FC<VerificationProps> = props => {
         className="vads-u-margin-top--4"
         legend="Are you a US-based company?"
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-        errorClassName="vads-u-margin-left--2"
         name="isUSBasedCompany"
         required
       >
@@ -48,7 +46,6 @@ const Verification: FC<VerificationProps> = props => {
           </span>
         }
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
-        errorClassName="vads-u-margin-left--2"
         name="is508Compliant"
         required
       >
@@ -60,7 +57,7 @@ const Verification: FC<VerificationProps> = props => {
       <CheckboxRadioField
         label={
           <span>
-            I agree to the <Link to="/terms-of-service">Terms of Service</Link>{' '}
+            I agree to the <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">Terms of Service</a>{' '}
             <span className="form-required-span">(*Required)</span>
           </span>
         }

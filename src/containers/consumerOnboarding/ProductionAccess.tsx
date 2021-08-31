@@ -9,6 +9,7 @@ import Modal from '@department-of-veterans-affairs/component-library/Modal';
 import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { Link, useHistory } from 'react-router-dom';
+import Icon508 from '../../assets/508-compliant.svg';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
@@ -180,7 +181,6 @@ const ProductionAccess: FC = () => {
 
   const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
-  const { modalVisible: modal3Visible, setModalVisible: setModal3Visible } = useModalController();
   const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
 
   const history = useHistory();
@@ -210,6 +210,45 @@ const ProductionAccess: FC = () => {
     }
   };
 
+  /**
+   * 508 COMPLIANT MODAL
+   */
+
+  const { modalVisible: modal508Visible, setModalVisible: setModal508Visible } = useModalController();
+  const [acknowledge508, setAcknowledge508] = useState(false);
+
+  const Modal508Compliant = (): JSX.Element =>
+    <Modal
+      id="warning-508-complicance-modal"
+      title="Must be Section 508 Compliant!"
+      visible={modal508Visible}
+      clickToClose
+      onClose={(): void => setModal508Visible(false)}
+      primaryButton={{
+        action: (): void => {
+          setModal508Visible(false);
+          setAcknowledge508(true);
+        },
+        text: 'I acknowledge',
+      }}
+    >
+      <>
+        <img src={Icon508} aria-hidden="true" alt="" className={classNames('va-modal-icon')} />
+        <p>Consumer websites and applications must be Section 508 compliant to get production
+          access.
+        </p>
+        <p>Learn about becoming{' '}
+          <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+            Section 508 Compliant
+          </a>{' '}
+          or contact us with questions.
+        </p>
+      </>
+    </Modal>;
+
+  /**
+   * FORM HANDLERS
+   */
   const handleBack = (): void => {
     if (activeStep === 0) {
       setModal1Visible(true);
@@ -223,7 +262,7 @@ const ProductionAccess: FC = () => {
       delete values.is508Compliant;
       delete values.isUSBasedCompany;
       delete values.termsOfService;
-      // Remvoing the blank optional values from the request body
+      // Removing the blank optional values from the request body
       const filteredValues = JSON.parse(
         // eslint-disable-next-line @typescript-eslint/no-unsafe-return
         JSON.stringify(values, (k, v) => (v === '' ? null : v)),
@@ -287,9 +326,8 @@ const ProductionAccess: FC = () => {
         setModal2Visible(true);
         return;
       }
-
-      if (values.is508Compliant === yesOrNoValues.No) {
-        setModal3Visible(true);
+      if (values.is508Compliant === yesOrNoValues.No && !acknowledge508) {
+        setModal508Visible(true);
         return;
       }
 
@@ -300,8 +338,12 @@ const ProductionAccess: FC = () => {
       actions.setSubmitting(false);
     }
   };
+
+  /**
+   * COMPONENT
+   */
   return (
-    <div className={classNames('vads-l-grid-container', 'vads-u-padding--4')}>
+    <div className={classNames('vads-l-grid-container', 'vads-u-padding--4', 'prod-access-form')}>
       <Helmet>
         <title>Production access form</title>
       </Helmet>
@@ -401,23 +443,7 @@ const ProductionAccess: FC = () => {
             We currently only grant access to US-based companies. You may contact us if you have any
             questions.
           </Modal>
-          <Modal
-            id="warning-508-complicance-modal"
-            title="Must be Section 508 Compliant"
-            visible={modal3Visible}
-            onClose={(): void => setModal3Visible(false)}
-            primaryButton={{
-              action: (): void => setModal3Visible(false),
-              text: 'Continue',
-            }}
-          >
-            Consumer websites and applications must be Section 508 compliant to get production
-            access. Learn about becoming{' '}
-            <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
-              Section 508 Compliant
-            </a>{' '}
-            or contact us with questions.
-          </Modal>
+          <Modal508Compliant />
           <Modal
             id="submission-complete-modal"
             title="Thanks for submitting!"
