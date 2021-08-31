@@ -47,12 +47,22 @@ interface SandboxAccessFormProps {
   onSuccess: (results: ApplySuccessResult) => void;
 }
 
+interface SandboxAccessFormError {
+  body?: {
+    errors: string[];
+  };
+  ok?: boolean;
+  status?: number;
+}
+
 const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
-  const [submissionError, setSubmissionError] = useState(false);
+  const [submissionHasError, setSubmissionHasError] = useState(false);
+  const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
   const consumerDocsEnabled = useFlag([FLAG_CONSUMER_DOCS]);
 
   const handleSubmit = async (values: Values): Promise<void> => {
-    setSubmissionError(false);
+    setSubmissionHasError(false);
+    setSubmissionErrors([]);
     const applicationBody: DevApplicationRequest = {
       ...values,
       apis: values.apis.join(','),
@@ -86,7 +96,11 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
         email: values.email,
       });
     } catch (error: unknown) {
-      setSubmissionError(true);
+      setSubmissionHasError(true);
+      if (process.env.NODE_ENV === 'development') {
+        const errors = (error as SandboxAccessFormError).body?.errors ?? [];
+        setSubmissionErrors(errors);
+      }
     }
   };
 
@@ -169,13 +183,22 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
             );
           }}
         </Formik>
-        {submissionError && (
+        {submissionHasError && (
           <AlertBox
             status="error"
             headline="We encountered a server error while saving your form. Please try again later."
             content={
               <span>
                 Need assistance? Create an issue through our <Link to="/support">Support page</Link>
+                {submissionErrors.length > 0 ? (
+                  <ul>
+                    {submissionErrors.map((item: string) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  ''
+                )}
               </span>
             }
           />
