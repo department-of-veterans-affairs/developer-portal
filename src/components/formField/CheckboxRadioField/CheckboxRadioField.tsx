@@ -30,14 +30,14 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
 
   const idReadyName = toHtmlId(name);
   const idReadyValue = toHtmlId(value ?? '');
-  const applyErrorStyles = showError && !!getIn(errors, name) && !!getIn(touched, name);
+  const shouldDisplayErrors = showError && !!getIn(errors, name) && !!getIn(touched, name);
   const errorId = `${idReadyName}FormFieldError`;
   const fieldId = `${idReadyName}FormField${idReadyValue}`;
 
   return (
     <div
       className={classNames({
-        'usa-input-error': applyErrorStyles,
+        'usa-input-error': shouldDisplayErrors,
       }, className)}
     >
       <Field
@@ -46,7 +46,7 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
         type={type}
         value={value}
         innerRef={innerRef}
-        aria-invalid={applyErrorStyles}
+        aria-invalid={shouldDisplayErrors}
         {...props}
       />
       <label htmlFor={fieldId} className={radioClass}>
@@ -55,7 +55,7 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
       {showError && (
         <span
           id={errorId}
-          className={classNames({ 'usa-input-error-message': applyErrorStyles })}
+          className={classNames({ 'usa-input-error-message': shouldDisplayErrors })}
           role="alert"
         >
           <ErrorMessage name={name} />
