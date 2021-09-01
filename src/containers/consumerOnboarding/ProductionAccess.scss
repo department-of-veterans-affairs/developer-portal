@@ -8,7 +8,7 @@
   }
 }
 
-.prod-access-form{
+.prod-access-form {
   #warning-508-complicance-modal{
     .va-modal-title{
       text-align: center;
@@ -19,7 +19,8 @@
     }
     .alert-actions{text-align:center}
   }
+
+  label[for="termsOfServiceFormField"] {
+    margin-top: 8px;
+  }
 }
-
-
-

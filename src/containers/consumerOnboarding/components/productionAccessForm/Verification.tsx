@@ -1,5 +1,8 @@
+import classNames from 'classnames';
+import { useFormikContext } from 'formik';
 import React, { FC, useEffect, useRef } from 'react';
 import { CheckboxRadioField, FieldSet } from '../../../../components';
+import { Values } from '../../ProductionAccess';
 import { SelectedAPIs } from './SelectedApis';
 
 interface VerificationProps {
@@ -13,6 +16,9 @@ const Verification: FC<VerificationProps> = props => {
       firstInputRef.current?.focus();
     }
   }, [props.hasPassedStep]);
+
+  const { errors, touched } = useFormikContext<Values>();
+  const hasTermsOfServiceError = errors.termsOfService && touched.termsOfService;
 
   return (
     <>
@@ -55,16 +61,21 @@ const Verification: FC<VerificationProps> = props => {
 
       <SelectedAPIs />
       <CheckboxRadioField
-        label={
-          <span>
-            I agree to the <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">Terms of Service</a>{' '}
-            <span className="form-required-span">(*Required)</span>
-          </span>
-        }
+        label="I agree to the terms"
         name="termsOfService"
         required
         type="checkbox"
-        className="form-checkbox"
+        description={
+          <>
+            <p className={classNames({ 'vads-u-font-weight--bold': hasTermsOfServiceError })}>
+              Terms and conditions <span className="form-required-span">(*Required)</span>
+            </p>
+            <p className="vads-u-color--gray">
+              Review our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</a>.
+            </p>
+          </>
+        }
+        className="form-checkbox vads-u-margin-top--4"
         showError
       />
     </>

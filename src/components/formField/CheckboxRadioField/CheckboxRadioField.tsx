@@ -12,6 +12,7 @@ export interface CheckboxRadioFieldProps {
   value?: string;
   innerRef?: React.RefObject<HTMLElement>;
   showError?: boolean;
+  description?: ReactNode;
 }
 
 const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
@@ -21,6 +22,7 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
   type,
   innerRef,
   value,
+  description,
   showError = false,
   ...props
 }) => {
@@ -33,6 +35,7 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
   const shouldDisplayErrors = showError && !!getIn(errors, name) && !!getIn(touched, name);
   const errorId = `${idReadyName}FormFieldError`;
   const fieldId = `${idReadyName}FormField${idReadyValue}`;
+  const descriptionId = `${idReadyName}FormFieldDescription`;
 
   return (
     <div
@@ -40,18 +43,11 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
         'usa-input-error': shouldDisplayErrors,
       }, className)}
     >
-      <Field
-        id={fieldId}
-        name={name}
-        type={type}
-        value={value}
-        innerRef={innerRef}
-        aria-invalid={shouldDisplayErrors}
-        {...props}
-      />
-      <label htmlFor={fieldId} className={radioClass}>
-        {label}
-      </label>
+      {description && (
+        <div id={descriptionId}>
+          {description}
+        </div>
+      )}
       {showError && (
         <span
           id={errorId}
@@ -61,6 +57,19 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
           <ErrorMessage name={name} />
         </span>
       )}
+      <Field
+        id={fieldId}
+        name={name}
+        type={type}
+        value={value}
+        innerRef={innerRef}
+        aria-invalid={shouldDisplayErrors}
+        aria-describedby={`${showError ? errorId : ''} ${description ? descriptionId : ''}`}
+        {...props}
+      />
+      <label htmlFor={fieldId} className={radioClass}>
+        {label}
+      </label>
     </div>
   );
 };
