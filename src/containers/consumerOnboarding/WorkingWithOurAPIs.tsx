@@ -1,11 +1,15 @@
 /* eslint-disable max-lines */
 import React from 'react';
+import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 
 const WorkingWithOurAPIs = (): JSX.Element => (
   <div>
+    <Helmet>
+      <title>Working with Lighthouse APIs</title>
+    </Helmet>
     <PageHeader header="Working with Lighthouse APIs" />
     <p>
       Integrating with Lighthouse APIs can help your app’s users get faster, more reliable access to
