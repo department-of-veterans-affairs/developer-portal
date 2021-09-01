@@ -49,7 +49,7 @@ interface SandboxAccessFormProps {
 
 interface SandboxAccessFormError extends HttpErrorResponse {
   body: {
-    errors: string[];
+    errors?: string[];
   };
 }
 
@@ -96,7 +96,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
     } catch (error: unknown) {
       setSubmissionHasError(true);
       // This will only capture the errors on 4xx errors from the developer-portal-backend.
-      const errors = (error as SandboxAccessFormError).body?.errors ?? [];
+      const errors = (error as SandboxAccessFormError).body.errors ?? [];
       setSubmissionErrors(errors);
     }
   };
