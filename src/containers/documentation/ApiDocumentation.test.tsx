@@ -5,7 +5,7 @@ import { setupServer } from 'msw/node';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import * as openAPIData from '../../__mocks__/openAPIData/openAPIData.test.json';
-import { APIDescription } from '../../apiDefs/schema';
+import { APIDescription, ProdAccessFormSteps } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import store, { history } from '../../store';
 import ApiDocumentation from './ApiDocumentation';
@@ -21,6 +21,7 @@ const api: APIDescription = {
   enabledByDefault: true,
   name: 'My API',
   openData: false,
+  prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
   releaseNotes: ReleaseNotes,
   urlFragment: 'my_api',
   vaInternalOnly: false,

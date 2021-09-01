@@ -2,7 +2,7 @@ import 'jest';
 import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
 import { getEnvFlags, isHostedApiEnabled } from './env';
 import * as queries from './query';
-import { APIDescription } from './schema';
+import { APIDescription, ProdAccessFormSteps } from './schema';
 
 describe('env module', () => {
   const DEFAULT_ENV = process.env;
@@ -41,6 +41,7 @@ describe('env module', () => {
       docSources: [],
       name: 'My API',
       openData: false,
+      prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
       releaseNotes: ClaimsReleaseNotes,
       vaInternalOnly: false,
     };

@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import moment from 'moment';
 import * as React from 'react';
-import { APICategories, APIDeactivationInfo, APIDescription } from '../apiDefs/schema';
+import { APICategories, APIDeactivationInfo, APIDescription, ProdAccessFormSteps } from '../apiDefs/schema';
 
 export const fakeCategoryOrder: string[] = ['lotr', 'sports'];
 export const fakeCategories: APICategories = {
@@ -13,6 +13,7 @@ export const fakeCategories: APICategories = {
         enabledByDefault: true,
         name: 'Rings API',
         openData: false,
+        prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>March 25, 2020</h3>
@@ -36,6 +37,7 @@ export const fakeCategories: APICategories = {
         enabledByDefault: true,
         name: 'Silmarils API',
         openData: false,
+        prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>April 3, 1005</h3>
@@ -53,6 +55,7 @@ export const fakeCategories: APICategories = {
         enabledByDefault: true,
         name: 'Hobbits API',
         openData: false,
+        prodAccessSteps: ProdAccessFormSteps.BasicInformation,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 22, 2019</h3>
@@ -81,6 +84,7 @@ export const fakeCategories: APICategories = {
         enabledByDefault: true,
         name: 'Basketball API',
         openData: false,
+        prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 21, 2019</h3>
@@ -98,6 +102,7 @@ export const fakeCategories: APICategories = {
         enabledByDefault: false,
         name: 'Baseball API',
         openData: false,
+        prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 22, 2019</h3>
@@ -130,6 +135,7 @@ export const extraAPI: APIDescription = {
   enabledByDefault: true,
   name: 'Soccer API',
   openData: false,
+  prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
   releaseNotes: () => (
     <div>
       <h3>October 22, 2019</h3>

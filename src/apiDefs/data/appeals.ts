@@ -3,7 +3,7 @@ import {
   DecisionReviewReleaseNotes,
 } from '../../content/apiDocs/appeals';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { APIDescription } from '../schema';
+import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const appealsApis: APIDescription[] = [
   {
@@ -18,6 +18,7 @@ const appealsApis: APIDescription[] = [
     enabledByDefault: true,
     name: 'Appeals Status API',
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
     releaseNotes: AppealsStatusReleaseNotes,
     urlFragment: 'appeals',
     vaInternalOnly: true,
@@ -34,6 +35,7 @@ const appealsApis: APIDescription[] = [
     enabledByDefault: true,
     name: 'Decision Reviews API',
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
     releaseNotes: DecisionReviewReleaseNotes,
     urlFragment: 'decision_reviews',
     vaInternalOnly: true,

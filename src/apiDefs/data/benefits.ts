@@ -6,7 +6,7 @@ import {
   ClaimsAttributesReleaseNotes,
 } from '../../content/apiDocs/benefits';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { APIDescription } from '../schema';
+import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const benefitsApis: APIDescription[] = [
   {
@@ -27,6 +27,7 @@ const benefitsApis: APIDescription[] = [
       scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
     },
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
     releaseNotes: ClaimsReleaseNotes,
     urlFragment: 'claims',
     vaInternalOnly: false,
@@ -44,6 +45,7 @@ const benefitsApis: APIDescription[] = [
     enabledByDefault: true,
     name: 'Benefits Intake API',
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
     releaseNotes: BenefitsIntakeReleaseNotes,
     urlFragment: 'benefits',
     vaInternalOnly: false,
@@ -59,6 +61,7 @@ const benefitsApis: APIDescription[] = [
     enabledByDefault: true,
     name: 'Loan Guaranty API',
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
     releaseNotes: LoanGuarantyReleaseNotes,
     urlFragment: 'loan_guaranty',
     /**
@@ -82,7 +85,7 @@ const benefitsApis: APIDescription[] = [
     enabledByDefault: false,
     name: 'Claims Attributes API',
     openData: false,
-
+    prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
     releaseNotes: ClaimsAttributesReleaseNotes,
     urlFragment: 'claims_attributes',
     vaInternalOnly: false,

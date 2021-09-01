@@ -1,6 +1,6 @@
 import { facilitiesContent, FacilitiesReleaseNotes } from '../../content/apiDocs/facilities';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { APIDescription } from '../schema';
+import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const facilitiesApis: APIDescription[] = [
   {
@@ -15,6 +15,7 @@ const facilitiesApis: APIDescription[] = [
     enabledByDefault: true,
     name: 'VA Facilities API',
     openData: true,
+    prodAccessSteps: ProdAccessFormSteps.BasicInformation,
     releaseNotes: FacilitiesReleaseNotes,
     urlFragment: 'facilities',
     vaInternalOnly: false,

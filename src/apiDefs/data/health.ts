@@ -24,7 +24,7 @@ import {
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
 } from '../../content/apiDocs/health';
-import { APIDescription } from '../schema';
+import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API ?? '';
 const healthApis: APIDescription[] = [
@@ -55,6 +55,7 @@ const healthApis: APIDescription[] = [
       ],
     },
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
     releaseNotes: ClinicalHealthReleaseNotes,
     urlFragment: 'clinical_health',
     vaInternalOnly: true,
@@ -82,6 +83,7 @@ const healthApis: APIDescription[] = [
       ],
     },
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
     releaseNotes: CommunityCareReleaseNotes,
     urlFragment: 'community_care',
     vaInternalOnly: false,
@@ -105,6 +107,7 @@ const healthApis: APIDescription[] = [
     name: 'Urgent Care Eligibility API (FHIR)',
     oAuth: true,
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance, // doesn't matter, never had it, required by APIDescription
     releaseNotes: UrgentCareReleaseNotes,
     urlFragment: 'urgent_care',
     vaInternalOnly: false,
@@ -163,6 +166,7 @@ const healthApis: APIDescription[] = [
       ],
     },
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
     releaseNotes: FhirApiReleaseNotes,
     urlFragment: 'fhir',
     vaInternalOnly: false,
@@ -186,6 +190,7 @@ const healthApis: APIDescription[] = [
     name: 'Veterans Health API (Legacy)',
     oAuth: true,
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance, // doesn't matter, never had it, required by APIDescription
     releaseNotes: ArgonautReleaseNotes,
     urlFragment: 'argonaut',
     vaInternalOnly: false,

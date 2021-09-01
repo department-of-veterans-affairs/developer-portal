@@ -83,6 +83,7 @@ const onlyOpenDataAPIs = (apiList: string[]): boolean =>
   apisFor(apiList).every(api => api.openData);
 
 export {
+  apisFor,
   getAllApis,
   getAllOauthApis,
   getAllQuickstartCategorySlugs,

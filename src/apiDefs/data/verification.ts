@@ -4,7 +4,7 @@ import {
   VeteranVerificationReleaseNotes,
 } from '../../content/apiDocs/verification';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { APIDescription } from '../schema';
+import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const verificationApis: APIDescription[] = [
   {
@@ -19,6 +19,7 @@ const verificationApis: APIDescription[] = [
     enabledByDefault: true,
     name: 'Address Validation API',
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
     releaseNotes: AddressValidationReleaseNotes,
     urlFragment: 'address_validation',
     vaInternalOnly: true,
@@ -35,6 +36,7 @@ const verificationApis: APIDescription[] = [
     enabledByDefault: true,
     name: 'Veteran Confirmation API',
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
     releaseNotes: VeteranConfirmationReleaseNotes,
     urlFragment: 'veteran_confirmation',
     vaInternalOnly: false,
@@ -63,6 +65,7 @@ const verificationApis: APIDescription[] = [
       ],
     },
     openData: false,
+    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
     releaseNotes: VeteranVerificationReleaseNotes,
     urlFragment: 'veteran_verification',
     vaInternalOnly: false,
