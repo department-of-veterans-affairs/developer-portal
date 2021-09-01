@@ -19,6 +19,8 @@ import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
 
+import './SandboxAccessForm.scss';
+
 export interface Values {
   apis: string[];
   description: string;
@@ -118,7 +120,8 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
           validateOnBlur={false}
           validateOnChange={false}
         >
-          {({ isSubmitting, values }): React.ReactNode => {
+          {({ errors, isSubmitting, touched, values }): React.ReactNode => {
+            const hasTermsOfServiceError = errors.termsOfService && touched.termsOfService;
             const handleSubmitButtonClick = (): void => {
               setTimeout(() => {
                 const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
@@ -143,19 +146,22 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
                 />
 
                 <CheckboxRadioField
-                  label={
-                    <span>
-                      I agree to the{' '}
-                      <Link target="_blank" to="/terms-of-service">
-                        Terms of Service
-                      </Link>{' '}
-                      <span className="form-required-span">(*Required)</span>
-                    </span>
-                  }
+                  label="I agree to the terms"
                   name="termsOfService"
                   required
                   type="checkbox"
-                  className="form-checkbox"
+                  description={
+                    <>
+                      <p className={classNames({ 'vads-u-font-weight--bold': hasTermsOfServiceError })}>
+                        Terms and conditions <span className="form-required-span">(*Required)</span>
+                      </p>
+                      <p className="vads-u-color--gray">
+                        Review our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</a>.
+                      </p>
+                    </>
+                  }
+                  className="terms-of-service-checkbox vads-u-margin-top--4"
+                  showError
                 />
 
                 <button

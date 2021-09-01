@@ -75,7 +75,7 @@ const Verification: FC<VerificationProps> = props => {
             </p>
           </>
         }
-        className="form-checkbox vads-u-margin-top--4"
+        className="vads-u-margin-top--4"
         showError
       />
     </>
