@@ -7,7 +7,7 @@ import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox
 
 import { Form, Formik } from 'formik';
 import { useFlag } from '../../../../flags';
-import { makeRequest, ResponseType } from '../../../../utils/makeRequest';
+import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, CheckboxRadioField } from '../../../../components';
 import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../../../types/constants';
 import {
@@ -47,12 +47,10 @@ interface SandboxAccessFormProps {
   onSuccess: (results: ApplySuccessResult) => void;
 }
 
-interface SandboxAccessFormError {
-  body?: {
+interface SandboxAccessFormError extends HttpErrorResponse {
+  body: {
     errors: string[];
   };
-  ok?: boolean;
-  status?: number;
 }
 
 const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
@@ -97,10 +95,9 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
       });
     } catch (error: unknown) {
       setSubmissionHasError(true);
-      if (process.env.NODE_ENV === 'development') {
-        const errors = (error as SandboxAccessFormError).body?.errors ?? [];
-        setSubmissionErrors(errors);
-      }
+      // This will only capture the errors on 4xx errors from the developer-portal-backend.
+      const errors = (error as SandboxAccessFormError).body?.errors ?? [];
+      setSubmissionErrors(errors);
     }
   };
 
@@ -190,14 +187,12 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
             content={
               <span>
                 Need assistance? Create an issue through our <Link to="/support">Support page</Link>
-                {submissionErrors.length > 0 ? (
+                {process.env.NODE_ENV === 'development' && submissionErrors.length > 0 && (
                   <ul>
                     {submissionErrors.map((item: string) => (
                       <li key={item}>{item}</li>
                     ))}
                   </ul>
-                ) : (
-                  ''
                 )}
               </span>
             }
