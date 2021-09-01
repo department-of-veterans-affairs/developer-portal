@@ -19,6 +19,10 @@ import 'jest';
 import { FacilitiesReleaseNotes } from '../content/apiDocs/facilities';
 import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
 import {
+  VeteranConfirmationReleaseNotes,
+  VeteranVerificationReleaseNotes,
+} from '../content/apiDocs/verification';
+import {
   apisFor,
   getAllQuickstartCategorySlugs,
   includesOAuthAPI,
@@ -77,6 +81,54 @@ const claims: APIDescription = {
     linkUrl: 'https://www.va.gov/claim-or-appeal-status/',
     message: 'Are you a Veteran? Check your',
   },
+};
+
+const confirmation: APIDescription = {
+  // adding an altID to match keys need on the backend for signup
+  altID: 'confirmation',
+  description: 'Confirm Veteran status for a given person with an API key.',
+  docSources: [
+    {
+      openApiUrl: 'http://localhost:3000/internal/docs/veteran-confirmation/v0/openapi.json',
+    },
+  ],
+  enabledByDefault: true,
+  name: 'Veteran Confirmation API',
+  openData: false,
+  prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
+  releaseNotes: VeteranConfirmationReleaseNotes,
+  urlFragment: 'veteran_confirmation',
+  vaInternalOnly: false,
+};
+
+const verification: APIDescription = {
+  altID: 'verification',
+  description:
+    'Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.',
+  docSources: [
+    {
+      openApiUrl: 'http://localhost:3000/internal/docs/veteran-verification/v0/openapi.json',
+    },
+  ],
+  enabledByDefault: true,
+  name: 'Veteran Verification API',
+  oAuth: true,
+  oAuthInfo: {
+    baseAuthPath: '/oauth2/veteran-verification/v1',
+    scopes: [
+      'profile',
+      'openid',
+      'offline_access',
+      'service_history.read',
+      'disability_rating.read',
+      'veteran_status.read',
+    ],
+  },
+  openData: false,
+  prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
+  releaseNotes: VeteranVerificationReleaseNotes,
+  urlFragment: 'veteran_verification',
+  vaInternalOnly: false,
 };
 
 describe('query module', () => {
@@ -174,6 +226,14 @@ describe('query module', () => {
       expect(apis).toHaveLength(2);
       expect(apis).toContainEqual(facilities);
       expect(apis).toContainEqual(claims);
+    });
+
+    it('checks both urlFragment and altID', () => {
+      // 'verification' is an altID, 'veteran_confirmation' is a urlFragment
+      const apis = apisFor(['verification', 'veteran_confirmation']);
+      expect(apis).toHaveLength(2);
+      expect(apis).toContainEqual(confirmation);
+      expect(apis).toContainEqual(verification);
     });
   });
 });
