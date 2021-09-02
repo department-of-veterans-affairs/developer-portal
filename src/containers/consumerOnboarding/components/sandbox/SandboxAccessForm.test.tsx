@@ -35,7 +35,7 @@ const allKeyAuthApis = getAllKeyAuthApis()
       !isApiDeactivated(api) &&
       isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
   )
-  .map((api: APIDescription) => RegExp(api.name, 'g'));
+  .map((api: APIDescription) => RegExp(api.name, '^'));
 
 describe('SandboxAccessForm', () => {
   beforeEach(() => {
@@ -238,6 +238,37 @@ describe('SandboxAccessForm', () => {
       expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
       expect(await screen.findByText('Enter a valid VA-issued email address.')).toBeInTheDocument();
       expect(screen.queryByLabelText('Your VA issued email')).not.toBeInTheDocument();
+    });
+
+    it('internal api sponsor email should end with va.gov', async () => {
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@theshire.net', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
+        await userEvent.type(screen.getByRole('textbox', { name: /sponsor email/ }), 'frodo.baggins@theshire.net', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /VA issued email/ }), 'samwise@theshire.net', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+      });
+      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
+      expect(await screen.findAllByText('Enter a valid VA-issued email address.')).toHaveLength(2);
     });
 
     it('displays `Sending...` during form submission', async () => {

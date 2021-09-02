@@ -1,5 +1,4 @@
 import { FormikErrors } from 'formik';
-import { APPLY_FIELDS_TO_URL_FRAGMENTS } from '../../../../types/constants';
 import {
   validateEmail,
   validateVAEmail,
@@ -9,16 +8,6 @@ import {
 } from '../../../../utils/validators';
 import { includesOAuthAPI, includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { Values } from './SandboxAccessForm';
-
-export const anyOAuthApisSelected = (apis: string[]): boolean => {
-  const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);
-  return includesOAuthAPI(apiIdsByField);
-};
-
-export const anyInternalApisSelected = (apis: string[]): boolean => {
-  const apiIdsByField = apis.flatMap(formField => APPLY_FIELDS_TO_URL_FRAGMENTS[formField]);
-  return includesInternalOnlyAPI(apiIdsByField);
-};
 
 const anyApiSelected = ({ apis }: Values): boolean => apis.length > 0;
 
@@ -38,12 +27,12 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.apis = 'Choose at least one API.';
   }
 
-  if (anyOAuthApisSelected(values.apis)) {
+  if (includesOAuthAPI(values.apis)) {
     errors.oAuthApplicationType = validateOAuthApplicationType(values.oAuthApplicationType);
     errors.oAuthRedirectURI = validateOAuthRedirectURI(values.oAuthRedirectURI);
   }
 
-  if (anyInternalApisSelected(values.apis)) {
+  if (includesInternalOnlyAPI(values.apis)) {
     const vaEmailPattern = /^[A-Za-z0-9._%+-]+@va.gov$/;
 
     errors.internalApiInfo = {

@@ -8,7 +8,7 @@ const OAuthAppInfo = (): JSX.Element => {
   const redirectUriInputName = 'oAuthRedirectURI';
 
   return (
-    <div className="vads-u-margin-left--4">
+    <div className="vads-u-margin-left--2">
       <div className="vads-u-margin-top--4">
         Apps that cannot securely hide a client secret must use the{' '}
         <a href="https://oauth.net/2/pkce/" target="_blank" rel="noreferrer">
@@ -48,7 +48,7 @@ const OAuthAppInfo = (): JSX.Element => {
         label="OAuth Redirect URI"
         name={redirectUriInputName}
         required
-        className={classNames('vads-u-margin-top--4', 'oauth-uri-input', 'large-screen:vads-l-col--8')}
+        className={classNames('vads-u-margin-top--4', 'oauth-uri-input', 'xsmall-screen:vads-l-col--10')}
       />
     </div>
   );

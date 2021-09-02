@@ -14,8 +14,9 @@ import {
   ApplySuccessResult,
   DevApplicationRequest,
   DevApplicationResponse,
-  InternalApi,
+  InternalApiInfo,
 } from '../../../../types';
+import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
@@ -26,7 +27,7 @@ export interface Values {
   email: string;
   firstName: string;
   lastName: string;
-  internalApiInfo: InternalApi;
+  internalApiInfo: InternalApiInfo;
   oAuthApplicationType: string;
   oAuthRedirectURI: string;
   organization: string;
@@ -65,6 +66,14 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
       apis: values.apis.join(','),
     };
 
+    if (!includesInternalOnlyAPI(values.apis)) {
+      delete applicationBody.internalApiInfo;
+    }
+
+    if (applicationBody.internalApiInfo && !applicationBody.internalApiInfo.vaEmail) {
+      applicationBody.internalApiInfo.vaEmail = applicationBody.email;
+    }
+
     try {
       const response = await makeRequest<DevApplicationResponse>(
         APPLY_URL,
@@ -81,7 +90,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
 
       const json = response.body as DevApplicationResponse;
 
-      if (!json.token && !json.clientID) {
+      if (!json.token && !json.clientID && !json.email) {
         throw Error(
           'Developer Application endpoint returned 200 response with a valid response body',
         );
@@ -115,9 +124,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
           as well as further instructions. Thank you for being a part of our platform.
         </p>
       )}
-      <div
-        className={classNames({ 'vads-u-padding-x--2p5': !consumerDocsEnabled })}
-      >
+      <div className={classNames({ 'vads-u-padding-x--2p5': !consumerDocsEnabled })}>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}

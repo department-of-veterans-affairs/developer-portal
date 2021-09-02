@@ -5,13 +5,11 @@ import { TextField } from '../../../../components';
 import { Values } from './SandboxAccessForm';
 
 const InternalOnlyInfo = (): JSX.Element => {
-  const { errors, values } = useFormikContext();
-  const formValues = values as Values;
+  const { errors, values } = useFormikContext<Values>();
   const vaEmailPattern = /^[A-Za-z0-9._%+-]+@va.gov$/;
   const internalApiInfoName = 'internalApiInfo';
   const shouldDisplayInputError = !!errors[internalApiInfoName];
-  const internalApiInfoClass = shouldDisplayInputError ? 'vads-u-margin-left--3' : '';
-  const internalInputClassNames = 'vads-u-margin-top--2 large-screen:vads-l-col--8';
+  const internalApiInfoClass = shouldDisplayInputError ? 'vads-u-margin-left--0p5' : '';
 
   return (
     <div className={classNames('vads-u-padding-left--1p5')}>
@@ -22,30 +20,33 @@ const InternalOnlyInfo = (): JSX.Element => {
         business days.
       </div>
 
-      <TextField
-        label="Program name"
-        name="internalApiInfo.programName"
-        required
-        className={classNames(internalInputClassNames, internalApiInfoClass)}
-      />
-
-      <TextField
-        label="Business/OIT sponsor email"
-        name="internalApiInfo.sponsorEmail"
-        required
-        type="email"
-        className={classNames(internalInputClassNames, internalApiInfoClass)}
-      />
-
-      {!vaEmailPattern.test(formValues.email) && (
+      <div className={classNames(internalApiInfoClass, 'xsmall-screen:vads-l-col--10')}>
         <TextField
-          label="Your VA issued email"
-          name="internalApiInfo.vaEmail"
+          label="Program name"
+          name="internalApiInfo.programName"
+          required
+          className="vads-u-margin-top--2"
+        />
+
+        <TextField
+          label="Business/OIT sponsor email"
+          name="internalApiInfo.sponsorEmail"
           required
           type="email"
-          className={classNames(internalInputClassNames, internalApiInfoClass)}
+          className="vads-u-margin-top--2"
         />
-      )}
+
+        {!vaEmailPattern.test(values.email) && (
+          <TextField
+            label="Your VA issued email"
+            name="internalApiInfo.vaEmail"
+            required
+            type="email"
+            className="vads-u-margin-top--2"
+          />
+        )}
+      </div>
+
     </div>
   );
 };
