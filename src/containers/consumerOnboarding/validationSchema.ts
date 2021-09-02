@@ -19,7 +19,7 @@ const validationSchema = [
     isUSBasedCompany: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     termsOfService: yup
       .boolean()
-      .oneOf([true], { message: 'Agree to the Terms of Service to continue.' })
+      .oneOf([true], 'Agree to the Terms of Service to continue.')
       .required(),
   }),
   yup.object().shape({
