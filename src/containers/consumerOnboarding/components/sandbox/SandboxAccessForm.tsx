@@ -8,7 +8,7 @@ import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox
 import { Form, Formik } from 'formik';
 import { useFlag } from '../../../../flags';
 import { makeRequest, ResponseType } from '../../../../utils/makeRequest';
-import { TextField, CheckboxRadioField } from '../../../../components';
+import { TextField, TermsOfServiceCheckbox } from '../../../../components';
 import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../../../types/constants';
 import {
   ApplySuccessResult,
@@ -18,8 +18,6 @@ import {
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
-
-import './SandboxAccessForm.scss';
 
 export interface Values {
   apis: string[];
@@ -120,8 +118,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
           validateOnBlur={false}
           validateOnChange={false}
         >
-          {({ errors, isSubmitting, touched, values }): React.ReactNode => {
-            const hasTermsOfServiceError = errors.termsOfService && touched.termsOfService;
+          {({ isSubmitting, values }): React.ReactNode => {
             const handleSubmitButtonClick = (): void => {
               setTimeout(() => {
                 const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
@@ -145,25 +142,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
                   className="vads-u-margin-top--4"
                 />
 
-                <CheckboxRadioField
-                  label="I agree to the terms"
-                  name="termsOfService"
-                  required
-                  type="checkbox"
-                  description={
-                    <>
-                      <p className={classNames({ 'vads-u-font-weight--bold': hasTermsOfServiceError })}>
-                        Terms and conditions <span className="form-required-span">(*Required)</span>
-                      </p>
-                      <p className="vads-u-color--gray">
-                        Review our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</a>.
-                      </p>
-                    </>
-                  }
-                  className="terms-of-service-checkbox vads-u-margin-top--4"
-                  showError
-                />
-
+                <TermsOfServiceCheckbox />
                 <button
                   onClick={handleSubmitButtonClick}
                   type="submit"
