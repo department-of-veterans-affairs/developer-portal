@@ -1,5 +1,6 @@
 /* eslint-disable max-lines */
 import React from 'react';
+import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { PageHeader } from '../../components';
@@ -12,6 +13,9 @@ import {
 
 const RequestProductionAccess = (): JSX.Element => (
   <div className="request-production-access">
+    <Helmet>
+      <title>Request production access</title>
+    </Helmet>
     <PageHeader header="Request production access" />
     <p>Before you start onboarding, it’s good to know that:</p>
     <ul className="vads-u-margin-top--0">
