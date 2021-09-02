@@ -67,7 +67,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake API/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
 
       userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims API/ }));
@@ -101,7 +101,7 @@ describe('SandboxAccessForm', () => {
   describe('terms of service', () => {
     it('should toggle when clicked', () => {
       const tosCheckbox: HTMLInputElement = screen.getByRole('checkbox', {
-        name: /Terms of Service/,
+        name: 'I agree to the terms',
       }) as HTMLInputElement;
 
       expect(tosCheckbox).toBeInTheDocument();
@@ -113,7 +113,7 @@ describe('SandboxAccessForm', () => {
     });
 
     it('should contain a link to the terms of service page', () => {
-      const tosLink = screen.getByRole('link', { name: 'Terms of Service' });
+      const tosLink = screen.getByRole('link', { name: 'terms of service' });
 
       expect(tosLink).toBeInTheDocument();
       expect(tosLink.getAttribute('href')).toBe('/terms-of-service');
@@ -149,7 +149,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -177,7 +177,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -204,7 +204,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -228,7 +228,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
 
       userEvent.click(submitButton);
@@ -268,7 +268,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
 
       userEvent.click(submitButton);
@@ -295,7 +295,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
 
       userEvent.click(submitButton);
