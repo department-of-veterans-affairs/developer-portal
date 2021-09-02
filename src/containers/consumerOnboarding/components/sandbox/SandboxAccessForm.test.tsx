@@ -35,7 +35,7 @@ const allKeyAuthApis = getAllKeyAuthApis()
       !isApiDeactivated(api) &&
       isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
   )
-  .map((api: APIDescription) => RegExp(api.name, '^'));
+  .map((api: APIDescription) => RegExp(api.name));
 
 describe('SandboxAccessForm', () => {
   beforeEach(() => {
