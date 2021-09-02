@@ -65,6 +65,7 @@ const Verification: FC<VerificationProps> = props => {
         required
         type="checkbox"
         className="form-checkbox"
+        showError
       />
     </>
   );
