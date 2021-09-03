@@ -107,6 +107,7 @@ const verification: APIDescription = {
     'Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.',
   docSources: [
     {
+      metadataUrl: 'http://localhost:3000/internal/docs/veteran-verification/metadata.json',
       openApiUrl: 'http://localhost:3000/internal/docs/veteran-verification/v0/openapi.json',
     },
   ],
