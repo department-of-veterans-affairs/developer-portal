@@ -69,7 +69,10 @@ const lookupApiCategory = (categoryKey: string): APICategory | null => apiDefs[c
 const apisFor = (apiList: string[]): APIDescription[] => {
   const allApis = getAllApis();
   const searchedApiSet = new Set<string>(apiList);
-  return allApis.filter((api: APIDescription) => searchedApiSet.has(api.urlFragment));
+  return allApis.filter(
+    (api: APIDescription) =>
+      searchedApiSet.has(api.urlFragment) || searchedApiSet.has(api.altID ?? ''),
+  );
 };
 
 const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(api => !!api.oAuth);

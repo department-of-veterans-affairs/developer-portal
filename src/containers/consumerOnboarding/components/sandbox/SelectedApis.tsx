@@ -2,11 +2,10 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
 import { CheckboxRadioField, FieldSet, ApiTags } from '../../../../components';
-import { getAllOauthApis, getAllKeyAuthApis } from '../../../../apiDefs/query';
+import { getAllOauthApis, getAllKeyAuthApis, includesOAuthAPI } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
 import { Flag } from '../../../../flags';
 import { FLAG_HOSTED_APIS, APPLY_INTERNAL_APIS } from '../../../../types/constants';
-import { anyOAuthApisSelected } from './validateForm';
 import { OAuthAppInfo } from './OAuthAppInfo';
 import { InternalOnlyInfo } from './InternalOnlyInfo';
 import { Values } from './SandboxAccessForm';
@@ -14,10 +13,10 @@ import './SelectedApis.scss';
 
 interface APICheckboxListProps {
   apiCheckboxes: APIDescription[];
-  checkedApis: Values;
 }
 
-const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): JSX.Element => {
+const ApiCheckboxList = ({ apiCheckboxes }: APICheckboxListProps): JSX.Element => {
+  const formValues = useFormikContext<Values>().values;
   const hostedApis = apiCheckboxes.filter(
     api =>
       !api.vaInternalOnly  ||
@@ -29,7 +28,7 @@ const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): 
       {hostedApis.map(api => {
         const apiCheckboxName = api.altID ?? api.urlFragment;
         const internalApiSelected =
-          checkedApis.apis.includes(apiCheckboxName) && api.vaInternalOnly;
+        formValues.apis.includes(apiCheckboxName) && api.vaInternalOnly;
         return (
           <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
             <div
@@ -55,6 +54,8 @@ const ApiCheckboxList = ({ apiCheckboxes, checkedApis }: APICheckboxListProps): 
                 value={apiCheckboxName}
                 className="vads-u-padding-left--1p5"
               />
+              {/* Request model will need an update to support multiple internal only APIs
+              with separate VA info when we add the next internal only api */}
               {internalApiSelected && <InternalOnlyInfo />}
             </div>
           </Flag>
@@ -72,7 +73,7 @@ interface SelectedApisProps {
 }
 
 const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
-  const { errors, values } = useFormikContext<Values>();
+  const { errors } = useFormikContext<Values>();
   const checkboxName = 'apis';
   const shouldDisplayErrors = !!errors[checkboxName];
   const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
@@ -83,7 +84,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
     ? 'vads-u-font-weight--bold'
     : 'vads-u-font-weight--normal';
 
-  const oauthApisSelected = anyOAuthApisSelected(selectedApis);
+  const oauthApisSelected = includesOAuthAPI(selectedApis);
   const oauthApisBorderClass = oauthApisSelected ? 'vads-u-border-left--4px' : '';
   const oauthApisBorderColorClass = oauthApisSelected
     ? 'vads-u-border-color--primary-alt-light'
@@ -128,7 +129,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="standardApis"
         >
-          <ApiCheckboxList apiCheckboxes={keyAuthApis} checkedApis={values} />
+          <ApiCheckboxList apiCheckboxes={keyAuthApis} />
         </FieldSet>
         <FieldSet
           className={classNames(
@@ -141,7 +142,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="oauthApis"
         >
-          <ApiCheckboxList apiCheckboxes={oauthApis} checkedApis={values} />
+          <ApiCheckboxList apiCheckboxes={oauthApis} />
           {oauthApisSelected && <OAuthAppInfo />}
         </FieldSet>
       </div>

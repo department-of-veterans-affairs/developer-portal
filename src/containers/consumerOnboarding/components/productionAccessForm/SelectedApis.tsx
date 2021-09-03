@@ -18,14 +18,6 @@ const SelectedAPIs = (): JSX.Element => {
     'usa-input-error-label': shouldDisplayErrors,
   });
 
-  const validationClass = classNames({
-    'usa-input-error-message': shouldDisplayErrors,
-  });
-
-  const errorMessagePaddingClass = classNames({
-    'vads-u-padding-x--1p5': shouldDisplayErrors,
-  });
-
   const selectAPIClass = classNames({
     'vads-u-font-weight--bold': shouldDisplayErrors,
     'vads-u-font-weight--normal': !shouldDisplayErrors,
@@ -42,21 +34,28 @@ const SelectedAPIs = (): JSX.Element => {
         'vads-u-padding-x--1p5',
       )}
     >
-      <div className="vads-u-margin-top--1 apply-checkbox-labels">
+      <div className="vads-u-margin-top--2 apply-checkbox-labels">
         <legend
           id="select-checkbox-api"
-          className={classNames(selectAPIClass, labelClass, 'vads-u-font-size--base')}
+          className={classNames(
+            selectAPIClass,
+            labelClass,
+            'vads-u-font-size--base',
+            'vads-u-margin-bottom--1p5',
+          )}
         >
           Select the APIs for which you are requesting production access.{' '}
           <span className="vads-u-color--secondary-dark">&#40;*Required&#41;</span>
         </legend>
-        <span
+        <div
           id="api-checkbox-error"
-          className={classNames(validationClass, errorMessagePaddingClass)}
+          className={classNames('vads-u-margin-bottom--1p5', {
+            'usa-input-error-message': shouldDisplayErrors,
+          })}
           role="alert"
         >
           <ErrorMessage name="apis" />
-        </span>
+        </div>
         <ApiCheckboxList apis={allApis} />
       </div>
     </fieldset>

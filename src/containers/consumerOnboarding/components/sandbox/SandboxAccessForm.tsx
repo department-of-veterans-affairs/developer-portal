@@ -7,15 +7,16 @@ import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox
 
 import { Form, Formik } from 'formik';
 import { useFlag } from '../../../../flags';
-import { makeRequest, ResponseType } from '../../../../utils/makeRequest';
+import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, CheckboxRadioField } from '../../../../components';
 import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../../../types/constants';
 import {
   ApplySuccessResult,
   DevApplicationRequest,
   DevApplicationResponse,
-  InternalApi,
+  InternalApiInfo,
 } from '../../../../types';
+import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
@@ -26,7 +27,7 @@ export interface Values {
   email: string;
   firstName: string;
   lastName: string;
-  internalApiInfo: InternalApi;
+  internalApiInfo: InternalApiInfo;
   oAuthApplicationType: string;
   oAuthRedirectURI: string;
   organization: string;
@@ -54,16 +55,32 @@ interface SandboxAccessFormProps {
   onSuccess: (results: ApplySuccessResult) => void;
 }
 
+interface SandboxAccessFormError extends HttpErrorResponse {
+  body: {
+    errors?: string[];
+  };
+}
+
 const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
-  const [submissionError, setSubmissionError] = useState(false);
+  const [submissionHasError, setSubmissionHasError] = useState(false);
+  const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
   const consumerDocsEnabled = useFlag([FLAG_CONSUMER_DOCS]);
 
   const handleSubmit = async (values: Values): Promise<void> => {
-    setSubmissionError(false);
+    setSubmissionHasError(false);
+    setSubmissionErrors([]);
     const applicationBody: DevApplicationRequest = {
       ...values,
       apis: values.apis.join(','),
     };
+
+    if (!includesInternalOnlyAPI(values.apis)) {
+      delete applicationBody.internalApiInfo;
+    }
+
+    if (applicationBody.internalApiInfo && !applicationBody.internalApiInfo.vaEmail) {
+      applicationBody.internalApiInfo.vaEmail = applicationBody.email;
+    }
 
     try {
       const response = await makeRequest<DevApplicationResponse>(
@@ -93,7 +110,10 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
         email: json.email ?? values.email,
       });
     } catch (error: unknown) {
-      setSubmissionError(true);
+      setSubmissionHasError(true);
+      // This will only capture the errors on 4xx errors from the developer-portal-backend.
+      const errors = (error as SandboxAccessFormError).body.errors ?? [];
+      setSubmissionErrors(errors);
     }
   };
 
@@ -115,9 +135,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
           as well as further instructions. Thank you for being a part of our platform.
         </p>
       )}
-      <div
-        className={classNames({ 'vads-u-padding-x--2p5': !consumerDocsEnabled })}
-      >
+      <div className={classNames({ 'vads-u-padding-x--2p5': !consumerDocsEnabled })}>
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}
@@ -176,13 +194,20 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
             );
           }}
         </Formik>
-        {submissionError && (
+        {submissionHasError && (
           <AlertBox
             status="error"
             headline="We encountered a server error while saving your form. Please try again later."
             content={
               <span>
                 Need assistance? Create an issue through our <Link to="/support">Support page</Link>
+                {process.env.NODE_ENV === 'development' && submissionErrors.length > 0 && (
+                  <ul>
+                    {submissionErrors.map((item: string) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                )}
               </span>
             }
           />

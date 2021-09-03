@@ -1,0 +1,10 @@
+@import '../../../styles/variables';
+
+.va-api-text-field:not(.usa-input-error) {
+  input,
+  textarea {
+    // we need to state this explicitly in case the input is nested within
+    // a fieldset with usa-input-error
+    border: 0.1rem solid $color-gray;
+  }
+}
