@@ -10,6 +10,8 @@ import SegmentedProgressBar from '@department-of-veterans-affairs/component-libr
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { Link, useHistory } from 'react-router-dom';
 import Icon508 from '../../assets/508-compliant.svg';
+import { apisFor } from '../../apiDefs/query';
+import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
@@ -188,19 +190,10 @@ const ProductionAccess: FC = () => {
 
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
-    if (
-      apis.some((api: string) =>
-        ['claims', 'communityCare', 'health', 'confirmation', 'verification'].includes(api),
-      )
-    ) {
+    const selectedAPIs = apisFor(apis);
+    if (selectedAPIs.some(api => api.lastProdAccessStep === ProdAccessFormSteps.Four)) {
       setSteps([...possibleSteps.slice(0, 4)]);
-    } else if (
-      apis.some((api: string) =>
-        ['appeals', 'decision_reviews', 'benefits', 'loan_guaranty', 'address_validation'].includes(
-          api,
-        ),
-      )
-    ) {
+    } else if (selectedAPIs.some(api => api.lastProdAccessStep === ProdAccessFormSteps.Three)) {
       setSteps([...possibleSteps.slice(0, 3)]);
     } else {
       setSteps([...possibleSteps.slice(0, 2)]);
