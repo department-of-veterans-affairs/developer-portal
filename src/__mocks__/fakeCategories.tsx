@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import moment from 'moment';
 import * as React from 'react';
-import { APICategories, APIDeactivationInfo, APIDescription } from '../apiDefs/schema';
+import { APICategories, APIDeactivationInfo, APIDescription, ProdAccessFormSteps } from '../apiDefs/schema';
 
 export const fakeCategoryOrder: string[] = ['lotr', 'sports'];
 export const fakeCategories: APICategories = {
@@ -11,6 +11,7 @@ export const fakeCategories: APICategories = {
         description: 'One Ring to rule them all',
         docSources: [], // doesn't matter yet
         enabledByDefault: true,
+        lastProdAccessStep: ProdAccessFormSteps.Four,
         name: 'Rings API',
         openData: false,
         releaseNotes: (): JSX.Element => (
@@ -34,6 +35,7 @@ export const fakeCategories: APICategories = {
         description: 'Three pretty gems',
         docSources: [],
         enabledByDefault: true,
+        lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Silmarils API',
         openData: false,
         releaseNotes: (): JSX.Element => (
@@ -51,6 +53,7 @@ export const fakeCategories: APICategories = {
         description: 'Hobbits of the Shire',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        lastProdAccessStep: ProdAccessFormSteps.Two,
         name: 'Hobbits API',
         openData: false,
         releaseNotes: (): JSX.Element => (
@@ -79,6 +82,7 @@ export const fakeCategories: APICategories = {
         description: 'stuff about hoops or whatever',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Basketball API',
         openData: false,
         releaseNotes: (): JSX.Element => (
@@ -96,6 +100,7 @@ export const fakeCategories: APICategories = {
         description: 'a slow summer game',
         docSources: [], // doesn't matter here
         enabledByDefault: false,
+        lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Baseball API',
         openData: false,
         releaseNotes: (): JSX.Element => (
@@ -128,6 +133,7 @@ export const extraAPI: APIDescription = {
   description: 'the beautiful game',
   docSources: [],
   enabledByDefault: true,
+  lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'Soccer API',
   openData: false,
   releaseNotes: () => (

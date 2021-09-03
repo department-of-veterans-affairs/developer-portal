@@ -2,7 +2,7 @@ import 'jest';
 import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
 import { getEnvFlags, isHostedApiEnabled } from './env';
 import * as queries from './query';
-import { APIDescription } from './schema';
+import { APIDescription, ProdAccessFormSteps } from './schema';
 
 describe('env module', () => {
   const DEFAULT_ENV = process.env;
@@ -39,6 +39,7 @@ describe('env module', () => {
     const sharedApiValues = {
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
+      lastProdAccessStep: ProdAccessFormSteps.Four,
       name: 'My API',
       openData: false,
       releaseNotes: ClaimsReleaseNotes,

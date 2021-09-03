@@ -24,7 +24,7 @@ import {
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
 } from '../../content/apiDocs/health';
-import { APIDescription } from '../schema';
+import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API ?? '';
 const healthApis: APIDescription[] = [
@@ -39,6 +39,7 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'Clinical Health API (FHIR)',
     oAuth: true,
     oAuthInfo: {
@@ -69,6 +70,7 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Community Care Eligibility API',
     oAuth: true,
     oAuthInfo: {
@@ -102,6 +104,7 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Four, // doesn't matter, never had it, required by APIDescription
     name: 'Urgent Care Eligibility API (FHIR)',
     oAuth: true,
     openData: false,
@@ -133,6 +136,7 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
     multiOpenAPIIntro: FHIRMultiOpenAPIIntro,
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
@@ -183,6 +187,7 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Four, // doesn't matter, never had it, required by APIDescription
     name: 'Veterans Health API (Legacy)',
     oAuth: true,
     openData: false,

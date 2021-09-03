@@ -59,6 +59,16 @@ export const ApiDeactivationInfoPropType = PropTypes.shape({
   deprecationDate: PropTypes.any.isRequired,
 });
 
+/**
+ * This enum represents the prod access form from the access of an API. It is referring to the
+ * number of steps an API has, not an individual step.
+ */
+export enum ProdAccessFormSteps {
+  Two = 2,
+  Three = 3,
+  Four = 4,
+}
+
 export interface APIDescription {
   readonly name: string;
   readonly docSources: APIDocSource[];
@@ -74,6 +84,7 @@ export interface APIDescription {
   readonly multiOpenAPIIntro?: React.FunctionComponent;
   readonly veteranRedirect?: VeteranRedirectMessage;
   readonly altID?: string;
+  readonly lastProdAccessStep: ProdAccessFormSteps;
 }
 
 export interface OAuthInfo {

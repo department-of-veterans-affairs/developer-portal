@@ -17,7 +17,13 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
 import 'jest';
 import { FacilitiesReleaseNotes } from '../content/apiDocs/facilities';
+import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
 import {
+  VeteranConfirmationReleaseNotes,
+  VeteranVerificationReleaseNotes,
+} from '../content/apiDocs/verification';
+import {
+  apisFor,
   getAllQuickstartCategorySlugs,
   includesOAuthAPI,
   lookupApiByFragment,
@@ -25,31 +31,112 @@ import {
   includesInternalOnlyAPI,
   onlyOpenDataAPIs,
 } from './query';
+import { APIDescription, ProdAccessFormSteps } from './schema';
+
+const facilities: APIDescription = {
+  altID: 'facilities',
+  description: 'VA Facilities',
+  docSources: [
+    {
+      openApiUrl: 'http://localhost:3000/internal/docs/facilities/v0/openapi.json',
+    },
+  ],
+  enabledByDefault: true,
+  lastProdAccessStep: ProdAccessFormSteps.Two,
+  name: 'VA Facilities API',
+  openData: true,
+  releaseNotes: FacilitiesReleaseNotes,
+  urlFragment: 'facilities',
+  vaInternalOnly: false,
+  veteranRedirect: {
+    linkText: "Find the facility that's right for you",
+    linkUrl: 'https://www.va.gov/find-locations/',
+    message: 'Are you a Veteran?',
+  },
+};
+
+const claims: APIDescription = {
+  altID: 'claims',
+  description: 'Submit and track claims',
+  docSources: [
+    {
+      metadataUrl: 'http://localhost:3000/services/claims/metadata',
+      openApiUrl: 'http://localhost:3000/services/claims/docs/v0/api',
+    },
+  ],
+  enabledByDefault: true,
+  lastProdAccessStep: ProdAccessFormSteps.Four,
+  name: 'Benefits Claims API',
+  oAuth: true,
+  oAuthInfo: {
+    baseAuthPath: '/oauth2/claims/v1',
+    scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+  },
+  openData: false,
+  releaseNotes: ClaimsReleaseNotes,
+  urlFragment: 'claims',
+  vaInternalOnly: false,
+  veteranRedirect: {
+    linkText: 'benefits or appeals claim status',
+    linkUrl: 'https://www.va.gov/claim-or-appeal-status/',
+    message: 'Are you a Veteran? Check your',
+  },
+};
+
+const confirmation: APIDescription = {
+  // adding an altID to match keys need on the backend for signup
+  altID: 'confirmation',
+  description: 'Confirm Veteran status for a given person with an API key.',
+  docSources: [
+    {
+      openApiUrl: 'http://localhost:3000/internal/docs/veteran-confirmation/v0/openapi.json',
+    },
+  ],
+  enabledByDefault: true,
+  lastProdAccessStep: ProdAccessFormSteps.Four,
+  name: 'Veteran Confirmation API',
+  openData: false,
+  releaseNotes: VeteranConfirmationReleaseNotes,
+  urlFragment: 'veteran_confirmation',
+  vaInternalOnly: false,
+};
+
+const verification: APIDescription = {
+  altID: 'verification',
+  description:
+    'Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.',
+  docSources: [
+    {
+      metadataUrl: 'http://localhost:3000/internal/docs/veteran-verification/metadata.json',
+      openApiUrl: 'http://localhost:3000/internal/docs/veteran-verification/v0/openapi.json',
+    },
+  ],
+  enabledByDefault: true,
+  lastProdAccessStep: ProdAccessFormSteps.Four,
+  name: 'Veteran Verification API',
+  oAuth: true,
+  oAuthInfo: {
+    baseAuthPath: '/oauth2/veteran-verification/v1',
+    scopes: [
+      'profile',
+      'openid',
+      'offline_access',
+      'service_history.read',
+      'disability_rating.read',
+      'veteran_status.read',
+    ],
+  },
+  openData: false,
+  releaseNotes: VeteranVerificationReleaseNotes,
+  urlFragment: 'veteran_verification',
+  vaInternalOnly: false,
+};
 
 describe('query module', () => {
   describe('lookupApiByFragment', () => {
     it('finds the API if it is defined', () => {
       const api = lookupApiByFragment('facilities');
-      expect(api).toEqual({
-        altID: 'facilities',
-        description: 'VA Facilities',
-        docSources: [
-          {
-            openApiUrl: 'http://localhost:3000/internal/docs/facilities/v0/openapi.json',
-          },
-        ],
-        enabledByDefault: true,
-        name: 'VA Facilities API',
-        openData: true,
-        releaseNotes: FacilitiesReleaseNotes,
-        urlFragment: 'facilities',
-        vaInternalOnly: false,
-        veteranRedirect: {
-          linkText: "Find the facility that's right for you",
-          linkUrl: 'https://www.va.gov/find-locations/',
-          message: 'Are you a Veteran?',
-        },
-      });
+      expect(api).toEqual(facilities);
     });
 
     it('returns null if the API does not exist', () => {
@@ -131,6 +218,23 @@ describe('query module', () => {
   describe('getAllQuickstartCategorySlugs', () => {
     it('returns the list of all API category slugs that have a quickstart page', () => {
       expect(getAllQuickstartCategorySlugs()).toStrictEqual(['health']);
+    });
+  });
+
+  describe('apisFor', () => {
+    it('retrieves the requested APIs', () => {
+      const apis = apisFor(['facilities', 'claims']);
+      expect(apis).toHaveLength(2);
+      expect(apis).toContainEqual(facilities);
+      expect(apis).toContainEqual(claims);
+    });
+
+    it('checks both urlFragment and altID', () => {
+      // 'verification' is an altID, 'veteran_confirmation' is a urlFragment
+      const apis = apisFor(['verification', 'veteran_confirmation']);
+      expect(apis).toHaveLength(2);
+      expect(apis).toContainEqual(confirmation);
+      expect(apis).toContainEqual(verification);
     });
   });
 });
