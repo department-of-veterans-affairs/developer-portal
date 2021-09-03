@@ -96,7 +96,7 @@ describe('query module', () => {
 
   describe('includeOauthAPI', () => {
     it('returns true if the list includes an API within a key-based category', () => {
-      expect(includesOAuthAPI(['benefits', 'facilities', 'fhir'])).toBe(true);
+      expect(includesOAuthAPI(['benefits', 'facilities', 'health'])).toBe(true);
     });
 
     it('returns true if the list includes an API that is marked as OAuth at the API level', () => {
