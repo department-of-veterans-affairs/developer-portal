@@ -1,6 +1,6 @@
 import { vaFormsContent, VAFormsReleaseNotes } from '../../content/apiDocs/vaForms';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { APIDescription } from '../schema';
+import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const vaFormsApis: APIDescription[] = [
   {
@@ -13,6 +13,7 @@ const vaFormsApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Two,
     name: 'VA Forms API',
     openData: true,
     releaseNotes: VAFormsReleaseNotes,
