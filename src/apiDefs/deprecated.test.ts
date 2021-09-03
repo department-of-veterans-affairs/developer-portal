@@ -4,13 +4,14 @@ import moment from 'moment';
 // we just need a Markdown component for  our test IApiDescription
 import { UrgentCareDeprecationNotice } from '../content/apiDocs/health';
 import { isApiDeactivated, isApiDeprecated } from './deprecated';
-import { APIDescription } from './schema';
+import { APIDescription, ProdAccessFormSteps } from './schema';
 
 describe('deprecated API module', () => {
   const apiValues: APIDescription = {
     description: "it's a fabulous API, you really must try it sometime",
     docSources: [],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'My API',
     oAuth: false,
     openData: false,
