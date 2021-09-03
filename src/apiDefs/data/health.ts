@@ -39,6 +39,7 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'Clinical Health API (FHIR)',
     oAuth: true,
     oAuthInfo: {
@@ -55,7 +56,6 @@ const healthApis: APIDescription[] = [
       ],
     },
     openData: false,
-    prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
     releaseNotes: ClinicalHealthReleaseNotes,
     urlFragment: 'clinical_health',
     vaInternalOnly: true,
@@ -70,6 +70,7 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Community Care Eligibility API',
     oAuth: true,
     oAuthInfo: {
@@ -83,7 +84,6 @@ const healthApis: APIDescription[] = [
       ],
     },
     openData: false,
-    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
     releaseNotes: CommunityCareReleaseNotes,
     urlFragment: 'community_care',
     vaInternalOnly: false,
@@ -104,10 +104,10 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Four, // doesn't matter, never had it, required by APIDescription
     name: 'Urgent Care Eligibility API (FHIR)',
     oAuth: true,
     openData: false,
-    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance, // doesn't matter, never had it, required by APIDescription
     releaseNotes: UrgentCareReleaseNotes,
     urlFragment: 'urgent_care',
     vaInternalOnly: false,
@@ -136,6 +136,7 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
     multiOpenAPIIntro: FHIRMultiOpenAPIIntro,
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
@@ -166,7 +167,6 @@ const healthApis: APIDescription[] = [
       ],
     },
     openData: false,
-    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
     releaseNotes: FhirApiReleaseNotes,
     urlFragment: 'fhir',
     vaInternalOnly: false,
@@ -187,10 +187,10 @@ const healthApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Four, // doesn't matter, never had it, required by APIDescription
     name: 'Veterans Health API (Legacy)',
     oAuth: true,
     openData: false,
-    prodAccessSteps: ProdAccessFormSteps.PolicyGovernance, // doesn't matter, never had it, required by APIDescription
     releaseNotes: ArgonautReleaseNotes,
     urlFragment: 'argonaut',
     vaInternalOnly: false,

@@ -11,9 +11,9 @@ export const fakeCategories: APICategories = {
         description: 'One Ring to rule them all',
         docSources: [], // doesn't matter yet
         enabledByDefault: true,
+        lastProdAccessStep: ProdAccessFormSteps.Four,
         name: 'Rings API',
         openData: false,
-        prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>March 25, 2020</h3>
@@ -35,9 +35,9 @@ export const fakeCategories: APICategories = {
         description: 'Three pretty gems',
         docSources: [],
         enabledByDefault: true,
+        lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Silmarils API',
         openData: false,
-        prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>April 3, 1005</h3>
@@ -53,9 +53,9 @@ export const fakeCategories: APICategories = {
         description: 'Hobbits of the Shire',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        lastProdAccessStep: ProdAccessFormSteps.Two,
         name: 'Hobbits API',
         openData: false,
-        prodAccessSteps: ProdAccessFormSteps.BasicInformation,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 22, 2019</h3>
@@ -82,9 +82,9 @@ export const fakeCategories: APICategories = {
         description: 'stuff about hoops or whatever',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Basketball API',
         openData: false,
-        prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 21, 2019</h3>
@@ -100,9 +100,9 @@ export const fakeCategories: APICategories = {
         description: 'a slow summer game',
         docSources: [], // doesn't matter here
         enabledByDefault: false,
+        lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Baseball API',
         openData: false,
-        prodAccessSteps: ProdAccessFormSteps.TechnicalInformation,
         releaseNotes: (): JSX.Element => (
           <div>
             <h3>September 22, 2019</h3>
@@ -133,9 +133,9 @@ export const extraAPI: APIDescription = {
   description: 'the beautiful game',
   docSources: [],
   enabledByDefault: true,
+  lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'Soccer API',
   openData: false,
-  prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
   releaseNotes: () => (
     <div>
       <h3>October 22, 2019</h3>

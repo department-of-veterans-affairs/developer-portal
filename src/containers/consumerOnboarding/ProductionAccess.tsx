@@ -191,9 +191,9 @@ const ProductionAccess: FC = () => {
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
     const selectedAPIs = apisFor(apis);
-    if (selectedAPIs.some(api => api.prodAccessSteps === ProdAccessFormSteps.PolicyGovernance)) {
+    if (selectedAPIs.some(api => api.lastProdAccessStep === ProdAccessFormSteps.Four)) {
       setSteps([...possibleSteps.slice(0, 4)]);
-    } else if (selectedAPIs.some(api => api.prodAccessSteps === ProdAccessFormSteps.TechnicalInformation)) {
+    } else if (selectedAPIs.some(api => api.lastProdAccessStep === ProdAccessFormSteps.Three)) {
       setSteps([...possibleSteps.slice(0, 3)]);
     } else {
       setSteps([...possibleSteps.slice(0, 2)]);

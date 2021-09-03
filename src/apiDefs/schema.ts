@@ -64,9 +64,9 @@ export const ApiDeactivationInfoPropType = PropTypes.shape({
  * number of steps an API has, not an individual step.
  */
 export enum ProdAccessFormSteps {
-  BasicInformation = 2,
-  TechnicalInformation = 3,
-  PolicyGovernance = 4,
+  Two = 2,
+  Three = 3,
+  Four = 4,
 }
 
 export interface APIDescription {
@@ -84,7 +84,7 @@ export interface APIDescription {
   readonly multiOpenAPIIntro?: React.FunctionComponent;
   readonly veteranRedirect?: VeteranRedirectMessage;
   readonly altID?: string;
-  readonly prodAccessSteps: ProdAccessFormSteps;
+  readonly lastProdAccessStep: ProdAccessFormSteps;
 }
 
 export interface OAuthInfo {

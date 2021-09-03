@@ -39,9 +39,9 @@ describe('env module', () => {
     const sharedApiValues = {
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
+      lastProdAccessStep: ProdAccessFormSteps.Four,
       name: 'My API',
       openData: false,
-      prodAccessSteps: ProdAccessFormSteps.PolicyGovernance,
       releaseNotes: ClaimsReleaseNotes,
       vaInternalOnly: false,
     };
