@@ -9,7 +9,6 @@ const InternalOnlyInfo = (): JSX.Element => {
   const { errors, values } = useFormikContext<Values>();
   const internalApiInfoName = 'internalApiInfo';
   const shouldDisplayInputError = !!errors[internalApiInfoName];
-  const internalApiInfoClass = shouldDisplayInputError ? 'vads-u-margin-left--0p5' : '';
 
   return (
     <div className={classNames('vads-u-padding-left--1p5')}>
@@ -20,7 +19,7 @@ const InternalOnlyInfo = (): JSX.Element => {
         business days.
       </div>
 
-      <div className={classNames(internalApiInfoClass, 'xsmall-screen:vads-l-col--10')}>
+      <div className={classNames('xsmall-screen:vads-l-col--10', shouldDisplayInputError ? 'vads-u-margin-left--0p5' : '')}>
         <TextField
           label="Program name"
           name="internalApiInfo.programName"
