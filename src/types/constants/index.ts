@@ -12,18 +12,6 @@ export const APPLY_URL = `${BACKEND_BASE_URL}/developer_application`;
 export const PRODUCTION_ACCESS_URL = `${BACKEND_BASE_URL}/production_request`;
 export const CONTACT_US_URL = `${BACKEND_BASE_URL}/contact-us`;
 
-export const APPLY_FIELDS_TO_URL_FRAGMENTS = {
-  benefits: 'benefits',
-  claims: 'claims',
-  claimsAttributes: 'claims_attributes',
-  communityCare: 'community_care',
-  confirmation: 'veteran_confirmation',
-  facilities: 'facilities',
-  health: 'fhir',
-  vaForms: 'vaForms',
-  verification: 'veteran_verification',
-} as Record<string, string>;
-
 export const APPLY_STANDARD_APIS = [
   'claimsAttributes',
   'benefits',
@@ -34,7 +22,7 @@ export const APPLY_STANDARD_APIS = [
 export const APPLY_OAUTH_APIS = ['claims', 'communityCare', 'health', 'verification'];
 export const PAGE_HEADER_ID = 'page-header';
 export const PAGE_HEADER_AND_HALO_ID = 'header-halo';
-
+export const APPLY_INTERNAL_APIS = ['address_validation'];
 export const FLAG_API_ENABLED_PROPERTY = 'enabled';
 export const FLAG_CATEGORIES = 'categories';
 export const FLAG_CONSUMER_DOCS = 'consumer_docs';

@@ -3,13 +3,12 @@ import classNames from 'classnames';
 import { AUTHORIZATION_PKCE_PATH } from '../../../../types/constants/paths';
 
 import { CheckboxRadioField, TextField, FieldSet } from '../../../../components';
-import './OAuthAppInfo.scss';
 
 const OAuthAppInfo = (): JSX.Element => {
   const redirectUriInputName = 'oAuthRedirectURI';
 
   return (
-    <div className="vads-u-margin-left--4">
+    <div className="vads-u-margin-left--2">
       <div className="vads-u-margin-top--4">
         Apps that cannot securely hide a client secret must use the{' '}
         <a href="https://oauth.net/2/pkce/" target="_blank" rel="noreferrer">
@@ -23,7 +22,7 @@ const OAuthAppInfo = (): JSX.Element => {
         .
       </div>
       <FieldSet
-        className="vads-u-margin-top--4"
+        className={classNames('vads-u-margin-top--4', 'vads-u-padding-left--1p5')}
         legend="Can your application securely hide a client secret?"
         legendClassName="legend-label"
         name="oAuthApplicationType"
@@ -49,7 +48,7 @@ const OAuthAppInfo = (): JSX.Element => {
         label="OAuth Redirect URI"
         name={redirectUriInputName}
         required
-        className={classNames('vads-u-margin-top--4', 'oauth-uri-input')}
+        className={classNames('vads-u-margin-top--4', 'oauth-uri-input', 'xsmall-screen:vads-l-col--10')}
       />
     </div>
   );
