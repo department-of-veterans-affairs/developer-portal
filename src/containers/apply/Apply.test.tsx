@@ -31,6 +31,7 @@ describe('Apply', () => {
       mockMakeRequest.mockResolvedValue({
         body: {
           clientID: 1234,
+          kongUsername: 'lordOfMoria',
           token: 'lord-of-moria',
         },
       });
