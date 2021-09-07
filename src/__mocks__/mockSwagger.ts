@@ -336,7 +336,7 @@ export const mockSwagger = {
       },
     },
   },
-  'http://localhost:3000/services/appeals/docs/v0/api': {
+  'http://localhost:3000/internal/docs/appeals-status/v0/openapi.json': {
     openapi: '3.0.0',
     info: {
       version: '0.0.1',
