@@ -35,7 +35,7 @@ const allKeyAuthApis = getAllKeyAuthApis()
       !isApiDeactivated(api) &&
       isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
   )
-  .map((api: APIDescription) => (api.openData ? `${api.name} Open Data` : api.name));
+  .map((api: APIDescription) => RegExp(api.name));
 
 describe('SandboxAccessForm', () => {
   beforeEach(() => {
@@ -185,6 +185,92 @@ describe('SandboxAccessForm', () => {
       expect(await screen.findByText('Enter an http or https URI.')).toBeInTheDocument();
     });
 
+    it('validates internal api fields when selected', async () => {
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(
+          screen.getByRole('textbox', { name: /Email/ }),
+          'pippin@theshire.com',
+          {
+            delay: 0.01,
+          },
+        );
+
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+      });
+      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
+      expect(await screen.findAllByText('Enter a valid VA-issued email address.')).toHaveLength(2);
+    });
+
+    it('validates internal api fields when clicked and does not ask for VA email if a VA email exists in the dev info email field', async () => {
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@va.gov', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+      });
+      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
+      expect(await screen.findByText('Enter a valid VA-issued email address.')).toBeInTheDocument();
+      expect(screen.queryByLabelText('Your VA issued email')).not.toBeInTheDocument();
+    });
+
+    it('internal api sponsor email should end with va.gov', async () => {
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@theshire.net', {
+          delay: 0.01,
+        });
+
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
+        await userEvent.type(screen.getByRole('textbox', { name: /sponsor email/ }), 'frodo.baggins@theshire.net', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /VA issued email/ }), 'samwise@theshire.net', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+      });
+      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+
+      expect(await screen.findByText('Enter your program name.')).toBeInTheDocument();
+      expect(await screen.findAllByText('Enter a valid VA-issued email address.')).toHaveLength(2);
+    });
+
     it('displays `Sending...` during form submission', async () => {
       expect(screen.queryByRole('button', { name: 'Sending...' })).not.toBeInTheDocument();
 
@@ -309,7 +395,7 @@ describe('SandboxAccessForm', () => {
 
   describe('SelectedApis', () => {
     describe('Standard APIs', () => {
-      const filteredKeyAuthApis = allKeyAuthApis.filter(api => api !== 'Claims Attributes API');
+      const filteredKeyAuthApis = allKeyAuthApis.filter(api => api !== /Claims Attributes API/);
       it.each(filteredKeyAuthApis)('toggles the %s checkbox on click', name => {
         const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
           name,
