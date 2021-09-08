@@ -38,6 +38,7 @@ const facilities: APIDescription = {
   description: 'VA Facilities',
   docSources: [
     {
+      metadataUrl: 'http://localhost:3000/internal/docs/facilities/metadata.json',
       openApiUrl: 'http://localhost:3000/internal/docs/facilities/v0/openapi.json',
     },
   ],

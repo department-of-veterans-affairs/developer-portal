@@ -9,6 +9,7 @@ const facilitiesApis: APIDescription[] = [
     description: 'VA Facilities',
     docSources: [
       {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/facilities/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/facilities/v0/openapi.json`,
       },
     ],
