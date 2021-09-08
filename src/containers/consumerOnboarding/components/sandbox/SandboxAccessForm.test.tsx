@@ -206,7 +206,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -231,7 +231,7 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
@@ -263,7 +263,7 @@ describe('SandboxAccessForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /VA issued email/ }), 'samwise@theshire.net', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
