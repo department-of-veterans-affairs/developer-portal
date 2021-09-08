@@ -42,3 +42,5 @@ export const validateOAuthRedirectURI = (value: string): string | undefined => {
 
   return undefined;
 };
+
+export const isVaEmail = (value: string): boolean => VA_EMAIL_PATTERN.test(value);

@@ -107,7 +107,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
       onSuccess({
         ...json,
         apis: values.apis,
-        email: values.email,
+        email: json.email ?? values.email,
       });
     } catch (error: unknown) {
       setSubmissionHasError(true);

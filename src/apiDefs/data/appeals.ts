@@ -11,8 +11,8 @@ const appealsApis: APIDescription[] = [
       'Allows retrieval of all decision review request statuses (both legacy and AMA). Statuses are read only.',
     docSources: [
       {
-        metadataUrl: `${OPEN_API_SPEC_HOST}/services/appeals/appeals_status/metadata`,
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/appeals/docs/v0/api`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/appeals-status/metadata.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/appeals-status/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,

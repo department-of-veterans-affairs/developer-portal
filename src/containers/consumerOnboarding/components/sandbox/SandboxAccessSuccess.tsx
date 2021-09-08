@@ -6,6 +6,7 @@ import { getApiDefinitions } from '../../../../apiDefs/query';
 import sentenceJoin from '../../../../sentenceJoin';
 import { ApplySuccessResult } from '../../../../types';
 import { APPLY_OAUTH_APIS, APPLY_STANDARD_APIS } from '../../../../types/constants';
+import { isVaEmail } from '../../../../utils/validators';
 
 const AssistanceTrailer = (): JSX.Element => (
   <p>
@@ -27,6 +28,10 @@ interface OAuthCredentialsNoticeProps {
   email: string;
   selectedApis: string[];
   redirectURI: string;
+}
+
+interface InternalApiNoticeProps {
+  email: string;
 }
 
 // Mapping from the options on the form to Proper Names for APIs
@@ -107,12 +112,21 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
   );
 };
 
+const InternalApiNotice: React.FunctionComponent<InternalApiNoticeProps> = ({
+  email,
+}: InternalApiNoticeProps) => (
+  <p>
+    You should receive an email at {email} containing your access credentials.
+  </p>
+);
+
 const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
   const { apis, email, token, clientID, clientSecret, kongUsername, redirectURI } = props.result;
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
   const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis.includes(apiId));
   const hasStandardAPI = APPLY_STANDARD_APIS.some(apiId => apis.includes(apiId));
+  const hasInternalAPI = isVaEmail(email);
   const oAuthAPIs = APPLY_OAUTH_APIS.filter(apiId => apis.includes(apiId));
   const standardAPIs = APPLY_STANDARD_APIS.filter(apiId => apis.includes(apiId));
 
@@ -121,7 +135,7 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
       <p>
         <strong>Thank you for signing up!</strong>
       </p>
-      {hasStandardAPI && (
+      {hasStandardAPI && token && kongUsername && !hasInternalAPI && (
         <ApiKeyNotice
           email={email}
           token={token}
@@ -129,7 +143,7 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
           selectedApis={standardAPIs}
         />
       )}
-      {hasOAuthAPI && clientID && (
+      {hasOAuthAPI && clientID && redirectURI && !hasInternalAPI && (
         <OAuthCredentialsNotice
           email={email}
           clientID={clientID}
@@ -138,7 +152,10 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
           redirectURI={redirectURI}
         />
       )}
-      <AssistanceTrailer />
+      {hasInternalAPI && (
+        <InternalApiNotice email={email} />
+      )}
+      {!hasInternalAPI && <AssistanceTrailer />}
     </>
   );
 };
