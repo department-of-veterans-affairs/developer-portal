@@ -51,7 +51,7 @@ describe('Apply', () => {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake API/ }));
-        userEvent.click(screen.getByRole('checkbox', { name: /Terms of Service/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
 
       userEvent.click(submitButton);

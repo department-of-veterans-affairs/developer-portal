@@ -8,7 +8,7 @@ import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox
 import { Form, Formik } from 'formik';
 import { useFlag } from '../../../../flags';
 import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
-import { TextField, CheckboxRadioField } from '../../../../components';
+import { TextField, TermsOfServiceCheckbox } from '../../../../components';
 import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../../../types/constants';
 import {
   ApplySuccessResult,
@@ -167,22 +167,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
                   className="vads-u-margin-top--4"
                 />
 
-                <CheckboxRadioField
-                  label={
-                    <span>
-                      I agree to the{' '}
-                      <Link target="_blank" to="/terms-of-service">
-                        Terms of Service
-                      </Link>{' '}
-                      <span className="form-required-span">(*Required)</span>
-                    </span>
-                  }
-                  name="termsOfService"
-                  required
-                  type="checkbox"
-                  className="form-checkbox"
-                />
-
+                <TermsOfServiceCheckbox />
                 <button
                   onClick={handleSubmitButtonClick}
                   type="submit"

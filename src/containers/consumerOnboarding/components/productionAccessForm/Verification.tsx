@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef } from 'react';
-import { CheckboxRadioField, FieldSet } from '../../../../components';
+import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../../components';
 import { SelectedAPIs } from './SelectedApis';
 
 interface VerificationProps {
@@ -54,19 +54,7 @@ const Verification: FC<VerificationProps> = props => {
       </FieldSet>
 
       <SelectedAPIs />
-      <CheckboxRadioField
-        label={
-          <span>
-            I agree to the <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">Terms of Service</a>{' '}
-            <span className="form-required-span">(*Required)</span>
-          </span>
-        }
-        name="termsOfService"
-        required
-        type="checkbox"
-        className="form-checkbox"
-        showError
-      />
+      <TermsOfServiceCheckbox />
     </>
   );
 };

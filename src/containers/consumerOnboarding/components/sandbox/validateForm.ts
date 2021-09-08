@@ -21,7 +21,7 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
   };
 
   if (!values.termsOfService) {
-    errors.termsOfService = 'Terms of service agreement is required.';
+    errors.termsOfService = 'You must agree to the terms of service to continue.';
   }
 
   if (!anyApiSelected(values)) {
