@@ -21,6 +21,10 @@
 @import '~web-components/dist/component-library/component-library';
 // Layout
 
+html {
+  font-size: 0.625rem;
+}
+
 body {
   display: flex;
   min-height: 100vh;

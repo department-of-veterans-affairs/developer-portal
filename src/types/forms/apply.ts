@@ -18,6 +18,7 @@ export interface DevApplicationRequest {
   oAuthApplicationType: string;
   oAuthRedirectURI: string;
   termsOfService: boolean;
+  internalApiInfo?: InternalApiInfo;
 }
 
 export interface DevApplicationResponse {
@@ -26,5 +27,12 @@ export interface DevApplicationResponse {
   clientSecret: string;
   redirectURI: string;
   kongUsername: string;
+  email?: string;
   errors?: string[];
+}
+
+export interface InternalApiInfo {
+  programName: string;
+  sponsorEmail: string;
+  vaEmail: string;
 }
