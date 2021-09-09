@@ -35,6 +35,7 @@ const healthApis: APIDescription[] = [
       'Use to develop clinical-facing applications that improve access to and management of patient health data.',
     docSources: [
       {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-clinical-health/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-clinical-health/v0/openapi.json`,
       },
     ],
