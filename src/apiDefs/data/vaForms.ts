@@ -9,6 +9,7 @@ const vaFormsApis: APIDescription[] = [
     description: 'Look up VA forms and check for new versions.',
     docSources: [
       {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/forms/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/forms/v0/openapi.json`,
       },
     ],
