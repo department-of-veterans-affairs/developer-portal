@@ -9,7 +9,7 @@ import Modal from '@department-of-veterans-affairs/component-library/Modal';
 import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { Link, useHistory } from 'react-router-dom';
-import Icon508 from '../../assets/508-compliant.svg';
+// import Icon508 from '../../assets/508-compliant.svg';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
@@ -204,37 +204,42 @@ const ProductionAccess: FC = () => {
    * 508 COMPLIANT MODAL
    */
 
-  const { modalVisible: modal508Visible, setModalVisible: setModal508Visible } = useModalController();
-  const [acknowledge508, setAcknowledge508] = useState(false);
+  // commented out in API-9906 modal and the 508 question are going to be researched by UX
 
-  const Modal508Compliant = (): JSX.Element =>
-    <Modal
-      id="warning-508-complicance-modal"
-      title="Must be Section 508 Compliant!"
-      visible={modal508Visible}
-      clickToClose
-      onClose={(): void => setModal508Visible(false)}
-      primaryButton={{
-        action: (): void => {
-          setModal508Visible(false);
-          setAcknowledge508(true);
-        },
-        text: 'I acknowledge',
-      }}
-    >
-      <>
-        <img src={Icon508} aria-hidden="true" alt="" className={classNames('va-modal-icon')} />
-        <p>Consumer websites and applications must be Section 508 compliant to get production
-          access.
-        </p>
-        <p>Learn about becoming{' '}
-          <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
-            Section 508 Compliant
-          </a>{' '}
-          or contact us with questions.
-        </p>
-      </>
-    </Modal>;
+  // const { modalVisible: modal508Visible, setModalVisible: setModal508Visible } =
+  //   useModalController();
+  // // const [acknowledge508, setAcknowledge508] = useState(false);
+
+  // const Modal508Compliant = (): JSX.Element => (
+  //   <Modal
+  //     id="warning-508-complicance-modal"
+  //     title="Must be Section 508 Compliant!"
+  //     visible={modal508Visible}
+  //     clickToClose
+  //     onClose={(): void => setModal508Visible(false)}
+  //     primaryButton={{
+  //       action: (): void => {
+  //         setModal508Visible(false);
+  //         setAcknowledge508(true);
+  //       },
+  //       text: 'I acknowledge',
+  //     }}
+  //   >
+  //     <>
+  //       <img src={Icon508} aria-hidden="true" alt="" className={classNames('va-modal-icon')} />
+  //       <p>
+  //         Consumer websites and applications must be Section 508 compliant to get production access.
+  //       </p>
+  //       <p>
+  //         Learn about becoming{' '}
+  //         <a href="http://section508.gov" target="_blank" rel="noopener noreferrer">
+  //           Section 508 Compliant
+  //         </a>{' '}
+  //         or contact us with questions.
+  //       </p>
+  //     </>
+  //   </Modal>
+  // );
 
   /**
    * FORM HANDLERS
@@ -316,10 +321,13 @@ const ProductionAccess: FC = () => {
         setModal2Visible(true);
         return;
       }
-      if (values.is508Compliant === yesOrNoValues.No && !acknowledge508) {
-        setModal508Visible(true);
-        return;
-      }
+
+      // commented out in API-9906 modal and the 508 question are going to be researched by UX
+
+      // if (values.is508Compliant === yesOrNoValues.No && !acknowledge508) {
+      //   setModal508Visible(true);
+      //   return;
+      // }
 
       calculateSteps(values);
       setActiveStep(activeStep + 1);
@@ -433,7 +441,7 @@ const ProductionAccess: FC = () => {
             We currently only grant access to US-based companies. You may contact us if you have any
             questions.
           </Modal>
-          <Modal508Compliant />
+          {/* <Modal508Compliant /> */}
           <Modal
             id="submission-complete-modal"
             title="Thanks for submitting!"
