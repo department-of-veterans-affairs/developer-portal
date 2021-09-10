@@ -90,6 +90,7 @@ const confirmation: APIDescription = {
   description: 'Confirm Veteran status for a given person with an API key.',
   docSources: [
     {
+      metadataUrl: 'http://localhost:3000/internal/docs/veteran-confirmation/metadata.json',
       openApiUrl: 'http://localhost:3000/internal/docs/veteran-confirmation/v0/openapi.json',
     },
   ],
