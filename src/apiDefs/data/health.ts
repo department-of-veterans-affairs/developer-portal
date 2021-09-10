@@ -135,6 +135,7 @@ const healthApis: APIDescription[] = [
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-dstu2/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-dstu2/v0/openapi.json`,
       },
     ],
