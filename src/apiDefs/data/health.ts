@@ -122,6 +122,7 @@ const healthApis: APIDescription[] = [
       {
         key: 'r4',
         label: 'R4',
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/v0/openapi.json`,
       },
       {
