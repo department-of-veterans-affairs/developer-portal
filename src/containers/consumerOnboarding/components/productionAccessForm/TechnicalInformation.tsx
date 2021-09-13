@@ -28,10 +28,6 @@ const TechnicalInformation: FC = () => {
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-left--4px' : '';
   const keysToCustomersBorderColorClass =
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
-  // const firstInputRef = useRef<HTMLInputElement>(null);
-  // useEffect(() => {
-  //   firstInputRef.current?.focus();
-  // }, []);
 
   return (
     <>
