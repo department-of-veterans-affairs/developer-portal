@@ -30,7 +30,6 @@ const RequestProductionAccess = (): JSX.Element => (
         <a href="https://section508.gov/" target="_blank" rel="noreferrer">
           Section 508
         </a>{' '}
-        compliant.
       </li>
       <li>
         Our rate limiting is 60 requests per minute. View{' '}
