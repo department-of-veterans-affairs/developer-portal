@@ -67,6 +67,7 @@ const healthApis: APIDescription[] = [
       "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment & Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
     docSources: [
       {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/community-care-eligibility/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/community-care-eligibility/v0/openapi.json`,
       },
     ],
@@ -121,18 +122,21 @@ const healthApis: APIDescription[] = [
       {
         key: 'r4',
         label: 'R4',
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/v0/openapi.json`,
       },
       {
         apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-argonaut/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-argonaut/v0/openapi.json`,
       },
       {
         apiIntro: FhirDSTU2ApiIntro,
         key: 'dstu2',
         label: 'DSTU2',
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-dstu2/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-dstu2/v0/openapi.json`,
       },
     ],
