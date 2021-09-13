@@ -252,7 +252,7 @@ const ProductionAccess: FC = () => {
     } else {
       setActiveStep(activeStep - 1);
       setTimeout(() => {
-        // focus on h2 after moving to next step
+        // focus on h2 after moving to previous step
         const stepHeading = document.getElementById(STEP_HEADING_ID);
         stepHeading?.focus();
       }, 0);
