@@ -1,5 +1,5 @@
 /* eslint-disable max-lines */
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
@@ -20,10 +20,6 @@ const BasicInformation: FC = () => {
   const isVetFacingBorderClass = veteranFacing === 'yes' ? 'vads-u-border-left--4px' : '';
   const isVetFacingBorderColorClass =
     veteranFacing === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
-  const firstInputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    firstInputRef.current?.focus();
-  }, []);
 
   return (
     <>
@@ -33,7 +29,6 @@ const BasicInformation: FC = () => {
         name="primaryContact.firstName"
         required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
-        innerRef={firstInputRef}
       />
 
       <TextField

@@ -34,6 +34,8 @@ const possibleSteps = [
   'Policy governance',
 ];
 
+const STEP_HEADING_ID = 'form-step-heading';
+
 export interface Values {
   apis: string[];
   is508Compliant?: string;
@@ -244,8 +246,14 @@ const ProductionAccess: FC = () => {
       setModal1Visible(true);
     } else {
       setActiveStep(activeStep - 1);
+      setTimeout(() => {
+        // focus on h2 after moving to next step
+        const stepHeading = document.getElementById(STEP_HEADING_ID);
+        stepHeading?.focus();
+      }, 0);
     }
   };
+
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
     if (isLastStep) {
       setSubmissionError(false);
@@ -326,6 +334,11 @@ const ProductionAccess: FC = () => {
       setPassedStep1(true); // any time we submit successfully we know we've been through step 1
       actions.setTouched({});
       actions.setSubmitting(false);
+      setTimeout(() => {
+        // focus on h2 after moving to next step
+        const stepHeading = document.getElementById(STEP_HEADING_ID);
+        stepHeading?.focus();
+      }, 0);
     }
   };
 
@@ -351,12 +364,30 @@ const ProductionAccess: FC = () => {
               {activeStep === 0 ? (
                 <>
                   <SegmentedProgressBar current={1} total={4} />
-                  <h2 className="vads-u-font-size--h4">Step 1: Verification</h2>
+                  <h2
+                    id={STEP_HEADING_ID}
+                    className={classNames(
+                      'vads-u-font-size--h4',
+                      'vads-u-display--inline-block',
+                      'vads-u-margin-bottom--0',
+                    )}
+                    tabIndex={-1}
+                  >
+                    Step 1: Verification
+                  </h2>
                 </>
               ) : (
                 <>
                   <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
-                  <h2 className="vads-u-font-size--h4">
+                  <h2
+                    id={STEP_HEADING_ID}
+                    className={classNames(
+                      'vads-u-font-size--h4',
+                      'vads-u-display--inline-block',
+                      'vads-u-margin-bottom--0',
+                    )}
+                    tabIndex={-1}
+                  >
                     {`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}
                   </h2>
                 </>
