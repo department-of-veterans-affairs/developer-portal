@@ -122,12 +122,14 @@ const healthApis: APIDescription[] = [
       {
         key: 'r4',
         label: 'R4',
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/v0/openapi.json`,
       },
       {
         apiIntro: FhirArgonautApiIntro,
         key: 'argonaut',
         label: 'Argonaut',
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-argonaut/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-argonaut/v0/openapi.json`,
       },
       {

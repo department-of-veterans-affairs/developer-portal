@@ -30,6 +30,7 @@ const verificationApis: APIDescription[] = [
     description: 'Confirm Veteran status for a given person with an API key.',
     docSources: [
       {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-confirmation/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-confirmation/v0/openapi.json`,
       },
     ],
