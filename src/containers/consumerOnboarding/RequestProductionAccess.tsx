@@ -26,11 +26,10 @@ const RequestProductionAccess = (): JSX.Element => (
         API.
       </li>
       <li>
-        All apps and websites must be{' '}
+        We encourage all apps and websites to comply with{' '}
         <a href="https://section508.gov/" target="_blank" rel="noreferrer">
           Section 508
         </a>{' '}
-        compliant.
       </li>
       <li>
         Our rate limiting is 60 requests per minute. View{' '}
