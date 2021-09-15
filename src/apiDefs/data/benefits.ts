@@ -15,8 +15,8 @@ const benefitsApis: APIDescription[] = [
     description: 'Submit and track claims',
     docSources: [
       {
-        metadataUrl: `${OPEN_API_SPEC_HOST}/services/claims/metadata`,
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/claims/docs/v0/api`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-claims/metadata.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-claims/v0/openapi.json`,
       },
     ],
     enabledByDefault: true,
