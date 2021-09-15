@@ -150,7 +150,7 @@ const BasicInformation: FC = () => {
           hasMonetizedBorderClass,
           hasMonetizedsBorderColorClass,
         )}
-        legend="Have you ever monetized Veteran data? "
+        legend="Do you plan to monetize Veteran data? "
         legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
         name="monitizedVeteranInformation"
         required
