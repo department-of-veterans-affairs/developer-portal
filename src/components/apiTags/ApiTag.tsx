@@ -45,7 +45,7 @@ const ApiTag = ({ type }: ApiTagProps): JSX.Element => (
   <div className={classNames('api-tags', 'vads-u-font-size--sm')}>
     <span
       className={classNames(
-        'vads-u-background-color--gray-lightest'
+        'vads-u-color--gray-lightest'
       )}
     >  
     {apiTagConfig[type].screenReaderLabel} 
