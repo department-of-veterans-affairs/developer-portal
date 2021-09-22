@@ -37,6 +37,7 @@ apiTagConfig[tagTypes.VAInternalOnly] = {
 
 /**
  *  APITag Component
+ *  added a span with a dash to slow down the screen reader so the checkbox text does not run into the label 
  */
 const ApiTag = ({ type }: ApiTagProps): JSX.Element => (
   <div className={classNames('api-tags', 'vads-u-font-size--sm')}>
