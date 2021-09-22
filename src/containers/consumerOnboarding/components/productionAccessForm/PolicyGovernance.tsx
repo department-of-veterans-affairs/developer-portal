@@ -5,8 +5,10 @@ import { FLAG_LIST_AND_LOOP } from '../../../../types/constants';
 import ListOfTextEntries from './ListOfTextEntries';
 
 const PolicyGovernance: FC = () => (
-  <>
-    <h3 className="vads-u-margin-bottom--3">Terms of service and privacy policies</h3>
+  <fieldset>
+    <legend>
+      <h3 className="vads-u-margin-bottom--3">Terms of service and privacy policies</h3>
+    </legend>
     <Flag
       name={[FLAG_LIST_AND_LOOP]}
       fallbackRender={(): JSX.Element => (
@@ -40,7 +42,7 @@ const PolicyGovernance: FC = () => (
         buttonText="Add a URL"
       />
     </Flag>
-  </>
+  </fieldset>
 );
 
 export { PolicyGovernance };

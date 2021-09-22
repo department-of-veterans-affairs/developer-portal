@@ -30,8 +30,8 @@ const TechnicalInformation: FC = () => {
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
 
   return (
-    <>
-      <h3>Technical information</h3>
+    <fieldset>
+      <legend><h3 className="vads-u-margin-bottom--0">Technical information</h3></legend>
       <TextField
         as="textarea"
         label="We require you to store your production key and/or OAuth credentials securely so as not to risk unauthorized exposure. How and where do you provide this?"
@@ -233,7 +233,7 @@ const TechnicalInformation: FC = () => {
           />
         </FieldSet>
       )}
-    </>
+    </fieldset>
   );
 };
 

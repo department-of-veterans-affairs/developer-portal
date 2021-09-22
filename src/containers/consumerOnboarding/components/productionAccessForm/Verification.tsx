@@ -7,8 +7,8 @@ interface VerificationProps {
 }
 
 const Verification: FC<VerificationProps> = () => (
-  <>
-    <h3>Confirm</h3>
+  <fieldset>
+    <legend><h3 className="vads-u-margin-bottom--0">Confirm</h3></legend>
     <FieldSet
       className="vads-u-margin-top--4"
       legend="Are you a US-based company?"
@@ -46,7 +46,7 @@ const Verification: FC<VerificationProps> = () => (
 
     <SelectedAPIs />
     <TermsOfServiceCheckbox />
-  </>
+  </fieldset>
 );
 
 export { Verification };
