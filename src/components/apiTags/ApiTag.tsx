@@ -18,7 +18,6 @@ interface ApiTagProps {
 interface APITagConfiguration {
   label: string;
   background: string;
-  screenReaderLabel: string;
 }
 
 /**
@@ -29,13 +28,11 @@ const apiTagConfig: APITagConfiguration[] = [];
 apiTagConfig[tagTypes.OpenData] = {
   background: 'vads-u-background-color--primary-alt-light',
   label: 'Open Data',
-  screenReaderLabel: ' - ',
 };
 
 apiTagConfig[tagTypes.VAInternalOnly] = {
   background: 'vads-u-background-color--gold',
   label: 'Internal VA use only',
-  screenReaderLabel: ' - ',
 };
 
 /**
@@ -43,12 +40,9 @@ apiTagConfig[tagTypes.VAInternalOnly] = {
  */
 const ApiTag = ({ type }: ApiTagProps): JSX.Element => (
   <div className={classNames('api-tags', 'vads-u-font-size--sm')}>
-    <span
-      className={classNames(
-        'vads-u-color--gray-lightest'
-      )}
+    <span style={{ left: '-10000px', position: 'absolute'}}
     >  
-    {apiTagConfig[type].screenReaderLabel} 
+    {' - '} 
       </span>
     <span
       className={classNames(
