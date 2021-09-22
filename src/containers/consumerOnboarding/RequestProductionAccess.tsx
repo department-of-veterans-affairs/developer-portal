@@ -26,11 +26,10 @@ const RequestProductionAccess = (): JSX.Element => (
         API.
       </li>
       <li>
-        All apps and websites must be{' '}
+        We encourage all apps and websites to comply with{' '}
         <a href="https://section508.gov/" target="_blank" rel="noreferrer">
           Section 508
         </a>{' '}
-        compliant.
       </li>
       <li>
         Our rate limiting is 60 requests per minute. View{' '}
@@ -70,10 +69,6 @@ const RequestProductionAccess = (): JSX.Element => (
               <li>
                 Information for the app directory, such as key URLs, a brief app description, and a
                 list of compatible devices and browsers
-              </li>
-              <li>
-                An app icon with a transparent background (1024x1024 pixel image, in PNG, JPG, or
-                GIF file format)
               </li>
             </ul>
           </li>
@@ -160,7 +155,7 @@ const RequestProductionAccess = (): JSX.Element => (
           </li>
         </ul>
       </va-accordion-item>
-      <va-accordion-item header="Privacy policy and terms of service (OAuth APIs only)">
+      <va-accordion-item header="Privacy policy and terms of service">
         <ul className="checklist">
           <li>URL for your application’s terms of service</li>
           <li>URL for your application’s privacy policy</li>

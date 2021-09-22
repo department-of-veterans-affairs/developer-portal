@@ -61,8 +61,8 @@ const claims: APIDescription = {
   description: 'Submit and track claims',
   docSources: [
     {
-      metadataUrl: 'http://localhost:3000/services/claims/metadata',
-      openApiUrl: 'http://localhost:3000/services/claims/docs/v0/api',
+      metadataUrl: 'http://localhost:3000/internal/docs/benefits-claims/metadata.json',
+      openApiUrl: 'http://localhost:3000/internal/docs/benefits-claims/v0/openapi.json',
     },
   ],
   enabledByDefault: true,
