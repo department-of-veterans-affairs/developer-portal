@@ -79,7 +79,6 @@ const BasicInformation: FC = () => {
       <TextField
         label="Phone number"
         name="phoneNumber"
-        required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
       />
       <TextField

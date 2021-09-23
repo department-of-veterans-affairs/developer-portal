@@ -13,7 +13,7 @@ export interface ProductionAccessRequest {
   valueProvided: string;
   businessModel?: string;
   policyDocuments?: string[];
-  phoneNumber: string;
+  phoneNumber?: string;
   apis?: string;
   monitizedVeteranInformation: boolean;
   monitizationExplanation?: string;
