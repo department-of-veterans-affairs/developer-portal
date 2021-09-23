@@ -358,12 +358,12 @@ const ProductionAccess: FC = () => {
             <Form noValidate>
               {activeStep === 0 ? (
                 <>
-                  <SegmentedProgressBar current={1} total={4} />
+                  <SegmentedProgressBar current={1} total={4} ariaLabel={`Step 1: Verification`} />
                   <h2 className="vads-u-font-size--h4">Step 1: Verification</h2>
                 </>
               ) : (
                 <>
-                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
+                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} ariaLabel={`Step ${activeStep +1}: ${steps[activeStep]}`}/>
                   <h2 className="vads-u-font-size--h4">
                     {`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}
                   </h2>
