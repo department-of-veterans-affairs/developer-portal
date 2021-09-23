@@ -70,10 +70,6 @@ const RequestProductionAccess = (): JSX.Element => (
                 Information for the app directory, such as key URLs, a brief app description, and a
                 list of compatible devices and browsers
               </li>
-              <li>
-                An app icon with a transparent background (1024x1024 pixel image, in PNG, JPG, or
-                GIF file format)
-              </li>
             </ul>
           </li>
           <li>
@@ -159,7 +155,7 @@ const RequestProductionAccess = (): JSX.Element => (
           </li>
         </ul>
       </va-accordion-item>
-      <va-accordion-item header="Privacy policy and terms of service (OAuth APIs only)">
+      <va-accordion-item header="Privacy policy and terms of service">
         <ul className="checklist">
           <li>URL for your application’s terms of service</li>
           <li>URL for your application’s privacy policy</li>
