@@ -83,8 +83,6 @@ phases:
       # We will run these in a loop so we can handle the build failures correctly utilizing the phase variable.
       # Instead of checking for a combination of CODEBUILD_BUILD_SUCCEDING and some other variable we will assume
       # the phase variable is an indiation of the where the build failed and act accordingly in the POST_BUILD section.
-      # testing
-      - exit 1
       - phase=test
       - time="${time}\n${phase} - $(date +%r) - started"
       - |
