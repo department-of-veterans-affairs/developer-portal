@@ -51,7 +51,7 @@ export interface Values {
     email: string;
   };
   organization: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   appName: string;
   monitizedVeteranInformation: string;
   monitizationExplanation?: string;
