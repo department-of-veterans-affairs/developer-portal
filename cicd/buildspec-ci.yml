@@ -20,7 +20,8 @@ env:
   variables:
     GITHUB_USERNAME: 'va-bot'
     # These are the test make targets.
-    TESTS: 'images lint security unit e2e accessibility visual'
+    # All other tests are run in parallel using GitHub Actions
+    TESTS: 'visual'
     # These are the build environments
     ENVIRONMENTS: 'dev staging production'
     # Bucket for archiving deployments
