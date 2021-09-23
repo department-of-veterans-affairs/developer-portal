@@ -19,7 +19,7 @@ export const sections: SupportSection[] = [
     callToAction: 'Read our FAQs',
     component: FAQ,
     description:
-      'Answers to frequently asked questions about the VA API progam and the APIs themselves.',
+      'Answers to frequently asked questions about the VA API program and the APIs themselves.',
     id: 'faq',
     name: 'FAQ',
   },

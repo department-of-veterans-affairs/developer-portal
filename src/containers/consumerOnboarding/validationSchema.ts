@@ -52,12 +52,9 @@ const validationSchema = [
       .string()
       .isNotATestString()
       .required('Enter the company or organization name.'),
-    phoneNumber: yup
-      .string()
-      .matches(phoneRegex, {
-        message: 'Enter a valid company phone number.',
-      })
-      .required('Enter a company phone number.'),
+    phoneNumber: yup.string().matches(phoneRegex, {
+      message: 'Enter a valid company phone number.',
+    }),
     platforms: yup
       .string()
       .isNotATestString()
@@ -100,57 +97,57 @@ const validationSchema = [
       .required(),
     signUpLink: isListAndLoopEnabled
       ? yup
-        .array()
-        .of(yup.string().isNotATestString())
-        .when('veteranFacing', {
-          is: (value: string) => value === 'yes',
-          otherwise: yup.array().of(yup.string().isNotATestString()),
-          then: yup
-            .array()
-            .of(yup.string().isNotATestString().url('Add a valid link.'))
-            .min(1)
-            .required('Add a link.'),
-        })
+          .array()
+          .of(yup.string().isNotATestString())
+          .when('veteranFacing', {
+            is: (value: string) => value === 'yes',
+            otherwise: yup.array().of(yup.string().isNotATestString()),
+            then: yup
+              .array()
+              .of(yup.string().isNotATestString().url('Add a valid link.'))
+              .min(1)
+              .required('Add a link.'),
+          })
       : yup
-        .string()
-        .isNotATestString()
-        .when('veteranFacing', {
-          is: (value: string) => value === 'yes',
-          otherwise: yup.string().isNotATestString(),
-          then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
-        }),
+          .string()
+          .isNotATestString()
+          .when('veteranFacing', {
+            is: (value: string) => value === 'yes',
+            otherwise: yup.string().isNotATestString(),
+            then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
+          }),
     statusUpdateEmails: isListAndLoopEnabled
       ? yup
-        .array()
-        .of(yup.string().isNotATestString().email('Enter a valid email address.'))
-        .min(1)
-        .required('Enter a valid email address.')
+          .array()
+          .of(yup.string().isNotATestString().email('Enter a valid email address.'))
+          .min(1)
+          .required('Enter a valid email address.')
       : yup
-        .string()
-        .isNotATestString()
-        .email('Enter a valid email address.')
-        .required('Enter a valid email address.'),
+          .string()
+          .isNotATestString()
+          .email('Enter a valid email address.')
+          .required('Enter a valid email address.'),
     supportLink: isListAndLoopEnabled
       ? yup
-        .array()
-        .of(yup.string().isNotATestString())
-        .when('veteranFacing', {
-          is: (value: string) => value === 'yes',
-          otherwise: yup.array().of(yup.string().isNotATestString()),
-          then: yup
-            .array()
-            .of(yup.string().isNotATestString().url('Add a valid link.'))
-            .min(1)
-            .required('Add a link.'),
-        })
+          .array()
+          .of(yup.string().isNotATestString())
+          .when('veteranFacing', {
+            is: (value: string) => value === 'yes',
+            otherwise: yup.array().of(yup.string().isNotATestString()),
+            then: yup
+              .array()
+              .of(yup.string().isNotATestString().url('Add a valid link.'))
+              .min(1)
+              .required('Add a link.'),
+          })
       : yup
-        .string()
-        .isNotATestString()
-        .when('veteranFacing', {
-          is: (value: string) => value === 'yes',
-          otherwise: yup.string().isNotATestString(),
-          then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
-        }),
+          .string()
+          .isNotATestString()
+          .when('veteranFacing', {
+            is: (value: string) => value === 'yes',
+            otherwise: yup.string().isNotATestString(),
+            then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
+          }),
     valueProvided: yup.string().isNotATestString().required('Describe the value of your app.'),
     vasiSystemName: yup
       .string()
@@ -259,20 +256,20 @@ const validationSchema = [
   yup.object().shape({
     policyDocuments: isListAndLoopEnabled
       ? yup
-        .array()
-        .of(
-          yup
-            .string()
-            .isNotATestString()
-            .url('Add a link to your terms of service and privacy policies.'),
-        )
-        .min(1)
-        .required('Add a link to your terms of service and privacy policies.')
+          .array()
+          .of(
+            yup
+              .string()
+              .isNotATestString()
+              .url('Add a link to your terms of service and privacy policies.'),
+          )
+          .min(1)
+          .required('Add a link to your terms of service and privacy policies.')
       : yup
-        .string()
-        .isNotATestString()
-        .url('Add a link to your terms of service and privacy policies.')
-        .required('Add a link to your terms of service and privacy policies.'),
+          .string()
+          .isNotATestString()
+          .url('Add a link to your terms of service and privacy policies.')
+          .required('Add a link to your terms of service and privacy policies.'),
   }),
 ];
 export default validationSchema;

@@ -1,18 +1,18 @@
 export const mockMetadata = {
-  'http://localhost:3000/services/claims/metadata': {
+  'http://localhost:3000/internal/docs/benefits-claims/metadata.json': {
     meta: {
       versions: [
         {
-          healthcheck: '/services/vba_documents/v1/healthcheck',
+          healthcheck: '/internal/docs/benefits-claims/v1/healthcheck',
           internal_only: false,
-          path: '/services/claims/docs/v1/api',
+          path: '/internal/docs/benefits-claims/v1/openapi.json',
           status: 'Draft Version',
           version: '1.0.0',
         },
         {
-          healthcheck: '/services/vba_documents/v0/healthcheck',
+          healthcheck: '/internal/docs/benefits-claims/v0/healthcheck',
           internal_only: false,
-          path: '/services/claims/docs/v0/api',
+          path: '/internal/docs/benefits-claims/v0/openapi.json',
           status: 'Current Version',
           version: '0.0.1',
         },
