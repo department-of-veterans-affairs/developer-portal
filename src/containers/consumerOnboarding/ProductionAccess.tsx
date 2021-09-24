@@ -234,7 +234,6 @@ const ProductionAccess: FC = () => {
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
     if (isLastStep) {
       setSubmissionError(false);
-      delete values.is508Compliant;
       delete values.isUSBasedCompany;
       delete values.termsOfService;
       // Removing the blank optional values from the request body
@@ -253,6 +252,7 @@ const ProductionAccess: FC = () => {
           filteredValues.distributingAPIKeysToCustomers === yesOrNoValues.Yes,
         exposeVeteranInformationToThirdParties:
           filteredValues.exposeVeteranInformationToThirdParties === yesOrNoValues.Yes,
+        is508Compliant: filteredValues.is508Compliant === yesOrNoValues.Yes,
         listedOnMyHealthApplication:
           filteredValues.listedOnMyHealthApplication === yesOrNoValues.Yes,
         monitizedVeteranInformation:
