@@ -62,24 +62,28 @@ const TechnicalInformation: FC = () => {
         {storePIIOrPHI === 'yes' && (
           <div className="vads-u-margin-left--4">
             <TextField
+              as="textarea"
               label="Describe why this information is stored, and how it is securely stored/encrypted."
               name="piiStorageMethod"
               className="vads-u-margin-top--4"
               required
             />
             <TextField
+              as="textarea"
               label="Describe the safeguards you have in place to prevent multiple, unnecessary requests."
               name="multipleReqSafeguards"
               className="vads-u-margin-top--4"
               required
             />
             <TextField
+              as="textarea"
               label="Describe your breach management process."
               name="breachManagementProcess"
               className="vads-u-margin-top--4"
               required
             />
             <TextField
+              as="textarea"
               label="Provide information about your vulnerability management and patch process."
               name="vulnerabilityManagement"
               className="vads-u-margin-top--4"
