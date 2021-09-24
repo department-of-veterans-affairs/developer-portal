@@ -5,9 +5,6 @@ import { useFormikContext } from 'formik';
 import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { includesInternalOnlyAPI, onlyOpenDataAPIs } from '../../../../apiDefs/query';
-import { Flag } from '../../../../flags';
-import { FLAG_LIST_AND_LOOP } from '../../../../types/constants';
-import ListOfTextEntries from './ListOfTextEntries';
 
 const BasicInformation: FC = () => {
   const {
@@ -82,7 +79,6 @@ const BasicInformation: FC = () => {
       <TextField
         label="Phone number"
         name="phoneNumber"
-        required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
       />
       <TextField
@@ -90,40 +86,17 @@ const BasicInformation: FC = () => {
         name="appName"
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
       />
-      <Flag
-        name={[FLAG_LIST_AND_LOOP]}
-        fallbackRender={(): JSX.Element => (
-          <TextField
-            name="statusUpdateEmails"
-            label={
-              <>
-                Notification email for API status updates{' '}
-                <span className="form-required-span">(*Required)</span>
-              </>
-            }
-            description="A distribution list email is preferred. This email can be updated later if you need."
-            className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
-          />
-        )}
-      >
-        <ListOfTextEntries
-          description={
-            <>
-              <p className="vads-u-font-weight--bold">
-                Notification email for API status updates{' '}
-                <span className="form-required-span">(*Required)</span>
-              </p>
-              <p>
-                A distribution list email is preferred. You may enter more than one email address,
-                and this information can be updated later.
-              </p>
-            </>
-          }
-          className="vads-u-margin-top--2p5"
-          name="statusUpdateEmails"
-          buttonText="Add another email"
-        />
-      </Flag>
+      <TextField
+        name="statusUpdateEmails"
+        label={
+          <>
+            Notification email for API status updates{' '}
+            <span className="form-required-span">(*Required)</span>
+          </>
+        }
+        description="A distribution list email is preferred. This email can be updated later if you need."
+        className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+      />
       <h3>About your app</h3>
       <TextField
         as="textarea"
@@ -204,56 +177,26 @@ const BasicInformation: FC = () => {
               className="vads-u-margin-top--4"
               required
             />
-            <Flag
-              name={[FLAG_LIST_AND_LOOP]}
-              fallbackRender={(): JSX.Element => (
+            <TextField
+              name="signUpLink"
+              label={
                 <>
-                  <TextField
-                    name="signUpLink"
-                    label={
-                      <>
-                        Provide a link to a page describing how to sign up for your app.{' '}
-                        <span className="form-required-span">(*Required)</span>
-                      </>
-                    }
-                    className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
-                  />
-                  <TextField
-                    name="supportLink"
-                    label={
-                      <>
-                        Provide a link to your FAQs and/or support page.{' '}
-                        <span className="form-required-span">(*Required)</span>
-                      </>
-                    }
-                    className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
-                  />
+                  Provide a link to a page describing how to sign up for your app.{' '}
+                  <span className="form-required-span">(*Required)</span>
                 </>
-              )}
-            >
-              <ListOfTextEntries
-                description={
-                  <p className="vads-u-font-weight--bold">
-                    Provide a link to a page describing how to sign up for your app.{' '}
-                    <span className="form-required-span">(*Required)</span>
-                  </p>
-                }
-                className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
-                name="signUpLink"
-                buttonText="Add another URL"
-              />
-              <ListOfTextEntries
-                description={
-                  <p className="vads-u-font-weight--bold">
-                    Provide a link to your FAQs and/or support page.{' '}
-                    <span className="form-required-span">(*Required)</span>
-                  </p>
-                }
-                className="vads-u-background-color--gray-lightest vads-u-margin-top--2p5"
-                name="supportLink"
-                buttonText="Add another URL"
-              />
-            </Flag>
+              }
+              className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+            />
+            <TextField
+              name="supportLink"
+              label={
+                <>
+                  Provide a link to your FAQs and/or support page.{' '}
+                  <span className="form-required-span">(*Required)</span>
+                </>
+              }
+              className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+            />
             <TextField
               label="List of devices/platforms on which this app is available (eg. iOS, iPhone, iPad, Android tablet, Android phone, web browser, etc.)"
               name="platforms"
