@@ -42,7 +42,7 @@ env:
     DOCKER_USERNAME: '/dvp/devops/DOCKER_USERNAME'
     DOCKER_PASSWORD: '/dvp/devops/DOCKER_PASSWORD'
     # This webhook currently targets DSVA workspace #lighthous-deploys channel
-    SLACK_WEBHOOK: '/dvp/devops/codebuild_slack_webhook'
+    SLACK_WEBHOOK: '/dvp/devops/codebuild_slack_webhook_lighthouse'
 phases:
   install:
     commands:
@@ -150,7 +150,7 @@ phases:
           ;;
         *)
           comment="An unhandled error occured with the build process. This is most likely a failure with the build pipeline. A post has been made in Slack"
-          slackpost.sh "Pipeline failure for the developer portal"
+          slackpost.sh "CI Pipeline failure for the developer portal. <${CODEBUILD_BUILD_URL}|CodeBuild URL>"
           ;;
         esac
       # Output build times
