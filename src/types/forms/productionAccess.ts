@@ -38,4 +38,5 @@ export interface ProductionAccessRequest {
   listedOnMyHealthApplication?: boolean;
   productionKeyCredentialStorage?: string;
   productionOrOAuthKeyCredentialStorage?: string;
+  is508Compliant: boolean;
 }
