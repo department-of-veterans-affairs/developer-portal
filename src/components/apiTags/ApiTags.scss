@@ -5,4 +5,8 @@
   span {
     border-radius: 2px;
   }
+  .screen-reader-punctuation {
+    left: -10000px;
+    position: absolute;
+  }
 }

@@ -13,11 +13,10 @@ import { Link, useHistory } from 'react-router-dom';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
-import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { FLAG_LIST_AND_LOOP, PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
+import { PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -50,7 +49,7 @@ export interface Values {
     email: string;
   };
   organization: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   appName: string;
   monitizedVeteranInformation: string;
   monitizationExplanation?: string;
@@ -60,13 +59,11 @@ export interface Values {
   appDescription: string;
   vasiSystemName: string;
   applicationName?: string;
-  // statusUpdateEmails, signUpLink, supportLink, policyDocuments can be either a single value or
-  // an array until the list and loop component is created
-  statusUpdateEmails: string | string[];
+  statusUpdateEmails: string;
   valueProvided: string;
   businessModel?: string;
-  signUpLink: string | string[];
-  supportLink: string | string[];
+  signUpLink: string;
+  supportLink: string;
   storePIIOrPHI: string;
   piiStorageMethod: string;
   multipleReqSafeguards: string;
@@ -82,7 +79,7 @@ export interface Values {
   productionKeyCredentialStorage: string;
   productionOrOAuthKeyCredentialStorage: string;
   veteranFacingDescription: string;
-  policyDocuments: string | string[];
+  policyDocuments: string;
 }
 
 const initialValues: Values = {
@@ -133,21 +130,6 @@ const initialValues: Values = {
   website: '',
 };
 
-// temporary until the list and loop component is done
-const getInitialValues = (isListAndLoopEnabled: boolean): Values => {
-  if (isListAndLoopEnabled) {
-    return {
-      ...initialValues,
-      policyDocuments: [''],
-      signUpLink: [''],
-      statusUpdateEmails: [''],
-      supportLink: [''],
-    };
-  }
-
-  return initialValues;
-};
-
 const renderStepContent = (step: number, hasPassedStep1: boolean): JSX.Element => {
   switch (step) {
     case 0:
@@ -184,9 +166,7 @@ const ProductionAccess: FC = () => {
   const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
   const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
-
   const history = useHistory();
-  const isListAndLoopEnabled = useFlag([FLAG_LIST_AND_LOOP]);
 
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
@@ -254,7 +234,6 @@ const ProductionAccess: FC = () => {
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
     if (isLastStep) {
       setSubmissionError(false);
-      delete values.is508Compliant;
       delete values.isUSBasedCompany;
       delete values.termsOfService;
       // Removing the blank optional values from the request body
@@ -273,23 +252,16 @@ const ProductionAccess: FC = () => {
           filteredValues.distributingAPIKeysToCustomers === yesOrNoValues.Yes,
         exposeVeteranInformationToThirdParties:
           filteredValues.exposeVeteranInformationToThirdParties === yesOrNoValues.Yes,
+        is508Compliant: filteredValues.is508Compliant === yesOrNoValues.Yes,
         listedOnMyHealthApplication:
           filteredValues.listedOnMyHealthApplication === yesOrNoValues.Yes,
         monitizedVeteranInformation:
           filteredValues.monitizedVeteranInformation === yesOrNoValues.Yes,
-        policyDocuments: Array.isArray(filteredValues.policyDocuments)
-          ? filteredValues.policyDocuments
-          : [filteredValues.policyDocuments],
-        signUpLink: Array.isArray(filteredValues.signUpLink)
-          ? filteredValues.signUpLink
-          : [filteredValues.signUpLink],
-        statusUpdateEmails: Array.isArray(filteredValues.statusUpdateEmails)
-          ? filteredValues.statusUpdateEmails
-          : [filteredValues.statusUpdateEmails],
+        policyDocuments: [filteredValues.policyDocuments],
+        signUpLink: [filteredValues.signUpLink],
+        statusUpdateEmails: [filteredValues.statusUpdateEmails],
         storePIIOrPHI: filteredValues.storePIIOrPHI === yesOrNoValues.Yes,
-        supportLink: Array.isArray(filteredValues.supportLink)
-          ? filteredValues.supportLink
-          : [filteredValues.supportLink],
+        supportLink: [filteredValues.supportLink],
         veteranFacing: filteredValues.veteranFacing === yesOrNoValues.Yes,
       };
       // The backend cannont accept null values, so this is to remove blank optional fields that are null because of the filtering above
@@ -349,7 +321,7 @@ const ProductionAccess: FC = () => {
       <div className="vads-l-row">
         <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
           <Formik
-            initialValues={getInitialValues(isListAndLoopEnabled)}
+            initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={currentValidationSchema}
             validateOnBlur={false}
