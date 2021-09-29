@@ -1,4 +1,9 @@
 ### September 21, 2021
+The R4 Condition FHIR mapping has been enhanced to include the following changes:
+  -  ‘clinicalStatus’ element now supports the value ‘inactive’
+  -  ‘verificationStatus’ previously always returned ‘unconfirmed’.  Now values can be ‘unconfirmed’, ‘provisional’, ‘differential’, ‘confirmed’, or ‘refuted’
+  -  ‘recorder’ element has now been added.
+
 Populating 'verificationStatus' on the 'Condition' resource which was previously 'unconfirmed'. 
 
 The 'primarySource' field in the 'Immunization' resource is no longer hardcoded to be true.  
