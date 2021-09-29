@@ -2,11 +2,7 @@ import React, { FC } from 'react';
 import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../../components';
 import { SelectedAPIs } from './SelectedApis';
 
-interface VerificationProps {
-  hasPassedStep: boolean;
-}
-
-const Verification: FC<VerificationProps> = () => (
+const Verification: FC = () => (
   <fieldset>
     <legend><h3 className="vads-u-margin-bottom--0">Confirm</h3></legend>
     <FieldSet

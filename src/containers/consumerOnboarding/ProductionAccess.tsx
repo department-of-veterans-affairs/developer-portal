@@ -132,10 +132,10 @@ const initialValues: Values = {
   website: '',
 };
 
-const renderStepContent = (step: number, hasPassedStep1: boolean): JSX.Element => {
+const renderStepContent = (step: number): JSX.Element => {
   switch (step) {
     case 0:
-      return <Verification hasPassedStep={hasPassedStep1} />;
+      return <Verification />;
     case 1:
       return <BasicInformation />;
     case 2:
@@ -160,7 +160,6 @@ const handleSubmitButtonClick = (): void => {
 const ProductionAccess: FC = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [passedStep1, setPassedStep1] = useState(false); // for focus handling of step 1
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
@@ -311,7 +310,6 @@ const ProductionAccess: FC = () => {
 
       calculateSteps(values);
       setActiveStep(activeStep + 1);
-      setPassedStep1(true); // any time we submit successfully we know we've been through step 1
       actions.setTouched({});
       actions.setSubmitting(false);
       setTimeout(() => {
@@ -372,7 +370,7 @@ const ProductionAccess: FC = () => {
                   </h2>
                 </>
               )}
-              {renderStepContent(activeStep, passedStep1)}
+              {renderStepContent(activeStep)}
               <div className="vads-u-margin-y--5">
                 <button
                   className={classNames(
