@@ -1,7 +1,7 @@
 ### September 21, 2021
 We added new elements and values to the R4 `Condition` FHIR mapping. 
   -  The `clinicalStatus` element now supports the value `inactive`.
-  -  The `verificationStatus` element now returns these new values:`provisional`, `differential`, `confirmed`, or `refuted` in addition to the previously returned value, `unconfirmed`.
+  -  The `verificationStatus` element now returns these additional values:`provisional`, `differential`, `confirmed`, and `refuted`. Previously, this element always returned  `unconfirmed`.
   -  The `recorder` element is now added.
 
 The R4 `AllergyIntolerance` FHIR mapping now includes both `clincalStatus` and `verificationStatus`.  Previously, only one was populated based on value. 
