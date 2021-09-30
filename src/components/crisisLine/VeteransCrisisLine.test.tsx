@@ -18,14 +18,14 @@ describe('VeteransCrisisLine', () => {
   it('checks open/close functionality of dialog works correctly.', async () => {
     render(<VeteransCrisisLine />);
 
-    expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
 
     const modalButton = screen.getByRole('button');
     fireEvent.click(modalButton);
-    await waitFor(() => expect(screen.queryByRole('alertdialog')).toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeInTheDocument());
 
     const dialogCloseBtn = screen.getByRole('button');
     fireEvent.click(dialogCloseBtn);
-    await waitFor(() => expect(screen.queryByRole('alertdialog')).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });
 });

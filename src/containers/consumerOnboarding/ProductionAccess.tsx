@@ -331,11 +331,11 @@ const ProductionAccess: FC = () => {
               {activeStep === 0 ? (
                 <>
                   <SegmentedProgressBar current={1} total={4} ariaLabel={`Step 1: Verification`} />
-                  <h2 className="vads-u-font-size--h4">Step 1: Verification</h2>
+                  <h2 className="vads-u-font-size--h4">Step 1. There will be 1 to 3 more steps depending on the APIs you select. </h2>
                 </>
               ) : (
                 <>
-                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} ariaLabel={`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}/>
+                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} ariaLabel={`Step ${activeStep + 1} of ${steps.length}. `}/>
                   <h2 className="vads-u-font-size--h4">
                     {`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}
                   </h2>
