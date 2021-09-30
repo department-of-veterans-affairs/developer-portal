@@ -33,6 +33,8 @@ const possibleSteps = [
   'Policy governance',
 ];
 
+const STEP_HEADING_ID = 'form-step-heading';
+
 export interface Values {
   apis: string[];
   is508Compliant?: string;
@@ -130,10 +132,10 @@ const initialValues: Values = {
   website: '',
 };
 
-const renderStepContent = (step: number, hasPassedStep1: boolean): JSX.Element => {
+const renderStepContent = (step: number): JSX.Element => {
   switch (step) {
     case 0:
-      return <Verification hasPassedStep={hasPassedStep1} />;
+      return <Verification />;
     case 1:
       return <BasicInformation />;
     case 2:
@@ -158,7 +160,6 @@ const handleSubmitButtonClick = (): void => {
 const ProductionAccess: FC = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [passedStep1, setPassedStep1] = useState(false); // for focus handling of step 1
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
@@ -229,8 +230,14 @@ const ProductionAccess: FC = () => {
       setModal1Visible(true);
     } else {
       setActiveStep(activeStep - 1);
+      setTimeout(() => {
+        // focus on h2 after moving to previous step
+        const stepHeading = document.getElementById(STEP_HEADING_ID);
+        stepHeading?.focus();
+      }, 0);
     }
   };
+
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
     if (isLastStep) {
       setSubmissionError(false);
@@ -303,9 +310,13 @@ const ProductionAccess: FC = () => {
 
       calculateSteps(values);
       setActiveStep(activeStep + 1);
-      setPassedStep1(true); // any time we submit successfully we know we've been through step 1
       actions.setTouched({});
       actions.setSubmitting(false);
+      setTimeout(() => {
+        // focus on h2 after moving to next step
+        const stepHeading = document.getElementById(STEP_HEADING_ID);
+        stepHeading?.focus();
+      }, 0);
     }
   };
 
@@ -331,17 +342,35 @@ const ProductionAccess: FC = () => {
               {activeStep === 0 ? (
                 <>
                   <SegmentedProgressBar current={1} total={4} />
-                  <h2 className="vads-u-font-size--h4">Step 1: Verification</h2>
+                  <h2
+                    id={STEP_HEADING_ID}
+                    className={classNames(
+                      'vads-u-font-size--h4',
+                      'vads-u-display--inline-block',
+                      'vads-u-margin-bottom--0',
+                    )}
+                    tabIndex={-1}
+                  >
+                    Step 1: Verification
+                  </h2>
                 </>
               ) : (
                 <>
                   <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
-                  <h2 className="vads-u-font-size--h4">
+                  <h2
+                    id={STEP_HEADING_ID}
+                    className={classNames(
+                      'vads-u-font-size--h4',
+                      'vads-u-display--inline-block',
+                      'vads-u-margin-bottom--0',
+                    )}
+                    tabIndex={-1}
+                  >
                     {`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}
                   </h2>
                 </>
               )}
-              {renderStepContent(activeStep, passedStep1)}
+              {renderStepContent(activeStep)}
               <div className="vads-u-margin-y--5">
                 <button
                   className={classNames(
