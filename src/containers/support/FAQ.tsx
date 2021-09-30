@@ -110,44 +110,6 @@ const developmentQuestions: SupportQuestion[] = [
     question:
       'What kind of data can I get from the APIs? Do you have any example scenarios for Health, Benefits, Facilities or Veteran Verification?',
   },
-  {
-    answer: (
-      <React.Fragment>
-        <p>
-          The Address Validation API is for internal VA use only and is not listed on the developer
-          portal. To begin development in the sandbox environment, request a developer{' '}
-          <Link to="/apply">API key for the Facilities API</Link>. Once finished, send an email to{' '}
-          <a
-            href="mailto:api@va.gov?subject=Request%20for%20Sandbox%20Access%20to%20Address%20Validation%20API"
-            target="_BLANK"
-            rel="noopener noreferrer"
-          >
-            api@va.gov
-          </a>{' '}
-          with the subject line &quot;Request for Sandbox Access to Address Validation API.&quot; In
-          the email, include the following:
-        </p>
-        <ul>
-          <li>Email address used for the sandbox Facilities API key request</li>
-          <li>Name of team/project</li>
-          <li>Consumer name (if different from team/project)</li>
-          <li>Expected call volume (our default rate limit is 60 requests per minute)</li>
-          <li>Desired production date</li>
-          <li>
-            Any IP addresses or subnets <em>outside the VA intranet</em> from which you require
-            developer access (permitted in sandbox only)
-          </li>
-          <li>
-            When indicating your desired production date, note that we require at least one
-            week&apos;s notice before a demo can be scheduled, and that it may take up to a week
-            after the demo to grant you the sandbox key for the Address Validation API.
-          </li>
-        </ul>
-        <p>We will respond to your request within 2 business days.</p>
-      </React.Fragment>
-    ),
-    question: 'How do I get sandbox access to the Address Validation API (VA internal only)?',
-  },
 ];
 
 const supportQuestions: SupportQuestion[] = [

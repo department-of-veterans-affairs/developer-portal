@@ -2,7 +2,7 @@
 /* eslint-disable complexity */
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
 import { TextField, FieldSet, CheckboxRadioField } from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { includesOAuthAPI } from '../../../../apiDefs/query';
@@ -28,21 +28,16 @@ const TechnicalInformation: FC = () => {
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-left--4px' : '';
   const keysToCustomersBorderColorClass =
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
-  const firstInputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    firstInputRef.current?.focus();
-  }, []);
 
   return (
-    <>
-      <h3>Technical information</h3>
+    <fieldset>
+      <legend><h3 className="vads-u-margin-bottom--0">Technical information</h3></legend>
       <TextField
         as="textarea"
         label="We require you to store your production key and/or OAuth credentials securely so as not to risk unauthorized exposure. How and where do you provide this?"
         name="productionOrOAuthKeyCredentialStorage"
         required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
-        innerRef={firstInputRef}
       />
       <FieldSet
         className={classNames(
@@ -242,7 +237,7 @@ const TechnicalInformation: FC = () => {
           />
         </FieldSet>
       )}
-    </>
+    </fieldset>
   );
 };
 
