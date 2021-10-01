@@ -74,7 +74,7 @@ describe('SandboxAccessForm', () => {
 
       expect(screen.getByLabelText('Yes')).toBeInTheDocument();
       expect(screen.getByLabelText('No')).toBeInTheDocument();
-      userEvent.click(screen.getByLabelText('Yes')), {delay: 0.01};
+      userEvent.click(screen.getByLabelText('Yes'));
       expect(
         await screen.findByRole('textbox', { name: /OAuth Redirect URI/ }),
       ).toBeInTheDocument();

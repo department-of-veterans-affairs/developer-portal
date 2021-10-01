@@ -356,7 +356,7 @@ const ProductionAccess: FC = () => {
                 </>
               ) : (
                 <>
-                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} ariaLabel={`Step ${activeStep + 1} of ${steps.length}.`} />
+                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
                   <h2
                     id={STEP_HEADING_ID}
                     className={classNames(
