@@ -8,8 +8,7 @@ import VeteransCrisisLinePanel from './VeteransCrisisLinePanel';
 describe('VeteransCrisisLine', () => {
   it('checks that panel displays with correct information.', () => {
     render(<VeteransCrisisLinePanel />);
-    const title = screen.getByRole('heading');
-    expect(title).toHaveTextContent("We're here anytime, day or night - 24/7");
+    expect(screen.queryByText("We're here anytime, day or night - 24/7"));
     expect(
       screen.queryByText(
         'If you are a Veteran in crisis or concerned about one, connect with our caring, qualified responders for confidential help. Many of them are Veterans themselves.',

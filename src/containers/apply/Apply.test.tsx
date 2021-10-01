@@ -39,16 +39,16 @@ describe('Apply', () => {
 
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Meriadoc', {
-          delay: 0.01,
+          delay: 0.02,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck', {
-          delay: 0.01,
+          delay: 0.02,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'merry@theshire.net', {
-          delay: 0.01,
+          delay: 0.02,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
-          delay: 0.01,
+          delay: 0.02,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));

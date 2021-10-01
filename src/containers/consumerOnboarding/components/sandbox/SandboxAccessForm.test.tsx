@@ -55,16 +55,16 @@ describe('SandboxAccessForm', () => {
     it('adds required fields if selected', async () => {
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Samwise', {
-          delay: 0.01,
+          delay: 0.02,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Gamgee', {
-          delay: 0.01,
+          delay: 0.02,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'sam@theshire.net', {
-          delay: 0.01,
+          delay: 0.02,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
-          delay: 0.01,
+          delay: 0.02,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake API/ }));
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
@@ -74,6 +74,7 @@ describe('SandboxAccessForm', () => {
 
       expect(screen.getByLabelText('Yes')).toBeInTheDocument();
       expect(screen.getByLabelText('No')).toBeInTheDocument();
+      userEvent.click(screen.getByLabelText('Yes')), {delay: 0.01};
       expect(
         await screen.findByRole('textbox', { name: /OAuth Redirect URI/ }),
       ).toBeInTheDocument();
@@ -135,18 +136,18 @@ describe('SandboxAccessForm', () => {
 
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
-          delay: 0.01,
+          delay: 0.02,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Took', {
-          delay: 0.01,
+          delay: 0.02,
         });
 
         await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@theshire', {
-          delay: 0.01,
+          delay: 0.02,
         });
 
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
-          delay: 0.01,
+          delay: 0.02,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
@@ -372,13 +373,13 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Brandybuck', {
-          delay: 0.01,
+          delay: 0.02,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'merry@theshire.net', {
-          delay: 0.01,
+          delay: 0.03,
         });
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
-          delay: 0.01,
+          delay: 0.04,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake/ }));
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
