@@ -72,9 +72,8 @@ describe('SandboxAccessForm', () => {
 
       userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims API/ }));
 
-      expect(screen.getByLabelText('Yes')).toBeInTheDocument();
-      expect(screen.getByLabelText('No')).toBeInTheDocument();
-      userEvent.click(screen.getByLabelText('Yes'));
+      expect(await screen.findByRole('radio', { name: 'Yes' })).toBeInTheDocument();
+      expect(await screen.findByRole('radio', { name: 'No' })).toBeInTheDocument();
       expect(
         await screen.findByRole('textbox', { name: /OAuth Redirect URI/ }),
       ).toBeInTheDocument();
