@@ -73,6 +73,31 @@ const ScopesContent = (): JSX.Element => {
               code) token response when the &apos;openid&apos; scope is used.
             </td>
           </tr>
+          <tr>
+            <td>
+              <code>launch</code>
+            </td>
+            <td>
+              This scope enables the SMART-on-FHIR launch context. This scope must be used with the
+              <code>launch</code> parameter, as described in the table under&nbsp;
+              <HashLink to={{ ...location, hash: '#requesting-authorization' }}>Requesting authorization</HashLink>.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>fhirUser</code>
+            </td>
+            <td>
+              This scope adds a <code>fhirUser</code> claim to the <code>id_token</code>. The value
+              of the <code>fhirUser</code> claim is a URL of a FHIR resource representing the current user.
+              <p>
+                Learn more about the&nbsp;
+                <a href="http://www.hl7.org/fhir/smart-app-launch/scopes-and-launch-context/index.html#scopes-for-requesting-identity-data">
+                  fhirUser scope
+                </a>.
+              </p>
+            </td>
+          </tr>
         </tbody>
       </table>
 
