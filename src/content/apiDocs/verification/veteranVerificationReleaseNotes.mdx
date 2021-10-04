@@ -1,3 +1,19 @@
+### Sep 22, 2021
+The Veteran Verification API v1.0.0 was updated to include a change to the /disability_rating endpoint response. The DisabilityRatingAttributes will now show date (2018-03-27) rather than datetime (2018-03-27T21:00:41.000+0000). 
+
+This was introduced as a versioned change to allow API consumers to upgrade at their convenience. We encourage all consumers to migrate to the new version as v0.0.0 will be removed on December 1, 2021.
+[View code changes(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/7546)
+
+---
+
+### Aug 24, 2021
+The Veteran Verification API was updated to include more accurate Guard and Reserve Service data based on qualifying periods which is filtered to not include training or Title 32 service.
+
+[View code changes(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/7685)
+
+---
+
+
 ### June 10, 2020
 The optional query parameter `prompt` has been added to the authorization flow.
 - Supported prompts: login. If specified, the user will be forced to provide credentials regardless of session state. If omitted, an existing active session with the identity provider may not require the user to provide credentials.

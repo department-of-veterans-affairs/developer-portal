@@ -15,8 +15,7 @@ const InternalOnlyInfo = (): JSX.Element => {
       <div className="vads-u-font-weight--bold">Internal to VA only:</div>
       <div>
         This API is for use by VA-authorized individuals and departments only. You cannot request an
-        API key or use this API unless you have permission from VA. Provisional access takes 2-3
-        business days.
+        API key or use this API unless you have permission from VA.
       </div>
 
       <div className={classNames('xsmall-screen:vads-l-col--10', shouldDisplayInputError ? 'vads-u-margin-left--0p5' : '')}>
