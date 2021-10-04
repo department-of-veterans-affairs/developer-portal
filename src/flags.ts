@@ -5,7 +5,6 @@ import { getAllApis } from './apiDefs/query';
 import { APIDescription } from './apiDefs/schema';
 import {
   FLAG_CATEGORIES,
-  FLAG_CONSUMER_DOCS,
   FLAG_DEACTIVATED_APIS,
   FLAG_ENABLED_APIS,
   FLAG_HOSTED_APIS,
@@ -15,7 +14,6 @@ import {
 } from './types/constants';
 
 export interface AppFlags {
-  consumer_docs: boolean;
   categories: { [categoryId: string]: boolean };
   deactivated_apis: { [apiId: string]: boolean };
   enabled: { [apiId: string]: boolean };
@@ -47,7 +45,6 @@ const getFlags = (): AppFlags => {
 
   return {
     [FLAG_CATEGORIES]: apiCategories,
-    [FLAG_CONSUMER_DOCS]: process.env.REACT_APP_CONSUMER_DOCS === 'true',
     [FLAG_DEACTIVATED_APIS]: deactivatedFlags,
     [FLAG_ENABLED_APIS]: envFlags,
     [FLAG_HOSTED_APIS]: apiFlags,

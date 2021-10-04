@@ -2,6 +2,7 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { AccordionPanelContent, GroupedAccordions, PageHeader } from '../../components';
+import { CONSUMER_PROD_PATH, CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 
 const generalQuestions: SupportQuestion[] = [
   {
@@ -43,10 +44,11 @@ const developmentQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
-        Click to <Link to="/apply">Get Started</Link> by applying for an API key. Note that you will
-        need to provide your <Link to="/oauth">OAuth</Link> Redirect URI if you are applying for a
-        key to the Health, Claims, or Veteran Verification APIs. You are also required to agree to
-        the <Link to="/terms-of-service">VA API Terms of Service</Link> in order to obtain a key.
+        Click to <Link to={CONSUMER_SANDBOX_PATH}>Get Started</Link> by applying for an API key.
+        Note that you will need to provide your <Link to="/oauth">OAuth</Link> Redirect URI if you
+        are applying for a key to the Health, Claims, or Veteran Verification APIs. You are also
+        required to agree to the <Link to="/terms-of-service">VA API Terms of Service</Link> in
+        order to obtain a key.
       </p>
     ),
     question: 'Where do I apply for dev access?',
@@ -54,9 +56,9 @@ const developmentQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
-        Visit the <Link to="/go-live">Path to Production</Link> page for instructions on &quot;going
-        live.&quot; Schedule a demo presentation of your app by using the Contact Us, or by
-        submitting a request via the GitHub links.
+        Visit the <Link to={CONSUMER_PROD_PATH}>Path to Production</Link> page for instructions on
+        &quot;going live.&quot; Schedule a demo presentation of your app by using the Contact Us, or
+        by submitting a request via the GitHub links.
       </p>
     ),
     question: 'How do we move forward with production API access once dev is complete?',

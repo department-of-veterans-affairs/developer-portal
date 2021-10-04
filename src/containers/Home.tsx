@@ -9,7 +9,7 @@ import './Home.scss';
 import apiDefinitions, { apiCategoryOrder } from '../apiDefs/data/categories';
 import { CardLink, Hero } from '../components';
 import { Flag } from '../flags';
-import { FLAG_CATEGORIES, FLAG_CONSUMER_DOCS } from '../types/constants';
+import { FLAG_CATEGORIES } from '../types/constants';
 
 const columnContentClasses = classNames(
   'vads-u-text-align--center',
@@ -118,17 +118,15 @@ const Home = (): JSX.Element => (
             for Veterans. Explore usage policies and technical details about VA&apos;s API
             offerings.
           </ColumnContent>
-          <Flag name={[FLAG_CONSUMER_DOCS]}>
-            <ColumnContent
-              title="Consumer Onboarding"
-              imageSrc={rocketImage}
-              buttonDestination="/onboarding"
-              buttonText="Review the onboarding process"
-            >
-              We review the quality and security of all applications integrating with our APIs and
-              data before they go live.
-            </ColumnContent>
-          </Flag>
+          <ColumnContent
+            title="Consumer Onboarding"
+            imageSrc={rocketImage}
+            buttonDestination="/onboarding"
+            buttonText="Review the onboarding process"
+          >
+            We review the quality and security of all applications integrating with our APIs and
+            data before they go live.
+          </ColumnContent>
           <ColumnContent
             title="API Publishing"
             imageSrc={branchImage}

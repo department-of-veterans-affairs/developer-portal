@@ -19,6 +19,7 @@ import SwaggerUI from 'swagger-ui';
 import * as React from 'react';
 import * as decisionReviews from '../../../__mocks__/openAPIData/decisionReviews.test.json';
 import * as fhirR4 from '../../../__mocks__/openAPIData/fhirR4.test.json';
+import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { SwaggerPlugins, System } from './index';
 
 /**
@@ -145,7 +146,7 @@ describe('CurlForm', () => {
 
         const applyLink = getByRole(applyMessage, 'link', { name: 'Get One' });
         expect(applyLink).toBeInTheDocument();
-        expect(applyLink.getAttribute('href')).toBe('/apply');
+        expect(applyLink.getAttribute('href')).toBe(CONSUMER_SANDBOX_PATH);
       };
 
       // key-auth API

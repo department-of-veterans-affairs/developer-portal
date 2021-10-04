@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 import logo from '../../assets/hero-logo.svg';
+import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 
 const Hero: React.FunctionComponent = (): JSX.Element => (
   <section
@@ -34,7 +35,7 @@ const Hero: React.FunctionComponent = (): JSX.Element => (
         </h1>
         <Link
           id="hero-read-api-docs"
-          to="/apply"
+          to={CONSUMER_SANDBOX_PATH}
           className={classNames(
             'usa-button',
             'va-api-button-default',

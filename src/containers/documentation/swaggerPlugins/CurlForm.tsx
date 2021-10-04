@@ -17,6 +17,7 @@ import {
 } from 'swagger-ui';
 import { v4 as uuidv4 } from 'uuid';
 import { CodeWrapper } from '../../../components';
+import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { System } from './types';
 
 import './CurlForm.scss';
@@ -180,11 +181,13 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
            * OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
            * https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
            */
-          OauthFlow: token ? {
-            token: {
-              access_token: token,
-            },
-          } : undefined,
+          OauthFlow: token
+            ? {
+                token: {
+                  access_token: token,
+                },
+              }
+            : undefined,
           bearer_token: token,
         },
       };
@@ -202,9 +205,10 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         requestBody[property.name] = this.state.paramValues[property.name].split(',');
       } else if (property.type === 'object') {
         try {
-          requestBody[property.name] = JSON.parse(
-            this.state.paramValues[property.name],
-          ) as Record<string, unknown>;
+          requestBody[property.name] = JSON.parse(this.state.paramValues[property.name]) as Record<
+            string,
+            unknown
+          >;
         } catch (e: unknown) {
           requestBody[property.name] = this.state.paramValues[property.name];
         }
@@ -265,7 +269,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               }}
             />
             <small>
-              Don&apos;t have an API Key? <a href="/apply"> Get One </a>
+              Don&apos;t have an API Key? <a href={CONSUMER_SANDBOX_PATH}> Get One </a>
             </small>
           </div>
         </div>
@@ -283,7 +287,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               }}
             />
             <small>
-              Don&apos;t have an API Key? <a href="/apply"> Get One </a>
+              Don&apos;t have an API Key? <a href={CONSUMER_SANDBOX_PATH}> Get One </a>
             </small>
           </div>
         </div>

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { match as Match } from 'react-router';
 import { NavHashLink } from 'react-router-hash-link';
-import { FLAG_CATEGORIES, FLAG_CONSUMER_DOCS } from '../../types/constants';
+import { FLAG_CATEGORIES } from '../../types/constants';
 import {
   CONSUMER_APIS_PATH,
   CONSUMER_DEMO_PATH,
@@ -169,35 +169,51 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               ))}
             </SubNav>
           </li>
-          <Flag name={[FLAG_CONSUMER_DOCS]}>
-            <li className={navItemStyles()}>
-              <MainNavItem
-                targetUrl={CONSUMER_PATH}
-                largeScreenProps={sharedNavItemProps}
-                excludeSmallScreen
-                className={navLinkStyles}
+
+          <li className={navItemStyles()}>
+            <MainNavItem
+              targetUrl={CONSUMER_PATH}
+              largeScreenProps={sharedNavItemProps}
+              excludeSmallScreen
+              className={navLinkStyles}
+            >
+              Onboarding
+            </MainNavItem>
+            <SubNav name="Onboarding">
+              <SubNavEntry
+                onClick={props.onMobileNavClose}
+                to={CONSUMER_PATH}
+                id="onboarding-overview"
               >
-                Onboarding
-              </MainNavItem>
-              <SubNav name="Onboarding">
-                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PATH} id="onboarding-overview">
-                  Overview
-                </SubNavEntry>
-                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_SANDBOX_PATH} id="sandbox-access">
-                  Request sandbox access
-                </SubNavEntry>
-                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_PROD_PATH} id="prod-access">
-                  Request production access
-                </SubNavEntry>
-                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_DEMO_PATH} id="demo">
-                  Prepare for the demo
-                </SubNavEntry>
-                <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_APIS_PATH} id="working-with-apis">
-                  Working with our APIs
-                </SubNavEntry>
-              </SubNav>
-            </li>
-          </Flag>
+                Overview
+              </SubNavEntry>
+              <SubNavEntry
+                onClick={props.onMobileNavClose}
+                to={CONSUMER_SANDBOX_PATH}
+                id="sandbox-access"
+              >
+                Request sandbox access
+              </SubNavEntry>
+              <SubNavEntry
+                onClick={props.onMobileNavClose}
+                to={CONSUMER_PROD_PATH}
+                id="prod-access"
+              >
+                Request production access
+              </SubNavEntry>
+              <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_DEMO_PATH} id="demo">
+                Prepare for the demo
+              </SubNavEntry>
+              <SubNavEntry
+                onClick={props.onMobileNavClose}
+                to={CONSUMER_APIS_PATH}
+                id="working-with-apis"
+              >
+                Working with our APIs
+              </SubNavEntry>
+            </SubNav>
+          </li>
+
           <li className={navItemStyles()}>
             <MainNavItem
               onClick={props.onMobileNavClose}
@@ -287,7 +303,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
             <NavHashLink
               onClick={props.onMobileNavClose}
-              to="/apply"
+              to={CONSUMER_SANDBOX_PATH}
               className={classNames('usa-button', 'vads-u-width--full')}
             >
               Request an API Key

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
+import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 import { SectionHeaderWrapper } from '../index';
 
 const GettingStarted = (): JSX.Element => (
@@ -14,9 +15,9 @@ const GettingStarted = (): JSX.Element => (
       third party being authorized depends on the API.
     </p>
     <p>
-      The first step toward authorization is to <Link to="/apply">fill out our application</Link>{' '}
-      and make sure to select the right OAuth API for your needs. To complete the form, you will
-      need:
+      The first step toward authorization is to{' '}
+      <Link to={CONSUMER_SANDBOX_PATH}>fill out our application</Link> and make sure to select the
+      right OAuth API for your needs. To complete the form, you will need:
     </p>
     <ul>
       <li>Your organization name</li>

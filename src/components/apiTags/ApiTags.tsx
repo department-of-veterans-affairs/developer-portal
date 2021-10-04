@@ -1,7 +1,5 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import { Flag } from '../../flags';
-import { FLAG_CONSUMER_DOCS } from '../../types/constants';
 import ApiTag, { tagTypes } from './ApiTag';
 
 const ApiTagsPropTypes = {
@@ -13,7 +11,7 @@ type ApiTagsProps = PropTypes.InferProps<typeof ApiTagsPropTypes>;
 const ApiTags: React.FunctionComponent<ApiTagsProps> = (props: ApiTagsProps): JSX.Element => (
   <>
     {props.vaInternalOnly && <ApiTag type={tagTypes.VAInternalOnly} />}
-    <Flag name={[FLAG_CONSUMER_DOCS]}>{props.openData && <ApiTag type={tagTypes.OpenData} />}</Flag>
+    {props.openData && <ApiTag type={tagTypes.OpenData} />}
   </>
 );
 

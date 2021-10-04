@@ -5,17 +5,14 @@ import { Redirect, Route } from 'react-router-dom';
 import { getActiveApiDefinitions, getApiCategoryOrder } from './apiDefs/query';
 import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
-import DisabledApplyForm from './containers/DisabledApplyForm';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
 import News from './containers/News';
 import ErrorPage from './containers/ErrorPage';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
-import PathToProduction from './content/goLive.mdx';
 import TermsOfService from './content/termsOfService.mdx';
 import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
-import { Flag, getFlags } from './flags';
 import { Publishing } from './containers/publishing';
 import {
   CONSUMER_APPLICATION_PATH,
@@ -24,13 +21,10 @@ import {
   CONSUMER_SANDBOX_PATH,
   PUBLISHING_ROUTER_PATHS,
 } from './types/constants/paths';
-import { Apply } from './containers/apply/Apply';
-import { FLAG_SIGNUPS_ENABLED } from './types/constants';
 import { buildApiDetailRoutes } from './utils/routesHelper';
 import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
-  const flags = getFlags();
   const apiDefinitions = getActiveApiDefinitions();
   return (
     <Switch>
@@ -92,32 +86,16 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       ))}
 
       {/* Consumer Docs */}
-      {flags.consumer_docs && (
-        <Route path={CONSUMER_APPLICATION_PATH} component={ProductionAccess} />
-      )}
-      {flags.consumer_docs &&
-        CONSUMER_ROUTER_PATHS.map((path: string) => (
-          <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
-        ))}
 
-      {flags.consumer_docs ? (
-        <Redirect from="/apply" to={CONSUMER_SANDBOX_PATH} />
-      ) : (
-        <Route
-          path="/apply"
-          render={(): JSX.Element => (
-            <Flag
-              name={[FLAG_SIGNUPS_ENABLED]}
-              component={Apply}
-              fallbackComponent={DisabledApplyForm}
-            />
-          )}
-        />
-      )}
+      <Route path={CONSUMER_APPLICATION_PATH} component={ProductionAccess} />
 
-      {flags.consumer_docs ? (
-        <Redirect from="/go-live" to={CONSUMER_PROD_PATH} />
-      ) : <Route path="/go-live" render={(): JSX.Element => MarkdownPage(PathToProduction)} />}
+      {CONSUMER_ROUTER_PATHS.map((path: string) => (
+        <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
+      ))}
+
+      <Redirect from="/apply" to={CONSUMER_SANDBOX_PATH} />
+
+      <Redirect from="/go-live" to={CONSUMER_PROD_PATH} />
 
       {/* Catch the rest with the 404 */}
       <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
