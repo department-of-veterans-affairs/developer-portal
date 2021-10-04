@@ -8,6 +8,8 @@ import { AuthCodeFlowContentProps } from '../../containers/documentation/Authori
 
 const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
   const baseAuthPath = props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
+  const isClinicalHealthSelected = props.selectedOption === 'clinical_health';
+
   return (
     <>
       <h3 id="authorization-code-flow" tabIndex={-1}>
@@ -179,6 +181,39 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
               </p>
             </td>
           </tr>
+          {isClinicalHealthSelected && (
+            <tr>
+              <td>
+                <code>launch</code>
+              </td>
+              <td>Required</td>
+              <td>
+                <p>
+                  Base64-encoded JSON object, the value of which will contain a sta3n (a valid
+                  VistA station number) and the patient&#39;s ICN. The format of the object will be:
+                </p>
+                <p>
+                  <code>
+                    &#123; &quot;sta3n&quot;: &quot;993&quot;, &quot;patient&quot;: &quot;1000720100V271387&quot; &#125;
+                  </code>
+                </p>
+                <p>
+                  When encoded using base64, the object will look like this:
+                </p>
+                <p>
+                  <code>eyAic3RhM24iOiAiOTkzIiwgInBhdGllbnQiOiAiMTAwMDcyMDEwMFYyNzEzODciIH0=</code>
+                </p>
+                <p>
+                  This parameter must be used with the <code>launch</code> scope to enable the SMART-on-FHIR
+                  launch context.
+                </p>
+                <p>
+                  For more information about scopes, see&nbsp;
+                  <HashLink to={{ ...location, hash: '#scopes' }}>Scopes</HashLink>.
+                </p>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
       <p>
