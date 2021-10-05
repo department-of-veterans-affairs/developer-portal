@@ -13,6 +13,8 @@ import {
 } from '../../types/constants';
 import ApiPage from './ApiPage';
 import { AuthorizationDocs } from './AuthorizationDocs';
+import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
+import { ClientCredentialsGrantDocs } from './ClientCredentialsGrant/ClientCredentialsGrantDocs';
 import CategoryPage from './CategoryPage';
 import DocumentationOverview from './DocumentationOverview';
 import QuickstartPage from './QuickstartPage';
@@ -48,9 +50,23 @@ const ExploreSideNav = (): JSX.Element => {
       <SideNavEntry
         key="authorization"
         to="/explore/authorization"
+        id={`side-nav-category-link-authorization`}
         name="Authorization"
         forceAriaCurrent
-      />
+      >
+        <SideNavEntry
+          exact
+          to={`/explore/authorization/docs/acg`}
+          name="Authorization Code Grant"
+          subNavLevel={1}
+        />
+        <SideNavEntry
+          exact
+          to={`/explore/authorization/docs/ccg`}
+          name="Client Credentials Grant"
+          subNavLevel={1}
+        />
+      </SideNavEntry>
       {apiCategoryOrder.map((categoryKey: string) => {
         const apiCategory: APICategory = apiDefinitions[categoryKey];
         return (
@@ -106,6 +122,8 @@ const DocumentationRoot = (): JSX.Element => (
           <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
         ))}
         <Route path="/explore/authorization" component={AuthorizationDocs} exact />
+        <Route path="/explore/authorization/docs/acg" component={AuthorizationCodeGrantDocs} exact />
+        <Route path="/explore/authorization/docs/ccg" component={ClientCredentialsGrantDocs} exact />
         <Route exact path="/explore/" component={DocumentationOverview} />
         <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
         <Route exact path="/explore/:apiCategoryKey/docs/authorization">

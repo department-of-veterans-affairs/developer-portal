@@ -1,6 +1,6 @@
 import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
-import { puppeteerHost } from '../../e2eHelpers';
+import { puppeteerHost } from '../../../e2eHelpers';
 
 describe('AuthorizationDocs', () => {
   beforeAll(async () => {

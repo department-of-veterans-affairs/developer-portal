@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import { AuthCodeFlowContentProps } from '../../containers/documentation/AuthorizationDocs';
+import { AuthCodeFlowContentProps } from '../../containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
 import { CONSUMER_PROD_PATH } from '../../types/constants/paths';
 import { APISelector } from '../apiSelector/APISelector';
 

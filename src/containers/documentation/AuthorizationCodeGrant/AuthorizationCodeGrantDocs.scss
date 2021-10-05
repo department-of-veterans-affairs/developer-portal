@@ -1,4 +1,4 @@
-@import '../../styles/variables';
+@import '../../../styles/variables';
 
 .va-api-authorization-docs {
   p,
@@ -79,7 +79,7 @@
       select {
         border: 1px solid $color-gray;
         color: $color-base;
-        background-image: url('../../assets/select-arrow-dark.png');
+        background-image: url('../../../assets/select-arrow-dark.png');
       }
     }
   }

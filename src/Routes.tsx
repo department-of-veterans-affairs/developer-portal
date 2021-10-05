@@ -45,6 +45,8 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {/* API Documentation */}
       <Route exact path="/explore" component={DocumentationRoot} />
       <Route exact path="/explore/authorization" component={DocumentationRoot} />
+      <Route exact path="/explore/authorization/docs/acg" component={DocumentationRoot} />
+      <Route exact path="/explore/authorization/docs/ccg" component={DocumentationRoot} />
       {buildApiDetailRoutes(apiDefinitions).map(
         (path: string): JSX.Element => (
           <Route exact key={path} path={path} component={DocumentationRoot} />

@@ -4,7 +4,7 @@ import { HashLink } from 'react-router-hash-link';
 import ReactMarkdown from 'react-markdown';
 import highlight from 'rehype-highlight';
 import { APISelector, CodeWrapper } from '../index';
-import { AuthCodeFlowContentProps } from '../../containers/documentation/AuthorizationDocs';
+import { AuthCodeFlowContentProps } from '../../containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
 
 const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
   const baseAuthPath = props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
