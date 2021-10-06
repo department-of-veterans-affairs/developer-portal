@@ -3,8 +3,8 @@ import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import ReactMarkdown from 'react-markdown';
 import highlight from 'rehype-highlight';
-import { APISelector, CodeWrapper } from '../index';
-import { APIDescription } from '../../apiDefs/schema';
+import { APISelector, CodeWrapper } from '../../index';
+import { APIDescription } from '../../../apiDefs/schema';
 
 interface PKCEContentProps {
   options: APIDescription[];

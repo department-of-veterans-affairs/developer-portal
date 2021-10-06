@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SectionHeaderWrapper } from '../sectionHeaderWrapper/SectionHeaderWrapper';
+import { SectionHeaderWrapper } from '../../sectionHeaderWrapper/SectionHeaderWrapper';
 
 const TestUsers = (): JSX.Element => (
   <>

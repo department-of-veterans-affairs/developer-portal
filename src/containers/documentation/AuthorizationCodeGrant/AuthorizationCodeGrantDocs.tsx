@@ -12,17 +12,14 @@ import {
 import { getAllOauthApis } from '../../../apiDefs/query';
 import { isApiDeactivated } from '../../../apiDefs/deprecated';
 import { APIDescription } from '../../../apiDefs/schema';
-import {
-  PageHeader,
-  BuildingOIDCContent,
-  ScopesContent,
-  GettingStarted,
-  PageLinks,
-  IdToken,
-  TestUsers,
-  Https,
-} from '../../../components';
-
+import { PageHeader } from '../../../components';
+import { Https } from '../../../components/oauthDocs/acg/Https';
+import { TestUsers } from '../../../components/oauthDocs/acg/TestUsers';
+import { IdToken } from '../../../components/oauthDocs/acg/IdToken';
+import { PageLinks } from '../../../components/oauthDocs/acg/PageLinks';
+import { ScopesContent } from '../../../components/oauthDocs/acg/ScopesContent';
+import { BuildingOIDCContent } from '../../../components/oauthDocs/acg/BuildingOIDCContent';
+import { GettingStarted } from '../../../components/oauthDocs/acg/GettingStarted';
 import { usePrevious } from '../../../hooks';
 import { RootState } from '../../../types';
 import { DEFAULT_OAUTH_API_SELECTION } from '../../../types/constants';
@@ -105,7 +102,7 @@ const AuthorizationCodeGrantDocs = (): JSX.Element => {
       <Helmet>
         <title>Authorization Code Grant</title>
       </Helmet>
-      <PageHeader header="Authorization Code Grant" />
+      <PageHeader halo="Authorization" header="Authorization Code Grant" />
       <PageLinks options={options} selectedOption={selectedOAuthApi} />
       <GettingStarted />
       <BuildingOIDCContent />

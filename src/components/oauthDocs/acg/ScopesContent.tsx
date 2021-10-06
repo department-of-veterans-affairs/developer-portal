@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { HashLink } from 'react-router-hash-link';
-import { isApiDeactivated } from '../../apiDefs/deprecated';
-import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
-import { RootState } from '../../types';
-import { APISelector } from '../index';
+import { isApiDeactivated } from '../../../apiDefs/deprecated';
+import { getAllOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
+import { APIDescription } from '../../../apiDefs/schema';
+import { RootState } from '../../../types';
+import { APISelector } from '../../index';
 
-import { SectionHeaderWrapper } from '../sectionHeaderWrapper/SectionHeaderWrapper';
+import { SectionHeaderWrapper } from '../../sectionHeaderWrapper/SectionHeaderWrapper';
 
 /*
  * This is designed to be a single place of truth for the scopes descriptions.

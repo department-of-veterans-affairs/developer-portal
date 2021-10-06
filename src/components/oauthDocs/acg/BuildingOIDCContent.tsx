@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { useSelector } from 'react-redux';
-import { SectionHeaderWrapper } from '../index';
-import { isApiDeactivated } from '../../apiDefs/deprecated';
-import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
-import { RootState } from '../../types';
+import { SectionHeaderWrapper } from '../../index';
+import { isApiDeactivated } from '../../../apiDefs/deprecated';
+import { getAllOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
+import { APIDescription } from '../../../apiDefs/schema';
+import { RootState } from '../../../types';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
 

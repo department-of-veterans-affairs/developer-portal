@@ -2,13 +2,13 @@ import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { FlagsProvider, getFlags } from '../../flags';
+import { FlagsProvider, getFlags } from '../../../flags';
 
-import { getAllOauthApis, lookupApiByFragment } from '../../apiDefs/query';
-import store from '../../store';
-import { isApiDeactivated } from '../../apiDefs/deprecated';
-import { APIDescription } from '../../apiDefs/schema';
-import { AuthCodeFlowContent } from './AuthCodeFlowContent';
+import { getAllOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
+import store from '../../../store';
+import { isApiDeactivated } from '../../../apiDefs/deprecated';
+import { APIDescription } from '../../../apiDefs/schema';
+import { PKCEAuthContent } from './PKCEAuthContent';
 
 describe('Auth Flow Content', () => {
   beforeEach(() => {
@@ -20,14 +20,14 @@ describe('Auth Flow Content', () => {
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter>
-            <AuthCodeFlowContent apiDef={apiDef} options={defs} selectedOption={selectedOption} />
+            <PKCEAuthContent apiDef={apiDef} options={defs} selectedOption={selectedOption} />
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,
     );
   });
-  it('Initiating auth flow header', () => {
-    const heading = screen.getByText('Initiating the Authorization Code Flow');
+  it('PKCE Auth Header', () => {
+    const heading = screen.getByText('PKCE (Proof Key for Code Exchange) Authorization');
     expect(heading).toBeInTheDocument();
   });
   it('Oauth base path found ', () => {
@@ -38,6 +38,6 @@ describe('Auth Flow Content', () => {
   });
   it('Corrent number of code wrappers', () => {
     const codeWrapperArray = document.getElementsByClassName('code-wrapper');
-    expect(codeWrapperArray.length).toBeGreaterThanOrEqual(11);
+    expect(codeWrapperArray.length).toBeGreaterThanOrEqual(6);
   });
 });
