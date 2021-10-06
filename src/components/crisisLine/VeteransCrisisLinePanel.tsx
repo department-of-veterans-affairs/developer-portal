@@ -14,7 +14,7 @@ const VeteransCrisisLinePanel = (): JSX.Element => (
     )}
   >
     <div className="va-crisis-panel-body">
-      <h3 className={classNames('vads-u-display--flex', 'vads-u-align-items--flex-start')} >
+      <h3 className={classNames('vads-u-display--flex', 'vads-u-align-items--flex-start')}>
         <img
           src={vclLogo}
           alt="Veterans Crisis Line logo"
