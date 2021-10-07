@@ -56,6 +56,9 @@ const verificationApis: APIDescription[] = [
     lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Veteran Verification API',
     oAuth: true,
+    oAuthTypes: [
+      'AuthorizationCodeGrant'
+    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/veteran-verification/v1',
       scopes: [

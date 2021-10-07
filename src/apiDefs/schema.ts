@@ -78,6 +78,7 @@ export interface APIDescription {
   readonly vaInternalOnly: boolean;
   readonly openData: boolean;
   readonly oAuth?: boolean;
+  readonly oAuthTypes?: string[],
   readonly oAuthInfo?: OAuthInfo;
   readonly releaseNotes: React.FunctionComponent;
   readonly deactivationInfo?: APIDeactivationInfo;

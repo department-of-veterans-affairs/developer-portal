@@ -43,6 +43,10 @@ const healthApis: APIDescription[] = [
     lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'Clinical Health API (FHIR)',
     oAuth: true,
+    oAuthTypes: [
+      'AuthorizationCodeGrant',
+      'ClientCredentialsGrant'
+    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/clinical-health/v1',
       scopes: [
@@ -75,6 +79,9 @@ const healthApis: APIDescription[] = [
     lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Community Care Eligibility API',
     oAuth: true,
+    oAuthTypes: [
+      'AuthorizationCodeGrant'
+    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/community-care/v1',
       scopes: [
@@ -145,6 +152,10 @@ const healthApis: APIDescription[] = [
     multiOpenAPIIntro: FHIRMultiOpenAPIIntro,
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
+    oAuthTypes: [
+      'AuthorizationCodeGrant',
+      'ClientCredentialsGrant'
+    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/health/v1',
       scopes: [
