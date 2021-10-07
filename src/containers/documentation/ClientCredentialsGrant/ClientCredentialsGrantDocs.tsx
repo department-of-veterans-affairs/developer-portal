@@ -6,10 +6,18 @@ import {
   APISelector
 } from '../../../components';
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
+import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
+import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
 import { getAllOauthApis } from '../../../apiDefs/query';
 import { isApiDeactivated } from '../../../apiDefs/deprecated';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
+
+interface ClientCredentialsFlowContentProps {
+  options: APIDescription[];
+  selectedOption: string;
+  apiDef?: APIDescription | null;
+}
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
   // TODO: only get APIs that provide client credentials type oauth
@@ -29,8 +37,10 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
       </p>
       <APISelector options={options} selectedOption={selectedOAuthApi} />
       <GettingStarted />
+      <AuthCodeFlowContent options={options} selectedOption={selectedOAuthApi} />
+      <TestUsers />
     </div>
   );
 };
 
-export { ClientCredentialsGrantDocs };
+export { ClientCredentialsGrantDocs, ClientCredentialsFlowContentProps };

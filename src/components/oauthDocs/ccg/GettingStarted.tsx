@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { SectionHeaderWrapper } from '../../index';
 import { CodeWrapper } from '../../index';
-import classNames from 'classnames';
+import ReactMarkdown from 'react-markdown';
 
 
 const GettingStarted = (): JSX.Element => (
@@ -13,15 +13,17 @@ const GettingStarted = (): JSX.Element => (
       the public key into JWK format. What you generate will look similar to this: 
     </p>
     <CodeWrapper>
-      <pre
-        className={classNames(
-          'vads-u-display--flex',
-          'vads-u-justify-content--space-between',
-        )}
-      >
-        <code>
-        </code>
-      </pre>
+      <ReactMarkdown>
+          {`~~~json
+{
+  "kty": "RSA",
+  "n": "mYi1wUpwkJ1QB8...",
+  "e": "AQAB",
+  "alg": "RS256",
+  "use": "sig"
+}
+`         }
+        </ReactMarkdown>
     </CodeWrapper>
     <p>
       Then, send this key to our support team at <a href="mailto:api.va.gov">api@va.gov</a>, 
