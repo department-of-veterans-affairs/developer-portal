@@ -20,7 +20,6 @@ interface ClientCredentialsFlowContentProps {
 }
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
-  // TODO: only get APIs that provide client credentials type oauth
   const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) && 
                                                                      item.oAuthTypes && 
                                                                      item.oAuthTypes.includes("ClientCredentialsGrant"));

@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { SectionHeaderWrapper } from '../../index';
 import ReactMarkdown from 'react-markdown';
+import { lookupApiByFragment } from '../../../apiDefs/query';
 import { APISelector, CodeWrapper } from '../../index';
 import { ClientCredentialsFlowContentProps } from '../../../containers/documentation/ClientCredentialsGrant/ClientCredentialsGrantDocs';
 
 const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Element => {
+  const apiDef = lookupApiByFragment(props.selectedOption);
+  const scopes = apiDef?.oAuthInfo?.scopes ?? []
+  const baseAuthPath = apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
 
   return (
     <div>
@@ -30,12 +34,8 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
       <p>
         <strong>NOTE:</strong> The <code>aud</code> will not look like the <code>aud</code> for the SMART-on-FHIR token service. 
         This different formatting is necessary because we apply SMART-on-FHIR on top of a commercial authorization provider. 
-        You can programmatically pull the <code>issuer</code> from the metadata at 
-        {' '}
-      {/*TODO Changes per API selected */}
-        <a href="https://sandbox-api.va.gov/oauth2/pgd/v1/.well-known/openid-configuration">https://sandbox-api.va.gov/oauth2/pgd/v1/.well-known/openid-configuration</a>
-        {' '}
-        and append <code>/v1/token</code> to avoid hardcoding this value and needing to change it if/when this is changed in the future.
+        You can programmatically pull the <code>issuer</code> from the metadata
+        at <a href={"https://sandbox-api.va.gov" + baseAuthPath + "/.well-known/openid-configuration"}>{"https://sandbox-api.va.gov" + baseAuthPath + "/.well-known/openid-configuration"}</a> and append <code>/v1/token</code> to avoid hardcoding this value and needing to change it if/when this is changed in the future.
       </p>
       <p>
         Sign your JWT using your RSA-generated private key, which you will use as a client assertion. An example for what the structure will look like is:
@@ -114,9 +114,8 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
       {<APISelector options={props.options} selectedOption={props.selectedOption} />}
       <CodeWrapper>
         <ReactMarkdown>
-          {/*TODO: Should change based on selection*/}
           {`~~~plaintext
-curl --location --request POST 'https://sandbox-api.va.gov/oauth2/va-profile/v1/token' \\
+curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token' \\
   --header 'Accept: application/json' \\
   --header 'Content-Type: application/x-www-form-urlencoded' \\
   --data-urlencode 'grant_type=client_credentials' \\
@@ -164,7 +163,6 @@ curl --location --request POST 'https://sandbox-api.va.gov/oauth2/va-profile/v1/
                   With the base64 encoded payload similar to this:
                   <CodeWrapper>
                     <ReactMarkdown>
-                      {/*TODO: Should change based on selection*/}
                       {`~~~plaintext
 base64url(
   {
@@ -186,56 +184,14 @@ base64url(
               <td><code>scope</code></td>
               <td>True</td>
               <td>
-                {/*TODO: Only show some of below based on selected API*/}
                 <p>
                   View a user's VA Health records and patient information, see specific read only scopes below.
                   <ul>
-                    <li>launch</li>
-                    <li>patient/Observation.read</li>
-                    <li>patient/Observation.write</li>
-                    <li>patient/Patient.read</li>
-                    <li>patient/Patient.write</li>
-                    <li>patient/Questionnaire.read</li>
-                    <li>patient/Questionnaire.write</li>
-                    <li>patient/QuestionnaireResponse.read</li>
-                    <li>patient/QuestionnaireResponse.write</li>
-                    <li>system/Questionnaire.read</li>
-                    <li>system/Questionnaire.write</li>
-                  </ul>
-                </p>
-                <p>
-                  View a user's VA Health records and patient information, see specific read only scopes below.
-                  <ul>
-                    <li>launch</li>
-                    <li>patient/AllergyIntolerance.read</li>
-                    <li>patient/Appointment.read</li>
-                    <li>patient/Condition.read</li>
-                    <li>patient/DiagnosticReport.read</li>
-                    <li>patient/Immunization.read</li>
-                    <li>patient/Location.read</li>
-                    <li>patient/Medication.read</li>
-                    <li>patient/MedicationOrder.read</li>
-                    <li>patient/MedicationRequest.read</li>
-                    <li>patient/MedicationStatement.read</li>
-                    <li>patient/Observation.read</li>
-                    <li>patient/Organization.read</li>
-                    <li>patient/Patient.read</li>
-                    <li>patient/Practitioner.read</li>
-                    <li>patient/PractitionerRole.read</li>
-                    <li>patient/Procedure.read</li>
-                    <li>system/AllergyIntolerance.read</li>
-                    <li>system/Appointment.read</li>
-                    <li>system/Condition.read</li>
-                    <li>system/Coverage.read</li>
-                    <li>system/Coverage.write</li>
-                    <li>system/DiagnosticReport.read</li>
-                    <li>system/Immunization.read</li>
-                    <li>system/Location.read</li>
-                    <li>system/Medication.read</li>
-                    <li>system/MedicationOrder.read</li>
-                    <li>system/Observation.read</li>
-                    <li>system/Organization.read</li>
-                    <li>system/Patient.read</li>
+                    {scopes.map( (scope, index) =>
+                     (
+                         <li>{scope}</li>
+                     )
+                     )}
                   </ul>
                 </p>
               </td>
