@@ -10,7 +10,6 @@ import {
   FLAG_HOSTED_APIS,
   FLAG_PLATFORM_OUTAGE,
   FLAG_SHOW_TESTING_NOTICE,
-  FLAG_SIGNUPS_ENABLED,
 } from './types/constants';
 
 export interface AppFlags {
@@ -19,7 +18,6 @@ export interface AppFlags {
   enabled: { [apiId: string]: boolean };
   hosted_apis: { [apiId: string]: boolean };
   show_testing_notice: boolean;
-  signups_enabled: boolean;
   platform_outage: boolean;
 }
 
@@ -50,7 +48,6 @@ const getFlags = (): AppFlags => {
     [FLAG_HOSTED_APIS]: apiFlags,
     [FLAG_PLATFORM_OUTAGE]: process.env.REACT_APP_PLATFORM_OUTAGE === 'true',
     [FLAG_SHOW_TESTING_NOTICE]: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
-    [FLAG_SIGNUPS_ENABLED]: process.env.REACT_APP_SIGNUPS_ENABLED !== 'false',
   };
 };
 

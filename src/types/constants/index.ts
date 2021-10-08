@@ -30,7 +30,6 @@ export const FLAG_DEACTIVATED_APIS = 'deactivated_apis';
 export const FLAG_ENABLED_APIS = 'enabled';
 export const FLAG_HOSTED_APIS = 'hosted_apis';
 export const FLAG_SHOW_TESTING_NOTICE = 'show_testing_notice';
-export const FLAG_SIGNUPS_ENABLED = 'signups_enabled';
 export const FLAG_PLATFORM_OUTAGE = 'platform_outage';
 export enum yesOrNoValues {
   Yes = 'yes',
