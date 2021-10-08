@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { SectionHeaderWrapper, CodeWrapper } from '../../index';
+import highlight from 'rehype-highlight';
 
 const GettingStarted = (): JSX.Element => (
   <>
@@ -11,7 +12,7 @@ const GettingStarted = (): JSX.Element => (
       the public key into JWK format. What you generate will look similar to this:
     </p>
     <CodeWrapper>
-      <ReactMarkdown>
+      <ReactMarkdown rehypePlugins={[highlight]}>
         {`~~~json
 {
   "kty": "RSA",

@@ -102,9 +102,9 @@ const AuthorizationCodeGrantDocs = (): JSX.Element => {
   return (
     <div className="va-api-authorization-docs">
       <Helmet>
-        <title>Authorization Code Grant</title>
+        <title>Authorization Code Flow</title>
       </Helmet>
-      <PageHeader halo="Authorization" header="Authorization Code Grant" />
+      <PageHeader halo="Authorization" header="Authorization Code Flow" />
       <PageLinks options={options} selectedOption={selectedOAuthApi} />
       <GettingStarted />
       <BuildingOIDCContent />

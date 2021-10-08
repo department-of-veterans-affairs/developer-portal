@@ -2,7 +2,7 @@ import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { SectionHeaderWrapper, APISelector, CodeWrapper } from '../../index';
 import { lookupApiByFragment } from '../../../apiDefs/query';
-
+import highlight from 'rehype-highlight';
 import { ClientCredentialsFlowContentProps } from '../../../containers/documentation/ClientCredentialsGrant/ClientCredentialsGrantDocs';
 
 const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Element => {
@@ -40,7 +40,7 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
       <p>
         Sign your JWT using your RSA-generated private key, which you will use as a client assertion. An example for what the structure will look like is:
         <CodeWrapper>
-          <ReactMarkdown>
+          <ReactMarkdown rehypePlugins={[highlight]}>
             {`~~~json
 {
   "aud": "TBD",
@@ -113,8 +113,8 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper>
-        <ReactMarkdown>
-          {`~~~plaintext
+        <ReactMarkdown rehypePlugins={[highlight]}>
+          {`~~~sh
 curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token' \\
   --header 'Accept: application/json' \\
   --header 'Content-Type: application/x-www-form-urlencoded' \\
@@ -162,7 +162,7 @@ curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token'
                 <p>
                   With the base64 encoded payload similar to this:
                   <CodeWrapper>
-                    <ReactMarkdown>
+                    <ReactMarkdown rehypePlugins={[highlight]}>
                       {`~~~plaintext
 base64url(
   {
@@ -190,9 +190,9 @@ mV4cCI6MTYyOTMxOTU0OH0
                 <p>
                   View a user's VA Health records and patient information, see specific read only scopes below.
                   <ul>
-                    {scopes.map((scope, index) =>
+                    {scopes.map((scope) =>
                      (
-                       <li>{scope}</li>
+                       <li key={scope}>{scope}</li>
                      )
                      )}
                   </ul>

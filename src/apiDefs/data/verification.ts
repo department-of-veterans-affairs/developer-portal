@@ -56,9 +56,6 @@ const verificationApis: APIDescription[] = [
     lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Veteran Verification API',
     oAuth: true,
-    oAuthTypes: [
-      'AuthorizationCodeGrant',
-    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/veteran-verification/v1',
       scopes: [
@@ -70,6 +67,9 @@ const verificationApis: APIDescription[] = [
         'veteran_status.read',
       ],
     },
+    oAuthTypes: [
+      'AuthorizationCodeGrant',
+    ],
     openData: false,
     releaseNotes: VeteranVerificationReleaseNotes,
     urlFragment: 'veteran_verification',

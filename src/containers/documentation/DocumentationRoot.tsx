@@ -57,7 +57,7 @@ const ExploreSideNav = (): JSX.Element => {
         <SideNavEntry
           exact
           to="/explore/authorization/docs/acg"
-          name="Authorization Code Grant"
+          name="Authorization Code Flow"
           subNavLevel={1}
         />
         <SideNavEntry

@@ -43,10 +43,6 @@ const healthApis: APIDescription[] = [
     lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'Clinical Health API (FHIR)',
     oAuth: true,
-    oAuthTypes: [
-      'AuthorizationCodeGrant',
-      'ClientCredentialsGrant',
-    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/clinical-health/v1',
       scopes: [
@@ -60,6 +56,10 @@ const healthApis: APIDescription[] = [
         'patient/Practitioner.read',
       ],
     },
+    oAuthTypes: [
+      'AuthorizationCodeGrant',
+      'ClientCredentialsGrant',
+    ],
     openData: false,
     releaseNotes: ClinicalHealthReleaseNotes,
     urlFragment: 'clinical_health',
@@ -79,9 +79,6 @@ const healthApis: APIDescription[] = [
     lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Community Care Eligibility API',
     oAuth: true,
-    oAuthTypes: [
-      'AuthorizationCodeGrant',
-    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/community-care/v1',
       scopes: [
@@ -92,6 +89,9 @@ const healthApis: APIDescription[] = [
         'patient/CommunityCareEligibility.read',
       ],
     },
+    oAuthTypes: [
+      'AuthorizationCodeGrant',
+    ],
     openData: false,
     releaseNotes: CommunityCareReleaseNotes,
     urlFragment: 'community_care',
@@ -152,10 +152,6 @@ const healthApis: APIDescription[] = [
     multiOpenAPIIntro: FHIRMultiOpenAPIIntro,
     name: 'Veterans Health API (FHIR)',
     oAuth: true,
-    oAuthTypes: [
-      'AuthorizationCodeGrant',
-      'ClientCredentialsGrant',
-    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/health/v1',
       scopes: [
@@ -182,6 +178,10 @@ const healthApis: APIDescription[] = [
         'patient/Procedure.read',
       ],
     },
+    oAuthTypes: [
+      'AuthorizationCodeGrant',
+      'ClientCredentialsGrant',
+    ],
     openData: false,
     releaseNotes: FhirApiReleaseNotes,
     urlFragment: 'fhir',

@@ -23,13 +23,13 @@ const benefitsApis: APIDescription[] = [
     lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Benefits Claims API',
     oAuth: true,
-    oAuthTypes: [
-      'AuthorizationCodeGrant',
-    ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/claims/v1',
       scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
     },
+    oAuthTypes: [
+      'AuthorizationCodeGrant',
+    ],
     openData: false,
     releaseNotes: ClaimsReleaseNotes,
     urlFragment: 'claims',
