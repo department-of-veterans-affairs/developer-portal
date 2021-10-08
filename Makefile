@@ -42,7 +42,7 @@ security:
 		--user ${UNAME}:${GNAME} \
 		--volume "/application/node_modules" \
 		--volume "${PWD}:/application" \
-		${IMAGE_NAME} npm audit --audit-level ${AUDIT_LEVEL}
+		${IMAGE_NAME} npm audit --production --audit-level ${AUDIT_LEVEL}
 
 
 ## unit:		runs unit test script 
