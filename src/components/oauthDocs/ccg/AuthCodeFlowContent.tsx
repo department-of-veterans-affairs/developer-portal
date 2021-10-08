@@ -173,7 +173,10 @@ base64url(
     "iat": 1629319488,
     "exp": 1629319548
   }
-) => eyJhdWQiOiJUQkQiLCJpc3MiOiJUQkQiLCJzdWIiOiJUQkQiLCJqdGkiOiIyMGYyZTk1MC0wMDY1LTExZWMtYTg1NC0zZGVmOWZmYWYxY2IiLCJpYXQiOjE2MjkzMTk0ODgsImV4cCI6MTYyOTMxOTU0OH0
+) => 
+eyJhdWQiOiJUQkQiLCJpc3MiOiJUQkQiLCJzdWIiOiJUQkQiLCJqdGkiOiIyMGYyZTk1
+MC0wMDY1LTExZWMtYTg1NC0zZGVmOWZmYWYxY2IiLCJpYXQiOjE2MjkzMTk0ODgsI
+mV4cCI6MTYyOTMxOTU0OH0
 `}
                     </ReactMarkdown>
                   </CodeWrapper>
@@ -201,12 +204,12 @@ base64url(
               <td>False (but recommended)</td>
               <td>
                 <p>
-                  Base64-encoded JSON object, the value of which is the patient's ICN. The format of the object will be: 
-                  <code>{"{ \"patient\": \"1000720100V271387\"}"}</code>
+                  Base64-encoded JSON object, the value of which is the patient's ICN. The format of the object will
+                  be: <code>{"{ \"patient\": \"1000720100V271387\"}"}</code>
                 </p>
                 <p>
-                  When encoded using base64, the object will look like this:
-                  <code>LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo==</code>
+                  When encoded using base64, the object will look like
+                  this: <code>LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo==</code>
                 </p>
               </td>
             </tr>
