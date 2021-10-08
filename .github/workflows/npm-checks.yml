@@ -93,7 +93,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run test
-        run: npm audit --audit-level high
+        run: npm audit --production --audit-level high
 
   lint:
     needs: [build]
