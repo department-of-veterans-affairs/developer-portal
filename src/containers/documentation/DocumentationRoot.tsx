@@ -50,19 +50,19 @@ const ExploreSideNav = (): JSX.Element => {
       <SideNavEntry
         key="authorization"
         to="/explore/authorization"
-        id={`side-nav-category-link-authorization`}
+        id="side-nav-category-link-authorization"
         name="Authorization"
         forceAriaCurrent
       >
         <SideNavEntry
           exact
-          to={`/explore/authorization/docs/acg`}
+          to="/explore/authorization/docs/acg"
           name="Authorization Code Grant"
           subNavLevel={1}
         />
         <SideNavEntry
           exact
-          to={`/explore/authorization/docs/ccg`}
+          to="/explore/authorization/docs/ccg"
           name="Client Credentials Grant"
           subNavLevel={1}
         />

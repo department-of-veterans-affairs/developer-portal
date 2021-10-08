@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
 import {
   PageHeader,
-  APISelector
+  APISelector,
 } from '../../../components';
 import {
   resetOAuthApiSelection,
@@ -71,9 +71,9 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
     (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
   );
 
-  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) && 
-                                                                     item.oAuthTypes && 
-                                                                     item.oAuthTypes.includes("ClientCredentialsGrant"));
+  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) &&
+                                                                     item.oAuthTypes &&
+                                                                     item.oAuthTypes.includes('ClientCredentialsGrant'));
 
   React.useEffect(() => {
     if (initializing.current) {
@@ -103,7 +103,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
       </Helmet>
       <PageHeader halo="Authorization" header="Client Credentials Grant" />
       <p>
-        The Lighthouse OAuth 2.0 Client Credentials Grant (CCG) works by using your RSA generated key pair in JSON Web Key (JWK) format, as described in the OpenID spec. 
+        The Lighthouse OAuth 2.0 Client Credentials Grant (CCG) works by using your RSA generated key pair in JSON Web Key (JWK) format, as described in the OpenID spec.
       </p>
       <APISelector options={options} selectedOption={selectedOAuthApi} />
       <GettingStarted />

@@ -45,7 +45,7 @@ const healthApis: APIDescription[] = [
     oAuth: true,
     oAuthTypes: [
       'AuthorizationCodeGrant',
-      'ClientCredentialsGrant'
+      'ClientCredentialsGrant',
     ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/clinical-health/v1',
@@ -80,7 +80,7 @@ const healthApis: APIDescription[] = [
     name: 'Community Care Eligibility API',
     oAuth: true,
     oAuthTypes: [
-      'AuthorizationCodeGrant'
+      'AuthorizationCodeGrant',
     ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/community-care/v1',
@@ -154,7 +154,7 @@ const healthApis: APIDescription[] = [
     oAuth: true,
     oAuthTypes: [
       'AuthorizationCodeGrant',
-      'ClientCredentialsGrant'
+      'ClientCredentialsGrant',
     ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/health/v1',

@@ -74,9 +74,9 @@ const AuthorizationCodeGrantDocs = (): JSX.Element => {
     (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
   );
 
-  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)  && 
-                                                                     item.oAuthTypes && 
-                                                                     item.oAuthTypes.includes("AuthorizationCodeGrant"));
+  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)  &&
+                                                                     item.oAuthTypes &&
+                                                                     item.oAuthTypes.includes('AuthorizationCodeGrant'));
 
   React.useEffect(() => {
     if (initializing.current) {

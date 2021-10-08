@@ -1,20 +1,18 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { SectionHeaderWrapper } from '../../index';
-import { CodeWrapper } from '../../index';
 import ReactMarkdown from 'react-markdown';
-
+import { SectionHeaderWrapper, CodeWrapper } from '../../index';
 
 const GettingStarted = (): JSX.Element => (
   <>
     <SectionHeaderWrapper heading="Getting Started" id="getting-started" />
     <p>
-      After you <Link to="/apply">request sandbox access</Link>, you will need to generate your RSA key pair and convert 
-      the public key into JWK format. What you generate will look similar to this: 
+      After you <Link to="/apply">request sandbox access</Link>, you will need to generate your RSA key pair and convert
+      the public key into JWK format. What you generate will look similar to this:
     </p>
     <CodeWrapper>
       <ReactMarkdown>
-          {`~~~json
+        {`~~~json
 {
   "kty": "RSA",
   "n": "mYi1wUpwkJ1QB8...",
@@ -23,10 +21,10 @@ const GettingStarted = (): JSX.Element => (
   "use": "sig"
 }
 `         }
-        </ReactMarkdown>
+      </ReactMarkdown>
     </CodeWrapper>
     <p>
-      Then, send this key to our support team at <a href="mailto:api.va.gov">api@va.gov</a>, 
+      Then, send this key to our support team at <a href="mailto:api.va.gov">api@va.gov</a>,
       and we will send you a client ID.
     </p>
   </>

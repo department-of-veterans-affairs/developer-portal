@@ -24,7 +24,7 @@ const benefitsApis: APIDescription[] = [
     name: 'Benefits Claims API',
     oAuth: true,
     oAuthTypes: [
-      'AuthorizationCodeGrant'
+      'AuthorizationCodeGrant',
     ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/claims/v1',

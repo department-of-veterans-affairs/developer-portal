@@ -57,7 +57,7 @@ const verificationApis: APIDescription[] = [
     name: 'Veteran Verification API',
     oAuth: true,
     oAuthTypes: [
-      'AuthorizationCodeGrant'
+      'AuthorizationCodeGrant',
     ],
     oAuthInfo: {
       baseAuthPath: '/oauth2/veteran-verification/v1',

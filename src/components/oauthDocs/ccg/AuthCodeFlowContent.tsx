@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { SectionHeaderWrapper } from '../../index';
 import ReactMarkdown from 'react-markdown';
+import { SectionHeaderWrapper, APISelector, CodeWrapper } from '../../index';
 import { lookupApiByFragment } from '../../../apiDefs/query';
-import { APISelector, CodeWrapper } from '../../index';
+
 import { ClientCredentialsFlowContentProps } from '../../../containers/documentation/ClientCredentialsGrant/ClientCredentialsGrantDocs';
 
 const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Element => {
   const apiDef = lookupApiByFragment(props.selectedOption);
-  const scopes = apiDef?.oAuthInfo?.scopes ?? []
+  const scopes = apiDef?.oAuthInfo?.scopes ?? [];
   const baseAuthPath = apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
 
   return (
@@ -16,7 +16,7 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
       <p>
         To get authorized, you’ll need to <a href="https://developer.okta.com/docs/reference/api/oidc/#token-claims-for-client-authentication-with-client-secret-or-private-key-jwt">
           generate a JSON web token
-        </a> (JWT) and sign it using a private key. You’ll then use the signed JWT as a client assertion to receive an access token. 
+        </a> (JWT) and sign it using a private key. You’ll then use the signed JWT as a client assertion to receive an access token.
       </p>
       <h3 id="generating-signing-jwt" tabIndex={-1}>
         Generating and signing the JWT
@@ -32,16 +32,16 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
         </ul>
       </p>
       <p>
-        <strong>NOTE:</strong> The <code>aud</code> will not look like the <code>aud</code> for the SMART-on-FHIR token service. 
-        This different formatting is necessary because we apply SMART-on-FHIR on top of a commercial authorization provider. 
+        <strong>NOTE:</strong> The <code>aud</code> will not look like the <code>aud</code> for the SMART-on-FHIR token service.
+        This different formatting is necessary because we apply SMART-on-FHIR on top of a commercial authorization provider.
         You can programmatically pull the <code>issuer</code> from the metadata
-        at <a href={"https://sandbox-api.va.gov" + baseAuthPath + "/.well-known/openid-configuration"}>{"https://sandbox-api.va.gov" + baseAuthPath + "/.well-known/openid-configuration"}</a> and append <code>/v1/token</code> to avoid hardcoding this value and needing to change it if/when this is changed in the future.
+        at <a href={`https://sandbox-api.va.gov${baseAuthPath}/.well-known/openid-configuration`}>{`https://sandbox-api.va.gov${baseAuthPath}/.well-known/openid-configuration`}</a> and append <code>/v1/token</code> to avoid hardcoding this value and needing to change it if/when this is changed in the future.
       </p>
       <p>
         Sign your JWT using your RSA-generated private key, which you will use as a client assertion. An example for what the structure will look like is:
         <CodeWrapper>
           <ReactMarkdown>
-              {`~~~json
+            {`~~~json
 {
   "aud": "TBD",
   "iss": "TBD",
@@ -50,11 +50,11 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
   "exp": 1604430081,
   "jti": "23f8f614-72c3-4267-b0da-b8b067662c74"
 }`             }
-            </ReactMarkdown>
+          </ReactMarkdown>
         </CodeWrapper>
       </p>
       <p>
-        The claims in your client assertion are described in this table. 
+        The claims in your client assertion are described in this table.
         <table>
           <thead>
             <tr>
@@ -104,14 +104,14 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
         Use your client assertion to retrieve an access token. Be sure to include the scopes for the API
       </p>
       <p>
-        Lighthouse recommends also providing launch context requirements using the launch parameter and launch scope, 
-        if applicable. These limit the scope of an access token by indicating the token is for a specific patient or 
-        encounter. If used, the launch parameter must be a base64 encoded JSON object, such as: <code>{"base64({\"patient\":\"1000720100V271387\"}) => LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo=="}</code>
+        Lighthouse recommends also providing launch context requirements using the launch parameter and launch scope,
+        if applicable. These limit the scope of an access token by indicating the token is for a specific patient or
+        encounter. If used, the launch parameter must be a base64 encoded JSON object, such as: <code>{'base64({"patient":"1000720100V271387"}) => LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo=='}</code>
       </p>
       <p>
         Select your API from the dropdown to see the right auth server in the example.
       </p>
-      {<APISelector options={props.options} selectedOption={props.selectedOption} />}
+      <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper>
         <ReactMarkdown>
           {`~~~plaintext
@@ -153,11 +153,11 @@ curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token'
                 <p>
                   Base64 encoded, signed JWT in this format:
                   <br />
-                  {"<header>"}
+                  {'<header>'}
                   <br />
-                  {"<payload>"}
+                  {'<payload>'}
                   <br />
-                  {"<signature>"}
+                  {'<signature>'}
                 </p>
                 <p>
                   With the base64 encoded payload similar to this:
@@ -190,9 +190,9 @@ mV4cCI6MTYyOTMxOTU0OH0
                 <p>
                   View a user's VA Health records and patient information, see specific read only scopes below.
                   <ul>
-                    {scopes.map( (scope, index) =>
+                    {scopes.map((scope, index) =>
                      (
-                         <li>{scope}</li>
+                       <li>{scope}</li>
                      )
                      )}
                   </ul>
@@ -205,7 +205,7 @@ mV4cCI6MTYyOTMxOTU0OH0
               <td>
                 <p>
                   Base64-encoded JSON object, the value of which is the patient's ICN. The format of the object will
-                  be: <code>{"{ \"patient\": \"1000720100V271387\"}"}</code>
+                  be: <code>{'{ "patient": "1000720100V271387"}'}</code>
                 </p>
                 <p>
                   When encoded using base64, the object will look like
@@ -217,8 +217,8 @@ mV4cCI6MTYyOTMxOTU0OH0
         </table>
       </p>
       <p>
-        POST this assertion to the /token service to receive an access token in response. 
-Lighthouse will respond with your access token, which looks like what is shown below. 
+        POST this assertion to the /token service to receive an access token in response.
+        Lighthouse will respond with your access token, which looks like what is shown below.
       </p>
       <CodeWrapper>
         <ReactMarkdown>
@@ -240,8 +240,8 @@ scope=TBD
         </ReactMarkdown>
       </CodeWrapper>
       <p>
-        Use the returned access_token to authorize requests to our platform by including it in the header of HTTP 
-        requests as Authorization: Bearer {"{access_token}"}. Your access token will remain valid for 5 minutes. 
+        Use the returned access_token to authorize requests to our platform by including it in the header of HTTP
+        requests as Authorization: Bearer {'{access_token}'}. Your access token will remain valid for 5 minutes.
         If your access token expires, you will need to request a new one.
       </p>
     </div>
