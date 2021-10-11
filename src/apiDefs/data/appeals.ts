@@ -28,8 +28,8 @@ const appealsApis: APIDescription[] = [
       'Allows submission, management, and retrieval of decision review requests and details such as statuses in accordance with the AMA.',
     docSources: [
       {
-        metadataUrl: `${OPEN_API_SPEC_HOST}/services/appeals/decision_reviews/metadata`,
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/appeals/docs/v1/decision_reviews`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/appeals-decision-reviews/metadata.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/appeals-decision-reviews/v2/openapi.json`,
       },
     ],
     enabledByDefault: true,
