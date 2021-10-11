@@ -16,7 +16,7 @@ const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
       Select your API from the drop-downs to populate the examples with your API-specific URLs,
       parameters, and scopes.
     </p>
-    <APISelector options={props.options} selectedOption={props.selectedOption} />
+    <APISelector options={props.options} selectedOption={props.selectedOption} withButton={true} />
     <h2 tabIndex={-1} id="on-this-page">
       On this Page:
     </h2>
