@@ -21,7 +21,7 @@ const AuthorizationDocs = (): JSX.Element => (
           What you use depends on your application type and API. <Link to="/explore">Learn more about our APIs.</Link>
         </p>
         <p>
-          <Link to="/go-live">Read the consumer onboarding guide for getting production access.</Link>
+          <Link to="/onboarding">Read the consumer onboarding guide for getting production access.</Link>
         </p>
       </div>
       <CardLink name="Authorization Code Flow" url="/explore/authorization/docs/acg" callToAction="View the Authorization Code Flow Docs">

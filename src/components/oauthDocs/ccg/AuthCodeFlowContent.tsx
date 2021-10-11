@@ -163,7 +163,7 @@ curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token'
                   With the base64 encoded payload similar to this:
                   <CodeWrapper>
                     <ReactMarkdown rehypePlugins={[highlight]}>
-                      {`~~~plaintext
+                      {`~~~json
 base64url(
   {
     "aud": "TBD",
@@ -221,8 +221,8 @@ mV4cCI6MTYyOTMxOTU0OH0
         Lighthouse will respond with your access token, which looks like what is shown below.
       </p>
       <CodeWrapper>
-        <ReactMarkdown>
-          {`~~~plaintext
+        <ReactMarkdown rehypePlugins={[highlight]}>
+          {`~~~bash
 Host: api.va.gov
 Content-Type: application/x-www-form-urlencoded
 grant_type=client_credentials&
