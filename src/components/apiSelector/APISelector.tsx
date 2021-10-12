@@ -45,10 +45,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             )}
           >
             {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-            <select
-              aria-label={selectLabel}
-              value={!!selectedOptionOverride ? selectedOptionOverride : selectedOption }
-              onChange={onSelectionChange}
+            <div
               className={classNames(
                 'vads-u-display--inline-block',
                 'vads-u-flex--4',
@@ -56,12 +53,18 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
                 'va-api-u-min-width--200',
               )}
             >
-              {props.options.map(item => (
-                <option value={item.urlFragment} key={item.urlFragment}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
+              <select
+                aria-label={selectLabel}
+                value={!!selectedOptionOverride ? selectedOptionOverride : selectedOption }
+                onChange={onSelectionChange}
+              >
+                {props.options.map(item => (
+                  <option value={item.urlFragment} key={item.urlFragment}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
             <button
               onClick={onButtonClick}
               disabled={!selectedOptionOverride}
