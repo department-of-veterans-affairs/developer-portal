@@ -55,7 +55,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             >
               <select
                 aria-label={selectLabel}
-                value={!!selectedOptionOverride ? selectedOptionOverride : selectedOption}
+                value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
                 onChange={onSelectionChange}
               >
                 {props.options.map(item => (

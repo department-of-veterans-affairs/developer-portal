@@ -14,9 +14,8 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
     <div>
       <SectionHeaderWrapper heading="Requesting a Token with CCG" id="requesting-a-token" />
       <p>
-        To get authorized, you’ll need to <a href="https://developer.okta.com/docs/reference/api/oidc/#token-claims-for-client-authentication-with-client-secret-or-private-key-jwt">
-          generate a JSON web token
-        </a> (JWT) and sign it using a private key. You’ll then use the signed JWT as a client assertion to receive an access token.
+        To get authorized, you’ll need
+        to <a href="https://developer.okta.com/docs/reference/api/oidc/#token-claims-for-client-authentication-with-client-secret-or-private-key-jwt">generate a JSON web token</a> (JWT) and sign it using a private key. You’ll then use the signed JWT as a client assertion to receive an access token.
       </p>
       <h3 id="generating-signing-jwt" tabIndex={-1}>
         Generating and signing the JWT
@@ -92,7 +91,7 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
             <tr>
               <td><code>jti</code></td>
               <td>False</td>
-              <td><strong>String.</strong> The unique token identifier. If you specify this parameter, the token can only be used once and, as a result, subsequent token requests won't succeed.</td>
+              <td><strong>String.</strong> The unique token identifier. If you specify this parameter, the token can only be used once and, as a result, subsequent token requests won&apos;t succeed.</td>
             </tr>
           </tbody>
         </table>
@@ -188,7 +187,7 @@ mV4cCI6MTYyOTMxOTU0OH0
               <td>True</td>
               <td>
                 <p>
-                  View a user's VA Health records and patient information, see specific read only scopes below.
+                  View a user&apos;s VA Health records and patient information, see specific read only scopes below.
                   <ul>
                     {scopes.map(scope =>
                      (
@@ -204,7 +203,7 @@ mV4cCI6MTYyOTMxOTU0OH0
               <td>False (but recommended)</td>
               <td>
                 <p>
-                  Base64-encoded JSON object, the value of which is the patient's ICN. The format of the object will
+                  Base64-encoded JSON object, the value of which is the patient&apos;s ICN. The format of the object will
                   be: <code>{'{ "patient": "1000720100V271387"}'}</code>
                 </p>
                 <p>
