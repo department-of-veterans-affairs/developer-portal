@@ -105,7 +105,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
       <p>
         The Lighthouse OAuth 2.0 Client Credentials Grant (CCG) works by using your RSA generated key pair in JSON Web Key (JWK) format, as described in the OpenID spec.
       </p>
-      <APISelector options={options} selectedOption={selectedOAuthApi} withButton={true} />
+      <APISelector options={options} selectedOption={selectedOAuthApi} withButton />
       <GettingStarted />
       <AuthCodeFlowContent options={options} selectedOption={selectedOAuthApi} />
       <TestUsers />

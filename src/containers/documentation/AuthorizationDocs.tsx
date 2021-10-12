@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
+import { Link } from 'react-router-dom';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
-import { Link } from 'react-router-dom';
 
 // import CategoryPage from './CategoryPage'
 
@@ -35,6 +35,5 @@ const AuthorizationDocs = (): JSX.Element => (
   );
 
 export { AuthorizationDocs };
-
 
 // Grants an access token on behalf of a user.

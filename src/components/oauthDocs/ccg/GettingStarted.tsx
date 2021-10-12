@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import { SectionHeaderWrapper, CodeWrapper } from '../../index';
 import highlight from 'rehype-highlight';
+import { SectionHeaderWrapper, CodeWrapper } from '../../index';
 
 const GettingStarted = (): JSX.Element => (
   <>

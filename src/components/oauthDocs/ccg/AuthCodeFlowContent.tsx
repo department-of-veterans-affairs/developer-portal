@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
+import highlight from 'rehype-highlight';
 import { SectionHeaderWrapper, APISelector, CodeWrapper } from '../../index';
 import { lookupApiByFragment } from '../../../apiDefs/query';
-import highlight from 'rehype-highlight';
 import { ClientCredentialsFlowContentProps } from '../../../containers/documentation/ClientCredentialsGrant/ClientCredentialsGrantDocs';
 
 const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Element => {
@@ -190,7 +190,7 @@ mV4cCI6MTYyOTMxOTU0OH0
                 <p>
                   View a user's VA Health records and patient information, see specific read only scopes below.
                   <ul>
-                    {scopes.map((scope) =>
+                    {scopes.map(scope =>
                      (
                        <li key={scope}>{scope}</li>
                      )
