@@ -20,6 +20,8 @@ export const testPaths = [
   '/terms-of-service',
   '/explore',
   '/explore/authorization',
+  '/explore/authorization/docs/authorization-code',
+  '/explore/authorization/docs/client-credentials',
   '/explore/health',
   '/explore/benefits',
   '/explore/health/docs/quickstart',
