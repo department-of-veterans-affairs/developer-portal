@@ -73,6 +73,9 @@ const claims: APIDescription = {
     baseAuthPath: '/oauth2/claims/v1',
     scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
   },
+  oAuthTypes: [
+    'AuthorizationCodeGrant',
+  ],
   openData: false,
   releaseNotes: ClaimsReleaseNotes,
   urlFragment: 'claims',
@@ -128,6 +131,9 @@ const verification: APIDescription = {
       'veteran_status.read',
     ],
   },
+  oAuthTypes: [
+    'AuthorizationCodeGrant',
+  ],
   openData: false,
   releaseNotes: VeteranVerificationReleaseNotes,
   urlFragment: 'veteran_verification',

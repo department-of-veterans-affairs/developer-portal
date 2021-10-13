@@ -14,7 +14,9 @@ describe('Auth Flow Content', () => {
   beforeEach(() => {
     const selectedOption = 'veteran_verification';
     const apiDef = lookupApiByFragment(selectedOption);
-    const defs = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
+    const defs = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)  &&
+                                                                     item.oAuthTypes &&
+                                                                     item.oAuthTypes.includes('AuthorizationCodeGrant'));
 
     render(
       <Provider store={store}>
@@ -36,7 +38,7 @@ describe('Auth Flow Content', () => {
     );
     expect(codeWrapperArray.length).toBeGreaterThan(0);
   });
-  it('Corrent number of code wrappers', () => {
+  it('Correct number of code wrappers', () => {
     const codeWrapperArray = document.getElementsByClassName('code-wrapper');
     expect(codeWrapperArray.length).toBeGreaterThanOrEqual(11);
   });
