@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../../flags';
 import store from '../../../store';
-import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrantDocs';
+import { ClientCredentialsGrantDocs } from './ClientCredentialsGrantDocs';
 
 describe('Authorization Docs', () => {
   beforeEach(() => {
@@ -12,7 +12,7 @@ describe('Authorization Docs', () => {
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter>
-            <AuthorizationCodeGrantDocs />
+            <ClientCredentialsGrantDocs />
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,
@@ -20,14 +20,13 @@ describe('Authorization Docs', () => {
   });
 
   it('renders successfully', () => {
-    const authHeading = screen.getByRole('heading', { name: 'Authorization Code Flow' });
+    const authHeading = screen.getByRole('heading', { name: 'Client Credentials Grant' });
     expect(authHeading).toBeInTheDocument();
   });
 
-  it('Building OpenId header', () => {
-    const heading = screen.getAllByText('Building OpenID Connect Applications');
-    expect(heading).toHaveLength(2);
+  it('Requesting a Token header', () => {
+    const heading = screen.getAllByText('Requesting a Token with CCG');
+    expect(heading).toHaveLength(1);
     expect(heading[0]).toBeInTheDocument();
-    expect(heading[1]).toBeInTheDocument();
   });
 });

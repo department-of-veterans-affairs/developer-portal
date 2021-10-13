@@ -2,7 +2,7 @@ import { getDocument, queries } from 'pptr-testing-library';
 import { ElementHandle } from 'puppeteer';
 import { puppeteerHost } from '../../../e2eHelpers';
 
-describe('AuthorizationDocs', () => {
+describe('AuthorizationCodeFlowDocs', () => {
   beforeAll(async () => {
     await page.goto(`${puppeteerHost}/explore/authorization`, { waitUntil: 'networkidle0' });
   });
