@@ -6,10 +6,9 @@ import { Link } from 'react-router-dom';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 
 import { Form, Formik } from 'formik';
-import { useFlag } from '../../../../flags';
 import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, TermsOfServiceCheckbox } from '../../../../components';
-import { APPLY_URL, FLAG_CONSUMER_DOCS } from '../../../../types/constants';
+import { APPLY_URL } from '../../../../types/constants';
 import {
   ApplySuccessResult,
   DevApplicationRequest,
@@ -17,6 +16,7 @@ import {
   InternalApiInfo,
 } from '../../../../types';
 import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
+import { CONSUMER_PROD_PATH } from '../../../../types/constants/paths';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
@@ -64,7 +64,6 @@ interface SandboxAccessFormError extends HttpErrorResponse {
 const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
   const [submissionHasError, setSubmissionHasError] = useState(false);
   const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
-  const consumerDocsEnabled = useFlag([FLAG_CONSUMER_DOCS]);
 
   const handleSubmit = async (values: Values): Promise<void> => {
     setSubmissionHasError(false);
@@ -119,23 +118,21 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
 
   return (
     <div className="vads-l-row">
-      {!consumerDocsEnabled && (
-        <p
-          className={classNames(
-            'usa-font-lead',
-            'vads-u-font-family--sans',
-            'vads-u-margin-bottom--2',
-            'vads-u-margin-top--0',
-          )}
-        >
-          This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
-          credentials you will receive are for sandbox development only. When your app is ready to
-          go live, you may <Link to="/go-live">request production access</Link>. Please submit the
-          form below and you&apos;ll receive an email with your API key(s) and/or OAuth credentials,
-          as well as further instructions. Thank you for being a part of our platform.
-        </p>
-      )}
-      <div className={classNames({ 'vads-u-padding-x--2p5': !consumerDocsEnabled })}>
+      <p
+        className={classNames(
+          'usa-font-lead',
+          'vads-u-font-family--sans',
+          'vads-u-margin-bottom--2',
+          'vads-u-margin-top--0',
+        )}
+      >
+        This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
+        credentials you will receive are for sandbox development only. When your app is ready to go
+        live, you may <Link to={CONSUMER_PROD_PATH}>request production access</Link>. Please submit
+        the form below and you&apos;ll receive an email with your API key(s) and/or OAuth
+        credentials, as well as further instructions. Thank you for being a part of our platform.
+      </p>
+      <div className="vads-u-padding-x--2p5">
         <Formik
           initialValues={initialValues}
           onSubmit={handleSubmit}

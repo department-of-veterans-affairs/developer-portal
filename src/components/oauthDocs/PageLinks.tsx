@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { AuthCodeFlowContentProps } from '../../containers/documentation/AuthorizationDocs';
+import { CONSUMER_PROD_PATH } from '../../types/constants/paths';
 import { APISelector } from '../apiSelector/APISelector';
 
 const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
@@ -98,7 +99,7 @@ const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
       </li>
       <li>
         When your application is ready, you may{' '}
-        <Link to="/go-live">apply for production access</Link>.
+        <Link to={CONSUMER_PROD_PATH}>apply for production access</Link>.
       </li>
     </ul>
   </>

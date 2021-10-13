@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../flags';
+import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 import { Header } from './Header';
 
 describe('Header', () => {
@@ -38,7 +39,7 @@ describe('Header', () => {
     }) as HTMLAnchorElement[];
 
     expect(requestAPIKeyLinks.length).toBe(2);
-    expect(requestAPIKeyLinks[0].getAttribute('href')).toBe('/apply');
+    expect(requestAPIKeyLinks[0].getAttribute('href')).toBe(CONSUMER_SANDBOX_PATH);
   });
 
   describe('when the menu button is clicked', () => {

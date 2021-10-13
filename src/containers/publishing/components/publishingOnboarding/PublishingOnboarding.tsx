@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../../../components';
+import { CONSUMER_PROD_PATH } from '../../../../types/constants/paths';
 
 export const PublishingOnboarding: FC = () => (
   <>
@@ -10,31 +11,40 @@ export const PublishingOnboarding: FC = () => (
     </Helmet>
     <PageHeader header="How publishing works" />
     <p>
-      The process of publishing your API with Lighthouse can seem daunting, but don’t worry.
-      Our process is designed to ensure your questions are answered and we are both prepared for
-      your API’s go-live day and beyond. Here’s what you can expect during the publishing process.
+      The process of publishing your API with Lighthouse can seem daunting, but don’t worry. Our
+      process is designed to ensure your questions are answered and we are both prepared for your
+      API’s go-live day and beyond. Here’s what you can expect during the publishing process.
       Remember, we’re here for you each step of the way.
     </p>
     <ol className="process">
       <li className="process-step list-one">
         <strong>Contact us</strong>
         <p>
-          Get the process started by filling out the Contact Us form. You’ll need to gather information
-          about you and your API and send it to us so we know how we can best support you.
+          Get the process started by filling out the Contact Us form. You’ll need to gather
+          information about you and your API and send it to us so we know how we can best support
+          you.
         </p>
       </li>
       <li className="process-step list-two">
         <strong>Kickoff meeting</strong>
-        <p>We’ll answer many of your questions about API publishing with Lighthouse  as part of the kickoff meeting.</p>
+        <p>
+          We’ll answer many of your questions about API publishing with Lighthouse as part of the
+          kickoff meeting.
+        </p>
       </li>
       <li className="process-step list-three">
         <strong>Prepare your API for publication</strong>
-        <p>After kickoff, we will both complete tasks that will get your API ready for publication to our sandbox</p>
+        <p>
+          After kickoff, we will both complete tasks that will get your API ready for publication to
+          our sandbox
+        </p>
         environment and then production.
       </li>
       <li className="process-step list-four">
         <strong>Onboard consumers</strong>
-        <p>Once the hard work is done and your API is published, it’s time to onboard your consumers.</p>
+        <p>
+          Once the hard work is done and your API is published, it’s time to onboard your consumers.
+        </p>
       </li>
     </ol>
     <h2>Contact us</h2>
@@ -48,12 +58,14 @@ export const PublishingOnboarding: FC = () => (
       <li>OpenAPI specification and public-facing description, if you have it</li>
       <li>Information on public or internal VA network accessibility</li>
     </ul>
-    <Link to="/support/contact-us" className="usa-button usa-button-secondary">Contact Us</Link>
+    <Link to="/support/contact-us" className="usa-button usa-button-secondary">
+      Contact Us
+    </Link>
     <h2>Kickoff meeting</h2>
     <p>
-      At the kickoff meeting, we’ll introduce our teams, ask questions, clarify expectations, and discuss
-      timelines. A successful kickoff meeting ensures we all know what’s needed going forward. Here are some
-      examples of what you can expect to discuss during the kickoff meeting.
+      At the kickoff meeting, we’ll introduce our teams, ask questions, clarify expectations, and
+      discuss timelines. A successful kickoff meeting ensures we all know what’s needed going
+      forward. Here are some examples of what you can expect to discuss during the kickoff meeting.
     </p>
     <table>
       <thead>
@@ -82,7 +94,7 @@ export const PublishingOnboarding: FC = () => (
           <td>
             <ul>
               <li>Technical considerations</li>
-              <li>High-interest topics such as rate limiting, publishing  timeline, and more</li>
+              <li>High-interest topics such as rate limiting, publishing timeline, and more</li>
               <li>Coordination and communications</li>
             </ul>
           </td>
@@ -95,9 +107,9 @@ export const PublishingOnboarding: FC = () => (
     </p>
     <h2>Prepare your API for publication</h2>
     <p>
-      We’re here to make sure nothing gets overlooked as we publish your API in the sandbox environment
-      and then production. After kickoff, we’ll be with you every step of the way as we both complete tasks
-      to expose your API on Lighthouse. Here’s some of what you can expect.
+      We’re here to make sure nothing gets overlooked as we publish your API in the sandbox
+      environment and then production. After kickoff, we’ll be with you every step of the way as we
+      both complete tasks to expose your API on Lighthouse. Here’s some of what you can expect.
     </p>
     <table>
       <thead>
@@ -125,7 +137,10 @@ export const PublishingOnboarding: FC = () => (
               <li>Get you access to our document repository</li>
               <li>Schedule any needed publishing and maintenance check-ins</li>
               <li>Provide feedback on API documentation and spec</li>
-              <li>Propose route(s) for the API on <Link to="https://api.va.gov">https://api.va.gov</Link></li>
+              <li>
+                Propose route(s) for the API on{' '}
+                <Link to="https://api.va.gov">https://api.va.gov</Link>
+              </li>
               <li>Propose where the API will live in our information architecture</li>
             </ul>
           </td>
@@ -143,10 +158,11 @@ export const PublishingOnboarding: FC = () => (
     </table>
     <h2>Onboard consumers</h2>
     <p>
-      Onboarding existing and new consumers is easy when you have our support. As part of preparing your API
-      for publication, we’ll have a consumer migration plan ready to go. When you reach this phase of your API
-      publishing journey, it’s as simple as identifying your first consumer to onboard and following the plan
-      we’ve created together. Consumers must get production access by following our <Link to="/go-live">path to production guide</Link>.
+      Onboarding existing and new consumers is easy when you have our support. As part of preparing
+      your API for publication, we’ll have a consumer migration plan ready to go. When you reach
+      this phase of your API publishing journey, it’s as simple as identifying your first consumer
+      to onboard and following the plan we’ve created together. Consumers must get production access
+      by following our <Link to={CONSUMER_PROD_PATH}>path to production guide</Link>.
     </p>
   </>
 );

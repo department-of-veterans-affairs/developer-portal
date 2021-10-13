@@ -48,7 +48,7 @@ describe('PageContent', () => {
       name: 'Request Sandbox Access',
     });
 
-    expect(window.scrollTo).toHaveBeenCalledTimes(2);
+    expect(window.scrollTo).toHaveBeenCalledTimes(1);
     expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
   });
 });

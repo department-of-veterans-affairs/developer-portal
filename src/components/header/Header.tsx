@@ -7,6 +7,7 @@ import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
 import { FLAG_PLATFORM_OUTAGE, FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
+import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
 import Search from '../search/Search';
 import TestingNotice from '../TestingNotice';
@@ -82,7 +83,7 @@ const Header = (): JSX.Element => {
           <div className={desktopOnly()}>
             <div className={classNames('vads-u-display--flex', 'vads-u-flex-direction--column')}>
               <div className={defaultFlexContainer(true)}>
-                <NavHashLink to="/apply" className={buttonClassnames}>
+                <NavHashLink to={CONSUMER_SANDBOX_PATH} className={buttonClassnames}>
                   Request an API Key
                 </NavHashLink>
                 <Search />
@@ -113,10 +114,13 @@ const Header = (): JSX.Element => {
             content={
               <section aria-label="Network issue alert">
                 {/* message written for specific issue on 8/25/21, update next time it needs to be used */}
-                There were recent network issues affecting all VA sites and usage of VA Lighthouse APIs in
-                sandbox and production environments from 9:56 am to 10:44 am EDT. Please review the&nbsp;
-                <a href="https://valighthouse.statuspage.io/" target="_blank" rel="noreferrer">Status Page</a>
-                &nbsp;for details and reach out to <Link to="/support/contact-us">Support</Link> if you
+                There were recent network issues affecting all VA sites and usage of VA Lighthouse
+                APIs in sandbox and production environments from 9:56 am to 10:44 am EDT. Please
+                review the{' '}
+                <a href="https://valighthouse.statuspage.io/" target="_blank" rel="noreferrer">
+                  Status Page
+                </a>{' '}
+                for details and reach out to <Link to="/support/contact-us">Support</Link> if you
                 have any questions.
               </section>
             }

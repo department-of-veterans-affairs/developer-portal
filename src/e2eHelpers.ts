@@ -17,9 +17,7 @@ import { mockSwagger as mocks } from './__mocks__/mockSwagger';
 // Paths to test in visual regression and accessibility tests
 export const testPaths = [
   '/',
-  '/apply',
   '/terms-of-service',
-  '/go-live',
   '/explore',
   '/explore/authorization',
   '/explore/health',

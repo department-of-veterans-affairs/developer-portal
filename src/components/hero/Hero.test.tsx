@@ -3,6 +3,7 @@ import 'jest';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import * as logoImage from '../../__mocks__/fakeImage';
+import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 import { Hero } from './Hero';
 
 describe('Hero', () => {
@@ -23,7 +24,7 @@ describe('Hero', () => {
   it('contains a link to apply page', () => {
     const apiLink = screen.getByRole('link', { name: 'Request an API Key' });
     expect(apiLink).toBeInTheDocument();
-    expect(apiLink).toHaveAttribute('href', '/apply');
+    expect(apiLink).toHaveAttribute('href', CONSUMER_SANDBOX_PATH);
   });
 
   it('checks h1 text', () => {
