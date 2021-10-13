@@ -113,7 +113,7 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
       <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper>
         <ReactMarkdown rehypePlugins={[highlight]}>
-          {`~~~sh
+          {`~~~bash
 curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token' \\
   --header 'Accept: application/json' \\
   --header 'Content-Type: application/x-www-form-urlencoded' \\
