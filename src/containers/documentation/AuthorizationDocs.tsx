@@ -1,38 +1,44 @@
 import * as React from 'react';
 import Helmet from 'react-helmet';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 
-// import CategoryPage from './CategoryPage'
+const AuthorizationDocs = (): JSX.Element => {
+  const { search } = useLocation();
+  const api = new URLSearchParams(search).get('api') ?? '';
+  const newAuthDocLOcation = `/explore/authorization/docs/authorization-code?api=${api}`;
 
-const AuthorizationDocs = (): JSX.Element => (
-  <div className="va-api-authorization-docs">
-    <Helmet>
-      <title>Authorization</title>
-    </Helmet>
-    <PageHeader
-      header="Authorization"
-      description="Explore available OAuth 2.0 grant flows"
-    />
-    <div className={defaultFlexContainer()}>
-      <div>
-        <p>
-          What you use depends on your application type and API. <Link to="/explore">Learn more about our APIs.</Link>
-        </p>
-        <p>
-          <Link to="/onboarding">Read the consumer onboarding guide for getting production access.</Link>
-        </p>
+  return (
+    <div className="va-api-authorization-docs">
+      {api && <Redirect to={newAuthDocLOcation} /> }
+      <Helmet>
+        <title>Authorization</title>
+      </Helmet>
+      <PageHeader
+        header="Authorization"
+        description="Explore available OAuth 2.0 grant flows"
+      />
+      <div className={defaultFlexContainer()}>
+        <div>
+          <p>
+            What you use depends on your application type and API. <Link to="/explore">Learn more about our APIs.</Link>
+          </p>
+          <p>
+            <Link to="/onboarding">Read the consumer onboarding guide for getting production access.</Link>
+          </p>
+        </div>
+        <CardLink name="Authorization Code Flow" url="/explore/authorization/docs/authorization-code" callToAction="View the Authorization Code Flow docs">
+          Grants an access token on behalf of a user.
+        </CardLink>
+        <CardLink name="Client Credentials Grant" url="/explore/authorization/docs/client-credentials" callToAction="View the Client Credentials Grant docs">
+          Grants an access token on behalf of a system.
+        </CardLink>
       </div>
-      <CardLink name="Authorization Code Flow" url="/explore/authorization/docs/acg" callToAction="View the Authorization Code Flow Docs">
-        Grants an access token on behalf of a user.
-      </CardLink>
-      <CardLink name="Client Credentials Grant" url="/explore/authorization/docs/ccg" callToAction="View the Client Credentials Grant Docs">
-        Grants an access token on behalf of a user.
-      </CardLink>
     </div>
-  </div>
   );
+};
 
 export { AuthorizationDocs };
 

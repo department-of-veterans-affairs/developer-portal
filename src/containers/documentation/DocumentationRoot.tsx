@@ -56,13 +56,13 @@ const ExploreSideNav = (): JSX.Element => {
       >
         <SideNavEntry
           exact
-          to="/explore/authorization/docs/acg"
+          to="/explore/authorization/docs/authorization-code"
           name="Authorization Code Flow"
           subNavLevel={1}
         />
         <SideNavEntry
           exact
-          to="/explore/authorization/docs/ccg"
+          to="/explore/authorization/docs/client-credentials"
           name="Client Credentials Grant"
           subNavLevel={1}
         />
@@ -122,8 +122,8 @@ const DocumentationRoot = (): JSX.Element => (
           <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
         ))}
         <Route path="/explore/authorization" component={AuthorizationDocs} exact />
-        <Route path="/explore/authorization/docs/acg" component={AuthorizationCodeGrantDocs} exact />
-        <Route path="/explore/authorization/docs/ccg" component={ClientCredentialsGrantDocs} exact />
+        <Route path="/explore/authorization/docs/authorization-code" component={AuthorizationCodeGrantDocs} exact />
+        <Route path="/explore/authorization/docs/client-credentials" component={ClientCredentialsGrantDocs} exact />
         <Route exact path="/explore/" component={DocumentationOverview} />
         <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
         <Route exact path="/explore/:apiCategoryKey/docs/authorization">
