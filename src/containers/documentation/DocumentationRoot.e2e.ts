@@ -43,12 +43,12 @@ describe('auth docs route redirect', () => {
     await page.goto(`${puppeteerHost}/explore/health/docs/authorization`, {
       waitUntil: 'networkidle0',
     });
-    expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization?api=claims`);
+    expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization`);
   });
   it('should redirect to /explore/authorization?api=veteran_verification from /explore/verification/docs/authorization', async () => {
     await page.goto(`${puppeteerHost}/explore/verification/docs/authorization`, {
       waitUntil: 'networkidle0',
     });
-    expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization?api=veteran_verification`);
+    expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization/docs/authorization-code?api=veteran_verification`);
   });
 });
