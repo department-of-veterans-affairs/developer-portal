@@ -4,7 +4,7 @@ import { puppeteerHost } from '../../../e2eHelpers';
 
 describe('AuthorizationCodeFlowDocs', () => {
   beforeAll(async () => {
-    await page.goto(`${puppeteerHost}/explore/authorization`, { waitUntil: 'networkidle0' });
+    await page.goto(`${puppeteerHost}/explore/authorization/docs/authorization-code`, { waitUntil: 'networkidle0' });
   });
 
   /**
