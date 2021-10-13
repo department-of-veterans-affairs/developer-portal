@@ -26,7 +26,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
     }
   };
   const onButtonClick = (): void => {
-    if(selectedOptionOverride) {
+    if (selectedOptionOverride) {
       dispatch(setOAuthApiSelection(selectedOptionOverride));
       setSelectedOptionOverride('');
     }
