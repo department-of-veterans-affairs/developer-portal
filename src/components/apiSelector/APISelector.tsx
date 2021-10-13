@@ -26,8 +26,10 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
     }
   };
   const onButtonClick = (): void => {
-    dispatch(setOAuthApiSelection(selectedOptionOverride));
-    setSelectedOptionOverride('');
+    if(selectedOptionOverride) {
+      dispatch(setOAuthApiSelection(selectedOptionOverride));
+      setSelectedOptionOverride('');
+    }
   };
   const { selectedOption, options } = props;
   const selectLabel = props.selectLabel ?? 'Select an API to update the code snippet';
@@ -67,7 +69,6 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             </div>
             <button
               onClick={onButtonClick}
-              disabled={!selectedOptionOverride}
               className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
               type="button"
             >
