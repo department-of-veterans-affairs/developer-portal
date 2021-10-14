@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 
 import App from './App';

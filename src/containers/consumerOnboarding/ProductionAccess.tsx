@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete, id-length, max-lines */
 import React, { FC, useState } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';

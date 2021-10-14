@@ -1,7 +1,7 @@
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import classNames from 'classnames';
 import * as React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router';
 import {
   PAGE_HEADER_AND_HALO_ID,

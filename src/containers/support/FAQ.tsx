@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { AccordionPanelContent, GroupedAccordions, PageHeader } from '../../components';
 import { CONSUMER_PROD_PATH, CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';

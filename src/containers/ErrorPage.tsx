@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import errorImage400 from '../assets/400.svg';
 import errorImage404 from '../assets/404.svg';
 import './ErrorPage.scss';

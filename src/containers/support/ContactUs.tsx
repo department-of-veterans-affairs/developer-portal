@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
 import { FormType } from '../../types/forms/contactUsForm';
 import { PageHeader } from '../../components';

@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { Redirect, useParams } from 'react-router';
@@ -6,10 +5,6 @@ import { Redirect, useParams } from 'react-router';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { QuickstartWrapper } from '../../components';
 import { APINameParam } from '../../types';
-
-const QuickstartPagePropTypes = {
-  match: PropTypes.object.isRequired,
-};
 
 const QuickstartPage = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
@@ -25,5 +20,4 @@ const QuickstartPage = (): JSX.Element => {
   }
 };
 
-QuickstartPage.propTypes = QuickstartPagePropTypes;
 export default QuickstartPage;
