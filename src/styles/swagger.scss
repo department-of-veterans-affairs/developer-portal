@@ -179,3 +179,7 @@
     line-height: 1.5;
   }
 }
+
+div.model-example ul.tab li.tabitem::after {
+  right: 4px;
+}
