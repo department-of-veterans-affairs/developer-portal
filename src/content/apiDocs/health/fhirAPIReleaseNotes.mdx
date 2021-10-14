@@ -1,3 +1,14 @@
+### September 21, 2021
+We added new elements and values to the R4 `Condition` FHIR mapping. 
+  -  The `clinicalStatus` element now supports the value `inactive`.
+  -  The `verificationStatus` element now returns these additional values:`provisional`, `differential`, `confirmed`, and `refuted`. Previously, this element always returned  `unconfirmed`.
+  -  The `recorder` element is now added.
+
+The R4 `AllergyIntolerance` FHIR mapping now includes both `clincalStatus` and `verificationStatus`.  Previously, only one was populated based on value. 
+
+The `primarySource` for the R4 `Immunization` FHIR mapping now supports Boolean values. Previously, it was always `true`.
+
+---
 ### August 24, 2021
 Added the `code` data to the R4 `AllergyIntolerance` resource to be compliant with [US Core Implementation Guide](http://hl7.org/fhir/us/core/StructureDefinition-us-core-allergyintolerance.html).
 
