@@ -34,7 +34,16 @@ const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper>
-        <ReactMarkdown>
+        <ReactMarkdown
+          components={{
+            // eslint-disable-next-line react/display-name
+            code: ({ className, children, ...codeProps }): JSX.Element =>
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              <code tabIndex={0} className={className} {...codeProps}>
+                {children}
+              </code>,
+          }}
+        >
           {`~~~plaintext
 https://sandbox-api.va.gov${baseAuthPath}/authorization?
   client_id=0oa1c01m77heEXUZt2p7
@@ -186,7 +195,17 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         previous step.
       </p>
       <CodeWrapper>
-        <ReactMarkdown rehypePlugins={[highlight]}>
+        <ReactMarkdown
+          rehypePlugins={[highlight]}
+          components={{
+            // eslint-disable-next-line react/display-name
+            code: ({ className, children, ...codeProps }): JSX.Element =>
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              <code tabIndex={0} className={className} {...codeProps}>
+                {children}
+              </code>,
+          }}
+        >
           {`~~~http
 HTTP/1.1 302 Found
 Location: <yourRedirectURL>?
@@ -207,7 +226,17 @@ Location: <yourRedirectURL>?
       </ul>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper>
-        <ReactMarkdown rehypePlugins={[highlight]}>
+        <ReactMarkdown
+          rehypePlugins={[highlight]}
+          components={{
+            // eslint-disable-next-line react/display-name
+            code: ({ className, children, ...codeProps }): JSX.Element =>
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              <code tabIndex={0} className={className} {...codeProps}>
+                {children}
+              </code>,
+          }}
+        >
           {`~~~http
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
@@ -230,7 +259,17 @@ grant_type=authorization_code
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper>
-        <ReactMarkdown rehypePlugins={[highlight]}>
+        <ReactMarkdown
+          rehypePlugins={[highlight]}
+          components={{
+            // eslint-disable-next-line react/display-name
+            code: ({ className, children, ...codeProps }): JSX.Element =>
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              <code tabIndex={0} className={className} {...codeProps}>
+                {children}
+              </code>,
+          }}
+        >
           {`~~~json
 {
     "access_token": "SlAV32hkKG",
@@ -244,7 +283,17 @@ grant_type=authorization_code
       </CodeWrapper>
       <p>If an error occurs, you will instead receive a 400 response, like this:</p>
       <CodeWrapper>
-        <ReactMarkdown rehypePlugins={[highlight]}>
+        <ReactMarkdown
+          rehypePlugins={[highlight]}
+          components={{
+            // eslint-disable-next-line react/display-name
+            code: ({ className, children, ...codeProps }): JSX.Element =>
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              <code tabIndex={0} className={className} {...codeProps}>
+                {children}
+              </code>,
+          }}
+        >
           {`~~~http
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
@@ -273,7 +322,17 @@ Pragma: no-cache
       </p>
       <APISelector options={props.options} selectedOption={props.selectedOption} />
       <CodeWrapper>
-        <ReactMarkdown rehypePlugins={[highlight]}>
+        <ReactMarkdown
+          rehypePlugins={[highlight]}
+          components={{
+            // eslint-disable-next-line react/display-name
+            code: ({ className, children, ...codeProps }): JSX.Element =>
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              <code tabIndex={0} className={className} {...codeProps}>
+                {children}
+              </code>,
+          }}
+        >
           {`~~~http
 POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
