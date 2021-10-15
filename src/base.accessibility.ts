@@ -21,7 +21,7 @@ describe('Accessibility tests', () => {
      * validating color contrast in the code blocks, causing it to compare the
      * wrong background color.
      *
-     * The releate notes for axe-core 4.1.0 show that this is resolved, but
+     * The release notes for axe-core 4.1.0 show that this is resolved, but
      * jest-axe has its own version declared for axe-core, so we need to wait
      * for a version of jest-axe that has axe-core 4.1.0 as a downstream
      * dependency, before re-enabling the contrast checks on the authorization
@@ -31,7 +31,7 @@ describe('Accessibility tests', () => {
      * a new version of jest-axe has axe-core 4.1.0 as a downstream dependency,
      * and we upgrade to it.
      */
-    if (path === '/explore/authorization') {
+    if (path.startsWith('/explore/authorization')) {
       await page.evaluate(() => {
         window.axe.configure({
           checks: [

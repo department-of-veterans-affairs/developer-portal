@@ -23,6 +23,8 @@ import { RootState } from '../../../types';
 import { usePrevious } from '../../../hooks';
 import { DEFAULT_OAUTH_CCG_API_SELECTION } from '../../../types/constants';
 
+import './ClientCredentialsGrantDocs.scss';
+
 interface ClientCredentialsFlowContentProps {
   options: APIDescription[];
   selectedOption: string;
