@@ -64,48 +64,48 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
       </p>
       <p>
         The claims in your client assertion are described in this table.
-        <table>
-          <thead>
-            <tr>
-              <th>Claim</th>
-              <th>Required</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>aud</code></td>
-              <td>True</td>
-              <td><strong>String.</strong> This is the URL for the API for which you are generating a token.  For the [API NAME], this is: XYZ</td>
-            </tr>
-            <tr>
-              <td><code>iss</code></td>
-              <td>True</td>
-              <td><strong>String.</strong> This is the client ID we sent you when you signed up for sandbox access. </td>
-            </tr>
-            <tr>
-              <td><code>sub</code></td>
-              <td>True</td>
-              <td><strong>String.</strong> This is the client ID we sent you when you signed up for sandbox access. </td>
-            </tr>
-            <tr>
-              <td><code>iat</code></td>
-              <td>False</td>
-              <td><strong>Integer.</strong> This is a timestamp for how many seconds have passed since January 1, 1970 UTC. It must be a time before the request occurs. Example: 1604429781</td>
-            </tr>
-            <tr>
-              <td><code>exp</code></td>
-              <td>True</td>
-              <td><strong>Integer.</strong> This is a timestamp for when the token will expire, given in seconds since January 1, 1970. This claim fails the request if the expiration time is more than 300 seconds (5 minutes) after the iat. Example: 1604430081. </td>
-            </tr>
-            <tr>
-              <td><code>jti</code></td>
-              <td>False</td>
-              <td><strong>String.</strong> The unique token identifier. If you specify this parameter, the token can only be used once and, as a result, subsequent token requests won&apos;t succeed.</td>
-            </tr>
-          </tbody>
-        </table>
       </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Claim</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>aud</code></td>
+            <td>True</td>
+            <td><strong>String.</strong> This is the URL for the API for which you are generating a token.  For the [API NAME], this is: XYZ</td>
+          </tr>
+          <tr>
+            <td><code>iss</code></td>
+            <td>True</td>
+            <td><strong>String.</strong> This is the client ID we sent you when you signed up for sandbox access. </td>
+          </tr>
+          <tr>
+            <td><code>sub</code></td>
+            <td>True</td>
+            <td><strong>String.</strong> This is the client ID we sent you when you signed up for sandbox access. </td>
+          </tr>
+          <tr>
+            <td><code>iat</code></td>
+            <td>False</td>
+            <td><strong>Integer.</strong> This is a timestamp for how many seconds have passed since January 1, 1970 UTC. It must be a time before the request occurs. Example: 1604429781</td>
+          </tr>
+          <tr>
+            <td><code>exp</code></td>
+            <td>True</td>
+            <td><strong>Integer.</strong> This is a timestamp for when the token will expire, given in seconds since January 1, 1970. This claim fails the request if the expiration time is more than 300 seconds (5 minutes) after the iat. Example: 1604430081. </td>
+          </tr>
+          <tr>
+            <td><code>jti</code></td>
+            <td>False</td>
+            <td><strong>String.</strong> The unique token identifier. If you specify this parameter, the token can only be used once and, as a result, subsequent token requests won&apos;t succeed.</td>
+          </tr>
+        </tbody>
+      </table>
       <h3 id="retrieving-access-token" tabIndex={-1}>
         Retrieving an access token
       </h3>
@@ -145,54 +145,53 @@ curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token'
 `}
         </ReactMarkdown>
       </CodeWrapper>
-      <p>
-        <table>
-          <thead>
-            <tr>
-              <th>Field</th>
-              <th>Required</th>
-              <th>Value</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><code>grant_type</code></td>
-              <td>True</td>
-              <td><code>client_credentials</code></td>
-            </tr>
-            <tr>
-              <td><code>client_assertion_type</code></td>
-              <td>True</td>
-              <td><code>urn:ietf:params:oauth:client-assertion-type:jwt-bearer</code></td>
-            </tr>
-            <tr>
-              <td><code>client_assertion</code></td>
-              <td>True</td>
-              <td>
-                <p>
-                  Base64 encoded, signed JWT in this format:
-                  <br />
-                  {'<header>'}
-                  <br />
-                  {'<payload>'}
-                  <br />
-                  {'<signature>'}
-                </p>
-                <p>
-                  With the base64 encoded payload similar to this:
-                  <CodeWrapper>
-                    <ReactMarkdown
-                      rehypePlugins={[highlight]}
-                      components={{
-                        // eslint-disable-next-line react/display-name
-                        code: ({ className, children, ...codeProps }): JSX.Element =>
-                          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-                          <code tabIndex={0} className={className} {...codeProps}>
-                            {children}
-                          </code>,
-                      }}
-                    >
-                      {`~~~json
+      <table>
+        <thead>
+          <tr>
+            <th>Field</th>
+            <th>Required</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>grant_type</code></td>
+            <td>True</td>
+            <td><code>client_credentials</code></td>
+          </tr>
+          <tr>
+            <td><code>client_assertion_type</code></td>
+            <td>True</td>
+            <td><code>urn:ietf:params:oauth:client-assertion-type:jwt-bearer</code></td>
+          </tr>
+          <tr>
+            <td><code>client_assertion</code></td>
+            <td>True</td>
+            <td>
+              <p>
+                Base64 encoded, signed JWT in this format:
+                <br />
+                {'<header>'}
+                <br />
+                {'<payload>'}
+                <br />
+                {'<signature>'}
+              </p>
+              <p>
+                With the base64 encoded payload similar to this:
+                <CodeWrapper>
+                  <ReactMarkdown
+                    rehypePlugins={[highlight]}
+                    components={{
+                      // eslint-disable-next-line react/display-name
+                      code: ({ className, children, ...codeProps }): JSX.Element =>
+                        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                        <code tabIndex={0} className={className} {...codeProps}>
+                          {children}
+                        </code>,
+                    }}
+                  >
+                    {`~~~json
 base64url(
   {
     "aud": "TBD",
@@ -207,44 +206,43 @@ eyJhdWQiOiJUQkQiLCJpc3MiOiJUQkQiLCJzdWIiOiJUQkQiLCJqdGkiOiIyMGYyZTk1
 MC0wMDY1LTExZWMtYTg1NC0zZGVmOWZmYWYxY2IiLCJpYXQiOjE2MjkzMTk0ODgsI
 mV4cCI6MTYyOTMxOTU0OH0
 `}
-                    </ReactMarkdown>
-                  </CodeWrapper>
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td><code>scope</code></td>
-              <td>True</td>
-              <td>
-                <p>
-                  View a user&apos;s VA Health records and patient information, see specific read only scopes below.
-                  <ul>
-                    {scopes.map(scope =>
-                     (
-                       <li key={scope}>{scope}</li>
-                     )
-                     )}
-                  </ul>
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td><code>launch</code></td>
-              <td>False (but recommended)</td>
-              <td>
-                <p>
-                  Base64-encoded JSON object, the value of which is the patient&apos;s ICN. The format of the object will
-                  be: <code>{'{ "patient": "1000720100V271387"}'}</code>
-                </p>
-                <p>
-                  When encoded using base64, the object will look like
-                  this: <code>LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo==</code>
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </p>
+                  </ReactMarkdown>
+                </CodeWrapper>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td><code>scope</code></td>
+            <td>True</td>
+            <td>
+              <p>
+                View a user&apos;s VA Health records and patient information, see specific read only scopes below.
+                <ul>
+                  {scopes.map(scope =>
+                   (
+                     <li key={scope}>{scope}</li>
+                   )
+                   )}
+                </ul>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td><code>launch</code></td>
+            <td>False (but recommended)</td>
+            <td>
+              <p>
+                Base64-encoded JSON object, the value of which is the patient&apos;s ICN. The format of the object will
+                be: <code>{'{ "patient": "1000720100V271387"}'}</code>
+              </p>
+              <p>
+                When encoded using base64, the object will look like
+                this: <code>LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo==</code>
+              </p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <p>
         POST this assertion to the /token service to receive an access token in response.
         Lighthouse will respond with your access token, which looks like what is shown below.
