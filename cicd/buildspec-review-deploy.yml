@@ -56,7 +56,7 @@ phases:
     commands:
       # Install sentry-cli tool
       - curl -sL https://sentry.io/get-cli/ | bash
-      - sentry-cli info --log-level=info
+      - sentry-cli info --log-level=debug
       # Make a url compliant name for S3
       # Short Ref to commit hash
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
