@@ -43,8 +43,7 @@ env:
     DOCKER_USERNAME: '/dvp/devops/DOCKER_USERNAME'
     DOCKER_PASSWORD: '/dvp/devops/DOCKER_PASSWORD'
     # Sentry
-    SENTRY_DSN: '/dvp/prod/developer-portal-frontend/SENTRY_DSN'
-    SENTRY_AUTH_TOKEN: '/dvp/prod/developer-portal-frontend/SENTRY_AUTH_TOKEN'
+    SENTRY_AUTH_TOKEN: '/dvp/devops/SENTRY_AUTH_TOKEN'
 phases:
   install:
     commands:
