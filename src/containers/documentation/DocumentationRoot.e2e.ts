@@ -45,7 +45,7 @@ describe('auth docs route redirect', () => {
     });
     expect(page.url()).toEqual(`${puppeteerHost}/explore/authorization`);
   });
-  it('should redirect to /explore/authorization?api=veteran_verification from /explore/verification/docs/authorization', async () => {
+  it('should redirect to /explore/authorization/docs/authorization-code?api=veteran_verification from /explore/verification/docs/authorization', async () => {
     await page.goto(`${puppeteerHost}/explore/verification/docs/authorization`, {
       waitUntil: 'networkidle0',
     });
