@@ -34,17 +34,10 @@ env:
     # Running the container as root.
     UNAME: root
     GNAME: root
-    # Sentry
-    SENTRY_ORG: 'vsp'
-    SENTRY_PROJECT: 'dvp-developer-portal-web'
-    SENTRY_URL: 'http://sentry.vfs.va.gov/'
   parameter-store:
     GITHUB_TOKEN: '/dvp/devops/va_bot_github_token'
     DOCKER_USERNAME: '/dvp/devops/DOCKER_USERNAME'
     DOCKER_PASSWORD: '/dvp/devops/DOCKER_PASSWORD'
-    # Sentry
-    SENTRY_DSN: '/dvp/devops/SENTRY_DSN/developer-portal-frontend'
-    SENTRY_AUTH_TOKEN: '/dvp/devops/SENTRY_AUTH_TOKEN'
 phases:
   install:
     commands:
@@ -54,9 +47,6 @@ phases:
       - timeout 15 sh -c "until docker info; do echo .; sleep 1; done"
   pre_build:
     commands:
-      # Install sentry-cli tool
-      - curl -sL https://sentry.io/get-cli/ | bash
-      - sentry-cli info --log-level=debug
       # Make a url compliant name for S3
       # Short Ref to commit hash
       - COMMIT_HASH=${CODEBUILD_RESOLVED_SOURCE_VERSION:0:7}
