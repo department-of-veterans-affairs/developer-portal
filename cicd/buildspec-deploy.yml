@@ -33,13 +33,14 @@ env:
     # Sentry
     SENTRY_ORG: 'vsp'
     SENTRY_PROJECT: 'dvp-developer-portal-web'
+    SENTRY_URL: 'http://sentry.vfs.va.gov/'
   parameter-store:
     GITHUB_TOKEN: '/dvp/devops/va_bot_github_token'
     # LIGHTHOUSE SLACK_WEBHOOK
     SLACK_WEBHOOK: '/dvp/devops/codebuild_slack_webhook_lighthouse'
     # Sentry
-    SENTRY_DSN: '/dvp/prod/developer-portal-frontend/SENTRY_DSN'
-    SENTRY_AUTH_TOKEN: '/dvp/prod/developer-portal-frontend/SENTRY_AUTH_TOKEN'
+    SENTRY_DSN: '/dvp/devops/SENTRY_DSN/developer-portal-frontend'
+    SENTRY_AUTH_TOKEN: '/dvp/devops/SENTRY_AUTH_TOKEN'
 phases:
   pre_build:
     commands:
