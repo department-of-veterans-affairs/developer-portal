@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://developer.va.gov/",
   "scripts": {
-    "preinstall": "npx npm-force-resolutions@0.0.3",
+    "preinstall": "npx npm-force-resolutions@0.0.10",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "lint": "./node_modules/.bin/eslint --ext .ts,.tsx src",
@@ -135,7 +135,7 @@
     "html-loader": "^2.1.2",
     "html-webpack-plugin": "^4.5.2",
     "husky": "^6.0.0",
-    "jest": "^27.3.1",
+    "jest": "^26.6.3",
     "jest-axe": "^4.1.0",
     "jest-environment-puppeteer": "^4.4.0",
     "jest-image-snapshot": "~4.0.2",
