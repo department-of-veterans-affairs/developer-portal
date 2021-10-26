@@ -4,7 +4,7 @@
   "private": true,
   "homepage": "https://developer.va.gov/",
   "scripts": {
-    "preinstall": "npx npm-force-resolutions@0.0.3",
+    "preinstall": "npx npm-force-resolutions@0.0.10",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "lint": "./node_modules/.bin/eslint --ext .ts,.tsx src",
@@ -160,7 +160,7 @@
     "prettier": "^2.4.1",
     "pretty-format": "^26.6.2",
     "puppeteer": "^2.1.1",
-    "react-dev-utils": "^11.0.3",
+    "react-dev-utils": "^11.0.4",
     "react-test-renderer": "^17.0.2",
     "sass-loader": "^10.2.0",
     "source-map-loader": "^2.0.2",
@@ -176,13 +176,17 @@
     "webpack-manifest-plugin": "^3.2.0"
   },
   "resolutions": {
+    "ansi-html": "https://registry.npmjs.org/ansi-html-community/-/ansi-html-community-0.0.8.tgz",
+    "ansi-regex": "5.0.1",
     "dns-packet": "5.2.2",
+    "glob-parent": "5.1.2",
     "husky": "6.0.0",
     "trim": "1.0.1",
     "trim-newlines": "4.0.1",
     "css-what": "5.0.1",
     "normalize-url": "6.0.1",
     "prismjs": "1.24.0",
+    "set-value": "4.0.1",
     "tar": ">=6.1.2",
     "immer": "9.0.6"
   },
