@@ -4,7 +4,7 @@ export * from './actions/version';
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';
 export const DEFAULT_OAUTH_API_SELECTION = 'claims';
-export const DEFAULT_OAUTH_CCG_API_SELECTION = 'clinical_health';
+export const DEFAULT_OAUTH_CCG_API_SELECTION = 'fhir';
 export const OPEN_API_SPEC_HOST: string = process.env.REACT_APP_VETSGOV_SWAGGER_API ?? '';
 
 const BACKEND_BASE_URL = `${

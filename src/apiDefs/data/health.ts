@@ -58,7 +58,6 @@ const healthApis: APIDescription[] = [
     },
     oAuthTypes: [
       'AuthorizationCodeGrant',
-      'ClientCredentialsGrant',
     ],
     openData: false,
     releaseNotes: ClinicalHealthReleaseNotes,
