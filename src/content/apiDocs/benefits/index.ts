@@ -3,7 +3,6 @@ import BenefitsIntakeReleaseNotes from './benefitsIntakeReleaseNotes.mdx';
 import BenefitsOverview from './benefitsOverview.mdx';
 import ClaimsReleaseNotes from './claimsReleaseNotes.mdx';
 import LoanGuarantyReleaseNotes from './loanGuarantyReleaseNotes.mdx';
-import ClaimsAttributesReleaseNotes from './claimsAttributesReleaseNotes.mdx';
 
 const benefitsContent: APICategoryContent = {
   consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
@@ -22,5 +21,4 @@ export {
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
-  ClaimsAttributesReleaseNotes,
 };

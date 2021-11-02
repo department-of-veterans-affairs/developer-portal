@@ -46,7 +46,6 @@ const apisToEnglishApiKeyList = (): Record<string, string> => {
   const apiDefs = getApiDefinitions();
   return {
     benefits: apiDefs.benefits.properName,
-    claimsAttributes: 'Claims Attributes API',
     confirmation: 'Veteran Confirmation API',
     facilities: apiDefs.facilities.properName,
     vaForms: apiDefs.vaForms.properName,

@@ -15,7 +15,6 @@ export const PRODUCTION_ACCESS_URL = `${BACKEND_BASE_URL}/production_request`;
 export const CONTACT_US_URL = `${BACKEND_BASE_URL}/contact-us`;
 
 export const APPLY_STANDARD_APIS = [
-  'claimsAttributes',
   'benefits',
   'facilities',
   'vaForms',

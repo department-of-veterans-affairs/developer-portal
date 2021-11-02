@@ -36,7 +36,7 @@ describe('SandboxAccessSuccess with results', () => {
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: ['claimsAttributes', 'benefits', 'facilities', 'vaForms', 'confirmation'],
+                apis: ['benefits', 'facilities', 'vaForms', 'confirmation'],
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
@@ -63,7 +63,7 @@ describe('SandboxAccessSuccess with results', () => {
       it('displays confirmation for only standard APIs', () => {
         expect(
           screen.getByText(
-            /Claims Attributes API, Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
+            /Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
           ),
         ).toBeInTheDocument();
 
@@ -113,7 +113,7 @@ describe('SandboxAccessSuccess with results', () => {
       it('displays confirmation for only oauth APIs', () => {
         expect(
           screen.queryByText(
-            /Claims Attributes API, Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
+            /Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
           ),
         ).not.toBeInTheDocument();
 
