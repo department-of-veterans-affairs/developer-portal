@@ -2,11 +2,10 @@ import * as React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { getApiDefinitions } from '../../../../apiDefs/query';
+import { getApiDefinitions, getAllKeyAuthApis } from '../../../../apiDefs/query';
 import sentenceJoin from '../../../../sentenceJoin';
 import { ApplySuccessResult } from '../../../../types';
 import { APPLY_OAUTH_APIS } from '../../../../types/constants';
-import { getAllKeyAuthApis } from '../../../../apiDefs/query';
 import { isVaEmail } from '../../../../utils/validators';
 
 const AssistanceTrailer = (): JSX.Element => (
@@ -123,8 +122,8 @@ const InternalApiNotice: React.FunctionComponent<InternalApiNoticeProps> = ({
 const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
   const { apis, email, token, clientID, clientSecret, kongUsername, redirectURI } = props.result;
   const keyAuthApis = getAllKeyAuthApis();
-  const keyAuthApiList = keyAuthApis.map(api => api.altID ?? api.urlFragment)
-  
+  const keyAuthApiList = keyAuthApis.map(api => api.altID ?? api.urlFragment);
+
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
   const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis.includes(apiId));
   const hasStandardAPI = keyAuthApiList.some(apiId => apis.includes(apiId));
