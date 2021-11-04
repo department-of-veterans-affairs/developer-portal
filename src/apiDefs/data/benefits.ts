@@ -3,7 +3,6 @@ import {
   BenefitsIntakeReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
-  ClaimsAttributesReleaseNotes,
 } from '../../content/apiDocs/benefits';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import { APIDescription, ProdAccessFormSteps } from '../schema';
@@ -76,22 +75,6 @@ const benefitsApis: APIDescription[] = [
      * https://github.com/department-of-veterans-affairs/developer-portal/tree/742c629534dc9ee17bb9ba73a20406a3a05cd59d
      */
     vaInternalOnly: true,
-  },
-  {
-    altID: 'claimsAttributes',
-    description: 'Improve claim routing',
-    docSources: [
-      {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/claims-attributes/v1/openapi.json`,
-      },
-    ],
-    enabledByDefault: false,
-    lastProdAccessStep: ProdAccessFormSteps.Three,
-    name: 'Claims Attributes API',
-    openData: false,
-    releaseNotes: ClaimsAttributesReleaseNotes,
-    urlFragment: 'claims_attributes',
-    vaInternalOnly: false,
   },
 ];
 

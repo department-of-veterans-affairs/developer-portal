@@ -14,13 +14,6 @@ export const APPLY_URL = `${BACKEND_BASE_URL}/developer_application`;
 export const PRODUCTION_ACCESS_URL = `${BACKEND_BASE_URL}/production_request`;
 export const CONTACT_US_URL = `${BACKEND_BASE_URL}/contact-us`;
 
-export const APPLY_STANDARD_APIS = [
-  'claimsAttributes',
-  'benefits',
-  'facilities',
-  'vaForms',
-  'confirmation',
-];
 export const APPLY_OAUTH_APIS = ['claims', 'communityCare', 'health', 'verification'];
 export const PAGE_HEADER_ID = 'page-header';
 export const PAGE_HEADER_AND_HALO_ID = 'header-halo';
