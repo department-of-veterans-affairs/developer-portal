@@ -21,7 +21,7 @@ env:
     GITHUB_USERNAME: 'va-bot'
     # These are the test make targets.
     # All other tests are run in parallel using GitHub Actions
-    TESTS: 'visual'
+    TESTS: ''
     # These are the build environments
     ENVIRONMENTS: 'dev staging production'
     # Bucket for archiving deployments
