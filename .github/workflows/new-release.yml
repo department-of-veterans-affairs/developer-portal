@@ -1,15 +1,13 @@
-name: Build Pull Request Deployment Packages
+name: Create new Developer Portal release package
 
 on:
-  pull_request:
+  merge:
     branches: [master]
 
 jobs:
   install:
     runs-on: ubuntu-latest
     outputs:
-      hash: ${{ steps.githash.outputs.hash }}
-      pr_number: ${{ steps.pr_number.outputs.pr }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
       - uses: actions/checkout@v2
@@ -25,19 +23,6 @@ jobs:
           echo $NODE_VERSION
           echo "::set-output name=node_version::$NODE_VERSION"
 
-      - id: pr_number
-        name: Get PR Number
-        run: |
-          PR_NUMBER=`printf $GITHUB_REF | sed 's|refs/pull/||' | sed 's|/merge||'`
-          echo $PR_NUMBER
-          echo "::set-output name=pr::$PR_NUMBER"
-
-      - id: githash
-        name: Set git hash
-        run: |
-          GIT_HASH=$(/bin/bash -c "git log --oneline | cut -f3 -d \" \" | cut -c1-7")
-          echo "::set-output name=hash::$GIT_HASH"
-
       - id: cache_node_modules
         name: Cache node modules
         uses: actions/cache@v2
@@ -52,7 +37,7 @@ jobs:
         if: steps.cache_node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
-  pr_builds:
+  release_builds:
     needs: [install]
     runs-on: ubuntu-latest
     strategy:
@@ -87,26 +72,7 @@ jobs:
           NODE_ENV: production
           BUILD_ENV: ${{matrix.environment}}
           REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
-          S3_REVIEW_BUCKET: ${{secrets.AWS_S3_REVIEW_BUCKET}}
-          PREVIEW_SENTRY_DSN: ${{secrets.PREVIEW_SENTRY_DSN}}
-        run: |
-          echo "PUBLIC_URL=/$S3_REVIEW_BUCKET/gha-$REACT_APP_COMMIT_HASH/$BUILD_ENV" > .env.$BUILD_ENV.local
-          echo "REACT_APP_SENTRY_DSN=$PREVIEW_SENTRY_DSN" >> .env.$BUILD_ENV.local
-          npm run build $BUILD_ENV
-
-      - name: Add deploy.json
-        env:
-          BUILD_ENV: ${{matrix.environment}}
-          REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
-        run: |
-          date > ./current-date
-          echo '{' > build/$BUILD_ENV/deploy.json
-          echo "  \"environment\": \"$BUILD_ENV\"," >> build/$BUILD_ENV/deploy.json
-          echo "  \"date\": \"$( cat current-date )\"," >> build/$BUILD_ENV/deploy.json
-          echo "  \"commit\": \"$REACT_APP_COMMIT_HASH\"" >> build/$BUILD_ENV/deploy.json
-          echo '}' >> build/$BUILD_ENV/deploy.json
-          rm ./current-date
-          cat build/$BUILD_ENV/deploy.json
+        run: npm run build $BUILD_ENV
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -118,32 +84,55 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: GitHubActions
 
-      - name: Upload to PR review s3 bucket
+      - name: Create archive tarballs
         env:
-          COMMIT_HASH: ${{needs.install.outputs.hash}}
-          S3_REVIEW_BUCKET: ${{secrets.AWS_S3_REVIEW_BUCKET}}
+          BUILD_ENV: ${{matrix.environment}}
         run: |
-          aws s3 sync --no-progress --acl public-read build/ s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/
+          tar -C build/$BUILD_ENV -cf build/$BUILD_ENV.tar.bz2 .
 
-  pr_comment:
-    needs: [pr_builds, install]
+      - name: Upload to archive s3 bucket
+        env:
+          BUILD_ENV: ${{matrix.environment}}
+          S3_ARCHIVE_BUCKET: ${{secrets.AWS_S3_ARCHIVE_BUCKET}}
+        run: |
+          SHORT_SHA=$(echo ${COMMIT_HASH} | cut -c1-8)
+          aws s3 cp --no-progress --acl public-read build/$BUILD_ENV.tar.bz2 s3://$S3_ARCHIVE_BUCKET/gha-$SHORT_SHA/developer-portal-$BUILD_ENV.tar.bz2
+
+  create_release:
     runs-on: ubuntu-latest
-
+    needs: [release_builds]
     steps:
       - uses: actions/checkout@v2
-
-      - name: Add PR builds comment
+      - name: Download archives
         env:
-          COMMIT_HASH: ${{needs.install.outputs.hash}}
-          S3_REVIEW_BUCKET: ${{secrets.AWS_S3_REVIEW_BUCKET}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PR_NUMBER: ${{needs.install.outputs.pr_number}}
+          S3_ARCHIVE_BUCKET: ${{secrets.AWS_S3_ARCHIVE_BUCKET}}
         run: |
-          links=""
+          mkdir release
+          aws s3 cp --no-progress --acl public-read s3://$S3_ARCHIVE_BUCKET/gha-$COMMIT_HASH/*.tar.bz2 release/
+
+      - name: Create the release
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          NEW_TAG=$(git tag --sort=-creatordate | grep ^developer-portal | head -1 | awk -F. -v OFS=. '{$NF++;print}')
+          VERSION=${NEW_TAG#"developer-portal/v"}
+          gh release create $NEW_TAG
           for env in 'dev' 'staging' 'production' ; do
-            links="$links - [${env}](https://s3-us-gov-west-1.amazonaws.com/$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/index.html) <br />"
+            mv "release/developer-portal-${env}.tar.bz2" "release/developer-portal-${env}-${VERSION}.tar.bz2"
+            gh release upload ${NEW_TAG} "release/developer-portal-${env}-${VERSION}.tar.bz2#${NEW_TAG}_${env}.tar.bz2"
+            echo "${env} artifact uploaded"
           done
-          echo $links;
-          comment="These changes have been deployed to an s3 bucket. A build for each environment is available: <br /><br /> ${links} <br /> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
-          echo $PR_NUMBER
-          gh pr comment $PR_NUMBER --body "$comment"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{secrets.AWS_REGION}}
+          role-to-assume: ${{secrets.AWS_ROLE_ARN}}
+          role-duration-seconds: 1200
+          role-session-name: GitHubActions
+
+      - name: Build dev and staging
+        run: |
+          aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,value=${NEW_TAG}
