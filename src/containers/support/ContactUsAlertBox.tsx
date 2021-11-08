@@ -6,7 +6,7 @@ export const ContactUsAlertBox = (): JSX.Element => (
     <p>
       Are you a Veteran or looking for information on behalf of a Veteran?{' '}
       <a href="https://www.va.gov/vso">Contact your local VSO</a> or{' '}
-      <a href="https://iris.custhelp.va.gov/app/ask">submit a question</a> to get the help you need.
+      <a href="https://ask.va.gov/">submit a question</a> to get the help you need.
     </p>
   </AlertBox>
 );
