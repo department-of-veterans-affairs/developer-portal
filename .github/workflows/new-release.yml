@@ -1,7 +1,7 @@
 name: Create new Developer Portal release package
 
 on:
-  merge:
+  push:
     branches: [master]
 
 jobs:
