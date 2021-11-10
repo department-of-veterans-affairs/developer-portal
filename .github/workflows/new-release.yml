@@ -129,7 +129,7 @@ jobs:
         run: |
           SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
           mkdir release
-          aws s3 cp --no-progress --acl public-read s3://$S3_ARCHIVE_BUCKET/gha-$SHORT_SHA/*.tar.bz2 release/
+          aws s3 cp --no-progress --recursive s3://$S3_ARCHIVE_BUCKET/gha-$SHORT_SHA/ release/
 
       - name: Create the release
         env:
