@@ -95,8 +95,8 @@ jobs:
           BUILD_ENV: ${{matrix.environment}}
           S3_ARCHIVE_BUCKET: ${{secrets.AWS_S3_ARCHIVE_BUCKET}}
         run: |
-          SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
-          aws s3 cp --no-progress --acl public-read build/$BUILD_ENV.tar.bz2 s3://$S3_ARCHIVE_BUCKET/gha-$SHORT_SHA/developer-portal-$BUILD_ENV.tar.bz2
+          SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
+          aws s3 cp --no-progress --acl public-read build/$BUILD_ENV.tar.bz2 s3://$S3_ARCHIVE_BUCKET/$SHORT_SHA/developer-portal-$BUILD_ENV.tar.bz2
 
   create_release:
     runs-on: ubuntu-latest
@@ -127,9 +127,9 @@ jobs:
         env:
           S3_ARCHIVE_BUCKET: ${{secrets.AWS_S3_ARCHIVE_BUCKET}}
         run: |
-          SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-8)
+          SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
           mkdir release
-          aws s3 cp --no-progress --recursive s3://$S3_ARCHIVE_BUCKET/gha-$SHORT_SHA/ release/
+          aws s3 cp --no-progress --recursive s3://$S3_ARCHIVE_BUCKET/$SHORT_SHA/ release/
 
       - name: Create the release
         env:
