@@ -218,8 +218,7 @@ Location: <yourRedirectURL>?
       <p>Use the following format, in HTTP basic authentication, for your request.</p>
       <ul>
         <li>
-          Use the <code>code</code> and <code>state</code> parameters that were returned in the
-          previous step.
+          Use the <code>code</code> parameter that was returned in the previous step.
         </li>
         <li>
           Be sure to replace <code>{'<yourRedirectURL>'}</code> with the redirect URL that you
