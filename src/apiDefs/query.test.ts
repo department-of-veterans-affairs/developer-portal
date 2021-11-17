@@ -73,9 +73,7 @@ const claims: APIDescription = {
     baseAuthPath: '/oauth2/claims/v1',
     scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
   },
-  oAuthTypes: [
-    'AuthorizationCodeGrant',
-  ],
+  oAuthTypes: ['AuthorizationCodeGrant', 'ClientCredentialsGrant'],
   openData: false,
   releaseNotes: ClaimsReleaseNotes,
   urlFragment: 'claims',
