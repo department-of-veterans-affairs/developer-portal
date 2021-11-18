@@ -91,6 +91,13 @@ export interface APIDescription {
 export interface OAuthInfo {
   readonly baseAuthPath: string;
   readonly scopes: string[];
+  readonly ccgInfo?: CCGInfo;
+}
+
+export interface CCGInfo {
+  readonly sandboxAud: string;
+  readonly productionAud: string;
+  readonly scopes: string[];
 }
 
 export const ApiDescriptionPropType = PropTypes.shape({
