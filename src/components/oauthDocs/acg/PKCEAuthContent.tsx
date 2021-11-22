@@ -37,11 +37,12 @@ const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
         <ReactMarkdown
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~plaintext
@@ -199,11 +200,12 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
@@ -216,8 +218,7 @@ Location: <yourRedirectURL>?
       <p>Use the following format, in HTTP basic authentication, for your request.</p>
       <ul>
         <li>
-          Use the <code>code</code> and <code>state</code> parameters that were returned in the
-          previous step.
+          Use the <code>code</code> parameter that was returned in the previous step.
         </li>
         <li>
           Be sure to replace <code>{'<yourRedirectURL>'}</code> with the redirect URL that you
@@ -230,11 +231,12 @@ Location: <yourRedirectURL>?
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
@@ -245,7 +247,6 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=authorization_code
 &code=z92dapo5
 &client_id=0oa1c01m77heEXUZt2p7
-&state=af0ifjsldkj
 &redirect_uri=<yourRedirectURL>
 &code_verifier=ccec_bace_d453_e31c_eb86_2ad1_9a1b_0a89_a584_c068_2c96`}
         </ReactMarkdown>
@@ -263,11 +264,12 @@ grant_type=authorization_code
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~json
@@ -287,11 +289,12 @@ grant_type=authorization_code
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
@@ -326,11 +329,12 @@ Pragma: no-cache
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
