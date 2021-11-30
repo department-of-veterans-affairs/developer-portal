@@ -249,20 +249,32 @@ describe('SandboxAccessForm', () => {
           delay: 0.01,
         });
 
-        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'pippin@theshire.net', {
-          delay: 0.01,
-        });
+        await userEvent.type(
+          screen.getByRole('textbox', { name: /Email/ }),
+          'pippin@theshire.net',
+          {
+            delay: 0.01,
+          },
+        );
 
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
         userEvent.click(screen.getByRole('checkbox', { name: /Address Validation/ }));
-        await userEvent.type(screen.getByRole('textbox', { name: /sponsor email/ }), 'frodo.baggins@theshire.net', {
-          delay: 0.01,
-        });
-        await userEvent.type(screen.getByRole('textbox', { name: /VA issued email/ }), 'samwise@theshire.net', {
-          delay: 0.01,
-        });
+        await userEvent.type(
+          screen.getByRole('textbox', { name: /sponsor email/ }),
+          'frodo.baggins@theshire.net',
+          {
+            delay: 0.01,
+          },
+        );
+        await userEvent.type(
+          screen.getByRole('textbox', { name: /VA issued email/ }),
+          'samwise@theshire.net',
+          {
+            delay: 0.01,
+          },
+        );
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -320,7 +332,7 @@ describe('SandboxAccessForm', () => {
       userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(mockMakeRequest).toHaveBeenCalledTimes(1);
+        expect(mockMakeRequest).toHaveBeenCalledTimes(2);
         expect(mockOnSuccess).toHaveBeenCalledTimes(1);
       });
     });
