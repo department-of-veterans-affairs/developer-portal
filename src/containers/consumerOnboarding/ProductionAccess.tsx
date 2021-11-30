@@ -13,6 +13,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
+import { getFlags } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
@@ -30,7 +31,6 @@ import {
 } from './components/productionAccessForm';
 import validationSchema from './validationSchema';
 import './ProductionAccess.scss';
-import { getFlags } from '../../flags';
 
 const possibleSteps = [
   'Verification',
