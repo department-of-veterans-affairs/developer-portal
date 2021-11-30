@@ -17,6 +17,7 @@ import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import {
+  FLAG_POST_TO_LPB,
   LPB_PRODUCTION_ACCESS_URL,
   PRODUCTION_ACCESS_URL,
   yesOrNoValues,
@@ -29,6 +30,7 @@ import {
 } from './components/productionAccessForm';
 import validationSchema from './validationSchema';
 import './ProductionAccess.scss';
+import { getFlags } from '../../flags';
 
 const possibleSteps = [
   'Verification',
@@ -243,6 +245,7 @@ const ProductionAccess: FC = () => {
   };
 
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
+    const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
     if (isLastStep) {
       setSubmissionError(false);
       delete values.isUSBasedCompany;
@@ -299,21 +302,23 @@ const ProductionAccess: FC = () => {
       } catch (error: unknown) {
         setSubmissionError(true);
       }
-      try {
-        await makeRequest(
-          LPB_PRODUCTION_ACCESS_URL,
-          {
-            body: JSON.stringify(applicationBody),
-            headers: {
-              accept: 'application/json',
-              'content-type': 'application/json',
+      if (flagLpbActive) {
+        try {
+          await makeRequest(
+            LPB_PRODUCTION_ACCESS_URL,
+            {
+              body: JSON.stringify(applicationBody),
+              headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+              },
+              method: 'POST',
             },
-            method: 'POST',
-          },
-          { responseType: ResponseType.TEXT },
-        );
-        setModal4Visible(true);
-      } catch (error: unknown) {}
+            { responseType: ResponseType.TEXT },
+          );
+          setModal4Visible(true);
+        } catch (error: unknown) {}
+      }
     } else {
       if (values.isUSBasedCompany === yesOrNoValues.No) {
         setModal2Visible(true);
