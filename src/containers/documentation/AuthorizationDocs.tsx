@@ -21,7 +21,7 @@ const AuthorizationDocs = (): JSX.Element => {
         description="Explore available OAuth 2.0 grant flows"
       />
       <div className={defaultFlexContainer()}>
-        <div>
+        <div className="vads-l-col--12">
           <p>
             What you use depends on your application type and API. <Link to="/explore">Learn more about our APIs.</Link>
           </p>
