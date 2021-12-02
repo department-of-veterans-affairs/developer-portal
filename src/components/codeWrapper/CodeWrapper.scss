@@ -4,6 +4,17 @@
   & > pre {
     margin: 0;
     overflow: visible;
+    position: relative;
+
+    &:after {
+      content: "";
+      height: 100%;
+      width: 20px;
+      background: linear-gradient(270deg, #222935, transparent);
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 
   code {
