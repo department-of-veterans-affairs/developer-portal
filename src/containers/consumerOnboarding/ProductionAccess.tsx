@@ -13,10 +13,16 @@ import { Link, useHistory } from 'react-router-dom';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
+import { getFlags } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
+import {
+  FLAG_POST_TO_LPB,
+  LPB_PRODUCTION_ACCESS_URL,
+  PRODUCTION_ACCESS_URL,
+  yesOrNoValues,
+} from '../../types/constants';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -239,6 +245,7 @@ const ProductionAccess: FC = () => {
   };
 
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
+    const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
     if (isLastStep) {
       setSubmissionError(false);
       delete values.isUSBasedCompany;
@@ -295,6 +302,23 @@ const ProductionAccess: FC = () => {
       } catch (error: unknown) {
         setSubmissionError(true);
       }
+      if (flagLpbActive) {
+        try {
+          await makeRequest(
+            LPB_PRODUCTION_ACCESS_URL,
+            {
+              body: JSON.stringify(applicationBody),
+              headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+              },
+              method: 'POST',
+            },
+            { responseType: ResponseType.TEXT },
+          );
+          setModal4Visible(true);
+        } catch (error: unknown) {}
+      }
     } else {
       if (values.isUSBasedCompany === yesOrNoValues.No) {
         setModal2Visible(true);
@@ -341,7 +365,11 @@ const ProductionAccess: FC = () => {
             <Form noValidate>
               {activeStep === 0 ? (
                 <>
-                  <SegmentedProgressBar current={1} total={4} ariaLabel="Step 1. There will be 1 to 3 more steps depending on the APIs you select." />
+                  <SegmentedProgressBar
+                    current={1}
+                    total={4}
+                    ariaLabel="Step 1. There will be 1 to 3 more steps depending on the APIs you select."
+                  />
                   <h2
                     id={STEP_HEADING_ID}
                     className={classNames(
