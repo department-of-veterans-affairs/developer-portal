@@ -477,6 +477,7 @@ const ProductionAccess: FC = () => {
           >
             <img
               src={vaLogo}
+              width={220}
               alt="Department of Veterans Affairs logo"
               aria-label="Department of Veterans Affairs logo"
             />

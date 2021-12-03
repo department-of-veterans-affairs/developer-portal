@@ -47,7 +47,7 @@ describe('useModalController', () => {
     await waitFor(() => expect(screen.findByText('Modal Visible: false')).toBeDefined());
   });
 
-  it('turns visible when modal visisble is set to true', async () => {
+  it('turns visible when modal visible is set to true', async () => {
     userEvent.click(toggleVisibleButton);
     await waitFor(() => expect(screen.findByText('Modal Visible: true')).toBeDefined());
   });
