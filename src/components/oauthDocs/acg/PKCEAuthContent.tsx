@@ -12,7 +12,7 @@ interface PKCEContentProps {
   apiDef: APIDescription | null;
 }
 const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
-  const baseAuthPath = props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
+  const baseAuthPath = props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
   return (
     <>
       <h3 tabIndex={-1} id="pkce-authorization">
@@ -50,7 +50,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
   client_id=0oa1c01m77heEXUZt2p7
   &redirect_uri=<yourRedirectURL>
   &response_type=code
-  &scope=${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}
+  &scope=${props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access'}
   &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ
   &code_challenge_method=S256
   &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw`}
@@ -240,7 +240,7 @@ Location: <yourRedirectURL>?
           }}
         >
           {`~~~http
-POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
+POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 
@@ -277,7 +277,9 @@ grant_type=authorization_code
     "access_token": "SlAV32hkKG",
     "expires_in": 3600,
     "refresh_token": "8xLOxBtZp8",
-    "scope": ${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'},
+    "scope": ${
+      props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access'
+    },
     "state": "af0ifjsldkj",
     "token_type": "Bearer"
 }`}
@@ -338,14 +340,14 @@ Pragma: no-cache
           }}
         >
           {`~~~http
-POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
+POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 
 grant_type=refresh_token
 &refresh_token={your refresh_token}
 &client_id={client_id}
-&scope=${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}`}
+&scope=${props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access'}`}
         </ReactMarkdown>
       </CodeWrapper>
       <p>

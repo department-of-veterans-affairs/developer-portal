@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import { Notes } from 'src/components/oauthDocs/ccg/Notes';
+import { Notes } from '../../../components/oauthDocs/ccg/Notes';
 import { PageHeader, APISelector } from '../../../components';
 import {
   resetOAuthApiSelection,

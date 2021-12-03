@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
-import { CONSUMER_PROD_PATH } from 'src/types/constants/paths';
+import { CONSUMER_PROD_PATH } from '../../../types/constants/paths';
 
 const Notes: FC = () => (
   <>

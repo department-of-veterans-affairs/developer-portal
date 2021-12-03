@@ -57,19 +57,19 @@ const verificationApis: APIDescription[] = [
     name: 'Veteran Verification API',
     oAuth: true,
     oAuthInfo: {
-      baseAuthPath: '/oauth2/veteran-verification/v1',
-      scopes: [
-        'profile',
-        'openid',
-        'offline_access',
-        'service_history.read',
-        'disability_rating.read',
-        'veteran_status.read',
-      ],
+      acgInfo: {
+        baseAuthPath: '/oauth2/veteran-verification/v1',
+        scopes: [
+          'profile',
+          'openid',
+          'offline_access',
+          'service_history.read',
+          'disability_rating.read',
+          'veteran_status.read',
+        ],
+      },
     },
-    oAuthTypes: [
-      'AuthorizationCodeGrant',
-    ],
+    oAuthTypes: ['AuthorizationCodeGrant'],
     openData: false,
     releaseNotes: VeteranVerificationReleaseNotes,
     urlFragment: 'veteran_verification',
