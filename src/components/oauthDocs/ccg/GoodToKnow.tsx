@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { CONSUMER_PROD_PATH } from '../../../types/constants/paths';
 
-const Notes: FC = () => (
+const GoodToKnow: FC = () => (
   <>
-    <h3>It&apos;s also good to know that:</h3>
+    <h2>It&apos;s also good to know that:</h2>
     <ul>
       <li>
         The access credentials we supply are for the sandbox environment only and will not work in
@@ -23,4 +23,4 @@ const Notes: FC = () => (
   </>
 );
 
-export { Notes };
+export default GoodToKnow;

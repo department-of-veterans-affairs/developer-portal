@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import { Notes } from '../../../components/oauthDocs/ccg/Notes';
+import GoodToKnow from '../../../components/oauthDocs/ccg/GoodToKnow';
 import { PageHeader, APISelector } from '../../../components';
 import {
   resetOAuthApiSelection,
@@ -116,7 +116,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
         <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
       </p>
       <APISelector options={options} selectedOption={selectedOAuthApi} withButton />
-      <Notes />
+      <GoodToKnow />
       <GettingStarted />
       <AuthCodeFlowContent options={options} selectedOption={selectedOAuthApi} />
       <TestUsers />
