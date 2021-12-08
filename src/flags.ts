@@ -10,6 +10,7 @@ import {
   FLAG_HOSTED_APIS,
   FLAG_PLATFORM_OUTAGE,
   FLAG_SHOW_TESTING_NOTICE,
+  FLAG_POST_TO_LPB,
 } from './types/constants';
 
 export interface AppFlags {
@@ -19,6 +20,7 @@ export interface AppFlags {
   hosted_apis: { [apiId: string]: boolean };
   show_testing_notice: boolean;
   platform_outage: boolean;
+  post_to_lpb: boolean;
 }
 
 // eslint-disable-next-line @typescript-eslint/unbound-method
@@ -47,6 +49,7 @@ const getFlags = (): AppFlags => {
     [FLAG_ENABLED_APIS]: envFlags,
     [FLAG_HOSTED_APIS]: apiFlags,
     [FLAG_PLATFORM_OUTAGE]: process.env.REACT_APP_PLATFORM_OUTAGE === 'true',
+    [FLAG_POST_TO_LPB]: process.env.REACT_APP_POST_TO_LPB === 'true',
     [FLAG_SHOW_TESTING_NOTICE]: process.env.REACT_APP_SHOW_TESTING_NOTICE === 'true',
   };
 };

@@ -10,13 +10,22 @@ import SegmentedProgressBar from '@department-of-veterans-affairs/component-libr
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { Link, useHistory } from 'react-router-dom';
 // import Icon508 from '../../assets/508-compliant.svg';
+import { NavHashLink } from 'react-router-hash-link';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
+import { getFlags } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
+import vaLogo from '../../assets/VaSeal.png';
+import {
+  FLAG_POST_TO_LPB,
+  LPB_PRODUCTION_ACCESS_URL,
+  PRODUCTION_ACCESS_URL,
+  yesOrNoValues,
+} from '../../types/constants';
+import { SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -239,6 +248,7 @@ const ProductionAccess: FC = () => {
   };
 
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
+    const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
     if (isLastStep) {
       setSubmissionError(false);
       delete values.isUSBasedCompany;
@@ -295,6 +305,23 @@ const ProductionAccess: FC = () => {
       } catch (error: unknown) {
         setSubmissionError(true);
       }
+      if (flagLpbActive) {
+        try {
+          await makeRequest(
+            LPB_PRODUCTION_ACCESS_URL,
+            {
+              body: JSON.stringify(applicationBody),
+              headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+              },
+              method: 'POST',
+            },
+            { responseType: ResponseType.TEXT },
+          );
+          setModal4Visible(true);
+        } catch (error: unknown) {}
+      }
     } else {
       if (values.isUSBasedCompany === yesOrNoValues.No) {
         setModal2Visible(true);
@@ -341,7 +368,11 @@ const ProductionAccess: FC = () => {
             <Form noValidate>
               {activeStep === 0 ? (
                 <>
-                  <SegmentedProgressBar current={1} total={4} ariaLabel="Step 1. There will be 1 to 3 more steps depending on the APIs you select." />
+                  <SegmentedProgressBar
+                    current={1}
+                    total={4}
+                    ariaLabel="Step 1. There will be 1 to 3 more steps depending on the APIs you select."
+                  />
                   <h2
                     id={STEP_HEADING_ID}
                     className={classNames(
@@ -438,9 +469,21 @@ const ProductionAccess: FC = () => {
             title="Thank you for your interest!"
             visible={modal2Visible}
             onClose={(): void => setModal2Visible(false)}
+            primaryButton={{
+              action: (): void => history.goBack(),
+              text: 'Close form',
+            }}
+            classNames={['vads-u-text-align--center']}
           >
-            We currently only grant access to US-based companies. You may contact us if you have any
-            questions.
+            <img
+              src={vaLogo}
+              width={220}
+              alt="Department of Veterans Affairs logo"
+              aria-label="Department of Veterans Affairs logo"
+            />
+            <p>
+              We currently only grant access to US-based companies. You may <NavHashLink to={SUPPORT_CONTACT_PATH}>contact us</NavHashLink> if you have any questions.
+            </p>
           </Modal>
           {/* <Modal508Compliant /> */}
           <Modal
