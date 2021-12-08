@@ -14,7 +14,7 @@ import {
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { getAllOauthApis } from '../../../apiDefs/query';
+import { getActiveOauthApis, getAllOauthApis } from '../../../apiDefs/query';
 import { isApiDeactivated } from '../../../apiDefs/deprecated';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
@@ -71,7 +71,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
     (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
   );
 
-  const options = getAllOauthApis().filter(
+  const options = getActiveOauthApis().filter(
     (item: APIDescription) =>
       !isApiDeactivated(item) &&
       item.oAuthTypes &&
