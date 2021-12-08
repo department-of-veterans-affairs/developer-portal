@@ -18,9 +18,12 @@
   }
 
   .swagger-ui {
+    .wrapper {
+      margin: unset;
+    }
+
     .information-container {
       max-width: 900px;
-      margin: unset;
     }
   }
 }
