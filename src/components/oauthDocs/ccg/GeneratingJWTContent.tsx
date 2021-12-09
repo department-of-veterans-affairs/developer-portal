@@ -93,14 +93,14 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({
             </p>
             <p>
               For the {apiName} in sandbox, this is:{' '}
-              <a href={`https://deptva-eval.okta.com/oauth2/${sandboxAud}`}>
-                {`https://deptva-eval.okta.com/oauth2/${sandboxAud}`}
+              <a href={`https://deptva-eval.okta.com/oauth2/${sandboxAud}/v1/token`}>
+                {`https://deptva-eval.okta.com/oauth2/${sandboxAud}/v1/token`}
               </a>
             </p>
             <p>
               For the {apiName} in production, this is:{' '}
-              <a href={`https://va.okta.com/oauth2/${productionAud}`}>
-                {`https://va.okta.com/oauth2/${productionAud}`}
+              <a href={`https://va.okta.com/oauth2/${productionAud}/v1/token`}>
+                {`https://va.okta.com/oauth2/${productionAud}/v1/token`}
               </a>
             </p>
           </td>
