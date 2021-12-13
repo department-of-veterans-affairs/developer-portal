@@ -1,6 +1,8 @@
 import { APICategoryContent } from '../../../apiDefs/schema';
 import BenefitsIntakeReleaseNotes from './benefitsIntakeReleaseNotes.mdx';
 import BenefitsOverview from './benefitsOverview.mdx';
+// Benefits Reference Data name abbreviated due to linter rules
+import BenefitsRefDataReleaseNotes from './benefitsReferenceDataReleaseNotes.mdx';
 import ClaimsReleaseNotes from './claimsReleaseNotes.mdx';
 import LoanGuarantyReleaseNotes from './loanGuarantyReleaseNotes.mdx';
 
@@ -19,6 +21,8 @@ const benefitsContent: APICategoryContent = {
 export {
   benefitsContent,
   BenefitsIntakeReleaseNotes,
+  // Same as comment above
+  BenefitsRefDataReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
 };
