@@ -80,7 +80,7 @@ const benefitsApis: APIDescription[] = [
   {
     // adding an altID to match keys need on the backend for signup
     altID: 'benefitsReferenceData',
-    description: 'Get benefits reference data',
+    description: 'Look up data and codes for VA benefits claims',
     docSources: [
       {
         metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-reference-data/metadata.json`,
@@ -95,6 +95,7 @@ const benefitsApis: APIDescription[] = [
     releaseNotes: BenefitsRefDataReleaseNotes,
     urlFragment: 'benefits_reference_data',
     vaInternalOnly: false,
+    veteranRedirect: benefitsContent.veteranRedirect,
   },
 ];
 
