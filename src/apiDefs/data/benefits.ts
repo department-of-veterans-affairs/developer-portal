@@ -1,6 +1,7 @@
 import {
   benefitsContent,
   BenefitsIntakeReleaseNotes,
+  BenefitsRefDataReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
 } from '../../content/apiDocs/benefits';
@@ -75,6 +76,25 @@ const benefitsApis: APIDescription[] = [
      * https://github.com/department-of-veterans-affairs/developer-portal/tree/742c629534dc9ee17bb9ba73a20406a3a05cd59d
      */
     vaInternalOnly: true,
+  },
+  {
+    // adding an altID to match keys need on the backend for signup
+    altID: 'benefitsReferenceData',
+    description: 'Get benefits reference data',
+    docSources: [
+      {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-reference-data/metadata.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-reference-data/v1/openapi.json`,
+      },
+    ],
+    enabledByDefault: false,
+    // ask Team Okapi about what step to use for Line 92 from lastProdAccesssStep Object
+    lastProdAccessStep: ProdAccessFormSteps.Three,
+    name: 'Benefits Reference Data API',
+    openData: true,
+    releaseNotes: BenefitsRefDataReleaseNotes,
+    urlFragment: 'benefits_reference_data',
+    vaInternalOnly: false,
   },
 ];
 
