@@ -19,4 +19,18 @@
     }
     .alert-actions{text-align:center}
   }
+
+  #non-us-based-modal {
+    .va-modal-body {
+      text-align: center;
+
+      img {
+        padding: 30px 0 20px;
+      }
+
+      p {
+        padding-bottom: 40px;
+      }
+    }
+  }
 }
