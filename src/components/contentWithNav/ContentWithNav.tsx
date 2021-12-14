@@ -16,7 +16,7 @@ const ContentWithNav: FC<ContentWithNavProps> = ({ nav, content, navAriaLabel, c
   <div className={classNames('vads-u-padding-y--5', className)}>
     <div
       className={classNames(
-      { 'vads-l-grid-container--full vads-u-padding-x--4': fullWidth },
+      { 'vads-l-grid-container--full vads-u-padding-x--2 medium-screen:vads-u-padding-x--4': fullWidth },
       { 'vads-l-grid-container': !fullWidth }
     )}
     >
@@ -28,7 +28,7 @@ const ContentWithNav: FC<ContentWithNavProps> = ({ nav, content, navAriaLabel, c
             'vads-l-col--12',
             'medium-screen:vads-l-col--9',
             { 'large-screen:vads-l-col--10': fullWidth },
-            'vads-u-padding-left--5',
+            'medium-screen:vads-u-padding-left--5',
           )}
         >
           {content}
