@@ -492,7 +492,7 @@ const ProductionAccess: FC = () => {
           <Modal
             id="submission-complete-modal"
             title="Thanks for submitting!"
-            visible={modal4Visible || true}
+            visible={modal4Visible}
             onClose={(): void => {
               setModal4Visible(false);
               history.goBack();
