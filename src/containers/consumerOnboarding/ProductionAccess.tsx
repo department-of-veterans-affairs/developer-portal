@@ -518,7 +518,10 @@ const ProductionAccess: FC = () => {
             </p>
             <p>
               We’d love to hear from you. If you have a few minutes,{' '}
-              <Link to="/support/contact-us">tell us about your experience</Link>.
+              <a href="https://78bw424i.optimalworkshop.com/questions/z470uznd" target="blank">
+                tell us about your experience
+              </a>
+              .
             </p>
             <p className="howd-we-do">
               ☆☆☆☆☆{' '}
