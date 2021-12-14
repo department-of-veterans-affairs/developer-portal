@@ -8,6 +8,9 @@ RUN apt-get update && apt-get install -y chromium fonts-ipafont-gothic fonts-wqy
   && apt-get purge --auto-remove -y curl \
   && rm -rf /src/*.deb
 
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+
 WORKDIR /application
 
 # Match the jenkins uid/gid on the host (504)
