@@ -84,6 +84,12 @@
       max-width: 100%;
     }
   }
+
+  &.opblock-deprecated {
+    .opblock-summary-method {
+      color: #6B6B6B !important;
+    } 
+  }
 }
 .swagger-ui .renderedMarkdown {
   @import '~uswds/src/stylesheets/elements/table';
