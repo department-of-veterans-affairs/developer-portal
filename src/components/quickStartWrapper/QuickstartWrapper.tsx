@@ -13,13 +13,13 @@ const QuickstartWrapper: React.FunctionComponent<QuickstartWrapperProps> = (
   const { categoryName, quickstartContent } = props;
 
   return (
-    <>
+    <div className="quickstart-wrapper">
       <Helmet>
         <title>{categoryName} Quickstart</title>
       </Helmet>
       <PageHeader halo={categoryName} header="Quickstart" />
       {quickstartContent({})}
-    </>
+    </div>
   );
 };
 

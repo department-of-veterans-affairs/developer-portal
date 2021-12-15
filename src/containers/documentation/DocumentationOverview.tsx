@@ -11,7 +11,7 @@ const DocumentationOverview = (): JSX.Element => {
   const apiCategoryOrder = getApiCategoryOrder();
 
   return (
-    <div>
+    <div className="documentation-overview-wrapper">
       <Helmet>
         <title>Documentation</title>
       </Helmet>

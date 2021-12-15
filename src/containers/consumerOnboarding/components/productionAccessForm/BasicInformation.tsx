@@ -164,6 +164,7 @@ const BasicInformation: FC = () => {
             isVetFacingBorderColorClass,
           )}
           legend="Is your app Veteran-facing?"
+          description="If yes, we will ask for more details"
           legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
           name="veteranFacing"
           required

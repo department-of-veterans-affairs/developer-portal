@@ -4,8 +4,26 @@
 
 .documentation {
   .va-api-api-overview {
+    max-width: 900px;
+
     h2 {
       font-size: 2rem;
+    }
+  }
+
+  .va-api-authorization-docs,
+  .quickstart-wrapper,
+  .documentation-overview-wrapper {
+    max-width: 900px;
+  }
+
+  .swagger-ui {
+    .wrapper {
+      margin: unset;
+    }
+
+    .information-container {
+      max-width: 900px;
     }
   }
 }
