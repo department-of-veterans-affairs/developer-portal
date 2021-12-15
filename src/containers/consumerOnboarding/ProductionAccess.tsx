@@ -19,6 +19,7 @@ import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import vaLogo from '../../assets/VaSeal.png';
+import hiFive from '../../assets/high-five.svg';
 import {
   FLAG_POST_TO_LPB,
   LPB_PRODUCTION_ACCESS_URL,
@@ -482,7 +483,9 @@ const ProductionAccess: FC = () => {
               aria-label="Department of Veterans Affairs logo"
             />
             <p>
-              We currently only grant access to US-based companies. You may <NavHashLink to={SUPPORT_CONTACT_PATH}>contact us</NavHashLink> if you have any questions.
+              We currently only grant access to US-based companies. You may{' '}
+              <NavHashLink to={SUPPORT_CONTACT_PATH}>contact us</NavHashLink> if you have any
+              questions.
             </p>
           </Modal>
           {/* <Modal508Compliant /> */}
@@ -499,19 +502,33 @@ const ProductionAccess: FC = () => {
               text: 'Close',
             }}
           >
+            <img
+              src={hiFive}
+              width={220}
+              alt="High five clip art"
+              aria-label="High five clip art"
+            />
             <p>
-              We’ve received your production access request and have sent you an email confirmation.
-              We’ll be in touch with next steps or required changes within 1-2 weeks, depending on
-              the API.
+              <strong>
+                We’ve received your production access request and have sent you an email
+                confirmation.
+              </strong>
+              <br />
+              We’ll be in touch with the next steps or required changes.
             </p>
             <p>
-              It’s good to remember that getting production access can take over a month. For open
-              data APIs, this takes a week or less. Learn more about the production access
-              timelines.
+              We’d love to hear from you. If you have a few minutes,{' '}
+              <a href="https://78bw424i.optimalworkshop.com/questions/z470uznd" target="blank">
+                tell us about your experience
+              </a>
+              .
             </p>
-            <p>
-              In the meantime, you may <Link to="/support/contact-us">contact us </Link>if you have
-              any questions or learn more about working with our APIs.
+            <p className="howd-we-do">
+              ☆☆☆☆☆{' '}
+              <a href="https://78bw424i.optimalworkshop.com/questions/z470uznd" target="blank">
+                How’d we do
+              </a>
+              ?
             </p>
           </Modal>
           {submissionError && (

@@ -10,6 +10,7 @@ interface SideNavProps {
   className?: string;
   ariaLabel: string;
   children: React.ReactNode;
+  containerClassName?: string;
 }
 
 /**
@@ -35,6 +36,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
         'vads-l-col--12',
         // 'vads-u-padding-right--5',
         'medium-screen:vads-l-col--3',
+        props.containerClassName
       )}
     >
       <HashLink
