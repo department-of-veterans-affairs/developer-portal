@@ -7,6 +7,7 @@ import FieldSet from './FieldSet';
 interface RenderProps {
   legend: string;
   required?: boolean;
+  description?: string;
 }
 
 jest.mock('formik', () => ({
@@ -21,16 +22,17 @@ describe('FieldSet', () => {
       touched: {},
     }));
   });
-  const renderComponent = ({ legend, required }: RenderProps): void => {
+  const renderComponent = ({ legend, required, description }: RenderProps): void => {
     render(
       <Formik initialValues={{}} onSubmit={jest.fn()}>
-        <FieldSet name="test" legend={legend} required={required}>
+        <FieldSet name="test" legend={legend} required={required} description={description}>
           <CheckboxRadioField type="radio" label="Yes" value="web" name="radioButton" />
           <CheckboxRadioField type="radio" label="No" value="native" name="radioButton" />
         </FieldSet>
       </Formik>,
     );
   };
+
   describe('required is not set', () => {
     it('does not include required in the legend', () => {
       renderComponent({ legend: 'Test Input' });
@@ -42,6 +44,13 @@ describe('FieldSet', () => {
     it('includes required in the label', () => {
       renderComponent({ legend: 'Test Input', required: true });
       expect(screen.getByText('(*Required)')).toBeInTheDocument();
+    });
+  });
+
+  describe('description is passed', () => {
+    it('renders the description', () => {
+      renderComponent({ description: 'A test description', legend: 'Test Input' });
+      expect(screen.getByText('A test description')).toBeInTheDocument();
     });
   });
 });
