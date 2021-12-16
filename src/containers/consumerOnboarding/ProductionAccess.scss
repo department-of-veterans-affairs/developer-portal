@@ -9,15 +9,17 @@
 }
 
 .prod-access-form {
-  #warning-508-complicance-modal{
-    .va-modal-title{
+  #warning-508-complicance-modal {
+    .va-modal-title {
       text-align: center;
     }
-    .va-modal-icon{
-      margin:10px auto;
-      display:block;
+    .va-modal-icon {
+      margin: 10px auto;
+      display: block;
     }
-    .alert-actions{text-align:center}
+    .alert-actions {
+      text-align: center;
+    }
   }
 
   #non-us-based-modal {
@@ -30,6 +32,33 @@
 
       p {
         padding-bottom: 40px;
+      }
+    }
+  }
+
+  #submission-complete-modal {
+    .va-modal-inner {
+      max-width: 70rem;
+    }
+    .va-modal-body {
+      text-align: center;
+      h3.va-modal-title {
+        font-size: 3rem;
+      }
+      img {
+        padding-bottom: 20px;
+      }
+      p {
+        text-align: left;
+      }
+      p.howd-we-do {
+        bottom: 20px;
+        left: 50%;
+        position: absolute;
+        transform: translateX(-50%);
+      }
+      .alert-actions {
+        margin: 60px 0;
       }
     }
   }
