@@ -89,7 +89,19 @@ export interface APIDescription {
 }
 
 export interface OAuthInfo {
+  readonly acgInfo?: ACGInfo;
+  readonly ccgInfo?: CCGInfo;
+}
+
+export interface ACGInfo {
   readonly baseAuthPath: string;
+  readonly scopes: string[];
+}
+
+export interface CCGInfo {
+  readonly baseAuthPath: string;
+  readonly sandboxAud: string;
+  readonly productionAud: string;
   readonly scopes: string[];
 }
 

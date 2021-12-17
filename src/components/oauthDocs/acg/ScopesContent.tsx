@@ -21,7 +21,7 @@ const ScopesContent = (): JSX.Element => {
     (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
   );
   const apiDef = lookupApiByFragment(selectedOAuthApi);
-  const scopes = apiDef?.oAuthInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
+  const scopes = apiDef?.oAuthInfo?.acgInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
   const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
