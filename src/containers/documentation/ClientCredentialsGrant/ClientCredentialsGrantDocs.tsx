@@ -3,10 +3,8 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router';
-import {
-  PageHeader,
-  APISelector,
-} from '../../../components';
+import GoodToKnow from '../../../components/oauthDocs/ccg/GoodToKnow';
+import { PageHeader, APISelector } from '../../../components';
 import {
   resetOAuthApiSelection,
   ResetOAuthAPISelection,
@@ -16,7 +14,7 @@ import {
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { getAllOauthApis } from '../../../apiDefs/query';
+import { getActiveOauthApis, getAllOauthApis } from '../../../apiDefs/query';
 import { isApiDeactivated } from '../../../apiDefs/deprecated';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
@@ -73,9 +71,12 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
     (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
   );
 
-  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) &&
-                                                                     item.oAuthTypes &&
-                                                                     item.oAuthTypes.includes('ClientCredentialsGrant'));
+  const options = getActiveOauthApis().filter(
+    (item: APIDescription) =>
+      !isApiDeactivated(item) &&
+      item.oAuthTypes &&
+      item.oAuthTypes.includes('ClientCredentialsGrant'),
+  );
 
   React.useEffect(() => {
     if (initializing.current) {
@@ -105,9 +106,17 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
       </Helmet>
       <PageHeader halo="Authorization" header="Client Credentials Grant" />
       <p>
-        The Lighthouse OAuth 2.0 Client Credentials Grant (CCG) works by using your RSA generated key pair in JSON Web Key (JWK) format, as described in the OpenID spec.
+        The Lighthouse{' '}
+        <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4">
+          OAuth 2.0 Client Credentials Grant
+        </a>{' '}
+        (CCG) works by using your RSA generated key pair in{' '}
+        <a href="https://datatracker.ietf.org/doc/html/rfc7517">JSON Web Key (JWK)</a> format, as
+        described in the{' '}
+        <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
       </p>
       <APISelector options={options} selectedOption={selectedOAuthApi} withButton />
+      <GoodToKnow />
       <GettingStarted />
       <AuthCodeFlowContent options={options} selectedOption={selectedOAuthApi} />
       <TestUsers />

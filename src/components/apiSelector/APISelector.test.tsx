@@ -23,12 +23,12 @@ const options: APIDescription[] = [
     name: 'Benefits Claims API',
     oAuth: true,
     oAuthInfo: {
-      baseAuthPath: '/oauth2/claims/v1',
-      scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      acgInfo: {
+        baseAuthPath: '/oauth2/claims/v1',
+        scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      },
     },
-    oAuthTypes: [
-      'AuthorizationCodeGrant',
-    ],
+    oAuthTypes: ['AuthorizationCodeGrant'],
     openData: false,
     releaseNotes: ClaimsReleaseNotes,
     urlFragment: 'claims',
@@ -40,10 +40,7 @@ describe('APISelector', () => {
   it('does not render additional instruction text', () => {
     render(
       <Provider store={store}>
-        <APISelector
-          options={options}
-          selectedOption="claims"
-        />
+        <APISelector options={options} selectedOption="claims" />
       </Provider>,
     );
 
@@ -54,11 +51,7 @@ describe('APISelector', () => {
   it('renders additional instruction text', () => {
     render(
       <Provider store={store}>
-        <APISelector
-          options={options}
-          selectedOption="claims"
-          withButton
-        />
+        <APISelector options={options} selectedOption="claims" withButton />
       </Provider>,
     );
 
@@ -69,11 +62,7 @@ describe('APISelector', () => {
   it('renders select button', () => {
     render(
       <Provider store={store}>
-        <APISelector
-          options={options}
-          selectedOption="claims"
-          withButton
-        />
+        <APISelector options={options} selectedOption="claims" withButton />
       </Provider>,
     );
 
