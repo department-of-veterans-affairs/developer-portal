@@ -70,8 +70,16 @@ const claims: APIDescription = {
   name: 'Benefits Claims API',
   oAuth: true,
   oAuthInfo: {
-    baseAuthPath: '/oauth2/claims/v1',
-    scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+    acgInfo: {
+      baseAuthPath: '/oauth2/claims/v1',
+      scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+    },
+    ccgInfo: {
+      baseAuthPath: '/oauth2/claims/system/v1',
+      productionAud: '',
+      sandboxAud: '',
+      scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+    },
   },
   oAuthTypes: ['AuthorizationCodeGrant', 'ClientCredentialsGrant'],
   openData: false,
@@ -119,19 +127,19 @@ const verification: APIDescription = {
   name: 'Veteran Verification API',
   oAuth: true,
   oAuthInfo: {
-    baseAuthPath: '/oauth2/veteran-verification/v1',
-    scopes: [
-      'profile',
-      'openid',
-      'offline_access',
-      'service_history.read',
-      'disability_rating.read',
-      'veteran_status.read',
-    ],
+    acgInfo: {
+      baseAuthPath: '/oauth2/veteran-verification/v1',
+      scopes: [
+        'profile',
+        'openid',
+        'offline_access',
+        'service_history.read',
+        'disability_rating.read',
+        'veteran_status.read',
+      ],
+    },
   },
-  oAuthTypes: [
-    'AuthorizationCodeGrant',
-  ],
+  oAuthTypes: ['AuthorizationCodeGrant'],
   openData: false,
   releaseNotes: VeteranVerificationReleaseNotes,
   urlFragment: 'veteran_verification',
@@ -174,7 +182,7 @@ describe('query module', () => {
       const healthApi = lookupApiCategory('health');
       expect(healthApi).not.toBeNull();
       expect(healthApi?.apis.length).toBeGreaterThanOrEqual(4);
-      expect(healthApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(5);
+      expect(healthApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(6);
 
       const verificationApi = lookupApiCategory('verification');
       expect(verificationApi).not.toBeNull();

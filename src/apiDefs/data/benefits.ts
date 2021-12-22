@@ -23,8 +23,16 @@ const benefitsApis: APIDescription[] = [
     name: 'Benefits Claims API',
     oAuth: true,
     oAuthInfo: {
-      baseAuthPath: '/oauth2/claims/v1',
-      scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      acgInfo: {
+        baseAuthPath: '/oauth2/claims/v1',
+        scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      },
+      ccgInfo: {
+        baseAuthPath: '/oauth2/claims/system/v1',
+        productionAud: '',
+        sandboxAud: '',
+        scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      },
     },
     oAuthTypes: ['AuthorizationCodeGrant', 'ClientCredentialsGrant'],
     openData: false,

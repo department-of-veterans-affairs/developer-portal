@@ -14,9 +14,12 @@ describe('Auth Flow Content', () => {
   beforeEach(() => {
     const selectedOption = 'fhir';
     const apiDef = lookupApiByFragment(selectedOption);
-    const defs = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)  &&
-                                                                     item.oAuthTypes &&
-                                                                     item.oAuthTypes.includes('ClientCredentialsGrant'));
+    const defs = getAllOauthApis().filter(
+      (item: APIDescription) =>
+        !isApiDeactivated(item) &&
+        item.oAuthTypes &&
+        item.oAuthTypes.includes('ClientCredentialsGrant'),
+    );
 
     render(
       <Provider store={store}>
@@ -32,10 +35,8 @@ describe('Auth Flow Content', () => {
     const heading = screen.getByText('Requesting a Token with CCG');
     expect(heading).toBeInTheDocument();
   });
-  it('Oauth base path found ', () => {
-    const codeWrapperArray = screen.getAllByText(
-      /\/oauth2\/health\/v1\/token/i,
-    );
+  it('Oauth base path found', () => {
+    const codeWrapperArray = screen.getAllByText(/\/oauth2\/health\/system\/v1\//i);
     expect(codeWrapperArray.length).toBeGreaterThan(0);
   });
   it('Correct number of code wrappers', () => {
