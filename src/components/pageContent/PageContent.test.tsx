@@ -39,10 +39,6 @@ describe('PageContent', () => {
       name: 'Request Sandbox Access',
     });
     expect(documentationPageHeader).toBeInTheDocument();
-    setTimeout(() => {
-      expect(window.scrollTo).toHaveBeenCalledTimes(1);
-      expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
-    }, 0);
   });
 
   it('scrolls the window to the top position after navigation', async () => {
