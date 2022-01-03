@@ -28,6 +28,9 @@ const checkScreenshots = async (page: Page, selector: string): Promise<void> => 
 const paths = testPaths.filter(path => path !== '/');
 
 describe('Visual regression test', () => {
+  beforeEach(async () => {
+      await jestPuppeteer.resetBrowser();
+    });
   it('renders the homepage properly', async () => {
     // Set unlimited timeout on first request, since it may timeout while webpack is compiling.
     await page.goto(`${puppeteerHost}`, { timeout: 0, waitUntil: 'networkidle0' });

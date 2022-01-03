@@ -93,7 +93,7 @@ const benefitsApis: APIDescription[] = [
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-reference-data/v1/openapi.json`,
       },
     ],
-    enabledByDefault: false,
+    enabledByDefault: true,
     // ask Team Okapi about what step to use for Line 92 from lastProdAccesssStep Object
     lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'Benefits Reference Data API',
