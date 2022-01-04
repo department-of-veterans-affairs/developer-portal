@@ -1,0 +1,24 @@
+### December, 2021
+
+We added a new API to the developer portal. This API was previously the EVSS Data Reference Service. It allows consumers to look up the following data for use with benefits claims:
+
+- Contention types
+- Countries
+- Disabilities
+- Intake sites
+- Military pay types
+- Service branches
+- Special circumstances
+- States
+- VA medical treatment facilities
+
+This API will return only the data that can be used for benefits claims. For example, this API may return only a subset of states or countries that apply to benefits claims.
+
+There are some important differences between this API and the service it replaces:
+
+- The new service requires an API key
+- There are some stylistic differences such as changes to data types and camelCase
+- Responses are in JSON instead of HTML
+- For the treatment center endpoint, a 2-character state is required and any other input will now result in a 400 response rather than a 200 response or blank array
+
+Learn more about this API by reviewing the Benefits Data Lookup API documentation. [LINK TO THE LIVE DOCUMENTATION].
