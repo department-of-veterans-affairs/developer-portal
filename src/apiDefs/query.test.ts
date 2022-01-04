@@ -89,7 +89,7 @@ const claims: APIDescription = {
   veteranRedirect: {
     linkText: 'benefits or appeals claim status',
     linkUrl: 'https://www.va.gov/claim-or-appeal-status/',
-    message: 'Are you a Veteran? Check your',
+    message: 'Are you a Veteran or a Veteran representative? Check your',
   },
 };
 
