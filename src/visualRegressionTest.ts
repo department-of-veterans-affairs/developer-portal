@@ -28,18 +28,22 @@ const checkScreenshots = async (page: Page, selector: string): Promise<void> => 
 const paths = testPaths.filter(path => path !== '/');
 
 describe('Visual regression test', () => {
+  beforeEach(async () => {
+    await jestPuppeteer.resetBrowser();
+  });
+
   it('renders the homepage properly', async () => {
     // Set unlimited timeout on first request, since it may timeout while webpack is compiling.
     await page.goto(`${puppeteerHost}`, { timeout: 0, waitUntil: 'networkidle0' });
     await checkScreenshots(page, 'main');
   });
 
-  it('renders the header properly', async() => {
+  it('renders the header properly', async () => {
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
     await checkScreenshots(page, 'header');
   });
 
-  it('renders the footer properly', async() => {
+  it('renders the footer properly', async () => {
     await page.goto(`${puppeteerHost}`, { waitUntil: 'networkidle0' });
     await checkScreenshots(page, 'footer');
   });
@@ -54,7 +58,9 @@ describe('Visual regression test', () => {
 
     await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
     // Hide any videos that may be on the page
-    await page.evaluate('document.querySelectorAll("iframe").forEach((e) => { e.style="visibility: hidden;" });');
+    await page.evaluate(
+      'document.querySelectorAll("iframe").forEach((e) => { e.style="visibility: hidden;" });',
+    );
     await checkScreenshots(page, 'main');
   });
 });
