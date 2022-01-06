@@ -9,6 +9,7 @@ declare module 'swagger-client' {
     name: string;
     in: 'query' | 'header' | 'path' | 'cookie';
     example: Example;
+    schema?: Schema;
   }
 
   export interface Schema {
@@ -16,6 +17,7 @@ declare module 'swagger-client' {
     properties: { [key: string]: Schema };
     items?: Schema;
     example: Example;
+    enum?: string[];
 
     /**
      * not actually a part of the OpenAPI Spec - name is the key in properties, above, but we

@@ -46,6 +46,11 @@ const getAllOauthApis = (): APIDescription[] =>
     .filter((item: APIDescription) => !!item.oAuth)
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 
+const getActiveOauthApis = (): APIDescription[] =>
+  getAllOauthApis().filter((api: APIDescription) =>
+    isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  );
+
 const getAllKeyAuthApis = (): APIDescription[] =>
   getAllApis()
     .filter((item: APIDescription) => !item.oAuth)
@@ -84,6 +89,7 @@ const onlyOpenDataAPIs = (apiList: string[]): boolean =>
 
 export {
   apisFor,
+  getActiveOauthApis,
   getAllApis,
   getAllOauthApis,
   getAllQuickstartCategorySlugs,

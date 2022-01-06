@@ -115,6 +115,7 @@ const oldRouteToNew = [
 
 const DocumentationRoot = (): JSX.Element => (
   <ContentWithNav
+    fullWidth
     nav={<ExploreSideNav />}
     content={
       <Switch>

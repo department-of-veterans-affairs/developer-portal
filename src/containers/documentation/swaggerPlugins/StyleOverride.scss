@@ -83,6 +83,16 @@
       min-width: unset !important;
       max-width: 100%;
     }
+    .va-api-curl-form select {
+      min-width: 230px !important;
+      max-width: 46rem;
+    }
+  }
+
+  &.opblock-deprecated {
+    .opblock-summary-method {
+      color: $color-black !important;
+    } 
   }
 }
 .swagger-ui .renderedMarkdown {

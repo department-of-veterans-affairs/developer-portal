@@ -8,9 +8,8 @@ const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
   if (elementToFocus) {
     elementToFocus.focus();
   }
-
   if (elementToFocus?.id === 'main') {
-    window.scrollTo(0, 0);
+    setTimeout(() => window.scrollTo(0, 0), 0);
   }
 };
 
