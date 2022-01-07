@@ -228,6 +228,7 @@
   }
   .model-box-control {
     background: none;
+    color: #3b4151;
     display: inline-block;
     margin: 0;
     padding: 0;
@@ -235,6 +236,10 @@
   }
   .model.model-title {
     line-height: 1.5;
+  }
+
+  .prop-format {
+    color: #777;
   }
 }
 
