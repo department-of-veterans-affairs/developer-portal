@@ -251,7 +251,7 @@ jobs:
             report_path="test/image_snapshots/__diff_output__/"
             links=""
             for f in ${report_path}*; do
-              links="${links} - [${f#"${report_path}"}](https://s3-${AWS_REGION}.amazonaws.com/${AWS_S3_SCREENSHOTS_BUCKET}/$GITHUB_HEAD_REF/gha-${GITHUB_HEAD_REF}/${COMMIT_HASH}/${f#"${report_path}"}) <br />"
+              links="${links} - [${f#"${report_path}"}](https://s3-${AWS_REGION}.amazonaws.com/${AWS_S3_SCREENSHOTS_BUCKET}/$GITHUB_HEAD_REF/gha-${COMMIT_HASH}/${f#"${report_path}"}) <br />"
             done
             docsLink="https://github.com/$GITHUB_REPOSITORY/blob/master/docs/testing.md#visual-regression-testing"
             comment="Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
