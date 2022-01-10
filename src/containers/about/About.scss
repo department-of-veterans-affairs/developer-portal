@@ -1,0 +1,33 @@
+@import '../../styles/variables';
+
+#clients {
+  column-gap: 20px;
+
+  @include media($small-screen) {
+    column-count: 1;
+  }
+
+  @include media($medium-screen) {
+    column-count: 2;
+  }
+
+  @include media($small-desktop-screen) {
+    column-count: 3;
+  }
+}
+
+#clients > div {
+  font-style: italic;
+}
+
+.quote {
+  font-family: Bitter;
+  font-weight: 400;
+}
+
+.signature {
+  font-family: Bitter;
+  font-style: italic;
+  font-weight: 400;
+  text-align: end;
+}
