@@ -13,6 +13,10 @@ jobs:
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
       - uses: actions/checkout@v2
+      - name: Check open sans
+        run: dpkg -L fonts-open-sans
+      - name: Install open sans
+        run: sudo apt-get update && sudo apt-get install fonts-open-sans
       - name: Setup node
         uses: actions/setup-node@v2
         with:
