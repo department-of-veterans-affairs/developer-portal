@@ -7,7 +7,7 @@ import { APISelector, CodeWrapper } from '../../index';
 import { AuthCodeFlowContentProps } from '../../../containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
 
 const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
-  const baseAuthPath = props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
+  const baseAuthPath = props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
   const isClinicalHealthSelected = props.selectedOption === 'clinical_health';
 
   return (
@@ -35,11 +35,12 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         <ReactMarkdown
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~plaintext
@@ -47,7 +48,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
   client_id=0oa1c01m77heEXUZt2p7
   &redirect_uri=<yourRedirectURL>
   &response_type=code
-  &scope=${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}
+  &scope=${props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access'}
   &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ
   &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy`}
         </ReactMarkdown>
@@ -198,23 +199,22 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
               <td>Required</td>
               <td>
                 <p>
-                  Base64-encoded JSON object, the value of which will contain a sta3n (a valid
-                  VistA station number) and the patient&#39;s ICN. The format of the object will be:
+                  Base64-encoded JSON object, the value of which will contain a sta3n (a valid VistA
+                  station number) and the patient&#39;s ICN. The format of the object will be:
                 </p>
                 <p>
                   <code>
-                    &#123; &quot;sta3n&quot;: &quot;993&quot;, &quot;patient&quot;: &quot;1000720100V271387&quot; &#125;
+                    &#123; &quot;sta3n&quot;: &quot;993&quot;, &quot;patient&quot;:
+                    &quot;1000720100V271387&quot; &#125;
                   </code>
                 </p>
-                <p>
-                  When encoded using base64, the object will look like this:
-                </p>
+                <p>When encoded using base64, the object will look like this:</p>
                 <p>
                   <code>eyAic3RhM24iOiAiOTkzIiwgInBhdGllbnQiOiAiMTAwMDcyMDEwMFYyNzEzODciIH0=</code>
                 </p>
                 <p>
-                  This parameter must be used with the <code>launch</code> scope to enable the SMART-on-FHIR
-                  launch context.
+                  This parameter must be used with the <code>launch</code> scope to enable the
+                  SMART-on-FHIR launch context.
                 </p>
                 <p>
                   For more information about scopes, see&nbsp;
@@ -246,11 +246,12 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         <ReactMarkdown
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
@@ -280,15 +281,16 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
-POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
+POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
@@ -310,11 +312,12 @@ grant_type=authorization_code
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
@@ -327,7 +330,9 @@ Pragma: no-cache
     "access_token": "SlAV32hkKG",
     "expires_in": 3600,
     "refresh_token": "8xLOxBtZp8",
-    "scope": "${props.apiDef?.oAuthInfo?.scopes.join(' ') ?? 'profile openid offline_access'}",
+    "scope": "${
+      props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access'
+    }",
     "patient": "1558538470",
     "state": "af0ifjsldkj",
     "token_type": "Bearer",
@@ -340,11 +345,12 @@ Pragma: no-cache
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
@@ -381,15 +387,16 @@ Pragma: no-cache
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
-POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
+POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
@@ -415,15 +422,16 @@ grant_type=refresh_token&refresh_token={ *refresh_token* }`}
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
-GET ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/manage HTTP/1.1
+GET ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/manage HTTP/1.1
 Host: sandbox-api.va.gov`}
         </ReactMarkdown>
       </CodeWrapper>
@@ -441,15 +449,16 @@ Host: sandbox-api.va.gov`}
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
-POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
+POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
@@ -463,15 +472,16 @@ token={ *access_token* }&token_type_hint=access_token`}
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
-POST ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
+POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
@@ -497,15 +507,16 @@ token={ *refresh_token* }&token_type_hint=refresh_token`}
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http
-DELETE ${props.apiDef?.oAuthInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/grants HTTP/1.1
+DELETE ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/grants HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 
@@ -522,11 +533,12 @@ client_id={client_id}&email={test account email}`}
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element =>
+            code: ({ className, children, ...codeProps }): JSX.Element => (
               // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
               <code tabIndex={0} className={className} {...codeProps}>
                 {children}
-              </code>,
+              </code>
+            ),
           }}
         >
           {`~~~http

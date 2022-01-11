@@ -52,7 +52,15 @@ because of the service worker. To prevent this issue in the future the service w
 
 The developer portal sits behind an Nginx reverse proxy. Nginx is configured to route all requests to `/static` through to `/static`. All other paths are routed to `index.html`. This allows react to be in control of `404`ing any bad paths. However there are a group of paths at the root that need to be routed to (favicon.ico, google analytics, etc...). Ngnix is configured to explicitly route to these files. If you need to add an additional file hosted at the root of the developer portal do so [here](https://github.com/department-of-veterans-affairs/devops/blob/master/ansible/deployment/config/revproxy-vagov/vars/developer_portal_root_routes.yml). The vars in that file are used where the developer-portal [is configured](https://github.com/department-of-veterans-affairs/devops/blob/master/ansible/deployment/config/revproxy-vagov/templates/nginx_revproxy.conf.j2#L668) in the revproxy (search for `developer_portal_root_routes`)
 
-## Adding Additional APIs to the Apply Page
+## Adding Additional APIs to the Portal
+
+New APIs should be added to the appropriate file in `src/apiDefs/data`. This will add the new API to the Documentation and Release Notes sections. The API will also be added to the apply page if it is not internal only. If the new API is being added to the apply page, `developer-portal-backend` should be updated first (see below).
+
+Several properties are required when adding a new API definition. One of those is `lastProdAccessStep`, which should be set as follows:
+
+- Step two is the last step for open data APIs
+- Step three is the last step for internal-only, non-open-data APIs
+- Step four is the last step for non-internal-only, non-open-data APIs
 
 Adding a new API to the apply page requires changes in a few different places. You'll need to add the API in the following places:
 

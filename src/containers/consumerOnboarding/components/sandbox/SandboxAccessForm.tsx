@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { FC, useState } from 'react';
 
 import classNames from 'classnames';
@@ -8,7 +9,7 @@ import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox
 import { Form, Formik } from 'formik';
 import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, TermsOfServiceCheckbox } from '../../../../components';
-import { APPLY_URL } from '../../../../types/constants';
+import { APPLY_URL, FLAG_POST_TO_LPB, LPB_APPLY_URL } from '../../../../types/constants';
 import {
   ApplySuccessResult,
   DevApplicationRequest,
@@ -17,6 +18,7 @@ import {
 } from '../../../../types';
 import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { CONSUMER_PROD_PATH } from '../../../../types/constants/paths';
+import { getFlags } from '../../../../flags';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
@@ -66,6 +68,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
   const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
 
   const handleSubmit = async (values: Values): Promise<void> => {
+    const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
     setSubmissionHasError(false);
     setSubmissionErrors([]);
     const applicationBody: DevApplicationRequest = {
@@ -113,6 +116,23 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
       // This will only capture the errors on 4xx errors from the developer-portal-backend.
       const errors = (error as SandboxAccessFormError).body.errors ?? [];
       setSubmissionErrors(errors);
+    }
+
+    if (flagLpbActive) {
+      try {
+        await makeRequest<DevApplicationResponse>(
+          LPB_APPLY_URL,
+          {
+            body: JSON.stringify(applicationBody),
+            headers: {
+              accept: 'application/json',
+              'content-type': 'application/json',
+            },
+            method: 'POST',
+          },
+          { responseType: ResponseType.JSON },
+        );
+      } catch (error: unknown) {}
     }
   };
 

@@ -112,20 +112,65 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     });
   }
 
-  public buildInputs(fields: string[]): JSX.Element {
+  public buildInputs(fields: Parameter[]): JSX.Element {
     return (
       <div>
-        {fields.map((fieldName: string) => {
+        {fields.map((field: Parameter) => {
           const inputId = uuidv4();
           return (
-            <div key={fieldName}>
-              <label htmlFor={`${fieldName}-${inputId}`}>{fieldName}</label>
+            <div key={field.name}>
+              <label htmlFor={`${field.name}-${inputId}`}>{field.name}</label>
+              {!!field.schema?.enum && (
+                <>
+                  {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+                  <select
+                    className="curl-form-param"
+                    id={`${field.name}-${inputId}`}
+                    aria-label={field.name}
+                    value={this.state.paramValues[field.name] || ''}
+                    onChange={(e): void => this.handleInputChange(field.name, e.target.value)}
+                  >
+                    <option value="" />
+                    {field.schema.enum.map(
+                      (fieldName: string): JSX.Element => (
+                        <option value={fieldName} key={fieldName}>
+                          {fieldName}
+                        </option>
+                      ),
+                    )}
+                  </select>
+                </>
+              )}
+              {!field.schema?.enum && (
+                <input
+                  type="text"
+                  id={`${field.name}-${inputId}`}
+                  aria-label={field.name}
+                  value={this.state.paramValues[field.name] || ''}
+                  onChange={(e): void => this.handleInputChange(field.name, e.target.value)}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  public buildRequestBodyInputs(fields: Schema[]): JSX.Element {
+    return (
+      <div>
+        {fields.map((field: Schema) => {
+          const inputId = uuidv4();
+          return (
+            <div key={field.name}>
+              <label htmlFor={`${field.name}-${inputId}`}>{field.name}</label>
               <input
                 type="text"
-                id={`${fieldName}-${inputId}`}
-                aria-label={fieldName}
-                value={this.state.paramValues[fieldName] || ''}
-                onChange={(e): void => this.handleInputChange(fieldName, e.target.value)}
+                id={`${field.name}-${inputId}`}
+                aria-label={field.name}
+                value={this.state.paramValues[field.name] || ''}
+                onChange={(e): void => this.handleInputChange(field.name, e.target.value)}
               />
             </div>
           );
@@ -223,8 +268,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     if (this.state.params.length > 0) {
       return (
         <div>
-          <h3> Parameters: </h3>
-          {this.buildInputs(this.state.params.map(p => p.name))}
+          <h3>Parameters:</h3>
+          {this.buildInputs(this.state.params.map(p => p))}
         </div>
       );
     } else {
@@ -236,8 +281,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     if (this.state.requestBodyProperties.length > 0) {
       return (
         <div>
-          <h3> Request Body: </h3>
-          {this.buildInputs(this.state.requestBodyProperties.map(p => p.name))}
+          <h3>Request Body:</h3>
+          {this.buildRequestBodyInputs(this.state.requestBodyProperties.map(p => p))}
         </div>
       );
     } else {
@@ -259,7 +304,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     if (Object.keys(security[0]).includes('apikey')) {
       return (
         <div>
-          <h3> API Key: </h3>
+          <h3>API Key:</h3>
           <div>
             <input
               aria-label="Enter API Key"
@@ -277,7 +322,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     } else {
       return (
         <div>
-          <h3> Bearer Token: </h3>
+          <h3>Bearer Token:</h3>
           <div>
             <input
               aria-label="Enter Bearer Token"

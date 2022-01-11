@@ -47,8 +47,9 @@ describe('PageContent', () => {
     await screen.findByRole('heading', {
       name: 'Request Sandbox Access',
     });
-
-    expect(window.scrollTo).toHaveBeenCalledTimes(1);
-    expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+    setTimeout(() => {
+      expect(window.scrollTo).toHaveBeenCalledTimes(2);
+      expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+    }, 0);
   });
 });

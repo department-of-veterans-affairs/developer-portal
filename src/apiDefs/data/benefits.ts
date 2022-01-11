@@ -1,6 +1,7 @@
 import {
   benefitsContent,
   BenefitsIntakeReleaseNotes,
+  BenefitsRefDataReleaseNotes,
   ClaimsReleaseNotes,
   LoanGuarantyReleaseNotes,
 } from '../../content/apiDocs/benefits';
@@ -23,8 +24,16 @@ const benefitsApis: APIDescription[] = [
     name: 'Benefits Claims API',
     oAuth: true,
     oAuthInfo: {
-      baseAuthPath: '/oauth2/claims/v1',
-      scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      acgInfo: {
+        baseAuthPath: '/oauth2/claims/v1',
+        scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      },
+      ccgInfo: {
+        baseAuthPath: '/oauth2/claims/system/v1',
+        productionAud: '',
+        sandboxAud: '',
+        scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      },
     },
     oAuthTypes: ['AuthorizationCodeGrant', 'ClientCredentialsGrant'],
     openData: false,
@@ -48,6 +57,24 @@ const benefitsApis: APIDescription[] = [
     openData: false,
     releaseNotes: BenefitsIntakeReleaseNotes,
     urlFragment: 'benefits',
+    vaInternalOnly: false,
+    veteranRedirect: benefitsContent.veteranRedirect,
+  },
+  {
+    altID: 'benefitsReferenceData',
+    description: 'Look up data and codes for VA benefits claims',
+    docSources: [
+      {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-reference-data/metadata.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/benefits-reference-data/v1/openapi.json`,
+      },
+    ],
+    enabledByDefault: true,
+    lastProdAccessStep: ProdAccessFormSteps.Two,
+    name: 'Benefits Reference Data API',
+    openData: true,
+    releaseNotes: BenefitsRefDataReleaseNotes,
+    urlFragment: 'benefits_reference_data',
     vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
   },
