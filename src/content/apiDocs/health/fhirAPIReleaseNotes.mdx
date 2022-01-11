@@ -1,3 +1,9 @@
+### January 10, 2022
+  -  We changed the `referenceRange` that's returned with an `Observation` resource.
+      - It no longer returns the field `high` or `low` if there is not an associated value.
+      - It now returns the `system`, `code`, and `unit` only if all data are present.   
+
+---
 ### September 21, 2021
 We added new elements and values to the R4 `Condition` FHIR mapping. 
   -  The `clinicalStatus` element now supports the value `inactive`.
