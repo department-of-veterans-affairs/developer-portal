@@ -1,3 +1,8 @@
+---
+imports:
+  '{ Link }': 'react-router-dom'
+---
+
 ### December, 2021
 
 We added a new API to the developer portal. This API was previously the EVSS Data Reference Service. It allows consumers to look up the following data for use with benefits claims:
@@ -21,4 +26,4 @@ There are some important differences between this API and the service it replace
 - Responses are in JSON instead of HTML
 - For the treatment center endpoint, a 2-character state is required and any other input will now result in a 400 response rather than a 200 response or blank array
 
-Learn more about this API by reviewing the Benefits Data Lookup API documentation. [LINK TO THE LIVE DOCUMENTATION].
+Learn more about this API by reviewing the <Link to="/explore/benefits/docs/benefits_reference_data">Benefits Data Lookup API documentation</Link>.
