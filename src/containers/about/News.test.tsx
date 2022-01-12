@@ -5,7 +5,7 @@ import * as React from 'react';
 import { MemoryRouter } from 'react-router';
 import * as NewsData from '../../__mocks__/news.test.yml';
 import toHtmlId from '../../toHtmlId';
-import News from './News';
+import About from './About';
 import { DataSection } from './types/data-section';
 import { NewsItemData } from './types/news-item-data';
 
@@ -17,7 +17,7 @@ describe('News', () => {
   beforeEach(() => {
     render(
       <MemoryRouter initialEntries={['/about/news']}>
-        <News />
+        <About />
       </MemoryRouter>,
     );
   });
@@ -30,10 +30,11 @@ describe('News', () => {
     it('has the expected side nav entries', () => {
       const sideNav = screen.getByRole('navigation', { name: 'About Side Nav' });
       const navLinks = getAllByRole(sideNav, 'link');
-      expect(navLinks).toHaveLength(data.sections.length + 1);
+      // Increment by 2 to account for additional "News" link
+      expect(navLinks).toHaveLength(data.sections.length + 2);
 
       const overviewLink = getByRole(sideNav, 'link', { name: 'News' });
-      expect(overviewLink).toHaveAttribute('href', '/about/news#header-halo');
+      expect(overviewLink).toHaveAttribute('href', '/about/news');
 
       data.sections.forEach((dataSection: DataSection) => {
         const link = getByRole(sideNav, 'link', { name: dataSection.title });

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ContentWithNav, SideNavEntry } from '../../components';
-import { PAGE_HEADER_AND_HALO_ID } from '../../types/constants';
+// import { PAGE_HEADER_AND_HALO_ID } from '../../types/constants';
 import { ABOUT_PATH, ABOUT_NEWS_PATH } from '../../types/constants/paths';
 import toHtmlId from '../../toHtmlId';
 
@@ -51,7 +51,7 @@ const About = (): JSX.Element => (
       </Switch>
     }
     navAriaLabel="About Side Nav"
-    contentAriaLabelledBy={PAGE_HEADER_AND_HALO_ID}
+    contentAriaLabelledBy="page-header"
   />
 );
 

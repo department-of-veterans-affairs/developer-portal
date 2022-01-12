@@ -61,7 +61,7 @@ const News = (): JSX.Element => {
     'This page is where you’ll find interesting press releases, articles, or media that relate to the VA Lighthouse program and the Developer Portal.';
 
   return (
-    <div>
+    <>
       <Helmet>
         <title>News</title>
       </Helmet>
@@ -88,7 +88,7 @@ const News = (): JSX.Element => {
           ))}
         </section>
       ))}
-    </div>
+    </>
   );
 };
 

@@ -27,11 +27,12 @@ describe('NavBar', () => {
 
   describe('links', () => {
     /*
-     * The Documentation, Onboarding, and API Publishing navigation items are links in the
+     * The About, Docs, Onboarding, and API Publishing navigation items are links in the
      * desktop view and buttons in the mobile view. Both are rendered even though only one
      * will only be visible at a time based on the view.
      */
     it.each([
+      ['About', '/about'],
       ['Docs', '/explore'],
       ['Onboarding', '/onboarding'],
       ['API Publishing', '/api-publishing'],
@@ -46,12 +47,11 @@ describe('NavBar', () => {
     );
 
     /*
-     * The About, Release Notes, Support, and API Status navigation items are links in both
+     * The Release Notes, Support, and API Status navigation items are links in both
      * the desktop view and mobile view. Both are rendered even though only one will only be
      * visible at a time based on the view.
      */
     it.each([
-      ['About', '/about'],
       ['Release Notes', '/release-notes'],
       ['Support', '/support'],
       ['API Status', 'https://valighthouse.statuspage.io'],
