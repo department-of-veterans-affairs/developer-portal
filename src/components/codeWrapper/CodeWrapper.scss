@@ -7,7 +7,7 @@
     position: relative;
 
     &:after {
-      content: "";
+      content: '';
       height: 100%;
       width: 20px;
       background: linear-gradient(270deg, #222935, transparent);
@@ -18,6 +18,7 @@
   }
 
   code {
+    font-family: 'Ubuntu Mono', monospace;
     overflow: auto;
   }
 }
