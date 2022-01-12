@@ -61,6 +61,21 @@ describe('Visual regression test', () => {
     await page.evaluate(
       'document.querySelectorAll("iframe").forEach((e) => { e.style="visibility: hidden;" });',
     );
+    if (path.startsWith('/explore/benefits/docs')) {
+      await page.evaluate(
+        'document.querySelectorAll(".opblock-summary-control").forEach((e) => e.click());',
+      );
+      await page.waitFor(500);
+      await page.evaluate(
+        'document.querySelectorAll(\'#post_uploads_responses .model-example .tabitem > button[aria-selected="false"]\').forEach((e) => {e.click()})',
+      );
+      await page.evaluate(
+        "document.querySelector('#model-DocumentUploadSubmission .model-box-control').click();",
+      );
+      await page.evaluate(
+        "document.querySelector('#model-DocumentUploadStatusAttributes .model-box-control').click();",
+      );
+    }
     await checkScreenshots(page, 'main');
   });
 });
