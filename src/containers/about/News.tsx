@@ -32,7 +32,8 @@ const ItemDescription = ({ item }: { item: NewsItemData }): JSX.Element => (
 
 const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
   const description = <ItemDescription item={item} />;
-  if (item.url.includes('www.youtube.com')) {
+  const url = new URL(item.url);
+  if (url.host === 'www.youtube.com') {
     return (
       <div className="vads-u-margin-y--5">
         {description}

@@ -9,7 +9,7 @@ import { platformMetrics } from './platformMetrics';
 import { PlatformMetric } from './types/platform-metric';
 import './About.scss';
 
-const AboutOverview = (): JSX.Element => (
+const Overview = (): JSX.Element => (
   <div>
     <Helmet>
       <title>About</title>
@@ -115,4 +115,4 @@ const AboutOverview = (): JSX.Element => (
   </div>
 );
 
-export default AboutOverview;
+export default Overview;

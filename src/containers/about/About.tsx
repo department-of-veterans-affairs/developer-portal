@@ -9,7 +9,7 @@ import * as newsData from '../../content/news.yml';
 import { DataSection } from './types/data-section';
 import { NewsSection } from './types/news-section';
 import { SideNavSubEntryProps } from './types/side-nav-sub-entry-props';
-import AboutOverview from './AboutOverview';
+import Overview from './Overview';
 import News from './News';
 
 const data = newsData as {
@@ -46,7 +46,7 @@ const About = (): JSX.Element => (
     }
     content={
       <Switch>
-        <Route exact path={ABOUT_PATH} component={AboutOverview} />
+        <Route exact path={ABOUT_PATH} component={Overview} />
         <Route exact path={ABOUT_NEWS_PATH} component={News} />
       </Switch>
     }
