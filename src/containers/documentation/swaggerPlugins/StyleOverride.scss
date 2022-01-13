@@ -12,8 +12,6 @@
       padding: 1rem;
       background-color: #eeeeee;
       border: 1px solid #5b616b;
-      border-top-style: none;
-      border-bottom-style: none;
     }
     &:last-child {
       td {
@@ -92,7 +90,7 @@
   &.opblock-deprecated {
     .opblock-summary-method {
       color: $color-black !important;
-    } 
+    }
   }
 }
 .swagger-ui .renderedMarkdown {

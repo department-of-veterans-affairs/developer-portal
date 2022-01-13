@@ -91,7 +91,8 @@ export interface Values {
   productionKeyCredentialStorage: string;
   productionOrOAuthKeyCredentialStorage: string;
   veteranFacingDescription: string;
-  policyDocuments: string;
+  privacyPolicyURL?: string;
+  termsOfServiceURL?: string;
 }
 
 const initialValues: Values = {
@@ -114,12 +115,12 @@ const initialValues: Values = {
   phoneNumber: '',
   piiStorageMethod: '',
   platforms: '',
-  policyDocuments: '',
   primaryContact: {
     email: '',
     firstName: '',
     lastName: '',
   },
+  privacyPolicyURL: '',
   productionKeyCredentialStorage: '',
   productionOrOAuthKeyCredentialStorage: '',
   scopesAccessRequested: '',
@@ -133,6 +134,7 @@ const initialValues: Values = {
   storePIIOrPHI: '',
   supportLink: '',
   termsOfService: false,
+  termsOfServiceURL: '',
   thirdPartyInfoDescription: '',
   valueProvided: '',
   vasiSystemName: '',
@@ -263,6 +265,16 @@ const ProductionAccess: FC = () => {
         // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         key => filteredValues[key] == null && delete filteredValues[key],
       );
+
+      const policyDocuments = filteredValues.termsOfServiceURL && filteredValues.privacyPolicyURL ?
+        [filteredValues.termsOfServiceURL, filteredValues.privacyPolicyURL] :
+        undefined;
+
+      // delete privacyPolicyURL and termsOfServiceURL because the backend doesn't accept them,
+      // instead it uses the policyDocuments array.
+      delete filteredValues.privacyPolicyURL;
+      delete filteredValues.termsOfServiceURL;
+
       const applicationBody: ProductionAccessRequest = {
         ...filteredValues,
         apis: filteredValues.apis.join(','),
@@ -275,7 +287,7 @@ const ProductionAccess: FC = () => {
           filteredValues.listedOnMyHealthApplication === yesOrNoValues.Yes,
         monitizedVeteranInformation:
           filteredValues.monitizedVeteranInformation === yesOrNoValues.Yes,
-        policyDocuments: [filteredValues.policyDocuments],
+        policyDocuments,
         signUpLink: [filteredValues.signUpLink],
         statusUpdateEmails: [filteredValues.statusUpdateEmails],
         storePIIOrPHI: filteredValues.storePIIOrPHI === yesOrNoValues.Yes,

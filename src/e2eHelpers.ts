@@ -25,8 +25,7 @@ export const testPaths = [
   '/explore/health',
   '/explore/benefits',
   '/explore/health/docs/quickstart',
-  '/explore/benefits/docs/claims', // Only include a few swagger pages since they're all pretty similar
-  '/explore/benefits/docs/appeals',
+  '/explore/benefits/docs/claims', // Just need one expanded Swagger for visual testing
   '/release-notes',
   '/news',
   '/support',

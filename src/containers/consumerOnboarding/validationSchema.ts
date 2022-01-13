@@ -254,22 +254,16 @@ const validationSchema = [
       }),
   }),
   yup.object().shape({
-    policyDocuments: isListAndLoopEnabled
-      ? yup
-          .array()
-          .of(
-            yup
-              .string()
-              .isNotATestString()
-              .url('Add a link to your terms of service and privacy policies.'),
-          )
-          .min(1)
-          .required('Add a link to your terms of service and privacy policies.')
-      : yup
-          .string()
-          .isNotATestString()
-          .url('Add a link to your terms of service and privacy policies.')
-          .required('Add a link to your terms of service and privacy policies.'),
+    privacyPolicyURL: yup
+      .string()
+      .isNotATestString()
+      .url('Add a valid link to your privacy policies')
+      .required('Add a valid link to your privacy policies'),
+      termsOfServiceURL: yup
+      .string()
+      .isNotATestString()
+      .url('Add a valid link to your terms of service')
+      .required('Add a valid link to your terms of service'),
   }),
 ];
 export default validationSchema;
