@@ -9,6 +9,10 @@ import { platformMetrics } from './platformMetrics';
 import { PlatformMetric } from './types/platform-metric';
 import './About.scss';
 
+const ParagraphHeading = ({ children }: { children: string }): JSX.Element => (
+  <p className={classNames('vads-u-margin-bottom--0', 'vads-u-font-weight--bold')}>{children}</p>
+);
+
 const Overview = (): JSX.Element => (
   <div>
     <Helmet>
@@ -26,24 +30,24 @@ const Overview = (): JSX.Element => (
         to provide these approved entities—our consumers— with the highest quality integration
         experience.
       </p>
-      <h3 className="vads-u-margin-bottom--0">What do we do?</h3>
+      <ParagraphHeading>What do we do?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
         We give our consumers no-cost access to VA data through{' '}
         <Link to="https://developer.va.gov/explore">our APIs</Link>. We never, ever charge fees.
       </p>
-      <h3 className="vads-u-margin-bottom--0">Why do we do it?</h3>
+      <ParagraphHeading>Why do we do it?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
         Our APIs empower partners to build innovative,{' '}
         <Link to="https://www.va.gov/resources/find-apps-you-can-use/">Veteran-centered apps</Link>{' '}
         with the goal of better serving those who have served us.
       </p>
-      <h3 className="vads-u-margin-bottom--0">What are APIs?</h3>
+      <ParagraphHeading>What are APIs?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
         APIs are application programming interfaces, which allow applications to send and retrieve
         data without having to build functionality from scratch. We publish only modern, RESTful
         APIs.
       </p>
-      <h3 className="vads-u-margin-bottom--0">Why use our APIs?</h3>
+      <ParagraphHeading>Why use our APIs?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
         Integrating with our APIs allows you to access the most up-to-date VA data with the least
         amount of effort. When you choose to integrate your application with one or more of our
@@ -64,7 +68,7 @@ const Overview = (): JSX.Element => (
       ))}
     </div>
     <h2 className="vads-u-margin-top--0">You&apos;ll be in good company</h2>
-    <div className="vads-u-margin-bottom--5" id="clients">
+    <div className="vads-u-margin-bottom--6" id="clients">
       {consumerPartners.map(
         (partner: string): JSX.Element => (
           <div key={partner}>{partner}</div>

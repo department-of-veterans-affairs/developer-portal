@@ -17,7 +17,7 @@ export const consumerPartners: string[] = [
   'MyPatientLink',
   'OneRecord',
   'Panoramic Software',
-  'Roaring fort transportation authority',
+  'Roaring Fork Transportation Authority',
   'Santa Clara County VetCheck',
   'Thank You Universe',
   'The Commons Project',
