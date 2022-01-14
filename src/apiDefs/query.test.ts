@@ -76,8 +76,8 @@ const claims: APIDescription = {
     },
     ccgInfo: {
       baseAuthPath: '/oauth2/claims/system/v1',
-      productionAud: '',
-      sandboxAud: '',
+      productionAud: 'ausajojxqhTsDSVlA297',
+      sandboxAud: 'ausdg7guis2TYDlFe2p7',
       scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
     },
   },
