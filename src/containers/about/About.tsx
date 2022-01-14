@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { ContentWithNav, SideNavEntry } from '../../components';
-// import { PAGE_HEADER_AND_HALO_ID } from '../../types/constants';
-import { ABOUT_PATH, ABOUT_NEWS_PATH } from '../../types/constants/paths';
+import { PAGE_HEADER_ID } from '../../types/constants';
+import { ABOUT_OVERVIEW_PATH, ABOUT_NEWS_PATH } from '../../types/constants/paths';
 import toHtmlId from '../../toHtmlId';
 
 import * as newsData from '../../content/news.yml';
@@ -31,7 +31,12 @@ const About = (): JSX.Element => (
   <ContentWithNav
     nav={
       <>
-        <SideNavEntry key={`${ABOUT_PATH} page`} exact to={ABOUT_PATH} name="Overview" />
+        <SideNavEntry
+          key={`${ABOUT_OVERVIEW_PATH} page`}
+          exact
+          to={ABOUT_OVERVIEW_PATH}
+          name="Overview"
+        />
         <SideNavEntry
           key={`${ABOUT_NEWS_PATH} page`}
           exact={false}
@@ -46,12 +51,12 @@ const About = (): JSX.Element => (
     }
     content={
       <Switch>
-        <Route exact path={ABOUT_PATH} component={Overview} />
+        <Route exact path={ABOUT_OVERVIEW_PATH} component={Overview} />
         <Route exact path={ABOUT_NEWS_PATH} component={News} />
       </Switch>
     }
     navAriaLabel="About Side Nav"
-    contentAriaLabelledBy="page-header"
+    contentAriaLabelledBy={PAGE_HEADER_ID}
   />
 );
 
