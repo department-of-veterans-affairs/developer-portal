@@ -1,7 +1,27 @@
+### January 13, 2022
+Added FHIR R4 `Encounter` Resource data, which includes the ability to search by `patient`, `date`, and `_lastUpdated` date.
+
+The `vaccineCode` field in the R4 `Immunization` resource now includes the Vaccine Short Description as well as the Vaccine Group Code and Name based on the [CDC CVX to Vaccine Groups code set](https://www2a.cdc.gov/vaccines/iis/iisstandards/vaccines.asp?rpt=vg).
+
+Added support for `_lastUpdated` search in the R4 `Observation` resource.
+
+---
 ### January 10, 2022
-  -  We changed the `referenceRange` that's returned with an `Observation` resource.
-      - It no longer returns the field `high` or `low` if there is not an associated value.
-      - It now returns the `system`, `code`, and `unit` only if all data are present.   
+We changed the `referenceRange` data field that is returned with the `Observation` resource.
+ - It no longer returns the field `high` or `low` if there is not an associated value.
+ - It now returns the `system`, `code`, and `unit` fields only if all data are present.   
+
+---
+### December 13, 2021
+Added support for `_lastUpdated` search in both the DSTU2 and R4 `Procedure` resource.
+
+Integrated a new data source that contains COVID Vaccination data for VA Employees who received their vaccinations at a VA Facility.  This data is now available in the `Immunization` resource.  
+
+---
+### November 16, 2021
+Added `qualification.code.text` and `address.period` data fields to the `Practitioner` resource.
+
+Added the `code.text` data field to the `PractitionerRole` resource.  
 
 ---
 ### September 21, 2021
