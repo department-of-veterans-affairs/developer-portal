@@ -123,6 +123,45 @@ const healthApis: APIDescription[] = [
     vaInternalOnly: false,
   },
   {
+    altID: 'pgd',
+    description: '',
+    docSources: [
+      {
+        metadataUrl: '',
+        openApiUrl: '',
+      },
+    ],
+    enabledByDefault: false,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
+    name: 'PGD API (FHIR)',
+    oAuth: true,
+    oAuthInfo: {
+      ccgInfo: {
+        baseAuthPath: '/oauth2/pgd/system/v1',
+        productionAud: 'aus8ew475sXlNGpbp297',
+        sandboxAud: 'aus8x27nv4g4BS01v2p7',
+        scopes: [
+          'launch',
+          'patient/Observation.read',
+          'patient/Observation.write',
+          'patient/Patient.read',
+          'patient/Patient.write',
+          'patient/Questionnaire.read',
+          'patient/Questionnaire.write',
+          'patient/QuestionnaireResponse.read',
+          'patient/QuestionnaireResponse.write',
+          'system/Questionnaire.read',
+          'system/Questionnaire.write',
+        ],
+      },
+    },
+    oAuthTypes: ['ClientCredentialsGrant'],
+    openData: false,
+    releaseNotes: PgdReleaseNotes,
+    urlFragment: 'pgd',
+    vaInternalOnly: true,
+  },
+  {
     altID: 'health',
     description:
       'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
@@ -207,33 +246,6 @@ const healthApis: APIDescription[] = [
     releaseNotes: FhirApiReleaseNotes,
     urlFragment: 'fhir',
     vaInternalOnly: false,
-  },
-  {
-    altID: 'pgd',
-    description: '',
-    docSources: [
-      {
-        metadataUrl: '',
-        openApiUrl: '',
-      },
-    ],
-    enabledByDefault: false,
-    lastProdAccessStep: ProdAccessFormSteps.Four,
-    name: 'PGD API (FHIR)',
-    oAuth: true,
-    oAuthInfo: {
-      ccgInfo: {
-        baseAuthPath: '/oauth2/pgd/system/v1',
-        productionAud: 'aus8ew475sXlNGpbp297',
-        sandboxAud: 'aus8x27nv4g4BS01v2p7',
-        scopes: ['launch', 'system/Questionnaire.read', 'system/Questionnaire.write'],
-      },
-    },
-    oAuthTypes: ['ClientCredentialsGrant'],
-    openData: false,
-    releaseNotes: PgdReleaseNotes,
-    urlFragment: 'pgd',
-    vaInternalOnly: true,
   },
   {
     deactivationInfo: {
