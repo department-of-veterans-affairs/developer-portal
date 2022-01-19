@@ -15,7 +15,7 @@ const BuildingOIDCContent = (): JSX.Element => {
   );
   const apiDef = lookupApiByFragment(selectedOAuthApi);
   const selectorProps = {
-    options: getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)),
+    options: getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) && item.oAuthTypes && item.oAuthTypes.includes('AuthorizationCodeGrant')),
     selectedOption: selectedOAuthApi,
   };
 
