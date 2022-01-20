@@ -1,4 +1,4 @@
-### January 19, 2022
+### January 20, 2022
 
 We made updates to the "/forms/526" endpoint to make sure the schemas and descriptions better match the wording on the 526EZ form:
 
@@ -6,6 +6,11 @@ We made updates to the "/forms/526" endpoint to make sure the schemas and descri
 -   We deprecated 2 schemas because they were duplicating functionality supported by other schemas:
 	1.   `servicePay.hasSeparationPay` was deprecated because its functionality is supported by `servicePay.separationPay`. 
 	2.   `servicePay.militaryRetiredPay.willReceiveInfuture` was deprecated because its functionality is supported by `servicePay.militaryRetiredPay.willReceiveInFuture`. It also fixes letter case inconsistencies.
+
+### January 19, 2022
+
+* (v1) Updated form 526 schema and developer docs to allow `treatments.startDate` to be an optional field [#8890](https://github.com/department-of-veterans-affairs/vets-api/pull/8890)
+* (v1) Updated form 526 schema and developer docs to add optional `disabilities.serviceRelevance` field [#8890](https://github.com/department-of-veterans-affairs/vets-api/pull/8890)
 
 ### December 17, 2021
 
