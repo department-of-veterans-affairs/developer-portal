@@ -78,7 +78,7 @@ const claims: APIDescription = {
       baseAuthPath: '/oauth2/claims/system/v1',
       productionAud: 'ausajojxqhTsDSVlA297',
       sandboxAud: 'ausdg7guis2TYDlFe2p7',
-      scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
+      scopes: ['claim.read', 'claim.write'],
     },
   },
   oAuthTypes: ['AuthorizationCodeGrant', 'ClientCredentialsGrant'],
