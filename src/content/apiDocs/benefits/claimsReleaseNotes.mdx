@@ -4,8 +4,8 @@ We made updates to the "/forms/526" endpoint to make sure the schemas and descri
 
 -   Several schema descriptions were updated, but their functionality remains unchanged. Updated schema descriptions can be reviewed in the [Benefits Claims API documentation](https://developer.va.gov/explore/benefits/docs/claims?version=current). 
 -   We deprecated 2 schemas because they were duplicating functionality supported by other schemas:
-	1.   `servicePay.hasSeparationPay` was deprecated because its functionality is supported by `hasSeparationPay`. 
-	2.   `servicePay.militaryRetiredPay.willReceiveInfuture` was deprecated because its functionality is supported by `willReceiveinFuture`.
+	1.   `servicePay.hasSeparationPay` was deprecated because its functionality is supported by `servicePay.separationPay`. 
+	2.   `servicePay.militaryRetiredPay.willReceiveInfuture` was deprecated because its functionality is supported by `servicePay.militaryRetiredPay.willReceiveInFuture` and resolves letter case inconsistencies.
 
 ### December 17, 2021
 
