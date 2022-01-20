@@ -22,7 +22,7 @@ const ScopesContent = (): JSX.Element => {
   );
   const apiDef = lookupApiByFragment(selectedOAuthApi);
   const scopes = apiDef?.oAuthInfo?.acgInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
-  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
+  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) && item.oAuthTypes && item.oAuthTypes.includes('AuthorizationCodeGrant'));
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
 
