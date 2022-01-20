@@ -1,3 +1,15 @@
+### January 11th, 2022
+Release Notes for new Contestable Issues standalone endpoint
+
+We added a new endpoint (`GET /contestable_issues/{decision_review_type}`) to the Decision Reviews API. This endpoint returns contestable issues for a specific Veteran. Using this endpoint lets you tailor your appeal submission flow based on the Veteran’s issues. 
+
+This endpoint returns contestable issues for a single Veteran based on the Veteran’s social security number.
+You can search for contestable issues based on these appeal types: higher_level_reviews, notice_of_disagreements, and supplemental_claims. 
+The endpoint returns only issues that have been decided as of the receiptDate. 
+Read the Decision Review API documentation to learn more.
+
+---
+
 ### July 26th, 2021
 Decision Reviews API version 2 Release Notes
 

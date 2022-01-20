@@ -39,12 +39,12 @@ const getActiveApiDefinitions = (): APICategories => {
 };
 
 const getAllApis = (): APIDescription[] =>
-  Object.values(getApiDefinitions()).flatMap((category: APICategory) => category.apis);
+  Object.values(getApiDefinitions()).flatMap((category: APICategory) => category.apis)
+    .sort((a, b) => (a.name > b.name ? 1 : -1));
 
 const getAllOauthApis = (): APIDescription[] =>
   getAllApis()
-    .filter((item: APIDescription) => !!item.oAuth)
-    .sort((a, b) => (a.name > b.name ? 1 : -1));
+    .filter((item: APIDescription) => !!item.oAuth);
 
 const getActiveOauthApis = (): APIDescription[] =>
   getAllOauthApis().filter((api: APIDescription) =>
@@ -53,8 +53,7 @@ const getActiveOauthApis = (): APIDescription[] =>
 
 const getAllKeyAuthApis = (): APIDescription[] =>
   getAllApis()
-    .filter((item: APIDescription) => !item.oAuth)
-    .sort((a, b) => (a.name > b.name ? 1 : -1));
+    .filter((item: APIDescription) => !item.oAuth);
 
 const getAllQuickstartCategorySlugs = (): string[] =>
   Object.entries(getApiDefinitions())
