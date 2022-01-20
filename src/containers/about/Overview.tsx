@@ -1,7 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { Helmet } from 'react-helmet';
-import { Link } from 'react-router-dom';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { consumerPartners } from './consumerPartners';
@@ -21,25 +20,25 @@ const Overview = (): JSX.Element => (
     <PageHeader header="About" />
     <div className="vads-u-font-size--lg">
       <p className="vads-u-margin-top--0">
-        Lighthouse is part of VA’s Digital Modernization strategy. Since August 2018, we’ve been
-        giving approved individuals and organizations access to the VA data they need. Our platform
-        adheres to{' '}
-        <Link to="https://www.oit.va.gov/services/trm/">
+        Lighthouse is part of VA&apos;s Digital Modernization strategy. Since August 2018,
+        we&apos;ve been giving approved individuals and organizations access to the VA data they
+        need. Our platform adheres to{' '}
+        <a href="https://www.oit.va.gov/services/trm/">
           Office of Information and Technology (OIT) standards and technology
-        </Link>{' '}
+        </a>{' '}
         to provide these approved entities—our consumers— with the highest quality integration
         experience.
       </p>
       <ParagraphHeading>What do we do?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
         We give our consumers no-cost access to VA data through{' '}
-        <Link to="https://developer.va.gov/explore">our APIs</Link>. We never, ever charge fees.
+        <a href="https://developer.va.gov/explore">our APIs</a>. We never, ever charge fees.
       </p>
       <ParagraphHeading>Why do we do it?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
         Our APIs empower partners to build innovative,{' '}
-        <Link to="https://www.va.gov/resources/find-apps-you-can-use/">Veteran-centered apps</Link>{' '}
-        with the goal of better serving those who have served us.
+        <a href="https://www.va.gov/resources/find-apps-you-can-use/">Veteran-centered apps</a> with
+        the goal of better serving those who have served us.
       </p>
       <ParagraphHeading>What are APIs?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
@@ -51,7 +50,7 @@ const Overview = (): JSX.Element => (
       <p className="vads-u-margin-top--0">
         Integrating with our APIs allows you to access the most up-to-date VA data with the least
         amount of effort. When you choose to integrate your application with one or more of our
-        APIs, you’re getting trusted and reliable access to the data you need with the highest
+        APIs, you&apos;re getting trusted and reliable access to the data you need with the highest
         standards for security, performance, and more.
       </p>
     </div>
@@ -106,14 +105,14 @@ const Overview = (): JSX.Element => (
     <ul>
       <li>
         Learn about{' '}
-        <Link to="https://developer.va.gov/onboarding/working-with-lighthouse-apis">
+        <a href="https://developer.va.gov/onboarding/working-with-lighthouse-apis">
           working with our APIs
-        </Link>
+        </a>
         .
       </li>
       <li>
         Access to our sandbox environment is automatic when you{' '}
-        <Link to="https://developer.va.gov/apply">request an API key</Link>.
+        <a href="https://developer.va.gov/apply">request an API key</a>.
       </li>
     </ul>
   </div>
