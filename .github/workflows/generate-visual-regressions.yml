@@ -18,6 +18,7 @@ jobs:
       - id: pr_branch
         name: Determine PR branch
         run: |
+          gh auth login --with-token;
           gh auth status;
           PR_BRANCH=`gh api repos/department-of-veterans-affairs/developer-portal/pulls/${{ inputs.pr_number }} --jq '.head.ref'`;
           echo $PR_BRANCH;
