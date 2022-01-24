@@ -12,11 +12,9 @@ jobs:
   update_visual_regressions:
     runs-on: ubuntu-latest
     outputs:
-      hash: ${{ steps.pr_branch.outputs.branch_name }}
+      branch_name: ${{ steps.pr_branch.outputs.branch_name }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
-      - name: Is the input working?
-        run: echo ${{ github.event.inputs.pr_number }}
       - id: fetch_pr_branch
         uses: octokit/request-action@v2.x
         name: Fetch PR info
@@ -27,11 +25,11 @@ jobs:
       - id: pr_branch
         name: Determine PR Branch Name
         run: |
-          echo ${{ fromJson(steps.fetch_pr_branch.outputs.data) }}
-          echo ${{ fromJson(steps.fetch_pr_branch.outputs.data).head.ref }}
           PR_BRANCH=${{ fromJson(steps.fetch_pr_branch.outputs.data).head.ref }}
           echo $PR_BRANCH;
           echo echo "::set-output name=branch_name::$PR_BRANCH";
+      - name: Check output works
+        run: echo ${{ steps.pr_branch.outputs.branch_name }}
       - uses: actions/checkout@v2
         with:
           ref: ${{ steps.pr_branch.outputs.branch_name }}
@@ -87,5 +85,7 @@ jobs:
       - name: Commit new snapshots and push
         run: |
           git add test/image_snapshots/*
+          git config user.email "noreply@github.com"
+          git config user.name "GitHub Actions Runner"
           git commit -m "Updated visual snapshots via GitHub Actions job"
           git push origin ${{ steps.pr_branch.outputs.branch_name }}
