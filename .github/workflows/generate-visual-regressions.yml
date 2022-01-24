@@ -27,7 +27,7 @@ jobs:
         run: |
           PR_BRANCH=${{ fromJson(steps.fetch_pr_branch.outputs.data).head.ref }}
           echo $PR_BRANCH;
-          echo echo "::set-output name=branch_name::$PR_BRANCH";
+          echo "::set-output name=branch_name::$PR_BRANCH";
       - name: Check output works
         run: echo ${{ steps.pr_branch.outputs.branch_name }}
       - uses: actions/checkout@v2
