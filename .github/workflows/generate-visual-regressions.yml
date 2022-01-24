@@ -16,12 +16,12 @@ jobs:
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
       - name: Is the input working?
-        run: echo ${{ inputs.pr_number }}
+        run: echo ${{ github.event.inputs.pr_number }}
       - id: fetch_pr_branch
         uses: octokit/request-action@v2.x
         name: Fetch PR info
         with:
-          route: GET /repos/department-of-veterans-affairs/developer-portal/pulls/${{ inputs.pr_number }}
+          route: GET /repos/department-of-veterans-affairs/developer-portal/pulls/${{ github.event.inputs.pr_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: pr_branch
