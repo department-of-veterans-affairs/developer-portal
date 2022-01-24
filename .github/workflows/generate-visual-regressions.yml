@@ -28,7 +28,7 @@ jobs:
         name: Determine PR Branch Name
         run: |
           echo ${{ steps.fetch_pr_branch.outputs.data }}
-          echo ${{ steps.fetch_pr_branch.outputs.data.head.ref }}
+          echo ${{ toJson(steps.fetch_pr_branch.outputs.data).head.ref }}
           exit 1;
           # echo $PR_BRANCH;
           # echo echo "::set-output name=branch_name::$PR_BRANCH";
