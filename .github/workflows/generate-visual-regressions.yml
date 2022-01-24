@@ -15,16 +15,24 @@ jobs:
       hash: ${{ steps.pr_branch.outputs.branch_name }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
-      - id: pr_branch
-        name: Determine PR branch
+      - id: fetch_pr_branch
+        uses: octokit/request-action@v2.x
+        name: Fetch PR info
+        with:
+          route: GET /repos/{owner}/{repo}/pulls/{pr}
+          owner: department-of-veterans-affairs
+          repo: developer-portal
+          pr: ${{ inputs.pr_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - id: pr_branch
+        name: Determine PR Branch Name
         run: |
-          gh auth login --with-token
-          gh api repos/department-of-veterans-affairs/developer-portal/pulls/${{ inputs.pr_number }} --jq '.head.ref'
-          PR_BRANCH=`gh api repos/department-of-veterans-affairs/developer-portal/pulls/${{ inputs.pr_number }} --jq '.head.ref'`;
-          echo $PR_BRANCH;
-          echo echo "::set-output name=branch_name::$PR_BRANCH";
+          echo ${{ steps.fetch_pr_branch.outputs.data }}
+          echo ${{ steps.fetch_pr_branch.outputs.data.head.ref }}
+          exit 1;
+          # echo $PR_BRANCH;
+          # echo echo "::set-output name=branch_name::$PR_BRANCH";
       - uses: actions/checkout@v2
         with:
           ref: ${{ steps.pr_branch.outputs.branch_name }}
