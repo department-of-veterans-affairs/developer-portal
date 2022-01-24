@@ -19,7 +19,7 @@ jobs:
         uses: octokit/request-action@v2.x
         name: Fetch PR info
         with:
-          route: `GET /repos/department-of-veterans-affairs/developer-portal/pulls/${{ inputs.pr_number }}`
+          route: 'GET /repos/department-of-veterans-affairs/developer-portal/pulls/${{ inputs.pr_number }}'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - id: pr_branch
