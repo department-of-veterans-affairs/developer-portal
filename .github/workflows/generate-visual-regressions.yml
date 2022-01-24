@@ -17,6 +17,8 @@ jobs:
     steps:
       - id: pr_branch
         name: Determine PR branch
+        env:
+          GITHUB_SECRET: ${{ secrets.GITHUB_SECRET }}
         run: |
           gh auth login --with-token;
           gh auth status;
