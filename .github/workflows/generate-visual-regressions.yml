@@ -85,7 +85,7 @@ jobs:
       - name: Commit new snapshots and push
         run: |
           git add test/image_snapshots/*
-          git config user.email ${{ secrets.GIT_USER_EMAIL }}
-          git config user.name ${{ secrets.GIT_USER_NAME }}
+          git config user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config user.name "${{ secrets.GIT_USER_NAME }}"
           git commit -m "Updated visual snapshots via GitHub Actions job"
           git push origin ${{ steps.pr_branch.outputs.branch_name }}
