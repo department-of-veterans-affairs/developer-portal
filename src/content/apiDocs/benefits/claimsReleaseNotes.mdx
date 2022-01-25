@@ -1,38 +1,52 @@
 ### January 25, 2022
 
-We made updates to the "/forms/526" endpoint to make sure the schemas and descriptions better match the wording on the 526EZ form:
+We made updates to the v1 "/forms/526" endpoint to make sure the schemas and descriptions better match the wording on the 526EZ form:
 
 - Several schema descriptions were updated, but their functionality remains unchanged. Updated schema descriptions can be reviewed in the [Benefits Claims API documentation](https://developer.va.gov/explore/benefits/docs/claims?version=current).
 - We deprecated 2 schemas because they were duplicating functionality supported by other schemas:
   1.  `servicePay.hasSeparationPay` was deprecated because its functionality is supported by `servicePay.separationPay`.
   2.  `servicePay.militaryRetiredPay.willReceiveInfuture` was deprecated because its functionality is supported by `servicePay.militaryRetiredPay.willReceiveInFuture`. It also fixes letter case inconsistencies.
 
+---
+
 ### January 24, 2022
 
 - (v0 & v1) - Adds `RRD` as an available value for `specialIssues` in Form 526 submissions. [#8898](https://github.com/department-of-veterans-affairs/vets-api/pull/8898)
+
+---
 
 ### January 19, 2022
 
 - (v1) Updated form 526 schema and developer docs to allow `treatments.startDate` to be an optional field [#8890](https://github.com/department-of-veterans-affairs/vets-api/pull/8890)
 - (v1) Updated form 526 schema and developer docs to add optional `disabilities.serviceRelevance` field [#8890](https://github.com/department-of-veterans-affairs/vets-api/pull/8890)
 
+---
+
 ### December 17, 2021
 
 - (v1) Updated `directDeposit.accountType` enum for 526 form 'validate' endpoint to be case insensitive [#8716](https://github.com/department-of-veterans-affairs/vets-api/pull/8716)
+
+---
 
 ### December 14, 2021
 
 - (v1) Updated `directDeposit.accountType` enum for 526 form to be case insensitive [#8655](https://github.com/department-of-veterans-affairs/vets-api/pull/8655)
 
+---
+
 ### May 3, 2021
 
 - (v0 & v1) Fixed documentation to properly define consentLimits for a POST 2122 submission [#6728](https://github.com/department-of-veterans-affairs/vets-api/pull/6728)
+
+---
 
 ### April 22, 2021
 
 - (v1) "/forms/2122/active" now returns current and previous POA regardless of prior submissions to Lighthouse Claims API [#6621](https://github.com/department-of-veterans-affairs/vets-api/pull/6621)
 - (v0 & v1) Fixed bug where a Veteran was unable to submit a POA change for a previously used Representative [#6486](https://github.com/department-of-veterans-affairs/vets-api/pull/6486)
 - (v0 & v1) Fixed bug where some service branch options within a disability claim submission were invalid [#6640](https://github.com/department-of-veterans-affairs/vets-api/pull/6640)
+
+---
 
 ### March 30, 2021
 
