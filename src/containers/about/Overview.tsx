@@ -1,8 +1,10 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
+import { CONSUMER_APIS_PATH } from '../../types/constants/paths';
 import { consumerPartners } from './consumerPartners';
 import { platformMetrics } from './platformMetrics';
 import { PlatformMetric } from './types/platform-metric';
@@ -31,8 +33,8 @@ const Overview = (): JSX.Element => (
       </p>
       <ParagraphHeading>What do we do?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
-        We give our consumers no-cost access to VA data through{' '}
-        <a href="https://developer.va.gov/explore">our APIs</a>. We never, ever charge fees.
+        We give our consumers no-cost access to VA data through <Link to="/explore">our APIs</Link>.
+        We never, ever charge fees.
       </p>
       <ParagraphHeading>Why do we do it?</ParagraphHeading>
       <p className="vads-u-margin-top--0">
@@ -104,15 +106,11 @@ const Overview = (): JSX.Element => (
     </h3>
     <ul>
       <li>
-        Learn about{' '}
-        <a href="https://developer.va.gov/onboarding/working-with-lighthouse-apis">
-          working with our APIs
-        </a>
-        .
+        Learn about <Link to={CONSUMER_APIS_PATH}>working with our APIs</Link>.
       </li>
       <li>
         Access to our sandbox environment is automatic when you{' '}
-        <a href="https://developer.va.gov/apply">request an API key</a>.
+        <Link to="/apply">request an API key</Link>.
       </li>
     </ul>
   </div>
