@@ -1,0 +1,91 @@
+name: Generate Visual Regressions
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'What PR number needs updated visual regressions?'
+        required: true
+        type: number
+
+jobs:
+  update_visual_regressions:
+    runs-on: ubuntu-latest
+    outputs:
+      branch_name: ${{ steps.pr_branch.outputs.branch_name }}
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - id: fetch_pr_branch
+        uses: octokit/request-action@v2.x
+        name: Fetch PR info
+        with:
+          route: GET /repos/department-of-veterans-affairs/developer-portal/pulls/${{ github.event.inputs.pr_number }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - id: pr_branch
+        name: Determine PR Branch Name
+        run: |
+          PR_BRANCH=${{ fromJson(steps.fetch_pr_branch.outputs.data).head.ref }}
+          echo $PR_BRANCH;
+          echo "::set-output name=branch_name::$PR_BRANCH";
+      - name: Check output works
+        run: echo ${{ steps.pr_branch.outputs.branch_name }}
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ steps.pr_branch.outputs.branch_name }}
+          lfs: true
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "::set-output name=node_version::$NODE_VERSION"
+
+      - id: cache_node_modules
+        name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: developer-portal-node-modules
+          node-version: ${{ steps.node_version.outputs.node_version }}
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Checkout LFS objects
+        run: git lfs checkout
+      - name: Update apt-get and install packages
+        run: sudo apt-get update && sudo apt-get install -y libxss1 libxtst6 wget --no-install-recommends
+      - name: Install Google apt-get key
+        run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      - name: Install Google apt-get source
+        run: sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+      - name: Install Chrome and fonts
+        run: sudo apt-get update && sudo apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf --no-install-recommends
+      - name: Remove unnecessary files
+        run: sudo rm -rf /var/lib/apt/lists/* \
+          && sudo apt-get purge --auto-remove -y curl
+          && sudo rm -rf /src/*.deb
+
+      - name: Install dependencies
+        if: steps.cache_node_modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Delete all old snapshots
+        run: rm -f test/image_snapshots/visual-regression*
+
+      - id: visual_test
+        name: Create new snapshots
+        run: npm run test:visual -- -u
+
+      - name: Commit new snapshots and push
+        run: |
+          git add test/image_snapshots/*
+          git config user.email "${{ secrets.GIT_USER_EMAIL }}"
+          git config user.name "${{ secrets.GIT_USER_NAME }}"
+          git commit -m "Updated visual snapshots via GitHub Actions job"
+          git push origin ${{ steps.pr_branch.outputs.branch_name }}
