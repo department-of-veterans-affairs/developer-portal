@@ -15,6 +15,11 @@ jobs:
       branch_name: ${{ steps.pr_branch.outputs.branch_name }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
+      - name: testing gh auth
+        run: |
+          echo ${{ secrets.GIT_VISUAL_REGRESSIONS_COMMIT_TOKEN }} | gh auth login --with-token
+          gh auth status
+          exit 1;
       - id: fetch_pr_branch
         uses: octokit/request-action@v2.x
         name: Fetch PR info
