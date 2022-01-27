@@ -7,6 +7,7 @@ export const consumerPartners: string[] = [
   'Coral Health',
   'e7corp',
   'ER Partners',
+  'Flagship VA Mobile Application',
   'GeoffreyClapp',
   'GirlsComputingLeague',
   'Hill & Ponton P.A.',

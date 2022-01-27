@@ -9,8 +9,8 @@ export const platformMetrics: PlatformMetric[] = [
   },
   {
     callToAction: 'Learn about production access',
-    content: 'We have over 60 consumers in production, with more on the way.',
-    title: '60+ Consumers',
+    content: 'We have over 90 consumers in production, with more on the way.',
+    title: '90+ Consumers',
     url: '/onboarding',
   },
   {
