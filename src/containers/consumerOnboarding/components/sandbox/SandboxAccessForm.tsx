@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import React, { FC, useState } from 'react';
 
-import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
@@ -17,7 +16,6 @@ import {
   InternalApiInfo,
 } from '../../../../types';
 import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
-import { CONSUMER_PROD_PATH } from '../../../../types/constants/paths';
 import { getFlags } from '../../../../flags';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
@@ -138,20 +136,6 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
 
   return (
     <div className="vads-l-row">
-      <p
-        className={classNames(
-          'usa-font-lead',
-          'vads-u-font-family--sans',
-          'vads-u-margin-bottom--2',
-          'vads-u-margin-top--0',
-        )}
-      >
-        This page is the first step towards developing with VA Lighthouse APIs. The keys and/or
-        credentials you will receive are for sandbox development only. When your app is ready to go
-        live, you may <Link to={CONSUMER_PROD_PATH}>request production access</Link>. Please submit
-        the form below and you&apos;ll receive an email with your API key(s) and/or OAuth
-        credentials, as well as further instructions. Thank you for being a part of our platform.
-      </p>
       <div className="vads-u-padding-x--2p5">
         <Formik
           initialValues={initialValues}

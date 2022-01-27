@@ -129,9 +129,15 @@
     padding-right: 2rem;
   }
 
-  .opblock-body .code-wrapper {
-    background: #41444e;
-    border-radius: 4px;
+  .opblock-body {
+    pre {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .code-wrapper {
+      background: #41444e;
+      border-radius: 4px;
+    }
   }
 
   svg.svg-assets {

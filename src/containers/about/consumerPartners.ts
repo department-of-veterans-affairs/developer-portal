@@ -24,7 +24,7 @@ export const consumerPartners: string[] = [
   'The Commons Project',
   'Tyler Technologies',
   'USAJOBS',
-  'VA.GOV',
+  'VA.gov',
   'VAClaimHelper',
   'Veteran ID Card',
   'Veterans Information Services',
