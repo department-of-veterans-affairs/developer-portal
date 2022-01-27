@@ -14,6 +14,7 @@ import './styles/base.scss';
 // Apply Polyfills for IE11 for custom web-components
 void applyPolyfills().then(() => {
   void defineCustomElements();
+  return null;
 });
 
 /**
