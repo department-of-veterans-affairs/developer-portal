@@ -179,16 +179,8 @@
   },
   "resolutions": {
     "ansi-regex": "5.0.1",
-    "dns-packet": "5.2.2",
     "glob-parent": "5.1.2",
-    "husky": "6.0.0",
-    "trim": "1.0.1",
     "trim-newlines": "4.0.1",
-    "css-what": "5.0.1",
-    "normalize-url": "6.0.1",
-    "prismjs": "1.24.0",
-    "set-value": "4.0.1",
-    "tar": ">=6.1.2",
     "immer": "9.0.6"
   },
   "jest": {
