@@ -127,6 +127,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "expect-puppeteer": "^4.4.0",
@@ -173,22 +174,13 @@
     "url-loader": "^4.1.1",
     "webpack": "^4.46.0",
     "webpack-cli": "^4.9.0",
-    "webpack-dev-server": "^3.11.2",
+    "webpack-dev-server": "^3.11.3",
     "webpack-manifest-plugin": "^3.2.0"
   },
   "resolutions": {
-    "ansi-html": "https://registry.npmjs.org/ansi-html-community/-/ansi-html-community-0.0.8.tgz",
     "ansi-regex": "5.0.1",
-    "dns-packet": "5.2.2",
     "glob-parent": "5.1.2",
-    "husky": "6.0.0",
-    "trim": "1.0.1",
     "trim-newlines": "4.0.1",
-    "css-what": "5.0.1",
-    "normalize-url": "6.0.1",
-    "prismjs": "1.24.0",
-    "set-value": "4.0.1",
-    "tar": ">=6.1.2",
     "immer": "9.0.6"
   },
   "jest": {
