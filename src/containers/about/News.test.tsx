@@ -33,8 +33,8 @@ describe('News', () => {
       // Increment by 2 to account for additional "News" link
       expect(navLinks).toHaveLength(data.sections.length + 2);
 
-      const overviewLink = getByRole(sideNav, 'link', { name: 'News' });
-      expect(overviewLink).toHaveAttribute('href', '/about/news');
+      const newsLink = getByRole(sideNav, 'link', { name: 'News' });
+      expect(newsLink).toHaveAttribute('href', '/about/news');
 
       data.sections.forEach((dataSection: DataSection) => {
         const link = getByRole(sideNav, 'link', { name: dataSection.title });
