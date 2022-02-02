@@ -1,3 +1,7 @@
+### January 27, 2022
+The `manufacturer.display` field has been updated in the R4 `Immunization` resource. This field is populated based on CVX to manufacturer mappings from the [CDC Product Names to CVX and MVX code set](https://www2a.cdc.gov/vaccines/iis/iisstandards/vaccines.asp?rpt=tradename). In cases where a CVX code maps to multiple manufacturers, the exact manufacturer can't be determined and thus `manufacturer.display` will be omitted from the response.
+
+---
 ### January 13, 2022
 Added FHIR R4 `Encounter` Resource data, which includes the ability to search by `patient`, `date`, and `_lastUpdated` date.
 
