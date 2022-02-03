@@ -76,7 +76,7 @@ const benefitsApis: APIDescription[] = [
     urlFragment: 'benefits_reference_data',
     vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
-  }
+  },
 ];
 
 export default benefitsApis;
