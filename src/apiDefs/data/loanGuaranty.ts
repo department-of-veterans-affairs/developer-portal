@@ -7,6 +7,22 @@ import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const loanGuarantyApis: APIDescription[] = [
   {
+    description: 'Lets lenders automate parts of the mortgage post-closing process.',
+    docSources: [
+      {
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/lgy-remittance/metadata.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/lgy-remittance/v0/openapi.json`,
+      },
+    ],
+    enabledByDefault: false,
+    lastProdAccessStep: ProdAccessFormSteps.Three,
+    name: 'Guaranty Remittance API',
+    openData: false,
+    releaseNotes: GuarantyRemittanceReleaseNotes,
+    urlFragment: 'lgy_guaranty_remittance',
+    vaInternalOnly: true,
+  },
+  {
     description: 'Use the Loan Guaranty API to Manage VA Home Loans.',
     docSources: [
       {
@@ -27,22 +43,6 @@ const loanGuarantyApis: APIDescription[] = [
      * see this commit for when trusted partner only was represented in the source code:
      * https://github.com/department-of-veterans-affairs/developer-portal/tree/742c629534dc9ee17bb9ba73a20406a3a05cd59d
      */
-    vaInternalOnly: true,
-  },
-  {
-    description: 'Lets lenders automate parts of the mortgage post-closing process.',
-    docSources: [
-      {
-        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/lgy-remittance/metadata.json`,
-        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/lgy-remittance/v0/openapi.json`,
-      },
-    ],
-    enabledByDefault: false,
-    lastProdAccessStep: ProdAccessFormSteps.Three,
-    name: 'Guaranty Remittance API',
-    openData: false,
-    releaseNotes: GuarantyRemittanceReleaseNotes,
-    urlFragment: 'lgy_guaranty_remittance',
     vaInternalOnly: true,
   },
 ];
