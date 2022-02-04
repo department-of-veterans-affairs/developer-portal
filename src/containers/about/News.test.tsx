@@ -3,9 +3,11 @@ import { getAllByRole, getByRole, getByText, render, screen } from '@testing-lib
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
-import * as NewsData from '../__mocks__/news.test.yml';
-import toHtmlId from '../toHtmlId';
-import News, { DataSection, NewsItemData } from './News';
+import * as NewsData from '../../__mocks__/news.test.yml';
+import toHtmlId from '../../toHtmlId';
+import About from './About';
+import { DataSection } from './types/data-section';
+import { NewsItemData } from './types/news-item-data';
 
 const data = NewsData as {
   sections: DataSection[];
@@ -14,8 +16,8 @@ const data = NewsData as {
 describe('News', () => {
   beforeEach(() => {
     render(
-      <MemoryRouter initialEntries={['/news']}>
-        <News />
+      <MemoryRouter initialEntries={['/about/news']}>
+        <About />
       </MemoryRouter>,
     );
   });
@@ -26,16 +28,17 @@ describe('News', () => {
 
   describe('side nav', () => {
     it('has the expected side nav entries', () => {
-      const sideNav = screen.getByRole('navigation', { name: 'News Side Nav' });
+      const sideNav = screen.getByRole('navigation', { name: 'About Side Nav' });
       const navLinks = getAllByRole(sideNav, 'link');
-      expect(navLinks).toHaveLength(data.sections.length + 1);
+      // Increment by 2 to account for additional "News" link
+      expect(navLinks).toHaveLength(data.sections.length + 2);
 
-      const overviewLink = getByRole(sideNav, 'link', { name: 'Overview' });
-      expect(overviewLink).toHaveAttribute('href', '/news#header-halo');
+      const newsLink = getByRole(sideNav, 'link', { name: 'News' });
+      expect(newsLink).toHaveAttribute('href', '/about/news');
 
       data.sections.forEach((dataSection: DataSection) => {
         const link = getByRole(sideNav, 'link', { name: dataSection.title });
-        expect(link).toHaveAttribute('href', `/news#${toHtmlId(dataSection.title)}`);
+        expect(link).toHaveAttribute('href', `/about/news#${toHtmlId(dataSection.title)}`);
       });
     });
   });
@@ -54,7 +57,7 @@ describe('News', () => {
     expect(cardLinks).toHaveLength(data.sections.length);
     data.sections.forEach((section: DataSection, index: number) => {
       expect(cardLinks[index]).toHaveTextContent(section.title);
-      expect(cardLinks[index]).toHaveAttribute('href', `/news#${toHtmlId(section.title)}`);
+      expect(cardLinks[index]).toHaveAttribute('href', `/about/news#${toHtmlId(section.title)}`);
       expect(cardLinks[index].nextElementSibling).toHaveTextContent(section.description);
     });
   });

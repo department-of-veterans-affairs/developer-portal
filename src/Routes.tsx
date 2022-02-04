@@ -7,7 +7,8 @@ import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
-import News from './containers/News';
+import About from './containers/about/About';
+import News from './containers/about/News';
 import ErrorPage from './containers/ErrorPage';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
@@ -45,8 +46,16 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {/* API Documentation */}
       <Route exact path="/explore" component={DocumentationRoot} />
       <Route exact path="/explore/authorization" component={DocumentationRoot} />
-      <Route exact path="/explore/authorization/docs/authorization-code" component={DocumentationRoot} />
-      <Route exact path="/explore/authorization/docs/client-credentials" component={DocumentationRoot} />
+      <Route
+        exact
+        path="/explore/authorization/docs/authorization-code"
+        component={DocumentationRoot}
+      />
+      <Route
+        exact
+        path="/explore/authorization/docs/client-credentials"
+        component={DocumentationRoot}
+      />
       {buildApiDetailRoutes(apiDefinitions).map(
         (path: string): JSX.Element => (
           <Route exact key={path} path={path} component={DocumentationRoot} />
@@ -67,8 +76,9 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       )}
       <Route exact path="/release-notes/deactivated" component={ReleaseNotes} />
 
-      {/* News */}
-      <Route path="/news" component={News} />
+      {/* About */}
+      <Route path="/about" component={About} />
+      <Route path="/about/news" component={News} />
 
       {/* Support */}
       <Route exact path="/support" component={Support} />

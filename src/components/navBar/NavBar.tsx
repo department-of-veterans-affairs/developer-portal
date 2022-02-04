@@ -143,9 +143,9 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               excludeSmallScreen
               className={navLinkStyles}
             >
-              Documentation
+              Docs
             </MainNavItem>
-            <SubNav name="Documentation">
+            <SubNav name="Docs">
               <SubNavEntry onClick={props.onMobileNavClose} to="/explore" id="all">
                 Overview
               </SubNavEntry>
@@ -262,13 +262,21 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           </li>
           <li className={navItemStyles()}>
             <MainNavItem
-              onClick={props.onMobileNavClose}
-              targetUrl="/news"
+              targetUrl="/about"
               largeScreenProps={sharedNavItemProps}
+              excludeSmallScreen
               className={navLinkStyles}
             >
-              News
+              About
             </MainNavItem>
+            <SubNav name="About">
+              <SubNavEntry onClick={props.onMobileNavClose} to="/about" id="about">
+                Overview
+              </SubNavEntry>
+              <SubNavEntry onClick={props.onMobileNavClose} to="/about/news" id="news">
+                News
+              </SubNavEntry>
+            </SubNav>
           </li>
           <li className={navItemStyles()}>
             <MainNavItem

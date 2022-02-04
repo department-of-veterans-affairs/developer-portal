@@ -1,3 +1,6 @@
+export const ABOUT_OVERVIEW_PATH = '/about';
+export const ABOUT_NEWS_PATH = '/about/news';
+
 export const AUTHORIZATION_PKCE_PATH = '/explore/authorization?api=claims#pkce-authorization';
 
 export const CONSUMER_PATH = '/onboarding';
