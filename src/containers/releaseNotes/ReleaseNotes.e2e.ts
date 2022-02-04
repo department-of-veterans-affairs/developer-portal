@@ -7,7 +7,7 @@ describe('Release Notes', () => {
       await page.goto(`${puppeteerHost}/release-notes/benefits`);
     });
 
-    it.each(['Benefits Claims API', 'Benefits Intake API', 'Loan Guaranty API'])(
+    it.each(['Benefits Claims API', 'Benefits Intake API'])(
       'should move focus to the %s API section',
       async (apiName: string) => {
         const doc = await getDocument(page);

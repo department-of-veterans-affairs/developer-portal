@@ -6,7 +6,6 @@ describe('CategoryReleaseNotes', () => {
     it.each([
       'Benefits Claims API',
       'Benefits Intake API',
-      'Loan Guaranty API',
     ])(
       'should move focus to the target %s API section',
       async (apiName: string) => {
