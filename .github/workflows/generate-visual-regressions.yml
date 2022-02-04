@@ -91,3 +91,4 @@ jobs:
           git config user.name "${{ secrets.GIT_USER_NAME }}"
           git commit -m "Updated visual snapshots via GitHub Actions job"
           git push origin ${{ steps.pr_branch.outputs.branch_name }}
+          gh pr ready ${{ github.event.inputs.pr_number }}
