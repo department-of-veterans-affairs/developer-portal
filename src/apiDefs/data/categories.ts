@@ -3,6 +3,7 @@ import { benefitsContent } from '../../content/apiDocs/benefits';
 import { facilitiesContent } from '../../content/apiDocs/facilities';
 import { healthContent } from '../../content/apiDocs/health';
 import { vaFormsContent } from '../../content/apiDocs/vaForms';
+import { loanGuarantyContent } from '../../content/apiDocs/loanGuaranty';
 import { verificationContent } from '../../content/apiDocs/verification';
 
 import { APICategories } from '../schema';
@@ -11,6 +12,7 @@ import benefitsApis from './benefits';
 import facilitiesApis from './facilities';
 import healthApis from './health';
 import vaForms from './vaForms';
+import loanGuarantyApis from './loanGuaranty';
 import verificationApis from './verification';
 
 const apiDefinitions: APICategories = {
@@ -38,6 +40,12 @@ const apiDefinitions: APICategories = {
     name: 'Health APIs',
     properName: 'Health API',
   },
+  loanGuaranty: {
+    apis: loanGuarantyApis,
+    content: loanGuarantyContent,
+    name: 'Loan Guaranty APIs',
+    properName: 'Loan Guaranty API',
+  },
   vaForms: {
     apis: vaForms,
     content: vaFormsContent,
@@ -58,6 +66,7 @@ export const apiCategoryOrder: string[] = [
   'facilities',
   'vaForms',
   'health',
+  'loanGuaranty',
   'verification',
 ];
 export default apiDefinitions;
