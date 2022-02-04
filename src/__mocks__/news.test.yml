@@ -2,6 +2,7 @@ sections:
   - title: News releases
     description: Press releases from Gondor, Rohan, Rivendell, Lothlorien, etc
     media: false
+    callToAction: Read the news releases
     items:
       - title: Rohan declares war on Saruman
         date: February 3019
@@ -12,6 +13,7 @@ sections:
   - title: Articles
     description: Third-party content about the VA API program
     media: false
+    callToAction: Read the articles
     items:
       - title: Frodo stabbed by Witch King on Weathertop
         date: October 3018
@@ -24,6 +26,7 @@ sections:
   - title: Digital media
     description: YouTube videos and such
     media: true
+    callToAction: Access digital media
     items:
       - title: Sweeping panoramas of the New Zealand hills
         date: January 3019

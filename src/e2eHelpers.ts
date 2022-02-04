@@ -9,6 +9,8 @@ import {
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
   CONSUMER_APIS_PATH,
+  ABOUT_OVERVIEW_PATH,
+  ABOUT_NEWS_PATH,
 } from './types/constants/paths';
 
 import { mockMetadata as metadataMocks } from './__mocks__/mockMetadata';
@@ -27,7 +29,6 @@ export const testPaths = [
   '/explore/health/docs/quickstart',
   '/explore/benefits/docs/claims', // Just need one expanded Swagger for visual testing
   '/release-notes',
-  '/news',
   '/support',
   '/support/faq',
   '/support/contact-us',
@@ -38,6 +39,8 @@ export const testPaths = [
   CONSUMER_SANDBOX_PATH,
   CONSUMER_PROD_PATH,
   CONSUMER_DEMO_PATH,
+  ABOUT_OVERVIEW_PATH,
+  ABOUT_NEWS_PATH,
 ];
 
 export const metadataTestPaths = [''];
