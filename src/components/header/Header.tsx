@@ -85,8 +85,6 @@ const Header = (): JSX.Element => {
               <div className={defaultFlexContainer(true)}>
                 <NavHashLink to={CONSUMER_SANDBOX_PATH} className={buttonClassnames}>
                   Request an API Key
-                  <br />
-                  test
                 </NavHashLink>
                 <Search />
               </div>
