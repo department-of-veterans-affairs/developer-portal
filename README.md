@@ -4,6 +4,7 @@ The Developer Portal is the documentation and help portal for the VA API Platfor
 
 ## IMPORTANT: Install Git LFS before cloning this repo
 
+
 **Before you clone this repo, [install Git LFS](https://github.com/git-lfs/git-lfs/wiki/Installation)!!!** If Git LFS isn't installed, you may have problems cloning the repo. If you attempt to clone the repo and see hundreds of files in a changed or staged state, check that you have Git LFS installed.
 
 We use Git LFS for the image snapshots used by the app's visual regression tests. For more information, see the [testing docs](docs/testing.md#visual-regression-testing).
