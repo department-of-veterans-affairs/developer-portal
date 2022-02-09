@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { FC, useState } from 'react';
 
 import { Link } from 'react-router-dom';
@@ -15,7 +14,7 @@ import {
   DevApplicationRequest,
   DevApplicationResponse,
   InternalApiInfo,
-} from '../../../../types';
+} from '../../../../types/forms/apply';
 import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';

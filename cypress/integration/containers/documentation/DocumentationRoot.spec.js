@@ -1,6 +1,12 @@
 /// <reference types="cypress" />
 
 describe('Documentation Root', () => {
+  beforeEach(() => {
+    cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
+      fixture: 'legacy.json',
+    }).as('LPB datastore');
+  });
+
   it('Side nav is sticky on scroll', () => {
     cy.fixture('vaFormsMetaData.spec.json').then(json => {
       cy.intercept('/internal/docs/forms/metadata.json', json);

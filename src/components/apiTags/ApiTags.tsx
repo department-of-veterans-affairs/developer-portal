@@ -1,10 +1,16 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import { VaInternalOnly } from '../../apiDefs/schema';
 import ApiTag, { tagTypes } from './ApiTag';
 
 const ApiTagsPropTypes = {
   openData: PropTypes.bool.isRequired,
-  vaInternalOnly: PropTypes.oneOf([1, 2, 3]),
+  vaInternalOnly: PropTypes.oneOf([
+    VaInternalOnly.StrictlyInternal,
+    VaInternalOnly.AdditionalDetails,
+    VaInternalOnly.FlagOnly,
+    null,
+  ]),
 };
 
 type ApiTagsProps = PropTypes.InferProps<typeof ApiTagsPropTypes>;

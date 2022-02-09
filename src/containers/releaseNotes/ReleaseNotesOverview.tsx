@@ -1,13 +1,16 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
+import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import { getDeactivatedCategory } from '../../apiDefs/deprecated';
-import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
+import { getApiCategoryOrder, getApiDefinitions, getApisLoaded } from '../../apiDefs/query';
 import { CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { FLAG_CATEGORIES } from '../../types/constants';
+import { defaultLoadingProps } from '../../utils/loadingHelper';
 
 const ReleaseNotesOverview = (): JSX.Element => {
+  const apisLoaded = getApisLoaded();
   const apiDefs = getApiDefinitions();
   const deactivatedCategory = getDeactivatedCategory();
   return (
@@ -31,28 +34,35 @@ const ReleaseNotesOverview = (): JSX.Element => {
         </p>
       </div>
       <div className={defaultFlexContainer()}>
-        {getApiCategoryOrder().map((apiCategoryKey: string) => {
-          const { name, content } = apiDefs[apiCategoryKey];
-          return (
-            <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+        {apisLoaded ? (
+          <>
+            {getApiCategoryOrder().map((apiCategoryKey: string) => {
+              const { name, content } = apiDefs[apiCategoryKey];
+              return (
+                <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+                  <CardLink
+                    name={name}
+                    url={`/release-notes/${apiCategoryKey}`}
+                    callToAction={`View release notes for the ${name}`}
+                  >
+                    {content.shortDescription}
+                  </CardLink>
+                </Flag>
+              );
+            })}
+            {deactivatedCategory.apis.length > 0 && (
               <CardLink
-                name={name}
-                url={`/release-notes/${apiCategoryKey}`}
-                callToAction={`View release notes for the ${name}`}
+                name={deactivatedCategory.name}
+                url="/release-notes/deactivated"
+                callToAction="View release notes for deactivated APIs"
               >
-                {content.shortDescription}
+                This is a repository for deactivated APIs and related documentation and release
+                notes.
               </CardLink>
-            </Flag>
-          );
-        })}
-        {deactivatedCategory.apis.length > 0 && (
-          <CardLink
-            name={deactivatedCategory.name}
-            url="/release-notes/deactivated"
-            callToAction="View release notes for deactivated APIs"
-          >
-            This is a repository for deactivated APIs and related documentation and release notes.
-          </CardLink>
+            )}
+          </>
+        ) : (
+          <LoadingIndicator {...defaultLoadingProps()} />
         )}
       </div>
     </div>

@@ -43,6 +43,9 @@
   .opblock .opblock-summary-description {
     font-family: $font-sans;
   }
+  .opblock.opblock-deprecated {
+    opacity: 0.75; // 0.6 (default from swagger-ui) violates a11y rule for color-contrast
+  }
 
   .models h4 span {
     color: #555555;

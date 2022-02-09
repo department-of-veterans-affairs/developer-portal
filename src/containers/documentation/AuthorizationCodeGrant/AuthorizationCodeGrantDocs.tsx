@@ -9,7 +9,7 @@ import {
   setOAuthApiSelection,
   SetOAuthAPISelection,
 } from '../../../actions';
-import { getActiveAuthCodeApis, getActiveOauthApis } from '../../../apiDefs/query';
+import { getActiveAuthCodeApis, getActiveOauthApis, getApisLoaded } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { PageHeader } from '../../../components';
 import { Https } from '../../../components/oauthDocs/acg/Https';
@@ -63,6 +63,7 @@ const setInitialApi = (
 };
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
+  const apisLoaded = getApisLoaded();
   const history = useHistory();
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
@@ -75,15 +76,17 @@ const AuthorizationCodeGrantDocs = (): JSX.Element => {
   const options = getActiveAuthCodeApis();
 
   React.useEffect(() => {
-    if (initializing.current) {
-      // Do this on first load
-      initializing.current = false;
-      setInitialApi(history, location.search, dispatch);
-    } else {
-      // Do this on all subsequent re-renders
-      setSearchParam(history, location.search, api, false);
+    if (apisLoaded) {
+      if (initializing.current) {
+        // Do this on first load
+        initializing.current = false;
+        setInitialApi(history, location.search, dispatch);
+      } else {
+        // Do this on all subsequent re-renders
+        setSearchParam(history, location.search, api, false);
+      }
     }
-  }, [dispatch, location, history, prevApi, api]);
+  }, [dispatch, location, history, prevApi, api, apisLoaded]);
 
   /**
    * CLEAR REDUX STATE ON UNMOUNT

@@ -23,11 +23,13 @@ const renderComponent = async (): Promise<void> => {
 describe('ReleaseNotesOverview', () => {
   let apiDefsSpy: jest.SpyInstance<APICategories>;
   let allAPIsSpy: jest.SpyInstance<APIDescription[]>;
+  let apisLoadedSpy: jest.SpyInstance<boolean>;
 
   beforeAll(() => {
     jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
     apiDefsSpy = jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
     allAPIsSpy = jest.spyOn(apiQueries, 'getAllApis').mockReturnValue(fakeAPIs);
+    apisLoadedSpy = jest.spyOn(apiQueries, 'getApisLoaded').mockReturnValue(true);
   });
 
   beforeEach(renderComponent);
@@ -71,14 +73,26 @@ describe('ReleaseNotesOverview', () => {
       });
 
       await renderComponent();
-      expect(screen.queryByRole('link', {
-        name: 'Sports API',
-      })).toBeNull();
+      expect(
+        screen.queryByRole('link', {
+          name: 'Sports API',
+        }),
+      ).toBeNull();
     });
 
-    it('has a card link for deactivated APIs if there is at least one deactivated API', () => {
-      const cardLink = screen.getByRole('link', { name: 'Deactivated APIs' });
+    it('has a loading indicator before the apis are loaded', async () => {
+      apisLoadedSpy.mockReturnValue(false);
 
+      await renderComponent();
+      const loadingBar = screen.getByRole('progressbar');
+      expect(loadingBar).toBeInTheDocument();
+    });
+
+    it('has a card link for deactivated APIs if there is at least one deactivated API', async () => {
+      apisLoadedSpy.mockReturnValue(true);
+
+      await renderComponent();
+      const cardLink = screen.getByRole('link', { name: 'Deactivated APIs' });
       expect(cardLink).toBeInTheDocument();
       expect(cardLink.getAttribute('href')).toBe('/release-notes/deactivated');
     });
@@ -86,6 +100,7 @@ describe('ReleaseNotesOverview', () => {
     it('does not have a card link for deactivated APIs if there are none', async () => {
       const apis = fakeAPIs.map(api => ({ ...api, deactivationInfo: undefined }));
       allAPIsSpy.mockReturnValue(apis);
+      apisLoadedSpy.mockReturnValue(true);
       await renderComponent();
 
       expect(screen.queryByRole('link', { name: 'Deactivated APIs' })).toBeNull();

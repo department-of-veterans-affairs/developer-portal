@@ -3,6 +3,7 @@ import { History } from 'history';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import SwaggerUI from 'swagger-ui';
 import { usePrevious } from '../../hooks';
 import {
@@ -168,7 +169,8 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
 
   return (
     <React.Fragment>
-      {apiIntro?.({})}
+      {apiIntro !== undefined &&
+        <ReactMarkdown>{apiIntro}</ReactMarkdown>}
       <div id="swagger-ui" />
     </React.Fragment>
   );

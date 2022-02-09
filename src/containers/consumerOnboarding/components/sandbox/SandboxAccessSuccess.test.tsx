@@ -1,23 +1,30 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router';
-
+import { setApis } from '../../../../actions';
+import store from '../../../../store';
+import { fakeCategories } from '../../../../__mocks__/fakeCategories';
+import * as apiQueries from '../../../../apiDefs/query';
+import { APICategory, APIDescription } from '../../../../apiDefs/schema';
 import { SandboxAccessSuccess } from './SandboxAccessSuccess';
 
 describe('SandboxAccessSuccess with results', () => {
+  store.dispatch(setApis(fakeCategories));
+
+  // let allKayAuthAPIsSpy: jest.SpyInstance<APIDescription[]>;
   describe('with results', () => {
     describe('all apis', () => {
       beforeEach(() => {
+        const allKeyAuthApis: APIDescription[] = Object.values(fakeCategories)
+          .flatMap((category: APICategory) => category.apis)
+          .sort((a, b) => (a.name > b.name ? 1 : -1));
+
+        jest.spyOn(apiQueries, 'getAllKeyAuthApis').mockReturnValue(allKeyAuthApis);
         render(
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: [
-                  'apikey/benefits',
-                  'apikey/facilities',
-                  'apikey/vaForms',
-                  'apikey/confirmation',
-                ],
+                apis: ['apikey/rings', 'apikey/silmarils', 'apikey/hobbits'],
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
@@ -37,16 +44,16 @@ describe('SandboxAccessSuccess with results', () => {
 
     describe('standard apis', () => {
       beforeEach(() => {
+        const allKeyAuthApis: APIDescription[] = Object.values(fakeCategories)
+          .flatMap((category: APICategory) => category.apis)
+          .sort((a, b) => (a.name > b.name ? 1 : -1));
+
+        jest.spyOn(apiQueries, 'getAllKeyAuthApis').mockReturnValue(allKeyAuthApis);
         render(
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: [
-                  'apikey/benefits',
-                  'apikey/facilities',
-                  'apikey/vaForms',
-                  'apikey/confirmation',
-                ],
+                apis: ['apikey/rings', 'apikey/silmarils', 'apikey/hobbits'],
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
@@ -71,27 +78,24 @@ describe('SandboxAccessSuccess with results', () => {
       });
 
       it('displays confirmation for only standard APIs', () => {
-        expect(
-          screen.getByText(
-            /Benefits Intake API, VA Facilities API, VA Form API, and Veteran Confirmation API/,
-          ),
-        ).toBeInTheDocument();
+        expect(screen.getByText(/Hobbits API, Rings API, and Silmarils API/)).toBeInTheDocument();
 
-        expect(
-          screen.queryByText(
-            /Benefits Claims API, Community Care API, VA Health API, and Veteran Verification API/,
-          ),
-        ).not.toBeInTheDocument();
+        expect(screen.queryByText(/Basketball API, and Baseball API/)).not.toBeInTheDocument();
       });
     });
 
     describe('oauth acg apis', () => {
       beforeEach(() => {
+        const allAuthCodeApis: APIDescription[] = Object.values(fakeCategories)
+          .flatMap((category: APICategory) => category.apis)
+          .sort((a, b) => (a.name > b.name ? 1 : -1));
+
+        jest.spyOn(apiQueries, 'getAllAuthCodeApis').mockReturnValue(allAuthCodeApis);
         render(
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: ['acg/claims', 'acg/communityCare', 'acg/health', 'acg/verification'],
+                apis: ['acg/armageddon'],
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
@@ -127,11 +131,7 @@ describe('SandboxAccessSuccess with results', () => {
           ),
         ).not.toBeInTheDocument();
 
-        expect(
-          screen.getByText(
-            /Benefits Claims API, Community Care API, VA Health API, and Veteran Verification API/,
-          ),
-        ).toBeInTheDocument();
+        expect(screen.getByText(/Armageddon API/)).toBeInTheDocument();
       });
 
       it('contains a link to oauth documentation', () => {
@@ -150,7 +150,7 @@ describe('SandboxAccessSuccess with results', () => {
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: ['ccg/claims', 'ccg/health'],
+                apis: ['ccg/apollo13'],
                 ccgClientId: 'gimli',
                 email: 'gimli@eredluin.com',
                 kongUsername: 'Onering',
@@ -184,7 +184,7 @@ describe('SandboxAccessSuccess with results', () => {
           ),
         ).not.toBeInTheDocument();
 
-        expect(screen.getByText(/Benefits Claims API/)).toBeInTheDocument();
+        expect(screen.getByText(/Apollo 13 API/)).toBeInTheDocument();
       });
 
       it('contains a link to oauth documentation', () => {

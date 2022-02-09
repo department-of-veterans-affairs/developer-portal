@@ -5,6 +5,7 @@ import { computePosition, flip, shift, offset, arrow } from '@floating-ui/react-
 import classNames from 'classnames';
 import * as Sentry from '@sentry/browser';
 import { SetOAuthAPISelection, setOAuthApiSelection } from '../../actions';
+import { getApisLoaded } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 
 import './APISelector.scss';
@@ -19,6 +20,7 @@ interface APISelectorProps {
 }
 
 const APISelector = (props: APISelectorProps): JSX.Element => {
+  const apisLoaded = getApisLoaded();
   const dispatch: React.Dispatch<SetOAuthAPISelection> = useDispatch();
   const [selectedOptionOverride, setSelectedOptionOverride] = React.useState<string>();
   const [apiSelectionButtonDisabled, setApiSelectionButtonDisabled] = React.useState<boolean>();
@@ -126,6 +128,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
             onChange={onSelectionChange}
           >
+            {!apisLoaded && <option value="">Loading...</option>}
             {props.options.map(item => (
               <option value={item.urlFragment} key={item.urlFragment}>
                 {item.name}

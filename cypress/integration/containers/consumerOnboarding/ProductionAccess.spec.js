@@ -44,6 +44,10 @@ function technicalInformationFields(cy) {
 
 describe('Production Access Form', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
+      fixture: 'legacy.json',
+    }).as('LPB datastore');
+
     cy.visit('/onboarding/request-prod-access');
     cy.get('a[href="/onboarding/production-access-application"]').click();
   });

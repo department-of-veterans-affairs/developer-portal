@@ -2,14 +2,13 @@ import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
-import { getActiveApiDefinitions, getApiCategoryOrder } from './apiDefs/query';
+import { getActiveApiDefinitions, getApiCategoryOrder, getApisLoaded } from './apiDefs/query';
 import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
 import About from './containers/about/About';
 import News from './containers/about/News';
-import ErrorPage from './containers/ErrorPage';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
 import TermsOfService from './content/termsOfService.mdx';
@@ -24,6 +23,7 @@ import {
 } from './types/constants/paths';
 import { buildApiDetailRoutes } from './utils/routesHelper';
 import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
+import ErrorPage404 from './containers/ErrorPage404';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const apiDefinitions = getActiveApiDefinitions();
@@ -62,6 +62,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
           <Route exact key={path} path={path} component={DocumentationRoot} />
         ),
       )}
+      {!getApisLoaded() && <Route path="/explore/:name" component={DocumentationRoot} />}
 
       {/* Release Notes */}
       <Route exact path="/release-notes" component={ReleaseNotes} />
@@ -76,6 +77,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         ),
       )}
       <Route exact path="/release-notes/deactivated" component={ReleaseNotes} />
+      {!getApisLoaded() && <Route path="/release-notes/:name" component={ReleaseNotes} />}
 
       {/* About */}
       <Route path="/about" component={About} />
@@ -111,7 +113,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       <Redirect from="/go-live" to={CONSUMER_PROD_PATH} />
 
       {/* Catch the rest with the 404 */}
-      <Route render={(): JSX.Element => <ErrorPage errorCode={404} />} />
+      <Route component={ErrorPage404} />
     </Switch>
   );
 };

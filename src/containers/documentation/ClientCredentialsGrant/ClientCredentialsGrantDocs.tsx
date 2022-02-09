@@ -14,7 +14,7 @@ import {
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { getActiveCCGApis, getActiveOauthApis } from '../../../apiDefs/query';
+import { getActiveCCGApis, getActiveOauthApis, getApisLoaded } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
 import { usePrevious } from '../../../hooks';
@@ -60,6 +60,7 @@ const setInitialApi = (
 };
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
+  const apisLoaded = getApisLoaded();
   const history = useHistory();
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
@@ -72,15 +73,17 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
   const options = getActiveCCGApis();
 
   React.useEffect(() => {
-    if (initializing.current) {
-      // Do this on first load
-      initializing.current = false;
-      setInitialApi(history, location.search, dispatch);
-    } else {
-      // Do this on all subsequent re-renders
-      setSearchParam(history, location.search, api, false);
+    if (apisLoaded) {
+      if (initializing.current) {
+        // Do this on first load
+        initializing.current = false;
+        setInitialApi(history, location.search, dispatch);
+      } else {
+        // Do this on all subsequent re-renders
+        setSearchParam(history, location.search, api, false);
+      }
     }
-  }, [dispatch, location, history, prevApi, api]);
+  }, [dispatch, location, history, prevApi, api, apisLoaded]);
 
   /**
    * CLEAR REDUX STATE ON UNMOUNT

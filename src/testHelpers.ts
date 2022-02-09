@@ -1,6 +1,11 @@
 import * as axe from 'axe-core';
 import { toHaveNoViolations } from 'jest-axe';
 import { Request } from 'puppeteer';
+import legacyJson from '../cypress/fixtures/legacy.json';
+import metadataJson from '../cypress/fixtures/benefits-claims-metadata.json';
+import openapiJson from '../cypress/fixtures/benefits-claims-openapi.json';
+import { mockMetadata } from './__mocks__/mockMetadata';
+import { mockSwagger } from './__mocks__/mockSwagger';
 import {
   CONSUMER_PROD_PATH,
   CONSUMER_DEMO_PATH,
@@ -12,9 +17,6 @@ import {
   ABOUT_OVERVIEW_PATH,
   ABOUT_NEWS_PATH,
 } from './types/constants/paths';
-
-import { mockMetadata as metadataMocks } from './__mocks__/mockMetadata';
-import { mockSwagger as mocks } from './__mocks__/mockSwagger';
 
 // Paths to test in visual regression and accessibility tests
 export const testPaths = [
@@ -47,12 +49,6 @@ export const metadataTestPaths = [''];
 
 export const puppeteerHost = process.env.TEST_HOST ?? 'http://localhost:4444';
 
-declare global {
-  interface Window {
-    axe: typeof axe;
-  }
-}
-
 jest.setTimeout(100000);
 
 expect.extend(toHaveNoViolations);
@@ -70,17 +66,23 @@ export const axeCheck = (): Promise<axe.AxeResults> =>
     });
   });
 
-export const mockSwagger = (req: Request): void => {
+export const mockRequest = (req: Request): void => {
   const response = {
     body: '',
     contentType: 'application/json',
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: { 'Access-Control-Allow-Origin': 'http://localhost:3001' },
   };
 
-  if (req.url() in mocks) {
-    response.body = JSON.stringify(mocks[req.url()]);
-  } else if (req.url() in metadataMocks) {
-    response.body = JSON.stringify(metadataMocks[req.url()]);
+  if (req.url().includes('/platform-backend/v0/providers/transformations/legacy.json')) {
+    response.body = JSON.stringify(legacyJson);
+  } else if (req.url().includes('openapi.json')) {
+    response.body = JSON.stringify(openapiJson);
+  } else if (req.url().includes('metadata.json')) {
+    response.body = JSON.stringify(metadataJson);
+  } else if (req.url() in mockSwagger) {
+    response.body = JSON.stringify(mockSwagger[req.url()]);
+  } else if (req.url() in mockMetadata) {
+    response.body = JSON.stringify(mockMetadata[req.url()]);
   }
 
   if (response.body) {

@@ -5,7 +5,6 @@
  * also not add any more React components to these schema definitions, as that will add to the
  * work that we need to do to convert this schema to a database-based system.
  */
-import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 
 export interface VeteranRedirectMessage {
@@ -16,9 +15,9 @@ export interface VeteranRedirectMessage {
 
 export interface APICategoryContent {
   readonly consumerDocsLinkText: string;
-  readonly overview: React.FunctionComponent;
+  readonly overview: string;
   readonly shortDescription: string;
-  readonly quickstart?: React.FunctionComponent;
+  readonly quickstart?: string;
   readonly veteranRedirect?: VeteranRedirectMessage;
 }
 
@@ -35,7 +34,7 @@ export interface APIDocSource {
   readonly openApiUrl: string;
   readonly key?: string;
   readonly label?: string;
-  readonly apiIntro?: React.FunctionComponent;
+  readonly apiIntro?: string;
 }
 
 export const ApiDocSourcePropType = PropTypes.shape({
@@ -46,10 +45,10 @@ export const ApiDocSourcePropType = PropTypes.shape({
   openApiUrl: PropTypes.string.isRequired,
 });
 export interface APIDeactivationInfo {
-  readonly deprecationContent: React.FunctionComponent;
-  readonly deprecationDate: moment.Moment;
-  readonly deactivationContent: React.FunctionComponent;
-  readonly deactivationDate: moment.Moment;
+  readonly deprecationContent: string;
+  readonly deprecationDate: string;
+  readonly deactivationContent: string;
+  readonly deactivationDate: string;
 }
 
 export const ApiDeactivationInfoPropType = PropTypes.shape({
@@ -80,9 +79,9 @@ export interface APIDescription {
   readonly oAuth?: boolean;
   readonly oAuthTypes?: string[];
   readonly oAuthInfo?: OAuthInfo;
-  readonly releaseNotes: React.FunctionComponent;
+  readonly releaseNotes: string;
   readonly deactivationInfo?: APIDeactivationInfo;
-  readonly multiOpenAPIIntro?: React.FunctionComponent;
+  readonly multiOpenAPIIntro?: string;
   readonly veteranRedirect?: VeteranRedirectMessage;
   readonly altID?: string;
   readonly lastProdAccessStep: ProdAccessFormSteps;
@@ -133,7 +132,7 @@ export interface APICategories {
 }
 
 export enum VaInternalOnly {
-  StrictlyInternal = 1,
-  AdditionalDetails = 2,
-  FlagOnly = 3,
+  StrictlyInternal = 'StrictlyInternal',
+  AdditionalDetails = 'AdditionalDetails',
+  FlagOnly = 'FlagOnly',
 }

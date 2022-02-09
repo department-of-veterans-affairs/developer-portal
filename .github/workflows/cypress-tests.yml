@@ -57,10 +57,86 @@ jobs:
         with:
           runTests: false
 
+      - name: Start Fake LPB Server
+        run: ./scripts/fake_lpb.sh
+
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
           install: false
+          start: npm start
+          wait-on: http://localhost:3001
+
+      - name: Upload failed screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Upload failed videos
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+  accessibility:
+    runs-on: ubuntu-latest
+    outputs:
+      hash: ${{ steps.githash.outputs.hash }}
+      pr_number: ${{ steps.pr_number.outputs.pr }}
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          env
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "::set-output name=node_version::$NODE_VERSION"
+
+      - id: cache_node_modules
+        name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: developer-portal-node-modules
+          node-version: ${{ steps.node_version.outputs.node_version }}
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - id: cache_cypress_binary
+        name: Cache Cypress binary
+        uses: actions/cache@v2
+        env:
+          cache-name: developer-portal-cypress-binary
+        with:
+          path: cypress/cache
+          key: ${{ runner.os }}-cypress-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install Cypress and Dependencies
+        if: |
+          steps.cache_cypress_binary.outputs.cache-hit != 'true' ||
+          steps.cache_node_modules.outputs.cache-hit != 'true'
+        uses: cypress-io/github-action@v2
+        with:
+          runTests: false
+
+      - name: Start Fake LPB Server
+        run: ./scripts/fake_lpb.sh
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          config: ignoreTestFiles=null
+          install: false
+          spec: cypress/integration/accessibility.spec.js
           start: npm start
           wait-on: http://localhost:3001
 

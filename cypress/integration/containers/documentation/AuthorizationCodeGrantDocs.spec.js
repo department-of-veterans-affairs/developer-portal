@@ -20,6 +20,10 @@ const tableOfContents = [
 
 describe('Auth Code Grant Page', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
+      fixture: 'legacy.json',
+    }).as('LPB datastore');
+
     cy.visit('/explore/authorization/docs/authorization-code?api=claims');
   });
 

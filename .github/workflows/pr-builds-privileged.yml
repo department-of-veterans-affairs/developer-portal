@@ -72,6 +72,9 @@ jobs:
           COMMIT_HASH: ${{steps.get_pr_info.outputs.hash}}
         run: |
           aws s3 sync --no-progress --acl public-read build/ s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/
+          for env in 'dev' 'staging' 'production' ; do
+            aws s3 cp --acl public-read --content-type="application/json" s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/platform-backend/v0/consumers/applications s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/platform-backend/v0/consumers/applications
+          done
 
       - name: Add PR builds comment
         env:
@@ -81,7 +84,7 @@ jobs:
         run: |
           links=""
           for env in 'dev' 'staging' 'production' ; do
-            links="$links - [${env}](https://s3-us-gov-west-1.amazonaws.com/$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/index.html) <br />"
+            links="$links - [${env}](https://$S3_REVIEW_BUCKET.s3-us-gov-west-1.amazonaws.com/gha-$COMMIT_HASH/$env/index.html) <br />"
           done
           echo $links;
           comment="These changes have been deployed to an s3 bucket. A build for each environment is available: <br /><br /> ${links} <br /> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."

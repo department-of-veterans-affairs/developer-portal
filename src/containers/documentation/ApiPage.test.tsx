@@ -1,7 +1,7 @@
 import React from 'react';
 
 import moment from 'moment';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router';
 import { APICategory } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
@@ -26,7 +26,12 @@ jest.mock('./ApiDocumentation', () => {
 });
 
 // Test Utils
-const renderApiPage = (flags: AppFlags, initialRoute: string, componentPath?: string): void => {
+const renderApiPage = async (
+  flags: AppFlags,
+  initialRoute: string,
+  componentPath?: string,
+): Promise<void> => {
+  await waitFor(() => cleanup());
   render(
     <FlagsProvider flags={flags}>
       <MemoryRouter initialEntries={[initialRoute]}>
@@ -48,16 +53,17 @@ describe('ApiPage', () => {
 
   const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiByFragment');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
+  const apisLoadedSpy = jest.spyOn(apiDefs, 'getApisLoaded').mockReturnValue(true);
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   describe('given valid url params', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -76,10 +82,10 @@ describe('ApiPage', () => {
   });
 
   describe('given deactivated api and valid url params', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       lookupApiByFragmentMock.mockReturnValue(lotrSilmarilsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      renderApiPage(
+      await renderApiPage(
         {
           ...defaultFlags,
           deactivated_apis: { silmarils: true },
@@ -99,10 +105,10 @@ describe('ApiPage', () => {
   });
 
   describe('given unenabled api', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      renderApiPage(
+      await renderApiPage(
         {
           ...defaultFlags,
           enabled: {
@@ -120,9 +126,9 @@ describe('ApiPage', () => {
   });
 
   describe('given url params with no api', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       lookupApiByFragmentMock.mockReturnValue(null);
-      renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
+      await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -130,7 +136,9 @@ describe('ApiPage', () => {
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
-    it('renders the api not found page', () => {
+    it('renders the api not found page', async () => {
+      apisLoadedSpy.mockReturnValue(true);
+      await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
       expect(screen.getByText('Page not found.')).not.toBeNull();
       expect(
         screen.getByText('Try using the links below or the search bar to find your way forward.'),
@@ -139,10 +147,10 @@ describe('ApiPage', () => {
   });
 
   describe('given url with api that does not exist', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       lookupApiByFragmentMock.mockReturnValue(null);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      renderApiPage(defaultFlags, '/explore/lotr/docs/nonexistentapi');
+      await renderApiPage(defaultFlags, '/explore/lotr/docs/nonexistentapi');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -150,7 +158,9 @@ describe('ApiPage', () => {
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
-    it('renders the api not found page', () => {
+    it('renders the api not found page', async () => {
+      apisLoadedSpy.mockReturnValue(true);
+      await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
       expect(screen.getByText('Page not found.')).not.toBeNull();
       expect(
         screen.getByText('Try using the links below or the search bar to find your way forward.'),
@@ -159,10 +169,10 @@ describe('ApiPage', () => {
   });
 
   describe('given url with api that does not exist within the given api category', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.sports);
-      renderApiPage(defaultFlags, '/explore/sports/docs/silmarils');
+      await renderApiPage(defaultFlags, '/explore/sports/docs/silmarils');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -170,7 +180,9 @@ describe('ApiPage', () => {
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('sports');
     });
 
-    it('renders the api not found page', () => {
+    it('renders the api not found page', async () => {
+      apisLoadedSpy.mockReturnValue(true);
+      await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
       expect(screen.getByText('Page not found.')).not.toBeNull();
       expect(
         screen.getByText('Try using the links below or the search bar to find your way forward.'),
@@ -179,7 +191,7 @@ describe('ApiPage', () => {
   });
 
   describe('given api with deactivation info that is not yet deactivated', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       const modifiedLotrApi: APICategory = {
         ...fakeCategories.lotr,
         apis: [
@@ -192,7 +204,7 @@ describe('ApiPage', () => {
 
       lookupApiCategoryMock.mockReturnValue(modifiedLotrApi);
       lookupApiByFragmentMock.mockReturnValue(modifiedLotrApi.apis[0]);
-      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -207,7 +219,7 @@ describe('ApiPage', () => {
   });
 
   describe('given api with deactivation info that is deprecated but not deactivated', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       const modifiedLotrApi: APICategory = {
         ...fakeCategories.lotr,
         apis: [
@@ -215,7 +227,7 @@ describe('ApiPage', () => {
             ...lotrRingsApi,
             deactivationInfo: {
               ...unmetDeactivationInfo,
-              deprecationDate: moment().subtract(1, 'year'),
+              deprecationDate: moment().subtract(1, 'year').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
             },
           },
         ],
@@ -223,7 +235,7 @@ describe('ApiPage', () => {
 
       lookupApiCategoryMock.mockReturnValue(modifiedLotrApi);
       lookupApiByFragmentMock.mockReturnValue(modifiedLotrApi.apis[0]);
-      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -232,8 +244,8 @@ describe('ApiPage', () => {
     });
 
     it('renders deprecation info', () => {
-      expect(screen.queryByTestId('deprecation-info')).not.toBeNull();
-      expect(screen.queryByTestId('deactivation-info')).toBeNull();
+      expect(screen.queryByText('test-data::: This API is deprecated')).not.toBeNull();
+      expect(screen.queryByText('test-data::: This API is deactivated')).toBeNull();
     });
   });
 });

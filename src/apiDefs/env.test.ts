@@ -1,5 +1,4 @@
 import 'jest';
-import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
 import { getEnvFlags, isHostedApiEnabled } from './env';
 import * as queries from './query';
 import { APIDescription, ProdAccessFormSteps } from './schema';
@@ -42,7 +41,7 @@ describe('env module', () => {
       lastProdAccessStep: ProdAccessFormSteps.Four,
       name: 'My API',
       openData: false,
-      releaseNotes: ClaimsReleaseNotes,
+      releaseNotes: 'Dummy release notes.',
     };
 
     beforeEach(() => {

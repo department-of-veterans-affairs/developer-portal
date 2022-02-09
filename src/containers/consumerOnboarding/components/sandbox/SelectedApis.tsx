@@ -2,6 +2,7 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
+import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import { CheckboxRadioField, FieldSet, ApiTags } from '../../../../components';
 import {
   getAllKeyAuthApis,
@@ -9,11 +10,13 @@ import {
   includesAuthCodeAPI,
   includesCcgAPI,
   getAllCCGApis,
+  getApisLoaded,
 } from '../../../../apiDefs/query';
 import { APIDescription, VaInternalOnly } from '../../../../apiDefs/schema';
 import { Flag } from '../../../../flags';
 import { FLAG_HOSTED_APIS } from '../../../../types/constants';
 import { isHostedApiEnabled } from '../../../../apiDefs/env';
+import { defaultLoadingProps } from '../../../../utils/loadingHelper';
 import { OAuthAcgAppInfo } from './OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from './OAuthCcgAppInfo';
 import { InternalOnlyInfo } from './InternalOnlyInfo';
@@ -27,15 +30,14 @@ interface APICheckboxListProps {
 
 const ApiCheckboxList = ({ apiCheckboxes, authType }: APICheckboxListProps): JSX.Element => {
   const formValues = useFormikContext<Values>().values;
-  const hostedApis = apiCheckboxes.filter(
-    api =>
-      (!api.vaInternalOnly || api.vaInternalOnly !== VaInternalOnly.StrictlyInternal) &&
-      isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
-  );
 
   return (
     <>
-      {hostedApis.map(api => {
+      {apiCheckboxes.filter(
+          api =>
+            (!api.vaInternalOnly || api.vaInternalOnly !== VaInternalOnly.StrictlyInternal) &&
+            isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+        ).map(api => {
         const apiCheckboxName = api.altID ?? api.urlFragment;
         const internalApiSelected =
           formValues.apis.includes(`${authType}/${apiCheckboxName}`) &&
@@ -74,14 +76,11 @@ const ApiCheckboxList = ({ apiCheckboxes, authType }: APICheckboxListProps): JSX
   );
 };
 
-const authCodeApis = getAllAuthCodeApis();
-const ccgApis = getAllCCGApis();
-const keyAuthApis = getAllKeyAuthApis();
-
 interface SelectedApisProps {
   selectedApis: string[];
 }
 
+// eslint-disable-next-line complexity
 const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
   const { errors } = useFormikContext<Values>();
   const checkboxName = 'apis';
@@ -94,7 +93,9 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
     ? 'vads-u-font-weight--bold'
     : 'vads-u-font-weight--normal';
 
+  // console.log(selectedApis);
   const authCodeApiSelected = includesAuthCodeAPI(selectedApis);
+  // console.log(authCodeApiSelected);
   const authCodeApisBorderClass = authCodeApiSelected ? 'vads-u-border-left--4px' : '';
   const authCodeApisBorderColorClass = authCodeApiSelected
     ? 'vads-u-border-color--primary-alt-light'
@@ -137,13 +138,14 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           <ErrorMessage name="apis" />
         </span>
         <p className="vads-u-padding-x--1p5">You can always request access to more APIs later.</p>
+        {!getApisLoaded() && <LoadingIndicator {...defaultLoadingProps()} />}
         <FieldSet
           className={classNames('vads-u-margin-top--2')}
           legend="Standard APIs:"
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="standardApis"
         >
-          <ApiCheckboxList apiCheckboxes={keyAuthApis} authType="apikey" />
+          <ApiCheckboxList apiCheckboxes={getAllKeyAuthApis()} authType="apikey" />
         </FieldSet>
         <FieldSet
           className={classNames(
@@ -156,7 +158,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="oauthApis"
         >
-          <ApiCheckboxList apiCheckboxes={authCodeApis} authType="acg" />
+          <ApiCheckboxList apiCheckboxes={getAllAuthCodeApis()} authType="acg" />
           {authCodeApiSelected && <OAuthAcgAppInfo />}
         </FieldSet>
         <FieldSet
@@ -170,7 +172,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="ccgApis"
         >
-          <ApiCheckboxList apiCheckboxes={ccgApis} authType="ccg" />
+          <ApiCheckboxList apiCheckboxes={getAllCCGApis()} authType="ccg" />
           {ccgApiSelected && <OAuthCcgAppInfo />}
         </FieldSet>
       </div>

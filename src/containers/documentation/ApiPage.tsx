@@ -1,14 +1,17 @@
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
+import ReactMarkdown from 'react-markdown';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
-import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
+import { getApisLoaded, lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
+import { defaultLoadingProps } from '../../utils/loadingHelper';
 
 import { APINameParam } from '../../types';
 import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
@@ -41,7 +44,9 @@ const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | nu
 
   return (
     <div className={classNames('usa-alert', 'usa-alert-info', 'va-api-alert-box')}>
-      <div className={classNames('usa-alert-body')}>{content({})}</div>
+      <div className={classNames('usa-alert-body')}>
+        <ReactMarkdown>{content}</ReactMarkdown>
+      </div>
     </div>
   );
 };
@@ -61,6 +66,8 @@ const ApiPage = (): JSX.Element => {
 
   const api = getApi(params.apiName);
   const category = lookupApiCategory(params.apiCategoryKey);
+
+  const apisLoaded = getApisLoaded();
 
   const tabsRegex = /tab=(r4|argonaut|dstu2)/;
   if (location.pathname === '/explore/health/docs/fhir' && tabsRegex.test(location.search)) {
@@ -84,7 +91,11 @@ const ApiPage = (): JSX.Element => {
   }
 
   if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlFragment]) {
-    return <ApiNotFoundPage />;
+    if (apisLoaded) {
+      return <ApiNotFoundPage />;
+    } else {
+      return <LoadingIndicator {...defaultLoadingProps()} />;
+    }
   }
 
   return (

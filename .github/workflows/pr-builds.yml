@@ -93,7 +93,7 @@ jobs:
           BUILD_ENV: ${{matrix.environment}}
           REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
         run: |
-          echo "PUBLIC_URL=/$S3_REVIEW_BUCKET/gha-$REACT_APP_COMMIT_HASH/$BUILD_ENV" > .env.$BUILD_ENV.local
+          echo "PUBLIC_URL=/gha-$REACT_APP_COMMIT_HASH/$BUILD_ENV" > .env.$BUILD_ENV.local
           echo "REACT_APP_SENTRY_DSN=$PREVIEW_SENTRY_DSN" >> .env.$BUILD_ENV.local
           npm run build $BUILD_ENV
 
@@ -112,6 +112,24 @@ jobs:
           echo '}' >> build/$BUILD_ENV/deploy.json
           rm ./current-date
           cat build/$BUILD_ENV/deploy.json
+
+      - name: Add LPB legacy.json and dummy reponses
+        env:
+          BUILD_ENV: ${{matrix.environment}}
+          REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
+        run: |
+          LPB_HOST="https://$BUILD_ENV-developer.va.gov"
+          if [ "$BUILD_ENV" == "production" ]; then
+            LPB_HOST='https://developer.va.gov'
+          fi
+          wget "$LPB_HOST/platform-backend/v0/providers/transformations/legacy.json?environment=sandbox" -O legacy.json
+          mkdir -p build/$BUILD_ENV/platform-backend/v0/providers/transformations
+          mkdir -p build/$BUILD_ENV/platform-backend/v0/consumers
+          mkdir -p build/$BUILD_ENV/platform-backend/v0/support/contact-us
+          mv legacy.json build/$BUILD_ENV/platform-backend/v0/providers/transformations/
+          cp cypress/fixtures/applications-post.json build/$BUILD_ENV/platform-backend/v0/consumers/applications
+          touch build/$BUILD_ENV/platform-backend/v0/support/contact-us/requests
+          touch build/$BUILD_ENV/platform-backend/v0/consumers/production-requests
 
       - name: Save builds as GitHub Artifacts
         uses: actions/upload-artifact@v2

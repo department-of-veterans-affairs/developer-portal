@@ -1,10 +1,10 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
+import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import { ApiCheckboxList } from '../../../../components';
-import { getAllApis } from '../../../../apiDefs/query';
-
-const allApis = getAllApis();
+import { getAllApis, getApisLoaded } from '../../../../apiDefs/query';
+import { defaultLoadingProps } from '../../../../utils/loadingHelper';
 
 const SelectedAPIs = (): JSX.Element => {
   const { errors } = useFormikContext();
@@ -56,7 +56,8 @@ const SelectedAPIs = (): JSX.Element => {
         >
           <ErrorMessage name="apis" />
         </div>
-        <ApiCheckboxList apis={allApis} />
+        {!getApisLoaded() && <LoadingIndicator {...defaultLoadingProps()} />}
+        <ApiCheckboxList apis={getAllApis()} />
       </div>
     </fieldset>
   );

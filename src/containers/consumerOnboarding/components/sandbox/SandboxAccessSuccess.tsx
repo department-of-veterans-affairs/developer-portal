@@ -2,10 +2,15 @@ import * as React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { getApiDefinitions, getAllKeyAuthApis } from '../../../../apiDefs/query';
+import {
+  getAllKeyAuthApis,
+  getAllApis,
+  getAllAuthCodeApis,
+  getAllCCGApis,
+} from '../../../../apiDefs/query';
+import { APIDescription } from '../../../../apiDefs/schema';
 import sentenceJoin from '../../../../sentenceJoin';
-import { ApplySuccessResult } from '../../../../types';
-import { APPLY_ACG_APIS, APPLY_CCG_APIS } from '../../../../types/constants';
+import { ApplySuccessResult } from '../../../../types/forms/apply';
 import { isVaEmail } from '../../../../utils/validators';
 import './SandboxAccessSuccess.scss';
 
@@ -41,24 +46,6 @@ interface InternalApiNoticeProps {
   email: string;
 }
 
-// Mapping from the options on the form to Proper Names for APIs
-const apisToEnglishOAuthList: Record<string, string> = {
-  claims: 'Benefits Claims API',
-  communityCare: 'Community Care API',
-  health: 'VA Health API',
-  verification: 'Veteran Verification API',
-};
-
-const apisToEnglishApiKeyList = (): Record<string, string> => {
-  const apiDefs = getApiDefinitions();
-  return {
-    benefits: apiDefs.benefits.properName,
-    confirmation: 'Veteran Confirmation API',
-    facilities: apiDefs.facilities.properName,
-    vaForms: apiDefs.vaForms.properName,
-  };
-};
-
 const OAuthACGCredentialsNotice: React.FunctionComponent<OAuthACGCredentialsNoticeProps> = ({
   clientID,
   clientSecret,
@@ -66,7 +53,13 @@ const OAuthACGCredentialsNotice: React.FunctionComponent<OAuthACGCredentialsNoti
   selectedApis,
   redirectURI,
 }: OAuthACGCredentialsNoticeProps) => {
-  const apiNameList = selectedApis.map(k => apisToEnglishOAuthList[k]);
+  const allApis = getAllApis();
+  const apiNameList = allApis
+    .filter(
+      (api: APIDescription) =>
+        selectedApis.includes(api.urlFragment) || selectedApis.includes(api.altID ?? ''),
+    )
+    .map((api: APIDescription) => api.name);
   const apiListSnippet = sentenceJoin(apiNameList);
 
   return (
@@ -101,7 +94,13 @@ const OAuthCCGCredentialsNotice: React.FunctionComponent<OAuthCCGCredentialsNoti
   email,
   selectedApis,
 }: OAuthCCGCredentialsNoticeProps) => {
-  const apiNameList = selectedApis.map(k => apisToEnglishOAuthList[k]);
+  const allApis = getAllApis();
+  const apiNameList = allApis
+    .filter(
+      (api: APIDescription) =>
+        selectedApis.includes(api.urlFragment) || selectedApis.includes(api.altID ?? ''),
+    )
+    .map((api: APIDescription) => api.name);
   const apiListSnippet = sentenceJoin(apiNameList);
 
   return (
@@ -127,7 +126,13 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
   kongUsername,
   selectedApis,
 }: APIKeyNoticeProps) => {
-  const apiNameList = selectedApis.map(k => apisToEnglishApiKeyList()[k]);
+  const allApis = getAllApis();
+  const apiNameList = allApis
+    .filter(
+      (api: APIDescription) =>
+        selectedApis.includes(api.urlFragment) || selectedApis.includes(api.altID ?? ''),
+    )
+    .map((api: APIDescription) => api.name);
   const apiListSnippet = sentenceJoin(apiNameList);
 
   return (
@@ -157,15 +162,19 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
   const { apis, email, token, ccgClientId, clientID, clientSecret, kongUsername, redirectURI } =
     props.result;
   const keyAuthApis = getAllKeyAuthApis();
+  const acgAuthApis = getAllAuthCodeApis();
+  const ccgAuthApis = getAllCCGApis();
   const keyAuthApiList = keyAuthApis.map(api => api.altID ?? api.urlFragment);
+  const acgAuthApisList = acgAuthApis.map(api => api.altID ?? api.urlFragment);
+  const ccgAuthApisList = ccgAuthApis.map(api => api.altID ?? api.urlFragment);
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
-  const hasOAuthAcgAPI = APPLY_ACG_APIS.some(apiId => apis.includes(`acg/${apiId}`));
-  const hasOAuthCcgAPI = APPLY_CCG_APIS.some(appId => apis.includes(`ccg/${appId}`));
+  const hasOAuthAcgAPI = acgAuthApisList.some(apiId => apis.includes(`acg/${apiId}`));
+  const hasOAuthCcgAPI = ccgAuthApisList.some(appId => apis.includes(`ccg/${appId}`));
   const hasStandardAPI = keyAuthApiList.some(apiId => apis.includes(`apikey/${apiId}`));
   const hasInternalAPI = isVaEmail(email);
-  const oAuthAcgAPIs = APPLY_ACG_APIS.filter(apiId => apis.includes(`acg/${apiId}`));
-  const oAuthCcgAPIs = APPLY_CCG_APIS.filter(apiId => apis.includes(`ccg/${apiId}`));
+  const oAuthAcgAPIs = acgAuthApisList.filter(apiId => apis.includes(`acg/${apiId}`));
+  const oAuthCcgAPIs = ccgAuthApisList.filter(apiId => apis.includes(`ccg/${apiId}`));
   const standardAPIs = keyAuthApiList.filter(apiId => apis.includes(`apikey/${apiId}`));
 
   return (

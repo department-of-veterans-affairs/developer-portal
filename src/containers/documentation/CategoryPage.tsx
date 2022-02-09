@@ -4,17 +4,24 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import classNames from 'classnames';
+import ReactMarkdown from 'react-markdown';
+import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import { Flag } from '../../flags';
-import { getApiDefinitions } from '../../apiDefs/query';
+import { getApiDefinitions, getApisLoaded } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { CardLink, ApiTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { FLAG_HOSTED_APIS, PAGE_HEADER_ID } from '../../types/constants';
 import { CONSUMER_PATH } from '../../types/constants/paths';
+import { defaultLoadingProps } from '../../utils/loadingHelper';
 
 const CategoryPage = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
+
+  if (!getApisLoaded()) {
+    return <LoadingIndicator {...defaultLoadingProps()} />;
+  }
 
   const {
     apis,
@@ -64,7 +71,7 @@ const CategoryPage = (): JSX.Element => {
         </AlertBox>
       )}
       <div className="vads-u-width--full">
-        {overview({})}
+        <ReactMarkdown>{overview}</ReactMarkdown>
         <p>
           <Link to={CONSUMER_PATH}>{consumerDocsLinkText}</Link>.
         </p>

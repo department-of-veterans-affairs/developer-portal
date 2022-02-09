@@ -1,6 +1,7 @@
 {
   "baseUrl": "http://localhost:3001",
   "videoUploadOnPasses": false,
+  "ignoreTestFiles": "accessibility.spec.js",
   "blockHosts": [
     "dap.digitalgov.gov",
     "search.usa.gov",

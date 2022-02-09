@@ -1,4 +1,13 @@
-export * from './forms/apply';
+import axe from 'axe-core';
+import { compose } from 'redux';
+import { APICategories } from '../apiDefs/schema';
+
+declare global {
+  interface Window {
+    axe: typeof axe;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
 export interface APINameParam {
   apiName?: string;
@@ -30,7 +39,13 @@ export interface OAuthAPISelection {
   selectedOAuthApi: string;
 }
 
+export interface ApiList {
+  apis: APICategories;
+  loaded: boolean;
+}
+
 export interface RootState {
   oAuthApiSelection: OAuthAPISelection;
   apiVersioning: APIVersioning;
+  apiList: ApiList;
 }

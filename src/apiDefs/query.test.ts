@@ -16,12 +16,9 @@
 
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
 import 'jest';
-import { FacilitiesReleaseNotes } from '../content/apiDocs/facilities';
-import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
-import {
-  VeteranConfirmationReleaseNotes,
-  VeteranVerificationReleaseNotes,
-} from '../content/apiDocs/verification';
+import { setApis } from '../actions';
+import store from '../store';
+import { fakeCategories } from '../__mocks__/fakeCategories';
 import {
   apisFor,
   getAllQuickstartCategorySlugs,
@@ -31,122 +28,77 @@ import {
   includesInternalOnlyAPI,
   onlyOpenDataAPIs,
 } from './query';
-import { APIDescription, ProdAccessFormSteps } from './schema';
+import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 
-const facilities: APIDescription = {
-  altID: 'facilities',
-  description: 'VA Facilities',
-  docSources: [
-    {
-      metadataUrl: 'http://localhost:3001/internal/docs/facilities/metadata.json',
-      openApiUrl: 'http://localhost:3001/internal/docs/facilities/v0/openapi.json',
-    },
-  ],
-  enabledByDefault: true,
-  lastProdAccessStep: ProdAccessFormSteps.Two,
-  name: 'VA Facilities API',
-  openData: true,
-  releaseNotes: FacilitiesReleaseNotes,
-  urlFragment: 'facilities',
-  veteranRedirect: {
-    linkText: "Find the facility that's right for you",
-    linkUrl: 'https://www.va.gov/find-locations/',
-    message: 'Are you a Veteran?',
-  },
-};
-
-const claims: APIDescription = {
-  altID: 'claims',
-  description: 'Submit and track claims',
-  docSources: [
-    {
-      metadataUrl: 'http://localhost:3001/internal/docs/benefits-claims/metadata.json',
-      openApiUrl: 'http://localhost:3001/internal/docs/benefits-claims/v0/openapi.json',
-    },
-  ],
+const rings: APIDescription = {
+  description: 'One Ring to rule them all',
+  docSources: [], // doesn't matter yet
   enabledByDefault: true,
   lastProdAccessStep: ProdAccessFormSteps.Four,
-  name: 'Benefits Claims API',
-  oAuth: true,
-  oAuthInfo: {
-    acgInfo: {
-      baseAuthPath: '/oauth2/claims/v1',
-      scopes: ['profile', 'openid', 'offline_access', 'claim.read', 'claim.write'],
-    },
-    ccgInfo: {
-      baseAuthPath: '/oauth2/claims/system/v1',
-      productionAud: 'ausajojxqhTsDSVlA297',
-      sandboxAud: 'ausdg7guis2TYDlFe2p7',
-      scopes: ['claim.read', 'claim.write'],
-    },
-  },
-  oAuthTypes: ['AuthorizationCodeGrant', 'ClientCredentialsGrant'],
+  name: 'Rings API',
   openData: false,
-  releaseNotes: ClaimsReleaseNotes,
-  urlFragment: 'claims',
-  veteranRedirect: {
-    linkText: 'benefits or appeals claim status',
-    linkUrl: 'https://www.va.gov/claim-or-appeal-status/',
-    message: 'Are you a Veteran or a Veteran representative? Check your',
-  },
+  releaseNotes:
+    '### March 25, 2020\n\nOne Ring destroyed\n\n\n---\n\n### June 10, 2019\n\nOne Ring discovered by Bilbo in Misty Mountains\n',
+  urlFragment: 'rings',
 };
 
-const confirmation: APIDescription = {
-  // adding an altID to match keys need on the backend for signup
-  altID: 'confirmation',
-  description: 'Confirm Veteran status for a given person with an API key.',
-  docSources: [
-    {
-      metadataUrl: 'http://localhost:3001/internal/docs/veteran-confirmation/metadata.json',
-      openApiUrl: 'http://localhost:3001/internal/docs/veteran-confirmation/v0/openapi.json',
-    },
-  ],
+const apollo13: APIDescription = {
+  altID: 'apollo13',
+  description: "When a trip to the moon doesn't go according to plan",
+  docSources: [],
   enabledByDefault: true,
   lastProdAccessStep: ProdAccessFormSteps.Three,
-  name: 'Veteran Confirmation API',
-  openData: false,
-  releaseNotes: VeteranConfirmationReleaseNotes,
-  urlFragment: 'veteran_confirmation',
-};
-
-const verification: APIDescription = {
-  altID: 'verification',
-  description:
-    'Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.',
-  docSources: [
-    {
-      metadataUrl: 'http://localhost:3001/internal/docs/veteran-verification/metadata.json',
-      openApiUrl: 'http://localhost:3001/internal/docs/veteran-verification/v0/openapi.json',
-    },
-  ],
-  enabledByDefault: true,
-  lastProdAccessStep: ProdAccessFormSteps.Four,
-  name: 'Veteran Verification API',
+  name: 'Apollo 13 API',
   oAuth: true,
   oAuthInfo: {
-    acgInfo: {
-      baseAuthPath: '/oauth2/veteran-verification/v1',
-      scopes: [
-        'profile',
-        'openid',
-        'offline_access',
-        'service_history.read',
-        'disability_rating.read',
-        'veteran_status.read',
-      ],
+    ccgInfo: {
+      baseAuthPath: '/oauth2/apollo_13/v1',
+      productionAud: 'sample-productionAud',
+      sandboxAud: 'sample-sandboxAud',
+      scopes: [],
     },
   },
-  oAuthTypes: ['AuthorizationCodeGrant'],
+  oAuthTypes: ['ClientCredentialsGrant'],
   openData: false,
-  releaseNotes: VeteranVerificationReleaseNotes,
-  urlFragment: 'veteran_verification',
+  releaseNotes:
+    '### April 11, 1970\n\nLaunch!\n\n\n---\n\n### April 14, 1970\n\nOxygen tank #2 is unhappy.\n\n\n---\n\n### April 17, 1970\n\nSplashdown. The crew arrives home safely.\n',
+  urlFragment: 'apollo_13',
+};
+
+const theMartian: APIDescription = {
+  altID: 'the_martian',
+  description:
+    'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
+  docSources: [], // doesn't matter here
+  enabledByDefault: true,
+  lastProdAccessStep: ProdAccessFormSteps.Four,
+  name: 'The Martian API',
+  openData: false,
+  releaseNotes:
+    '### November 25, 2035\n\nA powerful storm hits the Ares III landing site forcing an evacuation during which Mark Watney is struck by debris and assumed to be dead.\n\n\n---\n\n### November 26, 2035\n\nMark Watney is not dead, just very sleepy and injured.\n\n\n---\n\n### February 2037\n\nMark Watney leaves Mars in a convertable space ship and rejoins his crew on the Hermes.\nYay!\n',
+  urlFragment: 'the_martian',
+  vaInternalOnly: VaInternalOnly.AdditionalDetails,
+};
+
+const basketball: APIDescription = {
+  description: 'stuff about hoops or whatever',
+  docSources: [], // doesn't matter here
+  enabledByDefault: true,
+  lastProdAccessStep: ProdAccessFormSteps.Three,
+  name: 'Basketball API',
+  openData: true,
+  releaseNotes:
+    '### September 21, 2019\n\nMoved exiled Numenoreans to Middle-earth\n\n\n---\n\n### June 12, 2019\n\nReleased our API\n',
+  urlFragment: 'basketball',
 };
 
 describe('query module', () => {
+  store.dispatch(setApis(fakeCategories));
+
   describe('lookupApiByFragment', () => {
     it('finds the API if it is defined', () => {
-      const api = lookupApiByFragment('facilities');
-      expect(api).toEqual(facilities);
+      const api = lookupApiByFragment('rings');
+      expect(api).toEqual(rings);
     });
 
     it('returns null if the API does not exist', () => {
@@ -160,30 +112,20 @@ describe('query module', () => {
      * categories change substantially in the future, this test will need to be updated.
      */
     it('returns the API category definition if it is defined', () => {
-      const appealsApi = lookupApiCategory('appeals');
-      expect(appealsApi).not.toBeNull();
-      expect(appealsApi?.apis.length).toBeGreaterThanOrEqual(2);
-      expect(appealsApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
+      const moviesApi = lookupApiCategory('movies');
+      expect(moviesApi).not.toBeNull();
+      expect(moviesApi?.apis.length).toEqual(3);
+      expect(moviesApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
 
-      const benefitsApi = lookupApiCategory('benefits');
-      expect(benefitsApi).not.toBeNull();
-      expect(benefitsApi?.apis.length).toBeGreaterThanOrEqual(3);
-      expect(benefitsApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(1);
+      const sportsApi = lookupApiCategory('sports');
+      expect(sportsApi).not.toBeNull();
+      expect(sportsApi?.apis.length).toEqual(2);
+      expect(sportsApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
 
-      const facilitiesApi = lookupApiCategory('facilities');
-      expect(facilitiesApi).not.toBeNull();
-      expect(facilitiesApi?.apis.length).toBeGreaterThanOrEqual(1);
-      expect(facilitiesApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
-
-      const healthApi = lookupApiCategory('health');
-      expect(healthApi).not.toBeNull();
-      expect(healthApi?.apis.length).toBeGreaterThanOrEqual(4);
-      expect(healthApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(6);
-
-      const verificationApi = lookupApiCategory('verification');
-      expect(verificationApi).not.toBeNull();
-      expect(verificationApi?.apis.length).toBeGreaterThanOrEqual(3);
-      expect(verificationApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
+      const lotrApi = lookupApiCategory('lotr');
+      expect(lotrApi).not.toBeNull();
+      expect(lotrApi?.apis.length).toEqual(3);
+      expect(lotrApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
     });
 
     it('returns null for an API that does not exist', () => {
@@ -192,59 +134,55 @@ describe('query module', () => {
   });
 
   describe('includeOauthAPI', () => {
-    it('returns true if the list includes an API within a key-based category', () => {
-      expect(includesOAuthAPI(['benefits', 'facilities', 'health'])).toBe(true);
-    });
-
     it('returns true if the list includes an API that is marked as OAuth at the API level', () => {
-      expect(includesOAuthAPI(['benefits', 'claims', 'facilities'])).toBe(true);
+      expect(includesOAuthAPI(['apollo13', 'armageddon'])).toBe(true);
     });
 
     it('returns false if the list does not include any OAuth APIs', () => {
-      expect(includesOAuthAPI(['benefits', 'facilities'])).toBe(false);
+      expect(includesOAuthAPI(['rings', 'silmarils', 'hobbits'])).toBe(false);
     });
   });
 
   describe('includesInternalOnlyAPI', () => {
     it('returns true if the list includes an API within a key-based category', () => {
-      expect(includesInternalOnlyAPI(['appeals', 'decision_reviews', 'loan_guaranty'])).toBe(true);
+      expect(includesInternalOnlyAPI(['the_martian', 'armageddon'])).toBe(true);
     });
 
     it('returns false if the list does not include any VA Internal Only APIs', () => {
-      expect(includesInternalOnlyAPI(['benefits', 'facilities', 'vaForms'])).toBe(false);
+      expect(includesInternalOnlyAPI(['baseball', 'basketball'])).toBe(false);
     });
   });
 
   describe('onlyOpenDataApis', () => {
     it('returns true if the list includes only Open Data APIs', () => {
-      expect(onlyOpenDataAPIs(['vaForms', 'facilities'])).toBe(true);
+      expect(onlyOpenDataAPIs(['hobbits', 'basketball'])).toBe(true);
     });
 
     it('returns false if the list does not include any VA Internal Only APIs', () => {
-      expect(onlyOpenDataAPIs(['benefits', 'facilities', 'vaForms'])).toBe(false);
+      expect(onlyOpenDataAPIs(['apollo13', 'baseball', 'armageddon'])).toBe(false);
     });
   });
 
   describe('getAllQuickstartCategorySlugs', () => {
     it('returns the list of all API category slugs that have a quickstart page', () => {
-      expect(getAllQuickstartCategorySlugs()).toStrictEqual(['health']);
+      expect(getAllQuickstartCategorySlugs()).toStrictEqual(['movies']);
     });
   });
 
   describe('apisFor', () => {
     it('retrieves the requested APIs', () => {
-      const apis = apisFor(['facilities', 'claims']);
+      const apis = apisFor(['the_martian', 'basketball']);
       expect(apis).toHaveLength(2);
-      expect(apis).toContainEqual(facilities);
-      expect(apis).toContainEqual(claims);
+      expect(apis).toContainEqual(theMartian);
+      expect(apis).toContainEqual(basketball);
     });
 
     it('checks both urlFragment and altID', () => {
       // 'verification' is an altID, 'veteran_confirmation' is a urlFragment
-      const apis = apisFor(['verification', 'veteran_confirmation']);
+      const apis = apisFor(['rings', 'apollo_13']);
       expect(apis).toHaveLength(2);
-      expect(apis).toContainEqual(confirmation);
-      expect(apis).toContainEqual(verification);
+      expect(apis).toContainEqual(rings);
+      expect(apis).toContainEqual(apollo13);
     });
   });
 });

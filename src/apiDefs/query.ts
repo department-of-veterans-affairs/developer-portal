@@ -13,17 +13,25 @@
  * - schema.ts
  */
 
-import apiDefs, { apiCategoryOrder } from './data/categories';
-import { isApiDeactivated } from './deprecated';
+import store from '../store';
 import { isHostedApiEnabled } from './env';
+import { isApiDeactivated } from './deprecated';
 import { APICategories, APICategory, APIDescription, VaInternalOnly } from './schema';
+import * as rootGetApiDefinitions from './getApiDefinitions';
 
-const getApiDefinitions = (): APICategories => apiDefs;
-const getApiCategoryOrder = (): string[] => apiCategoryOrder;
+const getApiDefinitions = (): APICategories => rootGetApiDefinitions.getApiDefinitions();
+
+const getApisLoaded = (): boolean => {
+  const state = store.getState();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+  return state.apiList.loaded;
+};
+
+const getApiCategoryOrder = (): string[] => Object.keys(rootGetApiDefinitions.getApiDefinitions());
 
 const getActiveApiDefinitions = (): APICategories => {
   const output: APICategories = {};
-  const definitions = getApiDefinitions();
+  const definitions = rootGetApiDefinitions.getApiDefinitions();
   Object.keys(definitions).forEach((key: string) => {
     const apis: APIDescription[] = definitions[key].apis.filter(
       (api: APIDescription) =>
@@ -39,7 +47,7 @@ const getActiveApiDefinitions = (): APICategories => {
 };
 
 const getAllApis = (): APIDescription[] =>
-  Object.values(getApiDefinitions())
+  Object.values(rootGetApiDefinitions.getApiDefinitions())
     .flatMap((category: APICategory) => category.apis)
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 const getActiveApis = (): APIDescription[] =>
@@ -76,7 +84,7 @@ const getAllKeyAuthApis = (): APIDescription[] =>
   getAllApis().filter((item: APIDescription) => !item.oAuth);
 
 const getAllQuickstartCategorySlugs = (): string[] =>
-  Object.entries(getApiDefinitions())
+  Object.entries(rootGetApiDefinitions.getApiDefinitions())
     .filter((item: [string, APICategory]) => !!item[1].content.quickstart)
     .map((item: [string, APICategory]) => item[0]);
 
@@ -87,8 +95,9 @@ const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   return apiResult ?? null;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- should check category existence
-const lookupApiCategory = (categoryKey: string): APICategory | null => apiDefs[categoryKey] ?? null;
+const lookupApiCategory = (categoryKey: string): APICategory | null =>
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+  rootGetApiDefinitions.getApiDefinitions()[categoryKey] ?? null;
 
 const apisFor = (
   selectedApiList: string[],
@@ -132,6 +141,7 @@ export {
   apisFor,
   getActiveKeyAuthApis,
   getActiveOauthApis,
+  getApisLoaded,
   getAllApis,
   getAllOauthApis,
   getAllAuthCodeApis,

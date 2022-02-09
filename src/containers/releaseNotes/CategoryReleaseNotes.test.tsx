@@ -12,10 +12,14 @@ import {
 } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
+import store from '../../store';
+import { setApis } from '../../actions';
 import { FlagsProvider, getFlags } from '../../flags';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
+  store.dispatch(setApis(fakeCategories));
+
   let apiDefsSpy: jest.SpyInstance<APICategories>;
   let allAPIsSpy: jest.SpyInstance<APIDescription[]>;
   beforeEach(() => {

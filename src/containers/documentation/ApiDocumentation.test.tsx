@@ -10,7 +10,7 @@ import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import store, { history } from '../../store';
 import ApiDocumentation from './ApiDocumentation';
 
-const ReleaseNotes: React.FunctionComponent = () => <div>My API&apos;s release notes</div>;
+const ReleaseNotes: string = 'My API&apos;s release notes';
 const api: APIDescription = {
   description: "it's a great API!",
   docSources: [
