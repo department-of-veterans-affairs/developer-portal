@@ -3,6 +3,7 @@ name: NPM Checks
 on:
   pull_request:
     branches: [master]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
   install:
@@ -254,7 +255,7 @@ jobs:
               links="${links} - [${f#"${report_path}"}](https://s3-${AWS_REGION}.amazonaws.com/${AWS_S3_SCREENSHOTS_BUCKET}/$GITHUB_HEAD_REF/gha-${COMMIT_HASH}/${f#"${report_path}"}) <br />"
             done
             docsLink="https://github.com/$GITHUB_REPOSITORY/blob/master/docs/testing.md#visual-regression-testing"
-            comment="Visual regression testing failed. Review these diffs and then [update the snapshots](${docsLink}). <br><br> ${links}"
+            comment="Visual regression testing failed. Review these diffs and then [update the snapshots locally or with GitHub Actions](${docsLink}). <br><br> ${links}"
             gh pr comment $PR_NUMBER --body "$comment"
           fi
       - name: Report Success/Failure

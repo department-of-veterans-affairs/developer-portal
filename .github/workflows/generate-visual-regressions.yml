@@ -84,8 +84,16 @@ jobs:
 
       - name: Commit new snapshots and push
         run: |
+          # Change to a personal access token so that PR integration jobs run
+          echo ${{ secrets.GIT_VISUAL_REGRESSIONS_COMMIT_TOKEN }} | gh auth login --with-token
           git add test/image_snapshots/*
           git config user.email "${{ secrets.GIT_USER_EMAIL }}"
           git config user.name "${{ secrets.GIT_USER_NAME }}"
           git commit -m "Updated visual snapshots via GitHub Actions job"
           git push origin ${{ steps.pr_branch.outputs.branch_name }}
+          # After pushing the code to the PR you need to set the PR to draft and back to ready
+          # for the integration tests to run. This is a custom github cli extension as native
+          # support for setting a PR to draft doesn't yet exist in the official cli methods.
+          gh extension install kyanny/gh-pr-draft
+          gh pr-draft ${{ github.event.inputs.pr_number }}
+          gh pr ready ${{ github.event.inputs.pr_number }}

@@ -10,6 +10,7 @@ be coming from our dev environment.
 If you are working on OpenAPI documentation in vets-api, you will need to point the portal at your local
 instance of [vets-api](https://github.com/department-of-veterans-affairs/vets-api#base-setup). You will do
 this by overriding the `REACT_APP_VETSGOV_SWAGGER_API` environment variable:
+
 ```
 REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3000
 ```
@@ -25,16 +26,17 @@ before submitting a pull request.
 General tests specific to a component or simple interactions between related components are handled by our
 unit test suite. This test suite uses the [jest framekwork](https://jestjs.io/). During development you can
 have the test runner provide you with immediate feedback by running this command:
+
 ```
 npm run-script test:unit -- --watch
 ```
 
 That will watch the files under version control and run the tests based on the files you modify. If you would
 like to run the same command that's run during the CI job, that is:
+
 ```
 npm run-script test:unit:ci
 ```
-
 
 ### End-to-End Tests
 
@@ -47,25 +49,29 @@ Set `TEST_HOST` to the url to use in the end to end testing. If not set a server
 
 ### Visual Regression Testing
 
-#### Using Git LFS to store 
+#### Using Git LFS to store
 
 You will need to first [install Git LFS](https://github.com/git-lfs/git-lfs/wiki/Installation) and then run `git lfs install` in the repo, then `git lfs checkout` or `git lfs pull` to get the actual image contents on your machine. This will make cloning the repo far less painful. Adding and updating the snapshots is still done with `git add` but in order for that command to work correctly you need git-lfs installed for your user.
 
-#### Setting Up and Running Tests
+#### Setting Up and Running Tests Locally
 
 This project uses `jest-image-snapshot` for visual regression testing. Screenshots of the app are checked into git, and regenerated whenever a change is made. If they don't match, Jenkins will report a test failure. To run these tests locally, you'll first need to build the docker image:
+
 ```
 docker build -t developer-portal .
 sudo chmod -R o+rwx test/image_snapshots
 ```
 
 Then you can run them in the docker image with
+
 ```
 docker run --rm -itv "$PWD:/application" -v "/application/node_modules" developer-portal npm run test:visual
 ```
-If the tests don't pass, an image showing the diff will be generated in `test/image_snapshots/diff_output` 
+
+If the tests don't pass, an image showing the diff will be generated in `test/image_snapshots/diff_output`
 
 If you need to update your snapshots (after seeing a failing diff), run with the `-u` flag:
+
 ```
 docker run --rm -itv "$PWD:/application" -v "/application/node_modules" developer-portal npm run test:visual -- -u
 ```
@@ -74,12 +80,20 @@ It's important to run these tests inside the docker container, or else the tests
 
 `TEST_HOST` can be set for visual regression testing in the same way as the end to end tests. However running visual regression tests against a live site isn't useful yet, as most tests will not pass.
 
+#### Update visual regressions via GitHub Actions
+
+It is possible to update the visual regressions via a workflow in GitHub Actions.
+
+- Visit the [Generate Visual Regressions](https://github.com/department-of-veterans-affairs/developer-portal/actions/workflows/generate-visual-regressions.yml) workflow
+- Click "Run workflow"
+- Leave the branch as the default branch
+- Enter the PR that needs updated visual regressions
+- Click run and wait about 5-7 minutes for it to complete
+
+Note: In order to trigger the PR integration tests automatically we had to do a workaround where upon completion of the visual updates the PR will be set to draft mode and then back to ready for review. Unfortunately this is the least intrusive method to work around this GitHub Actions limitation put in place to prevent runaway workflow loops.
+
 ## Build-Release-Deploy
 
 When you create a pull request, Jenkins will deploy your branch to an S3 bucket, and comment on the PR with a link. Your changes will be deployed at a URL like https://s3-us-gov-west-1.amazonaws.com/review-developer-va-gov/a1s2d3f4/production/index.html. This review instance can be used to demo changes to stakeholders before merging to master, but due to limitations with the current setup, you won't be able to link directly to pages other than index.html (navigation to those pages will work fine after visiting).
 
 The Developer Portal is automatically deployed to both [dev](https://dev-developer.va.gov/) and [staging](https://staging-developer.va.gov/) whenever changes are made to the master branch.
-
-Deploys to production are done daily at 11:30AM EST.
-
-
