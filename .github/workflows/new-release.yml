@@ -135,9 +135,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
+          RELEASE_TITLE=`gh api /repos/department-of-veterans-affairs/developer-portal/commits/$GITHUB_SHA | jq -r '.commit.message' | head -1`
           NEW_TAG=$(git tag --sort=-creatordate | head -1 | awk -F. -v OFS=. '{$NF++;print}')
           VERSION=${NEW_TAG#"developer-portal/v"}
-          gh release create $NEW_TAG
+          gh release create $NEW_TAG --title="$RELEASE_TITLE"
           for env in 'dev' 'staging' 'production' ; do
             mv "release/developer-portal-${env}.tar.bz2" "release/developer-portal-${env}-${VERSION}.tar.bz2"
             gh release upload ${NEW_TAG} "release/developer-portal-${env}-${VERSION}.tar.bz2#${NEW_TAG}_${env}.tar.bz2"
