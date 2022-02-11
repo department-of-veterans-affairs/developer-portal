@@ -3,7 +3,7 @@ name: Create Auto Deploy Maintenance Request
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 18 * * 1,2,3,4'
+    - cron: '0 18 * * 1,2,3,4,5'
 
 jobs:
   pre_mr_checks_and_create:
@@ -68,9 +68,13 @@ jobs:
           PROPOSED_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/releases/latest | jq -r ".tag_name"`
           sed -i -e '1,8d' maintenance-request.md
           # Set MR template variables
-          # TODO: If Friday set to Monday (current cron to create MR only runs Mon-Thurs)
-          PROPOSED_WINDOW_OPENING=`date --date="10:00 tomorrow" +"%Y/%m/%d %H:%M %Z"`
-          PROPOSED_WINDOW_CLOSING=`date --date="10:30 tomorrow" +"%Y/%m/%d %H:%M %Z"`
+          if [ "date +%A" == "Friday" ]; then
+            PROPOSED_WINDOW_OPENING=`date --date="10:00 next Monday" +"%Y/%m/%d %H:%M %Z"`
+            PROPOSED_WINDOW_CLOSING=`date --date="10:30 next Monday" +"%Y/%m/%d %H:%M %Z"`
+          else
+            PROPOSED_WINDOW_OPENING=`date --date="10:00 tomorrow" +"%Y/%m/%d %H:%M %Z"`
+            PROPOSED_WINDOW_CLOSING=`date --date="10:30 tomorrow" +"%Y/%m/%d %H:%M %Z"`
+          fi
 
           # Get the releases
           gh api /repos/department-of-veterans-affairs/developer-portal/releases > releases.json

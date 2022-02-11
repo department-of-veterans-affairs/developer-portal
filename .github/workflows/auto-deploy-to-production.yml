@@ -3,7 +3,7 @@ name: Auto Deploy master to Production
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/30 13,14,15,16,17,18,19,20,21 * * 2,3,4,5'
+    - cron: '*/30 13,14,15,16,17,18,19,20,21 * * 1,2,3,4,5'
 
 jobs:
   run_checks_and_deploy:
