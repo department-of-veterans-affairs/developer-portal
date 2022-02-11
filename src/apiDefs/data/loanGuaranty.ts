@@ -26,7 +26,7 @@ const loanGuarantyApis: APIDescription[] = [
     description: 'Use the Loan Guaranty API to Manage VA Home Loans.',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/loan_guaranty/docs/v1/api`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/loan_guaranty_property/v1/openapi.json`,
       },
     ],
     enabledByDefault: true,
