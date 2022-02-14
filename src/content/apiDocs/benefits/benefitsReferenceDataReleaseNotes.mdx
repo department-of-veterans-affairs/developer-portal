@@ -21,7 +21,7 @@ This API will return only the data that can be used for benefits claims. For exa
 
 There are some important differences between this API and the service it replaces:
 
-- The new service requires an API key. Obtain one through [this onboarding process](https://developer.va.gov/onboarding).
+- The new service requires an API key. [Obtain one through this onboarding process](https://developer.va.gov/onboarding).
 - There are some stylistic changes to each endpoints’ response format:
     * Contention Types
       + "contentionTypes" array renamed to "items"
@@ -50,15 +50,19 @@ There are some important differences between this API and the service it replace
       + "facilities" array renamed to "items"
 
 
-- Be prepared to handle HTTP status codes not explicitly specified in endpoint definitions.
-- Be tolerant with unknown fields in the payload, ignore deserialization of new fields but do not eliminate them from the payload if needed for subsequent PUT requests.
-- Follow the redirect when the server returns HTTP status code 301 (Moved Permanently).
 - Responses are in JSON instead of HTML.
 - Minor improvements to HTTPS Response Codes. (i.e. treatment centers invalid state was 200 and is now 400, new 429 rate limit errors, unauthorized 401, refer to [API specification](https://developer.va.gov/explore/benefits/docs/benefits_reference_data?version=current) for complete information).
 - For the treatment center endpoint, the optional “stateCode” query parameter must now be 2 capital letters, otherwise a 400 response is returned. Previously, a 200 with a blank array was returned.
 - Optional pagination is supported (new fields were added to in the responses even if the optional pagination parameters are not used for certain end points).
-- URL changes for the services. (Legacy production URLs are https://www.ebenefits.va.gov:444/wss-referencedata-services-web/rest/referencedata/v1/`<endpoint name>` and new production URLs are: https://api.va.gov/services/benefits-reference-data/v1/`<endpoint name>`)
+- URLs for the services are changed. The legacy production URLs are https://www.ebenefits.va.gov:444/wss-referencedata-services-web/rest/referencedata/v1/`<endpoint name>` and the new production URLs are: https://api.va.gov/services/benefits-reference-data/v1/`<endpoint name>`.
 
-Learn more about this API by reviewing the [Benefits Data lookup API documentation](/explore/benefits/docs/benefits_reference_data).
+
+It's important to know that with the new version, you will need to support backward compatibility. You should:
+- Be prepared to handle HTTP status codes not explicitly specified in endpoint definitions.
+- Be tolerant with unknown fields in the payload, ignore deserialization of new fields, but do not eliminate them from the payload if needed for subsequent PUT requests.
+- Follow the redirect when the server returns HTTP status code 301 (Moved Permanently).
+
+
+Learn more about this API by reviewing the [Benefits Reference Data API documentation](/explore/benefits/docs/benefits_reference_data).
 
 For cross-reference purposes, the PR for this release is [#4015](https://tools.health.dev-developer.va.gov/jenkins/job/department-of-veterans-affairs/job/health-apis-deployer/job/d2/4015/).
