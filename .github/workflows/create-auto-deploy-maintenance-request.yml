@@ -88,10 +88,10 @@ jobs:
           for pr in `echo $PROPOSED_RELEASE_PRS`; do
             gh api /repos/department-of-veterans-affairs/developer-portal/pulls/$pr > pr-$pr.json
             if [ "impact: maintainers" == "`jq -r '.labels[] | select(.name == \"impact: maintainers\") .name' pr-$pr.json`" ]; then
-              echo "- " `jq -r '.title' pr-$pr.json` "[https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr](#$pr)" >> maintainer-notes.txt
+              echo "- " `jq -r '.title' pr-$pr.json` "[#$pr]([https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr)" >> maintainer-notes.txt
             fi
             if [ "impact: users" == "`jq -r '.labels[] | select(.name == \"impact: users\") .name' pr-$pr.json`" ]; then
-              echo "- " `jq -r '.title' pr-$pr.json` "[https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr](#$pr)" >> user-notes.txt
+              echo "- " `jq -r '.title' pr-$pr.json` "[#$pr]([https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr)" >> user-notes.txt
             fi
           done
           DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$PROPOSED_RELEASE_TAG"
