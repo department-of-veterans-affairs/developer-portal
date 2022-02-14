@@ -86,7 +86,7 @@ jobs:
           echo '```' >> maintainer-notes.txt
           touch user-notes.txt
           for pr in `echo $PROPOSED_RELEASE_PRS`; do
-            gh pr view $pr --json labels,title > pr-$pr.json
+            gh api /repos/department-of-veterans-affairs/developer-portal/pulls/$pr > pr-$pr.json
             if [ "impact: maintainers" == "`jq -r '.labels[] | select(.name == \"impact: maintainers\") .name' pr-$pr.json`" ]; then
               echo "- " `jq -r '.title' pr-$pr.json` "[https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr](#$pr)" >> maintainer-notes.txt
             fi
