@@ -8,7 +8,7 @@ assignees: golavarr-va
 
 # MAINTENANCE REQUEST
 
-_This request was auto-generated._
+_This request was auto-generated. Please only approve this MR if the time is correct in the title as the deploy timing with be automated based off that and the approved label being applied._
 
 ```
 Environment ... dsva-production
