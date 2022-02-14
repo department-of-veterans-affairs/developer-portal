@@ -79,11 +79,21 @@ jobs:
           # Get the releases
           gh api /repos/department-of-veterans-affairs/developer-portal/releases > releases.json
           CURRENT_RELEASE_ID=`jq ".[] | select(.tag_name == \"$CURRENT_RELEASE_TAG\") | .id" releases.json`
-          PROPOSED_RELEASE_TITLES=`jq -r ".[] | select(.id > $CURRENT_RELEASE_ID) | \"- \" + .name + \"\"" releases.json`
-          MAINTAINER_NOTES=""
-          USER_NOTES="- "
-          # TODO: fix this into a loop with line breaks
-          MAINTAINER_NOTES=`printf "%s\n" "$PROPOSED_RELEASE_TITLES"`
+          PROPOSED_RELEASE_PRS=`jq -r ".[] | select(.id > $CURRENT_RELEASE_ID ) | \"- \" + .name + \"\"" releases.json | sed -E 's/(.*)\#([0-9]{1,})\)/\2/'`
+          echo '```' > maintainer-notes.txt
+          echo "Release tag: $PROPOSED_RELEASE_TAG" >> maintainer-notes.txt
+          echo "Rollback tag: $CURRENT_RELEASE_TAG" >> maintainer-notes.txt
+          echo '```' >> maintainer-notes.txt
+          touch user-notes.txt
+          for pr in `echo $PROPOSED_RELEASE_PRS`; do
+            gh pr view $pr --json labels,title > pr-$pr.json
+            if [ "impact: maintainers" == "`jq -r '.labels[] | select(.name == \"impact: maintainers\") .name' pr-$pr.json`" ]; then
+              echo "- " `jq -r '.title' pr-$pr.json` "[https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr](#$pr)" >> maintainer-notes.txt
+            fi
+            if [ "impact: users" == "`jq -r '.labels[] | select(.name == \"impact: users\") .name' pr-$pr.json`" ]; then
+              echo "- " `jq -r '.title' pr-$pr.json` "[https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr](#$pr)" >> user-notes.txt
+            fi
+          done
           DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$PROPOSED_RELEASE_TAG"
           ROLLBACK_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$CURRENT_RELEASE_TAG"
           ISSUE_TITLE="Deploy developer-portal to production ($PROPOSED_WINDOW_OPENING)"
@@ -97,14 +107,18 @@ jobs:
           sed -i "s|__release_tag__|$PROPOSED_RELEASE_TAG|g" maintenance-request.md
           echo $CURRENT_RELEASE_TAG
           sed -i "s|__rollback_tag__|$CURRENT_RELEASE_TAG|g" maintenance-request.md
-          echo $MAINTAINER_NOTES
-          sed -n '1,/^MAINTAINER_NOTES$/p' maintenance-request.md | sed \$d > temp-request.md
-          printf "%s\n" "$MAINTAINER_NOTES" >> temp-request.md
-          sed '1,/^MAINTAINER_NOTES$/d' maintenance-request.md >> temp-request.md
-          mv temp-request.md maintenance-request.md
-          # sed -i "s|MAINTAINER_NOTES|$MAINTAINER_NOTES|g" maintenance-request.md
-          echo $USER_NOTES
-          sed -i "s|USER_NOTES|$USER_NOTES|g" maintenance-request.md
+          # File splicing for maintainer notes
+          cat maintainer-notes.txt
+          sed -n '1,/^MAINTAINER_NOTES$/p' maintenance-request.md | sed \$d > temp-notes.md
+          cat maintainer-notes.txt >> temp-notes.md
+          sed '1,/^MAINTAINER_NOTES$/d' maintenance-request.md >> temp-notes.md
+          mv temp-notes.md maintenance-request.md
+          # File splicing for user notes
+          cat user-notes.txt
+          sed -n '1,/^USER_NOTES$/p' maintenance-request.md | sed \$d > temp-notes.md
+          cat user-notes.txt >> temp-notes.md
+          sed '1,/^USER_NOTES$/d' maintenance-request.md >> temp-notes.md
+          mv temp-notes.md maintenance-request.md
           echo $DEPLOYMENT_COMMAND
           sed -i "s|DEPLOYMENT_COMMAND|$DEPLOYMENT_COMMAND|g" maintenance-request.md
           echo $ROLLBACK_COMMAND
@@ -112,10 +126,10 @@ jobs:
 
           cat maintenance-request.md
 
-          gh issue create \
-            -R 'department-of-veterans-affairs/lighthouse-devops-support' \
-            --title "$ISSUE_TITLE" \
-            --assignee "$TEMPLATE_ASSIGNEE" \
-            --label "$TEMPLATE_ISSUE_LABEL" \
-            --label "repo: developer-portal" \
-            --body-file maintenance-request.md
+          # gh issue create \
+          #   -R 'department-of-veterans-affairs/lighthouse-devops-support' \
+          #   --title "$ISSUE_TITLE" \
+          #   --assignee "$TEMPLATE_ASSIGNEE" \
+          #   --label "$TEMPLATE_ISSUE_LABEL" \
+          #   --label "repo: developer-portal" \
+          #   --body-file maintenance-request.md
