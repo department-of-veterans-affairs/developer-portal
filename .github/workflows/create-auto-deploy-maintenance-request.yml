@@ -3,7 +3,7 @@ name: Create Auto Deploy Maintenance Request
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 18 * * 1,2,3,4,5'
+    - cron: '0 20 * * 1,2,3,4,5'
 
 jobs:
   pre_mr_checks_and_create:
