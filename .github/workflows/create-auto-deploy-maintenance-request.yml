@@ -1,0 +1,121 @@
+name: Create Auto Deploy Maintenance Request
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 18 * * 1,2,3,4,5'
+
+jobs:
+  pre_mr_checks_and_create:
+    runs-on: ubuntu-latest
+    outputs:
+      mr_number: ${{ steps.get_mr_number.outputs.mr_number }}
+      time_string: ${{ steps.get_time_string.outputs.time_string }}
+    steps:
+      - name: Set timezone to Eastern
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: 'America/New_York'
+      - name: Check for existing MRs
+        run: |
+          echo ${{secrets.GITHUB_TOKEN}} | gh auth login --with-token
+          gh issue list \
+            -R 'department-of-veterans-affairs/lighthouse-devops-support' \
+            -l 'repo: developer-portal' \
+            --limit 1 \
+            --json id,number,state,labels,title \
+            > issue.json
+          cat issue.json
+          if [ "[]" == "$(cat issue.json)" ]; then
+            :
+          else
+            # issue.json isn't an empty json array and there is currently an open MR tagged "repo: developer-portal"
+            # Any open MR should cancel the creation of a new MR
+            exit 1;
+          fi
+      - id: get_current_release_tag
+        name: Get current release tag from production deploy.json
+        run: |
+          wget https://developer.va.gov/deploy.json
+          CURRENT_RELEASE_TAG=`jq -r ".release" deploy.json`
+          echo $CURRENT_RELEASE_TAG
+          echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
+      - id: get_current_release_from_commit_hash
+        name: Get currently deployed release tag from the commit hash if last deploy didn't use the release tag
+        if: steps.get_current_release_tag.outputs.current_release_tag == ''
+        run: |
+          COMMIT_HASH=`jq -r ".commit" deploy.json`
+          echo $COMMIT_HASH
+          CURRENT_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/tags | jq -r ".[] | select(.commit.sha == \"$COMMIT_HASH\").name"`
+          echo $CURRENT_RELEASE_TAG
+          echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
+      - id: unified_current_release_tag
+        name: Unify release tag regardless of how it was found
+        run: |
+          if [ "" != "${{ steps.get_current_release_tag.outputs.current_release_tag }}" ]; then
+            CURRENT_RELEASE_TAG=`echo ${{ steps.get_current_release_tag.outputs.current_release_tag }}`
+          else
+            CURRENT_RELEASE_TAG=`echo ${{ steps.get_current_release_from_commit_hash.outputs.current_release_tag }}`
+          fi
+          echo $CURRENT_RELEASE_TAG
+          echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
+      - name: Generate the MR body text
+        run: |
+          wget https://raw.githubusercontent.com/department-of-veterans-affairs/developer-portal/master/.github/workflows/assets/maintenance-request.md
+          TEMPLATE_ISSUE_LABEL=`grep labels maintenance-request.md | cut -f2 -d " "`
+          TEMPLATE_ASSIGNEE=`grep assignees maintenance-request.md | cut -f2 -d " "`
+          CURRENT_RELEASE_TAG=`echo ${{steps.unified_current_release_tag.outputs.current_release_tag}}`
+          PROPOSED_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/releases/latest | jq -r ".tag_name"`
+          sed -i -e '1,8d' maintenance-request.md
+          # Set MR template variables
+          if [ "date +%A" == "Friday" ]; then
+            PROPOSED_WINDOW_OPENING=`date --date="10:00 next Monday" +"%Y/%m/%d %H:%M %Z"`
+            PROPOSED_WINDOW_CLOSING=`date --date="10:30 next Monday" +"%Y/%m/%d %H:%M %Z"`
+          else
+            PROPOSED_WINDOW_OPENING=`date --date="10:00 tomorrow" +"%Y/%m/%d %H:%M %Z"`
+            PROPOSED_WINDOW_CLOSING=`date --date="10:30 tomorrow" +"%Y/%m/%d %H:%M %Z"`
+          fi
+
+          # Get the releases
+          gh api /repos/department-of-veterans-affairs/developer-portal/releases > releases.json
+          CURRENT_RELEASE_ID=`jq ".[] | select(.tag_name == \"$CURRENT_RELEASE_TAG\") | .id" releases.json`
+          PROPOSED_RELEASE_TITLES=`jq -r ".[] | select(.id > $CURRENT_RELEASE_ID) | \"- \" + .name + \"\"" releases.json`
+          MAINTAINER_NOTES=""
+          USER_NOTES="- "
+          # TODO: fix this into a loop with line breaks
+          MAINTAINER_NOTES=`printf "%s\n" "$PROPOSED_RELEASE_TITLES"`
+          DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$PROPOSED_RELEASE_TAG"
+          ROLLBACK_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$CURRENT_RELEASE_TAG"
+          ISSUE_TITLE="Deploy developer-portal to production ($PROPOSED_WINDOW_OPENING)"
+
+          # Replace values in issue template
+          echo $PROPOSED_WINDOW_OPENING
+          sed -i "s|__proposed_start_date_time__|$PROPOSED_WINDOW_OPENING|g" maintenance-request.md
+          echo $PROPOSED_WINDOW_CLOSING
+          sed -i "s|__proposed_end_date_time__|$PROPOSED_WINDOW_CLOSING|g" maintenance-request.md
+          echo $PROPOSED_RELEASE_TAG
+          sed -i "s|__release_tag__|$PROPOSED_RELEASE_TAG|g" maintenance-request.md
+          echo $CURRENT_RELEASE_TAG
+          sed -i "s|__rollback_tag__|$CURRENT_RELEASE_TAG|g" maintenance-request.md
+          echo $MAINTAINER_NOTES
+          sed -n '1,/^MAINTAINER_NOTES$/p' maintenance-request.md | sed \$d > temp-request.md
+          printf "%s\n" "$MAINTAINER_NOTES" >> temp-request.md
+          sed '1,/^MAINTAINER_NOTES$/d' maintenance-request.md >> temp-request.md
+          mv temp-request.md maintenance-request.md
+          # sed -i "s|MAINTAINER_NOTES|$MAINTAINER_NOTES|g" maintenance-request.md
+          echo $USER_NOTES
+          sed -i "s|USER_NOTES|$USER_NOTES|g" maintenance-request.md
+          echo $DEPLOYMENT_COMMAND
+          sed -i "s|DEPLOYMENT_COMMAND|$DEPLOYMENT_COMMAND|g" maintenance-request.md
+          echo $ROLLBACK_COMMAND
+          sed -i "s|ROLLBACK_COMMAND|$ROLLBACK_COMMAND|g" maintenance-request.md
+
+          cat maintenance-request.md
+
+          gh issue create \
+            -R 'department-of-veterans-affairs/lighthouse-devops-support' \
+            --title "$ISSUE_TITLE" \
+            --assignee "$TEMPLATE_ASSIGNEE" \
+            --label "$TEMPLATE_ISSUE_LABEL" \
+            --label "repo: developer-portal" \
+            --body-file maintenance-request.md

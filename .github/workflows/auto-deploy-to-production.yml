@@ -1,0 +1,72 @@
+name: Auto Deploy master to Production
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/30 13,14,15,16,17,18,19,20,21 * * 1,2,3,4,5'
+
+jobs:
+  run_checks_and_deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      mr_number: ${{ steps.get_mr_number.outputs.mr_number }}
+      time_string: ${{ steps.get_time_string.outputs.time_string }}
+    steps:
+      - name: Set timezone to Eastern
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: 'America/New_York'
+      - id: get_time_string
+        name: Get time string for MR search
+        run: |
+          TIME_STRING=`date +"%m/%d/%Y %H:%M %Z"`
+          echo $TIME_STRING
+          echo "::set-output name=time_string::$TIME_STRING"
+      - id: get_mr_number
+        name: Grab matching deploy MR
+        run: |
+          echo $TIME_STRING
+          echo ${{ steps.get_time_string.outputs.time_string }}
+          TIME_STRING=`echo ${{steps.get_time_string.outputs.time_string}}`
+          echo $TIME_STRING
+          echo ${{secrets.GITHUB_TOKEN}} | gh auth login --with-token
+          gh issue list \
+            -R 'department-of-veterans-affairs/lighthouse-devops-support' \
+            -l 'repo: developer-portal' \
+            --limit 1 \
+            --json id,number,state,labels,title \
+            --jq "[.[]|select(.title==\"Deploy developer-portal to production ($TIME_STRING)\")][0]" \
+            > issue.json
+          cat issue.json
+          MR_NUMBER=`jq -e ".number" issue.json`
+          echo $MR_NUMBER
+          if [ -z "$MR_NUMBER" ]; then
+            # If there's no MR_NUMBER then exit because there's no open MR to deploy
+            echo "No MR Found. Exiting..."
+            exit 1;
+          fi
+          # If this errors, the MR isn't labeled "status: approved" at the time of it's scheduled deployment
+          jq ".labels" issue.json | jq -e ".[] | select(.name==\"status: approved\")"
+          jq -r ".body" issue.json > issue-body.txt
+          RELEASE_TAG=`grep 'Release Tag ...' issue-body.txt | sed 's/Release Tag ... //'`
+          echo "::set-output name=mr_number::$MR_NUMBER"
+          echo "::set-output name=release_tag::$RELEASE_TAG"
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{secrets.AWS_REGION}}
+          role-to-assume: ${{secrets.AWS_ROLE_ARN}}
+          role-duration-seconds: 1200
+          role-session-name: GitHubActions
+
+      - name: Build dev and staging
+        run: |
+          MR_NUMBER=`echo ${{steps.get_mr_number.outputs.mr_number}}`
+          RELEASE_TAG=`echo ${{steps.get_mr_number.outputs.release_tag}}`
+          COMMAND=`echo "aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,ENVIRONMENT=production,MR=$MR_NUMBER,RELEASE=$RELEASE_TAG"`
+          gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body "TESTING: This is not actually deploying automatically. This is the command that would run to send the code to production.<br><br>\`$COMMAND\`"
+          # Not actually deploying yet. Just testing.
+          # aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,ENVIRONMENT=production,MR=$MR_NUMBER,RELEASE=$RELEASE_TAG
+          # gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body "Deploy started with: <br><br>\`$COMMAND\`"
