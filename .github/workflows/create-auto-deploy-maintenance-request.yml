@@ -103,10 +103,6 @@ jobs:
           sed -i "s|__proposed_start_date_time__|$PROPOSED_WINDOW_OPENING|g" maintenance-request.md
           echo $PROPOSED_WINDOW_CLOSING
           sed -i "s|__proposed_end_date_time__|$PROPOSED_WINDOW_CLOSING|g" maintenance-request.md
-          echo $PROPOSED_RELEASE_TAG
-          sed -i "s|__release_tag__|$PROPOSED_RELEASE_TAG|g" maintenance-request.md
-          echo $CURRENT_RELEASE_TAG
-          sed -i "s|__rollback_tag__|$CURRENT_RELEASE_TAG|g" maintenance-request.md
           # File splicing for maintainer notes
           cat maintainer-notes.txt
           sed -n '1,/^MAINTAINER_NOTES$/p' maintenance-request.md | sed \$d > temp-notes.md

@@ -15,9 +15,6 @@ Environment ... dsva-production
 Product ....... developer-portal
 Start ......... __proposed_start_date_time__
 End ........... __proposed_end_date_time__
-Release Tag ... __release_tag__
---
-Rollback Tag .. __rollback_tag__
 ```
 
 **SLA OR PERFORMANCE IMPACTS**
