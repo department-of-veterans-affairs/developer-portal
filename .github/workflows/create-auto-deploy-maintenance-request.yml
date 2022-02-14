@@ -122,10 +122,10 @@ jobs:
 
           cat maintenance-request.md
 
-          # gh issue create \
-          #   -R 'department-of-veterans-affairs/lighthouse-devops-support' \
-          #   --title "$ISSUE_TITLE" \
-          #   --assignee "$TEMPLATE_ASSIGNEE" \
-          #   --label "$TEMPLATE_ISSUE_LABEL" \
-          #   --label "repo: developer-portal" \
-          #   --body-file maintenance-request.md
+          gh issue create \
+            -R 'department-of-veterans-affairs/lighthouse-devops-support' \
+            --title "$ISSUE_TITLE" \
+            --assignee "$TEMPLATE_ASSIGNEE" \
+            --label "$TEMPLATE_ISSUE_LABEL" \
+            --label "repo: developer-portal" \
+            --body-file maintenance-request.md
