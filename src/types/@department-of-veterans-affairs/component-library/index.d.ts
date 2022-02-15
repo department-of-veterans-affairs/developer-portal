@@ -15,9 +15,22 @@ interface VaAccordionItemProps {
   subheader?: string;
 }
 
+interface VaAlertProps {
+  ['background-only']?: boolean;
+  ['close-btn-aria-label']?: string;
+  ['disable-analytics']?: boolean;
+  ['full-width']?: boolean;
+  ['show-icon']?: boolean;
+  children: JSX.Element | JSX.Element[];
+  closeable?: boolean;
+  status: 'info' | 'success' | 'error' | 'warning' | 'continue';
+  visible: boolean;
+}
+
 declare namespace JSX {
   interface IntrinsicElements {
     'va-accordion': VaAccordionProps;
     'va-accordion-item': unknown;
+    'va-alert': VaAlertProps;
   }
 }
