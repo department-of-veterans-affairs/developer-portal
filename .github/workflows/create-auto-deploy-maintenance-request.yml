@@ -18,7 +18,7 @@ jobs:
           timezoneLinux: 'America/New_York'
       - name: Check for existing MRs
         run: |
-          echo ${{secrets.GITHUB_TOKEN}} | gh auth login --with-token
+          echo ${{secrets.GIT_AUTO_DEPLOY_TOKEN}} | gh auth login --with-token
           gh issue list \
             -R 'department-of-veterans-affairs/lighthouse-devops-support' \
             -l 'repo: developer-portal' \

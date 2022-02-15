@@ -1,9 +1,9 @@
 ---
 imports:
-  '{ Link }': 'react-router-dom'
+'{ Link }': 'react-router-dom'
 ---
 
-### December, 2021
+### February 4, 2022
 
 We added a new API to the developer portal. This API was previously the EVSS Data Reference Service. It allows consumers to look up the following data for use with benefits claims:
 
@@ -21,9 +21,48 @@ This API will return only the data that can be used for benefits claims. For exa
 
 There are some important differences between this API and the service it replaces:
 
-- The new service requires an API key
-- There are some stylistic differences such as changes to data types and camelCase
-- Responses are in JSON instead of HTML
-- For the treatment center endpoint, a 2-character state is required and any other input will now result in a 400 response rather than a 200 response or blank array
+- The new service requires an API key. [Obtain one through this onboarding process](https://developer.va.gov/onboarding).
+- There are some stylistic changes to each endpoints’ response format:
+    * Contention Types
+      + "contentionTypes" array renamed to "items"
+    * Countries
+      + "countries" array renamed to "items"
+    * Disabilities
+      + "disability" array renamed to "items"
+      + "classificationCode" renamed to "id"
+      + "id" is type long
+      + "endDate" renamed to "endDateTime"
+      + "endDateTime" reported in YYY-MM-DDTHH:MM:SSZ format
+      + "endDateTime" always included, even if null
+    * Intake Sites
+      + "intakeSites" array renamed to "items"
+      + "code" renamed to "id"
+      + "id" is type long
+    * Military Pay Types
+      + "militaryPayTypes" array renamed to "items"
+    * Service Branches
+      + "serviceBranches" array renamed to "items"
+    * Special Circumstances
+      + "specialCircumstances" array renamed to "items"
+    * States
+      + "states" array renamed to "items"
+    * Treatment Centers
+      + "facilities" array renamed to "items"
 
-Learn more about this API by reviewing the <Link to="/explore/benefits/docs/benefits_reference_data">Benefits Data Lookup API documentation</Link>.
+
+- Responses are in JSON instead of HTML.
+- Minor improvements to HTTPS Response Codes. (i.e. treatment centers invalid state was 200 and is now 400, new 429 rate limit errors, unauthorized 401, refer to [API specification](https://developer.va.gov/explore/benefits/docs/benefits_reference_data?version=current) for complete information).
+- For the treatment center endpoint, the optional “stateCode” query parameter must now be 2 capital letters, otherwise a 400 response is returned. Previously, a 200 with a blank array was returned.
+- Optional pagination is supported (new fields were added to in the responses even if the optional pagination parameters are not used for certain end points).
+- URLs for the services are changed. The legacy production URLs are https://www.ebenefits.va.gov:444/wss-referencedata-services-web/rest/referencedata/v1/`<endpoint name>` and the new production URLs are: https://api.va.gov/services/benefits-reference-data/v1/`<endpoint name>`.
+
+
+It's important to know that with the new version, you will need to support backward compatibility. You should:
+- Be prepared to handle HTTP status codes not explicitly specified in endpoint definitions.
+- Be tolerant with unknown fields in the payload, ignore deserialization of new fields, but do not eliminate them from the payload if needed for subsequent PUT requests.
+- Follow the redirect when the server returns HTTP status code 301 (Moved Permanently).
+
+
+Learn more about this API by reviewing the [Benefits Reference Data API documentation](/explore/benefits/docs/benefits_reference_data).
+
+For cross-reference purposes, the PR for this release is [#4015](https://tools.health.dev-developer.va.gov/jenkins/job/department-of-veterans-affairs/job/health-apis-deployer/job/d2/4015/).
