@@ -3,7 +3,7 @@ name: Auto Deploy master to Production
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/30 13,14,15,16,17,18,19,20,21 * * 1,2,3,4,5'
+    - cron: '*/30 15,16,17,18,19,20,21,22,23 * * 1,2,3,4,5'
 
 jobs:
   run_checks_and_deploy:
@@ -19,7 +19,7 @@ jobs:
       - id: get_time_string
         name: Get time string for MR search
         run: |
-          TIME_STRING=`date +"%m/%d/%Y %H:%M %Z"`
+          TIME_STRING=`date +"%Y/%m/%d %H:%M %Z" | sed -E 's/\:([03]{1})[0-9]{1}/:\10/g'`
           echo $TIME_STRING
           echo "::set-output name=time_string::$TIME_STRING"
       - id: get_mr_number
@@ -48,7 +48,7 @@ jobs:
           # If this errors, the MR isn't labeled "status: approved" at the time of it's scheduled deployment
           jq ".labels" issue.json | jq -e ".[] | select(.name==\"status: approved\")"
           jq -r ".body" issue.json > issue-body.txt
-          RELEASE_TAG=`grep 'Release Tag ...' issue-body.txt | sed 's/Release Tag ... //'`
+          RELEASE_TAG=`grep 'Release tag:' issue-body.txt | sed 's/Release tag: //'`
           echo "::set-output name=mr_number::$MR_NUMBER"
           echo "::set-output name=release_tag::$RELEASE_TAG"
       - name: Configure AWS Credentials
@@ -65,8 +65,8 @@ jobs:
         run: |
           MR_NUMBER=`echo ${{steps.get_mr_number.outputs.mr_number}}`
           RELEASE_TAG=`echo ${{steps.get_mr_number.outputs.release_tag}}`
-          COMMAND=`echo "aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,ENVIRONMENT=production,MR=$MR_NUMBER,RELEASE=$RELEASE_TAG"`
+          COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"$MR_NUMBER\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$RELEASE_TAG\\\"}]\""
           gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body "TESTING: This is not actually deploying automatically. This is the command that would run to send the code to production.<br><br>\`$COMMAND\`"
           # Not actually deploying yet. Just testing.
-          # aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,ENVIRONMENT=production,MR=$MR_NUMBER,RELEASE=$RELEASE_TAG
+          # aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override "[{\"name\":\"ENVIRONMENTS\",\"value\":\"production\"},{\"name\":\"MR\",\"value\":\"$MR_NUMBER\"},{\"name\":\"RELEASE\",\"value\":\"$RELEASE_TAG\"}]"
           # gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body "Deploy started with: <br><br>\`$COMMAND\`"

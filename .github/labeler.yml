@@ -1,0 +1,4 @@
+'impact: users':
+  - 'src/assets/**/*'
+  - 'src/content/**/*'
+  - 'src/styles/**/*'
