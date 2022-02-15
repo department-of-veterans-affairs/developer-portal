@@ -65,8 +65,8 @@ jobs:
         run: |
           MR_NUMBER=`echo ${{steps.get_mr_number.outputs.mr_number}}`
           RELEASE_TAG=`echo ${{steps.get_mr_number.outputs.release_tag}}`
-          COMMAND=`echo "aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,ENVIRONMENT=production,MR=$MR_NUMBER,RELEASE=$RELEASE_TAG"`
+          COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"$MR_NUMBER\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$RELEASE_TAG\\\"}]\""
           gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body "TESTING: This is not actually deploying automatically. This is the command that would run to send the code to production.<br><br>\`$COMMAND\`"
           # Not actually deploying yet. Just testing.
-          # aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,ENVIRONMENT=production,MR=$MR_NUMBER,RELEASE=$RELEASE_TAG
+          # aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override "[{\"name\":\"ENVIRONMENTS\",\"value\":\"production\"},{\"name\":\"MR\",\"value\":\"$MR_NUMBER\"},{\"name\":\"RELEASE\",\"value\":\"$RELEASE_TAG\"}]"
           # gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body "Deploy started with: <br><br>\`$COMMAND\`"

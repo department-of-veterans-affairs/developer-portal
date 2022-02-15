@@ -46,7 +46,7 @@ jobs:
         run: |
           COMMIT_HASH=`jq -r ".commit" deploy.json`
           echo $COMMIT_HASH
-          CURRENT_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/tags | jq -r ".[] | select(.commit.sha == \"$COMMIT_HASH\").name"`
+          CURRENT_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/tags | jq -r ".[] | select(.commit.sha == \\\"$COMMIT_HASH\\\").name"`
           echo $CURRENT_RELEASE_TAG
           echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
       - id: unified_current_release_tag
@@ -94,8 +94,8 @@ jobs:
               echo "- " `jq -r '.title' pr-$pr.json` "[#$pr](https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr)" >> user-notes.txt
             fi
           done
-          DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$PROPOSED_RELEASE_TAG"
-          ROLLBACK_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$CURRENT_RELEASE_TAG"
+          DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"[MR_NUMBER]\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$PROPOSED_RELEASE_TAG\\\"}]\""
+          ROLLBACK_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"[MR_NUMBER]\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$CURRENT_RELEASE_TAG\\\"}]\""
           ISSUE_TITLE="Deploy developer-portal to production ($PROPOSED_WINDOW_OPENING)"
 
           # Replace values in issue template
