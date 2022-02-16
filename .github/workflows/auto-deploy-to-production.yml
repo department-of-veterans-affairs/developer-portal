@@ -3,7 +3,7 @@ name: Auto Deploy master to Production
 on:
   workflow_dispatch:
   schedule:
-    - cron: '*/30 15,16,17,18,19,20,21,22,23 * * 1,2,3,4,5'
+    - cron: '*/30 13,14,15,16,17,18,19,20,21,22,23 * * 1,2,3,4,5'
 
 jobs:
   run_checks_and_deploy:
@@ -24,6 +24,7 @@ jobs:
           echo "::set-output name=time_string::$TIME_STRING"
       - id: get_mr_number
         name: Grab matching deploy MR
+        continue-on-error: true
         run: |
           echo $TIME_STRING
           echo ${{ steps.get_time_string.outputs.time_string }}
@@ -34,7 +35,7 @@ jobs:
             -R 'department-of-veterans-affairs/lighthouse-devops-support' \
             -l 'repo: developer-portal' \
             --limit 1 \
-            --json id,number,state,labels,title \
+            --json id,number,state,labels,title,body \
             --jq "[.[]|select(.title==\"Deploy developer-portal to production ($TIME_STRING)\")][0]" \
             > issue.json
           cat issue.json
@@ -51,6 +52,11 @@ jobs:
           RELEASE_TAG=`grep 'Release tag:' issue-body.txt | sed 's/Release tag: //'`
           echo "::set-output name=mr_number::$MR_NUMBER"
           echo "::set-output name=release_tag::$RELEASE_TAG"
+      - name: Cancel rather than fail job on above error
+        if: steps.get_mr_number.outcome == 'failure'
+        run: |
+          gh run cancel ${{github.run_id}}
+          sleep 60
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -61,7 +67,7 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: GitHubActions
 
-      - name: Build dev and staging
+      - name: Deploy to production
         run: |
           MR_NUMBER=`echo ${{steps.get_mr_number.outputs.mr_number}}`
           RELEASE_TAG=`echo ${{steps.get_mr_number.outputs.release_tag}}`
