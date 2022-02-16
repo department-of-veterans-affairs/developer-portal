@@ -48,8 +48,7 @@ jobs:
           fi
           # If this errors, the MR isn't labeled "status: approved" at the time of it's scheduled deployment
           jq ".labels" issue.json | jq -e ".[] | select(.name==\"status: approved\")"
-          jq -r ".body" issue.json > issue-body.txt
-          RELEASE_TAG=`grep 'Release tag:' issue-body.txt | sed 's/Release tag: //'`
+          RELEASE_TAG=`jq -r '.body' issue.json | grep 'Release tag:' | sed 's/Release tag: //'`
           echo "::set-output name=mr_number::$MR_NUMBER"
           echo "::set-output name=release_tag::$RELEASE_TAG"
       - name: Cancel rather than fail job on above error
