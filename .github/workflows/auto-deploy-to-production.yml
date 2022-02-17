@@ -66,12 +66,47 @@ jobs:
           role-duration-seconds: 1200
           role-session-name: GitHubActions
 
-      - name: Deploy to production
+      - id: deploy_to_production
+        name: Deploy to production
         run: |
           MR_NUMBER=`echo ${{steps.get_mr_number.outputs.mr_number}}`
           RELEASE_TAG=`echo ${{steps.get_mr_number.outputs.release_tag}}`
-          COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"$MR_NUMBER\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$RELEASE_TAG\\\"}]\""
-          gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body "TESTING: This is not actually deploying automatically. This is the command that would run to send the code to production.<br><br>\`$COMMAND\`"
-          # Not actually deploying yet. Just testing.
-          # aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override "[{\"name\":\"ENVIRONMENTS\",\"value\":\"production\"},{\"name\":\"MR\",\"value\":\"$MR_NUMBER\"},{\"name\":\"RELEASE\",\"value\":\"$RELEASE_TAG\"}]"
-          # gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body "Deploy started with: <br><br>\`$COMMAND\`"
+          echo 'Starting deploy to production'
+          aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override "[{\"name\":\"ENVIRONMENTS\",\"value\":\"production\"},{\"name\":\"MR\",\"value\":\"$MR_NUMBER\"},{\"name\":\"RELEASE\",\"value\":\"$RELEASE_TAG\"}]" > build.json
+          BUILD_ID=`jq -r '.build.id' build.json`
+          echo "BUILD_ID: $BUILD_ID"
+          echo "Sleep for 60 seconds before first check"
+          sleep 60
+          RUNNING="true"
+          while [ "true" == "$RUNNING" ]; do
+            echo 'Checking build status';
+            aws codebuild batch-get-builds --ids=$BUILD_ID > build-status.json
+            CURRENT_PHASE=`jq -r '.builds[0].currentPhase' build-status.json`
+            BUILD_STATUS=`jq -r '.builds[0].buildStatus' build-status.json`
+            if [ "COMPLETED" == "$CURRENT_PHASE" ]; then
+              echo 'Build phase completed';
+              START_RAW=`jq -r '.builds[0].startTime' build-status.json`
+              START_TIME=`gdate --date="$START_RAW" +"%Y/%m/%d %H:%M %Z"`
+              END_RAW=`jq -r '.builds[0].endTime' build-status.json`
+              END_TIME=`gdate --date="$END_RAW" +"%Y/%m/%d %H:%M %Z"`
+              printf '' > build-comment.md
+              if [ "SUCCEEDED" == "$BUILD_STATUS" ]; then
+                echo 'Build successful';
+              else
+                echo 'Build failed';
+                echo 'Build Failed: please check CodeBuild for more details.' >> build-comment.md
+              fi
+              echo '```' >> build-comment.md
+              echo "Start: $START_TIME" >> build-comment.md
+              echo "End: $END_TIME" >> build-comment.md
+              echo "Execution: https://console.amazonaws-us-gov.com/codesuite/codebuild/008577686731/projects/developer-portal-deploy/build/$BUILD_ID" >> build-comment.md
+              echo '```' >> build-comment.md
+
+              gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body-file build-comment.md
+
+              RUNNING="false"
+            else
+              echo 'Still in progress... wait 15 seconds and retry.'
+              sleep 15;
+            fi
+          done
