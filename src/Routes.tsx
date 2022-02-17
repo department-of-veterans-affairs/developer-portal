@@ -37,7 +37,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         path="/explore/terms-of-service"
         render={(): JSX.Element => <Redirect to="/terms-of-service" />}
       />
-      <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/news" />} />
+      <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/about/news" />} />
       <Route path="/oauth" render={(): JSX.Element => <Redirect to="/explore/authorization" />} />
 
       {/* Current routes: */}

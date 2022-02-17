@@ -105,17 +105,17 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
           </div>
           <div className="list-wrapper">
             <h3>
-              <a href="/news">News</a>
+              <a href="/about/news">News</a>
             </h3>
             <ul>
               <li>
-                <a href="/news#News-releases">News Releases</a>
+                <a href="/about/news#News-releases">News Releases</a>
               </li>
               <li>
-                <a href="/news#Articles">Articles</a>
+                <a href="/about/news#Articles">Articles</a>
               </li>
               <li>
-                <a href="news#Digital-media">Digital Media</a>
+                <a href="/about/news#Digital-media">Digital Media</a>
               </li>
             </ul>
           </div>

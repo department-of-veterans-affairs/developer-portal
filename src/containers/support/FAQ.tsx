@@ -106,7 +106,7 @@ const developmentQuestions: SupportQuestion[] = [
       <p>
         Please visit the <Link to="/explore">API documentation</Link> for more information and
         example use cases. There are also some real-world examples in the articles and press
-        releases linked on our <Link to="/news">News</Link> page.
+        releases linked on our <Link to="/about/news">News</Link> page.
       </p>
     ),
     question:
