@@ -131,7 +131,8 @@ const Header = (): JSX.Element => {
           <va-alert status="info" visible>
             <h3 slot="headline">
               A new version of the VA Facilities API (v1) will launch in the first quarter of 2022.
-              We will add release notes when it&apos;s live.
+              We will add <Link to="/release-notes/facilities">release notes</Link> when it&apos;s
+              live.
             </h3>
           </va-alert>
         )}
