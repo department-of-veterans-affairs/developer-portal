@@ -16,7 +16,9 @@ jobs:
         uses: szenius/set-timezone@v1.0
         with:
           timezoneLinux: 'America/New_York'
-      - name: Check for existing MRs
+      - id: check_for_existing_mr
+        name: Check for existing MRs
+        continue-on-error: true
         run: |
           echo ${{secrets.GIT_AUTO_DEPLOY_TOKEN}} | gh auth login --with-token
           gh issue list \
@@ -31,8 +33,14 @@ jobs:
           else
             # issue.json isn't an empty json array and there is currently an open MR tagged "repo: developer-portal"
             # Any open MR should cancel the creation of a new MR
+            echo 'An MR is currently open so no new MR can be created'
             exit 1;
           fi
+      - name: Cancel rather than fail job on above error
+        if: steps.check_for_existing_mr.outcome == 'failure'
+        run: |
+          gh run cancel ${{github.run_id}}
+          sleep 60
       - id: get_current_release_tag
         name: Get current release tag from production deploy.json
         run: |
