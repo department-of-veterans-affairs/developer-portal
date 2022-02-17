@@ -9,6 +9,7 @@ updates:
       - npm
       - dependencies
       - dependabot
+      - 'impact: maintainers'
     ignore:
       # Version 5.0.0 no longer the LocationDescriptor and locationState types introducing breaking
       # changes in the react-router-dom and in our application. React-router-dom needs version
@@ -29,11 +30,11 @@ updates:
       - dependency-name: puppeteer
       # latest version is an RC. Team should wait until the release version becomes official before
       # upgrading
-      # fails test due to possible race condition where a variable for the DOM in a dependency of 
+      # fails test due to possible race condition where a variable for the DOM in a dependency of
       # jest-image-snapshot fails to attach before test is run
       - dependency-name: jest-image-snapshot
-      # Fails e2e due to missing role reporting due to Webpack build order. It should also be 
-      # mentioned that the latest version on NPM is ahead of the latest version in the packages 
+      # Fails e2e due to missing role reporting due to Webpack build order. It should also be
+      # mentioned that the latest version on NPM is ahead of the latest version in the packages
       # repo which is failing it's build.
       - dependency-name: postcss-flexbugs-fixes
       - dependency-name: immutable

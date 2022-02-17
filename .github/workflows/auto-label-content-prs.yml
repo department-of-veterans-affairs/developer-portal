@@ -1,0 +1,15 @@
+name: Automatically label PRs with content changes
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  add_label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add label
+        uses: actions/labeler@v3
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'

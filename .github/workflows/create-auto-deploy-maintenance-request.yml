@@ -3,7 +3,7 @@ name: Create Auto Deploy Maintenance Request
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 18 * * 1,2,3,4,5'
+    - cron: '0 20 * * 1,2,3,4,5'
 
 jobs:
   pre_mr_checks_and_create:
@@ -46,7 +46,7 @@ jobs:
         run: |
           COMMIT_HASH=`jq -r ".commit" deploy.json`
           echo $COMMIT_HASH
-          CURRENT_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/tags | jq -r ".[] | select(.commit.sha == \"$COMMIT_HASH\").name"`
+          CURRENT_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/tags | jq -r ".[] | select(.commit.sha == \\\"$COMMIT_HASH\\\").name"`
           echo $CURRENT_RELEASE_TAG
           echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
       - id: unified_current_release_tag
@@ -79,13 +79,23 @@ jobs:
           # Get the releases
           gh api /repos/department-of-veterans-affairs/developer-portal/releases > releases.json
           CURRENT_RELEASE_ID=`jq ".[] | select(.tag_name == \"$CURRENT_RELEASE_TAG\") | .id" releases.json`
-          PROPOSED_RELEASE_TITLES=`jq -r ".[] | select(.id > $CURRENT_RELEASE_ID) | \"- \" + .name + \"\"" releases.json`
-          MAINTAINER_NOTES=""
-          USER_NOTES="- "
-          # TODO: fix this into a loop with line breaks
-          MAINTAINER_NOTES=`printf "%s\n" "$PROPOSED_RELEASE_TITLES"`
-          DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$PROPOSED_RELEASE_TAG"
-          ROLLBACK_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,environment=production,mr=[MR_NUMBER],RELEASE=$CURRENT_RELEASE_TAG"
+          PROPOSED_RELEASE_PRS=`jq -r ".[] | select(.id > $CURRENT_RELEASE_ID ) | \"- \" + .name + \"\"" releases.json | sed -E 's/(.*)\#([0-9]{1,})\)/\2/'`
+          echo '```' > maintainer-notes.txt
+          echo "Release tag: $PROPOSED_RELEASE_TAG" >> maintainer-notes.txt
+          echo "Rollback tag: $CURRENT_RELEASE_TAG" >> maintainer-notes.txt
+          echo '```' >> maintainer-notes.txt
+          touch user-notes.txt
+          for pr in `echo $PROPOSED_RELEASE_PRS`; do
+            gh api /repos/department-of-veterans-affairs/developer-portal/pulls/$pr > pr-$pr.json
+            if [ "impact: maintainers" == "`jq -r '.labels[] | select(.name == \"impact: maintainers\") .name' pr-$pr.json`" ]; then
+              echo "- " `jq -r '.title' pr-$pr.json` "[#$pr](https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr)" >> maintainer-notes.txt
+            fi
+            if [ "impact: users" == "`jq -r '.labels[] | select(.name == \"impact: users\") .name' pr-$pr.json`" ]; then
+              echo "- " `jq -r '.title' pr-$pr.json` "[#$pr](https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr)" >> user-notes.txt
+            fi
+          done
+          DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"[MR_NUMBER]\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$PROPOSED_RELEASE_TAG\\\"}]\""
+          ROLLBACK_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"[MR_NUMBER]\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$CURRENT_RELEASE_TAG\\\"}]\""
           ISSUE_TITLE="Deploy developer-portal to production ($PROPOSED_WINDOW_OPENING)"
 
           # Replace values in issue template
@@ -93,18 +103,18 @@ jobs:
           sed -i "s|__proposed_start_date_time__|$PROPOSED_WINDOW_OPENING|g" maintenance-request.md
           echo $PROPOSED_WINDOW_CLOSING
           sed -i "s|__proposed_end_date_time__|$PROPOSED_WINDOW_CLOSING|g" maintenance-request.md
-          echo $PROPOSED_RELEASE_TAG
-          sed -i "s|__release_tag__|$PROPOSED_RELEASE_TAG|g" maintenance-request.md
-          echo $CURRENT_RELEASE_TAG
-          sed -i "s|__rollback_tag__|$CURRENT_RELEASE_TAG|g" maintenance-request.md
-          echo $MAINTAINER_NOTES
-          sed -n '1,/^MAINTAINER_NOTES$/p' maintenance-request.md | sed \$d > temp-request.md
-          printf "%s\n" "$MAINTAINER_NOTES" >> temp-request.md
-          sed '1,/^MAINTAINER_NOTES$/d' maintenance-request.md >> temp-request.md
-          mv temp-request.md maintenance-request.md
-          # sed -i "s|MAINTAINER_NOTES|$MAINTAINER_NOTES|g" maintenance-request.md
-          echo $USER_NOTES
-          sed -i "s|USER_NOTES|$USER_NOTES|g" maintenance-request.md
+          # File splicing for maintainer notes
+          cat maintainer-notes.txt
+          sed -n '1,/^MAINTAINER_NOTES$/p' maintenance-request.md | sed \$d > temp-notes.md
+          cat maintainer-notes.txt >> temp-notes.md
+          sed '1,/^MAINTAINER_NOTES$/d' maintenance-request.md >> temp-notes.md
+          mv temp-notes.md maintenance-request.md
+          # File splicing for user notes
+          cat user-notes.txt
+          sed -n '1,/^USER_NOTES$/p' maintenance-request.md | sed \$d > temp-notes.md
+          cat user-notes.txt >> temp-notes.md
+          sed '1,/^USER_NOTES$/d' maintenance-request.md >> temp-notes.md
+          mv temp-notes.md maintenance-request.md
           echo $DEPLOYMENT_COMMAND
           sed -i "s|DEPLOYMENT_COMMAND|$DEPLOYMENT_COMMAND|g" maintenance-request.md
           echo $ROLLBACK_COMMAND
