@@ -127,6 +127,15 @@ const Header = (): JSX.Element => {
             className="vads-u-margin-top--0"
           />
         </Flag>
+        {location.pathname === '/explore/facilities/docs/facilities' && (
+          <va-alert status="info" visible>
+            <h3 slot="headline">
+              A new version of the VA Facilities API (v1) will launch in the first quarter of 2022.
+              We will add <Link to="/release-notes/facilities">release notes</Link> when it&apos;s
+              live.
+            </h3>
+          </va-alert>
+        )}
       </header>
     </>
   );
