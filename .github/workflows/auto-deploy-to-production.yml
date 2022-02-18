@@ -54,7 +54,7 @@ jobs:
       - name: Cancel rather than fail job on above error
         if: steps.get_mr_number.outcome == 'failure'
         run: |
-          gh run cancel ${{github.run_id}}
+          gh run cancel ${{github.run_id}} -R 'department-of-veterans-affairs/developer-portal'
           sleep 60
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
