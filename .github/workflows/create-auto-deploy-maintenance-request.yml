@@ -76,7 +76,8 @@ jobs:
           PROPOSED_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/releases/latest | jq -r ".tag_name"`
           sed -i -e '1,8d' maintenance-request.md
           # Set MR template variables
-          if [ "date +%A" == "Friday" ]; then
+          DAY_OF_THE_WEEK=`date +%A`
+          if [ "Friday" == "$DAY_OF_THE_WEEK" ]; then
             PROPOSED_WINDOW_OPENING=`date --date="10:00 next Monday" +"%Y/%m/%d %H:%M %Z"`
             PROPOSED_WINDOW_CLOSING=`date --date="10:30 next Monday" +"%Y/%m/%d %H:%M %Z"`
           else
