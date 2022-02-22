@@ -1,3 +1,7 @@
+### February 24, 2022
+To better meet the R4 FHIR specification for both the Veterans Health and Clinical Health APIs, we will replace the full US state name with the [USPS Two Letter Abbreviation](http://www.hl7.org/fhir/us/core/ValueSet-us-core-usps-state.html) in the R4 Patient resource. For example, `Texas` will be listed as `TX` and `Massachusetts` will be listed as `MA`. Consumers currently using DSTU2 will not be impacted by this change.
+
+---
 ### February 10, 2022
 Added support to allow `identifier` search by Integration Control Number (ICN) in the R4 `Practitioner` resource.  You can now search by either ICN or National Provider Identifier (NPI) using `identifier`.
 
