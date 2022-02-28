@@ -125,6 +125,7 @@
     "dotenv-expand": "^5.1.0",
     "eslint": "^7.32.0",
     "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^26.1.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-promise": "^6.0.0",
@@ -180,8 +181,9 @@
   "resolutions": {
     "ansi-regex": "5.0.1",
     "glob-parent": "5.1.2",
-    "trim-newlines": "4.0.1",
-    "immer": "9.0.6"
+    "immer": "9.0.6",
+    "prismjs": "1.27.0",
+    "trim-newlines": "4.0.1"
   },
   "jest": {
     "projects": [
