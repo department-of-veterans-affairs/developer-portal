@@ -2,7 +2,24 @@ module.exports = {
   name: 'unit',
   automock: false,
   displayName: 'Unit Tests',
-  collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}'],
+  collectCoverageFrom: [
+    'src/**/*.{js,jsx,ts,tsx}',
+    '!src/**/*.{d,e2e,test}.{ts,tsx}',
+    '!src/base.accessibility.ts',
+    '!src/e2eHelpers.ts',
+    '!src/index.tsx',
+    '!src/registerServiceWorker.ts',
+    '!src/visualRegressionTest.ts',
+    '!src/containers/consumerOnboarding/validationSchema.ts',
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 65,
+      functions: 75,
+      lines: 85,
+      statements: 85
+    }
+  },
   setupFiles: [
     '<rootDir>/config/polyfills.js',
     '<rootDir>/config/jest/testEnv.js', // only necessary when running Jest directly
