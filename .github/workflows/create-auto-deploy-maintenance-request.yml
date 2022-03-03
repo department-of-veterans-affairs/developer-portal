@@ -42,7 +42,8 @@ jobs:
           wget https://developer.va.gov/deploy.json
           CURRENT_RELEASE_TAG=`jq -r ".release" deploy.json`
           echo $CURRENT_RELEASE_TAG
-          echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
+          # echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
+          echo "::set-output name=current_release_tag::developer-portal/v0.0.843"
       - id: get_current_release_from_commit_hash
         name: Get currently deployed release tag from the commit hash if last deploy didn't use the release tag
         if: steps.get_current_release_tag.outputs.current_release_tag == ''
