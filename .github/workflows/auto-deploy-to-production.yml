@@ -107,6 +107,8 @@ jobs:
               sleep 15;
             fi
           done
+      - uses: actions/checkout@v2
+        if: steps.deploy_to_production.outcome == 'success'
       - name: Disable Workflow till next MR is created
         if: steps.deploy_to_production.outcome == 'success'
         run: gh workflow disable 'Auto Deploy master to Production'

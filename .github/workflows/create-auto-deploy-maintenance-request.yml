@@ -152,6 +152,8 @@ jobs:
           #   --label "$TEMPLATE_ISSUE_LABEL" \
           #   --label "repo: developer-portal" \
           #   --body-file maintenance-request.md
+      - uses: actions/checkout@v2
+        if: steps.create_mr.outcome == 'success'
       - name: Enable Auto Deploy Workflow
         if: steps.create_mr.outcome == 'success'
         run: gh workflow enable 'Auto Deploy master to Production'
