@@ -153,14 +153,13 @@ jobs:
 
           cat maintenance-request.md
 
-          # gh issue create \
-          #   -R 'department-of-veterans-affairs/lighthouse-devops-support' \
-          #   --title "$ISSUE_TITLE" \
-          #   --assignee "$TEMPLATE_ASSIGNEE" \
-          #   --label "$TEMPLATE_ISSUE_LABEL" \
-          #   --label "repo: developer-portal" \
-          #   --body-file maintenance-request.md
-          exit 1;
+          gh issue create \
+            -R 'department-of-veterans-affairs/lighthouse-devops-support' \
+            --title "$ISSUE_TITLE" \
+            --assignee "$TEMPLATE_ASSIGNEE" \
+            --label "$TEMPLATE_ISSUE_LABEL" \
+            --label "repo: developer-portal" \
+            --body-file maintenance-request.md
       - uses: actions/checkout@v2
         if: steps.create_mr.outcome == 'success'
       - name: Enable Auto Deploy Workflow
