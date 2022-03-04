@@ -7,6 +7,7 @@ import sentenceJoin from '../../../../sentenceJoin';
 import { ApplySuccessResult } from '../../../../types';
 import { APPLY_OAUTH_APIS } from '../../../../types/constants';
 import { isVaEmail } from '../../../../utils/validators';
+import './SandboxAccessSuccess.scss';
 
 const AssistanceTrailer = (): JSX.Element => (
   <p>
@@ -65,15 +66,18 @@ const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProp
   return (
     <div>
       <p className="usa-font-lead">
-        <strong>Your VA API OAuth Client ID:</strong> {clientID}
+        <strong>Your VA API OAuth Client ID: </strong>
+        <span className="oauth-client-id">{clientID}</span>
       </p>
       {clientSecret && (
         <p className="usa-font-lead">
-          <strong>Your VA API OAuth Client Secret:</strong> {clientSecret}
+          <strong>Your VA API OAuth Client Secret: </strong>
+          <span className="oauth-client-secret">{clientSecret}</span>
         </p>
       )}
       <p className="usa-font-lead">
-        <strong>Your Redirect URI is :</strong> {redirectURI}
+        <strong>Your Redirect URI is: </strong>
+        <span className="oauth-redirect-uri">{redirectURI}</span>
       </p>
 
       <p>
