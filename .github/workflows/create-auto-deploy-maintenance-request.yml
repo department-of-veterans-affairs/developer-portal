@@ -54,11 +54,14 @@ jobs:
           echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
       - id: unified_current_release_tag
         name: Unify release tag regardless of how it was found
+        env:
+          current-release-tag: ${{ steps.get_current_release_tag.outputs.current_release_tag }}
+          current-release-tag-from-commit-hash: ${{ steps.get_current_release_from_commit_hash.outputs.current_release_tag }}
         run: |
-          if [ "" != "${{ steps.get_current_release_tag.outputs.current_release_tag }}" ]; then
-            CURRENT_RELEASE_TAG=`echo ${{ steps.get_current_release_tag.outputs.current_release_tag }}`
+          if [ "" != "${{ env.current-release-tag }}" ]; then
+            CURRENT_RELEASE_TAG=`echo ${{ env.current-release-tag }}`
           else
-            CURRENT_RELEASE_TAG=`echo ${{ steps.get_current_release_from_commit_hash.outputs.current_release_tag }}`
+            CURRENT_RELEASE_TAG=`echo ${{ env.current-release-tag-from-commit-hash }}`
           fi
           echo $CURRENT_RELEASE_TAG
           echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
@@ -71,15 +74,21 @@ jobs:
       - id: check_if_new_release
         name: Check if the latest release is newer than production
         continue-on-error: true
+        env:
+          current-release-tag: ${{steps.unified_current_release_tag.outputs.current_release_tag}}
+          proposed-release-tag: ${{steps.get_proposed_release_tag.outputs.proposed_release_tag}}
         run: |
-          if [ "${{steps.unified_current_release_tag.outputs.current_release_tag}}" == "${{steps.get_proposed_release_tag.outputs.proposed_release_tag}}" ]; then
-            echo "Production already has ${{steps.get_proposed_release_tag.outputs.proposed_release_tag}} in production. Cancel MR creation."
+          if [ "${{ env.current-release-tag }}" == "${{ env.proposed-release-tag }}" ]; then
+            echo "Production already has ${{ env.proposed-release-tag }} in production. Cancel MR creation."
             exit 1;
           else
-            echo "Production is not yet at ${{steps.get_proposed_release_tag.outputs.proposed_release_tag}}. Continuing with MR creation."
+            echo "Production is not yet at ${{ env.proposed-release-tag }}. Continuing with MR creation."
           fi
       - id: create_mr
         name: Generate the MR body text and create MR
+        env:
+          current-release-tag: ${{ steps.unified_current_release_tag.outputs.current_release_tag }}
+          proposed-release-tag: ${{ steps.get_proposed_release_tag.outputs.proposed_release_tag }}
         if: |
           steps.check_for_existing_mr.outcome == 'success'
           && steps.check_if_new_release.outcome == 'success'
@@ -87,7 +96,6 @@ jobs:
           wget https://raw.githubusercontent.com/department-of-veterans-affairs/developer-portal/master/.github/workflows/assets/maintenance-request.md
           TEMPLATE_ISSUE_LABEL=`grep labels maintenance-request.md | cut -f2 -d " "`
           TEMPLATE_ASSIGNEE=`grep assignees maintenance-request.md | cut -f2 -d " "`
-          CURRENT_RELEASE_TAG=`echo ${{steps.unified_current_release_tag.outputs.current_release_tag}}`
           sed -i -e '1,8d' maintenance-request.md
           # Set MR template variables
           DAY_OF_THE_WEEK=`date +%A`
@@ -101,11 +109,11 @@ jobs:
 
           # Get the releases
           gh api /repos/department-of-veterans-affairs/developer-portal/releases > releases.json
-          CURRENT_RELEASE_ID=`jq ".[] | select(.tag_name == \"$CURRENT_RELEASE_TAG\") | .id" releases.json`
+          CURRENT_RELEASE_ID=`jq ".[] | select(.tag_name == \"${{ env.current-release-tag }}\") | .id" releases.json`
           PROPOSED_RELEASE_PRS=`jq -r ".[] | select(.id > $CURRENT_RELEASE_ID ) | \"- \" + .name + \"\"" releases.json | sed -E 's/(.*)\#([0-9]{1,})\)/\2/'`
           echo '```' > maintainer-notes.txt
-          echo "Release tag: ${{ steps.get_proposed_release_tag.outputs.proposed_release_tag }}" >> maintainer-notes.txt
-          echo "Rollback tag: $CURRENT_RELEASE_TAG" >> maintainer-notes.txt
+          echo "Release tag: ${{ env.proposed-release-tag }}" >> maintainer-notes.txt
+          echo "Rollback tag: ${{ env.current-release-tag }}" >> maintainer-notes.txt
           echo '```' >> maintainer-notes.txt
           touch user-notes.txt
           for pr in `echo $PROPOSED_RELEASE_PRS`; do
@@ -117,8 +125,8 @@ jobs:
               echo "- " `jq -r '.title' pr-$pr.json` "[#$pr](https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr)" >> user-notes.txt
             fi
           done
-          DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"[MR_NUMBER]\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$PROPOSED_RELEASE_TAG\\\"}]\""
-          ROLLBACK_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"[MR_NUMBER]\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"$CURRENT_RELEASE_TAG\\\"}]\""
+          DEPLOYMENT_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"[MR_NUMBER]\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"${{ env.proposed-release-tag }}\\\"}]\""
+          ROLLBACK_COMMAND="aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override \"[{\\\"name\\\":\\\"ENVIRONMENTS\\\",\\\"value\\\":\\\"production\\\"},{\\\"name\\\":\\\"MR\\\",\\\"value\\\":\\\"[MR_NUMBER]\\\"},{\\\"name\\\":\\\"RELEASE\\\",\\\"value\\\":\\\"${{ env.current-release-tag }}\\\"}]\""
           ISSUE_TITLE="Deploy developer-portal to production ($PROPOSED_WINDOW_OPENING)"
 
           # Replace values in issue template
