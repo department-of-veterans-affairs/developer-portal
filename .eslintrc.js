@@ -348,6 +348,7 @@ module.exports = {
     'promise',
     'react',
     'react-hooks',
+    'react-redux'
   ],
   extends: [
     'plugin:@typescript-eslint/recommended',
@@ -356,6 +357,7 @@ module.exports = {
     'plugin:promise/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:react-redux/recommended',
   ],
   rules: {
     ...coreESLintRules,
