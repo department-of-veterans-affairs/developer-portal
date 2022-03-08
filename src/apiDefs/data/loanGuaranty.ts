@@ -16,7 +16,7 @@ const loanGuarantyApis: APIDescription[] = [
       },
     ],
     enabledByDefault: false,
-    lastProdAccessStep: ProdAccessFormSteps.Three,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Guaranty Remittance API',
     openData: false,
     releaseNotes: GuarantyRemittanceReleaseNotes,
