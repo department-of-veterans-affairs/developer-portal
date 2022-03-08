@@ -18,6 +18,16 @@ const loanGuarantyApis: APIDescription[] = [
     enabledByDefault: false,
     lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Guaranty Remittance API',
+    oAuth: true,
+    oAuthInfo: {
+      ccgInfo: {
+        baseAuthPath: '/oauth2/loan-guaranty/system/v1',
+        productionAud: 'ausbts6ndxFQDyeBM297',
+        sandboxAud: 'auseavl6o5AjGZr2n2p7',
+        scopes: ['system.loan-remittance.read', 'system.loan-remittance.write', 'system.remediation-evidence.write'],
+      },
+    },
+    oAuthTypes: ['ClientCredentialsGrant'],
     openData: false,
     releaseNotes: GuarantyRemittanceReleaseNotes,
     urlFragment: 'lgy_guaranty_remittance',
