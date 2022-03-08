@@ -10,9 +10,8 @@ import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
 
 const BuildingOIDCContent = (): JSX.Element => {
-  const selectedOAuthApi = useSelector(
-    (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
-  );
+  const selector = (state: RootState): string => state.oAuthApiSelection.selectedOAuthApi;
+  const selectedOAuthApi = useSelector(selector);
   const apiDef = lookupApiByFragment(selectedOAuthApi);
   const selectorProps = {
     options: getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) && item.oAuthTypes && item.oAuthTypes.includes('AuthorizationCodeGrant')),

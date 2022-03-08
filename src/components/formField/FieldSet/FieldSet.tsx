@@ -7,7 +7,6 @@ export interface FieldSetProps {
   className?: string;
   legend: ReactNode;
   legendClassName?: string;
-  errorClassName?: string;
   name: string;
   required?: boolean;
   children: ReactNode;

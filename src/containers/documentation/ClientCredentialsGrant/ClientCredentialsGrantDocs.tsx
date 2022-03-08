@@ -65,11 +65,10 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
   const initializing = React.useRef(true);
-  const api = useSelector((state: RootState) => state.oAuthApiSelection.selectedOAuthApi);
+  const selector = (state: RootState): string => state.oAuthApiSelection.selectedOAuthApi;
+  const api = useSelector(selector);
   const prevApi = usePrevious(api);
-  const selectedOAuthApi = useSelector(
-    (state: RootState) => state.oAuthApiSelection.selectedOAuthApi,
-  );
+  const selectedOAuthApi = useSelector(selector);
 
   const options = getActiveOauthApis().filter(
     (item: APIDescription) =>

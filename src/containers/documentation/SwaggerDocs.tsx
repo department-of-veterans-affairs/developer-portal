@@ -83,15 +83,19 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning> =
     useDispatch();
 
-  const defaultUrl = useSelector((state: RootState) => getDocURL(state.apiVersioning));
+  const defaultUrlSelector = (state: RootState): string => getDocURL(state.apiVersioning);
+  const defaultUrl = useSelector(defaultUrlSelector);
   const history = useHistory();
   const location = useLocation();
-  const versionNumber = useSelector((state: RootState) => getVersionNumber(state.apiVersioning));
-  const versions = useSelector((state: RootState) => state.apiVersioning.versions);
+  const versionNumberSelector = (state: RootState): string => getVersionNumber(state.apiVersioning);
+  const versionNumber = useSelector(versionNumberSelector);
+  const versionsSelector = (state: RootState): VersionMetadata[] | null => state.apiVersioning.versions;
+  const versions = useSelector(versionsSelector);
 
   // Retrieve an initial version from the params so we can compare it under our effects down below
   const initializing = React.useRef(true);
-  let version = useSelector((state: RootState) => getVersion(state.apiVersioning));
+  const versionSelector = (state: RootState): string => getVersion(state.apiVersioning);
+  let version = useSelector(versionSelector);
   if (initializing.current) {
     initializing.current = false;
     // Use the version from the search param only if it's the first render
