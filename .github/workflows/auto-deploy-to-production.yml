@@ -19,7 +19,7 @@ jobs:
       - id: get_time_string
         name: Get time string for MR search
         run: |
-          TIME_STRING=`date +"%Y/%m/%d %H:%M %Z" | sed -E 's/\:([03]{1})[0-9]{1}/:\10/g'`
+          TIME_STRING=`date +"%Y/%m/%d %H:%M %Z" | sed -E 's/\:([03]{1}|[14]{1})[0-9]{1}/:\10/g' | sed 's/\:1/:0/' | sed 's/\:4/:3/'`
           echo $TIME_STRING
           echo "::set-output name=time_string::$TIME_STRING"
       - id: get_mr_number
@@ -51,11 +51,6 @@ jobs:
           RELEASE_TAG=`jq -r '.body' issue.json | grep 'Release tag:' | sed 's/Release tag: //'`
           echo "::set-output name=mr_number::$MR_NUMBER"
           echo "::set-output name=release_tag::$RELEASE_TAG"
-      - name: Cancel rather than fail job on above error
-        if: steps.get_mr_number.outcome == 'failure'
-        run: |
-          gh run cancel ${{github.run_id}} -R 'department-of-veterans-affairs/developer-portal'
-          sleep 60
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -68,6 +63,8 @@ jobs:
 
       - id: deploy_to_production
         name: Deploy to production
+        if: steps.get_mr_number.outcome == 'success'
+        continue-on-error: true
         run: |
           MR_NUMBER=`echo ${{steps.get_mr_number.outputs.mr_number}}`
           RELEASE_TAG=`echo ${{steps.get_mr_number.outputs.release_tag}}`
@@ -110,3 +107,8 @@ jobs:
               sleep 15;
             fi
           done
+      - uses: actions/checkout@v2
+        if: steps.deploy_to_production.outcome == 'success'
+      - name: Disable Workflow till next MR is created
+        if: steps.deploy_to_production.outcome == 'success'
+        run: gh workflow disable 'Auto Deploy master to Production'

@@ -7,6 +7,7 @@ import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const loanGuarantyApis: APIDescription[] = [
   {
+    altID: 'lgyGuarantyRemittance',
     description: 'Lets lenders automate parts of the mortgage post-closing process.',
     docSources: [
       {
@@ -15,12 +16,22 @@ const loanGuarantyApis: APIDescription[] = [
       },
     ],
     enabledByDefault: false,
-    lastProdAccessStep: ProdAccessFormSteps.Three,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Guaranty Remittance API',
+    oAuth: true,
+    oAuthInfo: {
+      ccgInfo: {
+        baseAuthPath: '/oauth2/loan-guaranty/system/v1',
+        productionAud: 'ausbts6ndxFQDyeBM297',
+        sandboxAud: 'auseavl6o5AjGZr2n2p7',
+        scopes: ['system.loan-remittance.read', 'system.loan-remittance.write', 'system.remediation-evidence.write'],
+      },
+    },
+    oAuthTypes: ['ClientCredentialsGrant'],
     openData: false,
     releaseNotes: GuarantyRemittanceReleaseNotes,
     urlFragment: 'lgy_guaranty_remittance',
-    vaInternalOnly: true,
+    vaInternalOnly: false,
   },
   {
     description: 'Use the Loan Guaranty API to Manage VA Home Loans.',
