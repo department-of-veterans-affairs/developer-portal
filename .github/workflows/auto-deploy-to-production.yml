@@ -19,7 +19,7 @@ jobs:
       - id: get_time_string
         name: Get time string for MR search
         run: |
-          TIME_STRING=`date +"%Y/%m/%d %H:%M %Z" | sed -E 's/\:([03]{1})[0-9]{1}/:\10/g'`
+          TIME_STRING=`date +"%Y/%m/%d %H:%M %Z" | sed -E 's/\:([03]{1}|[14]{1})[0-9]{1}/:\10/g' | sed 's/\:1/:0/' | sed 's/\:4/:3/'`
           echo $TIME_STRING
           echo "::set-output name=time_string::$TIME_STRING"
       - id: get_mr_number
