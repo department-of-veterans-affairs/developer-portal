@@ -7,6 +7,7 @@ import { APIDescription, ProdAccessFormSteps } from '../schema';
 
 const loanGuarantyApis: APIDescription[] = [
   {
+    altID: 'lgyGuarantyRemittance',
     description: 'Lets lenders automate parts of the mortgage post-closing process.',
     docSources: [
       {
