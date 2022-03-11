@@ -233,6 +233,20 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
                 },
               }
             : undefined,
+          OauthFlowProduction: token
+            ? {
+                token: {
+                  access_token: token,
+                },
+              }
+            : undefined,
+          OauthFlowSandbox: token
+            ? {
+                token: {
+                  access_token: token,
+                },
+              }
+            : undefined,
           bearer_token: token,
         },
       };
