@@ -138,8 +138,7 @@ export const PublishingOnboarding: FC = () => (
               <li>Schedule any needed publishing and maintenance check-ins</li>
               <li>Provide feedback on API documentation and spec</li>
               <li>
-                Propose route(s) for the API on{' '}
-                <Link to="https://api.va.gov">https://api.va.gov</Link>
+                Propose route(s) for the API on <a href="https://api.va.gov">https://api.va.gov</a>
               </li>
               <li>Propose where the API will live in our information architecture</li>
             </ul>
