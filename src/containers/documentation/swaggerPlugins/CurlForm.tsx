@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable max-lines -- component is long, need to refactor at some point */
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -39,9 +38,9 @@ export interface CurlFormState {
 }
 
 interface SecuritySchemeDefinition {
-  in: 'header' | 'cookie' | 'query';
+  in: 'cookie' | 'header' | 'query';
   name: string;
-  type: 'oauth2' | 'apiKey' | 'http';
+  type: 'apiKey' | 'http' | 'mutualTLS' | 'oauth2' | 'openIdConnect';
 }
 
 interface OpenAPISpecV3 extends IncompleteOpenAPISpecV3 {
@@ -230,39 +229,23 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       const token = this.isSwagger2()
         ? `Bearer: ${this.state.bearerToken}`
         : this.state.bearerToken;
-      options.securities = {
-        authorized: {
-          /**
-           * support multiple means of passing the bearer token. this is mostly due to swagger-client
-           * not being particularly sophisticated on this front.
-           * Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
-           * OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
-           * https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
-           */
-          OauthFlow: token
-            ? {
-                token: {
-                  access_token: token,
-                },
-              }
-            : undefined,
-          OauthFlowProduction: token
-            ? {
-                token: {
-                  access_token: token,
-                },
-              }
-            : undefined,
-          OauthFlowSandbox: token
-            ? {
-                token: {
-                  access_token: token,
-                },
-              }
-            : undefined,
-          bearer_token: token,
-        },
-      };
+      if (token) {
+        const securityItems = this.security() ?? [{}];
+        const authorizedProperties: never[] = [];
+        securityItems.forEach((item: { [schemeName: string]: string[] }): void => {
+          const schemeKey = Object.keys(item)[0];
+          if (schemeKey === 'bearer_token') {
+            // authorizedProperties[schemeKey] = { bearer_token: token };
+          } else {
+            authorizedProperties[schemeKey] = { token: { access_token: token } };
+          }
+        });
+        options.securities = {
+          authorized: {
+            ...authorizedProperties,
+          },
+        };
+      }
     }
     if (this.state.requestBodyProperties.length > 0) {
       options.requestBody = this.buildRequestBody();
