@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-lines -- component is long, need to refactor at some point */
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +8,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
   OpenAPISpec,
   OpenAPISpecV2,
-  OpenAPISpecV3,
+  OpenAPISpecV3 as IncompleteOpenAPISpecV3,
   Operation,
   Parameter,
   Schema,
@@ -35,6 +36,18 @@ export interface CurlFormState {
   requestBodyProperties: Schema[];
   paramValues: { [propertyName: string]: string };
   version: undefined | string;
+}
+
+interface SecuritySchemeDefinition {
+  in: 'header' | 'cookie' | 'query';
+  name: string;
+  type: 'oauth2' | 'apiKey' | 'http';
+}
+
+interface OpenAPISpecV3 extends IncompleteOpenAPISpecV3 {
+  components: {
+    securitySchemes: SecuritySchemeDefinition[];
+  };
 }
 
 export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
@@ -313,9 +326,17 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     return spec.swagger === '2.0';
   }
 
-  public authParameterContainer(): JSX.Element {
-    const security = this.security() ?? [{}];
-    if (Object.keys(security[0]).includes('apikey')) {
+  public authParameterContainer(): JSX.Element | null {
+    const securityItems = this.security() ?? [{}];
+    const securityTypes = securityItems
+      .flatMap((item: { [schemeName: string]: string[] }): string[] => {
+        const { securitySchemes } = (this.jsonSpec() as unknown as OpenAPISpecV3).components;
+        return Object.keys(item).map(
+          (key: string): string => (securitySchemes[key] as SecuritySchemeDefinition).type,
+        );
+      })
+      .filter((value, index, self) => self.indexOf(value) === index);
+    if (securityTypes.includes('apiKey')) {
       return (
         <div>
           <h3>API Key:</h3>
@@ -333,7 +354,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
           </div>
         </div>
       );
-    } else {
+    } else if (securityTypes.includes('oauth2')) {
       return (
         <div>
           <h3>Bearer Token:</h3>
@@ -352,6 +373,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         </div>
       );
     }
+    return null;
   }
 
   public environmentOptions(): JSX.Element[] {
