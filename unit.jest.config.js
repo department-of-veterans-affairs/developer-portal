@@ -29,9 +29,7 @@ module.exports = {
     '<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)',
     '<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)',
   ],
-  testPathIgnorePatterns: [
-    '<rootDir>/src/containers/documentation/swaggerPlugins/CurlForm.test.tsx',
-  ],
+  testPathIgnorePatterns: [],
   testEnvironment: 'jsdom',
   testURL: process.env.TEST_HOST || 'http://localhost:4444',
   transform: {

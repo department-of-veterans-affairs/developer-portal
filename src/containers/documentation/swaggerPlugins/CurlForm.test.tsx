@@ -26,7 +26,7 @@ import { SwaggerPlugins, System } from './index';
  * some tests in this file are long-running because of the expense of rendering Swagger UI,
  * so we double the timeout to 10s from the default 5s.
  */
-jest.setTimeout(10000);
+jest.setTimeout(30000);
 
 const expandOperation = (operationTag: string, description: string): HTMLElement => {
   const operationTagHeader = screen.getByRole('heading', { name: operationTag });

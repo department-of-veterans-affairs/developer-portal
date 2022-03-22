@@ -337,7 +337,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
           </div>
         </div>
       );
-    } else if (securityTypes.includes('oauth2')) {
+    } else if (securityTypes.includes('oauth2') || securityTypes.includes('openIdConnect')) {
       return (
         <div>
           <h3>Bearer Token:</h3>
