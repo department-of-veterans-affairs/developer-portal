@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable max-lines -- component is long, need to refactor at some point */
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -73,13 +72,11 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     state.params.forEach((parameter: Parameter) => {
       state.paramValues[parameter.name] = parameter.example || '';
     });
-    console.log('operation.requestBody: ', this.props.operation.requestBody);
     if (this.props.operation.requestBody && this.requirementsMet()) {
       const { properties } = this.props.operation.requestBody.content['application/json'].schema;
       Object.keys(properties).forEach((propertyName: string) => {
         const property = properties[propertyName];
         property.name = propertyName;
-        console.log('property: ', property);
         requestBodyProperties.push(property);
         if (property.type === 'array') {
           state.paramValues[propertyName] = property.items?.example;
@@ -95,7 +92,6 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public requirementsMet(): boolean {
-    console.log('this.security(): ', this.security());
     const hasSecurity = this.security() !== null;
     if (this.isSwagger2()) {
       const spec: OpenAPISpecV2 = this.jsonSpec() as OpenAPISpecV2;
@@ -222,7 +218,6 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       };
     }
     options.spec = spec;
-    // console.log('buildCurl security(): ', this.security());
     const securityItems = this.security() ?? [{}];
     const authorizedProperties: never[] = [];
     securityItems.forEach((item: { [schemeName: string]: string[] }): void => {
@@ -243,13 +238,9 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         ...authorizedProperties,
       },
     };
-    // console.log('securities: ', options.securities);
-    // console.log('requestBodyProperties: ', this.state.requestBodyProperties);
     if (this.state.requestBodyProperties.length > 0) {
       options.requestBody = this.buildRequestBody();
     }
-    // console.log('requestBody: ', options.requestBody);
-    console.log(options);
     return this.props.system.fn.curlify(options);
   }
 
@@ -319,7 +310,6 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         );
       })
       .filter((value, index, self) => self.indexOf(value) === index);
-    console.log(securityTypes);
     if (securityTypes.includes('apiKey')) {
       return (
         <div>
