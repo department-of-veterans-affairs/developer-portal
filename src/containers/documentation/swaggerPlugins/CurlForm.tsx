@@ -222,11 +222,9 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     const authorizedProperties: never[] = [];
     securityItems.forEach((item: { [schemeName: string]: string[] }): void => {
       const schemeKey = Object.keys(item)[0];
-      if (schemeKey === 'bearer_token') {
-        // authorizedProperties[schemeKey] = { bearer_token: token };
-      } else if (this.state.apiKey.length > 0) {
+      if (this.state.apiKey.length > 0) {
         authorizedProperties[schemeKey] = this.state.apiKey;
-      } else if (this.state.bearerToken.length > 0) {
+      } else if (this.state.bearerToken.length > 0 && schemeKey !== 'bearer_token') {
         const token = this.isSwagger2()
           ? `Bearer: ${this.state.bearerToken}`
           : this.state.bearerToken;
