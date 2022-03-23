@@ -136,6 +136,14 @@ const Header = (): JSX.Element => {
             </h3>
           </va-alert>
         )}
+        {location.pathname === '/explore/benefits/docs/claims' && (
+          <va-alert status="info" visible>
+            <h3 slot="headline">
+              Version 0 of the Benefits Claims API will be deprecated in May 2022. Version 1 is
+              active.
+            </h3>
+          </va-alert>
+        )}
       </header>
     </>
   );
