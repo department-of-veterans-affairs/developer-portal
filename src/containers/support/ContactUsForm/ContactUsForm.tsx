@@ -8,6 +8,7 @@ import { CONTACT_US_URL, FLAG_POST_TO_LPB, LPB_CONTACT_US_URL } from '../../../t
 import { useCookies } from "react-cookie";
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
+import { getFlags } from '../../../flags';
 import { ContactUsFormState, FormType, SubmissionData } from '../../../types/forms/contactUsForm';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
