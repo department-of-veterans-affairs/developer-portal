@@ -2,7 +2,7 @@
 import React, { FC, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useCookies } from "react-cookie";
+import { useCookies } from 'react-cookie';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
@@ -176,7 +176,7 @@ const ProductionAccess: FC = () => {
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
-  const setCookie = useCookies(["CSRF-TOKEN"])[1];
+  const setCookie = useCookies(['CSRF-TOKEN'])[1];
 
   const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
@@ -321,9 +321,10 @@ const ProductionAccess: FC = () => {
         setSubmissionError(true);
       }
       if (flagLpbActive) {
-        const forgeryToken = Math.random().toString(36).substring(2);
-        setCookie("CSRF-TOKEN", forgeryToken, {
-          path: "/"
+        const forgeryToken = Math.random().toString(36)
+                                          .substring(2);
+        setCookie('CSRF-TOKEN', forgeryToken, {
+          path: '/',
         });
 
         try {
@@ -332,9 +333,9 @@ const ProductionAccess: FC = () => {
             {
               body: JSON.stringify(applicationBody),
               headers: {
+                'X-Csrf-Token': forgeryToken,
                 accept: 'application/json',
                 'content-type': 'application/json',
-                'X-Csrf-Token': forgeryToken,
               },
               method: 'POST',
             },
