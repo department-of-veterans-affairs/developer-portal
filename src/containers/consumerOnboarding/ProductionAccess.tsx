@@ -27,7 +27,7 @@ import {
   PRODUCTION_ACCESS_URL,
   yesOrNoValues,
 } from '../../types/constants';
-import { SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
+import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -268,9 +268,10 @@ const ProductionAccess: FC = () => {
         key => filteredValues[key] == null && delete filteredValues[key],
       );
 
-      const policyDocuments = filteredValues.termsOfServiceURL && filteredValues.privacyPolicyURL ?
-        [filteredValues.termsOfServiceURL, filteredValues.privacyPolicyURL] :
-        undefined;
+      const policyDocuments =
+        filteredValues.termsOfServiceURL && filteredValues.privacyPolicyURL
+          ? [filteredValues.termsOfServiceURL, filteredValues.privacyPolicyURL]
+          : undefined;
 
       // delete privacyPolicyURL and termsOfServiceURL because the backend doesn't accept them,
       // instead it uses the policyDocuments array.
@@ -476,7 +477,7 @@ const ProductionAccess: FC = () => {
             visible={modal1Visible}
             onClose={(): void => setModal1Visible(false)}
             primaryButton={{
-              action: (): void => history.goBack(),
+              action: (): void => history.push(CONSUMER_PROD_PATH),
               text: 'Yes, leave',
             }}
             secondaryButton={{
