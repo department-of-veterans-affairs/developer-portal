@@ -7,7 +7,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
   OpenAPISpec,
   OpenAPISpecV2,
-  OpenAPISpecV3,
+  OpenAPISpecV3 as IncompleteOpenAPISpecV3,
   Operation,
   Parameter,
   Schema,
@@ -37,6 +37,18 @@ export interface CurlFormState {
   version: undefined | string;
 }
 
+interface SecuritySchemeDefinition {
+  in: 'cookie' | 'header' | 'query';
+  name: string;
+  type: 'apiKey' | 'http' | 'mutualTLS' | 'oauth2' | 'openIdConnect';
+}
+
+interface OpenAPISpecV3 extends IncompleteOpenAPISpecV3 {
+  components: {
+    securitySchemes: SecuritySchemeDefinition[];
+  };
+}
+
 export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   public constructor(props: CurlFormProps) {
     super(props);
@@ -60,7 +72,6 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     state.params.forEach((parameter: Parameter) => {
       state.paramValues[parameter.name] = parameter.example || '';
     });
-
     if (this.props.operation.requestBody && this.requirementsMet()) {
       const { properties } = this.props.operation.requestBody.content['application/json'].schema;
       Object.keys(properties).forEach((propertyName: string) => {
@@ -207,50 +218,24 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       };
     }
     options.spec = spec;
-    if (this.state.apiKey.length > 0) {
-      options.securities = {
-        authorized: {
-          apikey: this.state.apiKey,
-        },
-      };
-    } else {
-      const token = this.isSwagger2()
-        ? `Bearer: ${this.state.bearerToken}`
-        : this.state.bearerToken;
-      options.securities = {
-        authorized: {
-          /**
-           * support multiple means of passing the bearer token. this is mostly due to swagger-client
-           * not being particularly sophisticated on this front.
-           * Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
-           * OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
-           * https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
-           */
-          OauthFlow: token
-            ? {
-                token: {
-                  access_token: token,
-                },
-              }
-            : undefined,
-          OauthFlowProduction: token
-            ? {
-                token: {
-                  access_token: token,
-                },
-              }
-            : undefined,
-          OauthFlowSandbox: token
-            ? {
-                token: {
-                  access_token: token,
-                },
-              }
-            : undefined,
-          bearer_token: token,
-        },
-      };
-    }
+    const securityItems = this.security() ?? [{}];
+    const authorizedProperties: never[] = [];
+    securityItems.forEach((item: { [schemeName: string]: string[] }): void => {
+      const schemeKey = Object.keys(item)[0];
+      if (this.state.apiKey.length > 0) {
+        authorizedProperties[schemeKey] = this.state.apiKey;
+      } else if (this.state.bearerToken.length > 0 && schemeKey !== 'bearer_token') {
+        const token = this.isSwagger2()
+          ? `Bearer: ${this.state.bearerToken}`
+          : this.state.bearerToken;
+        authorizedProperties[schemeKey] = { token: { access_token: token } };
+      }
+    });
+    options.securities = {
+      authorized: {
+        ...authorizedProperties,
+      },
+    };
     if (this.state.requestBodyProperties.length > 0) {
       options.requestBody = this.buildRequestBody();
     }
@@ -313,9 +298,17 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     return spec.swagger === '2.0';
   }
 
-  public authParameterContainer(): JSX.Element {
-    const security = this.security() ?? [{}];
-    if (Object.keys(security[0]).includes('apikey')) {
+  public authParameterContainer(): JSX.Element | null {
+    const securityItems = this.security() ?? [{}];
+    const securityTypes = securityItems
+      .flatMap((item: { [schemeName: string]: string[] }): string[] => {
+        const { securitySchemes } = (this.jsonSpec() as unknown as OpenAPISpecV3).components;
+        return Object.keys(item).map(
+          (key: string): string => (securitySchemes[key] as SecuritySchemeDefinition).type,
+        );
+      })
+      .filter((value, index, self) => self.indexOf(value) === index);
+    if (securityTypes.includes('apiKey')) {
       return (
         <div>
           <h3>API Key:</h3>
@@ -333,7 +326,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
           </div>
         </div>
       );
-    } else {
+    } else if (securityTypes.includes('oauth2') || securityTypes.includes('openIdConnect')) {
       return (
         <div>
           <h3>Bearer Token:</h3>
@@ -352,6 +345,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
         </div>
       );
     }
+    return null;
   }
 
   public environmentOptions(): JSX.Element[] {
