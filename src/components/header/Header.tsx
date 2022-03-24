@@ -130,7 +130,7 @@ const Header = (): JSX.Element => {
         {location.pathname === '/explore/facilities/docs/facilities' && (
           <va-alert status="info" visible>
             <h3 slot="headline">
-              A new version of the VA Facilities API (v1) will launch in the first quarter of 2022.
+              Version 1 of the VA Facilities API is launching soon.
               We will add <Link to="/release-notes/facilities">release notes</Link> when it&apos;s
               live.
             </h3>
