@@ -224,11 +224,15 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       const schemeKey = Object.keys(item)[0];
       if (this.state.apiKey.length > 0) {
         authorizedProperties[schemeKey] = this.state.apiKey;
-      } else if (this.state.bearerToken.length > 0 && schemeKey !== 'bearer_token') {
+      } else if (this.state.bearerToken.length > 0) {
         const token = this.isSwagger2()
           ? `Bearer: ${this.state.bearerToken}`
           : this.state.bearerToken;
-        authorizedProperties[schemeKey] = { token: { access_token: token } };
+        if (schemeKey === 'bearer_token') {
+          authorizedProperties[schemeKey] = token;
+        } else {
+          authorizedProperties[schemeKey] = { token: { access_token: token } };
+        }
       }
     });
     options.securities = {
@@ -299,6 +303,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public authParameterContainer(): JSX.Element | null {
+    const bearerSecurityTypes = ['oauth2', 'openIdConnect', 'http'];
     const securityItems = this.security() ?? [{}];
     const securityTypes = securityItems
       .flatMap((item: { [schemeName: string]: string[] }): string[] => {
@@ -326,7 +331,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
           </div>
         </div>
       );
-    } else if (securityTypes.includes('oauth2') || securityTypes.includes('openIdConnect')) {
+    } else if (bearerSecurityTypes.filter(value => securityTypes.includes(value)).length > 0) {
       return (
         <div>
           <h3>Bearer Token:</h3>
