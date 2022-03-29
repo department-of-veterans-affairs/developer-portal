@@ -94,7 +94,7 @@ const BasicInformation: FC = () => {
               <span className="form-required-span">(*Required)</span>
             </>
           }
-          description="A distribution list email is preferred. This email can be updated later if you need."
+          description="A distribution list email is preferred. You may enter more than one email address, and this information can be updated later."
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
       </fieldset>
