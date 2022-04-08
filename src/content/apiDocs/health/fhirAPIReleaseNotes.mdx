@@ -1,3 +1,9 @@
+### April 8, 2022 (confirm with Peter)
+Allergy Intolerance wording:  `We have made backend changes in order to optimize performance, promote stability, and reduce maintenenace effort around
+the R4 AllergyIntolerance resource.  As a result, R4 AllergyIntolerance identifiers have changed.  All cross-resource
+references are still valid.  In addition, Read operations using old identifiers will still return the same response.`
+
+---
 ### February 24, 2022
 To better meet the R4 FHIR specification for both the Veterans Health and Clinical Health APIs, we will replace the full US state name with the [USPS Two Letter Abbreviation](http://www.hl7.org/fhir/us/core/ValueSet-us-core-usps-state.html) in the R4 Patient resource. For example, `Texas` will be listed as `TX` and `Massachusetts` will be listed as `MA`. Consumers currently using DSTU2 will not be impacted by this change.
 
