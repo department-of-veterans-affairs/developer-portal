@@ -30,6 +30,7 @@
     "@sentry/browser": "^6.13.3",
     "classnames": "^2.3.1",
     "core-js": "^3.18.3",
+    "cypress": "^9.5.4",
     "flag": "^4.4.0",
     "formdata-node": "^4.3.0",
     "formik": "^2.2.9",

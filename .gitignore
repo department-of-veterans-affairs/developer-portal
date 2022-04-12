@@ -34,3 +34,13 @@ test/image_snapshots/__diff_output__
 # Text editors
 .vscode/
 .idea/
+
+# Some Cypress folders
+cypress/downloads
+cypress/fixtures/example.json
+cypress/fixtures/profile.json
+cypress/fixtures/users.json
+cypress/screenshots
+cypress/videos
+cypress/integration/1-getting-started
+cypress/integration/2-advanced-examples
