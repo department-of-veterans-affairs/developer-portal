@@ -1,4 +1,4 @@
-name:
+name: Cypress tests
 
 on:
   pull_request:
