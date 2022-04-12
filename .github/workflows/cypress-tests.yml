@@ -1,0 +1,73 @@
+name:
+
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    outputs:
+      hash: ${{ steps.githash.outputs.hash }}
+      pr_number: ${{ steps.pr_number.outputs.pr }}
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "::set-output name=node_version::$NODE_VERSION"
+
+      - id: cache_node_modules
+        name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: developer-portal-node-modules
+          node-version: ${{ steps.node_version.outputs.node_version }}
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache_node_modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+  cypress:
+    needs: [install]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 12
+
+      - id: cache_node_modules
+        name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: developer-portal-node-modules
+          node-version: ${{ needs.install.outputs.node_version }}
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache_node_modules.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        with:
+          install: false
+          start: npm start
+          wait-on: http://localhost:3000
