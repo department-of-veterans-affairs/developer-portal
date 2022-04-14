@@ -18,7 +18,7 @@ export const FLAG_POST_TO_LPB = 'post_to_lpb';
 const LPB_BACKEND_BASE_URL = '/platform-backend';
 export const LPB_APPLY_URL = `${LPB_BACKEND_BASE_URL}/v0/consumers/applications`;
 export const LPB_PRODUCTION_ACCESS_URL = `${LPB_BACKEND_BASE_URL}/v0/consumers/production-requests`;
-export const LPB_CONTACT_US_URL = `${LPB_BACKEND_BASE_URL}/v0/contact-us/requests`;
+export const LPB_CONTACT_US_URL = `${LPB_BACKEND_BASE_URL}/v0/support/contact-us/requests`;
 
 export const APPLY_OAUTH_APIS = ['claims', 'communityCare', 'health', 'verification'];
 export const PAGE_HEADER_ID = 'page-header';
