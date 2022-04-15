@@ -1,5 +1,5 @@
 export const mockMetadata = {
-  'http://localhost:3000/internal/docs/benefits-claims/metadata.json': {
+  'http://localhost:3001/internal/docs/benefits-claims/metadata.json': {
     meta: {
       versions: [
         {

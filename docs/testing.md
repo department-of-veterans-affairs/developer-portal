@@ -12,7 +12,7 @@ instance of [vets-api](https://github.com/department-of-veterans-affairs/vets-ap
 this by overriding the `REACT_APP_VETSGOV_SWAGGER_API` environment variable:
 
 ```
-REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3000
+REACT_APP_VETSGOV_SWAGGER_API=http://localhost:3001
 ```
 
 ## Automated Testing
