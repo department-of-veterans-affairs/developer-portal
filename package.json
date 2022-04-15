@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://developer.va.gov/",
+  "proxy": "http://localhost:8080/",
   "scripts": {
     "preinstall": "npx npm-force-resolutions@0.0.10",
     "start": "node scripts/start.js",
@@ -45,6 +46,7 @@
     "prop-types": "^15.7.2",
     "raf": "^3.4.1",
     "react": "^17.0.2",
+    "react-cookie": "^4.1.1",
     "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
     "react-error-boundary": "^3.1.3",

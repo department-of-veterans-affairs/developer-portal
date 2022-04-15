@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 
+import { useCookies } from 'react-cookie';
 import { Form, Formik } from 'formik';
 import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, TermsOfServiceCheckbox } from '../../../../components';
@@ -64,6 +65,7 @@ interface SandboxAccessFormError extends HttpErrorResponse {
 const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
   const [submissionHasError, setSubmissionHasError] = useState(false);
   const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
+  const setCookie = useCookies(['CSRF-TOKEN'])[1];
 
   const handleSubmit = async (values: Values): Promise<void> => {
     const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
@@ -118,11 +120,18 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
 
     if (flagLpbActive) {
       try {
+        const forgeryToken = Math.random().toString(36)
+                                          .substring(2);
+        setCookie('CSRF-TOKEN', forgeryToken, {
+          path: '/',
+        });
+
         await makeRequest<DevApplicationResponse>(
           LPB_APPLY_URL,
           {
             body: JSON.stringify(applicationBody),
             headers: {
+              'X-Csrf-Token': forgeryToken,
               accept: 'application/json',
               'content-type': 'application/json',
             },

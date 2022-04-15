@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import React, { ReactNode, useState } from 'react';
 import { Formik, Form } from 'formik';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import { useCookies } from 'react-cookie';
 import { CheckboxRadioField } from '../../../components';
-import { CONTACT_US_URL } from '../../../types/constants';
+import { CONTACT_US_URL, FLAG_POST_TO_LPB, LPB_CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
+import { getFlags } from '../../../flags';
 import { ContactUsFormState, FormType, SubmissionData } from '../../../types/forms/contactUsForm';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
@@ -69,8 +71,11 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
     type: defaultType,
   };
 
+  const setCookie = useCookies(['CSRF-TOKEN'])[1];
   const formSubmission = async (values: ContactUsFormState): Promise<void> => {
+    const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
     setSubmissionError(false);
+
     try {
       await makeRequest(
         CONTACT_US_URL,
@@ -87,6 +92,30 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
       onSuccess();
     } catch {
       setSubmissionError(true);
+    }
+
+    if (flagLpbActive) {
+      const forgeryToken = Math.random().toString(36)
+                                        .substring(2);
+      setCookie('CSRF-TOKEN', forgeryToken, {
+        path: '/',
+      });
+
+      try {
+        await makeRequest(
+        LPB_CONTACT_US_URL,
+        {
+          body: JSON.stringify(processedData(values)),
+          headers: {
+            'X-Csrf-Token': forgeryToken,
+            accept: 'application/json',
+            'content-type': 'application/json',
+          },
+          method: 'POST',
+        },
+        { responseType: ResponseType.TEXT },
+      );
+      } catch (error: unknown) {}
     }
   };
 
