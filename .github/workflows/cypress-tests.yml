@@ -49,12 +49,10 @@ jobs:
           path: cypress-/cache
           key: ${{ runner.os }}-cypress-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Install dependencies
-        if: steps.cache_node_modules.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Install Cypress
-        if: steps.cache_cypress_binary.outputs.cache-hit != 'true'
+      - name: Install Cypress and Dependencies
+        if: |
+          steps.cache_cypress_binary.outputs.cache-hit != 'true' ||
+          steps.cache_node_modules.outputs.cache-hit != 'true'
         uses: cypress-io/github-action@v2
         with:
           runTests: false
