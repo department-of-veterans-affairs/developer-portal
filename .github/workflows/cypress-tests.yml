@@ -46,7 +46,7 @@ jobs:
         env:
           cache-name: developer-portal-cypress-binary
         with:
-          path: cypress-/cache
+          path: cypress/cache
           key: ${{ runner.os }}-cypress-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Cypress and Dependencies
