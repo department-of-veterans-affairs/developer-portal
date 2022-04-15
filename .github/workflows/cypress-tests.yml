@@ -41,7 +41,7 @@ jobs:
           key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
       - id: cache_cypress_binary
-        name: Cache node modules
+        name: Cache Cypress binary
         uses: actions/cache@v2
         env:
           cache-name: developer-portal-cypress-binary
@@ -64,4 +64,4 @@ jobs:
         with:
           install: false
           start: npm start
-          wait-on: http://localhost:3001
+          wait-on: http://localhost:3000
