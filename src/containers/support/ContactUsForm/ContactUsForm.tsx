@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { useCookies } from 'react-cookie';
 import { CheckboxRadioField } from '../../../components';
-import { CONTACT_US_URL, FLAG_POST_TO_LPB, LPB_CONTACT_US_URL } from '../../../types/constants';
+import { CONTACT_US_URL, FLAG_POST_TO_LPB, LPB_CONTACT_US_URL, LPB_CONTACT_US_PATH } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
 import { getFlags } from '../../../flags';
@@ -98,7 +98,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
       const forgeryToken = Math.random().toString(36)
                                         .substring(2);
       setCookie('CSRF-TOKEN', forgeryToken, {
-        path: '/',
+        path: LPB_CONTACT_US_PATH,
         sameSite: 'strict',
         secure: true,
       });
