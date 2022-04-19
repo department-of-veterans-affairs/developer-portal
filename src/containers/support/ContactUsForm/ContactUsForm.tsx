@@ -99,6 +99,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
                                         .substring(2);
       setCookie('CSRF-TOKEN', forgeryToken, {
         path: '/',
+        sameSite: 'strict',
       });
 
       try {
