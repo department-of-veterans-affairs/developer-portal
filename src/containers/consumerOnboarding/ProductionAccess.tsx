@@ -327,6 +327,7 @@ const ProductionAccess: FC = () => {
         setCookie('CSRF-TOKEN', forgeryToken, {
           path: '/',
           sameSite: 'strict',
+          secure: true,
         });
 
         try {

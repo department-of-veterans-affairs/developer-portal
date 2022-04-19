@@ -125,6 +125,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
         setCookie('CSRF-TOKEN', forgeryToken, {
           path: '/',
           sameSite: 'strict',
+          secure: true,
         });
 
         await makeRequest<DevApplicationResponse>(
