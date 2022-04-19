@@ -5,11 +5,11 @@ import ErrorBoundaryPage from '../../containers/ErrorBoundaryPage';
 import { SiteRoutes } from '../../Routes';
 
 const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
-  if (elementToFocus) {
-    elementToFocus.focus();
-  }
-  if (elementToFocus?.id === 'main') {
+  if (elementToFocus && elementToFocus.id === 'main') {
+    elementToFocus.focus({ preventScroll: true });
     window.scrollTo(0, 0);
+  } else if (elementToFocus) {
+    elementToFocus.focus();
   }
 };
 
@@ -24,7 +24,7 @@ const PageContent = (): JSX.Element => {
     if (prevPath !== location.pathname) {
       // Only focus and scroll if it's not an initial page load
       if (prevPath) {
-        setTimeout(() => focusAndScroll(mainRef.current), 0);
+        focusAndScroll(mainRef.current);
       }
       prevPathRef.current = location.pathname;
     }
