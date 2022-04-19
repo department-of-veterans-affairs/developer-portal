@@ -9,7 +9,7 @@ const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
     elementToFocus.focus();
   }
   if (elementToFocus?.id === 'main') {
-    setTimeout(() => window.scrollTo(0, 0), 0);
+    window.scrollTo(0, 0);
   }
 };
 
@@ -24,7 +24,7 @@ const PageContent = (): JSX.Element => {
     if (prevPath !== location.pathname) {
       // Only focus and scroll if it's not an initial page load
       if (prevPath) {
-        focusAndScroll(mainRef.current);
+        setTimeout(() => focusAndScroll(mainRef.current), 0);
       }
       prevPathRef.current = location.pathname;
     }
