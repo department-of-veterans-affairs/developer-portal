@@ -2,7 +2,12 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
-import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
+import {
+  TextField,
+  CheckboxRadioField,
+  FieldSet,
+  MultiEntryTextField,
+} from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { includesInternalOnlyAPI, onlyOpenDataAPIs } from '../../../../apiDefs/query';
 
@@ -86,14 +91,10 @@ const BasicInformation: FC = () => {
           name="appName"
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
-        <TextField
+        <MultiEntryTextField
           name="statusUpdateEmails"
-          label={
-            <>
-              Notification email for API status updates{' '}
-              <span className="form-required-span">(*Required)</span>
-            </>
-          }
+          label="Notification email for API status updates"
+          required
           description="A distribution list email is preferred. You may enter more than one email address, and this information can be updated later."
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
