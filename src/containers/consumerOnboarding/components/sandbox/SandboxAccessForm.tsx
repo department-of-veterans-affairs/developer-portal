@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 import { Form, Formik } from 'formik';
 import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, TermsOfServiceCheckbox } from '../../../../components';
-import { APPLY_URL, FLAG_POST_TO_LPB, LPB_APPLY_URL, LPB_APPLY_PATH } from '../../../../types/constants';
+import { APPLY_URL, FLAG_POST_TO_LPB, LPB_APPLY_URL } from '../../../../types/constants';
 import {
   ApplySuccessResult,
   DevApplicationRequest,
@@ -123,7 +123,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
         const forgeryToken = Math.random().toString(36)
                                           .substring(2);
         setCookie('CSRF-TOKEN', forgeryToken, {
-          path: LPB_APPLY_PATH,
+          path: LPB_APPLY_URL,
           sameSite: 'strict',
           secure: true,
         });

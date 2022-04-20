@@ -24,7 +24,6 @@ import hiFive from '../../assets/high-five.svg';
 import {
   FLAG_POST_TO_LPB,
   LPB_PRODUCTION_ACCESS_URL,
-  LPB_PRODUCTION_ACCESS_PATH,
   PRODUCTION_ACCESS_URL,
   yesOrNoValues,
 } from '../../types/constants';
@@ -326,7 +325,7 @@ const ProductionAccess: FC = () => {
         const forgeryToken = Math.random().toString(36)
                                           .substring(2);
         setCookie('CSRF-TOKEN', forgeryToken, {
-          path: LPB_PRODUCTION_ACCESS_PATH,
+          path: LPB_PRODUCTION_ACCESS_URL,
           sameSite: 'strict',
           secure: true,
         });
