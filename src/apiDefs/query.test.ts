@@ -38,8 +38,8 @@ const facilities: APIDescription = {
   description: 'VA Facilities',
   docSources: [
     {
-      metadataUrl: 'http://localhost:3000/internal/docs/facilities/metadata.json',
-      openApiUrl: 'http://localhost:3000/internal/docs/facilities/v0/openapi.json',
+      metadataUrl: 'http://localhost:3001/internal/docs/facilities/metadata.json',
+      openApiUrl: 'http://localhost:3001/internal/docs/facilities/v0/openapi.json',
     },
   ],
   enabledByDefault: true,
@@ -61,8 +61,8 @@ const claims: APIDescription = {
   description: 'Submit and track claims',
   docSources: [
     {
-      metadataUrl: 'http://localhost:3000/internal/docs/benefits-claims/metadata.json',
-      openApiUrl: 'http://localhost:3000/internal/docs/benefits-claims/v0/openapi.json',
+      metadataUrl: 'http://localhost:3001/internal/docs/benefits-claims/metadata.json',
+      openApiUrl: 'http://localhost:3001/internal/docs/benefits-claims/v0/openapi.json',
     },
   ],
   enabledByDefault: true,
@@ -99,8 +99,8 @@ const confirmation: APIDescription = {
   description: 'Confirm Veteran status for a given person with an API key.',
   docSources: [
     {
-      metadataUrl: 'http://localhost:3000/internal/docs/veteran-confirmation/metadata.json',
-      openApiUrl: 'http://localhost:3000/internal/docs/veteran-confirmation/v0/openapi.json',
+      metadataUrl: 'http://localhost:3001/internal/docs/veteran-confirmation/metadata.json',
+      openApiUrl: 'http://localhost:3001/internal/docs/veteran-confirmation/v0/openapi.json',
     },
   ],
   enabledByDefault: true,
@@ -118,8 +118,8 @@ const verification: APIDescription = {
     'Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.',
   docSources: [
     {
-      metadataUrl: 'http://localhost:3000/internal/docs/veteran-verification/metadata.json',
-      openApiUrl: 'http://localhost:3000/internal/docs/veteran-verification/v0/openapi.json',
+      metadataUrl: 'http://localhost:3001/internal/docs/veteran-verification/metadata.json',
+      openApiUrl: 'http://localhost:3001/internal/docs/veteran-verification/v0/openapi.json',
     },
   ],
   enabledByDefault: true,
