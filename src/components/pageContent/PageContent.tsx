@@ -5,11 +5,11 @@ import ErrorBoundaryPage from '../../containers/ErrorBoundaryPage';
 import { SiteRoutes } from '../../Routes';
 
 const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
-  if (elementToFocus) {
+  if (elementToFocus && elementToFocus.id === 'main') {
+    elementToFocus.focus({ preventScroll: true });
+    window.scrollTo(0, 0);
+  } else if (elementToFocus) {
     elementToFocus.focus();
-  }
-  if (elementToFocus?.id === 'main') {
-    setTimeout(() => window.scrollTo(0, 0), 0);
   }
 };
 

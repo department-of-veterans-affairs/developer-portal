@@ -85,23 +85,29 @@ jobs:
               START_RAW=`jq -r '.builds[0].startTime' build-status.json`
               START_TIME=`date --date="$START_RAW" +"%Y/%m/%d %H:%M %Z"`
               END_RAW=`jq -r '.builds[0].endTime' build-status.json`
-              END_TIME=`date --date="$END_RAW" +"%Y/%m/%d %H:%M %Z"`
-              printf '' > build-comment.md
-              if [ "SUCCEEDED" == "$BUILD_STATUS" ]; then
-                echo 'Build successful';
+              if [ null != "$END_RAW" ]; then
+                END_TIME=`date --date="$END_RAW" +"%Y/%m/%d %H:%M %Z"`
+                printf '' > build-comment.md
+                if [ "SUCCEEDED" == "$BUILD_STATUS" ]; then
+                  echo 'Build successful';
+                else
+                  echo 'Build failed';
+                  echo 'Build Failed: please check CodeBuild for more details.' >> build-comment.md
+                fi
+                echo '```' >> build-comment.md
+                echo "Start: $START_TIME" >> build-comment.md
+                echo "End: $END_TIME" >> build-comment.md
+                echo "Execution: https://console.amazonaws-us-gov.com/codesuite/codebuild/008577686731/projects/developer-portal-deploy/build/$BUILD_ID" >> build-comment.md
+                echo '```' >> build-comment.md
+
+                gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body-file build-comment.md
+
+                RUNNING="false"
               else
-                echo 'Build failed';
-                echo 'Build Failed: please check CodeBuild for more details.' >> build-comment.md
+                echo 'End time not yet set in `aws codebuild batch-get-builds`'
+                echo 'wait 15 seconds and try again.'
+                sleep 15;
               fi
-              echo '```' >> build-comment.md
-              echo "Start: $START_TIME" >> build-comment.md
-              echo "End: $END_TIME" >> build-comment.md
-              echo "Execution: https://console.amazonaws-us-gov.com/codesuite/codebuild/008577686731/projects/developer-portal-deploy/build/$BUILD_ID" >> build-comment.md
-              echo '```' >> build-comment.md
-
-              gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body-file build-comment.md
-
-              RUNNING="false"
             else
               echo 'Still in progress... wait 15 seconds and retry.'
               sleep 15;
