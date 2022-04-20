@@ -98,7 +98,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
       const forgeryToken = Math.random().toString(36)
                                         .substring(2);
       setCookie('CSRF-TOKEN', forgeryToken, {
-        path: '/',
+        path: LPB_CONTACT_US_URL,
         sameSite: 'strict',
         secure: true,
       });

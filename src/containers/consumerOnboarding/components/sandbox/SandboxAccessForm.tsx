@@ -123,7 +123,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
         const forgeryToken = Math.random().toString(36)
                                           .substring(2);
         setCookie('CSRF-TOKEN', forgeryToken, {
-          path: '/',
+          path: LPB_APPLY_URL,
           sameSite: 'strict',
           secure: true,
         });
