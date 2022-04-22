@@ -1,5 +1,23 @@
 /// <reference types="cypress" />
 
+const testPaths = [
+  '/',
+  '/terms-of-service',
+  '/explore',
+  '/explore/authorization',
+  '/explore/authorization/docs/authorization-code',
+  '/explore/benefits',
+  '/explore/health/docs/quickstart',
+  '/explore/benefits/docs/claims', // Just need one expanded Swagger for visual testing
+  '/release-notes/benefits',
+  '/api-publishing',
+  '/api-publishing/process',
+  '/onboarding',
+  '/onboarding/request-sandbox-access',
+  '/onboarding/production-access-application',
+  '/about/news',
+];
+
 describe('App wide tests', () => {
   it('Skip navigation should receive focus on first tab after homepage load', () => {
     cy.visit('/');
@@ -18,24 +36,7 @@ describe('App wide tests', () => {
     cy.focused().should('have.id', 'page-header');
   });
 
-  it('All pages types should include a link to the TOS', () => {
-    const testPaths = [
-      '/',
-      '/terms-of-service',
-      '/explore',
-      '/explore/authorization',
-      '/explore/authorization/docs/authorization-code',
-      '/explore/benefits',
-      '/explore/health/docs/quickstart',
-      '/explore/benefits/docs/claims', // Just need one expanded Swagger for visual testing
-      '/release-notes/benefits',
-      '/api-publishing',
-      '/api-publishing/process',
-      '/onboarding',
-      '/onboarding/request-sandbox-access',
-      '/onboarding/production-access-application',
-      '/about/news',
-    ];
+  it('All page types should include a link to the TOS', () => {
     testPaths.forEach(item => {
       cy.visit(item);
       cy.get('a[href="/terms-of-service"]').should('exist');

@@ -1,27 +1,19 @@
 /// <reference types="cypress" />
 
+const newsSections = ['News releases', 'Articles', 'Digital media'];
+
 describe('News page', () => {
   beforeEach(() => {
     cy.visit('/about/news');
   });
 
-  describe('side nav links', () => {
-    it('Check all news sections receive focus from sidebar links', () => {
-      ['News releases', 'Articles', 'Digital media'].forEach(item => {
-        let hash = item.replace(' ', '-');
-        cy.get('nav a[href="/about/news#' + hash).click();
-        cy.focused().should('have.id', hash);
-      });
-    });
-  });
-
-  describe('card links', () => {
-    it('Check all news sections receive focus from card links', () => {
-      ['News releases', 'Articles', 'Digital media'].forEach(item => {
-        let hash = item.replace(' ', '-');
-        cy.get('.card-content a[href="/about/news#' + hash).click();
-        cy.focused().should('have.id', hash);
-      });
+  newsSections.forEach(item => {
+    it(`Check ${item} receives focus from sidebar and card links`, () => {
+      let hash = item.replace(' ', '-');
+      cy.get('nav a[href="/about/news#' + hash).click();
+      cy.focused().should('have.id', hash);
+      cy.get('.card-content a[href="/about/news#' + hash).click();
+      cy.focused().should('have.id', hash);
     });
   });
 });
