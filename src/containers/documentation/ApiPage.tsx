@@ -1,4 +1,3 @@
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { useLocation, useParams } from 'react-router-dom';
@@ -7,7 +6,7 @@ import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { PageHeader } from '../../components';
+import { PageHeader, VeteranResources } from '../../components';
 import { useFlag } from '../../flags';
 
 import { APINameParam } from '../../types';
@@ -54,6 +53,12 @@ const getApi = (apiName?: string): APIDescription | null => {
   return lookupApiByFragment(apiName);
 };
 
+const VETERAN_BANNER_APPROVED_ROUTES = [
+  '/explore/benefits',
+  '/explore/facilities',
+  '/explore/vaForms',
+];
+
 const ApiPage = (): JSX.Element => {
   const location = useLocation();
   const params = useParams<APINameParam>();
@@ -72,15 +77,8 @@ const ApiPage = (): JSX.Element => {
         <title>{api.name} Documentation</title>
       </Helmet>
       <PageHeader halo={category.name} header={api.name} />
-      {api.veteranRedirect && (
-        <AlertBox
-          status="info"
-          key={api.urlFragment}
-          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
-        >
-          {api.veteranRedirect.message}&nbsp;
-          <a href={api.veteranRedirect.linkUrl}>{api.veteranRedirect.linkText}</a>.
-        </AlertBox>
+      {!!VETERAN_BANNER_APPROVED_ROUTES.find(route => location.pathname.includes(route)) && (
+        <VeteranResources />
       )}
       <DeactivationMessage api={api} />
       {!isApiDeactivated(api) && <ApiDocumentation apiDefinition={api} location={location} />}
