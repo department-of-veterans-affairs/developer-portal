@@ -11,6 +11,8 @@ import { useFlag } from '../../flags';
 
 import { APINameParam } from '../../types';
 import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
+import { VETERAN_BANNER_APPROVED_ROUTES } from '../../types/constants/paths';
+
 import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
 
@@ -53,12 +55,6 @@ const getApi = (apiName?: string): APIDescription | null => {
   return lookupApiByFragment(apiName);
 };
 
-const VETERAN_BANNER_APPROVED_ROUTES = [
-  '/explore/benefits',
-  '/explore/facilities',
-  '/explore/vaForms',
-];
-
 const ApiPage = (): JSX.Element => {
   const location = useLocation();
   const params = useParams<APINameParam>();
@@ -77,9 +73,9 @@ const ApiPage = (): JSX.Element => {
         <title>{api.name} Documentation</title>
       </Helmet>
       <PageHeader halo={category.name} header={api.name} />
-      {!!VETERAN_BANNER_APPROVED_ROUTES.find(route => location.pathname.includes(route)) && (
-        <VeteranResources />
-      )}
+      {!!VETERAN_BANNER_APPROVED_ROUTES.find((route: string) =>
+        location.pathname.includes(route),
+      ) && <VeteranResources />}
       <DeactivationMessage api={api} />
       {!isApiDeactivated(api) && <ApiDocumentation apiDefinition={api} location={location} />}
     </>

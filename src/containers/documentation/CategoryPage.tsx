@@ -9,13 +9,7 @@ import { CardLink, ApiTags, PageHeader, VeteranResources } from '../../component
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { FLAG_HOSTED_APIS, PAGE_HEADER_ID } from '../../types/constants';
-import { CONSUMER_PATH } from '../../types/constants/paths';
-
-const VETERAN_BANNER_APPROVED_ROUTES = [
-  '/explore/benefits',
-  '/explore/facilities',
-  '/explore/vaForms',
-];
+import { CONSUMER_PATH, VETERAN_BANNER_APPROVED_ROUTES } from '../../types/constants/paths';
 
 const CategoryPage = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
@@ -57,9 +51,9 @@ const CategoryPage = (): JSX.Element => {
         <title>{categoryName}</title>
       </Helmet>
       <PageHeader header={categoryName} />
-      {!!VETERAN_BANNER_APPROVED_ROUTES.find(route => location.pathname.includes(route)) && (
-        <VeteranResources />
-      )}
+      {!!VETERAN_BANNER_APPROVED_ROUTES.find((route: string) =>
+        location.pathname.includes(route),
+      ) && <VeteranResources />}
       <div className="vads-u-width--full">
         {overview({})}
         <p>
