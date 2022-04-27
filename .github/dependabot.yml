@@ -5,11 +5,7 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 3
-    labels:
-      - npm
-      - dependencies
-      - dependabot
-      - 'impact: maintainers'
+    labels: ['npm', 'dependencies', 'dependabot', 'impact: maintainers']
     ignore:
       # Version 5.0.0 no longer the LocationDescriptor and locationState types introducing breaking
       # changes in the react-router-dom and in our application. React-router-dom needs version
