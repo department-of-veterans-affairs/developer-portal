@@ -1,6 +1,11 @@
 ### May 3, 2022
 We added a new FHIR R4 resource to the [Veterans Health API (FHIR)](https://developer.va.gov/explore/health/docs/fhir?version=current), [DeviceRequest](http://www.hl7.org/Fhir/devicerequest.html), which supports READ and SEARCH functionality. This resource includes only CPAP and BiPAP data.
 
+Enabled FHIR _sort parameter, which includes the ability to specify the arrangement of responses by ascending or descending order, for the following R4 resources: 'Observation', 'Encounter', and 'Appointment'.
+ - Observation can be sorted by category, code, date, and _lastUpdated
+ - Encounter can be sorted by date and _lastUpdated
+ - Appointment can be sorted by date and _lastUpdated
+
 ---
 ### April 12, 2022
 We have made backend changes to the Veterans Health API that optimize performance, promote stability, and reduce maintenance efforts for the R4 and DSTU2 AllergyIntolerance and Procedure resources. As a result, AllergyIntolerance and Procedure identifiers have changed. The identifier changes do not impact consumers as all cross-resource references remain valid and old identifiers are honored for read operations. 
