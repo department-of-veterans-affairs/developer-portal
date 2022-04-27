@@ -42,7 +42,6 @@ const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
   const { errors, touched, values } = useFormikContext<any>();
   const shouldDisplayErrors =
     (!!errors[name] && !!touched[name]) || (!!getIn(errors, name) && !!getIn(touched, name));
-  // const containerClass = shouldDisplayErrors ? 'usa-input-error' : '';
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
 
   const idReadyName = toHtmlId(name);
@@ -80,12 +79,13 @@ const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
           return (
             <>
               <div style={{ maxWidth: '46rem' }}>
-                {emails.map((item: string, itemIdx: number) => (
+                {emails.map((_, index: number) => (
                   <EditInputField
-                    index={itemIdx}
-                    key={itemIdx}
+                    index={index}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
                     onRemove={handleRemoveInput}
-                    name={`${name}.${itemIdx}`}
+                    name={`${name}.${index}`}
                     type={type}
                     placeHolder="notificationlist@email.com"
                     required={required}
