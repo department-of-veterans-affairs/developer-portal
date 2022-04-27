@@ -1,10 +1,10 @@
 ### May 3, 2022
 We added a new FHIR R4 resource to the [Veterans Health API (FHIR)](https://developer.va.gov/explore/health/docs/fhir?version=current), [DeviceRequest](http://www.hl7.org/Fhir/devicerequest.html), which supports READ and SEARCH functionality. This resource includes only CPAP and BiPAP data.
 
-Enabled FHIR _sort parameter, which includes the ability to specify the arrangement of responses by ascending or descending order, for the following R4 resources: 'Observation', 'Encounter', and 'Appointment'.
- - Observation can be sorted by category, code, date, and _lastUpdated
- - Encounter can be sorted by date and _lastUpdated
- - Appointment can be sorted by date and _lastUpdated
+We also enabled the FHIR _sort parameter for the R4 'Observation', 'Encounter', and 'Appointment' resources. The _sort parameter lets you specify the arrangement of responses in ascending or descending order by certain other parameters. 
+ - 'Observation' can be sorted by category, code, date, and _lastUpdated.
+ - 'Encounter' can be sorted by date and _lastUpdated.
+ - 'Appointment' can be sorted by date and _lastUpdated.
 
 ---
 ### April 12, 2022
