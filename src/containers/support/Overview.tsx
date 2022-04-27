@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { CardLink, PageHeader, VeteranResources } from '../../components';
+import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { SupportSection } from './Support';
 
@@ -22,7 +22,6 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
       <title>Support</title>
     </Helmet>
     <PageHeader {...headerProps} />
-    <VeteranResources />
     <div className={defaultFlexContainer()}>
       {props.sections.map((section: SupportSection) => (
         <CardLink

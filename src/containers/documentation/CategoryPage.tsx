@@ -1,23 +1,25 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useLocation, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
+import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import classNames from 'classnames';
 import { Flag } from '../../flags';
 import { getApiDefinitions } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { CardLink, ApiTags, PageHeader, VeteranResources } from '../../components';
+import { CardLink, ApiTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
 import { FLAG_HOSTED_APIS, PAGE_HEADER_ID } from '../../types/constants';
-import { CONSUMER_PATH, VETERAN_BANNER_APPROVED_ROUTES } from '../../types/constants/paths';
+import { CONSUMER_PATH } from '../../types/constants/paths';
 
 const CategoryPage = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
-  const location = useLocation();
+
   const {
     apis,
     name: categoryName,
-    content: { overview, consumerDocsLinkText },
+    content: { overview, veteranRedirect, consumerDocsLinkText },
   } = getApiDefinitions()[apiCategoryKey];
 
   let cardSection;
@@ -51,9 +53,16 @@ const CategoryPage = (): JSX.Element => {
         <title>{categoryName}</title>
       </Helmet>
       <PageHeader header={categoryName} />
-      {!!VETERAN_BANNER_APPROVED_ROUTES.find((route: string) =>
-        location.pathname.includes(route),
-      ) && <VeteranResources />}
+      {veteranRedirect && (
+        <AlertBox
+          status="info"
+          key={apiCategoryKey}
+          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
+        >
+          {veteranRedirect.message}&nbsp;
+          <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
+        </AlertBox>
+      )}
       <div className="vads-u-width--full">
         {overview({})}
         <p>
