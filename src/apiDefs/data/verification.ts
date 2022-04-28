@@ -44,7 +44,7 @@ const verificationApis: APIDescription[] = [
         productionAud: 'TBD',
         sandboxAud: 'TBD',
         scopes: ['letters.read'],
-      }
+      },
     },
     oAuthTypes: ['ClientCredentialsGrant'],
     openData: false,
