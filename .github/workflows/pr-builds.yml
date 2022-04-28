@@ -107,7 +107,7 @@ jobs:
           echo '{' > build/$BUILD_ENV/deploy.json
           echo "  \"environment\": \"$BUILD_ENV\"," >> build/$BUILD_ENV/deploy.json
           echo "  \"date\": \"$( cat current-date )\"," >> build/$BUILD_ENV/deploy.json
-          echo "  \"commit\": \"$REACT_APP_COMMIT_HASH\"" >> build/$BUILD_ENV/deploy.json
+          echo "  \"commit\": \"$REACT_APP_COMMIT_HASH\"," >> build/$BUILD_ENV/deploy.json
           echo "  \"pr\": \"$PR_NUMBER\"" >> build/$BUILD_ENV/deploy.json
           echo '}' >> build/$BUILD_ENV/deploy.json
           rm ./current-date
