@@ -35,7 +35,7 @@ const verificationApis: APIDescription[] = [
       },
     ],
     enabledByDefault: false,
-    lastProdAccessStep: ProdAccessFormSteps.Four,
+    lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'VA Letter Generator API',
     oAuth: true,
     oAuthInfo: {
