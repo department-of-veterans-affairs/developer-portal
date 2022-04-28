@@ -26,6 +26,38 @@ const verificationApis: APIDescription[] = [
     vaInternalOnly: true,
   },
   {
+    altID: 'vaLetterGenerator',
+    description:
+      'Generate documents and letters for proof of existing VA benefits and status.',
+    docSources: [
+      {
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran-letters/v1/openapi.json`,
+      },
+    ],
+    enabledByDefault: false,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
+    name: 'VA Letter Generator API',
+    oAuth: true,
+    oAuthInfo: {
+      ccgInfo: {
+        baseAuthPath: 'oauth2/veteran-letters/system/v1/',
+        productionAud: 'TBD',
+        sandboxAud: 'TBD',
+        scopes: ['letters.read'],
+      }
+    },
+    oAuthTypes: ['ClientCredentialsGrant'],
+    openData: false,
+    releaseNotes: VaLetterGeneratorReleaseNotes,
+    urlFragment: 'va_letter_generator',
+    vaInternalOnly: true,
+    veteranRedirect: {
+    linkText: 'Download VA benefit letters from VA.Gov.',
+    linkUrl: 'https://www.va.gov/records/download-va-letters/',
+    message: 'Are you a Veteran or Veteran representative?',
+  },
+  },
+  {
     // adding an altID to match keys need on the backend for signup
     altID: 'confirmation',
     description: 'Confirm Veteran status for a given person with an API key.',
@@ -75,38 +107,6 @@ const verificationApis: APIDescription[] = [
     releaseNotes: VeteranVerificationReleaseNotes,
     urlFragment: 'veteran_verification',
     vaInternalOnly: false,
-  },
-  {
-    altID: 'vaLetterGenerator',
-    description:
-      'Generate documents and letters for proof of existing VA benefits and status.',
-    docSources: [
-      {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran-letters/v1/openapi.json`,
-      },
-    ],
-    enabledByDefault: true,
-    lastProdAccessStep: ProdAccessFormSteps.Four,
-    name: 'VA Letter Generator API',
-    oAuth: true,
-    oAuthInfo: {
-      ccgInfo: {
-        baseAuthPath: 'oauth2/veteran-letters/system/v1/',
-        productionAud: 'TBD',
-        sandboxAud: 'TBD',
-        scopes: ['letters.read'],
-      }
-    },
-    oAuthTypes: ['ClientCredentialsGrant'],
-    openData: false,
-    releaseNotes: VaLetterGeneratorReleaseNotes,
-    urlFragment: 'va_letter_generator',
-    vaInternalOnly: true,
-    veteranRedirect: {
-    linkText: 'Download VA benefit letters from VA.Gov.',
-    linkUrl: 'https://www.va.gov/records/download-va-letters/',
-    message: 'Are you a Veteran or Veteran representative?',
-  },
   },
 ];
 
