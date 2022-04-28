@@ -54,34 +54,6 @@ jobs:
         if: steps.cache_node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
-  e2e:
-    needs: [install]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup node
-        uses: actions/setup-node@v2
-        with:
-          node-version: 12
-
-      - id: cache_node_modules
-        name: Cache node modules
-        uses: actions/cache@v2
-        env:
-          cache-name: developer-portal-node-modules
-          node-version: ${{ needs.install.outputs.node_version }}
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install dependencies
-        if: steps.cache_node_modules.outputs.cache-hit != 'true'
-        run: npm ci
-
-      - name: Run test
-        run: npm run test:e2e:ci
-
   unit:
     needs: [install]
     runs-on: ubuntu-latest
