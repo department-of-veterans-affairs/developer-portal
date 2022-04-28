@@ -1,5 +1,4 @@
 /// <reference types="cypress" />
-// faqs.spec.js created with Cypress
 
 describe('FAQ page tests', () => {
   beforeEach(() => {
