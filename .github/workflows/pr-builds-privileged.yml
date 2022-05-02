@@ -50,8 +50,8 @@ jobs:
       - id: get_pr_info
         name: Get PR and hash data
         run: |
-          PR_NUMBER=`jq -r '.pr' ./build/dev/build.json`
-          COMMIT_HASH=`jq -r '.commit' ./build/dev/build.json`
+          PR_NUMBER=`jq -r '.pr' ./build/dev/deploy.json`
+          COMMIT_HASH=`jq -r '.commit' ./build/dev/deploy.json`
           echo $PR_NUMBER
           echo $COMMIT_HASH
           echo "::set-output name=pr::$PR_NUMBER"
