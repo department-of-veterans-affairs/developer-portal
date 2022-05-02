@@ -6,7 +6,7 @@ module.exports = {
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.{d,e2e,test}.{ts,tsx}',
     '!src/base.accessibility.ts',
-    '!src/e2eHelpers.ts',
+    '!src/testHelpers.ts',
     '!src/index.tsx',
     '!src/registerServiceWorker.ts',
     '!src/visualRegressionTest.ts',
