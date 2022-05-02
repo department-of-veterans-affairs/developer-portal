@@ -221,6 +221,7 @@ const healthApis: APIDescription[] = [
           'patient/Appointment.read',
           'patient/Condition.read',
           'patient/Device.read',
+          'patient/DeviceRequest.read',
           'patient/DiagnosticReport.read',
           'patient/Encounter.read',
           'patient/Immunization.read',
