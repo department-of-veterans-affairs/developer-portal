@@ -1,5 +1,5 @@
 /* eslint-disable no-loop-func -- we need to break up these Jest tests inside loops */
-import { axeCheck, mockSwagger, puppeteerHost, testPaths } from './e2eHelpers';
+import { axeCheck, mockSwagger, puppeteerHost, testPaths } from './testHelpers';
 
 describe('Accessibility tests', () => {
   it.each(testPaths)('has no axe violations at %s', async (path: string) => {
