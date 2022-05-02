@@ -9,7 +9,7 @@ env:
   CYPRESS_CACHE_FOLDER: cypress/cache
 
 jobs:
-  install:
+  cypress_install_and_run:
     runs-on: ubuntu-latest
     outputs:
       hash: ${{ steps.githash.outputs.hash }}
