@@ -375,7 +375,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.test.ts', '*.spec.ts', '*.test.tsx', '*.e2e.ts'],
+      files: ['*.test.ts', '*.spec.ts', '*.test.tsx'],
       rules: {
         'max-nested-callbacks': 'off',
       },

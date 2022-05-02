@@ -1,8 +1,8 @@
 module.exports = {
-  displayName: 'E2E Puppeteer Tests',
-  name: 'e2e',
+  displayName: 'Accessibility Puppeteer Tests',
+  name: 'accessibility',
   preset: 'jest-puppeteer',
-  testMatch: ['<rootDir>/src/**/?(*.)(e2e).(j|t)s?(x)'],
+  testMatch: ['<rootDir>/src/**/?(*.)(accessibility).(j|t)s?(x)'],
   setupFiles: ['<rootDir>/config/polyfills.js'],
   testURL: process.env.TEST_HOST || 'http://localhost:4444',
   transform: {
