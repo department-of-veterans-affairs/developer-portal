@@ -24,6 +24,7 @@ import {
   UrgentCareDeactivationNotice,
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
+  ProviderDirectoryReleaseNotes,
 } from '../../content/apiDocs/health';
 import { APIDescription, ProdAccessFormSteps } from '../schema';
 
@@ -96,6 +97,22 @@ const healthApis: APIDescription[] = [
     openData: false,
     releaseNotes: CommunityCareReleaseNotes,
     urlFragment: 'community_care',
+    vaInternalOnly: false,
+  },
+  {
+    altID: 'providerDirectory',
+    description: 'Use this API to return lists of VA providers and their information, such as locations, specialties, office hours, and more.',
+    docSources: [
+      {
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/provider-directory/v0/r4/docs`,
+      },
+    ],
+    enabledByDefault: false,
+    lastProdAccessStep: ProdAccessFormSteps.Four,
+    name: 'Provider Directory API',
+    openData: false,
+    releaseNotes: ProviderDirectoryReleaseNotes,
+    urlFragment: 'provider_directory',
     vaInternalOnly: false,
   },
   {
