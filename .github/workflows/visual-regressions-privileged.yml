@@ -43,9 +43,6 @@ jobs:
           mkdir image_diffs
           unzip visual-test-failures.zip -d image_diffs
 
-      - name: See what's downloaded
-        run: ls -la ./image_diffs
-
       - id: get_pr_info
         name: Get PR and hash data
         run: |
@@ -64,6 +61,33 @@ jobs:
         with:
           lfs: true
           ref: ${{ steps.get_pr_info.outputs.branch_name }}
+
+      - name: Redownload Screenshot Artifacts after branch change
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: ${{ github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "visual-test-failures"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              artifact_id: matchArtifact.id,
+              archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/visual-test-failures.zip', Buffer.from(download.data));
+
+      - name: Unzip again and delete metadata files
+        run: |
+          mkdir image_diffs
+          unzip visual-test-failures.zip -d image_diffs
+          rm ./image_diffs/pr.txt ./image_diffs/hash.txt ./image_diffs/branch.txt
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
