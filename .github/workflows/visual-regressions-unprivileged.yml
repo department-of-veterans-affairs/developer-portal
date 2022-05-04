@@ -111,6 +111,7 @@ jobs:
           mkdir -p test/image_snapshots/__diff_output__;
           echo $PR_NUMBER > test/image_snapshots/__diff_output__/pr.txt
           echo $COMMIT_HASH > test/image_snapshots/__diff_output__/hash.txt
+          echo $GITHUB_HEAD_REF > test/image_snapshots/__diff_output__/branch.txt
 
       - name: Upload failed screenshots
         if: steps.visual_test.outcome == 'failure'
