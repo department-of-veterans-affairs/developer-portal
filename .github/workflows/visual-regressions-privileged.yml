@@ -105,8 +105,8 @@ jobs:
           AWS_S3_SCREENSHOTS_BUCKET: ${{secrets.AWS_S3_SCREENSHOTS_BUCKET}}
           COMMIT_HASH: ${{steps.get_pr_info.outputs.hash}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PR_NUMBER: ${{steps.get_pr_number.outputs.pr}}
-          PR_BRANCH_NAME: ${{steps.get_pr_number.outputs.branch_name}}
+          PR_NUMBER: ${{steps.get_pr_info.outputs.pr}}
+          PR_BRANCH_NAME: ${{steps.get_pr_info.outputs.branch_name}}
         run: |
           aws s3 sync --no-progress --acl public-read image_diffs/ s3://$AWS_S3_SCREENSHOTS_BUCKET/$PR_BRANCH_NAME/gha-$COMMIT_HASH/
           report_path="image_diffs/"
