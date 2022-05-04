@@ -51,11 +51,19 @@ jobs:
         run: |
           PR_NUMBER=`cat ./image_diffs/pr.txt`
           COMMIT_HASH=`cat ./image_diffs/hash.txt`
+          PREVIOUS_GITHUB_HEAD_REF=`cat ./image_diffs/branch.txt`
           echo $PR_NUMBER
           echo $COMMIT_HASH
-          rm ./image_diffs/pr.txt ./image_diffs/hash.txt
+          echo $PREVIOUS_GITHUB_HEAD_REF
+          rm ./image_diffs/pr.txt ./image_diffs/hash.txt ./image_diffs/branch.txt
           echo "::set-output name=pr::$PR_NUMBER"
           echo "::set-output name=hash::$COMMIT_HASH"
+          echo "::set-output name=branch_name::$PREVIOUS_GITHUB_HEAD_REF"
+
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+          ref: ${{ steps.get_pr_info.outputs.branch_name }}
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -74,12 +82,13 @@ jobs:
           COMMIT_HASH: ${{steps.get_pr_info.outputs.hash}}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           PR_NUMBER: ${{steps.get_pr_number.outputs.pr}}
+          PR_BRANCH_NAME: ${{steps.get_pr_number.outputs.branch_name}}
         run: |
-          aws s3 sync --no-progress --acl public-read image_diffs/ s3://$AWS_S3_SCREENSHOTS_BUCKET/$GITHUB_HEAD_REF/gha-$COMMIT_HASH/
+          aws s3 sync --no-progress --acl public-read image_diffs/ s3://$AWS_S3_SCREENSHOTS_BUCKET/$PR_BRANCH_NAME/gha-$COMMIT_HASH/
           report_path="image_diffs/"
           links=""
           for f in ${report_path}*; do
-            links="${links} - [${f#"${report_path}"}](https://s3-${AWS_REGION}.amazonaws.com/${AWS_S3_SCREENSHOTS_BUCKET}/$GITHUB_HEAD_REF/gha-${COMMIT_HASH}/${f#"${report_path}"}) <br />"
+            links="${links} - [${f#"${report_path}"}](https://s3-${AWS_REGION}.amazonaws.com/${AWS_S3_SCREENSHOTS_BUCKET}/$PR_BRANCH_NAME/gha-${COMMIT_HASH}/${f#"${report_path}"}) <br />"
           done
           docsLink="https://github.com/$GITHUB_REPOSITORY/blob/master/docs/testing.md#visual-regression-testing"
           comment="Visual regression testing failed. Review these diffs and then [update the snapshots locally or with GitHub Actions](${docsLink}). <br><br> ${links}"
