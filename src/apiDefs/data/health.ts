@@ -101,7 +101,8 @@ const healthApis: APIDescription[] = [
   },
   {
     altID: 'providerDirectory',
-    description: 'Use this API to return lists of VA providers and their information, such as locations, specialties, office hours, and more.',
+    description:
+      'Use this API to return lists of VA providers and their information, such as locations, specialties, office hours, and more.',
     docSources: [
       {
         openApiUrl: `${OPEN_API_SPEC_HOST}/services/provider-directory/v0/r4/docs`,
@@ -144,8 +145,8 @@ const healthApis: APIDescription[] = [
     description: '',
     docSources: [
       {
-        metadataUrl: '',
-        openApiUrl: '',
+        // There is no docserver URL yes for PGD so no metadata.json file yes.
+        openApiUrl: `${swaggerHost}/services/pgd/v0/r4/openapi.json`,
       },
     ],
     enabledByDefault: false,
