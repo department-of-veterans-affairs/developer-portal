@@ -1,0 +1,25 @@
+{
+  "devComment": "The http-proxy-middleware package and src/setupProxy.js need to be removed as well when the real metadata.json file is ready",
+  "meta": {
+    "versions": [
+      {
+        "version": "0.0.0",
+        "internal_only": false,
+        "status": "Current Version - R4 spec",
+        "path": "/internal/docs/fhir-r4/v0/openapi.json"
+      },
+      {
+        "version": "0.0.0",
+        "internal_only": false,
+        "status": "Current Version - Argonaut spec",
+        "path": "/internal/docs/fhir-argonaut/v0/openapi.json"
+      },
+      {
+        "version": "0.0.0",
+        "internal_only": false,
+        "status": "Current Version - DSTU2 spec",
+        "path": "/internal/docs/fhir-dstu2/v0/openapi.json"
+      }
+    ]
+  }
+}

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://developer.va.gov/",
-  "proxy": "http://localhost:8080/",
   "scripts": {
     "preinstall": "npx npm-force-resolutions@0.0.10",
     "start": "node scripts/start.js",
@@ -38,6 +37,7 @@
     "highlight.js": "^10.7.3",
     "history": "^4.10.1",
     "hoist-non-react-statics": "^3.3.2",
+    "http-proxy-middleware": "^2.0.6",
     "immutable": "^3.8.2",
     "markdown-it-attrs": "^4.1.0",
     "moment": "^2.29.2",
