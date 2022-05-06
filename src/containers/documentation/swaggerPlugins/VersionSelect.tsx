@@ -45,43 +45,62 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
       const { version, status, internal_only } = meta;
       return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
     };
+    const fhirRegex = /\/explore\/health\/docs\/(patient_health|fhir)/;
+    const selectorLabel = fhirRegex.test(location.pathname)
+      ? 'Select a FHIR specification'
+      : 'Select a version';
 
     return (
-      <div
-        className={classNames(
-          'vads-u-display--flex',
-          'vads-u-flex-wrap--wrap',
-          'vads-u-justify-content--flex-start',
-        )}
-      >
-        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-        <select
-          aria-label="Version Selection"
-          value={this.state.version}
-          onChange={(e): void => this.handleSelectChange(e.target.value)}
-          className={classNames(
-            'vads-u-display--inline-block',
-            'vads-u-flex--4',
-            'vads-u-margin-right--4',
-            'va-api-u-min-width--200',
-          )}
-        >
-          {this.props
-            .getSystem()
-            .versionSelectors.versionMetadata()
-            ?.map((versionInfo: VersionMetadata) => (
-              <option value={versionInfo.version} key={versionInfo.version}>
-                {buildDisplay(versionInfo)}
-              </option>
-            ))}
-        </select>
-        <button
-          onClick={(): void => this.handleButtonClick()}
-          className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
-          type="button"
-        >
-          Select
-        </button>
+      <div className="api-selector-container">
+        <label htmlFor="version-selector">
+          {selectorLabel}
+          <div
+            className={classNames(
+              'vads-u-display--flex',
+              'vads-u-flex-wrap--wrap',
+              'vads-u-justify-content--flex-start',
+            )}
+          >
+            <div
+              className={classNames(
+                'vads-u-display--inline-block',
+                'vads-u-flex--4',
+                'vads-u-margin-right--4',
+                'va-api-u-min-width--200',
+              )}
+            >
+              {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+              <select
+                id="version-selector"
+                aria-label="Version Selection"
+                value={this.state.version}
+                onChange={(e): void => this.handleSelectChange(e.target.value)}
+                className={classNames(
+                  'vads-u-display--inline-block',
+                  'vads-u-flex--4',
+                  'vads-u-margin-right--4',
+                  'va-api-u-min-width--200',
+                )}
+              >
+                {this.props
+                  .getSystem()
+                  .versionSelectors.versionMetadata()
+                  ?.map((versionInfo: VersionMetadata) => (
+                    <option value={versionInfo.version} key={versionInfo.version}>
+                      {buildDisplay(versionInfo)}
+                    </option>
+                  ))}
+              </select>
+              <button
+                onClick={(): void => this.handleButtonClick()}
+                className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
+                type="button"
+              >
+                Select
+              </button>
+            </div>
+          </div>
+        </label>
       </div>
     );
   }

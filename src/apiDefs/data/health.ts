@@ -338,6 +338,7 @@ const healthApis: APIDescription[] = [
     releaseNotes: FhirApiReleaseNotes,
     urlFragment: 'patient_health',
     vaInternalOnly: false,
+    versionSelectorLabel: 'Select a FHIR specification',
   },
   {
     deactivationInfo: {
