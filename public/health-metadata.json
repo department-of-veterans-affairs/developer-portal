@@ -3,21 +3,21 @@
   "meta": {
     "versions": [
       {
-        "version": "0.0.0",
+        "version": "r4-0.0.0",
         "internal_only": false,
-        "status": "Current Version - R4 spec",
+        "status": "R4 spec",
         "path": "/internal/docs/fhir-r4/v0/openapi.json"
       },
       {
-        "version": "0.0.0",
+        "version": "argonaut-0.0.0",
         "internal_only": false,
-        "status": "Current Version - Argonaut spec",
+        "status": "Argonaut spec",
         "path": "/internal/docs/fhir-argonaut/v0/openapi.json"
       },
       {
-        "version": "0.0.0",
+        "version": "dstu2-0.0.0",
         "internal_only": false,
-        "status": "Current Version - DSTU2 spec",
+        "status": "DSTU2 spec",
         "path": "/internal/docs/fhir-dstu2/v0/openapi.json"
       }
     ]
