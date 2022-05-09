@@ -110,39 +110,37 @@ curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token'
                 <br />
                 {'<signature>'}
               </p>
-              <p>
-                With the base64 encoded payload similar to this:
-                <CodeWrapper>
-                  <ReactMarkdown
-                    rehypePlugins={[highlight]}
-                    components={{
-                      // eslint-disable-next-line react/display-name
-                      code: ({ className, children, ...codeProps }): JSX.Element => (
-                        // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-                        <code tabIndex={0} className={className} {...codeProps}>
-                          {children}
-                        </code>
-                      ),
-                    }}
-                  >
-                    {`~~~json
+              <p>With the base64 encoded payload similar to this:</p>
+              <CodeWrapper>
+                <ReactMarkdown
+                  rehypePlugins={[highlight]}
+                  components={{
+                    // eslint-disable-next-line react/display-name
+                    code: ({ className, children, ...codeProps }): JSX.Element => (
+                      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                      <code tabIndex={0} className={className} {...codeProps}>
+                        {children}
+                      </code>
+                    ),
+                  }}
+                >
+                  {`~~~json
 base64url(
-  {
-    "aud": "TBD",
-    "iss": "TBD",
-    "sub": "TBD",
-    "jti": "20f2e950-0065-11ec-a854-3def9ffaf1cb",
-    "iat": 1629319488,
-    "exp": 1629319548
-  }
+{
+  "aud": "TBD",
+  "iss": "TBD",
+  "sub": "TBD",
+  "jti": "20f2e950-0065-11ec-a854-3def9ffaf1cb",
+  "iat": 1629319488,
+  "exp": 1629319548
+}
 ) => 
 eyJhdWQiOiJUQkQiLCJpc3MiOiJUQkQiLCJzdWIiOiJUQkQiLCJqdGkiOiIyMGYyZTk1
 MC0wMDY1LTExZWMtYTg1NC0zZGVmOWZmYWYxY2IiLCJpYXQiOjE2MjkzMTk0ODgsI
 mV4cCI6MTYyOTMxOTU0OH0
 `}
-                  </ReactMarkdown>
-                </CodeWrapper>
-              </p>
+                </ReactMarkdown>
+              </CodeWrapper>
             </td>
           </tr>
           <tr>

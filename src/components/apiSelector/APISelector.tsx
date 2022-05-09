@@ -37,45 +37,43 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   if (props.withButton) {
     return (
       <div className="api-selector-container">
-        <p>
-          Select an API
+        <p>Select an API</p>
+        <div
+          className={classNames(
+            'vads-u-display--flex',
+            'vads-u-flex-wrap--wrap',
+            'vads-u-justify-content--flex-start',
+          )}
+        >
+          {/* eslint-disable-next-line jsx-a11y/no-onchange */}
           <div
             className={classNames(
-              'vads-u-display--flex',
-              'vads-u-flex-wrap--wrap',
-              'vads-u-justify-content--flex-start',
+              'vads-u-display--inline-block',
+              'vads-u-flex--4',
+              'vads-u-margin-right--4',
+              'va-api-u-min-width--200',
             )}
           >
-            {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-            <div
-              className={classNames(
-                'vads-u-display--inline-block',
-                'vads-u-flex--4',
-                'vads-u-margin-right--4',
-                'va-api-u-min-width--200',
-              )}
+            <select
+              aria-label={selectLabel}
+              value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
+              onChange={onSelectionChange}
             >
-              <select
-                aria-label={selectLabel}
-                value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
-                onChange={onSelectionChange}
-              >
-                {props.options.map(item => (
-                  <option value={item.urlFragment} key={item.urlFragment}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button
-              onClick={onButtonClick}
-              className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
-              type="button"
-            >
-              Select
-            </button>
+              {props.options.map(item => (
+                <option value={item.urlFragment} key={item.urlFragment}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
           </div>
-        </p>
+          <button
+            onClick={onButtonClick}
+            className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
+            type="button"
+          >
+            Select
+          </button>
+        </div>
       </div>
     );
   } else {
