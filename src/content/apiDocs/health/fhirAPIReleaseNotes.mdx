@@ -1,3 +1,10 @@
+### May 17, 2022
+To better meet the FHIR specification for both the Veterans Health and Clinical Health APIs, the following changes have been made about Organization.type in both DSTU2 and R2:
+ - For Insurance Companies and Government Agencies, data will be communicated in  Observation.type.code.
+ - No change for Organization Type concerning VA Facilities
+ - Data for all other Organization types (previously passed in Observation.type.system) will no longer be included in the response.
+
+---
 ### May 3, 2022
 We added a new FHIR R4 resource to the [Veterans Health API (FHIR)](https://developer.va.gov/explore/health/docs/fhir?version=current), [DeviceRequest](http://www.hl7.org/Fhir/devicerequest.html), which supports READ and SEARCH functionality. This resource includes only CPAP and BiPAP data.
 
