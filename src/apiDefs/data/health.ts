@@ -146,8 +146,8 @@ const healthApis: APIDescription[] = [
     description: '',
     docSources: [
       {
-        metadataUrl: '',
-        openApiUrl: '',
+        // There is no docserver URL yes for PGD so no metadata.json file yes.
+        openApiUrl: `${swaggerHost}/services/pgd/v0/r4/openapi.json`,
       },
     ],
     enabledByDefault: false,
