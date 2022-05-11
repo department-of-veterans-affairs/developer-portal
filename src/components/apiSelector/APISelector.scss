@@ -25,6 +25,16 @@
   }
 
   select {
+    display: block;
     min-width: 100%;
+  }
+
+  button {
+    width: calc(100% - 2rem);
+    margin-left: 2rem;
+  }
+
+  #swagger-ui & {
+    max-width: 800px;
   }
 }

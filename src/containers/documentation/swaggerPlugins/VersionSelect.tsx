@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import classNames from 'classnames';
 import * as React from 'react';
 import { VersionMetadata } from '../../../types';
 import { System } from './types';
@@ -49,10 +48,10 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
 
   public render(): JSX.Element {
     const buildDisplay = (meta: VersionMetadata): string => {
-      const { version, status, internal_only } = meta;
-      if (version.includes('-')) {
-        return `${status} ${internal_only ? '(Internal Only)' : ''}`;
+      if (meta.label) {
+        return meta.label;
       } else {
+        const { version, status, internal_only } = meta;
         return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
       }
     };
@@ -63,68 +62,49 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
 
     let apiStatus;
     if (this.props.getSystem().versionSelectors.apiVersion() === '') {
-      apiStatus = (
-        this.props.getSystem().versionSelectors.versionMetadata()?.[0] as VersionMetadata
-      ).status;
+      apiStatus =
+        (this.props.getSystem().versionSelectors.versionMetadata()?.[0] as VersionMetadata).label ??
+        '';
     } else {
       apiStatus = this.getVersionMetadataByProp(
         'version',
         this.props.getSystem().versionSelectors.apiVersion(),
-      )?.status;
+      )?.label;
     }
 
     return (
       <>
-        <div className="api-selector-container">
-          <label htmlFor="version-selector">
-            {selectorLabel}
-            <div
-              className={classNames(
-                'vads-u-display--flex',
-                'vads-u-flex-wrap--wrap',
-                'vads-u-justify-content--flex-start',
-              )}
-            >
-              <div
-                className={classNames(
-                  'vads-u-display--inline-block',
-                  'vads-u-flex--4',
-                  'vads-u-margin-right--4',
-                  'va-api-u-min-width--200',
-                )}
+        <div className="api-selector-container vads-l-grid-container vads-u-padding-y--2">
+          <div className="vads-l-row">
+            <label htmlFor="version-selector" className="vads-l-col--9">
+              {selectorLabel}
+              {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+              <select
+                id="version-selector"
+                aria-label="Version Selection"
+                value={this.state.version}
+                onChange={(e): void => this.handleSelectChange(e.target.value)}
               >
-                {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-                <select
-                  id="version-selector"
-                  aria-label="Version Selection"
-                  value={this.state.version}
-                  onChange={(e): void => this.handleSelectChange(e.target.value)}
-                  className={classNames(
-                    'vads-u-display--inline-block',
-                    'vads-u-flex--4',
-                    'vads-u-margin-right--4',
-                    'va-api-u-min-width--200',
-                  )}
-                >
-                  {this.props
-                    .getSystem()
-                    .versionSelectors.versionMetadata()
-                    ?.map((versionInfo: VersionMetadata) => (
-                      <option value={versionInfo.version} key={versionInfo.version}>
-                        {buildDisplay(versionInfo)}
-                      </option>
-                    ))}
-                </select>
-                <button
-                  onClick={(): void => this.handleButtonClick()}
-                  className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
-                  type="button"
-                >
-                  Select
-                </button>
-              </div>
+                {this.props
+                  .getSystem()
+                  .versionSelectors.versionMetadata()
+                  ?.map((versionInfo: VersionMetadata) => (
+                    <option value={versionInfo.version} key={versionInfo.version}>
+                      {buildDisplay(versionInfo)}
+                    </option>
+                  ))}
+              </select>
+            </label>
+            <div className="vads-l-col--3 vads-u-text-align--center">
+              <button
+                onClick={(): void => this.handleButtonClick()}
+                className="vads-u-margin-top--5"
+                type="button"
+              >
+                Select
+              </button>
             </div>
-          </label>
+          </div>
         </div>
         {fhirRegex.test(location.pathname) && <h2>{apiStatus}</h2>}
       </>
