@@ -76,12 +76,12 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
       <>
         <div className="api-selector-container vads-l-grid-container vads-u-padding-y--2">
           <div className="vads-l-row">
-            <label htmlFor="version-selector" className="vads-l-col--9">
+            <label htmlFor="api-selector-field" className="vads-l-col--9">
               {selectorLabel}
               {/* eslint-disable-next-line jsx-a11y/no-onchange */}
               <select
-                id="version-selector"
-                aria-label="Version Selection"
+                id="api-selector-field"
+                aria-label={selectorLabel}
                 value={this.state.version}
                 onChange={(e): void => this.handleSelectChange(e.target.value)}
               >
