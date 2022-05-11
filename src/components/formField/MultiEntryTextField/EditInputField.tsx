@@ -3,12 +3,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ErrorMessage, Field, useFormikContext, getIn } from 'formik';
 import classNames from 'classnames';
 
+import { useOutsideGroupClick, useEffectOnce } from '../../../hooks';
+
 import toHtmlId from '../../../toHtmlId';
 
 export interface EditInputFieldProps {
-  index: number;
   placeHolder: string;
-  onRemove: (arg0: number) => void;
+  onRemove: () => void;
   type?: 'text' | 'email';
   name: string;
   required: boolean;
@@ -16,8 +17,9 @@ export interface EditInputFieldProps {
   isOnlyInput: boolean;
 }
 
+// Initial render input is not disabled, there is no edit button
+// If the input is focused, then the edit button
 export const EditInputField: React.FC<EditInputFieldProps> = ({
-  index,
   onRemove,
   placeHolder,
   type = 'text',
@@ -32,15 +34,30 @@ export const EditInputField: React.FC<EditInputFieldProps> = ({
   const [isFocused, setIsFocused] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const removeBtnRef = useRef<HTMLButtonElement>(null);
+
   const idReadyName = toHtmlId(name);
   const { errors, touched } = useFormikContext();
   const errorId = `${idReadyName}FormFieldError`;
 
+  // Focus the input whenever a new one is added
+  useEffectOnce(() => {
+    if (inputRef.current && !isOnlyInput) {
+      inputRef.current.focus();
+    }
+  });
+
+  // Set focus to the input whenever edit is clicked
   useEffect(() => {
     if (inputRef.current && isTouched) {
       inputRef.current.focus();
     }
   }, [isActive, isTouched, name]);
+
+  useOutsideGroupClick<HTMLInputElement | HTMLButtonElement>([inputRef, removeBtnRef], () => {
+    setIsActive(false);
+    setIsFocused(false);
+  });
 
   const shouldDisplayErrors =
     (!!errors[name] && !!touched[name]) || (!!getIn(errors, name) && !!getIn(touched, name));
@@ -51,12 +68,7 @@ export const EditInputField: React.FC<EditInputFieldProps> = ({
   };
 
   const handleRemove = (): void => {
-    onRemove(index);
-  };
-
-  const handleBlur = (): void => {
-    setIsActive(false);
-    setIsFocused(false);
+    onRemove();
   };
 
   const handleFocus = (): void => {
@@ -88,19 +100,15 @@ export const EditInputField: React.FC<EditInputFieldProps> = ({
       </span>
 
       <div className="input-container">
-        {showEditButton ? (
-          <div className="input-edit-button-container">
-            <button
-              className="usa-button usa-button-secondary vads-u-background-color--white vads-u-margin--0p5"
-              type="button"
-              onClick={handleEdit}
-            >
-              edit
-            </button>
-          </div>
-        ) : (
-          ''
-        )}
+        <div className={showEditButton ? 'input-edit-button-container' : 'vads-u-display--none'}>
+          <button
+            className="usa-button usa-button-secondary vads-u-background-color--white vads-u-margin--0p5 vads-u-width--auto"
+            type="button"
+            onClick={handleEdit}
+          >
+            edit
+          </button>
+        </div>
 
         <Field
           className={classNames('vads-u-margin-right--2p5 vads-u-width--full', {
@@ -115,24 +123,26 @@ export const EditInputField: React.FC<EditInputFieldProps> = ({
           disabled={!isActive}
           placeholder={placeHolder}
           innerRef={inputRef}
-          onBlur={handleBlur}
           onFocus={handleFocus}
           {...props}
         />
 
-        {showRemoveButton ? (
-          <div className="vads-u-display--flex vads-u-flex-direction--row-reverse">
-            <button
-              className="usa-button usa-button-secondary vads-u-background-color--white"
-              type="button"
-              onClick={handleRemove}
-            >
-              remove
-            </button>
-          </div>
-        ) : (
-          ''
-        )}
+        <div
+          className={
+            showRemoveButton
+              ? 'vads-u-display--flex vads-u-flex-direction--row-reverse'
+              : 'vads-u-display--none'
+          }
+        >
+          <button
+            ref={removeBtnRef}
+            className="usa-button usa-button-secondary vads-u-background-color--white vads-u-width--auto"
+            type="button"
+            onClick={handleRemove}
+          >
+            remove
+          </button>
+        </div>
       </div>
     </div>
   );

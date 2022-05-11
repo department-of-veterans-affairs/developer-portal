@@ -16,20 +16,24 @@ import './MultiEntryTextField.scss';
 type FieldProps = ComponentPropsWithRef<typeof Field>;
 
 export interface MultiEntryTextFieldProps {
+  description?: ReactNode;
   className?: string;
   label: ReactNode;
   name: string;
   required?: boolean;
-  as?: FieldProps['as'];
-  description?: ReactNode;
   type?: 'text' | 'email';
+  // Below props are passed to each of the Field components
+  as?: FieldProps['as'];
   disabled?: boolean;
   onKeyDown?: (event: KeyboardEvent) => void;
   innerRef?: React.RefObject<HTMLElement>;
   customFieldClass?: string;
-  children?: ReactNode;
 }
 
+// Initially renders with one input, that's enabled and isn't focused
+// When the add button is clicked a new input is rendered below the other inputs
+// When a new input is added all other inputs in the group are disabled and focus is set to the new input
+// Each input is validated individually
 const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
   description,
   className,
@@ -81,10 +85,9 @@ const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
               <div style={{ maxWidth: '46rem' }}>
                 {emails.map((_, index: number) => (
                   <EditInputField
-                    index={index}
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
-                    onRemove={handleRemoveInput}
+                    onRemove={() => handleRemoveInput(index)}
                     name={`${name}.${index}`}
                     type={type}
                     placeHolder="notificationlist@email.com"
@@ -95,8 +98,9 @@ const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
                   />
                 ))}
               </div>
+
               <button
-                className="usa-button usa-button-secondary vads-u-background-color--white vads-u-margin-top--3"
+                className="usa-button usa-button-secondary vads-u-background-color--white vads-u-margin-top--3 vads-u-width--auto"
                 type="button"
                 onClick={handleAddInput}
               >
