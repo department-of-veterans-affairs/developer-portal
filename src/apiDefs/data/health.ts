@@ -274,7 +274,7 @@ const healthApis: APIDescription[] = [
       'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
     docSources: [
       {
-        metadataUrl: '/health-metadata.json',
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir/metadata.json`,
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir-r4/v0/openapi.json`,
       },
     ],
