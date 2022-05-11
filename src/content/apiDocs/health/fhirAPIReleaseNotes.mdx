@@ -1,8 +1,8 @@
 ### May 17, 2022
-To better meet the FHIR specification for both the Veterans Health and Clinical Health APIs, the following changes have been made about Organization.type in both DSTU2 and R2:
- - For Insurance Companies and Government Agencies, data will be communicated in  Observation.type.code.
- - No change for Organization Type concerning VA Facilities
- - Data for all other Organization types (previously passed in Observation.type.system) will no longer be included in the response.
+To better meet the FHIR specification for the Veterans and Clinical Health APIs, we've made some changes to the Organization.type properties for DSTU2 and R4.
+ - We will now return the type property for only insurance companies, government agencies, and VA facilities.
+ - We are now using [FHIR standard Organization type codes](https://www.hl7.org/fhir/codesystem-organization-type.html) in the organization.type field to communicate the government and insurance organization types.
+ - There is no change to how the organization type is returned for VA facilities, which will remain in the organization.type field.
 
 ---
 ### May 3, 2022
