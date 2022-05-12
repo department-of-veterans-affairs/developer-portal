@@ -98,11 +98,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
               </select>
             </label>
             <div className="vads-l-col--3 vads-u-text-align--center">
-              <button
-                onClick={(): void => this.handleButtonClick()}
-                className="vads-u-margin-top--5"
-                type="button"
-              >
+              <button onClick={(): void => this.handleButtonClick()} type="button">
                 Select
               </button>
             </div>

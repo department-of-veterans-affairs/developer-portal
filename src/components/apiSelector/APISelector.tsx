@@ -55,7 +55,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             </select>
           </label>
           <div className="vads-l-col--3 vads-u-text-align--center">
-            <button onClick={onButtonClick} className="vads-u-margin-top--5" type="button">
+            <button onClick={onButtonClick} type="button">
               Select
             </button>
           </div>
