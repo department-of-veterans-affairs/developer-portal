@@ -55,8 +55,10 @@ export const EditInputField: React.FC<EditInputFieldProps> = ({
   }, [isActive, isTouched, name]);
 
   useOutsideGroupClick<HTMLInputElement | HTMLButtonElement>([inputRef, removeBtnRef], () => {
-    setIsActive(false);
-    setIsFocused(false);
+    if (isTouched) {
+      setIsActive(false);
+      setIsFocused(false);
+    }
   });
 
   const shouldDisplayErrors =

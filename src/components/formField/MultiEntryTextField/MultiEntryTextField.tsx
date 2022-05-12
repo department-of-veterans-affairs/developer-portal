@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import React, { ComponentPropsWithRef, FC, ReactNode, KeyboardEvent } from 'react';
+import React, { FC, ReactNode } from 'react';
 
 import classNames from 'classnames';
-import { Field, useFormikContext, getIn, FieldArray } from 'formik';
+import { useFormikContext, getIn, FieldArray } from 'formik';
 
 import toHtmlId from '../../../toHtmlId';
 
@@ -13,45 +9,36 @@ import { EditInputField } from './EditInputField';
 
 import './MultiEntryTextField.scss';
 
-type FieldProps = ComponentPropsWithRef<typeof Field>;
-
-export interface MultiEntryTextFieldProps {
-  description?: ReactNode;
+export interface MultiEntryEmailFieldProps {
   className?: string;
+  description?: ReactNode;
   label: ReactNode;
   name: string;
+  placeholder: string;
   required?: boolean;
-  type?: 'text' | 'email';
-  // Below props are passed to each of the Field components
-  as?: FieldProps['as'];
-  disabled?: boolean;
-  onKeyDown?: (event: KeyboardEvent) => void;
-  innerRef?: React.RefObject<HTMLElement>;
-  customFieldClass?: string;
+  emails: string[];
 }
 
-// Initially renders with one input, that's enabled and isn't focused
+// Initially renders with one input that's enabled and isn't focused
 // When the add button is clicked a new input is rendered below the other inputs
 // When a new input is added all other inputs in the group are disabled and focus is set to the new input
 // Each input is validated individually
-const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
-  description,
+const MultiEntryEmailField: FC<MultiEntryEmailFieldProps> = ({
   className,
+  description,
   label,
   name,
+  placeholder = '',
   required = false,
-  type = 'text',
-  ...props
+  emails,
 }) => {
-  const { errors, touched, values } = useFormikContext<any>();
+  const { errors, touched } = useFormikContext<unknown>();
   const shouldDisplayErrors =
     (!!errors[name] && !!touched[name]) || (!!getIn(errors, name) && !!getIn(touched, name));
   const labelClass = shouldDisplayErrors ? 'usa-input-error-label' : '';
 
   const idReadyName = toHtmlId(name);
   const descriptionId = description ? `${idReadyName}FormFieldDescription` : '';
-
-  const emails: string[] = values[name];
 
   return (
     <div
@@ -71,12 +58,12 @@ const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
 
       <FieldArray
         name={name}
-        render={arrayHelpers => {
-          const handleAddInput = () => {
+        render={(arrayHelpers): ReactNode => {
+          const handleAddInput = (): void => {
             arrayHelpers.push('');
           };
 
-          const handleRemoveInput = (index: number) => {
+          const handleRemoveInput = (index: number): void => {
             arrayHelpers.remove(index);
           };
 
@@ -87,14 +74,13 @@ const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
                   <EditInputField
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
-                    onRemove={() => handleRemoveInput(index)}
+                    onRemove={(): void => handleRemoveInput(index)}
                     name={`${name}.${index}`}
-                    type={type}
-                    placeHolder="notificationlist@email.com"
+                    type="email"
+                    placeHolder={placeholder}
                     required={required}
                     descriptionId={descriptionId}
                     isOnlyInput={emails.length === 1}
-                    {...props}
                   />
                 ))}
               </div>
@@ -114,4 +100,4 @@ const MultiEntryTextField: FC<MultiEntryTextFieldProps> = ({
   );
 };
 
-export default MultiEntryTextField;
+export default MultiEntryEmailField;
