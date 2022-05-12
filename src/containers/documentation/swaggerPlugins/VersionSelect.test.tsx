@@ -59,7 +59,7 @@ describe('VersionSelect', () => {
   });
 
   it('renders successfully', () => {
-    expect(screen.getByRole('combobox', { name: 'Version Selection' })).toBeInTheDocument();
+    expect(screen.getByRole('combobox', { name: 'api-selector-field' })).toBeInTheDocument();
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
 
@@ -72,7 +72,9 @@ describe('VersionSelect', () => {
   });
 
   it('changes value to the selected option', () => {
-    const select = screen.getByRole('combobox', { name: 'Version Selection' }) as HTMLSelectElement;
+    const select = screen.getByRole('combobox', {
+      name: 'api-selector-field',
+    }) as HTMLSelectElement;
 
     expect(select.value).toBe('1.0.0');
 
@@ -82,7 +84,7 @@ describe('VersionSelect', () => {
   });
 
   it('does not fire updateVersion action if the button is not clicked', () => {
-    userEvent.selectOptions(screen.getByRole('combobox', { name: 'Version Selection' }), '0.0.1');
+    userEvent.selectOptions(screen.getByRole('combobox', { name: 'api-selector-field' }), '0.0.1');
 
     expect(updateVersionMock).toHaveBeenCalledTimes(0);
   });
@@ -90,7 +92,7 @@ describe('VersionSelect', () => {
   describe('when the button is clicked', (): void => {
     /* eslint-disable max-nested-callbacks */
     it('fires updateVersion action', (): void => {
-      const select = screen.getByRole('combobox', { name: 'Version Selection' });
+      const select = screen.getByRole('combobox', { name: 'api-selector-field' });
 
       userEvent.selectOptions(select, '0.0.1');
       userEvent.click(screen.getByRole('button'));
@@ -106,7 +108,9 @@ describe('VersionSelect with initial version', () => {
     const getSystem = mockGetSystem(versionMetadata, '0.0.1');
     render(<VersionSelect getSystem={getSystem} />);
 
-    const select = screen.getByRole('combobox', { name: 'Version Selection' }) as HTMLSelectElement;
+    const select = screen.getByRole('combobox', {
+      name: 'api-selector-field',
+    }) as HTMLSelectElement;
     expect(select.value).toBe('0.0.1');
   });
 });

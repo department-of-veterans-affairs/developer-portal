@@ -81,6 +81,8 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
               {/* eslint-disable-next-line jsx-a11y/no-onchange */}
               <select
                 id="api-selector-field"
+                role="combobox"
+                name="api-selector-field"
                 aria-label={selectorLabel}
                 value={this.state.version}
                 onChange={(e): void => this.handleSelectChange(e.target.value)}
