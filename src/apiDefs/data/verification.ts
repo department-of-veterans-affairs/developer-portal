@@ -27,8 +27,7 @@ const verificationApis: APIDescription[] = [
   },
   {
     altID: 'vaLetterGenerator',
-    description:
-      'Generate documents and letters for proof of existing VA benefits and status.',
+    description: 'Generate documents and letters for proof of existing VA benefits and status.',
     docSources: [
       {
         openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran-letters/v1/openapi.json`,
@@ -52,10 +51,10 @@ const verificationApis: APIDescription[] = [
     urlFragment: 'va_letter_generator',
     vaInternalOnly: true,
     veteranRedirect: {
-    linkText: 'Download VA benefit letters from VA.Gov.',
-    linkUrl: 'https://www.va.gov/records/download-va-letters/',
-    message: 'Are you a Veteran or Veteran representative?',
-  },
+      linkText: 'Download VA benefit letters from VA.Gov.',
+      linkUrl: 'https://www.va.gov/records/download-va-letters/',
+      message: 'Are you a Veteran or Veteran representative?',
+    },
   },
   {
     // adding an altID to match keys need on the backend for signup
@@ -68,7 +67,7 @@ const verificationApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
-    lastProdAccessStep: ProdAccessFormSteps.Four,
+    lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'Veteran Confirmation API',
     openData: false,
     releaseNotes: VeteranConfirmationReleaseNotes,

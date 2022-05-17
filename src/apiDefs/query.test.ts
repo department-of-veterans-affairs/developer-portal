@@ -104,7 +104,7 @@ const confirmation: APIDescription = {
     },
   ],
   enabledByDefault: true,
-  lastProdAccessStep: ProdAccessFormSteps.Four,
+  lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'Veteran Confirmation API',
   openData: false,
   releaseNotes: VeteranConfirmationReleaseNotes,
