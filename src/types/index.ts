@@ -6,11 +6,12 @@ export interface APINameParam {
 }
 
 export interface VersionMetadata {
-  version: string;
+  healthcheck: string;
+  internal_only: boolean;
+  label?: string;
   path: string;
   status: string;
-  internal_only: boolean;
-  healthcheck: string;
+  version: string;
 }
 
 export interface APIMetadata {
