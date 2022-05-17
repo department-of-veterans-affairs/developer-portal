@@ -5,9 +5,6 @@ import ArgonautReleaseNotes from './argonautReleaseNotes.mdx';
 import ClinicalHealthReleaseNotes from './clinicalHealthReleaseNotes.mdx';
 import CommunityCareReleaseNotes from './communityCareReleaseNotes.mdx';
 import FhirApiReleaseNotes from './fhirAPIReleaseNotes.mdx';
-import FhirArgonautApiIntro from './fhirArgonautApiIntro.mdx';
-import FhirDSTU2ApiIntro from './fhirDSTU2ApiIntro.mdx';
-import FHIRMultiOpenAPIIntro from './FHIRMultiOpenAPIIntro.mdx';
 import HealthOverview from './healthOverview.mdx';
 import HealthQuickstart from './healthQuickstart.mdx';
 import PgdReleaseNotes from './pgdReleaseNotes.mdx';
@@ -30,9 +27,6 @@ export {
   ClinicalHealthReleaseNotes,
   CommunityCareReleaseNotes,
   FhirApiReleaseNotes,
-  FhirArgonautApiIntro,
-  FhirDSTU2ApiIntro,
-  FHIRMultiOpenAPIIntro,
   HealthArgonautDeprecationNotice,
   HealthArgonautDeactivationNotice,
   PgdReleaseNotes,
