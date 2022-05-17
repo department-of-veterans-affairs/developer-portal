@@ -48,7 +48,7 @@ const healthApis: APIDescription[] = [
     oAuth: true,
     oAuthInfo: {
       acgInfo: {
-        baseAuthPath: '/oauth2/clinical-health/v1',
+        baseAuthPath: '/oauth2/clinical-health/v2',
         scopes: [
           'profile',
           'openid',
