@@ -3,8 +3,10 @@ import classNames from 'classnames';
 
 export const VeteranResourcesContent = (): JSX.Element => (
   <>
-    <h1>Veteran resources</h1>
-    <p>Are you looking for Veteran benefits and services information?</p>
+    <h1 id="veteran-resources-header">Veteran resources</h1>
+    <p id="veteran-resources-description">
+      Are you looking for Veteran benefits and services information?
+    </p>
     <div
       className={classNames(
         'veteran-blue-background-card',
