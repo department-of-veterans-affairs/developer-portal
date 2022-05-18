@@ -5,6 +5,10 @@ on:
     branches: [master]
     types: [opened, synchronize, reopened, ready_for_review]
 
+env:
+  S3_REVIEW_BUCKET: review-developer-va-gov
+  PREVIEW_SENTRY_DSN: http://dc7d5ebec20e474c80f8150c399d2955@sentry.vfs.va.gov/26
+
 jobs:
   install:
     runs-on: ubuntu-latest
@@ -88,8 +92,6 @@ jobs:
           NODE_ENV: production
           BUILD_ENV: ${{matrix.environment}}
           REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
-          S3_REVIEW_BUCKET: ${{secrets.AWS_S3_REVIEW_BUCKET}}
-          PREVIEW_SENTRY_DSN: ${{secrets.PREVIEW_SENTRY_DSN}}
         run: |
           echo "PUBLIC_URL=/$S3_REVIEW_BUCKET/gha-$REACT_APP_COMMIT_HASH/$BUILD_ENV" > .env.$BUILD_ENV.local
           echo "REACT_APP_SENTRY_DSN=$PREVIEW_SENTRY_DSN" >> .env.$BUILD_ENV.local
@@ -99,52 +101,20 @@ jobs:
         env:
           BUILD_ENV: ${{matrix.environment}}
           REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
+          PR_NUMBER: ${{needs.install.outputs.pr_number}}
         run: |
           date > ./current-date
           echo '{' > build/$BUILD_ENV/deploy.json
           echo "  \"environment\": \"$BUILD_ENV\"," >> build/$BUILD_ENV/deploy.json
           echo "  \"date\": \"$( cat current-date )\"," >> build/$BUILD_ENV/deploy.json
-          echo "  \"commit\": \"$REACT_APP_COMMIT_HASH\"" >> build/$BUILD_ENV/deploy.json
+          echo "  \"commit\": \"$REACT_APP_COMMIT_HASH\"," >> build/$BUILD_ENV/deploy.json
+          echo "  \"pr\": \"$PR_NUMBER\"" >> build/$BUILD_ENV/deploy.json
           echo '}' >> build/$BUILD_ENV/deploy.json
           rm ./current-date
           cat build/$BUILD_ENV/deploy.json
 
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Save builds as GitHub Artifacts
+        uses: actions/upload-artifact@v2
         with:
-          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
-          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-          aws-region: ${{secrets.AWS_REGION}}
-          role-to-assume: ${{secrets.AWS_ROLE_ARN}}
-          role-duration-seconds: 1200
-          role-session-name: GitHubActions
-
-      - name: Upload to PR review s3 bucket
-        env:
-          COMMIT_HASH: ${{needs.install.outputs.hash}}
-          S3_REVIEW_BUCKET: ${{secrets.AWS_S3_REVIEW_BUCKET}}
-        run: |
-          aws s3 sync --no-progress --acl public-read build/ s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/
-
-  pr_comment:
-    needs: [pr_builds, install]
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Add PR builds comment
-        env:
-          COMMIT_HASH: ${{needs.install.outputs.hash}}
-          S3_REVIEW_BUCKET: ${{secrets.AWS_S3_REVIEW_BUCKET}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          PR_NUMBER: ${{needs.install.outputs.pr_number}}
-        run: |
-          links=""
-          for env in 'dev' 'staging' 'production' ; do
-            links="$links - [${env}](https://s3-us-gov-west-1.amazonaws.com/$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/index.html) <br />"
-          done
-          echo $links;
-          comment="These changes have been deployed to an s3 bucket. A build for each environment is available: <br /><br /> ${links} <br /> due to s3 website hosting limitations in govcloud you need to first navigate to index.html explicitly."
-          echo $PR_NUMBER
-          gh pr comment $PR_NUMBER --body "$comment"
+          name: pr-builds
+          path: build

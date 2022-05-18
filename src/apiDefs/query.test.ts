@@ -104,7 +104,7 @@ const confirmation: APIDescription = {
     },
   ],
   enabledByDefault: true,
-  lastProdAccessStep: ProdAccessFormSteps.Four,
+  lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'Veteran Confirmation API',
   openData: false,
   releaseNotes: VeteranConfirmationReleaseNotes,
@@ -182,12 +182,12 @@ describe('query module', () => {
       const healthApi = lookupApiCategory('health');
       expect(healthApi).not.toBeNull();
       expect(healthApi?.apis.length).toBeGreaterThanOrEqual(4);
-      expect(healthApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(6);
+      expect(healthApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(7);
 
       const verificationApi = lookupApiCategory('verification');
       expect(verificationApi).not.toBeNull();
       expect(verificationApi?.apis.length).toBeGreaterThanOrEqual(3);
-      expect(verificationApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(1);
+      expect(verificationApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
     });
 
     it('returns null for an API that does not exist', () => {

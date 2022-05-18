@@ -21,17 +21,15 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({
       Generating and signing the JWT
     </h3>
     <p>Generate your JWT using:</p>
-    <p>
-      <ul>
-        <li>
-          The Lighthouse-provided client ID for the <code>iss</code> and <code>sub</code> claims
-        </li>
-        <li>The ID for your auth server</li>
-        <li>
-          An <code>aud</code> for your API
-        </li>
-      </ul>
-    </p>
+    <ul>
+      <li>
+        The Lighthouse-provided client ID for the <code>iss</code> and <code>sub</code> claims
+      </li>
+      <li>The ID for your auth server</li>
+      <li>
+        An <code>aud</code> for your API
+      </li>
+    </ul>
     <p>
       <strong>NOTE:</strong> The <code>aud</code> will not look like the <code>aud</code> for the
       SMART-on-FHIR token service. This different formatting is necessary because we apply
@@ -46,20 +44,21 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({
     <p>
       Sign your JWT using your RSA-generated private key, which you will use as a client assertion.
       An example for what the structure will look like is:
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~json
+    </p>
+    <CodeWrapper>
+      <ReactMarkdown
+        rehypePlugins={[highlight]}
+        components={{
+          // eslint-disable-next-line react/display-name
+          code: ({ className, children, ...codeProps }): JSX.Element => (
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            <code tabIndex={0} className={className} {...codeProps}>
+              {children}
+            </code>
+          ),
+        }}
+      >
+        {`~~~json
 {
 "aud": "TBD",
 "iss": "TBD",
@@ -68,9 +67,8 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({
 "exp": 1604430081,
 "jti": "23f8f614-72c3-4267-b0da-b8b067662c74"
 }`}
-        </ReactMarkdown>
-      </CodeWrapper>
-    </p>
+      </ReactMarkdown>
+    </CodeWrapper>
     <p>The claims in your client assertion are described in this table.</p>
     <table>
       <thead>
