@@ -1,7 +1,7 @@
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useLocation, useParams } from 'react-router-dom';
+import { Redirect, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
@@ -61,6 +61,27 @@ const ApiPage = (): JSX.Element => {
 
   const api = getApi(params.apiName);
   const category = lookupApiCategory(params.apiCategoryKey);
+
+  const tabsRegex = /tab=(r4|argonaut|dstu2)/;
+  if (location.pathname === '/explore/health/docs/fhir' && tabsRegex.test(location.search)) {
+    const tabName = tabsRegex.exec(location.search)?.[1];
+    let apiVersion = '';
+    switch (tabName) {
+      case 'r4':
+        apiVersion = 'current';
+        break;
+      case 'argonaut':
+        apiVersion = 'argonaut-0.0.0';
+        break;
+      case 'dstu2':
+        apiVersion = 'dstu2-0.0.0';
+        break;
+      default:
+        break;
+    }
+
+    return <Redirect to={`/explore/health/docs/fhir?version=${apiVersion}`} />;
+  }
 
   if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlFragment]) {
     return <ApiNotFoundPage />;
