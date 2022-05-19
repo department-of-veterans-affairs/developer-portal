@@ -161,8 +161,7 @@ const RequestProductionAccess = (): JSX.Element => (
           <li>URL for your application’s privacy policy</li>
         </ul>
         <p>
-          If your application <strong>uses OAuth</strong> or the{' '}
-          <strong>Veteran Confirmation API</strong>, we will review your terms of service and
+          If your application <strong>uses OAuth</strong>, we will review your terms of service and
           privacy policies to make sure they meet our quality, plain language, and content
           standards. We may require you to make changes to your policies before your demo.
         </p>

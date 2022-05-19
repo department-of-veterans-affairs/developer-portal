@@ -86,6 +86,7 @@ export interface APIDescription {
   readonly veteranRedirect?: VeteranRedirectMessage;
   readonly altID?: string;
   readonly lastProdAccessStep: ProdAccessFormSteps;
+  readonly versionSelectorLabel?: string;
 }
 
 export interface OAuthInfo {
