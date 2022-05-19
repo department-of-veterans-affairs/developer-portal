@@ -30,7 +30,7 @@ export const VeteranResourcesContent = (): JSX.Element => (
           <a href="https://www.va.gov/contact-us/">VA Contact Us page</a>.
         </li>
         <li>
-          Send VA a question using the <a href="https://ask.va.gov/">Ask VA page</a>.
+          Send the VA a question using the <a href="https://ask.va.gov/">Ask VA page</a>.
         </li>
       </ul>
     </div>
@@ -63,8 +63,8 @@ export const VeteranResourcesContent = (): JSX.Element => (
         .
       </li>
       <li>
-        Call the MyHealtheVet support team at 1-877-327-0022, Monday through Friday, 7:00 a.m. to
-        7:00 p.m. (Central Time).
+        Call the MyHealtheVet support team at 877-327-0022, Monday through Friday, 7:00 a.m. to 7:00
+        p.m. (Central Time).
       </li>
     </ul>
     <h2 className="vads-u-font-size--h3">Family and survivor benefits:</h2>
