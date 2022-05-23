@@ -2,6 +2,7 @@ import {
   AddressValidationReleaseNotes,
   VeteranConfirmationReleaseNotes,
   VeteranVerificationReleaseNotes,
+  VaLetterGeneratorReleaseNotes,
 } from '../../content/apiDocs/verification';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
 import { APIDescription, ProdAccessFormSteps } from '../schema';
@@ -25,6 +26,37 @@ const verificationApis: APIDescription[] = [
     vaInternalOnly: true,
   },
   {
+    altID: 'vaLetterGenerator',
+    description: 'Generate documents and letters for proof of existing VA benefits and status.',
+    docSources: [
+      {
+        openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran-letters/v1/openapi.json`,
+      },
+    ],
+    enabledByDefault: false,
+    lastProdAccessStep: ProdAccessFormSteps.Three,
+    name: 'VA Letter Generator API',
+    oAuth: true,
+    oAuthInfo: {
+      ccgInfo: {
+        baseAuthPath: 'oauth2/veteran-letters/system/v1/',
+        productionAud: 'TBD',
+        sandboxAud: 'TBD',
+        scopes: ['letters.read'],
+      },
+    },
+    oAuthTypes: ['ClientCredentialsGrant'],
+    openData: false,
+    releaseNotes: VaLetterGeneratorReleaseNotes,
+    urlFragment: 'va_letter_generator',
+    vaInternalOnly: true,
+    veteranRedirect: {
+      linkText: 'Download VA benefit letters from VA.Gov.',
+      linkUrl: 'https://www.va.gov/records/download-va-letters/',
+      message: 'Are you a Veteran or Veteran representative?',
+    },
+  },
+  {
     // adding an altID to match keys need on the backend for signup
     altID: 'confirmation',
     description: 'Confirm Veteran status for a given person with an API key.',
@@ -35,7 +67,7 @@ const verificationApis: APIDescription[] = [
       },
     ],
     enabledByDefault: true,
-    lastProdAccessStep: ProdAccessFormSteps.Four,
+    lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'Veteran Confirmation API',
     openData: false,
     releaseNotes: VeteranConfirmationReleaseNotes,

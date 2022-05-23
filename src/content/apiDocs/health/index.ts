@@ -15,6 +15,7 @@ import UrgentCareApiIntro from './urgentCareApiIntro.mdx';
 import UrgentCareDeactivationNotice from './urgentCareDeactivationNotice.mdx';
 import UrgentCareDeprecationNotice from './urgentCareDeprecationNotice.mdx';
 import UrgentCareReleaseNotes from './urgentCareReleaseNotes.mdx';
+import ProviderDirectoryReleaseNotes from './providerDirectoryReleaseNotes.mdx';
 
 const healthContent: APICategoryContent = {
   consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
@@ -39,4 +40,5 @@ export {
   UrgentCareDeprecationNotice,
   UrgentCareReleaseNotes,
   UrgentCareDeactivationNotice,
+  ProviderDirectoryReleaseNotes,
 };

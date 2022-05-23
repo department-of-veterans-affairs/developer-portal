@@ -1,13 +1,10 @@
-name: Build Pull Request Deployment Packages
-
+name: Unprivileged Visual Regressions
+# Unprivileged relates to this job being able to be run by a user without write permissions.
+# A PR from a forked repo can safely run this job as there are no repository secrets available to it.
 on:
   pull_request:
     branches: [master]
     types: [opened, synchronize, reopened, ready_for_review]
-
-env:
-  S3_REVIEW_BUCKET: review-developer-va-gov
-  PREVIEW_SENTRY_DSN: http://dc7d5ebec20e474c80f8150c399d2955@sentry.vfs.va.gov/26
 
 jobs:
   install:
@@ -41,6 +38,7 @@ jobs:
         name: Set git hash
         run: |
           GIT_HASH=$(/bin/bash -c "git log --oneline | cut -f3 -d \" \" | cut -c1-7")
+          echo $GIT_HASH
           echo "::set-output name=hash::$GIT_HASH"
 
       - id: cache_node_modules
@@ -57,19 +55,19 @@ jobs:
         if: steps.cache_node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
-  pr_builds:
-    needs: [install]
+  visual:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: ['dev', 'staging', 'production']
-
+    needs: [install]
     steps:
       - uses: actions/checkout@v2
+        with:
+          lfs: true
+
       - name: Setup node
         uses: actions/setup-node@v2
         with:
           node-version: 12
+
       - id: cache_node_modules
         name: Cache node modules
         uses: actions/cache@v2
@@ -80,41 +78,50 @@ jobs:
           path: node_modules
           key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
 
+      - name: Checkout LFS objects
+        run: git lfs checkout
+      - name: Update apt-get and install packages
+        run: sudo apt-get update && sudo apt-get install -y libxss1 libxtst6 wget --no-install-recommends
+      - name: Install Google apt-get key
+        run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      - name: Install Google apt-get source
+        run: sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
+      - name: Install Chrome and fonts
+        run: sudo apt-get update && sudo apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf --no-install-recommends
+      - name: Remove unnecessary files
+        run: sudo rm -rf /var/lib/apt/lists/* \
+          && sudo apt-get purge --auto-remove -y curl
+          && sudo rm -rf /src/*.deb
+
       - name: Install dependencies
         if: steps.cache_node_modules.outputs.cache-hit != 'true'
         run: npm ci
 
-      - name: Print env
-        run: printenv
+      - id: visual_test
+        name: Run test
+        run: npm run test:visual
+        continue-on-error: true
 
-      - name: Run Build
+      - name: Add PR and hash to artifact
+        if: steps.visual_test.outcome == 'failure'
         env:
-          NODE_ENV: production
-          BUILD_ENV: ${{matrix.environment}}
-          REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
-        run: |
-          echo "PUBLIC_URL=/$S3_REVIEW_BUCKET/gha-$REACT_APP_COMMIT_HASH/$BUILD_ENV" > .env.$BUILD_ENV.local
-          echo "REACT_APP_SENTRY_DSN=$PREVIEW_SENTRY_DSN" >> .env.$BUILD_ENV.local
-          npm run build $BUILD_ENV
-
-      - name: Add deploy.json
-        env:
-          BUILD_ENV: ${{matrix.environment}}
-          REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
+          COMMIT_HASH: ${{needs.install.outputs.hash}}
           PR_NUMBER: ${{needs.install.outputs.pr_number}}
         run: |
-          date > ./current-date
-          echo '{' > build/$BUILD_ENV/deploy.json
-          echo "  \"environment\": \"$BUILD_ENV\"," >> build/$BUILD_ENV/deploy.json
-          echo "  \"date\": \"$( cat current-date )\"," >> build/$BUILD_ENV/deploy.json
-          echo "  \"commit\": \"$REACT_APP_COMMIT_HASH\"," >> build/$BUILD_ENV/deploy.json
-          echo "  \"pr\": \"$PR_NUMBER\"" >> build/$BUILD_ENV/deploy.json
-          echo '}' >> build/$BUILD_ENV/deploy.json
-          rm ./current-date
-          cat build/$BUILD_ENV/deploy.json
+          mkdir -p test/image_snapshots/__diff_output__;
+          echo $PR_NUMBER > test/image_snapshots/__diff_output__/pr.txt
+          echo $COMMIT_HASH > test/image_snapshots/__diff_output__/hash.txt
+          echo $GITHUB_HEAD_REF > test/image_snapshots/__diff_output__/branch.txt
 
-      - name: Save builds as GitHub Artifacts
+      - name: Upload failed screenshots
+        if: steps.visual_test.outcome == 'failure'
         uses: actions/upload-artifact@v2
         with:
-          name: pr-builds
-          path: build
+          name: visual-test-failures
+          path: test/image_snapshots/__diff_output__
+
+      - name: Report Success/Failure
+        if: steps.visual_test.outcome == 'failure'
+        run: exit 1
+        # This is needed as a unique step due to the continue-on-error set above in visual_test.
+        # Images get uploaded to the s3 bucket from within visual-regressions-privileged.yml

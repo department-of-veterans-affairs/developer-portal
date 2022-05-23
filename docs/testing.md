@@ -21,6 +21,10 @@ There are a variety of automated tests that will be run when you submit a pull r
 the process of reviewing changes, it would be best for you to ensure each of these test suites passes locally
 before submitting a pull request.
 
+### Test helpers
+
+New routes need to be added to the `testPaths` array in `testHelpers.ts` so that they can be covered by both the accessibility tests and visual regression tests.
+
 ### Unit Tests
 
 General tests specific to a component or simple interactions between related components are handled by our
@@ -40,12 +44,9 @@ npm run-script test:unit:ci
 
 ### End-to-End Tests
 
-We also use jest, combined with [Puppeteer](https://github.com/GoogleChrome/puppeteer), to run end-to-end tests
-for accessibility issues.
+We use [Cypress](https://www.cypress.io/) for end-to-end tests to ensure that page elements are as expected and that user flows do not have unintended regressions.
 
-New routes need to be added to the `testPaths` array in `e2ehelpers.ts` so that they can be covered by both the accessibility tests and visual regression tests.
-
-Set `TEST_HOST` to the url to use in the end to end testing. If not set a server will be spun up for the duration of the tests. Server setup can be found in `jest-puppeteer.conifg.js`.
+The testing spec files for Cypress live in `cypress/integration` with the config being `cypress.json` in the project root. You will have to have `npm start` running when starting the tests locally.
 
 ### Visual Regression Testing
 

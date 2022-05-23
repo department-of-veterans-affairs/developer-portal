@@ -1,5 +1,4 @@
 /* eslint-disable jsx-a11y/no-onchange */
-import classNames from 'classnames';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { SetOAuthAPISelection, setOAuthApiSelection } from '../../actions';
@@ -33,49 +32,34 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   };
   const { selectedOption, options } = props;
   const selectLabel = props.selectLabel ?? 'Select an API to update the code snippet';
+  const selectorLabel = 'Select an API';
 
   if (props.withButton) {
     return (
-      <div className="api-selector-container">
-        <p>
-          Select an API
-          <div
-            className={classNames(
-              'vads-u-display--flex',
-              'vads-u-flex-wrap--wrap',
-              'vads-u-justify-content--flex-start',
-            )}
-          >
+      <div className="api-selector-container vads-l-grid-container vads-u-padding-y--2">
+        <div className="vads-l-row">
+          <label htmlFor="api-selector-field" className="vads-l-col--9">
+            {selectorLabel}
             {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-            <div
-              className={classNames(
-                'vads-u-display--inline-block',
-                'vads-u-flex--4',
-                'vads-u-margin-right--4',
-                'va-api-u-min-width--200',
-              )}
+            <select
+              id="api-selector-field"
+              aria-label={selectLabel}
+              value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
+              onChange={onSelectionChange}
             >
-              <select
-                aria-label={selectLabel}
-                value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
-                onChange={onSelectionChange}
-              >
-                {props.options.map(item => (
-                  <option value={item.urlFragment} key={item.urlFragment}>
-                    {item.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <button
-              onClick={onButtonClick}
-              className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
-              type="button"
-            >
+              {props.options.map(item => (
+                <option value={item.urlFragment} key={item.urlFragment}>
+                  {item.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="vads-l-col--3 vads-u-text-align--center">
+            <button onClick={onButtonClick} type="button">
               Select
             </button>
           </div>
-        </p>
+        </div>
       </div>
     );
   } else {
