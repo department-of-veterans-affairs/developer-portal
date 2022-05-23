@@ -2,6 +2,11 @@ name: Pull Request Labels
 on:
   pull_request:
     types: [opened, labeled, unlabeled, synchronize]
+  workflow_run:
+    workflows: ['Automatically label PRs with content changes']
+    types:
+      - completed
+
 jobs:
   is_labeled:
     runs-on: ubuntu-latest
