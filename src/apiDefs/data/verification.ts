@@ -30,7 +30,8 @@ const verificationApis: APIDescription[] = [
     description: 'Generate documents and letters for proof of existing VA benefits and status.',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/veteran-letters/v1/openapi.json`,
+        metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-letters/metadata.json`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-letters/v1/openapi.json`,
       },
     ],
     enabledByDefault: false,
