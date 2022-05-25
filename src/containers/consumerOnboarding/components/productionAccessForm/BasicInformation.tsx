@@ -2,13 +2,18 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
-import { TextField, CheckboxRadioField, FieldSet } from '../../../../components';
+import {
+  TextField,
+  CheckboxRadioField,
+  FieldSet,
+  MultiEntryEmailField,
+} from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { includesInternalOnlyAPI, onlyOpenDataAPIs } from '../../../../apiDefs/query';
 
 const BasicInformation: FC = () => {
   const {
-    values: { monitizedVeteranInformation, veteranFacing, apis },
+    values: { monitizedVeteranInformation, veteranFacing, apis, statusUpdateEmails },
   } = useFormikContext<Values>();
   const hasMonetizedBorderClass =
     monitizedVeteranInformation === 'yes' ? 'vads-u-border-left--4px' : '';
@@ -21,7 +26,9 @@ const BasicInformation: FC = () => {
   return (
     <>
       <fieldset>
-        <legend><h3 className="vads-u-margin-bottom--0">Primary Contact</h3></legend>
+        <legend>
+          <h3 className="vads-u-margin-bottom--0">Primary Contact</h3>
+        </legend>
         <TextField
           label="First name"
           name="primaryContact.firstName"
@@ -45,7 +52,9 @@ const BasicInformation: FC = () => {
         />
       </fieldset>
       <fieldset>
-        <legend><h3 className="vads-u-margin-bottom--0">Secondary Contact</h3></legend>
+        <legend>
+          <h3 className="vads-u-margin-bottom--0">Secondary Contact</h3>
+        </legend>
         <TextField
           label="First name"
           name="secondaryContact.firstName"
@@ -69,7 +78,9 @@ const BasicInformation: FC = () => {
         />
       </fieldset>
       <fieldset>
-        <legend><h3 className="vads-u-margin-bottom--0">About your company or organization</h3></legend>
+        <legend>
+          <h3 className="vads-u-margin-bottom--0">About your company or organization</h3>
+        </legend>
         <TextField
           label="Company or organization name"
           name="organization"
@@ -86,20 +97,20 @@ const BasicInformation: FC = () => {
           name="appName"
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
-        <TextField
+        <MultiEntryEmailField
           name="statusUpdateEmails"
-          label={
-            <>
-              Notification email for API status updates{' '}
-              <span className="form-required-span">(*Required)</span>
-            </>
-          }
-          description="A distribution list email is preferred. This email can be updated later if you need."
+          label="Notification email for API status updates"
+          required
+          description="A distribution list email is preferred. You may enter more than one email address, and this information can be updated later."
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          placeholder="notificationlist@email.com"
+          emails={statusUpdateEmails}
         />
       </fieldset>
       <fieldset>
-        <legend><h3 className="vads-u-margin-bottom--0">About your app</h3></legend>
+        <legend>
+          <h3 className="vads-u-margin-bottom--0">About your app</h3>
+        </legend>
         <TextField
           as="textarea"
           label="Describe the value of your app or service to Veterans and provide your app’s use case."
