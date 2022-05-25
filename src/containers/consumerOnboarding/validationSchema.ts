@@ -116,17 +116,11 @@ const validationSchema = [
             otherwise: yup.string().isNotATestString(),
             then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
           }),
-    statusUpdateEmails: isListAndLoopEnabled
-      ? yup
-          .array()
-          .of(yup.string().isNotATestString().email('Enter a valid email address.'))
-          .min(1)
-          .required('Enter a valid email address.')
-      : yup
-          .string()
-          .isNotATestString()
-          .email('Enter a valid email address.')
-          .required('Enter a valid email address.'),
+    statusUpdateEmails: yup
+      .array()
+      .of(yup.string().isNotATestString().email('Enter a valid email address.'))
+      .min(1)
+      .required('Enter a valid email address.'),
     supportLink: isListAndLoopEnabled
       ? yup
           .array()

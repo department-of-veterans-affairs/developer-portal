@@ -16,7 +16,7 @@ function basicInformationFields(cy) {
   cy.get('#organizationFormField').type('CompanyName');
   cy.get('#phoneNumberFormField').type('8005551212');
   cy.get('#appNameFormField').type('AppName');
-  cy.get('#statusUpdateEmailsFormField').type('NotificationEmailAddress@va.gov');
+  cy.get('#statusUpdateEmails\\.0').type('NotificationEmailAddress@va.gov');
   cy.get('#valueProvidedFormField').type('This is a testing description for an app.');
   cy.get('#monitizedVeteranInformationFormFieldyes').click();
   cy.get('#monitizationExplanationFormField').type('This is an explaination for monetization.');

@@ -72,7 +72,7 @@ export interface Values {
   appDescription: string;
   vasiSystemName: string;
   applicationName?: string;
-  statusUpdateEmails: string;
+  statusUpdateEmails: string[];
   valueProvided: string;
   businessModel?: string;
   signUpLink: string;
@@ -131,7 +131,7 @@ const initialValues: Values = {
     lastName: '',
   },
   signUpLink: '',
-  statusUpdateEmails: '',
+  statusUpdateEmails: [''],
   storePIIOrPHI: '',
   supportLink: '',
   termsOfService: false,
@@ -292,7 +292,7 @@ const ProductionAccess: FC = () => {
           filteredValues.monitizedVeteranInformation === yesOrNoValues.Yes,
         policyDocuments,
         signUpLink: [filteredValues.signUpLink],
-        statusUpdateEmails: [filteredValues.statusUpdateEmails],
+        statusUpdateEmails: filteredValues.statusUpdateEmails,
         storePIIOrPHI: filteredValues.storePIIOrPHI === yesOrNoValues.Yes,
         supportLink: [filteredValues.supportLink],
         veteranFacing: filteredValues.veteranFacing === yesOrNoValues.Yes,

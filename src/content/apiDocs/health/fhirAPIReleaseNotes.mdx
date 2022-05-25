@@ -1,3 +1,10 @@
+### May 24, 2022
+We have enabled the FHIR _sort parameter for the R4 'Condition', 'DiagnosticReport', and 'Location' resources. The _sort parameter lets you specify the arrangement of responses in ascending or descending order by certain other parameters.
+ - 'Condition' can be sorted by category and clinical-status.
+ - 'DiagnosticReport' can be sorted by date.
+ - 'Location' can be sorted by address, address-city, address-state, address-postalcode, and name.
+
+---
 ### May 17, 2022
 To better meet the FHIR specification for the Veterans and Clinical Health APIs, we've made some changes to the Organization.type properties for DSTU2 and R4.
  - We will now return the type property for only insurance companies, government agencies, and VA facilities.
