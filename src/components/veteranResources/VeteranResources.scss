@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+
+.veteran-resources-modal {
+  .va-modal-inner {
+    overflow-y: auto;
+    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
+
+    @include media($medium-screen) {
+      max-width: $small-screen;
+    }
+
+    @include media($small-desktop-screen) {
+      max-height: 80%;
+      max-width: $medium-screen;
+    }
+  }
+
+  .veteran-blue-background-card {
+    h2 {
+      margin-top: 0 !important;
+    }
+  }
+}
