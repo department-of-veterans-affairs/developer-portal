@@ -2,7 +2,7 @@ name: Build Pull Request Deployment Packages
 
 on:
   pull_request:
-    branches: [master]
+    branches: [master, 'API-7760/upgrade-webpack-to-v5']
     types: [opened, synchronize, reopened, ready_for_review]
 
 env:
