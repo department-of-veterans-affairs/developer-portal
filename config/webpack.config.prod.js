@@ -57,7 +57,7 @@ const createEnvironmentHash = require('./webpack/persistentCache/createEnvironme
 // For these, "homepage" can be set to "." to enable relative asset paths.
 const shouldUseRelativeAssetPaths = publicPath === './';
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = false;
+const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
 // style files regexes
 const cssRegex = /\.css$/;
