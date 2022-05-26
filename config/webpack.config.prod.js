@@ -225,6 +225,12 @@ module.exports = envName => {
         // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
         // { parser: { requireEnsure: false } },
         {
+          test: /\.(js|jsx|mjs|ts|tsx|scss)$/,
+          loader: require.resolve('source-map-loader'),
+          enforce: 'pre',
+          exclude: /@babel(?:\/|\\{1,2})runtime/,
+        },
+        {
           // "oneOf" will traverse all following loaders until one will
           // match the requirements. When no loader matches it will fall
           // back to the "file" loader at the end of the loader list.
