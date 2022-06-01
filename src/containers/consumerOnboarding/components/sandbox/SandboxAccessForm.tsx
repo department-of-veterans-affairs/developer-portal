@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 import { Form, Formik } from 'formik';
 import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, TermsOfServiceCheckbox } from '../../../../components';
-import { APPLY_URL, FLAG_POST_TO_LPB, LPB_APPLY_URL } from '../../../../types/constants';
+import { LPB_APPLY_URL } from '../../../../types/constants';
 import {
   ApplySuccessResult,
   DevApplicationRequest,
@@ -17,7 +17,6 @@ import {
   InternalApiInfo,
 } from '../../../../types';
 import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
-import { getFlags } from '../../../../flags';
 import { DeveloperInfo } from './DeveloperInfo';
 import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
@@ -68,7 +67,6 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
 
   const handleSubmit = async (values: Values): Promise<void> => {
-    const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
     setSubmissionHasError(false);
     setSubmissionErrors([]);
     const applicationBody: DevApplicationRequest = {
@@ -85,11 +83,20 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
     }
 
     try {
+      const forgeryToken = Math.random().toString(36)
+                                        .substring(2);
+      setCookie('CSRF-TOKEN', forgeryToken, {
+        path: LPB_APPLY_URL,
+        sameSite: 'strict',
+        secure: true,
+      });
+
       const response = await makeRequest<DevApplicationResponse>(
-        APPLY_URL,
+        LPB_APPLY_URL,
         {
           body: JSON.stringify(applicationBody),
           headers: {
+            'X-Csrf-Token': forgeryToken,
             accept: 'application/json',
             'content-type': 'application/json',
           },
@@ -116,32 +123,6 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
       // This will only capture the errors on 4xx errors from the developer-portal-backend.
       const errors = (error as SandboxAccessFormError).body.errors ?? [];
       setSubmissionErrors(errors);
-    }
-
-    if (flagLpbActive) {
-      try {
-        const forgeryToken = Math.random().toString(36)
-                                          .substring(2);
-        setCookie('CSRF-TOKEN', forgeryToken, {
-          path: LPB_APPLY_URL,
-          sameSite: 'strict',
-          secure: true,
-        });
-
-        await makeRequest<DevApplicationResponse>(
-          LPB_APPLY_URL,
-          {
-            body: JSON.stringify(applicationBody),
-            headers: {
-              'X-Csrf-Token': forgeryToken,
-              accept: 'application/json',
-              'content-type': 'application/json',
-            },
-            method: 'POST',
-          },
-          { responseType: ResponseType.JSON },
-        );
-      } catch (error: unknown) {}
     }
   };
 

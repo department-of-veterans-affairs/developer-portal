@@ -332,9 +332,6 @@ describe('SandboxAccessForm', () => {
       userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(mockMakeRequest).toHaveBeenCalledTimes(
-          process.env.REACT_APP_POST_TO_LPB === 'true' ? 2 : 1,
-        );
         expect(mockOnSuccess).toHaveBeenCalledTimes(1);
       });
     });
