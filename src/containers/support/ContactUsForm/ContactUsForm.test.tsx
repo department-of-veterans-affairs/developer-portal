@@ -99,10 +99,11 @@ describe('SupportContactUsFormPublishing', () => {
             });
             await waitFor(() => {
               expect(mockMakeRequest).toHaveBeenCalledWith(
-                'http://fake.va.gov/internal/developer-portal/public/contact-us',
+                '/platform-backend/v0/support/contact-us/requests',
                 {
                   body: expect.stringContaining('"email":"fbag@bagend.com"') as unknown,
                   headers: {
+                    'X-Csrf-Token': expect.not.stringContaining('unknown-string-here') as unknown,
                     accept: 'application/json',
                     'content-type': 'application/json',
                   },
@@ -167,10 +168,11 @@ describe('SupportContactUsFormPublishing', () => {
               it('does not submit the form fields from the non-selected form type', async () => {
                 await waitFor(() => {
                   expect(mockMakeRequest).toHaveBeenCalledWith(
-                    'http://fake.va.gov/internal/developer-portal/public/contact-us',
+                    '/platform-backend/v0/support/contact-us/requests',
                     {
                       body: expect.not.stringContaining('"apiDetails":"fake thing"') as unknown,
                       headers: {
+                        'X-Csrf-Token': expect.not.stringContaining('unknown-string-here') as unknown,
                         accept: 'application/json',
                         'content-type': 'application/json',
                       },
@@ -322,10 +324,11 @@ describe('SupportContactUsFormPublishing', () => {
             });
             await waitFor(() => {
               expect(mockMakeRequest).toHaveBeenCalledWith(
-                'http://fake.va.gov/internal/developer-portal/public/contact-us',
+                '/platform-backend/v0/support/contact-us/requests',
                 {
                   body: expect.stringContaining('"email":"fbag@bagend.com"') as unknown,
                   headers: {
+                    'X-Csrf-Token': expect.not.stringContaining('unknown-string-here') as unknown,
                     accept: 'application/json',
                     'content-type': 'application/json',
                   },
@@ -362,10 +365,11 @@ describe('SupportContactUsFormPublishing', () => {
             });
             await waitFor(() => {
               expect(mockMakeRequest).toHaveBeenCalledWith(
-                'http://fake.va.gov/internal/developer-portal/public/contact-us',
+                '/platform-backend/v0/support/contact-us/requests',
                 {
                   body: expect.stringContaining('"email":"fbag@bagend.com"') as unknown,
                   headers: {
+                    'X-Csrf-Token': expect.not.stringContaining('unknown-string-here') as unknown,
                     accept: 'application/json',
                     'content-type': 'application/json',
                   },
