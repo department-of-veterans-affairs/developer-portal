@@ -95,7 +95,7 @@ describe('Production Access Form', () => {
   });
 
   it('Form works for 2 step flow (VA Facilities)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,
@@ -123,7 +123,7 @@ describe('Production Access Form', () => {
   });
 
   it('Form works for 3 step flow (Clinical Health)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,
@@ -156,7 +156,7 @@ describe('Production Access Form', () => {
   });
 
   it('Form works for 4 step flow (Benefits Claims)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,
