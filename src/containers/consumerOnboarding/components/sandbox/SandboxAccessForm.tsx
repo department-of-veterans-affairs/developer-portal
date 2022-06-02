@@ -109,7 +109,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
 
       if (!json.token && !json.clientID && !json.email) {
         throw Error(
-          'Developer Application endpoint returned 200 response with a valid response body',
+          'Developer Application endpoint returned successful response status with an invalid response body',
         );
       }
 
