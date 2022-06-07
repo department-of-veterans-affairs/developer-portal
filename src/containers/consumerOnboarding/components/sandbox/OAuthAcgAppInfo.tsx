@@ -4,7 +4,7 @@ import { AUTHORIZATION_PKCE_PATH } from '../../../../types/constants/paths';
 
 import { CheckboxRadioField, TextField, FieldSet } from '../../../../components';
 
-const OAuthAppInfo = (): JSX.Element => {
+const OAuthAcgAppInfo = (): JSX.Element => {
   const redirectUriInputName = 'oAuthRedirectURI';
 
   return (
@@ -48,10 +48,14 @@ const OAuthAppInfo = (): JSX.Element => {
         label="OAuth Redirect URI"
         name={redirectUriInputName}
         required
-        className={classNames('vads-u-margin-top--4', 'oauth-uri-input', 'xsmall-screen:vads-l-col--10')}
+        className={classNames(
+          'vads-u-margin-top--4',
+          'oauth-uri-input',
+          'xsmall-screen:vads-l-col--10',
+        )}
       />
     </div>
   );
 };
 
-export { OAuthAppInfo };
+export { OAuthAcgAppInfo };

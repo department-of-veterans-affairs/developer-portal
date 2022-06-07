@@ -14,7 +14,8 @@ import { APIDescription } from '../../../../apiDefs/schema';
 import { Flag } from '../../../../flags';
 import { FLAG_HOSTED_APIS, APPLY_INTERNAL_APIS } from '../../../../types/constants';
 import { isHostedApiEnabled } from '../../../../apiDefs/env';
-import { OAuthAppInfo } from './OAuthAppInfo';
+import { OAuthAcgAppInfo } from './OAuthAcgAppInfo';
+import { OAuthCcgAppInfo } from './OAuthCcgAppInfo';
 import { InternalOnlyInfo } from './InternalOnlyInfo';
 import { Values } from './SandboxAccessForm';
 import './SelectedApis.scss';
@@ -151,12 +152,12 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
             authCodeApisBorderClass,
             authCodeApisBorderColorClass,
           )}
-          legend="OAuth APIs:"
+          legend="Authorization code flow APIs:"
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="oauthApis"
         >
           <ApiCheckboxList apiCheckboxes={authCodeApis} authType="acg" />
-          {authCodeApiSelected && <OAuthAppInfo />}
+          {authCodeApiSelected && <OAuthAcgAppInfo />}
         </FieldSet>
         <FieldSet
           className={classNames(
@@ -165,12 +166,12 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
             ccgApisBorderClass,
             ccgApisBorderColorClass,
           )}
-          legend="CCG APIs:"
+          legend="Client credentials grant APIs:"
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="ccgApis"
         >
           <ApiCheckboxList apiCheckboxes={ccgApis} authType="ccg" />
-          {ccgApiSelected && <OAuthAppInfo />}
+          {ccgApiSelected && <OAuthCcgAppInfo />}
         </FieldSet>
       </div>
     </fieldset>
