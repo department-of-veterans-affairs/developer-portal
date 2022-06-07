@@ -70,7 +70,7 @@ describe('SandboxAccessForm', () => {
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
 
-      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims API/ }));
+      userEvent.click(screen.getByDisplayValue('acg/claims'));
 
       expect(await screen.findByRole('radio', { name: 'Yes' })).toBeInTheDocument();
       expect(await screen.findByRole('radio', { name: 'No' })).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe('SandboxAccessForm', () => {
 
     it('loads the OAuthAppInfo component links when an OAuth API is selected', () => {
       expect(screen.queryByRole('link', { name: /PKCE/ })).not.toBeInTheDocument();
-      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
+      userEvent.click(screen.getByDisplayValue('acg/claims'));
       expect(screen.getAllByRole('link', { name: /PKCE/ })).toHaveLength(2);
     });
   });
@@ -176,7 +176,7 @@ describe('SandboxAccessForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
+        userEvent.click(screen.getByDisplayValue('acg/claims'));
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -423,14 +423,16 @@ describe('SandboxAccessForm', () => {
 
     describe('OAuth APIs', () => {
       it.each(allOauthApis)('toggles the %s checkbox on click', name => {
-        const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
+        const checkboxes: HTMLElement[] = screen.getAllByRole('checkbox', {
           name,
-        }) as HTMLInputElement;
-        expect(checkbox.checked).toBeFalsy();
+        });
+        checkboxes.forEach((checkbox: HTMLInputElement) => {
+          expect(checkbox.checked).toBeFalsy();
 
-        userEvent.click(checkbox);
+          userEvent.click(checkbox);
 
-        expect(checkbox.checked).toBeTruthy();
+          expect(checkbox.checked).toBeTruthy();
+        });
       });
     });
   });

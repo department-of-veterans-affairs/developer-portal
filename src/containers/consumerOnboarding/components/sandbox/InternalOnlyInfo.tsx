@@ -18,7 +18,12 @@ const InternalOnlyInfo = (): JSX.Element => {
         API key or use this API unless you have permission from VA.
       </div>
 
-      <div className={classNames('xsmall-screen:vads-l-col--10', shouldDisplayInputError ? 'vads-u-margin-left--0p5' : '')}>
+      <div
+        className={classNames(
+          'xsmall-screen:vads-l-col--10',
+          shouldDisplayInputError ? 'vads-u-margin-left--0p5' : '',
+        )}
+      >
         <TextField
           label="Program name"
           name="internalApiInfo.programName"
@@ -44,7 +49,6 @@ const InternalOnlyInfo = (): JSX.Element => {
           />
         )}
       </div>
-
     </div>
   );
 };

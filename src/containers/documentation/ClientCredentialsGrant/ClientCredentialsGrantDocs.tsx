@@ -14,8 +14,7 @@ import {
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { getActiveOauthApis, getAllOauthApis } from '../../../apiDefs/query';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
+import { getActiveCCGApis, getActiveOauthApis } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
 import { usePrevious } from '../../../hooks';
@@ -53,7 +52,7 @@ const setInitialApi = (
 ): void => {
   const params = new URLSearchParams(searchQuery || undefined);
   const apiQuery = params.get('api');
-  const availableApis = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
+  const availableApis = getActiveOauthApis();
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_CCG_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
@@ -70,12 +69,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
   const prevApi = usePrevious(api);
   const selectedOAuthApi = useSelector(selector);
 
-  const options = getActiveOauthApis().filter(
-    (item: APIDescription) =>
-      !isApiDeactivated(item) &&
-      item.oAuthTypes &&
-      item.oAuthTypes.includes('ClientCredentialsGrant'),
-  );
+  const options = getActiveCCGApis();
 
   React.useEffect(() => {
     if (initializing.current) {
