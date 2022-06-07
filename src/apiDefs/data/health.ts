@@ -106,7 +106,7 @@ const healthApis: APIDescription[] = [
       'Use this API to return lists of VA providers and their information, such as locations, specialties, office hours, and more.',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/provider-directory/v0/r4/docs`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/provider-directory-r4/v0/openapi.json`,
       },
     ],
     enabledByDefault: false,
