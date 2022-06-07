@@ -128,7 +128,9 @@ describe('SandboxAccessSuccess with results', () => {
         const oauthDocumentationLink = screen.getByRole('link', { name: 'OAuth Documentation' });
 
         expect(oauthDocumentationLink).toBeInTheDocument();
-        expect(oauthDocumentationLink.getAttribute('href')).toBe('/oauth');
+        expect(oauthDocumentationLink.getAttribute('href')).toBe(
+          '/explore/authorization/docs/authorization-code',
+        );
       });
     });
 
@@ -138,7 +140,17 @@ describe('SandboxAccessSuccess with results', () => {
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: ['addressValidation', 'communityCare', 'health', 'verification', 'claims', 'benefits', 'facilities', 'vaForms', 'confirmation'],
+                apis: [
+                  'addressValidation',
+                  'communityCare',
+                  'health',
+                  'verification',
+                  'claims',
+                  'benefits',
+                  'facilities',
+                  'vaForms',
+                  'confirmation',
+                ],
                 email: 'gimli@va.gov',
               }}
             />
