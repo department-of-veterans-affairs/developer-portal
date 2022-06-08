@@ -158,7 +158,7 @@ describe('SandboxAccessSuccess with results', () => {
       });
 
       it('does not display an API OAuth Client Secret', () => {
-        expect(screen.getByText('Your VA API OAuth Client Secret:')).not.toBeInTheDocument();
+        expect(screen.queryByText('Your VA API OAuth Client Secret:')).not.toBeInTheDocument();
       });
 
       it('displays the provided email address', () => {
