@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { getApiDefinitions, getAllKeyAuthApis } from '../../../../apiDefs/query';
 import sentenceJoin from '../../../../sentenceJoin';
 import { ApplySuccessResult } from '../../../../types';
-import { APPLY_OAUTH_APIS } from '../../../../types/constants';
+import { APPLY_ACG_APIS, APPLY_CCG_APIS } from '../../../../types/constants';
 import { isVaEmail } from '../../../../utils/validators';
 import './SandboxAccessSuccess.scss';
 
@@ -160,11 +160,13 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
   const keyAuthApiList = keyAuthApis.map(api => api.altID ?? api.urlFragment);
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
-  const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis.includes(apiId));
-  const hasStandardAPI = keyAuthApiList.some(apiId => apis.includes(apiId));
+  const hasOAuthAcgAPI = APPLY_ACG_APIS.some(apiId => apis.includes(`acg/${apiId}`));
+  const hasOAuthCcgAPI = APPLY_CCG_APIS.some(appId => apis.includes(`ccg/${appId}`));
+  const hasStandardAPI = keyAuthApiList.some(apiId => apis.includes(`apikey/${apiId}`));
   const hasInternalAPI = isVaEmail(email);
-  const oAuthAPIs = APPLY_OAUTH_APIS.filter(apiId => apis.includes(apiId));
-  const standardAPIs = keyAuthApiList.filter(apiId => apis.includes(apiId));
+  const oAuthAcgAPIs = APPLY_ACG_APIS.filter(apiId => apis.includes(`acg/${apiId}`));
+  const oAuthCcgAPIs = APPLY_CCG_APIS.filter(apiId => apis.includes(`ccg/${apiId}`));
+  const standardAPIs = keyAuthApiList.filter(apiId => apis.includes(`apikey/${apiId}`));
 
   return (
     <>
@@ -181,20 +183,20 @@ const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Elemen
               selectedApis={standardAPIs}
             />
           )}
-          {hasOAuthAPI && clientID && redirectURI && (
+          {hasOAuthAcgAPI && clientID && redirectURI && (
             <OAuthACGCredentialsNotice
               email={email}
               clientID={clientID}
               clientSecret={clientSecret}
-              selectedApis={oAuthAPIs}
+              selectedApis={oAuthAcgAPIs}
               redirectURI={redirectURI}
             />
           )}
-          {hasOAuthAPI && ccgClientId && (
+          {hasOAuthCcgAPI && ccgClientId && (
             <OAuthCCGCredentialsNotice
               email={email}
               ccgClientId={ccgClientId}
-              selectedApis={oAuthAPIs}
+              selectedApis={oAuthCcgAPIs}
             />
           )}
           <AssistanceTrailer />
