@@ -12,7 +12,12 @@ describe('SandboxAccessSuccess with results', () => {
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: ['benefits', 'facilities', 'vaForms', 'confirmation'],
+                apis: [
+                  'apikey/benefits',
+                  'apikey/facilities',
+                  'apikey/vaForms',
+                  'apikey/confirmation',
+                ],
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
@@ -36,7 +41,12 @@ describe('SandboxAccessSuccess with results', () => {
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: ['benefits', 'facilities', 'vaForms', 'confirmation'],
+                apis: [
+                  'apikey/benefits',
+                  'apikey/facilities',
+                  'apikey/vaForms',
+                  'apikey/confirmation',
+                ],
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
@@ -81,7 +91,7 @@ describe('SandboxAccessSuccess with results', () => {
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: ['claims', 'communityCare', 'health', 'verification'],
+                apis: ['acg/claims', 'acg/communityCare', 'acg/health', 'acg/verification'],
                 clientID: 'gimli',
                 clientSecret: 'sonofgloin',
                 email: 'gimli@eredluin.com',
@@ -140,7 +150,7 @@ describe('SandboxAccessSuccess with results', () => {
           <MemoryRouter>
             <SandboxAccessSuccess
               result={{
-                apis: ['claims'],
+                apis: ['ccg/claims', 'ccg/health'],
                 ccgClientId: 'gimli',
                 email: 'gimli@eredluin.com',
                 kongUsername: 'Onering',
@@ -194,15 +204,15 @@ describe('SandboxAccessSuccess with results', () => {
             <SandboxAccessSuccess
               result={{
                 apis: [
-                  'addressValidation',
-                  'communityCare',
-                  'health',
-                  'verification',
-                  'claims',
-                  'benefits',
-                  'facilities',
-                  'vaForms',
-                  'confirmation',
+                  'apikey/addressValidation',
+                  'acg/communityCare',
+                  'acg/health',
+                  'acg/verification',
+                  'acg/claims',
+                  'apikey/benefits',
+                  'apikey/facilities',
+                  'apikey/vaForms',
+                  'apikey/confirmation',
                 ],
                 email: 'gimli@va.gov',
               }}
