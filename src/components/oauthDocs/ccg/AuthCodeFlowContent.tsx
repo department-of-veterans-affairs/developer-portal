@@ -26,7 +26,6 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
       </p>
       <GeneratingJWTContent
         apiName={apiName}
-        baseAuthPath={baseAuthPath}
         productionAud={productionAud}
         sandboxAud={sandboxAud}
       />

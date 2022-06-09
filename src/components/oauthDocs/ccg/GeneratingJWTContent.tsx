@@ -5,17 +5,11 @@ import { CodeWrapper } from '../../../components';
 
 interface GeneratingJWTProps {
   apiName: string;
-  baseAuthPath: string;
   productionAud: string;
   sandboxAud: string;
 }
 
-const GeneratingJWTContent: FC<GeneratingJWTProps> = ({
-  apiName,
-  baseAuthPath,
-  productionAud,
-  sandboxAud,
-}) => (
+const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, sandboxAud }) => (
   <>
     <h3 id="generating-signing-jwt" tabIndex={-1}>
       Generating and signing the JWT
