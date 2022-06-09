@@ -103,7 +103,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
         <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4">
           OAuth 2.0 Client Credentials Grant
         </a>{' '}
-        (CCG) works by using your RSA generated key pair in{' '}
+        (CCG) grants access by using your RSA-generated key in{' '}
         <a href="https://datatracker.ietf.org/doc/html/rfc7517">JSON Web Key (JWK)</a> format, as
         described in the{' '}
         <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
