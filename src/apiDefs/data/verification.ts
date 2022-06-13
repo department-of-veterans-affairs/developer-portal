@@ -34,7 +34,7 @@ const verificationApis: APIDescription[] = [
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-letters/v1/openapi.json`,
       },
     ],
-    enabledByDefault: false,
+    enabledByDefault: true,
     lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'VA Letter Generator API',
     oAuth: true,
