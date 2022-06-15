@@ -20,10 +20,7 @@ import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import vaLogo from '../../assets/VaSeal.png';
 import hiFive from '../../assets/high-five.svg';
-import {
-  LPB_PRODUCTION_ACCESS_URL,
-  yesOrNoValues,
-} from '../../types/constants';
+import { LPB_PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
 import {
   BasicInformation,
@@ -301,8 +298,7 @@ const ProductionAccess: FC = () => {
         }
       });
       try {
-        const forgeryToken = Math.random().toString(36)
-                                          .substring(2);
+        const forgeryToken = Math.random().toString(36).substring(2);
         setCookie('CSRF-TOKEN', forgeryToken, {
           path: LPB_PRODUCTION_ACCESS_URL,
           sameSite: 'strict',
@@ -518,20 +514,6 @@ const ProductionAccess: FC = () => {
               </strong>
               <br />
               We’ll be in touch with the next steps or required changes.
-            </p>
-            <p>
-              We’d love to hear from you. If you have a few minutes,{' '}
-              <a href="https://78bw424i.optimalworkshop.com/questions/z470uznd" target="blank">
-                tell us about your experience
-              </a>
-              .
-            </p>
-            <p className="howd-we-do">
-              ☆☆☆☆☆{' '}
-              <a href="https://78bw424i.optimalworkshop.com/questions/z470uznd" target="blank">
-                How’d we do
-              </a>
-              ?
             </p>
           </Modal>
           {submissionError && (

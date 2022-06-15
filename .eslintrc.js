@@ -74,7 +74,6 @@ const coreESLintRules = {
   'max-params': ['error', 4],
   'max-statements-per-line': 'error',
   'new-parens': 'error',
-  'newline-per-chained-call': 'error',
   'no-alert': 'error',
   'no-bitwise': 'error',
   'no-caller': 'error',
