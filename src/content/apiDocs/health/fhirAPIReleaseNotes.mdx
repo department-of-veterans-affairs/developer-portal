@@ -3,6 +3,10 @@ The Veteran's Health API (FHIR) has been renamed to the Patient Health API (FHIR
 
 There are no other changes to functionality, request/response, or data.
 
+We have also enabled an additional FHIR _sort parameter for the R4 'AllergyIntolerance' and' DiagnosticReport' resources. The _sort parameter lets you specify the arrangement of responses in ascending or descending order by certain other parameters.
+ - 'AllergyIntolerance' can now be sorted by _lastUpdated.
+ - 'DiagnosticReport' can now be sorted by _lastUpdated.
+
 ---
 ### May 17, 2022
 To better meet the FHIR specification for the Veterans and Clinical Health APIs, we've made some changes to the Organization.type properties for DSTU2 and R4.
