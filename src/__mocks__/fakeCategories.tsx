@@ -1,7 +1,12 @@
 /* eslint-disable react/display-name */
 import moment from 'moment';
 import * as React from 'react';
-import { APICategories, APIDeactivationInfo, APIDescription, ProdAccessFormSteps } from '../apiDefs/schema';
+import {
+  APICategories,
+  APIDeactivationInfo,
+  APIDescription,
+  ProdAccessFormSteps,
+} from '../apiDefs/schema';
 
 export const fakeCategoryOrder: string[] = ['lotr', 'sports'];
 export const fakeCategories: APICategories = {
@@ -23,7 +28,6 @@ export const fakeCategories: APICategories = {
           </div>
         ),
         urlFragment: 'rings',
-        vaInternalOnly: false,
       },
       {
         deactivationInfo: {
@@ -47,7 +51,6 @@ export const fakeCategories: APICategories = {
           </div>
         ),
         urlFragment: 'silmarils',
-        vaInternalOnly: false,
       },
       {
         description: 'Hobbits of the Shire',
@@ -65,7 +68,6 @@ export const fakeCategories: APICategories = {
           </div>
         ),
         urlFragment: 'hobbits',
-        vaInternalOnly: false,
       },
     ],
     content: {
@@ -94,7 +96,6 @@ export const fakeCategories: APICategories = {
           </div>
         ),
         urlFragment: 'basketball',
-        vaInternalOnly: false,
       },
       {
         description: 'a slow summer game',
@@ -112,7 +113,6 @@ export const fakeCategories: APICategories = {
           </div>
         ),
         urlFragment: 'baseball',
-        vaInternalOnly: false,
       },
     ],
     content: {
@@ -145,7 +145,6 @@ export const extraAPI: APIDescription = {
     </div>
   ),
   urlFragment: 'soccer',
-  vaInternalOnly: false,
 };
 
 export const extraDeactivationInfo: APIDeactivationInfo = {

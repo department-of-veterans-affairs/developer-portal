@@ -5,7 +5,7 @@ import {
   VaLetterGeneratorReleaseNotes,
 } from '../../content/apiDocs/verification';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { APIDescription, ProdAccessFormSteps } from '../schema';
+import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from '../schema';
 
 const verificationApis: APIDescription[] = [
   {
@@ -23,7 +23,7 @@ const verificationApis: APIDescription[] = [
     openData: false,
     releaseNotes: AddressValidationReleaseNotes,
     urlFragment: 'address_validation',
-    vaInternalOnly: true,
+    vaInternalOnly: VaInternalOnly.AdditionalDetails,
   },
   {
     altID: 'vaLetterGenerator',
@@ -34,7 +34,7 @@ const verificationApis: APIDescription[] = [
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/veteran-letters/v1/openapi.json`,
       },
     ],
-    enabledByDefault: true,
+    enabledByDefault: false,
     lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'VA Letter Generator API',
     oAuth: true,
@@ -50,7 +50,7 @@ const verificationApis: APIDescription[] = [
     openData: false,
     releaseNotes: VaLetterGeneratorReleaseNotes,
     urlFragment: 'va_letter_generator',
-    vaInternalOnly: true,
+    vaInternalOnly: VaInternalOnly.FlagOnly,
     veteranRedirect: {
       linkText: 'Download VA benefit letters from VA.Gov.',
       linkUrl: 'https://www.va.gov/records/download-va-letters/',
@@ -73,7 +73,7 @@ const verificationApis: APIDescription[] = [
     openData: false,
     releaseNotes: VeteranConfirmationReleaseNotes,
     urlFragment: 'veteran_confirmation',
-    vaInternalOnly: false,
+    vaInternalOnly: VaInternalOnly.StrictlyInternal,
   },
   {
     altID: 'verification',
@@ -106,7 +106,6 @@ const verificationApis: APIDescription[] = [
     openData: false,
     releaseNotes: VeteranVerificationReleaseNotes,
     urlFragment: 'veteran_verification',
-    vaInternalOnly: false,
   },
 ];
 

@@ -31,7 +31,7 @@ import {
   includesInternalOnlyAPI,
   onlyOpenDataAPIs,
 } from './query';
-import { APIDescription, ProdAccessFormSteps } from './schema';
+import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 
 const facilities: APIDescription = {
   altID: 'facilities',
@@ -48,7 +48,6 @@ const facilities: APIDescription = {
   openData: true,
   releaseNotes: FacilitiesReleaseNotes,
   urlFragment: 'facilities',
-  vaInternalOnly: false,
   veteranRedirect: {
     linkText: "Find the facility that's right for you",
     linkUrl: 'https://www.va.gov/find-locations/',
@@ -85,7 +84,6 @@ const claims: APIDescription = {
   openData: false,
   releaseNotes: ClaimsReleaseNotes,
   urlFragment: 'claims',
-  vaInternalOnly: false,
   veteranRedirect: {
     linkText: 'benefits or appeals claim status',
     linkUrl: 'https://www.va.gov/claim-or-appeal-status/',
@@ -109,7 +107,7 @@ const confirmation: APIDescription = {
   openData: false,
   releaseNotes: VeteranConfirmationReleaseNotes,
   urlFragment: 'veteran_confirmation',
-  vaInternalOnly: false,
+  vaInternalOnly: VaInternalOnly.StrictlyInternal,
 };
 
 const verification: APIDescription = {
@@ -143,7 +141,6 @@ const verification: APIDescription = {
   openData: false,
   releaseNotes: VeteranVerificationReleaseNotes,
   urlFragment: 'veteran_verification',
-  vaInternalOnly: false,
 };
 
 describe('query module', () => {

@@ -3,7 +3,7 @@ import {
   GuarantyRemittanceReleaseNotes,
 } from '../../content/apiDocs/loanGuaranty';
 import { OPEN_API_SPEC_HOST } from '../../types/constants';
-import { APIDescription, ProdAccessFormSteps } from '../schema';
+import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from '../schema';
 
 const loanGuarantyApis: APIDescription[] = [
   {
@@ -35,7 +35,6 @@ const loanGuarantyApis: APIDescription[] = [
     openData: false,
     releaseNotes: GuarantyRemittanceReleaseNotes,
     urlFragment: 'lgy_guaranty_remittance',
-    vaInternalOnly: false,
   },
   {
     description: 'Use the Loan Guaranty API to Manage VA Home Loans.',
@@ -59,7 +58,7 @@ const loanGuarantyApis: APIDescription[] = [
      * see this commit for when trusted partner only was represented in the source code:
      * https://github.com/department-of-veterans-affairs/developer-portal/tree/742c629534dc9ee17bb9ba73a20406a3a05cd59d
      */
-    vaInternalOnly: true,
+    vaInternalOnly: VaInternalOnly.StrictlyInternal,
   },
 ];
 

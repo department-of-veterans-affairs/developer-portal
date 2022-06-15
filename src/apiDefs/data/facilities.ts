@@ -19,7 +19,6 @@ const facilitiesApis: APIDescription[] = [
     openData: true,
     releaseNotes: FacilitiesReleaseNotes,
     urlFragment: 'facilities',
-    vaInternalOnly: false,
     veteranRedirect: facilitiesContent.veteranRedirect,
   },
 ];

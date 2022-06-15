@@ -23,7 +23,6 @@ export const APPLY_ACG_APIS = ['claims', 'communityCare', 'health', 'verificatio
 export const APPLY_CCG_APIS = ['claims', 'health'];
 export const PAGE_HEADER_ID = 'page-header';
 export const PAGE_HEADER_AND_HALO_ID = 'header-halo';
-export const APPLY_INTERNAL_APIS = ['address_validation'];
 export const FLAG_API_ENABLED_PROPERTY = 'enabled';
 export const FLAG_CATEGORIES = 'categories';
 export const FLAG_DEACTIVATED_APIS = 'deactivated_apis';

@@ -4,7 +4,7 @@ import ApiTag, { tagTypes } from './ApiTag';
 
 const ApiTagsPropTypes = {
   openData: PropTypes.bool.isRequired,
-  vaInternalOnly: PropTypes.bool.isRequired,
+  vaInternalOnly: PropTypes.oneOf([1, 2, 3]),
 };
 
 type ApiTagsProps = PropTypes.InferProps<typeof ApiTagsPropTypes>;
