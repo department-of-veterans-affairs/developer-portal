@@ -31,7 +31,7 @@ import {
   includesInternalOnlyAPI,
   onlyOpenDataAPIs,
 } from './query';
-import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
+import { APIDescription, ProdAccessFormSteps } from './schema';
 
 const facilities: APIDescription = {
   altID: 'facilities',
@@ -107,7 +107,6 @@ const confirmation: APIDescription = {
   openData: false,
   releaseNotes: VeteranConfirmationReleaseNotes,
   urlFragment: 'veteran_confirmation',
-  vaInternalOnly: VaInternalOnly.StrictlyInternal,
 };
 
 const verification: APIDescription = {

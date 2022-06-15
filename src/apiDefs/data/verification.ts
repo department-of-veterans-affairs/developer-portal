@@ -73,7 +73,6 @@ const verificationApis: APIDescription[] = [
     openData: false,
     releaseNotes: VeteranConfirmationReleaseNotes,
     urlFragment: 'veteran_confirmation',
-    vaInternalOnly: VaInternalOnly.StrictlyInternal,
   },
   {
     altID: 'verification',
