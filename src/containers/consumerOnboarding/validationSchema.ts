@@ -1,5 +1,4 @@
 /* eslint-disable id-length */
-/* eslint-disable newline-per-chained-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { includesInternalOnlyAPI, includesOAuthAPI, onlyOpenDataAPIs } from '../../apiDefs/query';
 import yup from '../../utils/yup-extended';
@@ -253,7 +252,7 @@ const validationSchema = [
       .isNotATestString()
       .url('Add a valid link to your privacy policies')
       .required('Add a valid link to your privacy policies'),
-      termsOfServiceURL: yup
+    termsOfServiceURL: yup
       .string()
       .isNotATestString()
       .url('Add a valid link to your terms of service')

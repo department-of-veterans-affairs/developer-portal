@@ -130,17 +130,8 @@ const Header = (): JSX.Element => {
         {location.pathname === '/explore/facilities/docs/facilities' && (
           <va-alert status="info" visible>
             <h3 slot="headline">
-              Version 1 of the VA Facilities API is launching soon.
-              We will add <Link to="/release-notes/facilities">release notes</Link> when it&apos;s
-              live.
-            </h3>
-          </va-alert>
-        )}
-        {location.pathname === '/explore/benefits/docs/claims' && (
-          <va-alert status="info" visible>
-            <h3 slot="headline">
-              Version 0 of the Benefits Claims API is deprecated and will be deactivated June 16, 2022. Version 1 is
-              active.
+              Version 1 of the VA Facilities API is launching soon. We will add{' '}
+              <Link to="/release-notes/facilities">release notes</Link> when it&apos;s live.
             </h3>
           </va-alert>
         )}

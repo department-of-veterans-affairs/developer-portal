@@ -15,7 +15,7 @@ const loanGuarantyApis: APIDescription[] = [
         openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/lgy-remittance/v0/openapi.json`,
       },
     ],
-    enabledByDefault: false,
+    enabledByDefault: true,
     lastProdAccessStep: ProdAccessFormSteps.Four,
     name: 'Guaranty Remittance API',
     oAuth: true,
