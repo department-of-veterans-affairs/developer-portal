@@ -5,42 +5,23 @@ import { CodeWrapper } from '../../../components';
 
 interface GeneratingJWTProps {
   apiName: string;
-  baseAuthPath: string;
   productionAud: string;
   sandboxAud: string;
 }
 
-const GeneratingJWTContent: FC<GeneratingJWTProps> = ({
-  apiName,
-  baseAuthPath,
-  productionAud,
-  sandboxAud,
-}) => (
+const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, sandboxAud }) => (
   <>
     <h3 id="generating-signing-jwt" tabIndex={-1}>
       Generating and signing the JWT
     </h3>
     <p>Generate your JWT using:</p>
     <ul>
-      <li>
-        The Lighthouse-provided client ID for the <code>iss</code> and <code>sub</code> claims
-      </li>
+      <li>The client ID we sent you</li>
       <li>The ID for your auth server</li>
       <li>
         An <code>aud</code> for your API
       </li>
     </ul>
-    <p>
-      <strong>NOTE:</strong> The <code>aud</code> will not look like the <code>aud</code> for the
-      SMART-on-FHIR token service. This different formatting is necessary because we apply
-      SMART-on-FHIR on top of a commercial authorization provider. You can programmatically pull the{' '}
-      <code>issuer</code> from the metadata at{' '}
-      <a href={`https://sandbox-api.va.gov${baseAuthPath}/.well-known/openid-configuration`}>
-        {`https://sandbox-api.va.gov${baseAuthPath}/.well-known/openid-configuration`}
-      </a>{' '}
-      and append <code>/v1/token</code> to avoid hardcoding this value and needing to change it
-      if/when this is changed in the future.
-    </p>
     <p>
       Sign your JWT using your RSA-generated private key, which you will use as a client assertion.
       An example for what the structure will look like is:
@@ -61,8 +42,8 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({
         {`~~~json
 {
 "aud": "TBD",
-"iss": "TBD",
-"sub": "TBD",
+"iss": "{yourClientId}",
+"sub": "{yourClientId}",
 "iat": 1604429781,
 "exp": 1604430081,
 "jti": "23f8f614-72c3-4267-b0da-b8b067662c74"

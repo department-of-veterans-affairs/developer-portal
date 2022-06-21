@@ -43,7 +43,6 @@ describe('env module', () => {
       name: 'My API',
       openData: false,
       releaseNotes: ClaimsReleaseNotes,
-      vaInternalOnly: false,
     };
 
     beforeEach(() => {

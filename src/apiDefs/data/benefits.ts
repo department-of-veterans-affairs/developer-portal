@@ -38,7 +38,6 @@ const benefitsApis: APIDescription[] = [
     openData: false,
     releaseNotes: ClaimsReleaseNotes,
     urlFragment: 'claims',
-    vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
   },
   {
@@ -56,7 +55,6 @@ const benefitsApis: APIDescription[] = [
     openData: false,
     releaseNotes: BenefitsIntakeReleaseNotes,
     urlFragment: 'benefits',
-    vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
   },
   {
@@ -74,7 +72,6 @@ const benefitsApis: APIDescription[] = [
     openData: true,
     releaseNotes: BenefitsRefDataReleaseNotes,
     urlFragment: 'benefits_reference_data',
-    vaInternalOnly: false,
     veteranRedirect: benefitsContent.veteranRedirect,
   },
 ];

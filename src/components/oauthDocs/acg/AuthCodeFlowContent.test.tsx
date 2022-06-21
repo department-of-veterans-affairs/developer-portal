@@ -4,19 +4,15 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../../flags';
 
-import { getAllOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
+import { getActiveAuthCodeApis, lookupApiByFragment } from '../../../apiDefs/query';
 import store from '../../../store';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
-import { APIDescription } from '../../../apiDefs/schema';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 
 describe('Auth Flow Content', () => {
   beforeEach(() => {
     const selectedOption = 'veteran_verification';
     const apiDef = lookupApiByFragment(selectedOption);
-    const defs = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)  &&
-                                                                     item.oAuthTypes &&
-                                                                     item.oAuthTypes.includes('AuthorizationCodeGrant'));
+    const defs = getActiveAuthCodeApis();
 
     render(
       <Provider store={store}>

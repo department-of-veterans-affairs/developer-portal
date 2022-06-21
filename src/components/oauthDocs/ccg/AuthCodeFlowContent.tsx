@@ -17,16 +17,15 @@ const AuthCodeFlowContent = (props: ClientCredentialsFlowContentProps): JSX.Elem
     <div>
       <SectionHeaderWrapper heading="Requesting a Token with CCG" id="requesting-a-token" />
       <p>
-        To get authorized, you’ll need to{' '}
+        To get authorized{' '}
         <a href="https://developer.okta.com/docs/reference/api/oidc/#token-claims-for-client-authentication-with-client-secret-or-private-key-jwt">
           generate a JSON web token
         </a>{' '}
-        (JWT) and sign it using a private key. You’ll then use the signed JWT as a client assertion
-        to receive an access token.
+        (JWT) and sign it using your private key. You’ll then use the signed JWT as a client
+        assertion to receive an access token.
       </p>
       <GeneratingJWTContent
         apiName={apiName}
-        baseAuthPath={baseAuthPath}
         productionAud={productionAud}
         sandboxAud={sandboxAud}
       />

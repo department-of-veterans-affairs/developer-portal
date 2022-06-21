@@ -41,7 +41,7 @@ const RetrievingTokenContent: FC<RetrievingTokenProps> = ({
           </code>
         </p>
       )}
-      <p>Select your API from the dropdown to see the right auth server in the example.</p>
+      <p>Select your API from the dropdown to see the correct auth server in the example.</p>
       <APISelector options={options} selectedOption={selectedOption} />
       <CodeWrapper>
         <ReactMarkdown
@@ -164,8 +164,13 @@ mV4cCI6MTYyOTMxOTU0OH0
               <td>False (but recommended)</td>
               <td>
                 <p>
-                  Base64-encoded JSON object, the value of which is the patient&apos;s ICN. The
-                  format of the object will be: <code>{'{ "patient": "1000720100V271387"}'}</code>
+                  The launch scope and parameter limit the scope of an access token by indicating
+                  the token is for a specific patient or encounter.
+                </p>
+                <p>
+                  It must be a base64-encoded JSON object, the value of which is the patient&apos;s
+                  ICN. The format of the object will be:{' '}
+                  <code>{'{ "patient": "1000720100V271387"}'}</code>
                 </p>
                 <p>
                   When encoded using base64, the object will look like this:{' '}
@@ -176,10 +181,8 @@ mV4cCI6MTYyOTMxOTU0OH0
           )}
         </tbody>
       </table>
-      <p>
-        POST this assertion to the /token service to receive an access token in response. Lighthouse
-        will respond with your access token, which looks like what is shown below.
-      </p>
+      <p>POST this assertion to the /token service to receive an access token in response.</p>
+      <p>We will respond with your access token, which looks like what is shown below.</p>
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}

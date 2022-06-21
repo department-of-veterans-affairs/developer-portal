@@ -5,10 +5,9 @@ import { Formik, Form } from 'formik';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { useCookies } from 'react-cookie';
 import { CheckboxRadioField } from '../../../components';
-import { CONTACT_US_URL, FLAG_POST_TO_LPB, LPB_CONTACT_US_URL } from '../../../types/constants';
+import { LPB_CONTACT_US_URL } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
-import { getFlags } from '../../../flags';
 import { ContactUsFormState, FormType, SubmissionData } from '../../../types/forms/contactUsForm';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
@@ -73,28 +72,9 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
 
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
   const formSubmission = async (values: ContactUsFormState): Promise<void> => {
-    const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
     setSubmissionError(false);
 
     try {
-      await makeRequest(
-        CONTACT_US_URL,
-        {
-          body: JSON.stringify(processedData(values)),
-          headers: {
-            accept: 'application/json',
-            'content-type': 'application/json',
-          },
-          method: 'POST',
-        },
-        { responseType: ResponseType.TEXT },
-      );
-      onSuccess();
-    } catch {
-      setSubmissionError(true);
-    }
-
-    if (flagLpbActive) {
       const forgeryToken = Math.random().toString(36)
                                         .substring(2);
       setCookie('CSRF-TOKEN', forgeryToken, {
@@ -103,8 +83,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
         secure: true,
       });
 
-      try {
-        await makeRequest(
+      await makeRequest(
         LPB_CONTACT_US_URL,
         {
           body: JSON.stringify(processedData(values)),
@@ -117,7 +96,9 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
         },
         { responseType: ResponseType.TEXT },
       );
-      } catch (error: unknown) {}
+      onSuccess();
+    } catch {
+      setSubmissionError(true);
     }
   };
 

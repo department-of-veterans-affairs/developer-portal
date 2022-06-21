@@ -17,7 +17,6 @@ describe('deprecated API module', () => {
     openData: false,
     releaseNotes: UrgentCareDeprecationNotice,
     urlFragment: 'my_api',
-    vaInternalOnly: false,
   };
   let oldEnv: NodeJS.ProcessEnv;
 

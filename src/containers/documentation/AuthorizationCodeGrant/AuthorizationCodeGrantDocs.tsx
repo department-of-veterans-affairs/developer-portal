@@ -9,8 +9,7 @@ import {
   setOAuthApiSelection,
   SetOAuthAPISelection,
 } from '../../../actions';
-import { getAllOauthApis } from '../../../apiDefs/query';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
+import { getActiveAuthCodeApis, getActiveOauthApis } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { PageHeader } from '../../../components';
 import { Https } from '../../../components/oauthDocs/acg/Https';
@@ -56,7 +55,7 @@ const setInitialApi = (
 ): void => {
   const params = new URLSearchParams(searchQuery || undefined);
   const apiQuery = params.get('api');
-  const availableApis = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
+  const availableApis = getActiveOauthApis();
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
@@ -73,9 +72,7 @@ const AuthorizationCodeGrantDocs = (): JSX.Element => {
   const prevApi = usePrevious(api);
   const selectedOAuthApi = useSelector(selector);
 
-  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)  &&
-                                                                     item.oAuthTypes &&
-                                                                     item.oAuthTypes.includes('AuthorizationCodeGrant'));
+  const options = getActiveAuthCodeApis();
 
   React.useEffect(() => {
     if (initializing.current) {

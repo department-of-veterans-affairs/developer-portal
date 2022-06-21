@@ -24,7 +24,7 @@ import {
   UrgentCareReleaseNotes,
   ProviderDirectoryReleaseNotes,
 } from '../../content/apiDocs/health';
-import { APIDescription, ProdAccessFormSteps } from '../schema';
+import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from '../schema';
 
 const swaggerHost: string = process.env.REACT_APP_VETSGOV_SECONDARY_SWAGGER_API ?? '';
 const healthApis: APIDescription[] = [
@@ -63,7 +63,7 @@ const healthApis: APIDescription[] = [
     openData: false,
     releaseNotes: ClinicalHealthReleaseNotes,
     urlFragment: 'clinical_health',
-    vaInternalOnly: true,
+    vaInternalOnly: VaInternalOnly.StrictlyInternal,
   },
   {
     altID: 'communityCare',
@@ -95,7 +95,6 @@ const healthApis: APIDescription[] = [
     openData: false,
     releaseNotes: CommunityCareReleaseNotes,
     urlFragment: 'community_care',
-    vaInternalOnly: false,
   },
   {
     altID: 'providerDirectory',
@@ -103,7 +102,7 @@ const healthApis: APIDescription[] = [
       'Use this API to return lists of VA providers and their information, such as locations, specialties, office hours, and more.',
     docSources: [
       {
-        openApiUrl: `${OPEN_API_SPEC_HOST}/services/provider-directory/v0/r4/docs`,
+        openApiUrl: `${OPEN_API_SPEC_HOST}/internal/docs/provider-directory-r4/v0/openapi.json`,
       },
     ],
     enabledByDefault: false,
@@ -112,7 +111,6 @@ const healthApis: APIDescription[] = [
     openData: false,
     releaseNotes: ProviderDirectoryReleaseNotes,
     urlFragment: 'provider_directory',
-    vaInternalOnly: false,
   },
   {
     deactivationInfo: {
@@ -136,7 +134,6 @@ const healthApis: APIDescription[] = [
     openData: false,
     releaseNotes: UrgentCareReleaseNotes,
     urlFragment: 'urgent_care',
-    vaInternalOnly: false,
   },
   {
     altID: 'pgd',
@@ -175,7 +172,7 @@ const healthApis: APIDescription[] = [
     openData: false,
     releaseNotes: PgdReleaseNotes,
     urlFragment: 'pgd',
-    vaInternalOnly: true,
+    vaInternalOnly: VaInternalOnly.StrictlyInternal,
   },
   {
     altID: 'health',
@@ -246,7 +243,6 @@ const healthApis: APIDescription[] = [
     openData: false,
     releaseNotes: FhirApiReleaseNotes,
     urlFragment: 'fhir',
-    vaInternalOnly: false,
     versionSelectorLabel: 'Select a FHIR specification',
   },
   {
@@ -271,7 +267,6 @@ const healthApis: APIDescription[] = [
     openData: false,
     releaseNotes: ArgonautReleaseNotes,
     urlFragment: 'argonaut',
-    vaInternalOnly: false,
   },
 ];
 

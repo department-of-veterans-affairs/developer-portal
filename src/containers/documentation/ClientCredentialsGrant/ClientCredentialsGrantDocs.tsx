@@ -14,8 +14,7 @@ import {
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { getActiveOauthApis, getAllOauthApis } from '../../../apiDefs/query';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
+import { getActiveCCGApis, getActiveOauthApis } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
 import { usePrevious } from '../../../hooks';
@@ -53,7 +52,7 @@ const setInitialApi = (
 ): void => {
   const params = new URLSearchParams(searchQuery || undefined);
   const apiQuery = params.get('api');
-  const availableApis = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
+  const availableApis = getActiveOauthApis();
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_CCG_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
@@ -70,12 +69,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
   const prevApi = usePrevious(api);
   const selectedOAuthApi = useSelector(selector);
 
-  const options = getActiveOauthApis().filter(
-    (item: APIDescription) =>
-      !isApiDeactivated(item) &&
-      item.oAuthTypes &&
-      item.oAuthTypes.includes('ClientCredentialsGrant'),
-  );
+  const options = getActiveCCGApis();
 
   React.useEffect(() => {
     if (initializing.current) {
@@ -109,7 +103,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
         <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4">
           OAuth 2.0 Client Credentials Grant
         </a>{' '}
-        (CCG) works by using your RSA generated key pair in{' '}
+        (CCG) grants access by using your RSA-generated key in{' '}
         <a href="https://datatracker.ietf.org/doc/html/rfc7517">JSON Web Key (JWK)</a> format, as
         described in the{' '}
         <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.

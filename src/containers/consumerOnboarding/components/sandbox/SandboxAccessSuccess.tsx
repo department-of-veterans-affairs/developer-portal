@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { getApiDefinitions, getAllKeyAuthApis } from '../../../../apiDefs/query';
 import sentenceJoin from '../../../../sentenceJoin';
 import { ApplySuccessResult } from '../../../../types';
-import { APPLY_OAUTH_APIS } from '../../../../types/constants';
+import { APPLY_ACG_APIS, APPLY_CCG_APIS } from '../../../../types/constants';
 import { isVaEmail } from '../../../../utils/validators';
 import './SandboxAccessSuccess.scss';
 
@@ -23,12 +23,18 @@ interface APIKeyNoticeProps {
   selectedApis: string[];
 }
 
-interface OAuthCredentialsNoticeProps {
+interface OAuthACGCredentialsNoticeProps {
   clientID: string;
   clientSecret?: string;
   email: string;
   selectedApis: string[];
   redirectURI: string;
+}
+
+interface OAuthCCGCredentialsNoticeProps {
+  ccgClientId: string;
+  email: string;
+  selectedApis: string[];
 }
 
 interface InternalApiNoticeProps {
@@ -53,13 +59,13 @@ const apisToEnglishApiKeyList = (): Record<string, string> => {
   };
 };
 
-const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProps> = ({
+const OAuthACGCredentialsNotice: React.FunctionComponent<OAuthACGCredentialsNoticeProps> = ({
   clientID,
   clientSecret,
   email,
   selectedApis,
   redirectURI,
-}: OAuthCredentialsNoticeProps) => {
+}: OAuthACGCredentialsNoticeProps) => {
   const apiNameList = selectedApis.map(k => apisToEnglishOAuthList[k]);
   const apiListSnippet = sentenceJoin(apiNameList);
 
@@ -83,7 +89,33 @@ const OAuthCredentialsNotice: React.FunctionComponent<OAuthCredentialsNoticeProp
       <p>
         You should receive an email at {email} with the same credentials. Those credentials are for
         accessing the {apiListSnippet} in the sandbox environment. See our{' '}
-        <Link to="/oauth">OAuth Documentation</Link> for more information on usage.
+        <Link to="/explore/authorization/docs/authorization-code">OAuth Documentation</Link> for
+        more information on usage.
+      </p>
+    </div>
+  );
+};
+
+const OAuthCCGCredentialsNotice: React.FunctionComponent<OAuthCCGCredentialsNoticeProps> = ({
+  ccgClientId,
+  email,
+  selectedApis,
+}: OAuthCCGCredentialsNoticeProps) => {
+  const apiNameList = selectedApis.map(k => apisToEnglishOAuthList[k]);
+  const apiListSnippet = sentenceJoin(apiNameList);
+
+  return (
+    <div>
+      <p className="usa-font-lead">
+        <strong>Your VA API OAuth Client ID: </strong>
+        <span className="oauth-client-id">{ccgClientId}</span>
+      </p>
+
+      <p>
+        You should receive an email at {email} with the same credentials. Those credentials are for
+        accessing the {apiListSnippet} in the sandbox environment. See our{' '}
+        <Link to="/explore/authorization/docs/client-credentials">OAuth Documentation</Link> for
+        more information on usage.
       </p>
     </div>
   );
@@ -118,49 +150,59 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
 const InternalApiNotice: React.FunctionComponent<InternalApiNoticeProps> = ({
   email,
 }: InternalApiNoticeProps) => (
-  <p>
-    You should receive an email at {email} containing your access credentials.
-  </p>
+  <p>You should receive an email at {email} containing your access credentials.</p>
 );
 
 const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
-  const { apis, email, token, clientID, clientSecret, kongUsername, redirectURI } = props.result;
+  const { apis, email, token, ccgClientId, clientID, clientSecret, kongUsername, redirectURI } =
+    props.result;
   const keyAuthApis = getAllKeyAuthApis();
   const keyAuthApiList = keyAuthApis.map(api => api.altID ?? api.urlFragment);
 
   // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
-  const hasOAuthAPI = APPLY_OAUTH_APIS.some(apiId => apis.includes(apiId));
-  const hasStandardAPI = keyAuthApiList.some(apiId => apis.includes(apiId));
+  const hasOAuthAcgAPI = APPLY_ACG_APIS.some(apiId => apis.includes(`acg/${apiId}`));
+  const hasOAuthCcgAPI = APPLY_CCG_APIS.some(appId => apis.includes(`ccg/${appId}`));
+  const hasStandardAPI = keyAuthApiList.some(apiId => apis.includes(`apikey/${apiId}`));
   const hasInternalAPI = isVaEmail(email);
-  const oAuthAPIs = APPLY_OAUTH_APIS.filter(apiId => apis.includes(apiId));
-  const standardAPIs = keyAuthApiList.filter(apiId => apis.includes(apiId));
+  const oAuthAcgAPIs = APPLY_ACG_APIS.filter(apiId => apis.includes(`acg/${apiId}`));
+  const oAuthCcgAPIs = APPLY_CCG_APIS.filter(apiId => apis.includes(`ccg/${apiId}`));
+  const standardAPIs = keyAuthApiList.filter(apiId => apis.includes(`apikey/${apiId}`));
 
   return (
     <>
       <p>
         <strong>Thank you for signing up!</strong>
       </p>
-      {hasStandardAPI && token && kongUsername && !hasInternalAPI && (
-        <ApiKeyNotice
-          email={email}
-          token={token}
-          kongUsername={kongUsername}
-          selectedApis={standardAPIs}
-        />
+      {!hasInternalAPI && (
+        <>
+          {hasStandardAPI && token && kongUsername && (
+            <ApiKeyNotice
+              email={email}
+              token={token}
+              kongUsername={kongUsername}
+              selectedApis={standardAPIs}
+            />
+          )}
+          {hasOAuthAcgAPI && clientID && redirectURI && (
+            <OAuthACGCredentialsNotice
+              email={email}
+              clientID={clientID}
+              clientSecret={clientSecret}
+              selectedApis={oAuthAcgAPIs}
+              redirectURI={redirectURI}
+            />
+          )}
+          {hasOAuthCcgAPI && ccgClientId && (
+            <OAuthCCGCredentialsNotice
+              email={email}
+              ccgClientId={ccgClientId}
+              selectedApis={oAuthCcgAPIs}
+            />
+          )}
+          <AssistanceTrailer />
+        </>
       )}
-      {hasOAuthAPI && clientID && redirectURI && !hasInternalAPI && (
-        <OAuthCredentialsNotice
-          email={email}
-          clientID={clientID}
-          clientSecret={clientSecret}
-          selectedApis={oAuthAPIs}
-          redirectURI={redirectURI}
-        />
-      )}
-      {hasInternalAPI && (
-        <InternalApiNotice email={email} />
-      )}
-      {!hasInternalAPI && <AssistanceTrailer />}
+      {hasInternalAPI && <InternalApiNotice email={email} />}
     </>
   );
 };

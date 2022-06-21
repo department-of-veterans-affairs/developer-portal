@@ -16,7 +16,7 @@ function basicInformationFields(cy) {
   cy.get('#organizationFormField').type('CompanyName');
   cy.get('#phoneNumberFormField').type('8005551212');
   cy.get('#appNameFormField').type('AppName');
-  cy.get('#statusUpdateEmailsFormField').type('NotificationEmailAddress@va.gov');
+  cy.get('#statusUpdateEmails\\.0').type('NotificationEmailAddress@va.gov');
   cy.get('#valueProvidedFormField').type('This is a testing description for an app.');
   cy.get('#monitizedVeteranInformationFormFieldyes').click();
   cy.get('#monitizationExplanationFormField').type('This is an explaination for monetization.');
@@ -95,7 +95,7 @@ describe('Production Access Form', () => {
   });
 
   it('Form works for 2 step flow (VA Facilities)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,
@@ -123,7 +123,7 @@ describe('Production Access Form', () => {
   });
 
   it('Form works for 3 step flow (Clinical Health)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,
@@ -156,7 +156,7 @@ describe('Production Access Form', () => {
   });
 
   it('Form works for 4 step flow (Benefits Claims)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,

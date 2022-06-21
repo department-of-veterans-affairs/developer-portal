@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { HashLink } from 'react-router-hash-link';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
-import { getAllOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
-import { APIDescription } from '../../../apiDefs/schema';
+import { getActiveAuthCodeApis, lookupApiByFragment } from '../../../apiDefs/query';
 import { RootState } from '../../../types';
 import { APISelector } from '../../index';
 
@@ -21,7 +19,7 @@ const ScopesContent = (): JSX.Element => {
   const selectedOAuthApi = useSelector(selector);
   const apiDef = lookupApiByFragment(selectedOAuthApi);
   const scopes = apiDef?.oAuthInfo?.acgInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
-  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) && item.oAuthTypes && item.oAuthTypes.includes('AuthorizationCodeGrant'));
+  const options = getActiveAuthCodeApis();
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
 

@@ -7,7 +7,11 @@ import {
   validateOAuthApplicationType,
   isVaEmail,
 } from '../../../../utils/validators';
-import { includesOAuthAPI, includesInternalOnlyAPI } from '../../../../apiDefs/query';
+import {
+  includesInternalOnlyAPI,
+  includesAuthCodeAPI,
+  includesCcgAPI,
+} from '../../../../apiDefs/query';
 import { Values } from './SandboxAccessForm';
 
 const anyApiSelected = ({ apis }: Values): boolean => apis.length > 0;
@@ -28,9 +32,13 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.apis = 'Choose at least one API.';
   }
 
-  if (includesOAuthAPI(values.apis)) {
+  if (includesAuthCodeAPI(values.apis)) {
     errors.oAuthApplicationType = validateOAuthApplicationType(values.oAuthApplicationType);
     errors.oAuthRedirectURI = validateOAuthRedirectURI(values.oAuthRedirectURI);
+  }
+
+  if (includesCcgAPI(values.apis)) {
+    errors.oAuthPublicKey = validatePresence('oAuthPublicKey', values.oAuthPublicKey);
   }
 
   if (includesInternalOnlyAPI(values.apis)) {
@@ -38,9 +46,7 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
       programName: validatePresence('program name', values.internalApiInfo.programName),
       sponsorEmail: validateVAEmail(values.internalApiInfo.sponsorEmail),
       // eslint-disable-next-line no-negated-condition
-      vaEmail: !isVaEmail(values.email)
-        ? validateVAEmail(values.internalApiInfo.vaEmail)
-        : '',
+      vaEmail: !isVaEmail(values.email) ? validateVAEmail(values.internalApiInfo.vaEmail) : '',
     };
 
     const internalInfoErrors = errors.internalApiInfo;

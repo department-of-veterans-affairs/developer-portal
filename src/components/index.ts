@@ -32,3 +32,4 @@ export * from './formField';
 export * from './appVersion/AppVersion';
 export * from './apiTags/ApiTags';
 export * from './apiCheckboxList/APICheckboxList';
+export * from './veteranResources/VeteranResources';

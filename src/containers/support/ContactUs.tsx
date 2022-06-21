@@ -3,8 +3,7 @@ import { useLocation } from 'react-router';
 import { Helmet } from 'react-helmet';
 import SupportConfirmation from '../../content/supportConfirmation.mdx';
 import { FormType } from '../../types/forms/contactUsForm';
-import { PageHeader } from '../../components';
-import { ContactUsAlertBox } from './ContactUsAlertBox';
+import { PageHeader, VeteranResources } from '../../components';
 import ContactUsForm from './ContactUsForm';
 
 const ContactUs = (): JSX.Element => {
@@ -36,7 +35,7 @@ const ContactUs = (): JSX.Element => {
             If you have questions about APIs, development, or related topics, use this form to send
             us a message.
           </p>
-          <ContactUsAlertBox />
+          <VeteranResources />
           <ContactUsForm onSuccess={onSuccess} defaultType={type} />
         </>
       )}

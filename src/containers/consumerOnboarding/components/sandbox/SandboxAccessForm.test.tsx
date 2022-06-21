@@ -51,7 +51,7 @@ describe('SandboxAccessForm', () => {
     );
   });
 
-  describe('ouath apis', () => {
+  describe('ouath acg apis', () => {
     it('adds required fields if selected', async () => {
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Samwise', {
@@ -70,7 +70,7 @@ describe('SandboxAccessForm', () => {
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
 
-      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims API/ }));
+      userEvent.click(screen.getByDisplayValue('acg/claims'));
 
       expect(await screen.findByRole('radio', { name: 'Yes' })).toBeInTheDocument();
       expect(await screen.findByRole('radio', { name: 'No' })).toBeInTheDocument();
@@ -79,10 +79,41 @@ describe('SandboxAccessForm', () => {
       ).toBeInTheDocument();
     });
 
-    it('loads the OAuthAppInfo component links when an OAuth API is selected', () => {
+    it('loads the OAuthAcgAppInfo component links when an ACG OAuth API is selected', () => {
       expect(screen.queryByRole('link', { name: /PKCE/ })).not.toBeInTheDocument();
-      userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
+      userEvent.click(screen.getByDisplayValue('acg/claims'));
       expect(screen.getAllByRole('link', { name: /PKCE/ })).toHaveLength(2);
+    });
+  });
+
+  describe('ouath ccg apis', () => {
+    it('adds required fields if selected', async () => {
+      await act(async () => {
+        await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Samwise', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Gamgee', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'sam@theshire.net', {
+          delay: 0.01,
+        });
+        await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
+          delay: 0.01,
+        });
+        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Intake API/ }));
+        userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
+      });
+
+      userEvent.click(screen.getByDisplayValue('ccg/claims'));
+
+      expect(await screen.findByRole('textbox', { name: /OAuth Public Key/ })).toBeInTheDocument();
+    });
+
+    it("OAuthAcgAppInfo component doesn't load when a CCG OAuth API is selected", () => {
+      expect(screen.queryByRole('link', { name: /PKCE/ })).not.toBeInTheDocument();
+      userEvent.click(screen.getByDisplayValue('ccg/claims'));
+      expect(screen.queryByRole('link', { name: /PKCE/ })).not.toBeInTheDocument();
     });
   });
 
@@ -176,7 +207,7 @@ describe('SandboxAccessForm', () => {
         await userEvent.type(screen.getByRole('textbox', { name: /^Organization/ }), 'Fellowship', {
           delay: 0.01,
         });
-        userEvent.click(screen.getByRole('checkbox', { name: /Benefits Claims/ }));
+        userEvent.click(screen.getByDisplayValue('acg/claims'));
         userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
       });
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
@@ -332,9 +363,6 @@ describe('SandboxAccessForm', () => {
       userEvent.click(submitButton);
 
       await waitFor(() => {
-        expect(mockMakeRequest).toHaveBeenCalledTimes(
-          process.env.REACT_APP_POST_TO_LPB === 'true' ? 2 : 1,
-        );
         expect(mockOnSuccess).toHaveBeenCalledTimes(1);
       });
     });
@@ -423,14 +451,16 @@ describe('SandboxAccessForm', () => {
 
     describe('OAuth APIs', () => {
       it.each(allOauthApis)('toggles the %s checkbox on click', name => {
-        const checkbox: HTMLInputElement = screen.getByRole('checkbox', {
+        const checkboxes: HTMLElement[] = screen.getAllByRole('checkbox', {
           name,
-        }) as HTMLInputElement;
-        expect(checkbox.checked).toBeFalsy();
+        });
+        checkboxes.forEach((checkbox: HTMLInputElement) => {
+          expect(checkbox.checked).toBeFalsy();
 
-        userEvent.click(checkbox);
+          userEvent.click(checkbox);
 
-        expect(checkbox.checked).toBeTruthy();
+          expect(checkbox.checked).toBeTruthy();
+        });
       });
     });
   });

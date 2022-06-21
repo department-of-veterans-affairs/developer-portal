@@ -1,5 +1,4 @@
 /* eslint-disable id-length */
-/* eslint-disable newline-per-chained-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { includesInternalOnlyAPI, includesOAuthAPI, onlyOpenDataAPIs } from '../../apiDefs/query';
 import yup from '../../utils/yup-extended';
@@ -116,17 +115,11 @@ const validationSchema = [
             otherwise: yup.string().isNotATestString(),
             then: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
           }),
-    statusUpdateEmails: isListAndLoopEnabled
-      ? yup
-          .array()
-          .of(yup.string().isNotATestString().email('Enter a valid email address.'))
-          .min(1)
-          .required('Enter a valid email address.')
-      : yup
-          .string()
-          .isNotATestString()
-          .email('Enter a valid email address.')
-          .required('Enter a valid email address.'),
+    statusUpdateEmails: yup
+      .array()
+      .of(yup.string().isNotATestString().email('Enter a valid email address.'))
+      .min(1)
+      .required('Enter a valid email address.'),
     supportLink: isListAndLoopEnabled
       ? yup
           .array()
@@ -259,7 +252,7 @@ const validationSchema = [
       .isNotATestString()
       .url('Add a valid link to your privacy policies')
       .required('Add a valid link to your privacy policies'),
-      termsOfServiceURL: yup
+    termsOfServiceURL: yup
       .string()
       .isNotATestString()
       .url('Add a valid link to your terms of service')
