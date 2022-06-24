@@ -15,6 +15,7 @@ export interface TextFieldProps {
   as?: FieldProps['as'];
   description?: ReactNode;
   type?: 'text' | 'email' | 'password';
+  placeholder?: string;
   disabled?: boolean;
   onKeyDown?: (event: KeyboardEvent) => void;
   innerRef?: React.RefObject<HTMLElement>;
@@ -29,6 +30,7 @@ const TextField: FC<TextFieldProps> = ({
   name,
   required = false,
   type = 'text',
+  placeholder,
   disabled = false,
   onKeyDown,
   customFieldClass,
@@ -74,6 +76,7 @@ const TextField: FC<TextFieldProps> = ({
         aria-describedby={`${errorId} ${descriptionId}`}
         aria-invalid={shouldDisplayErrors}
         type={props.as ? undefined : type}
+        placeholder={placeholder}
         disabled={disabled}
         onKeyDown={onKeyDown}
         innerRef={innerRef}
