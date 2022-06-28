@@ -13,7 +13,7 @@ export const LPB_PRODUCTION_ACCESS_URL = `${LPB_BACKEND_BASE_URL}/v0/consumers/p
 export const LPB_CONTACT_US_URL = `${LPB_BACKEND_BASE_URL}/v0/support/contact-us/requests`;
 
 export const APPLY_ACG_APIS = ['claims', 'communityCare', 'health', 'verification'];
-export const APPLY_CCG_APIS = ['claims', 'health'];
+export const APPLY_CCG_APIS = ['claims', 'health', 'lgyGuarantyRemittance'];
 export const PAGE_HEADER_ID = 'page-header';
 export const PAGE_HEADER_AND_HALO_ID = 'header-halo';
 export const FLAG_API_ENABLED_PROPERTY = 'enabled';

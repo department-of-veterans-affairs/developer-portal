@@ -180,7 +180,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
             content={
               <span>
                 Need assistance? Create an issue through our <Link to="/support">Support page</Link>
-                {process.env.NODE_ENV === 'development' && submissionErrors.length > 0 && (
+                {submissionErrors.length > 0 && (
                   <ul>
                     {submissionErrors.map((item: string) => (
                       <li key={item}>{item}</li>

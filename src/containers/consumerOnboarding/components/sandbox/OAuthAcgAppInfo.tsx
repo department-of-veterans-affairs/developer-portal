@@ -47,6 +47,7 @@ const OAuthAcgAppInfo = (): JSX.Element => {
       <TextField
         label="OAuth Redirect URI"
         name={redirectUriInputName}
+        placeholder="http://localhost:8080/oauth/callback"
         required
         className={classNames(
           'vads-u-margin-top--4',

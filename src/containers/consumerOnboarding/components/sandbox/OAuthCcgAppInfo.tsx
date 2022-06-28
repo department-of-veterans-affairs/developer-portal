@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classNames from 'classnames';
 
 import { TextField } from '../../../../components';
 
@@ -16,14 +15,18 @@ const OAuthCcgAppInfo = (): JSX.Element => {
       </div>
 
       <TextField
+        as="textarea"
+        placeholder='{
+  "kty": "RSA",
+  "n": "mYi1wUpwkJ1QB8...",
+  "e": "AQAB",
+  "alg": "RS256",
+  "use": "sig"
+}'
         label="OAuth Public Key"
         name={oAuthPublicKey}
         required
-        className={classNames(
-          'vads-u-margin-top--4',
-          'oauth-uri-input',
-          'xsmall-screen:vads-l-col--10',
-        )}
+        className="vads-u-margin-top--4"
       />
     </div>
   );

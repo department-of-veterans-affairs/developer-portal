@@ -16,7 +16,7 @@
 import apiDefs, { apiCategoryOrder } from './data/categories';
 import { isApiDeactivated } from './deprecated';
 import { isHostedApiEnabled } from './env';
-import { APICategories, APICategory, APIDescription } from './schema';
+import { APICategories, APICategory, APIDescription, VaInternalOnly } from './schema';
 
 const getApiDefinitions = (): APICategories => apiDefs;
 const getApiCategoryOrder = (): string[] => apiCategoryOrder;
@@ -122,6 +122,9 @@ const includesCcgAPI = (apiList: string[]): boolean =>
 const includesInternalOnlyAPI = (apiList: string[]): boolean =>
   apisFor(apiList).some(api => api.vaInternalOnly);
 
+const includesInternalSponsorshipAPI = (apiList: string[]): boolean =>
+  apisFor(apiList).some(api => api.vaInternalOnly === VaInternalOnly.AdditionalDetails);
+
 const onlyOpenDataAPIs = (apiList: string[]): boolean =>
   apisFor(apiList).every(api => api.openData);
 
@@ -146,5 +149,6 @@ export {
   includesCcgAPI,
   getAllKeyAuthApis,
   includesInternalOnlyAPI,
+  includesInternalSponsorshipAPI,
   onlyOpenDataAPIs,
 };

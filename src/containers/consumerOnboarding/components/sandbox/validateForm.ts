@@ -8,7 +8,7 @@ import {
   isVaEmail,
 } from '../../../../utils/validators';
 import {
-  includesInternalOnlyAPI,
+  includesInternalSponsorshipAPI,
   includesAuthCodeAPI,
   includesCcgAPI,
 } from '../../../../apiDefs/query';
@@ -41,7 +41,7 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.oAuthPublicKey = validatePresence('oAuthPublicKey', values.oAuthPublicKey);
   }
 
-  if (includesInternalOnlyAPI(values.apis)) {
+  if (includesInternalSponsorshipAPI(values.apis)) {
     errors.internalApiInfo = {
       programName: validatePresence('program name', values.internalApiInfo.programName),
       sponsorEmail: validateVAEmail(values.internalApiInfo.sponsorEmail),
