@@ -23,6 +23,11 @@ describe('VersionSelector', () => {
       expect(VersionSelector.selectors.majorVersion(state)).toBe('1');
     });
 
+    it('returns the major version number from the apiVersion when apiVersion has a text prefix', () => {
+      const state = Map<string, string>({ apiVersion: 'prefix-1.0.0' });
+      expect(VersionSelector.selectors.majorVersion(state)).toBe('1');
+    });
+
     it('returns empty when apiVersion exists does not exist in state', () => {
       const state = Map<string, string>({ apiName: 'claims' });
       expect(VersionSelector.selectors.majorVersion(state)).toBe('');
