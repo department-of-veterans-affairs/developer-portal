@@ -121,7 +121,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
       });
     } catch (error: unknown) {
       setSubmissionHasError(true);
-      // This will only capture the errors on 4xx errors from the developer-portal-backend.
+      // This will only capture the errors on 4xx errors from the lighthouse-platform-backend.
       const errors = (error as SandboxAccessFormError).body.errors ?? [];
       setSubmissionErrors(errors);
     }
