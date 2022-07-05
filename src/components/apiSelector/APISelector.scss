@@ -16,6 +16,15 @@
   }
 }
 
+@include media($medium-screen) {
+  .api-selector-container {
+    button {
+      width: calc(100% - 2rem);
+      margin: 4.2rem 0 2rem 2rem !important;
+    }
+  }
+}
+
 .api-selector-container {
   background-color: #f1f1f1;
   padding: 1.5rem 10px;
@@ -31,8 +40,10 @@
   }
 
   button {
-    width: calc(100% - 2rem);
-    margin: 4.2rem 0 2rem 2rem;
+    width: 100%;
+    padding: 10px 0;
+    margin: 8px 0;
+    white-space: nowrap;
   }
 
   #swagger-ui & {

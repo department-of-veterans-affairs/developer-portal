@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import * as React from 'react';
+import classNames from 'classnames';
 import { VersionMetadata } from '../../../types';
 import { System } from './types';
 
@@ -9,6 +10,7 @@ export interface VersionSelectProps {
 
 export interface VersionSelectState {
   version: string;
+  versionSelectionButtonDisabled: boolean;
 }
 
 export default class VersionSelect extends React.Component<VersionSelectProps, VersionSelectState> {
@@ -16,7 +18,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
     super(props);
     const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();
     const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
-    this.state = { version: initialVersion };
+    this.state = { version: initialVersion, versionSelectionButtonDisabled: true };
   }
 
   public getCurrentVersion(): string {
@@ -40,10 +42,13 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
 
   public handleSelectChange(version: string): void {
     this.setState({ version });
+    this.setState({ versionSelectionButtonDisabled: false });
   }
 
   public handleButtonClick(): void {
     this.props.getSystem().versionActions.updateVersion(this.state.version);
+    this.setState({ version: this.state.version });
+    this.setState({ versionSelectionButtonDisabled: true });
   }
 
   public render(): JSX.Element {
@@ -76,7 +81,13 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
       <>
         <div className="api-selector-container vads-l-grid-container vads-u-padding-y--2">
           <div className="vads-l-row">
-            <label htmlFor="api-selector-field" className="vads-l-col--9">
+            <label
+              htmlFor="api-selector-field"
+              className={classNames(
+                'vads-l-col--12',
+                'medium-screen:vads-l-col--9',
+              )}
+            >
               {selectorLabel}
               {/* eslint-disable-next-line jsx-a11y/no-onchange */}
               <select
@@ -96,9 +107,19 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
                   ))}
               </select>
             </label>
-            <div className="vads-l-col--3 vads-u-text-align--center">
-              <button onClick={(): void => this.handleButtonClick()} type="button">
-                Select
+            <div
+              className={classNames(
+              'vads-l-col--12',
+              'medium-screen:vads-l-col--3',
+              'vads-u-text-align--center'
+            )}
+            >
+              <button
+                onClick={(): void => this.handleButtonClick()}
+                type="button"
+                disabled={this.state.versionSelectionButtonDisabled}
+              >
+                Update page
               </button>
             </div>
           </div>
