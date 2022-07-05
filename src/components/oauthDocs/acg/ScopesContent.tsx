@@ -36,6 +36,9 @@ const ScopesContent = (): JSX.Element => {
         options={options}
         selectedOption={selectedOAuthApi}
         selectLabel="Select an API to show and describe the related scopes"
+        buttonText="Update page"
+        buttonSuccessMessage="Page updated!"
+        theme="light"
       />
       <table>
         <thead>

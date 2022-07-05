@@ -30,7 +30,13 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         Begin the OpenID Connect authorization by using the authorization endpoint, query
         parameters, and scopes listed below.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           components={{
@@ -275,7 +281,13 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
           provided during registration.
         </li>
       </ul>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -306,7 +318,13 @@ grant_type=authorization_code
         the <code>offline_access</code> scope, you will also receive a <code>refresh_token</code>.
         The response will look like this:
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -381,7 +399,13 @@ Pragma: no-cache
         production. Use the <code>refresh_token</code> to obtain a new <code>access_token</code>{' '}
         after its expiry by sending the following request.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -443,7 +467,13 @@ Host: sandbox-api.va.gov`}
         using the revoke endpoint. Once revoked, the introspection endpoint will see the token as
         inactive.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -466,7 +496,13 @@ Authorization: Basic base64(client_id:client_secret)
 token={ *access_token* }&token_type_hint=access_token`}
         </ReactMarkdown>
       </CodeWrapper>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -501,7 +537,13 @@ token={ *refresh_token* }&token_type_hint=refresh_token`}
         grant will remain in effect unless and until revoked. Grants for a specific user and client
         are revoked in the sandbox environment using the below endpoint.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}

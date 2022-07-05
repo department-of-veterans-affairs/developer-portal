@@ -39,7 +39,13 @@ describe('APISelector', () => {
   it('does not render additional instruction text', () => {
     render(
       <Provider store={store}>
-        <APISelector options={options} selectedOption="claims" />
+        <APISelector
+          options={options}
+          selectedOption="claims"
+          buttonText="Update code"
+          buttonSuccessMessage="Code updated!"
+          theme="dark"
+        />
       </Provider>,
     );
 
@@ -50,7 +56,13 @@ describe('APISelector', () => {
   it('renders additional instruction text', () => {
     render(
       <Provider store={store}>
-        <APISelector options={options} selectedOption="claims" withButton />
+        <APISelector
+          options={options}
+          selectedOption="claims"
+          buttonText="Update page"
+          buttonSuccessMessage="Page updated!"
+          theme="light"
+        />
       </Provider>,
     );
 
@@ -61,7 +73,13 @@ describe('APISelector', () => {
   it('renders select button', () => {
     render(
       <Provider store={store}>
-        <APISelector options={options} selectedOption="claims" withButton />
+        <APISelector
+          options={options}
+          selectedOption="claims"
+          buttonText="Update page"
+          buttonSuccessMessage="Page updated!"
+          theme="light"
+        />
       </Provider>,
     );
 

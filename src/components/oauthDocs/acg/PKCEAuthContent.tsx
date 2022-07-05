@@ -32,7 +32,13 @@ const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
         Begin the OpenID Connect authorization by using the authorization endpoint, query
         parameters, and scopes listed below.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           components={{
@@ -225,7 +231,13 @@ Location: <yourRedirectURL>?
           provided during registration.
         </li>
       </ul>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -258,7 +270,13 @@ grant_type=authorization_code
         The response body will look like this, where <code>expires_in</code> is the time in seconds
         before the token expires:
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -325,7 +343,13 @@ Pragma: no-cache
         production. Use the <code>refresh_token</code> to obtain a new <code>access_token</code>{' '}
         after its expiry by sending the following request.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
