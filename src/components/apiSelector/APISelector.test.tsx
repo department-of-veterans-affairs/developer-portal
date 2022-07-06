@@ -66,7 +66,7 @@ describe('APISelector', () => {
     );
 
     const selectButton = screen.getByRole('button', {
-      name: 'Select',
+      name: 'Update page',
     });
     expect(selectButton).toBeInTheDocument();
   });
