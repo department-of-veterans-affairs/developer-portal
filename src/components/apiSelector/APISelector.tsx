@@ -39,10 +39,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   const { selectedOption, options } = props;
   const selectLabel = props.selectLabel ?? 'Select an API to update the code snippet';
   const selectorLabel = 'Select an API';
-
-  React.useEffect(() => {
-      setApiSelectionButtonDisabled(true);
-    }, []);
+  const buttonDisabled = apiSelectionButtonDisabled ?? true;
 
   if (props.withButton) {
     return (
@@ -77,7 +74,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             )}
           >
             <button
-              disabled={apiSelectionButtonDisabled}
+              disabled={buttonDisabled}
               onClick={onButtonClick}
               type="button"
               className="page-updater"
