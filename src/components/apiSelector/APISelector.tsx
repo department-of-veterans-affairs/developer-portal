@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/no-onchange */
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
+import { computePosition, flip, shift, offset, arrow } from '@floating-ui/react-dom';
 import classNames from 'classnames';
-import ReactTooltip from 'react-tooltip';
 import { SetOAuthAPISelection, setOAuthApiSelection } from '../../actions';
 import { APIDescription } from '../../apiDefs/schema';
 
@@ -28,18 +28,62 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
       dispatch(setOAuthApiSelection(event.currentTarget.value));
     }
   };
-  const onButtonClick = (): void => {
+  function update() {
+    const button = document.querySelector('#button') as HTMLInputElement;
+    const tooltip = document.querySelector('#tooltip') as HTMLElement;
+    const arrowElement = document.querySelector('#arrow') as HTMLElement;
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    computePosition(button, tooltip, {
+      middleware: [offset(6), flip(), shift(), arrow({ element: arrowElement })],
+      placement: 'top',
+    }).then(({ x, y, placement, middlewareData }) => {
+      Object.assign(tooltip.style, {
+        left: `${x}px`,
+        top: `${y}px`,
+      });
+
+      const arrowData = middlewareData.arrow;
+      if (arrowData) {
+        Object.assign(arrowElement.style, {
+          bottom: '',
+          left: arrowData.x != null ? `${arrowData.x}px` : '',
+          right: '',
+          top: arrowData.y != null ? `${arrowData.y}px` : '',
+        });
+      }
+
+      return true;
+    }).catch(error => { console.log(error) });
+  }
+  const onButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     if (selectedOptionOverride) {
       dispatch(setOAuthApiSelection(selectedOptionOverride));
       setSelectedOptionOverride('');
     }
 
+    const tooltip = document.querySelector('#tooltip') as HTMLElement;
+    tooltip.style.display = 'block';
+    update();
+
     setApiSelectionButtonDisabled(true);
+
+    event.stopPropagation();
   };
   const { selectedOption, options } = props;
   const selectLabel = props.selectLabel ?? 'Select an API to update the code snippet';
   const selectorLabel = 'Select an API';
   const buttonDisabled = apiSelectionButtonDisabled ?? true;
+
+  function hideTooltip() {
+    const tooltip = document.querySelector('#tooltip') as HTMLElement;
+    tooltip.style.display = '';
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('click', hideTooltip);
+    window.addEventListener('resize', update);
+  }, []);
 
   if (props.withButton) {
     return (
@@ -74,23 +118,18 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             )}
           >
             <button
+              id="button"
               disabled={buttonDisabled}
               onClick={onButtonClick}
               type="button"
               className="page-updater"
-              data-for="update-page-button"
-              data-tip="Page updated!"
-              data-iscapture="true"
-              data-effect="solid"
-              data-place="top"
-              data-event="click"
-              data-event-off="mouseout"
-              data-delay-hide="5000"
-              data-multiline="false"
             >
               Update page
             </button>
-            <ReactTooltip id="update-page-button" />
+            <div id="tooltip" className="tooltip" role="tooltip">
+              Page updated!
+              <div id="arrow" />
+            </div>
           </div>
         </div>
       </div>
