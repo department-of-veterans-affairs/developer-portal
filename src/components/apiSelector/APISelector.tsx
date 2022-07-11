@@ -3,6 +3,7 @@ import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { computePosition, flip, shift, offset, arrow } from '@floating-ui/react-dom';
 import classNames from 'classnames';
+import * as Sentry from '@sentry/browser';
 import { SetOAuthAPISelection, setOAuthApiSelection } from '../../actions';
 import { APIDescription } from '../../apiDefs/schema';
 
@@ -28,34 +29,42 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
       dispatch(setOAuthApiSelection(event.currentTarget.value));
     }
   };
-  function update() {
+  const update = (): void => {
     const button = document.querySelector('#button') as HTMLInputElement;
     const tooltip = document.querySelector('#tooltip') as HTMLElement;
     const arrowElement = document.querySelector('#arrow') as HTMLElement;
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    computePosition(button, tooltip, {
-      middleware: [offset(6), flip(), shift(), arrow({ element: arrowElement })],
-      placement: 'top',
-    }).then(({ x, y, placement, middlewareData }) => {
-      Object.assign(tooltip.style, {
-        left: `${x}px`,
-        top: `${y}px`,
-      });
-
-      const arrowData = middlewareData.arrow;
-      if (arrowData) {
-        Object.assign(arrowElement.style, {
-          bottom: '',
-          left: arrowData.x != null ? `${arrowData.x}px` : '',
-          right: '',
-          top: arrowData.y != null ? `${arrowData.y}px` : '',
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (button && tooltip && arrowElement) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      computePosition(button, tooltip, {
+        middleware: [offset(6), flip(), shift(), arrow({ element: arrowElement })],
+        placement: 'top',
+      }).then(({ x, y, middlewareData }) => {
+        Object.assign(tooltip.style, {
+          left: `${x}px`,
+          top: `${y}px`,
         });
-      }
 
-      return true;
-    }).catch(error => { console.log(error) });
-  }
+        const arrowData = middlewareData.arrow;
+        if (arrowData) {
+          Object.assign(arrowElement.style, {
+            bottom: '',
+            left: arrowData.x == null ? '' : `${arrowData.x}px`,
+            right: '',
+            top: arrowData.y == null ? '' : `${arrowData.y}px`,
+          });
+        }
+
+        return true;
+      }).catch(error => {
+        Sentry.withScope(scope => {
+          scope.setTag('Page Name', location.pathname);
+          Sentry.captureException(error);
+        });
+      });
+    }
+  };
   const onButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     if (selectedOptionOverride) {
       dispatch(setOAuthApiSelection(selectedOptionOverride));
@@ -75,10 +84,13 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   const selectorLabel = 'Select an API';
   const buttonDisabled = apiSelectionButtonDisabled ?? true;
 
-  function hideTooltip() {
+  const hideTooltip = (): void => {
     const tooltip = document.querySelector('#tooltip') as HTMLElement;
-    tooltip.style.display = '';
-  }
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (tooltip) {
+      tooltip.style.display = '';
+    }
+  };
 
   React.useEffect(() => {
     window.addEventListener('click', hideTooltip);
