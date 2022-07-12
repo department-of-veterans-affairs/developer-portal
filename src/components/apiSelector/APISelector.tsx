@@ -29,10 +29,9 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
       dispatch(setOAuthApiSelection(event.currentTarget.value));
     }
   };
-  const update = (): void => {
-    const button = document.querySelector('#button') as HTMLInputElement;
-    const tooltip = document.querySelector('#tooltip') as HTMLElement;
-    const arrowElement = document.querySelector('#arrow') as HTMLElement;
+  const update = (button: HTMLButtonElement): void => {
+    const tooltip = button.nextElementSibling as HTMLElement;
+    const arrowElement = tooltip.getElementsByClassName('arrow')[0] as HTMLElement;
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (button && tooltip && arrowElement) {
@@ -65,15 +64,21 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
       });
     }
   };
+  const updateAll = (): void => {
+    Array.from(document.getElementsByClassName('page-updater')).forEach(button => {
+      update(button as HTMLButtonElement);
+    });
+  };
   const onButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     if (selectedOptionOverride) {
       dispatch(setOAuthApiSelection(selectedOptionOverride));
       setSelectedOptionOverride('');
     }
 
-    const tooltip = document.querySelector('#tooltip') as HTMLElement;
+    const button = event.currentTarget as HTMLButtonElement;
+    const tooltip = button.nextElementSibling as HTMLElement;
     tooltip.style.display = 'block';
-    update();
+    update(button);
 
     setApiSelectionButtonDisabled(true);
 
@@ -84,17 +89,20 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   const selectorLabel = 'Select an API';
   const buttonDisabled = apiSelectionButtonDisabled ?? true;
 
-  const hideTooltip = (): void => {
-    const tooltip = document.querySelector('#tooltip') as HTMLElement;
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (tooltip) {
-      tooltip.style.display = '';
-    }
+  const hideTooltips = (): void => {
+    Array.from(document.getElementsByClassName('page-updater')).forEach(button => {
+      const tooltip = button.nextElementSibling as HTMLElement;
+      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+      if (tooltip) {
+        tooltip.style.display = '';
+      }
+    });
   };
 
   React.useEffect(() => {
-    window.addEventListener('click', hideTooltip);
-    window.addEventListener('resize', update);
+    window.addEventListener('click', hideTooltips);
+    window.addEventListener('resize', updateAll);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (props.withButton) {
@@ -130,7 +138,6 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             )}
           >
             <button
-              id="button"
               disabled={buttonDisabled}
               onClick={onButtonClick}
               type="button"
@@ -138,9 +145,9 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             >
               Update page
             </button>
-            <div id="tooltip" className="tooltip" role="tooltip">
+            <div className="tooltip" role="tooltip">
               Page updated!
-              <div id="arrow" />
+              <div className="arrow" />
             </div>
           </div>
         </div>
