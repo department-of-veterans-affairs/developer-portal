@@ -7,6 +7,7 @@ export const VETERAN_BANNER_APPROVED_ROUTES: string[] = [
   '/explore/vaForms',
 ];
 export const AUTHORIZATION_PKCE_PATH = '/explore/authorization?api=claims#pkce-authorization';
+export const AUTHORIZATION_CCG_PATH = '/explore/authorization/docs/client-credentials';
 
 export const CONSUMER_PATH = '/onboarding';
 export const CONSUMER_SANDBOX_PATH = `${CONSUMER_PATH}/request-sandbox-access`;
