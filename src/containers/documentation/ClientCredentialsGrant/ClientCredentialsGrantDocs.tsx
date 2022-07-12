@@ -99,7 +99,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
       </Helmet>
       <PageHeader halo="Authorization" header="Client Credentials Grant" />
       <p>
-        The Lighthouse{' '}
+        VA&apos;s{' '}
         <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4">
           OAuth 2.0 Client Credentials Grant
         </a>{' '}

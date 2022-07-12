@@ -40,7 +40,7 @@
     "hoist-non-react-statics": "^3.3.2",
     "immutable": "^3.8.2",
     "markdown-it-attrs": "^4.1.0",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "object-assign": "4.1.1",
     "promise": "^8.1.0",
     "prop-types": "^15.7.2",

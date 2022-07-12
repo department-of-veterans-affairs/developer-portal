@@ -1,6 +1,8 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 import highlight from 'rehype-highlight';
+import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { SectionHeaderWrapper, CodeWrapper } from '../../index';
 
 const GettingStarted = (): JSX.Element => (
@@ -25,7 +27,7 @@ const GettingStarted = (): JSX.Element => (
       </ReactMarkdown>
     </CodeWrapper>
     <p>
-      Next, request sandbox access for your desired client credentials grant API. On the access
+      Next, <Link to={CONSUMER_SANDBOX_PATH}>get sandbox access</Link> for your desired client credentials grant API. On the access
       form, provide your RSA public key. After you submit the form, we will send your client ID in
       an email.
     </p>
