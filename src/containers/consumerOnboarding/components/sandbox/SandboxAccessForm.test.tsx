@@ -272,6 +272,7 @@ describe('SandboxAccessForm', () => {
     });
 
     it('internal api sponsor email should end with va.gov', async () => {
+      jest.setTimeout(10000);
       await act(async () => {
         await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Peregrin', {
           delay: 0.01,
