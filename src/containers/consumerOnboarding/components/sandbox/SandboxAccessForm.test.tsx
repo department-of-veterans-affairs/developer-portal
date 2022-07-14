@@ -107,7 +107,7 @@ describe('SandboxAccessForm', () => {
 
       userEvent.click(screen.getByDisplayValue('ccg/claims'));
 
-      expect(await screen.findByRole('textbox', { name: /OAuth Public Key/ })).toBeInTheDocument();
+      expect(await screen.findByRole('textbox', { name: /OAuth public key/ })).toBeInTheDocument();
     });
 
     it("OAuthAcgAppInfo component doesn't load when a CCG OAuth API is selected", () => {
