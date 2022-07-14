@@ -19,14 +19,10 @@ const TermsOfServiceCheckbox: React.FunctionComponent = <T extends TermsOfServic
       required
       type="checkbox"
       description={
-        <>
-          <p className={classNames({ 'vads-u-font-weight--bold': hasTermsOfServiceError })}>
-            Terms and conditions <span className="form-required-span">(*Required)</span>
-          </p>
-          <p className="vads-u-color--gray">
-            Review our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</a>.
-          </p>
-        </>
+        <p className={classNames({ 'vads-u-font-weight--bold': hasTermsOfServiceError })}>
+          Review our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</a>
+          <span className="form-required-span">(*Required)</span>
+        </p>
       }
       className="vads-u-margin-top--4 terms-of-service-checkbox"
       showError
