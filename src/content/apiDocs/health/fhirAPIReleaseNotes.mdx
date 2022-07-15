@@ -1,3 +1,15 @@
+### July 6, 2022
+We have enabled an additional FHIR _sort parameter, _lastUpdated, for the following R4 resources: 
+ - Condition
+ - Location
+ - Organization
+ - Patient
+ - Practitioner
+ - PractitionerRole
+
+The _lastUpdated sort parameter lets you specify the arrangement of responses in ascending or descending order based on the last time they were changed.  This parameter can be used alone or in conjunction with other sort parameters listed in the [Patient Health API (FHIR) OpenAPI specification](https://api.va.gov/internal/docs/fhir-r4/v0/openapi.json) to customize the order of responses to best meet your use case.
+
+---
 ### June 21, 2022
 The Veteran's Health API (FHIR) has been renamed to the Patient Health API (FHIR). We've also updated the layout of this API's documentation, which replaces the FHIR specification tabs with a dropdown. These changes will help our consumers more easily identify the use cases of this and our other health APIs. 
 

@@ -29,12 +29,10 @@ describe('TermsOfServiceCheckbox', () => {
         </Formik>
       );
 
-      expect(screen.getByText('Terms and conditions')).toBeInTheDocument();
-
       const termsLink = screen.getByRole('link', { name: 'terms of service' });
       expect(termsLink).toBeInTheDocument();
       expect(termsLink).toHaveAttribute('href', '/terms-of-service');
-      expect(termsLink.parentElement).toHaveTextContent('Review our terms of service.');
+      expect(termsLink.parentElement).toHaveTextContent('Review our terms of service(*Required)');
 
       // ensure terms of service link opens in a new tab
       expect(termsLink).toHaveAttribute('target', '_blank');
