@@ -108,6 +108,7 @@ jobs:
           fi
 
           # Get the releases
+          echo "Get the releases"
           gh api /repos/department-of-veterans-affairs/developer-portal/releases > releases.json
           CURRENT_RELEASE_ID=`jq ".[] | select(.tag_name == \"${{ env.current-release-tag }}\") | .id" releases.json`
           PROPOSED_RELEASE_PRS=`jq -r ".[] | select(.id > $CURRENT_RELEASE_ID ) | \"- \" + .name + \"\"" releases.json | sed -E 's/(.*)\#([0-9]{1,})\)/\2/'`
@@ -117,6 +118,8 @@ jobs:
           echo '```' >> maintainer-notes.txt
           touch user-notes.txt
           for pr in `echo $PROPOSED_RELEASE_PRS`; do
+            echo "Get individual PR info"
+            echo $pr
             gh api /repos/department-of-veterans-affairs/developer-portal/pulls/$pr > pr-$pr.json
             if [ "impact: maintainers" == "`jq -r '.labels[] | select(.name == \"impact: maintainers\") .name' pr-$pr.json`" ]; then
               echo "- " `jq -r '.title' pr-$pr.json` "[#$pr](https://github.com/department-of-veterans-affairs/developer-portal/pull/$pr)" >> maintainer-notes.txt
@@ -153,6 +156,7 @@ jobs:
 
           cat maintenance-request.md
 
+          echo "Create issue"
           gh issue create \
             -R 'department-of-veterans-affairs/lighthouse-devops-support' \
             --title "$ISSUE_TITLE" \
