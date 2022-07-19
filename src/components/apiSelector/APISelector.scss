@@ -16,9 +16,39 @@
   }
 }
 
+@include media($medium-screen) {
+  .api-selector-container {
+    button {
+      width: calc(100% - 2rem);
+      margin: 4.2rem 0 2rem 2rem !important;
+    }
+  }
+}
+
 .api-selector-container {
   background-color: #f1f1f1;
   padding: 1.5rem 10px;
+
+  .tooltip {
+    display: none;
+    background: $color-gray-dark;
+    color: $color-gray-lightest;
+    padding: 5px 10px;
+    border-radius: 2px;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+
+    .arrow {
+      position: absolute;
+      background: $color-gray-dark;
+      width: 8px;
+      height: 8px;
+      transform: rotate(45deg);
+    }
+  }
 
   label {
     margin-top: 1rem;
@@ -31,8 +61,10 @@
   }
 
   button {
-    width: calc(100% - 2rem);
-    margin: 4.2rem 0 2rem 2rem;
+    width: 100%;
+    padding: 10px 0;
+    margin: 8px 0;
+    white-space: nowrap;
   }
 
   #swagger-ui & {
