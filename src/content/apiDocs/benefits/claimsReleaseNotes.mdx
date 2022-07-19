@@ -1,3 +1,40 @@
+### July 18, 2022
+
+We made changes to our [Benefits Claims API](https://developer.va.gov/explore/benefits/docs/claims?version=current) in order to better align the data this API returns with the data returned by the [Benefits Reference Data API](https://developer.va.gov/explore/benefits/docs/benefits_reference_data?version=current). These changes make it easier to use both APIs. 
+
+## Changes to the POST /forms/526 endpoint
+
+We updated the list of values in our enumeration for the serviceBranch field so they align with the /service-branches endpoint in the Benefits Reference Data API. 
+
+* We now support Space Force as a service branch.
+
+The following service branches are no longer valid and will be translated for backward compatibility:
+* Air Force Civilian is now Other
+* Army Air Corps is now Army Air Corps or Army Air Force
+* Army Nurse Corps is now Army
+* Commonwealth Army Veteran is now Other
+* Guerrilla Combination Service is now Other
+* Marine is now Marine Corps
+* National Oceanic and Atmospheric Administration is now National Oceanic & Atmospheric Administration
+* Regular Philippine Scout is now Other
+* Regular Scout Service is now Other
+* Special Philippine Scout is now Other
+* Unknown is now Other
+* Woman Air Corps is now Other 
+
+The changes for this endpoint apply to these request parameters:
+* serviceInformation.servicePeriods.serviceBranch
+* servicePay.militaryRetiredPay.payment.serviceBranch
+* servicePay.separationPay.payment.serviceBranch
+
+[The changes for this endpoint were made in PR #10161.](https://github.com/department-of-veterans-affairs/vets-api/pull/10161)
+
+## Changes to the POST /forms/2122 endpoint
+
+We updated this endpoint to allow requests to include a new property, serviceBranchOther. When choosing OTHER as the service branch on this request, you can now include a string value to specify the service branch name. This value will be included on the 2122a form for establishing an individual as the Veteran's power of attorney (POA).
+
+[The changes for this endpoint were made in PR #10182.](https://github.com/department-of-veterans-affairs/vets-api/pull/10182)
+
 ### May 16, 2022
 
 - We corrected our validation logic for the `title10ActivationDate` in our POST "/forms/526" endpoint. The `title10ActivationDate` cannot be in the future and must be after the earliest `servicePeriod.activeDutyBeginDate`. [These changes were made in PR #9851](https://github.com/department-of-veterans-affairs/vets-api/pull/9851).
