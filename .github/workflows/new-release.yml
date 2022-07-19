@@ -136,6 +136,12 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         run: |
           RELEASE_TITLE=`gh api /repos/department-of-veterans-affairs/developer-portal/commits/$GITHUB_SHA | jq -r '.commit.message' | head -1`
+          # If the commit message doesn't include the PR number at the end, append it.
+          if ! [[ $RELEASE_TITLE =~ \(\#[0-9]\) ]]; then
+            echo "PR number missing. This will append it to the release title."
+            PR_NUMBER=`gh api -X GET search/issues -f q="$GITHUB_SHA" | jq -r '.items[0].number'`
+            RELEASE_TITLE="$RELEASE_TITLE (#$PR_NUMBER)"
+          fi
           NEW_TAG=$(git tag --sort=-creatordate | head -1 | awk -F. -v OFS=. '{$NF++;print}')
           VERSION=${NEW_TAG#"developer-portal/v"}
           gh release create $NEW_TAG --title="$RELEASE_TITLE"
