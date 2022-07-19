@@ -21,7 +21,6 @@ const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
       selectedOption={props.selectedOption}
       buttonText="Update page"
       buttonSuccessMessage="Page updated!"
-      theme="light"
     />
     <h2 tabIndex={-1} id="on-this-page">
       On this Page:

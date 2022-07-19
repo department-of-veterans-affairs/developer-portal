@@ -113,7 +113,6 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
         selectedOption={selectedOAuthApi}
         buttonText="Update page"
         buttonSuccessMessage="Page updated!"
-        theme="light"
       />
       <GoodToKnow />
       <GettingStarted />

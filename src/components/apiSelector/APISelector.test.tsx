@@ -61,7 +61,6 @@ describe('APISelector', () => {
           selectedOption="claims"
           buttonText="Update page"
           buttonSuccessMessage="Page updated!"
-          theme="light"
         />
       </Provider>,
     );
@@ -78,7 +77,6 @@ describe('APISelector', () => {
           selectedOption="claims"
           buttonText="Update page"
           buttonSuccessMessage="Page updated!"
-          theme="light"
         />
       </Provider>,
     );
