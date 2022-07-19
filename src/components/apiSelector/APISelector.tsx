@@ -114,7 +114,6 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
     >
       <div className="vads-l-row">
         <label
-          htmlFor="api-selector-field"
           className={classNames(
             'vads-l-col--12',
             'medium-screen:vads-l-col--9',
@@ -123,7 +122,6 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
           { theme === 'light' && selectorLabel }
           {/* eslint-disable-next-line jsx-a11y/no-onchange */}
           <select
-            id="api-selector-field"
             aria-label={selectLabel}
             value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
             onChange={onSelectionChange}
