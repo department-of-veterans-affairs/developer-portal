@@ -12,8 +12,10 @@ import './APISelector.scss';
 interface APISelectorProps {
   options: APIDescription[];
   selectedOption: string;
+  buttonText: string;
+  buttonSuccessMessage: string;
+  theme?: string;
   selectLabel?: string;
-  withButton?: boolean;
 }
 
 const APISelector = (props: APISelectorProps): JSX.Element => {
@@ -22,12 +24,8 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   const [apiSelectionButtonDisabled, setApiSelectionButtonDisabled] = React.useState<boolean>();
 
   const onSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    if (props.withButton) {
-      setSelectedOptionOverride(event.currentTarget.value);
-      setApiSelectionButtonDisabled(false);
-    } else {
-      dispatch(setOAuthApiSelection(event.currentTarget.value));
-    }
+    setSelectedOptionOverride(event.currentTarget.value);
+    setApiSelectionButtonDisabled(false);
   };
   const update = (button: HTMLButtonElement): void => {
     const tooltip = button.nextElementSibling as HTMLElement;
@@ -84,8 +82,9 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
 
     event.stopPropagation();
   };
-  const { selectedOption, options } = props;
+  const { selectedOption } = props;
   const selectLabel = props.selectLabel ?? 'Select an API to update the code snippet';
+  const theme = props.theme ?? 'light';
   const selectorLabel = 'Select an API';
   const buttonDisabled = apiSelectionButtonDisabled ?? true;
 
@@ -105,67 +104,57 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (props.withButton) {
-    return (
-      <div className="api-selector-container vads-l-grid-container vads-u-padding-y--2">
-        <div className="vads-l-row">
-          <label
-            htmlFor="api-selector-field"
-            className={classNames(
-              'vads-l-col--12',
-              'medium-screen:vads-l-col--9',
-            )}
+  return (
+    <div
+      className={classNames(
+        'api-selector-container',
+        'vads-l-grid-container',
+        `theme-${theme}`,
+      )}
+    >
+      <div className="vads-l-row">
+        <label
+          className={classNames(
+            'vads-l-col--12',
+            'medium-screen:vads-l-col--9',
+          )}
+        >
+          { theme === 'light' && selectorLabel }
+          {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+          <select
+            aria-label={selectLabel}
+            value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
+            onChange={onSelectionChange}
           >
-            {selectorLabel}
-            {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-            <select
-              id="api-selector-field"
-              aria-label={selectLabel}
-              value={selectedOptionOverride ? selectedOptionOverride : selectedOption}
-              onChange={onSelectionChange}
-            >
-              {props.options.map(item => (
-                <option value={item.urlFragment} key={item.urlFragment}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <div
-            className={classNames(
-              'vads-l-col--12',
-              'medium-screen:vads-l-col--3',
-            )}
+            {props.options.map(item => (
+              <option value={item.urlFragment} key={item.urlFragment}>
+                {item.name}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div
+          className={classNames(
+            'vads-l-col--12',
+            'medium-screen:vads-l-col--3',
+          )}
+        >
+          <button
+            disabled={buttonDisabled}
+            onClick={onButtonClick}
+            type="button"
+            className="page-updater"
           >
-            <button
-              disabled={buttonDisabled}
-              onClick={onButtonClick}
-              type="button"
-              className="page-updater"
-            >
-              Update page
-            </button>
-            <div className="tooltip" role="tooltip">
-              Page updated!
-              <div className="arrow" />
-            </div>
+            {props.buttonText}
+          </button>
+          <div className="tooltip" role="tooltip">
+            {props.buttonSuccessMessage}
+            <div className="arrow" />
           </div>
         </div>
       </div>
-    );
-  } else {
-    return (
-      <div className="api-selector">
-        <select onChange={onSelectionChange} value={selectedOption} aria-label={selectLabel}>
-          {options.map(item => (
-            <option value={item.urlFragment} key={item.urlFragment}>
-              {item.name}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }
+    </div>
+  );
 };
 
 export { APISelector };

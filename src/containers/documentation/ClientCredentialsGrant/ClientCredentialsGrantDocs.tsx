@@ -108,7 +108,12 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
         described in the{' '}
         <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
       </p>
-      <APISelector options={options} selectedOption={selectedOAuthApi} withButton />
+      <APISelector
+        options={options}
+        selectedOption={selectedOAuthApi}
+        buttonText="Update page"
+        buttonSuccessMessage="Page updated!"
+      />
       <GoodToKnow />
       <GettingStarted />
       <AuthCodeFlowContent options={options} selectedOption={selectedOAuthApi} />

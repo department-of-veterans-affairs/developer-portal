@@ -42,7 +42,13 @@ const RetrievingTokenContent: FC<RetrievingTokenProps> = ({
         </p>
       )}
       <p>Select your API from the dropdown to see the correct auth server in the example.</p>
-      <APISelector options={options} selectedOption={selectedOption} />
+      <APISelector
+        options={options}
+        selectedOption={selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
