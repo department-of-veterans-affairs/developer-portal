@@ -79,14 +79,11 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
 
     return (
       <>
-        <div className="api-selector-container vads-l-grid-container vads-u-padding-y--2">
+        <div className="api-selector-container vads-l-grid-container theme-light">
           <div className="vads-l-row">
             <label
               htmlFor="api-selector-field"
-              className={classNames(
-                'vads-l-col--12',
-                'medium-screen:vads-l-col--9',
-              )}
+              className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--9')}
             >
               {selectorLabel}
               {/* eslint-disable-next-line jsx-a11y/no-onchange */}
@@ -109,10 +106,10 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
             </label>
             <div
               className={classNames(
-              'vads-l-col--12',
-              'medium-screen:vads-l-col--3',
-              'vads-u-text-align--center'
-            )}
+                'vads-l-col--12',
+                'medium-screen:vads-l-col--3',
+                'vads-u-text-align--center',
+              )}
             >
               <button
                 onClick={(): void => this.handleButtonClick()}
