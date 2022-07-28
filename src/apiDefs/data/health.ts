@@ -178,7 +178,7 @@ const healthApis: APIDescription[] = [
   {
     altID: 'health',
     description:
-      'Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.',
+      'Use the OpenID Connect and SMART on FHIR standards to allow VA patients to authorize third-party applications to access data on their behalf.',
     docSources: [
       {
         metadataUrl: `${OPEN_API_SPEC_HOST}/internal/docs/fhir/metadata.json`,

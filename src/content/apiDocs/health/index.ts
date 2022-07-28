@@ -18,7 +18,8 @@ const healthContent: APICategoryContent = {
   consumerDocsLinkText: 'Read the consumer onboarding guide for getting production access',
   overview: HealthOverview,
   quickstart: HealthQuickstart,
-  shortDescription: 'Use our APIs to build tools that help Veterans manage their health.',
+  shortDescription:
+    'Use our APIs to build tools that help Veterans and VA patients manage their health.',
 };
 
 export {
