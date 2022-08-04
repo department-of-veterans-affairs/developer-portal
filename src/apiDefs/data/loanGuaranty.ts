@@ -35,6 +35,7 @@ const loanGuarantyApis: APIDescription[] = [
     openData: false,
     releaseNotes: GuarantyRemittanceReleaseNotes,
     urlFragment: 'lgy_guaranty_remittance',
+    vaInternalOnly: VaInternalOnly.FlagOnly,
   },
   {
     description: 'Use the Loan Guaranty API to Manage VA Home Loans.',
