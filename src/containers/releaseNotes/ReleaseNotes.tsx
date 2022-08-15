@@ -14,6 +14,7 @@ import { ContentWithNav, SideNavEntry } from '../../components';
 import { Flag } from '../../flags';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
+import './ReleaseNotes.scss';
 
 interface SideNavAPIEntryProps {
   api: APIDescription;
