@@ -18,17 +18,16 @@ export const sections: SupportSection[] = [
   {
     callToAction: 'Read our FAQs',
     component: FAQ,
-    description:
-      'Answers to frequently asked questions about the VA API program and the APIs themselves.',
+    description: 'Answers to frequently asked questions.',
     id: 'faq',
-    name: 'FAQ',
+    name: 'FAQs',
   },
   {
-    callToAction: 'Send us a message',
+    callToAction: 'Go to the form',
     component: ContactUs,
-    description: 'Send us a message using the Contact Us form.',
+    description: 'Open a ticket using our support form.',
     id: 'contact-us',
-    name: 'Contact Us',
+    name: 'Developer portal support form',
   },
 ];
 
