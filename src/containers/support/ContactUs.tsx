@@ -28,12 +28,17 @@ const ContactUs = (): JSX.Element => {
       {!sent && (
         <>
           <Helmet>
-            <title>Contact Us</title>
+            <title>Developer portal support</title>
           </Helmet>
-          <PageHeader halo="Support" header="Contact Us" />
+          <PageHeader halo="Support" header="Developer portal support" />
           <p>
-            If you have questions about APIs, development, or related topics, use this form to send
-            us a message.
+            <strong>
+              You’ve reached our support form for software developers and API publishers.
+            </strong>
+          </p>
+          <p>
+            Open a ticket if you have any questions about APIs, development, or other related
+            topics.
           </p>
           <VeteranResources />
           <ContactUsForm onSuccess={onSuccess} defaultType={type} />

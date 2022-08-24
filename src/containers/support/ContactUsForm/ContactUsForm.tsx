@@ -75,8 +75,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
     setSubmissionError(false);
 
     try {
-      const forgeryToken = Math.random().toString(36)
-                                        .substring(2);
+      const forgeryToken = Math.random().toString(36).substring(2);
       setCookie('CSRF-TOKEN', forgeryToken, {
         path: LPB_CONTACT_US_URL,
         sameSite: 'strict',
@@ -132,7 +131,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
           {values.type === FormType.PUBLISHING && <PublishingFormFields />}
 
           <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>
-            {isSubmitting ? 'Sending...' : 'Submit'}
+            {isSubmitting ? 'Sending...' : 'Send to developer support'}
           </button>
           {submissionError && (
             <AlertBox
