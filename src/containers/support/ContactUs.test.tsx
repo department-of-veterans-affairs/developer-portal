@@ -32,7 +32,7 @@ describe('ContactUs', () => {
       </Router>,
     );
     const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading).toHaveTextContent('Contact Us');
+    expect(heading).toHaveTextContent('Developer portal support');
   });
 
   describe('query params', () => {

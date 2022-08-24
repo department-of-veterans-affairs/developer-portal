@@ -12,6 +12,6 @@ describe('SupportFAQ', () => {
       </Router>,
     );
     const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading).toHaveTextContent('Support');
+    expect(heading).toHaveTextContent('Developer portal support');
   });
 });
