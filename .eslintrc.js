@@ -317,6 +317,7 @@ const reactRules = {
   'react/static-property-placement': 'error',
   'react/style-prop-object': 'error',
   'react/void-dom-elements-no-children': 'error',
+  'react-redux/prefer-separate-component-file': 'off',
 };
 
 module.exports = {

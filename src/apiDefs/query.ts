@@ -21,6 +21,24 @@ import * as rootGetApiDefinitions from './getApiDefinitions';
 
 const getApiDefinitions = (): APICategories => rootGetApiDefinitions.getApiDefinitions();
 
+const apiLoadingState = {
+  ERROR: 3,
+  IN_PROGRESS: 1,
+  LOADED: 2,
+  UNKNOWN: 0,
+};
+
+const getApisLoadedState = (): number => {
+  const state = store.getState();
+  if (state.apiList.loaded) {
+    return apiLoadingState.LOADED;
+  } else if (state.apiList.error) {
+    return apiLoadingState.ERROR;
+  } else {
+    return apiLoadingState.IN_PROGRESS;
+  }
+};
+
 const getApisLoaded = (): boolean => {
   const state = store.getState();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
@@ -141,6 +159,8 @@ export {
   apisFor,
   getActiveKeyAuthApis,
   getActiveOauthApis,
+  getApisLoadedState,
+  apiLoadingState,
   getApisLoaded,
   getAllApis,
   getAllOauthApis,

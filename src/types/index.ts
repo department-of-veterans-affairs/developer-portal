@@ -41,6 +41,7 @@ export interface OAuthAPISelection {
 
 export interface ApiList {
   apis: APICategories;
+  error: boolean;
   loaded: boolean;
 }
 

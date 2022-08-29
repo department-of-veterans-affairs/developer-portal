@@ -5,7 +5,7 @@ import { Route, Router } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
 import { applyPolyfills, defineCustomElements } from 'web-components/loader';
 import { LPB_PROVIDERS_URL } from './types/constants';
-import { SetAPIs, setApis } from './actions';
+import { setApiLoadingError, SetAPIs, setApis } from './actions';
 import { APICategories } from './apiDefs/schema';
 import { Footer, Header, PageContent } from './components';
 import { FlagsProvider, getFlags } from './flags';
@@ -33,7 +33,8 @@ const App = (): JSX.Element => {
     fetch(LPB_PROVIDERS_URL)
       .then(res => res.json())
       .then(res => res as APICategories)
-      .then(apis => dispatch(setApis(apis)));
+      .then(apis => dispatch(setApis(apis)))
+      .catch(() => dispatch(setApiLoadingError()));
 
   React.useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
@@ -65,5 +66,4 @@ const App = (): JSX.Element => {
 
 const mapStateToProps = (state: RootState): APICategories => state.apiList.apis;
 
-// eslint-disable-next-line react-redux/prefer-separate-component-file
 export default connect(mapStateToProps)(App);

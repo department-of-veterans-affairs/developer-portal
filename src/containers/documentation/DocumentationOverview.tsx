@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
-import { getApiCategoryOrder, getApiDefinitions, getApisLoaded } from '../../apiDefs/query';
+import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { FLAG_CATEGORIES } from '../../types/constants';
-import { defaultLoadingProps } from '../../utils/loadingHelper';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
 
 const DocumentationOverview = (): JSX.Element => {
   const apiDefinitions = getApiDefinitions();
@@ -21,7 +20,7 @@ const DocumentationOverview = (): JSX.Element => {
         header="Documentation"
         description="Explore usage policies and technical details about VA's API offerings."
       />
-      {getApisLoaded() ? (
+      <ApisLoader>
         <div className={defaultFlexContainer()}>
           <CardLink
             name="Authorization"
@@ -46,9 +45,7 @@ const DocumentationOverview = (): JSX.Element => {
             );
           })}
         </div>
-      ) : (
-        <LoadingIndicator {...defaultLoadingProps()} />
-      )}
+      </ApisLoader>
     </div>
   );
 };
