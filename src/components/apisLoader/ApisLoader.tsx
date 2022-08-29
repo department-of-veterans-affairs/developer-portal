@@ -6,18 +6,30 @@ import { defaultLoadingProps } from '../../utils/loadingHelper';
 import { ApiList, RootState } from '../../types';
 
 interface ApisLoaderProps {
-  children: JSX.Element;
+  children?: JSX.Element;
+  hideError?: boolean;
+  hideSpinner?: boolean;
   state?: ApiList;
 }
 
 const ApisLoader: React.FunctionComponent<ApisLoaderProps> = (props): JSX.Element => {
   switch (getApisLoadedState()) {
     case apiLoadingState.LOADED:
-      return props.children;
+      return props.children ?? <div />;
     case apiLoadingState.IN_PROGRESS:
-      return <LoadingIndicator {...defaultLoadingProps()} />;
+      return props.hideSpinner ? <div /> : <LoadingIndicator {...defaultLoadingProps()} />;
     case apiLoadingState.ERROR:
-      return <h1>ApisLoader Error</h1>;
+      return props.hideError ? (
+        <div />
+      ) : (
+        <va-alert status="error" visible>
+          <h2 className="headline">Loading Error:</h2>
+          <p className="vads-u-margin-y--0">
+            API details failed to load from Lighthouse Platform Backend. Please reload or try again
+            later if the issue persists.
+          </p>
+        </va-alert>
+      );
     default:
       return <div />;
   }

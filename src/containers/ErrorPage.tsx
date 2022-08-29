@@ -4,9 +4,10 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useLocation } from 'react-router-dom';
 import { getApiDefinitions } from '../apiDefs/getApiDefinitions';
-import { getApiCategoryOrder, getApisLoaded } from '../apiDefs/query';
+import { getApiCategoryOrder } from '../apiDefs/query';
 import errorImage400 from '../assets/400.svg';
 import errorImage404 from '../assets/404.svg';
+import ApisLoader from '../components/apisLoader/ApisLoader';
 import { Flag } from '../flags';
 import { FLAG_CATEGORIES } from '../types/constants';
 import './ErrorPage.scss';
@@ -95,6 +96,7 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
           'vads-u-padding--3',
         )}
       >
+        <ApisLoader hideSpinner />
         <div className="vads-l-row">
           <div className="list-wrapper">
             <h3>
@@ -104,7 +106,7 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
               <li>
                 <Link to="/explore/authorization">Authorization</Link>
               </li>
-              {getApisLoaded() && (
+              <ApisLoader hideError>
                 <>
                   {apiCategoryOrder.map((apiCategoryKey: string) => {
                     const { name } = apiDefinitions[apiCategoryKey];
@@ -117,7 +119,7 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
                     );
                   })}
                 </>
-              )}
+              </ApisLoader>
             </ul>
           </div>
           <div className="list-wrapper">
@@ -141,7 +143,7 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
               <a href="/release-notes">Release Notes</a>
             </h3>
             <ul>
-              {getApisLoaded() && (
+              <ApisLoader hideError>
                 <>
                   {apiCategoryOrder.map((apiCategoryKey: string) => {
                     const { name } = apiDefinitions[apiCategoryKey];
@@ -154,7 +156,7 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
                     );
                   })}
                 </>
-              )}
+              </ApisLoader>
             </ul>
           </div>
           <div className="list-wrapper">
