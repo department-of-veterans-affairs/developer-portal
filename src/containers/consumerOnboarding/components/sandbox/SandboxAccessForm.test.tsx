@@ -5,12 +5,15 @@ import React from 'react';
 import 'jest';
 import '@testing-library/jest-dom/extend-expect';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
 import { makeRequest } from '../../../../utils/makeRequest';
 import * as apiQueries from '../../../../apiDefs/query';
 import * as rootApiQuery from '../../../../apiDefs/getApiDefinitions';
 import { FlagsProvider, getFlags } from '../../../../flags';
 import { fakeCategories } from '../../../../__mocks__/fakeCategories';
 import { APICategories, VaInternalOnly } from '../../../../apiDefs/schema';
+import { apiLoadingState } from '../../../../types/constants';
+import store from '../../../../store';
 import { SandboxAccessForm } from './SandboxAccessForm';
 
 jest.mock('../../../../utils/makeRequest', () => ({
@@ -24,11 +27,13 @@ const mockMakeRequest = makeRequest as jest.Mock;
 const renderComponent = async (): Promise<void> => {
   await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
   render(
-    <FlagsProvider flags={getFlags()}>
-      <MemoryRouter>
-        <SandboxAccessForm onSuccess={mockOnSuccess} />
-      </MemoryRouter>
-    </FlagsProvider>,
+    <Provider store={store}>
+      <FlagsProvider flags={getFlags()}>
+        <MemoryRouter>
+          <SandboxAccessForm onSuccess={mockOnSuccess} />
+        </MemoryRouter>
+      </FlagsProvider>
+    </Provider>,
   );
 };
 
@@ -56,7 +61,7 @@ describe('SandboxAccessForm', () => {
   beforeEach(async () => {
     document.querySelectorAll = jest.fn(() => [{ focus: jest.fn() }] as unknown as NodeList);
     jest.spyOn(rootApiQuery, 'getApiDefinitions').mockReturnValue(armageddonResetFakeCategories);
-    jest.spyOn(apiQueries, 'getApisLoaded').mockReturnValue(true);
+    jest.spyOn(apiQueries, 'getApisLoadedState').mockReturnValue(apiLoadingState.LOADED);
 
     await renderComponent();
   });

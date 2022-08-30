@@ -3,33 +3,40 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
 import { fakeAPIs, fakeCategories, fakeCategoryOrder } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
 import { APICategories, APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
+import store from '../../store';
+import { apiLoadingState } from '../../types/constants';
 import ReleaseNotesOverview from './ReleaseNotesOverview';
 
 const renderComponent = async (): Promise<void> => {
   await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
   render(
-    <FlagsProvider flags={getFlags()}>
-      <MemoryRouter>
-        <ReleaseNotesOverview />
-      </MemoryRouter>
-    </FlagsProvider>,
+    <Provider store={store}>
+      <FlagsProvider flags={getFlags()}>
+        <MemoryRouter>
+          <ReleaseNotesOverview />
+        </MemoryRouter>
+      </FlagsProvider>
+    </Provider>,
   );
 };
 
 describe('ReleaseNotesOverview', () => {
   let apiDefsSpy: jest.SpyInstance<APICategories>;
   let allAPIsSpy: jest.SpyInstance<APIDescription[]>;
-  let apisLoadedSpy: jest.SpyInstance<boolean>;
+  let apisLoadedSpy: jest.SpyInstance<string>;
 
   beforeAll(() => {
     jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
     apiDefsSpy = jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
     allAPIsSpy = jest.spyOn(apiQueries, 'getAllApis').mockReturnValue(fakeAPIs);
-    apisLoadedSpy = jest.spyOn(apiQueries, 'getApisLoaded').mockReturnValue(true);
+    apisLoadedSpy = jest
+      .spyOn(apiQueries, 'getApisLoadedState')
+      .mockReturnValue(apiLoadingState.LOADED);
   });
 
   beforeEach(renderComponent);
@@ -81,7 +88,7 @@ describe('ReleaseNotesOverview', () => {
     });
 
     it('has a loading indicator before the apis are loaded', async () => {
-      apisLoadedSpy.mockReturnValue(false);
+      apisLoadedSpy.mockReturnValue(apiLoadingState.IN_PROGRESS);
 
       await renderComponent();
       const loadingBar = screen.getByRole('progressbar');
@@ -89,7 +96,7 @@ describe('ReleaseNotesOverview', () => {
     });
 
     it('has a card link for deactivated APIs if there is at least one deactivated API', async () => {
-      apisLoadedSpy.mockReturnValue(true);
+      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
 
       await renderComponent();
       const cardLink = screen.getByRole('link', { name: 'Deactivated APIs' });
@@ -100,7 +107,7 @@ describe('ReleaseNotesOverview', () => {
     it('does not have a card link for deactivated APIs if there are none', async () => {
       const apis = fakeAPIs.map(api => ({ ...api, deactivationInfo: undefined }));
       allAPIsSpy.mockReturnValue(apis);
-      apisLoadedSpy.mockReturnValue(true);
+      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
       await renderComponent();
 
       expect(screen.queryByRole('link', { name: 'Deactivated APIs' })).toBeNull();

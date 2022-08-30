@@ -3,6 +3,7 @@ import { cleanup, getByRole, queryByRole, render, screen, waitFor } from '@testi
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter, Route } from 'react-router';
+import { Provider } from 'react-redux';
 import {
   extraAPI,
   extraDeactivationInfo,
@@ -15,6 +16,7 @@ import { APICategories, APIDescription } from '../../apiDefs/schema';
 import store from '../../store';
 import { setApis } from '../../actions';
 import { FlagsProvider, getFlags } from '../../flags';
+import { apiLoadingState } from '../../types/constants';
 import { CategoryReleaseNotes, DeactivatedReleaseNotes } from './CategoryReleaseNotes';
 
 describe('ReleaseNotesCollection', () => {
@@ -26,17 +28,20 @@ describe('ReleaseNotesCollection', () => {
     jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
     apiDefsSpy = jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
     allAPIsSpy = jest.spyOn(apiQueries, 'getAllApis').mockReturnValue(fakeAPIs);
+    jest.spyOn(apiQueries, 'getApisLoadedState').mockReturnValue(apiLoadingState.LOADED);
   });
 
   describe('CategoryReleaseNotes', () => {
     const renderComponent = async (route = '/release-notes/lotr'): Promise<void> => {
       await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
       render(
-        <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={[route]}>
-            <Route path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotes} />
-          </MemoryRouter>
-        </FlagsProvider>,
+        <Provider store={store}>
+          <FlagsProvider flags={getFlags()}>
+            <MemoryRouter initialEntries={[route]}>
+              <Route path="/release-notes/:apiCategoryKey" component={CategoryReleaseNotes} />
+            </MemoryRouter>
+          </FlagsProvider>
+        </Provider>,
       );
     };
 
@@ -158,11 +163,13 @@ describe('ReleaseNotesCollection', () => {
     const renderComponent = async (): Promise<void> => {
       await waitFor(() => cleanup());
       render(
-        <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/release-notes/deactivated']}>
-            <Route path="/release-notes/deactivated" component={DeactivatedReleaseNotes} />
-          </MemoryRouter>
-        </FlagsProvider>,
+        <Provider store={store}>
+          <FlagsProvider flags={getFlags()}>
+            <MemoryRouter initialEntries={['/release-notes/deactivated']}>
+              <Route path="/release-notes/deactivated" component={DeactivatedReleaseNotes} />
+            </MemoryRouter>
+          </FlagsProvider>
+        </Provider>,
       );
     };
 
