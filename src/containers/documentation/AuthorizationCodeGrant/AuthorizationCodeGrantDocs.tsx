@@ -9,7 +9,12 @@ import {
   setOAuthApiSelection,
   SetOAuthAPISelection,
 } from '../../../actions';
-import { getActiveAuthCodeApis, getActiveOauthApis, getApisLoaded } from '../../../apiDefs/query';
+import {
+  apiLoadingState,
+  getActiveAuthCodeApis,
+  getActiveOauthApis,
+  getApisLoadedState,
+} from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { PageHeader } from '../../../components';
 import { Https } from '../../../components/oauthDocs/acg/Https';
@@ -63,7 +68,7 @@ const setInitialApi = (
 };
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
-  const apisLoaded = getApisLoaded();
+  const apisLoaded = getApisLoadedState() === apiLoadingState.LOADED;
   const history = useHistory();
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();

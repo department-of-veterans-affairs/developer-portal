@@ -13,11 +13,7 @@ const QuickstartPage = (): JSX.Element => {
     getApisLoadedState() === apiLoadingState.IN_PROGRESS ||
     getApisLoadedState() === apiLoadingState.ERROR
   ) {
-    return (
-      <ApisLoader>
-        <div />
-      </ApisLoader>
-    );
+    return <ApisLoader />;
   }
   const {
     content: { quickstart: quickstartContent },
