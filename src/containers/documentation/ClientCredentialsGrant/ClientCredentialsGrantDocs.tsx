@@ -14,16 +14,11 @@ import {
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import {
-  apiLoadingState,
-  getActiveCCGApis,
-  getActiveOauthApis,
-  getApisLoadedState,
-} from '../../../apiDefs/query';
+import { getActiveCCGApis, getActiveOauthApis, getApisLoadedState } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
 import { usePrevious } from '../../../hooks';
-import { DEFAULT_OAUTH_CCG_API_SELECTION } from '../../../types/constants';
+import { apiLoadingState, DEFAULT_OAUTH_CCG_API_SELECTION } from '../../../types/constants';
 
 import './ClientCredentialsGrantDocs.scss';
 import ApisLoader from '../../../components/apisLoader/ApisLoader';

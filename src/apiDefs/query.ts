@@ -14,6 +14,7 @@
  */
 
 import store from '../store';
+import { apiLoadingState } from '../types/constants';
 import { isHostedApiEnabled } from './env';
 import { isApiDeactivated } from './deprecated';
 import { APICategories, APICategory, APIDescription, VaInternalOnly } from './schema';
@@ -21,13 +22,7 @@ import * as rootGetApiDefinitions from './getApiDefinitions';
 
 const getApiDefinitions = (): APICategories => rootGetApiDefinitions.getApiDefinitions();
 
-const apiLoadingState = {
-  ERROR: 3,
-  IN_PROGRESS: 1,
-  LOADED: 2,
-};
-
-const getApisLoadedState = (): number => {
+const getApisLoadedState = (): string => {
   const state = store.getState();
   if (state.apiList.loaded) {
     return apiLoadingState.LOADED;
@@ -159,7 +154,6 @@ export {
   getActiveKeyAuthApis,
   getActiveOauthApis,
   getApisLoadedState,
-  apiLoadingState,
   getApisLoaded,
   getAllApis,
   getAllOauthApis,

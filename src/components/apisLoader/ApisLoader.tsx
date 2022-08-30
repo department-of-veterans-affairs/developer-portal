@@ -1,9 +1,10 @@
 import * as React from 'react';
 import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import { connect } from 'react-redux';
-import { apiLoadingState, getApisLoadedState } from '../../apiDefs/query';
+import { getApisLoadedState } from '../../apiDefs/query';
 import { defaultLoadingProps } from '../../utils/loadingHelper';
 import { ApiList, RootState } from '../../types';
+import { apiLoadingState } from '../../types/constants';
 
 interface ApisLoaderProps {
   children?: JSX.Element;

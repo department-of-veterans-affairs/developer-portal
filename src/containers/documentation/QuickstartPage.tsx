@@ -2,10 +2,11 @@ import * as React from 'react';
 
 import { Redirect, useParams } from 'react-router';
 
-import { apiLoadingState, getApiDefinitions, getApisLoadedState } from '../../apiDefs/query';
+import { getApiDefinitions, getApisLoadedState } from '../../apiDefs/query';
 import { QuickstartWrapper } from '../../components';
 import { APINameParam } from '../../types';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
+import { apiLoadingState } from '../../types/constants';
 
 const QuickstartPage = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();

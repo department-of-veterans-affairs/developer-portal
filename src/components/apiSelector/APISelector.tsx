@@ -5,10 +5,10 @@ import { computePosition, flip, shift, offset, arrow } from '@floating-ui/react-
 import classNames from 'classnames';
 import * as Sentry from '@sentry/browser';
 import { SetOAuthAPISelection, setOAuthApiSelection } from '../../actions';
-import { apiLoadingState, getApisLoadedState } from '../../apiDefs/query';
+import { getApisLoadedState } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-
 import './APISelector.scss';
+import { apiLoadingState } from '../../types/constants';
 
 interface APISelectorProps {
   options: APIDescription[];

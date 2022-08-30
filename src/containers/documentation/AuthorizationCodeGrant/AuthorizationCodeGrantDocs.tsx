@@ -10,7 +10,6 @@ import {
   SetOAuthAPISelection,
 } from '../../../actions';
 import {
-  apiLoadingState,
   getActiveAuthCodeApis,
   getActiveOauthApis,
   getApisLoadedState,
@@ -26,7 +25,7 @@ import { BuildingOIDCContent } from '../../../components/oauthDocs/acg/BuildingO
 import { GettingStarted } from '../../../components/oauthDocs/acg/GettingStarted';
 import { usePrevious } from '../../../hooks';
 import { RootState } from '../../../types';
-import { DEFAULT_OAUTH_API_SELECTION } from '../../../types/constants';
+import { apiLoadingState, DEFAULT_OAUTH_API_SELECTION } from '../../../types/constants';
 
 import './AuthorizationCodeGrantDocs.scss';
 

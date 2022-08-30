@@ -2,12 +2,7 @@ import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
-import {
-  apiLoadingState,
-  getActiveApiDefinitions,
-  getApiCategoryOrder,
-  getApisLoadedState,
-} from './apiDefs/query';
+import { getActiveApiDefinitions, getApiCategoryOrder, getApisLoadedState } from './apiDefs/query';
 import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
@@ -29,6 +24,7 @@ import {
 import { buildApiDetailRoutes } from './utils/routesHelper';
 import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
 import ErrorPage404 from './containers/ErrorPage404';
+import { apiLoadingState } from './types/constants';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
   const apiDefinitions = getActiveApiDefinitions();

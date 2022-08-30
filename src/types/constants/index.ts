@@ -30,3 +30,8 @@ export enum yesOrNoValues {
   Yes = 'yes',
   No = 'no',
 }
+export enum apiLoadingState {
+  IN_PROGRESS = 'in_progress',
+  LOADED = 'loaded',
+  ERROR = 'error',
+}
