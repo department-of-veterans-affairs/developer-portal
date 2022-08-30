@@ -23,7 +23,7 @@ const ApisLoader: React.FunctionComponent<ApisLoaderProps> = (props): JSX.Elemen
         <div />
       ) : (
         <va-alert status="error" visible>
-          <h2 className="headline">Loading Error:</h2>
+          <h2 slot="headline">Loading Error:</h2>
           <p className="vads-u-margin-y--0">
             API details failed to load from Lighthouse Platform Backend. Please reload or try again
             later if the issue persists.

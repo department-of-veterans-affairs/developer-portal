@@ -1,18 +1,23 @@
 import * as React from 'react';
-import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 
 import { Redirect, useParams } from 'react-router';
 
-import { getApiDefinitions, getApisLoaded } from '../../apiDefs/query';
+import { apiLoadingState, getApiDefinitions, getApisLoadedState } from '../../apiDefs/query';
 import { QuickstartWrapper } from '../../components';
 import { APINameParam } from '../../types';
-import { defaultLoadingProps } from '../../utils/loadingHelper';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
 
 const QuickstartPage = (): JSX.Element => {
-  const apisLoaded = getApisLoaded();
   const { apiCategoryKey } = useParams<APINameParam>();
-  if (!apisLoaded) {
-    return <LoadingIndicator {...defaultLoadingProps()} />;
+  if (
+    getApisLoadedState() === apiLoadingState.IN_PROGRESS ||
+    getApisLoadedState() === apiLoadingState.ERROR
+  ) {
+    return (
+      <ApisLoader>
+        <div />
+      </ApisLoader>
+    );
   }
   const {
     content: { quickstart: quickstartContent },

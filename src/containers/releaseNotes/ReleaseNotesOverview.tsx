@@ -1,16 +1,14 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import { getDeactivatedCategory } from '../../apiDefs/deprecated';
-import { getApiCategoryOrder, getApiDefinitions, getApisLoaded } from '../../apiDefs/query';
+import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 import { CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { FLAG_CATEGORIES } from '../../types/constants';
-import { defaultLoadingProps } from '../../utils/loadingHelper';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
 
 const ReleaseNotesOverview = (): JSX.Element => {
-  const apisLoaded = getApisLoaded();
   const apiDefs = getApiDefinitions();
   const deactivatedCategory = getDeactivatedCategory();
   return (
@@ -34,7 +32,7 @@ const ReleaseNotesOverview = (): JSX.Element => {
         </p>
       </div>
       <div className={defaultFlexContainer()}>
-        {apisLoaded ? (
+        <ApisLoader>
           <>
             {getApiCategoryOrder().map((apiCategoryKey: string) => {
               const { name, content } = apiDefs[apiCategoryKey];
@@ -61,9 +59,7 @@ const ReleaseNotesOverview = (): JSX.Element => {
               </CardLink>
             )}
           </>
-        ) : (
-          <LoadingIndicator {...defaultLoadingProps()} />
-        )}
+        </ApisLoader>
       </div>
     </div>
   );

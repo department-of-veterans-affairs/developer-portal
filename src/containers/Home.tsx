@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import documentationImage from '../assets/documentation.svg';
 import rocketImage from '../assets/rocket.svg';
 import branchImage from '../assets/branch.svg';
@@ -10,8 +9,8 @@ import './Home.scss';
 import { CardLink, Hero } from '../components';
 import { Flag } from '../flags';
 import { FLAG_CATEGORIES } from '../types/constants';
-import { getApiCategoryOrder, getApiDefinitions, getApisLoaded } from '../apiDefs/query';
-import { defaultLoadingProps } from '../utils/loadingHelper';
+import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
+import ApisLoader from '../components/apisLoader/ApisLoader';
 
 const columnContentClasses = classNames(
   'vads-u-text-align--center',
@@ -71,7 +70,6 @@ const ColumnContent = (props: ColumnContentProps): JSX.Element => {
 };
 
 const ApiList = (): JSX.Element => {
-  const apisLoaded = getApisLoaded();
   const apiDefinitions = getApiDefinitions();
   const apiCategoryOrder = getApiCategoryOrder();
 
@@ -88,7 +86,7 @@ const ApiList = (): JSX.Element => {
         </p>
         <div className="vads-l-row">
           <div className="vads-l-row vads-u-justify-content--space-evenly">
-            {apisLoaded ? (
+            <ApisLoader>
               <>
                 {apiCategoryOrder.map((apiCategoryKey: string) => {
                   const { name, content } = apiDefinitions[apiCategoryKey];
@@ -106,9 +104,7 @@ const ApiList = (): JSX.Element => {
                   );
                 })}
               </>
-            ) : (
-              <LoadingIndicator {...defaultLoadingProps()} />
-            )}
+            </ApisLoader>
           </div>
         </div>
       </div>

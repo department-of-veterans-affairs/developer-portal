@@ -25,7 +25,6 @@ const apiLoadingState = {
   ERROR: 3,
   IN_PROGRESS: 1,
   LOADED: 2,
-  UNKNOWN: 0,
 };
 
 const getApisLoadedState = (): number => {

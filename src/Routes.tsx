@@ -2,7 +2,12 @@ import * as React from 'react';
 import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
-import { getActiveApiDefinitions, getApiCategoryOrder, getApisLoaded } from './apiDefs/query';
+import {
+  apiLoadingState,
+  getActiveApiDefinitions,
+  getApiCategoryOrder,
+  getApisLoadedState,
+} from './apiDefs/query';
 import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
@@ -62,7 +67,9 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
           <Route exact key={path} path={path} component={DocumentationRoot} />
         ),
       )}
-      {!getApisLoaded() && <Route path="/explore/:name" component={DocumentationRoot} />}
+      {getApisLoadedState() === apiLoadingState.IN_PROGRESS && (
+        <Route path="/explore/:name" component={DocumentationRoot} />
+      )}
 
       {/* Release Notes */}
       <Route exact path="/release-notes" component={ReleaseNotes} />
@@ -77,7 +84,9 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
         ),
       )}
       <Route exact path="/release-notes/deactivated" component={ReleaseNotes} />
-      {!getApisLoaded() && <Route path="/release-notes/:name" component={ReleaseNotes} />}
+      {getApisLoadedState() === apiLoadingState.IN_PROGRESS && (
+        <Route path="/release-notes/:name" component={ReleaseNotes} />
+      )}
 
       {/* About */}
       <Route path="/about" component={About} />
