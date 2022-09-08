@@ -13,10 +13,7 @@ jobs:
 
       - name: Cypress run
         run: |
-          # working but commented
-          # docker run -t -v $PWD:/e2e -w /e2e cypress/included:9.6.0 --config supportFile=false,ignoreTestFiles=null,baseUrl=https://dev-developer.va.gov -s ./cypress/integration/smoketest.spec.js
-          # intentionally broken for initial first test after merge
-          docker run -t -v $PWD:/e2e -w /e2e cypress/included:9.6.0 --config ignoreTestFiles=null,baseUrl=https://dev-developer.va.gov -s ./cypress/integration/smoketest.spec.js
+          docker run -t -v $PWD:/e2e -w /e2e cypress/included:9.6.0 --config supportFile=false,ignoreTestFiles=null,baseUrl=https://dev-developer.va.gov -s ./cypress/integration/smoketest.spec.js
 
       - name: Upload failed screenshots
         uses: actions/upload-artifact@v2
