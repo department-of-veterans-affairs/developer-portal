@@ -49,6 +49,7 @@ describe('VersionReducers', () => {
               healthcheck: '/services/basic/v2/healthcheck',
               internal_only: false,
               path: '/basic/v2/path',
+              sf_path: '/basic/v2/path',
               status: 'draft Version',
               version: '2.0.0',
             },
