@@ -1,6 +1,6 @@
 /* eslint-disable id-length, max-lines, sort-keys -- mock data */
 export const mockSwagger = {
-  'http://localhost:3001/internal/docs/benefits-claims/v0/openapi.json': {
+  'http://localhost:3001/internal/docs/benefits-claims/v0/openapi-sf.json': {
     openapi: '3.0.0',
     info: {
       version: '0.0.0',
@@ -336,7 +336,7 @@ export const mockSwagger = {
       },
     },
   },
-  'http://localhost:3001/internal/docs/appeals-status/v0/openapi.json': {
+  'http://localhost:3001/internal/docs/appeals-status/v0/openapi-sf.json': {
     openapi: '3.0.0',
     info: {
       version: '0.0.1',

@@ -5,7 +5,8 @@
         "version": "0.0.0",
         "internal_only": false,
         "status": "Current Version",
-        "path": "/internal/docs/forms/v0/openapi.json"
+        "path": "/internal/docs/forms/v0/openapi.json",
+        "sf_path": "/internal/docs/forms/v0/openapi-sf.json"
       }
     ]
   }

@@ -75,7 +75,7 @@ export const mockRequest = (req: Request): void => {
 
   if (req.url().includes('/platform-backend/v0/providers/transformations/legacy.json')) {
     response.body = JSON.stringify(legacyJson);
-  } else if (req.url().includes('openapi.json')) {
+  } else if (req.url().includes('openapi-sf.json')) {
     response.body = JSON.stringify(openapiJson);
   } else if (req.url().includes('metadata.json')) {
     response.body = JSON.stringify(metadataJson);
