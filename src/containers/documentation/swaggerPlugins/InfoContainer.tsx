@@ -3,6 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import * as React from 'react';
+import { System } from './types';
 
 /**
  * These two props are handed in via swagger-ui
@@ -12,6 +13,7 @@ import * as React from 'react';
  */
 export interface InfoContainerProps {
   getComponent: (componentName: string, container: boolean | undefined) => React.ComponentType;
+  getSystem: () => System;
   specSelectors: any;
   oas3Selectors: any;
 }
@@ -19,13 +21,17 @@ export interface InfoContainerProps {
 const InfoContainer: React.FunctionComponent<InfoContainerProps> = (
   props: InfoContainerProps,
 ): JSX.Element => {
-  const { getComponent, specSelectors, oas3Selectors } = props;
+  const { getComponent, getSystem, specSelectors, oas3Selectors } = props;
   const info = specSelectors.info();
-  const url = specSelectors.url();
+  const url = new URL(specSelectors.url());
   const basePath = specSelectors.basePath();
   const host = specSelectors.host();
   const externalDocs = specSelectors.externalDocs();
   const selectedServer = oas3Selectors.selectedServer();
+  const versionMetadata = getSystem().versionSelectors.versionMetadata();
+
+  const metadata = versionMetadata?.find(obj => obj.sf_path === url.pathname);
+  url.pathname = metadata?.path ?? url.pathname;
 
   const Info: any = getComponent('info', true);
   return (
@@ -33,7 +39,7 @@ const InfoContainer: React.FunctionComponent<InfoContainerProps> = (
       {info?.count() && (
         <Info
           info={info}
-          url={url.replace('-sf.json', '.json')}
+          url={url.href}
           host={host}
           basePath={basePath}
           externalDocs={externalDocs}
