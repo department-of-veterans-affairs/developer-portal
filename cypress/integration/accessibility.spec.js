@@ -29,9 +29,12 @@ describe('Accessibility tests', () => {
     cy.intercept('GET', '/internal/docs/benefits-claims/metadata.json', {
       fixture: 'claims-metadata.json',
     }).as('Claims Metadata');
-    cy.intercept('GET', '/internal/docs/benefits-claims/v1/openapi-sf.json', {
+    cy.intercept('GET', '/internal/docs/benefits-claims/v1/openapi.json', {
       fixture: 'claims-openapi.json',
     }).as('Claims OpenAPI');
+    cy.intercept('GET', '/internal/docs/benefits-claims/v1/openapi-sf.json', {
+      fixture: 'claims-openapi.json',
+    }).as('Claims OpenAPI - Swagger Safe');
   });
 
   it('Regular page types have no axe violations.', () => {

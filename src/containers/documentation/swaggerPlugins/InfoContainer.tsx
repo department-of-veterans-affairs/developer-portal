@@ -23,6 +23,8 @@ const InfoContainer: React.FunctionComponent<InfoContainerProps> = (
 ): JSX.Element => {
   const { getComponent, getSystem, specSelectors, oas3Selectors } = props;
   const info = specSelectors.info();
+  // eslint-disable-next-line no-console
+  console.log(specSelectors.url());
   const url = new URL(specSelectors.url());
   const basePath = specSelectors.basePath();
   const host = specSelectors.host();
