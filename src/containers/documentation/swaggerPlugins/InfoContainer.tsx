@@ -23,15 +23,20 @@ const InfoContainer: React.FunctionComponent<InfoContainerProps> = (
 ): JSX.Element => {
   const { getComponent, getSystem, specSelectors, oas3Selectors } = props;
   const info = specSelectors.info();
-  const url = new URL(specSelectors.url());
+  const specUrl = specSelectors.url();
   const basePath = specSelectors.basePath();
   const host = specSelectors.host();
   const externalDocs = specSelectors.externalDocs();
   const selectedServer = oas3Selectors.selectedServer();
   const versionMetadata = getSystem().versionSelectors.versionMetadata();
 
-  const metadata = versionMetadata?.find(obj => obj.sf_path === url.pathname);
-  url.pathname = metadata?.path ?? url.pathname;
+  let urlOutput: string | URL = '';
+  if (specUrl) {
+    const url = new URL(specUrl);
+    const metadata = versionMetadata?.find(obj => obj.sf_path === url.pathname);
+    url.pathname = metadata?.path ?? url.pathname;
+    urlOutput = url.href;
+  }
 
   const Info: any = getComponent('info', true);
   return (
@@ -39,7 +44,7 @@ const InfoContainer: React.FunctionComponent<InfoContainerProps> = (
       {info?.count() && (
         <Info
           info={info}
-          url={url.href}
+          url={urlOutput}
           host={host}
           basePath={basePath}
           externalDocs={externalDocs}
