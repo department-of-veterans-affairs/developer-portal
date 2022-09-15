@@ -5,6 +5,9 @@
     "accessibility.spec.js",
     "smoketest.spec.js"
   ],
+  "env": {
+    "REACT_APP_VETSGOV_SWAGGER_API": "http://localhost:3001"
+  },
   "blockHosts": [
     "dap.digitalgov.gov",
     "search.usa.gov",

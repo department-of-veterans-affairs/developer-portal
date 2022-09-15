@@ -7,6 +7,7 @@ on:
 
 env:
   CYPRESS_CACHE_FOLDER: cypress/cache
+  REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001
 
 jobs:
   cypress_install_and_run:
