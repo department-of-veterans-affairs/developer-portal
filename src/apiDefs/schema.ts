@@ -31,7 +31,7 @@ export const ApiCategoryContentPropType = PropTypes.shape({
 
 export interface APIDocSource {
   readonly metadataUrl?: string;
-  readonly openApiUrl: string;
+  readonly openApiUrl?: string;
   readonly key?: string;
   readonly label?: string;
   readonly apiIntro?: string;
@@ -42,7 +42,7 @@ export const ApiDocSourcePropType = PropTypes.shape({
   key: PropTypes.string,
   label: PropTypes.string,
   metadataUrl: PropTypes.string,
-  openApiUrl: PropTypes.string.isRequired,
+  openApiUrl: PropTypes.string,
 });
 export interface APIDeactivationInfo {
   readonly deprecationContent: string;

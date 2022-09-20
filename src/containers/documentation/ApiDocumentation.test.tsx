@@ -15,7 +15,7 @@ const api: APIDescription = {
   description: "it's a great API!",
   docSources: [
     {
-      openApiUrl: 'https://example.com/my/openapi/spec',
+      openApiUrl: 'http://localhost/my/openapi/spec',
     },
   ],
   enabledByDefault: true,
@@ -28,7 +28,7 @@ const api: APIDescription = {
 
 const server = setupServer(
   rest.get(
-    'https://example.com/my/openapi/spec',
+    'http://localhost/my/openapi/spec',
     (
       req: MockedRequest,
       res: ResponseComposition,
@@ -75,7 +75,8 @@ describe('ApiDocumentation', () => {
   afterAll(() => server.close());
 
   it('renders the OpenAPI URI', async () => {
-    expect(await screen.findByText('https://example.com/my/openapi/spec')).toBeInTheDocument();
+    expect(true).toBeTruthy();
+    expect(await screen.findByText('http://localhost/my/openapi/spec')).toBeInTheDocument();
   });
 
   it('has a section for each tag', async () => {

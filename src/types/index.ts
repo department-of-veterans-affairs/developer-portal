@@ -19,6 +19,7 @@ export interface VersionMetadata {
   internal_only: boolean;
   label?: string;
   path: string;
+  sf_path: string;
   status: string;
   version: string;
 }
@@ -41,6 +42,7 @@ export interface OAuthAPISelection {
 
 export interface ApiList {
   apis: APICategories;
+  error: boolean;
   loaded: boolean;
 }
 

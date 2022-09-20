@@ -2,7 +2,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import { CheckboxRadioField, FieldSet, ApiTags } from '../../../../components';
 import {
   getAllKeyAuthApis,
@@ -10,13 +9,12 @@ import {
   includesAuthCodeAPI,
   includesCcgAPI,
   getAllCCGApis,
-  getApisLoaded,
 } from '../../../../apiDefs/query';
 import { APIDescription, VaInternalOnly } from '../../../../apiDefs/schema';
 import { Flag } from '../../../../flags';
 import { FLAG_HOSTED_APIS } from '../../../../types/constants';
 import { isHostedApiEnabled } from '../../../../apiDefs/env';
-import { defaultLoadingProps } from '../../../../utils/loadingHelper';
+import ApisLoader from '../../../../components/apisLoader/ApisLoader';
 import { OAuthAcgAppInfo } from './OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from './OAuthCcgAppInfo';
 import { InternalOnlyInfo } from './InternalOnlyInfo';
@@ -33,45 +31,47 @@ const ApiCheckboxList = ({ apiCheckboxes, authType }: APICheckboxListProps): JSX
 
   return (
     <>
-      {apiCheckboxes.filter(
+      {apiCheckboxes
+        .filter(
           api =>
             (!api.vaInternalOnly || api.vaInternalOnly !== VaInternalOnly.StrictlyInternal) &&
             isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
-        ).map(api => {
-        const apiCheckboxName = api.altID ?? api.urlFragment;
-        const internalApiSelected =
-          formValues.apis.includes(`${authType}/${apiCheckboxName}`) &&
-          api.vaInternalOnly &&
-          api.vaInternalOnly === VaInternalOnly.AdditionalDetails;
-        return (
-          <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
-            <div
-              className={classNames(
-                internalApiSelected ? 'vads-u-border-left--4px' : '',
-                internalApiSelected ? 'vads-u-border-color--primary-alt-light' : '',
-              )}
-            >
-              <CheckboxRadioField
-                type="checkbox"
-                name="apis"
-                label={
-                  <>
-                    <span>{api.name}</span>
-                    <span className="vads-u-display--inline-block vads-u-margin-left--1">
-                      <ApiTags openData={api.openData} vaInternalOnly={api.vaInternalOnly} />
-                    </span>
-                  </>
-                }
-                value={`${authType}/${apiCheckboxName}`}
-                className="vads-u-padding-left--1p5"
-              />
-              {/* Request model will need an update to support multiple internal only APIs
+        )
+        .map(api => {
+          const apiCheckboxName = api.altID ?? api.urlFragment;
+          const internalApiSelected =
+            formValues.apis.includes(`${authType}/${apiCheckboxName}`) &&
+            api.vaInternalOnly &&
+            api.vaInternalOnly === VaInternalOnly.AdditionalDetails;
+          return (
+            <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
+              <div
+                className={classNames(
+                  internalApiSelected ? 'vads-u-border-left--4px' : '',
+                  internalApiSelected ? 'vads-u-border-color--primary-alt-light' : '',
+                )}
+              >
+                <CheckboxRadioField
+                  type="checkbox"
+                  name="apis"
+                  label={
+                    <>
+                      <span>{api.name}</span>
+                      <span className="vads-u-display--inline-block vads-u-margin-left--1">
+                        <ApiTags openData={api.openData} vaInternalOnly={api.vaInternalOnly} />
+                      </span>
+                    </>
+                  }
+                  value={`${authType}/${apiCheckboxName}`}
+                  className="vads-u-padding-left--1p5"
+                />
+                {/* Request model will need an update to support multiple internal only APIs
               with separate VA info when we add the next internal only api */}
-              {internalApiSelected && <InternalOnlyInfo />}
-            </div>
-          </Flag>
-        );
-      })}
+                {internalApiSelected && <InternalOnlyInfo />}
+              </div>
+            </Flag>
+          );
+        })}
     </>
   );
 };
@@ -138,14 +138,15 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           <ErrorMessage name="apis" />
         </span>
         <p className="vads-u-padding-x--1p5">You can always request access to more APIs later.</p>
-        {!getApisLoaded() && <LoadingIndicator {...defaultLoadingProps()} />}
         <FieldSet
           className={classNames('vads-u-margin-top--2')}
           legend="Standard APIs:"
           legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
           name="standardApis"
         >
-          <ApiCheckboxList apiCheckboxes={getAllKeyAuthApis()} authType="apikey" />
+          <ApisLoader>
+            <ApiCheckboxList apiCheckboxes={getAllKeyAuthApis()} authType="apikey" />
+          </ApisLoader>
         </FieldSet>
         <FieldSet
           className={classNames(

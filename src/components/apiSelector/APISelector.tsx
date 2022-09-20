@@ -5,10 +5,10 @@ import { computePosition, flip, shift, offset, arrow } from '@floating-ui/react-
 import classNames from 'classnames';
 import * as Sentry from '@sentry/browser';
 import { SetOAuthAPISelection, setOAuthApiSelection } from '../../actions';
-import { getApisLoaded } from '../../apiDefs/query';
+import { getApisLoadedState } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-
 import './APISelector.scss';
+import { apiLoadingState } from '../../types/constants';
 
 interface APISelectorProps {
   options: APIDescription[];
@@ -20,7 +20,7 @@ interface APISelectorProps {
 }
 
 const APISelector = (props: APISelectorProps): JSX.Element => {
-  const apisLoaded = getApisLoaded();
+  const apisLoaded = getApisLoadedState() === apiLoadingState.LOADED;
   const dispatch: React.Dispatch<SetOAuthAPISelection> = useDispatch();
   const [selectedOptionOverride, setSelectedOptionOverride] = React.useState<string>();
   const [apiSelectionButtonDisabled, setApiSelectionButtonDisabled] = React.useState<boolean>();
@@ -39,29 +39,31 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
       computePosition(button, tooltip, {
         middleware: [offset(6), flip(), shift(), arrow({ element: arrowElement })],
         placement: 'top',
-      }).then(({ x, y, middlewareData }) => {
-        Object.assign(tooltip.style, {
-          left: `${x}px`,
-          top: `${y}px`,
-        });
-
-        const arrowData = middlewareData.arrow;
-        if (arrowData) {
-          Object.assign(arrowElement.style, {
-            bottom: '',
-            left: arrowData.x == null ? '' : `${arrowData.x}px`,
-            right: '',
-            top: arrowData.y == null ? '' : `${arrowData.y}px`,
+      })
+        .then(({ x, y, middlewareData }) => {
+          Object.assign(tooltip.style, {
+            left: `${x}px`,
+            top: `${y}px`,
           });
-        }
 
-        return true;
-      }).catch(error => {
-        Sentry.withScope(scope => {
-          scope.setTag('Page Name', location.pathname);
-          Sentry.captureException(error);
+          const arrowData = middlewareData.arrow;
+          if (arrowData) {
+            Object.assign(arrowElement.style, {
+              bottom: '',
+              left: arrowData.x == null ? '' : `${arrowData.x}px`,
+              right: '',
+              top: arrowData.y == null ? '' : `${arrowData.y}px`,
+            });
+          }
+
+          return true;
+        })
+        .catch(error => {
+          Sentry.withScope(scope => {
+            scope.setTag('Page Name', location.pathname);
+            Sentry.captureException(error);
+          });
         });
-      });
     }
   };
   const updateAll = (): void => {
@@ -103,25 +105,16 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   React.useEffect(() => {
     window.addEventListener('click', hideTooltips);
     window.addEventListener('resize', updateAll);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div
-      className={classNames(
-        'api-selector-container',
-        'vads-l-grid-container',
-        `theme-${theme}`,
-      )}
+      className={classNames('api-selector-container', 'vads-l-grid-container', `theme-${theme}`)}
     >
       <div className="vads-l-row">
-        <label
-          className={classNames(
-            'vads-l-col--12',
-            'medium-screen:vads-l-col--9',
-          )}
-        >
-          { theme === 'light' && selectorLabel }
+        <label className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--9')}>
+          {theme === 'light' && selectorLabel}
           {/* eslint-disable-next-line jsx-a11y/no-onchange */}
           <select
             aria-label={selectLabel}
@@ -136,12 +129,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
             ))}
           </select>
         </label>
-        <div
-          className={classNames(
-            'vads-l-col--12',
-            'medium-screen:vads-l-col--3',
-          )}
-        >
+        <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--3')}>
           <button
             disabled={buttonDisabled}
             onClick={onButtonClick}

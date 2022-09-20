@@ -1,14 +1,18 @@
+import * as Sentry from '@sentry/browser';
 import classNames from 'classnames';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
+import { Link, useLocation } from 'react-router-dom';
+import { getApiDefinitions } from '../apiDefs/getApiDefinitions';
+import { getApiCategoryOrder } from '../apiDefs/query';
 import errorImage400 from '../assets/400.svg';
 import errorImage404 from '../assets/404.svg';
+import ApisLoader from '../components/apisLoader/ApisLoader';
+import { Flag } from '../flags';
+import { FLAG_CATEGORIES } from '../types/constants';
 import './ErrorPage.scss';
 
-interface LinkTarget {
-  pathSegment: string;
-  title: string;
-}
+const { REACT_APP_SENTRY_DSN } = process.env;
 
 interface ErrorPageProps {
   errorCode: number;
@@ -17,20 +21,22 @@ interface ErrorPageProps {
 
 const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProps) => {
   const { error, errorCode } = props;
-  const lists: LinkTarget[] = [
-    { pathSegment: 'authorization', title: 'Authorization' },
-    { pathSegment: 'appeals', title: 'Appeals API' },
-    { pathSegment: 'benefits', title: 'Benefits API' },
-    { pathSegment: 'facilities', title: 'Facilities API' },
-    { pathSegment: 'vaForms', title: 'Forms API' },
-    { pathSegment: 'health', title: 'Health API' },
-    { pathSegment: 'verification', title: 'Vereran Verification API' },
-  ];
+  const location = useLocation();
   const errorImage = errorCode === 404 ? errorImage404 : errorImage400;
   const errorHeading = errorCode === 404 ? 'Page not found' : 'An error was encountered';
   const errorMessage = error
     ? `${error.name}: ${error.message}`
     : 'Try using these links or the search bar to find your way forward.';
+
+  const apiDefinitions = getApiDefinitions();
+  const apiCategoryOrder = getApiCategoryOrder();
+
+  React.useEffect(() => {
+    if (REACT_APP_SENTRY_DSN) {
+      const sentryError = new Error(errorHeading);
+      Sentry.captureException(sentryError);
+    }
+  }, [location, errorHeading]);
 
   return (
     <>
@@ -90,17 +96,30 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
           'vads-u-padding--3',
         )}
       >
+        <ApisLoader hideSpinner />
         <div className="vads-l-row">
           <div className="list-wrapper">
             <h3>
               <a href="/explore">Documentation</a>
             </h3>
             <ul>
-              {lists.map(item => (
-                <li key={item.pathSegment}>
-                  <a href={`/explore/${item.pathSegment}`}>{item.title}</a>
-                </li>
-              ))}
+              <li>
+                <Link to="/explore/authorization">Authorization</Link>
+              </li>
+              <ApisLoader hideError>
+                <>
+                  {apiCategoryOrder.map((apiCategoryKey: string) => {
+                    const { name } = apiDefinitions[apiCategoryKey];
+                    return (
+                      <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+                        <li>
+                          <a href={`/release-notes/${apiCategoryKey}`}>{name}</a>
+                        </li>
+                      </Flag>
+                    );
+                  })}
+                </>
+              </ApisLoader>
             </ul>
           </div>
           <div className="list-wrapper">
@@ -124,11 +143,20 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
               <a href="/release-notes">Release Notes</a>
             </h3>
             <ul>
-              {lists.map(item => (
-                <li key={item.pathSegment}>
-                  <a href={`/release-notes/${item.pathSegment}`}>{item.title}</a>
-                </li>
-              ))}
+              <ApisLoader hideError>
+                <>
+                  {apiCategoryOrder.map((apiCategoryKey: string) => {
+                    const { name } = apiDefinitions[apiCategoryKey];
+                    return (
+                      <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+                        <li>
+                          <a href={`/release-notes/${apiCategoryKey}`}>{name}</a>
+                        </li>
+                      </Flag>
+                    );
+                  })}
+                </>
+              </ApisLoader>
             </ul>
           </div>
           <div className="list-wrapper">

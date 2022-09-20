@@ -12,7 +12,7 @@ describe('Documentation Root', () => {
       cy.intercept('/internal/docs/forms/metadata.json', json);
     });
     cy.fixture('vaFormsOpenAPI.spec.json').then(json => {
-      cy.intercept('/internal/docs/forms/v0/openapi.json', json);
+      cy.intercept('/internal/docs/forms/v0/openapi-sf.json', json);
     });
     cy.visit('/explore/vaForms/docs/vaForms');
     // This is needed as a waitFor fails because Swagger UI

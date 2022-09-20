@@ -4,7 +4,6 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router';
-import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
 import {
   PAGE_HEADER_AND_HALO_ID,
   FLAG_API_ENABLED_PROPERTY,
@@ -18,7 +17,7 @@ import { CardLink, ApiTags, PageHeader } from '../../components';
 import { Flag, getFlags } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
-import { defaultLoadingProps } from '../../utils/loadingHelper';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
 
 interface ReleaseNotesCardLinksProps {
   categoryKey: string;
@@ -97,33 +96,33 @@ interface ReleaseNotesCollectionProps {
 const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProps> = (
   props: ReleaseNotesCollectionProps,
 ) => (
-  <>
-    <Helmet>
-      <title>{`${props.apiCategory?.name ?? ''} Release Notes`}</title>
-    </Helmet>
-    <PageHeader halo={props.apiCategory?.name} header="Release Notes" />
-    {props.alertText && (
-      <AlertBox status="info" className="vads-u-padding-y--2">
-        {props.alertText}
-      </AlertBox>
-    )}
-    {props.apiCategory ? (
-      <>
-        <ReleaseNotesCardLinks
-          apiCategory={props.apiCategory}
-          categoryKey={props.categoryKey}
-          flagName={props.apiFlagName}
-        />
-        <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-          {props.apiCategory.apis.map((api: APIDescription) => (
-            <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />
-          ))}
-        </div>
-      </>
-    ) : (
-      <LoadingIndicator {...defaultLoadingProps()} />
-    )}
-  </>
+  <ApisLoader>
+    <>
+      <Helmet>
+        <title>{`${props.apiCategory?.name ?? ''} Release Notes`}</title>
+      </Helmet>
+      <PageHeader halo={props.apiCategory?.name} header="Release Notes" />
+      {props.alertText && (
+        <AlertBox status="info" className="vads-u-padding-y--2">
+          {props.alertText}
+        </AlertBox>
+      )}
+      {props.apiCategory && (
+        <>
+          <ReleaseNotesCardLinks
+            apiCategory={props.apiCategory}
+            categoryKey={props.categoryKey}
+            flagName={props.apiFlagName}
+          />
+          <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
+            {props.apiCategory.apis.map((api: APIDescription) => (
+              <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  </ApisLoader>
 );
 
 export const CategoryReleaseNotes = (): JSX.Element => {

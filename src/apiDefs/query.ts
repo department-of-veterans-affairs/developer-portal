@@ -14,12 +14,24 @@
  */
 
 import store from '../store';
+import { apiLoadingState } from '../types/constants';
 import { isHostedApiEnabled } from './env';
 import { isApiDeactivated } from './deprecated';
 import { APICategories, APICategory, APIDescription, VaInternalOnly } from './schema';
 import * as rootGetApiDefinitions from './getApiDefinitions';
 
 const getApiDefinitions = (): APICategories => rootGetApiDefinitions.getApiDefinitions();
+
+const getApisLoadedState = (): string => {
+  const state = store.getState();
+  if (state.apiList.loaded) {
+    return apiLoadingState.LOADED;
+  } else if (state.apiList.error) {
+    return apiLoadingState.ERROR;
+  } else {
+    return apiLoadingState.IN_PROGRESS;
+  }
+};
 
 const getApisLoaded = (): boolean => {
   const state = store.getState();
@@ -141,6 +153,7 @@ export {
   apisFor,
   getActiveKeyAuthApis,
   getActiveOauthApis,
+  getApisLoadedState,
   getApisLoaded,
   getAllApis,
   getAllOauthApis,

@@ -19,17 +19,16 @@ export const fakeCategories: APICategories = {
         lastProdAccessStep: ProdAccessFormSteps.Four,
         name: 'Rings API',
         openData: false,
-        releaseNotes: '### March 25, 2020\n\nOne Ring destroyed\n\n\n---\n\n### June 10, 2019\n\nOne Ring discovered by Bilbo in Misty Mountains\n',
+        releaseNotes:
+          '### March 25, 2020\n\nOne Ring destroyed\n\n\n---\n\n### June 10, 2019\n\nOne Ring discovered by Bilbo in Misty Mountains\n',
         urlFragment: 'rings',
       },
       {
         deactivationInfo: {
           deactivationContent: 'Silmarils lost forever',
-          deactivationDate: moment().subtract(1, 'year')
-                                    .format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deactivationDate: moment().subtract(1, 'year').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
           deprecationContent: 'Morgoth claims the jewels',
-          deprecationDate: moment().subtract(15, 'months')
-                                   .format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationDate: moment().subtract(15, 'months').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
         description: 'Three pretty gems',
         docSources: [],
@@ -37,7 +36,8 @@ export const fakeCategories: APICategories = {
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Silmarils API',
         openData: false,
-        releaseNotes: '### April 3, 1005\n\nStolen by Morgoth\n\n\n---\n\n### December 1, 0215\n\nFeanor created the jewels\n',
+        releaseNotes:
+          '### April 3, 1005\n\nStolen by Morgoth\n\n\n---\n\n### December 1, 0215\n\nFeanor created the jewels\n',
         urlFragment: 'silmarils',
       },
       {
@@ -149,7 +149,8 @@ export const fakeCategories: APICategories = {
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Baseball API',
         openData: false,
-        releaseNotes: '### September 22, 2019\n\nMike Trout homers\n\n\n---\n\n### June 11, 2019\n\nGerrit Cole strikes out 80\n',
+        releaseNotes:
+          '### September 22, 2019\n\nMike Trout homers\n\n\n---\n\n### June 11, 2019\n\nGerrit Cole strikes out 80\n',
         urlFragment: 'baseball',
       },
     ],
@@ -174,24 +175,21 @@ export const extraAPI: APIDescription = {
   lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'Soccer API',
   openData: false,
-  releaseNotes: '### October 22, 2019\n\na lot of goals get scored\n\n\n---\n\n### August 11, 2019\n\nchampions league\n',
+  releaseNotes:
+    '### October 22, 2019\n\na lot of goals get scored\n\n\n---\n\n### August 11, 2019\n\nchampions league\n',
   urlFragment: 'soccer',
 };
 
 export const extraDeactivationInfo: APIDeactivationInfo = {
   deactivationContent: 'deactivated this API',
-  deactivationDate: moment().subtract(3, 'months')
-                            .format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+  deactivationDate: moment().subtract(3, 'months').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
   deprecationContent: 'deprecated this API',
-  deprecationDate: moment().subtract(6, 'months')
-                           .format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+  deprecationDate: moment().subtract(6, 'months').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
 };
 
 export const unmetDeactivationInfo: APIDeactivationInfo = {
   deactivationContent: 'test-data::: This API is deactivated',
-  deactivationDate: moment().add(3, 'months')
-                            .format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+  deactivationDate: moment().add(3, 'months').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
   deprecationContent: 'test-data::: This API is deprecated',
-  deprecationDate: moment().add(1, 'year')
-                           .format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+  deprecationDate: moment().add(1, 'year').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
 };

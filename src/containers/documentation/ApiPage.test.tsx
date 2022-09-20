@@ -3,10 +3,13 @@ import React from 'react';
 import moment from 'moment';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router';
+import { Provider } from 'react-redux';
 import { APICategory } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import { fakeCategories, unmetDeactivationInfo } from '../../__mocks__/fakeCategories';
 import * as apiDefs from '../../apiDefs/query';
+import store from '../../store';
+import { apiLoadingState } from '../../types/constants';
 import ApiPage from './ApiPage';
 
 // Convenience variables to try and keep the index values out of the test
@@ -33,14 +36,16 @@ const renderApiPage = async (
 ): Promise<void> => {
   await waitFor(() => cleanup());
   render(
-    <FlagsProvider flags={flags}>
-      <MemoryRouter initialEntries={[initialRoute]}>
-        <Route
-          path={componentPath ? componentPath : '/explore/:apiCategoryKey/docs/:apiName'}
-          component={ApiPage}
-        />
-      </MemoryRouter>
-    </FlagsProvider>,
+    <Provider store={store}>
+      <FlagsProvider flags={flags}>
+        <MemoryRouter initialEntries={[initialRoute]}>
+          <Route
+            path={componentPath ? componentPath : '/explore/:apiCategoryKey/docs/:apiName'}
+            component={ApiPage}
+          />
+        </MemoryRouter>
+      </FlagsProvider>
+    </Provider>,
   );
 };
 
@@ -53,7 +58,9 @@ describe('ApiPage', () => {
 
   const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiByFragment');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
-  const apisLoadedSpy = jest.spyOn(apiDefs, 'getApisLoaded').mockReturnValue(true);
+  const apisLoadedSpy = jest
+    .spyOn(apiDefs, 'getApisLoadedState')
+    .mockReturnValue(apiLoadingState.LOADED);
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -137,7 +144,7 @@ describe('ApiPage', () => {
     });
 
     it('renders the api not found page', async () => {
-      apisLoadedSpy.mockReturnValue(true);
+      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
       await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
       expect(screen.getByText('Page not found.')).not.toBeNull();
       expect(
@@ -159,7 +166,7 @@ describe('ApiPage', () => {
     });
 
     it('renders the api not found page', async () => {
-      apisLoadedSpy.mockReturnValue(true);
+      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
       await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
       expect(screen.getByText('Page not found.')).not.toBeNull();
       expect(
@@ -181,7 +188,7 @@ describe('ApiPage', () => {
     });
 
     it('renders the api not found page', async () => {
-      apisLoadedSpy.mockReturnValue(true);
+      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
       await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
       expect(screen.getByText('Page not found.')).not.toBeNull();
       expect(

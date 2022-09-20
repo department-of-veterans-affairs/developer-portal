@@ -9,7 +9,11 @@ import {
   setOAuthApiSelection,
   SetOAuthAPISelection,
 } from '../../../actions';
-import { getActiveAuthCodeApis, getActiveOauthApis, getApisLoaded } from '../../../apiDefs/query';
+import {
+  getActiveAuthCodeApis,
+  getActiveOauthApis,
+  getApisLoadedState,
+} from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { PageHeader } from '../../../components';
 import { Https } from '../../../components/oauthDocs/acg/Https';
@@ -21,7 +25,7 @@ import { BuildingOIDCContent } from '../../../components/oauthDocs/acg/BuildingO
 import { GettingStarted } from '../../../components/oauthDocs/acg/GettingStarted';
 import { usePrevious } from '../../../hooks';
 import { RootState } from '../../../types';
-import { DEFAULT_OAUTH_API_SELECTION } from '../../../types/constants';
+import { apiLoadingState, DEFAULT_OAUTH_API_SELECTION } from '../../../types/constants';
 
 import './AuthorizationCodeGrantDocs.scss';
 
@@ -63,7 +67,7 @@ const setInitialApi = (
 };
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
-  const apisLoaded = getApisLoaded();
+  const apisLoaded = getApisLoadedState() === apiLoadingState.LOADED;
   const history = useHistory();
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();

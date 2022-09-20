@@ -35,7 +35,8 @@ export interface ResetAPIs extends Action {
 export interface SetAPIs extends Action {
   type: constants.SET_APIS;
   apis: APICategories;
-  loaded: true;
+  loaded: boolean;
+  error: boolean;
 }
 
 export const resetVersioning: ActionCreator<ResetVersioning> = () => ({
@@ -71,6 +72,14 @@ export const setOAuthApiSelection: ActionCreator<SetOAuthAPISelection> = (
 
 export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => ({
   apis,
+  error: false,
   loaded: true,
+  type: constants.SET_APIS_VALUE,
+});
+
+export const setApiLoadingError: ActionCreator<SetAPIs> = () => ({
+  apis: {},
+  error: true,
+  loaded: false,
   type: constants.SET_APIS_VALUE,
 });

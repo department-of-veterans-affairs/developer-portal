@@ -14,13 +14,14 @@ import {
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { getActiveCCGApis, getActiveOauthApis, getApisLoaded } from '../../../apiDefs/query';
+import { getActiveCCGApis, getActiveOauthApis, getApisLoadedState } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
 import { usePrevious } from '../../../hooks';
-import { DEFAULT_OAUTH_CCG_API_SELECTION } from '../../../types/constants';
+import { apiLoadingState, DEFAULT_OAUTH_CCG_API_SELECTION } from '../../../types/constants';
 
 import './ClientCredentialsGrantDocs.scss';
+import ApisLoader from '../../../components/apisLoader/ApisLoader';
 
 interface ClientCredentialsFlowContentProps {
   options: APIDescription[];
@@ -60,7 +61,7 @@ const setInitialApi = (
 };
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
-  const apisLoaded = getApisLoaded();
+  const apisLoaded = getApisLoadedState() === apiLoadingState.LOADED;
   const history = useHistory();
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
@@ -111,6 +112,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
         described in the{' '}
         <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
       </p>
+      <ApisLoader hideSpinner />
       <APISelector
         options={options}
         selectedOption={selectedOAuthApi}

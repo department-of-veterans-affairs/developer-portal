@@ -11,8 +11,8 @@ describe('SupportFAQ', () => {
         <SupportOverview sections={sections} />
       </MemoryRouter>,
     );
-    const linkFAQ = screen.getByRole('link', { name: 'FAQ' });
-    const linkContactUs = screen.getByRole('link', { name: 'Contact Us' });
+    const linkFAQ = screen.getByRole('link', { name: 'FAQs' });
+    const linkContactUs = screen.getByRole('link', { name: 'Developer portal support form' });
     expect(linkFAQ).toBeInTheDocument();
     expect(linkContactUs).toBeInTheDocument();
   });

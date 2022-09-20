@@ -3,6 +3,7 @@ import { cleanup, getByRole, queryByRole, render, screen, waitFor } from '@testi
 import 'jest';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
 import {
   extraAPI,
   extraDeactivationInfo,
@@ -12,16 +13,20 @@ import {
 import * as apiQueries from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
+import store from '../../store';
+import { apiLoadingState } from '../../types/constants';
 import ReleaseNotes from './ReleaseNotes';
 
 const renderComponent = async (route = '/release-notes'): Promise<void> => {
   await waitFor(() => cleanup()); // in case we're calling from a test, not beforeEach()
   render(
-    <FlagsProvider flags={getFlags()}>
-      <MemoryRouter initialEntries={[route]}>
-        <ReleaseNotes />
-      </MemoryRouter>
-    </FlagsProvider>,
+    <Provider store={store}>
+      <FlagsProvider flags={getFlags()}>
+        <MemoryRouter initialEntries={[route]}>
+          <ReleaseNotes />
+        </MemoryRouter>
+      </FlagsProvider>
+    </Provider>,
   );
 };
 
@@ -33,6 +38,7 @@ describe('ReleaseNotes', () => {
     jest.spyOn(apiQueries, 'getApiCategoryOrder').mockReturnValue(fakeCategoryOrder);
     apiDefinitionsSpy = jest.spyOn(apiQueries, 'getApiDefinitions').mockReturnValue(fakeCategories);
     allAPIsSpy = jest.spyOn(apiQueries, 'getAllApis').mockReturnValue(allAPIs);
+    jest.spyOn(apiQueries, 'getApisLoadedState').mockReturnValue(apiLoadingState.LOADED);
 
     await renderComponent();
   });
