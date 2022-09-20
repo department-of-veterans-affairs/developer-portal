@@ -1,0 +1,18 @@
+@import '../../styles/variables';
+
+.tooltip {
+  background: $color-gray-dark;
+  color: $color-gray-lightest;
+  padding: 5px 10px;
+  border-radius: 2px;
+  pointer-events: none;
+  white-space: nowrap;
+
+  .arrow {
+    position: absolute;
+    background: $color-gray-dark;
+    width: 8px;
+    height: 8px;
+    transform: rotate(45deg);
+  }
+}
