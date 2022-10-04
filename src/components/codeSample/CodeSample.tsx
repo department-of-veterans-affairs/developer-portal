@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import highlight from 'rehype-highlight';
+import classNames from 'classnames';
 
 import { CodeWrapper } from '../codeWrapper/CodeWrapper';
 import Tooltip from '../tooltip/Tooltip';
+
+import './CodeSample.scss';
 
 interface CodeSampleProps {
   code: string;
@@ -20,7 +23,7 @@ export const CodeSample = ({ code, language = 'plaintext' }: CodeSampleProps): J
         components={{
           // eslint-disable-next-line react/display-name
           code: ({ className, children, ...codeProps }): JSX.Element => (
-            <code className={className} {...codeProps}>
+            <code className={classNames('fit-content', className)} {...codeProps}>
               {children}
             </code>
           ),
