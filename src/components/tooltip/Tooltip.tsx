@@ -94,4 +94,4 @@ const Tooltip = ({ children, label, placement = 'top' }: TooltipProps): JSX.Elem
   );
 };
 
-export default Tooltip;
+export { Tooltip };

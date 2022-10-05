@@ -3,8 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import highlight from 'rehype-highlight';
 import classNames from 'classnames';
 
-import { CodeWrapper } from '../codeWrapper/CodeWrapper';
-import Tooltip from '../tooltip/Tooltip';
+import { CodeWrapper, Tooltip } from '../index';
 
 import './CodeSample.scss';
 
