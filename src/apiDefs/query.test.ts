@@ -27,7 +27,7 @@ import {
   lookupApiCategory,
   includesInternalOnlyAPI,
   onlyOpenDataAPIs,
-  includesOpenDataAPI
+  includesOpenDataAPI,
 } from './query';
 import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 
