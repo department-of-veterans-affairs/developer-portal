@@ -9,7 +9,7 @@ import {
   MultiEntryEmailField,
 } from '../../../../components';
 import { Values } from '../../ProductionAccess';
-import { includesInternalOnlyAPI, onlyOpenDataAPIs } from '../../../../apiDefs/query';
+import { includesInternalOnlyAPI, onlyOpenDataAPIs, includesOpenDataAPI } from '../../../../apiDefs/query';
 
 const BasicInformation: FC = () => {
   const {
@@ -261,7 +261,7 @@ const BasicInformation: FC = () => {
             required
           />
         )}
-        {onlyOpenDataAPIs(apis) && (
+        {includesOpenDataAPI(apis) && (
           <TextField
             as="textarea"
             label="We require you to store your production key securely so as not to risk unauthorized exposure. How and where do you provide this?"

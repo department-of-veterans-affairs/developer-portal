@@ -148,6 +148,9 @@ const includesInternalSponsorshipAPI = (apiList: string[]): boolean =>
 
 const onlyOpenDataAPIs = (apiList: string[]): boolean =>
   apisFor(apiList).every(api => api.openData);
+  
+const includesOpenDataAPI = (apiList: string[]): boolean =>
+  apisFor(apiList).some(api => api.openData);
 
 export {
   apisFor,
@@ -174,4 +177,5 @@ export {
   includesInternalOnlyAPI,
   includesInternalSponsorshipAPI,
   onlyOpenDataAPIs,
+  includesOpenDataAPI
 };
