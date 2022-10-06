@@ -1,6 +1,6 @@
 /* eslint-disable id-length */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { includesInternalOnlyAPI, includesOAuthAPI, onlyOpenDataAPIs } from '../../apiDefs/query';
+import { includesInternalOnlyAPI, includesOAuthAPI, onlyOpenDataAPIs, includesOpenDataAPI } from '../../apiDefs/query';
 import yup from '../../utils/yup-extended';
 
 const phoneRegex =
@@ -78,7 +78,7 @@ const validationSchema = [
       .string()
       .isNotATestString()
       .when('apis', {
-        is: (value: string[]) => onlyOpenDataAPIs(value),
+        is: (value: string[]) => includesOpenDataAPI(value),
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
       }),
