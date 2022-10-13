@@ -20,7 +20,7 @@ import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import vaLogo from '../../assets/VaSeal.png';
 import hiFive from '../../assets/high-five.svg';
-import { LPB_PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
+import { LPB_FORGERY_TOKEN, LPB_PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
 import {
   BasicInformation,
@@ -298,8 +298,7 @@ const ProductionAccess: FC = () => {
         }
       });
       try {
-        const forgeryToken = Math.random().toString(36).substring(2);
-        setCookie('CSRF-TOKEN', forgeryToken, {
+        setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
           path: LPB_PRODUCTION_ACCESS_URL,
           sameSite: 'strict',
           secure: true,
@@ -310,7 +309,7 @@ const ProductionAccess: FC = () => {
           {
             body: JSON.stringify(applicationBody),
             headers: {
-              'X-Csrf-Token': forgeryToken,
+              'X-Csrf-Token': LPB_FORGERY_TOKEN,
               accept: 'application/json',
               'content-type': 'application/json',
             },

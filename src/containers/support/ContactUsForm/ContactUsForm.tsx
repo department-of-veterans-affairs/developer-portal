@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { useCookies } from 'react-cookie';
 import { CheckboxRadioField } from '../../../components';
-import { LPB_CONTACT_US_URL } from '../../../types/constants';
+import { LPB_CONTACT_US_URL, LPB_FORGERY_TOKEN } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
 import { ContactUsFormState, FormType, SubmissionData } from '../../../types/forms/contactUsForm';
@@ -75,8 +75,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
     setSubmissionError(false);
 
     try {
-      const forgeryToken = Math.random().toString(36).substring(2);
-      setCookie('CSRF-TOKEN', forgeryToken, {
+      setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
         path: LPB_CONTACT_US_URL,
         sameSite: 'strict',
         secure: true,
@@ -87,7 +86,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
         {
           body: JSON.stringify(processedData(values)),
           headers: {
-            'X-Csrf-Token': forgeryToken,
+            'X-Csrf-Token': LPB_FORGERY_TOKEN,
             accept: 'application/json',
             'content-type': 'application/json',
           },
