@@ -218,6 +218,7 @@ const BasicInformation: FC = () => {
                 required
               />
               <TextField
+                as="textarea"
                 label="Provide a brief description of your application."
                 description={
                   <>
@@ -249,6 +250,7 @@ const BasicInformation: FC = () => {
                 name="appDescription"
                 className="vads-u-margin-top--4"
                 required
+                maxLength={415}
               />
             </div>
           )}
