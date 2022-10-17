@@ -1,10 +1,8 @@
 /* eslint-disable max-lines */
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { APISelector } from '../../index';
+import { APISelector, CodeBlock } from '../../index';
 import { AuthCodeFlowContentProps } from '../../../containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
-
-import { CodeSample } from '../../codeSample/CodeSample';
 
 const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
   const baseAuthPath = props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
@@ -40,7 +38,7 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         theme="dark"
       />
 
-      <CodeSample
+      <CodeBlock
         code={`\
 https://sandbox-api.va.gov${baseAuthPath}/authorization?
   client_id=0oa1c01m77heEXUZt2p7
@@ -49,6 +47,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
   &scope=${scopes}
   &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ
   &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy`}
+        withCopy
       />
       <table>
         <thead>
@@ -239,8 +238,9 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         <code>state</code> parameters you must use to make a request to our authorization service.
         We require the state parameter for all authorization code grant flows.
       </p>
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 HTTP/1.1 302 Found
 Location: <yourRedirectURL>?
@@ -269,8 +269,9 @@ Location: <yourRedirectURL>?
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
@@ -295,7 +296,7 @@ grant_type=authorization_code
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="http"
         code={`\
 HTTP/1.1 200 OK
@@ -315,8 +316,9 @@ Pragma: no-cache
       />
 
       <p>If an error occurs, you will instead receive a response like this:</p>
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
@@ -351,8 +353,9 @@ Pragma: no-cache
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 POST ${baseAuthPath}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
@@ -374,8 +377,9 @@ grant_type=refresh_token&refresh_token={ *refresh_token* }`}
         currently have access to their data and can make adjustments to these access rights
         (grants).
       </p>
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 GET ${baseAuthPath}/manage HTTP/1.1
 Host: sandbox-api.va.gov`}
@@ -395,8 +399,9 @@ Host: sandbox-api.va.gov`}
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 POST ${baseAuthPath}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
@@ -412,8 +417,9 @@ token={ *access_token* }&token_type_hint=access_token`}
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 POST ${baseAuthPath}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
@@ -441,8 +447,9 @@ token={ *refresh_token* }&token_type_hint=refresh_token`}
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 DELETE ${baseAuthPath}/grants HTTP/1.1
 Host: sandbox-api.va.gov
@@ -455,8 +462,9 @@ client_id={client_id}&email={test account email}`}
         user’s email, which must be passed into the body of the request. Bad requests will be
         returned with an error response and description of the error.
       </p>
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 HTTP/1.1 400 Bad Request
 Content-Type: application/json

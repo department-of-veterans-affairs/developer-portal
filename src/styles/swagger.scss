@@ -137,9 +137,14 @@
       max-height: 400px;
       overflow-y: auto;
     }
+
     .code-wrapper {
-      background: #41444e;
+      background: #222935;
       border-radius: 4px;
+
+      & > pre {
+        background: none;
+      }
     }
   }
 

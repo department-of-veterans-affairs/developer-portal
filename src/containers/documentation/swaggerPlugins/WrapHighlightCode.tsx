@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { CodeWrapper } from '../../../components';
+import { CodeBlock } from '../../../components';
 
 export const WrapHighlightCode = {
-  highlightCode: (Original: React.ComponentType): React.ComponentType => {
-    const HighlightCode = (props: Record<string, unknown>): JSX.Element => (
-      <CodeWrapper>
-        <Original {...props} />
-      </CodeWrapper>
+  highlightCode: (): React.ComponentType => {
+    const HighlightCode = (props: Record<string, string>): JSX.Element => (
+      <CodeBlock language={props.language} code={props.value} />
     );
 
     return HighlightCode;

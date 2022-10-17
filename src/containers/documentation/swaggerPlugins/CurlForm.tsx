@@ -1,9 +1,6 @@
 /* eslint-disable max-lines -- component is long, need to refactor at some point */
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
   OpenAPISpec,
   OpenAPISpecV2,
@@ -16,7 +13,7 @@ import {
   SwaggerSpecObject,
 } from 'swagger-ui';
 import { v4 as uuidv4 } from 'uuid';
-import { CodeWrapper } from '../../../components';
+import { CodeBlock } from '../../../components';
 import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { System } from './types';
 
@@ -430,22 +427,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                <CodeWrapper>
-                  <pre
-                    className={classNames(
-                      'vads-u-display--flex',
-                      'vads-u-justify-content--space-between',
-                    )}
-                  >
-                    <code>{this.buildCurl()}</code>
-
-                    <CopyToClipboard text={this.buildCurl()}>
-                      <span className="va-api-curl__copy-to-clipboard">
-                        <FontAwesomeIcon icon={faCopy} size="2x" />
-                      </span>
-                    </CopyToClipboard>
-                  </pre>
-                </CodeWrapper>
+                <CodeBlock code={this.buildCurl()} language="bash" withCopy />
               </div>
             </div>
           </div>

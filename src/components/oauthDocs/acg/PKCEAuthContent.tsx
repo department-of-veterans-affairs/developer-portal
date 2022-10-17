@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { APISelector, CodeSample } from '../../index';
+import { APISelector, CodeBlock } from '../../index';
 import { APIDescription } from '../../../apiDefs/schema';
 
 interface PKCEContentProps {
@@ -40,7 +40,8 @@ const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
+        withCopy
         code={`\
 https://sandbox-api.va.gov${baseAuthPath}/authorization?
   client_id=0oa1c01m77heEXUZt2p7
@@ -190,8 +191,9 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         and the <code>code_verifier</code> used to create the <code>code_challenge</code> in the
         previous step.
       </p>
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 HTTP/1.1 302 Found
 Location: <yourRedirectURL>?
@@ -215,8 +217,9 @@ Location: <yourRedirectURL>?
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 POST ${baseAuthPath}/token HTTP/1.1
 Host: sandbox-api.va.gov
@@ -242,8 +245,9 @@ grant_type=authorization_code
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="json"
+        withCopy
         code={`\
 {
     "access_token": "SlAV32hkKG",
@@ -255,8 +259,9 @@ grant_type=authorization_code
 }`}
       />
       <p>If an error occurs, you will instead receive a 400 response, like this:</p>
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
@@ -289,8 +294,9 @@ Pragma: no-cache
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeSample
+      <CodeBlock
         language="http"
+        withCopy
         code={`\
 POST ${baseAuthPath}/token HTTP/1.1
 Host: sandbox-api.va.gov
