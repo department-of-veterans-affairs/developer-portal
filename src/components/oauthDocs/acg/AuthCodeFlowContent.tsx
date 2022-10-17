@@ -298,6 +298,7 @@ grant_type=authorization_code
       />
       <CodeBlock
         language="http"
+        withCopy
         code={`\
 HTTP/1.1 200 OK
 Content-Type: application/json
