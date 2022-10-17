@@ -12,21 +12,26 @@ Object.defineProperty(navigator, 'clipboard', {
 describe('CodeBlock', () => {
   afterEach(cleanup);
 
+  const defaultProps = { code: 'Hello', language: 'plaintext' };
+
   it('displays the code that was passed in via the "code" prop', () => {
-    const { container } = render(<CodeBlock code="Hello" language="plaintext" />);
+    const { container } = render(<CodeBlock {...defaultProps} />);
     expect(container).toHaveTextContent('Hello');
   });
 
-  describe('Copy to clipboard button', () => {
-    it('displays a tooltip after the button clicked', () => {
-      const { getByText } = render(<CodeBlock code="Hello" language="plaintext" />);
+  describe('withCopy - Copy to clipboard button', () => {
+    // set withCopy to true to enable the copy to clipboard button
+    const props = { ...defaultProps, withCopy: true };
+
+    it('displays a tooltip after the button is clicked', () => {
+      const { getByText } = render(<CodeBlock {...props} />);
       const button = getByText('Copy code to clipboard');
       userEvent.click(button);
       expect(getByText('Code copied to clipboard!')).toBeInTheDocument();
     });
 
     it('copies the code snippet to the clipboard when clicked', () => {
-      const { getByText } = render(<CodeBlock code="Hello" language="plaintext" />);
+      const { getByText } = render(<CodeBlock {...props} />);
       const button = getByText('Copy code to clipboard');
       userEvent.click(button);
       // eslint-disable-next-line @typescript-eslint/unbound-method
