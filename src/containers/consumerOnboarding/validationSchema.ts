@@ -14,12 +14,12 @@ const validationSchema = [
       .of(yup.string())
       .min(1, 'Choose at least one API.')
       .required('Choose at least one API.'),
-      is508Compliant: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-      isUSBasedCompany: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-      termsOfService: yup
-        .boolean()
-        .oneOf([true], 'You must agree to our terms of service to continue.')
-        .required(),
+    is508Compliant: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
+    isUSBasedCompany: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
+    termsOfService: yup
+      .boolean()
+      .oneOf([true], 'You must agree to our terms of service to continue.')
+      .required(),
   }),
   yup.object().shape({
     appDescription: yup
