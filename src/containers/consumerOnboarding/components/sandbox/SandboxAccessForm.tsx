@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie';
 import { Form, Formik } from 'formik';
 import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
 import { TextField, TermsOfServiceCheckbox } from '../../../../components';
-import { LPB_APPLY_URL } from '../../../../types/constants';
+import { LPB_APPLY_URL, LPB_FORGERY_TOKEN } from '../../../../types/constants';
 import {
   ApplySuccessResult,
   DevApplicationRequest,
@@ -84,8 +84,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
     }
 
     try {
-      const forgeryToken = Math.random().toString(36).substring(2);
-      setCookie('CSRF-TOKEN', forgeryToken, {
+      setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
         path: LPB_APPLY_URL,
         sameSite: 'strict',
         secure: true,
@@ -96,7 +95,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
         {
           body: JSON.stringify(applicationBody),
           headers: {
-            'X-Csrf-Token': forgeryToken,
+            'X-Csrf-Token': LPB_FORGERY_TOKEN,
             accept: 'application/json',
             'content-type': 'application/json',
           },

@@ -10,6 +10,7 @@ export const OPEN_API_SPEC_HOST: string = process.env.REACT_APP_VETSGOV_SWAGGER_
 
 const LPB_PREFIX = process.env.PUBLIC_URL ?? '';
 const LPB_BASE_URL = `${LPB_PREFIX}/platform-backend`;
+export const LPB_FORGERY_TOKEN = 'CsrfBlocker';
 export const LPB_APPLY_URL = `${LPB_BASE_URL}/v0/consumers/applications`;
 export const LPB_PRODUCTION_ACCESS_URL = `${LPB_BASE_URL}/v0/consumers/production-requests`;
 export const LPB_PROVIDERS_URL = `${LPB_BASE_URL}/v0/providers/transformations/legacy.json?environment=sandbox`;
