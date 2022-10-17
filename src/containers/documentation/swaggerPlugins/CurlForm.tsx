@@ -427,7 +427,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                <CodeBlock code={this.buildCurl()} language="bash" withCopy />
+                <CodeBlock code={this.buildCurl()} withCopy />
               </div>
             </div>
           </div>
