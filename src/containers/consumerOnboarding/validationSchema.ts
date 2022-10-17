@@ -10,10 +10,10 @@ const isListAndLoopEnabled = process.env.REACT_APP_LIST_AND_LOOP_ENABLED === 'tr
 const validationSchema = [
   yup.object().shape({
     apis: yup
-      .array()
-      .of(yup.string())
-      .min(1, 'Choose at least one API.')
-      .required('Choose at least one API.'),
+    .array()
+    .of(yup.string())
+    .min(1, 'Choose at least one API.')
+    .required('Choose at least one API.'),
     is508Compliant: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     isUSBasedCompany: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     termsOfService: yup
@@ -30,6 +30,7 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
       }),
+    appName: yup.string().isNotATestString().required('Enter front-end name of application.'),
     businessModel: yup
       .string()
       .isNotATestString()
