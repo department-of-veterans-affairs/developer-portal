@@ -1,11 +1,23 @@
 import classNames from 'classnames';
 import * as React from 'react';
 import { ErrorMessage, useFormikContext } from 'formik';
-import { ApiCheckboxList } from '../../../../components';
-import { getAllApis } from '../../../../apiDefs/query';
+import { ApiCheckboxList, FieldSet } from '../../../../components';
+import {
+  getAllAuthCodeApis,
+  getAllKeyAuthApis,
+  getAllCCGApis,
+  includesAuthCodeAPI,
+  includesCcgAPI,
+} from '../../../../apiDefs/query';
 import ApisLoader from '../../../../components/apisLoader/ApisLoader';
+import { OAuthAcgAppInfo } from './OAuthAcgAppInfo';
+import { OAuthCcgAppInfo } from './OAuthCcgAppInfo';
 
-const SelectedAPIs = (): JSX.Element => {
+interface SelectedApisProps {
+  selectedApis: string[];
+}
+
+const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
   const { errors } = useFormikContext();
   const checkboxName = 'apis';
   const shouldDisplayErrors = !!errors[checkboxName];
@@ -21,6 +33,15 @@ const SelectedAPIs = (): JSX.Element => {
     'vads-u-font-weight--bold': shouldDisplayErrors,
     'vads-u-font-weight--normal': !shouldDisplayErrors,
   });
+
+  const authCodeApiSelected = includesAuthCodeAPI(selectedApis);
+  const authCodeApisBorderClass = authCodeApiSelected ? 'vads-u-border-left--4px' : '';
+  const authCodeApisBorderColorClass = authCodeApiSelected
+    ? 'vads-u-border-color--primary-alt-light'
+    : '';
+  const ccgApiSelected = includesCcgAPI(selectedApis);
+  const ccgApisBorderClass = ccgApiSelected ? 'vads-u-border-left--4px' : '';
+  const ccgApisBorderColorClass = ccgApiSelected ? 'vads-u-border-color--primary-alt-light' : '';
 
   return (
     <fieldset
@@ -56,7 +77,44 @@ const SelectedAPIs = (): JSX.Element => {
           <ErrorMessage name="apis" />
         </div>
         <ApisLoader>
-          <ApiCheckboxList apis={getAllApis()} />
+          <>
+            <FieldSet
+              className={classNames('vads-u-margin-top--2')}
+              legend="Standard APIs:"
+              legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
+              name="standardApis"
+            >
+              <ApiCheckboxList apis={getAllKeyAuthApis()} />
+            </FieldSet>
+            <FieldSet
+              className={classNames(
+                'vads-u-margin-top--2',
+                'vads-u-padding-bottom--1p5',
+                authCodeApisBorderClass,
+                authCodeApisBorderColorClass,
+              )}
+              legend="Authorization Code Flow APIs:"
+              legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
+              name="oauthApis"
+            >
+              <ApiCheckboxList apis={getAllAuthCodeApis()} />
+              {authCodeApiSelected && <OAuthAcgAppInfo />}
+            </FieldSet>
+            <FieldSet
+              className={classNames(
+                'vads-u-margin-top--2',
+                'vads-u-padding-bottom--1p5',
+                ccgApisBorderClass,
+                ccgApisBorderColorClass,
+              )}
+              legend="Client Credentials Grant APIs:"
+              legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
+              name="ccgApis"
+            >
+              <ApiCheckboxList apis={getAllCCGApis()} />
+              {ccgApiSelected && <OAuthCcgAppInfo />}
+            </FieldSet>
+          </>
         </ApisLoader>
       </div>
     </fieldset>
