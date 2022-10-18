@@ -84,7 +84,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
               legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
               name="standardApis"
             >
-              <ApiCheckboxList apis={getAllKeyAuthApis()} />
+              <ApiCheckboxList apis={getAllKeyAuthApis()} authType="apikey" />
             </FieldSet>
             <FieldSet
               className={classNames(
@@ -97,7 +97,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
               legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
               name="oauthApis"
             >
-              <ApiCheckboxList apis={getAllAuthCodeApis()} />
+              <ApiCheckboxList apis={getAllAuthCodeApis()} authType="acg" />
               {authCodeApiSelected && <OAuthAcgAppInfo />}
             </FieldSet>
             <FieldSet
@@ -111,7 +111,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
               legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
               name="ccgApis"
             >
-              <ApiCheckboxList apis={getAllCCGApis()} />
+              <ApiCheckboxList apis={getAllCCGApis()} authType="ccg" />
               {ccgApiSelected && <OAuthCcgAppInfo />}
             </FieldSet>
           </>
