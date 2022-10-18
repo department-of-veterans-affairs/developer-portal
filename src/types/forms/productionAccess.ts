@@ -14,6 +14,7 @@ export interface ProductionAccessRequest {
   businessModel?: string;
   policyDocuments?: string[];
   phoneNumber?: string;
+  appName: string;
   apis?: string;
   monitizedVeteranInformation: boolean;
   monitizationExplanation?: string;
