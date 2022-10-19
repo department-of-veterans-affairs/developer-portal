@@ -42,6 +42,9 @@ const STEP_HEADING_ID = 'form-step-heading';
 
 export interface Values {
   apis: string[];
+  oAuthApplicationType?: string;
+  oAuthPublicKey?: string;
+  oAuthRedirectURI?: string;
   is508Compliant?: string;
   isUSBasedCompany?: string;
   termsOfService?: boolean;
@@ -106,6 +109,9 @@ const initialValues: Values = {
   monitizedVeteranInformation: '',
   multipleReqSafeguards: '',
   namingConvention: '',
+  oAuthApplicationType: '',
+  oAuthPublicKey: '',
+  oAuthRedirectURI: '',
   organization: '',
   phoneNumber: '',
   piiStorageMethod: '',
