@@ -172,6 +172,7 @@ describe('Production Access Form', () => {
 
     verificationFields(cy);
     cy.get('#apisFormFieldccgclaims').click();
+    cy.get('#oAuthPublicKeyFormField').type('{ }');
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()
