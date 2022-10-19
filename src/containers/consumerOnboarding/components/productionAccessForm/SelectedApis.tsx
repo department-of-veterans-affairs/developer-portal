@@ -61,6 +61,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
             labelClass,
             'vads-u-font-size--base',
             'vads-u-margin-bottom--1p5',
+            'vads-u-padding-x--1p5',
           )}
         >
           Select the APIs for which you are requesting production access.{' '}
