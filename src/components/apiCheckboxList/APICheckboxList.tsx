@@ -27,7 +27,7 @@ const ApiCheckboxList = ({ apis, authType }: APICheckboxListProps): JSX.Element 
             </>
           }
           value={`${authType}/${api.altID ?? api.urlFragment}`}
-          className="va-api-api-checkbox"
+          className="vads-u-padding-left--1p5"
         />
       </Flag>
     ))}
