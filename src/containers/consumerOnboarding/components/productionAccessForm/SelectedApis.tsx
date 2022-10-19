@@ -51,7 +51,6 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
         'apply-api-select',
         'vads-u-background-color--gray-lightest',
         'vads-u-margin-top--2p5',
-        'vads-u-padding-x--1p5',
       )}
     >
       <div className="vads-u-margin-top--2 apply-checkbox-labels">
