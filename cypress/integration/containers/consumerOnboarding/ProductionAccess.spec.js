@@ -136,7 +136,7 @@ describe('Production Access Form', () => {
     });
 
     verificationFields(cy);
-    cy.get('#apisFormFieldccgclinicalHealth').click();
+    cy.get('#apisFormFieldacgclinicalHealth').click();
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()
