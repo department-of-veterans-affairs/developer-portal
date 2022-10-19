@@ -137,6 +137,8 @@ describe('Production Access Form', () => {
 
     verificationFields(cy);
     cy.get('#apisFormFieldacgclinicalHealth').click();
+    cy.get('#oAuthApplicationTypeFormFieldweb').click();
+    cy.get('#oAuthRedirectURIFormField').type('http://localhost:3001/');
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()
