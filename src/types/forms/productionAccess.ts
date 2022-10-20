@@ -23,7 +23,6 @@ export interface ProductionAccessRequest {
   signUpLink?: string[];
   supportLink?: string[];
   platforms?: string;
-  veteranFacingDescription?: string;
   vasiSystemName?: string;
   storePIIOrPHI: boolean;
   piiStorageMethod?: string;

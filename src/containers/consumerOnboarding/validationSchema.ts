@@ -5,6 +5,7 @@ import {
   includesCcgAPI,
   includesInternalOnlyAPI,
   includesOAuthAPI,
+  includesOpenDataAPI,
   onlyOpenDataAPIs,
 } from '../../apiDefs/query';
 import yup from '../../utils/yup-extended';
@@ -109,7 +110,7 @@ const validationSchema = [
       .string()
       .isNotATestString()
       .when('apis', {
-        is: (value: string[]) => onlyOpenDataAPIs(value),
+        is: (value: string[]) => includesOpenDataAPI(value),
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
       }),
