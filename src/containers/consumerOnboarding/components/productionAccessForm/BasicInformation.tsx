@@ -93,9 +93,10 @@ const BasicInformation: FC = () => {
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
         <TextField
-          label="Front-end name of application (if different from organization name)"
+          label="Front-end name of application (even if the same as organization name)"
           name="appName"
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          required
         />
         <MultiEntryEmailField
           name="statusUpdateEmails"

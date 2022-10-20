@@ -30,6 +30,7 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
       }),
+    appName: yup.string().isNotATestString().required('Enter front-end name of application.'),
     businessModel: yup
       .string()
       .isNotATestString()
