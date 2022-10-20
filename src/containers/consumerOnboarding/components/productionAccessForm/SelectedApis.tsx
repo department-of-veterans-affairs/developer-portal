@@ -69,7 +69,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
         </legend>
         <div
           id="api-checkbox-error"
-          className={classNames('vads-u-margin-bottom--1p5', {
+          className={classNames('vads-u-margin-bottom--1p5', 'vads-u-padding-x--1p5', {
             'usa-input-error-message': shouldDisplayErrors,
           })}
           role="alert"
