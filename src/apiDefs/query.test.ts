@@ -27,6 +27,7 @@ import {
   lookupApiCategory,
   includesInternalOnlyAPI,
   onlyOpenDataAPIs,
+  includesOpenDataAPI,
 } from './query';
 import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 
@@ -183,6 +184,16 @@ describe('query module', () => {
       expect(apis).toHaveLength(2);
       expect(apis).toContainEqual(rings);
       expect(apis).toContainEqual(apollo13);
+    });
+  });
+
+  describe('includesOpenDataAPI', () => {
+    it('returns true if the list includes at least 1 Open Data API', () => {
+      expect(includesOpenDataAPI(['apollo13', 'basketball'])).toBe(true);
+    });
+
+    it('returns false if the list does not include at least 1 Open Data API', () => {
+      expect(includesOpenDataAPI(['apollo13', 'rings'])).toBe(false);
     });
   });
 });

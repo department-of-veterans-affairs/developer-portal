@@ -85,7 +85,6 @@ export interface Values {
   listedOnMyHealthApplication: string;
   productionKeyCredentialStorage: string;
   productionOrOAuthKeyCredentialStorage: string;
-  veteranFacingDescription: string;
   privacyPolicyURL?: string;
   termsOfServiceURL?: string;
 }
@@ -134,7 +133,6 @@ const initialValues: Values = {
   valueProvided: '',
   vasiSystemName: '',
   veteranFacing: '',
-  veteranFacingDescription: '',
   vulnerabilityManagement: '',
   website: '',
 };

@@ -9,7 +9,7 @@ import {
   MultiEntryEmailField,
 } from '../../../../components';
 import { Values } from '../../ProductionAccess';
-import { includesInternalOnlyAPI, onlyOpenDataAPIs } from '../../../../apiDefs/query';
+import { includesInternalOnlyAPI, onlyOpenDataAPIs, includesOpenDataAPI } from '../../../../apiDefs/query';
 
 const BasicInformation: FC = () => {
   const {
@@ -93,9 +93,10 @@ const BasicInformation: FC = () => {
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
         <TextField
-          label="Front-end name of application (if different from organization name)"
+          label="Front-end name of application (even if the same as organization name)"
           name="appName"
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          required
         />
         <MultiEntryEmailField
           name="statusUpdateEmails"
@@ -218,6 +219,7 @@ const BasicInformation: FC = () => {
                 required
               />
               <TextField
+                as="textarea"
                 label="Provide a brief description of your application."
                 description={
                   <>
@@ -249,6 +251,7 @@ const BasicInformation: FC = () => {
                 name="appDescription"
                 className="vads-u-margin-top--4"
                 required
+                maxLength={415}
               />
             </div>
           )}
@@ -261,7 +264,7 @@ const BasicInformation: FC = () => {
             required
           />
         )}
-        {onlyOpenDataAPIs(apis) && (
+        {includesOpenDataAPI(apis) && (
           <TextField
             as="textarea"
             label="We require you to store your production key securely so as not to risk unauthorized exposure. How and where do you provide this?"

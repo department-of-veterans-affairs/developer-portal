@@ -21,6 +21,7 @@ export interface TextFieldProps {
   innerRef?: React.RefObject<HTMLElement>;
   customFieldClass?: string;
   children?: ReactNode;
+  maxLength?: number;
 }
 
 const TextField: FC<TextFieldProps> = ({
@@ -36,6 +37,7 @@ const TextField: FC<TextFieldProps> = ({
   customFieldClass,
   children,
   innerRef,
+  maxLength,
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
@@ -80,6 +82,7 @@ const TextField: FC<TextFieldProps> = ({
         disabled={disabled}
         onKeyDown={onKeyDown}
         innerRef={innerRef}
+        maxLength={maxLength}
         {...props}
       />
       {children}
