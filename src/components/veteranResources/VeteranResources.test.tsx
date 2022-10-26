@@ -23,7 +23,7 @@ describe('VeteranResources', () => {
     fireEvent.click(modalButton);
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeInTheDocument());
 
-    const dialogXButton = screen.getByLabelText('Close the undefined modal');
+    const dialogXButton = screen.getByLabelText('close');
     fireEvent.click(dialogXButton);
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });

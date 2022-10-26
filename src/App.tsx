@@ -2,7 +2,10 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import { Route, Router } from 'react-router-dom';
-import { applyPolyfills, defineCustomElements } from 'web-components/loader';
+import {
+  applyPolyfills,
+  defineCustomElements,
+} from '@department-of-veterans-affairs/component-library';
 import { Footer, Header, PageContent } from './components';
 import { FlagsProvider, getFlags } from './flags';
 import { history } from './store';
