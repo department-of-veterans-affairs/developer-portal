@@ -616,8 +616,10 @@
               "profile",
               "openid",
               "offline_access",
-              "service_history.read",
               "disability_rating.read",
+              "enrolled_benefits.read",
+              "flashes.read",
+              "service_history.read",
               "veteran_status.read"
             ]
           }
