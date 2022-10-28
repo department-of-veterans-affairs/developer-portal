@@ -1,5 +1,4 @@
 import React from 'react';
-
 import moment from 'moment';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router';
@@ -253,6 +252,47 @@ describe('ApiPage', () => {
     it('renders deprecation info', () => {
       expect(screen.queryByText('test-data::: This API is deprecated')).not.toBeNull();
       expect(screen.queryByText('test-data::: This API is deactivated')).toBeNull();
+    });
+  });
+
+  describe('given api with veteran redirect', () => {
+    const apiCategory: APICategory = {
+      ...fakeCategories.lotr,
+      apis: [
+        {
+          ...lotrRingsApi,
+          veteranRedirect: {
+            linkText: 'Find a faster train',
+            linkUrl: 'https://www.va.gov/find-locations/',
+            message: 'Are you tired of waiting?',
+          },
+        },
+        {
+          ...lotrRingsApi,
+        },
+      ],
+      content: {
+        ...fakeCategories.lotr.content,
+        veteranRedirect: {
+          linkText: "Find the facility that's right for you.",
+          linkUrl: 'https://www.va.gov/find-locations/',
+          message: 'Are you a Veteran?',
+        },
+      },
+    };
+
+    it('renders API specific veteran redirect message', async () => {
+      lookupApiCategoryMock.mockReturnValue(apiCategory);
+      lookupApiByFragmentMock.mockReturnValue(apiCategory.apis[0]);
+      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      expect(screen.getByText('Find a faster train')).not.toBeNull();
+    });
+
+    it('renders category veteran redirect message', async () => {
+      lookupApiCategoryMock.mockReturnValue(apiCategory);
+      lookupApiByFragmentMock.mockReturnValue(apiCategory.apis[1]);
+      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      expect(screen.getByText("Find the facility that's right for you.")).not.toBeNull();
     });
   });
 });
