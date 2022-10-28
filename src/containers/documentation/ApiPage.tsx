@@ -7,10 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
-import {
-  APIDescription,
-  VeteranRedirectMessage as VeteranRedirectMessageProps,
-} from '../../apiDefs/schema';
+import { APIDescription, VeteranRedirectMessage } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 
@@ -61,15 +58,23 @@ const getApi = (apiName?: string): APIDescription | null => {
   return lookupApiByFragment(apiName);
 };
 
-const VeteranRedirectMessage = ({
+const VeteranRedirectAlertMessage = ({
+  api,
   veteranRedirect,
 }: {
-  veteranRedirect: VeteranRedirectMessageProps;
+  api: APIDescription;
+  veteranRedirect: VeteranRedirectMessage;
 }): JSX.Element => (
-  <div>
-    {veteranRedirect.message}&nbsp;
-    <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
-  </div>
+  <AlertBox
+    status="info"
+    key={api.urlFragment}
+    className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
+  >
+    <div>
+      {veteranRedirect.message}&nbsp;
+      <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
+    </div>
+  </AlertBox>
 );
 
 const ApiPage = (): JSX.Element => {
@@ -118,13 +123,7 @@ const ApiPage = (): JSX.Element => {
       </Helmet>
       <PageHeader halo={category.name} header={api.name} />
       {veteranRedirect && (
-        <AlertBox
-          status="info"
-          key={api.urlFragment}
-          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
-        >
-          <VeteranRedirectMessage veteranRedirect={veteranRedirect} />
-        </AlertBox>
+        <VeteranRedirectAlertMessage api={api} veteranRedirect={veteranRedirect} />
       )}
       <DeactivationMessage api={api} />
       {!isApiDeactivated(api) && <ApiDocumentation apiDefinition={api} location={location} />}
