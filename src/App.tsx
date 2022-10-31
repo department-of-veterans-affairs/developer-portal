@@ -2,6 +2,8 @@ import * as React from 'react';
 
 import classNames from 'classnames';
 import { Route, Router } from 'react-router-dom';
+import 'core-js/features/promise';
+import '@department-of-veterans-affairs/component-library/dist/main.css';
 import {
   applyPolyfills,
   defineCustomElements,

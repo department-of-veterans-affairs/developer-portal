@@ -7,7 +7,6 @@ import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from '@department-of-veterans-affairs/component-library/Modal';
-import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import { Link, useHistory } from 'react-router-dom';
 // import Icon508 from '../../assets/508-compliant.svg';
@@ -322,8 +321,7 @@ const ProductionAccess: FC = () => {
         setSubmissionError(true);
       }
       if (flagLpbActive) {
-        const forgeryToken = Math.random().toString(36)
-                                          .substring(2);
+        const forgeryToken = Math.random().toString(36).substring(2);
         setCookie('CSRF-TOKEN', forgeryToken, {
           path: LPB_PRODUCTION_ACCESS_URL,
           sameSite: 'strict',
@@ -393,10 +391,10 @@ const ProductionAccess: FC = () => {
             <Form noValidate>
               {activeStep === 0 ? (
                 <>
-                  <SegmentedProgressBar
+                  <va-segmented-progress-bar
                     current={1}
                     total={4}
-                    ariaLabel="Step 1. There will be 1 to 3 more steps depending on the APIs you select."
+                    label="Step 1. There will be 1 to 3 more steps depending on the APIs you select."
                   />
                   <h2
                     id={STEP_HEADING_ID}
@@ -412,7 +410,7 @@ const ProductionAccess: FC = () => {
                 </>
               ) : (
                 <>
-                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
+                  <va-segmented-progress-bar current={activeStep + 1} total={steps.length} />
                   <h2
                     id={STEP_HEADING_ID}
                     className={classNames(

@@ -56,6 +56,8 @@ jobs:
       - name: Install dependencies
         if: steps.cache_node_modules.outputs.cache-hit != 'true'
         run: npm ci
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   pr_builds:
     needs: [install]

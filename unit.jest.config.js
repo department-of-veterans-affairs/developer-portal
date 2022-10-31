@@ -17,8 +17,8 @@ module.exports = {
       branches: 65,
       functions: 75,
       lines: 85,
-      statements: 85
-    }
+      statements: 85,
+    },
   },
   setupFiles: [
     '<rootDir>/config/polyfills.js',
@@ -39,7 +39,9 @@ module.exports = {
     '^.+\\.ya?ml$': '<rootDir>/config/jest/yamlTransform.js',
     '^(?!.*\\.(js|jsx|mjs|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
   },
-  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$'],
+  transformIgnorePatterns: [
+    '[/\\\\]node_modules[/\\\\](?!@department-of-veterans-affairs/(?!formation)))',
+  ],
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
     'content/news.yml': '<rootDir>/src/__mocks__/news.test.yml',
