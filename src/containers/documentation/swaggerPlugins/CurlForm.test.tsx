@@ -461,7 +461,7 @@ describe('CurlForm', () => {
       };
 
       await testRequestBodyChange('data', dataValue);
-      await testRequestBodyChange('included', 'contestableIssue1,contestableIssue2');
+      await testRequestBodyChange('included', '[{"data":"data","foo":"bar"}]');
     });
 
     it('updates the generated curl command when request body inputs change', async () => {
@@ -472,7 +472,39 @@ describe('CurlForm', () => {
       };
 
       await updateRequestBody('data', dataValue);
-      await updateRequestBody('included', 'contestableIssue1,contestableIssue2');
+
+      const expectedCurl = `curl -X POST 'https://sandbox-api.va.gov/services/appeals/v1/decision_reviews/higher_level_reviews' \\
+--header 'X-VA-SSN: ' \\
+--header 'X-VA-Insurance-Policy-Number: ' \\
+--header 'X-VA-Birth-Date: ' \\
+--header 'X-VA-File-Number: ' \\
+--header 'Content-Type: application/json' \\
+--header 'X-VA-Service-Number: ' \\
+--header 'X-VA-Last-Name: ' \\
+--header 'X-VA-First-Name: ' \\
+--header 'X-VA-Middle-Initial: ' \\
+--data-raw '{
+  "data": {
+    "type": "higherLevelReview",
+    "attributes": {
+      "informalConference": false,
+      "sameOffice": true
+    }
+  }
+}'`;
+
+      await testCurlText(expectedCurl, operationContainer);
+    });
+
+    it('updates the generated curl command when request body inputs change with an array of objects', async () => {
+      const updateRequestBody = async (param: string, value: string): Promise<void> => {
+        const input = await findByRole(operationContainer, 'textbox', { name: param });
+        expect(input).toBeInTheDocument();
+        fireEvent.change(input, { target: { value } });
+      };
+
+      await updateRequestBody('data', dataValue);
+      await updateRequestBody('included', '[{"key":"value"},{"foo":"bar","decision":"reviews"}]');
 
       const expectedCurl = `curl -X POST 'https://sandbox-api.va.gov/services/appeals/v1/decision_reviews/higher_level_reviews' \\
 --header 'X-VA-SSN: ' \\
@@ -493,8 +525,13 @@ describe('CurlForm', () => {
     }
   },
   "included": [
-    "contestableIssue1",
-    "contestableIssue2"
+    {
+      "key": "value"
+    },
+    {
+      "foo": "bar",
+      "decision": "reviews"
+    }
   ]
 }'`;
 
