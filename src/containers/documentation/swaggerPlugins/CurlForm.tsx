@@ -250,7 +250,17 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     const requestBody = {};
     this.state.requestBodyProperties.forEach((property: Schema) => {
       if (property.type === 'array' && this.state.paramValues[property.name]) {
-        requestBody[property.name] = this.state.paramValues[property.name].split(',');
+        if (property.items?.type === 'object') {
+          try {
+            requestBody[property.name] = JSON.parse(
+              this.state.paramValues[property.name],
+            ) as Record<string, unknown>;
+          } catch {
+            // Do nothing as they simply don't yet have valid JSON
+          }
+        } else {
+          requestBody[property.name] = this.state.paramValues[property.name].split(',');
+        }
       } else if (property.type === 'object') {
         try {
           requestBody[property.name] = JSON.parse(this.state.paramValues[property.name]) as Record<

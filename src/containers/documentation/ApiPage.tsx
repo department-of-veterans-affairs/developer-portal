@@ -7,7 +7,7 @@ import ReactMarkdown from 'react-markdown';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
+import { APIDescription, VeteranRedirectMessage } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 
@@ -58,6 +58,25 @@ const getApi = (apiName?: string): APIDescription | null => {
   return lookupApiByFragment(apiName);
 };
 
+const VeteranRedirectAlertMessage = ({
+  api,
+  veteranRedirect,
+}: {
+  api: APIDescription;
+  veteranRedirect: VeteranRedirectMessage;
+}): JSX.Element => (
+  <AlertBox
+    status="info"
+    key={api.urlFragment}
+    className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
+  >
+    <div>
+      {veteranRedirect.message}&nbsp;
+      <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
+    </div>
+  </AlertBox>
+);
+
 const ApiPage = (): JSX.Element => {
   const location = useLocation();
   const params = useParams<APINameParam>();
@@ -65,6 +84,8 @@ const ApiPage = (): JSX.Element => {
 
   const api = getApi(params.apiName);
   const category = lookupApiCategory(params.apiCategoryKey);
+
+  const veteranRedirect = api?.veteranRedirect ?? category?.content.veteranRedirect;
 
   const tabsRegex = /tab=(r4|argonaut|dstu2)/;
   if (location.pathname === '/explore/health/docs/fhir' && tabsRegex.test(location.search)) {
@@ -101,15 +122,8 @@ const ApiPage = (): JSX.Element => {
         <title>{api.name} Documentation</title>
       </Helmet>
       <PageHeader halo={category.name} header={api.name} />
-      {api.veteranRedirect && (
-        <AlertBox
-          status="info"
-          key={api.urlFragment}
-          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
-        >
-          {api.veteranRedirect.message}&nbsp;
-          <a href={api.veteranRedirect.linkUrl}>{api.veteranRedirect.linkText}</a>.
-        </AlertBox>
+      {veteranRedirect && (
+        <VeteranRedirectAlertMessage api={api} veteranRedirect={veteranRedirect} />
       )}
       <DeactivationMessage api={api} />
       {!isApiDeactivated(api) && <ApiDocumentation apiDefinition={api} location={location} />}
