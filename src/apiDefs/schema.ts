@@ -72,6 +72,7 @@ export interface APIDescription {
   readonly name: string;
   readonly docSources: APIDocSource[];
   readonly urlFragment: string;
+  readonly categoryUrlFragment?: string;
   readonly description: string;
   readonly enabledByDefault: boolean;
   readonly vaInternalOnly?: VaInternalOnly;
