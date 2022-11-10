@@ -7,7 +7,7 @@ import '@department-of-veterans-affairs/component-library/dist/main.css';
 import {
   applyPolyfills,
   defineCustomElements,
-} from '@department-of-veterans-affairs/component-library';
+} from '@department-of-veterans-affairs/web-components/loader';
 import { Footer, Header, PageContent } from './components';
 import { FlagsProvider, getFlags } from './flags';
 import { history } from './store';

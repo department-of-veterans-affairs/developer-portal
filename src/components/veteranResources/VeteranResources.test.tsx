@@ -23,7 +23,7 @@ describe('VeteranResources', () => {
     fireEvent.click(modalButton);
     await waitFor(() => expect(screen.queryByRole('dialog')).toBeInTheDocument());
 
-    const dialogXButton = screen.getByLabelText('close');
+    const dialogXButton = screen.getByLabelText('close modal');
     fireEvent.click(dialogXButton);
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument());
   });
