@@ -12,19 +12,19 @@ describe('VersionSelector', () => {
 
   describe('apiVersion', () => {
     it('returns the apiVersion from state', () => {
-      const state = Map<string, string>({ apiVersion: '1.0.0' });
-      expect(VersionSelector.selectors.apiVersion(state)).toBe('1.0.0');
+      const state = Map<string, string>({ apiVersion: 'v1' });
+      expect(VersionSelector.selectors.apiVersion(state)).toBe('v1');
     });
   });
 
   describe('majorVersion', () => {
     it('returns the major version number from the apiVersion when apiVersion exists in state', () => {
-      const state = Map<string, string>({ apiVersion: '1.0.0' });
+      const state = Map<string, string>({ apiVersion: 'v1' });
       expect(VersionSelector.selectors.majorVersion(state)).toBe('1');
     });
 
-    it('returns the major version number from the apiVersion when apiVersion has a text prefix', () => {
-      const state = Map<string, string>({ apiVersion: 'prefix-1.0.0' });
+    it('returns the major version number from the apiVersion when apiVersion has a text suffix', () => {
+      const state = Map<string, string>({ apiVersion: 'v1.0.0-suffix' });
       expect(VersionSelector.selectors.majorVersion(state)).toBe('1');
     });
 
@@ -43,7 +43,7 @@ describe('VersionSelector', () => {
             internal_only: true,
             path: '/claims',
             status: 'up',
-            version: '1',
+            version: 'v1',
           },
         ],
       });
@@ -53,7 +53,7 @@ describe('VersionSelector', () => {
           internal_only: true,
           path: '/claims',
           status: 'up',
-          version: '1',
+          version: 'v1',
         },
       ]);
     });

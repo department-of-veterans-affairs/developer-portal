@@ -8,8 +8,8 @@ export const VersionSelector = {
     apiName: (state: Map<string, unknown>): string => state.get('apiName') as string,
     apiVersion: (state: Map<string, unknown>): string => state.get('apiVersion') as string,
     majorVersion: createSelector(apiVersion, (version: string | undefined): string => {
-      const unPrefixedVersion = version?.split('-').pop() ?? '';
-      return version ? unPrefixedVersion.substring(0, 1) : '';
+      const unPrefixedVersion = version?.split('-')[0] ?? '';
+      return version ? unPrefixedVersion.substring(1, 2) : '';
     }),
     versionMetadata: (state: Map<string, unknown>): VersionMetadata[] | null =>
       state.get('versionMetadata') as VersionMetadata[] | null,
