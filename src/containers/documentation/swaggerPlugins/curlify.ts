@@ -10,7 +10,7 @@ export const curlify = (requestOptions: RequestOptions): string => {
   /* eslint-enable @typescript-eslint/indent */
   const curlified = [];
   let type = '';
-  const postableMethods = ['PATCH', 'POST', 'PUT'];
+  const requestBodyMethods = ['PATCH', 'POST', 'PUT'];
   const newline = ' \\\r\n';
   const headers = request.get('headers') as Im.Map<string, string> | undefined;
   const method = request.get('method') as string;
@@ -29,7 +29,7 @@ export const curlify = (requestOptions: RequestOptions): string => {
     }
   }
 
-  if (body && postableMethods.includes(method)) {
+  if (body && requestBodyMethods.includes(method)) {
     if (type === 'multipart/form-data') {
       const bodyEntries = Object.entries(body.toJS() as { [prop: string]: unknown });
       for (const [key, value] of bodyEntries) {
