@@ -1,4 +1,5 @@
 export * from './codeBlock/CodeWrapper';
+export * from './codeBlock/CodeBlock';
 export * from './pageHeader/PageHeader';
 export * from './groupedAccordions/GroupedAccordions';
 export * from './header/Header';
