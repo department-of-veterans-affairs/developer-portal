@@ -1,8 +1,6 @@
 import React, { FC } from 'react';
-import ReactMarkdown from 'react-markdown';
-import highlight from 'rehype-highlight';
 import { APIDescription } from '../../../apiDefs/schema';
-import { APISelector, CodeWrapper } from '../../../components';
+import { APISelector, CodeBlock } from '../../../components';
 
 interface RetrievingTokenProps {
   options: APIDescription[];
@@ -49,20 +47,10 @@ const RetrievingTokenContent: FC<RetrievingTokenProps> = ({
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~bash
+      <CodeBlock
+        withCopyButton
+        language="bash"
+        code={`\
 curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token' \\
   --header 'Accept: application/json' \\
   --header 'Content-Type: application/x-www-form-urlencoded' \\
@@ -70,10 +58,8 @@ curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token'
   --data-urlencode 'client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer' \\
   --data-urlencode 'client_assertion={{signed-assertion-here}}' \\
   --data-urlencode 'scope=${scopes.join(' ')}' \\
-  ${hasLaunchScope ? "--data-urlencode 'launch=eyJwYXRpZW50IjoiMTIzNDUifQ==' \\" : ''}
-`}
-        </ReactMarkdown>
-      </CodeWrapper>
+  ${hasLaunchScope ? "--data-urlencode 'launch=eyJwYXRpZW50IjoiMTIzNDUifQ==' \\" : ''}`}
+      />
       <table>
         <thead>
           <tr>
@@ -117,20 +103,10 @@ curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token'
                 {'<signature>'}
               </p>
               <p>With the base64 encoded payload similar to this:</p>
-              <CodeWrapper>
-                <ReactMarkdown
-                  rehypePlugins={[highlight]}
-                  components={{
-                    // eslint-disable-next-line react/display-name
-                    code: ({ className, children, ...codeProps }): JSX.Element => (
-                      // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-                      <code tabIndex={0} className={className} {...codeProps}>
-                        {children}
-                      </code>
-                    ),
-                  }}
-                >
-                  {`~~~json
+              <CodeBlock
+                withCopyButton
+                language="json"
+                code={`\
 base64url(
 {
   "aud": "TBD",
@@ -143,10 +119,8 @@ base64url(
 ) => 
 eyJhdWQiOiJUQkQiLCJpc3MiOiJUQkQiLCJzdWIiOiJUQkQiLCJqdGkiOiIyMGYyZTk1
 MC0wMDY1LTExZWMtYTg1NC0zZGVmOWZmYWYxY2IiLCJpYXQiOjE2MjkzMTk0ODgsI
-mV4cCI6MTYyOTMxOTU0OH0
-`}
-                </ReactMarkdown>
-              </CodeWrapper>
+mV4cCI6MTYyOTMxOTU0OH0`}
+              />
             </td>
           </tr>
           <tr>
@@ -189,20 +163,10 @@ mV4cCI6MTYyOTMxOTU0OH0
       </table>
       <p>POST this assertion to the /token service to receive an access token in response.</p>
       <p>We will respond with your access token, which looks like what is shown below.</p>
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~bash
+      <CodeBlock
+        withCopyButton
+        language="bash"
+        code={`\
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 grant_type=client_credentials&
@@ -215,10 +179,8 @@ scope=${scopes.join(' ')}
   "token_type": "Bearer",
   "scope": "${scopes.join(' ')}",
   "expires_in": 900
-}
-`}
-        </ReactMarkdown>
-      </CodeWrapper>
+}`}
+      />
       <p>
         Use the returned access_token to authorize requests to our platform by including it in the
         header of HTTP requests as Authorization: Bearer {'{access_token}'}. Your access token will

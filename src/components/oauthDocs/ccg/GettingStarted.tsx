@@ -1,9 +1,7 @@
 import * as React from 'react';
-import ReactMarkdown from 'react-markdown';
 import { Link } from 'react-router-dom';
-import highlight from 'rehype-highlight';
 import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
-import { SectionHeaderWrapper, CodeWrapper } from '../../index';
+import { SectionHeaderWrapper, CodeBlock } from '../../index';
 
 const GettingStarted = (): JSX.Element => (
   <>
@@ -13,23 +11,22 @@ const GettingStarted = (): JSX.Element => (
       doing the conversion. The tool shows a private key being converted, but the process is the
       same for a public key. What you generate will look similar to this:
     </p>
-    <CodeWrapper>
-      <ReactMarkdown rehypePlugins={[highlight]}>
-        {`~~~json
+    <CodeBlock
+      withCopyButton
+      language="json"
+      code={`\
 {
   "kty": "RSA",
   "n": "mYi1wUpwkJ1QB8...",
   "e": "AQAB",
   "alg": "RS256",
   "use": "sig"
-}
-`}
-      </ReactMarkdown>
-    </CodeWrapper>
+}`}
+    />
     <p>
-      Next, <Link to={CONSUMER_SANDBOX_PATH}>get sandbox access</Link> for your desired client credentials grant API. On the access
-      form, provide your RSA public key. After you submit the form, we will send your client ID in
-      an email.
+      Next, <Link to={CONSUMER_SANDBOX_PATH}>get sandbox access</Link> for your desired client
+      credentials grant API. On the access form, provide your RSA public key. After you submit the
+      form, we will send your client ID in an email.
     </p>
   </>
 );

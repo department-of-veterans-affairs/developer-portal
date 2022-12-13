@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
-import ReactMarkdown from 'react-markdown';
-import highlight from 'rehype-highlight';
-import { CodeWrapper } from '../../../components';
+import { CodeBlock } from '../../../components';
 
 interface GeneratingJWTProps {
   apiName: string;
@@ -26,30 +24,19 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
       Sign your JWT using your RSA-generated private key, which you will use as a client assertion.
       An example for what the structure will look like is:
     </p>
-    <CodeWrapper>
-      <ReactMarkdown
-        rehypePlugins={[highlight]}
-        components={{
-          // eslint-disable-next-line react/display-name
-          code: ({ className, children, ...codeProps }): JSX.Element => (
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            <code tabIndex={0} className={className} {...codeProps}>
-              {children}
-            </code>
-          ),
-        }}
-      >
-        {`~~~json
+    <CodeBlock
+      withCopyButton
+      language="json"
+      code={`\
 {
-"aud": "TBD",
-"iss": "{yourClientId}",
-"sub": "{yourClientId}",
-"iat": 1604429781,
-"exp": 1604430081,
-"jti": "23f8f614-72c3-4267-b0da-b8b067662c74"
+  "aud": "TBD",
+  "iss": "{yourClientId}",
+  "sub": "{yourClientId}",
+  "iat": 1604429781,
+  "exp": 1604430081,
+  "jti": "23f8f614-72c3-4267-b0da-b8b067662c74"
 }`}
-      </ReactMarkdown>
-    </CodeWrapper>
+    />
     <p>The claims in your client assertion are described in this table.</p>
     <table>
       <thead>
