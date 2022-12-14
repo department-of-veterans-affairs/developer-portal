@@ -16,7 +16,7 @@ interface CodeBlockProps {
 /**
  * Displays a code block with optional copy to clipboard button
  * @param code - The code to be displayed
- * @param language - The language of the code
+ * @param language - The language to be used for syntax highlighting
  * @param withCopyButton - Whether or not to display a copy to clipboard button
  * @returns The code block component
  */
