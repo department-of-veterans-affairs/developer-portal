@@ -76,12 +76,14 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
                 {`https://deptva-eval.okta.com/oauth2/${sandboxAud}/v1/token`}
               </a>
             </p>
-            <p>
-              For the {apiName} in production, this is:{' '}
-              <a href={`https://va.okta.com/oauth2/${productionAud}/v1/token`}>
-                {`https://va.okta.com/oauth2/${productionAud}/v1/token`}
-              </a>
-            </p>
+            {sandboxAud !== productionAud && (
+              <p>
+                For the {apiName} in production, this is:{' '}
+                <a href={`https://va.okta.com/oauth2/${productionAud}/v1/token`}>
+                  {`https://va.okta.com/oauth2/${productionAud}/v1/token`}
+                </a>
+              </p>
+            )}
           </td>
         </tr>
         <tr>
