@@ -159,7 +159,7 @@
     "markdown-component-loader": "github:department-of-veterans-affairs/markdown-component-loader#4fc9ec4ceae45c189a29befc5e9cfa3b136b4a71",
     "markdown-it-anchor": "^7.1.0",
     "mini-css-extract-plugin": "^1.6.2",
-    "msw": "^0.28.2",
+    "msw": "^0.49.2",
     "node-sass": "^5.0.0",
     "node-sass-tilde-importer": "^1.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.8",
