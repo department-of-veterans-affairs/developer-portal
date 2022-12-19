@@ -69,8 +69,8 @@ describe('curlify', () => {
   });
 
   describe('request body', () => {
-    it('does not attempt to add a body for a non-POST method', () => {
-      const methods = ['GET', 'DELETE', 'PUT'];
+    it('does not attempt to add a body for a non-POST, PUT, or PATCH method', () => {
+      const methods = ['GET', 'DELETE'];
       methods.forEach((method: string) => {
         requestSpy.mockReturnValue({
           ...defaultReq,
@@ -82,25 +82,37 @@ describe('curlify', () => {
       });
     });
 
-    it('includes the empty request body if no properties have been specified', () => {
-      const curl = curlify(reqOptions);
-      expect(curl.endsWith("--data-raw '{}'")).toBe(true);
+    it('includes the empty request body if no properties have been specified for PATCH, POST, and PUT', () => {
+      const methods = ['PATCH', 'POST', 'PUT'];
+      methods.forEach((method: string) => {
+        requestSpy.mockReturnValue({
+          ...defaultReq,
+          method,
+        });
+
+        const curl = curlify(reqOptions);
+        expect(curl.endsWith("--data-raw '{}'")).toBe(true);
+      });
     });
 
-    it('populates request body properties', () => {
+    it('populates request body properties for PATCH, POST, and PUT', () => {
+      const methods = ['PATCH', 'POST', 'PUT'];
       const testBody = {
         format: 'flat',
         ids: [1, 22, 333],
       };
 
-      requestSpy.mockReturnValue({
-        ...defaultReq,
-        body: testBody,
-      });
+      methods.forEach((method: string) => {
+        requestSpy.mockReturnValue({
+          ...defaultReq,
+          body: testBody,
+          method,
+        });
 
-      const expectedData = `--data-raw '${JSON.stringify(testBody, null, 2)}'`;
-      const curl = curlify(reqOptions);
-      expect(curl.endsWith(expectedData)).toBe(true);
+        const curl = curlify(reqOptions);
+        const expectedData = `--data-raw '${JSON.stringify(testBody, null, 2)}'`;
+        expect(curl.endsWith(expectedData)).toBe(true);
+      });
     });
   });
 });
