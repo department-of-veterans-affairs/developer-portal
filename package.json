@@ -155,7 +155,7 @@
     "jsdom": "^16.7.0",
     "lint-staged": "^10.5.4",
     "lodash.noop": "^3.0.1",
-    "markdown-component-loader": "git://github.com/department-of-veterans-affairs/markdown-component-loader#1eea8199dfa3320a5198654f30ee6260eb9bef09",
+    "markdown-component-loader": "https://github.com/department-of-veterans-affairs/markdown-component-loader/archive/refs/tags/v1.2.0.tar.gz",
     "markdown-it-anchor": "^7.1.0",
     "mini-css-extract-plugin": "^2.6.0",
     "msw": "^0.28.2",
