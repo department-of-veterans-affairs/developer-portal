@@ -1,6 +1,6 @@
 # based on https://github.com/GoogleChrome/puppeteer/blob/master/docs/troubleshooting.md#running-puppeteer-in-docker
 
-FROM node:12
+FROM node:gallium
 
 # Install chromium dependencies
 RUN apt-get update && apt-get install -y libxss1 libxtst6 wget --no-install-recommends \
