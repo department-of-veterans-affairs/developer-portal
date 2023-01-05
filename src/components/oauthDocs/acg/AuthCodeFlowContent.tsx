@@ -241,7 +241,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
       <CodeBlock
         withCopyButton
         language="http"
-        code={`\ 
+        code={`\
 HTTP/1.1 302 Found
 Location: <yourRedirectURL>?
   code=z92dapo5
