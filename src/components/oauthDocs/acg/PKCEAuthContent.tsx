@@ -250,12 +250,12 @@ grant_type=authorization_code
         language="json"
         code={`\
 {
-    "access_token": "SlAV32hkKG",
-    "expires_in": 3600,
-    "refresh_token": "8xLOxBtZp8",
-    "scope": "${scopes}",
-    "state": "af0ifjsldkj",
-    "token_type": "Bearer"
+  "access_token": "SlAV32hkKG",
+  "expires_in": 3600,
+  "refresh_token": "8xLOxBtZp8",
+  "scope": "${scopes}",
+  "state": "af0ifjsldkj",
+  "token_type": "Bearer"
 }`}
       />
       <p>If an error occurs, you will instead receive a 400 response, like this:</p>
@@ -269,7 +269,7 @@ Cache-Control: no-store
 Pragma: no-cache
 
 {
-    "error": "invalid_request"
+  "error": "invalid_request"
 }`}
       />
       <p>
