@@ -253,7 +253,7 @@ grant_type=authorization_code
     "access_token": "SlAV32hkKG",
     "expires_in": 3600,
     "refresh_token": "8xLOxBtZp8",
-    "scope": ${scopes},
+    "scope": "${scopes}",
     "state": "af0ifjsldkj",
     "token_type": "Bearer"
 }`}
