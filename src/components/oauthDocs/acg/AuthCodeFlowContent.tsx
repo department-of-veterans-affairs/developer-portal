@@ -306,13 +306,13 @@ Cache-Control: no-store
 Pragma: no-cache
 
 {
-    "access_token": "SlAV32hkKG",
-    "expires_in": 3600,
-    "refresh_token": "8xLOxBtZp8",
-    "scope": "${scopes}",
-    "patient": "1558538470",
-    "state": "af0ifjsldkj",
-    "token_type": "Bearer",
+  "access_token": "SlAV32hkKG",
+  "expires_in": 3600,
+  "refresh_token": "8xLOxBtZp8",
+  "scope": "${scopes}",
+  "patient": "1558538470",
+  "state": "af0ifjsldkj",
+  "token_type": "Bearer",
 }`}
       />
 
@@ -327,7 +327,7 @@ Cache-Control: no-store
 Pragma: no-cache
 
 {
-    "error": "invalid_request"
+  "error": "invalid_request"
 }`}
       />
       <p>
@@ -473,8 +473,8 @@ Cache-Control: no-store
 Pragma: no-cache
 
 {
-    "error": "invalid_request",
-    "error_description": "Invalid email address."
+  "error": "invalid_request",
+  "error_description": "Invalid email address."
 }`}
       />
     </>
