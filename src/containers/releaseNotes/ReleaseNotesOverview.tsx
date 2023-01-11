@@ -17,7 +17,7 @@ const ReleaseNotesOverview = (): JSX.Element => {
         <title>Release Notes</title>
       </Helmet>
       <PageHeader header="Release Notes" />
-      <div className="vads-u-font-size--lg">
+      <div>
         <p>
           The VA Lighthouse product teams periodically update these APIs in order to deliver new
           features and repair defects. We avoid doing so whenever possible but occasionally we need
