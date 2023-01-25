@@ -446,6 +446,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
                       'vads-u-display--flex',
                       'vads-u-justify-content--space-between',
                     )}
+                    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+                    tabIndex={0}
                   >
                     <code>{this.buildCurl()}</code>
 

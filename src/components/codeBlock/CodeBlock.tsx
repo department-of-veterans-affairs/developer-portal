@@ -39,6 +39,12 @@ const CodeBlock = ({
               {children}
             </code>
           ),
+          pre: ({ children, ...preProps }): JSX.Element => (
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            <pre {...preProps} tabIndex={0}>
+              {children}
+            </pre>
+          ),
         }}
       >
         {codeMarkdown}

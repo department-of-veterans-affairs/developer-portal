@@ -12,8 +12,7 @@ interface CodeWrapperProps {
  * @returns {JSX.Element} The code wrapper component.
  */
 const CodeWrapper = (props: CodeWrapperProps): JSX.Element => (
-  // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-  <div className="code-wrapper" tabIndex={0}>
+  <div className="code-wrapper">
     <span className="sr-only">
       Ensure your screenreader verbosity is set to high for code snippets.
     </span>
