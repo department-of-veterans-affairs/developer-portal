@@ -44,19 +44,21 @@ const CodeBlock = ({
         {codeMarkdown}
       </ReactMarkdown>
 
-      {withCopyButton ? (
-        <Tooltip label="Code copied to clipboard!" placement="bottom">
-          <button
-            type="button"
-            className="va-api-button-default vads-u-border--1px vads-u-border-color--primary vads-u-margin--2"
-            onClick={async (): Promise<void> => {
-              await navigator.clipboard.writeText(code);
-            }}
-          >
-            Copy code to clipboard
-          </button>
-        </Tooltip>
-      ) : null}
+      <div className="vads-u-padding--2">
+        {withCopyButton ? (
+          <Tooltip label="Code copied to clipboard!" placement="bottom">
+            <button
+              type="button"
+              className="va-api-button-default vads-u-border--1px vads-u-border-color--primary"
+              onClick={async (): Promise<void> => {
+                await navigator.clipboard.writeText(code);
+              }}
+            >
+              Copy code to clipboard
+            </button>
+          </Tooltip>
+        ) : null}
+      </div>
     </CodeWrapper>
   );
 };

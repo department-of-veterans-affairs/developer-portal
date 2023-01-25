@@ -1,10 +1,12 @@
 .code-wrapper {
-  overflow-x: auto;
-
   & > pre {
     margin: 0;
-    overflow: visible;
+    overflow-x: auto;
     position: relative;
+
+    code {
+      background: none;
+    }
 
     &:after {
       content: '';
