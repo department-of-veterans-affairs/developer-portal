@@ -20,7 +20,7 @@ const Overview = (): JSX.Element => (
       <title>About</title>
     </Helmet>
     <PageHeader header="About" />
-    <div className="vads-u-font-size--lg">
+    <div>
       <p className="vads-u-margin-top--0">
         Lighthouse is part of VA&apos;s Digital Modernization strategy. Since August 2018,
         we&apos;ve been giving approved individuals and organizations access to the VA data they
