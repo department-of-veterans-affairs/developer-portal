@@ -50,12 +50,12 @@ const CodeBlock = ({
         {codeMarkdown}
       </ReactMarkdown>
 
-      <div className="vads-u-padding--2">
+      <div className="vads-u-padding--2 vads-u-text-align--center small-screen:vads-u-text-align--left">
         {withCopyButton ? (
           <Tooltip label="Code copied to clipboard!" placement="bottom">
             <button
               type="button"
-              className="va-api-button-default vads-u-border--1px vads-u-border-color--primary"
+              className="va-api-button-default vads-u-border--1px vads-u-border-color--primary vads-u-width--auto"
               onClick={async (): Promise<void> => {
                 await navigator.clipboard.writeText(code);
               }}
