@@ -21,6 +21,27 @@ const testPaths = [
   '/about/news',
 ];
 
+function logAxeViolations(path) {
+  // Return the callback that logs the violations
+  return violations => {
+    cy.task(
+      'log',
+      `${violations.length} accessibility violation${violations.length === 1 ? '' : 's'} ${
+        violations.length === 1 ? 'was' : 'were'
+      } detected for ${path}`,
+    );
+    // pluck specific keys to keep the table readable
+    const violationData = violations.map(({ id, impact, description, nodes }) => ({
+      id,
+      impact,
+      description,
+      nodes: nodes.length,
+    }));
+
+    cy.task('table', violationData);
+  };
+}
+
 describe('Accessibility tests', () => {
   beforeEach(() => {
     cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
@@ -41,14 +62,15 @@ describe('Accessibility tests', () => {
     testPaths.forEach(path => {
       cy.visit(path);
       cy.injectAxe();
-      cy.checkA11y();
+      cy.checkA11y(null, null, logAxeViolations(path));
     });
   });
 
   it('Swagger page has no axe violations', () => {
-    cy.visit('/explore/benefits/docs/claims');
+    const path = '/explore/benefits/docs/claims';
+    cy.visit(path);
     cy.injectAxe();
     cy.wait(5000); // Gives Swagger UI plenty of time to load
-    cy.checkA11y();
+    cy.checkA11y(null, null, logAxeViolations(path));
   });
 });
