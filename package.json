@@ -158,7 +158,7 @@
     "lodash.noop": "^3.0.1",
     "markdown-component-loader": "https://github.com/department-of-veterans-affairs/markdown-component-loader/archive/refs/tags/v1.2.0.tar.gz",
     "markdown-it-anchor": "^7.1.0",
-    "mini-css-extract-plugin": "^2.6.0",
+    "mini-css-extract-plugin": "~2.4.7",
     "msw": "^0.28.2",
     "postcss": "^8.4.13",
     "postcss-flexbugs-fixes": "^5.0.2",
