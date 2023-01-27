@@ -3,7 +3,6 @@ import { Switch } from 'react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 import { getActiveApiDefinitions, getApiCategoryOrder, getApisLoadedState } from './apiDefs/query';
-import { MarkdownPage } from './components';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
@@ -11,7 +10,6 @@ import About from './containers/about/About';
 import News from './containers/about/News';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
-import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Publishing } from './containers/publishing';
 import {
   CONSUMER_APPLICATION_PATH,
@@ -24,6 +22,7 @@ import { buildApiDetailRoutes } from './utils/routesHelper';
 import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
 import ErrorPage404 from './containers/ErrorPage404';
 import TermsOfService from './containers/TermsOfService';
+import IntegrationGuide from './containers/providers/IntegrationGuide';
 import { apiLoadingState } from './types/constants';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
@@ -95,10 +94,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       ))}
 
       {/* Integration Guide */}
-      <Route
-        path="/providers/integration-guide"
-        render={(): JSX.Element => MarkdownPage(ProviderIntegrationGuide)}
-      />
+      <Route path="/providers/integration-guide" component={IntegrationGuide} />
 
       {/* API Publishing */}
       {PUBLISHING_ROUTER_PATHS.map((path: string) => (
