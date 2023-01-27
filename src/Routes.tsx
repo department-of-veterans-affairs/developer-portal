@@ -11,7 +11,6 @@ import About from './containers/about/About';
 import News from './containers/about/News';
 import ReleaseNotes from './containers/releaseNotes/ReleaseNotes';
 import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
-import TermsOfService from './content/termsOfService.mdx';
 import ProviderIntegrationGuide from './content/providers/integrationGuide.mdx';
 import { Publishing } from './containers/publishing';
 import {
@@ -24,6 +23,7 @@ import {
 import { buildApiDetailRoutes } from './utils/routesHelper';
 import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
 import ErrorPage404 from './containers/ErrorPage404';
+import TermsOfService from './containers/TermsOfService';
 import { apiLoadingState } from './types/constants';
 
 export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
@@ -43,7 +43,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       <Route path="/oauth" render={(): JSX.Element => <Redirect to="/explore/authorization" />} />
 
       {/* Current routes: */}
-      <Route path="/terms-of-service" render={(): JSX.Element => MarkdownPage(TermsOfService)} />
+      <Route path="/terms-of-service" component={TermsOfService} />
 
       {/* API Documentation */}
       <Route exact path="/explore" component={DocumentationRoot} />
