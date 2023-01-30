@@ -156,7 +156,7 @@
     "lint-staged": "^10.5.4",
     "lodash.noop": "^3.0.1",
     "mini-css-extract-plugin": "^1.6.2",
-    "msw": "^0.28.2",
+    "msw": "^1.0.0",
     "node-sass": "^5.0.0",
     "node-sass-tilde-importer": "^1.0.2",
     "optimize-css-assets-webpack-plugin": "^5.0.8",
