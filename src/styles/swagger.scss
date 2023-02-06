@@ -13,6 +13,11 @@
 
   .info {
     margin-top: 0;
+    word-break: break-word;
+
+    table {
+      word-break: initial;
+    }
 
     p {
       color: $color-base;
@@ -34,6 +39,10 @@
       // never show Swagger UI's title feature
       display: none;
     }
+  }
+
+  .opblock .opblock-summary-path {
+    word-break: break-word;
   }
 
   .opblock.opblock-post .opblock-summary-method {
@@ -190,6 +199,11 @@
   }
   .model.model-title {
     line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .model-hint {
+    display: none;
   }
 
   .prop-format {

@@ -62,128 +62,130 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
   &code_challenge=gNL3Mve3EVRsiFq0H6gfCz8z8IUANboT-eQZgEkXzKw`}
         </ReactMarkdown>
       </CodeWrapper>
-      <table>
-        <thead>
-          <tr>
-            <th>Query Parameter</th>
-            <th>Required</th>
-            <th>Values</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <code>client_id</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              The <code>client_id</code> issued by the VA Lighthouse APIs team team
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>redirect_uri</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              The URL you supplied. The user will be redirected to this URL after authorizing your
-              application.
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>response_type</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              Supported response types: <code>code</code>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>code_challenge</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              Base64 encoded challenge generated from your <code>code_verifier</code>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>code_challenge_method</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              Supported code challenges: <code>S256</code>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>state</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              Specifying a <code>state</code> param helps protect against some classes of Cross Site
-              Request Forgery (CSRF) attacks, and applications must include it. The{' '}
-              <code>state</code> param will be passed back from the authorization server to your
-              redirect URL unchanged, and your application should verify that it has the expected
-              value. This helps assure that the client receiving the authorization response is the
-              same as the client that initiated the authorization process.
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>scope</code>
-            </td>
-            <td>Optional</td>
-            <td>
-              Will use your application&#39;s default scopes unless you specify a smaller subset of
-              scopes separated by a space. Review the{' '}
-              <HashLink to={{ ...location, hash: '#scopes' }}>Scopes section</HashLink> for more
-              information.
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>prompt</code>
-            </td>
-            <td>Optional</td>
-            <td>
-              <p>
-                Supported prompts: <code>login</code>, <code>consent</code> and <code>none</code>.
-              </p>
-              <p>
-                If <code>login</code> is specified, the user will be forced to provide credentials
-                regardless of session state. If omitted, an existing active session with the
-                identity provider may not require the user to provide credentials.
-              </p>
-              <p>
-                If <code>consent</code> is specified, the user will be asked to consent to their
-                scopes being used regardless of prior consent.
-              </p>
-              <p>
-                If <code>none</code> is specified, an application will attempt an authorization
-                request without user interaction. When the session is invalid or there are scopes
-                the user has not consented to, one of the following errors will be thrown:{' '}
-                <code>login_required</code> or
-                <code>consent_required</code>.
-              </p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Query Parameter</th>
+              <th>Required</th>
+              <th>Values</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <code>client_id</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                The <code>client_id</code> issued by the VA Lighthouse APIs team team
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>redirect_uri</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                The URL you supplied. The user will be redirected to this URL after authorizing your
+                application.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>response_type</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                Supported response types: <code>code</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>code_challenge</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                Base64 encoded challenge generated from your <code>code_verifier</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>code_challenge_method</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                Supported code challenges: <code>S256</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>state</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                Specifying a <code>state</code> param helps protect against some classes of Cross
+                Site Request Forgery (CSRF) attacks, and applications must include it. The{' '}
+                <code>state</code> param will be passed back from the authorization server to your
+                redirect URL unchanged, and your application should verify that it has the expected
+                value. This helps assure that the client receiving the authorization response is the
+                same as the client that initiated the authorization process.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>scope</code>
+              </td>
+              <td>Optional</td>
+              <td>
+                Will use your application&#39;s default scopes unless you specify a smaller subset
+                of scopes separated by a space. Review the{' '}
+                <HashLink to={{ ...location, hash: '#scopes' }}>Scopes section</HashLink> for more
+                information.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>prompt</code>
+              </td>
+              <td>Optional</td>
+              <td>
+                <p>
+                  Supported prompts: <code>login</code>, <code>consent</code> and <code>none</code>.
+                </p>
+                <p>
+                  If <code>login</code> is specified, the user will be forced to provide credentials
+                  regardless of session state. If omitted, an existing active session with the
+                  identity provider may not require the user to provide credentials.
+                </p>
+                <p>
+                  If <code>consent</code> is specified, the user will be asked to consent to their
+                  scopes being used regardless of prior consent.
+                </p>
+                <p>
+                  If <code>none</code> is specified, an application will attempt an authorization
+                  request without user interaction. When the session is invalid or there are scopes
+                  the user has not consented to, one of the following errors will be thrown:{' '}
+                  <code>login_required</code> or
+                  <code>consent_required</code>.
+                </p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <p>
         The Veteran will need to grant your application access permission. To do this, direct the
         Veteran to the URL above. The Veteran is taken through an authentication flow by VA.gov and
