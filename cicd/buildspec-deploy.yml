@@ -112,7 +112,7 @@ phases:
           if [[ "${env}" == "production" ]]; then
             export SENTRY_RELEASE=$(sentry-cli releases propose-version)
             sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
-            sentry-cli releases set-commits --auto $SENTRY_RELEASE
+            sentry-cli releases set-commits --auto --ignore-missing $SENTRY_RELEASE
             sentry-cli releases finalize $SENTRY_RELEASE
           fi
         done
