@@ -1,3 +1,7 @@
-.release-notes-wrapper p {
-  white-space: 'pre-wrap';
+.release-notes-wrapper {
+  word-break: break-word;
+
+  p {
+    white-space: pre-wrap;
+  }
 }

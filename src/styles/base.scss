@@ -116,3 +116,15 @@ input:focus::placeholder {
 .usa-input-error {
   position: static;
 }
+
+// Provide a better horizontal scroll for wide tables on a mobile layout
+.table-wrapper {
+  margin: 1.7em 0 1.7em -16px;
+  overflow-x: scroll;
+  padding: 0 16px;
+  width: calc(100% + 32px);
+
+  table {
+    margin: 0;
+  }
+}
