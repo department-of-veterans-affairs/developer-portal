@@ -1,27 +1,29 @@
 .code-wrapper {
+  position: relative;
+
   & > pre {
+    padding: 1rem 3rem;
     margin: 0;
-    overflow-x: auto;
-    position: relative;
+    max-width: 100%;
+    overflow: auto;
+  }
 
-    code {
-      background: none;
-    }
+  &:after {
+    content: '';
+    height: 100%;
+    width: 20px;
+    background: linear-gradient(270deg, #222935, transparent);
+    position: absolute;
+    right: 0;
+    top: 0;
 
-    &:after {
-      content: '';
-      height: 100%;
-      width: 20px;
-      background: linear-gradient(270deg, #222935, transparent);
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
+    border-radius: inherit;
   }
 
   code {
     font-family: 'Ubuntu Mono', monospace;
-    overflow: auto;
     max-height: 400px;
+
+    border-radius: inherit;
   }
 }

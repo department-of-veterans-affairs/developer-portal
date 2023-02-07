@@ -10,7 +10,6 @@
   .code-wrapper {
     // Needs both due to covering of both code blocks and inline formatted code/parameter names
     background-color: #222935;
-    border-radius: 6px;
   }
 
   code {
@@ -18,7 +17,7 @@
     font-family: 'Source Code Pro', monospace;
     padding: 0.2rem 0.4rem;
     margin: auto 0.2rem;
-    // border-radius: 6px;
+    border-radius: 6px;
 
     // this may look ugly but there's no padding at line end/start when text wraps
     white-space: nowrap;
@@ -26,7 +25,6 @@
 
   pre > code {
     display: block;
-    padding: 2rem;
     margin: 0;
     white-space: pre;
     
@@ -84,9 +82,14 @@
     }
   }
 
-  .api-selector + .code-wrapper {
+  .api-selector-container + .code-block{
     border-top-right-radius: 0;
     border-top-left-radius: 0;
-  }
 
+    border-radius: 0 0 6px 6px;
+
+    .code-wrapper {
+      border-radius: 0;
+    }
+  }
 }

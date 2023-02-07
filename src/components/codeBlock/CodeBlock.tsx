@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import highlight from 'rehype-highlight';
-import classNames from 'classnames';
 import { Tooltip } from '../index';
 
 import './CodeBlock.scss';
@@ -28,30 +27,32 @@ const CodeBlock = ({
   const codeMarkdown = `\`\`\`${language}\n${code}\n\`\`\``;
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+    <div className="code-block">
+      <CodeWrapper>
+        <ReactMarkdown
+          rehypePlugins={[highlight]}
+          components={{
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            code: ({ className, children, node, ...codeProps }): JSX.Element => (
+              <code className={className} {...codeProps}>
+                {children}
+              </code>
+            ),
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            pre: ({ children, node, ...preProps }): JSX.Element => (
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+              <pre {...preProps} tabIndex={0}>
+                {children}
+              </pre>
+            ),
+          }}
+        >
+          {codeMarkdown}
+        </ReactMarkdown>
+      </CodeWrapper>
 
-    <CodeWrapper>
-      <ReactMarkdown
-        rehypePlugins={[highlight]}
-        components={{
-          code: ({ className, children, ...codeProps }): JSX.Element => (
-            <code className={classNames('fit-content', className)} {...codeProps}>
-              {children}
-            </code>
-          ),
-          pre: ({ children, ...preProps }): JSX.Element => (
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            <pre {...preProps} tabIndex={0}>
-              {children}
-            </pre>
-          ),
-        }}
-      >
-        {codeMarkdown}
-      </ReactMarkdown>
-
-      <div className="vads-u-padding--2 vads-u-text-align--center small-screen:vads-u-text-align--left">
-        {withCopyButton ? (
+      {withCopyButton ? (
+        <div className="vads-u-text-align--center small-screen:vads-u-text-align--left copy-btn-container">
           <Tooltip label="Code copied to clipboard!" placement="bottom">
             <button
               type="button"
@@ -63,9 +64,9 @@ const CodeBlock = ({
               Copy code to clipboard
             </button>
           </Tooltip>
-        ) : null}
-      </div>
-    </CodeWrapper>
+        </div>
+      ) : null}
+    </div>
   );
 };
 
