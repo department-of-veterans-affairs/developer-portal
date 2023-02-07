@@ -235,42 +235,6 @@ module.exports = {
               },
             ],
           },
-          // Load .mdx files as components
-          {
-            test: /\.mdx$/,
-            include: paths.appSrc,
-            use: [
-              'babel-loader',
-              {
-                loader: 'markdown-component-loader',
-                options: {
-                  enabledMarkdownItRules: ['smartquotes', 'table'],
-                  markdownItPlugins: [
-                    [
-                      require('markdown-it-attrs'),
-                      {
-                        allowedAttributes: ['id', 'tabIndex', 'class'],
-                      },
-                    ],
-                    [
-                      require('markdown-it-anchor'),
-                      {
-                        level: 2,
-                        slugify: s =>
-                          encodeURIComponent(
-                            String(s)
-                              .trim()
-                              .toLowerCase()
-                              .replace(',', '')
-                              .replace(/\s+/g, '-'),
-                          ),
-                      },
-                    ],
-                  ],
-                },
-              },
-            ],
-          },
           {
             test: /\.ya?ml$/,
             include: paths.appSrc,
