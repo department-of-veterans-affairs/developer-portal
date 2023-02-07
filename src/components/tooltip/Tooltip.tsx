@@ -38,7 +38,7 @@ const Tooltip = ({ children, label, placement = 'top' }: TooltipProps): JSX.Elem
     middlewareData: { arrow: { x: arrowX, y: arrowY } = {} },
     placement: finalPlacement,
   } = useFloating<HTMLElement>({
-    middleware: [offset(5), flip(), shift({ padding: 8 }), arrow({ element: arrowRef })],
+    middleware: [offset(14), flip(), shift({ padding: 8 }), arrow({ element: arrowRef })],
     onOpenChange: setOpen,
     open,
     placement,
