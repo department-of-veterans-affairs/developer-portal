@@ -1,5 +1,7 @@
+$background-color: #222935;
+
 .code-block {
-  background: #222935;
+  background: $background-color;
   border-radius: 6px;
 
   .code-wrapper {
@@ -10,10 +12,10 @@
     width: fit-content;
   }
 
-    .copy-btn-container {
-      padding: 1rem 3rem;
-      background: #222935;
-      border: none;
-      border-radius: inherit;
-    }
+  .copy-btn-container {
+    padding: 1rem 1.3rem;
+    background: $background-color;
+    border: none;
+    border-radius: inherit;
+  }
 }
