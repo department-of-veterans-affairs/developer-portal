@@ -112,7 +112,7 @@ phases:
           if [[ "${env}" == "production" ]]; then
             export SENTRY_RELEASE=$(sentry-cli releases propose-version)
             sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
-            sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps build/${env}/static/js --url-prefix '~/static/js'
+            sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps ${env}/static/js --url-prefix '~/static/js'
             sentry-cli releases set-commits --auto --ignore-missing $SENTRY_RELEASE
             sentry-cli releases finalize $SENTRY_RELEASE
           fi
