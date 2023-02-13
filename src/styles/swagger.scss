@@ -13,6 +13,11 @@
 
   .info {
     margin: 0 0 3.2rem;
+    word-break: break-word;
+
+    table {
+      word-break: initial;
+    }
 
     p {
       color: $color-base;
@@ -58,6 +63,10 @@
       margin-bottom: 1.6rem;
       margin-top: 1.6rem;
     }
+  }
+
+  .opblock .opblock-summary-path {
+    word-break: break-word;
   }
 
   .opblock.opblock-post .opblock-summary-method {
@@ -214,6 +223,11 @@
   }
   .model.model-title {
     line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .model-hint {
+    display: none;
   }
 
   .prop-format {

@@ -14,7 +14,6 @@ export * from './footer/Footer';
 export * from './cardLink/CardLink';
 export * from './embeddedYoutubeVideo/EmbeddedYoutubeVideo';
 export * from './hero/Hero';
-export * from './markdownPage/MarkdownPage';
 export * from './quickStartWrapper/QuickstartWrapper';
 export * from './sectionHeaderWrapper/SectionHeaderWrapper';
 export * from './oauthDocs/acg/BuildingOIDCContent';
