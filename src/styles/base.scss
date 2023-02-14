@@ -51,7 +51,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: $font-sans;
+  font-family: 'Bitter', serif;
   color: $color-gray-dark;
 }
 
@@ -61,17 +61,20 @@ h1 {
 
 h2 {
   font-size: 3rem;
-  margin-top: 1.5rem !important;
-  margin-bottom: 1.5rem !important;
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
 }
 
 h3 {
-  margin-top: 2rem !important;
-  margin-bottom: 1.5rem !important;
+  margin-bottom: 1.6rem;
 }
 
 h4 {
-  font-size: 1.9rem;
+  font-size: 1.7rem;
+}
+
+p {
+  margin: 0.8rem 0;
 }
 
 // Override <a> styles from formation. The non-hover transition
