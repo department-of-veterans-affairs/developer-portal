@@ -159,7 +159,7 @@
     "msw": "^0.28.2",
     "node-sass": "^5.0.0",
     "node-sass-tilde-importer": "^1.0.2",
-    "optimize-css-assets-webpack-plugin": "^5.0.8",
+    "optimize-css-assets-webpack-plugin": "^6.0.1",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.0.6",
