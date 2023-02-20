@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import { AlertBox } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 
 import { useCookies } from 'react-cookie';
 import { Form, Formik } from 'formik';

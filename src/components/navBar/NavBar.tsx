@@ -12,7 +12,7 @@ import {
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
   CONSUMER_SANDBOX_PATH,
-  PUBLISHING_EXPECTATIONS_PATH,
+  PUBLISHING_REQUIREMENTS_URL,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
   SUPPORT_CONTACT_PATH,
@@ -246,7 +246,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               </SubNavEntry>
               <SubNavEntry
                 onClick={props.onMobileNavClose}
-                to={PUBLISHING_EXPECTATIONS_PATH}
+                to={PUBLISHING_REQUIREMENTS_URL}
                 id="expectations"
               >
                 Expectations for APIs

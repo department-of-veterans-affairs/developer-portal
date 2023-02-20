@@ -6,9 +6,11 @@ import { useCookies } from 'react-cookie';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
-import Modal from '@department-of-veterans-affairs/component-library/Modal';
-import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import Modal from 'component-library-legacy/Modal';
+import {
+  AlertBox,
+  SegmentedProgressBar,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, useHistory } from 'react-router-dom';
 // import Icon508 from '../../assets/508-compliant.svg';
 import { NavHashLink } from 'react-router-hash-link';

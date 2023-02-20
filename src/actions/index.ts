@@ -39,6 +39,16 @@ export interface SetAPIs extends Action {
   error: boolean;
 }
 
+export interface ResetGeneralStore extends Action {
+  type: constants.RESET_GENERAL_STORE;
+}
+
+export interface SetGeneralStore extends Action {
+  type: constants.SET_GENERAL_STORE;
+  vaNetworkConnected: boolean;
+  vaNetworkModal: boolean;
+}
+
 export const resetVersioning: ActionCreator<ResetVersioning> = () => ({
   type: constants.RESET_VERSIONING_VALUE,
 });
@@ -82,4 +92,13 @@ export const setApiLoadingError: ActionCreator<SetAPIs> = () => ({
   error: true,
   loaded: false,
   type: constants.SET_APIS_VALUE,
+});
+
+export const setGeneralStore: ActionCreator<SetGeneralStore> = (
+  vaNetworkModal: boolean,
+  vaNetworkConnected: boolean,
+) => ({
+  type: constants.SET_GENERAL_STORE_VALUE,
+  vaNetworkConnected,
+  vaNetworkModal,
 });

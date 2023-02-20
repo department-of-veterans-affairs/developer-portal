@@ -2,6 +2,7 @@ export * from './actions/apply';
 export * from './actions/oauthApiSelection';
 export * from './actions/version';
 export * from './actions/apiList';
+export * from './actions/generalStore';
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';
 export const DEFAULT_OAUTH_API_SELECTION = 'claims';
@@ -26,7 +27,6 @@ export const FLAG_DEACTIVATED_APIS = 'deactivated_apis';
 export const FLAG_ENABLED_APIS = 'enabled';
 export const FLAG_HOSTED_APIS = 'hosted_apis';
 export const FLAG_SHOW_TESTING_NOTICE = 'show_testing_notice';
-export const FLAG_PLATFORM_OUTAGE = 'platform_outage';
 export enum yesOrNoValues {
   Yes = 'yes',
   No = 'no',

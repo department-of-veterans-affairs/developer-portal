@@ -18,7 +18,7 @@
 // In support of API-4441, custom button variants were added that are unachievable with VADS / USWDS
 @import './buttons';
 
-@import '~web-components/dist/component-library/component-library';
+@import '~@department-of-veterans-affairs/component-library/dist/main.css';
 // Layout
 
 html {
@@ -130,4 +130,8 @@ input:focus::placeholder {
   table {
     margin: 0;
   }
+}
+
+#va-network-modal .loading-indicator {
+  margin-bottom: 2rem;
 }

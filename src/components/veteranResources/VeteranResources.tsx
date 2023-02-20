@@ -1,5 +1,5 @@
 import React from 'react';
-import Modal from '@department-of-veterans-affairs/component-library/Modal';
+import Modal from 'component-library-legacy/Modal';
 import { useModalController } from '../../hooks';
 import { VeteranResourcesContent } from './VeteranResourcesContent';
 import './VeteranResources.scss';
