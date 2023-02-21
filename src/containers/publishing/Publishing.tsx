@@ -40,7 +40,6 @@ const Publishing: FC = () => {
                 openModal();
                 return false;
               }}
-              style={{ backgroundColor: 'transparent', fontSize: '1.5rem', fontWeight: 'normal' }}
             >
               Requirements for APIs
             </button>

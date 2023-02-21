@@ -1,9 +1,9 @@
-// Necessary to include this file to polyfill USWDS resources 
+// Necessary to include this file to polyfill USWDS resources
 // to reduce duplication until we can find a compiler-level solution
 @import './uswdsPatch';
 
 // provides $color-* variables, $font-sans and other typography vars
-@import '~@department-of-veterans-affairs/formation/sass/base/b-variables';
+@import '~@department-of-veterans-affairs/formation/sass/shared-variables';
 
 @import './colors';
 @import './layout';
