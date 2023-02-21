@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 import highlight from 'rehype-highlight';
 import { CodeWrapper } from '../../../components';
+import { SUPPORT_CONTACT_PATH } from '../../../types/constants/paths';
 
 interface GeneratingJWTProps {
   apiName: string;
@@ -85,6 +87,11 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
                   </a>
                 </p>
               )}
+              <p>
+                <b>Important: </b> To get production access, you must either work for VA or have
+                specific VA agreements in place. If you have questions,{' '}
+                <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
+              </p>
             </td>
           </tr>
           <tr>
