@@ -1,8 +1,11 @@
+import { defineCustomElements } from '@department-of-veterans-affairs/component-library';
 import { getByRole, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import SupportFAQ, { SupportQuestions } from './FAQ';
+
+defineCustomElements();
 
 describe('SupportQuestions', () => {
   it('Accordion testing', () => {
@@ -23,6 +26,8 @@ describe('SupportQuestions', () => {
     const heading = getByRole(section, 'heading', { name: 'SupportQuestions Title' });
     expect(heading).toBeInTheDocument();
 
+    const defaultElement = document.querySelector('va-accordion');
+    expect(defaultElement?.shadowRoot?.querySelector('button')).toBeInTheDocument();
     const toggleButton = getByRole(section, 'button', { name: 'Expand all' });
     expect(toggleButton).toBeInTheDocument();
 
