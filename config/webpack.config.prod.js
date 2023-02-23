@@ -160,7 +160,7 @@ module.exports = envName => {
       chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
       assetModuleFilename: 'static/media/[name].[hash][ext]',
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath: path.publicUrlOrPath,
+      publicPath: paths.publicUrlOrPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: info =>
         path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
