@@ -1,18 +1,35 @@
 'use strict';
 
-const autoprefixer = require('autoprefixer');
+const fs = require('fs');
 const path = require('path');
+const resolve = require('resolve');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
-const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
+const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const modules = require('./modules');
 const CopyPlugin = require('copy-webpack-plugin');
+
+const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
+const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
+  '@pmmmwh/react-refresh-webpack-plugin',
+);
+const babelRuntimeEntry = require.resolve('babel-preset-react-app');
+const babelRuntimeEntryHelpers = require.resolve(
+  '@babel/runtime/helpers/esm/assertThisInitialized',
+  { paths: [babelRuntimeEntry] },
+);
+const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
+  paths: [babelRuntimeEntry],
+});
+
+const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
 // Webpack uses `output.publicPath`, from its options object, to determine
 // where the app is being served from.  In development, we always serve from
@@ -20,39 +37,32 @@ const CopyPlugin = require('copy-webpack-plugin');
 const publicPath = paths.servedPath;
 const publicPathNoSlash = publicPath.replace(/[/]+$/, '');
 const env = getClientEnvironment(publicPathNoSlash);
+const shouldUseReactRefresh = env.raw.FAST_REFRESH;
+
+const hasJsxRuntime = (() => {
+  if (process.env.DISABLE_NEW_JSX_TRANSFORM === 'true') {
+    return false;
+  }
+
+  try {
+    require.resolve('react/jsx-runtime');
+    return true;
+  } catch (e) {
+    return false;
+  }
+})();
 
 // This is the development configuration.
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
 module.exports = {
-  // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
-  // See the discussion in https://github.com/facebookincubator/create-react-app/issues/343.
+  target: ['browserslist'],
+  stats: 'errors-warnings',
   mode: 'development',
   devtool: 'cheap-module-source-map',
-  // These are the "entry points" to our application.
-  // This means they will be the "root" imports that are included in JS bundle.
-  // The first two entry points enable "hot" CSS and auto-refreshes for JS.
-  entry: [
-    // We ship a few polyfills by default:
-    require.resolve('./polyfills'),
-    // Include an alternative client for WebpackDevServer. A client's job is to
-    // connect to WebpackDevServer by a socket and get notified about changes.
-    // When you save a file, the client will either apply hot updates (in case
-    // of CSS changes), or refresh the page (in case of JS changes). When you
-    // make a syntax error, this client will display a syntax error overlay.
-    // Note: instead of the default WebpackDevServer client, we use a custom one
-    // to bring better experience for Create React App users. You can replace
-    // the line below with these two lines if you prefer the stock client:
-    // require.resolve('webpack-dev-server/client') + '?/',
-    // require.resolve('webpack/hot/dev-server'),
-    require.resolve('react-dev-utils/webpackHotDevClient'),
-    // Finally, this is your app's code:
-    paths.appIndexJs,
-    // We include the app code last so that if there is a runtime error during
-    // initialization, it doesn't blow up the WebpackDevServer client, and
-    // changing JS code would still trigger a refresh.
-  ],
+  entry: paths.appIndexJs,
   output: {
+    path: paths.appBuild,
     // Add /* filename */ comments to generated require()s in the output.
     pathinfo: true,
     // This does not produce a real file. It's just the virtual path that is
@@ -61,20 +71,38 @@ module.exports = {
     filename: 'static/js/bundle.js',
     // There are also additional JS chunk files if you use code splitting.
     chunkFilename: 'static/js/[name].chunk.js',
+    assetModuleFilename: 'static/media/[name].[hash][ext]',
     // This is the URL that app is served from. We use "/" in development.
-    publicPath: publicPath,
+    publicPath: paths.publicUrlOrPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
   },
+  cache: {
+    type: 'filesystem',
+    version: createEnvironmentHash(env.raw),
+    cacheDirectory: paths.appWebpackCache,
+    store: 'pack',
+    buildDependencies: {
+      defaultWebpack: ['webpack/lib/'],
+      config: [__filename],
+      tsconfig: [paths.appTsConfig].filter(f => fs.existsSync(f)),
+    },
+  },
+  ignoreWarnings: [/Failed to parse source map/],
+  infrastructureLogging: {
+    level: 'none',
+  },
   resolve: {
+    fallback: { stream: require.resolve('stream-browserify') },
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
     // https://github.com/facebookincubator/create-react-app/issues/253
     modules: ['node_modules', paths.appNodeModules].concat(
       // It is guaranteed to exist because we tweak it in `env.js`
-      process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
+      // process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
+      modules.additionalModulePaths || [],
     ),
     // These are the reasonable defaults supported by the Node ecosystem.
     // We also include JSX as a common component filename extension to support
@@ -82,22 +110,12 @@ module.exports = {
     // https://github.com/facebookincubator/create-react-app/issues/290
     // `web` extension prefixes have been added for better support
     // for React Native Web.
-    extensions: [
-      '.mjs',
-      '.web.ts',
-      '.ts',
-      '.web.tsx',
-      '.tsx',
-      '.web.js',
-      '.js',
-      '.json',
-      '.web.jsx',
-      '.jsx',
-    ],
+    extensions: paths.moduleFileExtensions.map(ext => `.${ext}`),
     alias: {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+      ...(modules.webpackAliases || {}),
     },
     plugins: [
       // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -105,23 +123,25 @@ module.exports = {
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-      // This module helps us get past the 'need alias' entries in the webpack.config file.
-      new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
+      new ModuleScopePlugin(paths.appSrc, [
+        paths.appPackageJson,
+        reactRefreshRuntimeEntry,
+        reactRefreshWebpackPluginRuntimeEntry,
+        babelRuntimeEntry,
+        babelRuntimeEntryHelpers,
+        babelRuntimeRegenerator,
+      ]),
+      // // This module helps us get past the 'need alias' entries in the webpack.config file.
     ],
   },
   module: {
     strictExportPresence: true,
     rules: [
-      // TODO: Disable require.ensure as it's not a standard language feature.
-      // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
-      // { parser: { requireEnsure: false } },
-
       {
-        test: /\.(js|jsx|mjs)$/,
-        loader: require.resolve('source-map-loader'),
         enforce: 'pre',
-        include: paths.appSrc,
+        exclude: /@babel(?:\/|\\{1,2})runtime/,
+        test: /\.(js|mjs|jsx|ts|tsx|css)$/,
+        loader: require.resolve('source-map-loader'),
       },
       {
         // "oneOf" will traverse all following loaders until one will
@@ -141,12 +161,28 @@ module.exports = {
           },
           {
             test: /\.(js|jsx|mjs)$/,
+            include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              babelrc: false,
-              compact: false,
-              presets: [require.resolve('babel-preset-react-app/dependencies')],
+              customize: require.resolve('babel-preset-react-app/webpack-overrides'),
+              presets: [
+                [
+                  require.resolve('babel-preset-react-app'),
+                  {
+                    runtime: hasJsxRuntime ? 'automatic' : 'classic',
+                  },
+                ],
+              ],
+              plugins: [
+                true && shouldUseReactRefresh && require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
+              // This is a feature of `babel-loader` for webpack (not Babel itself).
+              // It enables caching results in ./node_modules/.cache/babel-loader/
+              // directory for faster rebuilds.
               cacheDirectory: true,
+              // See #6846 for context on why cacheCompression is disabled
+              cacheCompression: false,
+              compact: false,
             },
           },
           // Compile .tsx?
@@ -178,20 +214,36 @@ module.exports = {
                 options: {
                   importLoaders: 1,
                   sourceMap: true,
+                  modules: {
+                    mode: 'icss',
+                  },
                 },
               },
               {
                 loader: require.resolve('postcss-loader'),
                 options: {
-                  // Necessary for external CSS imports to work
-                  // https://github.com/facebookincubator/create-react-app/issues/2677
-                  ident: 'postcss',
-                  plugins: () => [
-                    require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      flexbox: 'no-2009',
-                    }),
-                  ],
+                  postcssOptions: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebook/create-react-app/issues/2677
+                    ident: 'postcss',
+                    plugins: [
+                      'postcss-flexbugs-fixes',
+                      [
+                        'postcss-preset-env',
+                        {
+                          autoprefixer: {
+                            flexbox: 'no-2009',
+                          },
+                          stage: 3,
+                        },
+                      ],
+                      // Adds PostCSS Normalize as the reset css with default options,
+                      // so that it honors browserslist config in package.json
+                      // which in turn let's users customize the target behavior as per their needs.
+                      'postcss-normalize',
+                    ],
+                  },
+                  sourceMap: true,
                 },
               },
             ],
@@ -203,34 +255,61 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           {
             test: /\.scss$/,
-            include: [paths.appSrc, paths.appNodeModules],
             use: [
               require.resolve('style-loader'),
               {
                 loader: require.resolve('css-loader'),
                 options: {
+                  importLoaders: 3,
                   sourceMap: true,
+                  modules: {
+                    mode: 'icss',
+                  },
                 },
               },
               {
                 loader: require.resolve('postcss-loader'),
                 options: {
-                  // Necessary for external CSS imports to work
-                  // https://github.com/facebookincubator/create-react-app/issues/2677
-                  ident: 'postcss',
-                  plugins: () => [
-                    require('postcss-flexbugs-fixes'),
-                    autoprefixer({
-                      flexbox: 'no-2009',
-                    }),
-                  ],
+                  postcssOptions: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebook/create-react-app/issues/2677
+                    ident: 'postcss',
+                    config: false,
+                    includePaths: [paths.appSrc, paths.appNodeModules],
+                    plugins: [
+                      'postcss-flexbugs-fixes',
+                      [
+                        'postcss-preset-env',
+                        {
+                          autoprefixer: {
+                            flexbox: 'no-2009',
+                          },
+                          stage: 3,
+                        },
+                      ],
+                      // Adds PostCSS Normalize as the reset css with default options,
+                      // so that it honors browserslist config in package.json
+                      // which in turn let's users customize the target behavior as per their needs.
+                      'postcss-normalize',
+                    ],
+                  },
                   sourceMap: true,
+                },
+              },
+              {
+                loader: require.resolve('resolve-url-loader'),
+                options: {
+                  sourceMap: true,
+                  root: paths.appSrc,
                 },
               },
               {
                 loader: require.resolve('sass-loader'),
                 options: {
                   sourceMap: true,
+                  sassOptions: {
+                    includePaths: [paths.appNodeModules],
+                  },
                 },
               },
             ],
@@ -247,14 +326,11 @@ module.exports = {
           // that fall through the other loaders.
           {
             // Exclude `js` files to keep "css" loader working as it injects
-            // its runtime that would otherwise processed through "file" loader.
+            // its runtime that would otherwise be processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/, /\.scss$/],
-            loader: require.resolve('file-loader'),
-            options: {
-              name: 'static/media/[name].[hash:8].[ext]',
-            },
+            exclude: [/^$/, /\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+            type: 'asset/resource',
           },
         ],
       },
@@ -273,53 +349,98 @@ module.exports = {
     }),
     // In development, this will be an empty string.
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
-    // Add module names to factory functions so they appear in browser profiler.
-    new webpack.NamedModulesPlugin(),
+    // This gives some necessary context to module not found errors, such as
+    // the requesting resource.
+    new ModuleNotFoundPlugin(paths.appPath),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
     new webpack.DefinePlugin(env.stringified),
-    // This is necessary to emit hot updates (currently CSS only):
-    new webpack.HotModuleReplacementPlugin(),
     // Watcher doesn't work well if you mistype casing in a path so we use
     // a plugin that prints an error when you attempt to do this.
     // See https://github.com/facebookincubator/create-react-app/issues/240
     new CaseSensitivePathsPlugin(),
-    // If you require a missing module and then `npm install` it, you still have
-    // to restart the development server for Webpack to discover it. This plugin
-    // makes the discovery automatic so you don't have to restart.
-    // See https://github.com/facebookincubator/create-react-app/issues/186
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
     // Moment.js is an extremely popular library that bundles large locale files
     // by default due to how Webpack interprets its code. This is a practical
     // solution that requires the user to opt into importing specific locales.
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
-    new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    new WatchMissingNodeModulesPlugin(paths.appNodeModules),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
+    // Generate an asset manifest file with the following content:
+    // - "files" key: Mapping of all asset filenames to their corresponding
+    //   output file so that tools can pick it up without having to parse
+    //   `index.html`
+    // - "entrypoints" key: Array of files which are included in `index.html`,
+    //   can be used to reconstruct the HTML if necessary
+    new WebpackManifestPlugin({
+      fileName: 'asset-manifest.json',
+      publicPath: paths.publicUrlOrPath,
+      generate: (seed, files, entrypoints) => {
+        const manifestFiles = files.reduce((manifest, file) => {
+          manifest[file.name] = file.path;
+          return manifest;
+        }, seed);
+        const entrypointFiles = entrypoints.main.filter(fileName => !fileName.endsWith('.map'));
+
+        return {
+          files: manifestFiles,
+          entrypoints: entrypointFiles,
+        };
+      },
+    }),
     // Perform type checking and linting in a separate process to speed up compilation
     new ForkTsCheckerWebpackPlugin({
-      async: false,
+      async: true,
       eslint: {
         // we've explicitly decided not to lint in the dev server
         enabled: false,
         files: 'src/**/*.{ts,tsx}',
       },
-      typescript: true,
+      typescript: {
+        typescriptPath: resolve.sync('typescript', {
+          basedir: paths.appNodeModules,
+        }),
+        configOverwrite: {
+          compilerOptions: {
+            sourceMap: true,
+            skipLibCheck: true,
+            inlineSourceMap: false,
+            declarationMap: false,
+            noEmit: true,
+            incremental: true,
+            tsBuildInfoFile: paths.appTsBuildInfoFile,
+          },
+        },
+        context: paths.appPath,
+        diagnosticOptions: {
+          syntactic: true,
+        },
+        mode: 'write-references',
+      },
+      issue: {
+        // This one is specifically to match during CI tests,
+        // as micromatch doesn't match
+        // '../cra-template-typescript/template/src/App.tsx'
+        // otherwise.
+        include: [{ file: '../**/src/**/*.{ts,tsx}' }, { file: '**/src/**/*.{ts,tsx}' }],
+        exclude: [
+          { file: '**/src/**/__tests__/**' },
+          { file: '**/src/**/?(*.){spec|test}.*' },
+          { file: '**/src/setupProxy.*' },
+          { file: '**/src/setupTests.*' },
+        ],
+      },
+      logger: {
+        infrastructure: 'silent',
+      },
     }),
     // Place the dev robots.txt file in the public folder
     new CopyPlugin({
       patterns: [{ from: 'config/robots.dev.txt', to: 'robots.txt' }],
     }),
   ],
-  // Some libraries import Node modules but don't use them in the browser.
-  // Tell Webpack to provide empty mocks for them so importing them works.
-  node: {
-    dgram: 'empty',
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty',
-  },
   // Turn off performance hints during development because we don't do any
   // splitting or minification in interest of speed. These warnings become
   // cumbersome.

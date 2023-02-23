@@ -2,6 +2,11 @@ declare module 'component-library-legacy/AlertBox';
 declare module 'component-library-legacy/Modal';
 declare module 'component-library-legacy/LoadingIndicator';
 
+declare module 'web-components/loader' {
+  export function applyPolyfills(): Promise<void>;
+  export function defineCustomElements(): void;
+}
+
 interface VaAccordionProps {
   bordered?: boolean;
   children: JSX.Element | JSX.Element[];

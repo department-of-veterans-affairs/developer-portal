@@ -4,23 +4,42 @@
 'use strict';
 
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
 
+const modules = require('./modules');
+
+const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
+const reactRefreshWebpackPluginRuntimeEntry = require.resolve(
+  '@pmmmwh/react-refresh-webpack-plugin',
+);
+const babelRuntimeEntry = require.resolve('babel-preset-react-app');
+const babelRuntimeEntryHelpers = require.resolve(
+  '@babel/runtime/helpers/esm/assertThisInitialized',
+  { paths: [babelRuntimeEntry] },
+);
+const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
+  paths: [babelRuntimeEntry],
+});
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin');
+
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+
 const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
+
 const paths = require('./paths');
+
 const getClientEnvironment = require('./env');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const SitemapBuilderPlugin = require('../SitemapBuilderWebpackPlugin');
+
 const CopyPlugin = require('copy-webpack-plugin');
 
 // Webpack uses `output.publicPath`, from it's options object, to determine
@@ -29,7 +48,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const publicPath = paths.servedPath;
 const publicPathNoSlash = publicPath.replace(/[/]+$/, '');
 const env = getClientEnvironment(publicPathNoSlash);
-
+const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 // Some apps do not use client-side routing with pushState.
 // For these, "homepage" can be set to "." to enable relative asset paths.
 const shouldUseRelativeAssetPaths = publicPath === './';
@@ -42,15 +61,14 @@ const cssModuleRegex = /\.module\.css$/;
 const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
+const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000');
+
 // common function to get style loaders
 const getStyleLoaders = (cssOptions, preProcessor) => {
   const loaders = [
     {
       loader: MiniCssExtractPlugin.loader,
-      options: Object.assign(
-        {},
-        shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined,
-      ),
+      options: paths.publicUrlOrPath.startsWith('.') ? { publicPath: '../../' } : {},
     },
     {
       loader: require.resolve('css-loader'),
@@ -62,29 +80,47 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
       // package.json
       loader: require.resolve('postcss-loader'),
       options: {
-        // Necessary for external CSS imports to work
-        // https://github.com/facebook/create-react-app/issues/2677
-        ident: 'postcss',
-        plugins: () => [
-          require('postcss-flexbugs-fixes'),
-          require('postcss-preset-env')({
-            autoprefixer: {
-              flexbox: 'no-2009',
-            },
-            stage: 3,
-          }),
-        ],
+        postcssOptions: {
+          // Necessary for external CSS imports to work
+          // https://github.com/facebook/create-react-app/issues/2677
+          ident: 'postcss',
+          plugins: [
+            'postcss-flexbugs-fixes',
+            [
+              'postcss-preset-env',
+              {
+                autoprefixer: {
+                  flexbox: 'no-2009',
+                },
+                stage: 3,
+              },
+            ],
+            // Adds PostCSS Normalize as the reset css with default options,
+            // so that it honors browserslist config in package.json
+            // which in turn let's users customize the target behavior as per their needs.
+            'postcss-normalize',
+          ],
+        },
         sourceMap: shouldUseSourceMap,
       },
     },
-  ];
+  ].filter(Boolean);
   if (preProcessor) {
-    loaders.push({
-      loader: require.resolve(preProcessor),
-      options: {
-        sourceMap: shouldUseSourceMap,
+    loaders.push(
+      {
+        loader: require.resolve('resolve-url-loader'),
+        options: {
+          sourceMap: shouldUseSourceMap,
+          root: paths.appSrc,
+        },
       },
-    });
+      {
+        loader: require.resolve(preProcessor),
+        options: {
+          sourceMap: true,
+        },
+      },
+    );
   }
   return loaders;
 };
@@ -101,11 +137,14 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
 // The development configuration is different and lives in a separate file.
-module.exports = (envName) => {
+module.exports = envName => {
   return {
+    // target: ['browserlist'],
+    stats: 'errors-warnings',
     mode: 'production',
     // Don't attempt to continue if there are any errors.
     bail: true,
+    ignoreWarnings: [/Failed to parse source map/],
     // We generate sourcemaps in production. This is slow but gives good results.
     // You can exclude the *.map files from the build during deployment.
     devtool: shouldUseSourceMap ? 'source-map' : false,
@@ -117,22 +156,35 @@ module.exports = (envName) => {
       // Generated JS file names (with nested folders).
       // There will be one main bundle, and one file per asynchronous chunk.
       // We don't currently advertise code splitting but Webpack supports it.
-      filename: 'static/js/[name].[chunkhash:8].js',
-      chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+      filename: 'static/js/[name].[contenthash:8].js',
+      chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
+      assetModuleFilename: 'static/media/[name].[hash][ext]',
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath: publicPath,
+      publicPath: path.publicUrlOrPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
-      devtoolModuleFilenameTemplate: (info) =>
+      devtoolModuleFilenameTemplate: info =>
         path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
     },
+    cache: {
+      type: 'filesystem',
+      version: createEnvironmentHash(env.raw),
+      cacheDirectory: paths.appWebpackCache,
+      store: 'pack',
+      buildDependencies: {
+        defaultWebpack: ['webpack/lib/'],
+        config: [__filename],
+        tsconfig: [paths.appTsConfig].filter(f => fs.existsSync(f)),
+      },
+    },
     resolve: {
+      fallback: { stream: require.resolve('stream-browserify') },
       // This allows you to set a fallback for where Webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
       // https://github.com/facebookincubator/create-react-app/issues/253
       modules: ['node_modules', paths.appNodeModules].concat(
         // It is guaranteed to exist because we tweak it in `env.js`
-        process.env.NODE_PATH.split(path.delimiter).filter(Boolean),
+        modules.additionalModulePaths || [],
       ),
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
@@ -140,22 +192,12 @@ module.exports = (envName) => {
       // https://github.com/facebookincubator/create-react-app/issues/290
       // `web` extension prefixes have been added for better support
       // for React Native Web.
-      extensions: [
-        '.mjs',
-        '.web.ts',
-        '.ts',
-        '.web.tsx',
-        '.tsx',
-        '.web.js',
-        '.js',
-        '.json',
-        '.web.jsx',
-        '.jsx',
-      ],
+      extensions: paths.moduleFileExtensions.map(ext => `.${ext}`),
       alias: {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        ...(modules.webpackAliases || {}),
       },
       plugins: [
         // Prevents users from importing files from outside of src/ (or node_modules/).
@@ -163,21 +205,24 @@ module.exports = (envName) => {
         // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
         // please link the files into your node_modules/ and let module-resolution kick in.
         // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
-        new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
+        new ModuleScopePlugin(paths.appSrc, [
+          paths.appPackageJson,
+          reactRefreshRuntimeEntry,
+          reactRefreshWebpackPluginRuntimeEntry,
+          babelRuntimeEntry,
+          babelRuntimeEntryHelpers,
+          babelRuntimeRegenerator,
+        ]),
       ],
     },
     module: {
       strictExportPresence: true,
       rules: [
-        // TODO: Disable require.ensure as it's not a standard language feature.
-        // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
-        // { parser: { requireEnsure: false } },
         {
-          test: /\.(js|jsx|mjs)$/,
+          test: /\.(js|jsx|mjs|ts|tsx|scss)$/,
           loader: require.resolve('source-map-loader'),
           enforce: 'pre',
-          include: paths.appSrc,
+          exclude: /@babel(?:\/|\\{1,2})runtime/,
         },
         {
           // "oneOf" will traverse all following loaders until one will
@@ -194,6 +239,32 @@ module.exports = (envName) => {
                 name: 'static/media/[name].[hash:8].[ext]',
               },
             },
+            {
+              test: /\.svg$/,
+              use: [
+                {
+                  loader: require.resolve('@svgr/webpack'),
+                  options: {
+                    prettier: false,
+                    svgo: false,
+                    svgoConfig: {
+                      plugins: [{ removeViewBox: false }],
+                    },
+                    titleProp: true,
+                    ref: true,
+                  },
+                },
+                {
+                  loader: require.resolve('file-loader'),
+                  options: {
+                    name: 'static/media/[name].[hash].[ext]',
+                  },
+                },
+              ],
+              issuer: {
+                and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
+              },
+            },
             // "postcss" loader applies autoprefixer to our CSS.
             // "css" loader resolves paths in CSS and adds assets as dependencies.
             // `MiniCSSExtractPlugin` extracts styles into CSS
@@ -202,9 +273,12 @@ module.exports = (envName) => {
             {
               test: cssRegex,
               exclude: cssModuleRegex,
-              loader: getStyleLoaders({
+              use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: shouldUseSourceMap,
+                modules: {
+                  mode: 'icss',
+                },
               }),
               // Don't consider CSS imports dead code even if the
               // containing package claims to have no side effects.
@@ -216,11 +290,13 @@ module.exports = (envName) => {
             // using the extension .module.css
             {
               test: cssModuleRegex,
-              loader: getStyleLoaders({
+              use: getStyleLoaders({
                 importLoaders: 1,
                 sourceMap: shouldUseSourceMap,
-                modules: true,
-                getLocalIdent: getCSSModuleLocalIdent,
+                modules: {
+                  mode: 'local',
+                  getLocalIdent: getCSSModuleLocalIdent,
+                },
               }),
             },
             // Opt-in support for SASS. The logic here is somewhat similar
@@ -231,10 +307,13 @@ module.exports = (envName) => {
             {
               test: sassRegex,
               exclude: sassModuleRegex,
-              loader: getStyleLoaders(
+              use: getStyleLoaders(
                 {
-                  importLoaders: 2,
+                  importLoaders: 3,
                   sourceMap: shouldUseSourceMap,
+                  modules: {
+                    mode: 'icss',
+                  },
                 },
                 'sass-loader',
               ),
@@ -248,12 +327,14 @@ module.exports = (envName) => {
             // using the extension .module.scss or .module.sass
             {
               test: sassModuleRegex,
-              loader: getStyleLoaders(
+              use: getStyleLoaders(
                 {
-                  importLoaders: 2,
+                  importLoaders: 3,
                   sourceMap: shouldUseSourceMap,
-                  modules: true,
-                  getLocalIdent: getCSSModuleLocalIdent,
+                  modules: {
+                    mode: 'loal',
+                    getLocalIdent: getCSSModuleLocalIdent,
+                  },
                 },
                 'sass-loader',
               ),
@@ -301,15 +382,12 @@ module.exports = (envName) => {
             // This loader doesn't use a "test" so it will catch all modules
             // that fall through the other loaders.
             {
-              loader: require.resolve('file-loader'),
               // Exclude `js` files to keep "css" loader working as it injects
-              // it's runtime that would otherwise processed through "file" loader.
+              // its runtime that would otherwise be processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
-              options: {
-                name: 'static/media/[name].[hash:8].[ext]',
-              },
+              exclude: [/^$/, /\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+              type: 'asset/resource',
             },
             // ** STOP ** Are you adding a new loader?
             // Make sure to add the new loader(s) before the "file" loader.
@@ -358,11 +436,6 @@ module.exports = (envName) => {
         filename: 'static/css/[name].[contenthash:8].css',
         chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
       }),
-      new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          map: shouldUseSourceMap,
-        },
-      }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
       // having to parse `index.html`.
@@ -375,7 +448,11 @@ module.exports = (envName) => {
       // solution that requires the user to opt into importing specific locales.
       // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
       // You can remove this if you don't use Moment.js:
-      new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
+      new webpack.IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      }),
       // TypeScript type checking
       new ForkTsCheckerWebpackPlugin({
         async: false,
@@ -393,20 +470,7 @@ module.exports = (envName) => {
           },
         ],
       }),
-      new SitemapBuilderPlugin({
-        routesFile: path.join(paths.appSrc, 'Routes.tsx'),
-        polyfillsFile: path.join(paths.appConfigScripts, 'polyfills.js'),
-      }),
     ].filter(Boolean),
-    // Some libraries import Node modules but don't use them in the browser.
-    // Tell Webpack to provide empty mocks for them so importing them works.
-    node: {
-      dgram: 'empty',
-      fs: 'empty',
-      net: 'empty',
-      tls: 'empty',
-      child_process: 'empty',
-    },
     performance: {
       hints: 'error',
       maxAssetSize: 600000,
@@ -415,6 +479,9 @@ module.exports = (envName) => {
         // only check CSS bundle size, as our JS bundle is currently over 2M
         return assetFilename.endsWith('.css');
       },
+    },
+    optimization: {
+      minimizer: [new CssMinimizerPlugin()],
     },
   };
 };
