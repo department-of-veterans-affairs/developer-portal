@@ -40,10 +40,6 @@ const paths = require('./paths');
 
 const getClientEnvironment = require('./env');
 
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-
-// const SitemapBuilderPlugin = require('../SitemapBuilderWebpackPlugin');
-
 const CopyPlugin = require('copy-webpack-plugin');
 
 // Webpack uses `output.publicPath`, from it's options object, to determine
@@ -148,9 +144,7 @@ module.exports = envName => {
     mode: 'production',
     // Don't attempt to continue if there are any errors.
     bail: true,
-    ignoreWarnings: [
-      /Failed to parse source map/
-    ],
+    ignoreWarnings: [/Failed to parse source map/],
     // We generate sourcemaps in production. This is slow but gives good results.
     // You can exclude the *.map files from the build during deployment.
     devtool: shouldUseSourceMap ? 'source-map' : false,
@@ -219,15 +213,11 @@ module.exports = envName => {
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
         ]),
-        // new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
       ],
     },
     module: {
       strictExportPresence: true,
       rules: [
-        // TODO: Disable require.ensure as it's not a standard language feature.
-        // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
-        // { parser: { requireEnsure: false } },
         {
           test: /\.(js|jsx|mjs|ts|tsx|scss)$/,
           loader: require.resolve('source-map-loader'),
@@ -248,12 +238,6 @@ module.exports = envName => {
                 limit: 10000,
                 name: 'static/media/[name].[hash:8].[ext]',
               },
-              // type: 'asset',
-              // parser: {
-              //   dataUrlCondition: {
-              //     maxSize: imageInlineSizeLimit,
-              //   },
-              // },
             },
             {
               test: /\.svg$/,
@@ -397,17 +381,6 @@ module.exports = envName => {
             // When you `import` an asset, you get its filename.
             // This loader doesn't use a "test" so it will catch all modules
             // that fall through the other loaders.
-            // {
-            //   loader: require.resolve('file-loader'),
-            //   // Exclude `js` files to keep "css" loader working as it injects
-            //   // it's runtime that would otherwise processed through "file" loader.
-            //   // Also exclude `html` and `json` extensions so they get processed
-            //   // by webpacks internal loaders.
-            //   exclude: [/\.(js|jsx|mjs)$/, /\.html$/, /\.json$/],
-            //   options: {
-            //     name: 'static/media/[name].[hash:8].[ext]',
-            //   },
-            // },
             {
               // Exclude `js` files to keep "css" loader working as it injects
               // its runtime that would otherwise be processed through "file" loader.
@@ -497,20 +470,7 @@ module.exports = envName => {
           },
         ],
       }),
-      // new SitemapBuilderPlugin({
-      //   routesFile: path.join(paths.appSrc, 'Routes.tsx'),
-      //   polyfillsFile: path.join(paths.appConfigScripts, 'polyfills.js'),
-      // }),
     ].filter(Boolean),
-    // Some libraries import Node modules but don't use them in the browser.
-    // Tell Webpack to provide empty mocks for them so importing them works.
-    // node: {
-    //   dgram: 'empty',
-    //   fs: 'empty',
-    //   net: 'empty',
-    //   tls: 'empty',
-    //   child_process: 'empty',
-    // },
     performance: {
       hints: 'error',
       maxAssetSize: 600000,
