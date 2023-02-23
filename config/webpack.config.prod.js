@@ -139,7 +139,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // The development configuration is different and lives in a separate file.
 module.exports = envName => {
   return {
-    // target: ['browserlist'],
+    target: ['browserslist'],
     stats: 'errors-warnings',
     mode: 'production',
     // Don't attempt to continue if there are any errors.
