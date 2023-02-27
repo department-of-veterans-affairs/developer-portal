@@ -113,7 +113,7 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
                     return (
                       <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
                         <li>
-                          <a href={`/release-notes/${apiCategoryKey}`}>{name}</a>
+                          <a href={`/explore/${apiCategoryKey}`}>{name}</a>
                         </li>
                       </Flag>
                     );
