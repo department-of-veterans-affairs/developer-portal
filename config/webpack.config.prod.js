@@ -139,7 +139,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // The development configuration is different and lives in a separate file.
 module.exports = envName => {
   return {
-    // target: ['browserlist'],
+    target: ['browserslist'],
     stats: 'errors-warnings',
     mode: 'production',
     // Don't attempt to continue if there are any errors.
@@ -233,10 +233,11 @@ module.exports = envName => {
             // assets smaller than specified size as data URLs to avoid requests.
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              loader: require.resolve('url-loader'),
-              options: {
-                limit: 10000,
-                name: 'static/media/[name].[hash:8].[ext]',
+              type: 'asset',
+              parser: {
+                dataUrlCondition: {
+                  maxSize: imageInlineSizeLimit,
+                },
               },
             },
             {
