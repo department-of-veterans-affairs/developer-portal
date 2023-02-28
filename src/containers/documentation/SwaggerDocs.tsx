@@ -71,6 +71,7 @@ const renderSwaggerUI = (
 ): void => {
   const plugins = SwaggerPlugins(handleVersionChange(dispatch));
   const ui: System = SwaggerUI({
+    defaultModelExpandDepth: 5,
     dom_id: '#swagger-ui',
     layout: 'ExtendedLayout',
     plugins: [plugins],
