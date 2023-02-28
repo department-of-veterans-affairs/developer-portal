@@ -9,6 +9,7 @@ export interface VersionSelectProps {
 }
 
 export interface VersionSelectState {
+  selectedVersion: string;
   version: string;
 }
 
@@ -17,7 +18,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
     super(props);
     const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();
     const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
-    this.state = { version: initialVersion };
+    this.state = { selectedVersion: initialVersion, version: initialVersion };
   }
 
   public getCurrentVersion(): string {
@@ -40,12 +41,12 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
   }
 
   public handleSelectChange(version: string): void {
-    this.setState({ version });
+    this.setState(prevState => ({ ...prevState, selectedVersion: version }));
   }
 
   public handleButtonClick(): void {
-    this.props.getSystem().versionActions.updateVersion(this.state.version);
-    this.setState({ version: this.state.version });
+    this.props.getSystem().versionActions.updateVersion(this.state.selectedVersion);
+    this.setState(prevState => ({ ...prevState, version: this.state.selectedVersion }));
   }
 
   public render(): JSX.Element {
@@ -88,7 +89,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
                 id="api-selector-field"
                 name="api-selector-field"
                 aria-label={selectorLabel}
-                value={this.state.version}
+                value={this.state.selectedVersion}
                 onChange={(e): void => this.handleSelectChange(e.target.value)}
               >
                 {this.props
@@ -108,16 +109,26 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
                 'vads-u-text-align--center',
               )}
             >
-              <button
-                onClick={(): void => this.handleButtonClick()}
-                type="button"
-              >
+              <button onClick={(): void => this.handleButtonClick()} type="button">
                 Update page
               </button>
             </div>
           </div>
         </div>
-        {fhirRegex.test(location.pathname) && <h2>{apiStatus}</h2>}
+        {fhirRegex.test(location.pathname) && (
+          <h2
+            className={classNames(
+              'vads-u-font-family--sans',
+              'vads-u-font-weight--normal',
+              'vads-u-font-size--base',
+              'vads-u-padding--0p5',
+              'vads-u-margin-y--1',
+            )}
+            tabIndex={-1}
+          >
+            Showing documentation for <b>{apiStatus}</b>.
+          </h2>
+        )}
       </>
     );
   }
