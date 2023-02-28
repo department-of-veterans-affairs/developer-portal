@@ -13,12 +13,18 @@ export interface VersionSelectState {
   version: string;
 }
 
-export default class VersionSelect extends React.Component<VersionSelectProps, VersionSelectState> {
+export default class VersionSelect extends React.PureComponent<
+  VersionSelectProps,
+  VersionSelectState
+> {
+  public versionHeadingElement: React.RefObject<HTMLHeadingElement>;
+
   public constructor(props: VersionSelectProps) {
     super(props);
     const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();
     const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
     this.state = { selectedVersion: initialVersion, version: initialVersion };
+    this.versionHeadingElement = React.createRef();
   }
 
   public getCurrentVersion(): string {
@@ -45,8 +51,17 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
   }
 
   public handleButtonClick(): void {
-    this.props.getSystem().versionActions.updateVersion(this.state.selectedVersion);
     this.setState(prevState => ({ ...prevState, version: this.state.selectedVersion }));
+    this.props.getSystem().versionActions.updateVersion(this.state.selectedVersion);
+  }
+
+  public componentDidUpdate(
+    prevProps: Readonly<VersionSelectProps>,
+    prevState: Readonly<VersionSelectState>,
+  ): void {
+    if (prevState.version !== this.state.version) {
+      this.versionHeadingElement.current?.focus();
+    }
   }
 
   public render(): JSX.Element {
@@ -117,6 +132,7 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
         </div>
         {fhirRegex.test(location.pathname) && (
           <h2
+            ref={this.versionHeadingElement}
             className={classNames(
               'vads-u-font-family--sans',
               'vads-u-font-weight--normal',
