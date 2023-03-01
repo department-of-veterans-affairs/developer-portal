@@ -12,28 +12,61 @@
   }
 
   .info {
-    margin-top: 0;
+    margin: 0 0 3.2rem;
+    word-break: break-word;
+
+    table {
+      word-break: initial;
+    }
 
     p {
       color: $color-base;
       font-family: $font-sans;
-      font-size: 1.7rem;
+      font-size: 1.6rem;
+      margin: 0.8rem 0;
+    }
+
+    hgroup.main {
+      margin: 0 0 0.8rem;
+
+      a {
+        font-family: $font-sans;
+        font-size: 1.6rem;
+      }
     }
 
     a {
       color: #004795;
+      font-family: $font-sans;
+      font-size: 1.6rem;
       transition: none;
-      font-size: 1.7rem;
 
       &:visited {
         color: #4c2c92;
       }
     }
 
-    h2.title {
-      // never show Swagger UI's title feature
-      display: none;
+    & > div {
+      margin: 0;
     }
+
+    h2 {
+      margin: 3.2rem 0 1.6rem;
+
+      &.title {
+        // never show Swagger UI's title feature
+        display: none;
+      }
+    }
+
+    h3 {
+      margin-bottom: 1.6rem;
+      margin-top: 1.6rem;
+    }
+  }
+
+  .opblock .opblock-summary-path {
+    word-break: break-word;
   }
 
   .opblock.opblock-post .opblock-summary-method {
@@ -190,6 +223,11 @@
   }
   .model.model-title {
     line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .model-hint {
+    display: none;
   }
 
   .prop-format {

@@ -127,6 +127,13 @@ const Header = (): JSX.Element => {
             className="vads-u-margin-top--0"
           />
         </Flag>
+        {location.pathname === '/explore/appeals/docs/appeals' && (
+          <va-alert status="info" visible>
+            <h3 slot="headline">
+              A new version of Appeals Status API (v1) will launch later this year.
+            </h3>
+          </va-alert>
+        )}
         {location.pathname === '/explore/facilities/docs/facilities' && (
           <va-alert status="info" visible>
             <h3 slot="headline">

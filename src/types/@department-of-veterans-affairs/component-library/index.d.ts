@@ -3,6 +3,11 @@ declare module '@department-of-veterans-affairs/component-library/Modal';
 declare module '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
 declare module '@department-of-veterans-affairs/component-library/LoadingIndicator';
 
+declare module 'web-components/loader' {
+  export function applyPolyfills(): Promise<void>;
+  export function defineCustomElements(): void;
+}
+
 interface VaAccordionProps {
   bordered?: boolean;
   children: JSX.Element | JSX.Element[];

@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 import highlight from 'rehype-highlight';
 import { CodeWrapper } from '../../../components';
+import { SUPPORT_CONTACT_PATH } from '../../../types/constants/paths';
 
 interface GeneratingJWTProps {
   apiName: string;
@@ -51,95 +53,102 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
       </ReactMarkdown>
     </CodeWrapper>
     <p>The claims in your client assertion are described in this table.</p>
-    <table>
-      <thead>
-        <tr>
-          <th>Claim</th>
-          <th>Required</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <code>aud</code>
-          </td>
-          <td>True</td>
-          <td>
-            <p>
-              <strong>String.</strong> This is the URL for the API for which you are generating a
-              token.
-            </p>
-            <p>
-              For the {apiName} in sandbox, this is:{' '}
-              <a href={`https://deptva-eval.okta.com/oauth2/${sandboxAud}/v1/token`}>
-                {`https://deptva-eval.okta.com/oauth2/${sandboxAud}/v1/token`}
-              </a>
-            </p>
-            {sandboxAud !== productionAud && (
+    <div className="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Claim</th>
+            <th>Required</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <code>aud</code>
+            </td>
+            <td>True</td>
+            <td>
               <p>
-                For the {apiName} in production, this is:{' '}
-                <a href={`https://va.okta.com/oauth2/${productionAud}/v1/token`}>
-                  {`https://va.okta.com/oauth2/${productionAud}/v1/token`}
+                <strong>String.</strong> This is the URL for the API for which you are generating a
+                token.
+              </p>
+              <p>
+                For the {apiName} in sandbox, this is:{' '}
+                <a href={`https://deptva-eval.okta.com/oauth2/${sandboxAud}/v1/token`}>
+                  {`https://deptva-eval.okta.com/oauth2/${sandboxAud}/v1/token`}
                 </a>
               </p>
-            )}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <code>iss</code>
-          </td>
-          <td>True</td>
-          <td>
-            <strong>String.</strong> This is the client ID we sent you when you signed up for
-            sandbox access.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <code>sub</code>
-          </td>
-          <td>True</td>
-          <td>
-            <strong>String.</strong> This is the client ID we sent you when you signed up for
-            sandbox access.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <code>iat</code>
-          </td>
-          <td>False</td>
-          <td>
-            <strong>Integer.</strong> This is a timestamp for how many seconds have passed since
-            January 1, 1970 UTC. It must be a time before the request occurs. Example: 1604429781
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <code>exp</code>
-          </td>
-          <td>True</td>
-          <td>
-            <strong>Integer.</strong> This is a timestamp for when the token will expire, given in
-            seconds since January 1, 1970. This claim fails the request if the expiration time is
-            more than 300 seconds (5 minutes) after the iat. Example: 1604430081.{' '}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <code>jti</code>
-          </td>
-          <td>False</td>
-          <td>
-            <strong>String.</strong> The unique token identifier. If you specify this parameter, the
-            token can only be used once and, as a result, subsequent token requests won&apos;t
-            succeed.
-          </td>
-        </tr>
-      </tbody>
-    </table>
+              {sandboxAud !== productionAud && (
+                <p>
+                  For the {apiName} in production, this is:{' '}
+                  <a href={`https://va.okta.com/oauth2/${productionAud}/v1/token`}>
+                    {`https://va.okta.com/oauth2/${productionAud}/v1/token`}
+                  </a>
+                </p>
+              )}
+              <p>
+                <b>Important: </b> To get production access, you must either work for VA or have
+                specific VA agreements in place. If you have questions,{' '}
+                <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>iss</code>
+            </td>
+            <td>True</td>
+            <td>
+              <strong>String.</strong> This is the client ID we sent you when you signed up for
+              sandbox access.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>sub</code>
+            </td>
+            <td>True</td>
+            <td>
+              <strong>String.</strong> This is the client ID we sent you when you signed up for
+              sandbox access.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>iat</code>
+            </td>
+            <td>False</td>
+            <td>
+              <strong>Integer.</strong> This is a timestamp for how many seconds have passed since
+              January 1, 1970 UTC. It must be a time before the request occurs. Example: 1604429781
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>exp</code>
+            </td>
+            <td>True</td>
+            <td>
+              <strong>Integer.</strong> This is a timestamp for when the token will expire, given in
+              seconds since January 1, 1970. This claim fails the request if the expiration time is
+              more than 300 seconds (5 minutes) after the iat. Example: 1604430081.{' '}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>jti</code>
+            </td>
+            <td>False</td>
+            <td>
+              <strong>String.</strong> The unique token identifier. If you specify this parameter,
+              the token can only be used once and, as a result, subsequent token requests won&apos;t
+              succeed.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </>
 );
 
