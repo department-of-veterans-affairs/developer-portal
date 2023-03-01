@@ -311,6 +311,7 @@ module.exports = {
                   sourceMap: true,
                   sassOptions: {
                     includePaths: [paths.appNodeModules],
+                    quietDeps: true,
                   },
                 },
               },
