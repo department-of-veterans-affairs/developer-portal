@@ -30,13 +30,14 @@ const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
 });
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
-
+const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000');
 // Webpack uses `output.publicPath`, from its options object, to determine
 // where the app is being served from.  In development, we always serve from
 // the root. This makes config easier.
 const publicPath = paths.servedPath;
 const publicPathNoSlash = publicPath.replace(/[/]+$/, '');
 const env = getClientEnvironment(publicPathNoSlash);
+
 const shouldUseReactRefresh = env.raw.FAST_REFRESH;
 
 const hasJsxRuntime = (() => {
@@ -153,10 +154,11 @@ module.exports = {
           // A missing `test` is equivalent to a match.
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-            loader: require.resolve('url-loader'),
-            options: {
-              limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+            type: 'asset',
+            parser: {
+              dataUrlCondition: {
+                maxSize: imageInlineSizeLimit,
+              },
             },
           },
           {

@@ -139,7 +139,7 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // The development configuration is different and lives in a separate file.
 module.exports = envName => {
   return {
-    // target: ['browserlist'],
+    target: ['browserslist'],
     stats: 'errors-warnings',
     mode: 'production',
     // Don't attempt to continue if there are any errors.
@@ -160,7 +160,7 @@ module.exports = envName => {
       chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
       assetModuleFilename: 'static/media/[name].[hash][ext]',
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath: path.publicUrlOrPath,
+      publicPath: paths.publicUrlOrPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: info =>
         path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
@@ -233,10 +233,37 @@ module.exports = envName => {
             // assets smaller than specified size as data URLs to avoid requests.
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              loader: require.resolve('url-loader'),
-              options: {
-                limit: 10000,
-                name: 'static/media/[name].[hash:8].[ext]',
+              type: 'asset',
+              parser: {
+                dataUrlCondition: {
+                  maxSize: imageInlineSizeLimit,
+                },
+              },
+            },
+            {
+              test: /\.svg$/,
+              use: [
+                {
+                  loader: require.resolve('@svgr/webpack'),
+                  options: {
+                    prettier: false,
+                    svgo: false,
+                    svgoConfig: {
+                      plugins: [{ removeViewBox: false }],
+                    },
+                    titleProp: true,
+                    ref: true,
+                  },
+                },
+                {
+                  loader: require.resolve('file-loader'),
+                  options: {
+                    name: 'static/media/[name].[hash].[ext]',
+                  },
+                },
+              ],
+              issuer: {
+                and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
               },
             },
             {
