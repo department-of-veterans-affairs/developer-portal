@@ -102,8 +102,8 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
 
   return (
     <Formik initialValues={initialValues} onSubmit={formSubmission} validate={validateForm}>
-      {({ values, isSubmitting, isValid, dirty }): ReactNode => (
-        <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')}>
+      {({ values, isSubmitting }): ReactNode => (
+        <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')} noValidate>
           <ContactDetailsFormFields />
 
           <fieldset className="vads-u-margin-top--6">
@@ -129,7 +129,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
           {values.type === FormType.CONSUMER && <ConsumerFormFields />}
           {values.type === FormType.PUBLISHING && <PublishingFormFields />}
 
-          <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>
+          <button type="submit" className="vads-u-width--auto">
             {isSubmitting ? 'Sending...' : 'Send to developer support'}
           </button>
           {submissionError && (
