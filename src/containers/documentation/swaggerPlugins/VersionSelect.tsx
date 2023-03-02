@@ -33,7 +33,8 @@ export default class VersionSelect extends React.PureComponent<
   }
 
   public getCurrentVersion(): string {
-    const versions = this.props.versions;
+    const { versions: propVersions } = this.props;
+    const versions = propVersions;
     const selectCurrentVersion = (versionInfo: VersionMetadata): boolean =>
       versionInfo.status === 'Current Version';
 
@@ -46,7 +47,8 @@ export default class VersionSelect extends React.PureComponent<
   }
 
   public getVersionMetadataByProp(prop: string, version: string): VersionMetadata | undefined {
-    const versions = this.props.versions;
+    const { versions: propVersions } = this.props;
+    const versions = propVersions;
     const versionMatch = (versionInfo: VersionMetadata): boolean => versionInfo[prop] === version;
     return versions?.find(versionMatch);
   }
