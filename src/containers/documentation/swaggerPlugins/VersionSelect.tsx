@@ -127,7 +127,7 @@ export default class VersionSelect extends React.PureComponent<
             </div>
           </div>
         </div>
-        {fhirRegex.test(location.pathname) && (
+        {!!apiStatus && fhirRegex.test(location.pathname) && (
           <h2
             ref={this.versionHeadingElement}
             className={classNames(
