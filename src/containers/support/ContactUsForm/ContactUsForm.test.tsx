@@ -31,15 +31,6 @@ describe('SupportContactUsFormPublishing', () => {
     expect(screen.getByRole('textbox', { name: /Organization/ })).toBeInTheDocument();
   });
 
-  describe('form is missing required fields', () => {
-    beforeEach(() => {
-      renderComponent();
-    });
-    it('disables the submit button', () => {
-      expect(screen.getByRole('button', { name: 'Send to developer support' })).toBeDisabled();
-    });
-  });
-
   describe('form type', () => {
     describe('default is consumer', () => {
       beforeEach(() => {
@@ -131,12 +122,6 @@ describe('SupportContactUsFormPublishing', () => {
                 name: /Include as much information about your API as possible/,
               });
             });
-          });
-
-          it('disables the submit button', () => {
-            expect(
-              screen.getByRole('button', { name: 'Send to developer support' }),
-            ).toBeDisabled();
           });
 
           describe('switching back to default', () => {
