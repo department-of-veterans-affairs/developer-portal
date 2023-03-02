@@ -1,16 +1,21 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import classNames from 'classnames';
+import { ResetVersioning, SetRequestedAPIVersion, SetVersioning } from '../../../actions';
 import { VersionMetadata } from '../../../types';
-import { System } from './types';
 
 export interface VersionSelectProps {
-  getSystem: () => System;
+  dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning>;
+  version: string;
+  versions: VersionMetadata[] | null;
+  handleVersionChange: (
+    dispatch: React.Dispatch<SetRequestedAPIVersion>,
+  ) => (requestedVersion: string) => void;
 }
 
 export interface VersionSelectState {
   selectedVersion: string;
-  version: string;
+  currentVersion: string;
 }
 
 export default class VersionSelect extends React.PureComponent<
@@ -21,14 +26,14 @@ export default class VersionSelect extends React.PureComponent<
 
   public constructor(props: VersionSelectProps) {
     super(props);
-    const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();
+    const reduxVersion = this.props.version;
     const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
-    this.state = { selectedVersion: initialVersion, version: initialVersion };
+    this.state = { currentVersion: initialVersion, selectedVersion: initialVersion };
     this.versionHeadingElement = React.createRef();
   }
 
   public getCurrentVersion(): string {
-    const versions = this.props.getSystem().versionSelectors.versionMetadata();
+    const versions = this.props.versions;
     const selectCurrentVersion = (versionInfo: VersionMetadata): boolean =>
       versionInfo.status === 'Current Version';
 
@@ -41,7 +46,7 @@ export default class VersionSelect extends React.PureComponent<
   }
 
   public getVersionMetadataByProp(prop: string, version: string): VersionMetadata | undefined {
-    const versions = this.props.getSystem().versionSelectors.versionMetadata();
+    const versions = this.props.versions;
     const versionMatch = (versionInfo: VersionMetadata): boolean => versionInfo[prop] === version;
     return versions?.find(versionMatch);
   }
@@ -51,15 +56,15 @@ export default class VersionSelect extends React.PureComponent<
   }
 
   public handleButtonClick(): void {
-    this.setState(prevState => ({ ...prevState, version: this.state.selectedVersion }));
-    this.props.getSystem().versionActions.updateVersion(this.state.selectedVersion);
+    this.setState(prevState => ({ ...prevState, currentVersion: this.state.selectedVersion }));
+    this.props.handleVersionChange(this.props.dispatch)(this.state.selectedVersion);
   }
 
   public componentDidUpdate(
     prevProps: Readonly<VersionSelectProps>,
     prevState: Readonly<VersionSelectState>,
   ): void {
-    if (prevState.version !== this.state.version) {
+    if (prevState.currentVersion !== this.state.currentVersion) {
       this.versionHeadingElement.current?.focus();
     }
   }
@@ -79,15 +84,10 @@ export default class VersionSelect extends React.PureComponent<
       : 'Select a version';
 
     let apiStatus;
-    if (this.props.getSystem().versionSelectors.apiVersion() === '') {
-      apiStatus =
-        (this.props.getSystem().versionSelectors.versionMetadata()?.[0] as VersionMetadata).label ??
-        '';
+    if (this.props.version === 'current') {
+      apiStatus = this.props.versions?.[0].label ?? '';
     } else {
-      apiStatus = this.getVersionMetadataByProp(
-        'version',
-        this.props.getSystem().versionSelectors.apiVersion(),
-      )?.label;
+      apiStatus = this.getVersionMetadataByProp('version', this.props.version)?.label;
     }
 
     return (
@@ -107,14 +107,11 @@ export default class VersionSelect extends React.PureComponent<
                 value={this.state.selectedVersion}
                 onChange={(e): void => this.handleSelectChange(e.target.value)}
               >
-                {this.props
-                  .getSystem()
-                  .versionSelectors.versionMetadata()
-                  ?.map((versionInfo: VersionMetadata) => (
-                    <option value={versionInfo.version} key={versionInfo.version}>
-                      {buildDisplay(versionInfo)}
-                    </option>
-                  ))}
+                {this.props.versions?.map((versionInfo: VersionMetadata) => (
+                  <option value={versionInfo.version} key={versionInfo.version}>
+                    {buildDisplay(versionInfo)}
+                  </option>
+                ))}
               </select>
             </label>
             <div
