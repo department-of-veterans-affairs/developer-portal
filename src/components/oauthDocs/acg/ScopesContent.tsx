@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { HashLink } from 'react-router-hash-link';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
-import { getAllOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
-import { APIDescription } from '../../../apiDefs/schema';
+import { getActiveAuthCodeApis, lookupApiByFragment } from '../../../apiDefs/query';
 import { RootState } from '../../../types';
 import { APISelector } from '../../index';
 
@@ -16,12 +14,13 @@ import { SectionHeaderWrapper } from '../../sectionHeaderWrapper/SectionHeaderWr
  * conditions based on the scope names themselves prior to getting a CMS.
  * Scopes are listed in each API's respective file in apiDefs folder.
  */
+// eslint-disable-next-line complexity
 const ScopesContent = (): JSX.Element => {
   const selector = (state: RootState): string => state.oAuthApiSelection.selectedOAuthApi;
   const selectedOAuthApi = useSelector(selector);
   const apiDef = lookupApiByFragment(selectedOAuthApi);
   const scopes = apiDef?.oAuthInfo?.acgInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
-  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) && item.oAuthTypes && item.oAuthTypes.includes('AuthorizationCodeGrant'));
+  const options = getActiveAuthCodeApis();
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
 
@@ -38,6 +37,8 @@ const ScopesContent = (): JSX.Element => {
         options={options}
         selectedOption={selectedOAuthApi}
         selectLabel="Select an API to show and describe the related scopes"
+        buttonText="Update page"
+        buttonSuccessMessage="Page updated!"
       />
       <table>
         <thead>
@@ -177,16 +178,6 @@ const ScopesContent = (): JSX.Element => {
                   </td>
                 </tr>
               )}
-              {scopes.includes('service_history.read') && (
-                <tr>
-                  <td>
-                    <code>service_history.read</code>
-                  </td>
-                  <td>
-                    View a Veteran&apos;s service history including deployments and discharge status
-                  </td>
-                </tr>
-              )}
               {scopes.includes('disability_rating.read') && (
                 <tr>
                   <td>
@@ -194,6 +185,32 @@ const ScopesContent = (): JSX.Element => {
                   </td>
                   <td>
                     View a Veteran&apos;s VA disability ratings and the effective date of the rating
+                  </td>
+                </tr>
+              )}
+              {scopes.includes('enrolled_benefits.read') && (
+                <tr>
+                  <td>
+                    <code>enrolled_benefits.read</code>
+                  </td>
+                  <td>Gets enrolled benefits information</td>
+                </tr>
+              )}
+              {scopes.includes('flashes.read') && (
+                <tr>
+                  <td>
+                    <code>flashes.read</code>
+                  </td>
+                  <td>Retrieve certain benefit flashes associated with a Veteran</td>
+                </tr>
+              )}
+              {scopes.includes('service_history.read') && (
+                <tr>
+                  <td>
+                    <code>service_history.read</code>
+                  </td>
+                  <td>
+                    View a Veteran&apos;s service history including deployments and discharge status
                   </td>
                 </tr>
               )}

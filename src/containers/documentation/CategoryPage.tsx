@@ -4,17 +4,26 @@ import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import classNames from 'classnames';
+import ReactMarkdown from 'react-markdown';
 import { Flag } from '../../flags';
-import { getApiDefinitions } from '../../apiDefs/query';
+import { getApiDefinitions, getApisLoadedState } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { CardLink, ApiTags, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
-import { FLAG_HOSTED_APIS, PAGE_HEADER_ID } from '../../types/constants';
+import { apiLoadingState, FLAG_HOSTED_APIS, PAGE_HEADER_ID } from '../../types/constants';
 import { CONSUMER_PATH } from '../../types/constants/paths';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
 
 const CategoryPage = (): JSX.Element => {
   const { apiCategoryKey } = useParams<APINameParam>();
+
+  if (
+    getApisLoadedState() === apiLoadingState.IN_PROGRESS ||
+    getApisLoadedState() === apiLoadingState.ERROR
+  ) {
+    return <ApisLoader />;
+  }
 
   const {
     apis,
@@ -64,7 +73,7 @@ const CategoryPage = (): JSX.Element => {
         </AlertBox>
       )}
       <div className="vads-u-width--full">
-        {overview({})}
+        <ReactMarkdown>{overview}</ReactMarkdown>
         <p>
           <Link to={CONSUMER_PATH}>{consumerDocsLinkText}</Link>.
         </p>

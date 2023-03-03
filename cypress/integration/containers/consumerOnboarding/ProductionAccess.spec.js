@@ -44,6 +44,10 @@ function technicalInformationFields(cy) {
 
 describe('Production Access Form', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
+      fixture: 'legacy.json',
+    }).as('LPB datastore');
+
     cy.visit('/onboarding/request-prod-access');
     cy.get('a[href="/onboarding/production-access-application"]').click();
   });
@@ -51,7 +55,7 @@ describe('Production Access Form', () => {
   it('Test US-based companies only modal', () => {
     cy.get('#isUSBasedCompanyFormFieldno').click();
     cy.get('#is508CompliantFormFieldyes').click();
-    cy.get('#apisFormFieldappeals').click();
+    cy.get('#apisFormFieldapikeyappeals').click();
     cy.get('#termsOfServiceFormField').click();
     cy.get('button.usa-button[type=submit]').click();
     cy.get('#non-us-based-modal-title').should('be.visible');
@@ -89,13 +93,13 @@ describe('Production Access Form', () => {
     cy.get('#termsOfServiceFormField').click();
     cy.get('#main button[type="submit"]').click();
     cy.get('.usa-input-error').should('have.length', '1');
-    cy.get('#apisFormFieldappeals').click();
+    cy.get('#apisFormFieldapikeyappeals').click();
     cy.get('#main button[type="submit"]').click();
     cy.get('.usa-input-error').should('have.length', '0');
   });
 
   it('Form works for 2 step flow (VA Facilities)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,
@@ -104,7 +108,7 @@ describe('Production Access Form', () => {
     });
 
     verificationFields(cy);
-    cy.get('#apisFormFieldfacilities').click();
+    cy.get('#apisFormFieldapikeyfacilities').click();
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()
@@ -123,7 +127,7 @@ describe('Production Access Form', () => {
   });
 
   it('Form works for 3 step flow (Clinical Health)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,
@@ -132,7 +136,9 @@ describe('Production Access Form', () => {
     });
 
     verificationFields(cy);
-    cy.get('#apisFormFieldclinicalHealth').click();
+    cy.get('#apisFormFieldacgclinicalHealth').click();
+    cy.get('#oAuthApplicationTypeFormFieldweb').click();
+    cy.get('#oAuthRedirectURIFormField').type('http://localhost:3001/');
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()
@@ -156,7 +162,7 @@ describe('Production Access Form', () => {
   });
 
   it('Form works for 4 step flow (Benefits Claims)', () => {
-    cy.intercept('POST', '/internal/developer-portal/public/production_request', {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,
       body: {
         ok: true,
@@ -165,7 +171,8 @@ describe('Production Access Form', () => {
     });
 
     verificationFields(cy);
-    cy.get('#apisFormFieldclaims').click();
+    cy.get('#apisFormFieldccgclaims').click();
+    cy.get('#oAuthPublicKeyFormField').type('{ }');
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()

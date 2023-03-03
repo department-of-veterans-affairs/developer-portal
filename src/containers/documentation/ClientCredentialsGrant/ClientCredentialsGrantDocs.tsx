@@ -14,14 +14,14 @@ import {
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { getActiveOauthApis, getAllOauthApis } from '../../../apiDefs/query';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
+import { getActiveCCGApis, getActiveOauthApis, getApisLoadedState } from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { RootState } from '../../../types';
 import { usePrevious } from '../../../hooks';
-import { DEFAULT_OAUTH_CCG_API_SELECTION } from '../../../types/constants';
+import { apiLoadingState, DEFAULT_OAUTH_CCG_API_SELECTION } from '../../../types/constants';
 
 import './ClientCredentialsGrantDocs.scss';
+import ApisLoader from '../../../components/apisLoader/ApisLoader';
 
 interface ClientCredentialsFlowContentProps {
   options: APIDescription[];
@@ -53,7 +53,7 @@ const setInitialApi = (
 ): void => {
   const params = new URLSearchParams(searchQuery || undefined);
   const apiQuery = params.get('api');
-  const availableApis = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
+  const availableApis = getActiveOauthApis();
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_CCG_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
@@ -61,6 +61,7 @@ const setInitialApi = (
 };
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
+  const apisLoaded = getApisLoadedState() === apiLoadingState.LOADED;
   const history = useHistory();
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
@@ -70,23 +71,20 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
   const prevApi = usePrevious(api);
   const selectedOAuthApi = useSelector(selector);
 
-  const options = getActiveOauthApis().filter(
-    (item: APIDescription) =>
-      !isApiDeactivated(item) &&
-      item.oAuthTypes &&
-      item.oAuthTypes.includes('ClientCredentialsGrant'),
-  );
+  const options = getActiveCCGApis();
 
   React.useEffect(() => {
-    if (initializing.current) {
-      // Do this on first load
-      initializing.current = false;
-      setInitialApi(history, location.search, dispatch);
-    } else {
-      // Do this on all subsequent re-renders
-      setSearchParam(history, location.search, api, false);
+    if (apisLoaded) {
+      if (initializing.current) {
+        // Do this on first load
+        initializing.current = false;
+        setInitialApi(history, location.search, dispatch);
+      } else {
+        // Do this on all subsequent re-renders
+        setSearchParam(history, location.search, api, false);
+      }
     }
-  }, [dispatch, location, history, prevApi, api]);
+  }, [dispatch, location, history, prevApi, api, apisLoaded]);
 
   /**
    * CLEAR REDUX STATE ON UNMOUNT
@@ -105,16 +103,22 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
       </Helmet>
       <PageHeader halo="Authorization" header="Client Credentials Grant" />
       <p>
-        The Lighthouse{' '}
+        VA&apos;s{' '}
         <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4">
           OAuth 2.0 Client Credentials Grant
         </a>{' '}
-        (CCG) works by using your RSA generated key pair in{' '}
+        (CCG) grants access by using your RSA-generated key in{' '}
         <a href="https://datatracker.ietf.org/doc/html/rfc7517">JSON Web Key (JWK)</a> format, as
         described in the{' '}
         <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
       </p>
-      <APISelector options={options} selectedOption={selectedOAuthApi} withButton />
+      <ApisLoader hideSpinner />
+      <APISelector
+        options={options}
+        selectedOption={selectedOAuthApi}
+        buttonText="Update page"
+        buttonSuccessMessage="Page updated!"
+      />
       <GoodToKnow />
       <GettingStarted />
       <AuthCodeFlowContent options={options} selectedOption={selectedOAuthApi} />

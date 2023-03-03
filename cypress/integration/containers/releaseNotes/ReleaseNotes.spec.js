@@ -4,6 +4,10 @@ const releaseNotesSections = ['claims', 'benefits', 'benefits-reference_data'];
 
 describe('Release notes tests', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
+      fixture: 'legacy.json',
+    }).as('LPB datastore');
+
     cy.visit('/release-notes/benefits');
   });
 

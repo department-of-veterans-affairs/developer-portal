@@ -19,3 +19,10 @@ jobs:
           mode: exactly
           count: 1
           labels: 'impact: users, impact: maintainers'
+      - uses: mheap/github-action-required-labels@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          mode: exactly
+          count: 0
+          labels: 'DO NOT MERGE'

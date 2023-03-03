@@ -1,16 +1,17 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import { Link } from 'react-router-dom';
 import highlight from 'rehype-highlight';
+import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { SectionHeaderWrapper, CodeWrapper } from '../../index';
 
 const GettingStarted = (): JSX.Element => (
   <>
     <SectionHeaderWrapper heading="Getting Started" id="getting-started" />
     <p>
-      After you <Link to="/apply">request sandbox access</Link>, you will need to generate your RSA
-      key pair and convert the public key into JWK format. What you generate will look similar to
-      this:
+      You may find <a href="https://www.npmjs.com/package/pem-jwk">this pem-jwk tool</a> useful for
+      doing the conversion. The tool shows a private key being converted, but the process is the
+      same for a public key. What you generate will look similar to this:
     </p>
     <CodeWrapper>
       <ReactMarkdown rehypePlugins={[highlight]}>
@@ -26,8 +27,9 @@ const GettingStarted = (): JSX.Element => (
       </ReactMarkdown>
     </CodeWrapper>
     <p>
-      Then, send this key to our support team at <a href="mailto:api@va.gov">api@va.gov</a>, and we
-      will send you a client ID.
+      Next, <Link to={CONSUMER_SANDBOX_PATH}>get sandbox access</Link> for your desired client credentials grant API. On the access
+      form, provide your RSA public key. After you submit the form, we will send your client ID in
+      an email.
     </p>
   </>
 );

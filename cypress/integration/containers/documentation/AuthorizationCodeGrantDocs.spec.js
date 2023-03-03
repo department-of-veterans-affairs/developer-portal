@@ -20,6 +20,10 @@ const tableOfContents = [
 
 describe('Auth Code Grant Page', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
+      fixture: 'legacy.json',
+    }).as('LPB datastore');
+
     cy.visit('/explore/authorization/docs/authorization-code?api=claims');
   });
 
@@ -37,8 +41,8 @@ describe('Auth Code Grant Page', () => {
     cy.get(
       '#on-this-page + ul a[href="/explore/authorization/docs/authorization-code?api=claims#requesting-authorization',
     ).click();
-    cy.get('.api-selector-container select').select('clinical_health');
-    cy.get('.api-selector-container button').click();
+    cy.get('.api-selector-container.theme-light select').first().select('clinical_health');
+    cy.get('.api-selector-container.theme-light button').first().click();
     expect(cy.location().hash).to.not.equal('requesting-authorization');
   });
 
@@ -46,7 +50,8 @@ describe('Auth Code Grant Page', () => {
     cy.get(
       '#on-this-page + ul a[href="/explore/authorization/docs/authorization-code?api=claims#requesting-authorization',
     ).click();
-    cy.get('.api-selector select').first().select('clinical_health');
+    cy.get('.api-selector-container.theme-dark select').first().select('clinical_health');
+    cy.get('.api-selector-container.theme-dark button').first().click();
     expect(cy.location().hash).to.not.equal('requesting-authorization');
   });
 });

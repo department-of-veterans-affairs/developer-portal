@@ -2,9 +2,7 @@ import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { useSelector } from 'react-redux';
 import { SectionHeaderWrapper } from '../../index';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
-import { getAllOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
-import { APIDescription } from '../../../apiDefs/schema';
+import { getActiveAuthCodeApis, lookupApiByFragment } from '../../../apiDefs/query';
 import { RootState } from '../../../types';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
@@ -14,7 +12,7 @@ const BuildingOIDCContent = (): JSX.Element => {
   const selectedOAuthApi = useSelector(selector);
   const apiDef = lookupApiByFragment(selectedOAuthApi);
   const selectorProps = {
-    options: getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item) && item.oAuthTypes && item.oAuthTypes.includes('AuthorizationCodeGrant')),
+    options: getActiveAuthCodeApis(),
     selectedOption: selectedOAuthApi,
   };
 

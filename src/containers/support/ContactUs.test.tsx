@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { useLocation, MemoryRouter } from 'react-router';
+import { BrowserRouter as Router } from 'react-router-dom';
 import ContactUs from './ContactUs';
 
 jest.mock('react-router', () => ({
@@ -20,9 +21,19 @@ describe('ContactUs', () => {
     render(
       <MemoryRouter>
         <ContactUs />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   };
+
+  it('Page renders as expected', () => {
+    render(
+      <Router>
+        <ContactUs />
+      </Router>,
+    );
+    const heading = screen.getByRole('heading', { level: 1 });
+    expect(heading).toHaveTextContent('Developer portal support');
+  });
 
   describe('query params', () => {
     describe('type is set to publishing', () => {
@@ -32,7 +43,9 @@ describe('ContactUs', () => {
 
       it('sets the form to publishing', async () => {
         renderComponent();
-        expect(await screen.findByLabelText(/Include as much information about your API as possible/)).toBeInTheDocument();
+        expect(
+          await screen.findByLabelText(/Include as much information about your API as possible/),
+        ).toBeInTheDocument();
       });
     });
 
@@ -43,7 +56,11 @@ describe('ContactUs', () => {
 
       it('sets the form to the consumer support form', async () => {
         renderComponent();
-        expect(await screen.findByLabelText(/Describe your question or issue in as much detail as you can./)).toBeInTheDocument();
+        expect(
+          await screen.findByLabelText(
+            /Describe your question or issue in as much detail as you can./,
+          ),
+        ).toBeInTheDocument();
       });
     });
 
@@ -54,7 +71,11 @@ describe('ContactUs', () => {
 
       it('sets the form to the consumer support form', async () => {
         renderComponent();
-        expect(await screen.findByLabelText(/Describe your question or issue in as much detail as you can./)).toBeInTheDocument();
+        expect(
+          await screen.findByLabelText(
+            /Describe your question or issue in as much detail as you can./,
+          ),
+        ).toBeInTheDocument();
       });
     });
   });

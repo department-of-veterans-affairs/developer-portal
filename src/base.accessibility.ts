@@ -1,5 +1,5 @@
 /* eslint-disable no-loop-func -- we need to break up these Jest tests inside loops */
-import { axeCheck, mockSwagger, puppeteerHost, testPaths } from './testHelpers';
+import { axeCheck, mockRequest, puppeteerHost, testPaths } from './testHelpers';
 
 describe('Accessibility tests', () => {
   it.each(testPaths)('has no axe violations at %s', async (path: string) => {
@@ -7,7 +7,7 @@ describe('Accessibility tests', () => {
     if (/^\/explore\/[^\/]+\/docs/.test(path)) {
       await page.setRequestInterception(true);
       page.removeAllListeners('request');
-      page.on('request', mockSwagger);
+      page.on('request', mockRequest);
     }
 
     await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });

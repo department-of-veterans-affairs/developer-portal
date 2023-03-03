@@ -1,0 +1,668 @@
+{
+  "appeals": {
+    "name": "Appeals APIs",
+    "properName": "Appeals APIs",
+    "apis": [
+      {
+        "altID": "appeals",
+        "description": "Allows retrieval of all decision review request statuses (both legacy and AMA). Statuses are read only.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/appeals-status/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/appeals-status/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 3,
+        "name": "Appeals Status API",
+        "openData": false,
+        "releaseNotes": "### January 31, 2019\n\nAdd Power of Attorney verification for future Appeals Version 1 [#2717](https://github.com/department-of-veterans-affairs/vets-api/pull/2717)\n\n\n---\n\n### January 14, 2019\n\nBug discovered and fixed for safe null requests [#2727](https://github.com/department-of-veterans-affairs/vets-api/pull/2727)\n\n\n---\n\n### June 11, 2018\n\nImplement VA-required headers to retrieve status [#2024](https://github.com/department-of-veterans-affairs/vets-api/pull/2024)\n\n\n---\n\n### May 23, 2018\n\nAdd appeals service API [#1961](https://github.com/department-of-veterans-affairs/vets-api/pull/1961)\n",
+        "urlFragment": "appeals",
+        "vaInternalOnly": "StrictlyInternal",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": null
+      },
+      {
+        "altID": "decision_reviews",
+        "description": "Allows submission, management, and retrieval of decision review requests and details such as statuses in accordance with the AMA.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/appeals-decision-reviews/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/appeals-decision-reviews/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 3,
+        "name": "Decision Reviews API",
+        "openData": false,
+        "releaseNotes": "### January 11, 2022\n\nRelease Notes for new Contestable Issues standalone endpoint\n\nWe added a new endpoint (`GET /contestable_issues/{decision_review_type}`) to the Decision Reviews API. This endpoint returns contestable issues for a specific Veteran. Using this endpoint lets you tailor your appeal submission flow based on the Veteran’s issues. \n\nThis endpoint returns contestable issues for a single Veteran based on the Veteran’s social security number.\nYou can search for contestable issues based on these appeal types: higher_level_reviews, notice_of_disagreements, and supplemental_claims. \nThe endpoint returns only issues that have been decided as of the receiptDate. \nRead the Decision Review API documentation to learn more.\n\n\n---\n\n### July 26, 2021\n\nDecision Reviews API version 2 Release Notes\n\nVersion 2 of the Decision Reviews API is now released with the following changes:\n\nWe've added a new key, `informalConferenceContact` (required when an informal conference is requested), which will allow us to support both Veteran and representative contacts for informal conferences.\nWe've updated the possible responses enum of `informalConferenceTime` to reflect the above  changes.\n`socOptIn` is now required.\nFor the representative name, we've split `name` into `firstName` and `lastName` to be more flexible and allow more accurate entries.\nThe Veteran email field `emailAddressText` has been changed to `email`.\n\nAdded hlrCreateAddress to now accept an address for this API. This change follows NOD format:\n-`addressLine1`\n-`addressLine2`\n-`addressLine3`\n-`city`\n-`stateCode` - enum of all 2-character state codes (see the documentation for more info)\n-`countryCodeISO2`\n-`zipCode5`\n\n\n---\n\n### June 06, 2020\n\nInitial release of the Decision Review API\n",
+        "urlFragment": "decision_reviews",
+        "vaInternalOnly": "StrictlyInternal",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": null
+      }
+    ],
+    "content": {
+      "consumerDocsLinkText": "Read the consumer onboarding guide for getting production access",
+      "shortDescription": "Enables managing benefit decision appeals on behalf of a Veteran.",
+      "quickstart": null,
+      "veteranRedirect": null,
+      "overview": "## Allows internal VA users to manage Veterans’ decision review requests per the [Appeals Modernization Act (AMA)](https://benefits.va.gov/benefits/appeals.asp) or the legacy benefits appeals process. \n\nAllows you to submit, manage, or check the status of decision reviews (appeals) related to VA benefits claims. [Review the latest release notes](/release-notes/appeals).\n"
+    }
+  },
+  "benefits": {
+    "name": "Benefits APIs",
+    "properName": "Benefits APIs",
+    "apis": [
+      {
+        "altID": "claims",
+        "description": "Submit and track claims",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/benefits-claims/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/benefits-claims/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 4,
+        "name": "Benefits Claims API",
+        "openData": false,
+        "releaseNotes": "### February 15, 2022\n\n- Updated the v1 validation endpoints to validate in the same way as their respective submission endpoints. These endpoints are:\n  - POST \"forms/526\" and \"forms/526/validate\"\n  - POST \"forms/0966\" and \"forms/0966/validate\"\n  - POST \"forms/2122\" and \"forms/2122/validate\"\n\n- [#9112](https://github.com/department-of-veterans-affairs/vets-api/pull/9112)\n\n\n---\n\n### February 10, 2022\n\n- Updated test user representative Tamara Ellis' individual POA code to `067`. [#320](https://github.com/department-of-veterans-affairs/vets-api-clients/pull/320)\n-- Using Tamara Ellis' previous code of `A1Q` will still work, but attempts to assign `A1Q` to a Veteran test user will not change their POA code.  Using `067` will change their POA code.\n- Updated test user representative John Doe's individual POA code to `072`.  [#320](https://github.com/department-of-veterans-affairs/vets-api-clients/pull/320)\n-- Using John Doe's previous code of `A1H` will still work, but attempts to assign `A1H` to a Veteran test user will not change their POA code.  Using `072` will change their POA code.\n\n\n---\n\n### January 25, 2022\n\nWe made updates to the v1 \"/forms/526\" endpoint to make sure the schemas and descriptions better match the wording on the 526EZ form:\n\n- Several schema descriptions were updated, but their functionality remains unchanged. Updated schema descriptions can be reviewed in the [Benefits Claims API documentation](https://developer.va.gov/explore/benefits/docs/claims?version=current).\n- We deprecated 2 schemas because they were duplicating functionality supported by other schemas:\n  1.  `servicePay.hasSeparationPay` was deprecated because its functionality is supported by `servicePay.separationPay`.\n  2.  `servicePay.militaryRetiredPay.willReceiveInfuture` was deprecated because its functionality is supported by `servicePay.militaryRetiredPay.willReceiveInFuture`. It also fixes letter case inconsistencies.\n\n\n---\n\n### January 24, 2022\n\n- (v0 \u0026 v1) - Adds `RRD` as an available value for `specialIssues` in Form 526 submissions. [#8898](https://github.com/department-of-veterans-affairs/vets-api/pull/8898)\n\n\n---\n\n### January 19, 2022\n\n- (v1) Updated form 526 schema and developer docs to allow `treatments.startDate` to be an optional field [#8890](https://github.com/department-of-veterans-affairs/vets-api/pull/8890)\n- (v1) Updated form 526 schema and developer docs to add optional `disabilities.serviceRelevance` field [#8890](https://github.com/department-of-veterans-affairs/vets-api/pull/8890)\n\n\n---\n\n### December 17, 2021\n\n- (v1) Updated `directDeposit.accountType` enum for 526 form 'validate' endpoint to be case insensitive [#8716](https://github.com/department-of-veterans-affairs/vets-api/pull/8716)\n\n\n---\n\n### December 14, 2021\n\n- (v1) Updated `directDeposit.accountType` enum for 526 form to be case insensitive [#8655](https://github.com/department-of-veterans-affairs/vets-api/pull/8655)\n\n\n---\n\n### May 03, 2021\n\n- (v0 \u0026 v1) Fixed documentation to properly define consentLimits for a POST 2122 submission [#6728](https://github.com/department-of-veterans-affairs/vets-api/pull/6728)\n\n\n---\n\n### April 22, 2021\n\n- (v1) \"/forms/2122/active\" now returns current and previous POA regardless of prior submissions to Lighthouse Claims API [#6621](https://github.com/department-of-veterans-affairs/vets-api/pull/6621)\n- (v0 \u0026 v1) Fixed bug where a Veteran was unable to submit a POA change for a previously used Representative [#6486](https://github.com/department-of-veterans-affairs/vets-api/pull/6486)\n- (v0 \u0026 v1) Fixed bug where some service branch options within a disability claim submission were invalid [#6640](https://github.com/department-of-veterans-affairs/vets-api/pull/6640)\n\n\n---\n\n### March 30, 2021\n\n- (v0 \u0026 v1) Deprecate \"schema\" endpoint for 526 form [#6289](https://github.com/department-of-veterans-affairs/vets-api/pull/6289)\n- (v0 \u0026 v1) Deprecate \"schema\" endpoint for 0966 form [#6289](https://github.com/department-of-veterans-affairs/vets-api/pull/6289)\n- (v0 \u0026 v1) Deprecate \"schema\" endpoint for 2122 form [#6289](https://github.com/department-of-veterans-affairs/vets-api/pull/6289)\n- (v0 \u0026 v1) Deprecate \"validate\" endpoint for 526 form [#6289](https://github.com/department-of-veterans-affairs/vets-api/pull/6289)\n- (v0 \u0026 v1) Deprecate \"validate\" endpoint for 0966 form [#6289](https://github.com/department-of-veterans-affairs/vets-api/pull/6289)\n- (v0 \u0026 v1) Deprecate \"validate\" endpoint for 2122 form [#6289](https://github.com/department-of-veterans-affairs/vets-api/pull/6289)\n- (v0 \u0026 v1) Reduce valid flashes to 526 endpoint to shorter more relevant list [#6256](https://github.com/department-of-veterans-affairs/vets-api/pull/6256)\n\n\n---\n\n### January 04, 2021\n\n- (v0 \u0026 v1) Write flashes to BGS when 526 claims are submitted for auto-establishment [#5248](https://github.com/department-of-veterans-affairs/vets-api/pull/5248)\n- (v0 \u0026 v1) Write special issues to BGS when 526 claims are submitted for auto-establishment [#5576](https://github.com/department-of-veterans-affairs/vets-api/pull/5576)\n\n\n---\n\n### September 14, 2020\n\n(v0 \u0026 v1) Add `validate` endpoint for 2122 form [#4881](https://github.com/department-of-veterans-affairs/vets-api/pull/4881)\n\n\n---\n\n### September 01, 2020\n\nUpdate claims API documentation [#4783](https://github.com/department-of-veterans-affairs/vets-api/pull/4783)\n\n\n---\n\n### August 25, 2020\n\nMigrate Intent to FIle from EVSS to BGS [#4575](https://github.com/department-of-veterans-affairs/vets-api/pull/4575)\n\n\n---\n\n### August 17, 2020\n\nAdded camel inflected schemas to claims API [#4730](https://github.com/department-of-veterans-affairs/vets-api/pull/4730)\n\n\n---\n\n### August 07, 2020\n\n(v0 \u0026 v1) Add `validate` endpoint for 0966 form [#4656](https://github.com/department-of-veterans-affairs/vets-api/pull/4656)\n\n\n---\n\n### July 16, 2020\n\nAbility to generate and upload a signed 2122 PDF form using submitted signatures [#4463](https://github.com/department-of-veterans-affairs/vets-api/pull/4463)\n\n- Updated schema changes for 2122\n\n\n---\n\n### June 25, 2020\n\n(v0 \u0026 v1) Updated `homelessSituationType` and `homelessnessRiskSituationType` enums [#4383](https://github.com/department-of-veterans-affairs/vets-api/pull/4383)\n\n\n---\n\n### June 17, 2020\n\n(v0 \u0026 v1) Add optional base64 encoding information to documentation [#4381](https://github.com/department-of-veterans-affairs/vets-api/pull/4381)\n\n\n---\n\n### November 27, 2019\n\n(v0) Add \"claimDate\" field to set receipt dates for internal consumers [#3596](https://github.com/department-of-veterans-affairs/vets-api/pull/3596)\n\n\n---\n\n### November 20, 2019\n\n(v1) Require attachment for original claims submitted by representatives [#3554](https://github.com/department-of-veterans-affairs/vets-api/pull/3554)\n\n\n---\n\n### November 12, 2019\n\n(v1) Validate existence of previous claim to determine \"original claim\" status and require attachment in those cases [#3471](https://github.com/department-of-veterans-affairs/vets-api/pull/3471)\n\n\n---\n\n### September 24, 2019\n\n(v0 \u0026 v1) Add \"autoCestPDFGenerationDisabled\" boolean field [#3328](https://github.com/department-of-veterans-affairs/vets-api/pull/3328)\n\n\n---\n\n### July 23, 2019\n\n(v1) Announced production support for external use of v1, allowing:\n\n- Users with existing Power of Attorney to establish 526 claims on a Veteran's behalf\n- Authenticated Veterans to establish 526 claims on their own behalf\n\n\n---\n\n### June 25, 2019\n\nCreating ITF expiration validation for 526 [#3119](https://github.com/department-of-veterans-affairs/vets-api/pull/3119)\n\n\n---\n\n### June 17, 2019\n\nAdd supporting documents to claims [#3111](https://github.com/department-of-veterans-affairs/vets-api/pull/3111)\n\n\n---\n\n### June 10, 2019\n\nAdd machine readable source to errors [#3097](https://github.com/department-of-veterans-affairs/vets-api/pull/3097)\n\n\n---\n\n### June 03, 2019\n\n- Add a couple specs for empty ITF requests [#3083](https://github.com/department-of-veterans-affairs/vets-api/pull/3083)\n- Upgrade Ruby to 2.4.5 [#2995](https://github.com/department-of-veterans-affairs/vets-api/pull/2995)\n\n\n---\n\n### May 30, 2019\n\n- Adding logic to match claims detail and auto claim serializers [#3061](https://github.com/department-of-veterans-affairs/vets-api/pull/3061)\n- Adding Form Schema documentation and json api compliance [#3075](https://github.com/department-of-veterans-affairs/vets-api/pull/3075)\n\n\n---\n\n### May 28, 2019\n\n- Rails 5.2.3 [#2933](https://github.com/department-of-veterans-affairs/vets-api/pull/2933)\n- Get request for displaying JSON Schema for each form [#3072](https://github.com/department-of-veterans-affairs/vets-api/pull/3072)\n\n\n---\n\n### May 20, 2019\n\n- (v1) Claims docs fix [#3055](https://github.com/department-of-veterans-affairs/vets-api/pull/3055)\n- (v1) add edipi to from_identity call [#3047](https://github.com/department-of-veterans-affairs/vets-api/pull/3047)\n\n\n---\n\n### May 01, 2019\n\n- (v1) Art.claims 404 [#3015](https://github.com/department-of-veterans-affairs/vets-api/pull/3015)\n- (v1) Rails 5.1 [#2897](https://github.com/department-of-veterans-affairs/vets-api/pull/2897)\n\n\n---\n\n### April 30, 2019\n\n(v1) Creating Swagger Blocks Documentation for Claims V1 [#2952](https://github.com/department-of-veterans-affairs/vets-api/pull/2952)\n\n\n---\n\n### April 23, 2019\n\n- (v1) Check PoA with Okta [#2990](https://github.com/department-of-veterans-affairs/vets-api/pull/2990)\n- (v1) Intent To File Claims Api [#2990](https://github.com/department-of-veterans-affairs/vets-api/pull/2990)\n\n\n---\n\n### April 17, 2019\n\n(v1) Art.claims api schema [#2965](https://github.com/department-of-veterans-affairs/vets-api/pull/2965)\n\n\n---\n\n### April 12, 2019\n\n(v1) Verify PoA from OGC data [#2951](https://github.com/department-of-veterans-affairs/vets-api/pull/2951)\n\n\n---\n\n### April 11, 2019\n\n(v1) Add ability to set users from oauth token or headers [#2949](https://github.com/department-of-veterans-affairs/vets-api/pull/2949)\n\n\n---\n\n### April 09, 2019\n\n- (v1) Upgrade API to Rails 5.0.7.2 [#2833](https://github.com/department-of-veterans-affairs/vets-api/pull/2833)\n- (v1 )Uploading Uploads to EVSS for Auto-CEST [#2915](https://github.com/department-of-veterans-affairs/vets-api/pull/2915)\n- (v1) 526 Additional Validations [#2936](https://github.com/department-of-veterans-affairs/vets-api/pull/2936)\n\n\n---\n\n### April 05, 2019\n\n(v1) Split off Claims v1 [#2927](https://github.com/department-of-veterans-affairs/vets-api/pull/2927)\n\n\n---\n\n### March 26, 2019\n\n(v0) Create mock override to test auto-establishment in staging [#2908](https://github.com/department-of-veterans-affairs/vets-api/pull/2908)\n\n- Our upstream partners limit the number of test submissions allowed in staging, so we now use mocked data by default.\n\n\n---\n\n### March 21, 2019\n\n(v0) Fix security vulnerability in disability claim auto-establishment [#2903](https://github.com/department-of-veterans-affairs/vets-api/pull/2903)\n\n\n---\n\n### March 20, 2019\n\n(v0) Fix duplicate submissions for disability claim auto-establishment [#2852](https://github.com/department-of-veterans-affairs/vets-api/pull/2852)\n\n\n---\n\n### March 18, 2019\n\n(v0) Add support for uploading documents to auto-established disability compensation claims [#2868](https://github.com/department-of-veterans-affairs/vets-api/pull/2868)\n\n\n---\n\n### March 15, 2019\n\n(v0) Improve Veteran lookup for disability claim auto-establishment and claim status [#2863](https://github.com/department-of-veterans-affairs/vets-api/pull/2863)\n\n\n---\n\n### January 08, 2019\n\n(v0) Implement Power of Attorney lookup for future v1 [#2709](https://github.com/department-of-veterans-affairs/vets-api/pull/2709)\n(v0) Implement initial VA internal-only disability claim auto-establishment [#2824](https://github.com/department-of-veterans-affairs/vets-api/pull/2824)\n\n\n---\n\n### January 04, 2019\n\n(v0) Update claim statuses to be consistent with VA.gov [#2701](https://github.com/department-of-veterans-affairs/vets-api/pull/2701)\n",
+        "urlFragment": "claims",
+        "oAuth": true,
+        "oAuthInfo": {
+          "acgInfo": {
+            "baseAuthPath": "/oauth2/claims/v1",
+            "scopes": [
+              "profile",
+              "openid",
+              "offline_access",
+              "claim.read",
+              "claim.write"
+            ]
+          },
+          "ccgInfo": {
+            "baseAuthPath": "/oauth2/claims/system/v1",
+            "productionAud": "ausajojxqhTsDSVlA297",
+            "sandboxAud": "ausdg7guis2TYDlFe2p7",
+            "scopes": [
+              "claim.read",
+              "claim.write"
+            ]
+          }
+        },
+        "oAuthTypes": [
+          "AuthorizationCodeGrant",
+          "ClientCredentialsGrant"
+        ],
+        "veteranRedirect": {
+          "linkUrl": "https://www.va.gov/claim-or-appeal-status/",
+          "linkText": "benefits or appeals claim status",
+          "message": "Are you a Veteran or a Veteran representative? Check your"
+        }
+      },
+      {
+        "altID": "benefits",
+        "description": "Submit PDF claims",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/benefits-intake/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/benefits-intake/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 4,
+        "name": "Benefits Intake API",
+        "openData": false,
+        "releaseNotes": "### May 24, 2021\n\n(v1) We have turned back on the new Veteran first and last name field validations described in the May 17 release notes. In addition to these new validations, we will allow spaces in these fields, including leading and trailing spaces (white space). #6986\n\n[#6986](https://github.com/department-of-veterans-affairs/vets-api/pull/6986)\n\n\n---\n\n### May 20, 2021\n\n(v1) On May 17, we made changes to Veteran First and Last name field validations for the Benefits Intake API, which are described in a release note below.\n\nBased on the high number of errors being received, we are temporarily turning off these changes and reverting back to previous field requirements. We are working on updating the new validations to allow spaces and reduce the number of errors returned.\n\nWhen those changes are made, we will turn on the new validations, post an updated release note, and send a notification to all consumers.\n\n\n---\n\n### May 17, 2021\n\n(v1) In order to further automate matches of submitted documents with Veterans downstream, the required Veteran First and Last name metadata fields now only allow alpha characters, dashes -, and forward slashes /. Additionally, these fields must be less than or equal to 50 characters. No numbers or other special characters may be submitted in these fields.\n\nSubmissions with invalid characters will receive Error Status DOC102\t\"Invalid Veteran name (e.g. empty, invalid characters, or too long). Names must match the regular expression /^[a-zA-Z\\-\\/]{1,50}$/\"\n\n[#6882](https://github.com/department-of-veterans-affairs/vets-api/pull/6882)\n\n\n---\n\n### April 02, 2021\n\n(v1) We added new error detail messages that provide additional detail for a small number of submissions returning the DOC202 ERROR code.\n* Unidentified Mail: We could not associate this submission with a Veteran. Please verify the identifying information and resubmit.\n* Duplicate Submission: This document was already uploaded, faxed, or mailed and was or is being processed. This is a duplicate submission and will not be processed.\n* Blank Document: The attachment contains no content. Please verify the attachment and resubmit, if needed.\n\n\n---\n\n### March 29, 2021\n\n(v0) Version 0.0.1 of the Benefits Intake API was removed on March 29, 2021. Refer to [version 1.0.0](https://developer.va.gov/explore/benefits/docs/benefits?version=current) of the API and related documentation. For more information, [contact us](https://developer.va.gov/support/contact-us) or visit our [Google Developer Forum](https://groups.google.com/forum/m/#!forum/va-lighthouse).\n\n\n---\n\n### March 01, 2021\n\n(v1) The Benefits-Intake API now has a new claim/benefit selection option to help ensure submissions reach the correct business line so they can be processed as quickly as possible: [#6037](https://github.com/department-of-veterans-affairs/vets-api/pull/6037)\n\nThe existing businessLine metadata field can be empty, or it can contain the code to indicate a document is related to one of these claim/benefit types:\n\nCMP – Compensation requests such as those related to disability, unemployment, and pandemic claims\nPMC – Pension requests including survivor’s pension\nINS – Insurance such as life insurance, disability insurance, and other health insurance\nEDU – Education benefits, programs, and affiliations\nVRE – Veteran Readiness \u0026 Employment such as employment questionnaires, employment discrimination, employment verification\nBVA – Board of Veteran Appeals\nFID – Fiduciary/financial appointee, including family member benefits\nOTH – Other (which will be routed to CMP)\n\nThis change is currently optional, but may become a required field in a future iteration of the API.\n\n\n---\n\n### November 30, 2020\n\n(v1) Added uploaded PDF metadata (page count, total pages, document count, and document dimensions) to the DB and in the HTTP response:\n* Database migration [#5380](https://github.com/department-of-veterans-affairs/vets-api/pull/5380)\n* JSON metadata stored in DB and added to the status check response [#5303](https://github.com/department-of-veterans-affairs/vets-api/pull/5303)\n\n\n---\n\n### October 07, 2019\n\n(v0 \u0026 v1) Add support for base64 encoding [#3995](https://github.com/department-of-veterans-affairs/vets-api/pull/3395)\n\n\n---\n\n### August 19, 2019\n\n(v0 \u0026 v1) Validation on document page size [#3213](https://github.com/department-of-veterans-affairs/vets-api/pull/3213)\n\n\n---\n\n### July 29, 2019\n\n(v0 \u0026 v1) New `expired` status added to individual status endpoint [#3353](https://github.com/department-of-veterans-affairs/vets-api/pull/3353)\n\n\n---\n\n### July 24, 2019\n\n(v0 \u0026 v1) Cache statuses for /uploads/report endpoint [#3158](https://github.com/department-of-veterans-affairs/vets-api/pull/3158)\n\n\n---\n\n### July 11, 2019\n\n(v1) Revert changes to error handling [#3150](https://github.com/department-of-veterans-affairs/vets-api/pull/3150)\n\n\n---\n\n### July 09, 2019\n\n(v1) Announced support for v1, which includes 2 breaking changes:\n* \"vbms\" status [#3027](https://github.com/department-of-veterans-affairs/vets-api/pull/3027)\n* Updates to error handling [#3053](https://github.com/department-of-veterans-affairs/vets-api/pull/3053)\n\n\n---\n\n### June 11, 2019\n\n(v0 \u0026 v1) Adding Metadata Endpoints for V0 and V1 end points [#3093](https://github.com/department-of-veterans-affairs/vets-api/pull/3093)\n\n\n---\n\n### June 03, 2019\n\n(v0) Upgrade Ruby to 2.4.5 [#2995](https://github.com/department-of-veterans-affairs/vets-api/pull/2995)\n\n\n---\n\n### May 28, 2019\n\n(v0) Rails 5.2.3 [#2933](https://github.com/department-of-veterans-affairs/vets-api/pull/2933)\n\n\n---\n\n### May 23, 2019\n\n(v0) Create self-service testing tool [#3059](https://github.com/department-of-veterans-affairs/vets-api/pull/3059)\n\n\n---\n\n### May 03, 2019\n\n(v0) Validate Against Empty Files [#3025](https://github.com/department-of-veterans-affairs/vets-api/pull/3025)\n\n\n---\n\n### May 01, 2019\n\n(v0) Rails 5.1 [#2897](https://github.com/department-of-veterans-affairs/vets-api/pull/2897)\n\n\n---\n\n### April 09, 2019\n\n(v0) Upgrade API to Rails 5.0.7.2 [#2833](https://github.com/department-of-veterans-affairs/vets-api/pull/2833)\n\n\n---\n\n### March 18, 2019\n\n(v0) Handle new vbms success status without passing it along to consumers (would be a breaking change) [#2877](https://github.com/department-of-veterans-affairs/vets-api/pull/2877)\n\n\n---\n\n### January 28, 2019\n\n(v0) Status simulation in Developer environment [#2751](https://github.com/department-of-veterans-affairs/vets-api/pull/2751)\n- Can now specify status in developer environment, and receive mocked data for that status.\n\n\n---\n\n### October 08, 2018\n\n(v0) Update API URLs to va.gov domains in documentation [#2332](https://github.com/department-of-veterans-affairs/vets-api/pull/2332)\n\n\n---\n\n### September 18, 2018\n\n(v0) Implement VA-required logging for uploads [#2072](https://github.com/department-of-veterans-affairs/vets-api/pull/2072)\n\n\n---\n\n### August 27, 2018\n\n(v0) Validating PDF format on upload [#2213](https://github.com/department-of-veterans-affairs/vets-api/pull/2213)\n\n\n---\n\n### July 23, 2018\n\n(v0) Limit the size of individual attachments in uploads [#2094](https://github.com/department-of-veterans-affairs/vets-api/pull/2094)\n\n\n---\n\n### July 19, 2018\n\n* (v0) Improve pension and burial claim uploads to Central Mail [#2143](https://github.com/department-of-veterans-affairs/vets-api/pull/2143)\n* (v0) Add Consumer ID to Central Mail upload submission [#2071](https://github.com/department-of-veterans-affairs/vets-api/pull/2071)\n\n\n---\n\n### July 02, 2018\n\n(v0) Add Amazon SNS support to endpoint [#2058](https://github.com/department-of-veterans-affairs/vets-api/pull/2058)\n\n\n---\n\n### June 08, 2018\n\n(v0) Add numeric-characters-only validation to fileNumber metadata element [#2020](https://github.com/department-of-veterans-affairs/vets-api/pull/2020)\n\n\n---\n\n### May 17, 2018\n\n(v0) Add bulk status report [#1947](https://github.com/department-of-veterans-affairs/vets-api/pull/1947)\n\n\n---\n\n### May 08, 2018\n\n(v0) Start uploading documents to Central Mail [#1896](https://github.com/department-of-veterans-affairs/vets-api/pull/1896)\n\n\n---\n\n### April 26, 2018\n\n(v0) Start retrieving statuses from Central Mail [#1887](https://github.com/department-of-veterans-affairs/vets-api/pull/1887)\n\n\n---\n\n### April 20, 2018\n\n(v0) Create initial service [#1887](https://github.com/department-of-veterans-affairs/vets-api/pull/1887)\n",
+        "urlFragment": "benefits",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": {
+          "linkUrl": "https://www.va.gov/claim-or-appeal-status/",
+          "linkText": "benefits or appeals claim status",
+          "message": "Are you a Veteran or a Veteran representative? Check your"
+        }
+      },
+      {
+        "altID": "benefitsReferenceData",
+        "description": "Look up data and codes for VA benefits claims",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/benefits-reference-data/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/benefits-reference-data/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 2,
+        "name": "Benefits Reference Data API",
+        "openData": true,
+        "releaseNotes": "### February 04, 2022\n\nWe added a new API to the developer portal. This API was previously the EVSS Data Reference Service. It allows consumers to look up the following data for use with benefits claims:\n\n- Contention types\n- Countries\n- Disabilities\n- Intake sites\n- Military pay types\n- Service branches\n- Special circumstances\n- States\n- VA medical treatment facilities\n\nThis API will return only the data that can be used for benefits claims. For example, this API may return only a subset of states or countries that apply to benefits claims.\n\nThere are some important differences between this API and the service it replaces:\n\n- The new service requires an API key. [Obtain one through this onboarding process](https://developer.va.gov/onboarding).\n- There are some stylistic changes to each endpoints’ response format:\n    * Contention Types\n      + \"contentionTypes\" array renamed to \"items\"\n    * Countries\n      + \"countries\" array renamed to \"items\"\n    * Disabilities\n      + \"disability\" array renamed to \"items\"\n      + \"classificationCode\" renamed to \"id\"\n      + \"id\" is type long\n      + \"endDate\" renamed to \"endDateTime\"\n      + \"endDateTime\" reported in YYY-MM-DDTHH:MM:SSZ format\n      + \"endDateTime\" always included, even if null\n    * Intake Sites\n      + \"intakeSites\" array renamed to \"items\"\n      + \"code\" renamed to \"id\"\n      + \"id\" is type long\n    * Military Pay Types\n      + \"militaryPayTypes\" array renamed to \"items\"\n    * Service Branches\n      + \"serviceBranches\" array renamed to \"items\"\n    * Special Circumstances\n      + \"specialCircumstances\" array renamed to \"items\"\n    * States\n      + \"states\" array renamed to \"items\"\n    * Treatment Centers\n      + \"facilities\" array renamed to \"items\"\n\n\n- Responses are in JSON instead of HTML.\n- Minor improvements to HTTPS Response Codes. (i.e. treatment centers invalid state was 200 and is now 400, new 429 rate limit errors, unauthorized 401, refer to [API specification](https://developer.va.gov/explore/benefits/docs/benefits_reference_data?version=current) for complete information).\n- For the treatment center endpoint, the optional “stateCode” query parameter must now be 2 capital letters, otherwise a 400 response is returned. Previously, a 200 with a blank array was returned.\n- Optional pagination is supported (new fields were added to in the responses even if the optional pagination parameters are not used for certain end points).\n- URLs for the services are changed. The legacy production URLs are https://www.ebenefits.va.gov:444/wss-referencedata-services-web/rest/referencedata/v1/`\u003cendpoint name\u003e` and the new production URLs are: https://api.va.gov/services/benefits-reference-data/v1/`\u003cendpoint name\u003e`.\n\n\nIt's important to know that with the new version, you will need to support backward compatibility. You should:\n- Be prepared to handle HTTP status codes not explicitly specified in endpoint definitions.\n- Be tolerant with unknown fields in the payload, ignore deserialization of new fields, but do not eliminate them from the payload if needed for subsequent PUT requests.\n- Follow the redirect when the server returns HTTP status code 301 (Moved Permanently).\n\n\nLearn more about this API by reviewing the [Benefits Reference Data API documentation](/explore/benefits/docs/benefits_reference_data).\n\nFor cross-reference purposes, the PR for this release is [#4015](https://tools.health.dev-developer.va.gov/jenkins/job/department-of-veterans-affairs/job/health-apis-deployer/job/d2/4015/).\n",
+        "urlFragment": "benefits_reference_data",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": {
+          "linkUrl": "https://www.va.gov/claim-or-appeal-status/",
+          "linkText": "benefits or appeals claim status",
+          "message": "Are you a Veteran or a Veteran representative? Check your"
+        }
+      }
+    ],
+    "content": {
+      "consumerDocsLinkText": "Read the consumer onboarding guide for getting production access",
+      "shortDescription": "Enables approved organizations to submit benefits-related PDFs and access information on a Veteran’s behalf.",
+      "quickstart": null,
+      "veteranRedirect": {
+        "linkUrl": "https://www.va.gov/claim-or-appeal-status/",
+        "linkText": "benefits or appeals claim status",
+        "message": "Are you a Veteran or a Veteran representative? Check your"
+      },
+      "overview": "## Enables electronic submission and status tracking of non-medical, VA-related benefit claims.\n\nOur benefits APIs allow you to submit and track electronic benefits claims, submit PDF claims and supplemental documentation, and more. Using these APIs allows you to speed up claims processing when compared to traditional mail or fax submissions. Read the API documentation to find out which claims these APIs handle. [Review the latest release notes](/release-notes/benefits).\n"
+    }
+  },
+  "facilities": {
+    "name": "Facilities APIs",
+    "properName": "Facilities APIs",
+    "apis": [
+      {
+        "altID": "facilities",
+        "description": "VA Facilities",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/facilities/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/facilities/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 2,
+        "name": "VA Facilities API",
+        "openData": true,
+        "releaseNotes": "### March 15, 2022\n\nWe made some changes to the API:\n\n* It has a list of changes.\n* it does all the things that markdown does.\n* [It also has a link](https://developer.va.gov).\n\n\n---\n\n### January 11, 2022\n\nWe added a new Radius field to lat/long searches.\n* When the Radius field is supplied, only results within the specified radius will be returned.\n* This field is optional.\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/272)\n\n\n---\n\n### July 06, 2021\n\nTime zone data has now been added to API repsonse   \n* `time_zone` represents the corresponding IANA format time zone for the facility returned \n* Example value for Orlando VA Medical Center: \"America/New_York\"\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/226)\n\n\n---\n\n### April 15, 2021\n\nWe added a new meta section to the /nearby endpoint with a new `band_version` field.\n* `band_version` represents the data set used in the distance calculation\n* `band_version` value may be up to 6 weeks behind the current date\n* Example value: \"FEB2021\" with a return date in March, 2021\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/209)\n\n\n---\n\n### April 01, 2021\n\nService-specific details are now available for the Covid19Vaccine service where applicable.\n* `detailed_services` was added to the facilities API response for all facilities\n* Facilities offering the Covid19Vaccine health service provide detailed service info in this field\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/198)\n\n\n---\n\n### January 29, 2021\n\nCorrected `operationalHoursSpecialInstructions` to `operational_hours_special_instructions`\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/195)\n\n\n---\n\n### January 20, 2021\n\nYou can now return additional notes related to operational hours for a facility.\n* New field `operationalhoursspecialinstructions` included in the Facilities API response\n* This field is only applicable to health facilities (vha) and vet centers (vc)\n* Example value: \"Administrative hours are Monday-Friday 8:00 a.m. to 4:30 p.m.\"\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/172)\n\n\n---\n\n### January 11, 2021\n\nYou can now see if a facility offers Covid-19 vaccines.\n* `Covid19Vaccine` will return as a new service type for facilities, where available\n* The `Covid19Vaccine` service does not have satisfaction scores or wait times\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/184)\n\n\n---\n\n### December 02, 2020\n\nLocation queries now support filtering by mobile status.\n* Added `mobile` filter parameter to facilities endpoint\n* Options for `mobile` are `true` or `false`\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/169)\n\n\n---\n\n### November 16, 2020\n\nYou can now search for facilities by Veterans Integrated Service Network (VISN).\n* Added `visn` search parameter to facilities endpoint\n* Additional search parameters (such as `lat` and `long`) are not supported with this search type\n\n[View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/165)\n\n\n---\n\n### August 24, 2020\n\nA new `/ids` endpoint was added to the Facilities API which retrieves all facility IDs and supports filtering by facility type.\n\n\n---\n\n### April 20, 2020\n\nYou can now see if Health facilities offer Podiatry or Nutrition services.\n* Added `Podiatry` and `Nutrition` to the array of available services for a facility, where available. At this time, we do not have satisfaction scores and are not exposing wait times for podiatry or nutrition services.\n\n  [View the code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/38)\n\nYou can now see Health facilities' operating status and any important textual notes about that facility.\n- Added `operating_status` and `additional_info` flags to the API response for Health facilities (other facility types will return null for these fields). Options for operating_status are `normal, notice, limited, closed`; options for `additional_info` is a text string showing details of facility notices for visitors, such as messages about parking lot closures or floor visitation information.\n- `active_status` is deprecated and replaced with `operating_status`. It will be removed in version 1.\n\n [View code change(s)](https://github.com/department-of-veterans-affairs/lighthouse-facilities/pull/58)\n \n Note: the Facilities API codebase was refactored and separated from the vets-api repository.\n\n\n---\n\n### December 06, 2019\n\nThe Veterans Integrated Service Network (VISN) identifier for each health facility is now available.\n- `visn` has been added to all `/facilities` endpoints. [View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3609)\n- For non-health facilities, this will return as `null`.\n\n\n---\n\n### November 08, 2019\n\nThe `/nearby` endpoint received major changes.\n- Previously, the server retrieved an isochrone (a line connecting points of the same time) for a provided location and looked for facilities that fell within that polygon. Now the opposite is true: facilities have isochrones that are compared against the provided location. Users should see increased performance from this endpoint as a result.\n- Data about drive times now comes directly from the Veterans Health Administration (VHA). Responses may vary slightly from the previous implementation because of this switch.\n- The response schema has also changed. Instead of returning facility data from `/nearby`, the endpoint now provides `min_time` and `max_time` attributes for the matching polygons and links to endpoints that can be queried to retrieve full information about the associated facility. This schema change allows us to keep `/nearby` within v0 of the Facilities API instead of incrementing to v1. See the schema changes by [visiting the documentation](https://developer.va.gov/explore/facilities/docs/facilities).\n\n[View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3512)\n\n\n---\n\n### October 23, 2019\n\nWhen including latitude and longitude parameters in a request to  `/facilities` the results are now sorted in ascending order by distance.\n-  Previously the facilities in the response were sorted by type first and then distance. Now the closest facilities to the requested location will be returned first regardless of type.\n\n[View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3461)\n\n\n---\n\n### September 30, 2019\n\nYou can now see if Health facilities are mobile or temporarily deactivated.\n- Added `mobile` and `active_status` flags to the API response for Health facilities (other facility types will return `null` for these fields). Options for `mobile` are `true` or `false`; options for `active_status` are `A` for Active or `T` for Temporarily deactivated.\n  - Mobile facilities are subject to frequent address changes. To get the exact current location, please call the number listed.\n\n[View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3339/commits)\n\n\n---\n\n### September 20, 2019\n\nYou can now query facilities in `/nearby` using latitude and longitude\n- As an alternative option to `address`, this adds the ability to make a request to `/va_facilities/v1/nearby` using `lat` and `lng` as input parameters.\n\n[View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3273/commits)\n\n\n---\n\n### June 17, 2019\n\nGet nearby facilities for an address [#3084](https://github.com/department-of-veterans-affairs/vets-api/pull/3084)\n- `/nearby`, the first available endpoint for v1 of Facilities API, returns all facilities within a provided drive time for an address\n- v1 changes\n  - Changed `long` to `lng` to accommodate typed languages [#15](https://github.com/department-of-veterans-affairs/vets-api-clients/issues/15)\n  - Wait times are now nested in the Health services array\n\n\n---\n\n### April 26, 2019\n\nGet facilities by state [#2992](https://github.com/department-of-veterans-affairs/vets-api/pull/2992)\n- Facilities endpoint now accepts `state` as a parameter. This returns all facilities in a particular state/territory.\n\n\n---\n\n### April 25, 2019\n\nGet facilities by zip [#2987](https://github.com/department-of-veterans-affairs/vets-api/pull/2987)\n- Facilities endpoint now accepts `zip` as a parameter. This returns all facilities in a particular zip code.\n\n\n---\n\n### April 18, 2019\n\nFix error when returning CSV [#2974](https://github.com/department-of-veterans-affairs/vets-api/pull/2974)\n- The `/facilities/all` endpoint no longer returns a 500 status code when a user requests `text/csv`\n\n\n---\n\n### April 13, 2019\n\nStandardize closed days to \"Closed\" in Facilities API [#2802](https://github.com/department-of-veterans-affairs/vets-api/pull/2802)\n- Changes any casing of \"closed\" and \"-\" to \"Closed\" for a consistent convention in the Facilities API\n\n\n---\n\n### January 16, 2019\n\nFix facilities api bugs [#2735](https://github.com/department-of-veterans-affairs/vets-api/pull/2735)\n- Allows users to pass both a list of IDs and a lat/long in the same request.\n- Populate missing location data in NCA, VBA, and VC facilities, [view specific change](https://github.com/department-of-veterans-affairs/vets-api/pull/2735/files#diff-a0253f0a6c07463fb11a513df82f21d2).\n\n\n---\n\n### December 26, 2018\n\nRemove community care providers from all facilities search [#2582](https://github.com/department-of-veterans-affairs/vets-api/pull/2582)\n- Reverts back to the old functionality, removing community care providers from the all facility search\n- Community care providers can now only be searched by passing `type=cc_provider` into the search endpoint\n\n\n---\n\n### November 20, 2018\n\nAdd facilities distances [#2687](https://github.com/department-of-veterans-affairs/vets-api/pull/2687)\n- Adds distance to meta property of lat/long inquiries to the Facilities API and adds documentation for the meta property\n- Facility distances from lat/long point are returned in responses\n\n\n---\n\n### November 12, 2018\n\nCommunity care provider searches [#2405](https://github.com/department-of-veterans-affairs/vets-api/pull/2405)\n- This enhances the facilities search endpoint to include community care providers in the search by default\n- Additionally, it supports searching for just community care  providers by passing `type=cc_provider` into the search endpoint\n\n\n---\n\n### August 13, 2018\n\nLaunch of the VA Facilities API\n- VA_Facilities API endpoint for external API consumers. Supports json/[geojson](http://geojson.org/) results and a bulk \"get all\" endpoint in geojson and csv format.\n",
+        "urlFragment": "facilities",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": {
+          "linkUrl": "https://www.va.gov/find-locations/",
+          "linkText": "Find the facility that's right for you",
+          "message": "Are you a Veteran?"
+        }
+      }
+    ],
+    "content": {
+      "consumerDocsLinkText": "Learn about getting production access using open data APIs",
+      "shortDescription": "Use the VA Facilities API to find relevant information about a specific VA facility.",
+      "quickstart": null,
+      "veteranRedirect": {
+        "linkUrl": "https://www.va.gov/find-locations/",
+        "linkText": "Find the facility that's right for you",
+        "message": "Are you a Veteran?"
+      },
+      "overview": "## Use the VA Facilities API to find information about a specific VA facility. \n\nThis API uses open data to return contact information, location, hours of operation and available services for VA facilities. For medical facilities only, we provide data on appointment wait times and patient satisfaction. [Review the latest release notes](/release-notes/facilities).\n"
+    }
+  },
+  "vaForms": {
+    "name": "Forms APIs",
+    "properName": "Forms APIs",
+    "apis": [
+      {
+        "altID": "vaForms",
+        "description": "Look up VA forms and check for new versions.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/forms/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/forms/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 2,
+        "name": "VA Forms API",
+        "openData": true,
+        "releaseNotes": "### July 06, 2021\n\n(v0) We added a new searching algorithm that applies spell checking, full text search, and ranking based on popularity. These features allow users to more quickly find the forms they need. \n* [#7108](https://github.com/department-of-veterans-affairs/vets-api/pull/7108)\n\n\n---\n\n### May 11, 2021\n\n(v0) We added a new property to the Show endpoint (created_at) which is for VA.gov internal use only. [#6818](https://github.com/department-of-veterans-affairs/vets-api/pull/6818)\n* Example value: \"created_at\": \"2021-03-30T16:28:30.333Z\"\n\n\n---\n\n### May 04, 2021\n\n(v0) We added functionality that ensures removing the Form Details URL from unpublished forms.\n*  [#6743](https://github.com/department-of-veterans-affairs/vets-api/pull/6743)\n(v0) We added a feature flag that can enable an improved searching algorithm for the Forms API.\n*  [#6229](https://github.com/department-of-veterans-affairs/vets-api/pull/6229)\n\n\n---\n\n### March 30, 2021\n\n(v0) We added a new field, last_sha256_change, to the VA Forms API FormsIndex endpoint. This will allow consumers to know when the pdf file last changed.\n* Added the last sha256 revision to the FormsIndex endpoint [#6292](https://github.com/department-of-veterans-affairs/vets-api/pull/6292)\n  * Example value: \"last_sha256_change\": \"2019-08-01\"\n\n\n---\n\n### March 16, 2021\n\n(v0) We added a new field, va_form_administration, to the VA Forms API which will be used to populate the \"Related to\" field on the [form search results page](https://www.va.gov/find-forms/) when the benefits_category field is not available.\n* Database migration to add column [#6082](https://github.com/department-of-veterans-affairs/vets-api/pull/6082)\n* Added field to Form Reloader [#6133](https://github.com/department-of-veterans-affairs/vets-api/pull/6133)\n* New JSON field is included in the VA Forms API response [#6077](https://github.com/department-of-veterans-affairs/vets-api/pull/6077)\n  * Example value: \"va_form_administration\": \"Veterans Benefits Administration\"\n\n\n---\n\n### November 20, 2019\n\nInitial release of the VA Forms API\n\nAdd some line breaks and \"quotes\" to see what happens.\n\nMore edits to test posting content with authentication.\n",
+        "urlFragment": "vaForms",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": {
+          "linkUrl": "https://www.va.gov/find-forms/",
+          "linkText": "Find the forms you need",
+          "message": "Are you a Veteran?"
+        }
+      }
+    ],
+    "content": {
+      "consumerDocsLinkText": "Learn about getting production access using open data APIs",
+      "shortDescription": "Look up VA forms and check for new versions.",
+      "quickstart": null,
+      "veteranRedirect": {
+        "linkUrl": "https://www.va.gov/find-forms/",
+        "linkText": "Find the forms you need",
+        "message": "Are you a Veteran?"
+      },
+      "overview": "## Use this API to stay up-to-date on VA forms.\n\nThis API uses open data to make it easier to keep up with the ever-changing landscape of VA forms. This API indexes data sourced from [VA.gov](https://www.va.gov/vaforms/search_action.asp), creating unique hashes for each version of a form and allowing quick lookup. [Review the latest release notes](/release-notes/vaForms).\n"
+    }
+  },
+  "health": {
+    "name": "Health APIs",
+    "properName": "Health APIs",
+    "apis": [
+      {
+        "altID": "clinicalHealth",
+        "description": "Use to develop clinical-facing applications that improve access to and management of patient health data.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/fhir-clinical-health/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/fhir-clinical-health/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 3,
+        "name": "Clinical Health API (FHIR)",
+        "openData": false,
+        "releaseNotes": "### August 16, 2021\n\nLaunch of the Clinical Health API\n",
+        "urlFragment": "clinical_health",
+        "vaInternalOnly": "StrictlyInternal",
+        "oAuth": true,
+        "oAuthInfo": {
+          "acgInfo": {
+            "baseAuthPath": "/oauth2/clinical-health/v1",
+            "scopes": [
+              "profile",
+              "openid",
+              "offline_access",
+              "fhirUser",
+              "launch",
+              "patient/Condition.read",
+              "patient/Observation.read",
+              "patient/Patient.read",
+              "patient/Practitioner.read"
+            ]
+          }
+        },
+        "oAuthTypes": [
+          "AuthorizationCodeGrant"
+        ],
+        "veteranRedirect": null
+      },
+      {
+        "altID": "communityCare",
+        "description": "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment \u0026 Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/community-care-eligibility/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/community-care-eligibility/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 4,
+        "name": "Community Care Eligibility API",
+        "openData": false,
+        "releaseNotes": "### July 23, 2021\n\nThe CCE API now presents and accounts for a veteran's PACT status (Patient Aligned Care Team) when calculating eligibility.\n- PACT status is only consulted for PrimaryCare requests. A veteran with an active PACT is ineligible for community care for Primary Care appointments.  \n- The new field 'pactStatus' has been added to the API response when it has been used in the eligibility determination.\n\n[View code changes(s)](https://github.com/department-of-veterans-affairs/health-apis-community-care-eligibility/pull/131)\n\n\n---\n\n### July 30, 2019\n\nLaunch of the Community Care Eligibility API\n",
+        "urlFragment": "community_care",
+        "oAuth": true,
+        "oAuthInfo": {
+          "acgInfo": {
+            "baseAuthPath": "/oauth2/community-care/v1",
+            "scopes": [
+              "profile",
+              "openid",
+              "offline_access",
+              "launch/patient",
+              "patient/CommunityCareEligibility.read"
+            ]
+          }
+        },
+        "oAuthTypes": [
+          "AuthorizationCodeGrant"
+        ],
+        "veteranRedirect": null
+      },
+      {
+        "altID": "health",
+        "description": "Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/fhir/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/fhir/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 4,
+        "name": "Patient Health API (FHIR)",
+        "openData": false,
+        "releaseNotes": "### April 12, 2022\n\nWe have made backend changes in order to optimize performance, promote stability, and reduce maintenance efforts around the AllergyIntolerance and Procedure resources. As a result, AllergyIntolerance and Procedure identifiers have changed. All cross-resource references are still valid. Old identifiers will be honored for read operations. This change impacts both R4 and DSTU2 resources.\n\n\n---\n\n### February 24, 2022\n\nTo better meet the R4 FHIR specification for both the Veterans Health and Clinical Health APIs, we will replace the full US state name with the [USPS Two Letter Abbreviation](http://www.hl7.org/fhir/us/core/ValueSet-us-core-usps-state.html) in the R4 Patient resource. For example, `Texas` will be listed as `TX` and `Massachusetts` will be listed as `MA`. Consumers currently using DSTU2 will not be impacted by this change.\n\n\n---\n\n### February 10, 2022\n\nAdded support to allow `identifier` search by Integration Control Number (ICN) in the R4 `Practitioner` resource.  You can now search by either ICN or National Provider Identifier (NPI) using `identifier`.\n\n\n---\n\n### January 27, 2022\n\nThe `manufacturer.display` field has been updated in the R4 `Immunization` resource. This field is populated based on CVX to manufacturer mappings from the [CDC Product Names to CVX and MVX code set](https://www2a.cdc.gov/vaccines/iis/iisstandards/vaccines.asp?rpt=tradename). In cases where a CVX code maps to multiple manufacturers, the exact manufacturer can't be determined and thus `manufacturer.display` will be omitted from the response.\n\n\n---\n\n### January 13, 2022\n\nAdded FHIR R4 `Encounter` Resource data, which includes the ability to search by `patient`, `date`, and `_lastUpdated` date.  The `vaccineCode` field in the R4 `Immunization` resource now includes the Vaccine Short Description as well as the Vaccine Group Code and Name based on the [CDC CVX to Vaccine Groups code set](https://www2a.cdc.gov/vaccines/iis/iisstandards/vaccines.asp?rpt=vg).  Added support for `_lastUpdated` search in the R4 `Observation` resource.\n\n---\n\n### January 10, 2022\n\nWe changed the `referenceRange` data field that is returned with the `Observation` resource.\n- It no longer returns the field `high` or `low` if there is not an associated value.\n- It now returns the `system`, `code`, and `unit` fields only if all data are present.   \n\n\n---\n\n### December 13, 2021\n\nAdded support for `_lastUpdated` search in both the DSTU2 and R4 `Procedure` resource.\n\nIntegrated a new data source that contains COVID Vaccination data for VA Employees who received their vaccinations at a VA Facility.  This data is now available in the `Immunization` resource.  \n\n\n---\n\n### November 16, 2021\n\nAdded `qualification.code.text` and `address.period` data fields to the `Practitioner` resource.\n\nAdded the `code.text` data field to the `PractitionerRole` resource.  \n\n\n---\n\n### September 21, 2021\n\nWe added new elements and values to the R4 `Condition` FHIR mapping. \n-  The `clinicalStatus` element now supports the value `inactive`.\n-  The `verificationStatus` element now returns these additional values:`provisional`, `differential`, `confirmed`, and `refuted`. Previously, this element always returned  `unconfirmed`.\n-  The `recorder` element is now added.\n\nThe R4 `AllergyIntolerance` FHIR mapping now includes both `clincalStatus` and `verificationStatus`.  Previously, only one was populated based on value. \n\nThe `primarySource` for the R4 `Immunization` FHIR mapping now supports Boolean values. Previously, it was always `true`.\n\n\n---\n\n### August 24, 2021\n\nAdded the `code` data to the R4 `AllergyIntolerance` resource to be compliant with [US Core Implementation Guide](http://hl7.org/fhir/us/core/StructureDefinition-us-core-allergyintolerance.html).\n\nUpdated the `Condition` resource to include [SNOMED CT](http://snomed.info/sct) and ICD-10-CM codings when both are available.\n\n\n---\n\n### May 04, 2021\n\nAdded an `identifier` to the `Organization` resource to represent the VA Facility to be consistent with the Facility ID used by the Facilities API. For example a VAMC has an identifier of the form `vha_[stationNumber]` like `vha_673`.\n\nAdded an `identifier` to the `Location` resource to represent the VA clinic. This `identifier` has the form `vha_[stationNumber]_[clinic identifier]`.\n\n\n---\n\n### December 15, 2020\n\nThe following three R4 resources have been made available: `Device`, `Practitioner`, and `PractitionerRole`. Not all US Core searches are yet supported for `Practitioner` and `PractitionerRole`.\n\nThe hold times for `Immunization` and COVID 19 Lab Results have been eliminated.\n\n\n---\n\n### August 31, 2020\n\nIn adherence to changes per the [21st Century Cures Act](https://www.federalregister.gov/documents/2020/05/01/2020-07419/21st-century-cures-act-interoperability-information-blocking-and-the-onc-health-it-certification#h-13), the Veteran Health API profile, in line with the US Core Implementation Guide has added FHIR R4 resources to the R4 tab.\n\n\n---\n\n### August 07, 2020\n\nWe have updated the mock health records for test users in the Sandbox environment for the Veterans Health API `Condition` resource to list conditions from either SNOMED-CT or ICD-10 code sets.  Previously only SNOMED-CT codes were available.\n\n\n---\n\n### July 31, 2020\n\nWe are decreasing the data hold time for the Veterans Health API from 72 hours to 36 hours, effective July 31, 2020, based on an updated VHA policy.  When a physician enters or changes patient data, there is a holding period before the data is released and visible through other applications such as health apps. The holding period gives physicians time to contact their patients and discuss health data, such as sensitive diagnoses, before the patient sees this data elsewhere. This change applies only to real data entered into the production environment.\n\n\n---\n\n### July 13, 2020\n\nThe CoverageEligibilityResponse resource for Urgent Care is deprecated and scheduled for deactivation in the 3rd quarter of 2020.\nWe are working on new FHIR R4 resources and will add those in the 3rd quarter of 2020.\n\n\n---\n\n### December 04, 2018\n\nLaunch of the Veterans Health API\n- Available for development environment access.\n",
+        "urlFragment": "fhir",
+        "oAuth": true,
+        "oAuthInfo": {
+          "acgInfo": {
+            "baseAuthPath": "/oauth2/health/v1",
+            "scopes": [
+              "profile",
+              "openid",
+              "offline_access",
+              "launch/patient",
+              "patient/AllergyIntolerance.read",
+              "patient/Appointment.read",
+              "patient/Condition.read",
+              "patient/Device.read",
+              "patient/DiagnosticReport.read",
+              "patient/Immunization.read",
+              "patient/Location.read",
+              "patient/Medication.read",
+              "patient/MedicationOrder.read",
+              "patient/MedicationRequest.read",
+              "patient/MedicationStatement.read",
+              "patient/Observation.read",
+              "patient/Organization.read",
+              "patient/Patient.read",
+              "patient/Practitioner.read",
+              "patient/PractitionerRole.read",
+              "patient/Procedure.read"
+            ]
+          },
+          "ccgInfo": {
+            "baseAuthPath": "/oauth2/health/system/v1",
+            "productionAud": "aus8evxtl123l7Td3297",
+            "sandboxAud": "aus8nm1q0f7VQ0a482p7",
+            "scopes": [
+              "launch",
+              "system/AllergyIntolerance.read",
+              "system/Appointment.read",
+              "system/Condition.read",
+              "system/Coverage.read",
+              "system/Coverage.write",
+              "system/DiagnosticReport.read",
+              "system/Immunization.read",
+              "system/Location.read",
+              "system/Medication.read",
+              "system/MedicationOrder.read",
+              "system/Observation.read",
+              "system/Organization.read",
+              "system/Patient.read"
+            ]
+          }
+        },
+        "oAuthTypes": [
+          "AuthorizationCodeGrant",
+          "ClientCredentialsGrant"
+        ],
+        "veteranRedirect": null
+      },
+      {
+        "altID": "providerDirectory",
+        "description": "Use this API to return lists of VA providers and their information, such as locations, specialties, office hours, and more.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/provider-directory-r4/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/provider-directory-r4/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 2,
+        "name": "Provider Directory API",
+        "openData": true,
+        "releaseNotes": "",
+        "urlFragment": "provider_directory",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": null
+      },
+      {
+        "altID": null,
+        "description": "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
+        "docSources": [],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 4,
+        "name": "Urgent Care Eligibility API (FHIR)",
+        "openData": false,
+        "releaseNotes": "",
+        "urlFragment": "urgent_care",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": null,
+        "deactivationInfo": {
+          "deprecationContent": "This API is deprecated and scheduled for deactivation in the 3rd quarter of 2020. \n",
+          "deprecationDate": "2020-07-13T00:00:00.000-04:00",
+          "deactivationContent": "Our Urgent Care Eligibility API was deactivated on July 20, 2020. The API and related \ndocumentation is no longer accessible. For more information, [contact us](/support/contact-us) \nor visit our [Google Developer Forum](https://groups.google.com/forum/m/#!forum/va-lighthouse).\n",
+          "deactivationDate": "2020-07-20T00:00:00.000-04:00"
+        }
+      }
+    ],
+    "content": {
+      "consumerDocsLinkText": "Read the consumer onboarding guide for getting production access",
+      "shortDescription": "Use our APIs to build tools that help Veterans manage their health.",
+      "quickstart": "VA’s Health APIs allow a user/application to make queries that will return health records in FHIR format, without interacting with or understanding the inner workings of VA systems.\n\nThe database that powers the development environment is populated with synthetic Veteran data provided by MITRE Corporation. The data contains sample Veteran health records (both living and deceased) that mimic real Veteran demographics. The associated clinical resources include data generated from disease models covering up to a dozen of the most common Veteran afflictions.\n\nThe Community Care Eligibility API also allows a user/application to retrieve an array of different Veteran eligibilities from a synthetic dataset.\n\n## Development API access\n\nThe VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf. Some Health APIs also use the [SMART on FHIR](http://docs.smarthealthit.org/) profile. Both OpenID Connect and SMART on FHIR are built on OAuth 2.\n\n### What is the criteria to be considered for Development API access?\n\nThe following basic information should be provided:\n\n * Your name\n * Email address\n * Organization name\n * OAuth Redirect URI\n\n### What happens after I am approved?\n\nYou will receive an email from the VA API team notifying you of your approval, and it will include a new Client ID and Secret for your application. The base URI for the Health API endpoints are:\n\n * `https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/`\n * `https://dev-api.va.gov/services/fhir/v0/dstu2/`\n * `https://dev-api.va.gov/services/fhir/v0/r4/`\n * `https://dev-api.va.gov/services/community-care/v0/eligibility`\n\nAccordingly, the FHIR conformance statements can be retrieved from:\n\n * `https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/metadata`\n * `https://dev-api.va.gov/services/fhir/v0/dstu2/metadata`\n * `https://dev-api.va.gov/services/fhir/v0/r4/metadata`\n\nYou will also be provided with a set of test accounts to use that will allow you to access specific synthetic data patient records.\n\n## Developer Guidelines\n\nBelow are guidelines you should follow to be successful in your VA API integration.\n\n### Data Refresh\n\nThe APIs accessed via the Development environment are using the same underlying logic as VA’s production APIs; only the underlying data store is different. The synthetic data store is static and is not refreshed at the same intervals as production.\n\n### Usage\n\nAPI usage is not restricted within the Development environment.\n",
+      "veteranRedirect": null,
+      "overview": "## Use our Health APIs to build tools that help Veterans manage their health, view their VA medical records, share their health information, and determine potential eligibility for community care. While these APIs allow greater access to health data, they do not currently allow submission of medical claims. VA’s Health APIs use [HL7’s Fast Healthcare Interoperability Resources (FHIR) framework](https://www.hl7.org/fhir/overview.html) for providing healthcare data in a standardized format. FHIR solutions are built from a set of modular components, called resources, which can be easily assembled into working systems that solve real world clinical and administrative problems. When you register for access to the Health APIs, you will be granted access to a synthetic set of data (provided by the MITRE Corporation) that mimics real Veteran demographics. The associated clinical resources include data generated from disease models covering up to a dozen of the most common Veteran afflictions. [Review the latest release notes](/release-notes/health)._VA is a supporter of the [CARIN Alliance](https://www.carinalliance.com/) Code of Conduct._"
+    }
+  },
+  "loanGuaranty": {
+    "name": "Loan Guaranty APIs",
+    "properName": "Loan Guaranty APIs",
+    "apis": [
+      {
+        "altID": "lgyGuarantyRemittance",
+        "description": "Lets lenders automate parts of the mortgage post-closing process.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/lgy-remittance/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/lgy-remittance/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 4,
+        "name": "Guaranty Remittance API",
+        "openData": false,
+        "releaseNotes": "",
+        "urlFragment": "lgy_guaranty_remittance",
+        "oAuth": true,
+        "oAuthInfo": {
+          "ccgInfo": {
+            "baseAuthPath": "/oauth2/loan-guaranty/system/v1",
+            "productionAud": "ausbts6ndxFQDyeBM297",
+            "sandboxAud": "auseavl6o5AjGZr2n2p7",
+            "scopes": [
+              "system.loan-remittance.read",
+              "system.loan-remittance.write",
+              "system.remediation-evidence.write"
+            ]
+          }
+        },
+        "oAuthTypes": [
+          "ClientCredentialsGrant"
+        ],
+        "veteranRedirect": null
+      },
+      {
+        "altID": "loan_guaranty",
+        "description": "Use the Loan Guaranty API to Manage VA Home Loans.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/loan_guaranty_property/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/loan_guaranty_property/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 3,
+        "name": "Loan Guaranty API",
+        "openData": false,
+        "releaseNotes": "### March 10, 2020\n\nLaunch of the Loan Guaranty API\n",
+        "urlFragment": "loan_guaranty",
+        "vaInternalOnly": "StrictlyInternal",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": null
+      }
+    ],
+    "content": {
+      "consumerDocsLinkText": "Read the consumer onboarding guide for getting production access",
+      "shortDescription": "Enables electronic submission and status tracking of non-medical, VA-related benefit claims.",
+      "quickstart": null,
+      "veteranRedirect": null,
+      "overview": "## Help approved lenders automate and navigate the VA home loan process.\n\nOur Loan Guaranty (LGY) APIs assist with processing and guaranteeing VA home loans. [Review the latest release notes](/release-notes/loanGuaranty).\n"
+    }
+  },
+  "verification": {
+    "name": "Veteran Verification APIs",
+    "properName": "Veteran Verification APIs",
+    "apis": [
+      {
+        "altID": "addressValidation",
+        "description": "Provides methods to standardize and validate addresses.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/address-validation/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/address-validation/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 3,
+        "name": "Address Validation API",
+        "openData": false,
+        "releaseNotes": "### September 26, 2018\n\nCreate Address Validation API\n- The ‘validate’ API accepts a structured JSON address object (broken down by street/city/state/zip/etc), and returns a result indicating whether the address is valid, and if so includes a canonicalized address and geocoding information (lat/long) for the address.\n",
+        "urlFragment": "address_validation",
+        "vaInternalOnly": "AdditionalDetails",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": null
+      },
+      {
+        "altID": "vaLetterGenerator",
+        "description": "Generate documents and letters for proof of existing VA benefits and status.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/veteran-letters/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/veteran-letters/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 3,
+        "name": "VA Letter Generator API",
+        "openData": false,
+        "releaseNotes": "",
+        "urlFragment": "va_letter_generator",
+        "vaInternalOnly": "FlagOnly",
+        "oAuth": true,
+        "oAuthInfo": {
+          "ccgInfo": {
+            "baseAuthPath": "/oauth2/veteran-letters/system/v1",
+            "productionAud": "TBD",
+            "sandboxAud": "TBD",
+            "scopes": [
+              "letters.read"
+            ]
+          }
+        },
+        "oAuthTypes": [
+          "ClientCredentialsGrant"
+        ],
+        "veteranRedirect": null
+      },
+      {
+        "altID": "confirmation",
+        "description": "Confirm Veteran status for a given person with an API key.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/veteran-confirmation/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/veteran-confirmation/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 4,
+        "name": "Veteran Confirmation API",
+        "openData": false,
+        "releaseNotes": "### January 13, 2020\n\nLaunched Veteran Confirmation API with a status endpoint\n- `/status`: Allows third-parties to request confirmation from the VA of an individual's Veteran status after providing a valid API key and identifying attributes for the individual.\n\n[View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/3676)\n",
+        "urlFragment": "veteran_confirmation",
+        "oAuth": false,
+        "oAuthInfo": null,
+        "oAuthTypes": null,
+        "veteranRedirect": null
+      },
+      {
+        "altID": "verification",
+        "description": "Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.",
+        "docSources": [
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/veteran-verification/metadata.json"
+          },
+          {
+            "metadataUrl": "http://localhost:4444/internal/docs/veteran-verification/metadata.json"
+          }
+        ],
+        "enabledByDefault": true,
+        "lastProdAccessStep": 4,
+        "name": "Veteran Verification API",
+        "openData": false,
+        "releaseNotes": "### September 22, 2021\n\nThe Veteran Verification API v1.0.0 was updated to include a change to the /disability_rating endpoint response. The DisabilityRatingAttributes will now show date (2018-03-27) rather than datetime (2018-03-27T21:00:41.000+0000).\n\nThis was introduced as a versioned change to allow API consumers to upgrade at their convenience. We encourage all consumers to migrate to the new version as v0.0.0 will be removed on December 1, 2021.\n[View code changes(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/7546)\n\n\n---\n\n### August 24, 2021\n\nThe Veteran Verification API was updated to include more accurate Guard and Reserve Service data based on qualifying periods which is filtered to not include training or Title 32 service.\n\n[View code changes(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/7685)\n\n\n---\n\n### May 11, 2020\n\nAdded combined disability rating and individual disability ratings to the disability_rating endpoint.\n- `/disability_rating` endpoint: Adds `combined_disability_rating` field to responses. This is expressed as a percentage and represents how much a Veteran’s disability decreases their overall health and ability to function.\n- `/disability_rating` endpoint: Adds `individual_ratings` array to responses with each entry representing whether the individual condition is service related, when the Veteran could begin claiming benefits related to this disability, and the disability rating for the individual condition expressed as a percentage.\n\n[View code changes(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/4223)\n\n\n---\n\n### April 15, 2020\n\nAdded Veteran First \u0026 Last Name to service_history endpoint.\n- `/service_history`: Adds `first_name` and `last_name` fields to responses.\n\n[View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/4121)\n\n\n---\n\n### March 18, 2020\n\nAdded pay grade information to service_history endpoint.\n- `/service_history`: Adds `pay_grade_code` and `separation_reason` fields to responses.\n\n[View code change(s)](https://github.com/department-of-veterans-affairs/vets-api/pull/4016)\n\n\n---\n\n### November 08, 2018\n\nLaunched the Disability Rating and Veteran Status endpoints\n- `/disability_rating`: Given an authenticated user, this created an endpoint that returns a Veteran's disability rating from VA\n- `/status`: Allows third-parties to request confirmation from the VA of an individual's Veteran status after receiving authorization to do so using an Open ID Connect flow.\n\n\n---\n\n### June 11, 2018\n\nLaunched the Service History endpoint\n- `/service_history`: Given an authenticated user, this created an endpoint that returns a Veteran's service history from VA\n",
+        "urlFragment": "veteran_verification",
+        "oAuth": true,
+        "oAuthInfo": {
+          "acgInfo": {
+            "baseAuthPath": "/oauth2/veteran-verification/v1",
+            "scopes": [
+              "profile",
+              "openid",
+              "offline_access",
+              "service_history.read",
+              "disability_rating.read",
+              "veteran_status.read"
+            ]
+          }
+        },
+        "oAuthTypes": [
+          "AuthorizationCodeGrant"
+        ],
+        "veteranRedirect": null
+      }
+    ],
+    "content": {
+      "consumerDocsLinkText": "Read the consumer onboarding guide for getting production access",
+      "shortDescription": "Empowering Veterans to take control of their data and put it to work.",
+      "quickstart": null,
+      "veteranRedirect": null,
+      "overview": "## These APIs allow verification of Veteran status and data. They return service history, confirm Veteran status, and validate address information. \n\nWe’re giving Veterans better control of and access to their information – including their service history, Veteran status, discharge information, and more by working with government agencies and industry partners to help Veterans put their information to work. [Review the latest release notes](/release-notes/verification).\n"
+    }
+  }
+}

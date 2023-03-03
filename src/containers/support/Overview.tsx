@@ -5,9 +5,8 @@ import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { SupportSection } from './Support';
 
 const headerProps = {
-  description:
-    'Welcome to support for VA Lighthouse APIs. You can visit our FAQ page for answers to common questions, or use the Contact Us form to report a problem or ask a question. Our customer support team is happy to help and will respond within one business day.',
-  header: 'Support',
+  description: 'We’re here to help with your software development and API publishing needs.',
+  header: 'Developer portal support',
 };
 
 interface SupportOverviewProps {
@@ -19,7 +18,7 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
 ): JSX.Element => (
   <>
     <Helmet>
-      <title>Support</title>
+      <title>{headerProps.header}</title>
     </Helmet>
     <PageHeader {...headerProps} />
     <div className={defaultFlexContainer()}>

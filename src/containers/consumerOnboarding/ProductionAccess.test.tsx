@@ -1,14 +1,18 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { FlagsProvider, getFlags } from '../../flags';
+import store from '../../store';
 import ProductionAccess from './ProductionAccess';
 
 describe('ProductionAccess', () => {
   beforeEach(() => {
     render(
-      <FlagsProvider flags={getFlags()}>
-        <ProductionAccess />
-      </FlagsProvider>
+      <Provider store={store}>
+        <FlagsProvider flags={getFlags()}>
+          <ProductionAccess />
+        </FlagsProvider>
+      </Provider>,
     );
   });
 

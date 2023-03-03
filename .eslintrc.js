@@ -74,7 +74,6 @@ const coreESLintRules = {
   'max-params': ['error', 4],
   'max-statements-per-line': 'error',
   'new-parens': 'error',
-  'newline-per-chained-call': 'error',
   'no-alert': 'error',
   'no-bitwise': 'error',
   'no-caller': 'error',
@@ -318,6 +317,7 @@ const reactRules = {
   'react/static-property-placement': 'error',
   'react/style-prop-object': 'error',
   'react/void-dom-elements-no-children': 'error',
+  'react-redux/prefer-separate-component-file': 'off',
 };
 
 module.exports = {

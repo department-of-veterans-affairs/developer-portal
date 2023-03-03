@@ -1,6 +1,6 @@
 /* eslint-disable no-loop-func -- we need to break up these Jest tests inside loops */
 import { Page } from 'puppeteer';
-import { mockSwagger, puppeteerHost, testPaths } from './testHelpers';
+import { mockRequest, puppeteerHost, testPaths } from './testHelpers';
 
 jest.setTimeout(100000);
 
@@ -48,24 +48,21 @@ describe('Visual regression test', () => {
     await checkScreenshots(page, 'footer');
   });
 
-  it.each(paths)('renders %s properly', async (path: string) => {
-    // Mock swagger requests on docs pages so those pages aren't blank
-    if (/^\/explore\/[^\/]+\/docs/.test(path)) {
-      await page.setRequestInterception(true);
-      page.removeAllListeners('request');
-      page.on('request', mockSwagger);
-    }
-
+  it.only.each(paths)('renders %s properly', async (path: string) => {
+    await page.setRequestInterception(true);
+    page.removeAllListeners('request');
+    page.on('request', mockRequest);
     await page.goto(`${puppeteerHost}${path}`, { waitUntil: 'networkidle0' });
     // Hide any videos that may be on the page
     await page.evaluate(
       'document.querySelectorAll("iframe").forEach((e) => { e.style="visibility: hidden;" });',
     );
     if (path.startsWith('/explore/benefits/docs')) {
+      await page.waitFor(3000);
       await page.evaluate(
         'document.querySelectorAll(".opblock-summary-control").forEach((e) => e.click());',
       );
-      await page.waitFor(500);
+      await page.waitFor(3000);
       await page.evaluate(
         'document.querySelectorAll(\'#post_uploads_responses .model-example .tabitem > button[aria-selected="false"]\').forEach((e) => {e.click()})',
       );

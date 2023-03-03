@@ -6,6 +6,7 @@ import { CardLink, PageHeader } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { FLAG_CATEGORIES } from '../../types/constants';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
 
 const ReleaseNotesOverview = (): JSX.Element => {
   const apiDefs = getApiDefinitions();
@@ -16,7 +17,7 @@ const ReleaseNotesOverview = (): JSX.Element => {
         <title>Release Notes</title>
       </Helmet>
       <PageHeader header="Release Notes" />
-      <div className="vads-u-font-size--lg">
+      <div>
         <p>
           The VA Lighthouse product teams periodically update these APIs in order to deliver new
           features and repair defects. We avoid doing so whenever possible but occasionally we need
@@ -31,29 +32,34 @@ const ReleaseNotesOverview = (): JSX.Element => {
         </p>
       </div>
       <div className={defaultFlexContainer()}>
-        {getApiCategoryOrder().map((apiCategoryKey: string) => {
-          const { name, content } = apiDefs[apiCategoryKey];
-          return (
-            <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+        <ApisLoader>
+          <>
+            {getApiCategoryOrder().map((apiCategoryKey: string) => {
+              const { name, content } = apiDefs[apiCategoryKey];
+              return (
+                <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
+                  <CardLink
+                    name={name}
+                    url={`/release-notes/${apiCategoryKey}`}
+                    callToAction={`View release notes for the ${name}`}
+                  >
+                    {content.shortDescription}
+                  </CardLink>
+                </Flag>
+              );
+            })}
+            {deactivatedCategory.apis.length > 0 && (
               <CardLink
-                name={name}
-                url={`/release-notes/${apiCategoryKey}`}
-                callToAction={`View release notes for the ${name}`}
+                name={deactivatedCategory.name}
+                url="/release-notes/deactivated"
+                callToAction="View release notes for deactivated APIs"
               >
-                {content.shortDescription}
+                This is a repository for deactivated APIs and related documentation and release
+                notes.
               </CardLink>
-            </Flag>
-          );
-        })}
-        {deactivatedCategory.apis.length > 0 && (
-          <CardLink
-            name={deactivatedCategory.name}
-            url="/release-notes/deactivated"
-            callToAction="View release notes for deactivated APIs"
-          >
-            This is a repository for deactivated APIs and related documentation and release notes.
-          </CardLink>
-        )}
+            )}
+          </>
+        </ApisLoader>
       </div>
     </div>
   );

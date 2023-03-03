@@ -1,12 +1,18 @@
 /// <reference types="cypress" />
 
 describe('Documentation Root', () => {
+  beforeEach(() => {
+    cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
+      fixture: 'legacy.json',
+    }).as('LPB datastore');
+  });
+
   it('Side nav is sticky on scroll', () => {
     cy.fixture('vaFormsMetaData.spec.json').then(json => {
       cy.intercept('/internal/docs/forms/metadata.json', json);
     });
     cy.fixture('vaFormsOpenAPI.spec.json').then(json => {
-      cy.intercept('/internal/docs/forms/v0/openapi.json', json);
+      cy.intercept('/internal/docs/forms/v0/openapi-sf.json', json);
     });
     cy.visit('/explore/vaForms/docs/vaForms');
     // This is needed as a waitFor fails because Swagger UI

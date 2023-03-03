@@ -40,10 +40,6 @@ const paths = require('./paths');
 
 const getClientEnvironment = require('./env');
 
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-
-// const SitemapBuilderPlugin = require('../SitemapBuilderWebpackPlugin');
-
 const CopyPlugin = require('copy-webpack-plugin');
 
 // Webpack uses `output.publicPath`, from it's options object, to determine
@@ -143,11 +139,12 @@ const cssFilename = 'static/css/[name].[contenthash:8].css';
 // The development configuration is different and lives in a separate file.
 module.exports = envName => {
   return {
-    // target: ['browserlist'],
+    target: ['browserslist'],
     stats: 'errors-warnings',
     mode: 'production',
     // Don't attempt to continue if there are any errors.
     bail: true,
+    ignoreWarnings: [/Failed to parse source map/],
     // We generate sourcemaps in production. This is slow but gives good results.
     // You can exclude the *.map files from the build during deployment.
     devtool: shouldUseSourceMap ? 'source-map' : false,
@@ -163,7 +160,7 @@ module.exports = envName => {
       chunkFilename: 'static/js/[name].[contenthash:8].chunk.js',
       assetModuleFilename: 'static/media/[name].[hash][ext]',
       // We inferred the "public path" (such as / or /my-project) from homepage.
-      publicPath: path.publicUrlOrPath,
+      publicPath: paths.publicUrlOrPath,
       // Point sourcemap entries to original disk location (format as URL on Windows)
       devtoolModuleFilenameTemplate: info =>
         path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
@@ -180,6 +177,7 @@ module.exports = envName => {
       },
     },
     resolve: {
+      fallback: { stream: require.resolve('stream-browserify') },
       // This allows you to set a fallback for where Webpack should look for modules.
       // We placed these paths second because we want `node_modules` to "win"
       // if there are any conflicts. This matches Node resolution mechanism.
@@ -215,15 +213,11 @@ module.exports = envName => {
           babelRuntimeEntryHelpers,
           babelRuntimeRegenerator,
         ]),
-        // new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
       ],
     },
     module: {
       strictExportPresence: true,
       rules: [
-        // TODO: Disable require.ensure as it's not a standard language feature.
-        // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
-        // { parser: { requireEnsure: false } },
         {
           test: /\.(js|jsx|mjs|ts|tsx|scss)$/,
           loader: require.resolve('source-map-loader'),
@@ -239,10 +233,37 @@ module.exports = envName => {
             // assets smaller than specified size as data URLs to avoid requests.
             {
               test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-              loader: require.resolve('url-loader'),
-              options: {
-                limit: 10000,
-                name: 'static/media/[name].[hash:8].[ext]',
+              type: 'asset',
+              parser: {
+                dataUrlCondition: {
+                  maxSize: imageInlineSizeLimit,
+                },
+              },
+            },
+            {
+              test: /\.svg$/,
+              use: [
+                {
+                  loader: require.resolve('@svgr/webpack'),
+                  options: {
+                    prettier: false,
+                    svgo: false,
+                    svgoConfig: {
+                      plugins: [{ removeViewBox: false }],
+                    },
+                    titleProp: true,
+                    ref: true,
+                  },
+                },
+                {
+                  loader: require.resolve('file-loader'),
+                  options: {
+                    name: 'static/media/[name].[hash].[ext]',
+                  },
+                },
+              ],
+              issuer: {
+                and: [/\.(ts|tsx|js|jsx|md|mdx)$/],
               },
               // type: 'asset',
               // parser: {
@@ -384,38 +405,6 @@ module.exports = envName => {
                 },
               ],
             },
-            // Load .mdx files as components
-            {
-              test: /\.mdx$/,
-              include: paths.appSrc,
-              use: [
-                'babel-loader',
-                {
-                  loader: 'markdown-component-loader',
-                  options: {
-                    enabledMarkdownItRules: ['smartquotes', 'table'],
-                    markdownItPlugins: [
-                      [
-                        require('markdown-it-attrs'),
-                        {
-                          allowedAttributes: ['id', 'tabIndex', 'class'],
-                        },
-                      ],
-                      [
-                        require('markdown-it-anchor'),
-                        {
-                          level: 2,
-                          slugify: s =>
-                            encodeURIComponent(
-                              String(s).trim().toLowerCase().replace(',', '').replace(/\s+/g, '-'),
-                            ),
-                        },
-                      ],
-                    ],
-                  },
-                },
-              ],
-            },
             {
               test: /\.ya?ml$/,
               include: paths.appSrc,
@@ -525,20 +514,7 @@ module.exports = envName => {
           },
         ],
       }),
-      // new SitemapBuilderPlugin({
-      //   routesFile: path.join(paths.appSrc, 'Routes.tsx'),
-      //   polyfillsFile: path.join(paths.appConfigScripts, 'polyfills.js'),
-      // }),
     ].filter(Boolean),
-    // Some libraries import Node modules but don't use them in the browser.
-    // Tell Webpack to provide empty mocks for them so importing them works.
-    // node: {
-    //   dgram: 'empty',
-    //   fs: 'empty',
-    //   net: 'empty',
-    //   tls: 'empty',
-    //   child_process: 'empty',
-    // },
     performance: {
       hints: 'error',
       maxAssetSize: 600000,

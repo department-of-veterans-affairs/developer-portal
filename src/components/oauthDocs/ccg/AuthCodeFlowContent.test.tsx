@@ -4,22 +4,19 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../../flags';
 
-import { getAllOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
+import { getActiveCCGApis, lookupApiByFragment } from '../../../apiDefs/query';
 import store from '../../../store';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
-import { APIDescription } from '../../../apiDefs/schema';
+import { setApis } from '../../../actions';
+import { fakeCategories } from '../../../__mocks__/fakeCategories';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 
 describe('Auth Flow Content', () => {
+  store.dispatch(setApis(fakeCategories));
+
   beforeEach(() => {
-    const selectedOption = 'fhir';
+    const selectedOption = 'apollo_13';
     const apiDef = lookupApiByFragment(selectedOption);
-    const defs = getAllOauthApis().filter(
-      (item: APIDescription) =>
-        !isApiDeactivated(item) &&
-        item.oAuthTypes &&
-        item.oAuthTypes.includes('ClientCredentialsGrant'),
-    );
+    const defs = getActiveCCGApis();
 
     render(
       <Provider store={store}>
@@ -36,7 +33,7 @@ describe('Auth Flow Content', () => {
     expect(heading).toBeInTheDocument();
   });
   it('Oauth base path found', () => {
-    const codeWrapperArray = screen.getAllByText(/\/oauth2\/health\/system\/v1\//i);
+    const codeWrapperArray = screen.getAllByText(/\/oauth2\/sample\-sandboxAud\/v1\//i);
     expect(codeWrapperArray.length).toBeGreaterThan(0);
   });
   it('Correct number of code wrappers', () => {

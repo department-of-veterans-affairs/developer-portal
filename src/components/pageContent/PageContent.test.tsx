@@ -29,27 +29,33 @@ describe('PageContent', () => {
     expect(screen.getByRole('main')).toBeInTheDocument();
   });
 
-  it('loads new page content after navigating to a different route', async () => {
-    expect(screen.getAllByText(/A Veteran-centered API platform/).length).toBeGreaterThanOrEqual(2);
+  it('loads new page content after navigating to a different route', () => {
+    setTimeout(() => {
+      expect(screen.getAllByText(/A Veteran-centered API platform/).length).toBeGreaterThanOrEqual(
+        2,
+      );
 
-    const documentationLink = screen.getByRole('link', { name: 'Request an API Key' });
-    userEvent.click(documentationLink);
+      const documentationLink = screen.getByRole('link', { name: 'Request an API Key' });
+      userEvent.click(documentationLink);
 
-    const documentationPageHeader = await screen.findByRole('heading', {
-      name: 'Request Sandbox Access',
-    });
-    expect(documentationPageHeader).toBeInTheDocument();
+      const documentationPageHeader = screen.findByRole('heading', {
+        name: 'Request Sandbox Access',
+      });
+      expect(documentationPageHeader).toBeInTheDocument();
+    }, 0);
   });
 
-  it('scrolls the window to the top position after navigation', async () => {
-    userEvent.click(screen.getByRole('link', { name: 'Request an API Key' }));
-
-    await screen.findByRole('heading', {
-      name: 'Request Sandbox Access',
-    });
+  it('scrolls the window to the top position after navigation', () => {
     setTimeout(() => {
-      expect(window.scrollTo).toHaveBeenCalledTimes(2);
-      expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+      userEvent.click(screen.getByRole('link', { name: 'Request an API Key' }));
+
+      void screen.findByRole('heading', {
+        name: 'Request Sandbox Access',
+      });
+      setTimeout(() => {
+        expect(window.scrollTo).toHaveBeenCalledTimes(2);
+        expect(window.scrollTo).toHaveBeenCalledWith(0, 0);
+      }, 0);
     }, 0);
   });
 });

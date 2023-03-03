@@ -1,18 +1,67 @@
+$circle-radius: 30px;
+$arrow-size: $circle-radius * 0.5;
+$circle-radius-large: 60px;
+$arrow-size-large: $circle-radius-large * 0.5;
 .hover-image-videoplayer {
-  width: 110px;
-  height: 80px;
+  background-color: #122f51;
   background-position: center;
   background-size: cover;
-  background-image: url('../../assets/video-player.png');
+  height: 80px;
+  position: relative;
+  width: 110px;
 
-  &:hover {
-    background-image: url('../../assets/video-player-hover.png');
+  &:after {
+    background-color: #383938;
+    border-radius: 50%;
+    content: '';
+    display: block;
+    height: $circle-radius * 2;
+    left: calc(50% - $circle-radius);
+    position: absolute;
+    top: calc(50% - $circle-radius);
+    width: $circle-radius * 2;
+    z-index: 1;
+  }
+
+  &:before {
+    border-bottom: $arrow-size solid transparent;
+    border-left: ($arrow-size * 2) solid #fff;
+    border-right: 0px solid transparent;
+    border-top: $arrow-size solid transparent;
+    content: '';
+    display: block;
+    height: 0px;
+    left: calc(50% - ($arrow-size * 0.9));
+    position: absolute;
+    top: calc(50% - $arrow-size);
+    width: 0px;
+    z-index: 2;
+    z-index: 2;
+  }
+
+  &:hover:after {
+    background-color: #888887;
   }
 }
 
 @media (min-width: 890px) {
   .hover-image-videoplayer {
-    width: 220px;
     height: 160px;
+    width: 220px;
+
+    &:after {
+      height: $circle-radius-large * 2;
+      left: calc(50% - $circle-radius-large);
+      top: calc(50% - $circle-radius-large);
+      width: $circle-radius-large * 2;
+    }
+
+    &:before {
+      border-bottom: $arrow-size-large solid transparent;
+      border-left: ($arrow-size-large * 2) solid #fff;
+      border-top: $arrow-size-large solid transparent;
+      left: calc(50% - ($arrow-size-large * 0.9));
+      top: calc(50% - $arrow-size-large);
+    }
   }
 }

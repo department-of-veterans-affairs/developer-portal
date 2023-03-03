@@ -5,7 +5,6 @@
  * also not add any more React components to these schema definitions, as that will add to the
  * work that we need to do to convert this schema to a database-based system.
  */
-import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 
 export interface VeteranRedirectMessage {
@@ -16,9 +15,9 @@ export interface VeteranRedirectMessage {
 
 export interface APICategoryContent {
   readonly consumerDocsLinkText: string;
-  readonly overview: React.FunctionComponent;
+  readonly overview: string;
   readonly shortDescription: string;
-  readonly quickstart?: React.FunctionComponent;
+  readonly quickstart?: string;
   readonly veteranRedirect?: VeteranRedirectMessage;
 }
 
@@ -32,10 +31,10 @@ export const ApiCategoryContentPropType = PropTypes.shape({
 
 export interface APIDocSource {
   readonly metadataUrl?: string;
-  readonly openApiUrl: string;
+  readonly openApiUrl?: string;
   readonly key?: string;
   readonly label?: string;
-  readonly apiIntro?: React.FunctionComponent;
+  readonly apiIntro?: string;
 }
 
 export const ApiDocSourcePropType = PropTypes.shape({
@@ -43,13 +42,13 @@ export const ApiDocSourcePropType = PropTypes.shape({
   key: PropTypes.string,
   label: PropTypes.string,
   metadataUrl: PropTypes.string,
-  openApiUrl: PropTypes.string.isRequired,
+  openApiUrl: PropTypes.string,
 });
 export interface APIDeactivationInfo {
-  readonly deprecationContent: React.FunctionComponent;
-  readonly deprecationDate: moment.Moment;
-  readonly deactivationContent: React.FunctionComponent;
-  readonly deactivationDate: moment.Moment;
+  readonly deprecationContent: string;
+  readonly deprecationDate: string;
+  readonly deactivationContent: string;
+  readonly deactivationDate: string;
 }
 
 export const ApiDeactivationInfoPropType = PropTypes.shape({
@@ -73,16 +72,17 @@ export interface APIDescription {
   readonly name: string;
   readonly docSources: APIDocSource[];
   readonly urlFragment: string;
+  readonly categoryUrlFragment?: string;
   readonly description: string;
   readonly enabledByDefault: boolean;
-  readonly vaInternalOnly: boolean;
+  readonly vaInternalOnly?: VaInternalOnly;
   readonly openData: boolean;
   readonly oAuth?: boolean;
   readonly oAuthTypes?: string[];
   readonly oAuthInfo?: OAuthInfo;
-  readonly releaseNotes: React.FunctionComponent;
+  readonly releaseNotes: string;
   readonly deactivationInfo?: APIDeactivationInfo;
-  readonly multiOpenAPIIntro?: React.FunctionComponent;
+  readonly multiOpenAPIIntro?: string;
   readonly veteranRedirect?: VeteranRedirectMessage;
   readonly altID?: string;
   readonly lastProdAccessStep: ProdAccessFormSteps;
@@ -130,4 +130,10 @@ export interface APICategory extends BaseAPICategory {
 
 export interface APICategories {
   [key: string]: APICategory;
+}
+
+export enum VaInternalOnly {
+  StrictlyInternal = 'StrictlyInternal',
+  AdditionalDetails = 'AdditionalDetails',
+  FlagOnly = 'FlagOnly',
 }

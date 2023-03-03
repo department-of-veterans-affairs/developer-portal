@@ -9,12 +9,11 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
-const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');;
+const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 const modules = require('./modules');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const reactRefreshRuntimeEntry = require.resolve('react-refresh/runtime');
@@ -32,6 +31,7 @@ const babelRuntimeRegenerator = require.resolve('@babel/runtime/regenerator', {
 
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
 
+const imageInlineSizeLimit = parseInt(process.env.IMAGE_INLINE_SIZE_LIMIT || '10000');
 // Webpack uses `output.publicPath`, from its options object, to determine
 // where the app is being served from.  In development, we always serve from
 // the root. This makes config easier.
@@ -61,29 +61,6 @@ module.exports = {
   stats: 'errors-warnings',
   mode: 'development',
   devtool: 'cheap-module-source-map',
-  // These are the "entry points" to our application.
-  // This means they will be the "root" imports that are included in JS bundle.
-  // The first two entry points enable "hot" CSS and auto-refreshes for JS.
-  // entry: [
-  //   // We ship a few polyfills by default:
-  //   require.resolve('./polyfills'),
-  //   // Include an alternative client for WebpackDevServer. A client's job is to
-  //   // connect to WebpackDevServer by a socket and get notified about changes.
-  //   // When you save a file, the client will either apply hot updates (in case
-  //   // of CSS changes), or refresh the page (in case of JS changes). When you
-  //   // make a syntax error, this client will display a syntax error overlay.
-  //   // Note: instead of the default WebpackDevServer client, we use a custom one
-  //   // to bring better experience for Create React App users. You can replace
-  //   // the line below with these two lines if you prefer the stock client:
-  //   // require.resolve('webpack-dev-server/client') + '?/',
-  //   // require.resolve('webpack/hot/dev-server'),
-  //   require.resolve('react-dev-utils/webpackHotDevClient'),
-  //   // Finally, this is your app's code:
-  //   paths.appIndexJs,
-  //   // We include the app code last so that if there is a runtime error during
-  //   // initialization, it doesn't blow up the WebpackDevServer client, and
-  //   // changing JS code would still trigger a refresh.
-  // ],
   entry: paths.appIndexJs,
   output: {
     path: paths.appBuild,
@@ -113,10 +90,12 @@ module.exports = {
       tsconfig: [paths.appTsConfig].filter(f => fs.existsSync(f)),
     },
   },
+  ignoreWarnings: [/Failed to parse source map/],
   infrastructureLogging: {
     level: 'none',
   },
   resolve: {
+    fallback: { stream: require.resolve('stream-browserify') },
     // This allows you to set a fallback for where Webpack should look for modules.
     // We placed these paths second because we want `node_modules` to "win"
     // if there are any conflicts. This matches Node resolution mechanism.
@@ -154,7 +133,6 @@ module.exports = {
         babelRuntimeRegenerator,
       ]),
       // // This module helps us get past the 'need alias' entries in the webpack.config file.
-      // new TsconfigPathsPlugin({ configFile: paths.appTsConfig }),
     ],
   },
   module: {
@@ -176,10 +154,11 @@ module.exports = {
           // A missing `test` is equivalent to a match.
           {
             test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-            loader: require.resolve('url-loader'),
-            options: {
-              limit: 10000,
-              name: 'static/media/[name].[hash:8].[ext]',
+            type: 'asset',
+            parser: {
+              dataUrlCondition: {
+                maxSize: imageInlineSizeLimit,
+              },
             },
           },
           {
@@ -278,7 +257,6 @@ module.exports = {
           // in development "style" loader enables hot editing of CSS.
           {
             test: /\.scss$/,
-            // include: [paths.appSrc, paths.appNodeModules],
             use: [
               require.resolve('style-loader'),
               {
@@ -334,38 +312,6 @@ module.exports = {
                   sassOptions: {
                     includePaths: [paths.appNodeModules],
                   },
-                },
-              },
-            ],
-          },
-          // Load .mdx files as components
-          {
-            test: /\.mdx$/,
-            include: paths.appSrc,
-            use: [
-              'babel-loader',
-              {
-                loader: 'markdown-component-loader',
-                options: {
-                  enabledMarkdownItRules: ['smartquotes', 'table'],
-                  markdownItPlugins: [
-                    [
-                      require('markdown-it-attrs'),
-                      {
-                        allowedAttributes: ['id', 'tabIndex', 'class'],
-                      },
-                    ],
-                    [
-                      require('markdown-it-anchor'),
-                      {
-                        level: 2,
-                        slugify: s =>
-                          encodeURIComponent(
-                            String(s).trim().toLowerCase().replace(',', '').replace(/\s+/g, '-'),
-                          ),
-                      },
-                    ],
-                  ],
                 },
               },
             ],
@@ -474,7 +420,6 @@ module.exports = {
           syntactic: true,
         },
         mode: 'write-references',
-        // profile: true,
       },
       issue: {
         // This one is specifically to match during CI tests,

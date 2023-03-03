@@ -3,7 +3,6 @@ import 'jest';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { APIDescription, ProdAccessFormSteps } from '../../apiDefs/schema';
-import { ClaimsReleaseNotes } from '../../content/apiDocs/benefits';
 import store from '../../store';
 import { APISelector } from './APISelector';
 
@@ -30,9 +29,8 @@ const options: APIDescription[] = [
     },
     oAuthTypes: ['AuthorizationCodeGrant'],
     openData: false,
-    releaseNotes: ClaimsReleaseNotes,
+    releaseNotes: 'Dummy release notes.',
     urlFragment: 'claims',
-    vaInternalOnly: false,
   },
 ];
 
@@ -40,7 +38,13 @@ describe('APISelector', () => {
   it('does not render additional instruction text', () => {
     render(
       <Provider store={store}>
-        <APISelector options={options} selectedOption="claims" />
+        <APISelector
+          options={options}
+          selectedOption="claims"
+          buttonText="Update code"
+          buttonSuccessMessage="Code updated!"
+          theme="dark"
+        />
       </Provider>,
     );
 
@@ -51,7 +55,12 @@ describe('APISelector', () => {
   it('renders additional instruction text', () => {
     render(
       <Provider store={store}>
-        <APISelector options={options} selectedOption="claims" withButton />
+        <APISelector
+          options={options}
+          selectedOption="claims"
+          buttonText="Update page"
+          buttonSuccessMessage="Page updated!"
+        />
       </Provider>,
     );
 
@@ -62,12 +71,17 @@ describe('APISelector', () => {
   it('renders select button', () => {
     render(
       <Provider store={store}>
-        <APISelector options={options} selectedOption="claims" withButton />
+        <APISelector
+          options={options}
+          selectedOption="claims"
+          buttonText="Update page"
+          buttonSuccessMessage="Page updated!"
+        />
       </Provider>,
     );
 
     const selectButton = screen.getByRole('button', {
-      name: 'Select',
+      name: 'Update page',
     });
     expect(selectButton).toBeInTheDocument();
   });

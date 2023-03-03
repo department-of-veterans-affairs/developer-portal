@@ -1,6 +1,13 @@
 declare module '@department-of-veterans-affairs/component-library';
 declare module '@department-of-veterans-affairs/component-library/AlertBox';
 declare module '@department-of-veterans-affairs/component-library/Modal';
+declare module '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
+declare module '@department-of-veterans-affairs/component-library/LoadingIndicator';
+
+declare module 'web-components/loader' {
+  export function applyPolyfills(): Promise<void>;
+  export function defineCustomElements(): void;
+}
 
 interface VaAccordionProps {
   bordered?: boolean;
@@ -39,6 +46,10 @@ declare namespace JSX {
     'va-accordion': VaAccordionProps;
     'va-accordion-item': unknown;
     'va-alert': VaAlertProps;
+<<<<<<< HEAD
     'va-segmented-progress-bar': VaSegmentedProgressBar;
+=======
+    defaultLoadingSpinner: unknown;
+>>>>>>> master
   }
 }

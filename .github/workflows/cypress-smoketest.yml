@@ -1,0 +1,84 @@
+name: Smoketest - Sandbox Form
+
+on:
+  schedule:
+    - cron: '20 * * * *'
+  workflow_dispatch:
+
+jobs:
+  cypress_smoketest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cypress run
+        run: |
+          docker run -t -v $PWD:/e2e -w /e2e cypress/included:9.6.0 --config supportFile=false,ignoreTestFiles=null,baseUrl=https://dev-developer.va.gov -s ./cypress/integration/smoketest.spec.js
+
+      - name: Upload failed screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+
+      - name: Upload failed videos
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+      - name: Setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+          working-directory: 'smoketest'
+
+      - name: Install jq
+        run: |
+          sudo apt update;
+          sudo apt install -y jq;
+
+      - name: Delete smoketest Okta apps
+        env:
+          OKTA_BASE_URL: 'https://deptva-eval.okta.com/api/v1'
+          OKTA_TOKEN: ${{ secrets.OKTA_TOKEN }}
+        run: |
+          cd smoketest;
+          acgClientId=`jq -r '.clientID' ../cypress/downloads/sandbox-form-post-response.json`;
+          ccgClientId=`jq -r '.ccgClientId' ../cypress/downloads/sandbox-form-post-response.json`;
+          echo "Deleting ACG Client: $acgClientId"
+          bundle exec ruby ./delete-smoketest-apps.rb $acgClientId;
+          echo "Deleting CCG Client: $ccgClientId"
+          bundle exec ruby ./delete-smoketest-apps.rb $ccgClientId;
+
+      - name: Send Slack notification for a failed signup
+        uses: slackapi/slack-github-action@v1.21.0
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: C012L7SRG66
+          # This ID is for #vaapi-alerts in Lighthouse Slack
+          payload: |
+            {
+              "text": "Developer Portal Sandbox Signup Form Smoketest: ${{ job.status }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Developer Portal Sandbox Signup Form Smoketest:\n*Status: ${{ job.status }}*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "@teamokapi please investigate"
+                  }
+                }
+              ]
+            }

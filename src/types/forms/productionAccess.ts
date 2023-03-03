@@ -14,6 +14,7 @@ export interface ProductionAccessRequest {
   businessModel?: string;
   policyDocuments?: string[];
   phoneNumber?: string;
+  appName: string;
   apis?: string;
   monitizedVeteranInformation: boolean;
   monitizationExplanation?: string;
@@ -22,7 +23,6 @@ export interface ProductionAccessRequest {
   signUpLink?: string[];
   supportLink?: string[];
   platforms?: string;
-  veteranFacingDescription?: string;
   vasiSystemName?: string;
   storePIIOrPHI: boolean;
   piiStorageMethod?: string;

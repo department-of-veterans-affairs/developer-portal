@@ -1,7 +1,13 @@
 /* eslint-disable id-length */
-/* eslint-disable newline-per-chained-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { includesInternalOnlyAPI, includesOAuthAPI, onlyOpenDataAPIs } from '../../apiDefs/query';
+import {
+  includesAuthCodeAPI,
+  includesCcgAPI,
+  includesInternalOnlyAPI,
+  includesOAuthAPI,
+  includesOpenDataAPI,
+  onlyOpenDataAPIs,
+} from '../../apiDefs/query';
 import yup from '../../utils/yup-extended';
 
 const phoneRegex =
@@ -17,6 +23,30 @@ const validationSchema = [
       .required('Choose at least one API.'),
     is508Compliant: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     isUSBasedCompany: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
+    oAuthApplicationType: yup
+      .string()
+      .isNotATestString()
+      .when('apis', {
+        is: (value: string[]) => includesAuthCodeAPI(value),
+        otherwise: yup.string().isNotATestString(),
+        then: yup.string().oneOf(['web', 'native']).required('Choose an option.'),
+      }),
+    oAuthPublicKey: yup
+      .string()
+      .isNotATestString()
+      .when('apis', {
+        is: (value: string[]) => includesCcgAPI(value),
+        otherwise: yup.string().isNotATestString(),
+        then: yup.string().isNotATestString().required('Enter your oAuthPublicKey.'),
+      }),
+    oAuthRedirectURI: yup
+      .string()
+      .isNotATestString()
+      .when('apis', {
+        is: (value: string[]) => includesAuthCodeAPI(value),
+        otherwise: yup.string().isNotATestString(),
+        then: yup.string().isNotATestString().required('Enter an http or https URI.'),
+      }),
     termsOfService: yup
       .boolean()
       .oneOf([true], 'You must agree to our terms of service to continue.')
@@ -31,6 +61,7 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
       }),
+    appName: yup.string().isNotATestString().required('Enter front-end name of application.'),
     businessModel: yup
       .string()
       .isNotATestString()
@@ -79,7 +110,7 @@ const validationSchema = [
       .string()
       .isNotATestString()
       .when('apis', {
-        is: (value: string[]) => onlyOpenDataAPIs(value),
+        is: (value: string[]) => includesOpenDataAPI(value),
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Enter a description.'),
       }),
@@ -253,7 +284,7 @@ const validationSchema = [
       .isNotATestString()
       .url('Add a valid link to your privacy policies')
       .required('Add a valid link to your privacy policies'),
-      termsOfServiceURL: yup
+    termsOfServiceURL: yup
       .string()
       .isNotATestString()
       .url('Add a valid link to your terms of service')

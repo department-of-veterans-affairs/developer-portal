@@ -13,7 +13,7 @@ export const isApiDeprecated = (api: APIDescription): boolean => {
     return true;
   }
 
-  return moment().isAfter(api.deactivationInfo.deprecationDate);
+  return moment().isAfter(moment(api.deactivationInfo.deprecationDate, 'YYYY-MM-DDTHH:mm:ss.SSSZ'));
 };
 
 export const isApiDeactivated = (api: APIDescription): boolean => {
@@ -27,7 +27,7 @@ export const isApiDeactivated = (api: APIDescription): boolean => {
     return true;
   }
 
-  return moment().isAfter(api.deactivationInfo.deactivationDate);
+  return moment().isAfter(moment(api.deactivationInfo.deactivationDate, 'YYYY-MM-DDTHH:mm:ss.SSSZ'));
 };
 
 export const getDeprecatedFlags = (): { [apiId: string]: boolean } =>

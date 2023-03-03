@@ -30,7 +30,13 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         Begin the OpenID Connect authorization by using the authorization endpoint, query
         parameters, and scopes listed below.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           components={{
@@ -53,178 +59,185 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
   &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy`}
         </ReactMarkdown>
       </CodeWrapper>
-      <table>
-        <thead>
-          <tr>
-            <th>Query Parameter</th>
-            <th>Required</th>
-            <th>Values</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <code>client_id</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              The <code>client_id</code> issued by the VA API Platform team
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>redirect_uri</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              The URL you supplied. The user will be redirected to this URL after authorizing your
-              application.{' '}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>response_type</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              Supported response types: <code>code</code>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>state</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              Specifying a <code>state</code> param helps protect against some classes of Cross Site
-              Request Forgery (CSRF) attacks, and applications must include it. The{' '}
-              <code>state</code> param will be passed back from the authorization server to your
-              redirect URL unchanged, and your application should verify that it has the expected
-              value. This helps assure that the client receiving the authorization response is the
-              same as the client that initiated the authorization process.{' '}
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>scope</code>
-            </td>
-            <td>
-              <strong>Required</strong>
-            </td>
-            <td>
-              Will use your application&#39;s default scopes unless you specify a smaller subset of
-              scopes separated by a space. Review the{' '}
-              <HashLink to={{ ...location, hash: '#scopes' }}>Scopes section</HashLink> for more
-              information.
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>nonce</code>
-            </td>
-            <td>Optional</td>
-            <td>
-              <p>
-                Using a <code>nonce</code> with JWTs prevents some kinds of replay attacks where a
-                malicious party can attempt to resend an <code>id_token</code> request in order to
-                impersonate a user of your application.
-              </p>
-              <p>
-                A nonce should be generated on a per-session basis and stored on the user&#39;s
-                client. If the user requested an id_token (by including the openid scope in the
-                authorization request) then the{' '}
-                <HashLink to={{ ...location, hash: '#payload' }}>payload of the id_token</HashLink>{' '}
-                will contain a nonce value that should match the nonce value included in the
-                authorization request.
-              </p>
-              <p>
-                The{' '}
-                <a href="https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes">
-                  OpenID Connect documentation{' '}
-                </a>
-                offers the following suggestion for generating nonces:
-              </p>
-              <p>
-                The nonce parameter value needs to include per-session state and be unguessable to
-                attackers. One method to achieve this for Web Server Clients is to store a
-                cryptographically random value as an HttpOnly session cookie and use a cryptographic
-                hash of the value as the nonce parameter. In that case, the nonce in the returned ID
-                Token is compared to the hash of the session cookie to detect ID Token replay by
-                third parties. A related method applicable to JavaScript Clients is to store the
-                cryptographically random value in HTML5 local storage and use a cryptographic hash
-                of this value.{' '}
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <code>prompt</code>
-            </td>
-            <td>Optional</td>
-            <td>
-              <p>
-                Supported prompts: <code>login</code>, <code>consent</code> and <code>none</code>.
-              </p>
-              <p>
-                If <code>login</code> is specified, the user will be forced to provide credentials
-                regardless of session state. If omitted, an existing active session with the
-                identity provider may not require the user to provide credentials.
-              </p>
-              <p>
-                If <code>consent</code> is specified, the user will be asked to consent to their
-                scopes being used regardless of prior consent.
-              </p>
-              <p>
-                If <code>none</code> is specified, an application will attempt an authorization
-                request without user interaction. When the session is invalid or there are scopes
-                the user has not consented to, one of the following errors will be thrown:{' '}
-                <code>login_required</code> or
-                <code>consent_required</code>.
-              </p>
-            </td>
-          </tr>
-          {isClinicalHealthSelected && (
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Query Parameter</th>
+              <th>Required</th>
+              <th>Values</th>
+            </tr>
+          </thead>
+          <tbody>
             <tr>
               <td>
-                <code>launch</code>
+                <code>client_id</code>
               </td>
-              <td>Required</td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                The <code>client_id</code> issued by the VA API Platform team
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>redirect_uri</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                The URL you supplied. The user will be redirected to this URL after authorizing your
+                application.{' '}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>response_type</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                Supported response types: <code>code</code>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>state</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                Specifying a <code>state</code> param helps protect against some classes of Cross
+                Site Request Forgery (CSRF) attacks, and applications must include it. The{' '}
+                <code>state</code> param will be passed back from the authorization server to your
+                redirect URL unchanged, and your application should verify that it has the expected
+                value. This helps assure that the client receiving the authorization response is the
+                same as the client that initiated the authorization process.{' '}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>scope</code>
+              </td>
+              <td>
+                <strong>Required</strong>
+              </td>
+              <td>
+                Will use your application&#39;s default scopes unless you specify a smaller subset
+                of scopes separated by a space. Review the{' '}
+                <HashLink to={{ ...location, hash: '#scopes' }}>Scopes section</HashLink> for more
+                information.
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <code>nonce</code>
+              </td>
+              <td>Optional</td>
               <td>
                 <p>
-                  Base64-encoded JSON object, the value of which will contain a sta3n (a valid VistA
-                  station number) and the patient&#39;s ICN. The format of the object will be:
+                  Using a <code>nonce</code> with JWTs prevents some kinds of replay attacks where a
+                  malicious party can attempt to resend an <code>id_token</code> request in order to
+                  impersonate a user of your application.
                 </p>
                 <p>
-                  <code>
-                    &#123; &quot;sta3n&quot;: &quot;993&quot;, &quot;patient&quot;:
-                    &quot;1000720100V271387&quot; &#125;
-                  </code>
-                </p>
-                <p>When encoded using base64, the object will look like this:</p>
-                <p>
-                  <code>eyAic3RhM24iOiAiOTkzIiwgInBhdGllbnQiOiAiMTAwMDcyMDEwMFYyNzEzODciIH0=</code>
-                </p>
-                <p>
-                  This parameter must be used with the <code>launch</code> scope to enable the
-                  SMART-on-FHIR launch context.
+                  A nonce should be generated on a per-session basis and stored on the user&#39;s
+                  client. If the user requested an id_token (by including the openid scope in the
+                  authorization request) then the{' '}
+                  <HashLink to={{ ...location, hash: '#payload' }}>
+                    payload of the id_token
+                  </HashLink>{' '}
+                  will contain a nonce value that should match the nonce value included in the
+                  authorization request.
                 </p>
                 <p>
-                  For more information about scopes, see&nbsp;
-                  <HashLink to={{ ...location, hash: '#scopes' }}>Scopes</HashLink>.
+                  The{' '}
+                  <a href="https://openid.net/specs/openid-connect-core-1_0.html#NonceNotes">
+                    OpenID Connect documentation{' '}
+                  </a>
+                  offers the following suggestion for generating nonces:
+                </p>
+                <p>
+                  The nonce parameter value needs to include per-session state and be unguessable to
+                  attackers. One method to achieve this for Web Server Clients is to store a
+                  cryptographically random value as an HttpOnly session cookie and use a
+                  cryptographic hash of the value as the nonce parameter. In that case, the nonce in
+                  the returned ID Token is compared to the hash of the session cookie to detect ID
+                  Token replay by third parties. A related method applicable to JavaScript Clients
+                  is to store the cryptographically random value in HTML5 local storage and use a
+                  cryptographic hash of this value.{' '}
                 </p>
               </td>
             </tr>
-          )}
-        </tbody>
-      </table>
+            <tr>
+              <td>
+                <code>prompt</code>
+              </td>
+              <td>Optional</td>
+              <td>
+                <p>
+                  Supported prompts: <code>login</code>, <code>consent</code> and <code>none</code>.
+                </p>
+                <p>
+                  If <code>login</code> is specified, the user will be forced to provide credentials
+                  regardless of session state. If omitted, an existing active session with the
+                  identity provider may not require the user to provide credentials.
+                </p>
+                <p>
+                  If <code>consent</code> is specified, the user will be asked to consent to their
+                  scopes being used regardless of prior consent.
+                </p>
+                <p>
+                  If <code>none</code> is specified, an application will attempt an authorization
+                  request without user interaction. When the session is invalid or there are scopes
+                  the user has not consented to, one of the following errors will be thrown:{' '}
+                  <code>login_required</code> or
+                  <code>consent_required</code>.
+                </p>
+              </td>
+            </tr>
+            {isClinicalHealthSelected && (
+              <tr>
+                <td>
+                  <code>launch</code>
+                </td>
+                <td>Required</td>
+                <td>
+                  <p>
+                    Base64-encoded JSON object, the value of which will contain a sta3n (a valid
+                    VistA station number) and the patient&#39;s ICN. The format of the object will
+                    be:
+                  </p>
+                  <p>
+                    <code>
+                      &#123; &quot;sta3n&quot;: &quot;993&quot;, &quot;patient&quot;:
+                      &quot;1000720100V271387&quot; &#125;
+                    </code>
+                  </p>
+                  <p>When encoded using base64, the object will look like this:</p>
+                  <p>
+                    <code>
+                      eyAic3RhM24iOiAiOTkzIiwgInBhdGllbnQiOiAiMTAwMDcyMDEwMFYyNzEzODciIH0=
+                    </code>
+                  </p>
+                  <p>
+                    This parameter must be used with the <code>launch</code> scope to enable the
+                    SMART-on-FHIR launch context.
+                  </p>
+                  <p>
+                    For more information about scopes, see&nbsp;
+                    <HashLink to={{ ...location, hash: '#scopes' }}>Scopes</HashLink>.
+                  </p>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
       <p>
         The Veteran will need to grant your application access permission. To do this, direct the
         Veteran to the URL above. The Veteran is taken through an authentication flow by VA.gov and
@@ -275,7 +288,13 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
           provided during registration.
         </li>
       </ul>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -306,7 +325,13 @@ grant_type=authorization_code
         the <code>offline_access</code> scope, you will also receive a <code>refresh_token</code>.
         The response will look like this:
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -381,7 +406,13 @@ Pragma: no-cache
         production. Use the <code>refresh_token</code> to obtain a new <code>access_token</code>{' '}
         after its expiry by sending the following request.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -443,7 +474,13 @@ Host: sandbox-api.va.gov`}
         using the revoke endpoint. Once revoked, the introspection endpoint will see the token as
         inactive.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -466,7 +503,13 @@ Authorization: Basic base64(client_id:client_secret)
 token={ *access_token* }&token_type_hint=access_token`}
         </ReactMarkdown>
       </CodeWrapper>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}
@@ -501,7 +544,13 @@ token={ *refresh_token* }&token_type_hint=refresh_token`}
         grant will remain in effect unless and until revoked. Grants for a specific user and client
         are revoked in the sandbox environment using the below endpoint.
       </p>
-      <APISelector options={props.options} selectedOption={props.selectedOption} />
+      <APISelector
+        options={props.options}
+        selectedOption={props.selectedOption}
+        buttonText="Update code"
+        buttonSuccessMessage="Code updated!"
+        theme="dark"
+      />
       <CodeWrapper>
         <ReactMarkdown
           rehypePlugins={[highlight]}

@@ -9,8 +9,11 @@ import {
   setOAuthApiSelection,
   SetOAuthAPISelection,
 } from '../../../actions';
-import { getAllOauthApis } from '../../../apiDefs/query';
-import { isApiDeactivated } from '../../../apiDefs/deprecated';
+import {
+  getActiveAuthCodeApis,
+  getActiveOauthApis,
+  getApisLoadedState,
+} from '../../../apiDefs/query';
 import { APIDescription } from '../../../apiDefs/schema';
 import { PageHeader } from '../../../components';
 import { Https } from '../../../components/oauthDocs/acg/Https';
@@ -22,7 +25,7 @@ import { BuildingOIDCContent } from '../../../components/oauthDocs/acg/BuildingO
 import { GettingStarted } from '../../../components/oauthDocs/acg/GettingStarted';
 import { usePrevious } from '../../../hooks';
 import { RootState } from '../../../types';
-import { DEFAULT_OAUTH_API_SELECTION } from '../../../types/constants';
+import { apiLoadingState, DEFAULT_OAUTH_API_SELECTION } from '../../../types/constants';
 
 import './AuthorizationCodeGrantDocs.scss';
 
@@ -56,7 +59,7 @@ const setInitialApi = (
 ): void => {
   const params = new URLSearchParams(searchQuery || undefined);
   const apiQuery = params.get('api');
-  const availableApis = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item));
+  const availableApis = getActiveOauthApis();
   const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
   const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_API_SELECTION;
   dispatch(setOAuthApiSelection(api));
@@ -64,6 +67,7 @@ const setInitialApi = (
 };
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
+  const apisLoaded = getApisLoadedState() === apiLoadingState.LOADED;
   const history = useHistory();
   const location = useLocation();
   const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
@@ -73,20 +77,20 @@ const AuthorizationCodeGrantDocs = (): JSX.Element => {
   const prevApi = usePrevious(api);
   const selectedOAuthApi = useSelector(selector);
 
-  const options = getAllOauthApis().filter((item: APIDescription) => !isApiDeactivated(item)  &&
-                                                                     item.oAuthTypes &&
-                                                                     item.oAuthTypes.includes('AuthorizationCodeGrant'));
+  const options = getActiveAuthCodeApis();
 
   React.useEffect(() => {
-    if (initializing.current) {
-      // Do this on first load
-      initializing.current = false;
-      setInitialApi(history, location.search, dispatch);
-    } else {
-      // Do this on all subsequent re-renders
-      setSearchParam(history, location.search, api, false);
+    if (apisLoaded) {
+      if (initializing.current) {
+        // Do this on first load
+        initializing.current = false;
+        setInitialApi(history, location.search, dispatch);
+      } else {
+        // Do this on all subsequent re-renders
+        setSearchParam(history, location.search, api, false);
+      }
     }
-  }, [dispatch, location, history, prevApi, api]);
+  }, [dispatch, location, history, prevApi, api, apisLoaded]);
 
   /**
    * CLEAR REDUX STATE ON UNMOUNT

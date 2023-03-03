@@ -2,6 +2,7 @@ import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox
 import classNames from 'classnames';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
+import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router';
 import {
   PAGE_HEADER_AND_HALO_ID,
@@ -16,6 +17,7 @@ import { CardLink, ApiTags, PageHeader } from '../../components';
 import { Flag, getFlags } from '../../flags';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { APINameParam } from '../../types';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
 
 interface ReleaseNotesCardLinksProps {
   categoryKey: string;
@@ -37,17 +39,14 @@ const ReleaseNotesCardLinks: React.FunctionComponent<ReleaseNotesCardLinksProps>
     <div role="navigation" aria-labelledby={PAGE_HEADER_AND_HALO_ID}>
       <div className={defaultFlexContainer()}>
         {apis.map((apiDesc: APIDescription) => {
-          const { description, name, urlFragment, vaInternalOnly, openData } =
-            apiDesc;
+          const { description, name, urlFragment, vaInternalOnly, openData } = apiDesc;
           const dashUrlFragment = urlFragment.replace('_', '-');
 
           return (
             <CardLink
               key={name}
               name={name}
-              subhead={
-                vaInternalOnly && <ApiTags {...{ openData, vaInternalOnly }} />
-              }
+              subhead={vaInternalOnly && <ApiTags {...{ openData, vaInternalOnly }} />}
               url={`/release-notes/${categoryKey}#${dashUrlFragment}`}
               callToAction={`View the release notes for the ${name}`}
             >
@@ -76,10 +75,12 @@ const APIReleaseNote = ({
       </h2>
       {api.deactivationInfo && isApiDeactivated(api) && (
         <AlertBox headline="Deactivated API" status="info">
-          {api.deactivationInfo.deactivationContent({})}
+          <ReactMarkdown>{api.deactivationInfo.deactivationContent}</ReactMarkdown>
         </AlertBox>
       )}
-      {api.releaseNotes({})}
+      <div className="release-notes-wrapper">
+        <ReactMarkdown>{api.releaseNotes}</ReactMarkdown>
+      </div>
       <hr />
     </Flag>
   );
@@ -87,7 +88,7 @@ const APIReleaseNote = ({
 
 interface ReleaseNotesCollectionProps {
   categoryKey: string;
-  apiCategory: BaseAPICategory;
+  apiCategory?: BaseAPICategory;
   apiFlagName: 'enabled' | 'hosted_apis';
   alertText?: string;
 }
@@ -95,27 +96,33 @@ interface ReleaseNotesCollectionProps {
 const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProps> = (
   props: ReleaseNotesCollectionProps,
 ) => (
-  <>
-    <Helmet>
-      <title>{props.apiCategory.name} Release Notes</title>
-    </Helmet>
-    <PageHeader halo={props.apiCategory.name} header="Release Notes" />
-    {props.alertText && (
-      <AlertBox status="info" className="vads-u-padding-y--2">
-        {props.alertText}
-      </AlertBox>
-    )}
-    <ReleaseNotesCardLinks
-      apiCategory={props.apiCategory}
-      categoryKey={props.categoryKey}
-      flagName={props.apiFlagName}
-    />
-    <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
-      {props.apiCategory.apis.map((api: APIDescription) => (
-        <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />
-      ))}
-    </div>
-  </>
+  <ApisLoader>
+    <>
+      <Helmet>
+        <title>{`${props.apiCategory?.name ?? ''} Release Notes`}</title>
+      </Helmet>
+      <PageHeader halo={props.apiCategory?.name} header="Release Notes" />
+      {props.alertText && (
+        <AlertBox status="info" className="vads-u-padding-y--2">
+          {props.alertText}
+        </AlertBox>
+      )}
+      {props.apiCategory && (
+        <>
+          <ReleaseNotesCardLinks
+            apiCategory={props.apiCategory}
+            categoryKey={props.categoryKey}
+            flagName={props.apiFlagName}
+          />
+          <div className={classNames('vads-u-width--full', 'vads-u-margin-top--4')}>
+            {props.apiCategory.apis.map((api: APIDescription) => (
+              <APIReleaseNote flagName={props.apiFlagName} key={api.urlFragment} api={api} />
+            ))}
+          </div>
+        </>
+      )}
+    </>
+  </ApisLoader>
 );
 
 export const CategoryReleaseNotes = (): JSX.Element => {

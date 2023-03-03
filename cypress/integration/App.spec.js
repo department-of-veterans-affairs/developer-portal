@@ -19,6 +19,12 @@ const testPaths = [
 ];
 
 describe('App wide tests', () => {
+  beforeEach(() => {
+    cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
+      fixture: 'legacy.json',
+    }).as('LPB datastore');
+  });
+
   it('Skip navigation should receive focus on first tab after homepage load', () => {
     cy.visit('/');
     cy.get('body').tab();

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
-import { ApplySuccessResult } from '../../types';
+import { ApplySuccessResult } from '../../types/forms/apply';
 import { isVaEmail } from '../../utils/validators';
 import { SandboxAccessForm, SandboxAccessSuccess } from './components/sandbox';
 
@@ -42,10 +42,15 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
   return (
     <>
       <Helmet>
-        { successResults ? <title>Your submission was successful.</title> :
-        <title>Request Sandbox Access</title> }
+        {successResults ? (
+          <title>Your submission was successful.</title>
+        ) : (
+          <title>Request Sandbox Access</title>
+        )}
       </Helmet>
-      <PageHeader header={successResults ? 'Your submission was successful.' : 'Request Sandbox Access'} />
+      <PageHeader
+        header={successResults ? 'Your submission was successful.' : 'Request Sandbox Access'}
+      />
       {successResults ? (
         <>
           <SandboxAccessSuccess result={successResults} />

@@ -1,15 +1,13 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { PageHeader } from '../../../../components';
-import {
-  AuthenticationMarkdown,
-  DocumentationMarkdown,
-  ModernizationMarkdown,
-  MonitoringMarkdown,
-  SecurityMarkdown,
-  SupportMarkdown,
-  VersioningMarkdown,
-} from '../../../../content/publishing/expectations';
+import Authentication from './Authentication';
+import Documentation from './Documentation';
+import Modernization from './Modernization';
+import Monitoring from './Monitoring';
+import Security from './Security';
+import Support from './Support';
+import Versioning from './Versioning';
 
 const PublishingExpectations = (): JSX.Element => (
   <>
@@ -28,49 +26,49 @@ const PublishingExpectations = (): JSX.Element => (
     <h2>Security</h2>
     <va-accordion>
       <va-accordion-item header="We follow industry best practices regarding security and privacy to ensure the data is safe and secure.">
-        <SecurityMarkdown authenticationUrl="/explore/authorization" />
+        <Security />
       </va-accordion-item>
     </va-accordion>
 
     <h2>Documentation</h2>
     <va-accordion>
       <va-accordion-item header="API documentation on Lighthouse adheres to strict quality standards.">
-        <DocumentationMarkdown />
+        <Documentation />
       </va-accordion-item>
     </va-accordion>
 
     <h2>Versioning</h2>
     <va-accordion>
       <va-accordion-item header="Thoughtful and consistent versioning is key to API functionality and availability.">
-        <VersioningMarkdown />
+        <Versioning />
       </va-accordion-item>
     </va-accordion>
 
     <h2>Monitoring</h2>
     <va-accordion>
       <va-accordion-item header="We monitor APIs closely to ensure they are available when your consumers needs them most.">
-        <MonitoringMarkdown />
+        <Monitoring />
       </va-accordion-item>
     </va-accordion>
 
     <h2>Support</h2>
     <va-accordion>
       <va-accordion-item header="Before launching your API, we will work with you to define the details of a robust support plan.">
-        <SupportMarkdown />
+        <Support />
       </va-accordion-item>
     </va-accordion>
 
     <h2>Modernization</h2>
     <va-accordion>
       <va-accordion-item header="We provide only RESTful APIs that meet modern API standards for versioning, compatibility, and more.">
-        <ModernizationMarkdown />
+        <Modernization />
       </va-accordion-item>
     </va-accordion>
 
     <h2>Authentication and Authorization</h2>
     <va-accordion>
       <va-accordion-item header="We handle authentication and authorization for streamlined and robust security measures.">
-        <AuthenticationMarkdown />
+        <Authentication />
       </va-accordion-item>
     </va-accordion>
   </>

@@ -4,6 +4,7 @@ import { HashLink } from 'react-router-hash-link';
 import { AuthCodeFlowContentProps } from '../../../containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
 import { CONSUMER_PROD_PATH } from '../../../types/constants/paths';
 import { APISelector } from '../../apiSelector/APISelector';
+import ApisLoader from '../../apisLoader/ApisLoader';
 
 const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
   <>
@@ -16,7 +17,13 @@ const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
       Select your API from the drop-downs to populate the examples with your API-specific URLs,
       parameters, and scopes.
     </p>
-    <APISelector options={props.options} selectedOption={props.selectedOption} withButton />
+    <ApisLoader hideSpinner />
+    <APISelector
+      options={props.options}
+      selectedOption={props.selectedOption}
+      buttonText="Update page"
+      buttonSuccessMessage="Page updated!"
+    />
     <h2 tabIndex={-1} id="on-this-page">
       On this Page:
     </h2>
@@ -87,7 +94,7 @@ const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
         <HashLink to={{ ...location, hash: '#https' }}>HTTPS</HashLink>
       </li>
     </ul>
-    <h3>It’s also good to know that:</h3>
+    <h3>It&apos;s also good to know that:</h3>
     <ul>
       <li>
         The access credentials we supply are for the sandbox environment only and will not work in

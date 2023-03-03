@@ -12,7 +12,7 @@ interface ExpectedResponse {
   };
 }
 
-const requestUri = 'http://fake.va.gov/internal/developer-portal/public/test';
+const requestUri = '/internal/developer-portal/public/test';
 
 const requestData = { _bodyInit: 'json for you',
   _bodyText: 'json for you',

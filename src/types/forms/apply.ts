@@ -1,6 +1,7 @@
 export interface ApplySuccessResult {
   apis: string[];
-  clientID?: string;
+  ccgClientId?: string;
+  clientID?: string; // This is for ACG Client IDs
   clientSecret?: string;
   email: string;
   kongUsername?: string;
@@ -23,7 +24,8 @@ export interface DevApplicationRequest {
 
 export interface DevApplicationResponse {
   token?: string;
-  clientID?: string;
+  ccgClientId?: string;
+  clientID?: string; // This is for ACG Client IDs
   clientSecret?: string;
   redirectURI?: string;
   kongUsername?: string;

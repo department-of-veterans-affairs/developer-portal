@@ -2,7 +2,9 @@ module.exports = {
   displayName: 'Visual Regression Tests',
   name: 'visual',
   preset: 'jest-puppeteer',
-  testURL: process.env.TEST_HOST || 'http://localhost:4444',
+  testEnvironmentOptions: {
+    url: process.env.TEST_HOST || 'http://localhost:4444',
+  },
   testMatch: ['<rootDir>/src/visualRegressionTest.ts'],
   setupFiles: ['<rootDir>/config/polyfills.js'],
   setupFilesAfterEnv: ['<rootDir>/config/jest/imageSnapshot.ts'],

@@ -14,18 +14,12 @@ import { NavHashLink } from 'react-router-hash-link';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
-import { getFlags } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import vaLogo from '../../assets/VaSeal.png';
 import hiFive from '../../assets/high-five.svg';
-import {
-  FLAG_POST_TO_LPB,
-  LPB_PRODUCTION_ACCESS_URL,
-  PRODUCTION_ACCESS_URL,
-  yesOrNoValues,
-} from '../../types/constants';
+import { LPB_FORGERY_TOKEN, LPB_PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
 import {
   BasicInformation,
@@ -47,6 +41,9 @@ const STEP_HEADING_ID = 'form-step-heading';
 
 export interface Values {
   apis: string[];
+  oAuthApplicationType?: string;
+  oAuthPublicKey?: string;
+  oAuthRedirectURI?: string;
   is508Compliant?: string;
   isUSBasedCompany?: string;
   termsOfService?: boolean;
@@ -90,7 +87,6 @@ export interface Values {
   listedOnMyHealthApplication: string;
   productionKeyCredentialStorage: string;
   productionOrOAuthKeyCredentialStorage: string;
-  veteranFacingDescription: string;
   privacyPolicyURL?: string;
   termsOfServiceURL?: string;
 }
@@ -111,6 +107,9 @@ const initialValues: Values = {
   monitizedVeteranInformation: '',
   multipleReqSafeguards: '',
   namingConvention: '',
+  oAuthApplicationType: '',
+  oAuthPublicKey: '',
+  oAuthRedirectURI: '',
   organization: '',
   phoneNumber: '',
   piiStorageMethod: '',
@@ -139,7 +138,6 @@ const initialValues: Values = {
   valueProvided: '',
   vasiSystemName: '',
   veteranFacing: '',
-  veteranFacingDescription: '',
   vulnerabilityManagement: '',
   website: '',
 };
@@ -252,7 +250,6 @@ const ProductionAccess: FC = () => {
   };
 
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
-    const flagLpbActive = getFlags()[FLAG_POST_TO_LPB];
     if (isLastStep) {
       setSubmissionError(false);
       delete values.isUSBasedCompany;
@@ -304,11 +301,18 @@ const ProductionAccess: FC = () => {
         }
       });
       try {
+        setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
+          path: LPB_PRODUCTION_ACCESS_URL,
+          sameSite: 'strict',
+          secure: true,
+        });
+
         await makeRequest(
-          PRODUCTION_ACCESS_URL,
+          LPB_PRODUCTION_ACCESS_URL,
           {
             body: JSON.stringify(applicationBody),
             headers: {
+              'X-Csrf-Token': LPB_FORGERY_TOKEN,
               accept: 'application/json',
               'content-type': 'application/json',
             },
@@ -319,31 +323,6 @@ const ProductionAccess: FC = () => {
         setModal4Visible(true);
       } catch (error: unknown) {
         setSubmissionError(true);
-      }
-      if (flagLpbActive) {
-        const forgeryToken = Math.random().toString(36).substring(2);
-        setCookie('CSRF-TOKEN', forgeryToken, {
-          path: LPB_PRODUCTION_ACCESS_URL,
-          sameSite: 'strict',
-          secure: true,
-        });
-
-        try {
-          await makeRequest(
-            LPB_PRODUCTION_ACCESS_URL,
-            {
-              body: JSON.stringify(applicationBody),
-              headers: {
-                'X-Csrf-Token': forgeryToken,
-                accept: 'application/json',
-                'content-type': 'application/json',
-              },
-              method: 'POST',
-            },
-            { responseType: ResponseType.TEXT },
-          );
-          setModal4Visible(true);
-        } catch (error: unknown) {}
       }
     } else {
       if (values.isUSBasedCompany === yesOrNoValues.No) {
@@ -537,20 +516,6 @@ const ProductionAccess: FC = () => {
               </strong>
               <br />
               We’ll be in touch with the next steps or required changes.
-            </p>
-            <p>
-              We’d love to hear from you. If you have a few minutes,{' '}
-              <a href="https://78bw424i.optimalworkshop.com/questions/z470uznd" target="blank">
-                tell us about your experience
-              </a>
-              .
-            </p>
-            <p className="howd-we-do">
-              ☆☆☆☆☆{' '}
-              <a href="https://78bw424i.optimalworkshop.com/questions/z470uznd" target="blank">
-                How’d we do
-              </a>
-              ?
             </p>
           </Modal>
           {submissionError && (

@@ -1,6 +1,6 @@
 /* eslint-disable id-length, max-lines, sort-keys -- mock data */
 export const mockSwagger = {
-  'http://localhost:3001/internal/docs/benefits-claims/v0/openapi.json': {
+  'http://localhost:3001/internal/docs/benefits-claims/v0/openapi-sf.json': {
     openapi: '3.0.0',
     info: {
       version: '0.0.0',
@@ -336,7 +336,7 @@ export const mockSwagger = {
       },
     },
   },
-  'http://localhost:3001/internal/docs/appeals-status/v0/openapi.json': {
+  'http://localhost:3001/internal/docs/appeals-status/v0/openapi-sf.json': {
     openapi: '3.0.0',
     info: {
       version: '0.0.1',
@@ -672,23 +672,19 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'next',
-                              url:
-                                'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=2&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=19&_count=15',
+                              url: 'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=19&_count=15',
                             },
                           ],
                           entry: [
@@ -722,8 +718,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -731,8 +726,7 @@ export const mockSwagger = {
                                 _type: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -740,8 +734,7 @@ export const mockSwagger = {
                                 _category: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -795,8 +788,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -862,8 +854,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -919,8 +910,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -986,8 +976,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1043,8 +1032,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1110,8 +1098,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1167,8 +1154,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1224,8 +1210,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1281,8 +1266,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1338,8 +1322,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1395,8 +1378,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1452,8 +1434,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1519,8 +1500,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1529,8 +1509,7 @@ export const mockSwagger = {
                                 _category: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1584,8 +1563,7 @@ export const mockSwagger = {
                                 _criticality: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1593,8 +1571,7 @@ export const mockSwagger = {
                                 _type: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unknown',
                                     },
                                   ],
@@ -1921,23 +1898,19 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'next',
-                              url:
-                                'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=2&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=31&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=31&_count=15',
                             },
                           ],
                           entry: [
@@ -2730,23 +2703,19 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'next',
-                              url:
-                                'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=2&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=39&_count=15',
+                              url: 'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=39&_count=15',
                             },
                           ],
                           entry: [
@@ -3193,8 +3162,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3486,23 +3454,19 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'next',
-                              url:
-                                'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=2&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=10&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=10&_count=15',
                             },
                           ],
                           entry: [
@@ -3526,8 +3490,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3558,8 +3521,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3586,8 +3548,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3618,8 +3579,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3650,8 +3610,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3682,8 +3641,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3714,8 +3672,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3746,8 +3703,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3778,8 +3734,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3810,8 +3765,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3842,8 +3796,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3874,8 +3827,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3906,8 +3858,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3938,8 +3889,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -3970,8 +3920,7 @@ export const mockSwagger = {
                                 _reported: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -4367,23 +4316,19 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'next',
-                              url:
-                                'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=2&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=20&_count=15',
+                              url: 'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=20&_count=15',
                             },
                           ],
                           entry: [
@@ -4411,8 +4356,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' INHALE 2 PUFFS BY MOUTH EVERY 4 HOURS AS NEEDED FOR SHORTNESS OF BREATH',
+                                    text: ' INHALE 2 PUFFS BY MOUTH EVERY 4 HOURS AS NEEDED FOR SHORTNESS OF BREATH',
                                     timing: { code: { text: 'Q4H PRN' } },
                                     route: { text: 'INHALATION ORAL' },
                                     asNeededBoolean: true,
@@ -4449,8 +4393,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' TAKE ONE TABLET BY MOUTH ONE TIME EACH DAY FOR CHOLESTEROL',
+                                    text: ' TAKE ONE TABLET BY MOUTH ONE TIME EACH DAY FOR CHOLESTEROL',
                                     timing: { code: { text: 'QDAILY' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 1 },
@@ -4488,8 +4431,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' TAKE 1 TEASPOONFUL BY MOUTH EVERY 6 HOURS AS NEEDED FOR COUGH CAN TAKE 2 TEASPOONS AT BEDTIME IF NEEDED. USE SPARINGLY FOR COUGH can take 2 teaspoons at bedtime if needed. Use sparingly',
+                                    text: ' TAKE 1 TEASPOONFUL BY MOUTH EVERY 6 HOURS AS NEEDED FOR COUGH CAN TAKE 2 TEASPOONS AT BEDTIME IF NEEDED. USE SPARINGLY FOR COUGH can take 2 teaspoons at bedtime if needed. Use sparingly',
                                     timing: { code: { text: 'Q6H PRN' } },
                                     route: { text: 'ORAL' },
                                     asNeededBoolean: true,
@@ -4526,8 +4468,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' TAKE ONE CAPSULE BY MOUTH TWICE A DAY FOR 15 DAYS FOR INFECTION. SEPARATE FROM IRON/CALCIUM/MAGNESIUM PRODUCTS BY 2 HOURS EITHER WAY. FOR INFECTION. SEPARATE FROM IRON/CALCIUM/MAGNESIUM PRODUCTS BY 2 HOURS EITHER WAY.',
+                                    text: ' TAKE ONE CAPSULE BY MOUTH TWICE A DAY FOR 15 DAYS FOR INFECTION. SEPARATE FROM IRON/CALCIUM/MAGNESIUM PRODUCTS BY 2 HOURS EITHER WAY. FOR INFECTION. SEPARATE FROM IRON/CALCIUM/MAGNESIUM PRODUCTS BY 2 HOURS EITHER WAY.',
                                     timing: { code: { text: 'BID' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 1 },
@@ -4565,32 +4506,28 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
+                                    text: ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
                                     timing: { code: { text: 'TID' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 2 },
                                     asNeededBoolean: false,
                                   },
                                   {
-                                    text:
-                                      ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
+                                    text: ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
                                     timing: { code: { text: 'BID' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 2 },
                                     asNeededBoolean: false,
                                   },
                                   {
-                                    text:
-                                      ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
+                                    text: ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
                                     timing: { code: { text: 'BID' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 1 },
                                     asNeededBoolean: false,
                                   },
                                   {
-                                    text:
-                                      ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
+                                    text: ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
                                     timing: { code: { text: 'QDAILY' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 1 },
@@ -4650,8 +4587,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' APPLY TOPICAL CREAM TO SKIN TWICE A DAY TO FOOT to foot',
+                                    text: ' APPLY TOPICAL CREAM TO SKIN TWICE A DAY TO FOOT to foot',
                                     timing: { code: { text: 'BID' } },
                                     route: { text: 'TOPICAL' },
                                     asNeededBoolean: false,
@@ -4687,8 +4623,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' USE 1 STRIP FOR TESTING GLUCOSE EVERY DAY (90 DAY SUPPLY)',
+                                    text: ' USE 1 STRIP FOR TESTING GLUCOSE EVERY DAY (90 DAY SUPPLY)',
                                     timing: { code: { text: 'QD' } },
                                     route: { text: 'TEST STRIPS' },
                                     asNeededBoolean: false,
@@ -4725,8 +4660,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' APPLY SMALL AMOUNT TO AFFECTED AREA EVERY DAY FOR ITCHING/RASH',
+                                    text: ' APPLY SMALL AMOUNT TO AFFECTED AREA EVERY DAY FOR ITCHING/RASH',
                                     timing: { code: { text: 'TAA DAILY' } },
                                     asNeededBoolean: false,
                                   },
@@ -4762,8 +4696,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' USE 1 STRIP FOR TESTING GLUCOSE EVERY DAY (90 DAY SUPPLY)',
+                                    text: ' USE 1 STRIP FOR TESTING GLUCOSE EVERY DAY (90 DAY SUPPLY)',
                                     timing: { code: { text: 'QD' } },
                                     route: { text: 'TEST STRIPS' },
                                     asNeededBoolean: false,
@@ -4839,8 +4772,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' TAKE ONE TABLET BY MOUTH TWICE A DAY FOR BLOOD PRESSURE/HEART',
+                                    text: ' TAKE ONE TABLET BY MOUTH TWICE A DAY FOR BLOOD PRESSURE/HEART',
                                     timing: { code: { text: 'BID' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 1 },
@@ -4879,8 +4811,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' DISSOLVE ONE TABLET UNDER THE TONGUE IF NEEDED FOR CHEST PAIN/DISCOMFORT EVERY 5 MINUTES UP TO 3 DOSES; CALL ER IF NO RELIEF',
+                                    text: ' DISSOLVE ONE TABLET UNDER THE TONGUE IF NEEDED FOR CHEST PAIN/DISCOMFORT EVERY 5 MINUTES UP TO 3 DOSES; CALL ER IF NO RELIEF',
                                     timing: { code: { text: 'PRN' } },
                                     route: { text: 'SUBLINGUAL' },
                                     doseQuantity: { value: 1 },
@@ -4918,8 +4849,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' TAKE ONE TABLET BY MOUTH EVERY DAY TO CONTROL BLOOD PRESSURE',
+                                    text: ' TAKE ONE TABLET BY MOUTH EVERY DAY TO CONTROL BLOOD PRESSURE',
                                     timing: { code: { text: 'DAILY' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 1 },
@@ -4957,8 +4887,7 @@ export const mockSwagger = {
                                 },
                                 dosageInstruction: [
                                   {
-                                    text:
-                                      ' TAKE ONE-HALF TABLET BY MOUTH AT BEDTIME TO LOWER CHOLESTEROL',
+                                    text: ' TAKE ONE-HALF TABLET BY MOUTH AT BEDTIME TO LOWER CHOLESTEROL',
                                     timing: { code: { text: 'HS(AT BEDTIME)' } },
                                     route: { text: 'ORAL' },
                                     doseQuantity: { value: 0.5 },
@@ -5101,8 +5030,7 @@ export const mockSwagger = {
                           },
                           dosageInstruction: [
                             {
-                              text:
-                                ' INHALE 2 PUFFS BY MOUTH EVERY 4 HOURS AS NEEDED FOR SHORTNESS OF BREATH',
+                              text: ' INHALE 2 PUFFS BY MOUTH EVERY 4 HOURS AS NEEDED FOR SHORTNESS OF BREATH',
                               timing: { code: { text: 'Q4H PRN' } },
                               route: { text: 'INHALATION ORAL' },
                               asNeededBoolean: true,
@@ -5242,23 +5170,19 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'next',
-                              url:
-                                'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=2&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=2&_count=15',
                             },
                           ],
                           entry: [
@@ -5889,23 +5813,19 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'next',
-                              url:
-                                'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=2&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=60&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=60&_count=15',
                             },
                           ],
                           entry: [
@@ -6874,18 +6794,15 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
                             },
                           ],
                           entry: [
@@ -6897,13 +6814,11 @@ export const mockSwagger = {
                                 language: 'en-US',
                                 extension: [
                                   {
-                                    url:
-                                      'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-race.html',
+                                    url: 'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-race.html',
                                     extension: [{ url: 'text', valueString: 'White' }],
                                   },
                                   {
-                                    url:
-                                      'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-ethnicity.html',
+                                    url: 'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-ethnicity.html',
                                     extension: [
                                       { url: 'text', valueString: 'Non Hispanic or Latino' },
                                     ],
@@ -7086,13 +7001,11 @@ export const mockSwagger = {
                           language: 'en-US',
                           extension: [
                             {
-                              url:
-                                'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-race.html',
+                              url: 'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-race.html',
                               extension: [{ url: 'text', valueString: 'White' }],
                             },
                             {
-                              url:
-                                'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-ethnicity.html',
+                              url: 'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-ethnicity.html',
                               extension: [{ url: 'text', valueString: 'Non Hispanic or Latino' }],
                             },
                           ],
@@ -7279,23 +7192,19 @@ export const mockSwagger = {
                           link: [
                             {
                               relation: 'self',
-                              url:
-                                'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'first',
-                              url:
-                                'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=1&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=1&_count=15',
                             },
                             {
                               relation: 'next',
-                              url:
-                                'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=2&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=2&_count=15',
                             },
                             {
                               relation: 'last',
-                              url:
-                                'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=4&_count=15',
+                              url: 'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=4&_count=15',
                             },
                           ],
                           entry: [
@@ -7312,8 +7221,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7344,8 +7252,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7385,8 +7292,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7421,8 +7327,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7457,8 +7362,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7493,8 +7397,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7533,8 +7436,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7575,8 +7477,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7611,8 +7512,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7647,8 +7547,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7683,8 +7582,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7719,8 +7617,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7760,8 +7657,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7801,8 +7697,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -7842,8 +7737,7 @@ export const mockSwagger = {
                                 _status: {
                                   extension: [
                                     {
-                                      url:
-                                        'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                      url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                       valueCode: 'unsupported',
                                     },
                                   ],
@@ -10620,23 +10514,19 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'next',
-                            url:
-                              'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=2&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=19&_count=15',
+                            url: 'https://lighthouse.vaftl.us/AllergyIntolerance?patient=185601V825290&page=19&_count=15',
                           },
                         ],
                         entry: [
@@ -10670,8 +10560,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -10679,8 +10568,7 @@ export const mockSwagger = {
                               _type: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -10688,8 +10576,7 @@ export const mockSwagger = {
                               _category: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -10743,8 +10630,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -10810,8 +10696,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -10867,8 +10752,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -10934,8 +10818,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -10991,8 +10874,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11058,8 +10940,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11115,8 +10996,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11172,8 +11052,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11229,8 +11108,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11286,8 +11164,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11343,8 +11220,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11400,8 +11276,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11467,8 +11342,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11477,8 +11351,7 @@ export const mockSwagger = {
                               _category: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11532,8 +11405,7 @@ export const mockSwagger = {
                               _criticality: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11541,8 +11413,7 @@ export const mockSwagger = {
                               _type: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unknown',
                                   },
                                 ],
@@ -11772,23 +11643,19 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'next',
-                            url:
-                              'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=2&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=31&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Condition?patient=185601V825290&page=31&_count=15',
                           },
                         ],
                         entry: [
@@ -12504,23 +12371,19 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'next',
-                            url:
-                              'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=2&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=39&_count=15',
+                            url: 'https://lighthouse.vaftl.us/DiagnosticReport?patient=185601V825290&page=39&_count=15',
                           },
                         ],
                         entry: [
@@ -12967,8 +12830,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13204,23 +13066,19 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'next',
-                            url:
-                              'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=2&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=10&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Immunization?patient=185601V825290&page=10&_count=15',
                           },
                         ],
                         entry: [
@@ -13244,8 +13102,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13276,8 +13133,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13304,8 +13160,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13336,8 +13191,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13368,8 +13222,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13400,8 +13253,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13432,8 +13284,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13464,8 +13315,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13496,8 +13346,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13528,8 +13377,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13560,8 +13408,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13592,8 +13439,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13624,8 +13470,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13656,8 +13501,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13688,8 +13532,7 @@ export const mockSwagger = {
                               _reported: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -13910,8 +13753,7 @@ export const mockSwagger = {
                         },
                         dosageInstruction: [
                           {
-                            text:
-                              ' INHALE 2 PUFFS BY MOUTH EVERY 4 HOURS AS NEEDED FOR SHORTNESS OF BREATH',
+                            text: ' INHALE 2 PUFFS BY MOUTH EVERY 4 HOURS AS NEEDED FOR SHORTNESS OF BREATH',
                             timing: { code: { text: 'Q4H PRN' } },
                             route: { text: 'INHALATION ORAL' },
                             asNeededBoolean: true,
@@ -14015,23 +13857,19 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'next',
-                            url:
-                              'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=2&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=20&_count=15',
+                            url: 'https://lighthouse.vaftl.us/MedicationOrder?patient=185601V825290&page=20&_count=15',
                           },
                         ],
                         entry: [
@@ -14059,8 +13897,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' INHALE 2 PUFFS BY MOUTH EVERY 4 HOURS AS NEEDED FOR SHORTNESS OF BREATH',
+                                  text: ' INHALE 2 PUFFS BY MOUTH EVERY 4 HOURS AS NEEDED FOR SHORTNESS OF BREATH',
                                   timing: { code: { text: 'Q4H PRN' } },
                                   route: { text: 'INHALATION ORAL' },
                                   asNeededBoolean: true,
@@ -14097,8 +13934,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' TAKE ONE TABLET BY MOUTH ONE TIME EACH DAY FOR CHOLESTEROL',
+                                  text: ' TAKE ONE TABLET BY MOUTH ONE TIME EACH DAY FOR CHOLESTEROL',
                                   timing: { code: { text: 'QDAILY' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 1 },
@@ -14136,8 +13972,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' TAKE 1 TEASPOONFUL BY MOUTH EVERY 6 HOURS AS NEEDED FOR COUGH CAN TAKE 2 TEASPOONS AT BEDTIME IF NEEDED. USE SPARINGLY FOR COUGH can take 2 teaspoons at bedtime if needed. Use sparingly',
+                                  text: ' TAKE 1 TEASPOONFUL BY MOUTH EVERY 6 HOURS AS NEEDED FOR COUGH CAN TAKE 2 TEASPOONS AT BEDTIME IF NEEDED. USE SPARINGLY FOR COUGH can take 2 teaspoons at bedtime if needed. Use sparingly',
                                   timing: { code: { text: 'Q6H PRN' } },
                                   route: { text: 'ORAL' },
                                   asNeededBoolean: true,
@@ -14174,8 +14009,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' TAKE ONE CAPSULE BY MOUTH TWICE A DAY FOR 15 DAYS FOR INFECTION. SEPARATE FROM IRON/CALCIUM/MAGNESIUM PRODUCTS BY 2 HOURS EITHER WAY. FOR INFECTION. SEPARATE FROM IRON/CALCIUM/MAGNESIUM PRODUCTS BY 2 HOURS EITHER WAY.',
+                                  text: ' TAKE ONE CAPSULE BY MOUTH TWICE A DAY FOR 15 DAYS FOR INFECTION. SEPARATE FROM IRON/CALCIUM/MAGNESIUM PRODUCTS BY 2 HOURS EITHER WAY. FOR INFECTION. SEPARATE FROM IRON/CALCIUM/MAGNESIUM PRODUCTS BY 2 HOURS EITHER WAY.',
                                   timing: { code: { text: 'BID' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 1 },
@@ -14213,32 +14047,28 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
+                                  text: ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
                                   timing: { code: { text: 'TID' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 2 },
                                   asNeededBoolean: false,
                                 },
                                 {
-                                  text:
-                                    ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
+                                  text: ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
                                   timing: { code: { text: 'BID' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 2 },
                                   asNeededBoolean: false,
                                 },
                                 {
-                                  text:
-                                    ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
+                                  text: ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
                                   timing: { code: { text: 'BID' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 1 },
                                   asNeededBoolean: false,
                                 },
                                 {
-                                  text:
-                                    ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
+                                  text: ' TAKE TWO TABLETS BY MOUTH THREE TIMES A DAY FOR 2 DAYS, THEN TAKE TWO TABLETS TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET TWICE A DAY FOR 2 DAYS, THEN TAKE ONE TABLET ONE TIME EACH DAY FOR 2 DAYS WITH FOOD, FOR BREATHING WITH FOOD, FOR BREATHING',
                                   timing: { code: { text: 'QDAILY' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 1 },
@@ -14334,8 +14164,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' USE 1 STRIP FOR TESTING GLUCOSE EVERY DAY (90 DAY SUPPLY)',
+                                  text: ' USE 1 STRIP FOR TESTING GLUCOSE EVERY DAY (90 DAY SUPPLY)',
                                   timing: { code: { text: 'QD' } },
                                   route: { text: 'TEST STRIPS' },
                                   asNeededBoolean: false,
@@ -14372,8 +14201,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' APPLY SMALL AMOUNT TO AFFECTED AREA EVERY DAY FOR ITCHING/RASH',
+                                  text: ' APPLY SMALL AMOUNT TO AFFECTED AREA EVERY DAY FOR ITCHING/RASH',
                                   timing: { code: { text: 'TAA DAILY' } },
                                   asNeededBoolean: false,
                                 },
@@ -14409,8 +14237,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' USE 1 STRIP FOR TESTING GLUCOSE EVERY DAY (90 DAY SUPPLY)',
+                                  text: ' USE 1 STRIP FOR TESTING GLUCOSE EVERY DAY (90 DAY SUPPLY)',
                                   timing: { code: { text: 'QD' } },
                                   route: { text: 'TEST STRIPS' },
                                   asNeededBoolean: false,
@@ -14486,8 +14313,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' TAKE ONE TABLET BY MOUTH TWICE A DAY FOR BLOOD PRESSURE/HEART',
+                                  text: ' TAKE ONE TABLET BY MOUTH TWICE A DAY FOR BLOOD PRESSURE/HEART',
                                   timing: { code: { text: 'BID' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 1 },
@@ -14526,8 +14352,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' DISSOLVE ONE TABLET UNDER THE TONGUE IF NEEDED FOR CHEST PAIN/DISCOMFORT EVERY 5 MINUTES UP TO 3 DOSES; CALL ER IF NO RELIEF',
+                                  text: ' DISSOLVE ONE TABLET UNDER THE TONGUE IF NEEDED FOR CHEST PAIN/DISCOMFORT EVERY 5 MINUTES UP TO 3 DOSES; CALL ER IF NO RELIEF',
                                   timing: { code: { text: 'PRN' } },
                                   route: { text: 'SUBLINGUAL' },
                                   doseQuantity: { value: 1 },
@@ -14565,8 +14390,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' TAKE ONE TABLET BY MOUTH EVERY DAY TO CONTROL BLOOD PRESSURE',
+                                  text: ' TAKE ONE TABLET BY MOUTH EVERY DAY TO CONTROL BLOOD PRESSURE',
                                   timing: { code: { text: 'DAILY' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 1 },
@@ -14604,8 +14428,7 @@ export const mockSwagger = {
                               },
                               dosageInstruction: [
                                 {
-                                  text:
-                                    ' TAKE ONE-HALF TABLET BY MOUTH AT BEDTIME TO LOWER CHOLESTEROL',
+                                  text: ' TAKE ONE-HALF TABLET BY MOUTH AT BEDTIME TO LOWER CHOLESTEROL',
                                   timing: { code: { text: 'HS(AT BEDTIME)' } },
                                   route: { text: 'ORAL' },
                                   doseQuantity: { value: 0.5 },
@@ -14823,23 +14646,19 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'next',
-                            url:
-                              'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=2&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/MedicationStatement?patient=185601V825290&page=2&_count=15',
                           },
                         ],
                         entry: [
@@ -15417,23 +15236,19 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'next',
-                            url:
-                              'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=2&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=60&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Observation?patient=185601V825290&page=60&_count=15',
                           },
                         ],
                         entry: [
@@ -16246,13 +16061,11 @@ export const mockSwagger = {
                         language: 'en-US',
                         extension: [
                           {
-                            url:
-                              'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-race.html',
+                            url: 'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-race.html',
                             extension: [{ url: 'text', valueString: 'White' }],
                           },
                           {
-                            url:
-                              'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-ethnicity.html',
+                            url: 'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-ethnicity.html',
                             extension: [{ url: 'text', valueString: 'Non Hispanic or Latino' }],
                           },
                         ],
@@ -16403,18 +16216,15 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Patient?_id=185601V825290&page=1&_count=15',
                           },
                         ],
                         entry: [
@@ -16426,13 +16236,11 @@ export const mockSwagger = {
                               language: 'en-US',
                               extension: [
                                 {
-                                  url:
-                                    'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-race.html',
+                                  url: 'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-race.html',
                                   extension: [{ url: 'text', valueString: 'White' }],
                                 },
                                 {
-                                  url:
-                                    'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-ethnicity.html',
+                                  url: 'http://www.fhir.org/guides/argonaut/r2/StructureDefinition-argo-ethnicity.html',
                                   extension: [
                                     { url: 'text', valueString: 'Non Hispanic or Latino' },
                                   ],
@@ -16703,23 +16511,19 @@ export const mockSwagger = {
                         link: [
                           {
                             relation: 'self',
-                            url:
-                              'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'first',
-                            url:
-                              'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=1&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=1&_count=15',
                           },
                           {
                             relation: 'next',
-                            url:
-                              'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=2&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=2&_count=15',
                           },
                           {
                             relation: 'last',
-                            url:
-                              'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=4&_count=15',
+                            url: 'https://lighthouse.vaftl.us/Procedure?patient=185601V825290&page=4&_count=15',
                           },
                         ],
                         entry: [
@@ -16736,8 +16540,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -16768,8 +16571,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -16809,8 +16611,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -16845,8 +16646,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -16881,8 +16681,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -16917,8 +16716,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -16957,8 +16755,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -16999,8 +16796,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -17035,8 +16831,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -17071,8 +16866,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -17107,8 +16901,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -17143,8 +16936,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -17184,8 +16976,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -17225,8 +17016,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],
@@ -17266,8 +17056,7 @@ export const mockSwagger = {
                               _status: {
                                 extension: [
                                   {
-                                    url:
-                                      'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
+                                    url: 'http://hl7.org/fhir/StructureDefinition/data-absent-reason',
                                     valueCode: 'unsupported',
                                   },
                                 ],

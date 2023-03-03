@@ -43,9 +43,9 @@ const FieldSet: FC<FieldSetProps> = ({
           {required && <span className="form-required-span">(*Required)</span>}
         </legend>
         {description && (
-          <p className="vads-u-color--gray vads-u-font-size--sm">
+          <div className={classNames('vads-u-color--gray', 'vads-u-margin-top--2')}>
             {description}
-          </p>
+          </div>
         )}
         <span id={errorId} className={errorMessageClass} role="alert">
           <ErrorMessage name={name} />

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
+import ReactMarkdown from 'react-markdown';
 import { PageHeader } from '..';
 
 interface QuickstartWrapperProps {
   categoryName: string;
-  quickstartContent: React.FunctionComponent;
+  quickstartContent: string;
 }
 
 const QuickstartWrapper: React.FunctionComponent<QuickstartWrapperProps> = (
@@ -18,7 +19,7 @@ const QuickstartWrapper: React.FunctionComponent<QuickstartWrapperProps> = (
         <title>{categoryName} Quickstart</title>
       </Helmet>
       <PageHeader halo={categoryName} header="Quickstart" />
-      {quickstartContent({})}
+      <ReactMarkdown>{quickstartContent}</ReactMarkdown>
     </div>
   );
 };
