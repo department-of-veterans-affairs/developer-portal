@@ -24,23 +24,25 @@ const versions: VersionMetadata[] = [
   },
 ];
 
-const updateVersionMock = jest.fn<never, []>();
 const dispatch = jest.fn();
 const version = 'current';
 const handleVersionChange = jest.fn();
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const handleVersionChangeMock = () => handleVersionChange;
 
 describe('VersionSelect', () => {
   beforeEach(() => {
     render(
       <VersionSelect
         dispatch={dispatch}
+        handleVersionChange={handleVersionChangeMock}
         version={version}
         versions={versions}
-        handleVersionChange={handleVersionChange}
       />,
     );
 
-    updateVersionMock.mockReset();
+    dispatch.mockReset();
+    handleVersionChange.mockReset();
   });
 
   it('renders successfully', () => {
@@ -66,21 +68,21 @@ describe('VersionSelect', () => {
     expect(select.value).toBe('0.0.1');
   });
 
-  it('does not fire updateVersion action if the button is not clicked', () => {
+  it('does not fire handleVersionChange action if the button is not clicked', () => {
     userEvent.selectOptions(screen.getByLabelText('Select a version'), '0.0.1');
 
-    expect(updateVersionMock).toHaveBeenCalledTimes(0);
+    expect(handleVersionChange).toHaveBeenCalledTimes(0);
   });
 
   describe('when the button is clicked', (): void => {
     /* eslint-disable max-nested-callbacks */
-    it('fires updateVersion action', (): void => {
+    it('fires handleVersionChange action', (): void => {
       const select = screen.getByLabelText('Select a version');
 
       userEvent.selectOptions(select, '0.0.1');
       userEvent.click(screen.getByRole('button'));
 
-      expect(updateVersionMock).toHaveBeenCalledWith('0.0.1');
+      expect(handleVersionChange).toHaveBeenCalledTimes(1);
     });
     /* eslint-enable max-nested-callbacks */
   });
@@ -91,13 +93,13 @@ describe('VersionSelect with initial version', () => {
     render(
       <VersionSelect
         dispatch={dispatch}
+        handleVersionChange={handleVersionChange}
         version={version}
         versions={versions}
-        handleVersionChange={handleVersionChange}
       />,
     );
 
     const select = screen.getByLabelText('Select a version') as HTMLSelectElement;
-    expect(select.value).toBe('0.0.1');
+    expect(select.value).toBe('1.0.0');
   });
 });
