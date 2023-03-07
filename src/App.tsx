@@ -3,7 +3,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { Route, Router } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
-import { defineCustomElements } from '@department-of-veterans-affairs/component-library';
+import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
 import { LPB_PROVIDERS_URL } from './types/constants';
 import { setApiLoadingError, SetAPIs, setApis } from './actions';
 import { APICategories } from './apiDefs/schema';
@@ -18,7 +18,7 @@ import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
 
-defineCustomElements();
+void defineCustomElements();
 
 /**
  * the double flex container only exists and is flexed to
