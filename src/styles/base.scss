@@ -115,11 +115,6 @@ input:focus::placeholder {
   }
 }
 
-// default is position: relative and right: 1.9rem (moving it 19px left)
-.usa-input-error {
-  position: static;
-}
-
 // Provide a better horizontal scroll for wide tables on a mobile layout
 .table-wrapper {
   margin: 1.7em 0 1.7em -16px;
