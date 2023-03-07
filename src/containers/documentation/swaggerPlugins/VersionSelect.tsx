@@ -6,16 +6,17 @@ import { VersionMetadata } from '../../../types';
 
 export interface VersionSelectProps {
   dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning>;
-  version: string;
-  versions: VersionMetadata[] | null;
   handleVersionChange: (
     dispatch: React.Dispatch<SetRequestedAPIVersion>,
   ) => (requestedVersion: string) => void;
+  version: string;
+  versions: VersionMetadata[] | null;
 }
 
 export interface VersionSelectState {
-  selectedVersion: string;
   currentVersion: string;
+  initialRender: boolean;
+  selectedVersion: string;
 }
 
 export default class VersionSelect extends React.PureComponent<
@@ -28,7 +29,11 @@ export default class VersionSelect extends React.PureComponent<
     super(props);
     const reduxVersion = this.props.version;
     const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
-    this.state = { currentVersion: initialVersion, selectedVersion: initialVersion };
+    this.state = {
+      currentVersion: initialVersion,
+      initialRender: true,
+      selectedVersion: initialVersion,
+    };
     this.versionHeadingElement = React.createRef();
   }
 
@@ -68,6 +73,8 @@ export default class VersionSelect extends React.PureComponent<
   ): void {
     if (prevState.currentVersion !== this.state.currentVersion) {
       this.versionHeadingElement.current?.focus();
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      this.setState(prevState => ({ ...prevState, initialRender: false }));
     }
   }
 
@@ -141,7 +148,11 @@ export default class VersionSelect extends React.PureComponent<
             )}
             tabIndex={-1}
           >
-            Showing documentation for <b>{apiStatus}</b>.
+            {!this.state.initialRender && (
+              <>
+                Showing documentation for <b>{apiStatus}</b>.
+              </>
+            )}
           </h2>
         )}
       </>
