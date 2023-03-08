@@ -21,7 +21,6 @@ const ConsumerFormFields: FC = () => (
       name="description"
       as="textarea"
       required
-      className="vads-u-margin-top--0"
     />
   </>
 );
