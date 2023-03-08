@@ -5,7 +5,7 @@ import { TextField, CheckboxRadioField } from '../../../../components';
 import { ContactUsFormState } from '../../../../types/forms/contactUsForm';
 
 const titleClass = classNames(
-  'vads-u-margin-top--4',
+  'vads-u-margin-top--6',
   'vads-u-margin-bottom--2p5',
   'vads-u-font-size--lg',
 );

@@ -7,7 +7,7 @@ const ConsumerFormFields: FC = () => (
     <legend>
       <h2
         className={classNames(
-          'vads-u-margin-top--4',
+          'vads-u-margin-top--6',
           'vads-u-margin-bottom--0',
           'vads-u-font-size--lg',
         )}
