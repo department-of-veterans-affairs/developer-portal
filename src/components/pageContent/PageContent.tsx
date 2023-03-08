@@ -110,7 +110,7 @@ const PageContent = (): JSX.Element => {
           {vaNetworkAvailable.status === 'testing' && (
             <LoadingIndicator
               label="testing connection"
-              message="Validating VA network access..."
+              message="Validating VA network access... Login may be required."
             />
           )}
           {vaNetworkAvailable.status === 'unavailable' && (
