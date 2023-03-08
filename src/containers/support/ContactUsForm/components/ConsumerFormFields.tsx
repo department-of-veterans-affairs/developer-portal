@@ -16,7 +16,8 @@ const ConsumerFormFields: FC = () => (
       </h2>
     </legend>
     <TextField
-      label="Describe your question or issue in as much detail as you can. If your question is about an error, include steps you took to get it and any error messaging you received."
+      label="Describe your question or issue in as much detail as you can."
+      secondLabel="If your question is about an error, include steps you took to get it and any error messaging you received."
       name="description"
       as="textarea"
       required
