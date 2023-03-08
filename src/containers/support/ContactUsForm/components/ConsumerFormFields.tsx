@@ -8,7 +8,7 @@ const ConsumerFormFields: FC = () => (
       <h2
         className={classNames(
           'vads-u-margin-top--6',
-          'vads-u-margin-bottom--0',
+          'vads-u-margin-bottom--2p5',
           'vads-u-font-size--lg',
         )}
       >
@@ -21,7 +21,7 @@ const ConsumerFormFields: FC = () => (
       name="description"
       as="textarea"
       required
-      className="vads-u-margin-top--4"
+      className="vads-u-margin-top--0"
     />
   </>
 );
