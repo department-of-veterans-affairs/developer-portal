@@ -6,7 +6,6 @@ import {
   PUBLISHING_REQUIREMENTS_URL,
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_PATH,
-  // PUBLISHING_EXPECTATIONS_PATH,
 } from '../../types/constants/paths';
 import { ContentWithNav, SideNavEntry } from '../../components';
 import { setGeneralStore, SetGeneralStore } from '../../actions';

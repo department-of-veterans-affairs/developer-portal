@@ -31,15 +31,15 @@ const PublishingIntroduction: FC = () => {
       <PageHeader header="Publishing your API on Lighthouse" />
       <p>
         <strong>
-          VA Lighthouse APIs work with internal VA teams to publish the APIs they’ve created.
+          VA Lighthouse APIs work with internal VA teams to publish the APIs they&apos;ve created.
         </strong>{' '}
         Together, Lighthouse and VA are driving innovation to help Veterans control their data and
-        access the benefits they’ve earned. If you are an internal VA team and want to publish your
-        API to help further the goals of the Office of Information and Technology{' '}
+        access the benefits they&apos;ve earned. If you are an internal VA team and want to publish
+        your API to help further the goals of the Office of Information and Technology{' '}
         <a href="https://www.oit.va.gov/reports/year-in-review/2020/">
           digital transformation strategy
         </a>
-        , you’re in the right place.
+        , you&apos;re in the right place.
       </p>
       <p>
         Publishing your API on Lighthouse results in a streamlined API experience for you and your
@@ -49,15 +49,15 @@ const PublishingIntroduction: FC = () => {
       </p>
       <p>
         We publish only modern, <a href="https://restfulapi.net/">RESTful</a> APIs, but if your API
-        follows another protocol and you’re interested in publishing your API on our platform, reach
-        out to us. We may be able to help you convert your API so you can benefit from being part of
-        the Lighthouse community.
+        follows another protocol and you&apos;re interested in publishing your API on our platform,
+        reach out to us. We may be able to help you convert your API so you can benefit from being
+        part of the Lighthouse community.
       </p>
       <h2>Lighthouse is your solution</h2>
       <p>
         Publishing your API on Lighthouse lifts much of the administrative and maintenance burden
         from your team to ours. We act as your API partner and consultant and are invested in your
-        team’s success. The benefits of working with us are far-reaching for both you and your
+        team&apos;s success. The benefits of working with us are far-reaching for both you and your
         consumers, including:
       </p>
       <div className="vads-u-display--flex vads-u-flex-direction--column vads-u-margin-bottom--7">
@@ -98,8 +98,8 @@ const PublishingIntroduction: FC = () => {
         <SectionWithIcon header="Reduced overhead" imageFile={costImage} headerId="overhead">
           <p>
             Publishing with Lighthouse shifts the burden of access control, authentication, consent,
-            rate limiting, and more. You’ll spend your time and effort on tasks that matter most,
-            freeing your resources and reducing overhead.
+            rate limiting, and more. You&apos;ll spend your time and effort on tasks that matter
+            most, freeing your resources and reducing overhead.
           </p>
         </SectionWithIcon>
         <SectionWithIcon header="Security" imageFile={lockImage} headerId="security">
