@@ -61,7 +61,7 @@ const PageContent = (): JSX.Element => {
       .then(() => {
         setVaNetworkAvailable({ status: 'connected' });
         window.location.assign(PUBLISHING_REQUIREMENTS_URL);
-        return null;
+        return true;
       })
       .catch(() => {
         setTimeout(() => {
@@ -86,6 +86,14 @@ const PageContent = (): JSX.Element => {
     }
   }, [vaNetworkAvailable]);
 
+  let modalTitle =
+    vaNetworkAvailable.status === 'unavailable'
+      ? "It looks like you're not connected to the VA network."
+      : null;
+  if (vaNetworkAvailable.status === 'connected') {
+    modalTitle = 'Connected';
+  }
+
   return (
     <main id="main" ref={mainRef} tabIndex={-1}>
       <ErrorBoundary FallbackComponent={ErrorBoundaryPage}>
@@ -97,11 +105,7 @@ const PageContent = (): JSX.Element => {
           onPrimaryButtonClick={closeVaNetworkModal}
           primary-button-text="Close"
           status={vaNetworkAvailable.status === 'testing' ? null : 'info'}
-          modalTitle={
-            vaNetworkAvailable.status === 'testing'
-              ? null
-              : "It looks like you're not connected to the VA network."
-          }
+          modalTitle={modalTitle}
         >
           {vaNetworkAvailable.status === 'testing' && (
             <LoadingIndicator
