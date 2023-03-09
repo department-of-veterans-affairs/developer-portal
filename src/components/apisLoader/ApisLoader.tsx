@@ -1,5 +1,6 @@
 import * as React from 'react';
-import LoadingIndicator from '@department-of-veterans-affairs/component-library/LoadingIndicator';
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
+import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
 import { connect } from 'react-redux';
 import { getApisLoadedState } from '../../apiDefs/query';
 import { defaultLoadingProps } from '../../utils/loadingHelper';
@@ -23,12 +24,12 @@ const ApisLoader: React.FunctionComponent<ApisLoaderProps> = (props): JSX.Elemen
       return props.hideError ? (
         <div />
       ) : (
-        <va-alert status="error" visible>
+        <VaAlert status="error" visible>
           <h2 slot="headline">Loading Error:</h2>
           <p className="vads-u-margin-y--0">
             API details failed to load. Please reload or try again later if the issue persists.
           </p>
-        </va-alert>
+        </VaAlert>
       );
     default:
       return <div />;

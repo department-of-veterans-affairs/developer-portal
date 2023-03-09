@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactNode, useState } from 'react';
 import { Formik, Form } from 'formik';
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import AlertBox from 'component-library-legacy/AlertBox';
 import { useCookies } from 'react-cookie';
 import { CheckboxRadioField } from '../../../components';
 import { LPB_CONTACT_US_URL, LPB_FORGERY_TOKEN } from '../../../types/constants';

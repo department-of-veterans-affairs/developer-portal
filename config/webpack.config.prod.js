@@ -118,6 +118,9 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
         loader: require.resolve(preProcessor),
         options: {
           sourceMap: true,
+          sassOptions: {
+            quietDeps: true,
+          },
         },
       },
     );

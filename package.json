@@ -22,8 +22,9 @@
   },
   "dependencies": {
     "@braintree/sanitize-url": "^5.0.2",
-    "@department-of-veterans-affairs/component-library": "3.2.1",
+    "@department-of-veterans-affairs/component-library": "8.5.0",
     "@department-of-veterans-affairs/formation": "6.16.3",
+    "@department-of-veterans-affairs/web-components": "2.11.0",
     "@floating-ui/react-dom": "*",
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
@@ -31,6 +32,7 @@
     "@fortawesome/react-fontawesome": "^0.1.15",
     "@sentry/browser": "^6.13.3",
     "classnames": "^2.3.1",
+    "component-library-legacy": "npm:@department-of-veterans-affairs/component-library@3.2.1",
     "core-js": "^3.18.3",
     "flag": "^4.4.0",
     "formdata-node": "^4.3.0",

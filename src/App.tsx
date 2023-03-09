@@ -3,7 +3,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { Route, Router } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
-import { applyPolyfills, defineCustomElements } from 'web-components/loader';
+import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
 import { LPB_PROVIDERS_URL } from './types/constants';
 import { setApiLoadingError, SetAPIs, setApis } from './actions';
 import { APICategories } from './apiDefs/schema';
@@ -16,11 +16,7 @@ import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
 
-// Apply Polyfills for IE11 for custom web-components
-void applyPolyfills().then(() => {
-  void defineCustomElements();
-  return null;
-});
+void defineCustomElements();
 
 /**
  * the double flex container only exists and is flexed to

@@ -1,8 +1,15 @@
+import classNames from 'classnames';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { AccordionPanelContent, GroupedAccordions, PageHeader } from '../../components';
+import { PageHeader } from '../../components';
+import toHtmlId from '../../toHtmlId';
 import { CONSUMER_PROD_PATH, CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
+
+interface AccordionPanelContent {
+  readonly body: string | JSX.Element;
+  readonly title: string;
+}
 
 const generalQuestions: SupportQuestion[] = [
   {
@@ -148,8 +155,33 @@ export const SupportQuestions = (props: SupportQuestionsProps): JSX.Element => {
     body: q.answer,
     title: q.question,
   }));
+  const headingId = `${toHtmlId(props.title)}-accordions`;
 
-  return <GroupedAccordions panelContents={content} title={props.title} />;
+  return (
+    <section
+      className={classNames('va-grouped-accordion', 'vads-u-margin-bottom--2p5')}
+      aria-labelledby={headingId}
+    >
+      <div
+        className={classNames(
+          'vads-u-display--flex',
+          'vads-u-justify-content--space-between',
+          'vads-u-align-items--center',
+        )}
+      >
+        <h2 id={headingId} className="vads-u-font-size--lg">
+          {props.title}
+        </h2>
+      </div>
+      <va-accordion>
+        {content.map((c: AccordionPanelContent) => (
+          <va-accordion-item header={c.title} key={c.title}>
+            {c.body}
+          </va-accordion-item>
+        ))}
+      </va-accordion>
+    </section>
+  );
 };
 
 const SupportFAQ: () => JSX.Element = () => (

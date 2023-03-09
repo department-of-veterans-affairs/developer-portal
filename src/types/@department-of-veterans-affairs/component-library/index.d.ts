@@ -1,12 +1,6 @@
-declare module '@department-of-veterans-affairs/component-library/AlertBox';
-declare module '@department-of-veterans-affairs/component-library/Modal';
-declare module '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
-declare module '@department-of-veterans-affairs/component-library/LoadingIndicator';
-
-declare module 'web-components/loader' {
-  export function applyPolyfills(): Promise<void>;
-  export function defineCustomElements(): void;
-}
+declare module 'component-library-legacy/AlertBox';
+declare module 'component-library-legacy/Modal';
+declare module 'component-library-legacy/LoadingIndicator';
 
 interface VaAccordionProps {
   bordered?: boolean;
@@ -21,6 +15,13 @@ interface VaAccordionItemProps {
   subheader?: string;
 }
 
+declare module '@department-of-veterans-affairs/component-library/dist/react-bindings';
+declare module '@department-of-veterans-affairs/react-components';
+declare module '@department-of-veterans-affairs/component-library' {
+  export function applyPolyfills(): Promise<void>;
+  export function defineCustomElements(): void;
+}
+
 interface VaAlertProps {
   ['background-only']?: boolean;
   ['close-btn-aria-label']?: string;
@@ -32,7 +33,6 @@ interface VaAlertProps {
   status: 'info' | 'success' | 'error' | 'warning' | 'continue';
   visible: boolean;
 }
-
 declare namespace JSX {
   interface IntrinsicElements {
     'va-accordion': VaAccordionProps;
