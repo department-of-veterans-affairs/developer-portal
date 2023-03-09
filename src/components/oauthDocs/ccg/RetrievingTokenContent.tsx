@@ -138,44 +138,6 @@ mV4cCI6MTYyOTMxOTU0OH0`}
               </td>
             </tr>
             {hasLaunchScope && (
-              <>
-                <tr>
-                  <td>
-                    <code>launch</code>
-                  </td>
-                  <td>False (but recommended)</td>
-                  <td>
-                    <p>
-                      The launch scope and parameter limit the scope of an access token by
-                      indicating the token is for a specific patient or encounter.
-                    </p>
-                    <p>
-                      It must be a base64-encoded JSON object, the value of which is the
-                      patient&apos;s ICN. The format of the object will be:{' '}
-                      <code>{'{ "patient": "1000720100V271387"}'}</code>
-                    </p>
-                    <p>
-                      When encoded using base64, the object will look like this:{' '}
-                      <code>LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo==</code>
-                    </p>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <code>scope</code>
-                  </td>
-                  <td>True</td>
-                  <td>
-                    <ul>
-                      {scopes.map(scope => (
-                        <li key={scope}>{scope}</li>
-                      ))}
-                    </ul>
-                  </td>
-                </tr>
-              </>
-            )}
-            {hasLaunchScope && (
               <tr>
                 <td>
                   <code>launch</code>
