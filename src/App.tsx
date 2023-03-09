@@ -12,8 +12,6 @@ import { FlagsProvider, getFlags } from './flags';
 import { history } from './store';
 import { RootState } from './types';
 
-import '@department-of-veterans-affairs/component-library/dist/main.css';
-
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
