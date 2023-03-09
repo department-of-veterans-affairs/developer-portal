@@ -1,4 +1,6 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
+import { SUPPORT_CONTACT_PATH } from '../../../types/constants/paths';
 import { CodeBlock } from '../../../components';
 
 interface GeneratingJWTProps {
@@ -72,6 +74,11 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
                   </a>
                 </p>
               )}
+              <p>
+                <b>Important: </b> To get production access, you must either work for VA or have
+                specific VA agreements in place. If you have questions,{' '}
+                <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
+              </p>
             </td>
           </tr>
           <tr>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import AlertBox from 'component-library-legacy/AlertBox';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 

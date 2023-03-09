@@ -1,7 +1,6 @@
 export * from './codeBlock/CodeWrapper';
 export * from './codeBlock/CodeBlock';
 export * from './pageHeader/PageHeader';
-export * from './groupedAccordions/GroupedAccordions';
 export * from './header/Header';
 export * from './navBar/NavBar';
 export * from './pageContent/PageContent';
@@ -34,3 +33,4 @@ export * from './apiTags/ApiTags';
 export * from './apiCheckboxList/APICheckboxList';
 export * from './veteranResources/VeteranResources';
 export * from './tooltip/Tooltip';
+export * from './sideNav/SideNavExternalLink';

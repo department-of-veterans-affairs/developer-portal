@@ -1,14 +1,18 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import store from '../../../../store';
 import { PublishingIntroduction } from './PublishingIntroduction';
 
 describe('PublishingIntroduction', () => {
   beforeEach(() => {
     render(
-      <MemoryRouter initialEntries={['/api-publishing']}>
-        <PublishingIntroduction />
-      </MemoryRouter>,
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/api-publishing']}>
+          <PublishingIntroduction />
+        </MemoryRouter>
+      </Provider>,
     );
   });
 
@@ -20,7 +24,6 @@ describe('PublishingIntroduction', () => {
   describe('card links', () => {
     it.each([
       ['How onboarding works', '/api-publishing/process'],
-      ['Expectations of Lighthouse APIs', '/api-publishing/expectations'],
       ['Contact us', '/support/contact-us'],
     ])('has the "%s" card link', (title: string, url: string) => {
       const cardLink = screen.getByRole('link', { name: title });

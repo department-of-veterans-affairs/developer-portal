@@ -1,4 +1,4 @@
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -6,7 +6,7 @@ import { HashLink, NavHashLink } from 'react-router-hash-link';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
-import { FLAG_PLATFORM_OUTAGE, FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
+import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
 import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
 import Search from '../search/Search';
@@ -108,32 +108,20 @@ const Header = (): JSX.Element => {
           </div>
         </div>
         <NavBar isMobileMenuVisible={mobileNavVisible} onMobileNavClose={toggleMenuVisible} />
-        <Flag name={[FLAG_PLATFORM_OUTAGE]}>
-          <AlertBox
-            status="error"
-            content={
-              <section aria-label="Network issue alert">
-                {/* message written for specific issue on 8/25/21, update next time it needs to be used */}
-                There were recent network issues affecting all VA sites and usage of VA Lighthouse
-                APIs in sandbox and production environments from 9:56 am to 10:44 am EDT. Please
-                review the{' '}
-                <a href="https://valighthouse.statuspage.io/" target="_blank" rel="noreferrer">
-                  Status Page
-                </a>{' '}
-                for details and reach out to <Link to="/support/contact-us">Support</Link> if you
-                have any questions.
-              </section>
-            }
-            className="vads-u-margin-top--0"
-          />
-        </Flag>
+        {location.pathname === '/explore/appeals/docs/appeals' && (
+          <VaAlert status="info" visible>
+            <h3 slot="headline">
+              A new version of Appeals Status API (v1) will launch later this year.
+            </h3>
+          </VaAlert>
+        )}
         {location.pathname === '/explore/facilities/docs/facilities' && (
-          <va-alert status="info" visible>
+          <VaAlert status="info" visible>
             <h3 slot="headline">
               Version 1 of the VA Facilities API is launching soon. We will add{' '}
               <Link to="/release-notes/facilities">release notes</Link> when it&apos;s live.
             </h3>
-          </va-alert>
+          </VaAlert>
         )}
       </header>
     </>

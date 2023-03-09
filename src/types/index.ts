@@ -46,8 +46,14 @@ export interface ApiList {
   loaded: boolean;
 }
 
+export interface GeneralStore {
+  vaNetworkModal: boolean;
+  vaNetworkConnected: boolean;
+}
+
 export interface RootState {
   oAuthApiSelection: OAuthAPISelection;
   apiVersioning: APIVersioning;
   apiList: ApiList;
+  generalStore: GeneralStore;
 }

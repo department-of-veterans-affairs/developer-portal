@@ -26,12 +26,15 @@ export const CONSUMER_ROUTER_PATHS: string[] = [
 
 export const PUBLISHING_PATH = '/api-publishing';
 export const PUBLISHING_ONBOARDING_PATH = `${PUBLISHING_PATH}/process`;
-export const PUBLISHING_EXPECTATIONS_PATH = `${PUBLISHING_PATH}/expectations`;
+export const PUBLISHING_REQUIREMENTS_URL =
+  'https://hub.lighthouse.va.gov/docs/default/component/lighthouse-api-standards/';
 export const PUBLISHING_ROUTER_PATHS: string[] = [
   PUBLISHING_PATH,
   PUBLISHING_ONBOARDING_PATH,
-  PUBLISHING_EXPECTATIONS_PATH,
+  PUBLISHING_REQUIREMENTS_URL,
 ];
+// For legacy links
+export const PUBLISHING_EXPECTATIONS_PATH = `${PUBLISHING_PATH}/expectations`;
 
 export const RELEASE_NOTES_PATH = '/release-notes';
 export const RELEASE_NOTES_DEACTIVATED_PATH = `${RELEASE_NOTES_PATH}/deactivated`;

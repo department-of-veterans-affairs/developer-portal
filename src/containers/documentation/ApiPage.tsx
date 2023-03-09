@@ -1,9 +1,9 @@
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Redirect, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import ReactMarkdown from 'react-markdown';
+import AlertBox from 'component-library-legacy/AlertBox';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
 import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
