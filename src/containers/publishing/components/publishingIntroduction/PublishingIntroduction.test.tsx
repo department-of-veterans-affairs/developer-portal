@@ -24,7 +24,6 @@ describe('PublishingIntroduction', () => {
   describe('card links', () => {
     it.each([
       ['How onboarding works', '/api-publishing/process'],
-      // ['Expectations of Lighthouse APIs', '/api-publishing/expectations'],
       ['Contact us', '/support/contact-us'],
     ])('has the "%s" card link', (title: string, url: string) => {
       const cardLink = screen.getByRole('link', { name: title });
