@@ -10,6 +10,7 @@ type FieldProps = ComponentPropsWithRef<typeof Field>;
 export interface TextFieldProps {
   className?: string;
   label: ReactNode;
+  secondLabel?: string;
   name: string;
   required?: boolean;
   as?: FieldProps['as'];
@@ -28,6 +29,7 @@ const TextField: FC<TextFieldProps> = ({
   description,
   className,
   label,
+  secondLabel,
   name,
   required = false,
   type = 'text',
@@ -60,12 +62,25 @@ const TextField: FC<TextFieldProps> = ({
     <div className={classNames('va-api-text-field', containerClass, className)}>
       <label htmlFor={fieldId} className={classNames('vads-u-margin-top--0', labelClass)}>
         {label}
-        {required && <span className="form-required-span">(*Required)</span>}
+        {secondLabel && <p className="second-label">{secondLabel}</p>}
+        {required && (
+          <span
+            className={classNames('form-required-span', {
+              'second-label-required-span': secondLabel,
+            })}
+          >
+            (*Required)
+          </span>
+        )}
       </label>
-      {description &&
-        <div id={descriptionId} className={classNames('vads-u-color--gray', 'vads-u-margin-top--2')}>
+      {description && (
+        <div
+          id={descriptionId}
+          className={classNames('vads-u-color--gray', 'vads-u-margin-top--2')}
+        >
           {description}
-        </div>}
+        </div>
+      )}
       <span id={errorId} className={validationClass} role="alert">
         <ErrorMessage name={name} />
       </span>

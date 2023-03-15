@@ -5,7 +5,7 @@ import { TextField, CheckboxRadioField } from '../../../../components';
 import { ContactUsFormState } from '../../../../types/forms/contactUsForm';
 
 const titleClass = classNames(
-  'vads-u-margin-top--4',
+  'vads-u-margin-top--6',
   'vads-u-margin-bottom--2p5',
   'vads-u-font-size--lg',
 );
@@ -37,7 +37,7 @@ const PublishingFormFields: FC = () => {
         as="textarea"
       />
 
-      <fieldset className="vads-u-margin-top--4">
+      <fieldset className="vads-u-margin-top--6">
         <legend className={classNames('vads-u-font-size--lg', 'vads-u-margin-bottom--2p5')}>
           <h2 className={classNames('vads-u-font-size--lg', 'vads-u-margin-y--0')}>
             Do you have concerns about publishing your API for public use?

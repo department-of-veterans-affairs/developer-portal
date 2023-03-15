@@ -23,11 +23,9 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
   const apisLoaded = getApisLoadedState() === apiLoadingState.LOADED;
   const dispatch: React.Dispatch<SetOAuthAPISelection> = useDispatch();
   const [selectedOptionOverride, setSelectedOptionOverride] = React.useState<string>();
-  const [apiSelectionButtonDisabled, setApiSelectionButtonDisabled] = React.useState<boolean>();
 
   const onSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     setSelectedOptionOverride(event.currentTarget.value);
-    setApiSelectionButtonDisabled(false);
   };
   const update = (button: HTMLButtonElement): void => {
     const tooltip = button.nextElementSibling as HTMLElement;
@@ -82,15 +80,12 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
     tooltip.style.display = 'block';
     update(button);
 
-    setApiSelectionButtonDisabled(true);
-
     event.stopPropagation();
   };
   const { selectedOption } = props;
   const selectLabel = props.selectLabel ?? 'Select an API to update the code snippet';
   const theme = props.theme ?? 'light';
   const selectorLabel = 'Select an API';
-  const buttonDisabled = apiSelectionButtonDisabled ?? true;
 
   const hideTooltips = (): void => {
     Array.from(document.getElementsByClassName('page-updater')).forEach(button => {
@@ -131,7 +126,6 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
         </label>
         <div className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--3')}>
           <button
-            disabled={buttonDisabled}
             onClick={onButtonClick}
             type="button"
             className="page-updater"

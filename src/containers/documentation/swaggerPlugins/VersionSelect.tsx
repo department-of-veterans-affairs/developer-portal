@@ -1,28 +1,45 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import classNames from 'classnames';
+import { ResetVersioning, SetRequestedAPIVersion, SetVersioning } from '../../../actions';
 import { VersionMetadata } from '../../../types';
-import { System } from './types';
 
 export interface VersionSelectProps {
-  getSystem: () => System;
+  dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning>;
+  handleVersionChange: (
+    dispatch: React.Dispatch<SetRequestedAPIVersion>,
+  ) => (requestedVersion: string) => void;
+  version: string;
+  versions: VersionMetadata[] | null;
 }
 
 export interface VersionSelectState {
-  version: string;
-  versionSelectionButtonDisabled: boolean;
+  currentVersion: string;
+  initialRender: boolean;
+  selectedVersion: string;
 }
 
-export default class VersionSelect extends React.Component<VersionSelectProps, VersionSelectState> {
+export default class VersionSelect extends React.PureComponent<
+  VersionSelectProps,
+  VersionSelectState
+> {
+  public versionHeadingElement: React.RefObject<HTMLHeadingElement>;
+
   public constructor(props: VersionSelectProps) {
     super(props);
-    const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();
+    const reduxVersion = this.props.version;
     const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
-    this.state = { version: initialVersion, versionSelectionButtonDisabled: true };
+    this.state = {
+      currentVersion: initialVersion,
+      initialRender: true,
+      selectedVersion: initialVersion,
+    };
+    this.versionHeadingElement = React.createRef();
   }
 
   public getCurrentVersion(): string {
-    const versions = this.props.getSystem().versionSelectors.versionMetadata();
+    const { versions: propVersions } = this.props;
+    const versions = propVersions;
     const selectCurrentVersion = (versionInfo: VersionMetadata): boolean =>
       versionInfo.status === 'Current Version';
 
@@ -35,20 +52,30 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
   }
 
   public getVersionMetadataByProp(prop: string, version: string): VersionMetadata | undefined {
-    const versions = this.props.getSystem().versionSelectors.versionMetadata();
+    const { versions: propVersions } = this.props;
+    const versions = propVersions;
     const versionMatch = (versionInfo: VersionMetadata): boolean => versionInfo[prop] === version;
     return versions?.find(versionMatch);
   }
 
   public handleSelectChange(version: string): void {
-    this.setState({ version });
-    this.setState({ versionSelectionButtonDisabled: false });
+    this.setState(prevState => ({ ...prevState, selectedVersion: version }));
   }
 
   public handleButtonClick(): void {
-    this.props.getSystem().versionActions.updateVersion(this.state.version);
-    this.setState({ version: this.state.version });
-    this.setState({ versionSelectionButtonDisabled: true });
+    this.setState(prevState => ({ ...prevState, currentVersion: this.state.selectedVersion }));
+    this.props.handleVersionChange(this.props.dispatch)(this.state.selectedVersion);
+  }
+
+  public componentDidUpdate(
+    prevProps: Readonly<VersionSelectProps>,
+    prevState: Readonly<VersionSelectState>,
+  ): void {
+    if (prevState.currentVersion !== this.state.currentVersion) {
+      this.versionHeadingElement.current?.focus();
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      this.setState(prevState => ({ ...prevState, initialRender: false }));
+    }
   }
 
   public render(): JSX.Element {
@@ -66,15 +93,10 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
       : 'Select a version';
 
     let apiStatus;
-    if (this.props.getSystem().versionSelectors.apiVersion() === '') {
-      apiStatus =
-        (this.props.getSystem().versionSelectors.versionMetadata()?.[0] as VersionMetadata).label ??
-        '';
+    if (this.props.version === 'current') {
+      apiStatus = this.props.versions?.[0].label ?? '';
     } else {
-      apiStatus = this.getVersionMetadataByProp(
-        'version',
-        this.props.getSystem().versionSelectors.apiVersion(),
-      )?.label;
+      apiStatus = this.getVersionMetadataByProp('version', this.props.version)?.label;
     }
 
     return (
@@ -91,17 +113,14 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
                 id="api-selector-field"
                 name="api-selector-field"
                 aria-label={selectorLabel}
-                value={this.state.version}
+                value={this.state.selectedVersion}
                 onChange={(e): void => this.handleSelectChange(e.target.value)}
               >
-                {this.props
-                  .getSystem()
-                  .versionSelectors.versionMetadata()
-                  ?.map((versionInfo: VersionMetadata) => (
-                    <option value={versionInfo.version} key={versionInfo.version}>
-                      {buildDisplay(versionInfo)}
-                    </option>
-                  ))}
+                {this.props.versions?.map((versionInfo: VersionMetadata) => (
+                  <option value={versionInfo.version} key={versionInfo.version}>
+                    {buildDisplay(versionInfo)}
+                  </option>
+                ))}
               </select>
             </label>
             <div
@@ -111,17 +130,31 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
                 'vads-u-text-align--center',
               )}
             >
-              <button
-                onClick={(): void => this.handleButtonClick()}
-                type="button"
-                disabled={this.state.versionSelectionButtonDisabled}
-              >
+              <button onClick={(): void => this.handleButtonClick()} type="button">
                 Update page
               </button>
             </div>
           </div>
         </div>
-        {fhirRegex.test(location.pathname) && <h2>{apiStatus}</h2>}
+        {!!apiStatus && fhirRegex.test(location.pathname) && (
+          <h2
+            ref={this.versionHeadingElement}
+            className={classNames(
+              'vads-u-font-family--sans',
+              'vads-u-font-weight--normal',
+              'vads-u-font-size--base',
+              'vads-u-padding--0p5',
+              'vads-u-margin-y--1',
+            )}
+            tabIndex={-1}
+          >
+            {!this.state.initialRender && (
+              <>
+                Showing documentation for <b>{apiStatus}</b>.
+              </>
+            )}
+          </h2>
+        )}
       </>
     );
   }

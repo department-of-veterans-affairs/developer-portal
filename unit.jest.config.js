@@ -11,6 +11,7 @@ module.exports = {
     '!src/registerServiceWorker.ts',
     '!src/visualRegressionTest.ts',
     '!src/containers/consumerOnboarding/validationSchema.ts',
+    '!src/setupProxy.js',
   ],
   coverageThreshold: {
     global: {
