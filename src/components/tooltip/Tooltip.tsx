@@ -13,17 +13,15 @@ import {
   Side,
 } from '@floating-ui/react-dom-interactions';
 
-// import { mergeRefs } from './utils';
-
 import './Tooltip.scss';
 
-interface TooltipProps {
+export interface TooltipProps {
   label: string;
   placement?: Placement;
   children: JSX.Element;
 }
 
-const Tooltip = ({ children, label, placement = 'top' }: TooltipProps): JSX.Element => {
+export const Tooltip = ({ children, label, placement = 'top' }: TooltipProps): JSX.Element => {
   const [open, setOpen] = useState(false);
 
   const arrowRef = useRef(null);
@@ -49,9 +47,6 @@ const Tooltip = ({ children, label, placement = 'top' }: TooltipProps): JSX.Elem
     useRole(context, { role: 'tooltip' }),
     useDismiss(context, { ancestorScroll: true }),
   ]);
-
-  // Preserve the consumer's ref
-  // const ref = useMemo(() => mergeRefs([reference, children.ref]), [reference, children]);
 
   const staticSide: string | undefined = {
     bottom: 'top',
@@ -93,5 +88,3 @@ const Tooltip = ({ children, label, placement = 'top' }: TooltipProps): JSX.Elem
     </>
   );
 };
-
-export { Tooltip };
