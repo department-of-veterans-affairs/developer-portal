@@ -20,7 +20,7 @@ describe('EditInputField', () => {
   const defaultProps: EditInputFieldProps = {
     descriptionId: 'test',
     isOnlyInput: false,
-    name: 'test',
+    name: 'test field',
     onRemove: jest.fn(),
     placeHolder: 'test',
     required: false,
