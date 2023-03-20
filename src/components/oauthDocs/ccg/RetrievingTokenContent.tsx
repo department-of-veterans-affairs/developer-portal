@@ -26,19 +26,6 @@ const RetrievingTokenContent: FC<RetrievingTokenProps> = ({
         Use your client assertion to retrieve an access token. Be sure to include the scopes for the
         API.
       </p>
-      {hasLaunchScope && (
-        <p>
-          Lighthouse recommends also providing launch context requirements using the launch
-          parameter and launch scope, if applicable. These limit the scope of an access token by
-          indicating the token is for a specific patient or encounter. If used, the launch parameter
-          must be a base64 encoded JSON object, such as:{' '}
-          <code>
-            {
-              'base64({"patient":"1000720100V271387"}) => LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo=='
-            }
-          </code>
-        </p>
-      )}
       <p>Select your API from the dropdown to see the correct auth server in the example.</p>
       <APISelector
         options={options}
@@ -142,7 +129,7 @@ mV4cCI6MTYyOTMxOTU0OH0`}
                 <td>
                   <code>launch</code>
                 </td>
-                <td>False (but recommended)</td>
+                <td>True</td>
                 <td>
                   <p>
                     The launch scope and parameter limit the scope of an access token by indicating
