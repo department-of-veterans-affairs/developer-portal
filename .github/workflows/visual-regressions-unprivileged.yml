@@ -83,22 +83,22 @@ jobs:
           COMMIT_HASH: ${{steps.githash.outputs.hash}}
           PR_NUMBER: ${{steps.pr_number.outputs.pr_number}}
         run: |
-          mkdir -p test/image_snapshots/__diff_output__;
-          echo $PR_NUMBER > test/image_snapshots/__diff_output__/pr.txt
-          echo $COMMIT_HASH > test/image_snapshots/__diff_output__/hash.txt
-          echo $GITHUB_HEAD_REF > test/image_snapshots/__diff_output__/branch.txt
+          mkdir -p test/image_snapshots/visual.cy.js/__diff_output__;
+          echo $PR_NUMBER > test/image_snapshots/visual.cy.js/__diff_output__/pr.txt
+          echo $COMMIT_HASH > test/image_snapshots/visual.cy.js/__diff_output__/hash.txt
+          echo $GITHUB_HEAD_REF > test/image_snapshots/visual.cy.js/__diff_output__/branch.txt
 
       - name: Add overview failure graphics to archive
         if: steps.visual_test.outcome == 'failure'
         run: |
-          cp cypress/screenshots/* test/image_snapshots/__diff_output__/
+          cp cypress/screenshots/* test/image_snapshots/visual.cy.js/__diff_output__/
 
       - name: Upload failed screenshots
         if: steps.visual_test.outcome == 'failure'
         uses: actions/upload-artifact@v2
         with:
           name: visual-test-failures
-          path: test/image_snapshots/__diff_output__
+          path: test/image_snapshots/visual.cy.js/__diff_output__
 
       - name: Report Success/Failure
         if: steps.visual_test.outcome == 'failure'
