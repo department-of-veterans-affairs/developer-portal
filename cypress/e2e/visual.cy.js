@@ -75,7 +75,7 @@ describe('Visual Regression tests', () => {
     });
 
     it.only(`Check Swagger page has no visual regressions at ${size.width}px width.`, () => {
-      const path = '/explore/benefits/docs/claims';
+      const path = '/explore/vaForms/docs/vaForms';
       cy.viewport(size.width, size.height);
       cy.visit(path);
       cy.wait(5000); // Gives Swagger UI plenty of time to load
