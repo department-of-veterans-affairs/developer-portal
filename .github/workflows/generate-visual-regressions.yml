@@ -19,8 +19,17 @@ jobs:
       branch_name: ${{ steps.pr_branch.outputs.branch_name }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
-      - name: Install git-lfs and gh
-        run: apt update && apt install git-lfs gh
+      - name: Install gh
+        run: |
+          type -p curl >/dev/null || apt install curl -y
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+          && apt update \
+          && apt install gh -y
+
+      - name: Install git-lfs
+        run: apt update && apt install git-lfs
       - id: fetch_pr_branch
         uses: octokit/request-action@v2.x
         name: Fetch PR info
