@@ -54,6 +54,12 @@ describe('Visual Regression tests', () => {
     cy.intercept('GET', '/platform-backend/v0/providers/transformations/legacy.json*', {
       fixture: 'legacy.json',
     }).as('LPB datastore');
+    cy.intercept('GET', '/internal/docs/forms/metadata.json', {
+      fixture: 'vaForms-metadata.json',
+    }).as('VA Forms Metadata');
+    cy.intercept('GET', '/internal/docs/forms/v0/openapi.json', {
+      fixture: 'vaForms-openapi.json',
+    }).as('VA Forms OpenAPI');
     cy.intercept('GET', '/internal/docs/benefits-claims/metadata.json', {
       fixture: 'claims-metadata.json',
     }).as('Claims Metadata');
