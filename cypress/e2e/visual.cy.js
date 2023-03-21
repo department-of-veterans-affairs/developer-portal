@@ -71,7 +71,7 @@ describe('Visual Regression tests', () => {
       });
     });
 
-    it.only(`Check Swagger page has no visual regressions at ${size.width}px width.`, () => {
+    it(`Check Swagger page has no visual regressions at ${size.width}px width.`, () => {
       const path = '/explore/vaForms/docs/vaForms';
       cy.viewport(size.width, size.height);
       cy.visit(path);
