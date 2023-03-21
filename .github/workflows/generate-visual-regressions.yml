@@ -80,7 +80,7 @@ jobs:
         run: ./scripts/fake_lpb.sh
 
       - name: Delete all old snapshots
-        run: rm -f test/image_snapshots/visual-regression*
+        run: rm -f test/image_snapshots/visual.cy.js/*
 
       - id: visual_test
         continue-on-error: true
