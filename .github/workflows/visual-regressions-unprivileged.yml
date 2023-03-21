@@ -50,8 +50,6 @@ jobs:
           echo $GIT_HASH
           echo "::set-output name=hash::$GIT_HASH"
 
-      - name: Checkout LFS objects
-        run: git lfs checkout
       - name: Update apt-get and install packages
         run: sudo apt-get update && sudo apt-get install -y libxss1 libxtst6 wget --no-install-recommends
       - name: Install Google apt-get key
