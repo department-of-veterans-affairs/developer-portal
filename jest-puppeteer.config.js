@@ -18,7 +18,7 @@ if (!process.env.TEST_HOST) {
     command: `${envVars.join(' ')} npm run start`,
     protocol: 'http',
     port: 4444,
-    launchTimeout: 600000,
+    launchTimeout: 120000,
   };
 }
 

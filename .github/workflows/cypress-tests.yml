@@ -34,16 +34,13 @@ jobs:
       - name: Install python env
         run: |
           apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
-      - name: Install bzip2
-        run: apt install bzip2
-
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          install-command: npm ci --legacy-peer-deps
+          install-command: npm ci
           start: npm start
           wait-on: http://localhost:3001
           wait-on-timeout: 180
@@ -88,16 +85,13 @@ jobs:
       - name: Install python env
         run: |
           apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
-      - name: Install bzip2
-        run: apt install bzip2
-
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          install-command: npm ci --legacy-peer-deps
+          install-command: npm ci
           spec: cypress/e2e/accessibility.cy.js
           start: npm start
           wait-on: http://localhost:3001
