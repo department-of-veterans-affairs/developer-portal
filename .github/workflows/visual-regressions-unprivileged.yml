@@ -91,7 +91,7 @@ jobs:
       - name: Add overview failure graphics to archive
         if: steps.visual_test.outcome == 'failure'
         run: |
-          cp cypress/screenshots/* test/image_snapshots/visual.cy.js/__diff_output__/
+          cp cypress/screenshots/visual.cy.js/* test/image_snapshots/visual.cy.js/__diff_output__/
 
       - name: Upload failed screenshots
         if: steps.visual_test.outcome == 'failure'
