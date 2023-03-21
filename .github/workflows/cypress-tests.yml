@@ -1,9 +1,9 @@
-name: API-19692 Cypress Infrastructure Updates
+name: Cypress e2e and Accessibility tests
 
 on:
-  push:
-    branches:
-      - 'api-19692/node-18-cypress-in-docker'
+  pull_request:
+    branches: [master, node-18-upgrade]
+    types: [opened, synchronize, reopened, ready_for_review]
 
 env:
   REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001

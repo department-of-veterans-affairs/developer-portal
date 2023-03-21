@@ -17,7 +17,7 @@ const testPaths = [
   '/explore/benefits',
   '/explore/health/docs/quickstart',
   // Swagger page handled individually below
-  // '/explore/benefits/docs/claims',
+  // '/explore/vaForms/docs/vaForms',
   '/release-notes/benefits',
   '/api-publishing',
   '/api-publishing/process',
@@ -60,15 +60,6 @@ describe('Visual Regression tests', () => {
     cy.intercept('GET', '/internal/docs/forms/v0/openapi.json', {
       fixture: 'vaForms-openapi.json',
     }).as('VA Forms OpenAPI');
-    cy.intercept('GET', '/internal/docs/benefits-claims/metadata.json', {
-      fixture: 'claims-metadata.json',
-    }).as('Claims Metadata');
-    cy.intercept('GET', '/internal/docs/benefits-claims/v1/openapi.json', {
-      fixture: 'claims-openapi.json',
-    }).as('Claims OpenAPI');
-    cy.intercept('GET', '/internal/docs/benefits-claims/v1/openapi-sf.json', {
-      fixture: 'claims-openapi.json',
-    }).as('Claims OpenAPI - Swagger Safe');
   });
 
   viewports.forEach(size => {
