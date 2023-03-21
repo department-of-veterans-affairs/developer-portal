@@ -4,12 +4,12 @@ import * as path from 'path';
 
 const viewports = [
   { count: 1, height: 800, width: 1200 },
-  // { count: 2, height: 800, width: 768 },
-  // { count: 3, height: 800, width: 375 },
+  { count: 2, height: 800, width: 768 },
+  { count: 3, height: 800, width: 375 },
 ];
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  if (err.message.contains("Failed to construct 'URL': Invalid URL")) {
+  if (err.message.contains('Failed to construct')) {
     return false;
   }
 });

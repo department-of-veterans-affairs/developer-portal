@@ -30,8 +30,10 @@ const InfoContainer: React.FunctionComponent<InfoContainerProps> = (
   const selectedServer = oas3Selectors.selectedServer();
   const versionMetadata = getSystem().versionSelectors.versionMetadata();
 
-  let urlOutput: string | URL = '';
+  let urlOutput: string = '';
   if (specUrl) {
+    // eslint-disable-next-line no-console
+    console.log(specUrl);
     const url = new URL(specUrl);
     const metadata = versionMetadata?.find(obj => obj.sf_path === url.pathname);
     url.pathname = metadata?.path ?? url.pathname;
