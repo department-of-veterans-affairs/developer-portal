@@ -38,6 +38,8 @@ jobs:
         with:
           ref: ${{ steps.pr_branch.outputs.branch_name }}
           lfs: true
+      - name: Trust git repo ownership
+        run: git config --global --add safe.directory /__w/developer-portal/developer-portal
       - name: Unshallow the checkout
         run: git fetch --prune --unshallow
       - name: Setup node
