@@ -6,7 +6,7 @@ on:
       pr_number:
         description: 'What PR number needs updated visual regressions?'
         required: true
-        type: number
+        type: string
 
 jobs:
   update_visual_regressions:
@@ -19,6 +19,8 @@ jobs:
       branch_name: ${{ steps.pr_branch.outputs.branch_name }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
+      - name: Install git-lfs
+        run: apt update && apt install git-lfs
       - id: fetch_pr_branch
         uses: octokit/request-action@v2.x
         name: Fetch PR info

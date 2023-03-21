@@ -16,6 +16,8 @@ jobs:
     outputs:
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
+      - name: Install git-lfs
+        run: apt update && apt install git-lfs
       - name: Checkout
         uses: actions/checkout@v3
         with:
