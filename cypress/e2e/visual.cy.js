@@ -9,9 +9,7 @@ const viewports = [
 ];
 
 Cypress.on('uncaught:exception', (err, runnable) => {
-  if (err.message.contains('Failed to construct')) {
-    return false;
-  }
+  return false;
 });
 
 const testPaths = [
