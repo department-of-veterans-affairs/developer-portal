@@ -8,10 +8,6 @@ const viewports = [
   { count: 3, height: 800, width: 375 },
 ];
 
-Cypress.on('uncaught:exception', (err, runnable) => {
-  return false;
-});
-
 const testPaths = [
   '/',
   '/terms-of-service',
