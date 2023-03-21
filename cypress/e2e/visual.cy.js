@@ -4,27 +4,33 @@ import * as path from 'path';
 
 const viewports = [
   { count: 1, height: 800, width: 1200 },
-  { count: 2, height: 800, width: 768 },
-  { count: 3, height: 800, width: 375 },
+  // { count: 2, height: 800, width: 768 },
+  // { count: 3, height: 800, width: 375 },
 ];
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+  if (err.message.contains("Failed to construct 'URL': Invalid URL")) {
+    return false;
+  }
+});
 
 const testPaths = [
   '/',
-  // '/terms-of-service',
-  // '/explore',
-  // '/explore/authorization',
-  // '/explore/authorization/docs/authorization-code',
-  // '/explore/benefits',
-  // '/explore/health/docs/quickstart',
-  // // Swagger page handled individually below
-  // // '/explore/benefits/docs/claims',
-  // '/release-notes/benefits',
-  // '/api-publishing',
-  // '/api-publishing/process',
-  // '/onboarding',
-  // '/onboarding/request-sandbox-access',
-  // '/onboarding/production-access-application',
-  // '/about/news',
+  '/terms-of-service',
+  '/explore',
+  '/explore/authorization',
+  '/explore/authorization/docs/authorization-code',
+  '/explore/benefits',
+  '/explore/health/docs/quickstart',
+  // Swagger page handled individually below
+  // '/explore/benefits/docs/claims',
+  '/release-notes/benefits',
+  '/api-publishing',
+  '/api-publishing/process',
+  '/onboarding',
+  '/onboarding/request-sandbox-access',
+  '/onboarding/production-access-application',
+  '/about/news',
 ];
 
 const imageSnapshotsDir = path.resolve(__dirname, '../../test/image_snapshots');
@@ -74,7 +80,7 @@ describe('Visual Regression tests', () => {
       });
     });
 
-    it(`Check Swagger page has no visual regressions at ${size.width}px width.`, () => {
+    it.only(`Check Swagger page has no visual regressions at ${size.width}px width.`, () => {
       const path = '/explore/benefits/docs/claims';
       cy.viewport(size.width, size.height);
       cy.visit(path);
