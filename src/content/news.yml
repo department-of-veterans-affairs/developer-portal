@@ -39,6 +39,22 @@ sections:
     media: false
     callToAction: Read the articles
     items:
+      - date: August 2022
+        title: Mobile apps giving Veterans more control over their health
+        source: VA News
+        url: https://news.va.gov/104844/mobile-apps-giving-veterans-more-control-over-their-health/
+      - date: April 2022
+        title: CLEAR app lets Veterans carry their vaccine and health records anywhere
+        source: VA News
+        url: https://news.va.gov/102555/clear-app-lets-veterans-carry-their-vaccine-and-health-records-anywhere/
+      - date: February 2022
+        title: Curious about QR codes and why they are useful?
+        source: VA News
+        url: https://news.va.gov/100169/curious-about-qr-codes-and-why-they-are-useful/
+      - date: October 2021
+        title: Third-Party Apps Make It Easier for Veterans to Manage Their Health
+        source: DigitalVA
+        url: https://digital.va.gov/general/third-party-apps-make-it-easier-for-veterans-to-manage-their-health/
       - date: November 2019
         title: End User in Focus for Evolving Digital Services at VA
         source: GovernmentCIO Media & Research
