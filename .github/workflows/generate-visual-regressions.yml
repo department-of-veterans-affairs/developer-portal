@@ -6,15 +6,30 @@ on:
       pr_number:
         description: 'What PR number needs updated visual regressions?'
         required: true
-        type: number
+        type: string
 
 jobs:
   update_visual_regressions:
     runs-on: ubuntu-latest
+    container: cypress/included:12.8.1
+    env:
+      CYPRESS_SINGLE_SPEC: true
+      failOnSnapshotDiff: false
     outputs:
       branch_name: ${{ steps.pr_branch.outputs.branch_name }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
+      - name: Install gh
+        run: |
+          type -p curl >/dev/null || apt install curl -y
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+          && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+          && apt update \
+          && apt install gh -y
+
+      - name: Install git-lfs
+        run: apt update && apt install git-lfs
       - id: fetch_pr_branch
         uses: octokit/request-action@v2.x
         name: Fetch PR info
@@ -28,12 +43,12 @@ jobs:
           PR_BRANCH=${{ fromJson(steps.fetch_pr_branch.outputs.data).head.ref }}
           echo $PR_BRANCH;
           echo "::set-output name=branch_name::$PR_BRANCH";
-      - name: Check output works
-        run: echo ${{ steps.pr_branch.outputs.branch_name }}
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           ref: ${{ steps.pr_branch.outputs.branch_name }}
           lfs: true
+      - name: Trust git repo ownership
+        run: git config --global --add safe.directory /__w/developer-portal/developer-portal
       - name: Unshallow the checkout
         run: git fetch --prune --unshallow
       - name: Setup node
@@ -48,41 +63,33 @@ jobs:
           echo $NODE_VERSION
           echo "::set-output name=node_version::$NODE_VERSION"
 
-      # - id: cache_node_modules
-      #   name: Cache node modules
-      #   uses: actions/cache@v2
-      #   env:
-      #     cache-name: developer-portal-node-modules
-      #     node-version: ${{ steps.node_version.outputs.node_version }}
-      #   with:
-      #     path: node_modules
-      #     key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Checkout LFS objects
-        run: git lfs checkout
-      - name: Update apt-get and install packages
-        run: sudo apt-get update && sudo apt-get install -y libxss1 libxtst6 wget --no-install-recommends
-      - name: Install Google apt-get key
-        run: wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-      - name: Install Google apt-get source
-        run: sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
-      - name: Install Chrome and fonts
-        run: sudo apt-get update && sudo apt-get install -y google-chrome-unstable fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf --no-install-recommends
+      - name: Install fonts
+        run: apt-get update && apt-get install -y fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf --no-install-recommends
       - name: Remove unnecessary files
-        run: sudo rm -rf /var/lib/apt/lists/* \
-          && sudo apt-get purge --auto-remove -y curl
-          && sudo rm -rf /src/*.deb
+        run: rm -rf /var/lib/apt/lists/* \
+          && apt-get purge --auto-remove -y curl
+          && rm -rf /src/*.deb
 
-      - name: Install dependencies
-        # if: steps.cache_node_modules.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
+      - name: Install python env
+        run: |
+          apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
+
+      - name: Start Fake LPB Server
+        run: ./scripts/fake_lpb.sh
 
       - name: Delete all old snapshots
-        run: rm -f test/image_snapshots/visual-regression*
+        run: rm -f test/image_snapshots/visual.cy.js/*
 
       - id: visual_test
-        name: Create new snapshots
-        run: npm run test:visual -- -u
+        continue-on-error: true
+        name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install-command: npm ci --legacy-peer-deps
+          spec: cypress/e2e/visual.cy.js
+          start: npm start
+          wait-on: http://localhost:3001
+          wait-on-timeout: 180
 
       - name: Commit new snapshots and push
         run: |

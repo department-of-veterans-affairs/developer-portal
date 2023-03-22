@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion != 'success' }}
     steps:
+      - name: Install git-lfs
+        run: apt update && apt install git-lfs
       - uses: actions/checkout@v2
         with:
           lfs: true
@@ -57,7 +59,7 @@ jobs:
           echo "::set-output name=hash::$COMMIT_HASH"
           echo "::set-output name=branch_name::$PREVIOUS_GITHUB_HEAD_REF"
 
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           lfs: true
           ref: ${{ steps.get_pr_info.outputs.branch_name }}

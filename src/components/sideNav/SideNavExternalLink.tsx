@@ -6,7 +6,7 @@ import './SideNav.scss';
 export interface ExternalLinkProps {
   href: string;
   name: string | JSX.Element;
-  subNavLevel: number;
+  subNavLevel?: number;
 }
 
 const SideNavExternalLink = (props: ExternalLinkProps): JSX.Element => {

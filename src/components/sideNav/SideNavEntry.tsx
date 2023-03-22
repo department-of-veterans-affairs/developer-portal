@@ -10,8 +10,8 @@ import { isHashLinkExact } from '../../utils/isNavHashLinkExact';
 export interface SideNavEntryProps extends NavHashLinkProps {
   name: string | JSX.Element;
   className?: string;
-  subNavLevel: number;
-  sharedAnchors: string[];
+  subNavLevel?: number;
+  sharedAnchors?: string[];
   forceAriaCurrent?: boolean;
 }
 
@@ -58,7 +58,8 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
        * allow "exact" matches for some anchors that are shared across the site if the nav link
        * does not include a hash.
        */
-      const hashMatch: boolean = !location.hash || props.sharedAnchors.includes(location.hash);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- sharedAnchors is always defined
+      const hashMatch: boolean = !location.hash || !!props.sharedAnchors?.includes(location.hash);
       return !!pathMatch && hashMatch;
     } else {
       /**

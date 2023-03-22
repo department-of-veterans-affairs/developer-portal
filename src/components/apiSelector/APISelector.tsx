@@ -69,7 +69,7 @@ const APISelector = (props: APISelectorProps): JSX.Element => {
       update(button as HTMLButtonElement);
     });
   };
-  const onButtonClick = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+  const onButtonClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     if (selectedOptionOverride) {
       dispatch(setOAuthApiSelection(selectedOptionOverride));
       setSelectedOptionOverride('');

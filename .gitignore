@@ -30,12 +30,13 @@ yarn-error.log*
 src/__image_snapshots__/__diff_output__
 test/image_snapshots/diff_output
 test/image_snapshots/__diff_output__
-
+test/image_snapshots/visual.cy.js/__diff_output__
 # Text editors
 .vscode/
 .idea/
 
 # Some Cypress folders
+.snapshot-report
 cypress/downloads
 cypress/fixtures/example.json
 cypress/fixtures/profile.json

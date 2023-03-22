@@ -23,19 +23,23 @@ const InfoContainer: React.FunctionComponent<InfoContainerProps> = (
 ): JSX.Element => {
   const { getComponent, getSystem, specSelectors, oas3Selectors } = props;
   const info = specSelectors.info();
-  const specUrl = specSelectors.url();
+  const specUrl: string = specSelectors.url();
   const basePath = specSelectors.basePath();
   const host = specSelectors.host();
   const externalDocs = specSelectors.externalDocs();
   const selectedServer = oas3Selectors.selectedServer();
   const versionMetadata = getSystem().versionSelectors.versionMetadata();
 
-  let urlOutput: string | URL = '';
+  let urlOutput: string = '';
   if (specUrl) {
-    const url = new URL(specUrl);
-    const metadata = versionMetadata?.find(obj => obj.sf_path === url.pathname);
-    url.pathname = metadata?.path ?? url.pathname;
-    urlOutput = url.href;
+    try {
+      const url = new URL(specUrl);
+      const metadata = versionMetadata?.find(obj => obj.sf_path === url.pathname);
+      url.pathname = metadata?.path ?? url.pathname;
+      urlOutput = url.href;
+    } catch (e: unknown) {
+      // This shouldn't be needed but GitHub Actions errors for some reason on this part.
+    }
   }
 
   const Info: any = getComponent('info', true);

@@ -1,4 +1,4 @@
-name: Cypress tests
+name: Cypress e2e and Accessibility tests
 
 on:
   pull_request:
@@ -6,18 +6,18 @@ on:
     types: [opened, synchronize, reopened, ready_for_review]
 
 env:
-  CYPRESS_CACHE_FOLDER: cypress/cache
   REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001
 
 jobs:
-  cypress_install_and_run:
+  end-to-end:
     runs-on: ubuntu-latest
+    container: cypress/included:12.8.1
     outputs:
-      hash: ${{ steps.githash.outputs.hash }}
-      pr_number: ${{ steps.pr_number.outputs.pr }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -31,42 +31,19 @@ jobs:
           echo $NODE_VERSION
           echo "::set-output name=node_version::$NODE_VERSION"
 
-      # - id: cache_node_modules
-      #   name: Cache node modules
-      #   uses: actions/cache@v2
-      #   env:
-      #     cache-name: developer-portal-node-modules
-      #     node-version: ${{ steps.node_version.outputs.node_version }}
-      #   with:
-      #     path: node_modules
-      #     key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-
-      - id: cache_cypress_binary
-        name: Cache Cypress binary
-        uses: actions/cache@v2
-        env:
-          cache-name: developer-portal-cypress-binary
-        with:
-          path: cypress/cache
-          key: ${{ runner.os }}-cypress-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install Cypress and Dependencies
-        if: |
-          steps.cache_cypress_binary.outputs.cache-hit != 'true'
-        # steps.cache_node_modules.outputs.cache-hit != 'true'
-        uses: cypress-io/github-action@v2
-        with:
-          runTests: false
-
+      - name: Install python env
+        run: |
+          apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v5
         with:
-          install: false
+          install-command: npm ci
           start: npm start
           wait-on: http://localhost:3001
+          wait-on-timeout: 180
 
       - name: Upload failed screenshots
         uses: actions/upload-artifact@v2
@@ -83,12 +60,15 @@ jobs:
 
   accessibility:
     runs-on: ubuntu-latest
+    container: cypress/included:12.8.1
+    env:
+      CYPRESS_SINGLE_SPEC: true
     outputs:
-      hash: ${{ steps.githash.outputs.hash }}
-      pr_number: ${{ steps.pr_number.outputs.pr }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Setup node
         uses: actions/setup-node@v2
         with:
@@ -102,44 +82,20 @@ jobs:
           echo $NODE_VERSION
           echo "::set-output name=node_version::$NODE_VERSION"
 
-      # - id: cache_node_modules
-      #   name: Cache node modules
-      #   uses: actions/cache@v2
-      #   env:
-      #     cache-name: developer-portal-node-modules
-      #     node-version: ${{ steps.node_version.outputs.node_version }}
-      #   with:
-      #     path: node_modules
-      #     key: ${{ runner.os }}-${{ env.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-
-      - id: cache_cypress_binary
-        name: Cache Cypress binary
-        uses: actions/cache@v2
-        env:
-          cache-name: developer-portal-cypress-binary
-        with:
-          path: cypress/cache
-          key: ${{ runner.os }}-cypress-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install Cypress and Dependencies
-        if: |
-          steps.cache_cypress_binary.outputs.cache-hit != 'true'
-        # steps.cache_node_modules.outputs.cache-hit != 'true'
-        uses: cypress-io/github-action@v2
-        with:
-          runTests: false
-
+      - name: Install python env
+        run: |
+          apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
 
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v5
         with:
-          config: ignoreTestFiles=null
-          install: false
-          spec: cypress/integration/accessibility.spec.js
+          install-command: npm ci
+          spec: cypress/e2e/accessibility.cy.js
           start: npm start
           wait-on: http://localhost:3001
+          wait-on-timeout: 180
 
       - name: Upload failed screenshots
         uses: actions/upload-artifact@v2
