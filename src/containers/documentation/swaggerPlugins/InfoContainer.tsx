@@ -32,14 +32,10 @@ const InfoContainer: React.FunctionComponent<InfoContainerProps> = (
 
   let urlOutput: string = '';
   if (specUrl) {
-    try {
-      const url = new URL(specUrl);
-      const metadata = versionMetadata?.find(obj => obj.sf_path === url.pathname);
-      url.pathname = metadata?.path ?? url.pathname;
-      urlOutput = url.href;
-    } catch (e: unknown) {
-      // This shouldn't be needed but GitHub Actions errors for some reason on this part.
-    }
+    const url = new URL(specUrl);
+    const metadata = versionMetadata?.find(obj => obj.sf_path === url.pathname);
+    url.pathname = metadata?.path ?? url.pathname;
+    urlOutput = url.href;
   }
 
   const Info: any = getComponent('info', true);
