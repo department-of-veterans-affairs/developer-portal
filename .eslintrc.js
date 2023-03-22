@@ -151,6 +151,14 @@ const typescriptESLintRules = {
       default: 'array-simple',
     },
   ],
+  '@typescript-eslint/no-misused-promises': [
+    'error',
+    {
+      'checksVoidReturn': {
+        'attributes': false,
+      },
+    },
+  ],
   // can be removed soon - leave for a bit after TSLint removal
   '@typescript-eslint/ban-tslint-comment': 'error',
   '@typescript-eslint/brace-style': 'error',

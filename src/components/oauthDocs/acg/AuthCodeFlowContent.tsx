@@ -1,14 +1,15 @@
 /* eslint-disable max-lines */
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import ReactMarkdown from 'react-markdown';
-import highlight from 'rehype-highlight';
-import { APISelector, CodeWrapper } from '../../index';
+import { APISelector, CodeBlock } from '../../index';
 import { AuthCodeFlowContentProps } from '../../../containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
 
 const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
   const baseAuthPath = props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
   const isClinicalHealthSelected = props.selectedOption === 'clinical_health';
+
+  const scopes =
+    props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access';
 
   return (
     <>
@@ -37,28 +38,17 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeWrapper>
-        <ReactMarkdown
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~plaintext
+      <CodeBlock
+        withCopyButton
+        code={`\
 https://sandbox-api.va.gov${baseAuthPath}/authorization?
   client_id=0oa1c01m77heEXUZt2p7
   &redirect_uri=<yourRedirectURL>
   &response_type=code
-  &scope=${props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access'}
+  &scope=${scopes}
   &state=1AOQK33KIfH2g0ADHvU1oWAb7xQY7p6qWnUFiG1ffcUdrbCY1DBAZ3NffrjaoBGQ
   &nonce=o5jYpLSe29RBHBsn5iAnMKYpYw2Iw9XRBweacc001hRo5xxJEbHuniEbhuxHfVZy`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <div className="table-wrapper">
         <table>
           <thead>
@@ -255,25 +245,15 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         <code>state</code> parameters you must use to make a request to our authorization service.
         We require the state parameter for all authorization code grant flows.
       </p>
-      <CodeWrapper>
-        <ReactMarkdown
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
-  HTTP/1.1 302 Found
-  Location: <yourRedirectURL>?
-    code=z92dapo5
-    &state=af0ifjsldkj`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
+HTTP/1.1 302 Found
+Location: <yourRedirectURL>?
+  code=z92dapo5
+  &state=af0ifjsldkj`}
+      />
       <p>
         Use the following format, in HTTP basic authentication, for your request using the returned
         code and state parameters.
@@ -295,20 +275,10 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
@@ -317,8 +287,7 @@ Authorization: Basic base64(client_id:client_secret)
 grant_type=authorization_code
 &code=z92dapo5
 &redirect_uri=<yourRedirectURL>`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <p>
         The authorization server will respond with an{' '}
         <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink>. If you requested
@@ -332,63 +301,39 @@ grant_type=authorization_code
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 HTTP/1.1 200 OK
 Content-Type: application/json
 Cache-Control: no-store
 Pragma: no-cache
 
 {
-    "access_token": "SlAV32hkKG",
-    "expires_in": 3600,
-    "refresh_token": "8xLOxBtZp8",
-    "scope": "${
-      props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access'
-    }",
-    "patient": "1558538470",
-    "state": "af0ifjsldkj",
-    "token_type": "Bearer",
+  "access_token": "SlAV32hkKG",
+  "expires_in": 3600,
+  "refresh_token": "8xLOxBtZp8",
+  "scope": "${scopes}",
+  "patient": "1558538470",
+  "state": "af0ifjsldkj",
+  "token_type": "Bearer",
 }`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <p>If an error occurs, you will instead receive a response like this:</p>
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
 Cache-Control: no-store
 Pragma: no-cache
 
 {
-    "error": "invalid_request"
+  "error": "invalid_request"
 }`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <p>
         Use the returned <code>access_token</code> to authorize requests to our platform by
         including it in the header of HTTP requests as{' '}
@@ -413,28 +358,17 @@ Pragma: no-cache
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
 
 grant_type=refresh_token&refresh_token={ *refresh_token* }`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <p>
         The response will return a new <code>access_token</code> and <code>refresh_token</code>, if
         you requested the
@@ -448,24 +382,13 @@ grant_type=refresh_token&refresh_token={ *refresh_token* }`}
         currently have access to their data and can make adjustments to these access rights
         (grants).
       </p>
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 GET ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/manage HTTP/1.1
 Host: sandbox-api.va.gov`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <h4 id="revoking-tokens" tabIndex={-1}>
         Revoking Tokens
       </h4>
@@ -481,28 +404,17 @@ Host: sandbox-api.va.gov`}
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
 
 token={ *access_token* }&token_type_hint=access_token`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <APISelector
         options={props.options}
         selectedOption={props.selectedOption}
@@ -510,28 +422,17 @@ token={ *access_token* }&token_type_hint=access_token`}
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
 
 token={ *refresh_token* }&token_type_hint=refresh_token`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <h4 id="revoking-grants" tabIndex={-1}>
         Revoking Grants
       </h4>
@@ -551,57 +452,35 @@ token={ *refresh_token* }&token_type_hint=refresh_token`}
         buttonSuccessMessage="Code updated!"
         theme="dark"
       />
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 DELETE ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/grants HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 
 client_id={client_id}&email={test account email}`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
       <p>
         The client ID is your application client ID (<code>client_id</code>) and the email is the
         user’s email, which must be passed into the body of the request. Bad requests will be
         returned with an error response and description of the error.
       </p>
-      <CodeWrapper>
-        <ReactMarkdown
-          rehypePlugins={[highlight]}
-          components={{
-            // eslint-disable-next-line react/display-name
-            code: ({ className, children, ...codeProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <code tabIndex={0} className={className} {...codeProps}>
-                {children}
-              </code>
-            ),
-          }}
-        >
-          {`~~~http
+      <CodeBlock
+        withCopyButton
+        language="http"
+        code={`\
 HTTP/1.1 400 Bad Request
 Content-Type: application/json
 Cache-Control: no-store
 Pragma: no-cache
 
 {
-    "error": "invalid_request",
-    "error_description": "Invalid email address."
+  "error": "invalid_request",
+  "error_description": "Invalid email address."
 }`}
-        </ReactMarkdown>
-      </CodeWrapper>
+      />
     </>
   );
 };

@@ -1,0 +1,21 @@
+$background-color: #222935;
+
+.code-block {
+  background: $background-color;
+  border-radius: 6px;
+
+  .code-wrapper {
+    border-radius: inherit;
+  }
+
+  code {
+    width: fit-content;
+  }
+
+  .copy-btn-container {
+    padding: 1rem 1.3rem;
+    background: $background-color;
+    border: none;
+    border-radius: inherit;
+  }
+}

@@ -1,4 +1,5 @@
-export * from './codeWrapper/CodeWrapper';
+export * from './codeBlock/CodeWrapper';
+export * from './codeBlock/CodeBlock';
 export * from './pageHeader/PageHeader';
 export * from './header/Header';
 export * from './navBar/NavBar';
@@ -31,4 +32,5 @@ export * from './appVersion/AppVersion';
 export * from './apiTags/ApiTags';
 export * from './apiCheckboxList/APICheckboxList';
 export * from './veteranResources/VeteranResources';
+export * from './tooltip/Tooltip';
 export * from './sideNav/SideNavExternalLink';
