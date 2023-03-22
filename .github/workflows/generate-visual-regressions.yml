@@ -85,7 +85,7 @@ jobs:
         name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          install-command: npm ci --legacy-peer-deps
+          install-command: npm ci
           spec: cypress/e2e/visual.cy.js
           start: npm start
           wait-on: http://localhost:3001

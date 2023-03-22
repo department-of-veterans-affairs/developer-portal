@@ -52,7 +52,7 @@ jobs:
 
       - name: Install dependencies
         # if: steps.cache_node_modules.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
   unit:
     needs: [install]
@@ -76,7 +76,7 @@ jobs:
 
       - name: Install dependencies
         # if: steps.cache_node_modules.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
       - name: Run test
         run: npm run test:unit:ci
@@ -116,7 +116,7 @@ jobs:
 
       - name: Install dependencies
         # if: steps.cache_node_modules.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
       - name: Run test
         run: npm run lint

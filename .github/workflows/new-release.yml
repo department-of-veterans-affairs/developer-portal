@@ -62,7 +62,7 @@ jobs:
 
       - name: Install dependencies
         # if: steps.cache_node_modules.outputs.cache-hit != 'true'
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
       - name: Print env
         run: printenv
