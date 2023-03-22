@@ -3,7 +3,7 @@ name: Unprivileged Visual Regressions
 # A PR from a forked repo can safely run this job as there are no repository secrets available to it.
 on:
   pull_request:
-    branches: [master, node-18-upgrade]
+    branches: [master]
     types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:

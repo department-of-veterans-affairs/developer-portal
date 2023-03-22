@@ -1,7 +1,7 @@
 name: Pull Request Labels
 on:
   pull_request:
-    branches: [master, node-18-upgrade]
+    branches: [master]
     types: [opened, labeled, unlabeled, synchronize]
   workflow_run:
     workflows: ['Automatically label PRs with content changes']
