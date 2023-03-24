@@ -11,7 +11,7 @@ import {
   useDismiss,
   useClick,
   Side,
-} from '@floating-ui/react-dom-interactions';
+} from '@floating-ui/react';
 
 import './Tooltip.scss';
 
