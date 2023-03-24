@@ -15,6 +15,7 @@ jobs:
     env:
       CYPRESS_SINGLE_SPEC: true
       failOnSnapshotDiff: false
+      REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001
     outputs:
       branch_name: ${{ steps.pr_branch.outputs.branch_name }}
       node_version: ${{ steps.node_version.outputs.node_version }}
