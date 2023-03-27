@@ -21,8 +21,8 @@ jobs:
         with:
           node-version: 18
 
-      - name: NPM Symlink for TypeScript
-        run: ln -s /usr/local/lib/node_modules ./node_modules
+      - name: NPM Install
+        run: npm ci
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
