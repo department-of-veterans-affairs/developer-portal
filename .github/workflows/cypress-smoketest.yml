@@ -13,14 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     container: cypress/included:12.8.1
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 18
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
           install: false
           spec: cypress/e2e/smoketest.cy.js
-          wait-on: https://dev-developer.va.gov
 
       - name: Upload failed screenshots
         uses: actions/upload-artifact@v3
@@ -65,7 +70,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.23.0
         if: failure()
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: BlockWebhook-${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: C012L7SRG66
           # This ID is for #vaapi-alerts in Lighthouse Slack
