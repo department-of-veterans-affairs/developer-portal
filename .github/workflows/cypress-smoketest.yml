@@ -73,7 +73,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.23.0
         if: failure()
         env:
-          SLACK_BOT_TOKEN: BlockWebhook-${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
           channel-id: C012L7SRG66
           # This ID is for #vaapi-alerts in Lighthouse Slack
