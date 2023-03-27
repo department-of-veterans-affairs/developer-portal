@@ -27,7 +27,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
-          baseUrl: https://dev-developer.va.gov
+          config: baseUrl=https://dev-developer.va.gov
           install: false
           spec: cypress/e2e/smoketest.cy.js
 
