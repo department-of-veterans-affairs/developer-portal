@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 18
 
+      - name: NPM Install
+        run: npm ci
+
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
