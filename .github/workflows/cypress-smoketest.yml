@@ -21,12 +21,13 @@ jobs:
         with:
           node-version: 18
 
-      - name: NPM Install
-        run: npm ci
+      - name: NPM Symlink for TypeScript
+        run: ln -s /usr/local/lib/node_modules ./node_modules
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
+          baseUrl: https://dev-developer.va.gov
           install: false
           spec: cypress/e2e/smoketest.cy.js
 
