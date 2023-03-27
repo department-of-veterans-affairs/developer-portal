@@ -23,14 +23,14 @@ jobs:
           wait-on: https://dev-developer.va.gov
 
       - name: Upload failed screenshots
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
 
       - name: Upload failed videos
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: cypress-videos
@@ -62,7 +62,7 @@ jobs:
           bundle exec ruby ./delete-smoketest-apps.rb $ccgClientId;
 
       - name: Send Slack notification for a failed signup
-        uses: slackapi/slack-github-action@v1.21.0
+        uses: slackapi/slack-github-action@v1.23.0
         if: failure()
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
