@@ -5,15 +5,26 @@ on:
     - cron: '20 * * * *'
   workflow_dispatch:
 
+env:
+  CYPRESS_SINGLE_SPEC: true
+
 jobs:
   cypress_smoketest:
     runs-on: ubuntu-latest
+    container: cypress/included:12.8.1
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Cypress run
         run: |
           docker run -t -v $PWD:/e2e -w /e2e cypress/included:9.6.0 --config supportFile=false,ignoreTestFiles=null,baseUrl=https://dev-developer.va.gov -s ./cypress/integration/smoketest.spec.js
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          spec: cypress/e2e/smoketest.cy.js
+          wait-on: https://dev-developer.va.gov
 
       - name: Upload failed screenshots
         uses: actions/upload-artifact@v2
