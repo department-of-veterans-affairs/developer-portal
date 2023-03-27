@@ -16,10 +16,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Cypress run
-        run: |
-          docker run -t -v $PWD:/e2e -w /e2e cypress/included:9.6.0 --config supportFile=false,ignoreTestFiles=null,baseUrl=https://dev-developer.va.gov -s ./cypress/integration/smoketest.spec.js
-
-      - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
           install: false
