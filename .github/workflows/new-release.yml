@@ -21,7 +21,7 @@ jobs:
         run: |
           NODE_VERSION=$(node -v)
           echo $NODE_VERSION
-          echo "::set-output name=node_version::$NODE_VERSION"
+          echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
 
       - name: Install dependencies
         run: npm ci
@@ -86,7 +86,7 @@ jobs:
         run: |
           LATEST_RELEASE=$(curl -s https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq '.tag_name' | sed 's/\"//g')
           echo $LATEST_RELEASE
-          echo "::set-output name=tag::$LATEST_RELEASE"
+          echo "tag=$LATEST_RELEASE" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v3
         with:

@@ -28,20 +28,20 @@ jobs:
         run: |
           NODE_VERSION=$(node -v)
           echo $NODE_VERSION
-          echo "::set-output name=node_version::$NODE_VERSION"
+          echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
 
       - id: pr_number
         name: Get PR Number
         run: |
           PR_NUMBER=`printf $GITHUB_REF | sed 's|refs/pull/||' | sed 's|/merge||'`
           echo $PR_NUMBER
-          echo "::set-output name=pr::$PR_NUMBER"
+          echo "pr=$PR_NUMBER" >> $GITHUB_OUTPUT
 
       - id: githash
         name: Set git hash
         run: |
           GIT_HASH=$(/bin/bash -c "git log --oneline | cut -f3 -d \" \" | cut -c1-7")
-          echo "::set-output name=hash::$GIT_HASH"
+          echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
 
       - name: Install dependencies
         run: npm ci
