@@ -113,7 +113,7 @@ jobs:
               sleep 15;
             fi
           done
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         if: steps.deploy_to_production.outcome == 'success'
       - name: Disable Workflow till next MR is created
         if: steps.deploy_to_production.outcome == 'success'

@@ -17,9 +17,9 @@ jobs:
       pr_number: ${{ steps.pr_number.outputs.pr }}
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
@@ -54,9 +54,9 @@ jobs:
         environment: ['dev', 'staging', 'production']
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
@@ -111,7 +111,7 @@ jobs:
           touch build/$BUILD_ENV/platform-backend/v0/consumers/production-requests
 
       - name: Save builds as GitHub Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: pr-builds
           path: build
