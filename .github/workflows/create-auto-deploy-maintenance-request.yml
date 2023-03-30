@@ -42,7 +42,7 @@ jobs:
           wget https://developer.va.gov/deploy.json
           CURRENT_RELEASE_TAG=`jq -r ".release" deploy.json`
           echo $CURRENT_RELEASE_TAG
-          echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
+          echo "current_release_tag=$CURRENT_RELEASE_TAG" >> $GITHUB_OUTPUT
       - id: get_current_release_from_commit_hash
         name: Get currently deployed release tag from the commit hash if last deploy didn't use the release tag
         if: steps.get_current_release_tag.outputs.current_release_tag == ''
@@ -51,7 +51,7 @@ jobs:
           echo $COMMIT_HASH
           CURRENT_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/tags | jq -r ".[] | select(.commit.sha == \\\"$COMMIT_HASH\\\").name"`
           echo $CURRENT_RELEASE_TAG
-          echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
+          echo "current_release_tag=$CURRENT_RELEASE_TAG" >> $GITHUB_OUTPUT
       - id: unified_current_release_tag
         name: Unify release tag regardless of how it was found
         env:
@@ -64,13 +64,13 @@ jobs:
             CURRENT_RELEASE_TAG=`echo ${{ env.current-release-tag-from-commit-hash }}`
           fi
           echo $CURRENT_RELEASE_TAG
-          echo "::set-output name=current_release_tag::$CURRENT_RELEASE_TAG"
+          echo "current_release_tag=$CURRENT_RELEASE_TAG" >> $GITHUB_OUTPUT
       - id: get_proposed_release_tag
         name: Get the tag name of the latest release
         run: |
           PROPOSED_RELEASE_TAG=`gh api /repos/department-of-veterans-affairs/developer-portal/releases/latest | jq -r ".tag_name"`
           echo $PROPOSED_RELEASE_TAG
-          echo "::set-output name=proposed_release_tag::$PROPOSED_RELEASE_TAG"
+          echo "proposed_release_tag=$PROPOSED_RELEASE_TAG" >> $GITHUB_OUTPUT
       - id: check_if_new_release
         name: Check if the latest release is newer than production
         continue-on-error: true
@@ -164,7 +164,7 @@ jobs:
             --label "$TEMPLATE_ISSUE_LABEL" \
             --label "repo: developer-portal" \
             --body-file maintenance-request.md
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         if: steps.create_mr.outcome == 'success'
       - name: Enable Auto Deploy Workflow
         if: steps.create_mr.outcome == 'success'

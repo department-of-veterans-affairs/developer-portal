@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Install git-lfs
         run: apt update && apt install git-lfs
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           lfs: true
 
@@ -55,9 +55,9 @@ jobs:
           echo $COMMIT_HASH
           echo $PREVIOUS_GITHUB_HEAD_REF
           rm ./image_diffs/pr.txt ./image_diffs/hash.txt ./image_diffs/branch.txt
-          echo "::set-output name=pr::$PR_NUMBER"
-          echo "::set-output name=hash::$COMMIT_HASH"
-          echo "::set-output name=branch_name::$PREVIOUS_GITHUB_HEAD_REF"
+          echo "pr=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+          echo "branch_name=$PREVIOUS_GITHUB_HEAD_REF" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v3
         with:
