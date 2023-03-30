@@ -96,6 +96,7 @@ jobs:
           wget https://raw.githubusercontent.com/department-of-veterans-affairs/developer-portal/master/.github/workflows/assets/maintenance-request.md
           TEMPLATE_ISSUE_LABEL=`grep labels maintenance-request.md | cut -f2 -d " "`
           TEMPLATE_ASSIGNEE=`grep assignees maintenance-request.md | cut -f2 -d " "`
+          echo $TEMPLATE_ASSIGNEE
           sed -i -e '1,8d' maintenance-request.md
           # Set MR template variables
           DAY_OF_THE_WEEK=`date +%A`
@@ -160,7 +161,7 @@ jobs:
           gh issue create \
             -R 'department-of-veterans-affairs/lighthouse-devops-support' \
             --title "$ISSUE_TITLE" \
-            --assignee "$TEMPLATE_ASSIGNEE" \
+            --assignee $TEMPLATE_ASSIGNEE \
             --label "$TEMPLATE_ISSUE_LABEL" \
             --label "repo: developer-portal" \
             --body-file maintenance-request.md
