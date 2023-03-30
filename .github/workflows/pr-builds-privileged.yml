@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Download PR Build Artifacts
         uses: actions/github-script@v3.1.0
@@ -54,8 +54,8 @@ jobs:
           COMMIT_HASH=`jq -r '.commit' ./build/dev/deploy.json`
           echo $PR_NUMBER
           echo $COMMIT_HASH
-          echo "::set-output name=pr::$PR_NUMBER"
-          echo "::set-output name=hash::$COMMIT_HASH"
+          echo "pr=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1

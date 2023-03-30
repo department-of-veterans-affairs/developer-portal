@@ -21,7 +21,7 @@ jobs:
         run: |
           TIME_STRING=`date +"%Y/%m/%d %H:%M %Z" | sed -E 's/\:([03]{1}|[14]{1})[0-9]{1}/:\10/g' | sed 's/\:1/:0/' | sed 's/\:4/:3/'`
           echo $TIME_STRING
-          echo "::set-output name=time_string::$TIME_STRING"
+          echo "time_string=$TIME_STRING" >> $GITHUB_OUTPUT
       - id: get_mr_number
         name: Grab matching deploy MR
         continue-on-error: true
@@ -49,8 +49,8 @@ jobs:
           # If this errors, the MR isn't labeled "status: approved" at the time of it's scheduled deployment
           jq ".labels" issue.json | jq -e ".[] | select(.name==\"status: approved\")"
           RELEASE_TAG=`jq -r '.body' issue.json | grep 'Release tag:' | sed 's/Release tag: //'`
-          echo "::set-output name=mr_number::$MR_NUMBER"
-          echo "::set-output name=release_tag::$RELEASE_TAG"
+          echo "mr_number=$MR_NUMBER" >> $GITHUB_OUTPUT
+          echo "release_tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -113,7 +113,7 @@ jobs:
               sleep 15;
             fi
           done
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         if: steps.deploy_to_production.outcome == 'success'
       - name: Disable Workflow till next MR is created
         if: steps.deploy_to_production.outcome == 'success'
