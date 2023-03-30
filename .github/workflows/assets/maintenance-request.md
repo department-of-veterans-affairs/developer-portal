@@ -3,7 +3,7 @@ name: Maintenance Request
 about: Request a change to Lab/Sandbox or the Production environment.
 title: __mr_summary__ (YYYY/MM/DD HH:MM ET)
 labels: maintenance-request
-assignees: lighthouse-leeroyjenkles
+assignees: mramirez-va, evelez-va
 ---
 
 # MAINTENANCE REQUEST

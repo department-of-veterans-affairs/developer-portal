@@ -123,6 +123,14 @@ const Header = (): JSX.Element => {
             </h3>
           </VaAlert>
         )}
+        {location.pathname === '/explore/verification/docs/veteran_confirmation' && (
+          <VaAlert status="info" visible>
+            <h3 slot="headline">
+              Version 0 of the Veteran Confirmation API is deprecated and scheduled for deactivation
+              on April 4, 2024. Version 1 of the Veteran Confirmation API is now active.
+            </h3>
+          </VaAlert>
+        )}
       </header>
     </>
   );
