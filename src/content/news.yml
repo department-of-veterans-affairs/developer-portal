@@ -66,7 +66,7 @@ sections:
       - date: September 2019
         source: FCW
         title: Doing digital differently at VA
-        url: https://fcw.com/articles/2019/09/12/comment-doing-digital-differently-at-va-gfrerer.aspx
+        url: https://fcw.com/digital-government/2019/09/doing-digital-differently-at-va/210908/
       - date: August 2019
         source: FedHealthIT
         title: VA’s System of Systems – Getting from There to Here and Beyond
@@ -94,7 +94,7 @@ sections:
       - date: July 2018
         source: GCN.com
         title: VA releases Lighthouse 'API-first' RFI
-        url: https://gcn.com/articles/2018/07/30/va-lighthouse-api.aspx
+        url: https://gcn.com/2018/07/va-releases-lighthouse-api-first-rfi/299831/
       - date: June 2018
         source: Healthcare IT News
         title: VA tackles interoperability, massive data stores with open FHIR API project
