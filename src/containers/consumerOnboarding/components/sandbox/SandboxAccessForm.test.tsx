@@ -12,7 +12,7 @@ import * as rootApiQuery from '../../../../apiDefs/getApiDefinitions';
 import { FlagsProvider, getFlags } from '../../../../flags';
 import { fakeCategories } from '../../../../__mocks__/fakeCategories';
 import { APICategories, VaInternalOnly } from '../../../../apiDefs/schema';
-import { apiLoadingState } from '../../../../types/constants';
+import { apiLoadingState, LPB_APPLY_URL } from '../../../../types/constants';
 import store from '../../../../store';
 import { SandboxAccessForm } from './SandboxAccessForm';
 
@@ -30,7 +30,13 @@ const renderComponent = async (): Promise<void> => {
     <Provider store={store}>
       <FlagsProvider flags={getFlags()}>
         <MemoryRouter>
-          <SandboxAccessForm onSuccess={mockOnSuccess} />
+          {/* This is currently broken */}
+          <SandboxAccessForm
+            apiIdentifier=""
+            authTypes={[]}
+            onSuccess={mockOnSuccess}
+            postUrl={LPB_APPLY_URL}
+          />
         </MemoryRouter>
       </FlagsProvider>
     </Provider>,

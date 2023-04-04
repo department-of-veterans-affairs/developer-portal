@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useRef, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -7,8 +7,13 @@ import AlertBox from 'component-library-legacy/AlertBox';
 import { useCookies } from 'react-cookie';
 import { Form, Formik } from 'formik';
 import { HttpErrorResponse, makeRequest, ResponseType } from '../../../../utils/makeRequest';
-import { TextField, TermsOfServiceCheckbox } from '../../../../components';
-import { LPB_APPLY_URL, LPB_FORGERY_TOKEN } from '../../../../types/constants';
+import {
+  TextField,
+  TermsOfServiceCheckbox,
+  CheckboxRadioField,
+  FieldSet,
+} from '../../../../components';
+import { LPB_FORGERY_TOKEN } from '../../../../types/constants';
 import {
   ApplySuccessResult,
   DevApplicationRequest,
@@ -17,8 +22,9 @@ import {
 } from '../../../../types/forms/apply';
 import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { DeveloperInfo } from './DeveloperInfo';
-import SelectedApis from './SelectedApis';
 import { validateForm } from './validateForm';
+import { OAuthAcgAppInfo } from './OAuthAcgAppInfo';
+import { OAuthCcgAppInfo } from './OAuthCcgAppInfo';
 
 export interface Values {
   apis: string[];
@@ -53,7 +59,10 @@ const initialValues = {
 };
 
 interface SandboxAccessFormProps {
+  apiIdentifier: string;
+  authTypes: string[];
   onSuccess: (results: ApplySuccessResult) => void;
+  postUrl: string;
 }
 
 interface SandboxAccessFormError extends HttpErrorResponse {
@@ -62,9 +71,16 @@ interface SandboxAccessFormError extends HttpErrorResponse {
   };
 }
 
-const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
+const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
+  apiIdentifier,
+  authTypes,
+  onSuccess,
+  postUrl,
+}) => {
+  const formRef = useRef(null);
   const [submissionHasError, setSubmissionHasError] = useState(false);
   const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
+  const [authType, setAuthType] = useState<string | null>();
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
 
   const handleSubmit = async (values: Values): Promise<void> => {
@@ -85,13 +101,13 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
 
     try {
       setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
-        path: LPB_APPLY_URL,
+        path: postUrl,
         sameSite: 'strict',
         secure: true,
       });
 
       const response = await makeRequest<DevApplicationResponse>(
-        LPB_APPLY_URL,
+        postUrl,
         {
           body: JSON.stringify(applicationBody),
           headers: {
@@ -125,10 +141,33 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
     }
   };
 
+  const authTypeChange = (event: React.FormEvent<HTMLFormElement>): void => {
+    const target = event.target as HTMLInputElement;
+    if (target.name === 'apis[]') {
+      switch (target.id) {
+        case 'apisFormFieldacgclaims':
+          setAuthType('acg');
+          break;
+        case 'apisFormFieldccgclaims':
+          setAuthType('ccg');
+          break;
+        case 'apisFormFieldacgclaims':
+          setAuthType('apikey');
+          break;
+        default:
+      }
+    }
+  };
+
+  if (authTypes.length === 1 && authType !== authTypes[0]) {
+    setAuthType(authTypes[0]);
+  }
+
   return (
     <div className="vads-l-row">
       <div className="vads-u-padding-x--2p5">
         <Formik
+          innerRef={formRef}
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validate={validateForm}
@@ -147,10 +186,45 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
             };
 
             return (
-              <Form noValidate>
-                <h2>Application</h2>
+              <Form noValidate onChange={authTypeChange}>
                 <DeveloperInfo />
-                <SelectedApis selectedApis={values.apis} />
+                {authTypes.length === 1 && (
+                  <input name="apis[]" type="hidden" value={`${authTypes[0]}/${apiIdentifier}`} />
+                )}
+                {authTypes.length > 1 && (
+                  <FieldSet legend="Choose your auth type" name="apis[]" required>
+                    {authTypes.includes('apikey') && (
+                      <CheckboxRadioField
+                        type="radio"
+                        label="API Key"
+                        name="authType"
+                        value={`apikey/${apiIdentifier}`}
+                        required
+                      />
+                    )}
+                    {authTypes.includes('acg') && (
+                      <CheckboxRadioField
+                        type="radio"
+                        label="Authorization Code Flow"
+                        name="apis[]"
+                        value={`acg/${apiIdentifier}`}
+                        required
+                      />
+                    )}
+                    {authTypes.includes('ccg') && (
+                      <CheckboxRadioField
+                        type="radio"
+                        label="Client Credentials Grant"
+                        name="apis[]"
+                        value={`ccg/${apiIdentifier}`}
+                        required
+                      />
+                    )}
+                  </FieldSet>
+                )}
+
+                {authType === 'acg' && <OAuthAcgAppInfo />}
+                {authType === 'ccg' && <OAuthCcgAppInfo />}
 
                 <TextField
                   as="textarea"

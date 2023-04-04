@@ -154,6 +154,7 @@ const includesOpenDataAPI = (apiList: string[]): boolean =>
 
 export {
   apisFor,
+  getActiveApis,
   getActiveKeyAuthApis,
   getActiveOauthApis,
   getApisLoadedState,
