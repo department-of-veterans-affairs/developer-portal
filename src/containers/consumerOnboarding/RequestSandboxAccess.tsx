@@ -6,6 +6,11 @@ import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { LPB_APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult } from '../../types/forms/apply';
+import {
+  AUTHORIZATION_CCG_PATH,
+  AUTHORIZATION_PKCE_PATH,
+  TERMS_OF_SERVICE_PATH,
+} from '../../types/constants/paths';
 import { SandboxAccessForm, SandboxAccessSuccess } from './components/sandbox';
 
 const RequestSandboxAccess: React.FunctionComponent = () => {
@@ -69,7 +74,13 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
             apiIdentifier={selectedApi.urlFragment}
             authTypes={getAuthTypes(selectedApi)}
             onSuccess={setSuccessResults}
-            postUrl={LPB_APPLY_URL}
+            urls={{
+              acgPkceAuthUrl: AUTHORIZATION_PKCE_PATH,
+              ccgPublicKeyUrl: AUTHORIZATION_CCG_PATH,
+              postUrl: LPB_APPLY_URL,
+              termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
+            }}
+            key={selectedApi.urlFragment}
           />
         </>
       )}

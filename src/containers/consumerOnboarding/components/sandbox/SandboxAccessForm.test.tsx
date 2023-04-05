@@ -14,6 +14,11 @@ import { fakeCategories } from '../../../../__mocks__/fakeCategories';
 import { APICategories, VaInternalOnly } from '../../../../apiDefs/schema';
 import { apiLoadingState, LPB_APPLY_URL } from '../../../../types/constants';
 import store from '../../../../store';
+import {
+  AUTHORIZATION_CCG_PATH,
+  AUTHORIZATION_PKCE_PATH,
+  TERMS_OF_SERVICE_PATH,
+} from '../../../../types/constants/paths';
 import { SandboxAccessForm } from './SandboxAccessForm';
 
 jest.mock('../../../../utils/makeRequest', () => ({
@@ -35,7 +40,12 @@ const renderComponent = async (): Promise<void> => {
             apiIdentifier=""
             authTypes={[]}
             onSuccess={mockOnSuccess}
-            postUrl={LPB_APPLY_URL}
+            urls={{
+              acgPkceAuthUrl: AUTHORIZATION_PKCE_PATH,
+              ccgPublicKeyUrl: AUTHORIZATION_CCG_PATH,
+              postUrl: LPB_APPLY_URL,
+              termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
+            }}
           />
         </MemoryRouter>
       </FlagsProvider>

@@ -1,4 +1,5 @@
-import React, { FC, useRef, useState } from 'react';
+/* eslint-disable no-console */
+import React, { FC, useState } from 'react';
 
 import { Link } from 'react-router-dom';
 
@@ -20,14 +21,15 @@ import {
   DevApplicationResponse,
   InternalApiInfo,
 } from '../../../../types/forms/apply';
-import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
+// import { includesInternalOnlyAPI } from '../../../../apiDefs/query';
 import { DeveloperInfo } from './DeveloperInfo';
 import { validateForm } from './validateForm';
 import { OAuthAcgAppInfo } from './OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from './OAuthCcgAppInfo';
 
+import './SandboxAccessForm.scss';
+
 export interface Values {
-  apis: string[];
   description: string;
   email: string;
   firstName: string;
@@ -38,10 +40,10 @@ export interface Values {
   oAuthRedirectURI: string;
   organization: string;
   termsOfService: boolean;
+  typeAndApi: string;
 }
 
 const initialValues = {
-  apis: [],
   description: '',
   email: '',
   firstName: '',
@@ -56,13 +58,19 @@ const initialValues = {
   oAuthRedirectURI: '',
   organization: '',
   termsOfService: false,
+  typeAndApi: '',
 };
 
 interface SandboxAccessFormProps {
   apiIdentifier: string;
   authTypes: string[];
   onSuccess: (results: ApplySuccessResult) => void;
-  postUrl: string;
+  urls: {
+    acgPkceAuthUrl: string;
+    ccgPublicKeyUrl: string;
+    postUrl: string;
+    termsOfServiceUrl: string;
+  };
 }
 
 interface SandboxAccessFormError extends HttpErrorResponse {
@@ -75,25 +83,27 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
   apiIdentifier,
   authTypes,
   onSuccess,
-  postUrl,
+  urls,
 }) => {
-  const formRef = useRef(null);
   const [submissionHasError, setSubmissionHasError] = useState(false);
   const [submissionErrors, setSubmissionErrors] = useState<string[]>([]);
   const [authType, setAuthType] = useState<string | null>();
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
+  const { acgPkceAuthUrl, ccgPublicKeyUrl, postUrl, termsOfServiceUrl } = urls;
 
   const handleSubmit = async (values: Values): Promise<void> => {
+    console.log('handleSubmit called');
+    console.log(values);
     setSubmissionHasError(false);
     setSubmissionErrors([]);
     const applicationBody: DevApplicationRequest = {
       ...values,
-      apis: values.apis.join(','),
+      apis: values.typeAndApi,
     };
 
-    if (!includesInternalOnlyAPI(values.apis)) {
-      delete applicationBody.internalApiInfo;
-    }
+    // if (!includesInternalOnlyAPI(values.apis)) {
+    //   delete applicationBody.internalApiInfo;
+    // }
 
     if (applicationBody.internalApiInfo && !applicationBody.internalApiInfo.vaEmail) {
       applicationBody.internalApiInfo.vaEmail = applicationBody.email;
@@ -130,7 +140,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
 
       onSuccess({
         ...json,
-        apis: values.apis,
+        apis: [values.typeAndApi],
         email: json.email ?? values.email,
       });
     } catch (error: unknown) {
@@ -143,15 +153,15 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
 
   const authTypeChange = (event: React.FormEvent<HTMLFormElement>): void => {
     const target = event.target as HTMLInputElement;
-    if (target.name === 'apis[]') {
+    if (target.name === 'typeAndApi') {
       switch (target.id) {
-        case 'apisFormFieldacgclaims':
+        case 'typeAndApiFormFieldacgclaims':
           setAuthType('acg');
           break;
-        case 'apisFormFieldccgclaims':
+        case 'typeAndApiFormFieldccgclaims':
           setAuthType('ccg');
           break;
-        case 'apisFormFieldacgclaims':
+        case 'typeAndApiFormFieldacgclaims':
           setAuthType('apikey');
           break;
         default:
@@ -161,13 +171,14 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
 
   if (authTypes.length === 1 && authType !== authTypes[0]) {
     setAuthType(authTypes[0]);
+    initialValues.typeAndApi = `${authTypes[0]}/${apiIdentifier}`;
   }
+  console.log(authTypes);
 
   return (
     <div className="vads-l-row">
       <div className="vads-u-padding-x--2p5">
         <Formik
-          innerRef={formRef}
           initialValues={initialValues}
           onSubmit={handleSubmit}
           validate={validateForm}
@@ -188,11 +199,13 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
             return (
               <Form noValidate onChange={authTypeChange}>
                 <DeveloperInfo />
-                {authTypes.length === 1 && (
-                  <input name="apis[]" type="hidden" value={`${authTypes[0]}/${apiIdentifier}`} />
-                )}
                 {authTypes.length > 1 && (
-                  <FieldSet legend="Choose your auth type" name="apis[]" required>
+                  <FieldSet
+                    className="vads-u-margin-top--4"
+                    legend="Choose your auth type"
+                    name="typeAndApi"
+                    required
+                  >
                     {authTypes.includes('apikey') && (
                       <CheckboxRadioField
                         type="radio"
@@ -206,7 +219,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
                       <CheckboxRadioField
                         type="radio"
                         label="Authorization Code Flow"
-                        name="apis[]"
+                        name="typeAndApi"
                         value={`acg/${apiIdentifier}`}
                         required
                       />
@@ -215,7 +228,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
                       <CheckboxRadioField
                         type="radio"
                         label="Client Credentials Grant"
-                        name="apis[]"
+                        name="typeAndApi"
                         value={`ccg/${apiIdentifier}`}
                         required
                       />
@@ -223,8 +236,8 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
                   </FieldSet>
                 )}
 
-                {authType === 'acg' && <OAuthAcgAppInfo />}
-                {authType === 'ccg' && <OAuthCcgAppInfo />}
+                {authType === 'acg' && <OAuthAcgAppInfo acgPkceAuthUrl={acgPkceAuthUrl} />}
+                {authType === 'ccg' && <OAuthCcgAppInfo ccgPublicKeyUrl={ccgPublicKeyUrl} />}
 
                 <TextField
                   as="textarea"
@@ -233,7 +246,7 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({
                   className="vads-u-margin-top--4"
                 />
 
-                <TermsOfServiceCheckbox />
+                <TermsOfServiceCheckbox termsOfServiceUrl={termsOfServiceUrl} />
                 <button
                   onClick={handleSubmitButtonClick}
                   type="submit"

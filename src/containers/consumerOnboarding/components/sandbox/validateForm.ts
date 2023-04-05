@@ -1,63 +1,67 @@
+/* eslint-disable no-console */
 import { FormikErrors } from 'formik';
 import {
   validateEmail,
-  validateVAEmail,
+  // validateVAEmail,
   validatePresence,
   validateOAuthRedirectURI,
   validateOAuthApplicationType,
-  isVaEmail,
+  // isVaEmail,
 } from '../../../../utils/validators';
-import {
-  includesInternalSponsorshipAPI,
-  includesAuthCodeAPI,
-  includesCcgAPI,
-} from '../../../../apiDefs/query';
+// import {
+//   includesInternalSponsorshipAPI,
+//   includesAuthCodeAPI,
+//   includesCcgAPI,
+// } from '../../../../apiDefs/query';
 import { Values } from './SandboxAccessForm';
 
-const anyApiSelected = ({ apis }: Values): boolean => apis.length > 0;
-
 export const validateForm = (values: Values): FormikErrors<Values> => {
+  console.log('validateForm called');
+  console.log(values);
   const errors: FormikErrors<Values> = {
     email: validateEmail(values.email),
     firstName: validatePresence('first name', values.firstName),
     lastName: validatePresence('last name', values.lastName),
+    typeAndApi: validatePresence('auth type', values.typeAndApi),
   };
 
   if (!values.termsOfService) {
     errors.termsOfService = 'You must agree to the terms of service to continue.';
   }
 
-  if (!anyApiSelected(values)) {
-    errors.apis = 'Choose at least one API.';
-  }
+  // if (!anyApiSelected(values)) {
+  //   errors.apis = 'Choose at least one API.';
+  // }
 
-  if (includesAuthCodeAPI(values.apis)) {
+  if (values.typeAndApi.startsWith('acg')) {
     errors.oAuthApplicationType = validateOAuthApplicationType(values.oAuthApplicationType);
     errors.oAuthRedirectURI = validateOAuthRedirectURI(values.oAuthRedirectURI);
   }
 
-  if (includesCcgAPI(values.apis)) {
+  if (values.typeAndApi.startsWith('ccg')) {
     errors.oAuthPublicKey = validatePresence('oAuthPublicKey', values.oAuthPublicKey);
   }
 
-  if (includesInternalSponsorshipAPI(values.apis)) {
-    errors.internalApiInfo = {
-      programName: validatePresence('program name', values.internalApiInfo.programName),
-      sponsorEmail: validateVAEmail(values.internalApiInfo.sponsorEmail),
-      // eslint-disable-next-line no-negated-condition
-      vaEmail: !isVaEmail(values.email) ? validateVAEmail(values.internalApiInfo.vaEmail) : '',
-    };
+  // if (includesInternalSponsorshipAPI(values.apis)) {
+  //   errors.internalApiInfo = {
+  //     programName: validatePresence('program name', values.internalApiInfo.programName),
+  //     sponsorEmail: validateVAEmail(values.internalApiInfo.sponsorEmail),
+  //     // eslint-disable-next-line no-negated-condition
+  //     vaEmail: !isVaEmail(values.email) ? validateVAEmail(values.internalApiInfo.vaEmail) : '',
+  //   };
 
-    const internalInfoErrors = errors.internalApiInfo;
+  //   const internalInfoErrors = errors.internalApiInfo;
 
-    if (
-      !internalInfoErrors.programName &&
-      !internalInfoErrors.sponsorEmail &&
-      !internalInfoErrors.vaEmail
-    ) {
-      delete errors.internalApiInfo;
-    }
-  }
+  //   if (
+  //     !internalInfoErrors.programName &&
+  //     !internalInfoErrors.sponsorEmail &&
+  //     !internalInfoErrors.vaEmail
+  //   ) {
+  //     delete errors.internalApiInfo;
+  //   }
+  // }
+
+  console.log(errors);
 
   /*
    * This removes any fields that have an 'undefined' error (as returned by validatePresence)

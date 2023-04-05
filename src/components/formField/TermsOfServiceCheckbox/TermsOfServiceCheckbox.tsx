@@ -5,11 +5,19 @@ import CheckboxRadioField from '../CheckboxRadioField';
 
 import './TermsOfServiceCheckbox.scss';
 
+interface TermsOfServiceCheckboxProps {
+  termsOfServiceUrl: string;
+}
+
 export interface TermsOfServiceFormValues {
   termsOfService: boolean;
 }
 
-const TermsOfServiceCheckbox: React.FunctionComponent = <T extends TermsOfServiceFormValues>() => {
+const TermsOfServiceCheckbox: React.FC<TermsOfServiceCheckboxProps> = <
+  T extends TermsOfServiceFormValues,
+>({
+  termsOfServiceUrl,
+}: TermsOfServiceCheckboxProps) => {
   const { errors, touched } = useFormikContext<T>();
   const hasTermsOfServiceError = !!errors.termsOfService && !!touched.termsOfService;
   return (
@@ -20,7 +28,10 @@ const TermsOfServiceCheckbox: React.FunctionComponent = <T extends TermsOfServic
       type="checkbox"
       description={
         <p className={classNames({ 'vads-u-font-weight--bold': hasTermsOfServiceError })}>
-          Review our <a href="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</a>
+          Review our{' '}
+          <a href={termsOfServiceUrl} target="_blank" rel="noopener noreferrer">
+            terms of service
+          </a>
           <span className="form-required-span">(*Required)</span>
         </p>
       }

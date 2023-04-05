@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { useFormikContext } from 'formik';
 import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../../components';
 import { Values } from '../../ProductionAccess';
+import { TERMS_OF_SERVICE_PATH } from '../../../../types/constants/paths';
 import { SelectedAPIs } from './SelectedApis';
 
 const Verification: FC = () => {
@@ -43,7 +44,7 @@ const Verification: FC = () => {
       </FieldSet>
 
       <SelectedAPIs selectedApis={apis} />
-      <TermsOfServiceCheckbox />
+      <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
     </fieldset>
   );
 };

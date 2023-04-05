@@ -15,9 +15,10 @@ import { Flag } from '../../../../flags';
 import { FLAG_HOSTED_APIS } from '../../../../types/constants';
 import { isHostedApiEnabled } from '../../../../apiDefs/env';
 import ApisLoader from '../../../../components/apisLoader/ApisLoader';
+import { AUTHORIZATION_CCG_PATH, AUTHORIZATION_PKCE_PATH } from '../../../../types/constants/paths';
 import { OAuthAcgAppInfo } from './OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from './OAuthCcgAppInfo';
-import { InternalOnlyInfo } from './InternalOnlyInfo';
+// import { InternalOnlyInfo } from './InternalOnlyInfo';
 import { Values } from './SandboxAccessForm';
 import './SelectedApis.scss';
 
@@ -26,55 +27,52 @@ interface APICheckboxListProps {
   authType: 'acg' | 'apikey' | 'ccg';
 }
 
-const ApiCheckboxList = ({ apiCheckboxes, authType }: APICheckboxListProps): JSX.Element => {
-  const formValues = useFormikContext<Values>().values;
-
-  return (
-    <>
-      {apiCheckboxes
-        .filter(
-          api =>
-            (!api.vaInternalOnly || api.vaInternalOnly !== VaInternalOnly.StrictlyInternal) &&
-            isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
-        )
-        .map(api => {
-          const apiCheckboxName = api.altID ?? api.urlFragment;
-          const internalApiSelected =
-            formValues.apis.includes(`${authType}/${apiCheckboxName}`) &&
-            api.vaInternalOnly &&
-            api.vaInternalOnly === VaInternalOnly.AdditionalDetails;
-          return (
-            <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
-              <div
-                className={classNames(
-                  internalApiSelected ? 'vads-u-border-left--4px' : '',
-                  internalApiSelected ? 'vads-u-border-color--primary-alt-light' : '',
-                )}
-              >
-                <CheckboxRadioField
-                  type="checkbox"
-                  name="apis"
-                  label={
-                    <>
-                      <span>{api.name}</span>
-                      <span className="vads-u-display--inline-block vads-u-margin-left--1">
-                        <ApiTags openData={api.openData} vaInternalOnly={api.vaInternalOnly} />
-                      </span>
-                    </>
-                  }
-                  value={`${authType}/${apiCheckboxName}`}
-                  className="vads-u-padding-left--1p5"
-                />
-                {/* Request model will need an update to support multiple internal only APIs
+const ApiCheckboxList = ({ apiCheckboxes, authType }: APICheckboxListProps): JSX.Element => (
+  <>
+    {apiCheckboxes
+      .filter(
+        api =>
+          (!api.vaInternalOnly || api.vaInternalOnly !== VaInternalOnly.StrictlyInternal) &&
+          isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+      )
+      .map(api => {
+        const apiCheckboxName = api.altID ?? api.urlFragment;
+        // const internalApiSelected =
+        //   formValues.apis.includes(`${authType}/${apiCheckboxName}`) &&
+        //   api.vaInternalOnly &&
+        //   api.vaInternalOnly === VaInternalOnly.AdditionalDetails;
+        return (
+          <Flag name={[FLAG_HOSTED_APIS, api.urlFragment]} key={api.urlFragment}>
+            <div
+              className={
+                classNames()
+                // internalApiSelected ? 'vads-u-border-left--4px' : '',
+                // internalApiSelected ? 'vads-u-border-color--primary-alt-light' : '',
+              }
+            >
+              <CheckboxRadioField
+                type="checkbox"
+                name="apis"
+                label={
+                  <>
+                    <span>{api.name}</span>
+                    <span className="vads-u-display--inline-block vads-u-margin-left--1">
+                      <ApiTags openData={api.openData} vaInternalOnly={api.vaInternalOnly} />
+                    </span>
+                  </>
+                }
+                value={`${authType}/${apiCheckboxName}`}
+                className="vads-u-padding-left--1p5"
+              />
+              {/* Request model will need an update to support multiple internal only APIs
               with separate VA info when we add the next internal only api */}
-                {internalApiSelected && <InternalOnlyInfo />}
-              </div>
-            </Flag>
-          );
-        })}
-    </>
-  );
-};
+              {/* {internalApiSelected && <InternalOnlyInfo />} */}
+            </div>
+          </Flag>
+        );
+      })}
+  </>
+);
 
 interface SelectedApisProps {
   selectedApis: string[];
@@ -160,7 +158,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           name="oauthApis"
         >
           <ApiCheckboxList apiCheckboxes={getAllAuthCodeApis()} authType="acg" />
-          {authCodeApiSelected && <OAuthAcgAppInfo />}
+          {authCodeApiSelected && <OAuthAcgAppInfo acgPkceAuthUrl={AUTHORIZATION_PKCE_PATH} />}
         </FieldSet>
         <FieldSet
           className={classNames(
@@ -174,7 +172,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           name="ccgApis"
         >
           <ApiCheckboxList apiCheckboxes={getAllCCGApis()} authType="ccg" />
-          {ccgApiSelected && <OAuthCcgAppInfo />}
+          {ccgApiSelected && <OAuthCcgAppInfo ccgPublicKeyUrl={AUTHORIZATION_CCG_PATH} />}
         </FieldSet>
       </div>
     </fieldset>

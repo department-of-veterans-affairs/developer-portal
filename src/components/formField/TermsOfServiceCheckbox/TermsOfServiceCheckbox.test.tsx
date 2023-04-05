@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import * as yup from 'yup';
+import { TERMS_OF_SERVICE_PATH } from '../../../types/constants/paths';
 import TermsOfServiceCheckbox, { TermsOfServiceFormValues } from './TermsOfServiceCheckbox';
 
 describe('TermsOfServiceCheckbox', () => {
@@ -11,9 +12,9 @@ describe('TermsOfServiceCheckbox', () => {
       render(
         <Formik initialValues={{ termsOfService: false }} onSubmit={jest.fn()}>
           <Form noValidate>
-            <TermsOfServiceCheckbox />
+            <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
           </Form>
-        </Formik>
+        </Formik>,
       );
 
       const checkbox = screen.getByRole('checkbox', { name: 'I agree to the terms' });
@@ -24,9 +25,9 @@ describe('TermsOfServiceCheckbox', () => {
       render(
         <Formik initialValues={{ termsOfService: false }} onSubmit={jest.fn()}>
           <Form noValidate>
-            <TermsOfServiceCheckbox />
+            <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
           </Form>
-        </Formik>
+        </Formik>,
       );
 
       const termsLink = screen.getByRole('link', { name: 'terms of service' });
@@ -49,10 +50,10 @@ describe('TermsOfServiceCheckbox', () => {
       render(
         <Formik initialValues={{ termsOfService: initialValue }} onSubmit={checkValue}>
           <Form noValidate>
-            <TermsOfServiceCheckbox />
+            <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
             <button type="submit">Submit</button>
           </Form>
-        </Formik>
+        </Formik>,
       );
 
       userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
@@ -69,9 +70,7 @@ describe('TermsOfServiceCheckbox', () => {
 
   describe('validation', () => {
     const schema = yup.object().shape({
-      termsOfService: yup.boolean()
-        .oneOf([true], 'Accept the terms or else.')
-        .required(),
+      termsOfService: yup.boolean().oneOf([true], 'Accept the terms or else.').required(),
     });
 
     it('does not have an error message when there is no error', async () => {
@@ -85,10 +84,10 @@ describe('TermsOfServiceCheckbox', () => {
           validationSchema={schema}
         >
           <Form noValidate>
-            <TermsOfServiceCheckbox />
+            <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
             <button type="submit">Submit</button>
           </Form>
-        </Formik>
+        </Formik>,
       );
 
       userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
@@ -109,10 +108,10 @@ describe('TermsOfServiceCheckbox', () => {
           validationSchema={schema}
         >
           <Form noValidate>
-            <TermsOfServiceCheckbox />
+            <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
             <button type="submit">Submit</button>
           </Form>
-        </Formik>
+        </Formik>,
       );
 
       userEvent.click(screen.getByRole('button', { name: 'Submit' }));
