@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import highlight from 'rehype-highlight';
+import prism from 'remark-prism';
 import { Tooltip } from '../index';
 
 import './CodeBlock.scss';
@@ -30,11 +31,12 @@ const CodeBlock = ({
     <div className="code-block">
       <CodeWrapper>
         <ReactMarkdown
+          remarkPlugins={[prism]}
           rehypePlugins={[highlight]}
           components={{
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             code: ({ className, children, node, ...codeProps }): JSX.Element => (
-              <code className={className} {...codeProps}>
+              <code className="line-numbers" {...codeProps}>
                 {children}
               </code>
             ),
