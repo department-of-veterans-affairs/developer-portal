@@ -1,9 +1,8 @@
 /* eslint-disable max-lines -- component is long, need to refactor at some point */
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import classNames from 'classnames';
 import * as React from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import {
   OpenAPISpec,
   OpenAPISpecV2,
@@ -16,7 +15,7 @@ import {
   SwaggerSpecObject,
 } from 'swagger-ui';
 import { v4 as uuidv4 } from 'uuid';
-import { CodeBlock, CodeWrapper } from '../../../components';
+import { CodeBlock } from '../../../components';
 import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { System } from './types';
 
