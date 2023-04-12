@@ -16,7 +16,7 @@ import {
   SwaggerSpecObject,
 } from 'swagger-ui';
 import { v4 as uuidv4 } from 'uuid';
-import { CodeWrapper } from '../../../components';
+import { CodeBlock, CodeWrapper } from '../../../components';
 import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { System } from './types';
 
@@ -440,7 +440,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                <CodeWrapper>
+                {/* <CodeWrapper>
                   <pre
                     className={classNames(
                       'vads-u-display--flex',
@@ -457,7 +457,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
                       </span>
                     </CopyToClipboard>
                   </pre>
-                </CodeWrapper>
+                </CodeWrapper> */}
+                <CodeBlock withCopyButton code={this.buildCurl()} />
               </div>
             </div>
           </div>
