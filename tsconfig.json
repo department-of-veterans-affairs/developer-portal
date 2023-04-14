@@ -7,6 +7,7 @@
     "lib": ["es6", "es2019", "esnext.array", "dom"],
     "sourceMap": true,
     "allowJs": true,
+    "ignoreDeprecations": "5.0",
     "jsx": "react",
     "moduleResolution": "node",
     "rootDirs": ["src", "cypress/fixtures"],
@@ -14,6 +15,11 @@
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
+    "paths": {
+      "@department-of-veterans-affairs/sandbox-access-form": [
+        "@department-of-veterans-affairs/sandbox-access-form/lib"
+      ]
+    },
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { SandboxAccessForm } from '@department-of-veterans-affairs/sandbox-access-form';
 import { getActiveApis, lookupApiByFragment } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
@@ -11,7 +12,7 @@ import {
   AUTHORIZATION_PKCE_PATH,
   TERMS_OF_SERVICE_PATH,
 } from '../../types/constants/paths';
-import { SandboxAccessForm, SandboxAccessSuccess } from './components/sandbox';
+import { SandboxAccessSuccess } from './components/sandbox';
 
 const RequestSandboxAccess: React.FunctionComponent = () => {
   const apis = getActiveApis();
@@ -31,6 +32,10 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
     const api =
       lookupApiByFragment(event.target.value) ?? ({ urlFragment: 'appeals' } as APIDescription);
     setSelectedApi(api);
+  };
+
+  const onFormFailure = (data: unknown): void => {
+    console.log(data);
   };
 
   const getAuthTypes = (api: APIDescription): string[] => {
@@ -73,6 +78,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
           <SandboxAccessForm
             apiIdentifier={selectedApi.urlFragment}
             authTypes={getAuthTypes(selectedApi)}
+            onFailure={onFormFailure}
             onSuccess={setSuccessResults}
             urls={{
               acgPkceAuthUrl: AUTHORIZATION_PKCE_PATH,
@@ -81,6 +87,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
               termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
             }}
             key={selectedApi.urlFragment}
+            internalOnly={!!selectedApi.vaInternalOnly}
           />
         </>
       )}
