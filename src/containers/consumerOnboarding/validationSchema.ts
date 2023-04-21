@@ -240,14 +240,11 @@ const validationSchema = [
         otherwise: yup.string().isNotATestString(),
         then: yup.string().isNotATestString().required('Provide the naming convention.'),
       }),
-    piiStorageMethod: yup
-      .string()
-      .isNotATestString()
-      .when('storePIIOrPHI', {
-        is: (value: string) => value === 'yes',
-        otherwise: yup.string().isNotATestString(),
-        then: yup.string().isNotATestString().required('Enter a description.'),
-      }),
+    piiStorageMethod: yup.string().when('storePIIOrPHI', {
+      is: (value: string) => value === 'yes',
+      otherwise: yup.string(),
+      then: yup.string().required('Enter a description.'),
+    }),
     productionOrOAuthKeyCredentialStorage: yup
       .string()
       .isNotATestString()
