@@ -32,8 +32,8 @@ describe('Auth Flow Content', () => {
     const heading = screen.getByText('PKCE (Proof Key for Code Exchange) Authorization');
     expect(heading).toBeInTheDocument();
   });
-  it('Oauth base path found ', () => {
-    const codeWrapperArray = screen.getAllByText('/oauth2/armageddon/v1/authorization?');
+  it('Oauth base path found ', async () => {
+    const codeWrapperArray = await screen.findAllByText('/oauth2/armageddon/v1/authorization?');
     expect(codeWrapperArray.length).toBeGreaterThan(0);
   });
   it('Corrent number of code wrappers', () => {
