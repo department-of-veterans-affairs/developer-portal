@@ -33,7 +33,7 @@ describe('Auth Flow Content', () => {
     expect(heading).toBeInTheDocument();
   });
   it('Oauth base path found ', () => {
-    const codeWrapperArray = screen.getAllByText(/\/oauth2\/armageddon\/v1\/authorization\? /i);
+    const codeWrapperArray = screen.getAllByText('/oauth2/armageddon/v1/authorization?');
     expect(codeWrapperArray.length).toBeGreaterThan(0);
   });
   it('Corrent number of code wrappers', () => {
