@@ -59,9 +59,7 @@ const testCurlText = async (
   expect(curlHeading).toBeInTheDocument();
   expect(curlHeading.nextElementSibling).not.toBeNull();
   expect(curlHeading.nextElementSibling).toBeInTheDocument();
-
-  const codeBlock = await findByText(
-    curlHeading.nextElementSibling as HTMLElement,
+  const codeBlock =  screen.getByText(
     normalizeCurlText(expectedCurl),
     {
       normalizer: normalizeCurlText,
