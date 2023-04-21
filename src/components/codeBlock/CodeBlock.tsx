@@ -34,9 +34,9 @@ const CodeBlock = ({
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             code: ({ className, children, node, ...codeProps }): JSX.Element => (
               <SyntaxHighlighter
+                className={className}
                 language={language}
                 showLineNumbers
-                className={className}
                 useInlineStyles={false}
               >
                 {String(children).replace(/\n$/, '')}

@@ -439,24 +439,6 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                {/* <CodeWrapper>
-                  <pre
-                    className={classNames(
-                      'vads-u-display--flex',
-                      'vads-u-justify-content--space-between',
-                    )}
-                    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-                    tabIndex={0}
-                  >
-                    <code>{this.buildCurl()}</code>
-
-                    <CopyToClipboard text={this.buildCurl()}>
-                      <span className="va-api-curl__copy-to-clipboard">
-                        <FontAwesomeIcon icon={faCopy} size="2x" />
-                      </span>
-                    </CopyToClipboard>
-                  </pre>
-                </CodeWrapper> */}
                 <CodeBlock withCopyButton code={this.buildCurl()} />
               </div>
             </div>

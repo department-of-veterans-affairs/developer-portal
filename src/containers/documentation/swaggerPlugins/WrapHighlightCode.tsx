@@ -6,6 +6,7 @@ export const WrapHighlightCode = {
     const HighlightCode = (props: Record<string, unknown>): JSX.Element => (
       <CodeWrapper>
         <Original {...props} />
+        {console.log(props)}
       </CodeWrapper>
     );
 
