@@ -38,16 +38,15 @@ const CodeBlock = ({
                 language={language}
                 showLineNumbers
                 useInlineStyles={false}
+                tabIndex={0}
               >
                 {String(children).replace(/\n$/, '')}
               </SyntaxHighlighter>
             ),
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             pre: ({ children, node, ...preProps }): JSX.Element => (
-              // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-              <pre {...preProps} tabIndex={0}>
-                {children}
-              </pre>
+              // eslint-disable-next-line react/jsx-no-useless-fragment
+              <>{children}</>
             ),
           }}
         >
