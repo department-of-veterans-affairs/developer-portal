@@ -37,6 +37,11 @@ jobs:
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
 
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
       - name: Cypress run
         uses: cypress-io/github-action@v5
         with:
@@ -87,6 +92,11 @@ jobs:
           apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
