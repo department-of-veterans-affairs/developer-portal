@@ -58,9 +58,10 @@ const testCurlText = async (
   expect(curlHeading).toBeInTheDocument();
   expect(curlHeading.nextElementSibling).not.toBeNull();
   expect(curlHeading.nextElementSibling).toBeInTheDocument();
+  const curlSubstring = expectedCurl.slice(0, 10);
   expect(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    screen.getByText((content, element) => content.startsWith(expectedCurl.slice(0, 10))),
+    screen.getByText((content, element) => content.startsWith(curlSubstring)),
   ).toBeInTheDocument();
 };
 
