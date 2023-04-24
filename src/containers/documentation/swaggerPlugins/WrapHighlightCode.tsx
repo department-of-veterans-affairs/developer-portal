@@ -7,7 +7,6 @@ export const WrapHighlightCode = {
   highlightCode: (Original: React.ComponentType): React.ComponentType => {
     const HighlightCode = (props: Record<string, unknown>): JSX.Element => (
       <CodeWrapper>
-        {/* <Original {...props} /> */}
         <CodeBlock withCopyButton code={props.value as string} language={props.language as string} />
       </CodeWrapper>
     );
