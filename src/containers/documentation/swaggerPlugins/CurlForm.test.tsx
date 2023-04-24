@@ -49,7 +49,6 @@ const collapseOperation = (operationContainer: HTMLElement, description: string)
   fireEvent.click(operationEl);
 };
 
-// const normalizeCurlText = (original: string): string => original.trim().replace(/\s+/g, ' ');
 const testCurlText = async (
   expectedCurl: string,
   operationContainer: HTMLElement,
