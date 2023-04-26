@@ -1,4 +1,3 @@
-import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import classNames from 'classnames';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -109,27 +108,25 @@ const Header = (): JSX.Element => {
         </div>
         <NavBar isMobileMenuVisible={mobileNavVisible} onMobileNavClose={toggleMenuVisible} />
         {location.pathname === '/explore/appeals/docs/appeals' && (
-          <VaAlert status="info" visible>
-            <h3 slot="headline">
-              A new version of Appeals Status API (v1) will launch later this year.
-            </h3>
-          </VaAlert>
+          <va-alert background-only show-icon status="info" visible>
+            <h3>A new version of Appeals Status API (v1) will launch later this year.</h3>
+          </va-alert>
         )}
         {location.pathname === '/explore/facilities/docs/facilities' && (
-          <VaAlert status="info" visible>
-            <h3 slot="headline">
+          <va-alert background-only show-icon status="info" visible>
+            <h3>
               Version 1 of the VA Facilities API is launching soon. We will add{' '}
               <Link to="/release-notes/facilities">release notes</Link> when it&apos;s live.
             </h3>
-          </VaAlert>
+          </va-alert>
         )}
         {location.pathname === '/explore/verification/docs/veteran_confirmation' && (
-          <VaAlert status="info" visible>
-            <h3 slot="headline">
+          <va-alert background-only show-icon status="info" visible>
+            <h3>
               Version 0 of the Veteran Confirmation API is deprecated and scheduled for deactivation
               on April 4, 2024. Version 1 of the Veteran Confirmation API is now active.
             </h3>
-          </VaAlert>
+          </va-alert>
         )}
       </header>
     </>

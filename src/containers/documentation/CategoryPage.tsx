@@ -2,8 +2,6 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
-import AlertBox from 'component-library-legacy/AlertBox';
-import classNames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import { Flag } from '../../flags';
 import { getApiDefinitions, getApisLoadedState } from '../../apiDefs/query';
@@ -63,14 +61,12 @@ const CategoryPage = (): JSX.Element => {
       </Helmet>
       <PageHeader header={categoryName} />
       {veteranRedirect && (
-        <AlertBox
-          status="info"
-          key={apiCategoryKey}
-          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
-        >
-          {veteranRedirect.message}&nbsp;
-          <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
-        </AlertBox>
+        <va-alert background-only show-icon status="info" key={apiCategoryKey} visible>
+          <p className="vads-u-margin-y--0">
+            {veteranRedirect.message}&nbsp;
+            <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
+          </p>
+        </va-alert>
       )}
       <div className="vads-u-width--full">
         <ReactMarkdown>{overview}</ReactMarkdown>

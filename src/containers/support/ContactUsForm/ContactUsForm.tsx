@@ -2,7 +2,6 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactNode, useState } from 'react';
 import { Formik, Form } from 'formik';
-import AlertBox from 'component-library-legacy/AlertBox';
 import { useCookies } from 'react-cookie';
 import { CheckboxRadioField } from '../../../components';
 import { LPB_CONTACT_US_URL, LPB_FORGERY_TOKEN } from '../../../types/constants';
@@ -133,10 +132,9 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
             {isSubmitting ? 'Sending...' : 'Send to developer support'}
           </button>
           {submissionError && (
-            <AlertBox
-              status="error"
-              headline="We encountered a server error while saving your form. Please try again later."
-            />
+            <va-alert background-only show-icon status="error" visible>
+              <h2>We encountered a server error while saving your form. Please try again later.</h2>
+            </va-alert>
           )}
         </Form>
       )}
