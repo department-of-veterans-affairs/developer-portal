@@ -34,5 +34,6 @@ describe('EditInputField', () => {
       </Formik>,
     );
     expect(container).toBeInTheDocument();
+    container.click();
   });
 });

@@ -30,5 +30,14 @@ describe('PublishingIntroduction', () => {
       expect(cardLink).toBeInTheDocument();
       expect(cardLink).toHaveAttribute('href', url);
     });
+
+    it('Modal is opened on click', () => {
+      const cardBox = screen.getByRole('link', { name: 'Requirements for APIs' });
+      expect(cardBox).toBeInTheDocument();
+      cardBox.click();
+      setTimeout(() => {
+        expect(screen.findByText('It looks like')).toBeInTheDocument();
+      }, 3000);
+    });
   });
 });

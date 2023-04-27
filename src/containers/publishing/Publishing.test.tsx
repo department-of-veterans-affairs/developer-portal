@@ -54,4 +54,13 @@ describe('Publishing', () => {
       });
     });
   });
+
+  it('Modal is opened on click', () => {
+    const sideNavLink = screen.getByRole('button', { name: 'Requirements for APIs' });
+    expect(sideNavLink).toBeInTheDocument();
+    sideNavLink.click();
+    setTimeout(() => {
+      expect(screen.findByText('It looks like')).toBeInTheDocument();
+    }, 3000);
+  });
 });
