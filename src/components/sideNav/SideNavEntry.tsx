@@ -13,13 +13,14 @@ export interface SideNavEntryProps extends NavHashLinkProps {
   subNavLevel?: number;
   sharedAnchors?: string[];
   forceAriaCurrent?: boolean;
+  if?: boolean;
 }
 
 /**
  * Constructs a NavHashLink in the sidebar that also takes into account the
  * hash when determining if it's active
  */
-const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
+const SideNavEntry = (props: SideNavEntryProps): JSX.Element | null => {
   /**
    * The isActive prop receives two arguments: a `match` object representing
    * the original determination, and the current location. The match algorithm
@@ -27,6 +28,9 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element => {
    * include partial matches according to the https://github.com/pillarjs/path-to-regexp
    * implementation.
    */
+  if (props.if === false) {
+    return null;
+  }
   const navHashLinkIsActive = (pathMatch: Match | null, location: Location): boolean => {
     const withoutTrailingSlash = (path: string): string => path.replace(/\/$/, '');
 

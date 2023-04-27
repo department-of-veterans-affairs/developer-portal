@@ -9,9 +9,14 @@ declare global {
   }
 }
 
+export interface APIUrlFragment {
+  urlFragment: string;
+}
+
 export interface APINameParam {
   apiName?: string;
   apiCategoryKey: string;
+  urlFragment?: string;
 }
 
 export interface VersionMetadata {

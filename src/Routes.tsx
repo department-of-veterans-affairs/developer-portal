@@ -18,7 +18,6 @@ import {
   CONSUMER_SANDBOX_PATH,
   PUBLISHING_ROUTER_PATHS,
 } from './types/constants/paths';
-import { buildApiDetailRoutes } from './utils/routesHelper';
 import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
 import ErrorPage404 from './containers/ErrorPage404';
 import TermsOfService from './containers/TermsOfService';
@@ -45,26 +44,8 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       <Route path="/terms-of-service" component={TermsOfService} />
 
       {/* API Documentation */}
-      <Route exact path="/explore" component={DocumentationRoot} />
-      <Route exact path="/explore/authorization" component={DocumentationRoot} />
-      <Route
-        exact
-        path="/explore/authorization/docs/authorization-code"
-        component={DocumentationRoot}
-      />
-      <Route
-        exact
-        path="/explore/authorization/docs/client-credentials"
-        component={DocumentationRoot}
-      />
-      {buildApiDetailRoutes(apiDefinitions).map(
-        (path: string): JSX.Element => (
-          <Route exact key={path} path={path} component={DocumentationRoot} />
-        ),
-      )}
-      {getApisLoadedState() === apiLoadingState.IN_PROGRESS && (
-        <Route path="/explore/:name" component={DocumentationRoot} />
-      )}
+      <Route path="/explore/api/:urlFragment" component={DocumentationRoot} />
+      <Route path="/explore" component={DocumentationRoot} />
 
       {/* Release Notes */}
       <Route exact path="/release-notes" component={ReleaseNotes} />
