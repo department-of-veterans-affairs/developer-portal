@@ -32,6 +32,7 @@ import {
 import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 
 const rings: APIDescription = {
+  categoryUrlFragment: 'lotr',
   description: 'One Ring to rule them all',
   docSources: [], // doesn't matter yet
   enabledByDefault: true,
