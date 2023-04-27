@@ -133,7 +133,9 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
           </button>
           {submissionError && (
             <va-alert background-only show-icon status="error" visible>
-              <h2>We encountered a server error while saving your form. Please try again later.</h2>
+              <p className="vads-u-margin-y--0">
+                We encountered a server error while saving your form. Please try again later.
+              </p>
             </va-alert>
           )}
         </Form>

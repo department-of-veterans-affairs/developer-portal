@@ -19,8 +19,8 @@ const ApiNotFoundPage = (): JSX.Element => {
   return (
     <div role="region" aria-labelledby={PAGE_HEADER_ID}>
       <va-alert background-only show-icon status="warning" visible>
-        <h2>Page not found.</h2>
-        <p className="vads-u-margin-y--0">
+        <p className="vads-u-margin-y--0">Page not found.</p>
+        <p className="vads-u-margin-top--1">
           Try using the links below or the search bar to find your way forward.
         </p>
       </va-alert>

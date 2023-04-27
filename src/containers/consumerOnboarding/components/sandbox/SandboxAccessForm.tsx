@@ -169,9 +169,11 @@ const SandboxAccessForm: FC<SandboxAccessFormProps> = ({ onSuccess }) => {
         </Formik>
         {submissionHasError && (
           <va-alert background-only show-icon status="error" visible>
-            <h2>We encountered a server error while saving your form. Please try again later.</h2>
             <p className="vads-u-margin-y--0">
-              Need assistance? Create an issue through our <Link to="/support">Support page</Link>
+              We encountered a server error while saving your form. Please try again later.
+            </p>
+            <p className="vads-u-margin-top--1">
+              Need assistance? Create an issue through our <Link to="/support">Support page</Link>.
               {submissionErrors.length > 0 && (
                 <ul>
                   {submissionErrors.map((item: string) => (

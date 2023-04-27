@@ -74,7 +74,7 @@ const APIReleaseNote = ({
       </h2>
       {api.deactivationInfo && isApiDeactivated(api) && (
         <va-alert background-only show-icon status="info" visible>
-          <h2>Deactivated API</h2>
+          <p className="vads-u-margin-y--0">Deactivated API</p>
           <ReactMarkdown>{api.deactivationInfo.deactivationContent}</ReactMarkdown>
         </va-alert>
       )}

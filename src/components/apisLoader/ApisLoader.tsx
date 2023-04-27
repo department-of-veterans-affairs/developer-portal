@@ -24,8 +24,8 @@ const ApisLoader: React.FunctionComponent<ApisLoaderProps> = (props): JSX.Elemen
         <div />
       ) : (
         <va-alert background-only show-icon status="error" visible>
-          <h2>Loading Error:</h2>
-          <p className="vads-u-margin-y--0">
+          <p className="vads-u-margin-y--0">Loading Error:</p>
+          <p className="vads-u-margin-top--1">
             API details failed to load. Please reload or try again later if the issue persists.
           </p>
         </va-alert>

@@ -109,23 +109,25 @@ const Header = (): JSX.Element => {
         <NavBar isMobileMenuVisible={mobileNavVisible} onMobileNavClose={toggleMenuVisible} />
         {location.pathname === '/explore/appeals/docs/appeals' && (
           <va-alert background-only show-icon status="info" visible>
-            <h3>A new version of Appeals Status API (v1) will launch later this year.</h3>
+            <p className="vads-u-margin-y--0">
+              A new version of Appeals Status API (v1) will launch later this year.
+            </p>
           </va-alert>
         )}
         {location.pathname === '/explore/facilities/docs/facilities' && (
           <va-alert background-only show-icon status="info" visible>
-            <h3>
+            <p className="vads-u-margin-y--0">
               Version 1 of the VA Facilities API is launching soon. We will add{' '}
               <Link to="/release-notes/facilities">release notes</Link> when it&apos;s live.
-            </h3>
+            </p>
           </va-alert>
         )}
         {location.pathname === '/explore/verification/docs/veteran_confirmation' && (
           <va-alert background-only show-icon status="info" visible>
-            <h3>
+            <p className="vads-u-margin-y--0">
               Version 0 of the Veteran Confirmation API is deprecated and scheduled for deactivation
               on April 4, 2024. Version 1 of the Veteran Confirmation API is now active.
-            </h3>
+            </p>
           </va-alert>
         )}
       </header>
