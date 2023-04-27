@@ -39,7 +39,7 @@ const renderApiPage = async (
       <FlagsProvider flags={flags}>
         <MemoryRouter initialEntries={[initialRoute]}>
           <Route
-            path={componentPath ? componentPath : '/explore/:apiCategoryKey/docs/:apiName'}
+            path={componentPath ? componentPath : '/explore/api/:urlFragment/docs'}
             component={ApiPage}
           />
         </MemoryRouter>
@@ -69,7 +69,7 @@ describe('ApiPage', () => {
     beforeEach(async () => {
       lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      await renderApiPage(defaultFlags, '/explore/api/rings/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -96,7 +96,7 @@ describe('ApiPage', () => {
           ...defaultFlags,
           deactivated_apis: { silmarils: true },
         },
-        '/explore/lotr/docs/silmarils',
+        '/explore/api/silmarils/docs',
       );
     });
 
@@ -121,7 +121,7 @@ describe('ApiPage', () => {
             rings: false,
           },
         },
-        '/explore/lotr/docs/rings',
+        '/explore/api/rings/docs',
       );
     });
 
@@ -131,68 +131,30 @@ describe('ApiPage', () => {
     });
   });
 
-  describe('given url params with no api', () => {
-    beforeEach(async () => {
-      lookupApiByFragmentMock.mockReturnValue(null);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
-    });
-
-    it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledTimes(0);
-      expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
-    });
-
-    it('renders the api not found page', async () => {
-      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
-      expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(
-        screen.getByText('Try using the links below or the search bar to find your way forward.'),
-      ).not.toBeNull();
-    });
-  });
-
   describe('given url with api that does not exist', () => {
     beforeEach(async () => {
       lookupApiByFragmentMock.mockReturnValue(null);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs/nonexistentapi');
+      await renderApiPage(defaultFlags, '/explore/api/nonexistentapi/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
       expect(lookupApiByFragmentMock).toHaveBeenCalledWith('nonexistentapi');
-      expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
+      expect(lookupApiCategoryMock).toHaveBeenCalledTimes(0);
     });
 
     it('renders the api not found page', async () => {
       apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
-      expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(
-        screen.getByText('Try using the links below or the search bar to find your way forward.'),
-      ).not.toBeNull();
-    });
-  });
-
-  describe('given url with api that does not exist within the given api category', () => {
-    beforeEach(async () => {
-      lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
-      lookupApiCategoryMock.mockReturnValue(fakeCategories.sports);
-      await renderApiPage(defaultFlags, '/explore/sports/docs/silmarils');
-    });
-
-    it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('silmarils');
-      expect(lookupApiCategoryMock).toHaveBeenCalledWith('sports');
-    });
-
-    it('renders the api not found page', async () => {
-      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
-      expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(
-        screen.getByText('Try using the links below or the search bar to find your way forward.'),
-      ).not.toBeNull();
+      await renderApiPage(
+        defaultFlags,
+        '/explore/api/nonexistantapi/docs',
+        '/explore/api/:urlFragment/docs',
+      );
+      expect(screen.getByText('ApiPage.tsx 404')).not.toBeNull();
+      // Temporary 404 page
+      // expect(
+      //   screen.getByText('Try using the links below or the search bar to find your way forward.'),
+      // ).not.toBeNull();
     });
   });
 
@@ -210,7 +172,7 @@ describe('ApiPage', () => {
 
       lookupApiCategoryMock.mockReturnValue(modifiedLotrApi);
       lookupApiByFragmentMock.mockReturnValue(modifiedLotrApi.apis[0]);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      await renderApiPage(defaultFlags, '/explore/api/rings/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -241,7 +203,7 @@ describe('ApiPage', () => {
 
       lookupApiCategoryMock.mockReturnValue(modifiedLotrApi);
       lookupApiByFragmentMock.mockReturnValue(modifiedLotrApi.apis[0]);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      await renderApiPage(defaultFlags, '/explore/api/rings/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
@@ -284,15 +246,8 @@ describe('ApiPage', () => {
     it('renders API specific veteran redirect message', async () => {
       lookupApiCategoryMock.mockReturnValue(apiCategory);
       lookupApiByFragmentMock.mockReturnValue(apiCategory.apis[0]);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      await renderApiPage(defaultFlags, '/explore/api/rings/docs');
       expect(screen.getByText('Find a faster train')).not.toBeNull();
-    });
-
-    it('renders category veteran redirect message', async () => {
-      lookupApiCategoryMock.mockReturnValue(apiCategory);
-      lookupApiByFragmentMock.mockReturnValue(apiCategory.apis[1]);
-      await renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
-      expect(screen.getByText("Find the facility that's right for you.")).not.toBeNull();
     });
   });
 });

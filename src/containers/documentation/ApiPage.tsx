@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import AlertBox from 'component-library-legacy/AlertBox';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
-import { lookupApiByFragment } from '../../apiDefs/query';
+import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription, VeteranRedirectMessage } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
@@ -88,18 +88,8 @@ const ApiPage = (): JSX.Element => {
   if (!api) {
     return <h1>ApiPage.tsx 404</h1>;
   }
-  const category = {
-    content: {
-      veteranRedirect: {
-        linkText: 'This is clickable',
-        linkUrl: 'https://www.va.gov',
-        message: 'Very temporary placeholder',
-      },
-    },
-    name: "Categories don't really exist anymmore",
-  };
-
-  const veteranRedirect = api.veteranRedirect ?? category.content.veteranRedirect;
+  const category = lookupApiCategory(api.categoryUrlFragment ?? '');
+  const veteranRedirect = api.veteranRedirect ?? category?.content.veteranRedirect;
 
   const tabsRegex = /tab=(r4|argonaut|dstu2)/;
   if (location.pathname === '/explore/health/docs/fhir' && tabsRegex.test(location.search)) {
@@ -136,7 +126,7 @@ const ApiPage = (): JSX.Element => {
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
-      <PageHeader halo={category.name} header={api.name} />
+      <PageHeader halo={category?.name} header={api.name} />
       {veteranRedirect && (
         <VeteranRedirectAlertMessage api={api} veteranRedirect={veteranRedirect} />
       )}

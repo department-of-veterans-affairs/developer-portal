@@ -13,6 +13,7 @@ export const fakeCategories: APICategories = {
   lotr: {
     apis: [
       {
+        categoryUrlFragment: 'lotr',
         description: 'One Ring to rule them all',
         docSources: [], // doesn't matter yet
         enabledByDefault: true,
@@ -24,6 +25,7 @@ export const fakeCategories: APICategories = {
         urlFragment: 'rings',
       },
       {
+        categoryUrlFragment: 'lotr',
         deactivationInfo: {
           deactivationContent: 'Silmarils lost forever',
           deactivationDate: moment().subtract(1, 'year').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
@@ -41,6 +43,7 @@ export const fakeCategories: APICategories = {
         urlFragment: 'silmarils',
       },
       {
+        categoryUrlFragment: 'lotr',
         description: 'Hobbits of the Shire',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
