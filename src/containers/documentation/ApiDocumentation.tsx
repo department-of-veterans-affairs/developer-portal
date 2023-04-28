@@ -2,7 +2,6 @@ import { Location } from 'history';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType } from '../../apiDefs/schema';
 import { Flag } from '../../flags';
@@ -43,17 +42,6 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
    */
   return (
     <Flag name={[FLAG_HOSTED_APIS, apiDefinition.urlFragment]}>
-      {(apiDefinition.urlFragment === 'veteran_verification' ||
-        apiDefinition.urlFragment === 'fhir') && (
-        <div role="region" aria-labelledby="oauth-info-heading" className="api-docs-oauth-link">
-          <h2 id="oauth-info-heading" className="usa-alert-heading">
-            Authentication and Authorization
-          </h2>
-          <Link to={`/explore/authorization?api=${apiDefinition.urlFragment}`}>
-            View our OAuth documentation
-          </Link>
-        </div>
-      )}
       <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} />
     </Flag>
   );
