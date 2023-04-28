@@ -126,12 +126,16 @@ const ApiPage = (): JSX.Element => {
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
-      <PageHeader halo={category?.name} header={api.name} />
+      <PageHeader header="Docs" subText={api.name} />
       {veteranRedirect && (
         <VeteranRedirectAlertMessage api={api} veteranRedirect={veteranRedirect} />
       )}
       <DeactivationMessage api={api} />
-      {!isApiDeactivated(api) && <ApiDocumentation apiDefinition={api} location={location} />}
+      {!isApiDeactivated(api) && (
+        <div className="sans-serif-headers">
+          <ApiDocumentation apiDefinition={api} location={location} />
+        </div>
+      )}
     </>
   );
 };

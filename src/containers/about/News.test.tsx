@@ -53,7 +53,7 @@ describe('News', () => {
     // headers, card links, news sections - relevant for getting card links
     expect(mainSection.children.length).toBeGreaterThanOrEqual(2);
 
-    const cardLinks = getAllByRole(mainSection.children[1] as HTMLElement, 'link');
+    const cardLinks = getAllByRole(mainSection.children[2] as HTMLElement, 'link');
     expect(cardLinks).toHaveLength(data.sections.length);
     data.sections.forEach((section: DataSection, index: number) => {
       expect(cardLinks[index]).toHaveTextContent(section.title);

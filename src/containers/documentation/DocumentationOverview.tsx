@@ -16,10 +16,10 @@ const DocumentationOverview = (): JSX.Element => {
       <Helmet>
         <title>Documentation</title>
       </Helmet>
-      <PageHeader
-        header="Documentation"
-        description="Explore usage policies and technical details about VA's API offerings."
-      />
+      <PageHeader header="Documentation" />
+      <p className="vads-u-font-size--lg vads-u-font-weight--bold vads-u-margin-y--2">
+        Explore usage policies and technical details about VA&apos;s API offerings.
+      </p>
       <ApisLoader>
         <div className={defaultFlexContainer()}>
           <CardLink

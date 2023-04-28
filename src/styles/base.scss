@@ -54,6 +54,14 @@ h4 {
   font-family: 'Bitter', serif;
   color: $color-gray-dark;
 }
+.sans-serif-headers {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+  }
+}
 
 h1 {
   font-size: 4rem;

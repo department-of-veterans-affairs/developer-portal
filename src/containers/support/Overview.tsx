@@ -5,7 +5,6 @@ import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { SupportSection } from './Support';
 
 const headerProps = {
-  description: 'We’re here to help with your software development and API publishing needs.',
   header: 'Developer portal support',
 };
 
@@ -21,6 +20,9 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
       <title>{headerProps.header}</title>
     </Helmet>
     <PageHeader {...headerProps} />
+    <p className="vads-u-font-size--lg vads-u-font-weight--bold vads-u-margin-y--2">
+      We&apos;re here to help with your software development and API publishing needs.
+    </p>
     <div className={defaultFlexContainer()}>
       {props.sections.map((section: SupportSection) => (
         <CardLink
