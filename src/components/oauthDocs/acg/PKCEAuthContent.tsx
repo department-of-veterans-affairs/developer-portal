@@ -1,18 +1,13 @@
 /* eslint-disable max-lines */
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { APISelector, CodeBlock } from '../../index';
-import { APIDescription } from '../../../apiDefs/schema';
+import { CodeBlock } from '../../index';
+import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 
-interface PKCEContentProps {
-  options: APIDescription[];
-  selectedOption: string;
-  apiDef: APIDescription | null;
-}
-const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
-  const baseAuthPath = props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
-  const scopes =
-    props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access';
+const PKCEAuthContent = (props: ApiRequiredProps): JSX.Element => {
+  const { api } = props;
+  const baseAuthPath = api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
+  const scopes = api.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access';
 
   return (
     <>
@@ -33,13 +28,6 @@ const PKCEAuthContent = (props: PKCEContentProps): JSX.Element => {
         Begin the OpenID Connect authorization by using the authorization endpoint, query
         parameters, and scopes listed below.
       </p>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         code={`\
@@ -212,18 +200,11 @@ Location: <yourRedirectURL>?
           provided during registration.
         </li>
       </ul>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="http"
         code={`\
-POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
+POST ${api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 
@@ -240,13 +221,6 @@ grant_type=authorization_code
         The response body will look like this, where <code>expires_in</code> is the time in seconds
         before the token expires:
       </p>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="json"
@@ -289,18 +263,11 @@ Pragma: no-cache
         production. Use the <code>refresh_token</code> to obtain a new <code>access_token</code>{' '}
         after its expiry by sending the following request.
       </p>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="http"
         code={`\
-POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
+POST ${api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 

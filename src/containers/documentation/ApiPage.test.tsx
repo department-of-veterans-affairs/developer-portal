@@ -78,8 +78,8 @@ describe('ApiPage', () => {
     });
 
     it('renders api page heading', () => {
-      expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Rings API');
-      expect(screen.getByText('LOTR API')).not.toBeNull();
+      expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Docs');
+      expect(screen.getByText('Rings API')).not.toBeNull();
     });
 
     it('renders api documentation', () => {

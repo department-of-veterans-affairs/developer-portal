@@ -1,20 +1,12 @@
 import React, { FC } from 'react';
-import { APIDescription } from '../../../apiDefs/schema';
-import { APISelector, CodeBlock } from '../../../components';
+import { CodeBlock } from '../../../components';
 
 interface RetrievingTokenProps {
-  options: APIDescription[];
-  selectedOption: string;
   scopes: string[];
   baseAuthPath: string;
 }
 
-const RetrievingTokenContent: FC<RetrievingTokenProps> = ({
-  options,
-  selectedOption,
-  scopes,
-  baseAuthPath,
-}) => {
+const RetrievingTokenContent: FC<RetrievingTokenProps> = ({ scopes, baseAuthPath }) => {
   const hasLaunchScope = scopes.includes('launch');
 
   return (
@@ -26,14 +18,6 @@ const RetrievingTokenContent: FC<RetrievingTokenProps> = ({
         Use your client assertion to retrieve an access token. Be sure to include the scopes for the
         API.
       </p>
-      <p>Select your API from the dropdown to see the correct auth server in the example.</p>
-      <APISelector
-        options={options}
-        selectedOption={selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="bash"

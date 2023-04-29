@@ -1,15 +1,15 @@
 /* eslint-disable max-lines */
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { APISelector, CodeBlock } from '../../index';
-import { AuthCodeFlowContentProps } from '../../../containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
+import { CodeBlock } from '../../index';
+import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 
-const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
-  const baseAuthPath = props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
-  const isClinicalHealthSelected = props.selectedOption === 'clinical_health';
+const AuthCodeFlowContent = (props: ApiRequiredProps): JSX.Element => {
+  const { api } = props;
+  const baseAuthPath = api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
+  const isClinicalHealthSelected = api.urlFragment === 'clinical_health';
 
-  const scopes =
-    props.apiDef?.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access';
+  const scopes = api.oAuthInfo?.acgInfo?.scopes.join(' ') ?? 'profile openid offline_access';
 
   return (
     <>
@@ -31,13 +31,6 @@ const AuthCodeFlowContent = (props: AuthCodeFlowContentProps): JSX.Element => {
         Begin the OpenID Connect authorization by using the authorization endpoint, query
         parameters, and scopes listed below.
       </p>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         code={`\
@@ -268,18 +261,11 @@ Location: <yourRedirectURL>?
           provided during registration.
         </li>
       </ul>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="http"
         code={`\
-POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
+POST ${api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
@@ -294,13 +280,6 @@ grant_type=authorization_code
         the <code>offline_access</code> scope, you will also receive a <code>refresh_token</code>.
         The response will look like this:
       </p>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="http"
@@ -351,18 +330,11 @@ Pragma: no-cache
         production. Use the <code>refresh_token</code> to obtain a new <code>access_token</code>{' '}
         after its expiry by sending the following request.
       </p>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="http"
         code={`\
-POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
+POST ${api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/token HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
@@ -386,7 +358,7 @@ grant_type=refresh_token&refresh_token={ *refresh_token* }`}
         withCopyButton
         language="http"
         code={`\
-GET ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/manage HTTP/1.1
+GET ${api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/manage HTTP/1.1
 Host: sandbox-api.va.gov`}
       />
       <h4 id="revoking-tokens" tabIndex={-1}>
@@ -397,36 +369,22 @@ Host: sandbox-api.va.gov`}
         using the revoke endpoint. Once revoked, the introspection endpoint will see the token as
         inactive.
       </p>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="http"
         code={`\
-POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
+POST ${api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
 
 token={ *access_token* }&token_type_hint=access_token`}
       />
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="http"
         code={`\
-POST ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
+POST ${api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/revoke HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 Authorization: Basic base64(client_id:client_secret)
@@ -445,18 +403,11 @@ token={ *refresh_token* }&token_type_hint=refresh_token`}
         grant will remain in effect unless and until revoked. Grants for a specific user and client
         are revoked in the sandbox environment using the below endpoint.
       </p>
-      <APISelector
-        options={props.options}
-        selectedOption={props.selectedOption}
-        buttonText="Update code"
-        buttonSuccessMessage="Code updated!"
-        theme="dark"
-      />
       <CodeBlock
         withCopyButton
         language="http"
         code={`\
-DELETE ${props.apiDef?.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/grants HTTP/1.1
+DELETE ${api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1'}/grants HTTP/1.1
 Host: sandbox-api.va.gov
 Content-Type: application/x-www-form-urlencoded
 

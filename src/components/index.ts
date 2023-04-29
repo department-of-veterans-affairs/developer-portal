@@ -23,7 +23,6 @@ export * from './oauthDocs/acg/PageLinks';
 export * from './oauthDocs/acg/IdToken';
 export * from './oauthDocs/acg/TestUsers';
 export * from './oauthDocs/acg/Https';
-export * from './apiSelector/APISelector';
 export * from './contentWithNav/ContentWithNav';
 export * from './subNav/SubNavEntry';
 export * from './subNav/SubNav';

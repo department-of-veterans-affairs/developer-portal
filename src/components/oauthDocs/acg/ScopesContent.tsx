@@ -1,11 +1,8 @@
 import * as React from 'react';
-import { useSelector } from 'react-redux';
 import { HashLink } from 'react-router-hash-link';
-import { getActiveAuthCodeApis, lookupApiByFragment } from '../../../apiDefs/query';
-import { RootState } from '../../../types';
-import { APISelector } from '../../index';
 
 import { SectionHeaderWrapper } from '../../sectionHeaderWrapper/SectionHeaderWrapper';
+import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 
 /*
  * This is designed to be a single place of truth for the scopes descriptions.
@@ -15,12 +12,9 @@ import { SectionHeaderWrapper } from '../../sectionHeaderWrapper/SectionHeaderWr
  * Scopes are listed in each API's respective file in apiDefs folder.
  */
 // eslint-disable-next-line complexity
-const ScopesContent = (): JSX.Element => {
-  const selector = (state: RootState): string => state.oAuthApiSelection.selectedOAuthApi;
-  const selectedOAuthApi = useSelector(selector);
-  const apiDef = lookupApiByFragment(selectedOAuthApi);
-  const scopes = apiDef?.oAuthInfo?.acgInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
-  const options = getActiveAuthCodeApis();
+const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
+  const { api } = props;
+  const scopes = api.oAuthInfo?.acgInfo?.scopes ?? ['profile', 'openid', 'offline_access'];
   const hasClaimScope = scopes.some(element => element.startsWith('claim.'));
   const hasPatientScope = scopes.some(element => element.startsWith('patient/'));
 
@@ -33,13 +27,6 @@ const ScopesContent = (): JSX.Element => {
         always request access to additional scopes if a Veteran or VSO needs the data while using
         your application.
       </p>
-      <APISelector
-        options={options}
-        selectedOption={selectedOAuthApi}
-        selectLabel="Select an API to show and describe the related scopes"
-        buttonText="Update page"
-        buttonSuccessMessage="Page updated!"
-      />
       <table>
         <thead>
           <tr>

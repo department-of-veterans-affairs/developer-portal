@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../../flags';
 
-import { getActiveOauthApis, lookupApiByFragment } from '../../../apiDefs/query';
+import { lookupApiByFragment } from '../../../apiDefs/query';
 import store from '../../../store';
 import { fakeCategories } from '../../../__mocks__/fakeCategories';
 import { setApis } from '../../../actions';
@@ -15,14 +15,16 @@ describe('Auth Flow Content', () => {
 
   beforeEach(() => {
     const selectedOption = 'armageddon';
-    const apiDef = lookupApiByFragment(selectedOption);
-    const defs = getActiveOauthApis();
+    const api = lookupApiByFragment(selectedOption);
+    if (!api) {
+      return;
+    }
 
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter>
-            <PKCEAuthContent apiDef={apiDef} options={defs} selectedOption={selectedOption} />
+            <PKCEAuthContent api={api} />
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,

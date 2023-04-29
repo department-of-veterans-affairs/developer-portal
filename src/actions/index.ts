@@ -19,15 +19,6 @@ export interface SetVersioning extends Action {
   versions: VersionMetadata[] | null;
 }
 
-export interface ResetOAuthAPISelection extends Action {
-  type: constants.RESET_OAUTH_API_SELECTION;
-}
-
-export interface SetOAuthAPISelection extends Action {
-  type: constants.SET_OAUTH_API_SELECTION;
-  selectedOAuthApi: string;
-}
-
 export interface ResetAPIs extends Action {
   type: constants.RESET_APIS;
 }
@@ -67,17 +58,6 @@ export const setVersioning: ActionCreator<SetVersioning> = (
   type: constants.SET_VERSIONING_VALUE,
   version,
   versions,
-});
-
-export const resetOAuthApiSelection: ActionCreator<ResetOAuthAPISelection> = () => ({
-  type: constants.RESET_OAUTH_API_SELECTION_VALUE,
-});
-
-export const setOAuthApiSelection: ActionCreator<SetOAuthAPISelection> = (
-  selectedOAuthApi: string,
-) => ({
-  selectedOAuthApi,
-  type: constants.SET_OAUTH_API_SELECTION_VALUE,
 });
 
 export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => ({

@@ -1,20 +1,12 @@
 import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
-import { useSelector } from 'react-redux';
 import { SectionHeaderWrapper } from '../../index';
-import { getActiveAuthCodeApis, lookupApiByFragment } from '../../../apiDefs/query';
-import { RootState } from '../../../types';
+import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
 
-const BuildingOIDCContent = (): JSX.Element => {
-  const selector = (state: RootState): string => state.oAuthApiSelection.selectedOAuthApi;
-  const selectedOAuthApi = useSelector(selector);
-  const apiDef = lookupApiByFragment(selectedOAuthApi);
-  const selectorProps = {
-    options: getActiveAuthCodeApis(),
-    selectedOption: selectedOAuthApi,
-  };
+const BuildingOIDCContent = (props: ApiRequiredProps): JSX.Element => {
+  const { api } = props;
 
   return (
     <section aria-labelledby="building-oidc-apps" className="building-oidc-apps">
@@ -40,17 +32,8 @@ const BuildingOIDCContent = (): JSX.Element => {
         </li>
       </ul>
 
-      <AuthCodeFlowContent
-        apiDef={apiDef}
-        options={selectorProps.options}
-        selectedOption={selectorProps.selectedOption}
-      />
-
-      <PKCEAuthContent
-        apiDef={apiDef}
-        options={selectorProps.options}
-        selectedOption={selectorProps.selectedOption}
-      />
+      <AuthCodeFlowContent api={api} />
+      <PKCEAuthContent api={api} />
     </section>
   );
 };

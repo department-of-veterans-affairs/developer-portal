@@ -57,7 +57,6 @@ export interface GeneralStore {
 }
 
 export interface RootState {
-  oAuthApiSelection: OAuthAPISelection;
   apiVersioning: APIVersioning;
   apiList: ApiList;
   generalStore: GeneralStore;

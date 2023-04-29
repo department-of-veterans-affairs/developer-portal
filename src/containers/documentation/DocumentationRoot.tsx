@@ -21,12 +21,26 @@ interface ExploreSideNavProps {
   api: APIDescription;
 }
 
+export interface ApiRequiredProps {
+  api: APIDescription;
+}
+
+const getApi = (apiName?: string): APIDescription | null => {
+  if (!apiName) {
+    return null;
+  }
+
+  return lookupApiByFragment(apiName);
+};
+export { getApi };
+
 const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
   const { api } = props;
   console.log(api);
   return (
     <>
       <SideNavEntry key="all" exact to={`/explore/api/${api.urlFragment}`} name="Overview" />
+      <SideNavEntry exact to={`/explore/api/${api.urlFragment}/docs`} name="Docs" subNavLevel={1} />
       <SideNavEntry
         exact
         if={api.oAuthTypes?.includes('AuthorizationCodeGrant')}
@@ -39,12 +53,6 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
         if={api.oAuthTypes?.includes('ClientCredentialsGrant')}
         to={`/explore/api/${api.urlFragment}/client-credentials`}
         name="Client Credentials Grant"
-        subNavLevel={1}
-      />
-      <SideNavEntry
-        exact
-        to={`/explore/api/${api.urlFragment}/docs`}
-        name="API Docs"
         subNavLevel={1}
       />
       <SideNavEntry

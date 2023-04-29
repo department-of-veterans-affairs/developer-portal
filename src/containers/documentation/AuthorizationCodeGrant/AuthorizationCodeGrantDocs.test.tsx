@@ -1,18 +1,36 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, Route } from 'react-router-dom';
+import { cleanup } from 'axe-core';
 import { FlagsProvider, getFlags } from '../../../flags';
 import store from '../../../store';
+import { fakeCategories } from '../../../__mocks__/fakeCategories';
+import * as apiDefs from '../../../apiDefs/query';
 import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrantDocs';
 
 describe('Authorization Docs', () => {
-  beforeEach(() => {
+  const lotrRingsApi = fakeCategories.lotr.apis[0];
+
+  const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiByFragment');
+  const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  beforeEach(async () => {
+    lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
+    lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
+    await waitFor(() => cleanup());
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
-          <MemoryRouter>
-            <AuthorizationCodeGrantDocs />
+          <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
+            <Route
+              path="/explore/api/:urlFragment/authorization-code"
+              component={AuthorizationCodeGrantDocs}
+            />
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,

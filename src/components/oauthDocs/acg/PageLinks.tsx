@@ -1,29 +1,15 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import { AuthCodeFlowContentProps } from '../../../containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
 import { CONSUMER_PROD_PATH } from '../../../types/constants/paths';
-import { APISelector } from '../../apiSelector/APISelector';
-import ApisLoader from '../../apisLoader/ApisLoader';
 
-const PageLinks = (props: AuthCodeFlowContentProps): JSX.Element => (
+const PageLinks = (): JSX.Element => (
   <>
     <p>
       This page walks you through the steps toward authorization and authentication for using OAuth
       APIs on the Lighthouse platform. We provide examples throughout this document that you can
       copy and use to get started.
     </p>
-    <p>
-      Select your API from the drop-downs to populate the examples with your API-specific URLs,
-      parameters, and scopes.
-    </p>
-    <ApisLoader hideSpinner />
-    <APISelector
-      options={props.options}
-      selectedOption={props.selectedOption}
-      buttonText="Update page"
-      buttonSuccessMessage="Page updated!"
-    />
     <h2 tabIndex={-1} id="on-this-page">
       On this Page:
     </h2>

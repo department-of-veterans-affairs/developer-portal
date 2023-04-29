@@ -1,100 +1,23 @@
-import { History } from 'history';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
+import { useParams } from 'react-router';
 import GoodToKnow from '../../../components/oauthDocs/ccg/GoodToKnow';
-import { PageHeader, APISelector } from '../../../components';
-import {
-  resetOAuthApiSelection,
-  ResetOAuthAPISelection,
-  setOAuthApiSelection,
-  SetOAuthAPISelection,
-} from '../../../actions';
+import { PageHeader } from '../../../components';
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { getActiveCCGApis, getActiveOauthApis, getApisLoadedState } from '../../../apiDefs/query';
-import { APIDescription } from '../../../apiDefs/schema';
-import { RootState } from '../../../types';
-import { usePrevious } from '../../../hooks';
-import { apiLoadingState, DEFAULT_OAUTH_CCG_API_SELECTION } from '../../../types/constants';
+import { APIUrlFragment } from '../../../types';
 
 import './ClientCredentialsGrantDocs.scss';
 import ApisLoader from '../../../components/apisLoader/ApisLoader';
-
-interface ClientCredentialsFlowContentProps {
-  options: APIDescription[];
-  selectedOption: string;
-  apiDef?: APIDescription | null;
-}
-
-const setSearchParam = (
-  history: History,
-  queryString: string,
-  api: string,
-  initialLoad: boolean,
-): void => {
-  const params = new URLSearchParams(queryString);
-  if (params.get('api') !== api) {
-    params.set('api', api);
-    if (initialLoad) {
-      history.replace(`${history.location.pathname}?${params.toString()}${history.location.hash}`);
-    } else {
-      history.push(`${history.location.pathname}?${params.toString()}`);
-    }
-  }
-};
-
-const setInitialApi = (
-  history: History,
-  searchQuery: string,
-  dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection>,
-): void => {
-  const params = new URLSearchParams(searchQuery || undefined);
-  const apiQuery = params.get('api');
-  const availableApis = getActiveOauthApis();
-  const isAnApi = availableApis.some((item: APIDescription) => item.urlFragment === apiQuery);
-  const api = apiQuery && isAnApi ? apiQuery.toLowerCase() : DEFAULT_OAUTH_CCG_API_SELECTION;
-  dispatch(setOAuthApiSelection(api));
-  setSearchParam(history, searchQuery, api, true);
-};
+import { getApi } from '../DocumentationRoot';
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
-  const apisLoaded = getApisLoadedState() === apiLoadingState.LOADED;
-  const history = useHistory();
-  const location = useLocation();
-  const dispatch: React.Dispatch<ResetOAuthAPISelection | SetOAuthAPISelection> = useDispatch();
-  const initializing = React.useRef(true);
-  const selector = (state: RootState): string => state.oAuthApiSelection.selectedOAuthApi;
-  const api = useSelector(selector);
-  const prevApi = usePrevious(api);
-  const selectedOAuthApi = useSelector(selector);
-
-  const options = getActiveCCGApis();
-
-  React.useEffect(() => {
-    if (apisLoaded) {
-      if (initializing.current) {
-        // Do this on first load
-        initializing.current = false;
-        setInitialApi(history, location.search, dispatch);
-      } else {
-        // Do this on all subsequent re-renders
-        setSearchParam(history, location.search, api, false);
-      }
-    }
-  }, [dispatch, location, history, prevApi, api, apisLoaded]);
-
-  /**
-   * CLEAR REDUX STATE ON UNMOUNT
-   */
-  React.useEffect(
-    () => (): void => {
-      dispatch(resetOAuthApiSelection());
-    },
-    [], // eslint-disable-line react-hooks/exhaustive-deps
-  );
+  const params = useParams<APIUrlFragment>();
+  const api = getApi(params.urlFragment);
+  if (!api) {
+    return <h1>ApiPage.tsx 404</h1>;
+  }
 
   return (
     <div className="va-api-authorization-docs">
@@ -113,18 +36,12 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
         <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
       </p>
       <ApisLoader hideSpinner />
-      <APISelector
-        options={options}
-        selectedOption={selectedOAuthApi}
-        buttonText="Update page"
-        buttonSuccessMessage="Page updated!"
-      />
       <GoodToKnow />
       <GettingStarted />
-      <AuthCodeFlowContent options={options} selectedOption={selectedOAuthApi} />
+      <AuthCodeFlowContent api={api} />
       <TestUsers />
     </div>
   );
 };
 
-export { ClientCredentialsGrantDocs, ClientCredentialsFlowContentProps };
+export { ClientCredentialsGrantDocs };
