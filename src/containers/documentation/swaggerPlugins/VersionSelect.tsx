@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import { ResetVersioning, SetRequestedAPIVersion, SetVersioning } from '../../../actions';
 import { VersionMetadata } from '../../../types';
 
+import './VersionSelect.scss';
+
 export interface VersionSelectProps {
   dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning>;
   handleVersionChange: (
@@ -101,17 +103,17 @@ export default class VersionSelect extends React.PureComponent<
 
     return (
       <>
-        <div className="api-selector-container vads-l-grid-container theme-light">
+        <div className="version-selector-container vads-l-grid-container theme-light">
           <div className="vads-l-row">
             <label
-              htmlFor="api-selector-field"
+              htmlFor="version-selector-field"
               className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--9')}
             >
               {selectorLabel}
               {/* eslint-disable-next-line jsx-a11y/no-onchange */}
               <select
-                id="api-selector-field"
-                name="api-selector-field"
+                id="version-selector-field"
+                name="version-selector-field"
                 aria-label={selectorLabel}
                 value={this.state.selectedVersion}
                 onChange={(e): void => this.handleSelectChange(e.target.value)}

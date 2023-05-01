@@ -27,7 +27,7 @@
     display: block;
     margin: 0;
     white-space: pre;
-    
+
     &:focus {
       border: 1px solid $color-gray;
     }
@@ -53,43 +53,6 @@
 
     ul {
       list-style-type: square;
-    }
-  }
-
-  .building-oidc-apps .api-selector {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-  }
-  .api-selector {
-    background-color: $color-gray;
-
-    select {
-      color: #80f8a2;
-      option {
-          color: $color-base;
-      }
-    }
-  }
-
-  .scopes-content {
-    .api-selector {
-      background-color: $color-white;
-      select {
-        border: 1px solid $color-gray;
-        color: $color-base;
-        background-image: url('../../../assets/select-arrow-dark.png');
-      }
-    }
-  }
-
-  .api-selector-container + .code-block{
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-
-    border-radius: 0 0 6px 6px;
-
-    .code-wrapper {
-      border-radius: 0;
     }
   }
 }

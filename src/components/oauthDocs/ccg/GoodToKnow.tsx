@@ -16,8 +16,8 @@ const GoodToKnow: FC = () => (
       </li>
       <li>
         This page provides examples that show authorization server URLs in the sandbox environment,
-        unless otherwise indicated, which differ depending on the API. You can get production auth
-        server URLs from the API documentation.
+        unless otherwise indicated, you can get production auth server URLs from the API
+        documentation.
       </li>
       <li>
         When your application is ready, you may{' '}

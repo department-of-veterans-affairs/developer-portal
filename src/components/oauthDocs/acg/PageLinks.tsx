@@ -5,11 +5,6 @@ import { CONSUMER_PROD_PATH } from '../../../types/constants/paths';
 
 const PageLinks = (): JSX.Element => (
   <>
-    <p>
-      This page walks you through the steps toward authorization and authentication for using OAuth
-      APIs on the Lighthouse platform. We provide examples throughout this document that you can
-      copy and use to get started.
-    </p>
     <h2 tabIndex={-1} id="on-this-page">
       On this Page:
     </h2>
@@ -80,7 +75,7 @@ const PageLinks = (): JSX.Element => (
         <HashLink to={{ ...location, hash: '#https' }}>HTTPS</HashLink>
       </li>
     </ul>
-    <h3>It&apos;s also good to know that:</h3>
+    <h3>It&apos;s good to know that:</h3>
     <ul>
       <li>
         The access credentials we supply are for the sandbox environment only and will not work in

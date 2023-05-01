@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { SectionHeaderWrapper, CodeBlock } from '../../index';
+import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 
-const GettingStarted = (): JSX.Element => (
+const GettingStarted = (props: ApiRequiredProps): JSX.Element => (
   <>
     <SectionHeaderWrapper heading="Getting Started" id="getting-started" />
     <p>
@@ -24,9 +24,9 @@ const GettingStarted = (): JSX.Element => (
 }`}
     />
     <p>
-      Next, <Link to={CONSUMER_SANDBOX_PATH}>get sandbox access</Link> for your desired client
-      credentials grant API. On the access form, provide your RSA public key. After you submit the
-      form, we will send your client ID in an email.
+      Next, get sandbox access. On the{' '}
+      <Link to={`/explore/api/${props.api.urlFragment}/sandbox-access`}>access form</Link>, provide
+      your RSA public key. After you submit the form, we will send your client ID in an email.
     </p>
   </>
 );

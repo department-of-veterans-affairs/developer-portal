@@ -8,7 +8,6 @@ import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeF
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
 import { APIUrlFragment } from '../../../types';
 
-import './ClientCredentialsGrantDocs.scss';
 import ApisLoader from '../../../components/apisLoader/ApisLoader';
 import { getApi } from '../DocumentationRoot';
 
@@ -20,27 +19,29 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
   }
 
   return (
-    <div className="va-api-authorization-docs">
+    <>
       <Helmet>
         <title>Client Credentials Grant</title>
       </Helmet>
-      <PageHeader halo="Authorization" header="Client Credentials Grant" />
-      <p>
-        VA&apos;s{' '}
-        <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4">
-          OAuth 2.0 Client Credentials Grant
-        </a>{' '}
-        (CCG) grants access by using your RSA-generated key in{' '}
-        <a href="https://datatracker.ietf.org/doc/html/rfc7517">JSON Web Key (JWK)</a> format, as
-        described in the{' '}
-        <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
-      </p>
-      <ApisLoader hideSpinner />
-      <GoodToKnow />
-      <GettingStarted />
-      <AuthCodeFlowContent api={api} />
-      <TestUsers />
-    </div>
+      <PageHeader header="Client Credentials Grant" subText={api.name} />
+      <div className="va-api-authorization-docs">
+        <p>
+          VA&apos;s{' '}
+          <a href="https://datatracker.ietf.org/doc/html/rfc6749#section-4.4">
+            OAuth 2.0 Client Credentials Grant
+          </a>{' '}
+          (CCG) grants access by using your RSA-generated key in{' '}
+          <a href="https://datatracker.ietf.org/doc/html/rfc7517">JSON Web Key (JWK)</a> format, as
+          described in the{' '}
+          <a href="https://openid.net/specs/draft-jones-json-web-key-03.html">OpenID spec</a>.
+        </p>
+        <ApisLoader hideSpinner />
+        <GoodToKnow />
+        <GettingStarted api={api} />
+        <AuthCodeFlowContent api={api} />
+        <TestUsers />
+      </div>
+    </>
   );
 };
 

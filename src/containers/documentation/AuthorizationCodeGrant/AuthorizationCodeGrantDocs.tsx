@@ -22,19 +22,21 @@ const AuthorizationCodeGrantDocs = (): JSX.Element => {
   }
 
   return (
-    <div className="va-api-authorization-docs">
+    <>
       <Helmet>
         <title>Authorization Code Flow</title>
       </Helmet>
-      <PageHeader halo="Authorization" header="Authorization Code Flow" />
-      <PageLinks />
-      <GettingStarted />
-      <BuildingOIDCContent api={api} />
-      <ScopesContent api={api} />
-      <IdToken />
-      <TestUsers />
-      <Https />
-    </div>
+      <PageHeader header="Authorization Code Flow" subText={api.name} />
+      <div className="va-api-authorization-docs">
+        <PageLinks />
+        <GettingStarted />
+        <BuildingOIDCContent api={api} />
+        <ScopesContent api={api} />
+        <IdToken />
+        <TestUsers />
+        <Https />
+      </div>
+    </>
   );
 };
 
