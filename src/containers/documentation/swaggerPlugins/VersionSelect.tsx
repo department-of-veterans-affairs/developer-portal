@@ -89,7 +89,7 @@ export default class VersionSelect extends React.PureComponent<
         return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
       }
     };
-    const fhirRegex = /\/explore\/health\/docs\/(patient_health|fhir)/;
+    const fhirRegex = /\/explore\/api\/(patient_health|fhir)\/docs/;
     const selectorLabel = fhirRegex.test(location.pathname)
       ? 'Select a FHIR specification'
       : 'Select a version';
@@ -139,22 +139,8 @@ export default class VersionSelect extends React.PureComponent<
           </div>
         </div>
         {!!apiStatus && fhirRegex.test(location.pathname) && (
-          <h2
-            ref={this.versionHeadingElement}
-            className={classNames(
-              'vads-u-font-family--sans',
-              'vads-u-font-weight--normal',
-              'vads-u-font-size--base',
-              'vads-u-padding--0p5',
-              'vads-u-margin-y--1',
-            )}
-            tabIndex={-1}
-          >
-            {!this.state.initialRender && (
-              <>
-                Showing documentation for <b>{apiStatus}</b>.
-              </>
-            )}
+          <h2 ref={this.versionHeadingElement} tabIndex={-1}>
+            {apiStatus}
           </h2>
         )}
       </>

@@ -50,8 +50,12 @@
       margin: 0;
     }
 
+    h1 {
+      font-size: $h2-font-size;
+    }
+
     h2 {
-      margin: 3.2rem 0 1.6rem;
+      font-size: $h3-font-size;
 
       &.title {
         // never show Swagger UI's title feature
@@ -60,8 +64,7 @@
     }
 
     h3 {
-      margin-bottom: 1.6rem;
-      margin-top: 1.6rem;
+      font-size: $h4-font-size;
     }
   }
 
