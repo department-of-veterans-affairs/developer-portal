@@ -43,6 +43,9 @@
 .opblock {
   .opblock-body {
     background-color: white;
+    pre span.linenumber {
+      color: #AEB0B5 !important;
+    }
     .opblock-section-header {
       padding: 0 !important;
       box-shadow: none !important;
