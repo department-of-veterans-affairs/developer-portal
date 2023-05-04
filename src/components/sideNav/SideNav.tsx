@@ -36,7 +36,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
         'vads-l-col--12',
         // 'vads-u-padding-right--5',
         'medium-screen:vads-l-col--3',
-        props.containerClassName
+        props.containerClassName,
       )}
     >
       <HashLink
@@ -69,8 +69,6 @@ const SideNav = (props: SideNavProps): JSX.Element => {
             'va-api-sidenav-list',
             'vads-u-background-color--white',
             'vads-u-border-bottom--2px',
-            'vads-u-border-left--2px',
-            'vads-u-border-right--2px',
             'vads-u-border-top--0',
             'vads-u-border-color--gray-lighter',
           )}

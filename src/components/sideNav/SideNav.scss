@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+$border-offset: 3px;
 
 .va-api-side-nav {
   position: sticky;
@@ -6,9 +7,33 @@
 }
 
 li.va-api-sidenav-entry {
+  a {
+    color: $color-cool-blue;
+  }
+  position: relative;
+  a.va-api-active-sidenav-link {
+    &:before {
+      content: '';
+      border: calc($border-offset / 2) solid $color-cool-blue;
+      height: calc(42px - $border-offset * 2);
+      position: absolute;
+      top: $border-offset;
+      left: 0;
+      width: 0;
+    }
+
+    &.va-api-nav-level-1 {
+      color: $color-base;
+
+      &:before {
+        border-color: $color-base;
+      }
+    }
+  }
   a:hover,
   a:focus {
-    background-color: $color-gray-lighter;
+    background-color: $color-primary-alt-lightest;
+    color: $color-cool-blue;
   }
 }
 
@@ -49,7 +74,7 @@ ul.usa-sidenav-list {
     border: none;
     border-radius: 0;
     box-sizing: border-box;
-    color: #000 !important;
+    color: $color-cool-blue !important;
     display: block;
     font-family: $font-sans;
     font-weight: normal;
@@ -69,8 +94,7 @@ ul.usa-sidenav-list {
 
     &:hover,
     &:focus {
-      background-color: $color-gray-lighter;
-      color: $color-primary;
+      background-color: $color-primary-alt-lightest;
       text-decoration: none;
     }
 
