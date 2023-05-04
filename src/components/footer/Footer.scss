@@ -11,3 +11,11 @@
 .va-api-footer-logo {
   align-self: center;
 }
+
+.va-api-footer-list-item {
+  flex: 0 0 33.3333%;
+
+  @include media($medium-screen) {
+    flex: 0 0 auto !important;
+  }
+}

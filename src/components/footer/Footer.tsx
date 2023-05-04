@@ -31,14 +31,18 @@ const footerListStyles = classNames(
   'vads-u-margin-y--1',
   'vads-u-flex--1',
   'vads-u-display--flex',
-  'vads-u-flex-direction--column',
-  'vads-u-justify-content--flex-start',
+  'vads-u-flex-direction--row',
+  'vads-u-flex-wrap--wrap',
+  'vads-u-justify-content--space-between',
+  'medium-screen:vads-u-flex-direction--column',
+  'medium-screen:vads-u-justify-content--flex-start',
   'medium-screen:vads-u-flex-direction--row',
   'medium-screen:vads-u-flex-wrap--wrap',
   'medium-screen:vads-u-margin-y--4',
 );
 const footerLinkStyles = classNames('vads-u-font-size--sm', 'vads-u-color--white');
 const listItemStyles = classNames(
+  'va-api-footer-list-item',
   'medium-screen:vads-u-margin-bottom--0',
 );
 
@@ -84,12 +88,6 @@ const Footer: React.FunctionComponent = (): JSX.Element => (
       <li className={listItemStyles}>
         <a href="https://www.va.gov/privacy/" className={footerLinkStyles}>
           Privacy
-        </a>
-      </li>
-      <span className={separatorStyles}>|</span>
-      <li className={listItemStyles}>
-        <a href="https://www.va.gov/vulnerability-disclosure-policy/" className={footerLinkStyles}>
-          Vulnerability Disclosure Policy
         </a>
       </li>
     </ul>
