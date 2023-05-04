@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { PageHeader } from '../../components';
 
@@ -22,6 +22,9 @@ const ApiOverviewPage = (): JSX.Element => {
       </Helmet>
       <PageHeader header={api.name} />
       <ReactMarkdown>{api.description}</ReactMarkdown>
+      <Link to={`/explore/api/${api.urlFragment}/docs`} className="vads-c-action-link--green">
+        Read the docs
+      </Link>
     </>
   );
 };
