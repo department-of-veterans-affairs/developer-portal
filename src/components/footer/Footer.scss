@@ -19,3 +19,54 @@
     flex: 0 0 auto !important;
   }
 }
+
+@include media($medium-screen) {
+  .va-api-footer-list-item:not(:last-child)::after {
+    content: '|';
+    padding: 0 1.2rem;
+  }
+}
+
+#footer-publishing-link {
+  order: 0;
+}
+
+#footer-accessibility-link {
+  order: 4;
+
+  @include media($medium-screen) {
+    order: 0;
+  }
+}
+
+#footer-support-link {
+  order: 2;
+
+  @include media($medium-screen) {
+    order: 0;
+  }
+}
+
+#footer-web-policies-link {
+  order: 5;
+
+  @include media($medium-screen) {
+    order: 0;
+  }
+}
+
+#footer-tos-link {
+  order: 6;
+
+  @include media($medium-screen) {
+    order: 0;
+  }
+}
+
+#footer-privacy-link {
+  order: 3;
+
+  @include media($medium-screen) {
+    order: 0;
+  }
+}

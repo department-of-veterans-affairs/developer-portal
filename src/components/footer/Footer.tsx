@@ -46,46 +46,35 @@ const listItemStyles = classNames(
   'medium-screen:vads-u-margin-bottom--0',
 );
 
-const separatorStyles = classNames(
-  'vads-u-display--none',
-  'medium-screen:vads-u-padding-x--1p5',
-  'medium-screen:vads-u-display--inline'
-  );
-
 const Footer: React.FunctionComponent = (): JSX.Element => (
   <footer role="contentinfo" className={footerStyles}>
     <ul className={footerListStyles}>
-      <li className={listItemStyles}>
+      <li id="footer-publishing-link" className={listItemStyles}>
         <NavHashLink to={PUBLISHING_PATH} className={footerLinkStyles}>
           API Publishing
         </NavHashLink>
       </li>
-      <span className={separatorStyles}>|</span>
-      <li className={listItemStyles}>
+      <li id="footer-accessibility-link" className={listItemStyles}>
         <a href="https://www.section508.va.gov/" className={footerLinkStyles}>
           Accessibility
         </a>
       </li>
-      <span className={separatorStyles}>|</span>
-      <li className={listItemStyles}>
+      <li id="footer-support-link" className={listItemStyles}>
         <NavHashLink to={SUPPORT_PATH} className={footerLinkStyles}>
           Support
         </NavHashLink>
       </li>
-      <span className={separatorStyles}>|</span>
-      <li className={listItemStyles}>
+      <li id="footer-web-policies-link" className={listItemStyles}>
         <a href="https://www.va.gov/webpolicylinks.asp" className={footerLinkStyles}>
           Web Policies
         </a>
       </li>
-      <span className={separatorStyles}>|</span>
-      <li className={listItemStyles}>
+      <li id="footer-tos-link" className={listItemStyles}>
         <NavHashLink to={TERMS_OF_SERVICE_PATH} className={footerLinkStyles}>
           Terms of Service
         </NavHashLink>
       </li>
-      <span className={separatorStyles}>|</span>
-      <li className={listItemStyles}>
+      <li id="footer-privacy-link" className={listItemStyles}>
         <a href="https://www.va.gov/privacy/" className={footerLinkStyles}>
           Privacy
         </a>
