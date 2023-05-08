@@ -29,10 +29,8 @@ const GettingStarted = (): JSX.Element => (
       After you submit the form, we send you a client ID and secret, depending on whether you can
       safely store a client secret. If you cannot safely store a client secret, we will send you a
       client ID and you will use the{' '}
-      <HashLink to={{ ...location, hash: '#pkce-authorization' }}>
-        Proof Key for Code Exchange
-      </HashLink>{' '}
-      (PKCE) flow (<a href="https://tools.ietf.org/html/rfc7636">RFC 7636</a>) for authorization.{' '}
+      <HashLink to="#pkce-authorization">Proof Key for Code Exchange</HashLink> (PKCE) flow (
+      <a href="https://tools.ietf.org/html/rfc7636">RFC 7636</a>) for authorization.{' '}
     </p>
     <h3>Support</h3>
     <p>

@@ -44,7 +44,7 @@ const Header = (): JSX.Element => {
         className={classNames('va-api-header', 'vads-u-background-color--primary-darkest')}
       >
         <HashLink
-          to={{ ...location, hash: '#main' }}
+          to="#main"
           className={classNames('va-api-skipnav', 'vads-u-padding-x--2', 'vads-u-padding-y--1')}
         >
           Skip to main content

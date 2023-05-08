@@ -112,8 +112,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
               <td>
                 Will use your application&#39;s default scopes unless you specify a smaller subset
                 of scopes separated by a space. Review the{' '}
-                <HashLink to={{ ...location, hash: '#scopes' }}>Scopes section</HashLink> for more
-                information.
+                <HashLink to="#scopes">Scopes section</HashLink> for more information.
               </td>
             </tr>
             <tr>
@@ -131,11 +130,8 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
                   A nonce should be generated on a per-session basis and stored on the user&#39;s
                   client. If the user requested an id_token (by including the openid scope in the
                   authorization request) then the{' '}
-                  <HashLink to={{ ...location, hash: '#payload' }}>
-                    payload of the id_token
-                  </HashLink>{' '}
-                  will contain a nonce value that should match the nonce value included in the
-                  authorization request.
+                  <HashLink to="#payload">payload of the id_token</HashLink> will contain a nonce
+                  value that should match the nonce value included in the authorization request.
                 </p>
                 <p>
                   The{' '}
@@ -213,7 +209,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
                   </p>
                   <p>
                     For more information about scopes, see&nbsp;
-                    <HashLink to={{ ...location, hash: '#scopes' }}>Scopes</HashLink>.
+                    <HashLink to="#scopes">Scopes</HashLink>.
                   </p>
                 </td>
               </tr>
@@ -276,9 +272,9 @@ grant_type=authorization_code
       />
       <p>
         The authorization server will respond with an{' '}
-        <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink>. If you requested
-        the <code>offline_access</code> scope, you will also receive a <code>refresh_token</code>.
-        The response will look like this:
+        <HashLink to="#id-token">access token</HashLink>. If you requested the{' '}
+        <code>offline_access</code> scope, you will also receive a <code>refresh_token</code>. The
+        response will look like this:
       </p>
       <CodeBlock
         withCopyButton
@@ -319,9 +315,8 @@ Pragma: no-cache
         <code>{'Authorization: Bearer {access_token}'}</code>.
       </p>
       <p>
-        <strong>Note:</strong> the{' '}
-        <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink> will only work for
-        the API and scopes for which you have previously initiated authorization. If you need
+        <strong>Note:</strong> the <HashLink to="#id-token">access token</HashLink> will only work
+        for the API and scopes for which you have previously initiated authorization. If you need
         additional scopes in the future, you will need to build a new authorization URL with the
         additional scopes and have the Veteran grant consent again.
       </p>

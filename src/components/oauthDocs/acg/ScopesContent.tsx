@@ -49,8 +49,7 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
             </td>
             <td>
               This scope causes the authorization server to provide a refresh token when the{' '}
-              <HashLink to={{ ...location, hash: '#id-token' }}>access token</HashLink> is
-              requested.
+              <HashLink to="#id-token">access token</HashLink> is requested.
             </td>
           </tr>
           <tr>
@@ -106,10 +105,7 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
                     This scope enables the SMART-on-FHIR launch context. This scope must be used
                     with the&nbsp;
                     <code>launch</code> parameter, as described in the table under&nbsp;
-                    <HashLink to={{ ...location, hash: '#requesting-authorization' }}>
-                      Requesting authorization
-                    </HashLink>
-                    .
+                    <HashLink to="#requesting-authorization">Requesting authorization</HashLink>.
                   </td>
                 </tr>
               )}

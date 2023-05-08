@@ -19,15 +19,12 @@ const BuildingOIDCContent = (props: ApiRequiredProps): JSX.Element => {
         <li>
           If you are building a <strong>server-based application</strong>, you’ll also receive a
           client secret and will use the{' '}
-          <HashLink to={{ ...location, hash: '#authorization-code-flow' }}>
-            authorization code flow
-          </HashLink>{' '}
-          to complete authentication.
+          <HashLink to="#authorization-code-flow">authorization code flow</HashLink> to complete
+          authentication.
         </li>
         <li>
           If you are unable to <strong>safely store a client secret</strong>, such as within a
-          native mobile app, you will{' '}
-          <HashLink to={{ ...location, hash: '#pkce-authorization' }}>use PKCE</HashLink> to
+          native mobile app, you will <HashLink to="#pkce-authorization">use PKCE</HashLink> to
           complete authentication.
         </li>
       </ul>
