@@ -46,11 +46,11 @@ li.va-api-sidenav-entry {
   position: relative;
 
   @include media($medium-screen) {
-    &.va-api-nav-level-1 {
+    .va-api-nav-level-1 {
       padding-left: 32px !important;
     }
 
-    &.va-api-nav-level-2 {
+    .va-api-nav-level-2 {
       padding-left: 56px !important;
     }
   }
