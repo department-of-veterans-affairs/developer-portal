@@ -89,21 +89,16 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element | null => {
       )}
     >
       <NavHashLink
-        className={classNames(
-          'vads-u-padding--1p5',
-          {
-            'vads-u-padding-left--4': subNavLevel === 1,
-            'vads-u-padding-left--7': subNavLevel === 2,
-          },
-          `va-api-nav-level-${subNavLevel ?? 0}`,
-          className,
-        )}
+        className={classNames(`va-api-nav-level-${subNavLevel ?? 0}`, className)}
         activeClassName={classNames('va-api-active-sidenav-link', 'vads-u-font-weight--bold')}
         isActive={navHashLinkIsActive}
         aria-current={props.forceAriaCurrent || isHashLinkExact(props.to) ? 'page' : 'false'}
         {...navLinkProps}
       >
-        {name}
+        <>
+          {name}
+          <i className="fas fa-star" />
+        </>
       </NavHashLink>
       {props.children && (
         <ul

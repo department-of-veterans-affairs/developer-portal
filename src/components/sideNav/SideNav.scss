@@ -2,31 +2,103 @@
 $border-offset: 3px;
 
 .va-api-side-nav {
+  padding-bottom: 24px;
   position: sticky;
   top: 20px;
 }
 
+.nav-in-this-section[type='button'] {
+  background: $color-gray-lightest;
+  border-radius: 0;
+  color: $color-primary-darker;
+  margin: 0;
+  padding: 18px 13px;
+  position: relative;
+  text-align: left;
+
+  i {
+    position: absolute;
+    right: 13px;
+  }
+
+  &.open {
+    background: $color-primary-darker;
+    color: white;
+  }
+  &:hover {
+    background: $color-gray-lightest;
+  }
+}
+
 li.va-api-sidenav-entry {
   a {
+    background: $color-gray-lightest;
     color: $color-cool-blue;
+    padding: 21px 13px;
+    text-decoration: underline;
+
+    @include media($medium-screen) {
+      background: $color-white;
+      padding: 12px;
+      text-decoration: none;
+    }
   }
   position: relative;
-  a.va-api-active-sidenav-link {
-    &:before {
-      content: '';
-      border: calc($border-offset / 2) solid $color-cool-blue;
-      height: calc(42px - $border-offset * 2);
-      position: absolute;
-      top: $border-offset;
-      left: 0;
-      width: 0;
+
+  @include media($medium-screen) {
+    &.va-api-nav-level-1 {
+      padding-left: 32px !important;
     }
 
+    &.va-api-nav-level-2 {
+      padding-left: 56px !important;
+    }
+  }
+
+  .fa-star {
+    display: none;
+  }
+
+  a.va-api-active-sidenav-link {
+    background-color: $color-white;
+    color: $color-primary-darker;
+    text-decoration: none;
+
     &.va-api-nav-level-1 {
-      color: $color-base;
+      @include media($medium-screen) {
+        color: $color-base;
+        padding-left: 32px !important;
+      }
 
       &:before {
         border-color: $color-base;
+        color: $color-base;
+      }
+    }
+    .fa-star {
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: 20px;
+      transform: translateY(-50%);
+    }
+    @include media($medium-screen) {
+      &:before {
+        content: '';
+        border: calc($border-offset / 2) solid $color-cool-blue;
+        height: calc(42px - $border-offset * 2);
+        position: absolute;
+        top: $border-offset;
+        left: 0;
+        width: 0;
+      }
+
+      &.va-api-nav-level-2 {
+        padding-left: 56px !important;
+      }
+
+      .fa-star {
+        display: none;
       }
     }
   }
@@ -66,6 +138,8 @@ a.va-api-secondary-skip-nav {
 
 ul.usa-sidenav-list {
   a {
+    // border-left: 1px solid $color-gray-lighter;
+    // border-right: 1px solid $color-gray-lighter;
     font-size: 1.5rem;
   }
 
