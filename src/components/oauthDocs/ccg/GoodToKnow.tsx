@@ -4,7 +4,7 @@ import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../../types/constan
 
 const GoodToKnow: FC = () => (
   <>
-    <h2>It&apos;s also good to know that:</h2>
+    <h2>It&apos;s good to know that:</h2>
     <ul>
       <li>
         The access credentials we supply are for the sandbox environment only and will not work in
