@@ -52,10 +52,14 @@
 
     h1 {
       font-size: $h2-font-size;
+      margin-top: $spacing-md-small;
     }
 
     h2 {
       font-size: $h3-font-size;
+      &.fhir-revision[tabindex]:focus {
+        outline-color: green;
+      }
 
       &.title {
         // never show Swagger UI's title feature
@@ -241,4 +245,17 @@
 
 div.model-example ul.tab li.tabitem::after {
   right: 4px;
+}
+
+h2.fhir-revision:focus {
+  animation: 1s temporaryFocusOutline 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes temporaryFocusOutline {
+  0% {
+    outline: 2px solid rgba(249, 198, 66, 1);
+  }
+  100% {
+    outline: 2px solid rgba(249, 198, 66, 0);
+  }
 }

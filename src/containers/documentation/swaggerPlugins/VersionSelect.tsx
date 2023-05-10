@@ -64,7 +64,8 @@ export default class VersionSelect extends React.PureComponent<
     this.setState(prevState => ({ ...prevState, selectedVersion: version }));
   }
 
-  public handleButtonClick(): void {
+  public handleButtonClick(e: React.MouseEvent<HTMLButtonElement>): void {
+    e.currentTarget.blur();
     this.setState(prevState => ({ ...prevState, currentVersion: this.state.selectedVersion }));
     this.props.handleVersionChange(this.props.dispatch)(this.state.selectedVersion);
   }
@@ -132,14 +133,14 @@ export default class VersionSelect extends React.PureComponent<
                 'vads-u-text-align--center',
               )}
             >
-              <button onClick={(): void => this.handleButtonClick()} type="button">
+              <button onClick={(e): void => this.handleButtonClick(e)} type="button">
                 Update page
               </button>
             </div>
           </div>
         </div>
         {!!apiStatus && fhirRegex.test(location.pathname) && (
-          <h2 ref={this.versionHeadingElement} tabIndex={-1}>
+          <h2 ref={this.versionHeadingElement} tabIndex={-1} className="fhir-revision">
             {apiStatus}
           </h2>
         )}

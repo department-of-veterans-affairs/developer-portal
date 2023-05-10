@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as React from 'react';
 import { Link, Route, Switch, useParams } from 'react-router-dom';
 
@@ -36,10 +35,9 @@ export { getApi };
 
 const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
   const { api } = props;
-  console.log(api);
   return (
     <>
-      <SideNavEntry key="all" exact to={`/explore/api/${api.urlFragment}`} name="Overview" />
+      <SideNavEntry key="all" exact to={`/explore/api/${api.urlFragment}`} name={api.name} />
       <SideNavEntry exact to={`/explore/api/${api.urlFragment}/docs`} name="Docs" subNavLevel={1} />
       <SideNavEntry
         exact
@@ -58,13 +56,13 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
       <SideNavEntry
         exact
         to={`/explore/api/${api.urlFragment}/release-notes`}
-        name="Release Notes"
+        name="Release notes"
         subNavLevel={1}
       />
       <SideNavEntry
         exact
         to={`/explore/api/${api.urlFragment}/sandbox-access`}
-        name="Request Sandbox Access"
+        name="Sandbox access"
         subNavLevel={1}
       />
     </>
