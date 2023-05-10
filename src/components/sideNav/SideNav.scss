@@ -8,9 +8,9 @@ $border-offset: 3px;
 }
 
 .nav-in-this-section[type='button'] {
-  background: $color-gray-lightest;
+  background: $color-gray-lightest !important;
   border-radius: 0;
-  color: $color-primary-darker;
+  color: $color-primary-darker !important;
   margin: 0;
   padding: 18px 13px;
   position: relative;
@@ -21,12 +21,10 @@ $border-offset: 3px;
     right: 13px;
   }
 
-  &.open {
-    background: $color-primary-darker;
-    color: white;
-  }
-  &:hover {
-    background: $color-gray-lightest;
+  &.open,
+  &.open:hover {
+    background: $color-primary-darker !important;
+    color: white !important;
   }
 }
 
