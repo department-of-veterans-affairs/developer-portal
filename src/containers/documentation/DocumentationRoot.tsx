@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link, Route, Switch, useParams } from 'react-router-dom';
+import { Route, Switch, useParams } from 'react-router-dom';
 
 import { lookupApiByFragment, getApisLoadedState } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
@@ -13,6 +13,7 @@ import ApiPage from './ApiPage';
 import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
 import { ClientCredentialsGrantDocs } from './ClientCredentialsGrant/ClientCredentialsGrantDocs';
 import ApiOverviewPage from './ApiOverviewPage';
+import { ExploreRoot } from './ExploreRoot';
 
 import './Documentation.scss';
 
@@ -72,12 +73,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
 const DocumentationRoot = (): JSX.Element => {
   const params = useParams<APIUrlFragment>();
   if (!params.urlFragment) {
-    return (
-      <>
-        <h1>Very placeholder root explore page.</h1>
-        <Link to="/explore/api/fhir">Here&apos;s an example set of documentation</Link>
-      </>
-    );
+    return <ExploreRoot />;
   }
   const api = lookupApiByFragment(params.urlFragment);
 
