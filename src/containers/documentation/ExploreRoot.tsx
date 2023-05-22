@@ -36,11 +36,15 @@ export const ExploreRoot = (): JSX.Element => {
         </div>
         <div className="caption-container">
           <p className="vads-u-margin-y--0 vads-u-font-family--serif">
-            Showing all <span className="vads-u-font-weight--bold">{apis.length}</span> items
+            Showing all{' '}
+            <span data-testid="api-count" className="vads-u-font-weight--bold">
+              {apis.length}
+            </span>{' '}
+            items
           </p>
         </div>
       </div>
-      <div className="explore-main-container">
+      <div data-testid="explore-apis-list" className="explore-main-container">
         {apis.map(api => (
           <ExploreApiCard
             description={api.description}
