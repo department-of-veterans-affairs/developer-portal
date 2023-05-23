@@ -10,25 +10,22 @@ import store from '../../store';
 import { setApis } from '../../actions';
 import { ExploreRoot } from './ExploreRoot';
 
-const renderComponent = () => {
-  render(
-    <Provider store={store}>
-      <FlagsProvider flags={getFlags()}>
-        <MemoryRouter>
-          <ExploreRoot />
-        </MemoryRouter>
-      </FlagsProvider>
-    </Provider>,
-  );
-};
-
 describe('ExploreRoot', () => {
   store.dispatch(setApis(fakeCategories));
   let getAllApisSpy: jest.SpyInstance;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     getAllApisSpy = jest.spyOn(apiQueries, 'getAllApis');
-    renderComponent();
+
+    render(
+      <Provider store={store}>
+        <FlagsProvider flags={getFlags()}>
+          <MemoryRouter>
+            <ExploreRoot />
+          </MemoryRouter>
+        </FlagsProvider>
+      </Provider>,
+    );
   });
 
   it('renders successfully', () => {
