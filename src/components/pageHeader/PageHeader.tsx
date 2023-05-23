@@ -17,6 +17,7 @@ const PageHeader = (props: PageHeaderProps): JSX.Element => {
     <div id={PAGE_HEADER_AND_HALO_ID} className={className}>
       {halo && <div className="header-halo vads-u-color--gray">{halo}</div>}
       <h1
+        data-cy="page-header"
         id={PAGE_HEADER_ID}
         className="vads-u-margin-top--0 vads-u-margin-bottom--0"
         tabIndex={-1}

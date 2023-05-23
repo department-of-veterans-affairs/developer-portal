@@ -20,7 +20,7 @@ export const ExploreRoot = (): JSX.Element => {
       <p className="vads-u-margin-y--0">
         View and sort our APIs to find the best one for your needs.
       </p>
-      <div className="filters-container">
+      <div className="filters-container" data-cy="explore-filters">
         <div className="filter-controls">
           <select className="filter-size" name="topic" id="topic">
             <option value="topic-1">Topic 1</option>
@@ -44,7 +44,7 @@ export const ExploreRoot = (): JSX.Element => {
           </p>
         </div>
       </div>
-      <div data-testid="explore-apis-list" className="explore-main-container">
+      <div data-cy="api-list" className="explore-main-container" role="list">
         {apis.map(api => (
           <ExploreApiCard
             description={api.description}

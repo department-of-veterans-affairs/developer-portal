@@ -15,7 +15,7 @@ export const ExploreApiCard = ({
   name,
   urlFragment,
 }: ExploreApiCardProps): JSX.Element => (
-  <div className="explore-api-card-container">
+  <div className="explore-api-card-container" role="listitem">
     <Link
       to={`/explore/api/${urlFragment}`}
       className="vads-u-text-decoration--none vads-u-margin-y--2 vads-u-color--link-default vads-u-font-size--lg vads-u-font-weight--bold"
