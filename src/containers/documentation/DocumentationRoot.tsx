@@ -7,7 +7,7 @@ import { ContentWithNav, SideNavEntry } from '../../components';
 import { APIUrlFragment } from '../../types';
 import { apiLoadingState } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
-import { CategoryReleaseNotes } from '../releaseNotes/CategoryReleaseNotes';
+import { ReleaseNotes } from '../releaseNotes/ReleaseNotes';
 import RequestSandboxAccess from '../consumerOnboarding/RequestSandboxAccess';
 import ApiPage from './ApiPage';
 import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
@@ -108,11 +108,7 @@ const DocumentationRoot = (): JSX.Element => {
             path="/explore/api/:urlFragment/client-credentials"
             component={ClientCredentialsGrantDocs}
           />
-          <Route
-            exact
-            path="/explore/api/:urlFragment/release-notes"
-            component={CategoryReleaseNotes}
-          />
+          <Route exact path="/explore/api/:urlFragment/release-notes" component={ReleaseNotes} />
           <Route
             exact
             path="/explore/api/:urlFragment/sandbox-access"

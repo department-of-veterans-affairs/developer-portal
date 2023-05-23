@@ -6,7 +6,7 @@ import { APIUrlFragment } from '../../types';
 import { getApi } from '../documentation/DocumentationRoot';
 import { PageHeader } from '../../components';
 
-export const CategoryReleaseNotes = (): JSX.Element => {
+export const ReleaseNotes = (): JSX.Element => {
   const params = useParams<APIUrlFragment>();
   const api = getApi(params.urlFragment);
   if (!api) {

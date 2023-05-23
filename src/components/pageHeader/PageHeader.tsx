@@ -23,7 +23,7 @@ const PageHeader = (props: PageHeaderProps): JSX.Element => {
       >
         {header}
       </h1>
-      {subText && <p className="header-sub-text vads-u-color--gray">{subText}</p>}
+      {subText && <h2 className="header-sub-text vads-u-color--gray">{subText}</h2>}
     </div>
   );
 };
