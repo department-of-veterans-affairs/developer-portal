@@ -5,9 +5,11 @@
   font-weight: 400;
 }
 .va-api-text-field {
-  width: 46rem;
+  max-width: 46rem;
 }
 .sandbox-access-form-oauth-details {
+  @extend .va-api-text-field;
+
   &.multiple-types {
     background: $color-gray-lightest;
     padding: 1em;

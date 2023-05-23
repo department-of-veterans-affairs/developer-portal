@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
@@ -105,7 +104,6 @@ const SandboxAccessSuccess = (props: {
     props.result;
   const { api } = props;
   const hasInternalAPI = isVaEmail(email);
-  console.log(hasInternalAPI, isApiKeyApi(api), kongUsername, token);
 
   return (
     <div className="signup-success-wrapper vads-u-margin-top--5">
