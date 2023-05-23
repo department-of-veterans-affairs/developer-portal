@@ -1,218 +1,137 @@
+/* eslint-disable no-console */
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
-
 import { Link } from 'react-router-dom';
 
-import {
-  getAllKeyAuthApis,
-  getAllApis,
-  getAllAuthCodeApis,
-  getAllCCGApis,
-} from '../../../../apiDefs/query';
+import { isAcgApi, isApiKeyApi, isCcgApi } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
-import sentenceJoin from '../../../../sentenceJoin';
 import { ApplySuccessResult } from '../../../../types/forms/apply';
 import { isVaEmail } from '../../../../utils/validators';
 import './SandboxAccessSuccess.scss';
-
-const AssistanceTrailer = (): JSX.Element => (
-  <p>
-    If you would like to report a bug or make a feature request, please open an issue through our{' '}
-    <Link to="/support">Support page</Link>.
-  </p>
-);
+import { SUPPORT_CONTACT_PATH } from '../../../../types/constants/paths';
 
 interface APIKeyNoticeProps {
   token: string;
-  email: string;
+  api: APIDescription;
   kongUsername: string;
-  selectedApis: string[];
 }
 
 interface OAuthACGCredentialsNoticeProps {
+  api: APIDescription;
   clientID: string;
   clientSecret?: string;
-  email: string;
-  selectedApis: string[];
   redirectURI: string;
 }
 
 interface OAuthCCGCredentialsNoticeProps {
+  api: APIDescription;
   ccgClientId: string;
-  email: string;
-  selectedApis: string[];
-}
-
-interface InternalApiNoticeProps {
-  email: string;
 }
 
 const OAuthACGCredentialsNotice: React.FunctionComponent<OAuthACGCredentialsNoticeProps> = ({
+  api,
   clientID,
   clientSecret,
-  email,
-  selectedApis,
   redirectURI,
-}: OAuthACGCredentialsNoticeProps) => {
-  const allApis = getAllApis();
-  const apiNameList = allApis
-    .filter(
-      (api: APIDescription) =>
-        selectedApis.includes(api.urlFragment) || selectedApis.includes(api.altID ?? ''),
-    )
-    .map((api: APIDescription) => api.name);
-  const apiListSnippet = sentenceJoin(apiNameList);
-
-  return (
-    <div>
-      <p className="usa-font-lead">
-        <strong>Your VA API OAuth Client ID: </strong>
-        <span className="oauth-client-id">{clientID}</span>
-      </p>
-      {clientSecret && (
-        <p className="usa-font-lead">
-          <strong>Your VA API OAuth Client Secret: </strong>
-          <span className="oauth-client-secret">{clientSecret}</span>
+}: OAuthACGCredentialsNoticeProps) => (
+  <>
+    <h3>Sandbox credentials for the {api.name}.</h3>
+    <va-alert background-only status="success" visible>
+      <>
+        <p>
+          <strong>Your VA API OAuth Client ID: </strong> {clientID}
         </p>
-      )}
-      <p className="usa-font-lead">
-        <strong>Your Redirect URI is: </strong>
-        <span className="oauth-redirect-uri">{redirectURI}</span>
-      </p>
-
-      <p>
-        You should receive an email at {email} with the same credentials. Those credentials are for
-        accessing the {apiListSnippet} in the sandbox environment. See our{' '}
-        <Link to="/explore/authorization/docs/authorization-code">OAuth Documentation</Link> for
-        more information on usage.
-      </p>
-    </div>
-  );
-};
+        {clientSecret && (
+          <p>
+            <strong>Your VA API OAuth Client Secret: </strong> {clientSecret}
+          </p>
+        )}
+        <p>
+          <strong>Your Redirect URI is: </strong> {redirectURI}
+        </p>
+      </>
+    </va-alert>
+  </>
+);
 
 const OAuthCCGCredentialsNotice: React.FunctionComponent<OAuthCCGCredentialsNoticeProps> = ({
   ccgClientId,
-  email,
-  selectedApis,
-}: OAuthCCGCredentialsNoticeProps) => {
-  const allApis = getAllApis();
-  const apiNameList = allApis
-    .filter(
-      (api: APIDescription) =>
-        selectedApis.includes(api.urlFragment) || selectedApis.includes(api.altID ?? ''),
-    )
-    .map((api: APIDescription) => api.name);
-  const apiListSnippet = sentenceJoin(apiNameList);
-
-  return (
-    <div>
-      <p className="usa-font-lead">
-        <strong>Your VA API OAuth Client ID: </strong>
-        <span className="oauth-client-id">{ccgClientId}</span>
-      </p>
-
+  api,
+}: OAuthCCGCredentialsNoticeProps) => (
+  <>
+    <h3>Sandbox credentials for the {api.name}.</h3>
+    <va-alert background-only status="success" visible>
       <p>
-        You should receive an email at {email} with the same credentials. Those credentials are for
-        accessing the {apiListSnippet} in the sandbox environment. See our{' '}
-        <Link to="/explore/authorization/docs/client-credentials">OAuth Documentation</Link> for
-        more information on usage.
+        <strong>Your VA API OAuth Client ID: </strong> {ccgClientId}
       </p>
-    </div>
-  );
-};
+    </va-alert>
+  </>
+);
 
 const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
   token,
-  email,
+  api,
   kongUsername,
-  selectedApis,
-}: APIKeyNoticeProps) => {
-  const allApis = getAllApis();
-  const apiNameList = allApis
-    .filter(
-      (api: APIDescription) =>
-        selectedApis.includes(api.urlFragment) || selectedApis.includes(api.altID ?? ''),
-    )
-    .map((api: APIDescription) => api.name);
-  const apiListSnippet = sentenceJoin(apiNameList);
-
-  return (
-    <div>
-      <p className="usa-font-lead">
-        <strong>Your VA API key is:</strong> {token}
-      </p>
-      <p className="usa-font-lead">
-        <strong>Your application id is:</strong> {kongUsername}
-      </p>
-      <p>
-        You should receive an email at {email} with the same key. That key is for accessing the{' '}
-        {apiListSnippet} in the sandbox environment. You can use it by including it in each request
-        as an HTTP request header named <span className="va-api-u-font-family--mono">apiKey</span>.
-      </p>
-    </div>
-  );
-};
-
-const InternalApiNotice: React.FunctionComponent<InternalApiNoticeProps> = ({
-  email,
-}: InternalApiNoticeProps) => (
-  <p>You should receive an email at {email} containing your access credentials.</p>
+}: APIKeyNoticeProps) => (
+  <>
+    <h3>Key for the {api.name}.</h3>
+    <va-alert background-only status="success" visible>
+      <>
+        <p>
+          <strong>Sandbox key:</strong> {token}
+        </p>
+        <p>
+          <strong>Kong Username:</strong> {kongUsername}
+        </p>
+      </>
+    </va-alert>
+  </>
 );
 
-const SandboxAccessSuccess = (props: { result: ApplySuccessResult }): JSX.Element => {
-  const { apis, email, token, ccgClientId, clientID, clientSecret, kongUsername, redirectURI } =
-    props.result;
-  const keyAuthApis = getAllKeyAuthApis();
-  const acgAuthApis = getAllAuthCodeApis();
-  const ccgAuthApis = getAllCCGApis();
-  const keyAuthApiList = keyAuthApis.map(api => api.altID ?? api.urlFragment);
-  const acgAuthApisList = acgAuthApis.map(api => api.altID ?? api.urlFragment);
-  const ccgAuthApisList = ccgAuthApis.map(api => api.altID ?? api.urlFragment);
+const InternalApiNotice: React.FunctionComponent = () => (
+  <p>
+    <strong>Important:</strong> to get production access for this API, you must either work for the
+    VA or have specific VA agreements in place. If you have questions,{' '}
+    <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
+  </p>
+);
 
-  // Auth type should be encoded into global API table once it's extracted from ExploreDocs.
-  const hasOAuthAcgAPI = acgAuthApisList.some(apiId => apis.includes(`acg/${apiId}`));
-  const hasOAuthCcgAPI = ccgAuthApisList.some(appId => apis.includes(`ccg/${appId}`));
-  const hasStandardAPI = keyAuthApiList.some(apiId => apis.includes(`apikey/${apiId}`));
+const SandboxAccessSuccess = (props: {
+  result: ApplySuccessResult;
+  api: APIDescription;
+}): JSX.Element => {
+  const { email, token, ccgClientId, clientID, clientSecret, kongUsername, redirectURI } =
+    props.result;
+  const { api } = props;
   const hasInternalAPI = isVaEmail(email);
-  const oAuthAcgAPIs = acgAuthApisList.filter(apiId => apis.includes(`acg/${apiId}`));
-  const oAuthCcgAPIs = ccgAuthApisList.filter(apiId => apis.includes(`ccg/${apiId}`));
-  const standardAPIs = keyAuthApiList.filter(apiId => apis.includes(`apikey/${apiId}`));
+  console.log(hasInternalAPI, isApiKeyApi(api), kongUsername, token);
 
   return (
-    <>
-      <p>
-        <strong>Thank you for signing up!</strong>
-      </p>
-      {!hasInternalAPI && (
-        <>
-          {hasStandardAPI && token && kongUsername && (
-            <ApiKeyNotice
-              email={email}
-              token={token}
-              kongUsername={kongUsername}
-              selectedApis={standardAPIs}
-            />
-          )}
-          {hasOAuthAcgAPI && clientID && redirectURI && (
-            <OAuthACGCredentialsNotice
-              email={email}
-              clientID={clientID}
-              clientSecret={clientSecret}
-              selectedApis={oAuthAcgAPIs}
-              redirectURI={redirectURI}
-            />
-          )}
-          {hasOAuthCcgAPI && ccgClientId && (
-            <OAuthCCGCredentialsNotice
-              email={email}
-              ccgClientId={ccgClientId}
-              selectedApis={oAuthCcgAPIs}
-            />
-          )}
-          <AssistanceTrailer />
-        </>
-      )}
-      {hasInternalAPI && <InternalApiNotice email={email} />}
-    </>
+    <div className="signup-success-wrapper vads-u-margin-top--5">
+      <FontAwesomeIcon icon={faCheckCircle} />
+      <h2 className="vads-u-margin--0 vads-u-padding--0 vads-u-margin-left--5">Explore our APIs</h2>
+      <div className="medium-screen:vads-u-margin-left--5">
+        {isApiKeyApi(api) && token && kongUsername && (
+          <ApiKeyNotice api={api} token={token} kongUsername={kongUsername} />
+        )}
+        {isAcgApi(api) && clientID && redirectURI && (
+          <OAuthACGCredentialsNotice
+            api={api}
+            clientID={clientID}
+            clientSecret={clientSecret}
+            redirectURI={redirectURI}
+          />
+        )}
+        {isCcgApi(api) && ccgClientId && (
+          <OAuthCCGCredentialsNotice api={api} ccgClientId={ccgClientId} />
+        )}
+        <p>
+          We sent this sandbox access information to your email address: <strong>{email}</strong>
+        </p>
+        {hasInternalAPI && <InternalApiNotice />}
+      </div>
+    </div>
   );
 };
 

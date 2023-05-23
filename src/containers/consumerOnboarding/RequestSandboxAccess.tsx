@@ -14,11 +14,22 @@ import {
 import { APIUrlFragment } from '../../types';
 import { getApi } from '../documentation/DocumentationRoot';
 import { SandboxAccessSuccess } from './components/sandbox';
+import './RequestSandboxAccess.scss';
 
 const RequestSandboxAccess: React.FunctionComponent = () => {
   const params = useParams<APIUrlFragment>();
   const api = getApi(params.urlFragment);
-  const [successResults, setSuccessResults] = useState<ApplySuccessResult>();
+  const [successResults, setSuccessResults] = useState<ApplySuccessResult | false>(false);
+  // const [successResults, setSuccessResults] = useState<ApplySuccessResult>({
+  //   apis: ['ccg/fhir'],
+  //   ccgClientId: 'CCG-Client-ID',
+  //   clientID: 'clientID',
+  //   clientSecret: 'clientSecret',
+  //   email: 'giles.wells@va.gov',
+  //   kongUsername: 'kong-username',
+  //   // redirectURI: 'redirectURI',
+  //   token: 'api-token-value',
+  // });
   if (!api) {
     return <h1>placeholder 404</h1>;
   }
@@ -48,25 +59,28 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
         )}
       </Helmet>
       <PageHeader
-        header={successResults ? 'Your submission was successful.' : 'Request Sandbox Access'}
+        header={successResults ? 'Success, happy developing!' : 'Request Sandbox Access'}
+        subText={successResults ? '' : api.name}
       />
       {successResults ? (
-        <SandboxAccessSuccess result={successResults} />
+        <SandboxAccessSuccess result={successResults} api={api} />
       ) : (
-        <SandboxAccessForm
-          apiIdentifier={api.urlFragment}
-          authTypes={authTypes}
-          onFailure={onFormFailure}
-          onSuccess={setSuccessResults}
-          urls={{
-            acgPkceAuthUrl: AUTHORIZATION_PKCE_PATH,
-            ccgPublicKeyUrl: AUTHORIZATION_CCG_PATH,
-            postUrl: LPB_APPLY_URL,
-            termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
-          }}
-          key={api.urlFragment}
-          internalOnly={!!api.vaInternalOnly}
-        />
+        <>
+          <p>Submit this form to get instant access to test data for this API.</p>
+          <SandboxAccessForm
+            apiIdentifier={api.urlFragment}
+            authTypes={authTypes}
+            onFailure={onFormFailure}
+            onSuccess={setSuccessResults}
+            urls={{
+              acgPkceAuthUrl: AUTHORIZATION_PKCE_PATH,
+              ccgPublicKeyUrl: AUTHORIZATION_CCG_PATH,
+              postUrl: LPB_APPLY_URL,
+              termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
+            }}
+            key={api.urlFragment}
+          />
+        </>
       )}
     </>
   );

@@ -152,6 +152,12 @@ const onlyOpenDataAPIs = (apiList: string[]): boolean =>
 const includesOpenDataAPI = (apiList: string[]): boolean =>
   apisFor(apiList).some(api => api.openData);
 
+const isApiKeyApi = (api: APIDescription): boolean => !api.oAuth;
+const isAcgApi = (api: APIDescription): boolean =>
+  !!api.oAuthTypes?.includes('AuthorizationCodeGrant');
+const isCcgApi = (api: APIDescription): boolean =>
+  !!api.oAuthTypes?.includes('ClientCredentialsGrant');
+
 export {
   apisFor,
   getActiveApis,
@@ -174,6 +180,9 @@ export {
   includesOAuthAPI,
   includesAuthCodeAPI,
   includesCcgAPI,
+  isApiKeyApi,
+  isAcgApi,
+  isCcgApi,
   getAllKeyAuthApis,
   includesInternalOnlyAPI,
   includesInternalSponsorshipAPI,

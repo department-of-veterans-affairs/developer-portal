@@ -23,6 +23,7 @@ describe('SandboxAccessSuccess with results', () => {
         render(
           <MemoryRouter>
             <SandboxAccessSuccess
+              api={store.getState().apiList.apis.health.apis[0]}
               result={{
                 apis: ['apikey/rings', 'apikey/silmarils', 'apikey/hobbits'],
                 clientID: 'gimli',
@@ -52,6 +53,7 @@ describe('SandboxAccessSuccess with results', () => {
         render(
           <MemoryRouter>
             <SandboxAccessSuccess
+              api={store.getState().apiList.apis.health.apis[0]}
               result={{
                 apis: ['apikey/rings', 'apikey/silmarils', 'apikey/hobbits'],
                 clientID: 'gimli',
@@ -94,6 +96,7 @@ describe('SandboxAccessSuccess with results', () => {
         render(
           <MemoryRouter>
             <SandboxAccessSuccess
+              api={store.getState().apiList.apis.health.apis[0]}
               result={{
                 apis: ['acg/armageddon'],
                 clientID: 'gimli',
@@ -149,6 +152,7 @@ describe('SandboxAccessSuccess with results', () => {
         render(
           <MemoryRouter>
             <SandboxAccessSuccess
+              api={store.getState().apiList.apis.health.apis[0]}
               result={{
                 apis: ['ccg/apollo13'],
                 ccgClientId: 'gimli',
@@ -202,6 +206,7 @@ describe('SandboxAccessSuccess with results', () => {
         render(
           <MemoryRouter>
             <SandboxAccessSuccess
+              api={store.getState().apiList.apis.health.apis[0]}
               result={{
                 apis: [
                   'apikey/addressValidation',

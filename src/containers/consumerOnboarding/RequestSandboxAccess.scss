@@ -1,0 +1,45 @@
+@import '../../styles/variables.scss';
+
+#typeAndApiLegend {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+.va-api-text-field {
+  width: 46rem;
+}
+.sandbox-access-form-oauth-details {
+  &.multiple-types {
+    background: $color-gray-lightest;
+    padding: 1em;
+    h3 {
+      margin-top: 0;
+    }
+  }
+
+  h3 {
+    font-family: $font-sans;
+    font-size: 1em;
+    line-height: 24px;
+  }
+}
+.signup-success-wrapper {
+  position: relative;
+
+  h2 {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+  }
+
+  svg {
+    color: $color-green;
+    position: absolute;
+    top: 5px;
+    left: 0;
+    font-size: 32px;
+  }
+
+  h3 {
+    font-family: $font-sans;
+  }
+}
