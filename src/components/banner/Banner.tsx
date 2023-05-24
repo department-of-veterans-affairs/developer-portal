@@ -58,29 +58,22 @@ const Banner = (): JSX.Element => {
 
   return (
     <div>
-      <div className={classNames('site-guidance', 'vads-u-background-color--gray-dark')}>
-        <div className={classNames('va-api-banner-header')}>
-          <div
-            className={classNames(
-              'va-api-banner-inner',
-              'vads-u-max-width--100',
-              'vads-u-color--white',
-              'medium-screen:vads-u-padding-x--4',
-            )}
-          >
+      <div
+        className={classNames(
+          'site-guidance',
+          'vads-u-background-color--gray-lightest',
+          'vads-u-padding-left--2',
+          'medium-screen:vads-u-padding-left--4',
+        )}
+      >
+        <div className="va-api-banner-header">
+          <div className={classNames('va-api-banner-inner', 'vads-u-max-width--100')}>
             <div className={classNames(defaultFlexContainer(true), 'vads-u-padding-y--0p25')}>
               <div>
                 <img
                   src={flagIcon}
                   alt="US flag"
-                  className={classNames(
-                    'va-api-banner-icon',
-                    'vads-u-margin-left--1p5',
-                    'vads-u-margin-right--1',
-                    'vads-u-margin-top--neg1',
-                    'medium-screen:vads-u-margin-left--0',
-                    'medium-screen:vads-u-margin-top--0',
-                  )}
+                  className="va-api-banner-icon"
                   aria-hidden="true"
                 />
               </div>
@@ -89,23 +82,16 @@ const Banner = (): JSX.Element => {
                   'site-notice-text',
                   defaultFlexContainer(true),
                   'vads-u-margin-left--1',
-                  'vads-u-font-size--sm',
                   'small-desktop-screen:vads-u-max-width--none',
+                  'vads-u-color--base',
                 )}
               >
-                <p>An official website of the United States government.</p>
+                <p className="vads-u-padding-right--0p5">
+                  An official website of the United States government
+                </p>
                 <button
                   id="toggle-how-you-know-dropdown"
-                  className={classNames(
-                    'va-api-site-guidance-button',
-                    'vads-u-color--white',
-                    'vads-u-font-size--sm',
-                    'vads-u-margin--0',
-                    'vads-u-margin-top--0p25',
-                    'vads-u-padding--0',
-                    'small-desktop-screen:vads-u-margin-left--1',
-                    'small-desktop-screen:vads-u-margin-top--0',
-                  )}
+                  className="va-api-site-guidance-button"
                   aria-label="Here's how you know this is an official website"
                   onClick={toggleAccordionVisible}
                   aria-expanded={accordionVisible ? 'true' : 'false'}
@@ -127,7 +113,7 @@ const Banner = (): JSX.Element => {
               className={classNames(
                 'usa-accordion-content',
                 'vads-l-grid-container',
-                'vads-u-background-color--gray-dark',
+                'vads-u-background-color--gray-lightest',
               )}
               aria-hidden={accordionVisible ? 'false' : 'true'}
               aria-label="Here's how you know this is an official website"

@@ -8,12 +8,11 @@
   position: fixed;
   top: 0;
   right: 0;
-  bottom: 0;
   overflow-y: scroll;
 
   @include media($medium-screen) {
     background-color: $color-primary-darkest;
-    position: relative;
+    position: static;
     overflow-y: visible;
   }
 
@@ -23,10 +22,12 @@
   }
 
   .va-api-mobile-nav-close {
+    align-self: end;
+    background-color: $color-white;
+    color: $color-gray;
+    float: right;
     height: 40px;
     width: 40px;
-    float: right;
-    background-color: transparent;
 
     img {
       height: 15px;
@@ -78,5 +79,36 @@
 
   ul.va-api-sub-nav {
     list-style: none;
+  }
+
+  .va-api-external-link {
+    @include media($medium-screen) {
+      color: $color-white !important;
+      &:hover {
+        border-bottom: 3px solid #fdb81e;
+        font-weight: 400;
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .va-api-separator::before {
+    color: $color-white;
+    content: '|';
+    font-weight: 300;
+    margin: 0 1.6rem;
+    @include media($medium-screen) {
+      font-size: 2.4rem;
+    }
+  }
+
+  .va-api-search-bar-container {
+    background-color: #d9d9d9;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 1rem 0.8rem;
+    position: absolute;
+    right: 0;
+    top: 133px;
+    z-index: 1000;
   }
 }

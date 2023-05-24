@@ -10,7 +10,7 @@ describe('Banner', () => {
   });
 
   it('should render the site notice text and toggle button', () => {
-    const siteNotice = screen.getByText('An official website of the United States government.');
+    const siteNotice = screen.getByText('An official website of the United States government');
     expect(siteNotice).toBeInTheDocument();
 
     const toggleButton = screen.getByRole('button', {
@@ -45,9 +45,11 @@ describe('Banner', () => {
     expect(toggleButton.getAttribute('aria-expanded')).toBe('true');
 
     userEvent.click(toggleButton);
-    expect(screen.queryByRole('region', {
-      name: "Here's how you know this is an official website",
-    })).toBeNull();
+    expect(
+      screen.queryByRole('region', {
+        name: "Here's how you know this is an official website",
+      }),
+    ).toBeNull();
     expect(toggleButton.getAttribute('aria-expanded')).toBe('false');
   });
 
@@ -70,7 +72,7 @@ describe('Banner', () => {
 
       const description = getByText(
         guidanceRegion,
-        /^Federal government websites often end in \.gov/
+        /^Federal government websites often end in \.gov/,
       );
       expect(description).toBeInTheDocument();
     });
@@ -82,7 +84,7 @@ describe('Banner', () => {
       const description = getByText(
         guidanceRegion,
         // partial regex because it's broken up by the <strong> for the "https://" part
-        /ensures that you're connecting to the official website/
+        /ensures that you're connecting to the official website/,
       );
       expect(description).toBeInTheDocument();
     });

@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, getAllByRole, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -26,42 +26,19 @@ describe('NavBar', () => {
   });
 
   describe('links', () => {
-    /*
-     * The About, Docs, Onboarding, and API Publishing navigation items are links in the
-     * desktop view and buttons in the mobile view. Both are rendered even though only one
-     * will only be visible at a time based on the view.
-     */
     it.each([
-      ['About', '/about'],
-      ['Docs', '/explore'],
+      ['Explore APIs', '/explore'],
       ['Onboarding', '/onboarding'],
-      ['API Publishing', '/api-publishing'],
+      ['About', '/about'],
+      ['API Status', 'https://valighthouse.statuspage.io'],
+      ['Support', '/support'],
     ])(
       'contains the %s link with the correct URL (%s) and the corresponding button for the mobile nav',
       (navItemText: string, linkURL: string) => {
-        const link = screen.getByRole('link', { name: navItemText });
-        expect(link).toHaveAttribute('href', linkURL);
-        const button = screen.getByRole('button', { name: navItemText });
-        expect(button).toBeInTheDocument();
-      },
-    );
-
-    /*
-     * The Release Notes, Support, and API Status navigation items are links in both
-     * the desktop view and mobile view. Both are rendered even though only one will only be
-     * visible at a time based on the view.
-     */
-    it.each([
-      ['Release Notes', '/release-notes'],
-      ['Support', '/support'],
-      ['API Status', 'https://valighthouse.statuspage.io'],
-    ])(
-      'contains the %s nav links for desktop and mobile',
-      (navItemText: string, linkURL: string) => {
-        const links = screen.getAllByRole('link', { name: navItemText });
-        expect(links.length).toEqual(2);
-        expect(links[0]).toHaveAttribute('href', linkURL);
-        expect(links[1]).toHaveAttribute('href', linkURL);
+        const navbar = screen.getByRole('navigation');
+        const link = getAllByRole(navbar, 'link', { name: navItemText });
+        expect(link[0]).toHaveAttribute('href', linkURL);
+        expect(link[0]).toBeInTheDocument();
       },
     );
   });

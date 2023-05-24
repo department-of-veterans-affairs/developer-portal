@@ -1,36 +1,25 @@
 /* eslint-disable max-lines */
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import * as React from 'react';
 import { match as Match } from 'react-router';
-import { NavHashLink } from 'react-router-hash-link';
-import { FLAG_CATEGORIES } from '../../types/constants';
+import { faChevronDown, faChevronUp, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   CONSUMER_APIS_PATH,
   CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
-  CONSUMER_SANDBOX_PATH,
-  PUBLISHING_REQUIREMENTS_URL,
-  PUBLISHING_ONBOARDING_PATH,
-  PUBLISHING_PATH,
-  SUPPORT_CONTACT_PATH,
 } from '../../types/constants/paths';
-import closeButton from '../../../node_modules/uswds/src/img/close.png';
-
-import { Flag } from '../../flags';
-import { desktopOnly, mobileOnly } from '../../styles/vadsUtils';
+import { desktopOnly } from '../../styles/vadsUtils';
 import { LargeScreenNavItemProps, MainNavItem, SubNav, SubNavEntry } from '../../components';
 import Search from '../search/Search';
-
 import './NavBar.scss';
-
-import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
 
 interface NavBarProps {
   isMobileMenuVisible: boolean;
   onMobileNavClose: () => void;
+  isSearchBarVisible?: boolean;
+  toggleSearchBar?: () => void;
 }
 
 const navItemStyles = (isFirstChild = false): string =>
@@ -55,6 +44,7 @@ const navLinkStyles = classNames(
   'vads-u-padding--1',
   'vads-u-text-decoration--none',
   'medium-screen:vads-u-padding--1p5',
+  'va-api-external-link',
 );
 
 const NavBar = (props: NavBarProps): JSX.Element => {
@@ -66,7 +56,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     },
     'va-api-nav',
     desktopOnly(),
-    'medium-screen:vads-u-width--full',
+    'vads-u-width--auto',
   );
 
   const toggleDefaultNavLink = (useDefault: boolean): void => {
@@ -86,39 +76,35 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     onMouseLeave: () => toggleDefaultNavLink(true),
   };
 
-  const apiDefs = getApiDefinitions();
-  const apiCategoryOrder: string[] = getApiCategoryOrder();
-
   return (
     <nav className={navClasses}>
       <div
         className={classNames(
           'vads-u-padding--2p5',
           'vads-u-border-color--white',
-          'medium-screen:vads-u-border-top--1px',
-          'medium-screen:vads-u-margin-x--4',
+          'medium-screen:vads-u-margin-left--4',
           'medium-screen:vads-u-padding--0',
           'medium-screen:vads-u-display--flex',
         )}
       >
-        <div className={mobileOnly()}>
+        <div
+          className={classNames(
+            'vads-u-display--flex',
+            'vads-u-flex-direction--column',
+            'medium-screen:vads-u-display--none',
+          )}
+        >
           <button
             className={classNames(
               'va-api-mobile-nav-close',
               'vads-u-display--block',
-              'vads-u-margin-top--0',
-              'vads-u-margin-right--neg1',
-              'vads-u-margin-bottom--2',
+              'vads-u-margin--0',
               'vads-u-padding--0',
             )}
             onClick={props.onMobileNavClose}
             type="button"
           >
-            <img
-              src={closeButton}
-              alt="Close button"
-              className={classNames('vads-u-color--gray-dark', 'vads-u-max-width--none')}
-            />
+            <FontAwesomeIcon icon={faTimes} />
           </button>
           <Search
             inMenu
@@ -129,6 +115,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             )}
           />
         </div>
+
         <ul
           className={classNames(
             'vads-u-margin-y--0',
@@ -136,38 +123,14 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             'medium-screen:vads-u-display--inline',
           )}
         >
-          <li className={navItemStyles(true)}>
+          <li className={navItemStyles()}>
             <MainNavItem
               targetUrl="/explore"
               largeScreenProps={sharedNavItemProps}
-              excludeSmallScreen
               className={navLinkStyles}
             >
-              Docs
+              Explore APIs
             </MainNavItem>
-            <SubNav name="Docs">
-              <SubNavEntry onClick={props.onMobileNavClose} to="/explore" id="all">
-                Overview
-              </SubNavEntry>
-              <SubNavEntry
-                onClick={props.onMobileNavClose}
-                to="/explore/authorization"
-                id="authorization"
-              >
-                Authorization
-              </SubNavEntry>
-              {apiCategoryOrder.map(apiKey => (
-                <Flag name={[FLAG_CATEGORIES, apiKey]} key={apiKey}>
-                  <SubNavEntry
-                    onClick={props.onMobileNavClose}
-                    to={`/explore/${apiKey}`}
-                    id={apiKey}
-                  >
-                    {apiDefs[apiKey].name}
-                  </SubNavEntry>
-                </Flag>
-              ))}
-            </SubNav>
           </li>
 
           <li className={navItemStyles()}>
@@ -185,14 +148,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                 to={CONSUMER_PATH}
                 id="onboarding-overview"
               >
-                Overview
-              </SubNavEntry>
-              <SubNavEntry
-                onClick={props.onMobileNavClose}
-                to={CONSUMER_SANDBOX_PATH}
-                id="sandbox-access"
-              >
-                Request sandbox access
+                API Consumer onboarding
               </SubNavEntry>
               <SubNavEntry
                 onClick={props.onMobileNavClose}
@@ -216,52 +172,6 @@ const NavBar = (props: NavBarProps): JSX.Element => {
 
           <li className={navItemStyles()}>
             <MainNavItem
-              onClick={props.onMobileNavClose}
-              targetUrl="/release-notes"
-              largeScreenProps={sharedNavItemProps}
-              className={navLinkStyles}
-            >
-              Release Notes
-            </MainNavItem>
-          </li>
-          <li className={navItemStyles()}>
-            <MainNavItem
-              targetUrl={PUBLISHING_PATH}
-              largeScreenProps={sharedNavItemProps}
-              excludeSmallScreen
-              className={navLinkStyles}
-            >
-              API Publishing
-            </MainNavItem>
-            <SubNav name="API Publishing">
-              <SubNavEntry onClick={props.onMobileNavClose} to={PUBLISHING_PATH} id="overview">
-                Overview
-              </SubNavEntry>
-              <SubNavEntry
-                onClick={props.onMobileNavClose}
-                to={PUBLISHING_ONBOARDING_PATH}
-                id="process"
-              >
-                How publishing works
-              </SubNavEntry>
-              <SubNavEntry
-                onClick={props.onMobileNavClose}
-                to={PUBLISHING_REQUIREMENTS_URL}
-                id="expectations"
-              >
-                Expectations for APIs
-              </SubNavEntry>
-              <SubNavEntry
-                onClick={props.onMobileNavClose}
-                to={{ pathname: SUPPORT_CONTACT_PATH, search: '?type=publishing' }}
-                id="contact"
-              >
-                Contact Us
-              </SubNavEntry>
-            </SubNav>
-          </li>
-          <li className={navItemStyles()}>
-            <MainNavItem
               targetUrl="/about"
               largeScreenProps={sharedNavItemProps}
               excludeSmallScreen
@@ -278,6 +188,13 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               </SubNavEntry>
             </SubNav>
           </li>
+
+          <li className={navItemStyles()}>
+            <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
+              API Status
+            </a>
+          </li>
+
           <li className={navItemStyles()}>
             <MainNavItem
               onClick={props.onMobileNavClose}
@@ -288,37 +205,32 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               Support
             </MainNavItem>
           </li>
-          <li className={classNames(navItemStyles(), mobileOnly())}>
-            <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
-              API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
-            </a>
+
+          <li className={classNames(navItemStyles(), desktopOnly(), 'va-api-separator')}>
+            <button
+              className={classNames(
+                'vads-u-background-color--primary-darkest',
+                'vads-u-font-weight--normal',
+                'vads-u-padding--1p5',
+              )}
+              onClick={props.toggleSearchBar}
+              type="button"
+            >
+              <FontAwesomeIcon className={classNames('vads-u-margin-right--1')} icon={faSearch} />
+              Search
+              <FontAwesomeIcon
+                className={classNames('vads-u-margin-left--1')}
+                icon={props.isSearchBarVisible ? faChevronUp : faChevronDown}
+              />
+            </button>
           </li>
         </ul>
-        <a
-          className={classNames(
-            desktopOnly(),
-            'va-api-u-margin-y--auto',
-            'vads-u-margin-left--auto',
-            'vads-u-color--white',
-            'vads-u-text-decoration--none',
-            'vads-u-font-size--base',
-          )}
-          href="https://valighthouse.statuspage.io"
-        >
-          API Status <FontAwesomeIcon icon={faExternalLinkAlt} />
-        </a>
-        <div className={mobileOnly()}>
-          <div className={classNames('va-api-nav-secondary', 'vads-u-margin-y--2')}>
-            <NavHashLink
-              onClick={props.onMobileNavClose}
-              to={CONSUMER_SANDBOX_PATH}
-              className={classNames('usa-button', 'vads-u-width--full')}
-            >
-              Request an API Key
-            </NavHashLink>
-          </div>
-        </div>
       </div>
+      {!props.isMobileMenuVisible && props.isSearchBarVisible && (
+        <div className="va-api-search-bar-container">
+          <Search className="va-api-search-bar" />
+        </div>
+      )}
     </nav>
   );
 };

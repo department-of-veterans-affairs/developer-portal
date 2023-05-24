@@ -15,7 +15,6 @@ import {
   CONSUMER_APPLICATION_PATH,
   CONSUMER_PROD_PATH,
   CONSUMER_ROUTER_PATHS,
-  CONSUMER_SANDBOX_PATH,
   PUBLISHING_ROUTER_PATHS,
 } from './types/constants/paths';
 import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
@@ -89,8 +88,6 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => {
       {CONSUMER_ROUTER_PATHS.map((path: string) => (
         <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
       ))}
-
-      <Redirect from="/apply" to={CONSUMER_SANDBOX_PATH} />
 
       <Redirect from="/go-live" to={CONSUMER_PROD_PATH} />
 

@@ -8,22 +8,17 @@
 
   input.va-api-search-autocomplete {
     @include media($medium-screen) {
-      width: 240px;
+      width: 600px;
+    }
+    &::placeholder {
+      color: $color-gray-medium;
     }
   }
 
   form {
     button.va-api-search-submit {
-      border-radius: 0 5px 5px 0;
+      border-radius: 0 2px 2px 0;
     }
-  }
-}
-
-.va-api-search-form--inverse-color {
-  @include va-api-input-text-color($color-gray-lightest);
-
-  input.va-api-search-autocomplete {
-    background-color: $va-api-color-blue-dark;
   }
 }
 
