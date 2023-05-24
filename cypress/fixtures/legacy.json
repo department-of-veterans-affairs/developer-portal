@@ -74,28 +74,16 @@
         "oAuthInfo": {
           "acgInfo": {
             "baseAuthPath": "/oauth2/claims/v1",
-            "scopes": [
-              "profile",
-              "openid",
-              "offline_access",
-              "claim.read",
-              "claim.write"
-            ]
+            "scopes": ["profile", "openid", "offline_access", "claim.read", "claim.write"]
           },
           "ccgInfo": {
             "baseAuthPath": "/oauth2/claims/system/v1",
             "productionAud": "ausajojxqhTsDSVlA297",
             "sandboxAud": "ausdg7guis2TYDlFe2p7",
-            "scopes": [
-              "claim.read",
-              "claim.write"
-            ]
+            "scopes": ["claim.read", "claim.write"]
           }
         },
-        "oAuthTypes": [
-          "AuthorizationCodeGrant",
-          "ClientCredentialsGrant"
-        ],
+        "oAuthTypes": ["AuthorizationCodeGrant", "ClientCredentialsGrant"],
         "veteranRedirect": {
           "linkUrl": "https://www.va.gov/claim-or-appeal-status/",
           "linkText": "benefits or appeals claim status",
@@ -277,9 +265,7 @@
             ]
           }
         },
-        "oAuthTypes": [
-          "AuthorizationCodeGrant"
-        ],
+        "oAuthTypes": ["AuthorizationCodeGrant"],
         "veteranRedirect": null
       },
       {
@@ -309,9 +295,7 @@
             ]
           }
         },
-        "oAuthTypes": [
-          "AuthorizationCodeGrant"
-        ],
+        "oAuthTypes": ["AuthorizationCodeGrant"],
         "veteranRedirect": null
       },
       {
@@ -378,10 +362,7 @@
             ]
           }
         },
-        "oAuthTypes": [
-          "AuthorizationCodeGrant",
-          "ClientCredentialsGrant"
-        ],
+        "oAuthTypes": ["AuthorizationCodeGrant", "ClientCredentialsGrant"],
         "veteranRedirect": null
       },
       {
@@ -430,7 +411,7 @@
       "shortDescription": "Use our APIs to build tools that help Veterans manage their health.",
       "quickstart": "VA’s Health APIs allow a user/application to make queries that will return health records in FHIR format, without interacting with or understanding the inner workings of VA systems.\n\nThe database that powers the development environment is populated with synthetic Veteran data provided by MITRE Corporation. The data contains sample Veteran health records (both living and deceased) that mimic real Veteran demographics. The associated clinical resources include data generated from disease models covering up to a dozen of the most common Veteran afflictions.\n\nThe Community Care Eligibility API also allows a user/application to retrieve an array of different Veteran eligibilities from a synthetic dataset.\n\n## Development API access\n\nThe VA API Platform uses the [OpenID Connect](https://openid.net/specs/openid-connect-core-1_0.html) standard to allow Veterans to authorize third-party applications to access data on their behalf. Some Health APIs also use the [SMART on FHIR](http://docs.smarthealthit.org/) profile. Both OpenID Connect and SMART on FHIR are built on OAuth 2.\n\n### What is the criteria to be considered for Development API access?\n\nThe following basic information should be provided:\n\n * Your name\n * Email address\n * Organization name\n * OAuth Redirect URI\n\n### What happens after I am approved?\n\nYou will receive an email from the VA API team notifying you of your approval, and it will include a new Client ID and Secret for your application. The base URI for the Health API endpoints are:\n\n * `https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/`\n * `https://dev-api.va.gov/services/fhir/v0/dstu2/`\n * `https://dev-api.va.gov/services/fhir/v0/r4/`\n * `https://dev-api.va.gov/services/community-care/v0/eligibility`\n\nAccordingly, the FHIR conformance statements can be retrieved from:\n\n * `https://dev-api.va.gov/services/fhir/v0/argonaut/data-query/metadata`\n * `https://dev-api.va.gov/services/fhir/v0/dstu2/metadata`\n * `https://dev-api.va.gov/services/fhir/v0/r4/metadata`\n\nYou will also be provided with a set of test accounts to use that will allow you to access specific synthetic data patient records.\n\n## Developer Guidelines\n\nBelow are guidelines you should follow to be successful in your VA API integration.\n\n### Data Refresh\n\nThe APIs accessed via the Development environment are using the same underlying logic as VA’s production APIs; only the underlying data store is different. The synthetic data store is static and is not refreshed at the same intervals as production.\n\n### Usage\n\nAPI usage is not restricted within the Development environment.\n",
       "veteranRedirect": null,
-      "overview": "## Use our Health APIs to build tools that help Veterans manage their health, view their VA medical records, share their health information, and determine potential eligibility for community care. While these APIs allow greater access to health data, they do not currently allow submission of medical claims. VA’s Health APIs use [HL7’s Fast Healthcare Interoperability Resources (FHIR) framework](https://www.hl7.org/fhir/overview.html) for providing healthcare data in a standardized format. FHIR solutions are built from a set of modular components, called resources, which can be easily assembled into working systems that solve real world clinical and administrative problems. When you register for access to the Health APIs, you will be granted access to a synthetic set of data (provided by the MITRE Corporation) that mimics real Veteran demographics. The associated clinical resources include data generated from disease models covering up to a dozen of the most common Veteran afflictions. [Review the latest release notes](/release-notes/health)._VA is a supporter of the [CARIN Alliance](https://www.carinalliance.com/) Code of Conduct._"
+      "overview": "## Use our Health APIs to build tools that help Veterans manage their health, view their VA medical records, share their health information, and determine potential eligibility for community care. While these APIs allow greater access to health data, they do not currently allow submission of medical claims. VA’s Health APIs use [HL7’s Fast Healthcare Interoperability Resources (FHIR) framework](https://www.hl7.org/fhir/overview.html) for providing healthcare data in a standardized format. FHIR solutions are built from a set of modular components, called resources, which can be easily assembled into working systems that solve real world clinical and administrative problems. When you register for access to the Health APIs, you will be granted access to a synthetic set of data (provided by the MITRE Corporation) that mimics real Veteran demographics. The associated clinical resources include data generated from disease models covering up to a dozen of the most common Veteran afflictions. [Review the latest release notes](/release-notes/health)."
     }
   },
   "loanGuaranty": {
@@ -464,9 +445,7 @@
             ]
           }
         },
-        "oAuthTypes": [
-          "ClientCredentialsGrant"
-        ],
+        "oAuthTypes": ["ClientCredentialsGrant"],
         "veteranRedirect": null
       },
       {
@@ -543,14 +522,10 @@
             "baseAuthPath": "/oauth2/veteran-letters/system/v1",
             "productionAud": "TBD",
             "sandboxAud": "TBD",
-            "scopes": [
-              "letters.read"
-            ]
+            "scopes": ["letters.read"]
           }
         },
-        "oAuthTypes": [
-          "ClientCredentialsGrant"
-        ],
+        "oAuthTypes": ["ClientCredentialsGrant"],
         "veteranRedirect": null
       },
       {
@@ -600,9 +575,7 @@
             ]
           }
         },
-        "oAuthTypes": [
-          "AuthorizationCodeGrant"
-        ],
+        "oAuthTypes": ["AuthorizationCodeGrant"],
         "veteranRedirect": null
       }
     ],

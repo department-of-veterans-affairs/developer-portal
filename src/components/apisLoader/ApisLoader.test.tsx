@@ -70,8 +70,7 @@ describe('ApisLoader', () => {
 
     await renderComponent();
 
-    expect(screen.getByRole('heading', { level: 2 })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { level: 2 }).textContent).toBe('Loading Error:');
+    expect(screen.getByText('Loading Error:')).toBeInTheDocument();
   });
 
   it('hideSpinner works as expected', async () => {

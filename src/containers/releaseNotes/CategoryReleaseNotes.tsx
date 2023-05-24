@@ -1,6 +1,5 @@
-import AlertBox from 'component-library-legacy/AlertBox';
-import classNames from 'classnames';
 import * as React from 'react';
+import classNames from 'classnames';
 import { Helmet } from 'react-helmet';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router';
@@ -74,9 +73,10 @@ const APIReleaseNote = ({
         {api.name}
       </h2>
       {api.deactivationInfo && isApiDeactivated(api) && (
-        <AlertBox headline="Deactivated API" status="info">
+        <va-alert background-only show-icon status="info" visible>
+          <p className="vads-u-margin-y--0">Deactivated API</p>
           <ReactMarkdown>{api.deactivationInfo.deactivationContent}</ReactMarkdown>
-        </AlertBox>
+        </va-alert>
       )}
       <div className="release-notes-wrapper">
         <ReactMarkdown>{api.releaseNotes}</ReactMarkdown>
@@ -103,9 +103,9 @@ const ReleaseNotesCollection: React.FunctionComponent<ReleaseNotesCollectionProp
       </Helmet>
       <PageHeader halo={props.apiCategory?.name} header="Release Notes" />
       {props.alertText && (
-        <AlertBox status="info" className="vads-u-padding-y--2">
-          {props.alertText}
-        </AlertBox>
+        <va-alert background-only show-icon status="info" visible>
+          <p className="vads-u-margin-y--0">{props.alertText}</p>
+        </va-alert>
       )}
       {props.apiCategory && (
         <>

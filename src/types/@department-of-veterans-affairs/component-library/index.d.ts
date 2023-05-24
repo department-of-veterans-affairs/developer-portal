@@ -1,4 +1,3 @@
-declare module 'component-library-legacy/AlertBox';
 declare module 'component-library-legacy/Modal';
 declare module 'component-library-legacy/LoadingIndicator';
 
@@ -32,6 +31,7 @@ interface VaAlertProps {
   closeable?: boolean;
   status: 'info' | 'success' | 'error' | 'warning' | 'continue';
   visible: boolean;
+  key?: string;
 }
 declare namespace JSX {
   interface IntrinsicElements {

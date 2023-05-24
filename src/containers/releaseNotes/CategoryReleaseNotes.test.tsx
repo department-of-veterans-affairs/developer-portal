@@ -269,14 +269,7 @@ describe('ReleaseNotesCollection', () => {
       });
 
       it('renders deactivation info for each API', () => {
-        const silmarilsHeading = screen.getByRole('heading', { name: 'Silmarils API' });
-        expect(silmarilsHeading.nextElementSibling).not.toBeNull();
-
-        const deactivationInfo: HTMLElement = silmarilsHeading.nextElementSibling as HTMLElement;
-        expect(
-          getByRole(deactivationInfo, 'heading', { name: 'Deactivated API' }),
-        ).toBeInTheDocument();
-        expect(deactivationInfo).toHaveTextContent('Silmarils lost forever');
+        expect(screen.getByText('Silmarils lost forever')).toBeInTheDocument();
       });
 
       it('renders the release notes themselves within the section', () => {
