@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import AlertBox from 'component-library-legacy/AlertBox';
 import { useParams } from 'react-router';
 import { Link } from 'react-router-dom';
 
@@ -19,12 +18,12 @@ const ApiNotFoundPage = (): JSX.Element => {
 
   return (
     <div role="region" aria-labelledby={PAGE_HEADER_ID}>
-      <AlertBox
-        className="vads-u-margin-top--0 va-api-alert-box"
-        headline="Page not found."
-        content="Try using the links below or the search bar to find your way forward."
-        status="warning"
-      />
+      <va-alert background-only show-icon status="warning" visible>
+        <p className="vads-u-margin-y--0">Page not found.</p>
+        <p className="vads-u-margin-top--1">
+          Try using the links below or the search bar to find your way forward.
+        </p>
+      </va-alert>
       {category?.name && <PageHeader header={category.name} />}
       <ul>
         {category?.apis

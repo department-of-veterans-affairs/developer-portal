@@ -7,7 +7,6 @@ import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'component-library-legacy/Modal';
-import AlertBox from 'component-library-legacy/AlertBox';
 import { VaSegmentedProgressBar } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, useHistory } from 'react-router-dom';
 // import Icon508 from '../../assets/508-compliant.svg';
@@ -520,16 +519,15 @@ const ProductionAccess: FC = () => {
             </p>
           </Modal>
           {submissionError && (
-            <AlertBox
-              status="error"
-              headline="We encountered a server error while saving your form. Please try again later."
-              content={
-                <span>
-                  Need assistance? Create an issue through our{' '}
-                  <Link to="/support">Support page.</Link>
-                </span>
-              }
-            />
+            <va-alert background-only show-icon status="error" visible>
+              <p className="vads-u-margin-y--0">
+                We encountered a server error while saving your form. Please try again later.
+              </p>
+              <p className="vads-u-margin-top--1">
+                Need assistance? Create an issue through our <Link to="/support">Support page</Link>
+                .
+              </p>
+            </va-alert>
           )}
         </div>
       </div>

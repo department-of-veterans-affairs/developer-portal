@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet';
 import { Redirect, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import ReactMarkdown from 'react-markdown';
-import AlertBox from 'component-library-legacy/AlertBox';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
 import { lookupApiCategory } from '../../apiDefs/query';
@@ -60,16 +59,12 @@ const VeteranRedirectAlertMessage = ({
   api: APIDescription;
   veteranRedirect: VeteranRedirectMessage;
 }): JSX.Element => (
-  <AlertBox
-    status="info"
-    key={api.urlFragment}
-    className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
-  >
-    <div>
+  <va-alert background-only show-icon status="info" key={api.urlFragment} visible>
+    <p className="vads-u-margin-y--0">
       {veteranRedirect.message}&nbsp;
       <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
-    </div>
-  </AlertBox>
+    </p>
+  </va-alert>
 );
 
 const ApiPage = (): JSX.Element => {

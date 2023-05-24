@@ -26,6 +26,10 @@
     max-height: 400px;
   }
 
+  span.linenumber {
+    color: #AEB0B5;
+  }
+
   @media (min-width: 1008px) {
     code {
       font-size: 1.6rem;
