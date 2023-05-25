@@ -1,0 +1,36 @@
+.explore-root-container {
+  padding: 2rem 3.2rem 0;
+}
+
+.filters-container {
+  background-color: #f1f1f1;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  margin: 0.8rem 0 1.6rem;
+  padding: 1rem 0.8rem;
+  width: 100%;
+}
+
+.filter-controls {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+input.filter-size {
+  height: 2rem;
+}
+
+.filter-size {
+  width: 22rem;
+}
+
+.caption-container {
+  display: flex;
+  align-items: center;
+}
+
+.explore-main-container {
+  display: flex;
+  flex-flow: column nowrap;
+}
