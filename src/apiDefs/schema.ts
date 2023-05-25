@@ -124,6 +124,7 @@ export interface BaseAPICategory {
   readonly apis: APIDescription[];
   readonly properName: string;
   readonly name: string;
+  readonly urlSlug: string;
 }
 
 export interface APICategory extends BaseAPICategory {

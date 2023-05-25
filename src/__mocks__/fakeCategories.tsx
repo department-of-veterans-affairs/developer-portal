@@ -65,6 +65,7 @@ export const fakeCategories: APICategories = {
     },
     name: 'LOTR API',
     properName: 'Fancy LOTR API',
+    urlSlug: 'lotr',
   },
   movies: {
     apis: [
@@ -137,6 +138,7 @@ export const fakeCategories: APICategories = {
     },
     name: 'Movies API',
     properName: 'Cinematic Movies API',
+    urlSlug: 'movies',
   },
   sports: {
     apis: [
@@ -172,6 +174,7 @@ export const fakeCategories: APICategories = {
     },
     name: 'Sports API',
     properName: 'Fancy Sports API',
+    urlSlug: 'sports',
   },
 };
 

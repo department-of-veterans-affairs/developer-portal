@@ -26,6 +26,7 @@ import {
   lookupApiByFragment,
   lookupApiBySlug,
   lookupApiCategory,
+  lookupApiCategoryBySlug,
   includesInternalOnlyAPI,
   onlyOpenDataAPIs,
   includesOpenDataAPI,
@@ -121,6 +122,29 @@ describe('query module', () => {
 
     it('returns null if the API does not exist', () => {
       expect(lookupApiByFragment('fake')).toBeNull();
+    });
+  });
+
+  describe('lookupCategoryBySlug', () => {
+    it('returns the API category definition if the urlSlug matches the slug passed', () => {
+      const moviesApi = lookupApiCategoryBySlug('movies');
+      expect(moviesApi).not.toBeNull();
+      expect(moviesApi?.apis.length).toEqual(3);
+      expect(moviesApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
+
+      const sportsApi = lookupApiCategoryBySlug('sports');
+      expect(sportsApi).not.toBeNull();
+      expect(sportsApi?.apis.length).toEqual(2);
+      expect(sportsApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
+
+      const lotrApi = lookupApiCategoryBySlug('lotr');
+      expect(lotrApi).not.toBeNull();
+      expect(lotrApi?.apis.length).toEqual(3);
+      expect(lotrApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
+    });
+
+    it('returns null for no matching url-slug is found', () => {
+      expect(lookupApiCategoryBySlug('fake')).toBeNull();
     });
   });
 

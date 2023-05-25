@@ -112,6 +112,12 @@ const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   return apiResult ?? null;
 };
 
+const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
+  const categories: APICategories = rootGetApiDefinitions.getApiDefinitions();
+  const hasMatchingIdentifier = (category: APICategory): boolean => category.urlSlug === urlSlug;
+  return Object.values(categories).find(hasMatchingIdentifier) ?? null;
+};
+
 const lookupApiCategory = (categoryKey: string): APICategory | null =>
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   rootGetApiDefinitions.getApiDefinitions()[categoryKey] ?? null;
@@ -177,6 +183,7 @@ export {
   lookupApiByFragment,
   lookupApiBySlug,
   lookupApiCategory,
+  lookupApiCategoryBySlug,
   includesOAuthAPI,
   includesAuthCodeAPI,
   includesCcgAPI,
