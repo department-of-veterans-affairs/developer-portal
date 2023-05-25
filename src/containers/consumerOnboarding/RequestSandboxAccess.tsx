@@ -87,6 +87,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
               termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
             }}
             key={selectedApi.urlFragment}
+            internalOnly={!!selectedApi.vaInternalOnly}
           />
         </>
       )}
