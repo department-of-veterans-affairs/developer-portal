@@ -66,7 +66,9 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
         <SandboxAccessSuccess result={successResults} api={api} />
       ) : (
         <>
-          <p>Submit this form to get instant access to test data for this API.</p>
+          <p className="vads-u-margin-top--3">
+            Submit this form to get instant access to test data for this API.
+          </p>
           <SandboxAccessForm
             apiIdentifier={api.urlFragment}
             authTypes={authTypes}

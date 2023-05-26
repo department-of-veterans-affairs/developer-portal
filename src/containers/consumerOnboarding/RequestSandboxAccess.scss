@@ -8,11 +8,12 @@
   max-width: 46rem;
 }
 .sandbox-access-form-oauth-details {
+  margin-top: 32px;
   @extend .va-api-text-field;
 
   &.multiple-types {
     background: $color-gray-lightest;
-    padding: 1em;
+    padding: 12px;
     h3 {
       margin-top: 0;
     }
