@@ -44,7 +44,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
         exact
         if={api.oAuthTypes?.includes('AuthorizationCodeGrant')}
         to={`/explore/api/${api.urlFragment}/authorization-code`}
-        name="Authorization Code Flow"
+        name="Authorization Code Grant"
         subNavLevel={1}
       />
       <SideNavEntry
