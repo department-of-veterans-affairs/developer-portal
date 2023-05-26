@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 import { APIUrlFragment } from '../../types';
 import { getApi } from '../documentation/DocumentationRoot';
 import { PageHeader } from '../../components';
+import './ReleaseNotes.scss';
 
 export const ReleaseNotes = (): JSX.Element => {
   const params = useParams<APIUrlFragment>();
@@ -18,7 +19,7 @@ export const ReleaseNotes = (): JSX.Element => {
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
-      <PageHeader header="Release Notes" subText={api.name} />
+      <PageHeader header="Release notes" subText={api.name} />
       <div className="release-notes-wrapper">
         <ReactMarkdown>{api.releaseNotes}</ReactMarkdown>
       </div>

@@ -1,5 +1,11 @@
+@import '../../styles/variables';
+
 .release-notes-wrapper {
   word-break: break-word;
+
+  h3 {
+    font-family: $font-sans;
+  }
 
   p {
     white-space: pre-wrap;
