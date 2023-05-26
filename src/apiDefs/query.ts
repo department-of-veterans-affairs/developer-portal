@@ -100,8 +100,8 @@ const getAllQuickstartCategorySlugs = (): string[] =>
     .filter((item: [string, APICategory]) => !!item[1].content.quickstart)
     .map((item: [string, APICategory]) => item[0]);
 
-const lookupApiBySlug = (apiKey: string): APIDescription | null => {
-  const hasMatchingIdentifier = (apiDesc: APIDescription): boolean => apiDesc.urlSlug === apiKey;
+const lookupApiBySlug = (urlSlug: string): APIDescription | null => {
+  const hasMatchingIdentifier = (apiDesc: APIDescription): boolean => apiDesc.urlSlug === urlSlug;
   const apiResult = getAllApis().find(hasMatchingIdentifier);
   return apiResult ?? null;
 };
