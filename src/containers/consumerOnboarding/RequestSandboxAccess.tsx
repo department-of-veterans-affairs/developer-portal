@@ -11,14 +11,14 @@ import {
   AUTHORIZATION_PKCE_PATH,
   TERMS_OF_SERVICE_PATH,
 } from '../../types/constants/paths';
-import { APIUrlFragment } from '../../types';
+import { APIUrlSlug } from '../../types';
 import { getApi } from '../documentation/DocumentationRoot';
 import { SandboxAccessSuccess } from './components/sandbox';
 import './RequestSandboxAccess.scss';
 
 const RequestSandboxAccess: React.FunctionComponent = () => {
-  const params = useParams<APIUrlFragment>();
-  const api = getApi(params.urlFragment);
+  const params = useParams<APIUrlSlug>();
+  const api = getApi(params.urlSlug);
   const [successResults, setSuccessResults] = useState<ApplySuccessResult | false>(false);
   // const [successResults, setSuccessResults] = useState<ApplySuccessResult>({
   //   apis: ['ccg/fhir'],

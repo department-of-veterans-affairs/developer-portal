@@ -27,10 +27,10 @@ const ApiNotFoundPage = (): JSX.Element => {
       {category?.name && <PageHeader header={category.name} />}
       <ul>
         {category?.apis
-          .filter((item: APIDescription) => !isApiDeactivated(item) && flags[item.urlFragment])
+          .filter((item: APIDescription) => !isApiDeactivated(item) && flags[item.urlSlug])
           .map((item: APIDescription) => (
-            <li key={item.urlFragment}>
-              <Link to={`/explore/${apiCategoryKey}/docs/${item.urlFragment}`}>{item.name}</Link>
+            <li key={item.urlSlug}>
+              <Link to={`/explore/api/${item.urlSlug}`}>{item.name}</Link>
             </li>
           ))}
       </ul>

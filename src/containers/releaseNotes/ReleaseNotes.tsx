@@ -2,14 +2,14 @@ import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
-import { APIUrlFragment } from '../../types';
+import { APIUrlSlug } from '../../types';
 import { getApi } from '../documentation/DocumentationRoot';
 import { PageHeader } from '../../components';
 import './ReleaseNotes.scss';
 
 export const ReleaseNotes = (): JSX.Element => {
-  const params = useParams<APIUrlFragment>();
-  const api = getApi(params.urlFragment);
+  const params = useParams<APIUrlSlug>();
+  const api = getApi(params.urlSlug);
   if (!api) {
     return <h1>placeholder 404</h1>;
   }
