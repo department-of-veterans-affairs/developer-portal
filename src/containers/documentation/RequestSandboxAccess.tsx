@@ -12,7 +12,7 @@ import {
   TERMS_OF_SERVICE_PATH,
 } from '../../types/constants/paths';
 import { APIUrlSlug } from '../../types';
-import { getApi } from '../documentation/DocumentationRoot';
+import { getApi } from './DocumentationRoot';
 import { SandboxAccessSuccess } from './components/sandbox';
 import './RequestSandboxAccess.scss';
 

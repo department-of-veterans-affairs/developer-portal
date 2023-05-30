@@ -38,7 +38,7 @@ describe('Authorization Docs', () => {
   });
 
   it('renders successfully', () => {
-    const authHeading = screen.getByRole('heading', { name: 'Authorization Code Flow' });
+    const authHeading = screen.getByRole('heading', { name: 'Authorization Code Grant' });
     expect(authHeading).toBeInTheDocument();
   });
 

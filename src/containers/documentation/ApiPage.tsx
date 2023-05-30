@@ -101,7 +101,7 @@ const ApiPage = (): JSX.Element => {
   }
 
   // if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlSlug]) {
-  if (!enabledApisFlags[api.urlSlug]) {
+  if (!enabledApisFlags[api.urlFragment]) {
     return (
       <ApisLoader>
         <ApiNotFoundPage />

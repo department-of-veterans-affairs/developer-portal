@@ -3,8 +3,8 @@ import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router';
 import { Helmet } from 'react-helmet';
 import { APIUrlSlug } from '../../types';
-import { getApi } from '../documentation/DocumentationRoot';
 import { PageHeader } from '../../components';
+import { getApi } from './DocumentationRoot';
 import './ReleaseNotes.scss';
 
 export const ReleaseNotes = (): JSX.Element => {

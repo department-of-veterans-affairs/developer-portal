@@ -13,8 +13,7 @@ import { ReleaseNotes } from './ReleaseNotes';
 describe('ReleaseNotes', () => {
   const lotrRingsApi = fakeCategories.lotr.apis[0];
 
-  const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiByFragment');
-  const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
+  const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -22,13 +21,12 @@ describe('ReleaseNotes', () => {
 
   beforeEach(async () => {
     lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
-    lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
     await waitFor(() => cleanup());
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={['/explore/api/rings/release-notes']}>
-            <Route path="/explore/api/:urlFragment/release-notes" component={ReleaseNotes} />
+            <Route path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,
@@ -36,7 +34,7 @@ describe('ReleaseNotes', () => {
   });
 
   it('renders the heading', () => {
-    const heading1 = screen.getByRole('heading', { name: 'Release Notes' });
+    const heading1 = screen.getByRole('heading', { name: 'Release notes' });
     expect(heading1).toBeInTheDocument();
     const heading2 = screen.getByRole('heading', { name: 'Rings API' });
     expect(heading2).toHaveTextContent('Rings API');
