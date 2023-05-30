@@ -100,11 +100,22 @@ const getAllQuickstartCategorySlugs = (): string[] =>
     .filter((item: [string, APICategory]) => !!item[1].content.quickstart)
     .map((item: [string, APICategory]) => item[0]);
 
+const lookupApiBySlug = (urlSlug: string): APIDescription | null => {
+  const hasMatchingIdentifier = (apiDesc: APIDescription): boolean => apiDesc.urlSlug === urlSlug;
+  const apiResult = getAllApis().find(hasMatchingIdentifier);
+  return apiResult ?? null;
+};
 const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean =>
     apiDesc.urlFragment === apiKey;
   const apiResult = getAllApis().find(hasMatchingIdentifier);
   return apiResult ?? null;
+};
+
+const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
+  const categories: APICategories = rootGetApiDefinitions.getApiDefinitions();
+  const hasMatchingIdentifier = (category: APICategory): boolean => category.urlSlug === urlSlug;
+  return Object.values(categories).find(hasMatchingIdentifier) ?? null;
 };
 
 const lookupApiCategory = (categoryKey: string): APICategory | null =>
@@ -118,7 +129,7 @@ const apisFor = (
   const allApis = getAllApis();
   const searchedApiSet = new Set<string>(selectedApiList);
   return allApis.filter((api: APIDescription) => {
-    if (searchedApiSet.has(api.urlFragment) || searchedApiSet.has(api.altID ?? '')) {
+    if (searchedApiSet.has(api.urlSlug) || searchedApiSet.has(api.altID ?? '')) {
       return true;
     }
     return selectedApiList.some((item: string) => {
@@ -176,7 +187,9 @@ export {
   getApiDefinitions,
   getActiveApiDefinitions,
   lookupApiByFragment,
+  lookupApiBySlug,
   lookupApiCategory,
+  lookupApiCategoryBySlug,
   includesOAuthAPI,
   includesAuthCodeAPI,
   includesCcgAPI,

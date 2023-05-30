@@ -6,18 +6,18 @@ interface ExploreApiCardProps {
   description: string;
   filterTags: string[];
   name: string;
-  urlFragment: string;
+  urlSlug: string;
 }
 
 export const ExploreApiCard = ({
   description,
   filterTags = [],
   name,
-  urlFragment,
+  urlSlug,
 }: ExploreApiCardProps): JSX.Element => (
   <div className="explore-api-card-container" role="listitem">
     <Link
-      to={`/explore/api/${urlFragment}`}
+      to={`/explore/api/${urlSlug}`}
       className="vads-u-text-decoration--none vads-u-margin-y--2 vads-u-color--link-default vads-u-font-size--lg vads-u-font-weight--bold"
     >
       {name}
@@ -25,7 +25,7 @@ export const ExploreApiCard = ({
     <p className="va-api-description vads-u-color--base">{description}</p>
     <div className="tags-container">
       {filterTags.map(tag => (
-        <span className="usa-label" key={`${tag} ${urlFragment}`}>
+        <span className="usa-label" key={`${tag} ${urlSlug}`}>
           {tag}
         </span>
       ))}

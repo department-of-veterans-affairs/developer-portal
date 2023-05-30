@@ -12,6 +12,9 @@ declare global {
 export interface APIUrlFragment {
   urlFragment: string;
 }
+export interface APIUrlSlug {
+  urlSlug: string;
+}
 
 export interface APINameParam {
   apiName?: string;

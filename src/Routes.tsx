@@ -39,7 +39,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => (
     <Route path="/terms-of-service" component={TermsOfService} />
 
     {/* API Documentation */}
-    <Route path="/explore/api/:urlFragment" component={DocumentationRoot} />
+    <Route path="/explore/api/:urlSlug" component={DocumentationRoot} />
     <Route path="/explore" component={DocumentationRoot} />
 
     {/* About */}

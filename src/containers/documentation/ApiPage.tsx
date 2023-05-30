@@ -12,7 +12,7 @@ import { APIDescription, VeteranRedirectMessage } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 
-import { APIUrlFragment } from '../../types';
+import { APIUrlSlug } from '../../types';
 import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import ApiDocumentation from './ApiDocumentation';
@@ -59,7 +59,7 @@ const VeteranRedirectAlertMessage = ({
   api: APIDescription;
   veteranRedirect: VeteranRedirectMessage;
 }): JSX.Element => (
-  <va-alert background-only show-icon status="info" key={api.urlFragment} visible>
+  <va-alert background-only show-icon status="info" key={api.urlSlug} visible>
     <p className="vads-u-margin-y--0">
       {veteranRedirect.message}&nbsp;
       <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
@@ -69,10 +69,10 @@ const VeteranRedirectAlertMessage = ({
 
 const ApiPage = (): JSX.Element => {
   const location = useLocation();
-  const params = useParams<APIUrlFragment>();
+  const params = useParams<APIUrlSlug>();
   const enabledApisFlags = useFlag([FLAG_API_ENABLED_PROPERTY]);
 
-  const api = getApi(params.urlFragment);
+  const api = getApi(params.urlSlug);
   if (!api) {
     return <h1>ApiPage.tsx 404</h1>;
   }
@@ -100,8 +100,8 @@ const ApiPage = (): JSX.Element => {
     return <Redirect to={`/explore/health/docs/fhir?version=${apiVersion}`} />;
   }
 
-  // if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlFragment]) {
-  if (!enabledApisFlags[api.urlFragment]) {
+  // if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlSlug]) {
+  if (!enabledApisFlags[api.urlSlug]) {
     return (
       <ApisLoader>
         <ApiNotFoundPage />

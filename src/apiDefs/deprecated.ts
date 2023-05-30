@@ -47,4 +47,5 @@ export const getDeactivatedCategory = (): BaseAPICategory => ({
   apis: getAllApis().filter((api: APIDescription) => isApiDeactivated(api)),
   name: 'Deactivated APIs',
   properName: 'Deactivated APIs',
+  urlSlug: 'deactivated',
 });

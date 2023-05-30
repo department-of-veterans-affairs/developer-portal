@@ -25,8 +25,8 @@ const GettingStarted = (props: ApiRequiredProps): JSX.Element => (
     />
     <p>
       Next, get sandbox access. On the{' '}
-      <Link to={`/explore/api/${props.api.urlFragment}/sandbox-access`}>access form</Link>, provide
-      your RSA public key. After you submit the form, we will send your client ID in an email.
+      <Link to={`/explore/api/${props.api.urlSlug}/sandbox-access`}>access form</Link>, provide your
+      RSA public key. After you submit the form, we will send your client ID in an email.
     </p>
   </>
 );

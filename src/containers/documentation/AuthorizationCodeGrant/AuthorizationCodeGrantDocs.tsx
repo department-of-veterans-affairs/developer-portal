@@ -9,14 +9,14 @@ import { PageLinks } from '../../../components/oauthDocs/acg/PageLinks';
 import { ScopesContent } from '../../../components/oauthDocs/acg/ScopesContent';
 import { BuildingOIDCContent } from '../../../components/oauthDocs/acg/BuildingOIDCContent';
 import { GettingStarted } from '../../../components/oauthDocs/acg/GettingStarted';
-import { APIUrlFragment } from '../../../types';
+import { APIUrlSlug } from '../../../types';
 
 import './AuthorizationCodeGrantDocs.scss';
 import { getApi } from '../DocumentationRoot';
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
-  const params = useParams<APIUrlFragment>();
-  const api = getApi(params.urlFragment);
+  const params = useParams<APIUrlSlug>();
+  const api = getApi(params.urlSlug);
   if (!api) {
     return <h1>ApiPage.tsx 404</h1>;
   }

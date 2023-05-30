@@ -49,9 +49,9 @@ export const ExploreRoot = (): JSX.Element => {
           <ExploreApiCard
             description={api.description}
             filterTags={['PLACEHOLDER TAG']}
-            key={api.urlFragment}
+            key={api.urlSlug}
             name={api.name}
-            urlFragment={api.urlFragment}
+            urlSlug={api.urlSlug}
           />
         ))}
       </div>

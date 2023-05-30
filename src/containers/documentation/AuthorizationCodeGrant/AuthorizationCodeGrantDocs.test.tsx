@@ -12,7 +12,7 @@ import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrantDocs';
 describe('Authorization Docs', () => {
   const lotrRingsApi = fakeCategories.lotr.apis[0];
 
-  const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiByFragment');
+  const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
 
   afterEach(() => {
@@ -20,7 +20,7 @@ describe('Authorization Docs', () => {
   });
 
   beforeEach(async () => {
-    lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
+    lookupApiBySlugMock.mockReturnValue(lotrRingsApi);
     lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
     await waitFor(() => cleanup());
     render(
@@ -28,7 +28,7 @@ describe('Authorization Docs', () => {
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
             <Route
-              path="/explore/api/:urlFragment/authorization-code"
+              path="/explore/api/:urlSlug/authorization-code"
               component={AuthorizationCodeGrantDocs}
             />
           </MemoryRouter>
