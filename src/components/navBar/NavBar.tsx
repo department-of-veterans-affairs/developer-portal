@@ -209,6 +209,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           <li className={classNames(navItemStyles(), desktopOnly(), 'va-api-separator')}>
             <button
               className={classNames(
+                'va-api-navbar-search-button',
                 'vads-u-background-color--primary-darkest',
                 'vads-u-font-weight--normal',
                 'vads-u-padding--1p5',

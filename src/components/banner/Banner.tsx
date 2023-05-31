@@ -8,6 +8,7 @@ import { defaultFlexContainer } from '../../styles/vadsUtils';
 import flagIcon from '../../../node_modules/uswds/src/img/favicons/favicon-40.png';
 import dotGovIcon from '../../assets/icon-dot-gov.svg';
 import httpsIcon from '../../assets/icon-https.svg';
+import lockIcon from '../../assets/lock-icon.svg';
 import './Banner.scss';
 
 const GuidanceBoxPropTypes = {
@@ -34,7 +35,7 @@ const GuidanceBox = (props: GuidanceBoxProps): JSX.Element => (
   >
     <img
       className={classNames(
-        'va-api-banner-icon',
+        'va-api-banner-guidance-icon',
         'vads-u-margin-right--1',
         'vads-u-margin-top--0p5',
       )}
@@ -124,23 +125,25 @@ const Banner = (): JSX.Element => {
                   id="dot-gov-guidance"
                   icon={dotGovIcon}
                   icon_alt="Government icon"
-                  title="The .gov means it's official"
+                  title="Official websites use .gov"
                 >
                   <p className="vads-u-margin--0">
-                    Federal government websites often end in .gov or .mil. Before sharing sensitive
-                    information, make sure you&apos;re on a federal government site.
+                    A <span className="vads-u-font-weight--bold">.gov</span> website belongs to an
+                    official government organization in the United States.
                   </p>
                 </GuidanceBox>
                 <GuidanceBox
                   id="https-guidance"
                   icon={httpsIcon}
                   icon_alt="HTTPS browser icon"
-                  title="The site is secure."
+                  title="Secure .gov websites use HTTPS"
                 >
                   <p className="vads-u-margin--0">
-                    The <strong>https://</strong> ensures that you&apos;re connecting to the
-                    official website and that any information you provide is encrypted and sent
-                    securely.
+                    A <span className="vads-u-font-weight--bold">lock</span> ({' '}
+                    <img alt="https icon" className="va-api-banner-lock-icon" src={lockIcon} /> ) or{' '}
+                    <span className="vads-u-font-weight--bold">https://</span> means you’ve safely
+                    connected to the .gov website. Share sensitive information only on official,
+                    secure websites.
                   </p>
                 </GuidanceBox>
               </div>

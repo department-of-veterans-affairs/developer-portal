@@ -108,7 +108,11 @@
     padding: 1rem 0.8rem;
     position: absolute;
     right: 0;
-    top: 133px;
+    top: 57px;
     z-index: 1000;
+  }
+
+  .va-api-navbar-search-button {
+    border-radius: 0;
   }
 }

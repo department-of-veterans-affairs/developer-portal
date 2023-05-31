@@ -20,10 +20,6 @@ describe('Header', () => {
     expect(screen.getByText(/Developer/)).toBeInTheDocument();
   });
 
-  it('should contain a the Veterans Crisis Line modal', () => {
-    expect(screen.getByText(/Veterans Crisis Line/)).toBeInTheDocument();
-  });
-
   it('should contain a link to skip to the main content', () => {
     const mainContentLink: HTMLAnchorElement = screen.getByRole('link', {
       name: 'Skip to main content',

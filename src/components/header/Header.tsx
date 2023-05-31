@@ -7,7 +7,6 @@ import { Flag } from '../../flags';
 import TestingNotice from '../TestingNotice';
 import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
 import { Banner } from '../banner/Banner';
-import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
 import { NavBar } from '../navBar/NavBar';
 import './Header.scss';
 
@@ -78,11 +77,11 @@ export const Header = (): JSX.Element => {
   );
 
   const headerContentContainerClassNames = classNames(
+    'va-api-header-container',
     'vads-u-display--flex',
     'vads-u-justify-content--space-between',
     'vads-u-align-items--center',
     'medium-screen:vads-u-padding-left--4',
-    'medium-screen:vads-u-margin-y--3',
   );
 
   const headerContentLinkClassNames = classNames(
@@ -108,7 +107,6 @@ export const Header = (): JSX.Element => {
           Skip to main content
         </HashLink>
         <Banner />
-        <VeteransCrisisLine />
 
         <div className={headerContentContainerClassNames}>
           <div className={headerContentLinkClassNames}>
