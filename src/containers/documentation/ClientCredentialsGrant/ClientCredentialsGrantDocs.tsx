@@ -6,14 +6,14 @@ import { PageHeader } from '../../../components';
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { APIUrlFragment } from '../../../types';
+import { APIUrlSlug } from '../../../types';
 
 import ApisLoader from '../../../components/apisLoader/ApisLoader';
 import { getApi } from '../DocumentationRoot';
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
-  const params = useParams<APIUrlFragment>();
-  const api = getApi(params.urlFragment);
+  const params = useParams<APIUrlSlug>();
+  const api = getApi(params.urlSlug);
   if (!api) {
     return <h1>ApiPage.tsx 404</h1>;
   }

@@ -42,6 +42,7 @@ describe('env module', () => {
       name: 'My API',
       openData: false,
       releaseNotes: 'Dummy release notes.',
+      urlSlug: 'my-api',
     };
 
     beforeEach(() => {

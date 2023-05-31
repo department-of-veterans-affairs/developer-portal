@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../../flags';
 
-import { lookupApiByFragment } from '../../../apiDefs/query';
+import { lookupApiBySlug } from '../../../apiDefs/query';
 import store from '../../../store';
 import { fakeCategories } from '../../../__mocks__/fakeCategories';
 import { setApis } from '../../../actions';
@@ -15,7 +15,7 @@ describe('Auth Flow Content', () => {
 
   beforeEach(() => {
     const selectedOption = 'armageddon';
-    const api = lookupApiByFragment(selectedOption);
+    const api = lookupApiBySlug(selectedOption);
     if (!api) {
       return;
     }

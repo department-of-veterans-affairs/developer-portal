@@ -1,18 +1,19 @@
 import * as React from 'react';
-import { Link, Route, Switch, useParams } from 'react-router-dom';
+import { Route, Switch, useParams } from 'react-router-dom';
 
-import { lookupApiByFragment, getApisLoadedState } from '../../apiDefs/query';
+import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { ContentWithNav, SideNavEntry } from '../../components';
-import { APIUrlFragment } from '../../types';
+import { APIUrlSlug } from '../../types';
 import { apiLoadingState } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
-import { CategoryReleaseNotes } from '../releaseNotes/CategoryReleaseNotes';
-import RequestSandboxAccess from '../consumerOnboarding/RequestSandboxAccess';
+import { ReleaseNotes } from './ReleaseNotes';
+import RequestSandboxAccess from './RequestSandboxAccess';
 import ApiPage from './ApiPage';
 import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
 import { ClientCredentialsGrantDocs } from './ClientCredentialsGrant/ClientCredentialsGrantDocs';
 import ApiOverviewPage from './ApiOverviewPage';
+import { ExploreRoot } from './ExploreRoot';
 
 import './Documentation.scss';
 
@@ -29,7 +30,7 @@ const getApi = (apiName?: string): APIDescription | null => {
     return null;
   }
 
-  return lookupApiByFragment(apiName);
+  return lookupApiBySlug(apiName);
 };
 export { getApi };
 
@@ -37,31 +38,31 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
   const { api } = props;
   return (
     <>
-      <SideNavEntry key="all" exact to={`/explore/api/${api.urlFragment}`} name={api.name} />
-      <SideNavEntry exact to={`/explore/api/${api.urlFragment}/docs`} name="Docs" subNavLevel={1} />
+      <SideNavEntry key="all" exact to={`/explore/api/${api.urlSlug}`} name={api.name} />
+      <SideNavEntry exact to={`/explore/api/${api.urlSlug}/docs`} name="Docs" subNavLevel={1} />
       <SideNavEntry
         exact
         if={api.oAuthTypes?.includes('AuthorizationCodeGrant')}
-        to={`/explore/api/${api.urlFragment}/authorization-code`}
-        name="Authorization Code Flow"
+        name="Authorization Code Grant"
+        to={`/explore/api/${api.urlSlug}/authorization-code`}
         subNavLevel={1}
       />
       <SideNavEntry
         exact
         if={api.oAuthTypes?.includes('ClientCredentialsGrant')}
-        to={`/explore/api/${api.urlFragment}/client-credentials`}
+        to={`/explore/api/${api.urlSlug}/client-credentials`}
         name="Client Credentials Grant"
         subNavLevel={1}
       />
       <SideNavEntry
         exact
-        to={`/explore/api/${api.urlFragment}/release-notes`}
+        to={`/explore/api/${api.urlSlug}/release-notes`}
         name="Release notes"
         subNavLevel={1}
       />
       <SideNavEntry
         exact
-        to={`/explore/api/${api.urlFragment}/sandbox-access`}
+        to={`/explore/api/${api.urlSlug}/sandbox-access`}
         name="Sandbox access"
         subNavLevel={1}
       />
@@ -70,16 +71,11 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
 };
 
 const DocumentationRoot = (): JSX.Element => {
-  const params = useParams<APIUrlFragment>();
-  if (!params.urlFragment) {
-    return (
-      <>
-        <h1>Very placeholder root explore page.</h1>
-        <Link to="/explore/api/fhir">Here&apos;s an example set of documentation</Link>
-      </>
-    );
+  const params = useParams<APIUrlSlug>();
+  if (!params.urlSlug) {
+    return <ExploreRoot />;
   }
-  const api = lookupApiByFragment(params.urlFragment);
+  const api = lookupApiBySlug(params.urlSlug);
 
   if (
     getApisLoadedState() === apiLoadingState.IN_PROGRESS ||
@@ -96,26 +92,22 @@ const DocumentationRoot = (): JSX.Element => {
       nav={<ExploreSideNav api={api} />}
       content={
         <Switch>
-          <Route exact path="/explore/api/:urlFragment" component={ApiOverviewPage} />
-          <Route exact path="/explore/api/:urlFragment/docs" component={ApiPage} />
+          <Route exact path="/explore/api/:urlSlug" component={ApiOverviewPage} />
+          <Route exact path="/explore/api/:urlSlug/docs" component={ApiPage} />
           <Route
             exact
-            path="/explore/api/:urlFragment/authorization-code"
+            path="/explore/api/:urlSlug/authorization-code"
             component={AuthorizationCodeGrantDocs}
           />
           <Route
             exact
-            path="/explore/api/:urlFragment/client-credentials"
+            path="/explore/api/:urlSlug/client-credentials"
             component={ClientCredentialsGrantDocs}
           />
+          <Route exact path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
           <Route
             exact
-            path="/explore/api/:urlFragment/release-notes"
-            component={CategoryReleaseNotes}
-          />
-          <Route
-            exact
-            path="/explore/api/:urlFragment/sandbox-access"
+            path="/explore/api/:urlSlug/sandbox-access"
             component={RequestSandboxAccess}
           />
         </Switch>

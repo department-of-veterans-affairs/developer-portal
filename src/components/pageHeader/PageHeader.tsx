@@ -17,13 +17,14 @@ const PageHeader = (props: PageHeaderProps): JSX.Element => {
     <div id={PAGE_HEADER_AND_HALO_ID} className={className}>
       {halo && <div className="header-halo vads-u-color--gray">{halo}</div>}
       <h1
+        data-cy="page-header"
         id={PAGE_HEADER_ID}
         className="vads-u-margin-top--0 vads-u-margin-bottom--0"
         tabIndex={-1}
       >
         {header}
       </h1>
-      {subText && <p className="header-sub-text vads-u-color--gray">{subText}</p>}
+      {subText && <h2 className="header-sub-text vads-u-color--gray">{subText}</h2>}
     </div>
   );
 };

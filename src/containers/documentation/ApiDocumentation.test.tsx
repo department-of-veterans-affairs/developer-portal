@@ -24,6 +24,7 @@ const api: APIDescription = {
   openData: false,
   releaseNotes: ReleaseNotes,
   urlFragment: 'my_api',
+  urlSlug: 'my-api',
 };
 
 const server = setupServer(

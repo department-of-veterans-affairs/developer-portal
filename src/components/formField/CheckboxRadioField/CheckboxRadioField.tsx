@@ -27,8 +27,7 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
-  const radioClass =
-    type === 'radio' ? 'vads-u-margin--0 vads-u-padding-y--1 vads-u-padding-x--1p5' : '';
+  const radioClass = type === 'radio' ? 'vads-u-margin--0 vads-u-padding-y--1' : '';
 
   const idReadyName = toHtmlId(name);
   const idReadyValue = toHtmlId(value ?? '');
@@ -39,15 +38,14 @@ const CheckboxRadioField: FC<CheckboxRadioFieldProps> = ({
 
   return (
     <div
-      className={classNames({
-        'usa-input-error': shouldDisplayErrors,
-      }, className)}
-    >
-      {description && (
-        <div id={descriptionId}>
-          {description}
-        </div>
+      className={classNames(
+        {
+          'usa-input-error': shouldDisplayErrors,
+        },
+        className,
       )}
+    >
+      {description && <div id={descriptionId}>{description}</div>}
       {showError && (
         <span
           id={errorId}
