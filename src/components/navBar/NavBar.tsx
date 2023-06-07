@@ -22,20 +22,17 @@ interface NavBarProps {
   toggleSearchBar?: () => void;
 }
 
-const navItemStyles = (isFirstChild = false): string =>
-  classNames(
-    'va-api-main-nav-item',
-    'vads-u-display--block',
-    'vads-u-margin-bottom--0',
-    'vads-u-padding-y--1',
-    'medium-screen:vads-u-display--inline-block',
-    'medium-screen:vads-u-padding-y--0',
-    !isFirstChild && [
-      'vads-u-border-top--1px',
-      'vads-u-border-color--gray-lighter',
-      'medium-screen:vads-u-border-top--0',
-    ],
-  );
+const navItemStyles: string = classNames(
+  'va-api-main-nav-item',
+  'vads-u-display--block',
+  'vads-u-margin-bottom--0',
+  'vads-u-padding-y--1',
+  'medium-screen:vads-u-display--inline-block',
+  'medium-screen:vads-u-padding-y--0',
+  'vads-u-border-top--1px',
+  'vads-u-border-color--gray-lighter',
+  'medium-screen:vads-u-border-top--0',
+);
 
 const navLinkStyles = classNames(
   'vads-u-color--gray-dark',
@@ -123,7 +120,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             'medium-screen:vads-u-display--inline',
           )}
         >
-          <li className={navItemStyles()}>
+          <li className={navItemStyles}>
             <MainNavItem
               targetUrl="/explore"
               largeScreenProps={sharedNavItemProps}
@@ -133,7 +130,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             </MainNavItem>
           </li>
 
-          <li className={navItemStyles()}>
+          <li className={navItemStyles}>
             <MainNavItem
               targetUrl={CONSUMER_PATH}
               largeScreenProps={sharedNavItemProps}
@@ -170,7 +167,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             </SubNav>
           </li>
 
-          <li className={navItemStyles()}>
+          <li className={navItemStyles}>
             <MainNavItem
               targetUrl="/about"
               largeScreenProps={sharedNavItemProps}
@@ -189,13 +186,13 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             </SubNav>
           </li>
 
-          <li className={navItemStyles()}>
+          <li className={navItemStyles}>
             <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
               API Status
             </a>
           </li>
 
-          <li className={navItemStyles()}>
+          <li className={navItemStyles}>
             <MainNavItem
               onClick={props.onMobileNavClose}
               targetUrl="/support"
@@ -206,7 +203,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             </MainNavItem>
           </li>
 
-          <li className={classNames(navItemStyles(), desktopOnly(), 'va-api-separator')}>
+          <li className={classNames(navItemStyles, desktopOnly(), 'va-api-separator')}>
             <button
               className={classNames(
                 'va-api-navbar-search-button',
