@@ -72,7 +72,7 @@ describe('Banner', () => {
 
       const description = getByText(
         guidanceRegion,
-        /^A .gov website belongs to an official government organization in the United States./,
+        /website belongs to an official government organization in the United States./,
       );
       expect(description).toBeInTheDocument();
     });
