@@ -8,44 +8,8 @@ import TestingNotice from '../TestingNotice';
 import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
 import { Banner } from '../banner/Banner';
 import { NavBar } from '../navBar/NavBar';
+import { HeaderAlerts } from '../headerAlerts/HeaderAlerts';
 import './Header.scss';
-
-interface HeaderAlertsProps {
-  pathname: string;
-}
-
-const HeaderAlerts = ({ pathname }: HeaderAlertsProps): JSX.Element | null => {
-  switch (pathname) {
-    case '/explore/appeals/docs/appeals':
-      return (
-        <va-alert background-only show-icon status="info" visible>
-          <p className="vads-u-margin-y--0">
-            A new version of Appeals Status API (v1) will launch later this year.
-          </p>
-        </va-alert>
-      );
-    case '/explore/facilities/docs/facilities':
-      return (
-        <va-alert background-only show-icon status="info" visible>
-          <p className="vads-u-margin-y--0">
-            Version 1 of the VA Facilities API is launching soon. We will add{' '}
-            <Link to="/release-notes/facilities">release notes</Link> when it&apos;s live.
-          </p>
-        </va-alert>
-      );
-    case '/explore/verification/docs/veteran_confirmation':
-      return (
-        <va-alert background-only show-icon status="info" visible>
-          <p className="vads-u-margin-y--0">
-            Version 0 of the Veteran Confirmation API is deprecated and scheduled for deactivation
-            on April 4, 2024. Version 1 of the Veteran Confirmation API is now active.
-          </p>
-        </va-alert>
-      );
-    default:
-      return null;
-  }
-};
 
 export const Header = (): JSX.Element => {
   const [searchBarVisible, setSearchBarVisible] = useState(false);
