@@ -210,6 +210,8 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                 'vads-u-background-color--primary-darkest',
                 'vads-u-font-weight--normal',
                 'vads-u-padding--1p5',
+                'vads-u-line-height--4',
+                'vads-u-margin--0',
               )}
               onClick={props.toggleSearchBar}
               type="button"

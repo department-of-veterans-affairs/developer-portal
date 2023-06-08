@@ -10,6 +10,8 @@
   right: 0;
   overflow-y: scroll;
 
+  margin-top: 0.3rem;
+
   @include media($medium-screen) {
     background-color: $color-primary-darkest;
     position: static;
