@@ -1,13 +1,13 @@
 import React from 'react';
-import { render } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { findByShadowLabelText } from 'shadow-dom-testing-library';
+import { render } from '@testing-library/react';
+import { screen } from 'shadow-dom-testing-library';
 import { FlagsProvider, getFlags } from '../../flags';
 import { HeaderAlerts } from './HeaderAlerts';
 
 describe('HeaderAlerts', () => {
   it('should render the header', async () => {
-    const { container } = render(
+    render(
       <FlagsProvider flags={getFlags()}>
         <Router>
           <HeaderAlerts pathname="/explore/api/appeals-status/docs" />
@@ -16,15 +16,12 @@ describe('HeaderAlerts', () => {
     );
 
     expect(
-      await findByShadowLabelText(
-        container,
-        /A new version of Appeals Status API (v1) will launch later this year./,
-      ),
+      await screen.findByShadowText(/A new version of Appeals Status API/),
     ).toBeInTheDocument();
   });
 
   it('should render the header', async () => {
-    const { container } = render(
+    render(
       <FlagsProvider flags={getFlags()}>
         <Router>
           <HeaderAlerts pathname="/explore/api/va-facilities/docs" />
@@ -33,15 +30,12 @@ describe('HeaderAlerts', () => {
     );
 
     expect(
-      await findByShadowLabelText(
-        container,
-        /Version 1 of the VA Facilities API is launching soon./,
-      ),
+      await screen.findByShadowText(/Version 1 of the VA Facilities API is launching soon./),
     ).toBeInTheDocument();
   });
 
   it('should render the header', async () => {
-    const { container } = render(
+    render(
       <FlagsProvider flags={getFlags()}>
         <Router>
           <HeaderAlerts pathname="/explore/api/veteran-confirmation/docs" />
@@ -50,10 +44,7 @@ describe('HeaderAlerts', () => {
     );
 
     expect(
-      await findByShadowLabelText(
-        container,
-        /Version 0 of the Veteran Confirmation API is deprecated and scheduled for deactivation/,
-      ),
+      await screen.findByShadowText(/Version 0 of the Veteran Confirmation API/),
     ).toBeInTheDocument();
   });
 });

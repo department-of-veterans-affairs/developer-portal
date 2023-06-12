@@ -38,9 +38,9 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
     '^.+\\.css$': '<rootDir>/config/jest/cssTransform.js',
     '^.+\\.ya?ml$': '<rootDir>/config/jest/yamlTransform.js',
-    '^(?!.*\\.(js|jsx|mjs|css|json)$)': '<rootDir>/config/jest/fileTransform.js',
+    '^(?!.*\\.(js|jsx|mjs|css|json|cjs)$)': '<rootDir>/config/jest/fileTransform.js',
   },
-  transformIgnorePatterns: ['node_modules/?!(shadow-dom-testing-library)', '/node_modules/(?!(react-syntax-highlighter|swagger-ui|swagger-client)/).+\\.(js|jsx|mjs|ts|tsx)$'],
+  transformIgnorePatterns: ['/node_modules/(?!(react-syntax-highlighter|swagger-ui|swagger-client)/).+\\.(js|jsx|mjs|ts|tsx)$'],
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
     'content/news.yml': '<rootDir>/src/__mocks__/news.test.yml',
