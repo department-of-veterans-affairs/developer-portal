@@ -3,7 +3,6 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../flags';
-import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 import { Header } from './Header';
 
 describe('Header', () => {
@@ -18,11 +17,7 @@ describe('Header', () => {
   });
 
   it('should render the header', () => {
-    expect(screen.getByText(/Lighthouse APIs/)).toBeInTheDocument();
-  });
-
-  it('should contain a the Veterans Crisis Line modal', () => {
-    expect(screen.getByText(/Veterans Crisis Line/)).toBeInTheDocument();
+    expect(screen.getByText(/Developer/)).toBeInTheDocument();
   });
 
   it('should contain a link to skip to the main content', () => {
@@ -31,15 +26,6 @@ describe('Header', () => {
     }) as HTMLAnchorElement;
 
     expect(mainContentLink.getAttribute('href')).toBe('/#main');
-  });
-
-  it('should contain a link to skip to request an API key', () => {
-    const requestAPIKeyLinks: HTMLAnchorElement[] = screen.getAllByRole('link', {
-      name: 'Request an API Key',
-    }) as HTMLAnchorElement[];
-
-    expect(requestAPIKeyLinks.length).toBe(2);
-    expect(requestAPIKeyLinks[0].getAttribute('href')).toBe(CONSUMER_SANDBOX_PATH);
   });
 
   describe('when the menu button is clicked', () => {

@@ -1,7 +1,8 @@
 @import '../../styles/variables';
 
 .site-notice-text {
-  max-width: 350px;
+  flex: 1;
+  font-size: 1.2rem;
 
   p {
     margin-top: 0;
@@ -14,7 +15,12 @@
   }
 
   .va-api-site-guidance-button {
-    background-color: rgba(0, 0, 0, 0);
+    background-color: transparent;
+    color: $color-link-default;
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 0;
+    width: auto;
 
     &[aria-expanded='true'] {
       @include display-icon(angle-arrow-up-primary, after, 1rem, 4px, hover);
@@ -23,10 +29,24 @@
     &[aria-expanded='false'] {
       @include display-icon(angle-arrow-down-primary, after, 1rem, 4px, hover);
     }
+
+    &:hover {
+      background-color: transparent;
+      color: $color-link-default;
+    }
   }
 }
 
 .va-api-banner-icon {
-  height: 2rem;
-  width: 2rem;
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.va-api-banner-guidance-icon {
+  height: 4rem;
+  width: 4rem;
+}
+
+.va-api-banner-lock-icon {
+  height: 1.2rem;
 }
