@@ -130,6 +130,14 @@ const Header = (): JSX.Element => {
             </p>
           </va-alert>
         )}
+        {location.pathname === '/explore/verification/docs/veteran_verification' && (
+          <va-alert background-only show-icon status="info" visible>
+            <p className="vads-u-margin-y--0">
+              Veteran Service History and Eligibility versions 0 and 1 are deprecated and scheduled
+              for deactivation on May 30, 2024. Version 2 is now live.
+            </p>
+          </va-alert>
+        )}
       </header>
     </>
   );
