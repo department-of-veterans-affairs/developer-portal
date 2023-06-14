@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { getAllApis } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
+import React from 'react';
 import { ExploreApiCard, PageHeader } from '../../components';
 import './ExploreRoot.scss';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
+import { getAllApis } from '../../apiDefs/query';
 
 export const ExploreRoot = (): JSX.Element => {
-  const [apis, setApis] = useState<APIDescription[]>([]);
-
-  useEffect(() => {
-    if (!apis.length) {
-      const allApis = getAllApis();
-      setApis(allApis);
-    }
-  }, [apis]);
+  const apis = getAllApis();
 
   return (
     <div className="explore-root-container">
@@ -44,17 +37,19 @@ export const ExploreRoot = (): JSX.Element => {
           </p>
         </div>
       </div>
-      <div data-cy="api-list" className="explore-main-container" role="list">
-        {apis.map(api => (
-          <ExploreApiCard
-            description={api.description}
-            filterTags={['PLACEHOLDER TAG']}
-            key={api.urlSlug}
-            name={api.name}
-            urlSlug={api.urlSlug}
-          />
-        ))}
-      </div>
+      <ApisLoader>
+        <div data-cy="api-list" className="explore-main-container" role="list">
+          {apis.map(api => (
+            <ExploreApiCard
+              description={api.description}
+              filterTags={['PLACEHOLDER TAG']}
+              key={api.urlSlug}
+              name={api.name}
+              urlSlug={api.urlSlug}
+            />
+          ))}
+        </div>
+      </ApisLoader>
     </div>
   );
 };
