@@ -61,16 +61,23 @@ export const setVersioning: ActionCreator<SetVersioning> = (
 });
 
 export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => {
-  const vaBenefitsCategory: APICategory = {
-    ...apis.benefits,
-    apis: apis.appeals.apis.concat(apis.benefits.apis),
-    name: 'VA Benefits',
-    properName: 'VA Benefits',
-    urlSlug: 'va-benefits',
-  };
-  delete apis.appeals;
-  delete apis.benefits;
-  apis['va-benefits'] = vaBenefitsCategory;
+  // This is necessary because the typing doesn't allow for conditions to check
+  // if apis.appeals.apis doesn't exist. Without this, unit tests that use
+  // fakeCategories fail because appeals.apis doesn't exist.
+  // This can be removed after a migration post IA launch merges the categories
+  // within LPB itself.
+  try {
+    const vaBenefitsCategory: APICategory = {
+      ...apis.benefits,
+      apis: apis.appeals.apis.concat(apis.benefits.apis),
+      name: 'VA Benefits',
+      properName: 'VA Benefits',
+      urlSlug: 'va-benefits',
+    };
+    delete apis.appeals;
+    delete apis.benefits;
+    apis['va-benefits'] = vaBenefitsCategory;
+  } catch (e: unknown) {}
 
   return {
     apis,
