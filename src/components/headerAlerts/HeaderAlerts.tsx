@@ -20,7 +20,7 @@ export const HeaderAlerts = ({ pathname }: HeaderAlertsProps): JSX.Element | nul
         <va-alert background-only show-icon status="info" visible>
           <p className="vads-u-margin-y--0">
             Version 1 of the VA Facilities API is launching soon. We will add{' '}
-            <Link to="/release-notes/facilities">release notes</Link> when it&apos;s live.
+            <Link to="/explore/api/va-facilities/release-notes">release notes</Link> when it&apos;s live.
           </p>
         </va-alert>
       );
