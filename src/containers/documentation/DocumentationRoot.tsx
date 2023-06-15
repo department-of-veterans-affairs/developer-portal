@@ -89,7 +89,7 @@ const DocumentationRoot = (): JSX.Element => {
   }
   return (
     <>
-      {location.pathname === `/explore/api/${api.urlSlug}` && (
+      {location.pathname.includes(`/explore/api/${api.urlSlug}`) && (
         <BreadCrumbs>
           <Link to="/">Home</Link>
           <Link to="/explore">Explore APIs</Link>
