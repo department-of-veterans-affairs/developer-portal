@@ -26,7 +26,7 @@ export const ExploreApiCard = ({
     <div className="tags-container">
       {filterTags.map(tag => (
         <span className="usa-label" key={`${tag} ${urlSlug}`}>
-          {tag}
+          {tag.replace(/-/g, ' ').toUpperCase()}
         </span>
       ))}
     </div>

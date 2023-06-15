@@ -78,14 +78,14 @@ export interface APIDescription {
   readonly enabledByDefault: boolean;
   readonly vaInternalOnly?: VaInternalOnly;
   readonly openData: boolean;
-  readonly oAuth?: boolean;
-  readonly oAuthTypes?: string[];
-  readonly oAuthInfo?: OAuthInfo;
+  readonly oAuth: boolean;
+  readonly oAuthTypes: string[] | null;
+  readonly oAuthInfo: OAuthInfo | null;
   readonly releaseNotes: string;
   readonly deactivationInfo?: APIDeactivationInfo;
   readonly multiOpenAPIIntro?: string;
-  readonly veteranRedirect?: VeteranRedirectMessage;
-  readonly altID?: string;
+  readonly veteranRedirect: VeteranRedirectMessage | null;
+  readonly altID: string | null;
   readonly lastProdAccessStep: ProdAccessFormSteps;
   readonly versionSelectorLabel?: string;
 }

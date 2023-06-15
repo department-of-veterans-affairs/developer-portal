@@ -3,9 +3,32 @@ import { ExploreApiCard, PageHeader } from '../../components';
 import './ExploreRoot.scss';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import { getAllApis } from '../../apiDefs/query';
+import { APIDescription } from '../../apiDefs/schema';
+
+const OAUTHTYPES = {
+  ClientCredentialsGrant: 'Client Credentials Grant',
+  AuthorizationCodeGrant: 'Authorization Code Grant',
+};
 
 export const ExploreRoot = (): JSX.Element => {
   const apis = getAllApis();
+
+  const generateFilterTags = (api: APIDescription): string[] => {
+    const { oAuthTypes, urlSlug } = api;
+    let tags: string[] = [urlSlug];
+
+    if (oAuthTypes !== null) {
+      oAuthTypes.forEach(type => {
+        tags = [OAUTHTYPES[type], ...tags];
+      });
+    }
+
+    if (api?.openData) {
+      tags = ['OPEN DATA', ...tags];
+    }
+
+    return tags;
+  };
 
   return (
     <div className="explore-root-container">
@@ -42,7 +65,7 @@ export const ExploreRoot = (): JSX.Element => {
           {apis.map(api => (
             <ExploreApiCard
               description={api.description}
-              filterTags={['PLACEHOLDER TAG']}
+              filterTags={generateFilterTags(api)}
               key={api.urlSlug}
               name={api.name}
               urlSlug={api.urlSlug}
