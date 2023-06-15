@@ -19,6 +19,7 @@ export const BreadCrumbs = ({ children, label = 'Breadcrumbs' }: BreadCrumbsProp
         }
         return <li className="va-breadcrumbs-li">{cloneElement(child)}</li>;
       }
+      return null;
     });
 
   return (
