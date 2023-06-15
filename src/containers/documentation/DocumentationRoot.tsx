@@ -71,7 +71,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
 };
 
 const DocumentationRoot = (): JSX.Element => {
-  let location = useLocation();
+  const location = useLocation();
   const params = useParams<APIUrlSlug>();
   if (!params.urlSlug) {
     return <ExploreRoot />;
