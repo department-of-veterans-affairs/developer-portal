@@ -102,6 +102,25 @@ The following is an approximate checklist of steps you might go through when add
 1. Create any necessary Markdown files in `src/content/apiDocs/[api_category]/`. Currently, for an individual API, the only thing to add would be an optional API intro that appears before the Swagger documentation. Make sure that your Markdown components are exported from `src/content/apiDocs/index.ts`.
 1. Verify your changes in development.
 
+## Adding a New API Deprecation Banner
+
+We have simplified the steps to add a deprecation banner to an API page. You will need the following two pieces of information before you can add a new banner:
+
+- `content` to be displayed within a `<p>` tag wrapped within a fragment
+
+```
+<>API X version Y is deprecated and scheduled for deactivation on July 9, 2099. Version Z is now live.</>
+```
+
+- `path` to designate where the banner should render
+
+```
+/explore/<api-category>/docs/<api-name>
+```
+
+1. Navigate to `src/utils/deprecationBannerHelper.tsx`, and add a new object with the `content` and `path` attributes described above.
+1. Verify your changes in development.
+
 ## Testing Your Changes
 
 Please review the [Testing Guide](testing.md) for details on how to incorporate testing into your development
