@@ -25,8 +25,8 @@ export const BreadCrumbs = ({ children, label = 'Breadcrumbs' }: BreadCrumbsProp
     });
 
   return (
-    <nav aria-label={label}>
-      <ul>{generateBreadCrumbs()}</ul>
+    <nav aria-label={label} className="va-api-breadcrumbs-nav">
+      <ul className="va-api-breadcrumbs-ul">{generateBreadCrumbs()}</ul>
     </nav>
   );
 };

@@ -1,13 +1,13 @@
 @import '../../styles/variables';
 
-nav {
+.va-api-breadcrumbs-nav {
   background: $color-white;
   border-bottom: 1px solid $color-gray-lighter;
   color: $color-link-default;
   font-size: inherit;
 }
 
-ul {
+.va-api-breadcrumbs-ul {
   box-sizing: border-box;
   list-style: square;
   max-width: 100rem;
