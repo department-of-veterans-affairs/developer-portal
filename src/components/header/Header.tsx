@@ -111,7 +111,7 @@ const Header = (): JSX.Element => {
         {deprecationBannerTargets
           .filter(target => target.path === location.pathname)
           .map(target => (
-            <va-alert background-only show-icon status="info" visible>
+            <va-alert key={target.path} background-only show-icon status="info" visible>
               <p className="vads-u-margin-y--0">{target.content}</p>
             </va-alert>
           ))}
