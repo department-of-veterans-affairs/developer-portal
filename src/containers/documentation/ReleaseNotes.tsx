@@ -23,8 +23,8 @@ export const ReleaseNotes = (): JSX.Element => {
       <BreadCrumbs>
         <Link to="/">Home</Link>
         <Link to="/explore">Explore APIs</Link>
-        <Link to={`/explore/api/${api.urlSlug as string}`}>{api.name}</Link>
-        <Link to={`/explore/api/${api.urlSlug as string}/release-notes`}>Release Notes</Link>
+        <Link to={`/explore/api/${api.urlSlug}`}>{api.name}</Link>
+        <Link to={`/explore/api/${api.urlSlug}/release-notes`}>Release Notes</Link>
       </BreadCrumbs>
       <PageHeader header="Release notes" subText={api.name} />
       <div className="release-notes-wrapper">
