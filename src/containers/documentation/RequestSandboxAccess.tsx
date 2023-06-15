@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { SandboxAccessForm } from '@department-of-veterans-affairs/sandbox-access-form';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
-import { BreadCrumbs, PageHeader } from '../../components';
+import { PageHeader } from '../../components';
 import { LPB_APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult } from '../../types/forms/apply';
 import {
@@ -59,12 +58,6 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
           <title>Request Sandbox Access</title>
         )}
       </Helmet>
-      <BreadCrumbs>
-        <Link to="/">Home</Link>
-        <Link to="/explore">Explore APIs</Link>
-        <Link to={`/explore/api/${api.urlSlug}`}>{api.name}</Link>
-        <Link to={`/explore/api/${api.urlSlug}/docs`}>Sandbox Access</Link>
-      </BreadCrumbs>
       <PageHeader
         header={successResults ? 'Success, happy developing!' : 'Request Sandbox Access'}
         subText={successResults ? '' : api.name}

@@ -2,14 +2,14 @@
 /* eslint-disable complexity */
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { Link, Redirect, useLocation, useParams } from 'react-router-dom';
+import { Redirect, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
 import { lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription, VeteranRedirectMessage } from '../../apiDefs/schema';
-import { BreadCrumbs, PageHeader } from '../../components';
+import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 
 import { APIUrlSlug } from '../../types';
@@ -114,12 +114,6 @@ const ApiPage = (): JSX.Element => {
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
-      <BreadCrumbs>
-        <Link to="/">Home</Link>
-        <Link to="/explore">Explore APIs</Link>
-        <Link to={`/explore/api/${api.urlSlug}`}>{api.name}</Link>
-        <Link to={`/explore/api/${api.urlSlug}/docs`}>Docs</Link>
-      </BreadCrumbs>
       <PageHeader header="Docs" subText={api.name} />
       {veteranRedirect && (
         <VeteranRedirectAlertMessage api={api} veteranRedirect={veteranRedirect} />

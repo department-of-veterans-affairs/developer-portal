@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Link, Route, Switch, useLocation, useParams } from 'react-router-dom';
 
 import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { ContentWithNav, SideNavEntry } from '../../components';
+import { BreadCrumbs, ContentWithNav, SideNavEntry } from '../../components';
 import { APIUrlSlug } from '../../types';
 import { apiLoadingState } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
@@ -71,6 +71,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
 };
 
 const DocumentationRoot = (): JSX.Element => {
+  let location = useLocation();
   const params = useParams<APIUrlSlug>();
   if (!params.urlSlug) {
     return <ExploreRoot />;
@@ -87,34 +88,62 @@ const DocumentationRoot = (): JSX.Element => {
     return <h1>temporary 404</h1>;
   }
   return (
-    <ContentWithNav
-      fullWidth
-      nav={<ExploreSideNav api={api} />}
-      content={
-        <Switch>
-          <Route exact path="/explore/api/:urlSlug" component={ApiOverviewPage} />
-          <Route exact path="/explore/api/:urlSlug/docs" component={ApiPage} />
-          <Route
-            exact
-            path="/explore/api/:urlSlug/authorization-code"
-            component={AuthorizationCodeGrantDocs}
-          />
-          <Route
-            exact
-            path="/explore/api/:urlSlug/client-credentials"
-            component={ClientCredentialsGrantDocs}
-          />
-          <Route exact path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
-          <Route
-            exact
-            path="/explore/api/:urlSlug/sandbox-access"
-            component={RequestSandboxAccess}
-          />
-        </Switch>
-      }
-      navAriaLabel="API Docs Side Nav"
-      className="documentation"
-    />
+    <>
+      {location.pathname === `/explore/api/${api.urlSlug}` && (
+        <BreadCrumbs>
+          <Link to="/">Home</Link>
+          <Link to="/explore">Explore APIs</Link>
+          <Link to={`/explore/api/${api.urlSlug}`}>{api.name}</Link>
+          {location.pathname === `/explore/api/${api.urlSlug}/docs` && (
+            <Link to={`/explore/api/${api.urlSlug}/docs`}>Docs</Link>
+          )}
+          {location.pathname === `/explore/api/${api.urlSlug}/authorization-code` && (
+            <Link to={`/explore/api/${api.urlSlug}/authorization-code`}>
+              Authorization Code Flow
+            </Link>
+          )}
+          {location.pathname === `/explore/api/${api.urlSlug}/client-credentials` && (
+            <Link to={`/explore/api/${api.urlSlug}/client-credentials`}>
+              Client Crendentials Grant (CCG)
+            </Link>
+          )}
+          {location.pathname === `/explore/api/${api.urlSlug}/release-notes` && (
+            <Link to={`/explore/api/${api.urlSlug}/release-notes`}>Release Notes</Link>
+          )}
+          {location.pathname === `/explore/api/${api.urlSlug}/sandbox-access` && (
+            <Link to={`/explore/api/${api.urlSlug}/sandbox-access`}>Sandbox Access</Link>
+          )}
+        </BreadCrumbs>
+      )}
+      <ContentWithNav
+        fullWidth
+        nav={<ExploreSideNav api={api} />}
+        content={
+          <Switch>
+            <Route exact path="/explore/api/:urlSlug" component={ApiOverviewPage} />
+            <Route exact path="/explore/api/:urlSlug/docs" component={ApiPage} />
+            <Route
+              exact
+              path="/explore/api/:urlSlug/authorization-code"
+              component={AuthorizationCodeGrantDocs}
+            />
+            <Route
+              exact
+              path="/explore/api/:urlSlug/client-credentials"
+              component={ClientCredentialsGrantDocs}
+            />
+            <Route exact path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
+            <Route
+              exact
+              path="/explore/api/:urlSlug/sandbox-access"
+              component={RequestSandboxAccess}
+            />
+          </Switch>
+        }
+        navAriaLabel="API Docs Side Nav"
+        className="documentation"
+      />
+    </>
   );
 };
 
