@@ -1,7 +1,7 @@
 import { Action, ActionCreator } from 'redux';
 import { VersionMetadata } from '../types';
 import * as constants from '../types/constants';
-import { APICategories } from '../apiDefs/schema';
+import { APICategories, APICategory } from '../apiDefs/schema';
 
 export interface ResetVersioning extends Action {
   type: constants.RESET_VERSIONING;
@@ -60,12 +60,32 @@ export const setVersioning: ActionCreator<SetVersioning> = (
   versions,
 });
 
-export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => ({
-  apis,
-  error: false,
-  loaded: true,
-  type: constants.SET_APIS_VALUE,
-});
+export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => {
+  // This is necessary because the typing doesn't allow for conditions to check
+  // if apis.appeals.apis doesn't exist. Without this, unit tests that use
+  // fakeCategories fail because appeals.apis doesn't exist.
+  // This can be removed after a migration post IA launch merges the categories
+  // within LPB itself.
+  try {
+    const vaBenefitsCategory: APICategory = {
+      ...apis.benefits,
+      apis: apis.appeals.apis.concat(apis.benefits.apis),
+      name: 'VA Benefits',
+      properName: 'VA Benefits',
+      urlSlug: 'va-benefits',
+    };
+    delete apis.appeals;
+    delete apis.benefits;
+    apis['va-benefits'] = vaBenefitsCategory;
+  } catch (e: unknown) {}
+
+  return {
+    apis,
+    error: false,
+    loaded: true,
+    type: constants.SET_APIS_VALUE,
+  };
+};
 
 export const setApiLoadingError: ActionCreator<SetAPIs> = () => ({
   apis: {},
