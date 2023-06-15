@@ -14,7 +14,9 @@ export const BreadCrumbs = ({ children, label = 'Breadcrumbs' }: BreadCrumbsProp
       if (React.isValidElement(child)) {
         if (arrayChildren.length - 1 === index) {
           return (
-            <li className="va-breadcrumbs-li">{cloneElement(child, { 'aria-current': 'page' })}</li>
+            <li className="va-breadcrumbs-li">
+              {cloneElement(child as React.ReactElement, { 'aria-current': 'page' })}
+            </li>
           );
         }
         return <li className="va-breadcrumbs-li">{cloneElement(child)}</li>;
