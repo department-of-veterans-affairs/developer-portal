@@ -7,8 +7,8 @@ import ApisLoader from '../../components/apisLoader/ApisLoader';
 import './ExploreRoot.scss';
 
 const OAUTHTYPES = {
-  ClientCredentialsGrant: 'CLIENT CREDENTIALS GRANT',
   AuthorizationCodeGrant: 'AUTHORIZATION CODE GRANT',
+  ClientCredentialsGrant: 'CLIENT CREDENTIALS GRANT',
 };
 
 const RESTRICTED_ACCESS_APIS = [
@@ -30,16 +30,16 @@ export const ExploreRoot = (): JSX.Element => {
   const apiDefs = getApiDefinitions();
 
   const generateFilterTags = (api: APIDescription): string[] => {
-    const { name, oAuthTypes } = api;
+    const { name, oAuthTypes, openData } = api;
     let tags: string[] = [];
 
     if (oAuthTypes !== null) {
       oAuthTypes.forEach(type => {
-        tags = [OAUTHTYPES[type], ...tags];
+        tags = [OAUTHTYPES[type] as string, ...tags];
       });
     }
 
-    if (api?.openData) {
+    if (openData) {
       tags = ['OPEN DATA', ...tags];
     }
 
