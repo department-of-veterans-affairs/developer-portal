@@ -2,19 +2,18 @@
 
 .va-api-breadcrumbs-nav {
   background: $color-white;
-  border-bottom: 1px solid $color-gray-lighter;
   color: $color-link-default;
   font-size: inherit;
 }
 
 .va-api-breadcrumbs-ul {
+  border-bottom: 1px solid $color-gray-lighter;
   box-sizing: border-box;
   list-style: square;
-  max-width: 100rem;
-  padding-left: 0.8rem;
-  padding-right: 0.8rem;
+  margin-left: 3.2rem;
+  margin-right: 3.2rem;
+  padding: 0;
   position: relative;
-  width: 100%;
 }
 
 .va-breadcrumbs-li {
