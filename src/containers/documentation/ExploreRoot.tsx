@@ -1,21 +1,37 @@
 import React from 'react';
-import { ExploreApiCard, PageHeader } from '../../components';
-import './ExploreRoot.scss';
-import ApisLoader from '../../components/apisLoader/ApisLoader';
+import { getApiDefinitions } from '../../apiDefs/getApiDefinitions';
 import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
+import { ExploreApiCard, PageHeader } from '../../components';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
+import './ExploreRoot.scss';
 
 const OAUTHTYPES = {
-  ClientCredentialsGrant: 'Client Credentials Grant',
-  AuthorizationCodeGrant: 'Authorization Code Grant',
+  ClientCredentialsGrant: 'CLIENT CREDENTIALS GRANT',
+  AuthorizationCodeGrant: 'AUTHORIZATION CODE GRANT',
 };
+
+const RESTRICTED_ACCESS_APIS = [
+  'Address Validation API',
+  'Benefits Documents',
+  'Clinical Health API (FHIR)',
+  'Community Care Eligibility API',
+  'Contact Information',
+  'Decision Reviews API',
+  'Direct Deposit',
+  'Guaranty Remittance API',
+  'Loan Guaranty API',
+  'Loan Review',
+  'VA Letter Generator API',
+];
 
 export const ExploreRoot = (): JSX.Element => {
   const apis = getAllApis();
+  const apiDefs = getApiDefinitions();
 
   const generateFilterTags = (api: APIDescription): string[] => {
-    const { oAuthTypes, urlSlug } = api;
-    let tags: string[] = [urlSlug];
+    const { name, oAuthTypes } = api;
+    let tags: string[] = [];
 
     if (oAuthTypes !== null) {
       oAuthTypes.forEach(type => {
@@ -27,7 +43,32 @@ export const ExploreRoot = (): JSX.Element => {
       tags = ['OPEN DATA', ...tags];
     }
 
+    if (RESTRICTED_ACCESS_APIS.includes(name)) {
+      tags = ['RESTRICTED ACCESS', ...tags];
+    }
+
     return tags;
+  };
+
+  const getApiList = (): JSX.Element[] => {
+    let apiList: JSX.Element[] = [];
+    const apiListKeys = Object.keys(apiDefs);
+
+    apiListKeys.forEach(apiCategory => {
+      const categoryName = apiDefs[apiCategory].urlSlug;
+      const tempList: JSX.Element[] = apiDefs[apiCategory].apis.map(api => (
+        <ExploreApiCard
+          description={api.description}
+          filterTags={[categoryName, ...generateFilterTags(api)]}
+          key={api.urlSlug}
+          name={api.name}
+          urlSlug={api.urlSlug}
+        />
+      ));
+      apiList = [...tempList, ...apiList];
+    });
+
+    return apiList;
   };
 
   return (
@@ -62,15 +103,7 @@ export const ExploreRoot = (): JSX.Element => {
       </div>
       <ApisLoader>
         <div data-cy="api-list" className="explore-main-container" role="list">
-          {apis.map(api => (
-            <ExploreApiCard
-              description={api.description}
-              filterTags={generateFilterTags(api)}
-              key={api.urlSlug}
-              name={api.name}
-              urlSlug={api.urlSlug}
-            />
-          ))}
+          {getApiList()}
         </div>
       </ApisLoader>
     </div>
