@@ -1,5 +1,4 @@
 import React from 'react';
-import { getApiDefinitions } from '../../apiDefs/getApiDefinitions';
 import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { ExploreApiCard, PageHeader } from '../../components';
@@ -27,7 +26,6 @@ const RESTRICTED_ACCESS_APIS = [
 
 export const ExploreRoot = (): JSX.Element => {
   const apis = getAllApis();
-  const apiDefs = getApiDefinitions();
 
   const generateFilterTags = (api: APIDescription): string[] => {
     const { name, oAuthTypes, openData } = api;
@@ -48,27 +46,6 @@ export const ExploreRoot = (): JSX.Element => {
     }
 
     return tags;
-  };
-
-  const getApiList = (): JSX.Element[] => {
-    let apiList: JSX.Element[] = [];
-    const apiListKeys = Object.keys(apiDefs);
-
-    apiListKeys.forEach(apiCategory => {
-      const categoryName = apiDefs[apiCategory].urlSlug;
-      const tempList: JSX.Element[] = apiDefs[apiCategory].apis.map(api => (
-        <ExploreApiCard
-          description={api.description}
-          filterTags={[categoryName, ...generateFilterTags(api)]}
-          key={api.urlSlug}
-          name={api.name}
-          urlSlug={api.urlSlug}
-        />
-      ));
-      apiList = [...tempList, ...apiList];
-    });
-
-    return apiList;
   };
 
   return (
@@ -103,7 +80,15 @@ export const ExploreRoot = (): JSX.Element => {
       </div>
       <ApisLoader>
         <div data-cy="api-list" className="explore-main-container" role="list">
-          {getApiList()}
+          {apis.map(api => (
+            <ExploreApiCard
+              key={api.urlSlug}
+              description={api.description}
+              filterTags={generateFilterTags(api)}
+              name={api.name}
+              urlSlug={api.urlSlug}
+            />
+          ))}
         </div>
       </ApisLoader>
     </div>
