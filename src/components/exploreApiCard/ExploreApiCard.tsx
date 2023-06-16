@@ -31,21 +31,22 @@ export const ExploreApiCard = ({
     >
       {name}
     </Link>
-    <p className={classNames('va-api-description', 'vads-u-color--base')}>{description}</p>
+    <p className={classNames('vads-u-color--base')}>{description}</p>
     <div className="tags-container">
       {filterTags.map(tag => (
         <span
           className={classNames(
-            'usa-label',
+            'explore-filter-tag',
             'vads-u-background-color--gray-lightest',
             'vads-u-color--base',
-            'vads-u-padding-y--0p5',
-            'vads-u-padding-x--1',
           )}
           key={`${tag} ${urlSlug}`}
         >
           {['CLIENT CREDENTIALS GRANT', 'RESTRICTED ACCESS'].includes(tag) && (
-            <FontAwesomeIcon className="vads-u-margin-right--1" icon={faLock} />
+            <FontAwesomeIcon
+              className={classNames('explore-fa-lock', 'vads-u-color--gray-medium')}
+              icon={faLock}
+            />
           )}
           {tag.replace(/-/g, ' ').toUpperCase()}
         </span>
