@@ -10,6 +10,7 @@
   border-bottom: 1px solid $color-gray-lighter;
   box-sizing: border-box;
   list-style: square;
+  margin-bottom: 0;
   margin-left: 3.2rem;
   margin-right: 3.2rem;
   padding: 0 0 1.6rem 0;
@@ -80,5 +81,10 @@
       display: none;
       padding: 0;
     }
+  }
+
+  .va-api-breadcrumbs-ul {
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
   }
 }
