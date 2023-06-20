@@ -53,11 +53,14 @@
       margin-bottom: 3px;
       color: $color-white !important;
 
-      &.va-api-active-nav,
-      &:hover {
+      &.va-api-active-nav {
         font-weight: 400;
-        border-bottom: 3px solid #fdb81e;
+        border-bottom: 3px solid $color-gold;
         margin-bottom: 0;
+      }
+
+      &:hover {
+        color: $color-gold !important;
       }
     }
   }
@@ -87,7 +90,7 @@
     @include media($medium-screen) {
       color: $color-white !important;
       &:hover {
-        border-bottom: 3px solid #fdb81e;
+        color: $color-gold !important;
         font-weight: 400;
         margin-bottom: 0;
       }
@@ -116,5 +119,9 @@
 
   .va-api-navbar-search-button {
     border-radius: 0;
+
+    &:hover {
+      color: $color-gold !important;
+    }
   }
 }

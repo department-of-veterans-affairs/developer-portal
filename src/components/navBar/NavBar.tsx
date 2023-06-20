@@ -1,7 +1,6 @@
 /* eslint-disable max-lines */
 import classNames from 'classnames';
-import React, { useRef, useState } from 'react';
-import { match as Match } from 'react-router';
+import React, { useRef } from 'react';
 import { faChevronDown, faChevronUp, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -11,7 +10,7 @@ import {
   CONSUMER_PROD_PATH,
 } from '../../types/constants/paths';
 import { desktopOnly } from '../../styles/vadsUtils';
-import { LargeScreenNavItemProps, MainNavItem, SubNav, SubNavEntry } from '../../components';
+import { MainNavItem, SubNav, SubNavEntry } from '../../components';
 import Search from '../search/Search';
 import { useOutsideGroupClick } from '../../hooks';
 import './NavBar.scss';
@@ -46,7 +45,6 @@ const navLinkStyles = classNames(
 );
 
 const NavBar = (props: NavBarProps): JSX.Element => {
-  const [useDefaultNavLink, setUseDefaultNavLink] = useState(true);
   const searchRef: React.LegacyRef<HTMLDivElement> | undefined = useRef(null);
   const { isMobileMenuVisible, isSearchBarVisible, onMobileNavClose, toggleSearchBar } = props;
 
@@ -58,23 +56,6 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     desktopOnly(),
     'vads-u-width--auto',
   );
-
-  const toggleDefaultNavLink = (useDefault: boolean): void => {
-    setUseDefaultNavLink(useDefault);
-  };
-
-  const checkActiveNavLink = (match: Match | null): boolean => {
-    if (!match) {
-      return false;
-    }
-    return useDefaultNavLink;
-  };
-
-  const sharedNavItemProps: LargeScreenNavItemProps = {
-    isActive: checkActiveNavLink,
-    onMouseEnter: () => toggleDefaultNavLink(false),
-    onMouseLeave: () => toggleDefaultNavLink(true),
-  };
 
   useOutsideGroupClick<HTMLDivElement>([searchRef], () => {
     if (isSearchBarVisible && toggleSearchBar) {
@@ -130,22 +111,13 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           )}
         >
           <li className={navItemStyles}>
-            <MainNavItem
-              targetUrl="/explore"
-              largeScreenProps={sharedNavItemProps}
-              className={navLinkStyles}
-            >
+            <MainNavItem targetUrl="/explore" className={navLinkStyles}>
               Explore APIs
             </MainNavItem>
           </li>
 
           <li className={navItemStyles}>
-            <MainNavItem
-              targetUrl={CONSUMER_PATH}
-              largeScreenProps={sharedNavItemProps}
-              excludeSmallScreen
-              className={navLinkStyles}
-            >
+            <MainNavItem targetUrl={CONSUMER_PATH} excludeSmallScreen className={navLinkStyles}>
               Onboarding
             </MainNavItem>
             <SubNav name="Onboarding">
@@ -169,12 +141,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           </li>
 
           <li className={navItemStyles}>
-            <MainNavItem
-              targetUrl="/about"
-              largeScreenProps={sharedNavItemProps}
-              excludeSmallScreen
-              className={navLinkStyles}
-            >
+            <MainNavItem targetUrl="/about" excludeSmallScreen className={navLinkStyles}>
               About
             </MainNavItem>
             <SubNav name="About">
@@ -194,12 +161,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           </li>
 
           <li className={navItemStyles}>
-            <MainNavItem
-              onClick={onMobileNavClose}
-              targetUrl="/support"
-              largeScreenProps={sharedNavItemProps}
-              className={navLinkStyles}
-            >
+            <MainNavItem onClick={onMobileNavClose} targetUrl="/support" className={navLinkStyles}>
               Support
             </MainNavItem>
           </li>
