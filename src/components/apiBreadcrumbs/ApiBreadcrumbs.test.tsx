@@ -5,7 +5,7 @@ import 'jest';
 import { APIDescription } from '../../apiDefs/schema';
 import { ApiBreadcrumbs } from './ApiBreadcrumbs';
 
-describe('BreadCrumbs', () => {
+describe('APIBreadcrumbs', () => {
   it('should render breadcrumbs', () => {
     const api = {
       name: 'Appeals Status API',

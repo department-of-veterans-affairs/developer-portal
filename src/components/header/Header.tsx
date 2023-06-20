@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import * as React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
@@ -24,8 +24,6 @@ const Header = (): JSX.Element => {
    * TOGGLE MENU VISIBLE
    */
   const [mobileNavVisible, setMobileNavVisible] = React.useState(false);
-
-  const location = useLocation();
   const toggleMenuVisible = (): void => {
     setMobileNavVisible((state: boolean) => !state);
   };
@@ -107,29 +105,6 @@ const Header = (): JSX.Element => {
           </div>
         </div>
         <NavBar isMobileMenuVisible={mobileNavVisible} onMobileNavClose={toggleMenuVisible} />
-        {location.pathname === '/explore/appeals/docs/appeals' && (
-          <va-alert background-only show-icon status="info" visible>
-            <p className="vads-u-margin-y--0">
-              A new version of Appeals Status API (v1) will launch later this year.
-            </p>
-          </va-alert>
-        )}
-        {location.pathname === '/explore/facilities/docs/facilities' && (
-          <va-alert background-only show-icon status="info" visible>
-            <p className="vads-u-margin-y--0">
-              Version 1 of the VA Facilities API is launching soon. We will add{' '}
-              <Link to="/release-notes/facilities">release notes</Link> when it&apos;s live.
-            </p>
-          </va-alert>
-        )}
-        {location.pathname === '/explore/verification/docs/veteran_confirmation' && (
-          <va-alert background-only show-icon status="info" visible>
-            <p className="vads-u-margin-y--0">
-              Version 0 of the Veteran Confirmation API is deprecated and scheduled for deactivation
-              on April 4, 2024. Version 1 of the Veteran Confirmation API is now active.
-            </p>
-          </va-alert>
-        )}
       </header>
     </>
   );

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route, Switch, useParams } from 'react-router-dom';
 import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../components';
+import { ApiBreadcrumbs, ContentWithNav, DeprecationBanners, SideNavEntry } from '../../components';
 import { APIUrlSlug } from '../../types';
 import { apiLoadingState } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
@@ -88,6 +88,7 @@ const DocumentationRoot = (): JSX.Element => {
   return (
     <>
       <ApiBreadcrumbs api={api} />
+      <DeprecationBanners />
       <ContentWithNav
         fullWidth
         nav={<ExploreSideNav api={api} />}
