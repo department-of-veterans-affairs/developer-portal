@@ -13,7 +13,7 @@ export const Header = (): JSX.Element => {
   const [searchBarVisible, setSearchBarVisible] = useState(false);
   const [mobileNavVisible, setMobileNavVisible] = useState(false);
   const location = useLocation();
-    
+
   const toggleMenuVisible = (): void => {
     setMobileNavVisible((state: boolean) => !state);
   };
@@ -91,7 +91,6 @@ export const Header = (): JSX.Element => {
             </button>
           </div>
         </div>
-        <NavBar isMobileMenuVisible={mobileNavVisible} onMobileNavClose={toggleMenuVisible} />
       </header>
     </>
   );
