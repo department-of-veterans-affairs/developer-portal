@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import classNames from 'classnames';
-import { mobileOnly } from '../../styles/vadsUtils';
+import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import TestingNotice from '../TestingNotice';
 import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
-import { Banner } from '../banner/Banner';
-import { NavBar } from '../navBar/NavBar';
+import { mobileOnly } from '../../styles/vadsUtils';
 import './Header.scss';
 
 export const Header = (): JSX.Element => {
   const [searchBarVisible, setSearchBarVisible] = useState(false);
   const [mobileNavVisible, setMobileNavVisible] = useState(false);
-  const location = useLocation();
+  /**
+   * TOGGLE MENU VISIBLE
+   */
   const toggleMenuVisible = (): void => {
     setMobileNavVisible((state: boolean) => !state);
   };
