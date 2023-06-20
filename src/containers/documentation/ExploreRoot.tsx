@@ -11,14 +11,14 @@ import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 
 export interface FuzzyValues {
-  search: string | null;
+  search: string;
 }
 
 export const ExploreRoot = (): JSX.Element => {
   const history = useHistory();
   const location = useLocation();
-  const [search, setSearch] = useState<string | null>(
-    new URLSearchParams(location.search).get('search'),
+  const [search, setSearch] = useState<string>(
+    new URLSearchParams(location.search).get('search') ?? '',
   );
   let apis = getAllApis();
 
@@ -32,7 +32,7 @@ export const ExploreRoot = (): JSX.Element => {
   }
 
   const initialFuzzy: FuzzyValues = {
-    search: new URLSearchParams(location.search).get('search'),
+    search: new URLSearchParams(location.search).get('search') ?? '',
   };
 
   const handleFuzzySubmit = (values: FuzzyValues): void => {
