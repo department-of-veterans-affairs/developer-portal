@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import classNames from 'classnames';
 import { Banner, NavBar } from '../../components';
@@ -12,9 +12,8 @@ import './Header.scss';
 export const Header = (): JSX.Element => {
   const [searchBarVisible, setSearchBarVisible] = useState(false);
   const [mobileNavVisible, setMobileNavVisible] = useState(false);
-  /**
-   * TOGGLE MENU VISIBLE
-   */
+  const location = useLocation();
+    
   const toggleMenuVisible = (): void => {
     setMobileNavVisible((state: boolean) => !state);
   };
