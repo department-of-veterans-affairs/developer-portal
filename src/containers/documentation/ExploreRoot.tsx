@@ -1,9 +1,9 @@
-/* eslint-disable no-console */
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Field, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import Fuse from 'fuse.js';
+import { useHistory, useLocation } from 'react-router';
 import { ExploreApiCard, PageHeader } from '../../components';
 import './ExploreRoot.scss';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
@@ -11,11 +11,15 @@ import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 
 export interface FuzzyValues {
-  search: string;
+  search: string | null;
 }
 
 export const ExploreRoot = (): JSX.Element => {
-  const [search, setSearch] = useState('');
+  const history = useHistory();
+  const location = useLocation();
+  const [search, setSearch] = useState<string | null>(
+    new URLSearchParams(location.search).get('search'),
+  );
   let apis = getAllApis();
 
   if (search) {
@@ -28,17 +32,22 @@ export const ExploreRoot = (): JSX.Element => {
   }
 
   const initialFuzzy: FuzzyValues = {
-    search,
+    search: new URLSearchParams(location.search).get('search'),
   };
-  console.log(initialFuzzy);
-  console.log('Search: ', search);
 
-  const handleFuzzySubmit = (
-    values: FuzzyValues,
-    // actions: FormikHelpers<FuzzyValues>,
-  ): void => {
+  const handleFuzzySubmit = (values: FuzzyValues): void => {
     setSearch(values.search);
-    console.log('submitted: ', values);
+    if (values.search) {
+      history.replace({
+        ...location,
+        search: `search=${values.search}`,
+      });
+    } else {
+      history.replace({
+        ...location,
+        search: '',
+      });
+    }
   };
 
   return (
@@ -65,7 +74,7 @@ export const ExploreRoot = (): JSX.Element => {
             validateOnBlur={false}
             validateOnChange={false}
           >
-            <Form noValidate>
+            <Form noValidate id="explore-page-fuzzy-search">
               <Field
                 id="fuzzy-search"
                 className="va-api-text-field"
@@ -75,7 +84,7 @@ export const ExploreRoot = (): JSX.Element => {
                 type="text"
                 placeholder="Search APIs by keyword"
               />
-              <button type="submit" className="display-inline vads-u-width--auto">
+              <button type="submit" className="display-inline">
                 <FontAwesomeIcon icon={faSearch} />
               </button>
             </Form>

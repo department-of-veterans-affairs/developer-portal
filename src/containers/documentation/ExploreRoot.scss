@@ -34,3 +34,22 @@ input.filter-size {
   display: flex;
   flex-flow: column nowrap;
 }
+#explore-page-fuzzy-search {
+  margin-left: 24px;
+  width: 235px;
+
+  input {
+    border: 1px solid transparent;
+    border-radius: 5px 0 0 5px;
+    display: inline-block;
+    width: calc(100% - 47px);
+  }
+  button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 1rem;
+    height: 42px;
+    width: 47px;
+    border-radius: 0 5px 5px 0;
+  }
+}
