@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import classNames from 'classnames';
-import * as React from 'react';
+import React, { useRef, useState } from 'react';
 import { match as Match } from 'react-router';
 import { faChevronDown, faChevronUp, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,6 +13,7 @@ import {
 import { desktopOnly } from '../../styles/vadsUtils';
 import { LargeScreenNavItemProps, MainNavItem, SubNav, SubNavEntry } from '../../components';
 import Search from '../search/Search';
+import { useOutsideGroupClick } from '../../hooks';
 import './NavBar.scss';
 
 interface NavBarProps {
@@ -45,11 +46,13 @@ const navLinkStyles = classNames(
 );
 
 const NavBar = (props: NavBarProps): JSX.Element => {
-  const [useDefaultNavLink, setUseDefaultNavLink] = React.useState(true);
+  const [useDefaultNavLink, setUseDefaultNavLink] = useState(true);
+  const searchRef: React.LegacyRef<HTMLDivElement> | undefined = useRef(null);
+  const { isMobileMenuVisible, isSearchBarVisible, onMobileNavClose, toggleSearchBar } = props;
 
   const navClasses = classNames(
     {
-      'va-api-mobile-nav-visible': props.isMobileMenuVisible,
+      'va-api-mobile-nav-visible': isMobileMenuVisible,
     },
     'va-api-nav',
     desktopOnly(),
@@ -72,6 +75,12 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     onMouseEnter: () => toggleDefaultNavLink(false),
     onMouseLeave: () => toggleDefaultNavLink(true),
   };
+
+  useOutsideGroupClick<HTMLDivElement>([searchRef], () => {
+    if (isSearchBarVisible && toggleSearchBar) {
+      toggleSearchBar();
+    }
+  });
 
   return (
     <nav className={navClasses}>
@@ -98,7 +107,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               'vads-u-margin--0',
               'vads-u-padding--0',
             )}
-            onClick={props.onMobileNavClose}
+            onClick={onMobileNavClose}
             type="button"
           >
             <FontAwesomeIcon icon={faTimes} />
@@ -140,25 +149,17 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               Onboarding
             </MainNavItem>
             <SubNav name="Onboarding">
-              <SubNavEntry
-                onClick={props.onMobileNavClose}
-                to={CONSUMER_PATH}
-                id="onboarding-overview"
-              >
+              <SubNavEntry onClick={onMobileNavClose} to={CONSUMER_PATH} id="onboarding-overview">
                 API Consumer onboarding
               </SubNavEntry>
-              <SubNavEntry
-                onClick={props.onMobileNavClose}
-                to={CONSUMER_PROD_PATH}
-                id="prod-access"
-              >
+              <SubNavEntry onClick={onMobileNavClose} to={CONSUMER_PROD_PATH} id="prod-access">
                 Request production access
               </SubNavEntry>
-              <SubNavEntry onClick={props.onMobileNavClose} to={CONSUMER_DEMO_PATH} id="demo">
+              <SubNavEntry onClick={onMobileNavClose} to={CONSUMER_DEMO_PATH} id="demo">
                 Prepare for the demo
               </SubNavEntry>
               <SubNavEntry
-                onClick={props.onMobileNavClose}
+                onClick={onMobileNavClose}
                 to={CONSUMER_APIS_PATH}
                 id="working-with-apis"
               >
@@ -177,10 +178,10 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               About
             </MainNavItem>
             <SubNav name="About">
-              <SubNavEntry onClick={props.onMobileNavClose} to="/about" id="about">
+              <SubNavEntry onClick={onMobileNavClose} to="/about" id="about">
                 Overview
               </SubNavEntry>
-              <SubNavEntry onClick={props.onMobileNavClose} to="/about/news" id="news">
+              <SubNavEntry onClick={onMobileNavClose} to="/about/news" id="news">
                 News
               </SubNavEntry>
             </SubNav>
@@ -194,7 +195,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
 
           <li className={navItemStyles}>
             <MainNavItem
-              onClick={props.onMobileNavClose}
+              onClick={onMobileNavClose}
               targetUrl="/support"
               largeScreenProps={sharedNavItemProps}
               className={navLinkStyles}
@@ -214,21 +215,21 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                 'vads-u-margin--0',
                 'vads-u-margin-right--0p5',
               )}
-              onClick={props.toggleSearchBar}
+              onClick={toggleSearchBar}
               type="button"
             >
               <FontAwesomeIcon className={classNames('vads-u-margin-right--1')} icon={faSearch} />
               Search
               <FontAwesomeIcon
                 className={classNames('vads-u-margin-left--1')}
-                icon={props.isSearchBarVisible ? faChevronUp : faChevronDown}
+                icon={isSearchBarVisible ? faChevronUp : faChevronDown}
               />
             </button>
           </li>
         </ul>
       </div>
-      {!props.isMobileMenuVisible && props.isSearchBarVisible && (
-        <div className="va-api-search-bar-container">
+      {!isMobileMenuVisible && isSearchBarVisible && (
+        <div className="va-api-search-bar-container" ref={searchRef}>
           <Search className="va-api-search-bar" />
         </div>
       )}
