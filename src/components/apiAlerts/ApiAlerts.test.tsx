@@ -2,13 +2,13 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import * as React from 'react';
 import 'jest';
-import { DeprecationBanners } from './DeprecationBanners';
+import { ApiAlerts } from './ApiAlerts';
 
-describe('DeprecationBanners', () => {
-  it('should render deprecation banners', () => {
+describe('ApiAlerts', () => {
+  it('should render api alerts', () => {
     render(
       <MemoryRouter initialEntries={['/explore/api/va-facilities']}>
-        <DeprecationBanners />
+        <ApiAlerts />
       </MemoryRouter>,
     );
     expect(screen.queryByText(/VA Facilities API/)).toBeInTheDocument();

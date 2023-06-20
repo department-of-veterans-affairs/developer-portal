@@ -1,13 +1,13 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import { deprecationBannerTargets } from '../../utils/deprecationBannerHelper';
+import { apiAlerts } from '../../utils/apiAlerts';
 
-export const DeprecationBanners = (): JSX.Element => {
+export const ApiAlerts = (): JSX.Element => {
   const location = useLocation();
 
   return (
     <>
-      {deprecationBannerTargets
+      {apiAlerts
         .filter(target => location.pathname.includes(target.path))
         .map(target => (
           <va-alert key={target.path} background-only show-icon status="info" visible>

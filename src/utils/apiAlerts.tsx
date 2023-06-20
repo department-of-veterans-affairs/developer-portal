@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export const deprecationBannerTargets = [
+export const apiAlerts = [
   {
     content: <>A new version of Appeals Status API (v1) will launch later this year.</>,
     path: '/explore/api/appeals-status',
