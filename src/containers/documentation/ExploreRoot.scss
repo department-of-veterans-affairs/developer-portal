@@ -33,4 +33,15 @@ input.filter-size {
 .explore-main-container {
   display: flex;
   flex-flow: column nowrap;
+  margin-bottom: 2.4rem;
+}
+
+.explore-end-of-list {
+  font-family: 'Helvetica Neue';
+  font-size: 1rem;
+  font-style: italic;
+  letter-spacing: 0.25px;
+  line-height: 1.4rem;
+  margin-bottom: 11.6rem;
+  text-align: center;
 }

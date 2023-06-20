@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { ExploreApiCard, PageHeader } from '../../components';
@@ -79,17 +80,22 @@ export const ExploreRoot = (): JSX.Element => {
         </div>
       </div>
       <ApisLoader>
-        <div data-cy="api-list" className="explore-main-container" role="list">
-          {apis.map(api => (
-            <ExploreApiCard
-              key={api.urlSlug}
-              description={api.description}
-              filterTags={generateFilterTags(api)}
-              name={api.name}
-              urlSlug={api.urlSlug}
-            />
-          ))}
-        </div>
+        <>
+          <div data-cy="api-list" className="explore-main-container" role="list">
+            {apis.map(api => (
+              <ExploreApiCard
+                key={api.urlSlug}
+                description={api.description}
+                filterTags={generateFilterTags(api)}
+                name={api.name}
+                urlSlug={api.urlSlug}
+              />
+            ))}
+          </div>
+          <p className={classNames('explore-end-of-list', 'vads-u-color--gray-warm-dark')}>
+            End of list
+          </p>
+        </>
       </ApisLoader>
     </div>
   );
