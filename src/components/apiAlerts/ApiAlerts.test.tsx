@@ -17,7 +17,7 @@ describe('ApiAlerts', () => {
     expect(await screen.findByShadowText(/VA Facilities API/)).toBeInTheDocument();
   });
 
-  it('should not render api alert', async () => {
+  it('should not render api alert', () => {
     const { container } = render(
       <MemoryRouter initialEntries={['/']}>
         <ApiAlerts />
