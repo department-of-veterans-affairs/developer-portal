@@ -7,11 +7,24 @@ import { ApiAlerts } from './ApiAlerts';
 
 describe('ApiAlerts', () => {
   it('should render api alerts', async () => {
-    render(
+    const { container } = render(
       <MemoryRouter initialEntries={['/explore/api/va-facilities']}>
         <ApiAlerts />
       </MemoryRouter>,
     );
+    const alert = container.querySelector('va-alert');
+    expect(alert).toBeInTheDocument();
     expect(await screen.findByShadowText(/VA Facilities API/)).toBeInTheDocument();
+  });
+
+  it('should not render api alert', async () => {
+    const { container } = render(
+      <MemoryRouter initialEntries={['/']}>
+        <ApiAlerts />
+      </MemoryRouter>,
+    );
+
+    const alert = container.querySelector('va-alert');
+    expect(alert).not.toBeInTheDocument();
   });
 });

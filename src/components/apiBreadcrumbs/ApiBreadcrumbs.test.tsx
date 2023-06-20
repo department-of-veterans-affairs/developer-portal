@@ -31,4 +31,17 @@ describe('APIBreadcrumbs', () => {
     );
     expect(screen.queryByText(/Appeals Status API/)).not.toBeInTheDocument();
   });
+
+  it('should render release notes breadcrumb', () => {
+    const api = {
+      name: 'Appeals Status API',
+      urlSlug: 'appeals-status',
+    } as APIDescription;
+    render(
+      <MemoryRouter initialEntries={['/explore/api/appeals-status/release-notes']}>
+        <ApiBreadcrumbs api={api} />
+      </MemoryRouter>,
+    );
+    expect(screen.getByText(/Release Notes/)).toBeInTheDocument();
+  });
 });

@@ -27,11 +27,13 @@ export const ApiBreadcrumbs = ({ api }: ApiBreadcrumbsProps): JSX.Element | null
       <Link to="/">Home</Link>
       <Link to="/explore">Explore APIs</Link>
       <Link to={`/explore/api/${api.urlSlug}`}>{api.name}</Link>
-      {apiRoutes.map(({ name, path }) => (
-        <Link key={path} to={`/explore/api/${api.urlSlug}${path}`}>
-          {name}
-        </Link>
-      ))}
+      {apiRoutes
+        .filter(({ path }) => location.pathname === `/explore/api/${api.urlSlug}${path}`)
+        .map(({ name, path }) => (
+          <Link key={path} to={`/explore/api/${api.urlSlug}${path}`}>
+            {name}
+          </Link>
+        ))}
     </BreadCrumbs>
   );
 };
