@@ -18,7 +18,9 @@ interface ApiBreadcrumbsProps {
 export const ApiBreadcrumbs = ({ api }: ApiBreadcrumbsProps): JSX.Element | null => {
   const location = useLocation();
 
-  if (!location.pathname.includes(`/explore/api/${api.urlSlug}`)) return null;
+  if (!location.pathname.includes(`/explore/api/${api.urlSlug}`)) {
+    return null;
+  }
 
   return (
     <BreadCrumbs>
