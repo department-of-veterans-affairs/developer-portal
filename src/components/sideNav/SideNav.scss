@@ -84,7 +84,7 @@ li.va-api-sidenav-entry {
       &:before {
         content: '';
         border: calc($border-offset / 2) solid $color-cool-blue;
-        height: calc(42px - $border-offset * 2);
+        height: calc(100% - $border-offset * 2);
         position: absolute;
         top: $border-offset;
         left: 0;
