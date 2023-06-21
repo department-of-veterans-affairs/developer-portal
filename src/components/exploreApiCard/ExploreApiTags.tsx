@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { APIDescription } from '../../apiDefs/schema';
 import { generateFilterTags } from '../../utils/generateFilterTags';
+import './ExploreApiTags.scss';
 
 const ExploreApiTag = ({ tag }: { tag: string }): JSX.Element => (
   <span
