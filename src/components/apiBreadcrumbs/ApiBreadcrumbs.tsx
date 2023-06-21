@@ -5,7 +5,7 @@ import BreadCrumbs from '../breadCrumbs/BreadCrumbs';
 
 const apiRoutes = [
   { name: 'Docs', path: '/docs' },
-  { name: 'Authorization Code Flow', path: '/authorization-code' },
+  { name: 'Authorization Code Grant', path: '/authorization-code' },
   { name: 'Client Credentials Grant (CCG)', path: '/client-credentials' },
   { name: 'Release Notes', path: '/release-notes' },
   { name: 'Sandbox Access', path: '/sandbox-access' },
