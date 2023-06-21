@@ -86,6 +86,7 @@ export const fakeCategories: APICategories = {
     apis: [
       {
         altID: 'apollo13',
+        categoryUrlFragment: 'nothing-of-importance',
         description: "When a trip to the moon doesn't go according to plan",
         docSources: [], // doesn't matter here
         enabledByDefault: true,
@@ -110,6 +111,7 @@ export const fakeCategories: APICategories = {
       },
       {
         altID: 'armageddon',
+        categoryUrlFragment: 'nothing-of-importance',
         description: 'Asteroid Dotty has earth directly in her path, time to call Bruce Willis.',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
@@ -133,6 +135,7 @@ export const fakeCategories: APICategories = {
       },
       {
         altID: 'the_martian',
+        categoryUrlFragment: 'nothing-of-importance',
         description:
           'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
         docSources: [], // doesn't matter here
@@ -165,6 +168,7 @@ export const fakeCategories: APICategories = {
     apis: [
       {
         altID: null,
+        categoryUrlFragment: 'nothing-of-importance',
         description: 'stuff about hoops or whatever',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
@@ -182,6 +186,7 @@ export const fakeCategories: APICategories = {
       },
       {
         altID: null,
+        categoryUrlFragment: 'nothing-of-importance',
         description: 'a slow summer game',
         docSources: [], // doesn't matter here
         enabledByDefault: false,
@@ -215,6 +220,7 @@ export const fakeAPIs: APIDescription[] = Object.values(fakeCategories).flatMap(
 
 export const extraAPI: APIDescription = {
   altID: null,
+  categoryUrlFragment: 'nothing-of-importance',
   description: 'the beautiful game',
   docSources: [],
   enabledByDefault: true,

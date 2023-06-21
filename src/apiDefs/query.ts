@@ -118,9 +118,9 @@ const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
   return Object.values(categories).find(hasMatchingIdentifier) ?? null;
 };
 
-const lookupApiCategory = (categoryKey: string): APICategory | null =>
+const lookupApiCategory = (categoryKey: string): APICategory =>
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  rootGetApiDefinitions.getApiDefinitions()[categoryKey] ?? null;
+  rootGetApiDefinitions.getApiDefinitions()[categoryKey];
 
 const apisFor = (
   selectedApiList: string[],

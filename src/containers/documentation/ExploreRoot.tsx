@@ -83,13 +83,7 @@ export const ExploreRoot = (): JSX.Element => {
         <>
           <div data-cy="api-list" className="explore-main-container" role="list">
             {apis.map(api => (
-              <ExploreApiCard
-                key={api.urlSlug}
-                description={api.description}
-                filterTags={generateFilterTags(api)}
-                name={api.name}
-                urlSlug={api.urlSlug}
-              />
+              <ExploreApiCard key={api.urlSlug} api={api} filterTags={generateFilterTags(api)} />
             ))}
           </div>
           <p className={classNames('explore-end-of-list', 'vads-u-color--gray-warm-dark')}>

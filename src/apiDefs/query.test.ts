@@ -54,6 +54,7 @@ const rings: APIDescription = {
 
 const apollo13: APIDescription = {
   altID: 'apollo13',
+  categoryUrlFragment: 'nothing-of-importance',
   description: "When a trip to the moon doesn't go according to plan",
   docSources: [],
   enabledByDefault: true,
@@ -79,6 +80,7 @@ const apollo13: APIDescription = {
 
 const theMartian: APIDescription = {
   altID: 'the_martian',
+  categoryUrlFragment: 'nothing-of-importance',
   description:
     'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
   docSources: [], // doesn't matter here
@@ -99,6 +101,7 @@ const theMartian: APIDescription = {
 
 const basketball: APIDescription = {
   altID: null,
+  categoryUrlFragment: 'nothing-of-importance',
   description: 'stuff about hoops or whatever',
   docSources: [], // doesn't matter here
   enabledByDefault: true,
@@ -171,18 +174,18 @@ describe('query module', () => {
     it('returns the API category definition if it is defined', () => {
       const moviesApi = lookupApiCategory('movies');
       expect(moviesApi).not.toBeNull();
-      expect(moviesApi?.apis.length).toEqual(3);
-      expect(moviesApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
+      expect(moviesApi.apis.length).toEqual(3);
+      expect(moviesApi.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(2);
 
       const sportsApi = lookupApiCategory('sports');
       expect(sportsApi).not.toBeNull();
-      expect(sportsApi?.apis.length).toEqual(2);
-      expect(sportsApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
+      expect(sportsApi.apis.length).toEqual(2);
+      expect(sportsApi.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
 
       const lotrApi = lookupApiCategory('lotr');
       expect(lotrApi).not.toBeNull();
-      expect(lotrApi?.apis.length).toEqual(3);
-      expect(lotrApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
+      expect(lotrApi.apis.length).toEqual(3);
+      expect(lotrApi.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
     });
 
     it('returns null for an API that does not exist', () => {

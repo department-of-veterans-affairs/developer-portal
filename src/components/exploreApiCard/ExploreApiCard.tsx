@@ -1,35 +1,22 @@
+/* eslint-disable no-console */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import { getApiDefinitions } from '../../apiDefs/getApiDefinitions';
 import { APIDescription } from '../../apiDefs/schema';
 import './ExploreApiCard.scss';
+import { lookupApiCategory } from '../../apiDefs/query';
 
 interface ExploreApiCardProps {
-  description: string;
+  api: APIDescription;
   filterTags: string[];
-  name: string;
-  urlSlug: string;
 }
 
-export const ExploreApiCard = ({
-  description,
-  filterTags = [],
-  name,
-  urlSlug,
-}: ExploreApiCardProps): JSX.Element => {
-  const apiDefs = getApiDefinitions();
-
-  const getApiCategory = (): string => {
-    const categoryNames = Object.keys(apiDefs);
-    const apisByName = (api: APIDescription): boolean => api.name === name;
-    const categoryByApiName = (category: string): boolean =>
-      apiDefs[category].apis.filter(apisByName).length === 1;
-
-    return categoryNames.find(categoryByApiName) as string;
-  };
+export const ExploreApiCard = ({ api, filterTags = [] }: ExploreApiCardProps): JSX.Element => {
+  const { description, name, urlSlug } = api;
+  console.log(api);
+  const category = lookupApiCategory(api.categoryUrlFragment);
 
   return (
     <div className="explore-api-card-container" role="listitem">
@@ -47,7 +34,7 @@ export const ExploreApiCard = ({
       </Link>
       <p className={classNames('vads-u-color--base')}>{description}</p>
       <div className="tags-container">
-        {[getApiCategory(), ...filterTags].map(tag => (
+        {[category.name, ...filterTags].map(tag => (
           <span
             className={classNames(
               'explore-filter-tag',

@@ -73,7 +73,7 @@ export interface APIDescription {
   readonly docSources: APIDocSource[];
   readonly urlFragment: string;
   readonly urlSlug: string;
-  readonly categoryUrlFragment?: string;
+  readonly categoryUrlFragment: string;
   readonly description: string;
   readonly enabledByDefault: boolean;
   readonly vaInternalOnly?: VaInternalOnly;
@@ -121,7 +121,7 @@ export const ApiDescriptionPropType = PropTypes.shape({
 });
 
 export interface BaseAPICategory {
-  readonly apis: APIDescription[];
+  apis: APIDescription[];
   readonly properName: string;
   readonly name: string;
   readonly urlSlug: string;

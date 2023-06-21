@@ -1,7 +1,7 @@
 import { Action, ActionCreator } from 'redux';
 import { VersionMetadata } from '../types';
 import * as constants from '../types/constants';
-import { APICategories, APICategory } from '../apiDefs/schema';
+import { APICategories, APICategory, APIDescription } from '../apiDefs/schema';
 
 export interface ResetVersioning extends Action {
   type: constants.RESET_VERSIONING;
@@ -78,6 +78,16 @@ export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => {
     delete apis.benefits;
     apis['va-benefits'] = vaBenefitsCategory;
   } catch (e: unknown) {}
+  ['facilities', 'vaForms', 'health', 'loanGuaranty', 'va-benefits', 'verification'].forEach(
+    (category: string) => {
+      apis[category].apis = apis[category].apis.map((item: APIDescription) => ({
+        ...item,
+        categoryUrlFragment: category,
+      }));
+    },
+  );
+  // eslint-disable-next-line no-console
+  console.log(apis);
 
   return {
     apis,
