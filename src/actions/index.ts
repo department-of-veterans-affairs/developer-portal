@@ -86,8 +86,6 @@ export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => {
       }));
     },
   );
-  // eslint-disable-next-line no-console
-  console.log(apis);
 
   return {
     apis,
