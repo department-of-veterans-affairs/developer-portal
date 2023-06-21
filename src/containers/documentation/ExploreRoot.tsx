@@ -6,48 +6,8 @@ import { ExploreApiCard, PageHeader } from '../../components';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import './ExploreRoot.scss';
 
-const OAUTHTYPES = {
-  AuthorizationCodeGrant: 'AUTHORIZATION CODE GRANT',
-  ClientCredentialsGrant: 'CLIENT CREDENTIALS GRANT',
-};
-
-const RESTRICTED_ACCESS_APIS = [
-  'Address Validation API',
-  'Benefits Documents',
-  'Clinical Health API (FHIR)',
-  'Community Care Eligibility API',
-  'Contact Information',
-  'Decision Reviews API',
-  'Direct Deposit',
-  'Guaranty Remittance API',
-  'Loan Guaranty API',
-  'Loan Review',
-  'VA Letter Generator API',
-];
-
 export const ExploreRoot = (): JSX.Element => {
   const apis = getAllApis();
-
-  const generateFilterTags = (api: APIDescription): string[] => {
-    const { name, oAuthTypes, openData } = api;
-    let tags: string[] = [];
-
-    if (oAuthTypes !== null) {
-      oAuthTypes.forEach(type => {
-        tags = [OAUTHTYPES[type] as string, ...tags];
-      });
-    }
-
-    if (openData) {
-      tags = ['OPEN DATA', ...tags];
-    }
-
-    if (RESTRICTED_ACCESS_APIS.includes(name)) {
-      tags = ['RESTRICTED ACCESS', ...tags];
-    }
-
-    return tags;
-  };
 
   return (
     <div className="explore-root-container">
@@ -82,8 +42,8 @@ export const ExploreRoot = (): JSX.Element => {
       <ApisLoader>
         <>
           <div data-cy="api-list" className="explore-main-container" role="list">
-            {apis.map(api => (
-              <ExploreApiCard key={api.urlSlug} api={api} filterTags={generateFilterTags(api)} />
+            {apis.map((api: APIDescription) => (
+              <ExploreApiCard key={api.urlSlug} api={api} />
             ))}
           </div>
           <p className={classNames('explore-end-of-list', 'vads-u-color--gray-warm-dark')}>
