@@ -119,7 +119,6 @@ const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
 };
 
 const lookupApiCategory = (categoryKey: string): APICategory =>
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
   rootGetApiDefinitions.getApiDefinitions()[categoryKey];
 
 const apisFor = (
