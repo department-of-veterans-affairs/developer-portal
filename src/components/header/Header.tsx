@@ -2,14 +2,15 @@ import classNames from 'classnames';
 import * as React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { HashLink, NavHashLink } from 'react-router-hash-link';
+import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
+import Search from '../search/Search';
+import TestingNotice from '../TestingNotice';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
 import { defaultFlexContainer, desktopOnly, mobileOnly } from '../../styles/vadsUtils';
 import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
 import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
-import VeteransCrisisLine from '../crisisLine/VeteransCrisisLine';
-import Search from '../search/Search';
-import TestingNotice from '../TestingNotice';
+import { deprecationBannerTargets } from '../../utils/deprecationBannerHelper';
 import './Header.scss';
 
 const buttonClassnames = classNames(
@@ -107,37 +108,13 @@ const Header = (): JSX.Element => {
           </div>
         </div>
         <NavBar isMobileMenuVisible={mobileNavVisible} onMobileNavClose={toggleMenuVisible} />
-        {location.pathname === '/explore/appeals/docs/appeals' && (
-          <va-alert background-only show-icon status="info" visible>
-            <p className="vads-u-margin-y--0">
-              A new version of Appeals Status API (v1) will launch later this year.
-            </p>
-          </va-alert>
-        )}
-        {location.pathname === '/explore/facilities/docs/facilities' && (
-          <va-alert background-only show-icon status="info" visible>
-            <p className="vads-u-margin-y--0">
-              Version 1 of the VA Facilities API is launching soon. We will add{' '}
-              <Link to="/release-notes/facilities">release notes</Link> when it&apos;s live.
-            </p>
-          </va-alert>
-        )}
-        {location.pathname === '/explore/verification/docs/veteran_confirmation' && (
-          <va-alert background-only show-icon status="info" visible>
-            <p className="vads-u-margin-y--0">
-              Version 0 of the Veteran Confirmation API is deprecated and scheduled for deactivation
-              on April 4, 2024. Version 1 of the Veteran Confirmation API is now active.
-            </p>
-          </va-alert>
-        )}
-        {location.pathname === '/explore/verification/docs/veteran_verification' && (
-          <va-alert background-only show-icon status="info" visible>
-            <p className="vads-u-margin-y--0">
-              Veteran Service History and Eligibility versions 0 and 1 are deprecated and scheduled
-              for deactivation on May 30, 2024. Version 2 is now live.
-            </p>
-          </va-alert>
-        )}
+        {deprecationBannerTargets
+          .filter(target => target.path === location.pathname)
+          .map(target => (
+            <va-alert key={target.path} background-only show-icon status="info" visible>
+              <p className="vads-u-margin-y--0">{target.content}</p>
+            </va-alert>
+          ))}
       </header>
     </>
   );
