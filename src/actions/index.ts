@@ -78,14 +78,13 @@ export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => {
     delete apis.benefits;
     apis['va-benefits'] = vaBenefitsCategory;
   } catch (e: unknown) {}
-  ['facilities', 'vaForms', 'health', 'loanGuaranty', 'va-benefits', 'verification'].forEach(
-    (category: string) => {
-      apis[category].apis = apis[category].apis.map((item: APIDescription) => ({
-        ...item,
-        categoryUrlFragment: category,
-      }));
-    },
-  );
+  const keys = Object.keys(apis);
+  keys.forEach((category: string) => {
+    apis[category].apis = apis[category].apis.map((item: APIDescription) => ({
+      ...item,
+      categoryUrlFragment: category,
+    }));
+  });
 
   return {
     apis,

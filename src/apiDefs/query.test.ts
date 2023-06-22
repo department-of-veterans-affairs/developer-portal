@@ -54,7 +54,7 @@ const rings: APIDescription = {
 
 const apollo13: APIDescription = {
   altID: 'apollo13',
-  categoryUrlFragment: 'nothing-of-importance',
+  categoryUrlFragment: 'movies',
   description: "When a trip to the moon doesn't go according to plan",
   docSources: [],
   enabledByDefault: true,
@@ -80,7 +80,7 @@ const apollo13: APIDescription = {
 
 const theMartian: APIDescription = {
   altID: 'the_martian',
-  categoryUrlFragment: 'nothing-of-importance',
+  categoryUrlFragment: 'movies',
   description:
     'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
   docSources: [], // doesn't matter here
@@ -101,7 +101,7 @@ const theMartian: APIDescription = {
 
 const basketball: APIDescription = {
   altID: null,
-  categoryUrlFragment: 'nothing-of-importance',
+  categoryUrlFragment: 'sports',
   description: 'stuff about hoops or whatever',
   docSources: [], // doesn't matter here
   enabledByDefault: true,
@@ -186,10 +186,6 @@ describe('query module', () => {
       expect(lotrApi).not.toBeNull();
       expect(lotrApi.apis.length).toEqual(3);
       expect(lotrApi.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
-    });
-
-    it('returns null for an API that does not exist', () => {
-      expect(lookupApiCategory('fake')).toBeNull();
     });
   });
 

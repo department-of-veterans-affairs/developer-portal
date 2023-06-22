@@ -68,7 +68,11 @@ describe('Redux Store test', () => {
     });
   });
   it('should call setApis', () => {
-    coreTest(() => setApis({}), constants.SET_APIS_VALUE, { apis: {}, error: false, loaded: true });
+    coreTest(() => setApis({}), constants.SET_APIS_VALUE, {
+      apis: {},
+      error: false,
+      loaded: true,
+    });
   });
   it('should call SetGeneralStore', () => {
     coreTest(() => setGeneralStore(), constants.SET_GENERAL_STORE_VALUE);
