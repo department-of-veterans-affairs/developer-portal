@@ -156,7 +156,12 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           </li>
 
           <li className={navItemStyles}>
-            <a className={classNames(navLinkStyles)} href="https://valighthouse.statuspage.io">
+            <a
+              className={classNames(navLinkStyles)}
+              href="https://valighthouse.statuspage.io"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               API Status
             </a>
           </li>
