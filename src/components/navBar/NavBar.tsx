@@ -45,7 +45,8 @@ const navLinkStyles = classNames(
 );
 
 const NavBar = (props: NavBarProps): JSX.Element => {
-  const searchRef: React.LegacyRef<HTMLDivElement> | undefined = useRef(null);
+  const searchRef = useRef(null);
+  const searchButtonRef = useRef(null);
   const { isMobileMenuVisible, isSearchBarVisible, onMobileNavClose, toggleSearchBar } = props;
 
   const navClasses = classNames(
@@ -57,7 +58,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     'vads-u-width--auto',
   );
 
-  useOutsideGroupClick<HTMLDivElement>([searchRef], () => {
+  useOutsideGroupClick([searchRef, searchButtonRef], () => {
     if (isSearchBarVisible && toggleSearchBar) {
       toggleSearchBar();
     }
@@ -179,6 +180,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               )}
               onClick={toggleSearchBar}
               type="button"
+              ref={searchButtonRef}
             >
               <FontAwesomeIcon className={classNames('vads-u-margin-right--1')} icon={faSearch} />
               Search
