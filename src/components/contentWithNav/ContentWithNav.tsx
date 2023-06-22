@@ -12,16 +12,33 @@ interface ContentWithNavProps {
   fullWidth?: boolean;
 }
 
-const ContentWithNav: FC<ContentWithNavProps> = ({ nav, content, navAriaLabel, contentAriaLabelledBy, className, fullWidth }) => (
-  <div className={classNames('vads-u-padding-y--5', className)}>
+const ContentWithNav: FC<ContentWithNavProps> = ({
+  nav,
+  content,
+  navAriaLabel,
+  contentAriaLabelledBy,
+  className,
+  fullWidth,
+}) => (
+  <div
+    className={classNames('vads-u-padding-top--2p5 medium-screen:vads-u-padding-y--5', className)}
+  >
     <div
       className={classNames(
-      { 'vads-l-grid-container--full vads-u-padding-x--2 medium-screen:vads-u-padding-x--4': fullWidth },
-      { 'vads-l-grid-container': !fullWidth }
-    )}
+        {
+          'vads-l-grid-container--full vads-u-padding-x--2 medium-screen:vads-u-padding-x--4':
+            fullWidth,
+        },
+        { 'vads-l-grid-container': !fullWidth },
+      )}
     >
       <div className="vads-l-row">
-        <SideNav ariaLabel={navAriaLabel} containerClassName={classNames({ 'large-screen:vads-l-col--2': fullWidth })}>{nav}</SideNav>
+        <SideNav
+          ariaLabel={navAriaLabel}
+          containerClassName={classNames({ 'large-screen:vads-l-col--2': fullWidth })}
+        >
+          {nav}
+        </SideNav>
         <section
           aria-labelledby={contentAriaLabelledBy ?? PAGE_HEADER_ID}
           className={classNames(

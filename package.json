@@ -40,6 +40,7 @@
     "flag": "^4.4.0",
     "formdata-node": "^4.3.0",
     "formik": "^2.2.9",
+    "fuse.js": "^6.6.2",
     "get-video-id": "^3.4.1",
     "highlight.js": "^10.7.3",
     "history": "^4.10.1",

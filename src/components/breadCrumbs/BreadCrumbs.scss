@@ -1,0 +1,90 @@
+@import '../../styles/variables';
+
+.va-api-breadcrumbs-nav {
+  background: $color-white;
+  color: $color-link-default;
+  font-size: inherit;
+}
+
+.va-api-breadcrumbs-ul {
+  border-bottom: 1px solid $color-gray-lighter;
+  box-sizing: border-box;
+  list-style: square;
+  margin-bottom: 0;
+  margin-left: 3.2rem;
+  margin-right: 3.2rem;
+  padding: 0 0 1.6rem 0;
+  position: relative;
+}
+
+.va-breadcrumbs-li {
+  display: inline-block;
+  line-height: 1.5;
+  margin: 0.4rem 0 !important;
+  padding: 0.4rem 0 0.4rem 0;
+  vertical-align: middle;
+
+  &::after {
+    content: ' \203A ';
+    display: inline-block;
+    padding: 0 0.56rem;
+  }
+
+  &:last-child::after {
+    content: '';
+  }
+
+  > a {
+    background-color: transparent;
+    color: $color-link-default;
+    display: inline-block;
+    padding: 0.2rem;
+    transition-duration: 0.3s;
+    transition-property: color, background-color, border-color;
+    transition-timing-function: ease-in-out;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    &:focus {
+      outline: 2px solid $color-gold-light;
+      outline-offset: 0.2rem;
+    }
+  }
+
+  > a[aria-current='page'] {
+    color: $color-gray-dark;
+    cursor: default;
+    font-weight: bold;
+    pointer-events: none;
+    text-decoration: none;
+  }
+}
+
+@media screen and (max-width: 481px) {
+  .va-breadcrumbs-li {
+    display: none;
+
+    &:nth-last-child(2) {
+      display: flex;
+    }
+
+    &:nth-last-child(2)::before {
+      content: ' \2039 ';
+      display: inline-block;
+      padding: 0 0.24rem;
+    }
+
+    &:nth-last-child(2)::after {
+      content: '';
+      display: none;
+      padding: 0;
+    }
+  }
+
+  .va-api-breadcrumbs-ul {
+    margin-left: 1.6rem;
+    margin-right: 1.6rem;
+  }
+}
