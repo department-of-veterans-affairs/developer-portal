@@ -12,12 +12,22 @@ import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 
 interface ApiFilter {
-  type: 'auth' | 'topic';
-  value: string;
+  name: string;
+  type: 'auth' | 'category';
+  urlSlug: string;
 }
 
-// update
-const topicNames = ['benefits', 'etc'];
+const allFilters = [
+  { name: 'Appeals', type: 'category', urlSlug: 'appeals' },
+  { name: 'Benefits', type: 'category', urlSlug: 'va-benefits' },
+  { name: 'Facilities', type: 'category', urlSlug: 'facilities' },
+  { name: 'Forms', type: 'category', urlSlug: 'forms' },
+  { name: 'Health', type: 'category', urlSlug: 'health' },
+  { name: 'Loan Guaranty', type: 'category', urlSlug: 'loan-guaranty' },
+  { name: 'Veteran Verification', type: 'category', urlSlug: 'verification' },
+  { name: 'Authorization Code Grant', type: 'auth', urlSlug: 'acg' },
+  { name: 'Client Credentials Grant', type: 'auth', urlSlug: 'ccg' },
+];
 
 export interface FuzzyValues {
   search: string;
@@ -29,7 +39,17 @@ export const ExploreRoot = (): JSX.Element => {
   const [search, setSearch] = useState<string>(
     new URLSearchParams(location.search).get('search') ?? '',
   );
-  const [filters, setFilters] = useState<ApiFilter[]>([]); // TODO: grab filters from URL
+
+  const findFilter = (filter: string): ApiFilter => allFilters.filter(f => f.urlSlug === filter);
+  const normalizeFilters = (filters: string[]): ApiFilter[] =>
+    filters.map(filter => findFilter(filter));
+  const paramFilters =
+    new URLSearchParams(location.search)
+      .get('filters')
+      ?.split(',')
+      .map(filter => findFilter(filter)) ?? [];
+
+  const [filters, setFilters] = useState<ApiFilter[]>(paramFilters);
   const [filteredApis, setFilteredApis] = useState<APIDescription[]>([]);
   const apis = getAllApis();
 
@@ -66,32 +86,31 @@ export const ExploreRoot = (): JSX.Element => {
     }
   };
 
-  interface FilterValues {}
+  interface FilterValue {}
 
-  const handleFiltersSubmit = (values: FilterValues): void => {
-    // transform values into an array of filters of shape: { type: string, value: string }
-    // { type: 'auth', value: 'acg' }
-    // { type: 'topic', value: 'benefits'}
-    setFilters([]);
+  const handleFiltersSubmit = (values: FilterValue): void => {
+    const temp = Object.values(values).flatMap(value => value);
+    setFilters(normalizeFilters(temp));
   };
 
   useEffect(() => {
     // TODO: combine with search
-    setFilteredApis(
-      apis.filter(api =>
-        filters.every(filter => {
-          if (
-            (filter.type === 'topic' && filter.value === api.categoryUrlFragment) ||
-            (filter.type === 'auth' && filter.value === api.oAuthInfo?.acgInfo?.sandboxAud) ||
-            (filter.type === 'auth' && filter.value === api.oAuthInfo?.ccgInfo?.sandboxAud)
-          ) {
-            return true;
-          }
-          return false;
-        }),
-      ),
-    );
+    // setFilteredApis(
+    //   apis.filter(api =>
+    //     filters.every(filter => {
+    //       if (
+    //         (filter.type === 'topic' && filter.value === api.categoryUrlFragment) ||
+    //         (filter.type === 'auth' && filter.value === api.oAuthInfo?.acgInfo?.sandboxAud) ||
+    //         (filter.type === 'auth' && filter.value === api.oAuthInfo?.ccgInfo?.sandboxAud)
+    //       ) {
+    //         return true;
+    //       }
+    //       return false;
+    //     }),
+    //   ),
+    // );
     // add search
+    console.log(filters);
   }, [apis, filters]);
 
   return (
@@ -103,24 +122,41 @@ export const ExploreRoot = (): JSX.Element => {
       <div className="filters-container" data-cy="explore-filters">
         <div className="filter-controls">
           <Formik initialValues={initialFilters} onSubmit={handleFiltersSubmit}>
-            <div className="filter-topic-container">
-              {topicNames.map(topic => (
-                <CheckboxRadioField
-                  key={topic}
-                  label={topic}
-                  name={`topic.${topic}`}
-                  type="checkbox"
-                  value={topic}
-                />
-              ))}
-            </div>
+            <Form noValidate>
+              <div className="filter-topic-container">
+                {allFilters
+                  .filter(filter => filter.type === 'category')
+                  .map(category => (
+                    <CheckboxRadioField
+                      key={category.urlSlug}
+                      label={category.name}
+                      name={category.name}
+                      type="checkbox"
+                      value={category.urlSlug}
+                    />
+                  ))}
+                <button type="submit">APPLY FILTERS</button>
+              </div>
+            </Form>
           </Formik>
 
           <Formik initialValues={initialFilters} onSubmit={handleFiltersSubmit}>
-            <div className="filter-auth-container">
-              <CheckboxRadioField label="ACG" name="auth.acg" type="checkbox" value="yes" />
-              <CheckboxRadioField label="CCG" name="auth.ccg" type="checkbox" value="yes" />
-            </div>
+            <Form noValidate>
+              <div className="filter-auth-container">
+                {allFilters
+                  .filter(filter => filter.type === 'auth')
+                  .map(auth => (
+                    <CheckboxRadioField
+                      key={auth.urlSlug}
+                      label={auth.name}
+                      name={auth.name}
+                      type="checkbox"
+                      value={auth.urlSlug}
+                    />
+                  ))}
+                <button type="submit">APPLY FILTERS</button>
+              </div>
+            </Form>
           </Formik>
 
           <Formik
