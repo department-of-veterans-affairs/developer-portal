@@ -40,7 +40,8 @@ export const ExploreRoot = (): JSX.Element => {
     new URLSearchParams(location.search).get('search') ?? '',
   );
 
-  const findFilter = (filter: string): ApiFilter => allFilters.find(f => f.urlSlug === filter);
+  const findFilter = (filter: string): ApiFilter =>
+    allFilters.find(f => f.urlSlug === filter) as ApiFilter;
   const normalizeFilters = (filters: string[]): ApiFilter[] =>
     filters.map(filter => findFilter(filter));
   const paramFilters =
