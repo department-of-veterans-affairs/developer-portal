@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
 import classNames from 'classnames';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCaretUp, faKey, faSearch, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Field, FieldArray, Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Fuse from 'fuse.js';
 import { useHistory, useLocation, useParams } from 'react-router';
 import { CheckboxRadioField, ExploreApiCard, PageHeader } from '../../components';
@@ -13,11 +12,11 @@ import {
   getAllApis,
   getApiCategoryOrder,
   isAcgApi,
-  isApiKeyApi,
   isCcgApi,
   lookupApiCategory,
 } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
+import { useOutsideGroupClick } from '../../hooks';
 
 interface AuthFilterType {
   name: string;
@@ -37,7 +36,6 @@ export interface SearchFilterValues {
 const authTypes = [
   { name: 'Authorization Code Grant', urlSlug: 'acg' },
   { name: 'Client Credentials Grant', urlSlug: 'ccg' },
-  { name: 'API Key', urlSlug: 'apikey' },
 ] as AuthFilterType[];
 
 interface ExploreRootParams {
@@ -46,6 +44,12 @@ interface ExploreRootParams {
 
 export const ExploreRoot = (): JSX.Element => {
   const params = useParams<ExploreRootParams>();
+  const topicButtonRef = useRef(null);
+  const topicContainerRef = useRef(null);
+  const authButtonRef = useRef(null);
+  const authContainerRef = useRef(null);
+  const [isTopicOpen, setIsTopicOpen] = useState<boolean>(false);
+  const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const history = useHistory();
   const location = useLocation();
   const [topicFilter, setTopicFilter] = useState<string[]>(
@@ -66,11 +70,32 @@ export const ExploreRoot = (): JSX.Element => {
   const initialSearch: SearchFilterValues = {
     search,
   };
+  const toggleTopicOpen = (): void => setIsTopicOpen(prevState => !prevState);
+  const toggleAuthOpen = (): void => setIsAuthOpen(prevState => !prevState);
+
+  const topicClassNames = classNames('filter-topic-container', {
+    'vads-u-display--block': isTopicOpen,
+    'vads-u-display--none': !isTopicOpen,
+  });
+  const authClassNames = classNames('filter-topic-container', {
+    'vads-u-display--block': isAuthOpen,
+    'vads-u-display--none': !isAuthOpen,
+  });
+
+  useOutsideGroupClick([topicButtonRef, topicContainerRef], () => {
+    if (isTopicOpen) {
+      toggleTopicOpen();
+    }
+  });
+
+  useOutsideGroupClick([authButtonRef, authContainerRef], () => {
+    if (isAuthOpen) {
+      toggleAuthOpen();
+    }
+  });
 
   let apis = getAllApis();
-  console.log(apis);
   if (topicFilter.length > 0) {
-    console.log(topicFilter);
     apis = apis.filter((api: APIDescription) => topicFilter.includes(api.categoryUrlSlug));
   }
   if (authFilter.length > 0) {
@@ -79,9 +104,6 @@ export const ExploreRoot = (): JSX.Element => {
         return true;
       }
       if (authFilter.includes('ccg') && isCcgApi(api)) {
-        return true;
-      }
-      if (authFilter.includes('apikey') && isApiKeyApi(api)) {
         return true;
       }
       return false;
@@ -151,8 +173,22 @@ export const ExploreRoot = (): JSX.Element => {
             <FieldArray
               name="topics"
               render={(): JSX.Element => (
-                <Form noValidate>
-                  <div className="filter-topic-container">
+                <Form className="explore-filter-form vads-u-margin-right--2" noValidate>
+                  <button
+                    className="explore-filter-button"
+                    type="button"
+                    onClick={toggleTopicOpen}
+                    ref={topicButtonRef}
+                  >
+                    <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag} />
+                    Topics
+                    {isTopicOpen ? (
+                      <FontAwesomeIcon className="filter-button-caret" icon={faCaretUp} />
+                    ) : (
+                      <FontAwesomeIcon className="filter-button-caret" icon={faCaretDown} />
+                    )}
+                  </button>
+                  <div className={topicClassNames} ref={topicContainerRef}>
                     {topics.map((topic: string) => {
                       const category = lookupApiCategory(topic);
                       return (
@@ -171,12 +207,30 @@ export const ExploreRoot = (): JSX.Element => {
               )}
             />
           </Formik>
+
           <Formik initialValues={initialAuthTypes} onSubmit={handleAuthTypeFilterSubmit}>
             <FieldArray
               name="authTypes"
               render={(): JSX.Element => (
-                <Form noValidate>
-                  <div className="filter-topic-container">
+                <Form className="explore-filter-form" noValidate>
+                  <button
+                    className="explore-filter-button"
+                    type="button"
+                    onClick={toggleAuthOpen}
+                    ref={authButtonRef}
+                  >
+                    <FontAwesomeIcon
+                      className="fa-rotate-270 vads-u-margin-right--1"
+                      icon={faKey}
+                    />
+                    Auth Type
+                    {isAuthOpen ? (
+                      <FontAwesomeIcon className="filter-button-caret" icon={faCaretUp} />
+                    ) : (
+                      <FontAwesomeIcon className="filter-button-caret" icon={faCaretDown} />
+                    )}
+                  </button>
+                  <div className={authClassNames} ref={authContainerRef}>
                     {authTypes.map(authType => (
                       <CheckboxRadioField
                         key={authType.urlSlug}
