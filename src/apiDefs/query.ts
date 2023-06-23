@@ -39,7 +39,24 @@ const getApisLoaded = (): boolean => {
   return state.apiList.loaded;
 };
 
-const getApiCategoryOrder = (): string[] => Object.keys(rootGetApiDefinitions.getApiDefinitions());
+const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
+  const categories: APICategories = rootGetApiDefinitions.getApiDefinitions();
+  const hasMatchingIdentifier = (category: APICategory): boolean => category.urlSlug === urlSlug;
+  return Object.values(categories).find(hasMatchingIdentifier) ?? null;
+};
+
+const lookupApiCategory = (categoryKey: string): APICategory =>
+  rootGetApiDefinitions.getApiDefinitions()[categoryKey];
+
+const getApiCategoryOrder = (): string[] => {
+  // return the urlFragments of the categories sorted by category name
+  const urlFragments = Object.keys(rootGetApiDefinitions.getApiDefinitions());
+  return urlFragments.sort((a: string, b: string) => {
+    const cat1 = lookupApiCategory(a);
+    const cat2 = lookupApiCategory(b);
+    return cat1.name < cat2.name ? -1 : 0;
+  });
+};
 
 const getActiveApiDefinitions = (): APICategories => {
   const output: APICategories = {};
@@ -111,15 +128,6 @@ const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   const apiResult = getAllApis().find(hasMatchingIdentifier);
   return apiResult ?? null;
 };
-
-const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
-  const categories: APICategories = rootGetApiDefinitions.getApiDefinitions();
-  const hasMatchingIdentifier = (category: APICategory): boolean => category.urlSlug === urlSlug;
-  return Object.values(categories).find(hasMatchingIdentifier) ?? null;
-};
-
-const lookupApiCategory = (categoryKey: string): APICategory =>
-  rootGetApiDefinitions.getApiDefinitions()[categoryKey];
 
 const apisFor = (
   selectedApiList: string[],

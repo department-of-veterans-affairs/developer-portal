@@ -181,7 +181,7 @@ export const ExploreRoot = (): JSX.Element => {
                     ref={topicButtonRef}
                   >
                     <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag} />
-                    Topics
+                    Topics{topicFilter.length > 0 && ` (${topicFilter.length})`}
                     {isTopicOpen ? (
                       <FontAwesomeIcon className="filter-button-caret" icon={faCaretUp} />
                     ) : (
@@ -194,7 +194,7 @@ export const ExploreRoot = (): JSX.Element => {
                       return (
                         <CheckboxRadioField
                           key={category.urlSlug}
-                          label={category.name}
+                          label={`${category.name} (${category.apis.length})`}
                           name="topics"
                           type="checkbox"
                           value={category.urlSlug}
@@ -223,7 +223,7 @@ export const ExploreRoot = (): JSX.Element => {
                       className="fa-rotate-270 vads-u-margin-right--1"
                       icon={faKey}
                     />
-                    Auth Type
+                    Auth Type{authFilter.length > 0 && ` (${authFilter.length})`}
                     {isAuthOpen ? (
                       <FontAwesomeIcon className="filter-button-caret" icon={faCaretUp} />
                     ) : (
