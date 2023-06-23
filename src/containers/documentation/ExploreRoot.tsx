@@ -11,6 +11,11 @@ import ApisLoader from '../../components/apisLoader/ApisLoader';
 import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 
+interface ApiFilter {
+  type: 'auth' | 'topic';
+  value: string;
+}
+
 // update
 const topicNames = ['benefits', 'etc'];
 
@@ -24,7 +29,7 @@ export const ExploreRoot = (): JSX.Element => {
   const [search, setSearch] = useState<string>(
     new URLSearchParams(location.search).get('search') ?? '',
   );
-  const [filters, setFilters] = useState([]); // TODO: grab filters from URL
+  const [filters, setFilters] = useState<ApiFilter[]>([]); // TODO: grab filters from URL
   const [filteredApis, setFilteredApis] = useState<APIDescription[]>([]);
   const apis = getAllApis();
 
@@ -76,9 +81,9 @@ export const ExploreRoot = (): JSX.Element => {
       apis.filter(api =>
         filters.every(filter => {
           if (
-            filter === api.categoryUrlFragment ||
-            filter === api.oAuthInfo?.acgInfo?.sandboxAud ||
-            filter === api.oAuthInfo?.ccgInfo?.sandboxAud
+            (filter.type === 'topic' && filter.value === api.categoryUrlFragment) ||
+            (filter.type === 'auth' && filter.value === api.oAuthInfo?.acgInfo?.sandboxAud) ||
+            (filter.type === 'auth' && filter.value === api.oAuthInfo?.ccgInfo?.sandboxAud)
           ) {
             return true;
           }
