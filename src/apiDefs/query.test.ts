@@ -159,7 +159,7 @@ describe('query module', () => {
       expect(sportsApi?.apis.length).toEqual(2);
       expect(sportsApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);
 
-      const lotrApi = lookupApiCategoryBySlug('lotr');
+      const lotrApi = lookupApiCategoryBySlug('lord-of-the-rings');
       expect(lotrApi).not.toBeNull();
       expect(lotrApi?.apis.length).toEqual(3);
       expect(lotrApi?.apis.map(api => !!api.oAuth).filter(m => m).length).toEqual(0);

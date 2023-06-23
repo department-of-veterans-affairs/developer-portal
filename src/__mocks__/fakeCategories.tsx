@@ -83,7 +83,7 @@ export const fakeCategories: APICategories = {
     },
     name: 'LOTR API',
     properName: 'Fancy LOTR API',
-    urlSlug: 'lotr',
+    urlSlug: 'lord-of-the-rings',
   },
   movies: {
     apis: [
