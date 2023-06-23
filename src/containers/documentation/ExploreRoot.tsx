@@ -27,7 +27,7 @@ const allFilters = [
   { name: 'Veteran Verification', type: 'category', urlSlug: 'verification' },
   { name: 'Authorization Code Grant', type: 'auth', urlSlug: 'acg' },
   { name: 'Client Credentials Grant', type: 'auth', urlSlug: 'ccg' },
-];
+] as ApiFilter[];
 
 export interface FuzzyValues {
   search: string;
@@ -40,7 +40,7 @@ export const ExploreRoot = (): JSX.Element => {
     new URLSearchParams(location.search).get('search') ?? '',
   );
 
-  const findFilter = (filter: string): ApiFilter => allFilters.filter(f => f.urlSlug === filter);
+  const findFilter = (filter: string): ApiFilter => allFilters.find(f => f.urlSlug === filter);
   const normalizeFilters = (filters: string[]): ApiFilter[] =>
     filters.map(filter => findFilter(filter));
   const paramFilters =
