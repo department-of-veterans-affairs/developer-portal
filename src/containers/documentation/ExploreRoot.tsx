@@ -2,14 +2,17 @@ import classNames from 'classnames';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Field, Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Fuse from 'fuse.js';
 import { useHistory, useLocation } from 'react-router';
-import { ExploreApiCard, PageHeader } from '../../components';
+import { CheckboxRadioField, ExploreApiCard, PageHeader } from '../../components';
 import './ExploreRoot.scss';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
+
+// update
+const topicNames = ['benefits', 'etc'];
 
 export interface FuzzyValues {
   search: string;
@@ -21,20 +24,27 @@ export const ExploreRoot = (): JSX.Element => {
   const [search, setSearch] = useState<string>(
     new URLSearchParams(location.search).get('search') ?? '',
   );
-  let apis = getAllApis();
+  const [filters, setFilters] = useState([]); // TODO: grab filters from URL
+  const [filteredApis, setFilteredApis] = useState<APIDescription[]>([]);
+  const apis = getAllApis();
 
   if (search) {
     const fuse = new Fuse(apis, {
       keys: ['name', 'description', 'releaseNotes', 'urlSlug', 'urlFragment'],
     });
-    apis = fuse
-      .search<APIDescription>(search)
-      .map((api: Fuse.FuseResult<APIDescription>): APIDescription => api.item);
+    // TODO: combine with other filters
+    setFilteredApis(
+      fuse
+        .search<APIDescription>(search)
+        .map((api: Fuse.FuseResult<APIDescription>): APIDescription => api.item),
+    );
   }
 
   const initialFuzzy: FuzzyValues = {
     search: new URLSearchParams(location.search).get('search') ?? '',
   };
+
+  const initialFilters = {};
 
   const handleFuzzySubmit = (values: FuzzyValues): void => {
     setSearch(values.search);
@@ -51,6 +61,34 @@ export const ExploreRoot = (): JSX.Element => {
     }
   };
 
+  interface FilterValues {}
+
+  const handleFiltersSubmit = (values: FilterValues): void => {
+    // transform values into an array of filters of shape: { type: string, value: string }
+    // { type: 'auth', value: 'acg' }
+    // { type: 'topic', value: 'benefits'}
+    setFilters([]);
+  };
+
+  useEffect(() => {
+    // TODO: combine with search
+    setFilteredApis(
+      apis.filter(api =>
+        filters.every(filter => {
+          if (
+            filter === api.categoryUrlFragment ||
+            filter === api.oAuthInfo?.acgInfo?.sandboxAud ||
+            filter === api.oAuthInfo?.ccgInfo?.sandboxAud
+          ) {
+            return true;
+          }
+          return false;
+        }),
+      ),
+    );
+    // add search
+  }, [apis, filters]);
+
   return (
     <div className="explore-root-container">
       <PageHeader header="Explore our APIs" />
@@ -59,16 +97,27 @@ export const ExploreRoot = (): JSX.Element => {
       </p>
       <div className="filters-container" data-cy="explore-filters">
         <div className="filter-controls">
-          <select className="filter-size" name="topic" id="topic">
-            <option value="topic-1">Topic 1</option>
-            <option value="topic-2">Topic 2</option>
-            <option value="topic-3">Topic 3</option>
-          </select>
-          <select className="filter-size" name="auth" id="auth">
-            <option value="auth-1">Auth 1</option>
-            <option value="auth-2">Auth 2</option>
-            <option value="auth-3">Auth 3</option>
-          </select>
+          <Formik initialValues={initialFilters} onSubmit={handleFiltersSubmit}>
+            <div className="filter-topic-container">
+              {topicNames.map(topic => (
+                <CheckboxRadioField
+                  key={topic}
+                  label={topic}
+                  name={`topic.${topic}`}
+                  type="checkbox"
+                  value={topic}
+                />
+              ))}
+            </div>
+          </Formik>
+
+          <Formik initialValues={initialFilters} onSubmit={handleFiltersSubmit}>
+            <div className="filter-auth-container">
+              <CheckboxRadioField label="ACG" name="auth.acg" type="checkbox" value="yes" />
+              <CheckboxRadioField label="CCG" name="auth.ccg" type="checkbox" value="yes" />
+            </div>
+          </Formik>
+
           <Formik
             initialValues={initialFuzzy}
             onSubmit={handleFuzzySubmit}
@@ -95,7 +144,7 @@ export const ExploreRoot = (): JSX.Element => {
           <p className="vads-u-margin-y--0 vads-u-font-family--serif">
             Showing all{' '}
             <span data-testid="api-count" className="vads-u-font-weight--bold">
-              {apis.length}
+              {filteredApis.length}
             </span>{' '}
             items
           </p>
@@ -104,7 +153,7 @@ export const ExploreRoot = (): JSX.Element => {
       <ApisLoader>
         <>
           <div data-cy="api-list" className="explore-main-container" role="list">
-            {apis.map((api: APIDescription) => (
+            {filteredApis.map((api: APIDescription) => (
               <ExploreApiCard key={api.urlSlug} api={api} />
             ))}
           </div>

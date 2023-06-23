@@ -121,6 +121,8 @@ export const fakeCategories: APICategories = {
         oAuthInfo: {
           acgInfo: {
             baseAuthPath: '/oauth2/armageddon/v1',
+            productionAud: 'sample-productionAud',
+            sandboxAud: 'sample-sandboxAud',
             scopes: [],
           },
         },
