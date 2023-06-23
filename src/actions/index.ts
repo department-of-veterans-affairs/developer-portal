@@ -83,6 +83,7 @@ export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => {
     apis[category].apis = apis[category].apis.map((item: APIDescription) => ({
       ...item,
       categoryUrlFragment: category,
+      categoryUrlSlug: apis[category].urlSlug,
     }));
   });
 

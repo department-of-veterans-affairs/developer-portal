@@ -14,6 +14,7 @@ const ReleaseNotes: string = 'My API&apos;s release notes';
 const api: APIDescription = {
   altID: null,
   categoryUrlFragment: 'nothing-of-importance',
+  categoryUrlSlug: 'nothing-of-importance',
   description: "it's a great API!",
   docSources: [
     {

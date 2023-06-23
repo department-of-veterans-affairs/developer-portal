@@ -36,6 +36,7 @@ import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 const rings: APIDescription = {
   altID: null,
   categoryUrlFragment: 'lotr',
+  categoryUrlSlug: 'lord-of-the-rings',
   description: 'One Ring to rule them all',
   docSources: [], // doesn't matter yet
   enabledByDefault: true,
@@ -55,6 +56,7 @@ const rings: APIDescription = {
 const apollo13: APIDescription = {
   altID: 'apollo13',
   categoryUrlFragment: 'movies',
+  categoryUrlSlug: 'movies',
   description: "When a trip to the moon doesn't go according to plan",
   docSources: [],
   enabledByDefault: true,
@@ -81,6 +83,7 @@ const apollo13: APIDescription = {
 const theMartian: APIDescription = {
   altID: 'the_martian',
   categoryUrlFragment: 'movies',
+  categoryUrlSlug: 'movies',
   description:
     'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
   docSources: [], // doesn't matter here
@@ -102,6 +105,7 @@ const theMartian: APIDescription = {
 const basketball: APIDescription = {
   altID: null,
   categoryUrlFragment: 'sports',
+  categoryUrlSlug: 'sports',
   description: 'stuff about hoops or whatever',
   docSources: [], // doesn't matter here
   enabledByDefault: true,
