@@ -1,8 +1,8 @@
 import classNames from 'classnames';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCaretUp, faKey, faSearch, faTag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Field, Form, Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Fuse from 'fuse.js';
 import { useHistory, useLocation } from 'react-router';
 import { CheckboxRadioField, ExploreApiCard, PageHeader } from '../../components';
@@ -10,6 +10,7 @@ import './ExploreRoot.scss';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
+import { useOutsideGroupClick } from '../../hooks';
 
 interface ApiFilter {
   name: string;
@@ -34,11 +35,41 @@ export interface FuzzyValues {
 }
 
 export const ExploreRoot = (): JSX.Element => {
+  const topicButtonRef = useRef(null);
+  const topicContainerRef = useRef(null);
+  const authButtonRef = useRef(null);
+  const authContainerRef = useRef(null);
+  const [isTopicOpen, setIsTopicOpen] = useState<boolean>(false);
+  const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const history = useHistory();
   const location = useLocation();
   const [search, setSearch] = useState<string>(
     new URLSearchParams(location.search).get('search') ?? '',
   );
+
+  const toggleTopicOpen = (): void => setIsTopicOpen(prevState => !prevState);
+  const toggleAuthOpen = (): void => setIsAuthOpen(prevState => !prevState);
+
+  const topicClassNames = classNames('filter-topic-container', {
+    'vads-u-display--block': isTopicOpen,
+    'vads-u-display--none': !isTopicOpen,
+  });
+  const authClassNames = classNames('filter-topic-container', {
+    'vads-u-display--block': isAuthOpen,
+    'vads-u-display--none': !isAuthOpen,
+  });
+
+  useOutsideGroupClick([topicButtonRef, topicContainerRef], () => {
+    if (isTopicOpen) {
+      toggleTopicOpen();
+    }
+  });
+
+  useOutsideGroupClick([authButtonRef, authContainerRef], () => {
+    if (isAuthOpen) {
+      toggleAuthOpen();
+    }
+  });
 
   const findFilter = (filter: string): ApiFilter =>
     allFilters.find(f => f.urlSlug === filter) as ApiFilter;
@@ -123,8 +154,22 @@ export const ExploreRoot = (): JSX.Element => {
       <div className="filters-container" data-cy="explore-filters">
         <div className="filter-controls">
           <Formik initialValues={initialFilters} onSubmit={handleFiltersSubmit}>
-            <Form noValidate>
-              <div className="filter-topic-container">
+            <Form className="explore-filter-form vads-u-margin-right--2" noValidate>
+              <button
+                className="explore-filter-button"
+                type="button"
+                onClick={toggleTopicOpen}
+                ref={topicButtonRef}
+              >
+                <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag} />
+                Topics
+                {isTopicOpen ? (
+                  <FontAwesomeIcon className="filter-button-caret" icon={faCaretUp} />
+                ) : (
+                  <FontAwesomeIcon className="filter-button-caret" icon={faCaretDown} />
+                )}
+              </button>
+              <div className={topicClassNames} ref={topicContainerRef}>
                 {allFilters
                   .filter(filter => filter.type === 'category')
                   .map(category => (
@@ -142,8 +187,22 @@ export const ExploreRoot = (): JSX.Element => {
           </Formik>
 
           <Formik initialValues={initialFilters} onSubmit={handleFiltersSubmit}>
-            <Form noValidate>
-              <div className="filter-auth-container">
+            <Form className="explore-filter-form" noValidate>
+              <button
+                className="explore-filter-button"
+                type="button"
+                onClick={toggleAuthOpen}
+                ref={authButtonRef}
+              >
+                <FontAwesomeIcon className="fa-rotate-270 vads-u-margin-right--1" icon={faKey} />
+                Auth Type
+                {isAuthOpen ? (
+                  <FontAwesomeIcon className="filter-button-caret" icon={faCaretUp} />
+                ) : (
+                  <FontAwesomeIcon className="filter-button-caret" icon={faCaretDown} />
+                )}
+              </button>
+              <div className={authClassNames} ref={authContainerRef}>
                 {allFilters
                   .filter(filter => filter.type === 'auth')
                   .map(auth => (
