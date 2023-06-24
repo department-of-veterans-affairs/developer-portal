@@ -32,6 +32,9 @@ export interface AuthFilterValues {
 export interface SearchFilterValues {
   search: string;
 }
+interface FilterDataObject {
+  [key: string]: string;
+}
 
 const authTypes = [
   { name: 'Authorization Code Grant', urlSlug: 'acg' },
@@ -56,23 +59,17 @@ export const ExploreRoot = (): JSX.Element => {
     params.categoryUrlSlugs?.split('+') ?? [],
   );
   const [authFilter, setAuthFilter] = useState<string[]>(
-    new URLSearchParams(location.search).get('authTypes')?.split('+') ?? [],
+    new URLSearchParams(location.search).get('auth')?.split('+') ?? [],
   );
   const [search, setSearch] = useState<string>(new URLSearchParams(location.search).get('q') ?? '');
   const topics = getApiCategoryOrder();
 
-  const initialTopics: TopicFilterValues = {
-    topics: topicFilter,
-  };
-  const initialAuthTypes: AuthFilterValues = {
-    authTypes: authFilter,
-  };
-  const initialSearch: SearchFilterValues = {
-    search,
-  };
+  const initialTopics: TopicFilterValues = { topics: topicFilter };
+  const initialAuthTypes: AuthFilterValues = { authTypes: authFilter };
+  const initialSearch: SearchFilterValues = { search };
+
   const toggleTopicOpen = (): void => setIsTopicOpen(prevState => !prevState);
   const toggleAuthOpen = (): void => setIsAuthOpen(prevState => !prevState);
-
   const topicClassNames = classNames('filter-topic-container', {
     'vads-u-display--block': isTopicOpen,
     'vads-u-display--none': !isTopicOpen,
@@ -87,7 +84,6 @@ export const ExploreRoot = (): JSX.Element => {
       toggleTopicOpen();
     }
   });
-
   useOutsideGroupClick([authButtonRef, authContainerRef], () => {
     if (isAuthOpen) {
       toggleAuthOpen();
@@ -132,33 +128,36 @@ export const ExploreRoot = (): JSX.Element => {
       });
     }
   };
+  const applyQueryStringFilters = (data: FilterDataObject): void => {
+    const queryString = Object.keys(data)
+      .map(key => `${key}=${data[key]}`)
+      .join('&');
+    history.replace({
+      ...location,
+      search: queryString,
+    });
+  };
   const handleAuthTypeFilterSubmit = (values: AuthFilterValues): void => {
+    const data: FilterDataObject = {};
     if (values.authTypes.length > 0) {
-      history.replace({
-        ...location,
-        search: `authTypes=${values.authTypes.join('+')}`,
-      });
-    } else {
-      history.replace({
-        ...location,
-        search: '',
-      });
+      data.auth = values.authTypes.join('+');
+    }
+    if (search) {
+      data.q = search;
     }
     setAuthFilter(values.authTypes);
+    applyQueryStringFilters(data);
   };
   const handleSearchSubmit = (values: SearchFilterValues): void => {
-    setSearch(values.search);
-    if (values.search) {
-      history.replace({
-        ...location,
-        search: `q=${values.search}`,
-      });
-    } else {
-      history.replace({
-        ...location,
-        search: '',
-      });
+    const data: FilterDataObject = {};
+    if (authFilter.length > 0) {
+      data.auth = authFilter.join('+');
     }
+    if (values.search) {
+      data.q = values.search;
+    }
+    setSearch(values.search);
+    applyQueryStringFilters(data);
   };
 
   return (
@@ -207,7 +206,6 @@ export const ExploreRoot = (): JSX.Element => {
               )}
             />
           </Formik>
-
           <Formik initialValues={initialAuthTypes} onSubmit={handleAuthTypeFilterSubmit}>
             <FieldArray
               name="authTypes"
@@ -246,7 +244,6 @@ export const ExploreRoot = (): JSX.Element => {
               )}
             />
           </Formik>
-
           <Formik
             initialValues={initialSearch}
             onSubmit={handleSearchSubmit}
