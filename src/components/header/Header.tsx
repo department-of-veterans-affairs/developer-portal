@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import classNames from 'classnames';
+import { HashLink } from 'react-router-hash-link';
+import TestingNotice from '../TestingNotice';
 import { Banner, NavBar } from '../../components';
 import { Flag } from '../../flags';
-import TestingNotice from '../TestingNotice';
-import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
 import { mobileOnly } from '../../styles/vadsUtils';
+import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
+import { deprecationBannerTargets } from '../../utils/deprecationBannerHelper';
 import './Header.scss';
 
 export const Header = (): JSX.Element => {
@@ -91,6 +92,13 @@ export const Header = (): JSX.Element => {
             </button>
           </div>
         </div>
+        {deprecationBannerTargets
+          .filter(target => target.path === location.pathname)
+          .map(target => (
+            <va-alert key={target.path} background-only show-icon status="info" visible>
+              <p className="vads-u-margin-y--0">{target.content}</p>
+            </va-alert>
+          ))}
       </header>
     </>
   );
