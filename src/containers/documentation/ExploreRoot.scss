@@ -106,3 +106,16 @@ input.filter-size {
   width: 100%;
   z-index: 1000;
 }
+
+button.usa-button--unstyled {
+  color: #005ea2;
+  text-decoration: underline;
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}

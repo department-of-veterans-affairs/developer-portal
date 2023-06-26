@@ -202,7 +202,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
               key={`search-${search}`}
             />
           )}
-          <button onClick={clearAllFilters} type="button">
+          <button className="usa-button--unstyled" onClick={clearAllFilters} type="button">
             Clear all
           </button>
         </div>
