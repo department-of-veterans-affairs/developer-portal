@@ -90,9 +90,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
   useEffect(() => {
     let allApis = getAllApis();
     if (topicFilter.length > 0) {
-      allApis = allApis.filter((api: APIDescription) =>
-        topicFilter.includes(api.categoryUrlSlug as string),
-      );
+      allApis = allApis.filter((api: APIDescription) => topicFilter.includes(api.categoryUrlSlug));
     }
     if (authFilter.length > 0) {
       allApis = allApis.filter((api: APIDescription) => {
