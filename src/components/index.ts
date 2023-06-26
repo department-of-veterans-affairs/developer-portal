@@ -37,3 +37,7 @@ export * from './exploreApiCard/ExploreApiCard';
 export * from './breadCrumbs/BreadCrumbs';
 export * from './apiBreadcrumbs/ApiBreadcrumbs';
 export * from './apiAlerts/ApiAlerts';
+export * from './apiFilters/ApiFilters';
+export * from './apiFilters/TopicFilters';
+export * from './apiFilters/AuthFilters';
+export * from './apiFilters/SearchFilters';

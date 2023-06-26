@@ -6,12 +6,18 @@
 
 .filters-container {
   background-color: #f1f1f1;
-  display: flex;
+  display: none;
   flex-flow: row nowrap;
   justify-content: space-between;
   margin: 0.8rem 0 1.6rem;
   padding: 1rem 0.8rem;
   width: 100%;
+}
+
+@include media($medium-screen) {
+  .filters-container {
+    display: flex;
+  }
 }
 
 .filter-controls {
