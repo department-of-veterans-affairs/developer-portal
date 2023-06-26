@@ -16,6 +16,9 @@ const authTypes = [
   { name: 'Client Credentials Grant', urlSlug: 'ccg' },
 ] as AuthFilterType[];
 
+export const getAuthTypeName = (urlSlug: string): string =>
+  authTypes.find((item: AuthFilterType): boolean => item.urlSlug === urlSlug)?.name ?? '';
+
 interface AuthFilterValues {
   authTypes: string[];
 }

@@ -1,4 +1,5 @@
 @import '../../styles/variables';
+@import '../exploreApiCard/ExploreApiCard.scss';
 
 .va-api-filter-pill {
   align-items: center;
@@ -8,4 +9,8 @@
   > span {
     margin: 0 24px 0 6px;
   }
+}
+
+.filter-pills-container {
+  @extend .explore-api-card-container;
 }

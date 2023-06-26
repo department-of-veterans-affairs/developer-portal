@@ -3,7 +3,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { getAllApis, getApisLoaded, isAcgApi, isCcgApi } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { AuthFilters, SearchFilters, TopicFilters } from '../../components';
+import { AuthFilters, Pill, SearchFilters, TopicFilters, getAuthTypeName } from '../../components';
 
 interface ExploreRootParams {
   categoryUrlSlugs?: string;
@@ -88,6 +88,24 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     applyQueryStringFilters(data);
   };
 
+  const clearTopicFilter = (): void => {
+    handleTopicFilterSubmit({ topics: [] });
+  };
+
+  const clearAuthFilter = (): void => {
+    handleAuthTypeFilterSubmit({ authTypes: [] });
+  };
+
+  const clearSearchFilter = (): void => {
+    handleSearchSubmit({ search: '' });
+  };
+
+  const clearAllFilters = (): void => {
+    clearTopicFilter();
+    clearAuthFilter();
+    clearSearchFilter();
+  };
+
   useEffect(() => {
     let allApis = getAllApis();
     if (topicFilter.length > 0) {
@@ -115,23 +133,27 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setApis(allApis);
   }, [apisLoaded, authFilter, search, setApis, topicFilter]);
 
+  const hasFilterPill = topicFilter.length || authFilter.length || search;
+
   return (
     <>
-      {' '}
-      <p className="vads-u-margin-y--0">
-        View and sort our APIs to find the best one for your needs.
-      </p>
       <div className="filters-container" data-cy="explore-filters">
         <div className="filter-controls">
           <TopicFilters
             handleTopicFilterSubmit={handleTopicFilterSubmit}
+            key={`topic-${topicFilter.join('')}`}
             topicFilter={topicFilter}
           />
           <AuthFilters
             authFilter={authFilter}
             handleAuthTypeFilterSubmit={handleAuthTypeFilterSubmit}
+            key={`authType-${topicFilter.join('')}`}
           />
-          <SearchFilters handleSearchSubmit={handleSearchSubmit} search={search} />
+          <SearchFilters
+            handleSearchSubmit={handleSearchSubmit}
+            search={search}
+            key={`search-${search}`}
+          />
         </div>
         <div className="caption-container">
           <p className="vads-u-margin-y--0 vads-u-font-family--serif">
@@ -143,6 +165,36 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
           </p>
         </div>
       </div>
+      {hasFilterPill && (
+        <div className="filter-pills-container">
+          {topicFilter.map(
+            (name: string): JSX.Element => (
+              <Pill name={name} onClick={clearTopicFilter} type="topic" key={`topic-${name}`} />
+            ),
+          )}
+          {authFilter.map(
+            (urlSlug: string): JSX.Element => (
+              <Pill
+                name={getAuthTypeName(urlSlug)}
+                onClick={clearAuthFilter}
+                type="auth"
+                key={`auth-${urlSlug}`}
+              />
+            ),
+          )}
+          {search && (
+            <Pill
+              name={`'${search}'`}
+              onClick={clearSearchFilter}
+              type="search"
+              key={`search-${search}`}
+            />
+          )}
+          <button onClick={clearAllFilters} type="button">
+            Clear all
+          </button>
+        </div>
+      )}
     </>
   );
 };

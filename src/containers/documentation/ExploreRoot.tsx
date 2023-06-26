@@ -10,7 +10,10 @@ export const ExploreRoot = (): JSX.Element => {
 
   return (
     <div className="explore-root-container">
-      <PageHeader header="Explore our APIs" />
+      <PageHeader
+        header="Explore our APIs"
+        subText="View and sort our APIs to find the best one for your needs."
+      />
       <ApiFilters apis={apis} setApis={setApis} />
       <ApisLoader>
         <>
