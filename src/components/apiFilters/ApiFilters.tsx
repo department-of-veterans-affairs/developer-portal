@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Fuse from 'fuse.js';
-import { getAllApis, getApisLoaded, isAcgApi, isCcgApi } from '../../apiDefs/query';
+import {
+  getAllApis,
+  getApisLoaded,
+  isAcgApi,
+  isCcgApi,
+  lookupApiCategoryBySlug,
+} from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { AuthFilters, Pill, SearchFilters, TopicFilters, getAuthTypeName } from '../../components';
 
@@ -167,11 +173,17 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
       </div>
       {hasFilterPill && (
         <div className="filter-pills-container">
-          {topicFilter.map(
-            (name: string): JSX.Element => (
-              <Pill name={name} onClick={clearTopicFilter} type="topic" key={`topic-${name}`} />
-            ),
-          )}
+          {topicFilter.map((urlFragment: string): JSX.Element => {
+            const topic = lookupApiCategoryBySlug(urlFragment);
+            return (
+              <Pill
+                name={topic?.name ?? ''}
+                onClick={clearTopicFilter}
+                type="topic"
+                key={`topic-${urlFragment}`}
+              />
+            );
+          })}
           {authFilter.map(
             (urlSlug: string): JSX.Element => (
               <Pill
