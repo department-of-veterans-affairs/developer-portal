@@ -32,7 +32,6 @@ export const AuthFilters = ({
   const authButtonRef = useRef(null);
   const authContainerRef = useRef(null);
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
-  const toggleAuthOpen = (): void => setIsAuthOpen(prevState => !prevState);
 
   const initialAuthTypes: AuthFilterValues = { authTypes: authFilter };
 
@@ -40,6 +39,8 @@ export const AuthFilters = ({
     'vads-u-display--block': isAuthOpen,
     'vads-u-display--none': !isAuthOpen,
   });
+
+  const toggleAuthOpen = (): void => setIsAuthOpen(prevState => !prevState);
 
   useOutsideGroupClick([authButtonRef, authContainerRef], () => {
     if (isAuthOpen) {

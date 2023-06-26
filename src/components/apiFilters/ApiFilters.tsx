@@ -3,9 +3,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { getAllApis, isAcgApi, isCcgApi } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { TopicFilters } from './TopicFilters';
-import { AuthFilters } from './AuthFilters';
-import { SearchFilters } from './SearchFilters';
+import { AuthFilters, SearchFilters, TopicFilters } from '../../components';
 
 interface ExploreRootParams {
   categoryUrlSlugs?: string;
