@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 import Fuse from 'fuse.js';
-import { getAllApis, isAcgApi, isCcgApi } from '../../apiDefs/query';
+import { getAllApis, getApisLoaded, isAcgApi, isCcgApi } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { AuthFilters, SearchFilters, TopicFilters } from '../../components';
 
@@ -37,6 +37,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     new URLSearchParams(location.search).get('auth')?.split('+') ?? [],
   );
   const [search, setSearch] = useState<string>(new URLSearchParams(location.search).get('q') ?? '');
+  const apisLoaded = getApisLoaded();
 
   const handleTopicFilterSubmit = (values: TopicFilterValues): void => {
     setTopicFilter(values.topics);
@@ -112,7 +113,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
         .map((api: Fuse.FuseResult<APIDescription>): APIDescription => api.item);
     }
     setApis(allApis);
-  }, [authFilter, search, setApis, topicFilter]);
+  }, [apisLoaded, authFilter, search, setApis, topicFilter]);
 
   return (
     <>
