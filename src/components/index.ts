@@ -41,3 +41,4 @@ export * from './apiFilters/ApiFilters';
 export * from './apiFilters/TopicFilters';
 export * from './apiFilters/AuthFilters';
 export * from './apiFilters/SearchFilters';
+export * from './pill/Pill';

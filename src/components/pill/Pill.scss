@@ -1,0 +1,11 @@
+@import '../../styles/variables';
+
+.va-api-filter-pill {
+  align-items: center;
+  border-radius: 12px !important;
+  display: inline-flex !important;
+  padding: 4px 4px 4px 8px !important;
+  > span {
+    margin: 0 24px 0 6px;
+  }
+}
