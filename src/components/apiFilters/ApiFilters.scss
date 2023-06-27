@@ -28,10 +28,11 @@
 
 @include media($medium-screen) {
   .filters-container {
+    align-items: center;
     background-color: #f1f1f1;
     display: flex !important;
     flex-flow: row nowrap;
-    padding: 1rem 0.8rem;
+    padding: 0 1.6rem 0 0.8rem;
     margin: 0.8rem 0 1.6rem;
     justify-content: space-between;
     position: static;
@@ -46,6 +47,7 @@
 
 @include media($medium-screen) {
   .filter-controls {
+    align-items: center;
     transform: unset;
   }
 }
