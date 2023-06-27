@@ -6,10 +6,7 @@ import classNames from 'classnames';
 import { CheckboxRadioField } from '../formField';
 import { getApiCategoryOrder, lookupApiCategory } from '../../apiDefs/query';
 import { useOutsideGroupClick } from '../../hooks';
-
-interface TopicFilterValues {
-  topics: string[];
-}
+import { TopicFilterValues } from './ApiFilters';
 
 interface TopicFiltersProps {
   handleTopicFilterSubmit: (values: TopicFilterValues) => void;
@@ -40,11 +37,16 @@ export const TopicFilters = ({
     }
   });
 
+  const handleFormSubmit = (values: TopicFilterValues): void => {
+    toggleTopicOpen();
+    handleTopicFilterSubmit(values);
+  };
+
   return (
     <Formik
       className="explore-formik-container"
       initialValues={initialTopics}
-      onSubmit={handleTopicFilterSubmit}
+      onSubmit={handleFormSubmit}
     >
       <FieldArray
         name="topics"

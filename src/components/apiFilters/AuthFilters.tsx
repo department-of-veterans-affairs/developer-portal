@@ -5,6 +5,7 @@ import { faCaretDown, faCaretUp, faKey, faMinus, faPlus } from '@fortawesome/fre
 import classNames from 'classnames';
 import { CheckboxRadioField } from '../formField';
 import { useOutsideGroupClick } from '../../hooks';
+import { AuthFilterValues } from './ApiFilters';
 
 interface AuthFilterType {
   name: string;
@@ -18,10 +19,6 @@ const authTypes = [
 
 export const getAuthTypeName = (urlSlug: string): string =>
   authTypes.find((item: AuthFilterType): boolean => item.urlSlug === urlSlug)?.name ?? '';
-
-interface AuthFilterValues {
-  authTypes: string[];
-}
 
 interface AuthFiltersProps {
   authFilter: string[];
@@ -51,8 +48,13 @@ export const AuthFilters = ({
     }
   });
 
+  const handleFormSubmit = (values: AuthFilterValues): void => {
+    toggleAuthOpen();
+    handleAuthTypeFilterSubmit(values);
+  };
+
   return (
-    <Formik initialValues={initialAuthTypes} onSubmit={handleAuthTypeFilterSubmit}>
+    <Formik initialValues={initialAuthTypes} onSubmit={handleFormSubmit}>
       <FieldArray
         name="authTypes"
         render={(): JSX.Element => (
