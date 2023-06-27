@@ -39,6 +39,11 @@
     transform: unset;
     width: 100%;
   }
+  .filter-topic-container {
+    [type='checkbox'] + label {
+      display: inline-flex;
+    }
+  }
 }
 
 .filter-controls {
