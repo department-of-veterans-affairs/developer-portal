@@ -13,7 +13,6 @@ import {
   lookupApiCategoryBySlug,
 } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
-import { desktopOnly, mobileOnly } from '../../styles/vadsUtils';
 import { useOutsideGroupClick } from '../../hooks';
 
 import './ApiFilters.scss';
@@ -171,9 +170,6 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
 
   return (
     <>
-      {' '}
-      <p className={mobileOnly()}>Find, access and create with VA APIs.</p>
-      <p className={desktopOnly()}>View and sort our APIs to find the best one for your needs.</p>
       <div className="caption-container medium-screen:vads-u-display--none">
         <p className="vads-u-margin-y--0 vads-u-font-family--serif">
           Showing all{' '}
@@ -214,7 +210,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
             key={`search-${search}`}
           />
         </div>
-        <div className="caption-container">
+        <div className="caption-container vads-u-display--none">
           <p className="vads-u-margin-y--0 vads-u-font-family--serif">
             Showing all{' '}
             <span data-testid="api-count" className="vads-u-font-weight--bold">
