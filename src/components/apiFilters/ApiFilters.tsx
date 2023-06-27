@@ -117,12 +117,14 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     applyQueryStringFilters(data);
   };
 
-  const clearTopicFilter = (): void => {
-    handleTopicFilterSubmit({ topics: [] });
+  const clearTopicFilter = (urlFragment: string): void => {
+    const newTopics = topicFilter.filter(e => e !== urlFragment);
+    handleTopicFilterSubmit({ topics: newTopics });
   };
 
-  const clearAuthFilter = (): void => {
-    handleAuthTypeFilterSubmit({ authTypes: [] });
+  const clearAuthFilter = (urlSlug: string): void => {
+    const newAuthTypes = authFilter.filter(e => e !== urlSlug);
+    handleAuthTypeFilterSubmit({ authTypes: newAuthTypes });
   };
 
   const clearSearchFilter = (): void => {
@@ -230,7 +232,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
             return (
               <Pill
                 name={topic?.name ?? ''}
-                onClick={clearTopicFilter}
+                onClick={(): void => clearTopicFilter(urlFragment)}
                 type="topic"
                 key={`topic-${urlFragment}`}
               />
@@ -240,7 +242,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
             (urlSlug: string): JSX.Element => (
               <Pill
                 name={getAuthTypeName(urlSlug)}
-                onClick={clearAuthFilter}
+                onClick={(): void => clearAuthFilter(urlSlug)}
                 type="auth"
                 key={`auth-${urlSlug}`}
               />
