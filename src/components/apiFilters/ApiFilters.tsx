@@ -177,11 +177,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     <>
       <div className="caption-container medium-screen:vads-u-display--none">
         <p className="vads-u-margin-y--0 vads-u-font-family--serif">
-          Showing all{' '}
-          <span data-testid="api-count" className="vads-u-font-weight--bold">
-            {apis.length}
-          </span>{' '}
-          items
+          Showing all <span className="vads-u-font-weight--bold">{apis.length}</span> items
         </p>
       </div>
       <button
@@ -217,11 +213,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
         </div>
         <div className="caption-container vads-u-display--none medium-screen:vads-u-display--flex">
           <p className="vads-u-margin-y--0 vads-u-font-family--serif">
-            Showing all{' '}
-            <span data-testid="api-count" className="vads-u-font-weight--bold">
-              {apis.length}
-            </span>{' '}
-            items
+            Showing all <span className="vads-u-font-weight--bold">{apis.length}</span> items
           </p>
         </div>
       </div>
