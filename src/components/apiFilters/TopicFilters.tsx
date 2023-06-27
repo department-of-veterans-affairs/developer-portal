@@ -22,6 +22,7 @@ export const TopicFilters = ({
 }: TopicFiltersProps): JSX.Element => {
   const [isTopicOpen, setIsTopicOpen] = useState<boolean>(false);
   const topicButtonRef = useRef(null);
+  const topicButtonRef2 = useRef(null);
   const topicContainerRef = useRef(null);
   const topics = getApiCategoryOrder();
 
@@ -34,7 +35,7 @@ export const TopicFilters = ({
 
   const toggleTopicOpen = (): void => setIsTopicOpen(prevState => !prevState);
 
-  useOutsideGroupClick([topicButtonRef, topicContainerRef], () => {
+  useOutsideGroupClick([topicButtonRef, topicButtonRef2, topicContainerRef], () => {
     if (isTopicOpen) {
       toggleTopicOpen();
     }
@@ -67,7 +68,7 @@ export const TopicFilters = ({
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"
               type="button"
               onClick={toggleTopicOpen}
-              ref={topicButtonRef}
+              ref={topicButtonRef2}
             >
               <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag} />
               Topics{topicFilter.length > 0 && ` (${topicFilter.length})`}

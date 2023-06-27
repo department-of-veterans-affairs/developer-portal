@@ -33,6 +33,7 @@ export const AuthFilters = ({
   handleAuthTypeFilterSubmit,
 }: AuthFiltersProps): JSX.Element => {
   const authButtonRef = useRef(null);
+  const authButtonRef2 = useRef(null);
   const authContainerRef = useRef(null);
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
 
@@ -74,7 +75,7 @@ export const AuthFilters = ({
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"
               type="button"
               onClick={toggleAuthOpen}
-              ref={authButtonRef}
+              ref={authButtonRef2}
             >
               <FontAwesomeIcon className="fa-rotate-270 vads-u-margin-right--1" icon={faKey} />
               Auth Type{authFilter.length > 0 && ` (${authFilter.length})`}
