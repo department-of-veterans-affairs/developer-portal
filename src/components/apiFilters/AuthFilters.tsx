@@ -96,7 +96,12 @@ export const AuthFilters = ({
                   value={authType.urlSlug}
                 />
               ))}
-              <button type="submit">APPLY FILTERS</button>
+              <button
+                type="submit"
+                aria-label="Apply filters to update the API list and close the filter menu"
+              >
+                APPLY FILTERS
+              </button>
             </div>
           </Form>
         )}
