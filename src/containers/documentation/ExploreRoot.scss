@@ -128,6 +128,7 @@
 @include media($medium-screen) {
   #explore-page-fuzzy-search {
     box-shadow: unset;
+    width: 46rem;
   }
   .explore-filter-button {
     // transform: unset;
@@ -141,9 +142,10 @@
     width: 21.4rem !important;
     border: 0 !important;
   }
-  // .explore-filter-form {
-  //   background-color: unset;
-  // }
+
+  .explore-filter-form {
+    background-color: unset;
+  }
 
   .filter-topic-container {
     background-color: $color-white;
