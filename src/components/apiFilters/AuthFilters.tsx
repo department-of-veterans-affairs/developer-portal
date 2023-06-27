@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { FieldArray, Form, Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faCaretUp, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCaretUp, faKey, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import { CheckboxRadioField } from '../formField';
 import { useOutsideGroupClick } from '../../hooks';
@@ -58,18 +58,30 @@ export const AuthFilters = ({
         render={(): JSX.Element => (
           <Form className="explore-filter-form" noValidate>
             <button
-              className="explore-filter-button"
+              className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
               type="button"
               onClick={toggleAuthOpen}
               ref={authButtonRef}
             >
               <FontAwesomeIcon className="fa-rotate-270 vads-u-margin-right--1" icon={faKey} />
               Auth Type{authFilter.length > 0 && ` (${authFilter.length})`}
-              {isAuthOpen ? (
-                <FontAwesomeIcon className="filter-button-caret" icon={faCaretUp} />
-              ) : (
-                <FontAwesomeIcon className="filter-button-caret" icon={faCaretDown} />
-              )}
+              <FontAwesomeIcon
+                className="filter-button-caret"
+                icon={isAuthOpen ? faCaretUp : faCaretDown}
+              />
+            </button>
+            <button
+              className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"
+              type="button"
+              onClick={toggleAuthOpen}
+              ref={authButtonRef}
+            >
+              <FontAwesomeIcon className="fa-rotate-270 vads-u-margin-right--1" icon={faKey} />
+              Auth Type{authFilter.length > 0 && ` (${authFilter.length})`}
+              <FontAwesomeIcon
+                className="filter-button-caret"
+                icon={isAuthOpen ? faMinus : faPlus}
+              />
             </button>
             <div className={authClassNames} ref={authContainerRef}>
               {authTypes.map(authType => (

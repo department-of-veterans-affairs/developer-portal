@@ -1,0 +1,54 @@
+@import '../../styles/variables.scss';
+
+.filters-toggle-button {
+  background-color: $color-primary-darkest !important;
+  border-radius: 0 !important;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 100;
+  padding: 1.6rem !important;
+}
+
+.filters-toggle-icon {
+  position: absolute;
+  right: 1.6rem;
+}
+
+.filters-container {
+  background-color: $color-white;
+  position: fixed;
+  bottom: 50px;
+  left: 0;
+  width: 100%;
+  transform: translateY(100%);
+}
+
+@include media($medium-screen) {
+  .filters-container {
+    background-color: #f1f1f1;
+    display: flex !important;
+    flex-flow: row nowrap;
+    padding: 1rem 0.8rem;
+    margin: 0.8rem 0 1.6rem;
+    justify-content: space-between;
+    position: static;
+    transform: unset;
+    width: 100%;
+  }
+}
+
+.filter-controls {
+  transform: translateY(-100%);
+}
+
+@include media($medium-screen) {
+  .filter-controls {
+    transform: unset;
+  }
+}
+
+.filter-topic-container {
+  padding: 0 16px;
+}
