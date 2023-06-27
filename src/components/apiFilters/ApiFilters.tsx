@@ -81,12 +81,14 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     }
   };
 
-  const applyQueryStringFilters = (data: FilterDataObject): void => {
+  const applyQueryStringFilters = (data: FilterDataObject, pathOverride?: string): void => {
     const queryString = Object.keys(data)
       .map(key => `${key}=${data[key]}`)
       .join('&');
+    const pathname = pathOverride ?? location.pathname;
     history.replace({
       ...location,
+      pathname,
       search: queryString,
     });
   };
@@ -128,9 +130,10 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
   };
 
   const clearAllFilters = (): void => {
-    clearTopicFilter();
-    clearAuthFilter();
-    clearSearchFilter();
+    setTopicFilter([]);
+    setAuthFilter([]);
+    setSearch('');
+    applyQueryStringFilters({}, '/explore');
   };
 
   useOutsideGroupClick([filterButtonRef, filterContainerRef], () => {
