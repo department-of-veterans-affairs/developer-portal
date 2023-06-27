@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { FieldArray, Form, Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faCaretUp, faTag } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faCaretUp, faMinus, faPlus, faTag } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import { CheckboxRadioField } from '../formField';
 import { getApiCategoryOrder, lookupApiCategory } from '../../apiDefs/query';
@@ -41,24 +41,40 @@ export const TopicFilters = ({
   });
 
   return (
-    <Formik initialValues={initialTopics} onSubmit={handleTopicFilterSubmit}>
+    <Formik
+      className="explore-formik-container"
+      initialValues={initialTopics}
+      onSubmit={handleTopicFilterSubmit}
+    >
       <FieldArray
         name="topics"
         render={(): JSX.Element => (
-          <Form className="explore-filter-form vads-u-margin-right--2" noValidate>
+          <Form className="explore-filter-form medium-screen:vads-u-margin-right--2" noValidate>
             <button
-              className="explore-filter-button"
+              className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
               type="button"
               onClick={toggleTopicOpen}
               ref={topicButtonRef}
             >
               <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag} />
               Topics{topicFilter.length > 0 && ` (${topicFilter.length})`}
-              {isTopicOpen ? (
-                <FontAwesomeIcon className="filter-button-caret" icon={faCaretUp} />
-              ) : (
-                <FontAwesomeIcon className="filter-button-caret" icon={faCaretDown} />
-              )}
+              <FontAwesomeIcon
+                className="filter-button-caret"
+                icon={isTopicOpen ? faCaretUp : faCaretDown}
+              />
+            </button>
+            <button
+              className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"
+              type="button"
+              onClick={toggleTopicOpen}
+              ref={topicButtonRef}
+            >
+              <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag} />
+              Topics{topicFilter.length > 0 && ` (${topicFilter.length})`}
+              <FontAwesomeIcon
+                className="filter-button-caret"
+                icon={isTopicOpen ? faMinus : faPlus}
+              />
             </button>
             <div className={topicClassNames} ref={topicContainerRef}>
               {topics.map((topic: string) => {

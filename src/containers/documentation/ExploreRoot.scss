@@ -8,39 +8,50 @@
   }
 }
 
-.filters-container {
-  background-color: #f1f1f1;
-  display: none;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  margin: 0.8rem 0 1.6rem;
-  padding: 1rem 0.8rem;
-  width: 100%;
-}
+// .filters-container {
+//   background-color: #f1f1f1;
+//   // display: none;
+//   // flex-flow: row nowrap;
+//   // justify-content: space-between;
+//   // margin: 0.8rem 0 1.6rem;
+//   // padding: 1rem 0.8rem;
+//   bottom: 36px;
+//   left: 0;
+//   right: 0;
+//   position: fixed;
+//   width: 100%;
+//   transform: translateY(100%);
+// }
 
-@include media($medium-screen) {
-  .filters-container {
-    display: flex;
-  }
-}
+// @include media($medium-screen) {
+//   .filters-container {
+//     display: flex;
+//   }
+// }
 
-.filter-controls {
-  display: flex;
-  flex-flow: row nowrap;
-}
+// .filter-controls {
+//   display: flex;
+//   // flex-flow: row nowrap;
+//   flex-direction: column-reverse;
+//   // position: fixed;
+//   // bottom: 36px;
+//   // left: 0;
+//   // right: 0;
+//   transform: translateY(-100%);
+// }
 
-input.filter-size {
-  height: 2rem;
-}
+// input.filter-size {
+//   height: 2rem;
+// }
 
-.filter-size {
-  width: 22rem;
-}
+// .filter-size {
+//   width: 22rem;
+// }
 
-.caption-container {
-  display: flex;
-  align-items: center;
-}
+// .caption-container {
+//   display: flex;
+//   align-items: center;
+// }
 
 .explore-main-container {
   display: flex;
@@ -58,8 +69,11 @@ input.filter-size {
   text-align: center;
 }
 #explore-page-fuzzy-search {
-  margin-left: 24px;
-  width: 235px;
+  // margin-left: 24px;
+  // width: 235px;
+  background-color: $color-gray-light-alt;
+  padding: 1.2rem 1.6rem;
+  box-shadow: 0px -1px 12px 1px rgba(0, 0, 0, 0.2);
 
   input {
     border: 1px solid transparent;
@@ -77,34 +91,78 @@ input.filter-size {
   }
 }
 
+// .explore-filter-button {
+//   background-color: $color-white !important;
+//   border-radius: 3px !important;
+//   color: $color-gray !important;
+//   display: inline-flex !important;
+//   margin: 0 !important;
+//   padding: 12px 8px !important;
+//   position: relative;
+//   width: 21.4rem !important;
+// }
+
+// .explore-filter-form {
+//   position: relative;
+//   transform: translateY(-100%);
+// }
+
+// .explore-formik-container {
+//   transform: translateY(100%);
+// }
+
+.explore-filter-form {
+  background-color: $color-white;
+}
 .explore-filter-button {
-  background-color: $color-white !important;
-  border-radius: 3px !important;
-  color: $color-gray !important;
-  display: inline-flex !important;
+  background-color: $color-gray-light-alt !important;
+  border-radius: 0 !important;
+  color: $color-primary-darkest !important;
+  // display: flex !important;
   margin: 0 !important;
-  padding: 12px 8px !important;
   position: relative;
-  width: 21.4rem !important;
+  padding: 1.6rem !important;
+  border-top: 1px solid $color-primary-darkest !important;
+}
+
+@include media($medium-screen) {
+  #explore-page-fuzzy-search {
+    box-shadow: unset;
+  }
+  .explore-filter-button {
+    // transform: unset;
+    background-color: $color-white !important;
+    border-radius: 3px !important;
+    color: $color-gray !important;
+    display: inline-flex !important;
+    margin: 0 !important;
+    padding: 12px 8px !important;
+    position: relative;
+    width: 21.4rem !important;
+    border: 0 !important;
+  }
+  // .explore-filter-form {
+  //   background-color: unset;
+  // }
+
+  .filter-topic-container {
+    background-color: $color-white;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    z-index: 1000;
+  }
+
+  .explore-filter-form {
+    position: relative;
+  }
 }
 
 .filter-button-caret {
   position: absolute;
-  right: 8px;
-}
-
-.explore-filter-form {
-  position: relative;
-}
-
-.filter-topic-container {
-  background-color: $color-white;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  padding: 10px;
-  position: absolute;
-  top: 45px;
-  width: 100%;
-  z-index: 1000;
+  right: 1.6rem;
 }
 
 button.usa-button--unstyled {
