@@ -8,8 +8,22 @@ div.title-border {
 }
 
 section.api-list {
-  background-color: #f9f9f9;
   margin: auto;
+
+  h2 {
+    display: inline-block;
+    margin-right: 2rem;
+  }
+
+  .explore-api-card-container {
+    border: 1px solid $color-gray-light;
+    border-radius: 5px;
+    width: 100%;
+  }
+
+  .vads-l-col--3 {
+    display: flex;
+  }
 }
 
 a.va-home-button {
@@ -26,4 +40,7 @@ div.va-column-content-text {
 
 .flex-basis-32 {
   flex-basis: 32%;
+}
+.home .process strong a {
+  font-family: 'Bitter', serif;
 }
