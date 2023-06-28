@@ -12,17 +12,14 @@ const testPaths = [
   '/',
   '/terms-of-service',
   '/explore',
-  '/explore/authorization',
-  '/explore/authorization/docs/authorization-code',
-  '/explore/benefits',
-  '/explore/health/docs/quickstart',
-  // Swagger page handled individually below
-  // '/explore/vaForms/docs/vaForms',
-  '/release-notes/benefits',
+  '/explore/va-benefits',
+  '/explore?auth=acg&q=health',
+  '/explore/health?q=health',
+  '/explore/health?auth=acg',
+  '/explore/health?auth=acg&q=health',
   '/api-publishing',
   '/api-publishing/process',
   '/onboarding',
-  '/onboarding/request-sandbox-access',
   '/onboarding/production-access-application',
   '/about/news',
 ];
@@ -72,7 +69,7 @@ describe('Visual Regression tests', () => {
     });
 
     it(`Check Swagger page has no visual regressions at ${size.width}px width.`, () => {
-      const path = '/explore/vaForms/docs/vaForms';
+      const path = '/explore/api/va-forms/docs';
       cy.viewport(size.width, size.height);
       cy.visit(path);
       cy.wait(5000); // Gives Swagger UI plenty of time to load
