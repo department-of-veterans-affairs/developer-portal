@@ -118,7 +118,6 @@ const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
   return Object.values(categories).find(hasMatchingIdentifier) ?? null;
 };
 
-
 const lookupCategoryByApi = (api: APIDescription): APICategory | null => {
   const categories: APICategories = rootGetApiDefinitions.getApiDefinitions();
   const matchingCategory = Object.values(categories).find(category => category.apis.includes(api));
