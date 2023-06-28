@@ -16,6 +16,7 @@ describe('deprecated API module', () => {
     name: 'My API',
     oAuth: false,
     openData: false,
+    overviewPageContent: '## Default overview pag content',
     releaseNotes: urgentCareDeprecationNotice,
     urlFragment: 'my_api',
     urlSlug: 'my-api',

@@ -50,11 +50,13 @@ describe('env module', () => {
         {
           ...sharedApiValues,
           enabledByDefault: true,
+          overviewPageContent: '## Default overview pag content',
           urlFragment: enableApiId,
         },
         {
           ...sharedApiValues,
           enabledByDefault: false,
+          overviewPageContent: '## Default overview pag content',
           urlFragment: disabledApiId,
         },
       ]);

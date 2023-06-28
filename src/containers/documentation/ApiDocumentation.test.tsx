@@ -22,6 +22,7 @@ const api: APIDescription = {
   lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'My API',
   openData: false,
+  overviewPageContent: '## Default overview pag content',
   releaseNotes: ReleaseNotes,
   urlFragment: 'my_api',
   urlSlug: 'my-api',
