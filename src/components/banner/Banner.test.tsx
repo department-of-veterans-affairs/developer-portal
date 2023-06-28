@@ -10,7 +10,7 @@ describe('Banner', () => {
   });
 
   it('should render the site notice text and toggle button', () => {
-    const siteNotice = screen.getByText('An official website of the United States government.');
+    const siteNotice = screen.getByText('An official website of the United States government');
     expect(siteNotice).toBeInTheDocument();
 
     const toggleButton = screen.getByRole('button', {
@@ -45,9 +45,11 @@ describe('Banner', () => {
     expect(toggleButton.getAttribute('aria-expanded')).toBe('true');
 
     userEvent.click(toggleButton);
-    expect(screen.queryByRole('region', {
-      name: "Here's how you know this is an official website",
-    })).toBeNull();
+    expect(
+      screen.queryByRole('region', {
+        name: "Here's how you know this is an official website",
+      }),
+    ).toBeNull();
     expect(toggleButton.getAttribute('aria-expanded')).toBe('false');
   });
 
@@ -65,24 +67,24 @@ describe('Banner', () => {
     });
 
     it('should render the dot gov guidance', () => {
-      const leadText = getByText(guidanceRegion, "The .gov means it's official");
+      const leadText = getByText(guidanceRegion, 'Official websites use .gov');
       expect(leadText).toBeInTheDocument();
 
       const description = getByText(
         guidanceRegion,
-        /^Federal government websites often end in \.gov/
+        /website belongs to an official government organization in the United States./,
       );
       expect(description).toBeInTheDocument();
     });
 
     it('should render the HTTPS guidance', () => {
-      const leadText = getByText(guidanceRegion, 'The site is secure.');
+      const leadText = getByText(guidanceRegion, 'Secure .gov websites use HTTPS');
       expect(leadText).toBeInTheDocument();
 
       const description = getByText(
         guidanceRegion,
         // partial regex because it's broken up by the <strong> for the "https://" part
-        /ensures that you're connecting to the official website/
+        /means you’ve safely connected to the .gov website. Share sensitive information only on official, secure websites./,
       );
       expect(description).toBeInTheDocument();
     });

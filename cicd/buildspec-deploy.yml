@@ -117,6 +117,104 @@ phases:
             sentry-cli releases finalize $SENTRY_RELEASE_NAME
           fi
         done
+      - echo "Applying redirects to environments"
+      - |
+        cat << REDIRECTS > ./redirects.txt
+        # URL redirects for all environments added to s3 buckets during build deploy phase
+        # Format is "OriginalPathPlusQueryString|TargetPathPlusQueryString"
+        # ex. /old/url/path|/new-url
+        # The protocol and domain name per environment are added automatically
+        # API Page Redirects
+        /explore/appeals/docs/appealable-issues|/explore/api/appealable-issues/docs
+        /explore/appeals/docs/appeals|/explore/api/appeals-status/docs
+        /explore/appeals/docs/decision_reviews|/explore/api/decision-reviews/docs
+        /explore/appeals/docs/higher-level-reviews|/explore/api/higher-level-reviews/docs
+        /explore/appeals/docs/legacy-appeals|/explore/api/legacy-appeals/docs
+        /explore/benefits/docs/notice_of_disagreements|/explore/api/notice-of-disagreements/docs
+        /explore/benefits/docs/claims|/explore/api/benefits-claims/docs
+        /explore/benefits/docs/benefits-documents|/explore/api/benefits-documents/docs
+        /explore/benefits/docs/benefits|/explore/api/benefits-intake/docs
+        /explore/benefits/docs/benefits_reference_data|/explore/api/benefits-reference-data/docs
+        /explore/benefits/docs/direct-deposit-management|/explore/api/direct-deposit-management/docs
+        /explore/appeals/docs/education-benefits|/explore/api/education-benefits/docs
+        /explore/benefits/docs/supplemental-claims|/explore/api/supplemental-claims/docs
+        /explore/facilities/docs/facilities|/explore/api/va-facilities/docs
+        /explore/vaForms/docs/vaForms|/explore/api/va-forms/docs
+        /explore/health/docs/clinical_health|/explore/api/clinical-health/docs
+        /explore/health/docs/community_care|/explore/api/community-care-eligibility/docs
+        /explore/health/docs/fhir|/explore/api/patient-health/docs
+        /explore/health/docs/provider_directory|/explore/api/provider-directory/docs
+        /explore/health/docs/urgent_care|/explore/api/urgent-care-eligibility/docs
+        /explore/loanGuaranty/docs/lgy_guaranty_remittance|/explore/api/guaranty-remittance/docs
+        /explore/loanGuaranty/docs/loan_guaranty|/explore/api/loan-guaranty/docs
+        /explore/loanGuaranty/docs/loan-review|/explore/api/loan-review/docs
+        /explore/verification/docs/address_validation|/explore/api/address-validation/docs
+        /explore/verification/docs/contact_information|/explore/api/contact-information/docs
+        /explore/verification/docs/va_letter_generator|/explore/api/va-letter-generator/docs
+        /explore/verification/docs/veteran_confirmation|/explore/api/veteran-confirmation/docs
+        /explore/verification/docs/veteran_verification|/explore/api/veteran-service-history-and-eligibility/docs
+        # Category Redirects
+        /explore/appeals|/explore/va-benefits
+        /explore/benefits|/explore/va-benefits
+        /explore/facilities|/explore/facilities
+        /explore/vaForms|/explore/forms
+        /explore/health|/explore/health
+        /explore/loanGuaranty|/explore/loan-guaranty
+        /explore/verification|/explore/verification
+        # ACG Redirects
+        /explore/authentication/docs/authorization-code?api=appealable-issues|/explore/api/appealable-issues/authorization-code
+        /explore/authentication/docs/authorization-code?api=appeals|/explore/api/appeals-status/authorization-code
+        /explore/authentication/docs/authorization-code?api=claims|/explore/api/benefits-claims/authorization-code
+        /explore/authentication/docs/authorization-code?api=clinical_health|/explore/api/clinical-health/authorization-code
+        /explore/authentication/docs/authorization-code?api=community_care|/explore/api/community-care-eligibility/authorization-code
+        /explore/authentication/docs/authorization-code?api=higher-level-reviews|/explore/api/higher-level-reviews/authorization-code
+        /explore/authentication/docs/authorization-code?api=legacy-appeals|/explore/api/legacy-appeals/authorization-code
+        /explore/authentication/docs/authorization-code?api=notice_of_disagreements|/explore/api/notice-of-disagreements/authorization-code
+        /explore/authentication/docs/authorization-code?api=fhir|/explore/api/patient-health/authorization-code
+        /explore/authentication/docs/authorization-code?api=supplemental-claims|/explore/api/supplemental-claims/authorization-code
+        /explore/authentication/docs/authorization-code?api=veteran_verification|/explore/api/veteran-service-history-and-eligibility/authorization-code
+        # CCG Redirects
+        /explore/authentication/docs/client-credentials?api=address_validation|/explore/api/address-validation/client-credentials
+        /explore/authentication/docs/client-credentials?api=appealable-issues|/explore/api/appealable-issues/client-credentials
+        /explore/authentication/docs/client-credentials?api=appeals|/explore/api/appeals-status/client-credentials
+        /explore/authentication/docs/client-credentials?api=claims|/explore/api/benefits-claims/client-credentials
+        /explore/authentication/docs/client-credentials?api=benefits-documents|/explore/api/benefits-documents/client-credentials
+        /explore/authentication/docs/client-credentials?api=community_care|/explore/api/community-care-eligibility/client-credentials
+        /explore/authentication/docs/client-credentials?api=contact_information|/explore/api/contact-information/client-credentials
+        /explore/authentication/docs/client-credentials?api=direct-deposit-management|/explore/api/direct-deposit-management/client-credentials
+        /explore/authentication/docs/client-credentials?api=education-benefits|/explore/api/education-benefits/client-credentials
+        /explore/authentication/docs/client-credentials?api=lgy_guaranty_remittance|/explore/api/guaranty-remittance/client-credentials
+        /explore/authentication/docs/client-credentials?api=higher-level-reviews|/explore/api/higher-level-reviews/client-credentials
+        /explore/authentication/docs/client-credentials?api=legacy-appeals|/explore/api/legacy-appeals/client-credentials
+        /explore/authentication/docs/client-credentials?api=loan-review|/explore/api/loan-review/client-credentials
+        /explore/authentication/docs/client-credentials?api=notice_of_disagreements|/explore/api/notice-of-disagreements/client-credentials
+        /explore/authentication/docs/client-credentials?api=fhir|/explore/api/patient-health/client-credentials
+        /explore/authentication/docs/client-credentials?api=supplemental-claims|/explore/api/supplemental-claims/client-credentials
+        /explore/authentication/docs/client-credentials?api=va_letter_generator|/explore/api/va-letter-generator/client-credentials
+        /explore/authentication/docs/client-credentials?api=veteran_verification|/explore/api/veteran-service-history-and-eligibility/client-credentials
+        # Release Notes Redirects
+        /release-notes/appeals|/explore/va-benefits
+        /release-notes/benefits|/explore/va-benefits
+        /release-notes/facilities|/explore/api/va-facilities/release-notes
+        /release-notes/vaForms|/explore/api/va-forms/release-notes
+        /release-notes/health|/explore/health
+        /release-notes/loanGuaranty|/explore/loan-guaranty
+        /release-notes/verification|/explore/verification
+        # One off redirects
+        /explore/health/docs/quickstart|/explore/health
+        /release-notes|/explore
+        /onboarding/request-sandbox-access|/explore
+        /explore/authorization|/explore
+        /release-notes/deactivated|/explore
+        REDIRECTS
+        for env in ${ENVIRONMENTS}; do
+          # 301 redirects related to IA updates
+          for REDIRECT in `grep -v '#' ./redirects.txt`; do
+            ORIGINAL=${REDIRECT%|*}
+            TARGET="https://${S3_BUCKET}${REDIRECT#*|}"
+            eval aws s3api put-object --website-redirect-location $TARGET --bucket $S3_BUCKET --key $ORIGINAL --acl public-read
+          done
+        done
   post_build:
     commands:
       # Post to Slack.

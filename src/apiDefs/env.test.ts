@@ -36,13 +36,19 @@ describe('env module', () => {
     const enableApiId = 'real_api';
     const disabledApiId = 'fake_api';
     const sharedApiValues = {
+      altID: null,
+      categoryUrlFragment: 'nothing-of-importance',
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
       lastProdAccessStep: ProdAccessFormSteps.Four,
       name: 'My API',
+      oAuth: false,
+      oAuthInfo: null,
+      oAuthTypes: null,
       openData: false,
       releaseNotes: 'Dummy release notes.',
       urlSlug: 'my-api',
+      veteranRedirect: null,
     };
 
     beforeEach(() => {

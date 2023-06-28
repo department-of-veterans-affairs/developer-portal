@@ -13,20 +13,26 @@ export const fakeCategories: APICategories = {
   lotr: {
     apis: [
       {
+        altID: null,
         categoryUrlFragment: 'lotr',
         description: 'One Ring to rule them all',
         docSources: [], // doesn't matter yet
         enabledByDefault: true,
         lastProdAccessStep: ProdAccessFormSteps.Four,
         name: 'Rings API',
+        oAuth: false,
+        oAuthInfo: null,
+        oAuthTypes: null,
         openData: false,
         overviewPageContent: '## Default overview pag content',
         releaseNotes:
           '### March 25, 2020\n\nOne Ring destroyed\n\n\n---\n\n### June 10, 2019\n\nOne Ring discovered by Bilbo in Misty Mountains\n',
         urlFragment: 'rings',
         urlSlug: 'rings',
+        veteranRedirect: null,
       },
       {
+        altID: null,
         categoryUrlFragment: 'lotr',
         deactivationInfo: {
           deactivationContent: 'Silmarils lost forever',
@@ -39,26 +45,35 @@ export const fakeCategories: APICategories = {
         enabledByDefault: true,
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Silmarils API',
+        oAuth: false,
+        oAuthInfo: null,
+        oAuthTypes: null,
         openData: false,
         overviewPageContent: '## Default overview pag content',
         releaseNotes:
           '### April 3, 1005\n\nStolen by Morgoth\n\n\n---\n\n### December 1, 0215\n\nFeanor created the jewels\n',
         urlFragment: 'silmarils',
         urlSlug: 'silmarils',
+        veteranRedirect: null,
       },
       {
+        altID: null,
         categoryUrlFragment: 'lotr',
         description: 'Hobbits of the Shire',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
         lastProdAccessStep: ProdAccessFormSteps.Two,
         name: 'Hobbits API',
+        oAuth: false,
+        oAuthInfo: null,
+        oAuthTypes: null,
         openData: true,
         overviewPageContent: '## Default overview pag content',
         releaseNotes:
           '### September 22, 2019\n\nPippin and Merry got taller\n\n\n---\n\n### June 11, 2019\n\nBilbo disappeared\n',
         urlFragment: 'hobbits',
         urlSlug: 'hobbits',
+        veteranRedirect: null,
       },
     ],
     content: {
@@ -74,6 +89,7 @@ export const fakeCategories: APICategories = {
     apis: [
       {
         altID: 'apollo13',
+        categoryUrlFragment: 'nothing-of-importance',
         description: "When a trip to the moon doesn't go according to plan",
         docSources: [], // doesn't matter here
         enabledByDefault: true,
@@ -95,9 +111,11 @@ export const fakeCategories: APICategories = {
           '### April 11, 1970\n\nLaunch!\n\n\n---\n\n### April 14, 1970\n\nOxygen tank #2 is unhappy.\n\n\n---\n\n### April 17, 1970\n\nSplashdown. The crew arrives home safely.\n',
         urlFragment: 'apollo_13',
         urlSlug: 'apollo-13',
+        veteranRedirect: null,
       },
       {
         altID: 'armageddon',
+        categoryUrlFragment: 'nothing-of-importance',
         description: 'Asteroid Dotty has earth directly in her path, time to call Bruce Willis.',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
@@ -118,15 +136,20 @@ export const fakeCategories: APICategories = {
         urlFragment: 'armageddon',
         urlSlug: 'armageddon',
         vaInternalOnly: VaInternalOnly.StrictlyInternal,
+        veteranRedirect: null,
       },
       {
         altID: 'the_martian',
+        categoryUrlFragment: 'nothing-of-importance',
         description:
           'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
         lastProdAccessStep: ProdAccessFormSteps.Four,
         name: 'The Martian API',
+        oAuth: false,
+        oAuthInfo: null,
+        oAuthTypes: null,
         openData: false,
         overviewPageContent: '## Default overview pag content',
         releaseNotes:
@@ -134,6 +157,7 @@ export const fakeCategories: APICategories = {
         urlFragment: 'the_martian',
         urlSlug: 'the-martian',
         vaInternalOnly: VaInternalOnly.AdditionalDetails,
+        veteranRedirect: null,
       },
     ],
     content: {
@@ -149,30 +173,42 @@ export const fakeCategories: APICategories = {
   sports: {
     apis: [
       {
+        altID: null,
+        categoryUrlFragment: 'nothing-of-importance',
         description: 'stuff about hoops or whatever',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Basketball API',
+        oAuth: false,
+        oAuthInfo: null,
+        oAuthTypes: null,
         openData: true,
         overviewPageContent: '## Default overview pag content',
         releaseNotes:
           '### September 21, 2019\n\nMoved exiled Numenoreans to Middle-earth\n\n\n---\n\n### June 12, 2019\n\nReleased our API\n',
         urlFragment: 'basketball',
         urlSlug: 'basketball',
+        veteranRedirect: null,
       },
       {
+        altID: null,
+        categoryUrlFragment: 'nothing-of-importance',
         description: 'a slow summer game',
         docSources: [], // doesn't matter here
         enabledByDefault: false,
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Baseball API',
+        oAuth: false,
+        oAuthInfo: null,
+        oAuthTypes: null,
         openData: false,
         overviewPageContent: '## Default overview pag content',
         releaseNotes:
           '### September 22, 2019\n\nMike Trout homers\n\n\n---\n\n### June 11, 2019\n\nGerrit Cole strikes out 80\n',
         urlFragment: 'baseball',
         urlSlug: 'baseball',
+        veteranRedirect: null,
       },
     ],
     content: {
@@ -191,17 +227,23 @@ export const fakeAPIs: APIDescription[] = Object.values(fakeCategories).flatMap(
 );
 
 export const extraAPI: APIDescription = {
+  altID: null,
+  categoryUrlFragment: 'nothing-of-importance',
   description: 'the beautiful game',
   docSources: [],
   enabledByDefault: true,
   lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'Soccer API',
+  oAuth: false,
+  oAuthInfo: null,
+  oAuthTypes: null,
   openData: false,
   overviewPageContent: '## Default overview pag content',
   releaseNotes:
     '### October 22, 2019\n\na lot of goals get scored\n\n\n---\n\n### August 11, 2019\n\nchampions league\n',
   urlFragment: 'soccer',
   urlSlug: 'soccer',
+  veteranRedirect: null,
 };
 
 export const extraDeactivationInfo: APIDeactivationInfo = {

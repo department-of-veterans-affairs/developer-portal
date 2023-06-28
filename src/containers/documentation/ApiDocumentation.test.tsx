@@ -12,6 +12,8 @@ import ApiDocumentation from './ApiDocumentation';
 
 const ReleaseNotes: string = 'My API&apos;s release notes';
 const api: APIDescription = {
+  altID: null,
+  categoryUrlFragment: 'nothing-of-importance',
   description: "it's a great API!",
   docSources: [
     {
@@ -21,11 +23,15 @@ const api: APIDescription = {
   enabledByDefault: true,
   lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'My API',
+  oAuth: false,
+  oAuthInfo: null,
+  oAuthTypes: null,
   openData: false,
   overviewPageContent: '## Default overview pag content',
   releaseNotes: ReleaseNotes,
   urlFragment: 'my_api',
   urlSlug: 'my-api',
+  veteranRedirect: null,
 };
 
 const server = setupServer(

@@ -118,15 +118,15 @@ const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
   return Object.values(categories).find(hasMatchingIdentifier) ?? null;
 };
 
+
 const lookupCategoryByApi = (api: APIDescription): APICategory | null => {
   const categories: APICategories = rootGetApiDefinitions.getApiDefinitions();
   const matchingCategory = Object.values(categories).find(category => category.apis.includes(api));
   return matchingCategory ? matchingCategory : null;
 };
 
-const lookupApiCategory = (categoryKey: string): APICategory | null =>
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-  rootGetApiDefinitions.getApiDefinitions()[categoryKey] ?? null;
+const lookupApiCategory = (categoryKey: string): APICategory =>
+  rootGetApiDefinitions.getApiDefinitions()[categoryKey];
 
 const apisFor = (
   selectedApiList: string[],

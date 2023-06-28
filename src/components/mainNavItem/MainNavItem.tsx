@@ -1,25 +1,18 @@
+import React from 'react';
 import classNames from 'classnames';
-import * as React from 'react';
 import PropTypes from 'prop-types';
-import { match as Match } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { desktopOnly, mobileOnly } from '../../styles/vadsUtils';
 import { isHashLinkExact } from '../../utils/isNavHashLinkExact';
-
-export interface LargeScreenNavItemProps {
-  isActive: (match: Match | null) => boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-}
 
 interface MainNavItemProps {
   children: React.ReactChild | React.ReactChildren;
   activeClassName?: string;
   className?: string;
+  exact?: boolean;
   excludeLargeScreen: boolean;
   excludeSmallScreen: boolean;
   targetUrl: string;
-  largeScreenProps: LargeScreenNavItemProps;
   onClick: () => void;
 }
 
@@ -29,15 +22,16 @@ const MainNavItem = (props: MainNavItemProps): JSX.Element => {
     className,
     onClick,
     targetUrl,
+    exact,
     excludeLargeScreen,
     excludeSmallScreen,
-    largeScreenProps,
     children,
   } = props;
 
   const sharedProps = {
     activeClassName: classNames('va-api-active-nav', activeClassName),
     className: classNames('va-api-nav-link', className),
+    exact: exact ?? false,
     to: targetUrl,
   };
 
@@ -45,11 +39,7 @@ const MainNavItem = (props: MainNavItemProps): JSX.Element => {
     <>
       {!excludeLargeScreen && (
         <div className={desktopOnly()}>
-          <NavLink
-            aria-current={isHashLinkExact(props.targetUrl) ? 'page' : 'false'}
-            {...sharedProps}
-            {...largeScreenProps}
-          >
+          <NavLink aria-current={isHashLinkExact(targetUrl) ? 'page' : 'false'} {...sharedProps}>
             {children}
           </NavLink>
         </div>
@@ -57,7 +47,7 @@ const MainNavItem = (props: MainNavItemProps): JSX.Element => {
       {!excludeSmallScreen && (
         <div className={mobileOnly()}>
           <NavLink
-            aria-current={isHashLinkExact(props.targetUrl) ? 'page' : 'false'}
+            aria-current={isHashLinkExact(targetUrl) ? 'page' : 'false'}
             onClick={onClick}
             {...sharedProps}
           >
@@ -73,13 +63,9 @@ MainNavItem.propTypes = {
   activeClassName: PropTypes.string,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
+  exact: PropTypes.bool,
   excludeLargeScreen: PropTypes.bool,
   excludeSmallScreen: PropTypes.bool,
-  largeScreenProps: PropTypes.shape({
-    isActive: PropTypes.func.isRequired,
-    onMouseEnter: PropTypes.func.isRequired,
-    onMouseLeave: PropTypes.func.isRequired,
-  }),
   onClick: PropTypes.func,
   targetUrl: PropTypes.string.isRequired,
 };
