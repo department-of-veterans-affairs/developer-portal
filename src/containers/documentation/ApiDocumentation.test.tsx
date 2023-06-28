@@ -27,7 +27,7 @@ const api: APIDescription = {
   oAuthInfo: null,
   oAuthTypes: null,
   openData: false,
-  overviewPageContent: '## Default overview pag content',
+  overviewPageContent: '## Default overview page content',
   releaseNotes: ReleaseNotes,
   urlFragment: 'my_api',
   urlSlug: 'my-api',
