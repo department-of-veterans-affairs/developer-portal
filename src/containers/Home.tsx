@@ -23,7 +23,10 @@ const ApiList = (): JSX.Element => {
                 const api = lookupApiBySlug(urlSlug);
                 return (
                   api && (
-                    <div className="vads-l-col--3 vads-u-padding--2" key={urlSlug}>
+                    <div
+                      className="vads-l-col--12 small-screen:vads-l-col--6 medium-screen:vads-l-col--3 vads-u-padding--2"
+                      key={urlSlug}
+                    >
                       <ExploreApiCard api={api} />
                     </div>
                   )
@@ -41,7 +44,7 @@ const GettingStarted = (): JSX.Element => (
   <section className="vads-u-background-color--white vads-u-margin-top--2p5">
     <div className="vads-l-grid-container vads-u-margin-x--auto">
       <div className="vads-l-row">
-        <div className="vads-l-col--6">
+        <div className="vads-l-col--12 medium-screen:vads-l-col--6">
           <h1 className="vads-u-margin-bottom--0">Get started</h1>
           <p>Follow these steps to start developing with our APIs.</p>
           <ol className="process vads-u-margin-top--3" aria-labelledby="Getting started">
@@ -69,7 +72,7 @@ const GettingStarted = (): JSX.Element => (
             </li>
           </ol>
         </div>
-        <div className="vads-l-col--6">
+        <div className="vads-l-col--6 vads-u-display--none medium-screen:vads-u-display--block">
           <img
             src={peopleGraphic}
             alt="Abstract cartoon graphic showing three people building a web application with colored blocks"
