@@ -36,4 +36,9 @@ describe('ExploreRoot', () => {
   test('if getAllApis is called', () => {
     expect(getAllApisSpy).toHaveBeenCalled();
   });
+
+  it('should render mocked apis', () => {
+    const apiCounts = screen.getAllByTestId('api-count');
+    apiCounts.forEach(apiCount => expect(apiCount.textContent).toBe(`${fakeAPIs.length}`));
+  });
 });

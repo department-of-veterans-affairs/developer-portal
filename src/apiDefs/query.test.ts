@@ -22,6 +22,7 @@ import { fakeCategories } from '../__mocks__/fakeCategories';
 import {
   apisFor,
   getAllQuickstartCategorySlugs,
+  getApiCategoryOrder,
   includesOAuthAPI,
   lookupApiByFragment,
   lookupApiBySlug,
@@ -253,6 +254,12 @@ describe('query module', () => {
 
     it('returns false if the list does not include at least 1 Open Data API', () => {
       expect(includesOpenDataAPI(['apollo13', 'rings'])).toBe(false);
+    });
+  });
+
+  describe('getApiCategoryOrder', () => {
+    it('returns all urlFragments of categories sorted by category name', () => {
+      expect(getApiCategoryOrder()).toStrictEqual(['lotr', 'movies', 'sports']);
     });
   });
 });
