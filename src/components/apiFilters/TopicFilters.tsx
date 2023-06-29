@@ -94,7 +94,7 @@ export const TopicFilters = ({
               })}
               <button
                 aria-label="Apply filters to update the API list and close the filter menu"
-                className="vads-u-margin-top--4 vads-u-margin-bottom--2"
+                className="vads-u-margin-top--2 vads-u-margin-bottom--0"
                 type="submit"
               >
                 APPLY FILTERS
