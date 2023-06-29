@@ -79,6 +79,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
         pathname: '/explore',
       });
     }
+    window.scrollTo(0, 0);
   };
 
   const applyQueryStringFilters = (data: FilterDataObject, pathOverride?: string): void => {
@@ -103,6 +104,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     }
     setAuthFilter(values.authTypes);
     applyQueryStringFilters(data);
+    window.scrollTo(0, 0);
   };
 
   const handleSearchSubmit = (values: SearchFilterValues): void => {
@@ -115,6 +117,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     }
     setSearch(values.search);
     applyQueryStringFilters(data);
+    window.scrollTo(0, 0);
   };
 
   const clearTopicFilter = (urlFragment: string): void => {
@@ -248,7 +251,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
               key={`search-${search}`}
             />
           )}
-          <button className="usa-button--unstyled" onClick={clearAllFilters} type="button">
+          <button className="filters-clear-all-button" onClick={clearAllFilters} type="button">
             Clear all
           </button>
         </div>
