@@ -68,7 +68,8 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => (
       <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
     ))}
 
-    <Redirect from="/apply" to={CONSUMER_SANDBOX_PATH} />
+    <Redirect from="/apply" to="/explore" />
+    <Redirect from={CONSUMER_SANDBOX_PATH} to="/explore" />
 
     <Redirect from="/go-live" to={CONSUMER_PROD_PATH} />
 

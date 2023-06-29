@@ -5,7 +5,6 @@ import {
   CONSUMER_APIS_PATH,
   CONSUMER_DEMO_PATH,
   CONSUMER_PROD_PATH,
-  CONSUMER_SANDBOX_PATH,
 } from '../../types/constants/paths';
 import OnboardingOverview from './OnboardingOverview';
 
@@ -14,7 +13,7 @@ describe('OnboardingOverview', () => {
     render(
       <Router>
         <OnboardingOverview />
-      </Router>
+      </Router>,
     );
   });
 
@@ -23,14 +22,13 @@ describe('OnboardingOverview', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it.each([
-    'Onboarding steps',
-    'Onboarding timeline',
-    'About us',
-  ])('renders the "%s" heading', (headingText: string) => {
-    const heading = screen.getByRole('heading', { level: 2, name: headingText });
-    expect(heading).toBeInTheDocument();
-  });
+  it.each(['Onboarding steps', 'Onboarding timeline', 'About us'])(
+    'renders the "%s" heading',
+    (headingText: string) => {
+      const heading = screen.getByRole('heading', { level: 2, name: headingText });
+      expect(heading).toBeInTheDocument();
+    },
+  );
 
   describe('subway map/process list', () => {
     it('renders the subway map', () => {
@@ -50,29 +48,27 @@ describe('OnboardingOverview', () => {
       });
 
       describe.each([
-        ['Start developing', 1, CONSUMER_SANDBOX_PATH],
         ['Request production access', 2, CONSUMER_PROD_PATH],
         ['Prepare for and complete a demo', 3, CONSUMER_DEMO_PATH],
         ['Receive production access', 4, CONSUMER_APIS_PATH],
-      ])('includes the "%s" step (step %d)', (
-        stepName: string,
-        stepNumber: number,
-        linkURL: string,
-      ) => {
-        it('with the appropriate step name/title', () => {
-          expect(steps[stepNumber - 1]).toBeInTheDocument();
+      ])(
+        'includes the "%s" step (step %d)',
+        (stepName: string, stepNumber: number, linkURL: string) => {
+          it('with the appropriate step name/title', () => {
+            expect(steps[stepNumber - 1]).toBeInTheDocument();
 
-          const firstChild = steps[stepNumber - 1].children[0];
-          expect(firstChild.tagName).toBe('STRONG');
-          expect(firstChild).toHaveTextContent(stepName);
-        });
+            const firstChild = steps[stepNumber - 1].children[0];
+            expect(firstChild.tagName).toBe('STRONG');
+            expect(firstChild).toHaveTextContent(stepName);
+          });
 
-        it('with the appropriate link to the related page', () => {
-          const link = getByRole(steps[stepNumber - 1], 'link');
-          expect(link).toBeInTheDocument();
-          expect(link.getAttribute('href')).toBe(linkURL);
-        });
-      });
+          it('with the appropriate link to the related page', () => {
+            const link = getByRole(steps[stepNumber - 1], 'link');
+            expect(link).toBeInTheDocument();
+            expect(link.getAttribute('href')).toBe(linkURL);
+          });
+        },
+      );
     });
   });
 });
