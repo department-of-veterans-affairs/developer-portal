@@ -3,12 +3,14 @@
 .filters-toggle-button {
   background-color: $color-primary-darkest !important;
   border-radius: 0 !important;
+  border-top: 1px solid $color-white !important;
   bottom: 0;
+  box-shadow: 0px -1px 12px 1px rgba(0, 0, 0, 0.2);
   left: 0;
   position: fixed;
   right: 0;
   z-index: 101;
-  padding: 1.6rem !important;
+  padding: 2.4rem 1.6rem !important;
 }
 
 .filters-toggle-icon {
@@ -19,7 +21,7 @@
 .filters-container {
   background-color: $color-white;
   position: fixed;
-  bottom: 50px;
+  bottom: 65px;
   left: 0;
   width: 100%;
   transform: translateY(100%);
@@ -34,6 +36,24 @@
   background-color: $color-gray-light-alt !important;
   padding: 0.8rem 1.6rem;
   margin: 1.6rem 0;
+}
+
+button.filters-clear-all-button {
+  color: #005ea2;
+  text-decoration: underline;
+  background-color: $color-white;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-weight: 400;
+  margin: 1.6rem 0 0 0;
+  padding: 0.8rem 0;
+  text-align: left;
+
+  &:hover {
+    background-color: $color-white;
+    color: #005ea2 !important;
+  }
 }
 
 @include media($medium-screen) {
@@ -58,6 +78,10 @@
 
   .caption-container {
     margin: 0;
+  }
+
+  button.filters-clear-all-button {
+    margin: 0 0 0 1.6rem;
   }
 }
 
