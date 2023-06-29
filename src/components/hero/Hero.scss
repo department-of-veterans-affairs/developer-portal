@@ -3,9 +3,4 @@
 .hero-logo {
   margin-left: 50%;
   transform: translateX(-50%);
-
-  @include media($medium-screen) {
-    margin-left: units(2.5);
-    transform: none;
-  }
 }

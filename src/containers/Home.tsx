@@ -44,7 +44,7 @@ const GettingStarted = (): JSX.Element => (
   <section className="vads-u-background-color--white vads-u-margin-top--2p5">
     <div className="vads-l-grid-container vads-u-margin-x--auto">
       <div className="vads-l-row">
-        <div className="vads-l-col--12 medium-screen:vads-l-col--6">
+        <div className="vads-l-col--12 medium-screen:vads-l-col--7">
           <h1 className="vads-u-margin-bottom--0">Get started</h1>
           <p>Follow these steps to start developing with our APIs.</p>
           <ol className="process vads-u-margin-top--3" aria-labelledby="Getting started">
@@ -56,13 +56,13 @@ const GettingStarted = (): JSX.Element => (
             </li>
             <li className="process-step list-two" aria-labelledby="request-production-access">
               <strong id="request-production-access">
-                <Link to="/explore">Request production access</Link>
+                <Link to="/onboarding/request-prod-access">Request production access</Link>
               </strong>
               <p>After testing your app in sandbox, start the path to production.</p>
             </li>
             <li className="process-step list-three" aria-labelledby="Complete a demo">
               <strong id="Complete a demo">
-                <Link to="/explore">Complete a demo</Link>
+                <Link to="/onboarding/prepare-for-and-complete-a-demo">Complete a demo</Link>
               </strong>
               <p>
                 Schedule, prepare, and complete a demo with us.
@@ -72,7 +72,7 @@ const GettingStarted = (): JSX.Element => (
             </li>
           </ol>
         </div>
-        <div className="vads-l-col--6 vads-u-display--none medium-screen:vads-u-display--block">
+        <div className="vads-l-col--5 vads-u-display--none medium-screen:vads-u-display--block">
           <img
             src={peopleGraphic}
             alt="Abstract cartoon graphic showing three people building a web application with colored blocks"
