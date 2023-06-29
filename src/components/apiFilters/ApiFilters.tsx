@@ -4,17 +4,11 @@ import Fuse from 'fuse.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import { AuthFilters, Pill, SearchFilters, TopicFilters, getAuthTypeName } from '../../components';
-import {
-  getAllApis,
-  getApisLoaded,
-  isAcgApi,
-  isCcgApi,
-  lookupApiCategoryBySlug,
-} from '../../apiDefs/query';
+import { AuthFilters, FilterPills, SearchFilters, TopicFilters } from '../../components';
+import { getAllApis, getApisLoaded, isAcgApi, isCcgApi } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { useOutsideGroupClick } from '../../hooks';
-
+import { generateFilterPills } from '../../utils/generateFilterPills';
 import './ApiFilters.scss';
 
 interface ExploreRootParams {
@@ -174,13 +168,26 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setApis(allApis);
   }, [apisLoaded, authFilter, search, setApis, topicFilter]);
 
-  const hasFilterPill = topicFilter.length || authFilter.length || search;
+  const hasFilterPill = Boolean(topicFilter.length || authFilter.length || search);
+  const pillsProps = {
+    authFilter,
+    clearAuthFilter,
+    clearSearchFilter,
+    clearTopicFilter,
+    search,
+    topicFilter,
+  };
+  const pills = generateFilterPills(pillsProps);
 
   return (
     <>
       <div className="caption-container medium-screen:vads-u-display--none">
         <p className="vads-u-margin-y--0 vads-u-font-family--serif">
-          Showing all <span className="vads-u-font-weight--bold">{apis.length}</span> items
+          Showing all{' '}
+          <span data-testid="api-count" className="vads-u-font-weight--bold">
+            {apis.length}
+          </span>{' '}
+          items
         </p>
       </div>
       <button
@@ -220,42 +227,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
           </p>
         </div>
       </div>
-      {hasFilterPill && (
-        <div className="filter-pills-container">
-          {topicFilter.map((urlFragment: string): JSX.Element => {
-            const topic = lookupApiCategoryBySlug(urlFragment);
-            return (
-              <Pill
-                name={topic?.name ?? ''}
-                onClick={(): void => clearTopicFilter(urlFragment)}
-                type="topic"
-                key={`topic-${urlFragment}`}
-              />
-            );
-          })}
-          {authFilter.map(
-            (urlSlug: string): JSX.Element => (
-              <Pill
-                name={getAuthTypeName(urlSlug)}
-                onClick={(): void => clearAuthFilter(urlSlug)}
-                type="auth"
-                key={`auth-${urlSlug}`}
-              />
-            ),
-          )}
-          {search && (
-            <Pill
-              name={`'${search}'`}
-              onClick={clearSearchFilter}
-              type="search"
-              key={`search-${search}`}
-            />
-          )}
-          <button className="filters-clear-all-button" onClick={clearAllFilters} type="button">
-            Clear all
-          </button>
-        </div>
-      )}
+      {hasFilterPill && <FilterPills clearAllFilters={clearAllFilters}>{pills}</FilterPills>}
     </>
   );
 };

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 import { Provider } from 'react-redux';
-import { fakeCategories } from '../../__mocks__/fakeCategories';
+import { fakeAPIs, fakeCategories } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
 import { FlagsProvider, getFlags } from '../../flags';
 import store from '../../store';
@@ -38,7 +38,7 @@ describe('ExploreRoot', () => {
   });
 
   it('should render mocked apis', () => {
-    const apiCounts = screen.getAllByTestId('api-count');
-    apiCounts.forEach(apiCount => expect(apiCount.textContent).toBe(`${fakeAPIs.length}`));
+    const apiCount = screen.getByTestId('api-count').textContent;
+    expect(apiCount).toBe(`${fakeAPIs.length}`);
   });
 });
