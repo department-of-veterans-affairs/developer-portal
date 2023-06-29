@@ -16,7 +16,7 @@ const ApiList = (): JSX.Element => {
       <div className="vads-l-grid-container vads-u-margin-x--auto">
         <h2 className="vads-u-margin-top--0">Popular APIs</h2>
         <Link to="/explore">View all</Link>
-        <div className="vads-l-row vads-u-justify-content--space-evenly vads-u-margin-x--neg2">
+        <div className="vads-l-row vads-u-justify-content--space-evenly vads-u-margin-x--neg1p5">
           <ApisLoader>
             <>
               {popularApis.map((urlSlug: string) => {
@@ -60,8 +60,8 @@ const GettingStarted = (): JSX.Element => (
               </strong>
               <p>After testing your app in sandbox, start the path to production.</p>
             </li>
-            <li className="process-step list-three" aria-labelledby="Complete a demo">
-              <strong id="Complete a demo">
+            <li className="process-step list-three" aria-labelledby="complete-a-demo">
+              <strong id="complete-a-demo">
                 <Link to="/onboarding/prepare-for-and-complete-a-demo">Complete a demo</Link>
               </strong>
               <p>
