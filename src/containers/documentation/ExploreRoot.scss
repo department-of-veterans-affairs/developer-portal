@@ -1,10 +1,16 @@
 @import '../../styles/variables';
 
 .explore-root-container {
-  padding: 2rem 3.2rem 0;
+  padding: 2rem 1rem 0;
 
   .header-sub-text {
     font-weight: 400;
+  }
+}
+
+@include media($medium-screen) {
+  .explore-root-container {
+    padding: 2rem 3.2rem 0;
   }
 }
 
