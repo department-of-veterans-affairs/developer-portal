@@ -1,15 +1,5 @@
 @import '../../styles/variables';
 
-.filters-container {
-  background-color: #f1f1f1;
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  margin: 0.8rem 0 1.6rem;
-  padding: 1rem 0.8rem;
-  width: 100%;
-}
-
 .filter-controls {
   display: flex;
   flex-flow: row nowrap;
@@ -79,7 +69,6 @@
   background-color: $color-gray-light-alt !important;
   border-radius: 0 !important;
   color: $color-primary-darkest !important;
-  // display: flex !important;
   margin: 0 !important;
   position: relative;
   padding: 1.6rem !important;

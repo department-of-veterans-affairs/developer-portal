@@ -179,21 +179,21 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
 
   useEffect(() => {
     const checkStickiness = (): void => {
-      const filterToggleButton = document.querySelector(
+      const apiFiltersElm = document.getElementById('api-filters') as HTMLElement;
+      const footer = document.querySelector('footer') as HTMLElement;
+      const filtersToggleButton = document.querySelector(
         '.filters-toggle-button',
       ) as HTMLButtonElement;
-      const footer = document.querySelector('footer') as HTMLElement;
-      const filtersContainer = document.querySelector('.filters-container') as HTMLElement;
 
       const footerPosition = footer.getBoundingClientRect().top;
       const windowHeight = window.innerHeight;
 
       if (windowHeight > footerPosition) {
-        filterToggleButton.style.position = 'absolute';
-        filtersContainer.style.bottom = '220px'; // broken
+        apiFiltersElm.style.position = 'absolute';
+        filtersToggleButton.style.borderBottom = '1px solid #ffffff';
       } else {
-        filterToggleButton.style.position = 'fixed';
-        filtersContainer.style.bottom = '65px';
+        apiFiltersElm.style.position = 'fixed';
+        filtersToggleButton.style.borderBottom = 'unset';
       }
     };
     if (window.innerWidth < 768) {
@@ -229,41 +229,43 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
           items
         </p>
       </div>
-      <button
-        className="filters-toggle-button vads-u-margin--0 vads-u-display--flex medium-screen:vads-u-display--none"
-        onClick={toggleMobileMenu}
-        type="button"
-        ref={filterButtonRef}
-      >
-        <FontAwesomeIcon icon={faFilter} />
-        <span className="vads-u-margin-left--1">Filters</span>
-        <FontAwesomeIcon
-          className="filters-toggle-icon"
-          icon={isMobileMenuVisible ? faMinus : faPlus}
-        />
-      </button>
-      <div className="filters-container" data-cy="explore-filters" ref={filterContainerRef}>
-        <div className={filterControlsClasses}>
-          <TopicFilters
-            handleTopicFilterSubmit={handleTopicFilterSubmit}
-            key={`topic-${topicFilter.join('')}`}
-            topicFilter={topicFilter}
+      <div id="api-filters">
+        <button
+          className="filters-toggle-button vads-u-margin--0 vads-u-display--flex medium-screen:vads-u-display--none"
+          onClick={toggleMobileMenu}
+          type="button"
+          ref={filterButtonRef}
+        >
+          <FontAwesomeIcon icon={faFilter} />
+          <span className="vads-u-margin-left--1">Filters</span>
+          <FontAwesomeIcon
+            className="filters-toggle-icon"
+            icon={isMobileMenuVisible ? faMinus : faPlus}
           />
-          <AuthFilters
-            authFilter={authFilter}
-            handleAuthTypeFilterSubmit={handleAuthTypeFilterSubmit}
-            key={`authType-${topicFilter.join('')}`}
-          />
-          <SearchFilters
-            handleSearchSubmit={handleSearchSubmit}
-            search={search}
-            key={`search-${search}`}
-          />
-        </div>
-        <div className="caption-container vads-u-display--none medium-screen:vads-u-display--flex">
-          <p className="vads-u-margin-y--0 vads-u-font-family--serif">
-            Showing all <span className="vads-u-font-weight--bold">{apis.length}</span> items
-          </p>
+        </button>
+        <div className="filters-container" data-cy="explore-filters" ref={filterContainerRef}>
+          <div className={filterControlsClasses}>
+            <TopicFilters
+              handleTopicFilterSubmit={handleTopicFilterSubmit}
+              key={`topic-${topicFilter.join('')}`}
+              topicFilter={topicFilter}
+            />
+            <AuthFilters
+              authFilter={authFilter}
+              handleAuthTypeFilterSubmit={handleAuthTypeFilterSubmit}
+              key={`authType-${topicFilter.join('')}`}
+            />
+            <SearchFilters
+              handleSearchSubmit={handleSearchSubmit}
+              search={search}
+              key={`search-${search}`}
+            />
+          </div>
+          <div className="caption-container vads-u-display--none medium-screen:vads-u-display--flex">
+            <p className="vads-u-margin-y--0 vads-u-font-family--serif">
+              Showing all <span className="vads-u-font-weight--bold">{apis.length}</span> items
+            </p>
+          </div>
         </div>
       </div>
       {hasFilterPill && <FilterPills clearAllFilters={clearAllFilters}>{pills}</FilterPills>}
