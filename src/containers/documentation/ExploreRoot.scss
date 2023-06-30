@@ -1,5 +1,7 @@
+@import '../../styles/variables';
+
 .explore-root-container {
-  padding: 2rem 3.2rem 0;
+  padding: 2rem 1rem 0;
 }
 
 .filters-container {
@@ -28,6 +30,12 @@ input.filter-size {
 .caption-container {
   display: flex;
   align-items: center;
+}
+
+@include media($medium-screen) {
+  .explore-root-container {
+    padding: 2rem 3.2rem 0;
+  }
 }
 
 .explore-main-container {

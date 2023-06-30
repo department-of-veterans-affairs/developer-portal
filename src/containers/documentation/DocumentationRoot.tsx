@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { ApiAlerts, ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../components';
 import { APIUrlSlug } from '../../types';
 import { apiLoadingState } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
+import ErrorPage404 from '../ErrorPage404';
 import { ReleaseNotes } from './ReleaseNotes';
 import RequestSandboxAccess from './RequestSandboxAccess';
 import ApiPage from './ApiPage';
@@ -41,14 +42,14 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
       <SideNavEntry exact to={`/explore/api/${api.urlSlug}/docs`} name="Docs" subNavLevel={1} />
       <SideNavEntry
         exact
-        if={api.oAuthTypes?.includes('AuthorizationCodeGrant')}
+        if={!!api.oAuthTypes?.includes('AuthorizationCodeGrant')}
         name="Authorization Code Grant"
         to={`/explore/api/${api.urlSlug}/authorization-code`}
         subNavLevel={1}
       />
       <SideNavEntry
         exact
-        if={api.oAuthTypes?.includes('ClientCredentialsGrant')}
+        if={!!api.oAuthTypes?.includes('ClientCredentialsGrant')}
         to={`/explore/api/${api.urlSlug}/client-credentials`}
         name="Client Credentials Grant"
         subNavLevel={1}
@@ -71,6 +72,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
 
 const DocumentationRoot = (): JSX.Element => {
   const params = useParams<APIUrlSlug>();
+  const location = useLocation();
   if (!params.urlSlug) {
     return <ExploreRoot />;
   }
@@ -83,7 +85,19 @@ const DocumentationRoot = (): JSX.Element => {
     return <ApisLoader />;
   }
   if (!api) {
-    return <h1>temporary 404</h1>;
+    return <ErrorPage404 />;
+  }
+  if (
+    location.pathname.endsWith('authorization-code') &&
+    !api.oAuthTypes?.includes('AuthrorizationCodeGrant')
+  ) {
+    return <ErrorPage404 />;
+  }
+  if (
+    location.pathname.endsWith('client-credentials') &&
+    !api.oAuthTypes?.includes('ClientCredentialsGrant')
+  ) {
+    return <ErrorPage404 />;
   }
   return (
     <>
@@ -96,16 +110,20 @@ const DocumentationRoot = (): JSX.Element => {
           <Switch>
             <Route exact path="/explore/api/:urlSlug" component={ApiOverviewPage} />
             <Route exact path="/explore/api/:urlSlug/docs" component={ApiPage} />
-            <Route
-              exact
-              path="/explore/api/:urlSlug/authorization-code"
-              component={AuthorizationCodeGrantDocs}
-            />
-            <Route
-              exact
-              path="/explore/api/:urlSlug/client-credentials"
-              component={ClientCredentialsGrantDocs}
-            />
+            {api.oAuthTypes?.includes('AuthorizationCodeGrant') && (
+              <Route
+                exact
+                path="/explore/api/:urlSlug/authorization-code"
+                component={AuthorizationCodeGrantDocs}
+              />
+            )}
+            {api.oAuthTypes?.includes('ClientCredentialsGrant') && (
+              <Route
+                exact
+                path="/explore/api/:urlSlug/client-credentials"
+                component={ClientCredentialsGrantDocs}
+              />
+            )}
             <Route exact path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
             <Route
               exact

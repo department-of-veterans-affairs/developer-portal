@@ -7,7 +7,6 @@ import {
   CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
-  CONSUMER_SANDBOX_PATH,
 } from '../../types/constants/paths';
 import ConsumerOnboardingRoot from './ConsumerOnboardingRoot';
 
@@ -16,7 +15,7 @@ describe('ConsumerOnboardingRoot', () => {
     render(
       <MemoryRouter initialEntries={[CONSUMER_PATH]}>
         <ConsumerOnboardingRoot />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 
@@ -28,7 +27,6 @@ describe('ConsumerOnboardingRoot', () => {
 
     it.each([
       ['Overview', CONSUMER_PATH],
-      ['Request sandbox access', CONSUMER_SANDBOX_PATH],
       ['Request production access', CONSUMER_PROD_PATH],
       ['Prepare for the demo', CONSUMER_DEMO_PATH],
       ['Working with our APIs', CONSUMER_APIS_PATH],

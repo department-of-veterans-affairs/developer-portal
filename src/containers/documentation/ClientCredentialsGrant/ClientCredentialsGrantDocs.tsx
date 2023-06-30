@@ -10,18 +10,19 @@ import { APIUrlSlug } from '../../../types';
 
 import ApisLoader from '../../../components/apisLoader/ApisLoader';
 import { getApi } from '../DocumentationRoot';
+import ErrorPage404 from '../../ErrorPage404';
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
   const params = useParams<APIUrlSlug>();
   const api = getApi(params.urlSlug);
   if (!api) {
-    return <h1>ApiPage.tsx 404</h1>;
+    return <ErrorPage404 />;
   }
 
   return (
     <>
       <Helmet>
-        <title>Client Credentials Grant</title>
+        <title>{api.name} Client Credentials Grant</title>
       </Helmet>
       <PageHeader header="Client Credentials Grant" subText={api.name} />
       <div className="va-api-authorization-docs vads-u-margin-top--3">

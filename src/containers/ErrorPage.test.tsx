@@ -44,7 +44,7 @@ describe('ErrorPage', () => {
     expect(heading).toHaveLength(1);
     expect(heading[0]).toBeInTheDocument();
     expect(heading[0]).toHaveTextContent('Page not found.');
-    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(4);
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(3);
     expect(
       screen.getAllByText(/Try using these links or the search bar to find your way forward./)
         .length,
@@ -60,7 +60,7 @@ describe('ErrorPage', () => {
     expect(heading).toHaveLength(1);
     expect(heading[0]).toBeInTheDocument();
     expect(heading[0]).toHaveTextContent('An error was encountered.');
-    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(4);
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(3);
     expect(
       screen.getAllByText(/Try using these links or the search bar to find your way forward./)
         .length,
@@ -77,7 +77,7 @@ describe('ErrorPage', () => {
     expect(heading).toHaveLength(1);
     expect(heading[0]).toBeInTheDocument();
     expect(heading[0]).toHaveTextContent('An error was encountered.');
-    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(4);
+    expect(screen.getAllByRole('heading', { level: 3 })).toHaveLength(3);
     expect(
       screen.getAllByText(/Error: Computers do not like Lord of the Rings movies in unit tests./)
         .length,

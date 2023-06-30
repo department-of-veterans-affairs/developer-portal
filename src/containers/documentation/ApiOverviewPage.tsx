@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useParams } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { PageHeader } from '../../components';
 import { APIUrlSlug } from '../../types';
 import { ExploreApiTags } from '../../components/exploreApiCard/ExploreApiTags';
 import { APIDescription } from '../../apiDefs/schema';
+import ErrorPage404 from '../ErrorPage404';
 
 import { getApi } from './DocumentationRoot';
 import './ApiOverviewPage.scss';
@@ -26,13 +26,13 @@ const ApiOverviewPage = (): JSX.Element => {
   const api = getApi(params.urlSlug);
 
   if (!api) {
-    return <h1>placeholder 404</h1>;
+    return <ErrorPage404 />;
   }
 
   return (
     <>
       <Helmet>
-        <title>{api.name} Documentation</title>
+        <title>{api.name}</title>
       </Helmet>
       <PageHeader header={api.name} className="vads-u-margin-bottom--1p5" />
       <ExploreApiTags api={api} />
