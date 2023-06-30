@@ -22,7 +22,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
   return (
     <>
       <Helmet>
-        <title>Client Credentials Grant</title>
+        <title>{api.name} Client Credentials Grant</title>
       </Helmet>
       <PageHeader header="Client Credentials Grant" subText={api.name} />
       <div className="va-api-authorization-docs vads-u-margin-top--3">

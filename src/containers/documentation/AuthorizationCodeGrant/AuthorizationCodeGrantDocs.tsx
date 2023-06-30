@@ -25,7 +25,7 @@ const AuthorizationCodeGrantDocs = (): JSX.Element => {
   return (
     <>
       <Helmet>
-        <title>Authorization Code Grant</title>
+        <title>{api.name} Authorization Code Grant</title>
       </Helmet>
       <PageHeader header="Authorization Code Grant" subText={api.name} />
       <div className="va-api-authorization-docs">

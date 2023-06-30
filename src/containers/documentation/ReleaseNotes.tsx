@@ -18,7 +18,7 @@ export const ReleaseNotes = (): JSX.Element => {
   return (
     <>
       <Helmet>
-        <title>{api.name} Documentation</title>
+        <title>{api.name} Release Notes</title>
       </Helmet>
       <PageHeader header="Release notes" subText={api.name} />
       <div className="release-notes-wrapper">

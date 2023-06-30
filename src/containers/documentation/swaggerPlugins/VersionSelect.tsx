@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import * as React from 'react';
 import classNames from 'classnames';
 import { ResetVersioning, SetRequestedAPIVersion, SetVersioning } from '../../../actions';

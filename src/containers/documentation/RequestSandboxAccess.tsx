@@ -56,7 +56,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
         {successResults ? (
           <title>Your submission was successful.</title>
         ) : (
-          <title>Request Sandbox Access</title>
+          <title>{api.name} Request Sandbox Access</title>
         )}
       </Helmet>
       <PageHeader
