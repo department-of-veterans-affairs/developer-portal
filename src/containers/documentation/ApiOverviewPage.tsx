@@ -34,7 +34,7 @@ const ApiOverviewPage = (): JSX.Element => {
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
-      <PageHeader header={api.name} />
+      <PageHeader header={api.name} className="vads-u-margin-bottom--1p5" />
       <ExploreApiTags api={api} />
       <ReactMarkdown className="api-overview-content">
         {parseContent(api.overviewPageContent, api)}
