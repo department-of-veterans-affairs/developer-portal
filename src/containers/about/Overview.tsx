@@ -67,24 +67,6 @@ const Overview = (): JSX.Element => (
         </CardLink>
       ))}
     </div>
-    <div className={classNames('vads-u-border-left--5px', 'vads-u-border-color--gray-lighter')}>
-      <p
-        className={classNames(
-          'quote',
-          'vads-u-margin-top--0',
-          'vads-u-margin-left--2',
-          'vads-u-color--gray-dark',
-          'vads-u-font-size--lg',
-        )}
-      >
-        VA Lighthouse helped us to create needed efficiency within our office. During these lean
-        business times, innovative solutions are imperative in order to be able to help Veterans
-        more effectively with less resources.
-      </p>
-      <p className={classNames('signature', 'vads-u-color--gray-dark', 'vads-u-font-size--lg')}>
-        — VSO, Santa Clara, CA
-      </p>
-    </div>
     <h3
       className={classNames(
         'vads-u-border-bottom--5px',
