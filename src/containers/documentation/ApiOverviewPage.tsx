@@ -13,6 +13,8 @@ const ApiOverviewPage = (): JSX.Element => {
   if (!api) {
     return <h1>placeholder 404</h1>;
   }
+  console.log(api);
+  console.log(!!api.oAuthTypes?.includes('ClientCredentialsGrant'));
 
   return (
     <>

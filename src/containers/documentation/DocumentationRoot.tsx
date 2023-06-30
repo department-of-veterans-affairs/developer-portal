@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch, useParams } from 'react-router-dom';
+import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { ApiAlerts, ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../components';
@@ -72,6 +72,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
 
 const DocumentationRoot = (): JSX.Element => {
   const params = useParams<APIUrlSlug>();
+  const location = useLocation();
   if (!params.urlSlug) {
     return <ExploreRoot />;
   }
@@ -86,6 +87,18 @@ const DocumentationRoot = (): JSX.Element => {
   if (!api) {
     return <ErrorPage404 />;
   }
+  if (
+    location.pathname.endsWith('authorization-code') &&
+    !api.oAuthTypes?.includes('AuthrorizationCodeGrant')
+  ) {
+    return <ErrorPage404 />;
+  }
+  if (
+    location.pathname.endsWith('client-credentials') &&
+    !api.oAuthTypes?.includes('ClientCredentialsGrant')
+  ) {
+    return <ErrorPage404 />;
+  }
   return (
     <>
       <ApiBreadcrumbs api={api} />
@@ -97,16 +110,20 @@ const DocumentationRoot = (): JSX.Element => {
           <Switch>
             <Route exact path="/explore/api/:urlSlug" component={ApiOverviewPage} />
             <Route exact path="/explore/api/:urlSlug/docs" component={ApiPage} />
-            <Route
-              exact
-              path="/explore/api/:urlSlug/authorization-code"
-              component={AuthorizationCodeGrantDocs}
-            />
-            <Route
-              exact
-              path="/explore/api/:urlSlug/client-credentials"
-              component={ClientCredentialsGrantDocs}
-            />
+            {api.oAuthTypes?.includes('AuthorizationCodeGrant') && (
+              <Route
+                exact
+                path="/explore/api/:urlSlug/authorization-code"
+                component={AuthorizationCodeGrantDocs}
+              />
+            )}
+            {api.oAuthTypes?.includes('ClientCredentialsGrant') && (
+              <Route
+                exact
+                path="/explore/api/:urlSlug/client-credentials"
+                component={ClientCredentialsGrantDocs}
+              />
+            )}
             <Route exact path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
             <Route
               exact

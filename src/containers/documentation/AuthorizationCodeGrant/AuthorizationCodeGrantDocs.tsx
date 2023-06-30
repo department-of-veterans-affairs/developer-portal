@@ -13,12 +13,13 @@ import { APIUrlSlug } from '../../../types';
 
 import './AuthorizationCodeGrantDocs.scss';
 import { getApi } from '../DocumentationRoot';
+import ErrorPage404 from '../../ErrorPage404';
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
   const params = useParams<APIUrlSlug>();
   const api = getApi(params.urlSlug);
   if (!api) {
-    return <h1>ApiPage.tsx 404</h1>;
+    return <ErrorPage404 />;
   }
 
   return (

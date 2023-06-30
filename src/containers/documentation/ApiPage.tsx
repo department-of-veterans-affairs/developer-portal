@@ -15,6 +15,7 @@ import { useFlag } from '../../flags';
 import { APIUrlSlug } from '../../types';
 import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
+import ErrorPage404 from '../ErrorPage404';
 import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
 import { getApi } from './DocumentationRoot';
@@ -74,7 +75,7 @@ const ApiPage = (): JSX.Element => {
 
   const api = getApi(params.urlSlug);
   if (!api) {
-    return <h1>ApiPage.tsx 404</h1>;
+    return <ErrorPage404 />;
   }
   const category = lookupApiCategory(api.categoryUrlFragment ?? '');
   const veteranRedirect = api.veteranRedirect ?? category?.content.veteranRedirect;
