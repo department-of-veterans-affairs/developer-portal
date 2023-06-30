@@ -74,6 +74,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
       });
     }
     window.scrollTo(0, 0);
+    if (isMobileMenuVisible) {
+      toggleMobileMenu();
+    }
   };
 
   const applyQueryStringFilters = (data: FilterDataObject, pathOverride?: string): void => {
@@ -99,6 +102,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setAuthFilter(values.authTypes);
     applyQueryStringFilters(data);
     window.scrollTo(0, 0);
+    if (isMobileMenuVisible) {
+      toggleMobileMenu();
+    }
   };
 
   const handleSearchSubmit = (values: SearchFilterValues): void => {
@@ -112,6 +118,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setSearch(values.search);
     applyQueryStringFilters(data);
     window.scrollTo(0, 0);
+    if (isMobileMenuVisible) {
+      toggleMobileMenu();
+    }
   };
 
   const clearTopicFilter = (urlFragment: string): void => {
