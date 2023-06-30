@@ -74,6 +74,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
       });
     }
     window.scrollTo(0, 0);
+    if (isMobileMenuVisible) {
+      toggleMobileMenu();
+    }
   };
 
   const applyQueryStringFilters = (data: FilterDataObject, pathOverride?: string): void => {
@@ -99,6 +102,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setAuthFilter(values.authTypes);
     applyQueryStringFilters(data);
     window.scrollTo(0, 0);
+    if (isMobileMenuVisible) {
+      toggleMobileMenu();
+    }
   };
 
   const handleSearchSubmit = (values: SearchFilterValues): void => {
@@ -112,6 +118,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setSearch(values.search);
     applyQueryStringFilters(data);
     window.scrollTo(0, 0);
+    if (isMobileMenuVisible) {
+      toggleMobileMenu();
+    }
   };
 
   const clearTopicFilter = (urlFragment: string): void => {
@@ -167,6 +176,36 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     }
     setApis(allApis);
   }, [apisLoaded, authFilter, search, setApis, topicFilter]);
+
+  useEffect(() => {
+    const checkStickiness = (): void => {
+      const filterToggleButton = document.querySelector(
+        '.filters-toggle-button',
+      ) as HTMLButtonElement;
+      const footer = document.querySelector('footer') as HTMLElement;
+      const filtersContainer = document.querySelector('.filters-container') as HTMLElement;
+
+      const footerPosition = footer.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      if (windowHeight > footerPosition) {
+        filterToggleButton.style.position = 'absolute';
+        filtersContainer.style.bottom = '220px'; // broken
+      } else {
+        filterToggleButton.style.position = 'fixed';
+        filtersContainer.style.bottom = '65px';
+      }
+    };
+    if (window.innerWidth < 768) {
+      window.addEventListener('scroll', checkStickiness);
+    }
+
+    return () => {
+      if (window.innerWidth < 768) {
+        window.removeEventListener('scroll', checkStickiness);
+      }
+    };
+  }, []);
 
   const hasFilterPill = Boolean(topicFilter.length || authFilter.length || search);
   const pillsProps = {
