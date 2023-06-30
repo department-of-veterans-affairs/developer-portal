@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { CONSUMER_APIS_PATH } from '../../types/constants/paths';
-import { consumerPartners } from './consumerPartners';
 import { platformMetrics } from './platformMetrics';
 import { PlatformMetric } from './types/platform-metric';
 import './About.scss';
@@ -67,14 +66,6 @@ const Overview = (): JSX.Element => (
           {metricData.content}
         </CardLink>
       ))}
-    </div>
-    <h2 className="vads-u-margin-top--0">You&apos;ll be in good company</h2>
-    <div className="vads-u-margin-bottom--6" id="clients">
-      {consumerPartners.map(
-        (partner: string): JSX.Element => (
-          <div key={partner}>{partner}</div>
-        ),
-      )}
     </div>
     <div className={classNames('vads-u-border-left--5px', 'vads-u-border-color--gray-lighter')}>
       <p
