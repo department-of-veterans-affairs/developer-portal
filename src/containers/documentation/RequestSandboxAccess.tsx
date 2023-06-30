@@ -12,6 +12,7 @@ import {
   TERMS_OF_SERVICE_PATH,
 } from '../../types/constants/paths';
 import { APIUrlSlug } from '../../types';
+import ErrorPage404 from '../ErrorPage404';
 import { getApi } from './DocumentationRoot';
 import { SandboxAccessSuccess } from './components/sandbox';
 import './RequestSandboxAccess.scss';
@@ -31,7 +32,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
   //   token: 'api-token-value',
   // });
   if (!api) {
-    return <h1>placeholder 404</h1>;
+    return <ErrorPage404 />;
   }
 
   const onFormFailure = (data: unknown): void => {
@@ -55,7 +56,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
         {successResults ? (
           <title>Your submission was successful.</title>
         ) : (
-          <title>Request Sandbox Access</title>
+          <title>{api.name} Request Sandbox Access</title>
         )}
       </Helmet>
       <PageHeader

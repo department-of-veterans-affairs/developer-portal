@@ -150,11 +150,7 @@ describe('ApiPage', () => {
         '/explore/api/nonexistantapi/docs',
         '/explore/api/:urlSlug/docs',
       );
-      expect(screen.getByText('ApiPage.tsx 404')).not.toBeNull();
-      // Temporary 404 page
-      // expect(
-      //   screen.getByText('Try using the links below or the search bar to find your way forward.'),
-      // ).not.toBeNull();
+      expect(screen.findByText('Try using these links')).not.toBeNull();
     });
   });
 

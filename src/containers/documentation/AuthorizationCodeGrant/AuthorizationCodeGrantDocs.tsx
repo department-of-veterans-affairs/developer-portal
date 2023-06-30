@@ -13,18 +13,19 @@ import { APIUrlSlug } from '../../../types';
 
 import './AuthorizationCodeGrantDocs.scss';
 import { getApi } from '../DocumentationRoot';
+import ErrorPage404 from '../../ErrorPage404';
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
   const params = useParams<APIUrlSlug>();
   const api = getApi(params.urlSlug);
   if (!api) {
-    return <h1>ApiPage.tsx 404</h1>;
+    return <ErrorPage404 />;
   }
 
   return (
     <>
       <Helmet>
-        <title>Authorization Code Grant</title>
+        <title>{api.name} Authorization Code Grant</title>
       </Helmet>
       <PageHeader header="Authorization Code Grant" subText={api.name} />
       <div className="va-api-authorization-docs">

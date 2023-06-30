@@ -203,9 +203,11 @@ phases:
         # One off redirects
         /explore/health/docs/quickstart|/explore/health
         /release-notes|/explore
+        /apply|/explore
         /onboarding/request-sandbox-access|/explore
         /explore/authorization|/explore
         /release-notes/deactivated|/explore
+        /go-live|/onboarding/request-prod-access
         REDIRECTS
         for env in ${ENVIRONMENTS}; do
           # 301 redirects related to IA updates

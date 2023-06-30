@@ -1,154 +1,92 @@
-import classNames from 'classnames';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import documentationImage from '../assets/documentation.svg';
-import rocketImage from '../assets/rocket.svg';
-import branchImage from '../assets/branch.svg';
 import './Home.scss';
 
-import { CardLink, Hero } from '../components';
-import { Flag } from '../flags';
-import { FLAG_CATEGORIES } from '../types/constants';
-import { getApiCategoryOrder, getApiDefinitions } from '../apiDefs/query';
+import { ExploreApiCard, Hero } from '../components';
+import { lookupApiBySlug } from '../apiDefs/query';
 import ApisLoader from '../components/apisLoader/ApisLoader';
 
-const columnContentClasses = classNames(
-  'vads-u-text-align--center',
-  'vads-u-padding-top--3',
-  'vads-u-padding-bottom--2',
-  'va-api-u-max-width--350',
-  'flex-basis-32',
-);
-
-const buttonClasses = classNames(
-  'usa-button',
-  'usa-button-secondary',
-  'vads-u-align-items--center',
-  'va-home-button',
-);
-
-const imageClasses = classNames('medium-screen:vads-u-width--auto', 'va-api-u-width--100');
-
-const columnContentSectionClasses = classNames(
-  'vads-u-display--flex',
-  'vads-u-justify-content--space-between',
-  'vads-u-flex-direction--column',
-  'medium-screen:vads-u-flex-direction--row',
-  'vads-u-padding-bottom--3',
-  'va-api-u-max-width--1200',
-  'vads-u-align-items--center',
-  'medium-screen:vads-u-align-items--stretch',
-);
-
-export interface ColumnContentProps {
-  imageSrc: string;
-  title: string;
-  children: React.ReactNode;
-  buttonText: string;
-  buttonDestination: string;
-}
-
-const ColumnContent = (props: ColumnContentProps): JSX.Element => {
-  const { imageSrc, title, children, buttonText, buttonDestination } = props;
-  return (
-    <div className={columnContentClasses}>
-      <div className="vads-u-height--full va-column-content-text">
-        <div>
-          <img className={imageClasses} src={imageSrc} alt="" role="presentation" />
-        </div>
-        <div className="vads-u-padding-bottom--4">
-          <h2 className="vads-u-margin-top--0">{title}</h2>
-          <div className="title-border" />
-          <p>{children}</p>
-        </div>
-        <Link to={buttonDestination} className={buttonClasses}>
-          {buttonText}
-        </Link>
-      </div>
-    </div>
-  );
-};
+import peopleGraphic from '../assets/people.svg';
 
 const ApiList = (): JSX.Element => {
-  const apiDefinitions = getApiDefinitions();
-  const apiCategoryOrder = getApiCategoryOrder();
+  const popularApis = ['fhir', 'va-facilities', 'va-forms', 'benefits'];
 
   return (
     <section className="api-list vads-u-padding-top--3  vads-u-padding-bottom--2">
       <div className="vads-l-grid-container vads-u-margin-x--auto">
-        <h2 className="vads-u-margin-top--0">A modern, reliable API library.</h2>
-        <p>
-          Our API library makes accessing VA data easier and safer across many categories, including
-          appeals, benefits, health, facilities, forms, and Veteran verification. With our APIs,
-          individuals and organizations can securely access the VA data they need to build helpful
-          tools and services for Veterans at no cost. We’re actively expanding our API library to
-          include new categories and APIs, with the goal of better serving those who have served us.
-        </p>
-        <div className="vads-l-row">
-          <div className="vads-l-row vads-u-justify-content--space-evenly">
-            <ApisLoader>
-              <>
-                {apiCategoryOrder.map((apiCategoryKey: string) => {
-                  const { name, content } = apiDefinitions[apiCategoryKey];
-                  return (
-                    <Flag name={[FLAG_CATEGORIES, apiCategoryKey]} key={apiCategoryKey}>
-                      <CardLink
-                        name={name}
-                        url={`/explore/${apiCategoryKey}`}
-                        callToAction={`View the ${name}`}
-                        centered
-                      >
-                        {content.shortDescription}
-                      </CardLink>
-                    </Flag>
-                  );
-                })}
-              </>
-            </ApisLoader>
-          </div>
+        <h2 className="vads-u-margin-top--0">Popular APIs</h2>
+        <Link to="/explore">View all</Link>
+        <div className="vads-l-row vads-u-justify-content--space-evenly vads-u-margin-x--neg1p5">
+          <ApisLoader>
+            <>
+              {popularApis.map((urlSlug: string) => {
+                const api = lookupApiBySlug(urlSlug);
+                return (
+                  api && (
+                    <div
+                      className="vads-l-col--12 small-screen:vads-l-col--6 medium-screen:vads-l-col--3 vads-u-padding--2 vads-u-display--flex"
+                      key={urlSlug}
+                    >
+                      <ExploreApiCard api={api} />
+                    </div>
+                  )
+                );
+              })}
+            </>
+          </ApisLoader>
         </div>
       </div>
     </section>
   );
 };
 
+const GettingStarted = (): JSX.Element => (
+  <section className="vads-u-background-color--white vads-u-margin-top--2p5">
+    <div className="vads-l-grid-container vads-u-margin-x--auto">
+      <div className="vads-l-row">
+        <div className="vads-l-col--12 medium-screen:vads-l-col--7">
+          <h1 className="vads-u-margin-bottom--0">Get started</h1>
+          <p>Follow these steps to start developing with our APIs.</p>
+          <ol className="process vads-u-margin-top--3" aria-labelledby="Getting started">
+            <li className="process-step list-one" aria-labelledby="explore-our-apis">
+              <strong id="explore-our-apis">
+                <Link to="/explore">Explore our APIs</Link>
+              </strong>
+              <p>Find the right API and start developing right away.</p>
+            </li>
+            <li className="process-step list-two" aria-labelledby="request-production-access">
+              <strong id="request-production-access">
+                <Link to="/onboarding/request-prod-access">Request production access</Link>
+              </strong>
+              <p>After testing your app in sandbox, start the path to production.</p>
+            </li>
+            <li className="process-step list-three" aria-labelledby="complete-a-demo">
+              <strong id="complete-a-demo">
+                <Link to="/onboarding/prepare-for-and-complete-a-demo">Complete a demo</Link>
+              </strong>
+              <p>
+                Schedule, prepare, and complete a demo with us.
+                <br />
+                <em>No demo is needed for open data APIs.</em>
+              </p>
+            </li>
+          </ol>
+        </div>
+        <div className="vads-l-col--5 vads-u-display--none medium-screen:vads-u-display--block">
+          <img
+            src={peopleGraphic}
+            alt="Abstract cartoon graphic showing three people building a web application with colored blocks"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
 const Home = (): JSX.Element => (
   <div className="home vads-l-grid-container--full">
     <Hero />
-    <section className="vads-u-background-color--white">
-      <div className={classNames('vads-l-grid-container', 'vads-u-margin-x--auto')}>
-        <div className={columnContentSectionClasses}>
-          <ColumnContent
-            title="API Documentation"
-            imageSrc={documentationImage}
-            buttonDestination="/explore"
-            buttonText="Read the Docs"
-          >
-            A Veteran-centered API platform for securely accessing VA data to build innovative tools
-            for Veterans. Explore usage policies and technical details about VA&apos;s API
-            offerings.
-          </ColumnContent>
-          <ColumnContent
-            title="Consumer Onboarding"
-            imageSrc={rocketImage}
-            buttonDestination="/onboarding"
-            buttonText="Review the onboarding process"
-          >
-            We review the quality and security of all applications integrating with our APIs and
-            data before they go live.
-          </ColumnContent>
-          <ColumnContent
-            title="API Publishing"
-            imageSrc={branchImage}
-            buttonDestination="/api-publishing"
-            buttonText="Add your API to Lighthouse"
-          >
-            Change the face of VA data by adding your API to the Lighthouse development portal. Find
-            out how you can onboard your API and learn what to expect when working with Lighthouse.
-          </ColumnContent>
-        </div>
-      </div>
-    </section>
+    <GettingStarted />
     <ApiList />
   </div>
 );
