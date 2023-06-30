@@ -6,6 +6,7 @@ import { ApiAlerts, ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../c
 import { APIUrlSlug } from '../../types';
 import { apiLoadingState } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
+import ErrorPage404 from '../ErrorPage404';
 import { ReleaseNotes } from './ReleaseNotes';
 import RequestSandboxAccess from './RequestSandboxAccess';
 import ApiPage from './ApiPage';
@@ -41,14 +42,14 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
       <SideNavEntry exact to={`/explore/api/${api.urlSlug}/docs`} name="Docs" subNavLevel={1} />
       <SideNavEntry
         exact
-        if={api.oAuthTypes?.includes('AuthorizationCodeGrant')}
+        if={!!api.oAuthTypes?.includes('AuthorizationCodeGrant')}
         name="Authorization Code Grant"
         to={`/explore/api/${api.urlSlug}/authorization-code`}
         subNavLevel={1}
       />
       <SideNavEntry
         exact
-        if={api.oAuthTypes?.includes('ClientCredentialsGrant')}
+        if={!!api.oAuthTypes?.includes('ClientCredentialsGrant')}
         to={`/explore/api/${api.urlSlug}/client-credentials`}
         name="Client Credentials Grant"
         subNavLevel={1}
@@ -83,7 +84,7 @@ const DocumentationRoot = (): JSX.Element => {
     return <ApisLoader />;
   }
   if (!api) {
-    return <h1>temporary 404</h1>;
+    return <ErrorPage404 />;
   }
   return (
     <>
