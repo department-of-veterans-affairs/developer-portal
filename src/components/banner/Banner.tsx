@@ -64,13 +64,14 @@ const Banner = (): JSX.Element => {
           'site-guidance',
           'vads-u-background-color--gray-lightest',
           'vads-u-padding-left--2',
+          'vads-u-padding-y--0p5',
           'medium-screen:vads-u-padding-left--4',
         )}
       >
         <div className="va-api-banner-header">
           <div className={classNames('va-api-banner-inner', 'vads-u-max-width--100')}>
             <div className={classNames(defaultFlexContainer(true), 'vads-u-padding-y--0p25')}>
-              <div>
+              <div className="vads-u-display--flex">
                 <img
                   src={flagIcon}
                   alt="US flag"

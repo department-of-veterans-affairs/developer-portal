@@ -49,7 +49,7 @@ const Search = (props: SearchTypes): JSX.Element => {
             'vads-u-padding--1',
             'vads-u-color--base',
           )}
-          placeholder={inMenu ? '' : 'begin typing your search term here'}
+          placeholder={inMenu ? 'I’m looking for...' : 'begin typing your search term here'}
           aria-label="Search developer.va.gov"
         />
         <button

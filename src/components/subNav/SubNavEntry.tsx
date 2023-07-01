@@ -6,13 +6,14 @@ const itemStyles = classNames(
   'vads-u-border-top--1px',
   'vads-u-border-color--gray-lighter',
   'vads-u-margin-bottom--0',
-  'vads-u-padding-y--1',
 );
 
 const linkStyles = classNames(
   'vads-u-color--gray-dark',
   'vads-u-display--block',
-  'vads-u-padding-left--2p5',
+  'vads-u-padding-left--4',
+  'vads-u-padding-right--1',
+  'vads-u-padding-y--2',
   'vads-u-text-decoration--none',
   'vads-u-width--full',
 );
