@@ -114,7 +114,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           )}
         >
           <li className={navItemStyles}>
-            <MainNavItem targetUrl="/explore" className={navLinkStyles}>
+            <MainNavItem onClick={onMobileNavClose} targetUrl="/explore" className={navLinkStyles}>
               Explore APIs
             </MainNavItem>
           </li>
