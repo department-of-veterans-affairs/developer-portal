@@ -14,4 +14,11 @@
 
 .filter-pills-container {
   @extend .explore-api-card-container;
+  background-color: $color-white;
+  position: sticky;
+  top: 40px;
+
+  @include media($medium-screen) {
+    top: 72px;
+  }
 }
