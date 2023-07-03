@@ -32,7 +32,7 @@ describe('About Overview', () => {
       // Increment by 2 to account for additional "News" link
       expect(navLinks).toHaveLength(data.sections.length + 2);
 
-      const overviewLink = getByRole(sideNav, 'link', { name: 'Overview' });
+      const overviewLink = getByRole(sideNav, 'link', { name: 'About' });
       expect(overviewLink).toHaveAttribute('href', '/about');
 
       const newsLink = getByRole(sideNav, 'link', { name: 'News' });

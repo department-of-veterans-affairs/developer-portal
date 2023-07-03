@@ -26,7 +26,7 @@ describe('ConsumerOnboardingRoot', () => {
     });
 
     it.each([
-      ['Overview', CONSUMER_PATH],
+      ['API Consumer onboarding', CONSUMER_PATH],
       ['Request production access', CONSUMER_PROD_PATH],
       ['Prepare for the demo', CONSUMER_DEMO_PATH],
       ['Working with our APIs', CONSUMER_APIS_PATH],
@@ -40,7 +40,7 @@ describe('ConsumerOnboardingRoot', () => {
 
   describe('pages', () => {
     it('renders the overview page', async () => {
-      const link = screen.getByRole('link', { name: 'Overview' });
+      const link = screen.getByRole('link', { name: 'API Consumer onboarding' });
       userEvent.click(link);
 
       const heading = await screen.findByRole('heading', { name: 'API Consumer Onboarding' });
