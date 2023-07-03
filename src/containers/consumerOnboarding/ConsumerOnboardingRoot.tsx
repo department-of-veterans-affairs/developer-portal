@@ -17,7 +17,7 @@ const ConsumerOnboardingRoot = (): JSX.Element => (
   <ContentWithNav
     nav={
       <>
-        <SideNavEntry name="Overview" to={CONSUMER_PATH} exact />
+        <SideNavEntry name="API Consumer onboarding" to={CONSUMER_PATH} exact />
         <SideNavEntry name="Request production access" to={CONSUMER_PROD_PATH} />
         <SideNavEntry name="Prepare for the demo" to={CONSUMER_DEMO_PATH} />
         <SideNavEntry name="Working with our APIs" to={CONSUMER_APIS_PATH} />

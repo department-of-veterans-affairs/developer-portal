@@ -33,21 +33,20 @@ li.va-api-sidenav-entry {
     background: $color-gray-lightest;
     color: $color-cool-blue;
     padding: 21px 13px;
-    text-decoration: underline;
+    text-decoration: none;
 
     @include media($medium-screen) {
       background: $color-white;
       padding: 12px;
-      text-decoration: none;
     }
   }
   position: relative;
 
-  @include media($medium-screen) {
-    .va-api-nav-level-1 {
-      padding-left: 32px !important;
-    }
+  .va-api-nav-level-1 {
+    padding-left: 32px !important;
+  }
 
+  @include media($medium-screen) {
     .va-api-nav-level-2 {
       padding-left: 56px !important;
     }
@@ -108,15 +107,7 @@ li.va-api-sidenav-entry {
 }
 
 ul.va-api-sidenav-sub-list {
-  // Hide subnav by default
-  display: none;
   list-style: none;
-}
-
-a.va-api-active-sidenav-link + ul.va-api-sidenav-sub-list {
-  // Show the subnav when its parent (represented as a sibling in the DOM)
-  // is the selected nav item
-  display: block;
 }
 
 a.va-api-secondary-skip-nav {
