@@ -36,7 +36,16 @@ const ApiOverviewPage = (): JSX.Element => {
       </Helmet>
       <PageHeader header={api.name} className="vads-u-margin-bottom--1p5" />
       <ExploreApiTags api={api} />
-      <ReactMarkdown className="api-overview-content">
+      <ReactMarkdown
+        className="api-overview-content"
+        components={{
+          a: ({ className, children, ...anchorProps }): JSX.Element => (
+            <Link className={className} to={anchorProps.href ?? ''}>
+              {String(children)}
+            </Link>
+          ),
+        }}
+      >
         {parseContent(api.overviewPageContent, api)}
       </ReactMarkdown>
       <Link
