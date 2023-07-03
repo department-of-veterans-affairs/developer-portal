@@ -39,7 +39,10 @@ const ApiOverviewPage = (): JSX.Element => {
       <ReactMarkdown className="api-overview-content">
         {parseContent(api.overviewPageContent, api)}
       </ReactMarkdown>
-      <Link to={`/explore/api/${api.urlSlug}/docs`} className="vads-c-action-link--green">
+      <Link
+        to={`/explore/api/${api.urlSlug}/docs`}
+        className="vads-c-action-link--green vads-u-display--inline-block vads-u-margin-bottom--9"
+      >
         Read the docs
       </Link>
     </>
