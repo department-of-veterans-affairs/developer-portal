@@ -26,7 +26,7 @@ const navItemStyles: string = classNames(
   'va-api-main-nav-item',
   'vads-u-display--block',
   'vads-u-margin-bottom--0',
-  'vads-u-padding-y--1',
+  'medium-screen:vads-u-margin-right--0p5',
   'medium-screen:vads-u-display--inline-block',
   'medium-screen:vads-u-padding-y--0',
   'vads-u-border-top--1px',
@@ -38,7 +38,8 @@ const navLinkStyles = classNames(
   'vads-u-color--gray-dark',
   'vads-u-display--block',
   'vads-u-line-height--4',
-  'vads-u-padding--1',
+  'vads-u-padding-x--1',
+  'vads-u-padding-y--2',
   'vads-u-text-decoration--none',
   'medium-screen:vads-u-padding--2',
   'va-api-external-link',
@@ -68,6 +69,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
     <nav className={navClasses}>
       <div
         className={classNames(
+          'va-api-nav-inner',
           'vads-u-padding--2p5',
           'vads-u-border-color--white',
           'medium-screen:vads-u-margin-left--4',
@@ -112,7 +114,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           )}
         >
           <li className={navItemStyles}>
-            <MainNavItem targetUrl="/explore" className={navLinkStyles}>
+            <MainNavItem onClick={onMobileNavClose} targetUrl="/explore" className={navLinkStyles}>
               Explore APIs
             </MainNavItem>
           </li>

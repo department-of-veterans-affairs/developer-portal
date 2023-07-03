@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import toHtmlId from '../../toHtmlId';
-import { CONSUMER_PROD_PATH, CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
+import { CONSUMER_PROD_PATH } from '../../types/constants/paths';
 
 interface AccordionPanelContent {
   readonly body: string | JSX.Element;
@@ -50,7 +50,8 @@ const developmentQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
-        Click to <Link to={CONSUMER_SANDBOX_PATH}>Get Started</Link> by applying for an API key.
+        Get started by requesting access credentials from an API&apos;s overview page.{' '}
+        <Link to="/explore">Explore our APIs</Link>. <br />
         Note that you will need to provide your <Link to="/oauth">OAuth</Link> Redirect URI if you
         are applying for a key to the Health, Claims, or Veteran Verification APIs. You are also
         required to agree to the <Link to="/terms-of-service">VA API Terms of Service</Link> in
@@ -83,8 +84,8 @@ const developmentQuestions: SupportQuestion[] = [
     answer: (
       <p>
         Yes! You will receive your API key immediately after sign up. That is all you need to
-        proceed - all relevant information should be contained in the{' '}
-        <Link to="/explore">API documentation</Link>.
+        proceed - all relevant information can be found within an individual API&apos;s
+        documentation. <Link to="/explore">Find an API</Link>.
       </p>
     ),
     question: 'Can I start using the API as soon as I sign up?',
@@ -110,9 +111,9 @@ const developmentQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
-        Please visit the <Link to="/explore">API documentation</Link> for more information and
-        example use cases. There are also some real-world examples in the articles and press
-        releases linked on our <Link to="/about/news">News</Link> page.
+        Use cases and other information can be found within an individual API&apos;s documentation.{' '}
+        <Link to="/explore">Find an API</Link>. There are also some real-world examples in the
+        articles and press releases linked on our <Link to="/about/news">News</Link> page.
       </p>
     ),
     question:
