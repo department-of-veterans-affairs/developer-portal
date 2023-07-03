@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import { AuthFilters, FilterPills, SearchFilters, TopicFilters } from '../../components';
-import { getAllApis, getApisLoaded, isAcgApi, isCcgApi } from '../../apiDefs/query';
+import { getActiveApis, getApisLoaded, isAcgApi, isCcgApi } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { useOutsideGroupClick } from '../../hooks';
 import { generateFilterPills } from '../../utils/generateFilterPills';
@@ -151,12 +151,14 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
   });
 
   useEffect(() => {
-    let allApis = getAllApis();
+    let activeApis = getActiveApis();
     if (topicFilter.length > 0) {
-      allApis = allApis.filter((api: APIDescription) => topicFilter.includes(api.categoryUrlSlug));
+      activeApis = activeApis.filter((api: APIDescription) =>
+        topicFilter.includes(api.categoryUrlSlug),
+      );
     }
     if (authFilter.length > 0) {
-      allApis = allApis.filter((api: APIDescription) => {
+      activeApis = activeApis.filter((api: APIDescription) => {
         if (authFilter.includes('acg') && isAcgApi(api)) {
           return true;
         }
@@ -167,14 +169,14 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
       });
     }
     if (search) {
-      const fuse = new Fuse(allApis, {
+      const fuse = new Fuse(activeApis, {
         keys: ['name', 'description', 'releaseNotes', 'urlSlug', 'urlFragment'],
       });
-      allApis = fuse
+      activeApis = fuse
         .search<APIDescription>(search)
         .map((api: Fuse.FuseResult<APIDescription>): APIDescription => api.item);
     }
-    setApis(allApis);
+    setApis(activeApis);
   }, [apisLoaded, authFilter, search, setApis, topicFilter]);
 
   useEffect(() => {
