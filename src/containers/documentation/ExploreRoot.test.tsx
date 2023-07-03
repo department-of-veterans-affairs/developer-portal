@@ -39,6 +39,6 @@ describe('ExploreRoot', () => {
 
   it('should render mocked apis', () => {
     const apiCount = screen.getByTestId('api-count').textContent;
-    expect(apiCount).toBe(7);
+    expect(apiCount).toBe('7');
   });
 });
