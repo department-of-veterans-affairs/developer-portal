@@ -1,11 +1,10 @@
+import * as React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import * as React from 'react';
-
 import './TestingNotice.scss';
 
-const TestingNotice: React.FunctionComponent = (): JSX.Element => (
+export const TestingNotice = (): JSX.Element => (
   <div
     className={classNames(
       'va-api-testing-notice',
@@ -23,5 +22,3 @@ const TestingNotice: React.FunctionComponent = (): JSX.Element => (
     to visit VA Lighthouse.
   </div>
 );
-
-export default TestingNotice;

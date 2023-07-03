@@ -11,6 +11,7 @@ describe('deprecated API module', () => {
   const apiValues: APIDescription = {
     altID: null,
     categoryUrlFragment: 'nothing-of-importance',
+    categoryUrlSlug: 'nothing-of-importance',
     description: "it's a fabulous API, you really must try it sometime",
     docSources: [],
     enabledByDefault: true,

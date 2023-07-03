@@ -41,6 +41,7 @@ export const SiteRoutes: React.FunctionComponent = (): JSX.Element => (
     {/* API Documentation */}
     <Redirect from="/explore/api" to="/explore" exact />
     <Route path="/explore/api/:urlSlug" component={DocumentationRoot} />
+    <Route path="/explore/:categoryUrlSlugs" component={DocumentationRoot} />
     <Route path="/explore" component={DocumentationRoot} />
 
     {/* About */}

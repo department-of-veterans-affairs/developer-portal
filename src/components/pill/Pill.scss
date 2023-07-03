@@ -1,0 +1,24 @@
+@import '../../styles/variables';
+@import '../exploreApiCard/ExploreApiCard.scss';
+
+.va-api-filter-pill {
+  align-items: center;
+  border-radius: 12px !important;
+  display: inline-flex !important;
+  padding: 4px 4px 4px 8px !important;
+  > span {
+    margin: 0 24px 0 6px;
+  }
+  width: unset !important;
+}
+
+.filter-pills-container {
+  @extend .explore-api-card-container;
+  background-color: $color-white;
+  position: sticky;
+  top: 40px;
+
+  @include media($medium-screen) {
+    top: 72px;
+  }
+}

@@ -74,6 +74,7 @@ export interface APIDescription {
   readonly urlFragment: string;
   readonly urlSlug: string;
   readonly categoryUrlFragment: string;
+  readonly categoryUrlSlug: string;
   readonly description: string;
   readonly enabledByDefault: boolean;
   readonly vaInternalOnly?: VaInternalOnly;
@@ -98,6 +99,8 @@ export interface OAuthInfo {
 
 export interface ACGInfo {
   readonly baseAuthPath: string;
+  readonly sandboxAud: string;
+  readonly productionAud: string;
   readonly scopes: string[];
 }
 

@@ -1,0 +1,117 @@
+@import '../../styles/variables.scss';
+
+#api-filters {
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 101;
+}
+
+.filters-toggle-button {
+  background-color: $color-primary-darkest !important;
+  border-radius: 0 !important;
+  bottom: 0;
+  box-shadow: 0px -1px 12px 1px rgba(0, 0, 0, 0.2);
+  left: 0;
+  position: absolute;
+  right: 0;
+  z-index: 101;
+  padding: 2.4rem 1.6rem !important;
+}
+
+.filters-toggle-icon {
+  position: absolute;
+  right: 1.6rem;
+}
+
+.filters-container {
+  background-color: transparent;
+  position: absolute;
+  bottom: 64px;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  z-index: 100;
+}
+
+.filter-controls {
+  transform: translateY(-100%);
+}
+
+.caption-container {
+  background-color: $color-gray-light-alt !important;
+  margin: 1.6rem 0;
+  padding: 0.8rem 1.6rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+button.filters-clear-all-button {
+  color: #005ea2;
+  text-decoration: underline;
+  background-color: $color-white;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-weight: 400;
+  margin: 1.6rem 0 0 0;
+  padding: 0.8rem 0;
+  text-align: left;
+
+  &:hover {
+    background-color: $color-white;
+    color: $color-primary-darkest !important;
+  }
+}
+
+@include media($medium-screen) {
+  #api-filters {
+    bottom: initial;
+    position: sticky;
+    top: 0;
+    z-index: 101;
+  }
+
+  .filters-container {
+    align-items: center;
+    background-color: $color-gray-light-alt !important;
+    display: flex !important;
+    flex-flow: row nowrap;
+    padding: 0 1.6rem 0 0.8rem;
+    margin: 0.8rem 0 1.6rem;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    transform: unset;
+    width: 100%;
+  }
+
+  .filter-controls {
+    align-items: center;
+    transform: unset;
+  }
+
+  .caption-container {
+    margin: 0;
+  }
+
+  button.filters-clear-all-button {
+    margin: 0 0 0 1.6rem;
+  }
+}
+
+.filter-topic-container {
+  padding: 1.6rem;
+
+  [type='checkbox'] + label {
+    display: flex;
+    margin-top: 1.6rem;
+  }
+
+  [type='checkbox'] + label::before {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+  }
+}
