@@ -35,7 +35,7 @@ const About = (): JSX.Element => (
           key={`${ABOUT_OVERVIEW_PATH} page`}
           exact
           to={ABOUT_OVERVIEW_PATH}
-          name="Overview"
+          name="About"
         />
         <SideNavEntry
           key={`${ABOUT_NEWS_PATH} page`}

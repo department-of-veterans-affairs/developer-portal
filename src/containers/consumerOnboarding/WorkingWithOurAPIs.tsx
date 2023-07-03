@@ -3,7 +3,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
-import { CONSUMER_SANDBOX_PATH } from '../../types/constants/paths';
 
 const WorkingWithOurAPIs = (): JSX.Element => (
   <div>
@@ -32,9 +31,6 @@ const WorkingWithOurAPIs = (): JSX.Element => (
           adding an endpoint or field. Non-breaking changes do not require a new version, but
           changes that could impact your experience or use of an API will have an accompanying
           release note.
-        </p>
-        <p>
-          See our <Link to="/release-notes">release notes</Link>.
         </p>
       </va-accordion-item>
     </va-accordion>
@@ -82,9 +78,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
           Connection (TIC), and is in compliance with VA’s external system network requirements.
         </p>
         <p>
-          Getting access to the sandbox environment is easy and automatic. Apply for an API key by
-          filling out the form on <Link to={CONSUMER_SANDBOX_PATH}>our apply page</Link>, or submit
-          the form to receive a client secret and ID for OAuth. Submitting the form will require you
+          Getting access to the sandbox environment is easy, and for most APIs, automatic. Apply for
+          access credentials from an API&apos;s overview page. Submitting the form will require you
           to agree to our terms of service.
         </p>
         <h3 id="production">Production</h3>

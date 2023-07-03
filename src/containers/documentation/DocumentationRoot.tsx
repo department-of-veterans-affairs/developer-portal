@@ -89,7 +89,7 @@ const DocumentationRoot = (): JSX.Element => {
   }
   if (
     location.pathname.endsWith('authorization-code') &&
-    !api.oAuthTypes?.includes('AuthrorizationCodeGrant')
+    !api.oAuthTypes?.includes('AuthorizationCodeGrant')
   ) {
     return <ErrorPage404 />;
   }
