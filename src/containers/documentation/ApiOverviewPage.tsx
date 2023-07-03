@@ -59,4 +59,5 @@ const ApiOverviewPage = (): JSX.Element => {
 };
 
 ApiOverviewPage.propTypes = {};
+
 export default ApiOverviewPage;
