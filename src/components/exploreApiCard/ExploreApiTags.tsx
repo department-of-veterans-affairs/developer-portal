@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { APIDescription } from '../../apiDefs/schema';
-import { generateFilterTags } from '../../utils/generateFilterTags';
+import { generateFilterTags, TagDataProps } from '../../utils/generateFilterTags';
 import './ExploreApiTags.scss';
 
-const ExploreApiTag = ({ tag }: { tag: string }): JSX.Element => (
+const ExploreApiTag = ({ showLock, tagName }: TagDataProps): JSX.Element => (
   <span
     className={classNames(
       'explore-filter-tag',
@@ -14,13 +14,13 @@ const ExploreApiTag = ({ tag }: { tag: string }): JSX.Element => (
       'vads-u-color--base',
     )}
   >
-    {['CLIENT CREDENTIALS GRANT', 'RESTRICTED ACCESS'].includes(tag) && (
+    {showLock && (
       <FontAwesomeIcon
         className={classNames('explore-fa-lock', 'vads-u-color--gray-medium')}
         icon={faLock}
       />
     )}
-    {tag.replace(/-/g, ' ').toUpperCase()}
+    {tagName.replace(/-/g, ' ').toUpperCase()}
   </span>
 );
 
@@ -30,8 +30,12 @@ export const ExploreApiTags = ({ api }: { api: APIDescription }): JSX.Element =>
 
   return (
     <div className="explore-filter-tags">
-      {filterTags.map((tag: string) => (
-        <ExploreApiTag key={`${tag} ${urlSlug}`} tag={tag} />
+      {filterTags.map(tagData => (
+        <ExploreApiTag
+          key={`${tagData.tagName} ${urlSlug}`}
+          showLock={tagData.showLock}
+          tagName={tagData.tagName}
+        />
       ))}
     </div>
   );
