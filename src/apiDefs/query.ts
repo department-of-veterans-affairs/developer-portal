@@ -58,30 +58,14 @@ const getApiCategoryOrder = (): string[] => {
   });
 };
 
-const getActiveApiDefinitions = (): APICategories => {
-  const output: APICategories = {};
-  const definitions = rootGetApiDefinitions.getApiDefinitions();
-  Object.keys(definitions).forEach((key: string) => {
-    const apis: APIDescription[] = definitions[key].apis.filter(
-      (api: APIDescription) =>
-        isHostedApiEnabled(api.urlFragment, api.enabledByDefault) && !isApiDeactivated(api),
-    );
-    output[key] = {
-      ...definitions[key],
-      apis,
-    };
-  });
-
-  return output;
-};
-
 const getAllApis = (): APIDescription[] =>
   Object.values(rootGetApiDefinitions.getApiDefinitions())
     .flatMap((category: APICategory) => category.apis)
     .sort((a, b) => (a.name > b.name ? 1 : -1));
 const getActiveApis = (): APIDescription[] =>
-  getAllApis().filter((api: APIDescription) =>
-    isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  getAllApis().filter(
+    (api: APIDescription) =>
+      isHostedApiEnabled(api.urlFragment, api.enabledByDefault) && !isApiDeactivated(api),
   );
 
 const getActiveKeyAuthApis = (): APIDescription[] =>
@@ -192,7 +176,6 @@ export {
   getAllQuickstartCategorySlugs,
   getApiCategoryOrder,
   getApiDefinitions,
-  getActiveApiDefinitions,
   lookupApiByFragment,
   lookupApiBySlug,
   lookupApiCategory,
