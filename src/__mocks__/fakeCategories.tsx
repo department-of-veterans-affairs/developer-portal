@@ -25,7 +25,17 @@ export const fakeCategories: APICategories = {
         oAuthInfo: null,
         oAuthTypes: null,
         openData: false,
-        overviewPageContent: '## Default overview page content',
+        overviewPageContent: `
+### With this API you can
+- Rule them all
+- Find them
+- Bring them all
+- And in the darkness bind them
+
+### Getting access
+**Sandbox** [Start developing](/explore/api/{API_URL_SLUG}/sandbox-access) immediately with test data.
+**Production** Timeline for getting production access varies. [Learn more about getting production access](/onboarding/request-prod-access).
+`,
         releaseNotes:
           '### March 25, 2020\n\nOne Ring destroyed\n\n\n---\n\n### June 10, 2019\n\nOne Ring discovered by Bilbo in Misty Mountains\n',
         urlFragment: 'rings',
