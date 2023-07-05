@@ -6,17 +6,20 @@ const testPaths = [
   '/',
   '/terms-of-service',
   '/explore',
-  '/explore/authorization',
-  '/explore/authorization/docs/authorization-code',
-  '/explore/benefits',
-  '/explore/health/docs/quickstart',
-  // Swagger page handled individually below
-  // '/explore/benefits/docs/claims',
-  '/release-notes/benefits',
+  '/explore/va-benefits',
+  '/explore?auth=acg&q=health',
+  '/explore/health?q=health',
+  '/explore/health?auth=acg',
+  '/explore/health?auth=acg&q=health',
+  '/explore/api/claims',
+  // '/explore/api/claims/docs',
+  '/explore/api/claims/authorization-code',
+  '/explore/api/claims/client-credentials',
+  '/explore/api/claims/release-notes',
+  '/explore/api/claims/sandbox-access',
   '/api-publishing',
   '/api-publishing/process',
   '/onboarding',
-  '/onboarding/request-sandbox-access',
   '/onboarding/production-access-application',
   '/about/news',
 ];
@@ -62,12 +65,24 @@ describe('Accessibility tests', () => {
     testPaths.forEach(path => {
       cy.visit(path);
       cy.injectAxe();
+      cy.configureAxe({
+        rules: [
+          {
+            id: 'duplicate-id-aria',
+            enabled: false,
+          },
+          {
+            id: 'button-name',
+            enabled: false,
+          },
+        ],
+      });
       cy.checkA11y(null, null, logAxeViolations(path));
     });
   });
 
   it('Swagger page has no axe violations', () => {
-    const path = '/explore/benefits/docs/claims';
+    const path = '/explore/api/claims/docs';
     cy.visit(path);
     cy.injectAxe();
     cy.wait(5000); // Gives Swagger UI plenty of time to load

@@ -30,7 +30,7 @@ jobs:
           && apt install gh -y
 
       - name: Install git-lfs
-        run: apt update && apt install git-lfs
+        run: apt update && apt install git-lfs openssh-client -y
       - id: fetch_pr_branch
         uses: octokit/request-action@v2.x
         name: Fetch PR info
@@ -82,7 +82,7 @@ jobs:
         run: rm -f test/image_snapshots/visual.cy.js/*
 
       - name: Add private key for sandbox-access-form repo
-        uses: webfactory/ssh-agent@v0.5.4
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
 

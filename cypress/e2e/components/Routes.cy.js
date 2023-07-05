@@ -2,11 +2,9 @@
 
 const badUrls = [
   '/api-publishing/invalid',
-  '/explore/invalid',
-  '/explore/invalid/docs',
-  '/explore/invalid/docs/quickstart',
+  '/explore/api/invalid',
+  '/explore/api/invalid/docs',
   '/onboarding/invalid',
-  '/release-notes/invalid',
   '/support/invalid',
 ];
 

@@ -58,9 +58,15 @@ jobs:
           && apt-get purge --auto-remove -y curl
           && rm -rf /src/*.deb
 
-      - name: Install python env
+      - name: Install python and openssh-client env
         run: |
-          apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
+          apt update && apt install python3 openssh-client -y && ln -s /usr/bin/python3 /usr/bin/python
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+  
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
 

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp, faMinus, faPlus, faTag } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import { CheckboxRadioField } from '../formField';
-import { getApiCategoryOrder, lookupApiCategory } from '../../apiDefs/query';
+import { getApiCategoryOrder, getApisLoaded, lookupApiCategory } from '../../apiDefs/query';
 import { useOutsideGroupClick } from '../../hooks';
 import { TopicFilterValues } from './ApiFilters';
 
@@ -80,18 +80,19 @@ export const TopicFilters = ({
               />
             </button>
             <div className={topicClassNames} ref={topicContainerRef}>
-              {topics.map((topic: string) => {
-                const category = lookupApiCategory(topic);
-                return (
-                  <CheckboxRadioField
-                    key={category.urlSlug}
-                    label={`${category.name} (${category.apis.length})`}
-                    name="topics"
-                    type="checkbox"
-                    value={category.urlSlug}
-                  />
-                );
-              })}
+              {getApisLoaded() &&
+                topics.map((topic: string) => {
+                  const category = lookupApiCategory(topic);
+                  return (
+                    <CheckboxRadioField
+                      key={category.urlSlug}
+                      label={`${category.name} (${category.apis.length})`}
+                      name="topics"
+                      type="checkbox"
+                      value={category.urlSlug}
+                    />
+                  );
+                })}
               <button
                 aria-label="Apply filters to update the API list and close the filter menu"
                 className="vads-u-margin-top--2 vads-u-margin-bottom--0"

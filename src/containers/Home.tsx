@@ -16,7 +16,10 @@ const ApiList = (): JSX.Element => {
       <div className="vads-l-grid-container vads-u-margin-x--auto">
         <h2 className="vads-u-margin-top--0">Popular APIs</h2>
         <Link to="/explore">View all</Link>
-        <div className="vads-l-row vads-u-justify-content--space-evenly vads-u-margin-x--neg1p5">
+        <div
+          className="vads-l-row vads-u-justify-content--space-evenly vads-u-margin-x--neg1p5"
+          role="list"
+        >
           <ApisLoader>
             <>
               {popularApis.map((urlSlug: string) => {

@@ -24,15 +24,12 @@ describe('Auth Code Grant Page', () => {
       fixture: 'legacy.json',
     }).as('LPB datastore');
 
-    cy.visit('/explore/authorization/docs/authorization-code?api=claims');
+    cy.visit('/explore/api/claims/authorization-code');
   });
 
   it('All links in the table of contents move focus as expected', () => {
     tableOfContents.forEach(hash => {
-      cy.get(
-        '#on-this-page + ul a[href="/explore/authorization/docs/authorization-code?api=claims#' +
-          hash,
-      ).click();
+      cy.get('#on-this-page + ul a[href="/explore/api/claims/authorization-code#' + hash).click();
       cy.focused().should('have.id', hash);
     });
   });

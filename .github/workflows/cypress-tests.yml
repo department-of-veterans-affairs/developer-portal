@@ -31,16 +31,17 @@ jobs:
           echo $NODE_VERSION
           echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Install python env
+      - name: Install python and openssh-client env
         run: |
-          apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
-      - name: Start Fake LPB Server
-        run: ./scripts/fake_lpb.sh
+          apt update && apt install openssh-client python3 -y && ln -s /usr/bin/python3 /usr/bin/python
 
       - name: Add private key for sandbox-access-form repo
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Start Fake LPB Server
+        run: ./scripts/fake_lpb.sh
 
       - name: Cypress run
         uses: cypress-io/github-action@v5
@@ -87,16 +88,17 @@ jobs:
           echo $NODE_VERSION
           echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Install python env
+      - name: Install python and openssh-client env
         run: |
-          apt update && apt install python3 -y && ln -s /usr/bin/python3 /usr/bin/python
-      - name: Start Fake LPB Server
-        run: ./scripts/fake_lpb.sh
+          apt update && apt install openssh-client python3 -y && ln -s /usr/bin/python3 /usr/bin/python
 
       - name: Add private key for sandbox-access-form repo
         uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Start Fake LPB Server
+        run: ./scripts/fake_lpb.sh
 
       - name: Cypress run
         uses: cypress-io/github-action@v5

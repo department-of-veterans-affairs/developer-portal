@@ -40,20 +40,22 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
     <>
       <SideNavEntry key="all" exact to={`/explore/api/${api.urlSlug}`} name={api.name} />
       <SideNavEntry exact to={`/explore/api/${api.urlSlug}/docs`} name="Docs" subNavLevel={1} />
-      <SideNavEntry
-        exact
-        if={!!api.oAuthTypes?.includes('AuthorizationCodeGrant')}
-        name="Authorization Code Grant"
-        to={`/explore/api/${api.urlSlug}/authorization-code`}
-        subNavLevel={1}
-      />
-      <SideNavEntry
-        exact
-        if={!!api.oAuthTypes?.includes('ClientCredentialsGrant')}
-        to={`/explore/api/${api.urlSlug}/client-credentials`}
-        name="Client Credentials Grant"
-        subNavLevel={1}
-      />
+      {!!api.oAuthTypes?.includes('AuthorizationCodeGrant') && (
+        <SideNavEntry
+          exact
+          name="Authorization Code Grant"
+          to={`/explore/api/${api.urlSlug}/authorization-code`}
+          subNavLevel={1}
+        />
+      )}
+      {!!api.oAuthTypes?.includes('ClientCredentialsGrant') && (
+        <SideNavEntry
+          exact
+          to={`/explore/api/${api.urlSlug}/client-credentials`}
+          name="Client Credentials Grant"
+          subNavLevel={1}
+        />
+      )}
       <SideNavEntry
         exact
         to={`/explore/api/${api.urlSlug}/release-notes`}

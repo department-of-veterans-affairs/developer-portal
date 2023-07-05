@@ -20,9 +20,10 @@
   @extend .small-screen\:vads-l-col--6;
   @extend .medium-screen\:vads-l-col--3;
 
-  h3 a {
+  h2 a {
     color: $color-blue-darkest;
 
+    @extend h3;
     @extend .vads-u-text-decoration--none;
 
     &:hover {

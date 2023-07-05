@@ -4,16 +4,20 @@ const testPaths = [
   '/',
   '/terms-of-service',
   '/explore',
-  '/explore/authorization',
-  '/explore/authorization/docs/authorization-code',
-  '/explore/benefits',
-  '/explore/health/docs/quickstart',
-  '/explore/benefits/docs/claims', // Just need one expanded Swagger for visual testing
-  '/release-notes/benefits',
+  '/explore/va-benefits',
+  '/explore?auth=acg&q=health',
+  '/explore/health?q=health',
+  '/explore/health?auth=acg',
+  '/explore/health?auth=acg&q=health',
+  '/explore/api/claims',
+  '/explore/api/claims/docs',
+  '/explore/api/claims/authorization-code',
+  '/explore/api/claims/client-credentials',
+  '/explore/api/claims/release-notes',
+  '/explore/api/claims/sandbox-access',
   '/api-publishing',
   '/api-publishing/process',
   '/onboarding',
-  '/onboarding/request-sandbox-access',
   '/onboarding/production-access-application',
   '/about/news',
 ];
@@ -33,11 +37,12 @@ describe('App wide tests', () => {
   });
 
   it('Sub pages should focus skip nav on tab after load', () => {
-    cy.visit('/explore');
+    cy.visit('/explore/api/claims');
     cy.get('body').tab();
     cy.focused().realHover().should('contain.text', 'Skip to main content').click();
     cy.focused().should('have.id', 'main');
-    cy.get('#main').realPress('Tab');
+    // Need lots of tab presses to get past the breadcrumbs
+    cy.get('#main').realPress('Tab').realPress('Tab').realPress('Tab').realPress('Tab');
     cy.focused().realHover().should('contain.text', 'Skip Page Navigation').click();
     cy.focused().should('have.id', 'page-header');
   });

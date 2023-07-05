@@ -99,9 +99,9 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
         <ApisLoader hideSpinner />
         <div className="vads-l-row">
           <div className="list-wrapper">
-            <h3>
+            <h2>
               <a href="/explore">Documentation</a>
-            </h3>
+            </h2>
             <ul>
               <ApisLoader hideError>
                 <>
@@ -120,9 +120,9 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
             </ul>
           </div>
           <div className="list-wrapper">
-            <h3>
+            <h2>
               <a href="/about/news">News</a>
-            </h3>
+            </h2>
             <ul>
               <li>
                 <a href="/about/news#News-releases">News Releases</a>
@@ -136,9 +136,9 @@ const ErrorPage: React.FunctionComponent<ErrorPageProps> = (props: ErrorPageProp
             </ul>
           </div>
           <div className="list-wrapper">
-            <h3>
+            <h2>
               <a href="/support">Support</a>
-            </h3>
+            </h2>
             <ul>
               <li>
                 <a href="/support/faq" role="button">
