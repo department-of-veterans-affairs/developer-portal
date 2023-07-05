@@ -1,53 +1,78 @@
+export interface TagDataProps {
+  showLock: boolean;
+  tagName: string;
+}
+
+const AUTHORIZATION_CODE_GRANT = 'AUTHORIZATION CODE GRANT';
+const CLIENT_CREDENTIALS_GRANT = 'CLIENT CREDENTIALS GRANT';
+
 const OAUTHTYPES = {
-  AuthorizationCodeGrant: 'AUTHORIZATION CODE GRANT',
-  ClientCredentialsGrant: 'CLIENT CREDENTIALS GRANT',
+  AuthorizationCodeGrant: AUTHORIZATION_CODE_GRANT,
+  ClientCredentialsGrant: CLIENT_CREDENTIALS_GRANT,
 };
 
-const RESTRICTED_ACCESS_APIS = [
+const ACG_RESTRICTED_APIS = ['Clinical Health API (FHIR)', 'Community Care Eligibility API'];
+const NON_OAUTH_RESTRICTED_APIS = [
   'Address Validation API',
-  'Benefits Documents',
-  'Clinical Health API (FHIR)',
-  'Community Care Eligibility API',
-  'Contact Information',
   'Decision Reviews API',
-  'Direct Deposit',
-  'Guaranty Remittance API',
   'Loan Guaranty API',
-  'Loan Review',
-  'VA Letter Generator API',
 ];
+
+const hasMultipleAuthTypes = (types: string[]): boolean => types.length > 1;
+
+const isCCGOnly = (types: string[]): boolean =>
+  types.length === 1 && OAUTHTYPES[types[0]] === CLIENT_CREDENTIALS_GRANT;
+
+const hasRestrictedAccess = (name: string, oAuthTypes: string[] | null): boolean => {
+  if (ACG_RESTRICTED_APIS.includes(name) || NON_OAUTH_RESTRICTED_APIS.includes(name)) {
+    return true;
+  }
+
+  if (oAuthTypes !== null) {
+    return isCCGOnly(oAuthTypes);
+  }
+
+  return false;
+};
 
 export const generateFilterTags = (
   categoryUrlFragment: string,
   name: string,
   oAuthTypes: string[] | null,
   openData: boolean,
-): string[] => {
-  let tags: string[] = [];
+): TagDataProps[] => {
+  let tags: TagDataProps[] = [];
+
+  if (hasRestrictedAccess(name, oAuthTypes)) {
+    tags = [{ showLock: true, tagName: 'RESTRICTED ACCESS' }];
+  }
 
   switch (categoryUrlFragment) {
     case 'loanGuaranty':
-      tags = [...tags, 'loan-guaranty'];
+      tags = [...tags, { showLock: false, tagName: 'loan-guaranty' }];
       break;
     case 'vaForms':
-      tags = [...tags, 'forms'];
+      tags = [...tags, { showLock: false, tagName: 'forms' }];
       break;
     default:
-      tags = [...tags, categoryUrlFragment];
+      tags = [...tags, { showLock: false, tagName: categoryUrlFragment }];
   }
 
   if (oAuthTypes !== null) {
-    oAuthTypes.forEach(type => {
-      tags = [...tags, OAUTHTYPES[type] as string];
-    });
+    if (hasMultipleAuthTypes(oAuthTypes) && !ACG_RESTRICTED_APIS.includes(name)) {
+      oAuthTypes.forEach(type => {
+        const isCCGType = OAUTHTYPES[type] === CLIENT_CREDENTIALS_GRANT;
+        tags = [...tags, { showLock: isCCGType, tagName: OAUTHTYPES[type] as string }];
+      });
+    } else {
+      oAuthTypes.forEach(type => {
+        tags = [...tags, { showLock: false, tagName: OAUTHTYPES[type] as string }];
+      });
+    }
   }
 
   if (openData) {
-    tags = [...tags, 'OPEN DATA'];
-  }
-
-  if (RESTRICTED_ACCESS_APIS.includes(name)) {
-    tags = [...tags, 'RESTRICTED ACCESS'];
+    tags = [...tags, { showLock: false, tagName: 'OPEN DATA' }];
   }
 
   return tags;

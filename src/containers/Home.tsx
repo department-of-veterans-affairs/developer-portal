@@ -9,12 +9,12 @@ import ApisLoader from '../components/apisLoader/ApisLoader';
 import peopleGraphic from '../assets/people.svg';
 
 const ApiList = (): JSX.Element => {
-  const popularApis = ['fhir', 'va-facilities', 'va-forms', 'benefits'];
+  const popularApis = ['veteran-confirmation', 'va-facilities', 'va-forms', 'patient-health'];
 
   return (
     <section className="api-list vads-u-padding-top--3  vads-u-padding-bottom--2">
       <div className="vads-l-grid-container vads-u-margin-x--auto">
-        <h2 className="vads-u-margin-top--0">Popular APIs</h2>
+        <h2 className="vads-u-margin-top--0">Featured APIs</h2>
         <Link to="/explore">View all</Link>
         <div
           className="vads-l-row vads-u-justify-content--space-evenly vads-u-margin-x--neg1p5"
