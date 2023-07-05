@@ -11,7 +11,7 @@ const OAUTHTYPES = {
   ClientCredentialsGrant: CLIENT_CREDENTIALS_GRANT,
 };
 
-const ACG_RESTRICTED_APIS = ['Clinical Health API (FHIR)', 'Community Care Eligibility API'];
+const ACG_RESTRICTED_APIS = ['Clinical Health API (FHIR)'];
 const NON_OAUTH_RESTRICTED_APIS = [
   'Address Validation API',
   'Decision Reviews API',
