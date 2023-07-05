@@ -44,7 +44,7 @@ export const generateFilterTags = (
   let tags: TagDataProps[] = [];
 
   if (hasRestrictedAccess(name, oAuthTypes)) {
-    tags = [...tags, { showLock: true, tagName: 'RESTRICTED ACCESS' }];
+    tags = [{ showLock: true, tagName: 'RESTRICTED ACCESS' }];
   }
 
   switch (categoryUrlFragment) {
