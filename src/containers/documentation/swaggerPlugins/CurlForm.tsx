@@ -16,7 +16,6 @@ import {
 } from 'swagger-ui';
 import { v4 as uuidv4 } from 'uuid';
 import { CodeBlock } from '../../../components';
-import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { System } from './types';
 
 import './CurlForm.scss';
@@ -312,6 +311,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
   }
 
   public authParameterContainer(): JSX.Element | null {
+    const sandboxAccessUrl = location.pathname.replace('/docs', '/sandbox-access');
     const bearerSecurityTypes = ['oauth2', 'openIdConnect', 'http'];
     const securityItems = this.security() ?? [{}];
     const securityTypes = securityItems
@@ -335,7 +335,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               }}
             />
             <small>
-              Don&apos;t have an API Key? <a href={CONSUMER_SANDBOX_PATH}> Get One </a>
+              Don&apos;t have an API Key? <a href={sandboxAccessUrl}> Get One </a>
             </small>
           </div>
         </div>
@@ -353,7 +353,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               }}
             />
             <small>
-              Don&apos;t have an API Key? <a href={CONSUMER_SANDBOX_PATH}> Get One </a>
+              Don&apos;t have an API Key? <a href={sandboxAccessUrl}> Get One </a>
             </small>
           </div>
         </div>
