@@ -205,9 +205,15 @@ phases:
         for env in ${ENVIRONMENTS}; do
           u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
           echo $u_env
-          S3_BUCKET='$'S3_${u_env}_BUCKET
-          echo $S3_BUCKET
-          S3_BUCKET_HOST=$(eval echo \$${S3_BUCKET})
+          if [ "$u_env" == "PRODUCTION" ]; then
+            S3_BUCKET_HOST=$S3_PRODUCTION_BUCKET
+          fi
+          if [ "$u_env" == "STAGING" ]; then
+            S3_BUCKET_HOST=$S3_STAGING_BUCKET
+          fi
+          if [ "$u_env" == "DEV" ]; then
+            S3_BUCKET_HOST=$S3_DEV_BUCKET
+          fi
           echo $S3_BUCKET_HOST
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
             echo $REDIRECT
