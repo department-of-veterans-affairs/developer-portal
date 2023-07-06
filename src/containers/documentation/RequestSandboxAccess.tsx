@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { SandboxAccessForm } from '@department-of-veterans-affairs/sandbox-access-form';
 import { useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { LPB_APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult } from '../../types/forms/apply';
 import {
   AUTHORIZATION_CCG_PATH,
   AUTHORIZATION_PKCE_PATH,
+  SUPPORT_CONTACT_PATH,
   TERMS_OF_SERVICE_PATH,
 } from '../../types/constants/paths';
 import { APIUrlSlug } from '../../types';
@@ -70,19 +72,28 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
           <p className="vads-u-margin-top--3">
             Submit this form to get instant access to test data for this API.
           </p>
-          <SandboxAccessForm
-            apiIdentifier={api.urlFragment}
-            authTypes={authTypes}
-            onFailure={onFormFailure}
-            onSuccess={setSuccessResults}
-            urls={{
-              acgPkceAuthUrl: AUTHORIZATION_PKCE_PATH,
-              ccgPublicKeyUrl: AUTHORIZATION_CCG_PATH,
-              postUrl: LPB_APPLY_URL,
-              termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
-            }}
-            key={api.urlFragment}
-          />
+          {api.altID ? (
+            <SandboxAccessForm
+              apiIdentifier={api.altID}
+              authTypes={authTypes}
+              onFailure={onFormFailure}
+              onSuccess={setSuccessResults}
+              urls={{
+                acgPkceAuthUrl: AUTHORIZATION_PKCE_PATH,
+                ccgPublicKeyUrl: AUTHORIZATION_CCG_PATH,
+                postUrl: LPB_APPLY_URL,
+                termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
+              }}
+              key={api.urlFragment}
+            />
+          ) : (
+            <va-alert status="error" visible>
+              <p>
+                There is an error with this Sandbox Access Form. Please{' '}
+                <Link to={SUPPORT_CONTACT_PATH}>contact support</Link> for additional assistance.
+              </p>
+            </va-alert>
+          )}
         </>
       )}
     </>
