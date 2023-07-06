@@ -153,11 +153,8 @@ phases:
         echo 'explore/verification/docs/veteran_verification|/explore/api/veteran-service-history-and-eligibility/docs' >> ./redirects.txt
         echo 'explore/appeals|/explore/va-benefits' >> ./redirects.txt
         echo 'explore/benefits|/explore/va-benefits' >> ./redirects.txt
-        echo 'explore/facilities|/explore/facilities' >> ./redirects.txt
         echo 'explore/vaForms|/explore/forms' >> ./redirects.txt
-        echo 'explore/health|/explore/health' >> ./redirects.txt
         echo 'explore/loanGuaranty|/explore/loan-guaranty' >> ./redirects.txt
-        echo 'explore/verification|/explore/verification' >> ./redirects.txt
         echo 'explore/authentication/docs/authorization-code?api=appealable-issues|/explore/api/appealable-issues/authorization-code' >> ./redirects.txt
         echo 'explore/authentication/docs/authorization-code?api=appeals|/explore/api/appeals-status/authorization-code' >> ./redirects.txt
         echo 'explore/authentication/docs/authorization-code?api=claims|/explore/api/benefits-claims/authorization-code' >> ./redirects.txt
@@ -217,8 +214,9 @@ phases:
           echo $S3_BUCKET_NAME
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
             ORIGINAL=${REDIRECT%|*}
+            echo $ORIGINAL
             TARGET=${REDIRECT#*|}
-            TARGET_URL=https://${S3_BUCKET_NAME}${REDIRECT#*|}
+            TARGET_URL=https://${S3_BUCKET_NAME}${TARGET}
             echo $TARGET_URL
             eval aws s3api put-object --website-redirect-location ${TARGET_URL} --bucket ${S3_BUCKET_NAME} --key ${ORIGINAL} --acl public-read
           done
