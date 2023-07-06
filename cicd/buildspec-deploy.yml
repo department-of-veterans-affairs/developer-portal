@@ -119,8 +119,6 @@ phases:
         done
       - echo "Applying redirects to environments"
       - |
-        S3_BUCKET=S3_${u_env}_BUCKET 
-        S3_BUCKET_STRING=${$S3_BUCKET}
         touch ./redirects.txt
         # URL redirects for all environments added to s3 buckets during build deploy phase
         # Format is "OriginalPathPlusQueryString|TargetPathPlusQueryString"
@@ -212,6 +210,9 @@ phases:
         echo '/go-live|/onboarding/request-prod-access' >> ./redirects.txt
         echo '/oauth|/explore' >> ./redirects.txt
         for env in ${ENVIRONMENTS}; do
+          u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
+          S3_BUCKET=S3_${u_env}_BUCKET 
+          S3_BUCKET_STRING=${$S3_BUCKET}
           # 301 redirects related to IA updates
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
             ORIGINAL=${REDIRECT%|*}
