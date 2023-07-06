@@ -211,6 +211,8 @@ phases:
             echo $REDIRECT
             ORIGINAL=${REDIRECT%|*}
             echo $ORIGINAL
+            TARGET=https://${$S3_BUCKET}${REDIRECT#*|}
+            echo $TARGET
           done
         done
   post_build:
