@@ -209,6 +209,8 @@ phases:
           echo $S3_BUCKET
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
             echo $REDIRECT
+            ORIGINAL=${REDIRECT%|*}
+            echo $ORIGINAL
           done
         done
   post_build:
