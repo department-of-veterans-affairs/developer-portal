@@ -207,7 +207,7 @@ phases:
           echo $u_env
           S3_BUCKET=S3_${u_env}_BUCKET
           echo $S3_BUCKET
-          S3_BUCKET_HOST=$($S3_BUCKET)
+          S3_BUCKET_HOST=${(printf $S3_BUCKET)}
           echo $S3_BUCKET_HOST
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
             echo $REDIRECT
