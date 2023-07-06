@@ -15,6 +15,7 @@ import { RootState } from './types';
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
+import { SiteRedirects } from './components/SiteRedirects';
 
 void defineCustomElements();
 
@@ -41,6 +42,7 @@ const App = (): JSX.Element => {
   return (
     <FlagsProvider flags={getFlags()}>
       <Router history={history}>
+        <SiteRedirects />
         <div className="vads-u-display--flex">
           <div
             className={classNames(
