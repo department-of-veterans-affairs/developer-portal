@@ -205,9 +205,9 @@ phases:
         for env in ${ENVIRONMENTS}; do
           u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
           echo $u_env
-          S3_BUCKET='$'S3_${u_env}_BUCKET
+          S3_BUCKET=S3_${u_env}_BUCKET
           echo $S3_BUCKET
-          S3_BUCKET_HOST=(eval $S3_BUCKET)
+          declare -n S3_BUCKET_HOST=${S3_BUCKET}
           echo $S3_BUCKET_HOST
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
             echo $REDIRECT
@@ -225,6 +225,6 @@ phases:
       # Post to Slack.
       - |
         if [[ ${CODEBUILD_BUILD_SUCCEEDING} -eq 0 ]]; then
-          slackpost.sh -t failure "There was an error with the deployment process for CodeBuild Job ${CODEBUILD_BUILD_ID}."
-          sentry-cli send-event -m "There was an error with the deployment process for CodeBuild Job ${CODEBUILD_BUILD_ID}."
+          # slackpost.sh -t failure "There was an error with the deployment process for CodeBuild Job ${CODEBUILD_BUILD_ID}."
+          # sentry-cli send-event -m "There was an error with the deployment process for CodeBuild Job ${CODEBUILD_BUILD_ID}."
         fi
