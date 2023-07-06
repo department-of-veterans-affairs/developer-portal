@@ -208,11 +208,7 @@ phases:
           S3_BUCKET=S3_${u_env}_BUCKET
           echo $S3_BUCKET
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
-            ORIGINAL=${REDIRECT%|*}
-            TARGET=https://${$S3_BUCKET}${REDIRECT#*|}
-            echo $ORIGINAL
-            echo $TARGET
-            eval aws s3api put-object --website-redirect-location ${TARGET} --bucket ${S3_BUCKET} --key ${ORIGINAL} --acl public-read
+            echo $REDIRECT
           done
         done
   post_build:
