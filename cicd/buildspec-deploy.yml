@@ -214,8 +214,8 @@ phases:
           # 301 redirects related to IA updates
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
             ORIGINAL=${REDIRECT%|*}
-            TARGET="https://${S3_BUCKET}${REDIRECT#*|}"
-            eval aws s3api put-object --website-redirect-location $TARGET --bucket $S3_BUCKET --key $ORIGINAL --acl public-read
+            TARGET="https://${$S3_BUCKET}${REDIRECT#*|}"
+            eval aws s3api put-object --website-redirect-location $TARGET --bucket ${$S3_BUCKET} --key $ORIGINAL --acl public-read
           done
         done
   post_build:
