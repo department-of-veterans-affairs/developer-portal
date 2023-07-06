@@ -117,14 +117,12 @@ phases:
             sentry-cli releases finalize $SENTRY_RELEASE_NAME
           fi
         done
-      - echo "Applying redirects to environments"
+      # URL redirects for all environments added to s3 buckets during build deploy phase
+      # Format is "OriginalPathPlusQueryString|TargetPathPlusQueryString"
+      # ex. /old/url/path|/new-url
+      # The protocol and domain name per environment are added automatically
       - |
         touch ./redirects.txt
-        # URL redirects for all environments added to s3 buckets during build deploy phase
-        # Format is "OriginalPathPlusQueryString|TargetPathPlusQueryString"
-        # ex. /old/url/path|/new-url
-        # The protocol and domain name per environment are added automatically
-        # API Page Redirects
         echo '/explore/appeals/docs/appealable-issues|/explore/api/appealable-issues/docs' >> ./redirects.txt
         echo '/explore/appeals/docs/appeals|/explore/api/appeals-status/docs' >> ./redirects.txt
         echo '/explore/appeals/docs/decision_reviews|/explore/api/decision-reviews/docs' >> ./redirects.txt
@@ -153,7 +151,6 @@ phases:
         echo '/explore/verification/docs/va_letter_generator|/explore/api/va-letter-generator/docs' >> ./redirects.txt
         echo '/explore/verification/docs/veteran_confirmation|/explore/api/veteran-confirmation/docs' >> ./redirects.txt
         echo '/explore/verification/docs/veteran_verification|/explore/api/veteran-service-history-and-eligibility/docs' >> ./redirects.txt
-        # Category Redirects
         echo '/explore/appeals|/explore/va-benefits' >> ./redirects.txt
         echo '/explore/benefits|/explore/va-benefits' >> ./redirects.txt
         echo '/explore/facilities|/explore/facilities' >> ./redirects.txt
@@ -161,7 +158,6 @@ phases:
         echo '/explore/health|/explore/health' >> ./redirects.txt
         echo '/explore/loanGuaranty|/explore/loan-guaranty' >> ./redirects.txt
         echo '/explore/verification|/explore/verification' >> ./redirects.txt
-        # ACG Redirects
         echo '/explore/authentication/docs/authorization-code?api=appealable-issues|/explore/api/appealable-issues/authorization-code' >> ./redirects.txt
         echo '/explore/authentication/docs/authorization-code?api=appeals|/explore/api/appeals-status/authorization-code' >> ./redirects.txt
         echo '/explore/authentication/docs/authorization-code?api=claims|/explore/api/benefits-claims/authorization-code' >> ./redirects.txt
@@ -173,7 +169,6 @@ phases:
         echo '/explore/authentication/docs/authorization-code?api=fhir|/explore/api/patient-health/authorization-code' >> ./redirects.txt
         echo '/explore/authentication/docs/authorization-code?api=supplemental-claims|/explore/api/supplemental-claims/authorization-code' >> ./redirects.txt
         echo '/explore/authentication/docs/authorization-code?api=veteran_verification|/explore/api/veteran-service-history-and-eligibility/authorization-code' >> ./redirects.txt
-        # CCG Redirects
         echo '/explore/authentication/docs/client-credentials?api=address_validation|/explore/api/address-validation/client-credentials' >> ./redirects.txt
         echo '/explore/authentication/docs/client-credentials?api=appealable-issues|/explore/api/appealable-issues/client-credentials' >> ./redirects.txt
         echo '/explore/authentication/docs/client-credentials?api=appeals|/explore/api/appeals-status/client-credentials' >> ./redirects.txt
@@ -192,7 +187,6 @@ phases:
         echo '/explore/authentication/docs/client-credentials?api=supplemental-claims|/explore/api/supplemental-claims/client-credentials' >> ./redirects.txt
         echo '/explore/authentication/docs/client-credentials?api=va_letter_generator|/explore/api/va-letter-generator/client-credentials' >> ./redirects.txt
         echo '/explore/authentication/docs/client-credentials?api=veteran_verification|/explore/api/veteran-service-history-and-eligibility/client-credentials' >> ./redirects.txt
-        # Release Notes Redirects
         echo '/release-notes/appeals|/explore/va-benefits' >> ./redirects.txt
         echo '/release-notes/benefits|/explore/va-benefits' >> ./redirects.txt
         echo '/release-notes/facilities|/explore/api/va-facilities/release-notes' >> ./redirects.txt
@@ -200,7 +194,6 @@ phases:
         echo '/release-notes/health|/explore/health' >> ./redirects.txt
         echo '/release-notes/loanGuaranty|/explore/loan-guaranty' >> ./redirects.txt
         echo '/release-notes/verification|/explore/verification' >> ./redirects.txt
-        # One off redirects
         echo '/explore/health/docs/quickstart|/explore/health' >> ./redirects.txt
         echo '/release-notes|/explore' >> ./redirects.txt
         echo '/apply|/explore' >> ./redirects.txt
@@ -211,13 +204,15 @@ phases:
         echo '/oauth|/explore' >> ./redirects.txt
         for env in ${ENVIRONMENTS}; do
           u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
-          S3_BUCKET=S3_${u_env}_BUCKET 
-          S3_BUCKET_STRING=${$S3_BUCKET}
-          # 301 redirects related to IA updates
+          echo $u_env
+          S3_BUCKET=S3_${u_env}_BUCKET
+          echo $S3_BUCKET
           for REDIRECT in `grep -v '#' ./redirects.txt`; do
             ORIGINAL=${REDIRECT%|*}
-            TARGET="https://${S3_BUCKET_STRING}${REDIRECT#*|}"
-            eval aws s3api put-object --website-redirect-location ${TARGET} --bucket ${S3_BUCKET_STRING} --key ${ORIGINAL} --acl public-read
+            TARGET=https://${$S3_BUCKET}${REDIRECT#*|}
+            echo $ORIGINAL
+            echo $TARGET
+            eval aws s3api put-object --website-redirect-location ${TARGET} --bucket ${S3_BUCKET} --key ${ORIGINAL} --acl public-read
           done
         done
   post_build:
