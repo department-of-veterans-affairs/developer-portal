@@ -220,7 +220,7 @@ phases:
             TARGET=${REDIRECT#*|}
             TARGET_URL=https://${S3_BUCKET_NAME}${REDIRECT#*|}
             echo $TARGET_URL
-            aws s3api put-object --website-redirect-location ${TARGET_URL} --bucket ${S3_BUCKET_NAME} --key ${ORIGINAL} --acl public-read
+            eval aws s3api put-object --website-redirect-location ${TARGET_URL} --bucket ${S3_BUCKET_NAME} --key ${ORIGINAL} --acl public-read
           done
         done
   post_build:
