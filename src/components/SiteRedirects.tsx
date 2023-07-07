@@ -182,6 +182,10 @@ const SiteRedirects = (): null => {
       old: '/explore/authentication/docs/authorization-code?api=veteran_verification',
     },
     {
+      new: 'https://developer.va.gov/explore?auth=acg',
+      old: 'https://developer.va.gov/explore/authorization/docs/authorization-code',
+    },
+    {
       new: '/explore/api/address-validation/client-credentials',
       old: '/explore/authentication/docs/client-credentials?api=address_validation',
     },
@@ -252,6 +256,10 @@ const SiteRedirects = (): null => {
     {
       new: '/explore/api/veteran-service-history-and-eligibility/client-credentials',
       old: '/explore/authentication/docs/client-credentials?api=veteran_verification',
+    },
+    {
+      new: '/explore?auth=ccg',
+      old: '/explore/authorization/docs/client-credentials',
     },
     {
       new: '/explore/va-benefits',

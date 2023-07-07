@@ -199,6 +199,8 @@ phases:
         echo 'release-notes/deactivated|/explore' >> ./redirects.txt
         echo 'go-live|/onboarding/request-prod-access' >> ./redirects.txt
         echo 'oauth|/explore' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code|explore?auth=acg' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials|explore?auth=ccg' >> ./redirects.txt
         for env in ${ENVIRONMENTS}; do
           u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
           echo $u_env
