@@ -8,9 +8,9 @@ import { lookupApiBySlug } from '../../../apiDefs/query';
 import store from '../../../store';
 import { setApis } from '../../../actions';
 import { fakeCategories } from '../../../__mocks__/fakeCategories';
-import { AuthCodeFlowContent } from './AuthCodeFlowContent';
+import { AuthCodeGrantContent } from './AuthCodeGrantContent';
 
-describe('Auth Flow Content', () => {
+describe('Auth Grant Content', () => {
   store.dispatch(setApis(fakeCategories));
 
   beforeEach(() => {
@@ -24,14 +24,14 @@ describe('Auth Flow Content', () => {
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter>
-            <AuthCodeFlowContent api={api} />
+            <AuthCodeGrantContent api={api} />
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,
     );
   });
-  it('Initiating auth flow header', () => {
-    const heading = screen.getByText('Initiating the Authorization Code Flow');
+  it('Initiating auth grant header', () => {
+    const heading = screen.getByText('Initiating the Authorization Code Grant');
     expect(heading).toBeInTheDocument();
   });
   it('Oauth base path found ', () => {

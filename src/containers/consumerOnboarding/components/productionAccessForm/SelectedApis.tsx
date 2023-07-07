@@ -93,7 +93,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
                 authCodeApisBorderClass,
                 authCodeApisBorderColorClass,
               )}
-              legend="Authorization Code Flow APIs:"
+              legend="Authorization Code Grant APIs:"
               legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
               name="oauthApis"
             >

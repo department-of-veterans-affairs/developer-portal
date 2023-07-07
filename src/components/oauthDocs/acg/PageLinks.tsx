@@ -16,8 +16,8 @@ const PageLinks = (): JSX.Element => (
         <HashLink to="#building-oidc-apps">Building OpenID Connect Applications</HashLink>
         <ul>
           <li>
-            <HashLink to="#authorization-code-flow">
-              Initiating the Authorization Code Flow
+            <HashLink to="#authorization-code-grant">
+              Initiating the Authorization Code Grant
             </HashLink>
             <ul>
               <li>

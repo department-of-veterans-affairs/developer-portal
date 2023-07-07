@@ -57,7 +57,7 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
               <code>openid</code>
             </td>
             <td>
-              An <code>id_token</code> is available in the authorization code flow (response_type =
+              An <code>id_token</code> is available in the authorization code grant (response_type =
               code) token response when the &apos;openid&apos; scope is used.
             </td>
           </tr>

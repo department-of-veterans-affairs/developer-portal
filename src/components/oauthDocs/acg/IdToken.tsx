@@ -9,7 +9,7 @@ const IdToken = (): JSX.Element => (
       JWTs. A JWT consists of three parts: a header, a payload, and a signature.
     </p>
     <p>
-      An <code>id_token</code> is available in the authorization code flow (response_type = code)
+      An <code>id_token</code> is available in the authorization code grant (response_type = code)
       token response when the openid scope is used.
     </p>
     <p>

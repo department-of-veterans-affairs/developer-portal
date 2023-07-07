@@ -2,7 +2,7 @@ import * as React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { SectionHeaderWrapper } from '../../index';
 import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
-import { AuthCodeFlowContent } from './AuthCodeFlowContent';
+import { AuthCodeGrantContent } from './AuthCodeGrantContent';
 import { PKCEAuthContent } from './PKCEAuthContent';
 
 const BuildingOIDCContent = (props: ApiRequiredProps): JSX.Element => {
@@ -19,7 +19,7 @@ const BuildingOIDCContent = (props: ApiRequiredProps): JSX.Element => {
         <li>
           If you are building a <strong>server-based application</strong>, you’ll also receive a
           client secret and will use the{' '}
-          <HashLink to="#authorization-code-flow">authorization code flow</HashLink> to complete
+          <HashLink to="#authorization-code-grant">authorization code grant</HashLink> to complete
           authentication.
         </li>
         <li>
@@ -29,7 +29,7 @@ const BuildingOIDCContent = (props: ApiRequiredProps): JSX.Element => {
         </li>
       </ul>
 
-      <AuthCodeFlowContent api={api} />
+      <AuthCodeGrantContent api={api} />
       <PKCEAuthContent api={api} />
     </section>
   );

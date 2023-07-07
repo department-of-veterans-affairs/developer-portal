@@ -3,7 +3,7 @@
 const tableOfContents = [
   'getting-started',
   'building-oidc-apps',
-  'authorization-code-flow',
+  'authorization-code-grant',
   'requesting-authorization',
   'requesting-a-token',
   'manage-account',

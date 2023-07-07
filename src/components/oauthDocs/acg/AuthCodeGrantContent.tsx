@@ -4,7 +4,7 @@ import { HashLink } from 'react-router-hash-link';
 import { CodeBlock } from '../../index';
 import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 
-const AuthCodeFlowContent = (props: ApiRequiredProps): JSX.Element => {
+export const AuthCodeGrantContent = (props: ApiRequiredProps): JSX.Element => {
   const { api } = props;
   const baseAuthPath = api.oAuthInfo?.acgInfo?.baseAuthPath ?? '/oauth2/{api}/v1';
   const isClinicalHealthSelected = api.urlFragment === 'clinical_health';
@@ -13,8 +13,8 @@ const AuthCodeFlowContent = (props: ApiRequiredProps): JSX.Element => {
 
   return (
     <>
-      <h3 id="authorization-code-flow" tabIndex={-1}>
-        Initiating the Authorization Code Flow
+      <h3 id="authorization-code-grant" tabIndex={-1}>
+        Initiating the Authorization Code Grant
       </h3>
       <p>
         <strong>Note:</strong> We provide a sample <a href="https://nodejs.org/en/">Node.JS</a>{' '}
@@ -430,5 +430,3 @@ Pragma: no-cache
     </>
   );
 };
-
-export { AuthCodeFlowContent };
