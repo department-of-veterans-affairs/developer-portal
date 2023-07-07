@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { AUTHORIZATION_CCG_PATH } from '../../../../types/constants/paths';
-
 import { TextField } from '../../../../components';
 
 const OAuthCcgAppInfo = (): JSX.Element => (
@@ -10,7 +8,7 @@ const OAuthCcgAppInfo = (): JSX.Element => (
       <p>
         In order to access an API that uses OAuth 2.0 Client Credentials Grant, you must provide
         your public key.{' '}
-        <Link to={AUTHORIZATION_CCG_PATH} target="_blank">
+        <Link to="/explore?auth=ccg" target="_blank">
           Learn how to generate a public key.
         </Link>
       </p>

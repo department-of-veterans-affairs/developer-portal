@@ -7,12 +7,7 @@ import { Link } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { LPB_APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult } from '../../types/forms/apply';
-import {
-  AUTHORIZATION_CCG_PATH,
-  AUTHORIZATION_PKCE_PATH,
-  SUPPORT_CONTACT_PATH,
-  TERMS_OF_SERVICE_PATH,
-} from '../../types/constants/paths';
+import { SUPPORT_CONTACT_PATH, TERMS_OF_SERVICE_PATH } from '../../types/constants/paths';
 import { APIUrlSlug } from '../../types';
 import ErrorPage404 from '../ErrorPage404';
 import { getApi } from './DocumentationRoot';
@@ -20,19 +15,10 @@ import { SandboxAccessSuccess } from './components/sandbox';
 import './RequestSandboxAccess.scss';
 
 const RequestSandboxAccess: React.FunctionComponent = () => {
-  const params = useParams<APIUrlSlug>();
-  const api = getApi(params.urlSlug);
+  const { urlSlug } = useParams<APIUrlSlug>();
+  const api = getApi(urlSlug);
   const [successResults, setSuccessResults] = useState<ApplySuccessResult | false>(false);
-  // const [successResults, setSuccessResults] = useState<ApplySuccessResult>({
-  //   apis: ['ccg/fhir'],
-  //   ccgClientId: 'CCG-Client-ID',
-  //   clientID: 'clientID',
-  //   clientSecret: 'clientSecret',
-  //   email: 'giles.wells@va.gov',
-  //   kongUsername: 'kong-username',
-  //   // redirectURI: 'redirectURI',
-  //   token: 'api-token-value',
-  // });
+
   if (!api) {
     return <ErrorPage404 />;
   }
@@ -51,6 +37,9 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
   if (api.oAuthInfo?.ccgInfo) {
     authTypes.push('ccg');
   }
+
+  const acgPkceAuthUrl = `/explore/api/${urlSlug}/authorization-code`;
+  const ccgPublicKeyUrl = `/explore/api/${urlSlug}/client-credentials`;
 
   return (
     <>
@@ -79,8 +68,8 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
               onFailure={onFormFailure}
               onSuccess={setSuccessResults}
               urls={{
-                acgPkceAuthUrl: AUTHORIZATION_PKCE_PATH,
-                ccgPublicKeyUrl: AUTHORIZATION_CCG_PATH,
+                acgPkceAuthUrl,
+                ccgPublicKeyUrl,
                 postUrl: LPB_APPLY_URL,
                 termsOfServiceUrl: TERMS_OF_SERVICE_PATH,
               }}
