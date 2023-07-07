@@ -139,47 +139,47 @@ const SiteRedirects = (): null => {
     },
     {
       new: '/explore/api/appealable-issues/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=appealable-issues',
+      old: '/explore/authorization/docs/authorization-code?api=appealable-issues',
     },
     {
       new: '/explore/api/appeals-status/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=appeals',
+      old: '/explore/authorization/docs/authorization-code?api=appeals',
     },
     {
       new: '/explore/api/benefits-claims/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=claims',
+      old: '/explore/authorization/docs/authorization-code?api=claims',
     },
     {
       new: '/explore/api/clinical-health/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=clinical_health',
+      old: '/explore/authorization/docs/authorization-code?api=clinical_health',
     },
     {
       new: '/explore/api/community-care-eligibility/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=community_care',
+      old: '/explore/authorization/docs/authorization-code?api=community_care',
     },
     {
       new: '/explore/api/higher-level-reviews/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=higher-level-reviews',
+      old: '/explore/authorization/docs/authorization-code?api=higher-level-reviews',
     },
     {
       new: '/explore/api/legacy-appeals/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=legacy-appeals',
+      old: '/explore/authorization/docs/authorization-code?api=legacy-appeals',
     },
     {
       new: '/explore/api/notice-of-disagreements/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=notice_of_disagreements',
+      old: '/explore/authorization/docs/authorization-code?api=notice_of_disagreements',
     },
     {
       new: '/explore/api/patient-health/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=fhir',
+      old: '/explore/authorization/docs/authorization-code?api=fhir',
     },
     {
       new: '/explore/api/supplemental-claims/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=supplemental-claims',
+      old: '/explore/authorization/docs/authorization-code?api=supplemental-claims',
     },
     {
       new: '/explore/api/veteran-service-history-and-eligibility/authorization-code',
-      old: '/explore/authentication/docs/authorization-code?api=veteran_verification',
+      old: '/explore/authorization/docs/authorization-code?api=veteran_verification',
     },
     {
       new: 'https://developer.va.gov/explore?auth=acg',
@@ -187,75 +187,75 @@ const SiteRedirects = (): null => {
     },
     {
       new: '/explore/api/address-validation/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=address_validation',
+      old: '/explore/authorization/docs/client-credentials?api=address_validation',
     },
     {
       new: '/explore/api/appealable-issues/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=appealable-issues',
+      old: '/explore/authorization/docs/client-credentials?api=appealable-issues',
     },
     {
       new: '/explore/api/appeals-status/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=appeals',
+      old: '/explore/authorization/docs/client-credentials?api=appeals',
     },
     {
       new: '/explore/api/benefits-claims/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=claims',
+      old: '/explore/authorization/docs/client-credentials?api=claims',
     },
     {
       new: '/explore/api/benefits-documents/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=benefits-documents',
+      old: '/explore/authorization/docs/client-credentials?api=benefits-documents',
     },
     {
       new: '/explore/api/community-care-eligibility/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=community_care',
+      old: '/explore/authorization/docs/client-credentials?api=community_care',
     },
     {
       new: '/explore/api/contact-information/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=contact_information',
+      old: '/explore/authorization/docs/client-credentials?api=contact_information',
     },
     {
       new: '/explore/api/direct-deposit-management/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=direct-deposit-management',
+      old: '/explore/authorization/docs/client-credentials?api=direct-deposit-management',
     },
     {
       new: '/explore/api/education-benefits/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=education-benefits',
+      old: '/explore/authorization/docs/client-credentials?api=education-benefits',
     },
     {
       new: '/explore/api/guaranty-remittance/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=lgy_guaranty_remittance',
+      old: '/explore/authorization/docs/client-credentials?api=lgy_guaranty_remittance',
     },
     {
       new: '/explore/api/higher-level-reviews/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=higher-level-reviews',
+      old: '/explore/authorization/docs/client-credentials?api=higher-level-reviews',
     },
     {
       new: '/explore/api/legacy-appeals/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=legacy-appeals',
+      old: '/explore/authorization/docs/client-credentials?api=legacy-appeals',
     },
     {
       new: '/explore/api/loan-review/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=loan-review',
+      old: '/explore/authorization/docs/client-credentials?api=loan-review',
     },
     {
       new: '/explore/api/notice-of-disagreements/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=notice_of_disagreements',
+      old: '/explore/authorization/docs/client-credentials?api=notice_of_disagreements',
     },
     {
       new: '/explore/api/patient-health/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=fhir',
+      old: '/explore/authorization/docs/client-credentials?api=fhir',
     },
     {
       new: '/explore/api/supplemental-claims/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=supplemental-claims',
+      old: '/explore/authorization/docs/client-credentials?api=supplemental-claims',
     },
     {
       new: '/explore/api/va-letter-generator/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=va_letter_generator',
+      old: '/explore/authorization/docs/client-credentials?api=va_letter_generator',
     },
     {
       new: '/explore/api/veteran-service-history-and-eligibility/client-credentials',
-      old: '/explore/authentication/docs/client-credentials?api=veteran_verification',
+      old: '/explore/authorization/docs/client-credentials?api=veteran_verification',
     },
     {
       new: '/explore?auth=ccg',
