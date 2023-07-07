@@ -38,8 +38,8 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
     authTypes.push('ccg');
   }
 
-  const acgPkceAuthUrl = `explore/api/${urlSlug}/authorization-code`;
-  const ccgPublicKeyUrl = `explore/api/${urlSlug}/client-credentials`;
+  const acgPkceAuthUrl = `/explore/api/${urlSlug}/authorization-code`;
+  const ccgPublicKeyUrl = `/explore/api/${urlSlug}/client-credentials`;
 
   return (
     <>
