@@ -18,16 +18,7 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
   const { urlSlug } = useParams<APIUrlSlug>();
   const api = getApi(urlSlug);
   const [successResults, setSuccessResults] = useState<ApplySuccessResult | false>(false);
-  // const [successResults, setSuccessResults] = useState<ApplySuccessResult>({
-  //   apis: ['ccg/fhir'],
-  //   ccgClientId: 'CCG-Client-ID',
-  //   clientID: 'clientID',
-  //   clientSecret: 'clientSecret',
-  //   email: 'giles.wells@va.gov',
-  //   kongUsername: 'kong-username',
-  //   // redirectURI: 'redirectURI',
-  //   token: 'api-token-value',
-  // });
+
   if (!api) {
     return <ErrorPage404 />;
   }
