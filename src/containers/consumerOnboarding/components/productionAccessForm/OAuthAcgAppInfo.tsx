@@ -1,7 +1,5 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { AUTHORIZATION_PKCE_PATH } from '../../../../types/constants/paths';
-
 import { CheckboxRadioField, TextField, FieldSet } from '../../../../components';
 
 const OAuthAcgAppInfo = (): JSX.Element => (
@@ -12,11 +10,11 @@ const OAuthAcgAppInfo = (): JSX.Element => (
         PKCE
       </a>{' '}
       OAuth flow. If your app is a native or mobile app, or if it uses the same client secret for
-      all users, you&apos;ll get credentials for{' '}
-      <a href={AUTHORIZATION_PKCE_PATH} target="_blank" rel="noreferrer">
-        our PKCE OAuth flow
-      </a>
-      .
+      all users, you&apos;ll get credentials for our PKCE OAuth flow.{' '}
+      <a href="/explore?auth=acg" target="_blank" rel="noreferrer">
+        Explore the docs of our Authorization Code Grant APIs
+      </a>{' '}
+      to learn more about PKCE OAuth flow.
     </div>
     <FieldSet
       className={classNames('vads-u-margin-top--4', 'vads-u-padding-left--1p5')}
