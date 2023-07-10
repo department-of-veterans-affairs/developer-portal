@@ -14,10 +14,10 @@ describe('Documentation Root', () => {
     cy.fixture('vaFormsOpenAPI.spec.json').then(json => {
       cy.intercept('/internal/docs/forms/v0/openapi-sf.json', json);
     });
-    cy.visit('/explore/api/forms/docs');
+    cy.visit('/explore/api/va-forms/docs');
     // This is needed as a waitFor fails because Swagger UI
     // adds the DOM elements before showing them visually.
-    cy.get('#operations-tag-Forms').should('be.visible');
+    cy.get('#model-FormsIndex').should('be.visible');
     cy.get('.va-api-side-nav').then($el => {
       expect($el[0].offsetTop).to.equal(0);
     });
