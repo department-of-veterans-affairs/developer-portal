@@ -27,6 +27,7 @@ const testPaths = [
   '/api-publishing/process',
   '/onboarding',
   '/onboarding/production-access-application',
+  '/about',
   '/about/news',
 ];
 
