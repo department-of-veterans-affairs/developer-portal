@@ -82,7 +82,6 @@ const renderFHIRR4 = (): void => {
 
 describe('CurlForm', () => {
   const createHLRDesc = 'Create a Higher-Level Review';
-  const createHLRTDesc = 'Create a Higher-Level Review Two';
 
   let operationContainer: HTMLElement;
   beforeEach(() => {
