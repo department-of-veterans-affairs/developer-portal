@@ -26,12 +26,11 @@ const ApiList = (): JSX.Element => {
                 const api = lookupApiBySlug(urlSlug);
                 return (
                   api && (
-                    <div
+                    <ExploreApiCard
+                      api={api}
                       className="vads-l-col--12 small-screen:vads-l-col--6 medium-screen:vads-l-col--3 vads-u-padding--2 vads-u-display--flex"
                       key={urlSlug}
-                    >
-                      <ExploreApiCard api={api} />
-                    </div>
+                    />
                   )
                 );
               })}
