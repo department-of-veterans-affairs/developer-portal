@@ -38,10 +38,10 @@ const navLinkStyles = classNames(
   'vads-u-color--gray-dark',
   'vads-u-display--block',
   'vads-u-line-height--4',
-  'vads-u-padding-x--1',
+  'vads-u-padding-x--0p5',
   'vads-u-padding-y--2',
   'vads-u-text-decoration--none',
-  'medium-screen:vads-u-padding--2',
+  'small-desktop-screen:vads-u-padding--2',
   'va-api-external-link',
 );
 
