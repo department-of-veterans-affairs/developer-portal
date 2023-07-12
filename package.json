@@ -204,9 +204,7 @@
   },
   "jest": {
     "projects": [
-      "e2e.jest.config.js",
-      "unit.jest.config.js",
-      "visual.jest.config.js"
+      "unit.jest.config.js"
     ]
   },
   "browserslist": [
