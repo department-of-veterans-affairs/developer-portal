@@ -45,7 +45,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     params.categoryUrlSlugs?.split('+') ?? [],
   );
   const [authFilter, setAuthFilter] = useState<string[]>(
-    new URLSearchParams(location.search).get('auth')?.split('+') ?? [],
+    new URLSearchParams(location.search).get('auth')?.split(' ') ?? [],
   );
   const [search, setSearch] = useState<string>(new URLSearchParams(location.search).get('q') ?? '');
   const apisLoaded = getApisLoaded();
