@@ -19,7 +19,9 @@ export const ExploreRoot = (): JSX.Element => {
         <>
           <div data-cy="api-list" className="explore-main-container" role="list">
             {apis.map((api: APIDescription) => (
-              <ExploreApiCard key={api.urlSlug} api={api} />
+              <div key={api.urlSlug} className="vads-u-display--flex" role="listitem">
+                <ExploreApiCard api={api} />
+              </div>
             ))}
           </div>
           <p className={classNames('explore-end-of-list', 'vads-u-color--gray-warm-dark')}>
