@@ -48,6 +48,16 @@ const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
 const lookupApiCategory = (categoryKey: string): APICategory =>
   rootGetApiDefinitions.getApiDefinitions()[categoryKey];
 
+const countActiveApisByCategory = (categoryKey: string): number => {
+  const activeApis = rootGetApiDefinitions
+    .getApiDefinitions()
+    [categoryKey].apis.filter(
+      (api: APIDescription) =>
+        isHostedApiEnabled(api.urlFragment, api.enabledByDefault) && !isApiDeactivated(api),
+    );
+  return activeApis.length;
+};
+
 const getApiCategoryOrder = (): string[] => {
   // return the urlFragments of the categories sorted by category name
   const urlFragments = Object.keys(rootGetApiDefinitions.getApiDefinitions());
@@ -162,6 +172,7 @@ const isCcgApi = (api: APIDescription): boolean =>
 
 export {
   apisFor,
+  countActiveApisByCategory,
   getActiveApis,
   getActiveKeyAuthApis,
   getActiveOauthApis,
