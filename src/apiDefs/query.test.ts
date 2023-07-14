@@ -21,6 +21,7 @@ import store from '../store';
 import { fakeCategories } from '../__mocks__/fakeCategories';
 import {
   apisFor,
+  countActiveApisByCategory,
   getAllQuickstartCategorySlugs,
   getApiCategoryOrder,
   includesOAuthAPI,
@@ -274,6 +275,12 @@ describe('query module', () => {
   describe('getApiCategoryOrder', () => {
     it('returns all urlFragments of categories sorted by category name', () => {
       expect(getApiCategoryOrder()).toStrictEqual(['lotr', 'movies', 'sports']);
+    });
+  });
+
+  describe('countActiveApisByCategory', () => {
+    it('returns number of active apis for a given category', () => {
+      expect(countActiveApisByCategory('lotr')).toEqual(2);
     });
   });
 });

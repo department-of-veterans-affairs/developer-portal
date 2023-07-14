@@ -4,7 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp, faMinus, faPlus, faTag } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import { CheckboxRadioField } from '../formField';
-import { getApiCategoryOrder, getApisLoaded, lookupApiCategory } from '../../apiDefs/query';
+import {
+  countActiveApisByCategory,
+  getApiCategoryOrder,
+  getApisLoaded,
+  lookupApiCategory,
+} from '../../apiDefs/query';
 import { useOutsideGroupClick } from '../../hooks';
 import { TopicFilterValues } from './ApiFilters';
 
@@ -94,12 +99,11 @@ export const TopicFilters = ({
               {getApisLoaded() &&
                 topics.map((topic: string) => {
                   const category = lookupApiCategory(topic);
+                  const numOfActiveApis = countActiveApisByCategory(topic);
                   return (
                     <CheckboxRadioField
                       key={category.urlSlug}
-                      label={`${TOPIC_FILTER_NAMES[category.name] as string} (${
-                        category.apis.length
-                      })`}
+                      label={`${TOPIC_FILTER_NAMES[category.name] as string} (${numOfActiveApis})`}
                       name="topics"
                       type="checkbox"
                       value={category.urlSlug}
