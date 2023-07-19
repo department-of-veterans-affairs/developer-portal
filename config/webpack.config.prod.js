@@ -49,9 +49,6 @@ const publicPath = paths.servedPath;
 const publicPathNoSlash = publicPath.replace(/[/]+$/, '');
 const env = getClientEnvironment(publicPathNoSlash);
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
-// Some apps do not use client-side routing with pushState.
-// For these, "homepage" can be set to "." to enable relative asset paths.
-const shouldUseRelativeAssetPaths = publicPath === './';
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
