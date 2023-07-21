@@ -9,7 +9,7 @@ const usage = () => {
   console.log('  step: the number of steps to fill out. For example, if I want to test the Basic Information page, I would set the step to 1.');
 }
 
-let filename, step;
+let step;
 const validateArgs = () => {
   const args = process.argv.slice(2);
   if (args.length < 1) {
@@ -53,7 +53,7 @@ validateArgs();
 
 
 const execute = async () => {
-  const browser = await puppeteer.connect({
+  await puppeteer.connect({
 
   })
 };
