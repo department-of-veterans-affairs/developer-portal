@@ -149,7 +149,13 @@ const validationSchema = [
           }),
     statusUpdateEmails: yup
       .array()
-      .of(yup.string().isNotATestString().email('Enter a valid email address.'))
+      .of(
+        yup
+          .string()
+          .isNotATestString()
+          .email('Enter a valid email address.')
+          .required('Enter a valid email address.'),
+      )
       .min(1)
       .required('Enter a valid email address.'),
     supportLink: isListAndLoopEnabled
