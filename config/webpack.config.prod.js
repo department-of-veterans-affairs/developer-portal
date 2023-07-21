@@ -49,9 +49,6 @@ const publicPath = paths.servedPath;
 const publicPathNoSlash = publicPath.replace(/[/]+$/, '');
 const env = getClientEnvironment(publicPathNoSlash);
 const createEnvironmentHash = require('./webpack/persistentCache/createEnvironmentHash');
-// Some apps do not use client-side routing with pushState.
-// For these, "homepage" can be set to "." to enable relative asset paths.
-const shouldUseRelativeAssetPaths = publicPath === './';
 // Source maps are resource heavy and can cause out of memory issue for large source files.
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 
@@ -133,9 +130,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 if (env.stringified['process.env'].NODE_ENV !== '"production"') {
   throw new Error('Production builds must have NODE_ENV=production.');
 }
-
-// Note: defined here because it will be used more than once.
-const cssFilename = 'static/css/[name].[contenthash:8].css';
 
 // This is the production configuration.
 // It compiles slowly and is focused on producing a fast and minimal bundle.
