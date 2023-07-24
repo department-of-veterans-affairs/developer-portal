@@ -77,6 +77,7 @@ describe('Accessibility tests', () => {
           },
         ],
       });
+      cy.get('h1');
       cy.checkA11y(null, null, logAxeViolations(path));
     });
   });
@@ -85,7 +86,7 @@ describe('Accessibility tests', () => {
     const path = '/explore/api/claims/docs';
     cy.visit(path);
     cy.injectAxe();
-    cy.wait(5000); // Gives Swagger UI plenty of time to load
+    cy.get('.swagger-ui');
     cy.checkA11y(null, null, logAxeViolations(path));
   });
 });
