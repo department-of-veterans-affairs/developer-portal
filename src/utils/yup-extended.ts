@@ -22,21 +22,21 @@ yup.addMethod<yup.StringSchema>(yup.string, 'isValidRSAJWK', function () {
 
     try {
       const jwk = JSON.parse(value);
-      if (!jwk.keys) return createError({ message: 'Please enter a valid JSON.', path });
+      if (!jwk.keys) return createError({ message: 'Please enter a valid RSA-generated key in JSON Web Key format.', path });
 
       for (let key of jwk.keys) {
         if (!key.kty || !key.n || !key.e) {
-          return createError({ message: 'Please enter a valid JSON.', path });
+          return createError({ message: 'Please enter a valid RSA-generated key in JSON Web Key format.', path });
         }
         if (key.kty !== 'RSA') {
-          return createError({ message: 'Please enter a valid JSON.', path });
+          return createError({ message: 'Please enter a valid RSA-generated key in JSON Web Key format.', path });
         }
       }
 
       return true;
 
     } catch (e) {
-      return createError({ message: 'Please enter a real value.', path });
+      return createError({ message: 'Please enter a valid RSA-generated key in JSON Web Key format.', path });
     }
   });
 });
