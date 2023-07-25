@@ -18,7 +18,7 @@ export interface EditInputFieldProps {
 }
 
 // Initial render input is not disabled, there is no edit button
-// If the input is focused, then the edit button
+// If the input is focused, then the edit button is displayed
 export const EditInputField: React.FC<EditInputFieldProps> = ({
   onRemove,
   placeHolder,
