@@ -33,7 +33,7 @@ const validationSchema = [
       }),
     oAuthPublicKey: yup
       .string()
-      .isNotATestString()
+      .isValidRSAJWK()
       .when('apis', {
         is: (value: string[]) => includesCcgAPI(value),
         otherwise: yup.string().isNotATestString(),
