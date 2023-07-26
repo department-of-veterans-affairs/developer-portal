@@ -17,26 +17,27 @@ yup.addMethod<yup.StringSchema>(yup.string, 'isNotATestString', function () {
 });
 
 yup.addMethod<yup.StringSchema>(yup.string, 'isValidRSAJWK', function () {
-  return this.test('isValidRSAJWK', function (value) {
+  return this.test('isValidRSAJWK', function (value: string) {
     const { path, createError } = this;
 
     try {
-      const jwk = JSON.parse(value);
-      if (!jwk.keys) return createError({ message: 'Please enter a valid RSA-generated key in JSON Web Key format.', path });
+      const jwk = JSON.parse(value) as {
+        [key: string]: string;
+      };
 
-      for (let key of jwk.keys) {
-        if (!key.kty || !key.n || !key.e) {
-          return createError({ message: 'Please enter a valid RSA-generated key in JSON Web Key format.', path });
-        }
-        if (key.kty !== 'RSA') {
-          return createError({ message: 'Please enter a valid RSA-generated key in JSON Web Key format.', path });
-        }
+      if (!jwk.kty || !jwk.n || !jwk.e || jwk.kty !== 'RSA') {
+        return createError({
+          message: 'Please enter a valid RSA-generated key in JSON Web Key format.',
+          path,
+        });
       }
 
       return true;
-
-    } catch (e) {
-      return createError({ message: 'Please enter a valid RSA-generated key in JSON Web Key format.', path });
+    } catch (e: unknown) {
+      return createError({
+        message: 'Please enter a valid RSA-generated key in JSON Web Key format.',
+        path,
+      });
     }
   });
 });
