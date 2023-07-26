@@ -28,7 +28,7 @@
 .explore-main-container {
   display: flex;
   flex-flow: column nowrap;
-  margin-bottom: 2.4rem;
+  margin: 0.8rem 0 2.4rem 0;
 }
 
 .explore-end-of-list {
@@ -40,17 +40,20 @@
   margin-bottom: 11.6rem;
   text-align: center;
 }
+
 #explore-page-fuzzy-search {
+  align-items: center;
   background-color: $color-gray-light-alt;
-  padding: 1.2rem 1.6rem;
   box-shadow: 0px -1px 12px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  padding: 1.2rem 1.6rem;
 
   input {
     border: 1px solid transparent;
     border-radius: 5px 0 0 5px;
     display: inline-block;
-    width: calc(100% - 47px);
   }
+
   button {
     box-sizing: border-box;
     margin: 0;
@@ -73,13 +76,15 @@
   position: relative;
   padding: 1.6rem !important;
   border-top: 1px solid $color-primary-darkest !important;
+  width: 100% !important;
 }
 
 @include media($medium-screen) {
   #explore-page-fuzzy-search {
     box-shadow: unset;
-    width: 46rem;
+    min-width: 25.4rem;
   }
+
   .explore-filter-button {
     background-color: $color-white !important;
     border-radius: 3px !important;
@@ -88,12 +93,13 @@
     margin: 0 !important;
     padding: 12px 8px !important;
     position: relative;
-    width: 21.4rem !important;
+    width: 16rem !important;
     border: 0 !important;
   }
 
   .explore-filter-form {
     background-color: unset;
+    position: relative;
   }
 
   .filter-topic-container {
@@ -105,13 +111,19 @@
     width: 100%;
     z-index: 1000;
   }
-
-  .explore-filter-form {
-    position: relative;
-  }
 }
 
 .filter-button-caret {
   position: absolute;
   right: 1.6rem;
+}
+
+@include media($small-desktop-screen) {
+  #explore-page-fuzzy-search {
+    width: 30rem;
+  }
+
+  .explore-filter-button {
+    width: 21.4rem !important;
+  }
 }
