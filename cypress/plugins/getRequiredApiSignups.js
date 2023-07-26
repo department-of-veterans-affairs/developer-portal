@@ -34,6 +34,7 @@ export const getRequiredApiSignups = async () => {
                 altID: api.altID,
                 urlSlug: api.urlSlug,
                 enabledByDefault: api.enabledByDefault,
+                oAuthTypes: api.oAuthTypes,
               });
             }
             if (api.oAuthTypes.includes('ClientCredentialsGrant')) {
@@ -42,6 +43,7 @@ export const getRequiredApiSignups = async () => {
                 altID: api.altID,
                 urlSlug: api.urlSlug,
                 enabledByDefault: api.enabledByDefault,
+                oAuthTypes: api.oAuthTypes,
               });
             }
           } else {
