@@ -207,7 +207,10 @@ describe('Production Access Form', () => {
 
     verificationFields(cy);
     cy.get('#apisFormFieldccgclaims').click();
-    cy.get('#oAuthPublicKeyFormField').type('{ }');
+    cy.get('#oAuthPublicKeyFormField').type(
+      '{"kid": null,"kty": "RSA","e": "AQAB","use": null,"n": "2Fb4_D4-RSjvl11txu-0s9bThk8hTo2SJauTRrS9N7piFlpGi6PBql3KzLmEu_T36YMbmTjDRPyybEEBD_XkEDuNdWSQph5Da7atfFM04IW5WH3MGPuvmaH6WpZB4Li5qESTFaMk0677uCDvOLcJmfa8bzunvbtlB4U-1WLjtDBODWiVpLlGEUofNQdX2MvTF9shtm-QqPk7K-a2Z36LrZpgcQBB1U8QtqexdaLrMgaoxmEbSgXGAc-uDkmQx1VOAsREozYZ9f1tASmOKGlxfVyBHcf6dePxq1cewpmrUfRTezky5A4K6v17uBYSpEols4ritWDRDymb7rFlUwxBjqdCjmtV18HiLIrgBNPQ2-5Jlnt-BCJg3lP_UG0r6cMO2DEtTkAkDcy4HzNuMQCrXn5ZL4kSUITrf9Mixny3vFn3aVcSNsCqLUSAfnpfRIz9oUUz5xI-FD9QsJJ1vneC8mfo-1lNaVRLNhn2t9VWY0kqhNNzS2HIktkZGzGv7gsB"}',
+      { parseSpecialCharSequences: false },
+    );
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()
