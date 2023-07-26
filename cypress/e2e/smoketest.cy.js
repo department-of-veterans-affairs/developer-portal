@@ -5,6 +5,7 @@ const apis = require('../../requiredApiSignups');
 describe('Apikey Sandbox Signup Form', () => {
   apis.apikey.forEach(api => {
     it(`Test ${api.name}`, () => {
+      cy.wait(5000);
       cy.visit(`https://dev-developer.va.gov/explore/api/${api.urlSlug}/sandbox-access`);
       cy.get('#firstNameFormField').type('Smoke');
       cy.get('#lastNameFormField').type('Tester');
@@ -64,6 +65,7 @@ describe('Apikey Sandbox Signup Form', () => {
 describe('ACG Sandbox Signup Form', () => {
   apis.acg.forEach(api => {
     it(`Test ${api.name}`, () => {
+      cy.wait(5000);
       cy.visit(`https://dev-developer.va.gov/explore/api/${api.urlSlug}/sandbox-access`);
       cy.get('#firstNameFormField').type('Smoke');
       cy.get('#lastNameFormField').type('Tester');
@@ -128,6 +130,7 @@ describe('ACG Sandbox Signup Form', () => {
 describe('CCG Sandbox Signup Form', () => {
   apis.ccg.forEach(api => {
     it(`Test ${api.name}`, () => {
+      cy.wait(5000);
       cy.visit(`https://dev-developer.va.gov/explore/api/${api.urlSlug}/sandbox-access`);
       cy.get('#firstNameFormField').type('Smoke');
       cy.get('#lastNameFormField').type('Tester');
