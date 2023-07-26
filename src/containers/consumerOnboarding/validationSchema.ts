@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /* eslint-disable id-length */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
@@ -45,7 +46,11 @@ const validationSchema = [
       .when('apis', {
         is: (value: string[]) => includesAuthCodeAPI(value),
         otherwise: yup.string().isNotATestString(),
-        then: yup.string().isNotATestString().required('Enter an http or https URI.'),
+        then: yup
+          .string()
+          .isNotATestString()
+          .url('Enter an http or https URI.')
+          .required('Enter an http or https URI.'),
       }),
     termsOfService: yup
       .boolean()
