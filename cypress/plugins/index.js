@@ -13,6 +13,8 @@
 // the project's config changing)
 
 const { addMatchImageSnapshotPlugin } = require('cypress-image-snapshot/plugin');
+const { getRequiredApiSignups } = require('./getRequiredApiSignups');
+const fs = require('fs');
 
 /**
  * @type {Cypress.PluginConfig}
@@ -35,4 +37,8 @@ module.exports = (on, config) => {
   });
 
   addMatchImageSnapshotPlugin(on, config);
+
+  getRequiredApiSignups().then(data =>
+    fs.writeFile('./requiredApiSignups.json', JSON.stringify(data)),
+  );
 };
