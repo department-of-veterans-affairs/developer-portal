@@ -49,7 +49,7 @@ const GettingStarted = (): JSX.Element => (
     <div className="vads-l-grid-container vads-u-margin-x--auto">
       <div className="vads-l-row">
         <div className="vads-l-col--12 medium-screen:vads-l-col--7">
-          <h1 className="vads-u-margin-bottom--0">Get started</h1>
+          <h2 className="vads-u-margin-bottom--0">Get started</h2>
           <p>Follow these steps to start developing with our APIs.</p>
           <ol className="process vads-u-margin-top--3" aria-labelledby="Getting started">
             <li className="process-step list-one" aria-labelledby="explore-our-apis">
