@@ -8,6 +8,7 @@ import { LPB_CONTACT_US_URL, LPB_FORGERY_TOKEN } from '../../../types/constants'
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
 import { ContactUsFormState, FormType, SubmissionData } from '../../../types/forms/contactUsForm';
+import { ScrollToFirstError } from '../../../utils/ScrollToFirstError';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
 import PublishingFormFields from './components/PublishingFormFields';
@@ -104,7 +105,6 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
       {({ values, isSubmitting }): ReactNode => (
         <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')} noValidate>
           <ContactDetailsFormFields />
-
           <fieldset className="vads-u-margin-top--6">
             <legend className="vads-u-margin-bottom--2p5">
               <h2 className={classNames('vads-u-font-size--lg', 'vads-u-margin-y--0')}>
@@ -124,10 +124,8 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
               value={FormType.PUBLISHING}
             />
           </fieldset>
-
           {values.type === FormType.CONSUMER && <ConsumerFormFields />}
           {values.type === FormType.PUBLISHING && <PublishingFormFields />}
-
           <button type="submit" className="vads-u-width--auto">
             {isSubmitting ? 'Sending...' : 'Send to developer support'}
           </button>
@@ -138,6 +136,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
               </p>
             </va-alert>
           )}
+          <ScrollToFirstError />
         </Form>
       )}
     </Formik>
