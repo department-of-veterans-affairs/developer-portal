@@ -6,10 +6,12 @@ export const ScrollToFirstError = (): null => {
   const { errors, isSubmitting } = formik;
 
   useEffect(() => {
-    if (!Object.keys(errors).length) {
+    const errorElements = Object.keys(errors);
+    if (!errorElements.length) {
       return;
     }
-    const firstErrorName = Object.keys(errors)[0];
+
+    const firstErrorName = errorElements[0];
     const firstErrorElement = document.querySelector(`[name="${firstErrorName}"]`);
     if (firstErrorElement) {
       (firstErrorElement.parentElement ?? firstErrorElement).scrollIntoView({
