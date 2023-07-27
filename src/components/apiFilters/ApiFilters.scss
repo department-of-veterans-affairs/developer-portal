@@ -18,6 +18,7 @@
   right: 0;
   z-index: 101;
   padding: 2.4rem 1.6rem !important;
+  width: 100% !important; // firefox bug
 }
 
 .filters-toggle-icon {
@@ -41,7 +42,7 @@
 
 .caption-container {
   background-color: $color-gray-light-alt !important;
-  margin: 1.6rem 0;
+  margin-top: 1.6rem;
   padding: 0.8rem 1.6rem;
   position: sticky;
   top: 0;
@@ -79,8 +80,8 @@ button.filters-clear-all-button {
     background-color: $color-gray-light-alt !important;
     display: flex !important;
     flex-flow: row nowrap;
-    padding: 0 1.6rem 0 0.8rem;
-    margin: 0.8rem 0 1.6rem;
+    padding: 0 0.8rem;
+    margin-top: 1.6rem;
     justify-content: space-between;
     position: sticky;
     top: 0;
@@ -95,6 +96,7 @@ button.filters-clear-all-button {
 
   .caption-container {
     margin: 0;
+    padding: 0;
   }
 
   button.filters-clear-all-button {

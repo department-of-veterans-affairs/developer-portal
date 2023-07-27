@@ -12,14 +12,12 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 const envPublicUrl = process.env.PUBLIC_URL;
 
-function ensureSlash(path, needsSlash) {
+function ensureSlash(path) {
   const hasSlash = path.endsWith('/');
-  if (hasSlash && !needsSlash) {
-    return path.substr(path, path.length - 1);
-  } else if (!hasSlash && needsSlash) {
-    return `${path}/`;
-  } else {
+  if (hasSlash) {
     return path;
+  } else {
+    return `${path}/`;
   }
 }
 
@@ -43,7 +41,7 @@ function getServedPath(appPackageJson) {
     return '/';
   } else {
     const parsedPublicUrl = url.parse(publicUrl);
-    return ensureSlash(parsedPublicUrl.pathname, true);
+    return ensureSlash(parsedPublicUrl.pathname);
   }
 }
 

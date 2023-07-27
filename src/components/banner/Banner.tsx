@@ -65,7 +65,7 @@ const Banner = (): JSX.Element => {
           'vads-u-background-color--gray-lightest',
           'vads-u-padding-left--2',
           'vads-u-padding-top--0p5',
-          'vads-u-padding-bottom--1',
+          'vads-u-padding-bottom--0p5',
           'medium-screen:vads-u-padding-left--4',
         )}
       >

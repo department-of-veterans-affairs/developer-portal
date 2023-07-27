@@ -1,5 +1,4 @@
 @import '../../styles/variables';
-@import '../exploreApiCard/ExploreApiCard.scss';
 
 .va-api-filter-pill {
   align-items: center;
@@ -13,8 +12,9 @@
 }
 
 .filter-pills-container {
-  @extend .explore-api-card-container;
   background-color: $color-white;
+  border-bottom: 1px solid $color-gray-light;
+  padding: 2rem 1rem;
   position: sticky;
   top: 40px;
 
