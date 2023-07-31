@@ -27,37 +27,22 @@ describe('Apikey Sandbox Signup Form', () => {
           });
         },
       ).as('postSandboxForm');
+      const outputFile = `./cypress/downloads/sandbox-${api.altID}-apikey-response.json`;
       cy.get('#main button[type="submit"]').click();
       cy.wait('@postSandboxForm')
         .then(() => {
-          cy.writeFile('./cypress/downloads/sandbox-form-post-response.json', responseBody);
+          cy.writeFile(outputFile, responseBody);
         })
         .then(() => {
           expect(responseBody).to.not.have.property('errors');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('apis')
-            .should('eq', api.altID);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('clientID')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('clientSecret')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('ccgClientId')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('redirectURI')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('email')
-            .should('eq', 'smoketester@va.gov');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('kongUsername')
-            .should('eq', 'Tester');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('token')
-            .should('be.not.empty');
+          cy.readFile(outputFile).its('apis').should('eq', api.altID);
+          cy.readFile(outputFile).its('clientID').should('eq', null);
+          cy.readFile(outputFile).its('clientSecret').should('eq', null);
+          cy.readFile(outputFile).its('ccgClientId').should('eq', null);
+          cy.readFile(outputFile).its('redirectURI').should('eq', null);
+          cy.readFile(outputFile).its('email').should('eq', 'smoketester@va.gov');
+          cy.readFile(outputFile).its('kongUsername').should('eq', 'Tester');
+          cy.readFile(outputFile).its('token').should('be.not.empty');
         });
     });
   });
@@ -92,37 +77,22 @@ describe('ACG Sandbox Signup Form', () => {
           });
         },
       ).as('postSandboxForm');
+      const outputFile = `./cypress/downloads/sandbox-${api.altID}-acg-response.json`;
       cy.get('#main button[type="submit"]').click();
       cy.wait('@postSandboxForm')
         .then(() => {
-          cy.writeFile('./cypress/downloads/sandbox-form-post-response.json', responseBody);
+          cy.writeFile(outputFile, responseBody);
         })
         .then(() => {
           expect(responseBody).to.not.have.property('errors');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('apis')
-            .should('eq', api.altID);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('clientID')
-            .should('be.not.empty');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('clientSecret')
-            .should('be.not.empty');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('ccgClientId')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('email')
-            .should('eq', 'smoketester@va.gov');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('kongUsername')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('token')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('redirectURI')
-            .should('eq', 'https://developer.va.gov/oauth');
+          cy.readFile(outputFile).its('apis').should('eq', api.altID);
+          cy.readFile(outputFile).its('clientID').should('be.not.empty');
+          cy.readFile(outputFile).its('clientSecret').should('be.not.empty');
+          cy.readFile(outputFile).its('ccgClientId').should('eq', null);
+          cy.readFile(outputFile).its('email').should('eq', 'smoketester@va.gov');
+          cy.readFile(outputFile).its('kongUsername').should('eq', null);
+          cy.readFile(outputFile).its('token').should('eq', null);
+          cy.readFile(outputFile).its('redirectURI').should('eq', 'https://developer.va.gov/oauth');
         });
     });
   });
@@ -158,37 +128,22 @@ describe('CCG Sandbox Signup Form', () => {
           });
         },
       ).as('postSandboxForm');
+      const outputFile = `./cypress/downloads/sandbox-${api.altID}-ccg-response.json`;
       cy.get('#main button[type="submit"]').click();
       cy.wait('@postSandboxForm')
         .then(() => {
-          cy.writeFile('./cypress/downloads/sandbox-form-post-response.json', responseBody);
+          cy.writeFile(outputFile, responseBody);
         })
         .then(() => {
           expect(responseBody).to.not.have.property('errors');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('apis')
-            .should('eq', api.altID);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('clientID')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('clientSecret')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('ccgClientId')
-            .should('not.be.empty');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('email')
-            .should('eq', 'smoketester@va.gov');
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('kongUsername')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('token')
-            .should('eq', null);
-          cy.readFile('./cypress/downloads/sandbox-form-post-response.json')
-            .its('redirectURI')
-            .should('eq', null);
+          cy.readFile(outputFile).its('apis').should('eq', api.altID);
+          cy.readFile(outputFile).its('clientID').should('eq', null);
+          cy.readFile(outputFile).its('clientSecret').should('eq', null);
+          cy.readFile(outputFile).its('ccgClientId').should('not.be.empty');
+          cy.readFile(outputFile).its('email').should('eq', 'smoketester@va.gov');
+          cy.readFile(outputFile).its('kongUsername').should('eq', null);
+          cy.readFile(outputFile).its('token').should('eq', null);
+          cy.readFile(outputFile).its('redirectURI').should('eq', null);
         });
     });
   });
