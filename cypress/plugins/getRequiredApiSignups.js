@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 export const getRequiredApiSignups = async () => {
-  const request = new Request(
+  const request = new require('http').request(
     'https://dev-developer.va.gov/platform-backend/v0/providers/transformations/legacy.json?environment=sandbox',
     {
       mode: 'no-cors',
