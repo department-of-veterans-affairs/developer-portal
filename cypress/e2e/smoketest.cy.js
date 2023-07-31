@@ -3,9 +3,9 @@
 const apis = require('../../requiredApiSignups');
 
 // Temporary testing with less APIs
-apis.apikey = [apis.apikey];
-apis.acg = [apis.acg];
-apis.ccg = [apis.ccg];
+apis.apikey = [apis.apikey[0]];
+apis.acg = [apis.acg[0]];
+apis.ccg = [apis.ccg[0]];
 
 describe('Apikey Sandbox Signup Form', () => {
   apis.apikey.forEach(api => {
