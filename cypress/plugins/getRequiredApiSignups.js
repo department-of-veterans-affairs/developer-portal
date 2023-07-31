@@ -1,16 +1,16 @@
 /// <reference types="cypress" />
 import fetch from 'node-fetch';
 export const getRequiredApiSignups = async () => {
-  const request = new require('https').request(
-    'https://dev-developer.va.gov/platform-backend/v0/providers/transformations/legacy.json?environment=sandbox',
-    {
-      mode: 'no-cors',
-      headers: {
-        referer: 'https://dev-developer.va.gov/',
-      },
+  const options = {
+    mode: 'no-cors',
+    headers: {
+      referer: 'https://dev-developer.va.gov/',
     },
-  );
-  return fetch(request)
+  };
+  return fetch(
+    'https://dev-developer.va.gov/platform-backend/v0/providers/transformations/legacy.json?environment=sandbox',
+    options,
+  )
     .then(response => {
       console.log(response);
       return response.json();

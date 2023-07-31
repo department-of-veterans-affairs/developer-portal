@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-const apis = require('../../requiredApiSignups');
+const apis = require('../plugins/getRequiredApiSignups');
 
 describe('Apikey Sandbox Signup Form', () => {
   apis.apikey.forEach(api => {
