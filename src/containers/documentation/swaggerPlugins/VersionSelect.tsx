@@ -137,7 +137,7 @@ export default class VersionSelect extends React.PureComponent<
             </div>
           </div>
         </div>
-        {!!apiStatus && fhirRegex.test(location.pathname) && (
+        {!!apiStatus && (
           <h2
             ref={this.versionHeadingElement}
             tabIndex={-1}
