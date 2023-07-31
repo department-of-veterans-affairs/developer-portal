@@ -8,12 +8,6 @@ assignees: mramirez-va,evelez-va
 
 # MAINTENANCE REQUEST
 
-⚠️ **Attention: If this application is being deployed in an SLA environment for the first time:**
-
-> - [ ] I certify this application is compliant with the [SLA Environment Requirements for Applications](https://community.max.gov/display/VAExternal/SLA+Environment+Requirements+for+Applications) guidelines, including having a completed Fortify/CompositionAnalysis and WASA (if applicable).
-
----
-
 _This request was auto-generated. Please only approve this MR if the time is correct in the title as the deploy timing with be automated based off that and the approved label being applied._
 
 ```

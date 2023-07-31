@@ -98,6 +98,41 @@ describe('Production Access Form', () => {
     cy.get('.usa-input-error').should('have.length', '0');
   });
 
+  it('Form validation works on step 2', () => {
+    cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
+      statusCode: 201,
+      body: {
+        ok: true,
+        status: 201,
+      },
+    });
+
+    verificationFields(cy);
+    cy.get('#apisFormFieldapikeyfacilities').click();
+    cy.get('#main button[type="submit"]').click();
+
+    cy.focused()
+      .should('have.id', 'form-step-heading')
+      .should('have.text', 'Step 2 of 2: Basic information');
+
+    cy.get('#main button[type="submit"]').click();
+
+    cy.get('.usa-input-error').should('have.length', '13');
+
+    basicInformationFields(cy);
+
+    cy.get('#productionKeyCredentialStorageFormField').type(
+      'This is an explaination on how we intend to decure production keys.',
+    );
+
+    cy.get('#main button[type="submit"]').click();
+
+    cy.get('#submission-complete-modal').should('be.visible');
+    cy.get('#submission-complete-modal .usa-button').click();
+    cy.get('#submission-complete-modal').should('not.exist');
+    cy.get('.vads-c-action-link--green').should('be.visible');
+  });
+
   it('Form works for 2 step flow (VA Facilities)', () => {
     cy.intercept('POST', '/platform-backend/v0/consumers/production-requests', {
       statusCode: 201,

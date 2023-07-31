@@ -41,7 +41,7 @@ const navLinkStyles = classNames(
   'vads-u-padding-x--1',
   'vads-u-padding-y--2',
   'vads-u-text-decoration--none',
-  'medium-screen:vads-u-padding--2',
+  'small-desktop-screen:vads-u-padding--2',
   'va-api-external-link',
 );
 
@@ -180,7 +180,8 @@ const NavBar = (props: NavBarProps): JSX.Element => {
                 'va-api-navbar-search-button',
                 'vads-u-background-color--primary-darkest',
                 'vads-u-font-weight--normal',
-                'vads-u-padding--2',
+                'vads-u-padding-x--1',
+                'vads-u-padding-y--2',
                 'vads-u-line-height--4',
                 'vads-u-margin--0',
                 'vads-u-margin-right--0p5',

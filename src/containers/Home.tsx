@@ -12,32 +12,33 @@ const ApiList = (): JSX.Element => {
   const popularApis = ['veteran-confirmation', 'va-facilities', 'va-forms', 'patient-health'];
 
   return (
-    <section className="api-list vads-u-padding-top--3  vads-u-padding-bottom--2">
+    <section className="api-list vads-u-padding-top--3 vads-u-padding-bottom--2">
       <div className="vads-l-grid-container vads-u-margin-x--auto">
         <h2 className="vads-u-margin-top--0">Featured APIs</h2>
         <Link to="/explore">View all</Link>
-        <div
-          className="vads-l-row vads-u-justify-content--space-evenly vads-u-margin-x--neg1p5"
-          role="list"
-        >
-          <ApisLoader>
-            <>
-              {popularApis.map((urlSlug: string) => {
-                const api = lookupApiBySlug(urlSlug);
+        <ApisLoader>
+          <div
+            className="vads-l-row vads-u-justify-content--space-evenly vads-u-margin-x--neg1p5"
+            role="list"
+          >
+            {popularApis.map((urlSlug: string) => {
+              const api = lookupApiBySlug(urlSlug);
+              if (api) {
                 return (
-                  api && (
-                    <div
-                      className="vads-l-col--12 small-screen:vads-l-col--6 medium-screen:vads-l-col--3 vads-u-padding--2 vads-u-display--flex"
-                      key={urlSlug}
-                    >
-                      <ExploreApiCard api={api} />
-                    </div>
-                  )
+                  <div
+                    key={urlSlug}
+                    role="listitem"
+                    className="vads-l-col--12 small-screen:vads-l-col--6 medium-screen:vads-l-col--3 vads-u-padding--2 vads-u-display--flex"
+                  >
+                    <ExploreApiCard api={api} />
+                  </div>
                 );
-              })}
-            </>
-          </ApisLoader>
-        </div>
+              } else {
+                return null;
+              }
+            })}
+          </div>
+        </ApisLoader>
       </div>
     </section>
   );
@@ -48,7 +49,7 @@ const GettingStarted = (): JSX.Element => (
     <div className="vads-l-grid-container vads-u-margin-x--auto">
       <div className="vads-l-row">
         <div className="vads-l-col--12 medium-screen:vads-l-col--7">
-          <h1 className="vads-u-margin-bottom--0">Get started</h1>
+          <h2 className="vads-u-margin-bottom--0">Get started</h2>
           <p>Follow these steps to start developing with our APIs.</p>
           <ol className="process vads-u-margin-top--3" aria-labelledby="Getting started">
             <li className="process-step list-one" aria-labelledby="explore-our-apis">
