@@ -13,7 +13,6 @@ export const getRequiredApiSignups = async () => {
     options,
   )
     .then(response => {
-      console.log(response);
       return response.json();
     })
     .then(json => {

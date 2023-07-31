@@ -78,31 +78,31 @@ jobs:
             sleep 5;
           done
 
-      # - name: Send Slack notification for a failed signup
-      #   uses: slackapi/slack-github-action@v1.23.0
-      #   if: failure()
-      #   env:
-      #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      #   with:
-      #     channel-id: C012L7SRG66
-      #     # This ID is for #vaapi-alerts in Lighthouse Slack
-      #     payload: |
-      #       {
-      #         "text": "Developer Portal Sandbox Signup Form Smoketest: ${{ job.status }}",
-      #         "blocks": [
-      #           {
-      #             "type": "section",
-      #             "text": {
-      #               "type": "mrkdwn",
-      #               "text": "Developer Portal Sandbox Signup Form Smoketest:\n*Status: ${{ job.status }}*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-      #             }
-      #           },
-      #           {
-      #             "type": "section",
-      #             "text": {
-      #               "type": "mrkdwn",
-      #               "text": "@teamokapi please investigate"
-      #             }
-      #           }
-      #         ]
-      #       }
+      - name: Send Slack notification for a failed signup
+        uses: slackapi/slack-github-action@v1.23.0
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: C012L7SRG66
+          # This ID is for #vaapi-alerts in Lighthouse Slack
+          payload: |
+            {
+              "text": "Developer Portal Sandbox Signup Form Smoketest: ${{ job.status }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Developer Portal Sandbox Signup Form Smoketest:\n*Status: ${{ job.status }}*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "@teamokapi please investigate"
+                  }
+                }
+              ]
+            }
