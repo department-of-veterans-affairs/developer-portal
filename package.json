@@ -47,7 +47,7 @@
     "hoist-non-react-statics": "^3.3.2",
     "immutable": "^3.8.2",
     "moment": "^2.29.4",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.6.12",
     "object-assign": "4.1.1",
     "promise": "^8.1.0",
     "prop-types": "^15.7.2",

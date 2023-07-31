@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
-import fetch from 'node-fetch';
+const fetch = require('node-fetch');
+
 export const getRequiredApiSignups = async () => {
   const options = {
     mode: 'no-cors',
