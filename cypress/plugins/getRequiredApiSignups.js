@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+const fetch = require('node-fetch');
 export const getRequiredApiSignups = async () => {
   const request = new require('https').request(
     'https://dev-developer.va.gov/platform-backend/v0/providers/transformations/legacy.json?environment=sandbox',
