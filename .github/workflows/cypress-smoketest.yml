@@ -71,12 +71,12 @@ jobs:
             echo "Deleting ACG Client: $acgClientId";
             bundle exec ruby ./delete-smoketest-apps.rb $acgClientId;
             sleep 5;
-          end
+          done
           for ccgClientId in `grep ccgClientId ../cypress/downloads/sandbox-* | grep -v null | cut -d \" -f4`; do
             echo "Deleting CCG Client: $ccgClientId";
             bundle exec ruby ./delete-smoketest-apps.rb $ccgClientId;
             sleep 5;
-          end
+          done
 
       # - name: Send Slack notification for a failed signup
       #   uses: slackapi/slack-github-action@v1.23.0
