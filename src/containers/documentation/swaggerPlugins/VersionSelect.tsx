@@ -2,7 +2,6 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { ResetVersioning, SetRequestedAPIVersion, SetVersioning } from '../../../actions';
 import { VersionMetadata } from '../../../types';
-
 import './VersionSelect.scss';
 
 export interface VersionSelectProps {
@@ -89,7 +88,7 @@ export default class VersionSelect extends React.PureComponent<
         return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
       }
     };
-    const fhirRegex = /\/explore\/api\/(patient_health|fhir)\/docs/;
+    const fhirRegex = /\/explore\/api\/(clinical-health|patient-health)\/docs/;
     const selectorLabel = fhirRegex.test(location.pathname)
       ? 'Select a FHIR specification'
       : 'Select a version';
@@ -138,9 +137,23 @@ export default class VersionSelect extends React.PureComponent<
             </div>
           </div>
         </div>
-        {!!apiStatus && fhirRegex.test(location.pathname) && (
-          <h2 ref={this.versionHeadingElement} tabIndex={-1} className="fhir-revision">
-            {apiStatus}
+        {!!apiStatus && (
+          <h2
+            ref={this.versionHeadingElement}
+            tabIndex={-1}
+            className={classNames(
+              'vads-u-font-family--sans',
+              'vads-u-font-weight--normal',
+              'vads-u-font-size--base',
+              'vads-u-padding--0p5',
+              'vads-u-margin-y--1',
+            )}
+          >
+            {!this.state.initialRender && (
+              <>
+                Showing documentation for <b>{apiStatus}</b>.
+              </>
+            )}
           </h2>
         )}
       </>

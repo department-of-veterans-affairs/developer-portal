@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { BrowserRouter as Router, Router as HistoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
@@ -82,5 +82,24 @@ describe('ApiFilters', () => {
     expect(ccgPill).toBeInTheDocument();
     fireEvent.click(ccgPill);
     expect(history.location.pathname).toBe('/explore');
+  });
+
+  it('sets localStorage exploreApisPath on location change', async () => {
+    const history = createMemoryHistory();
+    history.push('/explore/va-benefits');
+    render(
+      <Provider store={store}>
+        <HistoryRouter history={history}>
+          <ApiFilters apis={apis} setApis={setApis} />
+        </HistoryRouter>
+      </Provider>,
+    );
+    expect(localStorage.getItem('exploreApisPath')).toBe('/explore/va-benefits');
+    history.push('/explore/va-benefits?auth=ccg');
+
+    await waitFor(() => {
+      expect(localStorage.getItem('exploreApisPath')).toBe('/explore/va-benefits?auth=ccg');
+    });
+    localStorage.clear();
   });
 });
