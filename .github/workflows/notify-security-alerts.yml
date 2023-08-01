@@ -1,0 +1,76 @@
+name: Notify Security Alerts
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 15 * * 1-5
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    name: Check for security alerts and notify team via Slack
+    steps:
+      - id: check_for_code_scanning_alerts
+        name: Check for code-scanning alerts
+        run: |
+          echo ${{ secrets.DEVPORTAL_SECURITY_SCAN_WORKFLOW_TOKEN }} | gh auth login --with-token
+          gh api '/repos/department-of-veterans-affairs/developer-portal/code-scanning/alerts?state=open' \
+            > code-scanning.json
+          cat code-scanning.json
+          if [ "[]" == "$(cat code-scanning.json)" ]; then
+            echo "security_alert_exists='false'" >> $GITHUB_OUTPUT
+          else
+            echo "security_alert_exists='true'" >> $GITHUB_OUTPUT
+          fi
+      - id: check_for_dependabot_alerts
+        name: Check for dependabot alerts   
+        run: |
+          gh api '/repos/department-of-veterans-affairs/developer-portal/dependabot/alerts?state=open' \
+            > dependabot.json
+          cat dependabot.json
+          if [ "[]" == "$(cat dependabot.json)" ]; then
+            echo "security_alert_exists='false'" >> $GITHUB_OUTPUT
+          else
+            echo "security_alert_exists='true'" >> $GITHUB_OUTPUT
+          fi
+      - id: check_for_secret_scanning_alerts
+        name: Check for secret scanning alerts   
+        run: |
+          gh api '/repos/department-of-veterans-affairs/developer-portal/secret-scanning/alerts?state=open' \
+            > secret-scanning.json
+          cat secret-scanning.json
+          if [ "[]" == "$(cat secret-scanning.json)" ]; then
+            echo "security_alert_exists='false'" >> $GITHUB_OUTPUT
+          else
+            echo "security_alert_exists='true'" >> $GITHUB_OUTPUT
+          fi
+      - id: send_slack_message
+        name: Send Slack Message
+        uses: slackapi/slack-github-action@v1.23.0
+        if: |
+          steps.check_for_code_scanning_alerts.outputs.security_alert_exists == 'true' ||
+          steps.check_for_dependabot_alerts.outputs.security_alert_exists == 'true' ||
+          steps.check_for_secret_scanning_alerts.outputs.security_alert_exists == 'true'
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          # This ID is for #team-okapi-alerts in Lighthouse Slack
+          channel-id: C05HL4MTAFR
+          payload: |
+            {
+              "text": "Developer Portal Security Alerts Check",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "A security vulnerability alert has been detected in the Developer Portal repository."
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "@teamokapi please investigate."
+                  }
+                }
+              ]
+            }
