@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-invalid-this */
 import * as yup from 'yup';
+import { StringSchema } from 'yup';
 
-yup.addMethod<yup.StringSchema>(yup.string, 'isNotATestString', function () {
+yup.addMethod<StringSchema>(yup.string, 'isNotATestString', function () {
   return this.test('isNotATestString', function (value) {
     const { path, createError } = this;
 
@@ -13,7 +14,7 @@ yup.addMethod<yup.StringSchema>(yup.string, 'isNotATestString', function () {
   });
 });
 
-yup.addMethod<yup.StringSchema>(yup.string, 'isValidRSAJWK', function () {
+yup.addMethod<StringSchema>(yup.string, 'isValidRSAJWK', function () {
   return this.test('isValidRSAJWK', function (value: string) {
     const { path, createError } = this;
 
@@ -40,13 +41,9 @@ yup.addMethod<yup.StringSchema>(yup.string, 'isValidRSAJWK', function () {
 });
 
 declare module 'yup' {
-  interface StringSchema<
-    TType extends Maybe<string> = string | undefined,
-    TContext extends AnyObject = AnyObject,
-    TOut extends TType = TType,
-  > extends yup.BaseSchema<TType, TContext, TOut> {
-    isNotATestString: () => StringSchema<TType, TContext>;
-    isValidRSAJWK: () => StringSchema<TType, TContext>;
+  interface StringSchema {
+    isNotATestString: () => StringSchema;
+    isValidRSAJWK: () => StringSchema;
   }
 }
 
