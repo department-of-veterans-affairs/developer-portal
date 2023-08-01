@@ -67,12 +67,16 @@ jobs:
           OKTA_TOKEN: ${{ secrets.OKTA_TOKEN }}
         run: |
           cd smoketest;
-          acgClientId=`jq -r '.clientID' ../cypress/downloads/sandbox-form-post-response.json`;
-          ccgClientId=`jq -r '.ccgClientId' ../cypress/downloads/sandbox-form-post-response.json`;
-          echo "Deleting ACG Client: $acgClientId"
-          bundle exec ruby ./delete-smoketest-apps.rb $acgClientId;
-          echo "Deleting CCG Client: $ccgClientId"
-          bundle exec ruby ./delete-smoketest-apps.rb $ccgClientId;
+          for acgClientId in `grep clientID ../cypress/downloads/sandbox-* | grep -v null | cut -d \" -f4`; do
+            echo "Deleting ACG Client: $acgClientId";
+            bundle exec ruby ./delete-smoketest-apps.rb $acgClientId;
+            sleep 5;
+          done
+          for ccgClientId in `grep ccgClientId ../cypress/downloads/sandbox-* | grep -v null | cut -d \" -f4`; do
+            echo "Deleting CCG Client: $ccgClientId";
+            bundle exec ruby ./delete-smoketest-apps.rb $ccgClientId;
+            sleep 5;
+          done
 
       - name: Send Slack notification for a failed signup
         uses: slackapi/slack-github-action@v1.23.0

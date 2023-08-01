@@ -13,11 +13,13 @@
   }
 
   code {
-    color: $color-white;
+    background-color: $color-gray-lightest;
+    color: $color-primary-darker;
     font-family: 'Source Code Pro', monospace;
     padding: 0.2rem 0.4rem;
     margin: auto 0.2rem;
     border-radius: 6px;
+    font-weight: 700;
 
     // this may look ugly but there's no padding at line end/start when text wraps
     white-space: nowrap;

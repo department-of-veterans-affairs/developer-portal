@@ -19,7 +19,7 @@
     "test:accessibility:ci": "CYPRESS_SINGLE_SPEC=true ./scripts/cypress_test.sh run -s ./cypress/e2e/accessibility.cy.js",
     "test:visual": "CYPRESS_SINGLE_SPEC=true ./node_modules/.bin/cypress run --reporter cypress-image-snapshot/reporter -s ./cypress/e2e/visual.cy.js",
     "test:visual:update": "CYPRESS_SINGLE_SPEC=true ./node_modules/.bin/cypress run --env updateSnapshots=true -s ./cypress/e2e/visual.cy.js",
-    "test:coverage": "node scripts/test.js --coverage "
+    "test:coverage": "node scripts/test.js --coverage"
   },
   "dependencies": {
     "@braintree/sanitize-url": "^6.0.2",
@@ -47,6 +47,7 @@
     "hoist-non-react-statics": "^3.3.2",
     "immutable": "^3.8.2",
     "moment": "^2.29.4",
+    "node-fetch": "^2.6.12",
     "object-assign": "4.1.1",
     "promise": "^8.1.0",
     "prop-types": "^15.7.2",
