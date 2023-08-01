@@ -170,7 +170,7 @@
     "lint-staged": "^10.5.4",
     "lodash.noop": "^3.0.1",
     "mini-css-extract-plugin": "^2.6.0",
-    "msw": "^0.28.2",
+    "msw": "^1.2.3",
     "postcss": "^8.4.13",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",
