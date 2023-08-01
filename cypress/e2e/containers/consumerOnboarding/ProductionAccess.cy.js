@@ -173,7 +173,7 @@ describe('Production Access Form', () => {
     verificationFields(cy);
     cy.get('#apisFormFieldacgclinicalHealth').click();
     cy.get('#oAuthApplicationTypeFormFieldweb').click();
-    cy.get('#oAuthRedirectURIFormField').type('http://localhost:3001/');
+    cy.get('#oAuthRedirectURIFormField').type('https://developer.va.gov/oauth');
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()
@@ -207,7 +207,10 @@ describe('Production Access Form', () => {
 
     verificationFields(cy);
     cy.get('#apisFormFieldccgclaims').click();
-    cy.get('#oAuthPublicKeyFormField').type('{ }');
+    cy.get('#oAuthPublicKeyFormField').type(
+      '{"kid": null,"kty": "RSA","e": "blah","use": null,"n": "blah"}',
+      { parseSpecialCharSequences: false },
+    );
     cy.get('#main button[type="submit"]').click();
 
     cy.focused()

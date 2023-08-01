@@ -49,7 +49,11 @@ const validationSchema = [
           }),
         then: () =>
           yup.object({
-            value: yup.string().isNotATestString().required('Enter your oAuthPublicKey.'),
+            value: yup
+              .string()
+              .isNotATestString()
+              .isValidRSAJWK()
+              .required('Enter your oAuthPublicKey.'),
           }),
       }),
     oAuthRedirectURI: yup
@@ -63,7 +67,11 @@ const validationSchema = [
           }),
         then: () =>
           yup.object({
-            value: yup.string().isNotATestString().required('Enter an http or https URI.'),
+            value: yup
+              .string()
+              .isNotATestString()
+              .url('Enter an http or https URI.')
+              .required('Enter an http or https URI.'),
           }),
       }),
     termsOfService: yup

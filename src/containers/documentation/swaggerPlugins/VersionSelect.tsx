@@ -88,7 +88,7 @@ export default class VersionSelect extends React.PureComponent<
         return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
       }
     };
-    const fhirRegex = /\/explore\/api\/(patient_health|fhir)\/docs/;
+    const fhirRegex = /\/explore\/api\/(clinical-health|patient-health)\/docs/;
     const selectorLabel = fhirRegex.test(location.pathname)
       ? 'Select a FHIR specification'
       : 'Select a version';
@@ -137,7 +137,7 @@ export default class VersionSelect extends React.PureComponent<
             </div>
           </div>
         </div>
-        {!!apiStatus && fhirRegex.test(location.pathname) && (
+        {!!apiStatus && (
           <h2
             ref={this.versionHeadingElement}
             tabIndex={-1}

@@ -17,6 +17,7 @@ interface ApiBreadcrumbsProps {
 
 export const ApiBreadcrumbs = ({ api }: ApiBreadcrumbsProps): JSX.Element | null => {
   const location = useLocation();
+  const exploreApisPath = localStorage.getItem('exploreApisPath') ?? '/explore';
 
   if (!location.pathname.includes(`/explore/api/${api.urlSlug}`)) {
     return null;
@@ -25,7 +26,7 @@ export const ApiBreadcrumbs = ({ api }: ApiBreadcrumbsProps): JSX.Element | null
   return (
     <BreadCrumbs>
       <Link to="/">Home</Link>
-      <Link to="/explore">Explore APIs</Link>
+      <Link to={exploreApisPath}>Explore APIs</Link>
       <Link to={`/explore/api/${api.urlSlug}`}>{api.name}</Link>
       {apiRoutes
         .filter(({ path }) => location.pathname === `/explore/api/${api.urlSlug}${path}`)
