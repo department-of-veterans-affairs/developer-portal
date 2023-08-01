@@ -15,6 +15,11 @@
     margin: 0 0 3.2rem;
     word-break: break-word;
 
+    code {
+      background-color: $color-gray-lightest;
+      color: $color-primary-darker;
+    }
+
     table {
       word-break: initial;
     }

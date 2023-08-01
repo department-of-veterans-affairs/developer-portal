@@ -24,7 +24,7 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
     </ul>
     <p>
       Sign your JWT using your RSA-generated private key, which you will use as a client assertion.
-      An example for what the structure will look like is:
+      The basic structure for this is provided below.
     </p>
     <CodeBlock
       withCopyButton
@@ -37,6 +37,26 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
   "iat": 1604429781,
   "exp": 1604430081,
   "jti": "23f8f614-72c3-4267-b0da-b8b067662c74"
+}`}
+    />
+    <p>
+      The following example shows how the basic structure above would work for a NodeJS function
+      using{' '}
+      <a href="https://www.npmjs.com/package/njwt" target="_blank" rel="noopener noreferrer">
+        nJwt
+      </a>
+      .
+    </p>
+    <CodeBlock
+      withCopyButton
+      language="javascript"
+      code={`function getAssertionPrivatekey (clientId, key, audience) {
+  let algorithm = "RS256";
+  const claims = { aud: audience, iss: clientId, sub: clientId, jti: uuidv4 };
+  let secret = fs.readFileSync(key, "utf8");
+  const token = jwt.create(claims, secret, algorithm); 
+  token.setExpiration(new Date() - getTime() + 60 * 1000);
+  return token.compact();
 }`}
     />
     <p>The claims in your client assertion are described in this table.</p>
