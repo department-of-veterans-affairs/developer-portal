@@ -101,7 +101,13 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={formSubmission} validate={validateForm}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={formSubmission}
+      validate={validateForm}
+      validateOnBlur={false}
+      validateOnChange={false}
+    >
       {({ values, isSubmitting }): ReactNode => (
         <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')} noValidate>
           <ContactDetailsFormFields />
