@@ -8,9 +8,6 @@ on:
 jobs:
   pre_mr_checks_and_create:
     runs-on: ubuntu-latest
-    outputs:
-      mr_number: ${{ steps.get_mr_number.outputs.mr_number }}
-      time_string: ${{ steps.get_time_string.outputs.time_string }}
     steps:
       - name: Set timezone to Eastern
         uses: szenius/set-timezone@v1.0

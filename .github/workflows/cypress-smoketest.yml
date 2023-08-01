@@ -90,7 +90,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "Developer Portal Sandbox Signup Form Smoketest:\n*Status: ${{ job.status }}*\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+                    "text": "Developer Portal Sandbox Signup Form Smoketest:\n*Status: ${{ job.status }}*"
                   }
                 },
                 {
