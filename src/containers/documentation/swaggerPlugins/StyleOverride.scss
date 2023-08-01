@@ -119,3 +119,7 @@
     }
   }
 }
+
+.swagger-ui table.model tbody tr td:first-of-type {
+  word-break: break-all;
+}
