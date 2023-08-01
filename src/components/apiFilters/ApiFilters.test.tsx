@@ -100,5 +100,6 @@ describe('ApiFilters', () => {
     await waitFor(() => {
       expect(localStorage.getItem('exploreApisPath')).toBe('/explore/va-benefits?auth=ccg');
     });
+    localStorage.clear();
   });
 });

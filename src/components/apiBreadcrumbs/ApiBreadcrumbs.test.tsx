@@ -57,5 +57,6 @@ describe('APIBreadcrumbs', () => {
       </MemoryRouter>,
     );
     expect(screen.getByText(/Explore APIs/)).toHaveAttribute('href', '/explore/va-benefits');
+    localStorage.clear();
   });
 });
