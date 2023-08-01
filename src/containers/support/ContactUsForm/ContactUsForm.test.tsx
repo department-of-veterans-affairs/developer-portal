@@ -185,20 +185,14 @@ describe('SupportContactUsFormPublishing', () => {
       });
 
       describe('some fields are invalid', () => {
-        beforeEach(async () => {
-          await act(async () => {
-            await userEvent.type(
-              screen.getByRole('textbox', { name: /Email address/ }),
-              'frodo my boy',
-              { delay: 0.01 },
-            );
-            userEvent.click(screen.getByRole('textbox', { name: /First name/ }));
-            userEvent.tab();
-          });
+        beforeEach(() => {
+          userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
         });
         it('displays the validation errors', async () => {
           expect(await screen.findByText('Enter your first name.')).toBeInTheDocument();
+          expect(await screen.findByText('Enter your last name.')).toBeInTheDocument();
           expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
+          expect(await screen.findByText('Enter your description.')).toBeInTheDocument();
         });
       });
     });
