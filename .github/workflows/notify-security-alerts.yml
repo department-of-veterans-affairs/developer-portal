@@ -23,7 +23,6 @@ jobs:
       - id: check_for_dependabot_alerts
         name: Check for dependabot alerts   
         run: |
-          echo ${{ secrets.DEVPORTAL_SECURITY_SCAN_WORKFLOW_TOKEN }} | gh auth login --with-token
           gh api '/repos/department-of-veterans-affairs/developer-portal/dependabot/alerts?state=open' \
             > dependabot.json
           cat dependabot.json
@@ -35,7 +34,6 @@ jobs:
       - id: check_for_secret_scanning_alerts
         name: Check for secret scanning alerts   
         run: |
-          echo ${{ secrets.DEVPORTAL_SECURITY_SCAN_WORKFLOW_TOKEN }} | gh auth login --with-token
           gh api '/repos/department-of-veterans-affairs/developer-portal/secret-scanning/alerts?state=open' \
             > secret-scanning.json
           cat secret-scanning.json
