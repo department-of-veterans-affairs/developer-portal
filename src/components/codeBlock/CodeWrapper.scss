@@ -21,8 +21,11 @@
   }
 
   code {
+    background-color: unset !important;
+    color: unset !important;
     border-radius: inherit;
     font-family: 'Ubuntu Mono', monospace;
+    font-weight: 400 !important;
     max-height: 400px;
   }
 
