@@ -29,50 +29,30 @@ const validationSchema = [
       .isNotATestString()
       .when('apis', {
         is: (value: string[]) => includesAuthCodeAPI(value),
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().oneOf(['web', 'native']).required('Choose an option.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().oneOf(['web', 'native']).required('Choose an option.'),
       }),
     oAuthPublicKey: yup
       .string()
       .isNotATestString()
       .when('apis', {
         is: (value: string[]) => includesCcgAPI(value),
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
         then: () =>
-          yup.object({
-            value: yup
-              .string()
-              .isNotATestString()
-              .isValidRSAJWK()
-              .required('Enter your oAuthPublicKey.'),
-          }),
+          yup.string().isNotATestString().isValidRSAJWK().required('Enter your oAuthPublicKey.'),
       }),
     oAuthRedirectURI: yup
       .string()
       .isNotATestString()
       .when('apis', {
         is: (value: string[]) => includesAuthCodeAPI(value),
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
         then: () =>
-          yup.object({
-            value: yup
-              .string()
-              .isNotATestString()
-              .url('Enter an http or https URI.')
-              .required('Enter an http or https URI.'),
-          }),
+          yup
+            .string()
+            .isNotATestString()
+            .url('Enter an http or https URI.')
+            .required('Enter an http or https URI.'),
       }),
     termsOfService: yup
       .boolean()
@@ -85,14 +65,8 @@ const validationSchema = [
       .isNotATestString()
       .when('veteranFacing', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter a description.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter a description.'),
       }),
     appName: yup.string().isNotATestString().required('Enter front-end name of application.'),
     businessModel: yup
@@ -100,28 +74,16 @@ const validationSchema = [
       .isNotATestString()
       .when('apis', {
         is: (value: string[]) => !onlyOpenDataAPIs(value),
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Describe your business model.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Describe your business model.'),
       }),
     monitizationExplanation: yup
       .string()
       .isNotATestString()
       .when('monitizedVeteranInformation', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter an explanation.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter an explanation.'),
       }),
     monitizedVeteranInformation: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     organization: yup
@@ -136,14 +98,8 @@ const validationSchema = [
       .isNotATestString()
       .when('veteranFacing', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter a list of devices/platforms.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter a list of devices/platforms.'),
       }),
     primaryContact: yup
       .object()
@@ -161,15 +117,10 @@ const validationSchema = [
       .string()
       .isNotATestString()
       .when('apis', {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         is: (value: string[]) => includesOpenDataAPI(value),
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter a description.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter a description.'),
       }),
     secondaryContact: yup
       .object()
@@ -189,36 +140,22 @@ const validationSchema = [
           .of(yup.string().isNotATestString())
           .when('veteranFacing', {
             is: (value: string) => value === 'yes',
-            otherwise: () =>
-              yup.object({
-                value: yup.array().of(yup.string().isNotATestString()),
-              }),
+            otherwise: () => yup.array().of(yup.string().isNotATestString()),
             then: () =>
-              yup.object({
-                value: yup
-                  .array()
-                  .of(yup.string().isNotATestString().url('Add a valid link.'))
-                  .min(1)
-                  .required('Add a link.'),
-              }),
+              yup
+                .array()
+                .of(yup.string().isNotATestString().url('Add a valid link.'))
+                .min(1)
+                .required('Add a link.'),
           })
       : yup
           .string()
           .isNotATestString()
           .when('veteranFacing', {
             is: (value: string) => value === 'yes',
-            otherwise: () =>
-              yup.object({
-                value: yup.string().isNotATestString(),
-              }),
+            otherwise: () => yup.string().isNotATestString(),
             then: () =>
-              yup.object({
-                value: yup
-                  .string()
-                  .isNotATestString()
-                  .url('Add a valid link.')
-                  .required('Add a link.'),
-              }),
+              yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
           }),
     statusUpdateEmails: yup
       .array()
@@ -237,36 +174,22 @@ const validationSchema = [
           .of(yup.string().isNotATestString())
           .when('veteranFacing', {
             is: (value: string) => value === 'yes',
-            otherwise: () =>
-              yup.object({
-                value: yup.array().of(yup.string().isNotATestString()),
-              }),
+            otherwise: () => yup.array().of(yup.string().isNotATestString()),
             then: () =>
-              yup.object({
-                value: yup
-                  .array()
-                  .of(yup.string().isNotATestString().url('Add a valid link.'))
-                  .min(1)
-                  .required('Add a link.'),
-              }),
+              yup
+                .array()
+                .of(yup.string().isNotATestString().url('Add a valid link.'))
+                .min(1)
+                .required('Add a link.'),
           })
       : yup
           .string()
           .isNotATestString()
           .when('veteranFacing', {
             is: (value: string) => value === 'yes',
-            otherwise: () =>
-              yup.object({
-                value: yup.string().isNotATestString(),
-              }),
+            otherwise: () => yup.string().isNotATestString(),
             then: () =>
-              yup.object({
-                value: yup
-                  .string()
-                  .isNotATestString()
-                  .url('Add a valid link.')
-                  .required('Add a link.'),
-              }),
+              yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
           }),
     valueProvided: yup.string().isNotATestString().required('Describe the value of your app.'),
     vasiSystemName: yup
@@ -274,14 +197,8 @@ const validationSchema = [
       .isNotATestString()
       .when('apis', {
         is: (value: string[]) => includesInternalOnlyAPI(value),
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter the VASI system name.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter the VASI system name.'),
       }),
     veteranFacing: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     website: yup
@@ -289,14 +206,9 @@ const validationSchema = [
       .isNotATestString()
       .when('veteranFacing', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
         then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
-          }),
+          yup.string().isNotATestString().url('Add a valid link.').required('Add a link.'),
       }),
   }),
   yup.object().shape({
@@ -305,100 +217,52 @@ const validationSchema = [
       .isNotATestString()
       .when('storePIIOrPHI', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter a description.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter a description.'),
       }),
     centralizedBackendLog: yup
       .string()
       .isNotATestString()
       .when('distributingAPIKeysToCustomers', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Provide the naming convention.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Provide the naming convention.'),
       }),
     distributingAPIKeysToCustomers: yup.string().when('apis', {
       is: (value: string[]) => value.includes('benefits'),
-      otherwise: () =>
-        yup.object({
-          value: yup.string().oneOf(['yes', 'no']),
-        }),
-      then: () =>
-        yup.object({
-          value: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-        }),
+      otherwise: () => yup.string().oneOf(['yes', 'no']),
+      then: () => yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     }),
     exposeVeteranInformationToThirdParties: yup.string().when('apis', {
       is: (value: string[]) => includesOAuthAPI(value),
-      otherwise: () =>
-        yup.object({
-          value: yup.string().oneOf(['yes', 'no']),
-        }),
-      then: () =>
-        yup.object({
-          value: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-        }),
+      otherwise: () => yup.string().oneOf(['yes', 'no']),
+      then: () => yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     }),
     listedOnMyHealthApplication: yup.string().when('apis', {
       is: (value: string[]) => value.includes('health'),
-      otherwise: () =>
-        yup.object({
-          value: yup.string().oneOf(['yes', 'no']),
-        }),
-      then: () =>
-        yup.object({
-          value: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
-        }),
+      otherwise: () => yup.string().oneOf(['yes', 'no']),
+      then: () => yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     }),
     multipleReqSafeguards: yup
       .string()
       .isNotATestString()
       .when('storePIIOrPHI', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter a description.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter a description.'),
       }),
     namingConvention: yup
       .string()
       .isNotATestString()
       .when('distributingAPIKeysToCustomers', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Provide the naming convention.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Provide the naming convention.'),
       }),
     piiStorageMethod: yup.string().when('storePIIOrPHI', {
       is: (value: string) => value === 'yes',
-      otherwise: () =>
-        yup.object({
-          value: yup.string(),
-        }),
-      then: () =>
-        yup.object({
-          value: yup.string().required('Enter a description.'),
-        }),
+      otherwise: () => yup.string(),
+      then: () => yup.string().required('Enter a description.'),
     }),
     productionOrOAuthKeyCredentialStorage: yup
       .string()
@@ -409,14 +273,8 @@ const validationSchema = [
       .isNotATestString()
       .when('apis', {
         is: (value: string[]) => includesOAuthAPI(value),
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter a list of scopes.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter a list of scopes.'),
       }),
     storePIIOrPHI: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     thirdPartyInfoDescription: yup
@@ -424,28 +282,16 @@ const validationSchema = [
       .isNotATestString()
       .when('exposeVeteranInformationToThirdParties', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter a description.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter a description.'),
       }),
     vulnerabilityManagement: yup
       .string()
       .isNotATestString()
       .when('storePIIOrPHI', {
         is: (value: string) => value === 'yes',
-        otherwise: () =>
-          yup.object({
-            value: yup.string().isNotATestString(),
-          }),
-        then: () =>
-          yup.object({
-            value: yup.string().isNotATestString().required('Enter a description.'),
-          }),
+        otherwise: () => yup.string().isNotATestString(),
+        then: () => yup.string().isNotATestString().required('Enter a description.'),
       }),
   }),
   yup.object().shape({

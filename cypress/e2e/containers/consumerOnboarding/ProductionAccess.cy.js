@@ -19,7 +19,7 @@ function basicInformationFields(cy) {
   cy.get('#statusUpdateEmails\\.0').type('NotificationEmailAddress@va.gov');
   cy.get('#valueProvidedFormField').type('This is a testing description for an app.');
   cy.get('#monitizedVeteranInformationFormFieldyes').click();
-  cy.get('#monitizationExplanationFormField').type('This is an explaination for monetization.');
+  cy.get('#monitizationExplanationFormField').type('This is an explanation for monetization.');
   cy.get('#veteranFacingFormFieldyes').click();
   cy.get('#websiteFormField').type('https://developer.va.gov');
   cy.get('#signUpLinkFormField').type('https://developer.va.gov');
@@ -122,7 +122,7 @@ describe('Production Access Form', () => {
     basicInformationFields(cy);
 
     cy.get('#productionKeyCredentialStorageFormField').type(
-      'This is an explaination on how we intend to decure production keys.',
+      'This is an explanation on how we intend to secure production keys.',
     );
 
     cy.get('#main button[type="submit"]').click();
@@ -151,7 +151,7 @@ describe('Production Access Form', () => {
       .should('have.text', 'Step 2 of 2: Basic information');
     basicInformationFields(cy);
     cy.get('#productionKeyCredentialStorageFormField').type(
-      'This is an explaination on how we intend to decure production keys.',
+      'This is an explanation on how we intend to secure production keys.',
     );
     cy.get('#main button[type="submit"]').click();
 
