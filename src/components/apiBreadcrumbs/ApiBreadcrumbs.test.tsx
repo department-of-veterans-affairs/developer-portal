@@ -44,4 +44,19 @@ describe('APIBreadcrumbs', () => {
     );
     expect(screen.getByText(/Release Notes/)).toBeInTheDocument();
   });
+
+  it('should use localStorage exploreApisPath item as the value for Explore APIs path', () => {
+    localStorage.setItem('exploreApisPath', '/explore/va-benefits');
+    const api = {
+      name: 'Appeals Status API',
+      urlSlug: 'appeals-status',
+    } as APIDescription;
+    render(
+      <MemoryRouter initialEntries={['/explore/api/appeals-status']}>
+        <ApiBreadcrumbs api={api} />
+      </MemoryRouter>,
+    );
+    expect(screen.getByText(/Explore APIs/)).toHaveAttribute('href', '/explore/va-benefits');
+    localStorage.clear();
+  });
 });

@@ -181,6 +181,10 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
   }, [apisLoaded, authFilter, search, setApis, topicFilter]);
 
   useEffect(() => {
+    localStorage.setItem('exploreApisPath', location.pathname + location.search);
+  }, [location]);
+
+  useEffect(() => {
     const checkStickiness = (): void => {
       const apiFiltersElm = document.getElementById('api-filters') as HTMLElement;
       const footer = document.querySelector('footer') as HTMLElement;
