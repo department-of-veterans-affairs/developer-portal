@@ -1,6 +1,5 @@
 import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
-import { MockedRequest, rest, restContext } from 'msw';
-import { ResponseComposition, MockedResponse } from 'msw/lib/types/response';
+import { MockedRequest, MockedResponse, ResponseComposition, rest, restContext } from 'msw';
 import { setupServer } from 'msw/node';
 import * as React from 'react';
 import { Provider } from 'react-redux';
