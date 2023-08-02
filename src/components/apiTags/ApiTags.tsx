@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import { ExploreApiTag } from '../exploreApiCard/ExploreApiTags';
 import { VaInternalOnly } from '../../apiDefs/schema';
-import ApiTag, { tagTypes } from './ApiTag';
 
 const ApiTagsPropTypes = {
   openData: PropTypes.bool.isRequired,
@@ -16,8 +16,8 @@ const ApiTagsPropTypes = {
 type ApiTagsProps = PropTypes.InferProps<typeof ApiTagsPropTypes>;
 const ApiTags: React.FunctionComponent<ApiTagsProps> = (props: ApiTagsProps): JSX.Element => (
   <>
-    {props.vaInternalOnly && <ApiTag type={tagTypes.VAInternalOnly} />}
-    {props.openData && <ApiTag type={tagTypes.OpenData} />}
+    {props.vaInternalOnly && <ExploreApiTag showLock tagName="Restricted Access" />}
+    {props.openData && <ExploreApiTag tagName="Open Data" />}
   </>
 );
 

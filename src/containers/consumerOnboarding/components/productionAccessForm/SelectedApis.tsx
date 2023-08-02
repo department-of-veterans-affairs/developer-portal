@@ -46,12 +46,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
   return (
     <fieldset
       aria-labelledby="select-checkbox-api"
-      className={classNames(
-        containerClass,
-        'apply-api-select',
-        'vads-u-background-color--gray-lightest',
-        'vads-u-margin-top--2p5',
-      )}
+      className={classNames(containerClass, 'apply-api-select', 'vads-u-margin-top--2p5')}
     >
       <div className="vads-u-margin-top--2 apply-checkbox-labels">
         <legend
@@ -61,7 +56,6 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
             labelClass,
             'vads-u-font-size--base',
             'vads-u-margin-bottom--1p5',
-            'vads-u-padding-x--1p5',
           )}
         >
           Select the APIs for which you are requesting production access.{' '}
@@ -81,7 +75,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
             <FieldSet
               className={classNames('vads-u-margin-top--2')}
               legend="Standard APIs:"
-              legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
+              legendClassName={classNames('vads-u-font-size--lg')}
               name="standardApis"
             >
               <ApiCheckboxList apis={getAllKeyAuthApis()} authType="apikey" />
@@ -94,7 +88,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
                 authCodeApisBorderColorClass,
               )}
               legend="Authorization Code Grant APIs:"
-              legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
+              legendClassName={classNames('vads-u-font-size--lg')}
               name="oauthApis"
             >
               <ApiCheckboxList apis={getAllAuthCodeApis()} authType="acg" />
@@ -108,7 +102,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
                 ccgApisBorderColorClass,
               )}
               legend="Client Credentials Grant APIs:"
-              legendClassName={classNames('vads-u-font-size--lg', 'vads-u-padding-left--1p5')}
+              legendClassName={classNames('vads-u-font-size--lg')}
               name="ccgApis"
             >
               <ApiCheckboxList apis={getAllCCGApis()} authType="ccg" />

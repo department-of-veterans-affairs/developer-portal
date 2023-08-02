@@ -6,7 +6,7 @@ import { APIDescription } from '../../apiDefs/schema';
 import { generateFilterTags, TagDataProps } from '../../utils/generateFilterTags';
 import './ExploreApiTags.scss';
 
-const ExploreApiTag = ({ showLock, tagName }: TagDataProps): JSX.Element => (
+export const ExploreApiTag = ({ showLock, tagName }: TagDataProps): JSX.Element => (
   <span
     className={classNames(
       'explore-filter-tag',
