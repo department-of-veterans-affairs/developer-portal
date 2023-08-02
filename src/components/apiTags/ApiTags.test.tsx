@@ -5,7 +5,7 @@ import { VaInternalOnly } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
 import { ApiTags } from './ApiTags';
 
-const internalOnlyText = 'Internal VA use only';
+const internalOnlyText = 'Restricted Access';
 const openDataText = 'Open Data';
 
 describe('ApiTags', () => {
