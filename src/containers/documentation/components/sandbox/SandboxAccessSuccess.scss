@@ -1,0 +1,8 @@
+@import '../../../../styles/variables.scss';
+@import '~@department-of-veterans-affairs/formation/sass/full';
+
+span.oauth-client-id, 
+span.oauth-client-secret, 
+span.oauth-redirect-uri {
+  white-space: nowrap;
+}

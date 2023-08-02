@@ -35,21 +35,18 @@ export const getDocURL = createSelector(
     if (!versionInfo) {
       return initialDocUrl;
     }
-    return `${constants.OPEN_API_SPEC_HOST}${versionInfo.path}`;
+    return `${constants.OPEN_API_SPEC_HOST}${versionInfo.sf_path}`;
   },
 );
 
-export const getVersion = createSelector(
-  getVersionInfo,
-  (versionInfo: VersionMetadata | null) => {
-    if (!versionInfo) {
-      return constants.CURRENT_VERSION_IDENTIFIER;
-    }
-    return versionInfo.status === currentVersionStatus
-      ? constants.CURRENT_VERSION_IDENTIFIER
-      : versionInfo.version;
-  },
-);
+export const getVersion = createSelector(getVersionInfo, (versionInfo: VersionMetadata | null) => {
+  if (!versionInfo) {
+    return constants.CURRENT_VERSION_IDENTIFIER;
+  }
+  return versionInfo.status === currentVersionStatus
+    ? constants.CURRENT_VERSION_IDENTIFIER
+    : versionInfo.version;
+});
 
 export const getVersionNumber = createSelector(
   getVersionInfo,

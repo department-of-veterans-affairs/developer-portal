@@ -1197,11 +1197,6 @@
         "type": "apiKey",
         "name": "apikey",
         "in": "header"
-      },
-      "openId": {
-        "type": "openIdConnect",
-        "name": "openId",
-        "openIdConnectUrl": "http://not.a.website"
       }
     }
   },
@@ -2888,10 +2883,5 @@
         ]
       }
     }
-  },
-  "security": [
-    {
-      "openId": []
-    }
-  ]
+  }
 }

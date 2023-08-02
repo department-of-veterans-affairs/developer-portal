@@ -2,7 +2,7 @@
 /* eslint-disable complexity */
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
 import { TextField, FieldSet, CheckboxRadioField } from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { includesOAuthAPI } from '../../../../apiDefs/query';
@@ -28,21 +28,18 @@ const TechnicalInformation: FC = () => {
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-left--4px' : '';
   const keysToCustomersBorderColorClass =
     distributingAPIKeysToCustomers === 'yes' ? 'vads-u-border-color--primary-alt-light' : '';
-  const firstInputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    firstInputRef.current?.focus();
-  }, []);
 
   return (
-    <>
-      <h3>Technical information</h3>
+    <fieldset>
+      <legend>
+        <h3 className="vads-u-margin-bottom--0">Technical information</h3>
+      </legend>
       <TextField
         as="textarea"
         label="We require you to store your production key and/or OAuth credentials securely so as not to risk unauthorized exposure. How and where do you provide this?"
         name="productionOrOAuthKeyCredentialStorage"
         required
         className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
-        innerRef={firstInputRef}
       />
       <FieldSet
         className={classNames(
@@ -62,24 +59,28 @@ const TechnicalInformation: FC = () => {
         {storePIIOrPHI === 'yes' && (
           <div className="vads-u-margin-left--4">
             <TextField
+              as="textarea"
               label="Describe why this information is stored, and how it is securely stored/encrypted."
               name="piiStorageMethod"
               className="vads-u-margin-top--4"
               required
             />
             <TextField
+              as="textarea"
               label="Describe the safeguards you have in place to prevent multiple, unnecessary requests."
               name="multipleReqSafeguards"
               className="vads-u-margin-top--4"
               required
             />
             <TextField
+              as="textarea"
               label="Describe your breach management process."
               name="breachManagementProcess"
               className="vads-u-margin-top--4"
               required
             />
             <TextField
+              as="textarea"
               label="Provide information about your vulnerability management and patch process."
               name="vulnerabilityManagement"
               className="vads-u-margin-top--4"
@@ -98,7 +99,7 @@ const TechnicalInformation: FC = () => {
               veteransInfoBorderClass,
               veteransInfoBorderColorClass,
             )}
-            legend="Does your application expose Veterans’ health, claims, disabilities, or service history data to any third parties, through its own APIs or otherwise?"
+            legend="Does your application expose VA patient health, claims, disabilities, or service history data to any third parties, through its own APIs or otherwise?"
             legendClassName="vads-u-font-weight--normal vads-u-font-size--base"
             name="exposeVeteranInformationToThirdParties"
             required
@@ -238,7 +239,7 @@ const TechnicalInformation: FC = () => {
           />
         </FieldSet>
       )}
-    </>
+    </fieldset>
   );
 };
 

@@ -7,7 +7,6 @@ import {
   CONSUMER_DEMO_PATH,
   CONSUMER_PATH,
   CONSUMER_PROD_PATH,
-  CONSUMER_SANDBOX_PATH,
 } from '../../types/constants/paths';
 import ConsumerOnboardingRoot from './ConsumerOnboardingRoot';
 
@@ -16,7 +15,7 @@ describe('ConsumerOnboardingRoot', () => {
     render(
       <MemoryRouter initialEntries={[CONSUMER_PATH]}>
         <ConsumerOnboardingRoot />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 
@@ -27,8 +26,7 @@ describe('ConsumerOnboardingRoot', () => {
     });
 
     it.each([
-      ['Overview', CONSUMER_PATH],
-      ['Request sandbox access', CONSUMER_SANDBOX_PATH],
+      ['API Consumer onboarding', CONSUMER_PATH],
       ['Request production access', CONSUMER_PROD_PATH],
       ['Prepare for the demo', CONSUMER_DEMO_PATH],
       ['Working with our APIs', CONSUMER_APIS_PATH],
@@ -42,7 +40,7 @@ describe('ConsumerOnboardingRoot', () => {
 
   describe('pages', () => {
     it('renders the overview page', async () => {
-      const link = screen.getByRole('link', { name: 'Overview' });
+      const link = screen.getByRole('link', { name: 'API Consumer onboarding' });
       userEvent.click(link);
 
       const heading = await screen.findByRole('heading', { name: 'API Consumer Onboarding' });

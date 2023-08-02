@@ -13,7 +13,8 @@ export interface ProductionAccessRequest {
   valueProvided: string;
   businessModel?: string;
   policyDocuments?: string[];
-  phoneNumber: string;
+  phoneNumber?: string;
+  appName: string;
   apis?: string;
   monitizedVeteranInformation: boolean;
   monitizationExplanation?: string;
@@ -22,7 +23,6 @@ export interface ProductionAccessRequest {
   signUpLink?: string[];
   supportLink?: string[];
   platforms?: string;
-  veteranFacingDescription?: string;
   vasiSystemName?: string;
   storePIIOrPHI: boolean;
   piiStorageMethod?: string;
@@ -38,4 +38,5 @@ export interface ProductionAccessRequest {
   listedOnMyHealthApplication?: boolean;
   productionKeyCredentialStorage?: string;
   productionOrOAuthKeyCredentialStorage?: string;
+  is508Compliant: boolean;
 }

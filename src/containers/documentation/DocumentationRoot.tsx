@@ -1,123 +1,144 @@
 import * as React from 'react';
-import { Redirect } from 'react-router';
-import { Route, Switch } from 'react-router-dom';
-
-import { getApiCategoryOrder, getApiDefinitions } from '../../apiDefs/query';
-import { APICategory, APIDescription } from '../../apiDefs/schema';
-import { ContentWithNav, SideNavEntry } from '../../components';
-import { Flag } from '../../flags';
-import {
-  CURRENT_VERSION_IDENTIFIER,
-  FLAG_CATEGORIES,
-  FLAG_HOSTED_APIS,
-} from '../../types/constants';
+import { Route, Switch, useLocation, useParams } from 'react-router-dom';
+import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
+import { APIDescription } from '../../apiDefs/schema';
+import { ApiAlerts, ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../components';
+import { APIUrlSlug } from '../../types';
+import { apiLoadingState } from '../../types/constants';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
+import ErrorPage404 from '../ErrorPage404';
+import { ReleaseNotes } from './ReleaseNotes';
+import RequestSandboxAccess from './RequestSandboxAccess';
 import ApiPage from './ApiPage';
-import { AuthorizationDocs } from './AuthorizationDocs';
-import CategoryPage from './CategoryPage';
-import DocumentationOverview from './DocumentationOverview';
-import QuickstartPage from './QuickstartPage';
+import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
+import { ClientCredentialsGrantDocs } from './ClientCredentialsGrant/ClientCredentialsGrantDocs';
+import ApiOverviewPage from './ApiOverviewPage';
+import { ExploreRoot } from './ExploreRoot';
 
 import './Documentation.scss';
 
-const SideNavApiEntry = (apiCategoryKey: string, api: APIDescription): JSX.Element => (
-  <Flag key={api.urlFragment} name={[FLAG_HOSTED_APIS, api.urlFragment]}>
-    <SideNavEntry
-      key={api.urlFragment}
-      exact
-      to={`/explore/${apiCategoryKey}/docs/${api.urlFragment}?version=${CURRENT_VERSION_IDENTIFIER}`}
-      name={
-        <>
-          {api.name}
-          {api.vaInternalOnly && (
-            <small className="vads-u-display--block">Internal VA use only.</small>
-          )}
-        </>
-      }
-      subNavLevel={1}
-    />
-  </Flag>
-);
+interface ExploreSideNavProps {
+  api: APIDescription;
+}
 
-const ExploreSideNav = (): JSX.Element => {
-  const apiCategoryOrder: string[] = getApiCategoryOrder();
-  const apiDefinitions = getApiDefinitions();
+export interface ApiRequiredProps {
+  api: APIDescription;
+}
 
+const getApi = (apiName?: string): APIDescription | null => {
+  if (!apiName) {
+    return null;
+  }
+
+  return lookupApiBySlug(apiName);
+};
+export { getApi };
+
+const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
+  const { api } = props;
   return (
     <>
-      <SideNavEntry key="all" exact to="/explore" name="Overview" />
+      <SideNavEntry key="all" exact to={`/explore/api/${api.urlSlug}`} name={api.name} />
+      <SideNavEntry exact to={`/explore/api/${api.urlSlug}/docs`} name="Docs" subNavLevel={1} />
+      {!!api.oAuthTypes?.includes('AuthorizationCodeGrant') && (
+        <SideNavEntry
+          exact
+          name="Authorization Code Grant"
+          to={`/explore/api/${api.urlSlug}/authorization-code`}
+          subNavLevel={1}
+        />
+      )}
+      {!!api.oAuthTypes?.includes('ClientCredentialsGrant') && (
+        <SideNavEntry
+          exact
+          to={`/explore/api/${api.urlSlug}/client-credentials`}
+          name="Client Credentials Grant"
+          subNavLevel={1}
+        />
+      )}
       <SideNavEntry
-        key="authorization"
-        to="/explore/authorization"
-        name="Authorization"
-        forceAriaCurrent
+        exact
+        to={`/explore/api/${api.urlSlug}/release-notes`}
+        name="Release notes"
+        subNavLevel={1}
       />
-      {apiCategoryOrder.map((categoryKey: string) => {
-        const apiCategory: APICategory = apiDefinitions[categoryKey];
-        return (
-          <Flag name={[FLAG_CATEGORIES, categoryKey]} key={categoryKey}>
-            <SideNavEntry
-              to={`/explore/${categoryKey}`}
-              id={`side-nav-category-link-${categoryKey}`}
-              className="side-nav-category-link"
-              name={apiCategory.name}
-            >
-              {apiCategory.content.quickstart && (
-                <SideNavEntry
-                  exact
-                  to={`/explore/${categoryKey}/docs/quickstart`}
-                  name="Quickstart"
-                  subNavLevel={1}
-                />
-              )}
-              {apiCategory.apis.map((api: APIDescription) => SideNavApiEntry(categoryKey, api))}
-            </SideNavEntry>
-          </Flag>
-        );
-      })}
+      <SideNavEntry
+        exact
+        to={`/explore/api/${api.urlSlug}/sandbox-access`}
+        name="Sandbox access"
+        subNavLevel={1}
+      />
     </>
   );
 };
 
-const oldRouteToNew = [
-  {
-    from: '/explore/verification/docs/disability_rating',
-    to: '/explore/verification/docs/veteran_verification',
-  },
-  {
-    from: '/explore/verification/docs/service_history',
-    to: '/explore/verification/docs/veteran_verification',
-  },
-  {
-    from: '/explore/benefits/docs/appeals',
-    to: '/explore/appeals/docs/appeals',
-  },
-  {
-    from: '/explore/verification/docs/authorization',
-    to: '/explore/authorization?api=veteran_verification',
-  },
-];
+const DocumentationRoot = (): JSX.Element => {
+  const params = useParams<APIUrlSlug>();
+  const location = useLocation();
+  if (!params.urlSlug) {
+    return <ExploreRoot />;
+  }
+  const api = lookupApiBySlug(params.urlSlug);
 
-const DocumentationRoot = (): JSX.Element => (
-  <ContentWithNav
-    nav={<ExploreSideNav />}
-    content={
-      <Switch>
-        {oldRouteToNew.map(routes => (
-          <Redirect key={routes.from} exact from={routes.from} to={routes.to} />
-        ))}
-        <Route path="/explore/authorization" component={AuthorizationDocs} exact />
-        <Route exact path="/explore/" component={DocumentationOverview} />
-        <Route exact path="/explore/:apiCategoryKey" component={CategoryPage} />
-        <Route exact path="/explore/:apiCategoryKey/docs/authorization">
-          <Redirect to="/explore/authorization" />
-        </Route>
-        <Route exact path="/explore/:apiCategoryKey/docs/quickstart" component={QuickstartPage} />
-        <Route exact path="/explore/:apiCategoryKey/docs/:apiName" component={ApiPage} />
-      </Switch>
-    }
-    navAriaLabel="API Docs Side Nav"
-    className="documentation"
-  />
-);
+  if (
+    getApisLoadedState() === apiLoadingState.IN_PROGRESS ||
+    getApisLoadedState() === apiLoadingState.ERROR
+  ) {
+    return <ApisLoader />;
+  }
+  if (!api) {
+    return <ErrorPage404 />;
+  }
+  if (
+    location.pathname.endsWith('authorization-code') &&
+    !api.oAuthTypes?.includes('AuthorizationCodeGrant')
+  ) {
+    return <ErrorPage404 />;
+  }
+  if (
+    location.pathname.endsWith('client-credentials') &&
+    !api.oAuthTypes?.includes('ClientCredentialsGrant')
+  ) {
+    return <ErrorPage404 />;
+  }
+  return (
+    <>
+      <ApiBreadcrumbs api={api} />
+      <ApiAlerts />
+      <ContentWithNav
+        fullWidth
+        nav={<ExploreSideNav api={api} />}
+        content={
+          <Switch>
+            <Route exact path="/explore/api/:urlSlug" component={ApiOverviewPage} />
+            <Route exact path="/explore/api/:urlSlug/docs" component={ApiPage} />
+            {api.oAuthTypes?.includes('AuthorizationCodeGrant') && (
+              <Route
+                exact
+                path="/explore/api/:urlSlug/authorization-code"
+                component={AuthorizationCodeGrantDocs}
+              />
+            )}
+            {api.oAuthTypes?.includes('ClientCredentialsGrant') && (
+              <Route
+                exact
+                path="/explore/api/:urlSlug/client-credentials"
+                component={ClientCredentialsGrantDocs}
+              />
+            )}
+            <Route exact path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
+            <Route
+              exact
+              path="/explore/api/:urlSlug/sandbox-access"
+              component={RequestSandboxAccess}
+            />
+          </Switch>
+        }
+        navAriaLabel="API Docs Side Nav"
+        className="documentation"
+      />
+    </>
+  );
+};
 
 export default DocumentationRoot;

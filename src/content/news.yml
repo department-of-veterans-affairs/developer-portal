@@ -1,9 +1,18 @@
-sections: 
+sections:
   - title: News releases
     description: Press releases from the Department of Veterans Affairs related to Lighthouse.
     media: false
     callToAction: Read the news releases
     items:
+      - date: October 2021
+        title: Mobile apps make it easier for Veterans to manage their health
+        url: https://blogs.va.gov/VAntage/96102/mobile-apps-make-it-easier-for-veterans-to-manage-their-health/
+      - date: May 2021
+        title: VA's Commitment to Ethics Safeguards Veterans' Data, Including Mobile Apps
+        url: https://www.oit.va.gov/news/article/?read=vas-commitment-to-ethics-safeguards-veterans-data-including-mobile-apps
+      - date: January 2021
+        title: Lighthouse APIs Provide Solutions to Improve the Veteran Experience
+        url: https://www.oit.va.gov/news/article/?read=lighthouse-apis-provide-solutions-to-improve-the-veteran-experience
       - date: April 2020
         title: VA health app now available to Veterans across all mobile and web platforms
         url: https://www.va.gov/opa/pressrel/pressrelease.cfm?id=5430
@@ -30,6 +39,22 @@ sections:
     media: false
     callToAction: Read the articles
     items:
+      - date: August 2022
+        title: Mobile apps giving Veterans more control over their health
+        source: VA News
+        url: https://news.va.gov/104844/mobile-apps-giving-veterans-more-control-over-their-health/
+      - date: April 2022
+        title: CLEAR app lets Veterans carry their vaccine and health records anywhere
+        source: VA News
+        url: https://news.va.gov/102555/clear-app-lets-veterans-carry-their-vaccine-and-health-records-anywhere/
+      - date: February 2022
+        title: Curious about QR codes and why they are useful?
+        source: VA News
+        url: https://news.va.gov/100169/curious-about-qr-codes-and-why-they-are-useful/
+      - date: October 2021
+        title: Third-Party Apps Make It Easier for Veterans to Manage Their Health
+        source: DigitalVA
+        url: https://digital.va.gov/general/third-party-apps-make-it-easier-for-veterans-to-manage-their-health/
       - date: November 2019
         title: End User in Focus for Evolving Digital Services at VA
         source: GovernmentCIO Media & Research
@@ -41,7 +66,7 @@ sections:
       - date: September 2019
         source: FCW
         title: Doing digital differently at VA
-        url: https://fcw.com/articles/2019/09/12/comment-doing-digital-differently-at-va-gfrerer.aspx
+        url: https://fcw.com/digital-government/2019/09/doing-digital-differently-at-va/210908/
       - date: August 2019
         source: FedHealthIT
         title: VA’s System of Systems – Getting from There to Here and Beyond
@@ -69,7 +94,7 @@ sections:
       - date: July 2018
         source: GCN.com
         title: VA releases Lighthouse 'API-first' RFI
-        url: https://gcn.com/articles/2018/07/30/va-lighthouse-api.aspx 
+        url: https://gcn.com/2018/07/va-releases-lighthouse-api-first-rfi/299831/
       - date: June 2018
         source: Healthcare IT News
         title: VA tackles interoperability, massive data stores with open FHIR API project
@@ -87,10 +112,26 @@ sections:
     media: true
     callToAction: Access digital media
     items:
+      - date: January 2022
+        source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
+        title: Find Apps You Can Use
+        url: https://www.youtube.com/watch?v=Q9WFSWuptzA
+      - date: June 2021
+        source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
+        title: VA Medical Center Website Upgrade
+        url: https://www.youtube.com/watch?v=nxGscKMiMiU
+      - date: October 2020
+        source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
+        title: Driving Digital Transformation at VA
+        url: https://www.youtube.com/watch?v=uqdvUSyyv2A
+      - date: March 2020
+        source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
+        title: "Lighthouse: VA's API Management Platform"
+        url: https://www.youtube.com/watch?v=EkpaYWKiA6A
       - date: January 2020
         source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
         title: Authentication Methods for Mobile Apps and VA.gov
-        url:  https://www.youtube.com/watch?v=jmnH42Qse48
+        url: https://www.youtube.com/watch?v=jmnH42Qse48
       - date: August 2019
         source: U.S. Department of Veterans Affairs, Office of Information and Technology (Video)
         title: Discover VA's Health APIs
@@ -103,7 +144,3 @@ sections:
         source: HIMMS - MobiHealthNews (Video)
         title: How the VA's Lighthouse initiative is leveraging the developer community
         url: https://www.mobihealthnews.com/content/how-vas-lighthouse-initiative-leveraging-developer-community
-      - date: May 2018
-        source: HIMMS - YouTube (Video)
-        title: VA The Digital Veteran Platform Lighthouse
-        url: https://www.youtube.com/watch?v=tS2zHheRpqw

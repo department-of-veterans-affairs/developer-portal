@@ -1,7 +1,15 @@
+import classNames from 'classnames';
 import * as React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { AccordionPanelContent, GroupedAccordions, PageHeader } from '../../components';
+import { PageHeader } from '../../components';
+import toHtmlId from '../../toHtmlId';
+import { CONSUMER_PROD_PATH } from '../../types/constants/paths';
+
+interface AccordionPanelContent {
+  readonly body: string | JSX.Element;
+  readonly title: string;
+}
 
 const generalQuestions: SupportQuestion[] = [
   {
@@ -10,9 +18,8 @@ const generalQuestions: SupportQuestion[] = [
         No - this is a support page for software developers utilizing the Veterans Affairs (VA)
         Application Programming Interface (API). If you are a Veteran seeking assistance, please
         visit the <a href="http://www.va.gov">U.S. Department of Veterans Affairs website</a> to
-        access and manage your VA benefits and health care. There are also helpful reference links
-        and Q&amp;A at the VA Inquiry Routing &amp; Information System{' '}
-        <a href="https://iris.custhelp.va.gov/app/answers/list">(IRIS)</a>.
+        access and manage your VA benefits and health care. You may also ask your question at Ask VA{' '}
+        <a href="https://ask.va.gov/">(AVA)</a>.
       </p>
     ),
     question: 'Is this where I apply for VA benefits and access to my health records?',
@@ -43,10 +50,12 @@ const developmentQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
-        Click to <Link to="/apply">Get Started</Link> by applying for an API key. Note that you will
-        need to provide your <Link to="/oauth">OAuth</Link> Redirect URI if you are applying for a
-        key to the Health, Claims, or Veteran Verification APIs. You are also required to agree to
-        the <Link to="/terms-of-service">VA API Terms of Service</Link> in order to obtain a key.
+        Get started by requesting access credentials from an API&apos;s overview page.{' '}
+        <Link to="/explore">Explore our APIs</Link>. <br />
+        Note that you will need to provide your <Link to="/oauth">OAuth</Link> Redirect URI if you
+        are applying for a key to the Health, Claims, or Veteran Verification APIs. You are also
+        required to agree to the <Link to="/terms-of-service">VA API Terms of Service</Link> in
+        order to obtain a key.
       </p>
     ),
     question: 'Where do I apply for dev access?',
@@ -54,9 +63,9 @@ const developmentQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
-        Visit the <Link to="/go-live">Path to Production</Link> page for instructions on &quot;going
-        live.&quot; Schedule a demo presentation of your app by using the Contact Us, or by
-        submitting a request via the GitHub links.
+        Visit the <Link to={CONSUMER_PROD_PATH}>Path to Production</Link> page for instructions on
+        &quot;going live.&quot; Schedule a demo presentation of your app by using the Contact Us, or
+        by submitting a request via the GitHub links.
       </p>
     ),
     question: 'How do we move forward with production API access once dev is complete?',
@@ -75,8 +84,8 @@ const developmentQuestions: SupportQuestion[] = [
     answer: (
       <p>
         Yes! You will receive your API key immediately after sign up. That is all you need to
-        proceed - all relevant information should be contained in the{' '}
-        <Link to="/explore">API documentation</Link>.
+        proceed - all relevant information can be found within an individual API&apos;s
+        documentation. <Link to="/explore">Find an API</Link>.
       </p>
     ),
     question: 'Can I start using the API as soon as I sign up?',
@@ -102,51 +111,13 @@ const developmentQuestions: SupportQuestion[] = [
   {
     answer: (
       <p>
-        Please visit the <Link to="/explore">API documentation</Link> for more information and
-        example use cases. There are also some real-world examples in the articles and press
-        releases linked on our <Link to="/news">News</Link> page.
+        Use cases and other information can be found within an individual API&apos;s documentation.{' '}
+        <Link to="/explore">Find an API</Link>. There are also some real-world examples in the
+        articles and press releases linked on our <Link to="/about/news">News</Link> page.
       </p>
     ),
     question:
       'What kind of data can I get from the APIs? Do you have any example scenarios for Health, Benefits, Facilities or Veteran Verification?',
-  },
-  {
-    answer: (
-      <React.Fragment>
-        <p>
-          The Address Validation API is for internal VA use only and is not listed on the developer
-          portal. To begin development in the sandbox environment, request a developer{' '}
-          <Link to="/apply">API key for the Facilities API</Link>. Once finished, send an email to{' '}
-          <a
-            href="mailto:api@va.gov?subject=Request%20for%20Sandbox%20Access%20to%20Address%20Validation%20API"
-            target="_BLANK"
-            rel="noopener noreferrer"
-          >
-            api@va.gov
-          </a>{' '}
-          with the subject line &quot;Request for Sandbox Access to Address Validation API.&quot; In
-          the email, include the following:
-        </p>
-        <ul>
-          <li>Email address used for the sandbox Facilities API key request</li>
-          <li>Name of team/project</li>
-          <li>Consumer name (if different from team/project)</li>
-          <li>Expected call volume (our default rate limit is 60 requests per minute)</li>
-          <li>Desired production date</li>
-          <li>
-            Any IP addresses or subnets <em>outside the VA intranet</em> from which you require
-            developer access (permitted in sandbox only)
-          </li>
-          <li>
-            When indicating your desired production date, note that we require at least one
-            week&apos;s notice before a demo can be scheduled, and that it may take up to a week
-            after the demo to grant you the sandbox key for the Address Validation API.
-          </li>
-        </ul>
-        <p>We will respond to your request within 2 business days.</p>
-      </React.Fragment>
-    ),
-    question: 'How do I get sandbox access to the Address Validation API (VA internal only)?',
   },
 ];
 
@@ -180,13 +151,38 @@ interface SupportQuestion {
   readonly question: string;
 }
 
-const SupportQuestions = (props: SupportQuestionsProps): JSX.Element => {
+export const SupportQuestions = (props: SupportQuestionsProps): JSX.Element => {
   const content: AccordionPanelContent[] = props.questions.map((q: SupportQuestion) => ({
     body: q.answer,
     title: q.question,
   }));
+  const headingId = `${toHtmlId(props.title)}-accordions`;
 
-  return <GroupedAccordions panelContents={content} title={props.title} />;
+  return (
+    <section
+      className={classNames('va-grouped-accordion', 'vads-u-margin-bottom--2p5')}
+      aria-labelledby={headingId}
+    >
+      <div
+        className={classNames(
+          'vads-u-display--flex',
+          'vads-u-justify-content--space-between',
+          'vads-u-align-items--center',
+        )}
+      >
+        <h2 id={headingId} className="vads-u-font-size--lg">
+          {props.title}
+        </h2>
+      </div>
+      <va-accordion>
+        {content.map((c: AccordionPanelContent) => (
+          <va-accordion-item header={c.title} key={c.title}>
+            {c.body}
+          </va-accordion-item>
+        ))}
+      </va-accordion>
+    </section>
+  );
 };
 
 const SupportFAQ: () => JSX.Element = () => (

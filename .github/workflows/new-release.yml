@@ -1,0 +1,145 @@
+name: Create new Developer Portal release package
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    outputs:
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Install dependencies
+        run: npm ci
+
+  release_builds:
+    needs: [install]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: ['dev', 'staging', 'production']
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Print env
+        run: printenv
+
+      - name: Run Build
+        env:
+          NODE_ENV: production
+          BUILD_ENV: ${{matrix.environment}}
+          REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
+        run: npm run build $BUILD_ENV
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{secrets.AWS_REGION}}
+          role-to-assume: ${{secrets.AWS_ROLE_ARN}}
+          role-duration-seconds: 1200
+          role-session-name: GitHubActions
+
+      - name: Create archive tarballs
+        env:
+          BUILD_ENV: ${{matrix.environment}}
+        run: |
+          tar -C build/$BUILD_ENV -cf build/$BUILD_ENV.tar.bz2 .
+
+      - name: Upload to archive s3 bucket
+        env:
+          BUILD_ENV: ${{matrix.environment}}
+          S3_ARCHIVE_BUCKET: ${{secrets.AWS_S3_ARCHIVE_BUCKET}}
+        run: |
+          SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
+          aws s3 cp --no-progress --acl public-read build/$BUILD_ENV.tar.bz2 s3://$S3_ARCHIVE_BUCKET/$SHORT_SHA/developer-portal-$BUILD_ENV.tar.bz2
+
+  create_release:
+    runs-on: ubuntu-latest
+    needs: [release_builds]
+    steps:
+      - id: latest_release
+        name: Get latest release with tag
+        run: |
+          LATEST_RELEASE=$(curl -s https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq '.tag_name' | sed 's/\"//g')
+          echo $LATEST_RELEASE
+          echo "tag=$LATEST_RELEASE" >> $GITHUB_OUTPUT
+
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{steps.latest_release.outputs.tag}}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{secrets.AWS_REGION}}
+          role-to-assume: ${{secrets.AWS_ROLE_ARN}}
+          role-duration-seconds: 1200
+          role-session-name: GitHubActions
+
+      - name: Download archives
+        env:
+          S3_ARCHIVE_BUCKET: ${{secrets.AWS_S3_ARCHIVE_BUCKET}}
+        run: |
+          SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
+          mkdir release
+          aws s3 cp --no-progress --recursive s3://$S3_ARCHIVE_BUCKET/$SHORT_SHA/ release/
+
+      - name: Create the release
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        run: |
+          RELEASE_TITLE=`gh api /repos/department-of-veterans-affairs/developer-portal/commits/$GITHUB_SHA | jq -r '.commit.message' | head -1`
+          # If the commit message doesn't include the PR number at the end, append it.
+          if ! [[ $RELEASE_TITLE =~ \(\#[0-9]\) ]]; then
+            echo "PR number missing. This will append it to the release title."
+            PR_NUMBER=`gh api -X GET search/issues -f q="$GITHUB_SHA" | jq -r '.items[0].number'`
+            RELEASE_TITLE="$RELEASE_TITLE (#$PR_NUMBER)"
+          fi
+          NEW_TAG=$(git tag --sort=-creatordate | head -1 | awk -F. -v OFS=. '{$NF++;print}')
+          VERSION=${NEW_TAG#"developer-portal/v"}
+          gh release create $NEW_TAG --title="$RELEASE_TITLE"
+          for env in 'dev' 'staging' 'production' ; do
+            mv "release/developer-portal-${env}.tar.bz2" "release/developer-portal-${env}-${VERSION}.tar.bz2"
+            gh release upload ${NEW_TAG} "release/developer-portal-${env}-${VERSION}.tar.bz2#${NEW_TAG}_${env}.tar.bz2"
+            echo "${env} artifact uploaded"
+          done
+
+      - name: Build dev and staging
+        run: |
+          aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override name=RELEASE,value=${NEW_TAG}

@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "display_name": "VA Forms API",
+    "display_description": "Look up VA forms and check for new versions.",
+    "signup_id": "vaForms",
+    "versions": [
+      {
+        "version": "v0",
+        "internal_only": false,
+        "status": "Current Version",
+        "path": "/internal/docs/forms/v0/openapi.json",
+        "sf_path": "/internal/docs/forms/v0/openapi.json",
+        "intended_use": "open-data",
+        "security": [
+          "apikey"
+        ],
+        "security_api_key": "va_forms",
+        "security_oauth": [],
+        "public_apply_page": true
+      }
+    ]
+  }
+}

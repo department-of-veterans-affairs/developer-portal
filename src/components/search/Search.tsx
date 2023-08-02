@@ -22,7 +22,6 @@ const Search = (props: SearchTypes): JSX.Element => {
         'vads-u-flex-wrap--nowrap',
         'vads-u-align-items--center',
         'va-api-search-wrapper',
-        { 'va-api-search-form--inverse-color': !inMenu },
         className,
       )}
     >
@@ -36,7 +35,6 @@ const Search = (props: SearchTypes): JSX.Element => {
           'vads-u-flex-wrap--nowrap',
           'vads-u-width--full',
           'medium-screen:vads-u-width--auto',
-          { 'va-api-search-form--transparent-submit': !inMenu },
         )}
       >
         <input name="utf8" type="hidden" value="&#x2713;" />
@@ -49,33 +47,19 @@ const Search = (props: SearchTypes): JSX.Element => {
             'va-api-search-autocomplete',
             'vads-u-margin-y--0',
             'vads-u-padding--1',
+            'vads-u-color--base',
           )}
-          placeholder={inMenu ? '' : 'Search...'}
+          placeholder={inMenu ? 'I’m looking for...' : 'Begin typing your search term here'}
           aria-label="Search developer.va.gov"
         />
         <button
           type="submit"
           name="commit"
-          className={classNames(
-            inMenu ? [
-              'va-api-search-submit',
-              'vads-u-margin--0',
-              'vads-u-padding--0',
-            ] : [
-              'vads-u-margin-bottom--0',
-              'vads-u-margin-left--neg5',
-              'vads-u-margin-right--0',
-              'vads-u-margin-top--0',
-              'vads-u-padding--0',
-            ],
-          )}
+          className={classNames('va-api-search-submit', 'vads-u-margin--0', 'vads-u-padding--1p5')}
           value="Search"
           aria-label="Search"
         >
-          <FontAwesomeIcon
-            className={classNames({ 'va-api-search-icon': !inMenu })}
-            icon={faSearch}
-          />
+          <FontAwesomeIcon className="va-api-search-icon" icon={faSearch} />
         </button>
       </form>
     </div>

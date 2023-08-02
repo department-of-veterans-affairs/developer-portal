@@ -12,8 +12,6 @@
       padding: 1rem;
       background-color: #eeeeee;
       border: 1px solid #5b616b;
-      border-top-style: none;
-      border-bottom-style: none;
     }
     &:last-child {
       td {
@@ -45,6 +43,9 @@
 .opblock {
   .opblock-body {
     background-color: white;
+    pre span.linenumber {
+      color: #AEB0B5 !important;
+    }
     .opblock-section-header {
       padding: 0 !important;
       box-shadow: none !important;
@@ -83,6 +84,16 @@
       min-width: unset !important;
       max-width: 100%;
     }
+    .va-api-curl-form select {
+      min-width: 230px !important;
+      max-width: 46rem;
+    }
+  }
+
+  &.opblock-deprecated {
+    .opblock-summary-method {
+      color: $color-black !important;
+    }
   }
 }
 .swagger-ui .renderedMarkdown {
@@ -107,4 +118,8 @@
       width: auto;
     }
   }
+}
+
+.swagger-ui table.model tbody tr td:first-of-type {
+  word-break: break-all;
 }

@@ -13,49 +13,109 @@
  * - schema.ts
  */
 
-import apiDefs, { apiCategoryOrder } from './data/categories';
-import { isApiDeactivated } from './deprecated';
+import store from '../store';
+import { apiLoadingState } from '../types/constants';
 import { isHostedApiEnabled } from './env';
-import { APICategories, APICategory, APIDescription } from './schema';
+import { isApiDeactivated } from './deprecated';
+import { APICategories, APICategory, APIDescription, VaInternalOnly } from './schema';
+import * as rootGetApiDefinitions from './getApiDefinitions';
 
-const getApiDefinitions = (): APICategories => apiDefs;
-const getApiCategoryOrder = (): string[] => apiCategoryOrder;
+const getApiDefinitions = (): APICategories => rootGetApiDefinitions.getApiDefinitions();
 
-const getActiveApiDefinitions = (): APICategories => {
-  const output: APICategories = {};
-  const definitions = getApiDefinitions();
-  Object.keys(definitions).forEach((key: string) => {
-    const apis: APIDescription[] = definitions[key].apis.filter(
+const getApisLoadedState = (): string => {
+  const state = store.getState();
+  if (state.apiList.loaded) {
+    return apiLoadingState.LOADED;
+  } else if (state.apiList.error) {
+    return apiLoadingState.ERROR;
+  } else {
+    return apiLoadingState.IN_PROGRESS;
+  }
+};
+
+const getApisLoaded = (): boolean => {
+  const state = store.getState();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
+  return state.apiList.loaded;
+};
+
+const lookupApiCategoryBySlug = (urlSlug: string): APICategory | null => {
+  const categories: APICategories = rootGetApiDefinitions.getApiDefinitions();
+  const hasMatchingIdentifier = (category: APICategory): boolean => category.urlSlug === urlSlug;
+  return Object.values(categories).find(hasMatchingIdentifier) ?? null;
+};
+
+const lookupApiCategory = (categoryKey: string): APICategory =>
+  rootGetApiDefinitions.getApiDefinitions()[categoryKey];
+
+const countActiveApisByCategory = (categoryKey: string): number => {
+  const activeApis = rootGetApiDefinitions
+    .getApiDefinitions()
+    [categoryKey].apis.filter(
       (api: APIDescription) =>
         isHostedApiEnabled(api.urlFragment, api.enabledByDefault) && !isApiDeactivated(api),
     );
-    output[key] = {
-      ...definitions[key],
-      apis,
-    };
-  });
+  return activeApis.length;
+};
 
-  return output;
+const getApiCategoryOrder = (): string[] => {
+  // return the urlFragments of the categories sorted by category name
+  const urlFragments = Object.keys(rootGetApiDefinitions.getApiDefinitions());
+  return urlFragments.sort((a: string, b: string) => {
+    const cat1 = lookupApiCategory(a);
+    const cat2 = lookupApiCategory(b);
+    return cat1.name < cat2.name ? -1 : 0;
+  });
 };
 
 const getAllApis = (): APIDescription[] =>
-  Object.values(getApiDefinitions()).flatMap((category: APICategory) => category.apis);
+  Object.values(rootGetApiDefinitions.getApiDefinitions())
+    .flatMap((category: APICategory) => category.apis)
+    .sort((a, b) => (a.name > b.name ? 1 : -1));
+const getActiveApis = (): APIDescription[] =>
+  getAllApis().filter(
+    (api: APIDescription) =>
+      isHostedApiEnabled(api.urlFragment, api.enabledByDefault) && !isApiDeactivated(api),
+  );
 
+const getActiveKeyAuthApis = (): APIDescription[] =>
+  getActiveApis().filter((item: APIDescription) => !item.oAuth);
 const getAllOauthApis = (): APIDescription[] =>
-  getAllApis()
-    .filter((item: APIDescription) => !!item.oAuth)
-    .sort((a, b) => (a.name > b.name ? 1 : -1));
+  getAllApis().filter((item: APIDescription) => !!item.oAuth);
 
+const getActiveOauthApis = (): APIDescription[] =>
+  getAllOauthApis().filter((api: APIDescription) =>
+    isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  );
+const getAllAuthCodeApis = (): APIDescription[] =>
+  getAllOauthApis().filter((item: APIDescription) =>
+    item.oAuthTypes?.includes('AuthorizationCodeGrant'),
+  );
+const getActiveAuthCodeApis = (): APIDescription[] =>
+  getAllAuthCodeApis().filter((api: APIDescription) =>
+    isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  );
+const getAllCCGApis = (): APIDescription[] =>
+  getAllOauthApis().filter((item: APIDescription) =>
+    item.oAuthTypes?.includes('ClientCredentialsGrant'),
+  );
+const getActiveCCGApis = (): APIDescription[] =>
+  getAllCCGApis().filter((api: APIDescription) =>
+    isHostedApiEnabled(api.urlFragment, api.enabledByDefault),
+  );
 const getAllKeyAuthApis = (): APIDescription[] =>
-  getAllApis()
-    .filter((item: APIDescription) => !item.oAuth)
-    .sort((a, b) => (a.name > b.name ? 1 : -1));
+  getAllApis().filter((item: APIDescription) => !item.oAuth);
 
 const getAllQuickstartCategorySlugs = (): string[] =>
-  Object.entries(getApiDefinitions())
+  Object.entries(rootGetApiDefinitions.getApiDefinitions())
     .filter((item: [string, APICategory]) => !!item[1].content.quickstart)
     .map((item: [string, APICategory]) => item[0]);
 
+const lookupApiBySlug = (urlSlug: string): APIDescription | null => {
+  const hasMatchingIdentifier = (apiDesc: APIDescription): boolean => apiDesc.urlSlug === urlSlug;
+  const apiResult = getAllApis().find(hasMatchingIdentifier);
+  return apiResult ?? null;
+};
 const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean =>
     apiDesc.urlFragment === apiKey;
@@ -63,37 +123,83 @@ const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   return apiResult ?? null;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- should check category existence
-const lookupApiCategory = (categoryKey: string): APICategory | null => apiDefs[categoryKey] ?? null;
-
-const apisFor = (apiList: string[]): APIDescription[] => {
+const apisFor = (
+  selectedApiList: string[],
+  authRegex: RegExp = /^(acg|apikey|ccg)\/[a-z]{1}/,
+): APIDescription[] => {
   const allApis = getAllApis();
-  const searchedApiSet = new Set<string>(apiList);
-  return allApis.filter(
-    (api: APIDescription) =>
-      searchedApiSet.has(api.urlFragment) || searchedApiSet.has(api.altID ?? ''),
-  );
+  const searchedApiSet = new Set<string>(selectedApiList);
+  return allApis.filter((api: APIDescription) => {
+    if (searchedApiSet.has(api.urlSlug) || searchedApiSet.has(api.altID ?? '')) {
+      return true;
+    }
+    return selectedApiList.some((item: string) => {
+      if (!authRegex.test(item)) {
+        return false;
+      }
+      const pieces = item.split('/');
+      return api.altID === pieces[1];
+    });
+  });
 };
 
 const includesOAuthAPI = (apiList: string[]): boolean => apisFor(apiList).some(api => !!api.oAuth);
+const includesAuthCodeAPI = (apiList: string[]): boolean =>
+  !!apisFor(apiList, /^acg\/[a-z]{1}/).some(
+    api => !!api.oAuthTypes?.includes('AuthorizationCodeGrant'),
+  );
+const includesCcgAPI = (apiList: string[]): boolean =>
+  !!apisFor(apiList, /^ccg\/[a-z]{1}/).some(
+    api => !!api.oAuthTypes?.includes('ClientCredentialsGrant'),
+  );
 const includesInternalOnlyAPI = (apiList: string[]): boolean =>
   apisFor(apiList).some(api => api.vaInternalOnly);
+
+const includesInternalSponsorshipAPI = (apiList: string[]): boolean =>
+  apisFor(apiList).some(api => api.vaInternalOnly === VaInternalOnly.AdditionalDetails);
 
 const onlyOpenDataAPIs = (apiList: string[]): boolean =>
   apisFor(apiList).every(api => api.openData);
 
+const includesOpenDataAPI = (apiList: string[]): boolean =>
+  apisFor(apiList).some(api => api.openData);
+
+const isApiKeyApi = (api: APIDescription): boolean => !api.oAuth;
+const isAcgApi = (api: APIDescription): boolean =>
+  !!api.oAuthTypes?.includes('AuthorizationCodeGrant');
+const isCcgApi = (api: APIDescription): boolean =>
+  !!api.oAuthTypes?.includes('ClientCredentialsGrant');
+
 export {
   apisFor,
+  countActiveApisByCategory,
+  getActiveApis,
+  getActiveKeyAuthApis,
+  getActiveOauthApis,
+  getApisLoadedState,
+  getApisLoaded,
   getAllApis,
   getAllOauthApis,
+  getAllAuthCodeApis,
+  getActiveAuthCodeApis,
+  getAllCCGApis,
+  getActiveCCGApis,
   getAllQuickstartCategorySlugs,
   getApiCategoryOrder,
   getApiDefinitions,
-  getActiveApiDefinitions,
   lookupApiByFragment,
+  lookupApiBySlug,
   lookupApiCategory,
+  lookupApiCategoryBySlug,
   includesOAuthAPI,
+  includesAuthCodeAPI,
+  includesCcgAPI,
+  isApiKeyApi,
+  isAcgApi,
+  isCcgApi,
   getAllKeyAuthApis,
   includesInternalOnlyAPI,
+  includesInternalSponsorshipAPI,
   onlyOpenDataAPIs,
+  includesOpenDataAPI,
 };

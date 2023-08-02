@@ -1,22 +1,19 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC } from 'react';
+import { useFormikContext } from 'formik';
 import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../../components';
+import { Values } from '../../ProductionAccess';
+import { TERMS_OF_SERVICE_PATH } from '../../../../types/constants/paths';
 import { SelectedAPIs } from './SelectedApis';
 
-interface VerificationProps {
-  hasPassedStep: boolean;
-}
-
-const Verification: FC<VerificationProps> = props => {
-  const firstInputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (props.hasPassedStep) {
-      firstInputRef.current?.focus();
-    }
-  }, [props.hasPassedStep]);
-
+const Verification: FC = () => {
+  const {
+    values: { apis },
+  } = useFormikContext<Values>();
   return (
-    <>
-      <h3>Confirm</h3>
+    <fieldset>
+      <legend>
+        <h3 className="vads-u-margin-bottom--0">Confirm</h3>
+      </legend>
       <FieldSet
         className="vads-u-margin-top--4"
         legend="Are you a US-based company?"
@@ -24,14 +21,7 @@ const Verification: FC<VerificationProps> = props => {
         name="isUSBasedCompany"
         required
       >
-        <CheckboxRadioField
-          type="radio"
-          label="Yes"
-          name="isUSBasedCompany"
-          value="yes"
-          required
-          innerRef={firstInputRef}
-        />
+        <CheckboxRadioField type="radio" label="Yes" name="isUSBasedCompany" value="yes" required />
         <CheckboxRadioField type="radio" label="No" name="isUSBasedCompany" value="no" required />
       </FieldSet>
       <FieldSet
@@ -53,9 +43,9 @@ const Verification: FC<VerificationProps> = props => {
         <CheckboxRadioField type="radio" label="No" name="is508Compliant" value="no" required />
       </FieldSet>
 
-      <SelectedAPIs />
-      <TermsOfServiceCheckbox />
-    </>
+      <SelectedAPIs selectedApis={apis} />
+      <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
+    </fieldset>
   );
 };
 

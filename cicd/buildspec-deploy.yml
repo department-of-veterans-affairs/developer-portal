@@ -33,13 +33,14 @@ env:
     # Sentry
     SENTRY_ORG: 'vsp'
     SENTRY_PROJECT: 'dvp-developer-portal-web'
+    SENTRY_URL: 'http://sentry.vfs.va.gov/'
   parameter-store:
     GITHUB_TOKEN: '/dvp/devops/va_bot_github_token'
     # LIGHTHOUSE SLACK_WEBHOOK
     SLACK_WEBHOOK: '/dvp/devops/codebuild_slack_webhook_lighthouse'
     # Sentry
-    SENTRY_DSN: '/dvp/prod/developer-portal-frontend/SENTRY_DSN'
-    SENTRY_AUTH_TOKEN: '/dvp/prod/developer-portal-frontend/SENTRY_AUTH_TOKEN'
+    SENTRY_DSN: '/dvp/devops/SENTRY_DSN/developer-portal-frontend'
+    SENTRY_AUTH_TOKEN: '/dvp/devops/SENTRY_AUTH_TOKEN'
 phases:
   pre_build:
     commands:
@@ -109,11 +110,118 @@ phases:
           eval aws s3 sync --no-progress --delete --acl public-read ${env}/ s3://\${$S3_BUCKET}/ || exit 1
           slackpost.sh -t success "Deployment of ${RELEASE}${COMMIT_HASH} to ${env} was completed."
           if [[ "${env}" == "production" ]]; then
-            export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-            sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
-            sentry-cli releases set-commits --auto $SENTRY_RELEASE
-            sentry-cli releases finalize $SENTRY_RELEASE
+            export SENTRY_RELEASE_NAME=$(echo $RELEASE | sed 's|/|-|')
+            sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE_NAME
+            sentry-cli releases files $SENTRY_RELEASE_NAME upload-sourcemaps ${env}/static/js --url-prefix '~/static/js'
+            sentry-cli releases set-commits --auto --ignore-missing $SENTRY_RELEASE_NAME
+            sentry-cli releases finalize $SENTRY_RELEASE_NAME
           fi
+        done
+      # URL redirects for all environments added to s3 buckets during build deploy phase
+      # Format is "OriginalPathPlusQueryString|TargetPathPlusQueryString"
+      # ex. old/url/path|/new-url
+      # The protocol and domain name per environment are added automatically
+      - |
+        touch ./redirects.txt
+        echo 'explore/appeals/docs/appealable-issues|/explore/api/appealable-issues/docs' >> ./redirects.txt
+        echo 'explore/appeals/docs/appeals|/explore/api/appeals-status/docs' >> ./redirects.txt
+        echo 'explore/appeals/docs/decision_reviews|/explore/api/decision-reviews/docs' >> ./redirects.txt
+        echo 'explore/appeals/docs/higher-level-reviews|/explore/api/higher-level-reviews/docs' >> ./redirects.txt
+        echo 'explore/appeals/docs/legacy-appeals|/explore/api/legacy-appeals/docs' >> ./redirects.txt
+        echo 'explore/benefits/docs/notice_of_disagreements|/explore/api/notice-of-disagreements/docs' >> ./redirects.txt
+        echo 'explore/benefits/docs/claims|/explore/api/benefits-claims/docs' >> ./redirects.txt
+        echo 'explore/benefits/docs/benefits-documents|/explore/api/benefits-documents/docs' >> ./redirects.txt
+        echo 'explore/benefits/docs/benefits|/explore/api/benefits-intake/docs' >> ./redirects.txt
+        echo 'explore/benefits/docs/benefits_reference_data|/explore/api/benefits-reference-data/docs' >> ./redirects.txt
+        echo 'explore/benefits/docs/direct-deposit-management|/explore/api/direct-deposit-management/docs' >> ./redirects.txt
+        echo 'explore/appeals/docs/education-benefits|/explore/api/education-benefits/docs' >> ./redirects.txt
+        echo 'explore/benefits/docs/supplemental-claims|/explore/api/supplemental-claims/docs' >> ./redirects.txt
+        echo 'explore/facilities/docs/facilities|/explore/api/va-facilities/docs' >> ./redirects.txt
+        echo 'explore/vaForms/docs/vaForms|/explore/api/va-forms/docs' >> ./redirects.txt
+        echo 'explore/health/docs/clinical_health|/explore/api/clinical-health/docs' >> ./redirects.txt
+        echo 'explore/health/docs/community_care|/explore/api/community-care-eligibility/docs' >> ./redirects.txt
+        echo 'explore/health/docs/fhir|/explore/api/patient-health/docs' >> ./redirects.txt
+        echo 'explore/health/docs/provider_directory|/explore/api/provider-directory/docs' >> ./redirects.txt
+        echo 'explore/health/docs/urgent_care|/explore/api/urgent-care-eligibility/docs' >> ./redirects.txt
+        echo 'explore/loanGuaranty/docs/lgy_guaranty_remittance|/explore/api/guaranty-remittance/docs' >> ./redirects.txt
+        echo 'explore/loanGuaranty/docs/loan_guaranty|/explore/api/loan-guaranty/docs' >> ./redirects.txt
+        echo 'explore/loanGuaranty/docs/loan-review|/explore/api/loan-review/docs' >> ./redirects.txt
+        echo 'explore/verification/docs/address_validation|/explore/api/address-validation/docs' >> ./redirects.txt
+        echo 'explore/verification/docs/contact_information|/explore/api/contact-information/docs' >> ./redirects.txt
+        echo 'explore/verification/docs/va_letter_generator|/explore/api/va-letter-generator/docs' >> ./redirects.txt
+        echo 'explore/verification/docs/veteran_confirmation|/explore/api/veteran-confirmation/docs' >> ./redirects.txt
+        echo 'explore/verification/docs/veteran_verification|/explore/api/veteran-service-history-and-eligibility/docs' >> ./redirects.txt
+        echo 'explore/appeals|/explore/va-benefits' >> ./redirects.txt
+        echo 'explore/benefits|/explore/va-benefits' >> ./redirects.txt
+        echo 'explore/vaForms|/explore/forms' >> ./redirects.txt
+        echo 'explore/loanGuaranty|/explore/loan-guaranty' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=appealable-issues|/explore/api/appealable-issues/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=appeals|/explore/api/appeals-status/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=claims|/explore/api/benefits-claims/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=clinical_health|/explore/api/clinical-health/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=community_care|/explore/api/community-care-eligibility/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=higher-level-reviews|/explore/api/higher-level-reviews/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=legacy-appeals|/explore/api/legacy-appeals/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=notice_of_disagreements|/explore/api/notice-of-disagreements/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=fhir|/explore/api/patient-health/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=supplemental-claims|/explore/api/supplemental-claims/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code?api=veteran_verification|/explore/api/veteran-service-history-and-eligibility/authorization-code' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=address_validation|/explore/api/address-validation/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=appealable-issues|/explore/api/appealable-issues/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=appeals|/explore/api/appeals-status/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=claims|/explore/api/benefits-claims/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=benefits-documents|/explore/api/benefits-documents/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=community_care|/explore/api/community-care-eligibility/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=contact_information|/explore/api/contact-information/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=direct-deposit-management|/explore/api/direct-deposit-management/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=education-benefits|/explore/api/education-benefits/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=lgy_guaranty_remittance|/explore/api/guaranty-remittance/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=higher-level-reviews|/explore/api/higher-level-reviews/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=legacy-appeals|/explore/api/legacy-appeals/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=loan-review|/explore/api/loan-review/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=notice_of_disagreements|/explore/api/notice-of-disagreements/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=fhir|/explore/api/patient-health/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=supplemental-claims|/explore/api/supplemental-claims/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=va_letter_generator|/explore/api/va-letter-generator/client-credentials' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials?api=veteran_verification|/explore/api/veteran-service-history-and-eligibility/client-credentials' >> ./redirects.txt
+        echo 'release-notes/appeals|/explore/va-benefits' >> ./redirects.txt
+        echo 'release-notes/benefits|/explore/va-benefits' >> ./redirects.txt
+        echo 'release-notes/facilities|/explore/api/va-facilities/release-notes' >> ./redirects.txt
+        echo 'release-notes/vaForms|/explore/api/va-forms/release-notes' >> ./redirects.txt
+        echo 'release-notes/health|/explore/health' >> ./redirects.txt
+        echo 'release-notes/loanGuaranty|/explore/loan-guaranty' >> ./redirects.txt
+        echo 'release-notes/verification|/explore/verification' >> ./redirects.txt
+        echo 'explore/health/docs/quickstart|/explore/health' >> ./redirects.txt
+        echo 'release-notes|/explore' >> ./redirects.txt
+        echo 'apply|/explore' >> ./redirects.txt
+        echo 'onboarding/request-sandbox-access|/explore' >> ./redirects.txt
+        echo 'explore/authorization|/explore' >> ./redirects.txt
+        echo 'release-notes/deactivated|/explore' >> ./redirects.txt
+        echo 'go-live|/onboarding/request-prod-access' >> ./redirects.txt
+        echo 'oauth|/explore' >> ./redirects.txt
+        echo 'explore/authorization/docs/authorization-code|/explore?auth=acg' >> ./redirects.txt
+        echo 'explore/authorization/docs/client-credentials|/explore?auth=ccg' >> ./redirects.txt
+        for env in ${ENVIRONMENTS}; do
+          u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
+          echo $u_env
+          if [ "$u_env" == "PRODUCTION" ]; then
+            S3_BUCKET_NAME=$S3_PRODUCTION_BUCKET
+          fi
+          if [ "$u_env" == "STAGING" ]; then
+            S3_BUCKET_NAME=$S3_STAGING_BUCKET
+          fi
+          if [ "$u_env" == "DEV" ]; then
+            S3_BUCKET_NAME=$S3_DEV_BUCKET
+          fi
+          echo $S3_BUCKET_NAME
+          for REDIRECT in `grep -v '#' ./redirects.txt`; do
+            ORIGINAL=${REDIRECT%|*}
+            echo $ORIGINAL
+            TARGET=${REDIRECT#*|}
+            TARGET_URL=https://${S3_BUCKET_NAME}${TARGET}
+            echo $TARGET_URL
+            eval aws s3api put-object --website-redirect-location ${TARGET_URL} --bucket ${S3_BUCKET_NAME} --key ${ORIGINAL} --acl public-read
+          done
         done
   post_build:
     commands:

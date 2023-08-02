@@ -1,18 +1,33 @@
+@import '../../styles/variables';
+
 .va-api-logo {
+  font-size: 1.8rem;
   a {
     font-weight: 300;
   }
 }
 
+.va-api-logo-link {
+  @include media($medium-screen) {
+    font-size: 2.4rem;
+  }
+}
+
 // the [type="button"] selector is required to override some USWDS/VADS styles
 .va-api-mobile-menu-button[type='button'] {
-  border-radius: 0;
+  background-color: $color-white;
+  border-radius: 4px;
+  color: $color-primary;
   height: 4rem;
   text-transform: uppercase;
   width: 6rem;
 }
 
 .va-api-header {
+  z-index: 1000;
+}
+
+.va-api-header-container {
   position: relative;
 }
 

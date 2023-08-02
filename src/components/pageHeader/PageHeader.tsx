@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import * as React from 'react';
 
 import { PAGE_HEADER_AND_HALO_ID, PAGE_HEADER_ID } from '../../types/constants';
@@ -6,35 +5,28 @@ import './PageHeader.scss';
 
 interface PageHeaderProps {
   className?: string;
-  description?: string;
   halo?: string;
   header: string;
+  subText?: string;
 }
 
-const PageHeader = (props: PageHeaderProps): JSX.Element => (
-  <div id={PAGE_HEADER_AND_HALO_ID} className={props.className}>
-    {props.halo && (
-      <div className={classNames('header-halo', 'vads-u-color--gray')}>{props.halo}</div>
-    )}
-    <h1
-      id={PAGE_HEADER_ID}
-      className={classNames('vads-u-margin-top--0', 'vads-u-margin-bottom--2')}
-      tabIndex={-1}
-    >
-      {props.header}
-    </h1>
-    {props.description && (
-      <p
-        className={classNames(
-          'vads-u-font-size--lg',
-          'vads-u-font-weight--bold',
-          'vads-u-margin-y--2',
-        )}
+const PageHeader = (props: PageHeaderProps): JSX.Element => {
+  const { className, halo, header, subText } = props;
+
+  return (
+    <div id={PAGE_HEADER_AND_HALO_ID} className={className}>
+      {halo && <div className="header-halo vads-u-color--gray">{halo}</div>}
+      <h1
+        data-cy="page-header"
+        id={PAGE_HEADER_ID}
+        className="vads-u-margin-top--0 vads-u-margin-bottom--0"
+        tabIndex={-1}
       >
-        {props.description}
-      </p>
-    )}
-  </div>
-);
+        {header}
+      </h1>
+      {subText && <h2 className="header-sub-text vads-u-color--gray">{subText}</h2>}
+    </div>
+  );
+};
 
 export { PageHeader };

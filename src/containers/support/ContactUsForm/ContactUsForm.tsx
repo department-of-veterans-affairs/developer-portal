@@ -2,12 +2,13 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactNode, useState } from 'react';
 import { Formik, Form } from 'formik';
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import { useCookies } from 'react-cookie';
 import { CheckboxRadioField } from '../../../components';
-import { CONTACT_US_URL } from '../../../types/constants';
+import { LPB_CONTACT_US_URL, LPB_FORGERY_TOKEN } from '../../../types/constants';
 import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
 import { ContactUsFormState, FormType, SubmissionData } from '../../../types/forms/contactUsForm';
+import { ScrollToFirstError } from '../../../utils/ScrollToFirstError';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
 import PublishingFormFields from './components/PublishingFormFields';
@@ -69,14 +70,23 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
     type: defaultType,
   };
 
+  const setCookie = useCookies(['CSRF-TOKEN'])[1];
   const formSubmission = async (values: ContactUsFormState): Promise<void> => {
     setSubmissionError(false);
+
     try {
+      setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
+        path: LPB_CONTACT_US_URL,
+        sameSite: 'strict',
+        secure: true,
+      });
+
       await makeRequest(
-        CONTACT_US_URL,
+        LPB_CONTACT_US_URL,
         {
           body: JSON.stringify(processedData(values)),
           headers: {
+            'X-Csrf-Token': LPB_FORGERY_TOKEN,
             accept: 'application/json',
             'content-type': 'application/json',
           },
@@ -91,11 +101,16 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
   };
 
   return (
-    <Formik initialValues={initialValues} onSubmit={formSubmission} validate={validateForm}>
-      {({ values, isSubmitting, isValid, dirty }): ReactNode => (
-        <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={formSubmission}
+      validate={validateForm}
+      validateOnBlur={false}
+      validateOnChange={false}
+    >
+      {({ values, isSubmitting }): ReactNode => (
+        <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')} noValidate>
           <ContactDetailsFormFields />
-
           <fieldset className="vads-u-margin-top--6">
             <legend className="vads-u-margin-bottom--2p5">
               <h2 className={classNames('vads-u-font-size--lg', 'vads-u-margin-y--0')}>
@@ -115,19 +130,19 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
               value={FormType.PUBLISHING}
             />
           </fieldset>
-
           {values.type === FormType.CONSUMER && <ConsumerFormFields />}
           {values.type === FormType.PUBLISHING && <PublishingFormFields />}
-
-          <button type="submit" className="vads-u-width--auto" disabled={!dirty || !isValid}>
-            {isSubmitting ? 'Sending...' : 'Submit'}
+          <button type="submit" className="vads-u-width--auto">
+            {isSubmitting ? 'Sending...' : 'Send to developer support'}
           </button>
           {submissionError && (
-            <AlertBox
-              status="error"
-              headline="We encountered a server error while saving your form. Please try again later."
-            />
+            <va-alert background-only show-icon status="error" visible>
+              <p className="vads-u-margin-y--0">
+                We encountered a server error while saving your form. Please try again later.
+              </p>
+            </va-alert>
           )}
+          <ScrollToFirstError />
         </Form>
       )}
     </Formik>

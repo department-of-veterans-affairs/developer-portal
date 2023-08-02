@@ -2,22 +2,30 @@ import 'jest';
 import moment from 'moment';
 
 // we just need a Markdown component for  our test IApiDescription
-import { UrgentCareDeprecationNotice } from '../content/apiDocs/health';
+import { fakeCategories } from '../__mocks__/fakeCategories';
 import { isApiDeactivated, isApiDeprecated } from './deprecated';
 import { APIDescription, ProdAccessFormSteps } from './schema';
 
+const urgentCareDeprecationNotice: string = fakeCategories.movies.apis[0].releaseNotes;
 describe('deprecated API module', () => {
   const apiValues: APIDescription = {
+    altID: null,
+    categoryUrlFragment: 'nothing-of-importance',
+    categoryUrlSlug: 'nothing-of-importance',
     description: "it's a fabulous API, you really must try it sometime",
     docSources: [],
     enabledByDefault: true,
     lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'My API',
     oAuth: false,
+    oAuthInfo: null,
+    oAuthTypes: null,
     openData: false,
-    releaseNotes: UrgentCareDeprecationNotice,
+    overviewPageContent: '## Default overview page content',
+    releaseNotes: urgentCareDeprecationNotice,
     urlFragment: 'my_api',
-    vaInternalOnly: false,
+    urlSlug: 'my-api',
+    veteranRedirect: null,
   };
   let oldEnv: NodeJS.ProcessEnv;
 
@@ -45,10 +53,10 @@ describe('deprecated API module', () => {
       const api: APIDescription = {
         ...apiValues,
         deactivationInfo: {
-          deactivationContent: UrgentCareDeprecationNotice,
-          deactivationDate: moment().add(2, 'month'),
-          deprecationContent: UrgentCareDeprecationNotice,
-          deprecationDate: moment().add(1, 'month'),
+          deactivationContent: urgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationContent: urgentCareDeprecationNotice,
+          deprecationDate: moment().add(1, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
       };
 
@@ -59,10 +67,10 @@ describe('deprecated API module', () => {
       const api: APIDescription = {
         ...apiValues,
         deactivationInfo: {
-          deactivationContent: UrgentCareDeprecationNotice,
-          deactivationDate: moment().add(2, 'month'),
-          deprecationContent: UrgentCareDeprecationNotice,
-          deprecationDate: moment().add(1, 'month'),
+          deactivationContent: urgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationContent: urgentCareDeprecationNotice,
+          deprecationDate: moment().add(1, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
       };
       expect(isApiDeprecated(api)).toBe(false);
@@ -72,10 +80,10 @@ describe('deprecated API module', () => {
       const api: APIDescription = {
         ...apiValues,
         deactivationInfo: {
-          deactivationContent: UrgentCareDeprecationNotice,
-          deactivationDate: moment().add(2, 'month'),
-          deprecationContent: UrgentCareDeprecationNotice,
-          deprecationDate: moment().subtract(1, 'month'),
+          deactivationContent: urgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationContent: urgentCareDeprecationNotice,
+          deprecationDate: moment().subtract(1, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
       };
       expect(isApiDeprecated(api)).toBe(true);
@@ -85,10 +93,10 @@ describe('deprecated API module', () => {
       const api: APIDescription = {
         ...apiValues,
         deactivationInfo: {
-          deactivationContent: UrgentCareDeprecationNotice,
-          deactivationDate: moment().subtract(1, 'month'),
-          deprecationContent: UrgentCareDeprecationNotice,
-          deprecationDate: moment().subtract(2, 'month'),
+          deactivationContent: urgentCareDeprecationNotice,
+          deactivationDate: moment().subtract(1, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationContent: urgentCareDeprecationNotice,
+          deprecationDate: moment().subtract(2, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
       };
       expect(isApiDeprecated(api)).toBe(true);
@@ -108,10 +116,10 @@ describe('deprecated API module', () => {
       const api: APIDescription = {
         ...apiValues,
         deactivationInfo: {
-          deactivationContent: UrgentCareDeprecationNotice,
-          deactivationDate: moment().add(2, 'month'),
-          deprecationContent: UrgentCareDeprecationNotice,
-          deprecationDate: moment().add(1, 'month'),
+          deactivationContent: urgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationContent: urgentCareDeprecationNotice,
+          deprecationDate: moment().add(1, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
       };
 
@@ -122,10 +130,10 @@ describe('deprecated API module', () => {
       const api: APIDescription = {
         ...apiValues,
         deactivationInfo: {
-          deactivationContent: UrgentCareDeprecationNotice,
-          deactivationDate: moment().add(2, 'month'),
-          deprecationContent: UrgentCareDeprecationNotice,
-          deprecationDate: moment().add(1, 'month'),
+          deactivationContent: urgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationContent: urgentCareDeprecationNotice,
+          deprecationDate: moment().add(1, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
       };
       expect(isApiDeactivated(api)).toBe(false);
@@ -135,10 +143,10 @@ describe('deprecated API module', () => {
       const api: APIDescription = {
         ...apiValues,
         deactivationInfo: {
-          deactivationContent: UrgentCareDeprecationNotice,
-          deactivationDate: moment().add(2, 'month'),
-          deprecationContent: UrgentCareDeprecationNotice,
-          deprecationDate: moment().subtract(1, 'month'),
+          deactivationContent: urgentCareDeprecationNotice,
+          deactivationDate: moment().add(2, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationContent: urgentCareDeprecationNotice,
+          deprecationDate: moment().subtract(1, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
       };
       expect(isApiDeactivated(api)).toBe(false);
@@ -148,10 +156,10 @@ describe('deprecated API module', () => {
       const api: APIDescription = {
         ...apiValues,
         deactivationInfo: {
-          deactivationContent: UrgentCareDeprecationNotice,
-          deactivationDate: moment().subtract(1, 'month'),
-          deprecationContent: UrgentCareDeprecationNotice,
-          deprecationDate: moment().subtract(2, 'month'),
+          deactivationContent: urgentCareDeprecationNotice,
+          deactivationDate: moment().subtract(1, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
+          deprecationContent: urgentCareDeprecationNotice,
+          deprecationDate: moment().subtract(2, 'month').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
         },
       };
       expect(isApiDeactivated(api)).toBe(true);

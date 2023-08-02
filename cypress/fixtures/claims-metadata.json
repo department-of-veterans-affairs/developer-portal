@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "versions": [
+      {
+        "version": "1.0.0",
+        "internal_only": false,
+        "status": "Current Version",
+        "path": "/internal/docs/benefits-claims/v1/openapi.json",
+        "sf_path": "/internal/docs/benefits-claims/v1/openapi-sf.json"
+      }
+    ]
+  }
+}

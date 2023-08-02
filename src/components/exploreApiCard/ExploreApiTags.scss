@@ -1,0 +1,22 @@
+.explore-filter-tags {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 0.4rem;
+}
+
+.explore-filter-tag {
+  align-items: center;
+  border-radius: 3px;
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 1.6rem;
+  font-variant: all-small-caps;
+  gap: 0.4rem;
+  line-height: 2.4rem;
+  padding: 0 0.4rem;
+}
+
+.explore-fa-lock {
+  height: 1.2rem !important;
+  width: 1rem !important;
+}

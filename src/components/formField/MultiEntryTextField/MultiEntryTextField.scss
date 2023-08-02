@@ -1,0 +1,24 @@
+@import '../../../styles/variables';
+
+.va-api-multi-entry-text-field:not(.usa-input-error) {
+
+  input,
+  textarea {
+    // we need to state this explicitly in case the input is nested within
+    // a fieldset with usa-input-error
+    border: 0.1rem solid $color-gray;
+  }
+}
+
+.input-container {
+  position: relative;
+  max-width: 46rem; // To match the width of the input
+}
+
+.input-edit-button-container {
+  position: absolute;
+  width: 100%;
+  height: 42px;
+  display: flex;
+  flex-direction: row-reverse;
+}

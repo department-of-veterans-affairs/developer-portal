@@ -7,10 +7,10 @@ export const VersionSelector = {
   selectors: {
     apiName: (state: Map<string, unknown>): string => state.get('apiName') as string,
     apiVersion: (state: Map<string, unknown>): string => state.get('apiVersion') as string,
-    majorVersion: createSelector(
-      apiVersion,
-      (version: string): string => (version ? version.substring(0, 1) : ''),
-    ),
+    majorVersion: createSelector(apiVersion, (version: string | undefined): string => {
+      const unPrefixedVersion = version?.split('-')[0] ?? '';
+      return version ? unPrefixedVersion.substring(1, 2) : '';
+    }),
     versionMetadata: (state: Map<string, unknown>): VersionMetadata[] | null =>
       state.get('versionMetadata') as VersionMetadata[] | null,
   },

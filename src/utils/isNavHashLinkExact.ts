@@ -1,7 +1,7 @@
 import { Location, LocationDescriptor } from 'history';
 
 export const isHashLinkExact = (
-  to: LocationDescriptor<unknown> | ((location: Location<unknown>) => LocationDescriptor<unknown>),
+  to: LocationDescriptor | ((location: Location) => LocationDescriptor),
 ): boolean => {
   // eslint-disable-next-line @typescript-eslint/no-base-to-string
   const url = to.toString();

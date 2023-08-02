@@ -1,19 +1,24 @@
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
+/* eslint-disable complexity */
 import * as React from 'react';
-import Helmet from 'react-helmet';
-import { useLocation, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+import { Redirect, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
+import ReactMarkdown from 'react-markdown';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
 
-import { lookupApiByFragment, lookupApiCategory } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
+import { lookupApiCategory } from '../../apiDefs/query';
+import { APIDescription, VeteranRedirectMessage } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 
-import { APINameParam } from '../../types';
+import { APIUrlSlug } from '../../types';
 import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
+import ApisLoader from '../../components/apisLoader/ApisLoader';
+import ErrorPage404 from '../ErrorPage404';
 import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
+import { getApi } from './DocumentationRoot';
 
 const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | null => {
   /*
@@ -41,29 +46,68 @@ const DeactivationMessage = ({ api }: { api: APIDescription }): JSX.Element | nu
 
   return (
     <div className={classNames('usa-alert', 'usa-alert-info', 'va-api-alert-box')}>
-      <div className={classNames('usa-alert-body')}>{content({})}</div>
+      <div className={classNames('usa-alert-body')}>
+        <ReactMarkdown>{content}</ReactMarkdown>
+      </div>
     </div>
   );
 };
 
-const getApi = (apiName?: string): APIDescription | null => {
-  if (!apiName) {
-    return null;
-  }
-
-  return lookupApiByFragment(apiName);
-};
+const VeteranRedirectAlertMessage = ({
+  api,
+  veteranRedirect,
+}: {
+  api: APIDescription;
+  veteranRedirect: VeteranRedirectMessage;
+}): JSX.Element => (
+  <va-alert background-only show-icon status="info" key={api.urlSlug} visible>
+    <p className="vads-u-margin-y--0">
+      {veteranRedirect.message}&nbsp;
+      <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
+    </p>
+  </va-alert>
+);
 
 const ApiPage = (): JSX.Element => {
   const location = useLocation();
-  const params = useParams<APINameParam>();
+  const params = useParams<APIUrlSlug>();
   const enabledApisFlags = useFlag([FLAG_API_ENABLED_PROPERTY]);
 
-  const api = getApi(params.apiName);
-  const category = lookupApiCategory(params.apiCategoryKey);
+  const api = getApi(params.urlSlug);
+  if (!api) {
+    return <ErrorPage404 />;
+  }
+  const category = lookupApiCategory(api.categoryUrlFragment ?? '');
+  const veteranRedirect = api.veteranRedirect ?? category?.content.veteranRedirect;
 
-  if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlFragment]) {
-    return <ApiNotFoundPage />;
+  const tabsRegex = /tab=(r4|argonaut|dstu2)/;
+  if (location.pathname === '/explore/health/docs/fhir' && tabsRegex.test(location.search)) {
+    const tabName = tabsRegex.exec(location.search)?.[1];
+    let apiVersion = '';
+    switch (tabName) {
+      case 'r4':
+        apiVersion = 'current';
+        break;
+      case 'argonaut':
+        apiVersion = 'argonaut-0.0.0';
+        break;
+      case 'dstu2':
+        apiVersion = 'dstu2-0.0.0';
+        break;
+      default:
+        break;
+    }
+
+    return <Redirect to={`/explore/health/docs/fhir?version=${apiVersion}`} />;
+  }
+
+  // if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlSlug]) {
+  if (!enabledApisFlags[api.urlFragment]) {
+    return (
+      <ApisLoader>
+        <ApiNotFoundPage />
+      </ApisLoader>
+    );
   }
 
   return (
@@ -71,19 +115,16 @@ const ApiPage = (): JSX.Element => {
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
-      <PageHeader halo={category.name} header={api.name} />
-      {api.veteranRedirect && (
-        <AlertBox
-          status="info"
-          key={api.urlFragment}
-          className={classNames('vads-u-margin-bottom--2', 'vads-u-padding-y--1')}
-        >
-          {api.veteranRedirect.message}&nbsp;
-          <a href={api.veteranRedirect.linkUrl}>{api.veteranRedirect.linkText}</a>.
-        </AlertBox>
+      <PageHeader header="Docs" subText={api.name} />
+      {veteranRedirect && (
+        <VeteranRedirectAlertMessage api={api} veteranRedirect={veteranRedirect} />
       )}
       <DeactivationMessage api={api} />
-      {!isApiDeactivated(api) && <ApiDocumentation apiDefinition={api} location={location} />}
+      {!isApiDeactivated(api) && (
+        <div className="sans-serif-headers">
+          <ApiDocumentation apiDefinition={api} location={location} />
+        </div>
+      )}
     </>
   );
 };

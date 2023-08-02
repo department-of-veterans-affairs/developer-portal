@@ -1,7 +1,7 @@
 import { Map, OrderedMap } from 'immutable';
 import { RequestOptions, SwaggerMapValues } from 'swagger-client';
 import { System as BaseSystem } from 'swagger-ui';
-import { OutputSelector } from 'reselect';
+import { OutputSelector, SelectorArray } from 'reselect';
 import { VersionMetadata } from '../../../types';
 
 /**
@@ -62,7 +62,7 @@ export interface SwaggerVersionSelectors {
     versionMetadata: (state: Map<string, unknown>) => VersionMetadata[] | null;
     apiName: (state: Map<string, unknown>) => string;
     apiVersion: (state: Map<string, unknown>) => string;
-    majorVersion: OutputSelector<Map<string, unknown>, string, (result: string) => string>;
+    majorVersion: OutputSelector<SelectorArray, string, (result: string) => string>;
   };
 }
 

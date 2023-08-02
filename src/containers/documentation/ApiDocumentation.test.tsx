@@ -1,6 +1,5 @@
 import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
-import { MockedRequest, rest, restContext } from 'msw';
-import { ResponseComposition, MockedResponse } from 'msw/lib/types/response';
+import { MockedRequest, MockedResponse, ResponseComposition, rest, restContext } from 'msw';
 import { setupServer } from 'msw/node';
 import * as React from 'react';
 import { Provider } from 'react-redux';
@@ -10,26 +9,34 @@ import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import store, { history } from '../../store';
 import ApiDocumentation from './ApiDocumentation';
 
-const ReleaseNotes: React.FunctionComponent = () => <div>My API&apos;s release notes</div>;
+const ReleaseNotes: string = 'My API&apos;s release notes';
 const api: APIDescription = {
+  altID: null,
+  categoryUrlFragment: 'nothing-of-importance',
+  categoryUrlSlug: 'nothing-of-importance',
   description: "it's a great API!",
   docSources: [
     {
-      openApiUrl: 'https://example.com/my/openapi/spec',
+      openApiUrl: 'http://localhost/my/openapi/spec',
     },
   ],
   enabledByDefault: true,
   lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'My API',
+  oAuth: false,
+  oAuthInfo: null,
+  oAuthTypes: null,
   openData: false,
+  overviewPageContent: '## Default overview page content',
   releaseNotes: ReleaseNotes,
   urlFragment: 'my_api',
-  vaInternalOnly: false,
+  urlSlug: 'my-api',
+  veteranRedirect: null,
 };
 
 const server = setupServer(
   rest.get(
-    'https://example.com/my/openapi/spec',
+    'http://localhost/my/openapi/spec',
     (
       req: MockedRequest,
       res: ResponseComposition,
@@ -76,7 +83,8 @@ describe('ApiDocumentation', () => {
   afterAll(() => server.close());
 
   it('renders the OpenAPI URI', async () => {
-    expect(await screen.findByText('https://example.com/my/openapi/spec')).toBeInTheDocument();
+    expect(true).toBeTruthy();
+    expect(await screen.findByText('http://localhost/my/openapi/spec')).toBeInTheDocument();
   });
 
   it('has a section for each tag', async () => {

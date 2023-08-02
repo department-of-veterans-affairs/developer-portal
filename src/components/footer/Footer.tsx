@@ -5,7 +5,7 @@ import { AppVersion } from '../../components';
 
 import './Footer.scss';
 
-import { SUPPORT_CONTACT_PATH, TERMS_OF_SERVICE_PATH } from '../../types/constants/paths';
+import { PUBLISHING_PATH, SUPPORT_PATH, TERMS_OF_SERVICE_PATH } from '../../types/constants/paths';
 import logo from '../../assets/lighthouseVaLogo.png';
 
 const footerStyles = classNames(
@@ -13,8 +13,6 @@ const footerStyles = classNames(
   'vads-u-color--white',
   'vads-u-width--full',
   'vads-u-display--flex',
-  'vads-u-border-top--5px',
-  'vads-u-border-color--gold',
   'vads-u-flex-direction--column',
   'vads-u-padding-x--2',
   'medium-screen:vads-u-flex-direction--row',
@@ -24,6 +22,7 @@ const vaLinkStyles = classNames(
   'vads-u-margin-y--1p5',
   'vads-u-flex--auto',
   'medium-screen:vads-u-margin-y--2p5',
+  'va-api-footer-logo'
 );
 const footerListStyles = classNames(
   'va-api-footer-link-list',
@@ -32,51 +31,58 @@ const footerListStyles = classNames(
   'vads-u-margin-y--1',
   'vads-u-flex--1',
   'vads-u-display--flex',
-  'vads-u-flex-direction--column',
-  'vads-u-justify-content--flex-start',
+  'vads-u-flex-direction--row',
+  'vads-u-flex-wrap--wrap',
+  'vads-u-justify-content--space-between',
+  'medium-screen:vads-u-flex-direction--column',
+  'medium-screen:vads-u-justify-content--flex-start',
   'medium-screen:vads-u-flex-direction--row',
-  'medium-screen:vads-u-justify-content--flex-end',
   'medium-screen:vads-u-flex-wrap--wrap',
   'medium-screen:vads-u-margin-y--4',
 );
 const footerLinkStyles = classNames('vads-u-font-size--sm', 'vads-u-color--white');
 const listItemStyles = classNames(
-  'medium-screen:vads-u-padding-left--4',
+  'va-api-footer-list-item',
   'medium-screen:vads-u-margin-bottom--0',
 );
 
 const Footer: React.FunctionComponent = (): JSX.Element => (
   <footer role="contentinfo" className={footerStyles}>
-    <a href="https://www.va.gov" className={vaLinkStyles}>
-      <img src={logo} className="va-api-footer-logo" alt="Department of Veterans Affairs" />
-    </a>
     <ul className={footerListStyles}>
-      <li className={listItemStyles}>
-        <NavHashLink to={SUPPORT_CONTACT_PATH} className={footerLinkStyles}>
-          Contact Us
+      <li id="footer-publishing-link" className={listItemStyles}>
+        <NavHashLink to={PUBLISHING_PATH} className={footerLinkStyles}>
+          API Publishing
         </NavHashLink>
       </li>
-      <li className={listItemStyles}>
-        <NavHashLink to={TERMS_OF_SERVICE_PATH} className={footerLinkStyles}>
-          Terms of Service
-        </NavHashLink>
-      </li>
-      <li className={listItemStyles}>
+      <li id="footer-accessibility-link" className={listItemStyles}>
         <a href="https://www.section508.va.gov/" className={footerLinkStyles}>
           Accessibility
         </a>
       </li>
-      <li className={listItemStyles}>
+      <li id="footer-support-link" className={listItemStyles}>
+        <NavHashLink to={SUPPORT_PATH} className={footerLinkStyles}>
+          Support
+        </NavHashLink>
+      </li>
+      <li id="footer-web-policies-link" className={listItemStyles}>
         <a href="https://www.va.gov/webpolicylinks.asp" className={footerLinkStyles}>
           Web Policies
         </a>
       </li>
-      <li className={listItemStyles}>
+      <li id="footer-tos-link" className={listItemStyles}>
+        <NavHashLink to={TERMS_OF_SERVICE_PATH} className={footerLinkStyles}>
+          Terms of Service
+        </NavHashLink>
+      </li>
+      <li id="footer-privacy-link" className={listItemStyles}>
         <a href="https://www.va.gov/privacy/" className={footerLinkStyles}>
           Privacy
         </a>
       </li>
     </ul>
+    <a href="https://www.va.gov" className={vaLinkStyles}>
+      <img src={logo} className="va-api-footer-logo" alt="Department of Veterans Affairs" />
+    </a>
     <AppVersion />
   </footer>
 );

@@ -1,5 +1,4 @@
 import 'jest';
-import { ClaimsReleaseNotes } from '../content/apiDocs/benefits';
 import { getEnvFlags, isHostedApiEnabled } from './env';
 import * as queries from './query';
 import { APIDescription, ProdAccessFormSteps } from './schema';
@@ -37,13 +36,20 @@ describe('env module', () => {
     const enableApiId = 'real_api';
     const disabledApiId = 'fake_api';
     const sharedApiValues = {
+      altID: null,
+      categoryUrlFragment: 'nothing-of-importance',
+      categoryUrlSlug: 'nothing-of-importance',
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
       lastProdAccessStep: ProdAccessFormSteps.Four,
       name: 'My API',
+      oAuth: false,
+      oAuthInfo: null,
+      oAuthTypes: null,
       openData: false,
-      releaseNotes: ClaimsReleaseNotes,
-      vaInternalOnly: false,
+      releaseNotes: 'Dummy release notes.',
+      urlSlug: 'my-api',
+      veteranRedirect: null,
     };
 
     beforeEach(() => {
@@ -51,11 +57,13 @@ describe('env module', () => {
         {
           ...sharedApiValues,
           enabledByDefault: true,
+          overviewPageContent: '## Default overview page content',
           urlFragment: enableApiId,
         },
         {
           ...sharedApiValues,
           enabledByDefault: false,
+          overviewPageContent: '## Default overview page content',
           urlFragment: disabledApiId,
         },
       ]);

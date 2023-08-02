@@ -1,10 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router';
-import Helmet from 'react-helmet';
-import SupportConfirmation from '../../content/supportConfirmation.mdx';
+import { Helmet } from 'react-helmet';
 import { FormType } from '../../types/forms/contactUsForm';
-import { PageHeader } from '../../components';
-import { ContactUsAlertBox } from './ContactUsAlertBox';
+import { PageHeader, VeteranResources } from '../../components';
 import ContactUsForm from './ContactUsForm';
 
 const ContactUs = (): JSX.Element => {
@@ -25,18 +23,33 @@ const ContactUs = (): JSX.Element => {
    */
   return (
     <>
-      {sent && <SupportConfirmation />}
+      {sent && (
+        <>
+          <PageHeader header="Thank you for contacting us." />
+          <p>
+            You will receive an automated email confirmation containing the text of your support
+            request. A human response with next steps will follow within one business day. If an
+            answer is not readily available or your issue needs to be escalated to an engineering
+            resource, we will provide an estimated time to resolution.
+          </p>
+        </>
+      )}
       {!sent && (
         <>
           <Helmet>
-            <title>Contact Us</title>
+            <title>Developer portal support</title>
           </Helmet>
-          <PageHeader halo="Support" header="Contact Us" />
+          <PageHeader halo="Support" header="Developer portal support" />
           <p>
-            If you have questions about APIs, development, or related topics, use this form to send
-            us a message.
+            <strong>
+              You’ve reached our support form for software developers and API publishers.
+            </strong>
           </p>
-          <ContactUsAlertBox />
+          <p>
+            Open a ticket if you have any questions about APIs, development, or other related
+            topics.
+          </p>
+          <VeteranResources />
           <ContactUsForm onSuccess={onSuccess} defaultType={type} />
         </>
       )}

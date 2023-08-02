@@ -1,5 +1,8 @@
 @import './variables';
 
+// Import lots of fonts used in Swagger UI and Theme Muted in a way that works with visual regressions
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@0;1&family=Source+Code+Pro:ital@0;1&family=Titillium+Web&family=Ubuntu+Mono&display=swap');
+
 .swagger-ui {
   margin-top: 20px;
 
@@ -9,28 +12,73 @@
   }
 
   .info {
-    margin-top: 0;
+    margin: 0 0 3.2rem;
+    word-break: break-word;
+
+    code {
+      background-color: $color-gray-lightest;
+      color: $color-primary-darker;
+    }
+
+    table {
+      word-break: initial;
+    }
 
     p {
       color: $color-base;
       font-family: $font-sans;
-      font-size: 1.7rem;
+      font-size: 1.6rem;
+      margin: 0.8rem 0;
+    }
+
+    hgroup.main {
+      margin: 0 0 0.8rem;
+
+      a {
+        font-family: $font-sans;
+        font-size: 1.6rem;
+      }
     }
 
     a {
       color: #004795;
+      font-family: $font-sans;
+      font-size: 1.6rem;
       transition: none;
-      font-size: 1.7rem;
 
       &:visited {
         color: #4c2c92;
       }
     }
 
-    h2.title {
-      // never show Swagger UI's title feature
-      display: none;
+    & > div {
+      margin: 0;
     }
+
+    h1 {
+      font-size: $h2-font-size;
+      margin-top: $spacing-md-small;
+    }
+
+    h2 {
+      font-size: $h3-font-size;
+      &.fhir-revision[tabindex]:focus {
+        outline-color: green;
+      }
+
+      &.title {
+        // never show Swagger UI's title feature
+        display: none;
+      }
+    }
+
+    h3 {
+      font-size: $h4-font-size;
+    }
+  }
+
+  .opblock .opblock-summary-path {
+    word-break: break-word;
   }
 
   .opblock.opblock-post .opblock-summary-method {
@@ -39,6 +87,9 @@
 
   .opblock .opblock-summary-description {
     font-family: $font-sans;
+  }
+  .opblock.opblock-deprecated {
+    opacity: 0.75; // 0.6 (default from swagger-ui) violates a11y rule for color-contrast
   }
 
   .models h4 span {
@@ -126,9 +177,16 @@
     padding-right: 2rem;
   }
 
-  .opblock-body .code-wrapper {
-    background: #41444e;
-    border-radius: 4px;
+  .opblock-body {
+    pre {
+      max-height: 400px;
+      overflow-y: auto;
+      background: #222935;
+    }
+    .code-wrapper {
+      background: #41444e;
+      border-radius: 4px;
+    }
   }
 
   svg.svg-assets {
@@ -170,6 +228,7 @@
   }
   .model-box-control {
     background: none;
+    color: #3b4151;
     display: inline-block;
     margin: 0;
     padding: 0;
@@ -177,5 +236,31 @@
   }
   .model.model-title {
     line-height: 1.5;
+    word-break: break-word;
+  }
+
+  .model-hint {
+    display: none;
+  }
+
+  .prop-format {
+    color: #777;
+  }
+}
+
+div.model-example ul.tab li.tabitem::after {
+  right: 4px;
+}
+
+h2.fhir-revision:focus {
+  animation: 1s temporaryFocusOutline 1s;
+  animation-fill-mode: forwards;
+}
+@keyframes temporaryFocusOutline {
+  0% {
+    outline: 2px solid rgba(249, 198, 66, 1);
+  }
+  100% {
+    outline: 2px solid rgba(249, 198, 66, 0);
   }
 }

@@ -1,0 +1,120 @@
+name: Auto Deploy master to Production
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/30 13,14,15,16,17,18,19,20,21,22,23 * * 1,2,3,4,5'
+
+jobs:
+  run_checks_and_deploy:
+    runs-on: ubuntu-latest
+    outputs:
+      mr_number: ${{ steps.get_mr_number.outputs.mr_number }}
+      time_string: ${{ steps.get_time_string.outputs.time_string }}
+    steps:
+      - name: Set timezone to Eastern
+        uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: 'America/New_York'
+      - id: get_time_string
+        name: Get time string for MR search
+        run: |
+          TIME_STRING=`date +"%Y/%m/%d %H:%M %Z" | sed -E 's/\:([03]{1}|[14]{1})[0-9]{1}/:\10/g' | sed 's/\:1/:0/' | sed 's/\:4/:3/'`
+          echo $TIME_STRING
+          echo "time_string=$TIME_STRING" >> $GITHUB_OUTPUT
+      - id: get_mr_number
+        name: Grab matching deploy MR
+        continue-on-error: true
+        run: |
+          echo $TIME_STRING
+          echo ${{ steps.get_time_string.outputs.time_string }}
+          TIME_STRING=`echo ${{steps.get_time_string.outputs.time_string}}`
+          echo $TIME_STRING
+          echo ${{secrets.GIT_AUTO_DEPLOY_TOKEN}} | gh auth login --with-token
+          gh issue list \
+            -R 'department-of-veterans-affairs/lighthouse-devops-support' \
+            -l 'repo: developer-portal' \
+            --limit 1 \
+            --json id,number,state,labels,title,body \
+            --jq "[.[]|select(.title==\"Deploy developer-portal to production ($TIME_STRING)\")][0]" \
+            > issue.json
+          cat issue.json
+          MR_NUMBER=`jq -e ".number" issue.json`
+          echo $MR_NUMBER
+          if [ -z "$MR_NUMBER" ]; then
+            # If there's no MR_NUMBER then exit because there's no open MR to deploy
+            echo "No MR Found. Exiting..."
+            exit 1;
+          fi
+          # If this errors, the MR isn't labeled "status: approved" at the time of it's scheduled deployment
+          jq ".labels" issue.json | jq -e ".[] | select(.name==\"status: approved\")"
+          RELEASE_TAG=`jq -r '.body' issue.json | grep 'Release tag:' | sed 's/Release tag: //'`
+          echo "mr_number=$MR_NUMBER" >> $GITHUB_OUTPUT
+          echo "release_tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+          aws-region: ${{secrets.AWS_REGION}}
+          role-to-assume: ${{secrets.AWS_ROLE_ARN}}
+          role-duration-seconds: 1200
+          role-session-name: GitHubActions
+
+      - id: deploy_to_production
+        name: Deploy to production
+        if: steps.get_mr_number.outcome == 'success'
+        continue-on-error: true
+        run: |
+          MR_NUMBER=`echo ${{steps.get_mr_number.outputs.mr_number}}`
+          RELEASE_TAG=`echo ${{steps.get_mr_number.outputs.release_tag}}`
+          echo 'Starting deploy to production'
+          aws codebuild start-build --project-name developer-portal-deploy --environment-variables-override "[{\"name\":\"ENVIRONMENTS\",\"value\":\"production\"},{\"name\":\"MR\",\"value\":\"$MR_NUMBER\"},{\"name\":\"RELEASE\",\"value\":\"$RELEASE_TAG\"}]" > build.json
+          BUILD_ID=`jq -r '.build.id' build.json`
+          echo "BUILD_ID: $BUILD_ID"
+          echo "Sleep for 60 seconds before first check"
+          sleep 60
+          RUNNING="true"
+          while [ "true" == "$RUNNING" ]; do
+            echo 'Checking build status';
+            aws codebuild batch-get-builds --ids=$BUILD_ID > build-status.json
+            CURRENT_PHASE=`jq -r '.builds[0].currentPhase' build-status.json`
+            BUILD_STATUS=`jq -r '.builds[0].buildStatus' build-status.json`
+            if [ "COMPLETED" == "$CURRENT_PHASE" ]; then
+              echo 'Build phase completed';
+              START_RAW=`jq -r '.builds[0].startTime' build-status.json`
+              START_TIME=`date --date="$START_RAW" +"%Y/%m/%d %H:%M %Z"`
+              END_RAW=`jq -r '.builds[0].endTime' build-status.json`
+              if [ null != "$END_RAW" ]; then
+                END_TIME=`date --date="$END_RAW" +"%Y/%m/%d %H:%M %Z"`
+                printf '' > build-comment.md
+                if [ "SUCCEEDED" == "$BUILD_STATUS" ]; then
+                  echo 'Build successful';
+                else
+                  echo 'Build failed';
+                  echo 'Build Failed: please check CodeBuild for more details.' >> build-comment.md
+                fi
+                echo '```' >> build-comment.md
+                echo "Start: $START_TIME" >> build-comment.md
+                echo "End: $END_TIME" >> build-comment.md
+                echo "Execution: https://console.amazonaws-us-gov.com/codesuite/codebuild/008577686731/projects/developer-portal-deploy/build/$BUILD_ID" >> build-comment.md
+                echo '```' >> build-comment.md
+
+                gh issue comment $MR_NUMBER -R 'department-of-veterans-affairs/lighthouse-devops-support' --body-file build-comment.md
+
+                RUNNING="false"
+              else
+                echo 'End time not yet set in `aws codebuild batch-get-builds`'
+                echo 'wait 15 seconds and try again.'
+                sleep 15;
+              fi
+            else
+              echo 'Still in progress... wait 15 seconds and retry.'
+              sleep 15;
+            fi
+          done
+      - uses: actions/checkout@v3
+        if: steps.deploy_to_production.outcome == 'success'
+      - name: Disable Workflow till next MR is created
+        if: steps.deploy_to_production.outcome == 'success'
+        run: gh workflow disable 'Auto Deploy master to Production'

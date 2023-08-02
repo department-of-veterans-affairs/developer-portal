@@ -1,0 +1,111 @@
+name: Unprivileged Visual Regressions
+# Unprivileged relates to this job being able to be run by a user without write permissions.
+# A PR from a forked repo can safely run this job as there are no repository secrets available to it.
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  visual:
+    runs-on: ubuntu-latest
+    container: cypress/included:12.8.1
+    env:
+      CYPRESS_SINGLE_SPEC: true
+      REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001
+      failOnSnapshotDiff: false
+    outputs:
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - name: Install git-lfs
+        run: apt update && apt install git-lfs
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          env
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
+
+      - id: pr_number
+        name: Get PR Number
+        run: |
+          PR_NUMBER=`printf $GITHUB_REF | sed 's|refs/pull/||' | sed 's|/merge||'`
+          echo $PR_NUMBER
+          echo "pr=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+      - id: githash
+        name: Set git hash
+        run: |
+          GIT_HASH=$(/bin/bash -c "git log --oneline | cut -f3 -d \" \" | cut -c1-7")
+          echo $GIT_HASH
+          echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
+
+      - name: Install fonts
+        run: apt-get update && apt-get install -y fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-freefont-ttf --no-install-recommends
+      - name: Remove unnecessary files
+        run: rm -rf /var/lib/apt/lists/* \
+          && apt-get purge --auto-remove -y curl
+          && rm -rf /src/*.deb
+
+      - name: Install python and openssh-client env
+        run: |
+          apt update && apt install python3 openssh-client -y && ln -s /usr/bin/python3 /usr/bin/python
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+  
+      - name: Start Fake LPB Server
+        run: ./scripts/fake_lpb.sh
+
+      - id: visual_test
+        continue-on-error: true
+        name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install-command: npm ci
+          spec: cypress/e2e/visual.cy.js
+          start: npm start
+          wait-on: http://localhost:3001
+          wait-on-timeout: 180
+
+      - name: Add PR and hash to artifact
+        if: steps.visual_test.outcome == 'failure'
+        env:
+          COMMIT_HASH: ${{steps.githash.outputs.hash}}
+          PR_NUMBER: ${{steps.pr_number.outputs.pr_number}}
+        run: |
+          mkdir -p test/image_snapshots/visual.cy.js/__diff_output__;
+          echo $PR_NUMBER > test/image_snapshots/visual.cy.js/__diff_output__/pr.txt
+          echo $COMMIT_HASH > test/image_snapshots/visual.cy.js/__diff_output__/hash.txt
+          echo $GITHUB_HEAD_REF > test/image_snapshots/visual.cy.js/__diff_output__/branch.txt
+
+      - name: Add overview failure graphics to archive
+        if: steps.visual_test.outcome == 'failure'
+        run: |
+          cp cypress/screenshots/visual.cy.js/* test/image_snapshots/visual.cy.js/__diff_output__/
+
+      - name: Upload failed screenshots
+        if: steps.visual_test.outcome == 'failure'
+        uses: actions/upload-artifact@v3
+        with:
+          name: visual-test-failures
+          path: test/image_snapshots/visual.cy.js/__diff_output__
+
+      - name: Report Success/Failure
+        if: steps.visual_test.outcome == 'failure'
+        run: exit 1
+        # This is needed as a unique step due to the continue-on-error set above in visual_test.
+        # Images get uploaded to the s3 bucket from within visual-regressions-privileged.yml

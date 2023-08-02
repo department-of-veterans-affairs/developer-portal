@@ -1,0 +1,34 @@
+.api-overview-content {
+  h2 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+
+  ul {
+    padding: 0 0 0 1.3rem;
+    list-style-type: '\2713 ';
+
+    li {
+      padding-left: 0.5rem;
+    }
+  }
+}
+.api-overview-tags {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+  gap: 1rem;
+
+  li {
+    font-size: 1.3rem;
+    padding: 0.4rem 1rem;
+    background: #eee;
+    border-radius: 4px;
+    text-transform: uppercase;
+
+    &:last-child {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

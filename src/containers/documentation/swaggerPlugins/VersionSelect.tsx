@@ -1,26 +1,45 @@
-import classNames from 'classnames';
 import * as React from 'react';
+import classNames from 'classnames';
+import { ResetVersioning, SetRequestedAPIVersion, SetVersioning } from '../../../actions';
 import { VersionMetadata } from '../../../types';
-import { System } from './types';
+import './VersionSelect.scss';
 
 export interface VersionSelectProps {
-  getSystem: () => System;
+  dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning>;
+  handleVersionChange: (
+    dispatch: React.Dispatch<SetRequestedAPIVersion>,
+  ) => (requestedVersion: string) => void;
+  version: string;
+  versions: VersionMetadata[] | null;
 }
 
 export interface VersionSelectState {
-  version: string;
+  currentVersion: string;
+  initialRender: boolean;
+  selectedVersion: string;
 }
 
-export default class VersionSelect extends React.Component<VersionSelectProps, VersionSelectState> {
+export default class VersionSelect extends React.PureComponent<
+  VersionSelectProps,
+  VersionSelectState
+> {
+  public versionHeadingElement: React.RefObject<HTMLHeadingElement>;
+
   public constructor(props: VersionSelectProps) {
     super(props);
-    const reduxVersion = this.props.getSystem().versionSelectors.apiVersion();
+    const reduxVersion = this.props.version;
     const initialVersion = reduxVersion ? reduxVersion : this.getCurrentVersion();
-    this.state = { version: initialVersion };
+    this.state = {
+      currentVersion: initialVersion,
+      initialRender: true,
+      selectedVersion: initialVersion,
+    };
+    this.versionHeadingElement = React.createRef();
   }
 
   public getCurrentVersion(): string {
-    const versions = this.props.getSystem().versionSelectors.versionMetadata();
+    const { versions: propVersions } = this.props;
+    const versions = propVersions;
     const selectCurrentVersion = (versionInfo: VersionMetadata): boolean =>
       versionInfo.status === 'Current Version';
 
@@ -32,57 +51,112 @@ export default class VersionSelect extends React.Component<VersionSelectProps, V
     return versions?.find(selectCurrentVersion)?.version ?? '';
   }
 
-  public handleSelectChange(version: string): void {
-    this.setState({ version });
+  public getVersionMetadataByProp(prop: string, version: string): VersionMetadata | undefined {
+    const { versions: propVersions } = this.props;
+    const versions = propVersions;
+    const versionMatch = (versionInfo: VersionMetadata): boolean => versionInfo[prop] === version;
+    return versions?.find(versionMatch);
   }
 
-  public handleButtonClick(): void {
-    this.props.getSystem().versionActions.updateVersion(this.state.version);
+  public handleSelectChange(version: string): void {
+    this.setState(prevState => ({ ...prevState, selectedVersion: version }));
+  }
+
+  public handleButtonClick(e: React.MouseEvent<HTMLButtonElement>): void {
+    e.currentTarget.blur();
+    this.setState(prevState => ({ ...prevState, currentVersion: this.state.selectedVersion }));
+    this.props.handleVersionChange(this.props.dispatch)(this.state.selectedVersion);
+  }
+
+  public componentDidUpdate(
+    prevProps: Readonly<VersionSelectProps>,
+    prevState: Readonly<VersionSelectState>,
+  ): void {
+    if (prevState.currentVersion !== this.state.currentVersion) {
+      this.versionHeadingElement.current?.focus();
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      this.setState(prevState => ({ ...prevState, initialRender: false }));
+    }
   }
 
   public render(): JSX.Element {
     const buildDisplay = (meta: VersionMetadata): string => {
-      const { version, status, internal_only } = meta;
-      return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
+      if (meta.label) {
+        return meta.label;
+      } else {
+        const { version, status, internal_only } = meta;
+        return `${version} - ${status} ${internal_only ? '(Internal Only)' : ''}`;
+      }
     };
+    const fhirRegex = /\/explore\/api\/(clinical-health|patient-health)\/docs/;
+    const selectorLabel = fhirRegex.test(location.pathname)
+      ? 'Select a FHIR specification'
+      : 'Select a version';
+
+    let apiStatus;
+    if (this.props.version === 'current') {
+      apiStatus = this.props.versions?.[0].label ?? '';
+    } else {
+      apiStatus = this.getVersionMetadataByProp('version', this.props.version)?.label;
+    }
 
     return (
-      <div
-        className={classNames(
-          'vads-u-display--flex',
-          'vads-u-flex-wrap--wrap',
-          'vads-u-justify-content--flex-start',
+      <>
+        <div className="version-selector-container vads-l-grid-container theme-light">
+          <div className="vads-l-row">
+            <label
+              htmlFor="version-selector-field"
+              className={classNames('vads-l-col--12', 'medium-screen:vads-l-col--9')}
+            >
+              {selectorLabel}
+              {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+              <select
+                id="version-selector-field"
+                name="version-selector-field"
+                aria-label={selectorLabel}
+                value={this.state.selectedVersion}
+                onChange={(e): void => this.handleSelectChange(e.target.value)}
+              >
+                {this.props.versions?.map((versionInfo: VersionMetadata) => (
+                  <option value={versionInfo.version} key={versionInfo.version}>
+                    {buildDisplay(versionInfo)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <div
+              className={classNames(
+                'vads-l-col--12',
+                'medium-screen:vads-l-col--3',
+                'vads-u-text-align--center',
+              )}
+            >
+              <button onClick={(e): void => this.handleButtonClick(e)} type="button">
+                Update page
+              </button>
+            </div>
+          </div>
+        </div>
+        {!!apiStatus && (
+          <h2
+            ref={this.versionHeadingElement}
+            tabIndex={-1}
+            className={classNames(
+              'vads-u-font-family--sans',
+              'vads-u-font-weight--normal',
+              'vads-u-font-size--base',
+              'vads-u-padding--0p5',
+              'vads-u-margin-y--1',
+            )}
+          >
+            {!this.state.initialRender && (
+              <>
+                Showing documentation for <b>{apiStatus}</b>.
+              </>
+            )}
+          </h2>
         )}
-      >
-        {/* eslint-disable-next-line jsx-a11y/no-onchange */}
-        <select
-          aria-label="Version Selection"
-          value={this.state.version}
-          onChange={(e): void => this.handleSelectChange(e.target.value)}
-          className={classNames(
-            'vads-u-display--inline-block',
-            'vads-u-flex--4',
-            'vads-u-margin-right--4',
-            'va-api-u-min-width--200',
-          )}
-        >
-          {this.props
-            .getSystem()
-            .versionSelectors.versionMetadata()
-            ?.map((versionInfo: VersionMetadata) => (
-              <option value={versionInfo.version} key={versionInfo.version}>
-                {buildDisplay(versionInfo)}
-              </option>
-            ))}
-        </select>
-        <button
-          onClick={(): void => this.handleButtonClick()}
-          className={classNames('vads-u-flex--1', 'va-api-u-max-width--150')}
-          type="button"
-        >
-          Select
-        </button>
-      </div>
+      </>
     );
   }
 }

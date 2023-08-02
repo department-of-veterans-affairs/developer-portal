@@ -10,8 +10,9 @@ const CardLinkPropTypes = {
   centered: PropTypes.bool,
   children: PropTypes.node,
   name: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
   subhead: PropTypes.node,
-  url: PropTypes.string.isRequired,
+  url: PropTypes.string,
 };
 
 type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
@@ -24,6 +25,7 @@ type CardLinkProps = PropTypes.InferProps<typeof CardLinkPropTypes>;
  */
 const CardLink: React.FC<CardLinkProps> = (props: CardLinkProps) => {
   const [isLinkFocused, setLinkFocused] = useState<boolean>(false);
+  const onClickHandler = props.onClick ?? undefined;
   return (
     <div
       className={classNames(
@@ -62,9 +64,10 @@ const CardLink: React.FC<CardLinkProps> = (props: CardLinkProps) => {
               'vads-u-font-size--lg',
               'vads-u-font-weight--bold',
             )}
-            to={props.url}
-            onFocus={(): void => setLinkFocused(true)}
+            to={props.url ?? '#'}
             onBlur={(): void => setLinkFocused(false)}
+            onClick={onClickHandler}
+            onFocus={(): void => setLinkFocused(true)}
           >
             {props.name}
           </NavHashLink>

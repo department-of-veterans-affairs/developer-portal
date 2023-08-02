@@ -1,13 +1,12 @@
 /* eslint-disable max-lines -- component is long, need to refactor at some point */
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import classNames from 'classnames';
 import * as React from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import {
   OpenAPISpec,
   OpenAPISpecV2,
-  OpenAPISpecV3,
+  OpenAPISpecV3 as IncompleteOpenAPISpecV3,
   Operation,
   Parameter,
   Schema,
@@ -16,7 +15,7 @@ import {
   SwaggerSpecObject,
 } from 'swagger-ui';
 import { v4 as uuidv4 } from 'uuid';
-import { CodeWrapper } from '../../../components';
+import { CodeBlock } from '../../../components';
 import { System } from './types';
 
 import './CurlForm.scss';
@@ -34,6 +33,18 @@ export interface CurlFormState {
   requestBodyProperties: Schema[];
   paramValues: { [propertyName: string]: string };
   version: undefined | string;
+}
+
+interface SecuritySchemeDefinition {
+  in: 'cookie' | 'header' | 'query';
+  name: string;
+  type: 'apiKey' | 'http' | 'mutualTLS' | 'oauth2' | 'openIdConnect';
+}
+
+interface OpenAPISpecV3 extends IncompleteOpenAPISpecV3 {
+  components: {
+    securitySchemes: SecuritySchemeDefinition[];
+  };
 }
 
 export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
@@ -59,7 +70,6 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     state.params.forEach((parameter: Parameter) => {
       state.paramValues[parameter.name] = parameter.example || '';
     });
-
     if (this.props.operation.requestBody && this.requirementsMet()) {
       const { properties } = this.props.operation.requestBody.content['application/json'].schema;
       Object.keys(properties).forEach((propertyName: string) => {
@@ -111,20 +121,65 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     });
   }
 
-  public buildInputs(fields: string[]): JSX.Element {
+  public buildInputs(fields: Parameter[]): JSX.Element {
     return (
       <div>
-        {fields.map((fieldName: string) => {
+        {fields.map((field: Parameter) => {
           const inputId = uuidv4();
           return (
-            <div key={fieldName}>
-              <label htmlFor={`${fieldName}-${inputId}`}>{fieldName}</label>
+            <div key={field.name}>
+              <label htmlFor={`${field.name}-${inputId}`}>{field.name}</label>
+              {!!field.schema?.enum && (
+                <>
+                  {/* eslint-disable-next-line jsx-a11y/no-onchange */}
+                  <select
+                    className="curl-form-param"
+                    id={`${field.name}-${inputId}`}
+                    aria-label={field.name}
+                    value={this.state.paramValues[field.name] || ''}
+                    onChange={(e): void => this.handleInputChange(field.name, e.target.value)}
+                  >
+                    <option value="" />
+                    {field.schema.enum.map(
+                      (fieldName: string): JSX.Element => (
+                        <option value={fieldName} key={fieldName}>
+                          {fieldName}
+                        </option>
+                      ),
+                    )}
+                  </select>
+                </>
+              )}
+              {!field.schema?.enum && (
+                <input
+                  type="text"
+                  id={`${field.name}-${inputId}`}
+                  aria-label={field.name}
+                  value={this.state.paramValues[field.name] || ''}
+                  onChange={(e): void => this.handleInputChange(field.name, e.target.value)}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  public buildRequestBodyInputs(fields: Schema[]): JSX.Element {
+    return (
+      <div>
+        {fields.map((field: Schema) => {
+          const inputId = uuidv4();
+          return (
+            <div key={field.name}>
+              <label htmlFor={`${field.name}-${inputId}`}>{field.name}</label>
               <input
                 type="text"
-                id={`${fieldName}-${inputId}`}
-                aria-label={fieldName}
-                value={this.state.paramValues[fieldName] || ''}
-                onChange={(e): void => this.handleInputChange(fieldName, e.target.value)}
+                id={`${field.name}-${inputId}`}
+                aria-label={field.name}
+                value={this.state.paramValues[field.name] || ''}
+                onChange={(e): void => this.handleInputChange(field.name, e.target.value)}
               />
             </div>
           );
@@ -161,34 +216,28 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
       };
     }
     options.spec = spec;
-    if (this.state.apiKey.length > 0) {
-      options.securities = {
-        authorized: {
-          apikey: this.state.apiKey,
-        },
-      };
-    } else {
-      const token = this.isSwagger2()
-        ? `Bearer: ${this.state.bearerToken}`
-        : this.state.bearerToken;
-      options.securities = {
-        authorized: {
-          /**
-           * support multiple means of passing the bearer token. this is mostly due to swagger-client
-           * not being particularly sophisticated on this front.
-           * Bearer auth security (Claims): https://swagger.io/docs/specification/authentication/bearer-authentication/
-           * OAuth 2.0 security (Health): https://swagger.io/docs/specification/authentication/oauth2/
-           * https://github.com/swagger-api/swagger-js/blob/master/src/execute/oas3/build-request.js#L78
-           */
-          OauthFlow: token ? {
-            token: {
-              access_token: token,
-            },
-          } : undefined,
-          bearer_token: token,
-        },
-      };
-    }
+    const securityItems = this.security() ?? [{}];
+    const authorizedProperties: never[] = [];
+    securityItems.forEach((item: { [schemeName: string]: string[] }): void => {
+      const schemeKey = Object.keys(item)[0];
+      if (this.state.apiKey.length > 0) {
+        authorizedProperties[schemeKey] = this.state.apiKey;
+      } else if (this.state.bearerToken.length > 0) {
+        const token = this.isSwagger2()
+          ? `Bearer: ${this.state.bearerToken}`
+          : this.state.bearerToken;
+        if (schemeKey === 'bearer_token') {
+          authorizedProperties[schemeKey] = token;
+        } else {
+          authorizedProperties[schemeKey] = { token: { access_token: token } };
+        }
+      }
+    });
+    options.securities = {
+      authorized: {
+        ...authorizedProperties,
+      },
+    };
     if (this.state.requestBodyProperties.length > 0) {
       options.requestBody = this.buildRequestBody();
     }
@@ -199,12 +248,23 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     const requestBody = {};
     this.state.requestBodyProperties.forEach((property: Schema) => {
       if (property.type === 'array' && this.state.paramValues[property.name]) {
-        requestBody[property.name] = this.state.paramValues[property.name].split(',');
+        if (property.items?.type === 'object') {
+          try {
+            requestBody[property.name] = JSON.parse(
+              this.state.paramValues[property.name],
+            ) as Record<string, unknown>;
+          } catch {
+            // Do nothing as they simply don't yet have valid JSON
+          }
+        } else {
+          requestBody[property.name] = this.state.paramValues[property.name].split(',');
+        }
       } else if (property.type === 'object') {
         try {
-          requestBody[property.name] = JSON.parse(
-            this.state.paramValues[property.name],
-          ) as Record<string, unknown>;
+          requestBody[property.name] = JSON.parse(this.state.paramValues[property.name]) as Record<
+            string,
+            unknown
+          >;
         } catch (e: unknown) {
           requestBody[property.name] = this.state.paramValues[property.name];
         }
@@ -219,8 +279,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     if (this.state.params.length > 0) {
       return (
         <div>
-          <h3> Parameters: </h3>
-          {this.buildInputs(this.state.params.map(p => p.name))}
+          <h3>Parameters:</h3>
+          {this.buildInputs(this.state.params.map(p => p))}
         </div>
       );
     } else {
@@ -232,8 +292,8 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     if (this.state.requestBodyProperties.length > 0) {
       return (
         <div>
-          <h3> Request Body: </h3>
-          {this.buildInputs(this.state.requestBodyProperties.map(p => p.name))}
+          <h3>Request Body:</h3>
+          {this.buildRequestBodyInputs(this.state.requestBodyProperties.map(p => p))}
         </div>
       );
     } else {
@@ -250,12 +310,22 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
     return spec.swagger === '2.0';
   }
 
-  public authParameterContainer(): JSX.Element {
-    const security = this.security() ?? [{}];
-    if (Object.keys(security[0]).includes('apikey')) {
+  public authParameterContainer(): JSX.Element | null {
+    const sandboxAccessUrl = location.pathname.replace('/docs', '/sandbox-access');
+    const bearerSecurityTypes = ['oauth2', 'openIdConnect', 'http'];
+    const securityItems = this.security() ?? [{}];
+    const securityTypes = securityItems
+      .flatMap((item: { [schemeName: string]: string[] }): string[] => {
+        const { securitySchemes } = (this.jsonSpec() as unknown as OpenAPISpecV3).components;
+        return Object.keys(item).map(
+          (key: string): string => (securitySchemes[key] as SecuritySchemeDefinition).type,
+        );
+      })
+      .filter((value, index, self) => self.indexOf(value) === index);
+    if (securityTypes.includes('apiKey')) {
       return (
         <div>
-          <h3> API Key: </h3>
+          <h3>API Key:</h3>
           <div>
             <input
               aria-label="Enter API Key"
@@ -265,15 +335,15 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               }}
             />
             <small>
-              Don&apos;t have an API Key? <a href="/apply"> Get One </a>
+              Don&apos;t have an API Key? <a href={sandboxAccessUrl}> Get One </a>
             </small>
           </div>
         </div>
       );
-    } else {
+    } else if (bearerSecurityTypes.filter(value => securityTypes.includes(value)).length > 0) {
       return (
         <div>
-          <h3> Bearer Token: </h3>
+          <h3>Bearer Token:</h3>
           <div>
             <input
               aria-label="Enter Bearer Token"
@@ -283,12 +353,13 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               }}
             />
             <small>
-              Don&apos;t have an API Key? <a href="/apply"> Get One </a>
+              Don&apos;t have an API Key? <a href={sandboxAccessUrl}> Get One </a>
             </small>
           </div>
         </div>
       );
     }
+    return null;
   }
 
   public environmentOptions(): JSX.Element[] {
@@ -368,22 +439,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               <br />
               <h3>Generated Curl</h3>
               <div className="opblock-body">
-                <CodeWrapper>
-                  <pre
-                    className={classNames(
-                      'vads-u-display--flex',
-                      'vads-u-justify-content--space-between',
-                    )}
-                  >
-                    <code>{this.buildCurl()}</code>
-
-                    <CopyToClipboard text={this.buildCurl()}>
-                      <span className="va-api-curl__copy-to-clipboard">
-                        <FontAwesomeIcon icon={faCopy} size="2x" />
-                      </span>
-                    </CopyToClipboard>
-                  </pre>
-                </CodeWrapper>
+                <CodeBlock withCopyButton code={this.buildCurl()} />
               </div>
             </div>
           </div>

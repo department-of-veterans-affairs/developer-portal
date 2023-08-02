@@ -1,0 +1,127 @@
+name: Build Pull Request Deployment Packages
+
+on:
+  pull_request:
+    branches: [master, api-11566/information-architecture]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+env:
+  S3_REVIEW_BUCKET: review-developer-va-gov
+  PREVIEW_SENTRY_DSN: http://dc7d5ebec20e474c80f8150c399d2955@sentry.vfs.va.gov/26
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    outputs:
+      hash: ${{ steps.githash.outputs.hash }}
+      pr_number: ${{ steps.pr_number.outputs.pr }}
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
+
+      - id: pr_number
+        name: Get PR Number
+        run: |
+          PR_NUMBER=`printf $GITHUB_REF | sed 's|refs/pull/||' | sed 's|/merge||'`
+          echo $PR_NUMBER
+          echo "pr=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+      - id: githash
+        name: Set git hash
+        run: |
+          GIT_HASH=$(/bin/bash -c "git log --oneline | cut -f3 -d \" \" | cut -c1-7")
+          echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Install dependencies
+        run: npm ci
+
+  pr_builds:
+    needs: [install]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: ['dev', 'staging', 'production']
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Print env
+        run: printenv
+
+      - name: Run Build
+        env:
+          NODE_ENV: production
+          BUILD_ENV: ${{matrix.environment}}
+          REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
+        run: |
+          echo "PUBLIC_URL=/gha-$REACT_APP_COMMIT_HASH/$BUILD_ENV" > .env.$BUILD_ENV.local
+          echo "REACT_APP_SENTRY_DSN=$PREVIEW_SENTRY_DSN" >> .env.$BUILD_ENV.local
+          npm run build $BUILD_ENV
+
+      - name: Add deploy.json
+        env:
+          BUILD_ENV: ${{matrix.environment}}
+          REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
+          PR_NUMBER: ${{needs.install.outputs.pr_number}}
+        run: |
+          date > ./current-date
+          echo '{' > build/$BUILD_ENV/deploy.json
+          echo "  \"environment\": \"$BUILD_ENV\"," >> build/$BUILD_ENV/deploy.json
+          echo "  \"date\": \"$( cat current-date )\"," >> build/$BUILD_ENV/deploy.json
+          echo "  \"commit\": \"$REACT_APP_COMMIT_HASH\"," >> build/$BUILD_ENV/deploy.json
+          echo "  \"pr\": \"$PR_NUMBER\"" >> build/$BUILD_ENV/deploy.json
+          echo '}' >> build/$BUILD_ENV/deploy.json
+          rm ./current-date
+          cat build/$BUILD_ENV/deploy.json
+
+      - name: Add LPB legacy.json and dummy reponses
+        env:
+          BUILD_ENV: ${{matrix.environment}}
+          REACT_APP_COMMIT_HASH: ${{needs.install.outputs.hash}}
+        run: |
+          LPB_HOST="https://$BUILD_ENV-developer.va.gov"
+          if [ "$BUILD_ENV" == "production" ]; then
+            LPB_HOST='https://developer.va.gov'
+          fi
+          wget "$LPB_HOST/platform-backend/v0/providers/transformations/legacy.json?environment=sandbox" -O legacy.json
+          mkdir -p build/$BUILD_ENV/platform-backend/v0/providers/transformations
+          mkdir -p build/$BUILD_ENV/platform-backend/v0/consumers
+          mkdir -p build/$BUILD_ENV/platform-backend/v0/support/contact-us
+          mv legacy.json build/$BUILD_ENV/platform-backend/v0/providers/transformations/
+          cp cypress/fixtures/applications-post.json build/$BUILD_ENV/platform-backend/v0/consumers/applications
+          touch build/$BUILD_ENV/platform-backend/v0/support/contact-us/requests
+          touch build/$BUILD_ENV/platform-backend/v0/consumers/production-requests
+
+      - name: Save builds as GitHub Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: pr-builds
+          path: build

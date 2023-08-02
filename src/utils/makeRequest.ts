@@ -40,12 +40,17 @@ const sentryErrorLogger = (error: string, errorID: string, endpointUrl: string):
 };
 
 // Handles non network errors (response not ok and status not 200) and logs them to Sentry
-const handleNonNetworkError =  async (url: string, requestId: string,  type: string, response: Response): Promise<HttpErrorResponse> => {
+const handleNonNetworkError = async (
+  url: string,
+  requestId: string,
+  type: string,
+  response: Response,
+): Promise<HttpErrorResponse> => {
   // Tries to resolve the response to obtain error details
-  let responseBody:  Record<string, unknown> | null | string = null;
+  let responseBody: Record<string, unknown> | null | string = null;
 
   if (response.headers.get('Content-type')?.includes('application/json')) {
-    responseBody = await response.json() as Record<string, unknown>;
+    responseBody = (await response.json()) as Record<string, unknown>;
   } else {
     responseBody = await response.text();
   }
@@ -68,40 +73,51 @@ const handleNonNetworkError =  async (url: string, requestId: string,  type: str
 };
 
 // Fetch common logic
-export const makeRequest = <T extends unknown>(url: string, requestInit: RequestInit, config: CallFetchConfig = { responseType: ResponseType.JSON }): Promise<HttpResponse<T>> => new Promise((resolve, reject) => {
-  const request = new Request(url, requestInit);
-  const requestId: string = uuidv4();
+export const makeRequest = <T>(
+  url: string,
+  requestInit: RequestInit,
+  config: CallFetchConfig = { responseType: ResponseType.JSON },
+): Promise<HttpResponse<T>> =>
+  new Promise((resolve, reject) => {
+    const request = new Request(url, requestInit);
+    const requestId: string = uuidv4();
 
-  // Common Headers
-  request.headers.append('X-Request-ID', requestId);
+    // Common Headers
+    request.headers.append('X-Request-ID', requestId);
 
-  fetch(request).then(async response => {
-    if (response.ok) {
-      const httpResponse: Partial<HttpResponse<T>> = {
-        ok: response.ok,
-        status: response.status,
-      };
+    fetch(request)
+      .then(async response => {
+        if (response.ok) {
+          const httpResponse: Partial<HttpResponse<T>> = {
+            ok: response.ok,
+            status: response.status,
+          };
 
-      if (config.responseType === ResponseType.JSON) {
-        httpResponse.body = await response.json() as T;
-      }
+          if (config.responseType === ResponseType.JSON) {
+            httpResponse.body = (await response.json()) as T;
+          }
 
-      if (config.responseType === ResponseType.TEXT) {
-        httpResponse.body = await response.text() as T;
-      }
+          if (config.responseType === ResponseType.TEXT) {
+            httpResponse.body = (await response.text()) as T;
+          }
 
-      if (config.responseType === ResponseType.BLOB) {
-        httpResponse.body = await response.blob() as T;
-      }
+          if (config.responseType === ResponseType.BLOB) {
+            httpResponse.body = (await response.blob()) as T;
+          }
 
-      return resolve(httpResponse as HttpResponse<T>);
-    } else {
-      const errorResponse =  await handleNonNetworkError(url, requestId, config.responseType, response);
-      return reject(errorResponse);
-    }
-  })
-    .catch(error => {
-      sentryErrorLogger(error, requestId, url);
-      return reject(new Error(error));
-    });
-});
+          return resolve(httpResponse as HttpResponse<T>);
+        } else {
+          const errorResponse = await handleNonNetworkError(
+            url,
+            requestId,
+            config.responseType,
+            response,
+          );
+          return reject(errorResponse);
+        }
+      })
+      .catch((error: string) => {
+        sentryErrorLogger(error, requestId, url);
+        return reject(new Error(error));
+      });
+  });

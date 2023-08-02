@@ -1,0 +1,123 @@
+name: Cypress e2e and Accessibility tests
+
+on:
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+env:
+  REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001
+
+jobs:
+  end-to-end:
+    runs-on: ubuntu-latest
+    container: cypress/included:12.8.1
+    outputs:
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          env
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Install python and openssh-client env
+        run: |
+          apt update && apt install openssh-client python3 -y && ln -s /usr/bin/python3 /usr/bin/python
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Start Fake LPB Server
+        run: ./scripts/fake_lpb.sh
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install-command: npm ci
+          start: npm start
+          wait-on: http://localhost:3001
+          wait-on-timeout: 180
+
+      - name: Upload failed screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Upload failed videos
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+
+  accessibility:
+    runs-on: ubuntu-latest
+    container: cypress/included:12.8.1
+    env:
+      CYPRESS_SINGLE_SPEC: true
+    outputs:
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          env
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Install python and openssh-client env
+        run: |
+          apt update && apt install openssh-client python3 -y && ln -s /usr/bin/python3 /usr/bin/python
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Start Fake LPB Server
+        run: ./scripts/fake_lpb.sh
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          install-command: npm ci
+          spec: cypress/e2e/accessibility.cy.js
+          start: npm start
+          wait-on: http://localhost:3001
+          wait-on-timeout: 180
+
+      - name: Upload failed screenshots
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Upload failed videos
+        uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: cypress-videos
+          path: cypress/videos

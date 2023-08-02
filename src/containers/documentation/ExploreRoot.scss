@@ -1,0 +1,129 @@
+@import '../../styles/variables';
+
+.filter-controls {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.explore-root-container {
+  padding: 2rem 1rem 0;
+
+  .header-sub-text {
+    font-weight: 400;
+  }
+}
+
+@include media($medium-screen) {
+  .explore-root-container {
+    padding: 2rem 3.2rem 0;
+  }
+}
+
+@include media($medium-screen) {
+  .explore-root-container {
+    padding: 2rem 3.2rem 0;
+  }
+}
+
+.explore-main-container {
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 0.8rem 0 2.4rem 0;
+}
+
+.explore-end-of-list {
+  font-family: 'Helvetica Neue';
+  font-size: 1.6rem;
+  font-style: italic;
+  letter-spacing: 0.25px;
+  line-height: 1.4rem;
+  margin-bottom: 11.6rem;
+  text-align: center;
+}
+
+#explore-page-fuzzy-search {
+  align-items: center;
+  background-color: $color-gray-light-alt;
+  box-shadow: 0px -1px 12px 1px rgba(0, 0, 0, 0.2);
+  display: flex;
+  padding: 1.2rem 1.6rem;
+
+  input {
+    border: 1px solid transparent;
+    border-radius: 5px 0 0 5px;
+    display: inline-block;
+  }
+
+  button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 1rem;
+    height: 42px;
+    width: 47px;
+    border-radius: 0 5px 5px 0;
+  }
+}
+
+.explore-filter-form {
+  background-color: $color-white;
+}
+
+.explore-filter-button {
+  background-color: $color-gray-light-alt !important;
+  border-radius: 0 !important;
+  color: $color-primary-darkest !important;
+  margin: 0 !important;
+  position: relative;
+  padding: 1.6rem !important;
+  border-top: 1px solid $color-primary-darkest !important;
+  width: 100% !important;
+}
+
+@include media($medium-screen) {
+  #explore-page-fuzzy-search {
+    box-shadow: unset;
+    min-width: 25.4rem;
+  }
+
+  .explore-filter-button {
+    background-color: $color-white !important;
+    border-radius: 3px !important;
+    color: $color-gray !important;
+    display: inline-flex !important;
+    margin: 0 !important;
+    padding: 12px 8px !important;
+    position: relative;
+    width: 16rem !important;
+    border: 0 !important;
+  }
+
+  .explore-filter-form {
+    background-color: unset;
+    position: relative;
+  }
+
+  .filter-topic-container {
+    background-color: $color-white;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 10px;
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    z-index: 1000;
+  }
+}
+
+.filter-button-caret {
+  position: absolute;
+  right: 1.6rem;
+}
+
+@include media($small-desktop-screen) {
+  #explore-page-fuzzy-search {
+    width: 30rem;
+  }
+
+  .explore-filter-button {
+    width: 21.4rem !important;
+  }
+}

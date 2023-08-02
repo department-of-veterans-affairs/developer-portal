@@ -4,22 +4,28 @@
     "outDir": "build/dist",
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "es2017", "esnext.array", "dom"],
+    "lib": ["es6", "es2019", "esnext.array", "dom"],
     "sourceMap": true,
     "allowJs": true,
+    "ignoreDeprecations": "5.0",
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "src",
+    "rootDirs": ["src", "cypress/fixtures"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
+    "paths": {
+      "@department-of-veterans-affairs/sandbox-access-form": [
+        "@department-of-veterans-affairs/sandbox-access-form/lib"
+      ]
+    },
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["src/e2eHelpers.ts"]
+  "include": ["src/**/*", "cypress.config.ts"],
+  "exclude": ["src/testHelpers.ts"]
 }

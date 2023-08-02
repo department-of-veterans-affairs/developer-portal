@@ -1,0 +1,41 @@
+.code-wrapper {
+  position: relative;
+
+  & > pre {
+    padding: 1.6rem 1.3rem;
+    margin: 0;
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  &:after {
+    content: '';
+    height: 100%;
+    width: 20px;
+    background: linear-gradient(270deg, #222935, transparent);
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    border-radius: inherit;
+  }
+
+  code {
+    background-color: unset !important;
+    color: unset !important;
+    border-radius: inherit;
+    font-family: 'Ubuntu Mono', monospace;
+    font-weight: 400 !important;
+    max-height: 400px;
+  }
+
+  span.linenumber {
+    color: #AEB0B5;
+  }
+
+  @media (min-width: 1008px) {
+    code {
+      font-size: 1.6rem;
+    }
+  }
+}

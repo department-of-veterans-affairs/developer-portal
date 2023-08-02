@@ -1,0 +1,113 @@
+name: NPM Checks
+
+on:
+  pull_request:
+    branches: [master, api-11566/information-architecture]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    outputs:
+      hash: ${{ steps.githash.outputs.hash }}
+      pr_number: ${{ steps.pr_number.outputs.pr }}
+      node_version: ${{ steps.node_version.outputs.node_version }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - id: node_version
+        name: Set Node Version to ENV
+        run: |
+          NODE_VERSION=$(node -v)
+          echo $NODE_VERSION
+          echo "node_version=$NODE_VERSION" >> $GITHUB_OUTPUT
+
+      - id: pr_number
+        name: Get PR Number
+        run: |
+          PR_NUMBER=`printf $GITHUB_REF | sed 's|refs/pull/||' | sed 's|/merge||'`
+          echo $PR_NUMBER
+          echo "pr=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+      - id: githash
+        name: Set git hash
+        run: |
+          GIT_HASH=$(/bin/bash -c "git log --oneline | cut -f3 -d \" \" | cut -c1-7")
+          echo $GIT_HASH
+          echo "hash=$GIT_HASH" >> $GITHUB_OUTPUT
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Install dependencies
+        run: npm ci
+
+  unit:
+    needs: [install]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run test
+        run: npm run test:unit:ci
+
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run test
+        run: npm audit --production --audit-level high
+
+  lint:
+    needs: [install]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Add private key for sandbox-access-form repo
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run test
+        run: npm run lint
+
+  images:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run test
+        run: ./prohibit_image_files.sh origin/master HEAD

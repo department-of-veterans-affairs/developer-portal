@@ -1,23 +1,26 @@
 /* eslint-disable @typescript-eslint/no-dynamic-delete, id-length, max-lines */
 import React, { FC, useState } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useCookies } from 'react-cookie';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
-import Modal from '@department-of-veterans-affairs/component-library/Modal';
-import SegmentedProgressBar from '@department-of-veterans-affairs/component-library/SegmentedProgressBar';
-import AlertBox from '@department-of-veterans-affairs/component-library/AlertBox';
+import Modal from 'component-library-legacy/Modal';
+import { VaSegmentedProgressBar } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, useHistory } from 'react-router-dom';
 // import Icon508 from '../../assets/508-compliant.svg';
+import { NavHashLink } from 'react-router-hash-link';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
-import { useFlag } from '../../flags';
 import { useModalController } from '../../hooks';
 import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
-import { FLAG_LIST_AND_LOOP, PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
+import vaLogo from '../../assets/VaSeal.png';
+import hiFive from '../../assets/high-five.svg';
+import { LPB_FORGERY_TOKEN, LPB_PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
+import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -34,8 +37,13 @@ const possibleSteps = [
   'Policy governance',
 ];
 
+const STEP_HEADING_ID = 'form-step-heading';
+
 export interface Values {
   apis: string[];
+  oAuthApplicationType?: string;
+  oAuthPublicKey?: string;
+  oAuthRedirectURI?: string;
   is508Compliant?: string;
   isUSBasedCompany?: string;
   termsOfService?: boolean;
@@ -50,7 +58,7 @@ export interface Values {
     email: string;
   };
   organization: string;
-  phoneNumber: string;
+  phoneNumber?: string;
   appName: string;
   monitizedVeteranInformation: string;
   monitizationExplanation?: string;
@@ -60,13 +68,11 @@ export interface Values {
   appDescription: string;
   vasiSystemName: string;
   applicationName?: string;
-  // statusUpdateEmails, signUpLink, supportLink, policyDocuments can be either a single value or
-  // an array until the list and loop component is created
-  statusUpdateEmails: string | string[];
+  statusUpdateEmails: string[];
   valueProvided: string;
   businessModel?: string;
-  signUpLink: string | string[];
-  supportLink: string | string[];
+  signUpLink: string;
+  supportLink: string;
   storePIIOrPHI: string;
   piiStorageMethod: string;
   multipleReqSafeguards: string;
@@ -81,8 +87,8 @@ export interface Values {
   listedOnMyHealthApplication: string;
   productionKeyCredentialStorage: string;
   productionOrOAuthKeyCredentialStorage: string;
-  veteranFacingDescription: string;
-  policyDocuments: string | string[];
+  privacyPolicyURL?: string;
+  termsOfServiceURL?: string;
 }
 
 const initialValues: Values = {
@@ -101,16 +107,19 @@ const initialValues: Values = {
   monitizedVeteranInformation: '',
   multipleReqSafeguards: '',
   namingConvention: '',
+  oAuthApplicationType: '',
+  oAuthPublicKey: '',
+  oAuthRedirectURI: '',
   organization: '',
   phoneNumber: '',
   piiStorageMethod: '',
   platforms: '',
-  policyDocuments: '',
   primaryContact: {
     email: '',
     firstName: '',
     lastName: '',
   },
+  privacyPolicyURL: '',
   productionKeyCredentialStorage: '',
   productionOrOAuthKeyCredentialStorage: '',
   scopesAccessRequested: '',
@@ -120,38 +129,23 @@ const initialValues: Values = {
     lastName: '',
   },
   signUpLink: '',
-  statusUpdateEmails: '',
+  statusUpdateEmails: [''],
   storePIIOrPHI: '',
   supportLink: '',
   termsOfService: false,
+  termsOfServiceURL: '',
   thirdPartyInfoDescription: '',
   valueProvided: '',
   vasiSystemName: '',
   veteranFacing: '',
-  veteranFacingDescription: '',
   vulnerabilityManagement: '',
   website: '',
 };
 
-// temporary until the list and loop component is done
-const getInitialValues = (isListAndLoopEnabled: boolean): Values => {
-  if (isListAndLoopEnabled) {
-    return {
-      ...initialValues,
-      policyDocuments: [''],
-      signUpLink: [''],
-      statusUpdateEmails: [''],
-      supportLink: [''],
-    };
-  }
-
-  return initialValues;
-};
-
-const renderStepContent = (step: number, hasPassedStep1: boolean): JSX.Element => {
+const renderStepContent = (step: number): JSX.Element => {
   switch (step) {
     case 0:
-      return <Verification hasPassedStep={hasPassedStep1} />;
+      return <Verification />;
     case 1:
       return <BasicInformation />;
     case 2:
@@ -176,17 +170,15 @@ const handleSubmitButtonClick = (): void => {
 const ProductionAccess: FC = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
-  const [passedStep1, setPassedStep1] = useState(false); // for focus handling of step 1
   const [steps, setSteps] = useState(possibleSteps);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
+  const setCookie = useCookies(['CSRF-TOKEN'])[1];
 
   const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
   const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
-
   const history = useHistory();
-  const isListAndLoopEnabled = useFlag([FLAG_LIST_AND_LOOP]);
 
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
@@ -249,12 +241,17 @@ const ProductionAccess: FC = () => {
       setModal1Visible(true);
     } else {
       setActiveStep(activeStep - 1);
+      setTimeout(() => {
+        // focus on h2 after moving to previous step
+        const stepHeading = document.getElementById(STEP_HEADING_ID);
+        stepHeading?.focus();
+      }, 0);
     }
   };
+
   const handleSubmit = async (values: Values, actions: FormikHelpers<Values>): Promise<void> => {
     if (isLastStep) {
       setSubmissionError(false);
-      delete values.is508Compliant;
       delete values.isUSBasedCompany;
       delete values.termsOfService;
       // Removing the blank optional values from the request body
@@ -266,6 +263,17 @@ const ProductionAccess: FC = () => {
         // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         key => filteredValues[key] == null && delete filteredValues[key],
       );
+
+      const policyDocuments =
+        filteredValues.termsOfServiceURL && filteredValues.privacyPolicyURL
+          ? [filteredValues.termsOfServiceURL, filteredValues.privacyPolicyURL]
+          : undefined;
+
+      // delete privacyPolicyURL and termsOfServiceURL because the backend doesn't accept them,
+      // instead it uses the policyDocuments array.
+      delete filteredValues.privacyPolicyURL;
+      delete filteredValues.termsOfServiceURL;
+
       const applicationBody: ProductionAccessRequest = {
         ...filteredValues,
         apis: filteredValues.apis.join(','),
@@ -273,23 +281,16 @@ const ProductionAccess: FC = () => {
           filteredValues.distributingAPIKeysToCustomers === yesOrNoValues.Yes,
         exposeVeteranInformationToThirdParties:
           filteredValues.exposeVeteranInformationToThirdParties === yesOrNoValues.Yes,
+        is508Compliant: filteredValues.is508Compliant === yesOrNoValues.Yes,
         listedOnMyHealthApplication:
           filteredValues.listedOnMyHealthApplication === yesOrNoValues.Yes,
         monitizedVeteranInformation:
           filteredValues.monitizedVeteranInformation === yesOrNoValues.Yes,
-        policyDocuments: Array.isArray(filteredValues.policyDocuments)
-          ? filteredValues.policyDocuments
-          : [filteredValues.policyDocuments],
-        signUpLink: Array.isArray(filteredValues.signUpLink)
-          ? filteredValues.signUpLink
-          : [filteredValues.signUpLink],
-        statusUpdateEmails: Array.isArray(filteredValues.statusUpdateEmails)
-          ? filteredValues.statusUpdateEmails
-          : [filteredValues.statusUpdateEmails],
+        policyDocuments,
+        signUpLink: [filteredValues.signUpLink],
+        statusUpdateEmails: filteredValues.statusUpdateEmails,
         storePIIOrPHI: filteredValues.storePIIOrPHI === yesOrNoValues.Yes,
-        supportLink: Array.isArray(filteredValues.supportLink)
-          ? filteredValues.supportLink
-          : [filteredValues.supportLink],
+        supportLink: [filteredValues.supportLink],
         veteranFacing: filteredValues.veteranFacing === yesOrNoValues.Yes,
       };
       // The backend cannont accept null values, so this is to remove blank optional fields that are null because of the filtering above
@@ -300,11 +301,18 @@ const ProductionAccess: FC = () => {
         }
       });
       try {
+        setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
+          path: LPB_PRODUCTION_ACCESS_URL,
+          sameSite: 'strict',
+          secure: true,
+        });
+
         await makeRequest(
-          PRODUCTION_ACCESS_URL,
+          LPB_PRODUCTION_ACCESS_URL,
           {
             body: JSON.stringify(applicationBody),
             headers: {
+              'X-Csrf-Token': LPB_FORGERY_TOKEN,
               accept: 'application/json',
               'content-type': 'application/json',
             },
@@ -331,9 +339,13 @@ const ProductionAccess: FC = () => {
 
       calculateSteps(values);
       setActiveStep(activeStep + 1);
-      setPassedStep1(true); // any time we submit successfully we know we've been through step 1
       actions.setTouched({});
       actions.setSubmitting(false);
+      setTimeout(() => {
+        // focus on h2 after moving to next step
+        const stepHeading = document.getElementById(STEP_HEADING_ID);
+        stepHeading?.focus();
+      }, 0);
     }
   };
 
@@ -349,7 +361,7 @@ const ProductionAccess: FC = () => {
       <div className="vads-l-row">
         <div className={classNames('vads-l-col--12', 'vads-u-padding-x--2p5')}>
           <Formik
-            initialValues={getInitialValues(isListAndLoopEnabled)}
+            initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={currentValidationSchema}
             validateOnBlur={false}
@@ -358,18 +370,40 @@ const ProductionAccess: FC = () => {
             <Form noValidate>
               {activeStep === 0 ? (
                 <>
-                  <SegmentedProgressBar current={1} total={4} />
-                  <h2 className="vads-u-font-size--h4">Step 1: Verification</h2>
+                  <VaSegmentedProgressBar
+                    current={1}
+                    total={4}
+                    ariaLabel="Step 1. There will be 1 to 3 more steps depending on the APIs you select."
+                  />
+                  <h2
+                    id={STEP_HEADING_ID}
+                    className={classNames(
+                      'vads-u-font-size--h4',
+                      'vads-u-display--inline-block',
+                      'vads-u-margin-bottom--0',
+                    )}
+                    tabIndex={-1}
+                  >
+                    Step 1: Verification
+                  </h2>
                 </>
               ) : (
                 <>
-                  <SegmentedProgressBar current={activeStep + 1} total={steps.length} />
-                  <h2 className="vads-u-font-size--h4">
+                  <VaSegmentedProgressBar current={activeStep + 1} total={steps.length} />
+                  <h2
+                    id={STEP_HEADING_ID}
+                    className={classNames(
+                      'vads-u-font-size--h4',
+                      'vads-u-display--inline-block',
+                      'vads-u-margin-bottom--0',
+                    )}
+                    tabIndex={-1}
+                  >
                     {`Step ${activeStep + 1} of ${steps.length}: ${steps[activeStep]}`}
                   </h2>
                 </>
               )}
-              {renderStepContent(activeStep, passedStep1)}
+              {renderStepContent(activeStep)}
               <div className="vads-u-margin-y--5">
                 <button
                   className={classNames(
@@ -422,7 +456,7 @@ const ProductionAccess: FC = () => {
             visible={modal1Visible}
             onClose={(): void => setModal1Visible(false)}
             primaryButton={{
-              action: (): void => history.goBack(),
+              action: (): void => history.push(CONSUMER_PROD_PATH),
               text: 'Yes, leave',
             }}
             secondaryButton={{
@@ -437,9 +471,23 @@ const ProductionAccess: FC = () => {
             title="Thank you for your interest!"
             visible={modal2Visible}
             onClose={(): void => setModal2Visible(false)}
+            primaryButton={{
+              action: (): void => history.goBack(),
+              text: 'Close form',
+            }}
+            classNames={['vads-u-text-align--center']}
           >
-            We currently only grant access to US-based companies. You may contact us if you have any
-            questions.
+            <img
+              src={vaLogo}
+              width={220}
+              alt="Department of Veterans Affairs logo"
+              aria-label="Department of Veterans Affairs logo"
+            />
+            <p>
+              We currently only grant access to US-based companies. You may{' '}
+              <NavHashLink to={SUPPORT_CONTACT_PATH}>contact us</NavHashLink> if you have any
+              questions.
+            </p>
           </Modal>
           {/* <Modal508Compliant /> */}
           <Modal
@@ -455,32 +503,31 @@ const ProductionAccess: FC = () => {
               text: 'Close',
             }}
           >
+            <img
+              src={hiFive}
+              width={220}
+              alt="High five clip art"
+              aria-label="High five clip art"
+            />
             <p>
-              We’ve received your production access request and have sent you an email confirmation.
-              We’ll be in touch with next steps or required changes within 1-2 weeks, depending on
-              the API.
-            </p>
-            <p>
-              It’s good to remember that getting production access can take over a month. For open
-              data APIs, this takes a week or less. Learn more about the production access
-              timelines.
-            </p>
-            <p>
-              In the meantime, you may <Link to="/support/contact-us">contact us </Link>if you have
-              any questions or learn more about working with our APIs.
+              <strong>
+                We’ve received your production access request and have sent you an email
+                confirmation.
+              </strong>
+              <br />
+              We’ll be in touch with the next steps or required changes.
             </p>
           </Modal>
           {submissionError && (
-            <AlertBox
-              status="error"
-              headline="We encountered a server error while saving your form. Please try again later."
-              content={
-                <span>
-                  Need assistance? Create an issue through our{' '}
-                  <Link to="/support">Support page.</Link>
-                </span>
-              }
-            />
+            <va-alert background-only show-icon status="error" visible>
+              <p className="vads-u-margin-y--0">
+                We encountered a server error while saving your form. Please try again later.
+              </p>
+              <p className="vads-u-margin-top--1">
+                Need assistance? Create an issue through our <Link to="/support">Support page</Link>
+                .
+              </p>
+            </va-alert>
           )}
         </div>
       </div>

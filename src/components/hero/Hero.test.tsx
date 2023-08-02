@@ -20,20 +20,16 @@ describe('Hero', () => {
     expect(heroImage).toHaveAttribute('src', logoImage.default);
   });
 
-  it('contains a link to apply page', () => {
-    const apiLink = screen.getByRole('link', { name: 'Request an API Key' });
-    expect(apiLink).toBeInTheDocument();
-    expect(apiLink).toHaveAttribute('href', '/apply');
-  });
-
   it('checks h1 text', () => {
-    const desiredText = 'A Veteran-centered API platform for securely accessing VA data';
+    const desiredText = 'Access VA APIs to build tools that best serve Veterans';
     const heroText = screen.getByText(desiredText);
     expect(heroText).toBeInTheDocument();
     expect(heroText).toHaveClass(
       'vads-u-color--white',
       'vads-u-font-size--h2',
       'small-desktop-screen:vads-u-font-size--h1',
+      'vads-u-margin-top--1',
+      'medium-screen:vads-u-margin-top--4',
     );
   });
 });

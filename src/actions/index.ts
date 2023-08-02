@@ -1,6 +1,7 @@
 import { Action, ActionCreator } from 'redux';
 import { VersionMetadata } from '../types';
 import * as constants from '../types/constants';
+import { APICategories, APICategory, APIDescription } from '../apiDefs/schema';
 
 export interface ResetVersioning extends Action {
   type: constants.RESET_VERSIONING;
@@ -18,13 +19,25 @@ export interface SetVersioning extends Action {
   versions: VersionMetadata[] | null;
 }
 
-export interface ResetOAuthAPISelection extends Action {
-  type: constants.RESET_OAUTH_API_SELECTION;
+export interface ResetAPIs extends Action {
+  type: constants.RESET_APIS;
 }
 
-export interface SetOAuthAPISelection extends Action {
-  type: constants.SET_OAUTH_API_SELECTION;
-  selectedOAuthApi: string;
+export interface SetAPIs extends Action {
+  type: constants.SET_APIS;
+  apis: APICategories;
+  loaded: boolean;
+  error: boolean;
+}
+
+export interface ResetGeneralStore extends Action {
+  type: constants.RESET_GENERAL_STORE;
+}
+
+export interface SetGeneralStore extends Action {
+  type: constants.SET_GENERAL_STORE;
+  vaNetworkConnected: boolean;
+  vaNetworkModal: boolean;
 }
 
 export const resetVersioning: ActionCreator<ResetVersioning> = () => ({
@@ -47,13 +60,53 @@ export const setVersioning: ActionCreator<SetVersioning> = (
   versions,
 });
 
-export const resetOAuthApiSelection: ActionCreator<ResetOAuthAPISelection> = () => ({
-  type: constants.RESET_OAUTH_API_SELECTION_VALUE,
+export const setApis: ActionCreator<SetAPIs> = (apis: APICategories) => {
+  // This is necessary because the typing doesn't allow for conditions to check
+  // if apis.appeals.apis doesn't exist. Without this, unit tests that use
+  // fakeCategories fail because appeals.apis doesn't exist.
+  // This can be removed after a migration post IA launch merges the categories
+  // within LPB itself.
+  try {
+    const vaBenefitsCategory: APICategory = {
+      ...apis.benefits,
+      apis: apis.appeals.apis.concat(apis.benefits.apis),
+      name: 'VA Benefits',
+      properName: 'VA Benefits',
+      urlSlug: 'va-benefits',
+    };
+    delete apis.appeals;
+    delete apis.benefits;
+    apis['va-benefits'] = vaBenefitsCategory;
+  } catch (e: unknown) {}
+  const keys = Object.keys(apis);
+  keys.forEach((category: string) => {
+    apis[category].apis = apis[category].apis.map((item: APIDescription) => ({
+      ...item,
+      categoryUrlFragment: category,
+      categoryUrlSlug: apis[category].urlSlug,
+    }));
+  });
+
+  return {
+    apis,
+    error: false,
+    loaded: true,
+    type: constants.SET_APIS_VALUE,
+  };
+};
+
+export const setApiLoadingError: ActionCreator<SetAPIs> = () => ({
+  apis: {},
+  error: true,
+  loaded: false,
+  type: constants.SET_APIS_VALUE,
 });
 
-export const setOAuthApiSelection: ActionCreator<SetOAuthAPISelection> = (
-  selectedOAuthApi: string,
+export const setGeneralStore: ActionCreator<SetGeneralStore> = (
+  vaNetworkModal: boolean,
+  vaNetworkConnected: boolean,
 ) => ({
-  selectedOAuthApi,
-  type: constants.SET_OAUTH_API_SELECTION_VALUE,
+  type: constants.SET_GENERAL_STORE_VALUE,
+  vaNetworkConnected,
+  vaNetworkModal,
 });

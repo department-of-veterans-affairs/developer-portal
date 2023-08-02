@@ -11,9 +11,7 @@ describe('VersionReducers', () => {
           payload: '2.0.0',
           type: 'API_VERSION_SET',
         }),
-      ).toStrictEqual(
-        Map<string, string>({ apiVersion: '2.0.0' }),
-      );
+      ).toStrictEqual(Map<string, string>({ apiVersion: '2.0.0' }));
     });
   });
 
@@ -37,6 +35,7 @@ describe('VersionReducers', () => {
               healthcheck: '/services/basic/v2/healthcheck',
               internal_only: false,
               path: '/basic/v2/path',
+              sf_path: '/basic/v2/path',
               status: 'draft Version',
               version: '2.0.0',
             },
@@ -50,6 +49,7 @@ describe('VersionReducers', () => {
               healthcheck: '/services/basic/v2/healthcheck',
               internal_only: false,
               path: '/basic/v2/path',
+              sf_path: '/basic/v2/path',
               status: 'draft Version',
               version: '2.0.0',
             },

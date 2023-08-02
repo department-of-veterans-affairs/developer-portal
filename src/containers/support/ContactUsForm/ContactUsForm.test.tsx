@@ -31,15 +31,6 @@ describe('SupportContactUsFormPublishing', () => {
     expect(screen.getByRole('textbox', { name: /Organization/ })).toBeInTheDocument();
   });
 
-  describe('form is missing required fields', () => {
-    beforeEach(() => {
-      renderComponent();
-    });
-    it('disables the submit button', () => {
-      expect(screen.getByRole('button', { name: 'Submit' })).toBeDisabled();
-    });
-  });
-
   describe('form type', () => {
     describe('default is consumer', () => {
       beforeEach(() => {
@@ -79,13 +70,13 @@ describe('SupportContactUsFormPublishing', () => {
 
         it('enables the submit button', async () => {
           await waitFor(() => {
-            expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled();
+            expect(screen.getByRole('button', { name: 'Send to developer support' })).toBeEnabled();
           });
         });
 
         describe('submitting the form', () => {
           beforeEach(async () => {
-            userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+            userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
             expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
           });
           it('sends the values', async () => {
@@ -99,10 +90,11 @@ describe('SupportContactUsFormPublishing', () => {
             });
             await waitFor(() => {
               expect(mockMakeRequest).toHaveBeenCalledWith(
-                'http://fake.va.gov/internal/developer-portal/public/contact-us',
+                '/platform-backend/v0/support/contact-us/requests',
                 {
                   body: expect.stringContaining('"email":"fbag@bagend.com"') as unknown,
                   headers: {
+                    'X-Csrf-Token': expect.not.stringContaining('unknown-string-here') as unknown,
                     accept: 'application/json',
                     'content-type': 'application/json',
                   },
@@ -112,7 +104,9 @@ describe('SupportContactUsFormPublishing', () => {
               );
             });
             expect(mockOnSuccess).toHaveBeenCalled();
-            expect(await screen.findByRole('button', { name: 'Submit' })).toBeInTheDocument();
+            expect(
+              await screen.findByRole('button', { name: 'Send to developer support' }),
+            ).toBeInTheDocument();
           });
         });
 
@@ -128,10 +122,6 @@ describe('SupportContactUsFormPublishing', () => {
                 name: /Include as much information about your API as possible/,
               });
             });
-          });
-
-          it('disables the submit button', () => {
-            expect(screen.getByRole('button', { name: 'Submit' })).toBeDisabled();
           });
 
           describe('switching back to default', () => {
@@ -154,12 +144,14 @@ describe('SupportContactUsFormPublishing', () => {
             });
 
             it('enables the submit button', () => {
-              expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled();
+              expect(
+                screen.getByRole('button', { name: 'Send to developer support' }),
+              ).toBeEnabled();
             });
 
             describe('submitting the form', () => {
               beforeEach(async () => {
-                userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+                userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
                 expect(
                   await screen.findByRole('button', { name: 'Sending...' }),
                 ).toBeInTheDocument();
@@ -167,10 +159,13 @@ describe('SupportContactUsFormPublishing', () => {
               it('does not submit the form fields from the non-selected form type', async () => {
                 await waitFor(() => {
                   expect(mockMakeRequest).toHaveBeenCalledWith(
-                    'http://fake.va.gov/internal/developer-portal/public/contact-us',
+                    '/platform-backend/v0/support/contact-us/requests',
                     {
                       body: expect.not.stringContaining('"apiDetails":"fake thing"') as unknown,
                       headers: {
+                        'X-Csrf-Token': expect.not.stringContaining(
+                          'unknown-string-here',
+                        ) as unknown,
                         accept: 'application/json',
                         'content-type': 'application/json',
                       },
@@ -180,7 +175,9 @@ describe('SupportContactUsFormPublishing', () => {
                   );
                 });
                 expect(mockOnSuccess).toHaveBeenCalled();
-                expect(await screen.findByRole('button', { name: 'Submit' })).toBeInTheDocument();
+                expect(
+                  await screen.findByRole('button', { name: 'Send to developer support' }),
+                ).toBeInTheDocument();
               });
             });
           });
@@ -188,20 +185,14 @@ describe('SupportContactUsFormPublishing', () => {
       });
 
       describe('some fields are invalid', () => {
-        beforeEach(async () => {
-          await act(async () => {
-            await userEvent.type(
-              screen.getByRole('textbox', { name: /Email address/ }),
-              'frodo my boy',
-              { delay: 0.01 },
-            );
-            userEvent.click(screen.getByRole('textbox', { name: /First name/ }));
-            userEvent.tab();
-          });
+        beforeEach(() => {
+          userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
         });
         it('displays the validation errors', async () => {
           expect(await screen.findByText('Enter your first name.')).toBeInTheDocument();
+          expect(await screen.findByText('Enter your last name.')).toBeInTheDocument();
           expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
+          expect(await screen.findByText('Enter your description.')).toBeInTheDocument();
         });
       });
     });
@@ -301,12 +292,12 @@ describe('SupportContactUsFormPublishing', () => {
         });
 
         it('enables the submit button', () => {
-          expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled();
+          expect(screen.getByRole('button', { name: 'Send to developer support' })).toBeEnabled();
         });
 
         describe('submitting the form', () => {
           it('sends the values', async () => {
-            userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+            userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
             expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
             expect(jsonSpy).toHaveBeenCalledWith({
               apiDescription: 'www.api.com',
@@ -322,10 +313,11 @@ describe('SupportContactUsFormPublishing', () => {
             });
             await waitFor(() => {
               expect(mockMakeRequest).toHaveBeenCalledWith(
-                'http://fake.va.gov/internal/developer-portal/public/contact-us',
+                '/platform-backend/v0/support/contact-us/requests',
                 {
                   body: expect.stringContaining('"email":"fbag@bagend.com"') as unknown,
                   headers: {
+                    'X-Csrf-Token': expect.not.stringContaining('unknown-string-here') as unknown,
                     accept: 'application/json',
                     'content-type': 'application/json',
                   },
@@ -335,7 +327,9 @@ describe('SupportContactUsFormPublishing', () => {
               );
             });
             expect(mockOnSuccess).toHaveBeenCalled();
-            expect(await screen.findByRole('button', { name: 'Submit' })).toBeInTheDocument();
+            expect(
+              await screen.findByRole('button', { name: 'Send to developer support' }),
+            ).toBeInTheDocument();
           });
 
           it('does not send api internal only details if the api is not internal only', async () => {
@@ -347,7 +341,7 @@ describe('SupportContactUsFormPublishing', () => {
                 }),
               ).not.toBeInTheDocument();
             });
-            userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+            userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
             expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
             expect(jsonSpy).toHaveBeenCalledWith({
               apiDescription: 'www.api.com',
@@ -362,10 +356,11 @@ describe('SupportContactUsFormPublishing', () => {
             });
             await waitFor(() => {
               expect(mockMakeRequest).toHaveBeenCalledWith(
-                'http://fake.va.gov/internal/developer-portal/public/contact-us',
+                '/platform-backend/v0/support/contact-us/requests',
                 {
                   body: expect.stringContaining('"email":"fbag@bagend.com"') as unknown,
                   headers: {
+                    'X-Csrf-Token': expect.not.stringContaining('unknown-string-here') as unknown,
                     accept: 'application/json',
                     'content-type': 'application/json',
                   },
@@ -375,7 +370,9 @@ describe('SupportContactUsFormPublishing', () => {
               );
             });
             expect(mockOnSuccess).toHaveBeenCalled();
-            expect(await screen.findByRole('button', { name: 'Submit' })).toBeInTheDocument();
+            expect(
+              await screen.findByRole('button', { name: 'Send to developer support' }),
+            ).toBeInTheDocument();
           });
         });
       });
@@ -407,10 +404,10 @@ describe('SupportContactUsFormPublishing', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Submit' })).toBeEnabled();
+      expect(screen.getByRole('button', { name: 'Send to developer support' })).toBeEnabled();
     });
 
-    userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+    userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
 
     expect(
       await screen.findByText(

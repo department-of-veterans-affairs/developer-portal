@@ -74,7 +74,6 @@ const coreESLintRules = {
   'max-params': ['error', 4],
   'max-statements-per-line': 'error',
   'new-parens': 'error',
-  'newline-per-chained-call': 'error',
   'no-alert': 'error',
   'no-bitwise': 'error',
   'no-caller': 'error',
@@ -150,6 +149,14 @@ const typescriptESLintRules = {
     'error',
     {
       default: 'array-simple',
+    },
+  ],
+  '@typescript-eslint/no-misused-promises': [
+    'error',
+    {
+      'checksVoidReturn': {
+        'attributes': false,
+      },
     },
   ],
   // can be removed soon - leave for a bit after TSLint removal
@@ -318,6 +325,7 @@ const reactRules = {
   'react/static-property-placement': 'error',
   'react/style-prop-object': 'error',
   'react/void-dom-elements-no-children': 'error',
+  'react-redux/prefer-separate-component-file': 'off',
 };
 
 module.exports = {
@@ -325,6 +333,7 @@ module.exports = {
     browser: true,
     node: true,
   },
+  ignorePatterns: ['*.spec.js'],
   root: true,
   // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser
   parser: '@typescript-eslint/parser',
@@ -345,15 +354,19 @@ module.exports = {
      */
     'jsx-a11y',
     'prefer-arrow',
+    'promise',
     'react',
     'react-hooks',
+    'react-redux'
   ],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'plugin:jsx-a11y/recommended',
+    'plugin:promise/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
+    'plugin:react-redux/recommended',
   ],
   rules: {
     ...coreESLintRules,
@@ -370,7 +383,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.test.ts', '*.spec.ts', '*.test.tsx', '*.e2e.ts'],
+      files: ['*.test.ts', '*.spec.ts', '*.test.tsx'],
       rules: {
         'max-nested-callbacks': 'off',
       },

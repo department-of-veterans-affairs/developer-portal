@@ -11,6 +11,12 @@ describe('API category and definition routes', () => {
       '/explore/lotr/docs/silmarils',
       '/explore/lotr/docs/hobbits',
       '/explore/lotr/docs/:apiName',
+      '/explore/movies',
+      '/explore/movies/docs/quickstart',
+      '/explore/movies/docs/apollo_13',
+      '/explore/movies/docs/armageddon',
+      '/explore/movies/docs/the_martian',
+      '/explore/movies/docs/:apiName',
       '/explore/sports',
       '/explore/sports/docs/basketball',
       '/explore/sports/docs/baseball',
@@ -28,7 +34,7 @@ describe('API category and definition routes', () => {
         content: {
           ...fakeCategories.lotr.content,
           // Add a quickstart
-          quickstart: (): JSX.Element | null => null,
+          quickstart: 'quickstart content here',
         },
       },
     };
@@ -40,6 +46,12 @@ describe('API category and definition routes', () => {
       '/explore/lotr/docs/silmarils',
       '/explore/lotr/docs/hobbits',
       '/explore/lotr/docs/:apiName',
+      '/explore/movies',
+      '/explore/movies/docs/quickstart',
+      '/explore/movies/docs/apollo_13',
+      '/explore/movies/docs/armageddon',
+      '/explore/movies/docs/the_martian',
+      '/explore/movies/docs/:apiName',
       '/explore/sports',
       '/explore/sports/docs/basketball',
       '/explore/sports/docs/baseball',
@@ -64,6 +76,12 @@ describe('API category and definition routes', () => {
       '/explore/lotr/docs/silmarils',
       '/explore/lotr/docs/hobbits',
       '/explore/lotr/docs/:apiName',
+      '/explore/movies',
+      '/explore/movies/docs/quickstart',
+      '/explore/movies/docs/apollo_13',
+      '/explore/movies/docs/armageddon',
+      '/explore/movies/docs/the_martian',
+      '/explore/movies/docs/:apiName',
       '/explore/sports',
     ];
     const builtRoutes = buildApiDetailRoutes(categories);

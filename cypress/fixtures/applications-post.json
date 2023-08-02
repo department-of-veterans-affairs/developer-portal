@@ -1,0 +1,10 @@
+{
+  "apis": "benefits,claims,claims",
+  "clientID": "DummyACGClientID",
+  "clientSecret": "DummyClientSecret",
+  "ccgClientId": "DummyCCGClientID",
+  "email": "api@va.gov",
+  "kongUsername": "DummyApplicationID",
+  "token": "DummyAPIKey",
+  "redirectURI": "http://localhost/oauth"
+}

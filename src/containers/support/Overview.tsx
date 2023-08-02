@@ -1,14 +1,11 @@
 import * as React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import { CardLink, PageHeader } from '../../components';
 import { defaultFlexContainer } from '../../styles/vadsUtils';
 import { SupportSection } from './Support';
-import { ContactUsAlertBox } from './ContactUsAlertBox';
 
 const headerProps = {
-  description:
-    'Welcome to support for VA Lighthouse APIs. You can visit our FAQ page for answers to common questions, or use the Contact Us form to report a problem or ask a question. Our customer support team is happy to help and will respond within one business day.',
-  header: 'Support',
+  header: 'Developer portal support',
 };
 
 interface SupportOverviewProps {
@@ -20,10 +17,12 @@ const SupportOverview: React.FunctionComponent<SupportOverviewProps> = (
 ): JSX.Element => (
   <>
     <Helmet>
-      <title>Support</title>
+      <title>{headerProps.header}</title>
     </Helmet>
     <PageHeader {...headerProps} />
-    <ContactUsAlertBox />
+    <p className="vads-u-font-size--lg vads-u-font-weight--bold vads-u-margin-y--2">
+      We&apos;re here to help with your software development and API publishing needs.
+    </p>
     <div className={defaultFlexContainer()}>
       {props.sections.map((section: SupportSection) => (
         <CardLink

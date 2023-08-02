@@ -7,10 +7,10 @@ export interface FieldSetProps {
   className?: string;
   legend: ReactNode;
   legendClassName?: string;
-  errorClassName?: string;
   name: string;
   required?: boolean;
   children: ReactNode;
+  description?: string;
 }
 
 const FieldSet: FC<FieldSetProps> = ({
@@ -20,6 +20,7 @@ const FieldSet: FC<FieldSetProps> = ({
   name,
   required = false,
   children,
+  description,
 }) => {
   const { errors } = useFormikContext();
   const shouldDisplayErrors = !!errors[name];
@@ -41,6 +42,11 @@ const FieldSet: FC<FieldSetProps> = ({
           {legend}
           {required && <span className="form-required-span">(*Required)</span>}
         </legend>
+        {description && (
+          <div className={classNames('vads-u-color--gray', 'vads-u-margin-top--2')}>
+            {description}
+          </div>
+        )}
         <span id={errorId} className={errorMessageClass} role="alert">
           <ErrorMessage name={name} />
         </span>

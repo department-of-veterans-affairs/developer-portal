@@ -5,11 +5,13 @@ import { HashLink } from 'react-router-hash-link';
 import * as Stickyfill from 'stickyfilljs';
 
 import './SideNav.scss';
+import { useLocation } from 'react-router';
 
 interface SideNavProps {
   className?: string;
   ariaLabel: string;
   children: React.ReactNode;
+  containerClassName?: string;
 }
 
 /**
@@ -23,11 +25,23 @@ export const applyStickiness = (objRef: Stickyfill.SingleOrMany<HTMLElement> | n
 };
 
 const SideNav = (props: SideNavProps): JSX.Element => {
+  const [showSectionNav, setShowSectionNav] = React.useState(false);
   const navRef = React.useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   React.useEffect(() => {
     applyStickiness(navRef.current);
   }, [navRef]);
+
+  React.useEffect(() => {
+    // Close the section nav on page change
+    setShowSectionNav(false);
+  }, [location]);
+
+  const toggleSectionNav = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    setShowSectionNav(!showSectionNav);
+    e.currentTarget.blur();
+  };
 
   return (
     <div
@@ -35,6 +49,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
         'vads-l-col--12',
         // 'vads-u-padding-right--5',
         'medium-screen:vads-l-col--3',
+        props.containerClassName,
       )}
     >
       <HashLink
@@ -47,28 +62,36 @@ const SideNav = (props: SideNavProps): JSX.Element => {
           'vads-u-display--block',
           'vads-u-color--white',
         )}
-        to={{ ...location, hash: '#page-header' }}
+        to="#page-header"
       >
         Skip Page Navigation
       </HashLink>
       <nav
-        className={classNames(
-          'va-api-side-nav',
-          'vads-u-display--none',
-          'medium-screen:vads-u-display--block',
-          props.className,
-        )}
+        className={classNames('va-api-side-nav', props.className)}
         aria-label={props.ariaLabel}
         ref={navRef}
       >
+        <button
+          className={classNames('nav-in-this-section', 'medium-screen:vads-u-display--none', {
+            open: showSectionNav,
+          })}
+          type="button"
+          onClick={(e): void => toggleSectionNav(e)}
+          key={`section-nav-${showSectionNav ? 'open' : 'closed'}`}
+        >
+          In this section
+          {showSectionNav ? <i className="fas fa-times" /> : <i className="fas fa-bars" />}
+        </button>
         <ul
           className={classNames(
             'usa-sidenav-list',
+            {
+              'vads-u-display--none': !showSectionNav,
+            },
+            'medium-screen:vads-u-display--block',
             'va-api-sidenav-list',
             'vads-u-background-color--white',
             'vads-u-border-bottom--2px',
-            'vads-u-border-left--2px',
-            'vads-u-border-right--2px',
             'vads-u-border-top--0',
             'vads-u-border-color--gray-lighter',
           )}

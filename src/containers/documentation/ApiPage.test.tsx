@@ -1,12 +1,14 @@
 import React from 'react';
-
 import moment from 'moment';
-import { render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter, Route } from 'react-router';
+import { Provider } from 'react-redux';
 import { APICategory } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import { fakeCategories, unmetDeactivationInfo } from '../../__mocks__/fakeCategories';
 import * as apiDefs from '../../apiDefs/query';
+import store from '../../store';
+import { apiLoadingState } from '../../types/constants';
 import ApiPage from './ApiPage';
 
 // Convenience variables to try and keep the index values out of the test
@@ -26,16 +28,23 @@ jest.mock('./ApiDocumentation', () => {
 });
 
 // Test Utils
-const renderApiPage = (flags: AppFlags, initialRoute: string, componentPath?: string): void => {
+const renderApiPage = async (
+  flags: AppFlags,
+  initialRoute: string,
+  componentPath?: string,
+): Promise<void> => {
+  await waitFor(() => cleanup());
   render(
-    <FlagsProvider flags={flags}>
-      <MemoryRouter initialEntries={[initialRoute]}>
-        <Route
-          path={componentPath ? componentPath : '/explore/:apiCategoryKey/docs/:apiName'}
-          component={ApiPage}
-        />
-      </MemoryRouter>
-    </FlagsProvider>,
+    <Provider store={store}>
+      <FlagsProvider flags={flags}>
+        <MemoryRouter initialEntries={[initialRoute]}>
+          <Route
+            path={componentPath ? componentPath : '/explore/api/:urlSlug/docs'}
+            component={ApiPage}
+          />
+        </MemoryRouter>
+      </FlagsProvider>
+    </Provider>,
   );
 };
 
@@ -46,28 +55,31 @@ describe('ApiPage', () => {
     enabled: { rings: true, silmarils: true },
   };
 
-  const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiByFragment');
+  const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
+  const apisLoadedSpy = jest
+    .spyOn(apiDefs, 'getApisLoadedState')
+    .mockReturnValue(apiLoadingState.LOADED);
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   describe('given valid url params', () => {
-    beforeEach(() => {
-      lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
+    beforeEach(async () => {
+      lookupApiBySlugMock.mockReturnValue(lotrRingsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      await renderApiPage(defaultFlags, '/explore/api/rings/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('rings');
+      expect(lookupApiBySlugMock).toHaveBeenCalledWith('rings');
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
     it('renders api page heading', () => {
-      expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Rings API');
-      expect(screen.getByText('LOTR API')).not.toBeNull();
+      expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Docs');
+      expect(screen.getByText('Rings API')).not.toBeNull();
     });
 
     it('renders api documentation', () => {
@@ -76,20 +88,20 @@ describe('ApiPage', () => {
   });
 
   describe('given deactivated api and valid url params', () => {
-    beforeEach(() => {
-      lookupApiByFragmentMock.mockReturnValue(lotrSilmarilsApi);
+    beforeEach(async () => {
+      lookupApiBySlugMock.mockReturnValue(lotrSilmarilsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      renderApiPage(
+      await renderApiPage(
         {
           ...defaultFlags,
           deactivated_apis: { silmarils: true },
         },
-        '/explore/lotr/docs/silmarils',
+        '/explore/api/silmarils/docs',
       );
     });
 
     it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('silmarils');
+      expect(lookupApiBySlugMock).toHaveBeenCalledWith('silmarils');
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
@@ -99,87 +111,51 @@ describe('ApiPage', () => {
   });
 
   describe('given unenabled api', () => {
-    beforeEach(() => {
-      lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
+    beforeEach(async () => {
+      lookupApiBySlugMock.mockReturnValue(lotrRingsApi);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      renderApiPage(
+      await renderApiPage(
         {
           ...defaultFlags,
           enabled: {
             rings: false,
           },
         },
-        '/explore/lotr/docs/rings',
+        '/explore/api/rings/docs',
       );
     });
 
     it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('rings');
+      expect(lookupApiBySlugMock).toHaveBeenCalledWith('rings');
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
-    });
-  });
-
-  describe('given url params with no api', () => {
-    beforeEach(() => {
-      lookupApiByFragmentMock.mockReturnValue(null);
-      renderApiPage(defaultFlags, '/explore/lotr/docs', '/explore/:apiCategoryKey/docs');
-    });
-
-    it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledTimes(0);
-      expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
-    });
-
-    it('renders the api not found page', () => {
-      expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(
-        screen.getByText('Try using the links below or the search bar to find your way forward.'),
-      ).not.toBeNull();
     });
   });
 
   describe('given url with api that does not exist', () => {
-    beforeEach(() => {
-      lookupApiByFragmentMock.mockReturnValue(null);
+    beforeEach(async () => {
+      lookupApiBySlugMock.mockReturnValue(null);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      renderApiPage(defaultFlags, '/explore/lotr/docs/nonexistentapi');
+      await renderApiPage(defaultFlags, '/explore/api/nonexistentapi/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('nonexistentapi');
-      expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
+      expect(lookupApiBySlugMock).toHaveBeenCalledWith('nonexistentapi');
+      expect(lookupApiCategoryMock).toHaveBeenCalledTimes(0);
     });
 
-    it('renders the api not found page', () => {
-      expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(
-        screen.getByText('Try using the links below or the search bar to find your way forward.'),
-      ).not.toBeNull();
-    });
-  });
-
-  describe('given url with api that does not exist within the given api category', () => {
-    beforeEach(() => {
-      lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
-      lookupApiCategoryMock.mockReturnValue(fakeCategories.sports);
-      renderApiPage(defaultFlags, '/explore/sports/docs/silmarils');
-    });
-
-    it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('silmarils');
-      expect(lookupApiCategoryMock).toHaveBeenCalledWith('sports');
-    });
-
-    it('renders the api not found page', () => {
-      expect(screen.getByText('Page not found.')).not.toBeNull();
-      expect(
-        screen.getByText('Try using the links below or the search bar to find your way forward.'),
-      ).not.toBeNull();
+    it('renders the api not found page', async () => {
+      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
+      await renderApiPage(
+        defaultFlags,
+        '/explore/api/nonexistantapi/docs',
+        '/explore/api/:urlSlug/docs',
+      );
+      expect(screen.findByText('Try using these links')).not.toBeNull();
     });
   });
 
   describe('given api with deactivation info that is not yet deactivated', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       const modifiedLotrApi: APICategory = {
         ...fakeCategories.lotr,
         apis: [
@@ -191,12 +167,12 @@ describe('ApiPage', () => {
       };
 
       lookupApiCategoryMock.mockReturnValue(modifiedLotrApi);
-      lookupApiByFragmentMock.mockReturnValue(modifiedLotrApi.apis[0]);
-      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      lookupApiBySlugMock.mockReturnValue(modifiedLotrApi.apis[0]);
+      await renderApiPage(defaultFlags, '/explore/api/rings/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('rings');
+      expect(lookupApiBySlugMock).toHaveBeenCalledWith('rings');
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
@@ -207,7 +183,7 @@ describe('ApiPage', () => {
   });
 
   describe('given api with deactivation info that is deprecated but not deactivated', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       const modifiedLotrApi: APICategory = {
         ...fakeCategories.lotr,
         apis: [
@@ -215,25 +191,59 @@ describe('ApiPage', () => {
             ...lotrRingsApi,
             deactivationInfo: {
               ...unmetDeactivationInfo,
-              deprecationDate: moment().subtract(1, 'year'),
+              deprecationDate: moment().subtract(1, 'year').format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
             },
           },
         ],
       };
 
       lookupApiCategoryMock.mockReturnValue(modifiedLotrApi);
-      lookupApiByFragmentMock.mockReturnValue(modifiedLotrApi.apis[0]);
-      renderApiPage(defaultFlags, '/explore/lotr/docs/rings');
+      lookupApiBySlugMock.mockReturnValue(modifiedLotrApi.apis[0]);
+      await renderApiPage(defaultFlags, '/explore/api/rings/docs');
     });
 
     it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiByFragmentMock).toHaveBeenCalledWith('rings');
+      expect(lookupApiBySlugMock).toHaveBeenCalledWith('rings');
       expect(lookupApiCategoryMock).toHaveBeenCalledWith('lotr');
     });
 
     it('renders deprecation info', () => {
-      expect(screen.queryByTestId('deprecation-info')).not.toBeNull();
-      expect(screen.queryByTestId('deactivation-info')).toBeNull();
+      expect(screen.queryByText('test-data::: This API is deprecated')).not.toBeNull();
+      expect(screen.queryByText('test-data::: This API is deactivated')).toBeNull();
+    });
+  });
+
+  describe('given api with veteran redirect', () => {
+    const apiCategory: APICategory = {
+      ...fakeCategories.lotr,
+      apis: [
+        {
+          ...lotrRingsApi,
+          veteranRedirect: {
+            linkText: 'Find a faster train',
+            linkUrl: 'https://www.va.gov/find-locations/',
+            message: 'Are you tired of waiting?',
+          },
+        },
+        {
+          ...lotrRingsApi,
+        },
+      ],
+      content: {
+        ...fakeCategories.lotr.content,
+        veteranRedirect: {
+          linkText: "Find the facility that's right for you.",
+          linkUrl: 'https://www.va.gov/find-locations/',
+          message: 'Are you a Veteran?',
+        },
+      },
+    };
+
+    it('renders API specific veteran redirect message', async () => {
+      lookupApiCategoryMock.mockReturnValue(apiCategory);
+      lookupApiBySlugMock.mockReturnValue(apiCategory.apis[0]);
+      await renderApiPage(defaultFlags, '/explore/api/rings/docs');
+      expect(screen.getByText('Find a faster train')).not.toBeNull();
     });
   });
 });
