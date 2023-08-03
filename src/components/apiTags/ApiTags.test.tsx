@@ -5,22 +5,23 @@ import { VaInternalOnly } from '../../apiDefs/schema';
 import { FlagsProvider, getFlags } from '../../flags';
 import { ApiTags } from './ApiTags';
 
-const internalOnlyText = 'Restricted Access';
-const openDataText = 'Open Data';
+const internalOnlyText = /Restricted Access/i;
+const openDataText = /Open Data/i;
 
 describe('ApiTags', () => {
-  it('renders the VA internal only tag and not the open data tag', () => {
+  it('renders the restricted access tag and not the open data tag', () => {
     render(
       <FlagsProvider flags={getFlags()}>
         <ApiTags openData={false} vaInternalOnly={VaInternalOnly.StrictlyInternal} />
       </FlagsProvider>,
     );
 
+    screen.debug();
     expect(screen.queryByText(internalOnlyText)).toBeInTheDocument();
     expect(screen.queryByText(openDataText)).not.toBeInTheDocument();
   });
 
-  it('renders the open data tag and not the VA internal only tag', () => {
+  it('renders the open data tag and not the restricted access tag', () => {
     render(
       <FlagsProvider flags={getFlags()}>
         <ApiTags openData vaInternalOnly={undefined} />
