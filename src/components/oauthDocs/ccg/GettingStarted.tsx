@@ -19,7 +19,7 @@ const GettingStarted = (props: ApiRequiredProps): JSX.Element => (
         <span className="vads-u-font-weight--bold">Generate the public key:</span> Once you have the
         private key, you can extract the corresponding public key using the following command.
         <div className="vads-u-margin-top--1">
-          <code>openssl rsa -in private. pem -outform PEM -pubout -out public.pem</code>
+          <code>openssl rsa -in private.pem -outform PEM -pubout -out public.pem</code>
         </div>
       </li>
       <li>
