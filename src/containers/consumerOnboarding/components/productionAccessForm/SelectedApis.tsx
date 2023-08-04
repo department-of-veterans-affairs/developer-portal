@@ -61,7 +61,7 @@ const SelectedAPIs = ({ selectedApis }: SelectedApisProps): JSX.Element => {
           )}
         >
           Select the APIs for which you are requesting production access.{' '}
-          <span className="vads-u-color--secondary-dark">&#40;*Required&#41;</span>
+          <span className="vads-u-color--secondary-darkest">&#40;*Required&#41;</span>
         </legend>
         <div
           id="api-checkbox-error"
