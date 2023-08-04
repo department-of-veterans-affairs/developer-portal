@@ -1,9 +1,8 @@
 import * as React from 'react';
+import { ApiTag, CheckboxRadioField } from '../index';
 import { APIDescription } from '../../apiDefs/schema';
-import { CheckboxRadioField, ApiTags } from '../index';
 import { Flag } from '../../flags';
 import { FLAG_HOSTED_APIS } from '../../types/constants';
-
 import './APICheckboxList.scss';
 
 interface APICheckboxListProps {
@@ -22,7 +21,8 @@ const ApiCheckboxList = ({ apis, authType }: APICheckboxListProps): JSX.Element 
             <>
               <span>{api.name}</span>
               <span className="vads-u-display--inline-block vads-u-margin-left--1">
-                <ApiTags openData={api.openData} vaInternalOnly={api.vaInternalOnly} />
+                {api.vaInternalOnly && <ApiTag showLock tagName="Restricted Access" />}
+                {api.openData && <ApiTag tagName="Open Data" />}
               </span>
             </>
           }
