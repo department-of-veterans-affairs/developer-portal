@@ -95,9 +95,11 @@ export default class VersionSelect extends React.PureComponent<
 
     let apiStatus;
     if (this.props.version === 'current') {
-      apiStatus = this.props.versions?.[0].label ?? '';
+      apiStatus = this.props.versions?.[0].label ?? this.props.versions?.[0].version;
     } else {
-      apiStatus = this.getVersionMetadataByProp('version', this.props.version)?.label;
+      apiStatus =
+        this.getVersionMetadataByProp('version', this.props.version)?.label ??
+        this.getVersionMetadataByProp('version', this.props.version)?.version;
     }
 
     return (
