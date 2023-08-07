@@ -23,6 +23,6 @@ export const ApiTag = ({ showLock, tagName }: ApiTagProps): JSX.Element => (
         icon={faLock}
       />
     )}
-    {tagName.replace(/-/g, ' ').toUpperCase()}
+    {tagName.replace(/-/g, ' ')}
   </span>
 );
