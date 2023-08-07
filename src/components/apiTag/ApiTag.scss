@@ -4,12 +4,13 @@
     display: flex;
     flex-flow: row nowrap;
     font-size: 1.4rem;
+    font-variant: small-caps;
     gap: 0.4rem;
     line-height: 2.4rem;
     padding: 0 0.4rem;
+    text-transform: uppercase;
 }
 
 .api-tag-fa-lock {
     height: 1.2rem !important;
-    width: 1rem !important;
 }
