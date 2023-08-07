@@ -39,6 +39,10 @@ sections:
     media: false
     callToAction: Read the articles
     items:
+      - date: May 2023
+        title: "VA’s API Platform: Seamless and Secure Access to VA Data for Veterans, Their Families, and Advocates"
+        source: DigitalVA
+        url: https://digital.va.gov/operational-excellence/vas-api-platform-seamless-and-secure-access-to-va-data-for-veterans-their-families-and-advocates/
       - date: August 2022
         title: Mobile apps giving Veterans more control over their health
         source: VA News
