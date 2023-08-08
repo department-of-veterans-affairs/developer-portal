@@ -8,15 +8,16 @@
     font-size: 1.6rem;
     font-variant: all-small-caps;
     height: 2.4rem;
-    gap: 0.4rem;
     line-height: 2.4rem;
-    padding: 0 0.4rem;
+    padding: 0.2rem 0.4rem;
 
     span {
+        margin: 0 0.4rem;
         padding-bottom: .3rem;
     }
 }
 
 .api-tag-fa-lock {
     height: 1.2rem !important;
+    margin: 0 0.2rem;
 }
