@@ -17,7 +17,12 @@ export const ApiTag = ({ showLock, tagName }: ApiTagProps): JSX.Element => (
       'vads-u-color--base',
     )}
   >
-    {showLock && <FontAwesomeIcon className={classNames('api-tag-fa-lock')} icon={faLock} />}
+    {showLock && (
+      <FontAwesomeIcon
+        className={classNames('api-tag-fa-lock', 'vads-u-color--gray-medium')}
+        icon={faLock}
+      />
+    )}
     <span>{tagName.replace(/-/g, ' ').toLowerCase()}</span>
   </span>
 );
