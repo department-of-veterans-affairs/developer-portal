@@ -14,7 +14,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion != 'success' }}
     steps:
       - name: Install git-lfs
-        run: apt update && apt install git-lfs
+        run: sudo apt update && apt install git-lfs
       - uses: actions/checkout@v3
         with:
           lfs: true
