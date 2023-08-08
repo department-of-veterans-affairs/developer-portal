@@ -8,6 +8,10 @@ on:
 env:
   REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   end-to-end:
     runs-on: ubuntu-latest

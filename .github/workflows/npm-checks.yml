@@ -5,6 +5,10 @@ on:
     branches: [master, api-11566/information-architecture]
     types: [opened, synchronize, reopened, ready_for_review]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   install:
     runs-on: ubuntu-latest

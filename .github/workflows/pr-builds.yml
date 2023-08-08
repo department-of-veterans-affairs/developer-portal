@@ -9,6 +9,10 @@ env:
   S3_REVIEW_BUCKET: review-developer-va-gov
   PREVIEW_SENTRY_DSN: http://dc7d5ebec20e474c80f8150c399d2955@sentry.vfs.va.gov/26
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+  
 jobs:
   install:
     runs-on: ubuntu-latest
