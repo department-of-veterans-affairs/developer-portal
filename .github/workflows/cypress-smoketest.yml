@@ -20,11 +20,6 @@ jobs:
         with:
           node-version: 18
 
-      - name: Add private key for sandbox-access-form repo
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
-
       - name: NPM Install
         run: npm ci
 
