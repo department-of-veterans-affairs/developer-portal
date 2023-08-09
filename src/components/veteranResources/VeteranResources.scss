@@ -1,6 +1,8 @@
 @import '../../styles/variables';
 
 .veteran-resources-modal {
+  z-index: 1001 !important;
+
   .va-modal-inner {
     overflow-y: auto;
     width: 100%;
