@@ -21,7 +21,7 @@ describe('PageContent tests', () => {
     });
     cy.get('a[href="/about/news#News-releases"]').first().click();
     cy.window().then($window => {
-      expect($window.scrollY).to.be.closeTo(863, 50);
+      expect($window.scrollY).to.be.closeTo(1929, 50);
     });
   });
 });
