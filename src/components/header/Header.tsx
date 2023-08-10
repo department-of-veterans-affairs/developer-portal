@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 import { HashLink } from 'react-router-hash-link';
-import { Banner, MaintenanceBanner, NavBar, TestingNotice } from '../../components';
+import { Banner, NavBar, TestingNotice } from '../../components';
 import { Flag } from '../../flags';
 import { mobileOnly } from '../../styles/vadsUtils';
 import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
@@ -99,7 +99,6 @@ export const Header = (): JSX.Element => {
             </va-alert>
           ))}
       </header>
-      <MaintenanceBanner />
     </>
   );
 };
