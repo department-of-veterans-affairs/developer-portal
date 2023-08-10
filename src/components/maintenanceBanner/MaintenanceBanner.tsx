@@ -23,8 +23,11 @@ export const MaintenanceBanner = (): JSX.Element => {
   return (
     <va-alert background-only show-icon status="warning" visible>
       <p className="vads-u-margin-y--0">
-        VA systems are undergoing maintenance on Thursday, August 17, 2023 from 8:00 p.m. ET to 8:15
-        p.m. ET. This maintenance will temporarily cause loading errors for parts of this website.
+        VA systems are undergoing maintenance on{' '}
+        <span className="vads-u-font-weight--bold">
+          Thursday, August 17, 2023 from 8:00 p.m. ET to 8:15 p.m. ET.
+        </span>{' '}
+        This maintenance will temporarily cause loading errors for parts of this website.
       </p>
     </va-alert>
   );
