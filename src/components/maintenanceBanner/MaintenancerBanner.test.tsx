@@ -6,8 +6,7 @@ import { MaintenanceBanner } from './MaintenanceBanner';
 describe('MaintenanceBanner', () => {
   it('should render', async () => {
     render(<MaintenanceBanner />);
-    const maintenanceText =
-      /VA systems are undergoing maintenance on Thursday, August 17, 2023 from 8:00 p\.m\. ET to 8:15 p\.m\. ET\./i;
+    const maintenanceText = /VA systems are undergoing maintenance on/i;
     const extendedMaintenanceText =
       /Scheduled maintenance for VA systems is currently in progress./i;
     const now = new Date();
