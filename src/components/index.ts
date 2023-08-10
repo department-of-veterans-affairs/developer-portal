@@ -44,3 +44,4 @@ export * from './apiFilters/SearchFilters';
 export * from './apiFilters/FilterPills';
 export * from './pill/Pill';
 export * from './testingNotice/TestingNotice';
+export * from './maintenanceBanner/MaintenanceBanner';
