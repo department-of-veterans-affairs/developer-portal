@@ -4,51 +4,60 @@ on:
   schedule:
     - cron: 0 15 * * 1-5
 jobs:
-  notify:
+  check_code_scanning_alerts:
     runs-on: ubuntu-latest
-    name: Check for security alerts and notify team via Slack
+    outputs:
+      alert_detected: ${{ steps.check.outputs.alert_detected }}
     steps:
-      - id: check_for_code_scanning_alerts
-        name: Check for code-scanning alerts
+      - id: check
         run: |
           echo ${{ secrets.DEVPORTAL_SECURITY_SCAN_WORKFLOW_TOKEN }} | gh auth login --with-token
           gh api '/repos/department-of-veterans-affairs/developer-portal/code-scanning/alerts?state=open' \
             > code-scanning.json
           cat code-scanning.json
-          if [ "[]" == "$(cat code-scanning.json)" ]; then
-            echo "security_alert_exists='false'" >> $GITHUB_OUTPUT
-          else
-            echo "security_alert_exists='true'" >> $GITHUB_OUTPUT
+          if [ "[]" != "$(cat code-scanning.json)" ]; then
+            echo "alert_detected='true'" >> $GITHUB_OUTPUT
           fi
-      - id: check_for_dependabot_alerts
-        name: Check for dependabot alerts   
+
+  check_dependabot_alerts:
+    runs-on: ubuntu-latest
+    outputs:
+      alert_detected: ${{ steps.check.outputs.alert_detected }}
+    steps:
+      - id: check
         run: |
+          echo ${{ secrets.DEVPORTAL_SECURITY_SCAN_WORKFLOW_TOKEN }} | gh auth login --with-token
           gh api '/repos/department-of-veterans-affairs/developer-portal/dependabot/alerts?state=open' \
             > dependabot.json
           cat dependabot.json
-          if [ "[]" == "$(cat dependabot.json)" ]; then
-            echo "security_alert_exists='false'" >> $GITHUB_OUTPUT
-          else
-            echo "security_alert_exists='true'" >> $GITHUB_OUTPUT
+          if [ "[]" != "$(cat dependabot.json)" ]; then
+            echo "alert_detected='true'" >> $GITHUB_OUTPUT
           fi
-      - id: check_for_secret_scanning_alerts
-        name: Check for secret scanning alerts   
+
+  check_secret_scanning_alerts:
+    runs-on: ubuntu-latest
+    outputs:
+      alert_detected: ${{ steps.check.outputs.alert_detected }}
+    steps:
+      - id: check
         run: |
+          echo ${{ secrets.DEVPORTAL_SECURITY_SCAN_WORKFLOW_TOKEN }} | gh auth login --with-token
           gh api '/repos/department-of-veterans-affairs/developer-portal/secret-scanning/alerts?state=open' \
             > secret-scanning.json
           cat secret-scanning.json
-          if [ "[]" == "$(cat secret-scanning.json)" ]; then
-            echo "security_alert_exists='false'" >> $GITHUB_OUTPUT
-          else
-            echo "security_alert_exists='true'" >> $GITHUB_OUTPUT
+          if [ "[]" != "$(cat secret-scanning.json)" ]; then
+            echo "alert_detected='true'" >> $GITHUB_OUTPUT
           fi
+
+  send_slack_message:
+    runs-on: ubuntu-latest
+    needs: [check_code_scanning_alerts, check_dependabot_alerts, check_secret_scanning_alerts]
+    if: needs.check_code_scanning_alerts.outputs.alert_detected || needs.check_dependabot_alerts.outputs.alert_detected || needs.check_secret_scanning_alerts.outputs.alert_detected
+    env:
+      SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    steps:
       - id: send_slack_message
-        name: Send Slack Message
         uses: slackapi/slack-github-action@v1.23.0
-        if: |
-          steps.check_for_code_scanning_alerts.outputs.security_alert_exists == 'true' ||
-          steps.check_for_dependabot_alerts.outputs.security_alert_exists == 'true' ||
-          steps.check_for_secret_scanning_alerts.outputs.security_alert_exists == 'true'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
