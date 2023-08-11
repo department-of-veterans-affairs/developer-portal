@@ -321,6 +321,22 @@ const SiteRedirects = (): null => {
       new: '/explore',
       old: '/oauth',
     },
+    {
+      new: '/explore/api/loan-guaranty',
+      old: '/explore/api/loan-guaranty/sandbox-access',
+    },
+    {
+      new: '/explore/api/clinical-health',
+      old: '/explore/api/clinical-health/sandbox-access',
+    },
+    {
+      new: '/explore/api/decision-reviews',
+      old: '/explore/api/decision-reviews/sandbox-access',
+    },
+    {
+      new: '/explore/api/appeals-status',
+      old: '/explore/api/appeals-status/sandbox-access',
+    },
   ];
   redirects.some((item: RedirectData): boolean => {
     const testFullPath = location.pathname + location.search;

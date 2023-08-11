@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch, useLocation, useParams } from 'react-router-dom';
 import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
+import { APIDescription, VaInternalOnly } from '../../apiDefs/schema';
 import { ApiAlerts, ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../components';
 import { APIUrlSlug } from '../../types';
 import { apiLoadingState } from '../../types/constants';
@@ -62,12 +62,14 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
         name="Release notes"
         subNavLevel={1}
       />
-      <SideNavEntry
-        exact
-        to={`/explore/api/${api.urlSlug}/sandbox-access`}
-        name="Sandbox access"
-        subNavLevel={1}
-      />
+      {api.vaInternalOnly !== VaInternalOnly.StrictlyInternal && (
+        <SideNavEntry
+          exact
+          to={`/explore/api/${api.urlSlug}/sandbox-access`}
+          name="Sandbox access"
+          subNavLevel={1}
+        />
+      )}
     </>
   );
 };
@@ -127,11 +129,13 @@ const DocumentationRoot = (): JSX.Element => {
               />
             )}
             <Route exact path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
-            <Route
-              exact
-              path="/explore/api/:urlSlug/sandbox-access"
-              component={RequestSandboxAccess}
-            />
+            {api.vaInternalOnly !== VaInternalOnly.StrictlyInternal && (
+              <Route
+                exact
+                path="/explore/api/:urlSlug/sandbox-access"
+                component={RequestSandboxAccess}
+              />
+            )}
           </Switch>
         }
         navAriaLabel="API Docs Side Nav"
