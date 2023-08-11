@@ -339,7 +339,7 @@ const ProductionAccess: FC = () => {
 
       calculateSteps(values);
       setActiveStep(activeStep + 1);
-      actions.setTouched({});
+      await actions.setTouched({});
       actions.setSubmitting(false);
       setTimeout(() => {
         // focus on h2 after moving to next step

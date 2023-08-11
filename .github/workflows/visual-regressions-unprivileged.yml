@@ -6,6 +6,10 @@ on:
     branches: [master]
     types: [opened, synchronize, reopened, ready_for_review]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   visual:
     runs-on: ubuntu-latest
@@ -61,11 +65,6 @@ jobs:
       - name: Install python and openssh-client env
         run: |
           apt update && apt install python3 openssh-client -y && ln -s /usr/bin/python3 /usr/bin/python
-
-      - name: Add private key for sandbox-access-form repo
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
   
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh

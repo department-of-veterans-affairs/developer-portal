@@ -8,6 +8,10 @@ on:
         required: true
         type: string
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.inputs.pr_number }}
+  cancel-in-progress: true
+
 jobs:
   update_visual_regressions:
     runs-on: ubuntu-latest
@@ -80,11 +84,6 @@ jobs:
 
       - name: Delete all old snapshots
         run: rm -f test/image_snapshots/visual.cy.js/*
-
-      - name: Add private key for sandbox-access-form repo
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
 
       - id: visual_test
         continue-on-error: true

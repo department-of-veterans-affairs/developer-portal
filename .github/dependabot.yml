@@ -18,42 +18,10 @@ updates:
       # Errorable elements are not available in the latest version. Application would need to be
       # refactored to integrate the new available elements
       - dependency-name: '@department-of-veterans-affairs/formation-react'
-      # The latest versions of our puppeteer supporting libraries in order to use puppeteer with our
-      # testing do not support anyting beyond puppeteer 2. We are on the latest version of puppeteer
-      # at the current time.
-      # The two libraries that do not support beyond puppeteer 2 are jest-puppeteer and
-      # pptr-testing-library.
+      # Previous packages preventing updates to puppeteer have been updated
+      # Upgrade ticket: https://jira.devops.va.gov/browse/API-28858
       - dependency-name: puppeteer
-      # latest version is an RC. Team should wait until the release version becomes official before
-      # upgrading
-      # fails test due to possible race condition where a variable for the DOM in a dependency of
-      # jest-image-snapshot fails to attach before test is run
-      - dependency-name: jest-image-snapshot
-      # Fails e2e due to missing role reporting due to Webpack build order. It should also be
-      # mentioned that the latest version on NPM is ahead of the latest version in the packages
-      # repo which is failing it's build.
-      - dependency-name: postcss-flexbugs-fixes
+      # Latest version is incompatible with current codebase.
+      # Audit/upgrade ticket: https://jira.devops.va.gov/browse/API-28854
       - dependency-name: immutable
         versions: [4.0.0-rc.x]
-      # -------------------------
-      # WEBPACK 5 RELATED IGNORES
-      # -------------------------
-      # Version 4+ depends on updating webpack to version 5
-      - dependency-name: postcss-loader
-        versions: [4.x]
-      # Version 11.0.1 introduces breaking changes in Webpack build and is not able to load the
-      # options of the loader during the build stage. This dependency can be updated after
-      # postcss-loaders gets update to latest version
-      - dependency-name: sass-loader
-        versions: [11.x]
-      # Version 10+ has a dependency with postcss-loader v5
-      - dependency-name: autoprefixer
-        versions: [10.x]
-      # Version 7+ needs webpack 5
-      - dependency-name: copy-webpack-plugin
-        versions: [7.x]
-      # Version 5+ needs webpack 5
-      - dependency-name: html-webpack-plugin
-        versions: [5.x]
-      # UNUSED PLUGINS
-      - dependency-name: workbox-webpack-plugin

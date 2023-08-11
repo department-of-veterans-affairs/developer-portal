@@ -11,6 +11,7 @@ import { useModalController } from '../../hooks';
 import { GeneralStore, RootState } from '../../types';
 import { SetGeneralStore, setGeneralStore } from '../../actions';
 import { PUBLISHING_REQUIREMENTS_URL } from '../../types/constants/paths';
+import { MaintenanceBanner } from '../maintenanceBanner/MaintenanceBanner';
 
 const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
   if (elementToFocus && elementToFocus.id === 'main') {
@@ -96,6 +97,7 @@ const PageContent = (): JSX.Element => {
 
   return (
     <main id="main" ref={mainRef} tabIndex={-1}>
+      <MaintenanceBanner />
       <ErrorBoundary FallbackComponent={ErrorBoundaryPage}>
         <SiteRoutes />
         <VaModal

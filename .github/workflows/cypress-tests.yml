@@ -8,6 +8,10 @@ on:
 env:
   REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   end-to-end:
     runs-on: ubuntu-latest
@@ -34,11 +38,6 @@ jobs:
       - name: Install python and openssh-client env
         run: |
           apt update && apt install openssh-client python3 -y && ln -s /usr/bin/python3 /usr/bin/python
-
-      - name: Add private key for sandbox-access-form repo
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
 
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
@@ -91,11 +90,6 @@ jobs:
       - name: Install python and openssh-client env
         run: |
           apt update && apt install openssh-client python3 -y && ln -s /usr/bin/python3 /usr/bin/python
-
-      - name: Add private key for sandbox-access-form repo
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SANDBOX_FORM_SSH_KEY }}
 
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
