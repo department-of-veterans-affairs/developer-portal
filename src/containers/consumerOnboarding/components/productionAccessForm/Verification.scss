@@ -1,0 +1,8 @@
+@import '../../../../styles/variables';
+
+.verification-divider {
+    background-color: $color-gray-light;
+    height: .1rem;
+    max-width: 300px;
+    width: 100%;
+}

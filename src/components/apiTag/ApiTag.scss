@@ -1,0 +1,24 @@
+@import '../../styles/variables';
+
+.api-tag {
+    align-items: center;
+    border-radius: 3px;
+    display: flex;
+    flex-flow: row nowrap;
+    font-size: 1.6rem;
+    font-variant: small-caps;
+    height: 2.4rem;
+    line-height: 2.4rem;
+    padding: 0.2rem 0.4rem;
+    text-transform: lowercase;
+
+    span {
+        margin: 0 0.4rem;
+        padding-bottom: 0.2rem;
+    }
+}
+
+.api-tag-fa-lock {
+    height: 1.2rem !important;
+    margin: 0 0.2rem;
+}
