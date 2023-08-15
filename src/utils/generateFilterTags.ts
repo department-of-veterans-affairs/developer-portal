@@ -1,5 +1,5 @@
 export interface TagDataProps {
-  showLock: boolean;
+  showLock?: boolean;
   tagName: string;
 }
 
