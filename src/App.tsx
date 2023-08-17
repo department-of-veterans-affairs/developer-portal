@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { Route, Router } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
-import { defineCustomElements } from '@department-of-veterans-affairs/component-library';
+import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
 import { LPB_PROVIDERS_URL } from './types/constants';
 import { setApiLoadingError, SetAPIs, setApis } from './actions';
 import { APICategories } from './apiDefs/schema';
