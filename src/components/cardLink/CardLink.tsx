@@ -1,7 +1,7 @@
+import React, { useState } from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { NavHashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 
 import './CardLink.scss';
 
@@ -56,7 +56,7 @@ const CardLink: React.FC<CardLinkProps> = (props: CardLinkProps) => {
       >
         <div className="card-content">
           <div className="name-border vads-u-border-bottom--5px vads-u-border-color--secondary" />
-          <NavHashLink
+          <Link
             className={classNames(
               'vads-u-text-decoration--none',
               'vads-u-margin-y--2',
@@ -70,7 +70,7 @@ const CardLink: React.FC<CardLinkProps> = (props: CardLinkProps) => {
             onFocus={(): void => setLinkFocused(true)}
           >
             {props.name}
-          </NavHashLink>
+          </Link>
           {props.subhead}
           <p className="va-api-description vads-u-color--base">{props.children}</p>
           <p

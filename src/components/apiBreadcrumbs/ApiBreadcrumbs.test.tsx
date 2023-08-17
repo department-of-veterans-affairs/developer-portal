@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import * as React from 'react';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import 'jest';
 import { APIDescription } from '../../apiDefs/schema';
 import { ApiBreadcrumbs } from './ApiBreadcrumbs';
@@ -13,7 +13,9 @@ describe('APIBreadcrumbs', () => {
     } as APIDescription;
     render(
       <MemoryRouter initialEntries={['/explore/api/appeals-status']}>
-        <ApiBreadcrumbs api={api} />
+        <Routes>
+          <Route path="/explore/api/:urlSlug" element={<ApiBreadcrumbs api={api} />} />
+        </Routes>
       </MemoryRouter>,
     );
     expect(screen.getByText(/Appeals Status API/)).toBeInTheDocument();
@@ -26,7 +28,9 @@ describe('APIBreadcrumbs', () => {
     } as APIDescription;
     render(
       <MemoryRouter initialEntries={['/about']}>
-        <ApiBreadcrumbs api={api} />
+        <Routes>
+          <Route path="/about" element={<ApiBreadcrumbs api={api} />} />
+        </Routes>
       </MemoryRouter>,
     );
     expect(screen.queryByText(/Appeals Status API/)).not.toBeInTheDocument();
@@ -39,7 +43,12 @@ describe('APIBreadcrumbs', () => {
     } as APIDescription;
     render(
       <MemoryRouter initialEntries={['/explore/api/appeals-status/release-notes']}>
-        <ApiBreadcrumbs api={api} />
+        <Routes>
+          <Route
+            path="/explore/api/:urlSlug/release-notes"
+            element={<ApiBreadcrumbs api={api} />}
+          />
+        </Routes>
       </MemoryRouter>,
     );
     expect(screen.getByText(/Release Notes/)).toBeInTheDocument();
@@ -53,7 +62,9 @@ describe('APIBreadcrumbs', () => {
     } as APIDescription;
     render(
       <MemoryRouter initialEntries={['/explore/api/appeals-status']}>
-        <ApiBreadcrumbs api={api} />
+        <Routes>
+          <Route path="/explore/api/:urlSlug" element={<ApiBreadcrumbs api={api} />} />
+        </Routes>
       </MemoryRouter>,
     );
     expect(screen.getByText(/Explore APIs/)).toHaveAttribute('href', '/explore/va-benefits');

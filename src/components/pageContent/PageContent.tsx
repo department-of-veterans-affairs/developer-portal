@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { VaModal } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
@@ -30,6 +30,7 @@ const PageContent = (): JSX.Element => {
   const mainRef = React.useRef<HTMLElement>(null);
   const prevPathRef = React.useRef<string | null>(null);
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch: React.Dispatch<SetGeneralStore> = useDispatch();
   const selector = (state: RootState): GeneralStore => state.generalStore;
   const vaNetworkStore = useSelector(selector);
@@ -61,7 +62,7 @@ const PageContent = (): JSX.Element => {
     fetch('https://hub.lighthouse.va.gov', { mode: 'no-cors' })
       .then(() => {
         setVaNetworkAvailable({ status: 'connected' });
-        window.location.assign(PUBLISHING_REQUIREMENTS_URL);
+        navigate(PUBLISHING_REQUIREMENTS_URL);
         return true;
       })
       .catch(() => {

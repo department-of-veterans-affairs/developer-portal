@@ -4,7 +4,6 @@ import { Link, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 
 import { PageHeader } from '../../components';
-import { APIUrlSlug } from '../../types';
 import { ExploreApiTags } from '../../components/exploreApiCard/ExploreApiTags';
 import { APIDescription } from '../../apiDefs/schema';
 import ErrorPage404 from '../ErrorPage404';
@@ -22,7 +21,7 @@ const parseContent = (markdown: string, api: APIDescription): string =>
   markdown.replace(/\{API_URL_SLUG\}/g, api.urlSlug);
 
 const ApiOverviewPage = (): JSX.Element => {
-  const params = useParams<APIUrlSlug>();
+  const params = useParams();
   const api = getApi(params.urlSlug);
 
   if (!api) {

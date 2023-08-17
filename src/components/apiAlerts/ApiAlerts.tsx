@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { apiAlerts } from '../../utils/apiAlerts';
 
 export const ApiAlerts = (): JSX.Element => {

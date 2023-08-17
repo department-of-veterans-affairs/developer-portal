@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { useLocation, MemoryRouter } from 'react-router';
+import { useLocation, MemoryRouter } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ContactUs from './ContactUs';
 
-jest.mock('react-router', () => ({
+jest.mock('react-router-dom', () => ({
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-  ...(jest.requireActual('react-router') as Record<string, unknown>),
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useLocation: jest.fn(() => ({})),
 }));
 

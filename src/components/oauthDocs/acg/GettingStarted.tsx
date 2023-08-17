@@ -1,7 +1,5 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
-import { CONSUMER_SANDBOX_PATH } from '../../../types/constants/paths';
 import { SectionHeaderWrapper } from '../../index';
 
 const GettingStarted = (): JSX.Element => (
@@ -15,9 +13,9 @@ const GettingStarted = (): JSX.Element => (
       third party being authorized depends on the API.
     </p>
     <p>
-      The first step toward authorization is to{' '}
-      <Link to={CONSUMER_SANDBOX_PATH}>fill out our application</Link> and make sure to select the
-      right OAuth API for your needs. To complete the form, you will need:
+      The first step toward authorization is to <Link to="/explore">fill out our application</Link>{' '}
+      and make sure to select the right OAuth API for your needs. To complete the form, you will
+      need:
     </p>
     <ul>
       <li>Your organization name</li>
@@ -29,7 +27,7 @@ const GettingStarted = (): JSX.Element => (
       After you submit the form, we send you a client ID and secret, depending on whether you can
       safely store a client secret. If you cannot safely store a client secret, we will send you a
       client ID and you will use the{' '}
-      <HashLink to="#pkce-authorization">Proof Key for Code Exchange</HashLink> (PKCE) flow (
+      <Link to="#pkce-authorization">Proof Key for Code Exchange</Link> (PKCE) flow (
       <a href="https://tools.ietf.org/html/rfc7636">RFC 7636</a>) for authorization.{' '}
     </p>
     <h3>Support</h3>

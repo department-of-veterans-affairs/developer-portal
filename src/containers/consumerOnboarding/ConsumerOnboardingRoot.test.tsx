@@ -1,7 +1,7 @@
 import { getByRole, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import {
   CONSUMER_APIS_PATH,
   CONSUMER_DEMO_PATH,
@@ -9,12 +9,17 @@ import {
   CONSUMER_PROD_PATH,
 } from '../../types/constants/paths';
 import ConsumerOnboardingRoot from './ConsumerOnboardingRoot';
+import OnboardingOverview from './OnboardingOverview';
 
 describe('ConsumerOnboardingRoot', () => {
   beforeEach(() => {
     render(
       <MemoryRouter initialEntries={[CONSUMER_PATH]}>
-        <ConsumerOnboardingRoot />
+        <Routes>
+          <Route path={CONSUMER_PATH} element={<ConsumerOnboardingRoot />}>
+            <Route index element={<OnboardingOverview />} />
+          </Route>
+        </Routes>
       </MemoryRouter>,
     );
   });

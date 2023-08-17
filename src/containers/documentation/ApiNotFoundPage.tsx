@@ -1,19 +1,15 @@
 import * as React from 'react';
-
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
-
+import { Link, useParams } from 'react-router-dom';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
 import { lookupApiCategory } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
-import { APINameParam } from '../../types';
 import { FLAG_API_ENABLED_PROPERTY, PAGE_HEADER_ID } from '../../types/constants';
 import { useFlag } from '../../flags';
 
 const ApiNotFoundPage = (): JSX.Element => {
-  const { apiCategoryKey } = useParams<APINameParam>();
-  const category = lookupApiCategory(apiCategoryKey);
+  const { apiCategoryKey } = useParams();
+  const category = lookupApiCategory(apiCategoryKey as string);
   const flags = useFlag([FLAG_API_ENABLED_PROPERTY]);
 
   return (

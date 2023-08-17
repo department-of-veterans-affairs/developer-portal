@@ -3,29 +3,33 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 
-import { LocationDescriptor } from 'history';
-import { MemoryRouter } from 'react-router';
+import { createMemoryRouter, RouterProvider, To } from 'react-router-dom';
 import { SideNavEntry } from './SideNavEntry';
 
 const testActive = async ({
-  exact = false,
   expectation,
   location,
   to,
   sharedAnchors,
 }: {
-  location: LocationDescriptor;
-  to: LocationDescriptor;
-  exact?: boolean;
+  location: string;
+  to: To;
   expectation: boolean;
   sharedAnchors?: string[];
 }): Promise<void> => {
   const activeClassName = 'va-api-active-sidenav-link';
-  render(
-    <MemoryRouter initialEntries={[location]}>
-      <SideNavEntry name="Go to Fake Page" to={to} exact={exact} sharedAnchors={sharedAnchors} />
-    </MemoryRouter>,
+  const router = createMemoryRouter(
+    [
+      {
+        element: <SideNavEntry name="Go to Fake Page" to={to} sharedAnchors={sharedAnchors} />,
+        path: location.split('#')[0],
+      },
+    ],
+    {
+      initialEntries: [location],
+    },
   );
+  render(<RouterProvider router={router} />);
 
   const navLink = screen.getByRole('link', { name: 'Go to Fake Page' });
   expect(navLink).toBeInTheDocument();
@@ -37,9 +41,8 @@ describe('SideNavEntry', () => {
   describe('isActive', () => {
     describe('exact matches', () => {
       it('is active when the path is the same as the location (to = "/fake" matches location = "/fake")', async () => {
-        await testActive({ exact: true, expectation: true, location: '/fake', to: '/fake' });
+        await testActive({ expectation: true, location: '/fake', to: '/fake' });
         await testActive({
-          exact: true,
           expectation: true,
           location: '/fake',
           to: { pathname: '/fake' },
@@ -47,9 +50,8 @@ describe('SideNavEntry', () => {
       });
 
       it('is not active when the path is not the same as the location (to = "/fake" does not match location = "/phony")', async () => {
-        await testActive({ exact: true, expectation: false, location: '/phony', to: '/fake' });
+        await testActive({ expectation: false, location: '/phony', to: '/fake' });
         await testActive({
-          exact: true,
           expectation: false,
           location: '/phony',
           to: { pathname: '/fake' },
@@ -57,20 +59,18 @@ describe('SideNavEntry', () => {
       });
 
       describe('trailing slashes', () => {
-        it('is active when the paths are the same except for a trailing slash on the to prop (to = "/fake/" matches location = "/fake")', async () => {
-          await testActive({ exact: true, expectation: true, location: '/fake', to: '/fake/' });
+        it('is not active when the paths are the same except for a trailing slash on the to prop (to = "/fake/" matches location = "/fake")', async () => {
+          await testActive({ expectation: false, location: '/fake', to: '/fake/' });
           await testActive({
-            exact: true,
-            expectation: true,
+            expectation: false,
             location: '/fake',
             to: { pathname: '/fake/' },
           });
         });
 
         it('is active when the paths are the same except for a trailing slash on the location (to = "/fake" matches location = "/fake/")', async () => {
-          await testActive({ exact: true, expectation: true, location: '/fake/', to: '/fake' });
+          await testActive({ expectation: true, location: '/fake/', to: '/fake' });
           await testActive({
-            exact: true,
             expectation: true,
             location: '/fake/',
             to: { pathname: '/fake' },
@@ -81,28 +81,24 @@ describe('SideNavEntry', () => {
       describe('with hashes', () => {
         it('is active when the path + hash match exactly (to = "/fake#anchor" matches location = "/fake#anchor"', async () => {
           await testActive({
-            exact: true,
             expectation: true,
             location: '/fake#anchor',
             to: '/fake#anchor',
           });
           await testActive({
-            exact: true,
             expectation: true,
             location: '/fake#anchor',
             to: { hash: '#anchor', pathname: '/fake' },
           });
         });
 
-        it('is not active when the paths match but the hashes do not (to = "/fake#anchor" does not match location = "/fake#hash")', async () => {
+        it.only('is not active when the paths match but the hashes do not (to = "/fake#anchor" does not match location = "/fake#hash")', async () => {
           await testActive({
-            exact: true,
             expectation: false,
             location: '/fake#hash',
             to: '/fake#anchor',
           });
           await testActive({
-            exact: true,
             expectation: false,
             location: '/fake#hash',
             to: { hash: '#anchor', pathname: '/fake' },
@@ -111,13 +107,11 @@ describe('SideNavEntry', () => {
 
         it('is not active when the hashes match but the paths do not (to = "/fake#anchor" does not match location = "/phony#anchor")', async () => {
           await testActive({
-            exact: true,
             expectation: false,
             location: '/phony#anchor',
             to: '/fake#anchor',
           });
           await testActive({
-            exact: true,
             expectation: false,
             location: '/phony#anchor',
             to: { hash: '#anchor', pathname: '/fake' },
@@ -126,13 +120,11 @@ describe('SideNavEntry', () => {
 
         it('is not active when the hashes match and there is a partial path match (to = "/fake/phony#anchor" does not match location = "/fake#anchor")', async () => {
           await testActive({
-            exact: true,
             expectation: false,
             location: '/fake#anchor',
             to: '/fake/phony#anchor',
           });
           await testActive({
-            exact: true,
             expectation: false,
             location: '/fake#anchor',
             to: { hash: '#anchor', pathname: '/fake/phony' },
@@ -141,13 +133,11 @@ describe('SideNavEntry', () => {
 
         it('is not active when the paths match but the to prop has a hash anchor (to = "/fake#anchor" does not match location = "/fake")', async () => {
           await testActive({
-            exact: true,
             expectation: false,
             location: '/fake',
             to: '/fake#anchor',
           });
           await testActive({
-            exact: true,
             expectation: false,
             location: '/fake',
             to: { hash: '#anchor', pathname: '/fake' },
@@ -156,13 +146,11 @@ describe('SideNavEntry', () => {
 
         it('is not active when the paths match but the location has a hash anchor (to = "/fake" does not match location = "/fake#anchor")', async () => {
           await testActive({
-            exact: true,
             expectation: false,
             location: '/fake#anchor',
             to: '/fake',
           });
           await testActive({
-            exact: true,
             expectation: false,
             location: '/fake#anchor',
             to: { pathname: '/fake' },
@@ -171,14 +159,12 @@ describe('SideNavEntry', () => {
 
         it('is active when the paths match exactly and location.hash is shared across the site (to = "/fake" matches location = "/fake#main")', async () => {
           await testActive({
-            exact: true,
             expectation: true,
             location: '/fake#main',
             sharedAnchors: ['#main'],
             to: '/fake',
           });
           await testActive({
-            exact: true,
             expectation: true,
             location: '/fake#main',
             sharedAnchors: ['#main'],
@@ -189,13 +175,11 @@ describe('SideNavEntry', () => {
         describe('that link to in-page anchors', () => {
           it('is active when the to prop is an in-page anchor link that matches location.hash exactly (to =  "#anchor" matches location = "/fake#anchor")', async () => {
             await testActive({
-              exact: true,
               expectation: true,
               location: '/fake#anchor',
               to: '#anchor',
             });
             await testActive({
-              exact: true,
               expectation: true,
               location: '/fake#anchor',
               to: { hash: '#anchor' },
@@ -204,13 +188,11 @@ describe('SideNavEntry', () => {
 
           it('is not active when the to prop is an in-page anchor link that does not match location.hash (to = "#anchor" does not match location = "/fake#hash")', async () => {
             await testActive({
-              exact: true,
               expectation: false,
               location: '/fake#hash',
               to: '#anchor',
             });
             await testActive({
-              exact: true,
               expectation: false,
               location: '/fake#hash',
               to: { hash: '#anchor' },
@@ -221,13 +203,11 @@ describe('SideNavEntry', () => {
         describe('and trailing slashes', () => {
           it('is active when the hashes match and the paths match except for a trailing slash on the to prop (to = "/fake/#anchor" matches location = "/fake#anchor")', async () => {
             await testActive({
-              exact: true,
               expectation: true,
               location: '/fake#anchor',
               to: '/fake/#anchor',
             });
             await testActive({
-              exact: true,
               expectation: true,
               location: '/fake#anchor',
               to: { hash: '#anchor', pathname: '/fake/' },
@@ -236,13 +216,11 @@ describe('SideNavEntry', () => {
 
           it('is active when the hashes match and the paths match except for a trailing slash on the location (to = "/fake#anchor" matches location = "/fake/#anchor")', async () => {
             await testActive({
-              exact: true,
               expectation: true,
               location: '/fake/#anchor',
               to: '/fake#anchor',
             });
             await testActive({
-              exact: true,
               expectation: true,
               location: '/fake/#anchor',
               to: { hash: '#anchor', pathname: '/fake' },

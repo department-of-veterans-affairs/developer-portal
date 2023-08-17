@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
-import { HashLink } from 'react-router-hash-link';
 import { Banner, NavBar, TestingNotice } from '../../components';
 import { Flag } from '../../flags';
 import { mobileOnly } from '../../styles/vadsUtils';
@@ -66,9 +65,9 @@ export const Header = (): JSX.Element => {
         <TestingNotice />
       </Flag>
       <header role="banner" className={headerClassNames}>
-        <HashLink to={{ ...location, hash: '#main' }} className={hashLinkClassNames}>
+        <Link to={{ ...location, hash: '#main' }} className={hashLinkClassNames}>
           Skip to main content
-        </HashLink>
+        </Link>
         <Banner />
 
         <div className={headerContentContainerClassNames}>

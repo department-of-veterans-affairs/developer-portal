@@ -1,18 +1,37 @@
 import React from 'react';
 import { getAllByRole, getByRole, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import { Publishing } from './Publishing';
+import { PublishingIntroduction } from './components/publishingIntroduction';
+import { PublishingOnboarding } from './components/publishingOnboarding';
 
 describe('Publishing', () => {
   beforeEach(() => {
+    const router = createMemoryRouter(
+      [
+        {
+          children: [
+            {
+              element: <PublishingIntroduction />,
+              index: true,
+            },
+            {
+              element: <PublishingOnboarding />,
+              path: 'process',
+            },
+          ],
+          element: <Publishing />,
+          path: '/api-publishing',
+        },
+      ],
+      { initialEntries: ['/api-publishing'] },
+    );
     render(
       <Provider store={store}>
-        <MemoryRouter initialEntries={['/api-publishing']}>
-          <Publishing />
-        </MemoryRouter>
+        <RouterProvider router={router} />
       </Provider>,
     );
   });

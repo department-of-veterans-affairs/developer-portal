@@ -2,7 +2,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import { PageHeader } from '../../components';
 import './RequestProductionAccess.scss';
 import {
@@ -33,8 +32,7 @@ const RequestProductionAccess = (): JSX.Element => (
       </li>
       <li>
         Our rate limiting is 60 requests per minute. View{' '}
-        <HashLink to={CONSUMER_RATE_LIMIT_PATH}>our rate limiting policy</HashLink> for more
-        information.
+        <Link to={CONSUMER_RATE_LIMIT_PATH}>our rate limiting policy</Link> for more information.
       </li>
     </ul>
     <strong>

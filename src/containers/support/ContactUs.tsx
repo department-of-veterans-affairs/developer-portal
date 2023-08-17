@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { FormType } from '../../types/forms/contactUsForm';
 import { PageHeader, VeteranResources } from '../../components';

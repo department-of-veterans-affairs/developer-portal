@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { cleanup } from 'axe-core';
 import { FlagsProvider, getFlags } from '../../../flags';
 import store from '../../../store';
@@ -27,27 +27,29 @@ describe('Authorization Docs', () => {
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={['/explore/api/lotr/client-credentials']}>
-            <Route
-              path="/explore/api/:urlSlug/client-credentials"
-              component={ClientCredentialsGrantDocs}
-            />
+            <Routes>
+              <Route
+                path="/explore/api/:urlSlug/client-credentials"
+                element={<ClientCredentialsGrantDocs />}
+              />
+            </Routes>
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,
     );
   });
 
-  beforeEach(() => {
-    render(
-      <Provider store={store}>
-        <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
-            <ClientCredentialsGrantDocs />
-          </MemoryRouter>
-        </FlagsProvider>
-      </Provider>,
-    );
-  });
+  // beforeEach(() => {
+  //   render(
+  //     <Provider store={store}>
+  //       <FlagsProvider flags={getFlags()}>
+  //         <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
+  //           <ClientCredentialsGrantDocs />
+  //         </MemoryRouter>
+  //       </FlagsProvider>
+  //     </Provider>,
+  //   );
+  // });
 
   it('renders successfully', () => {
     const authHeading = screen.getByRole('heading', { name: 'Client Credentials Grant' });

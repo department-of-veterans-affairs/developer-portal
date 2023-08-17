@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { PublishingOnboarding } from './PublishingOnboarding';
 
 describe('PublishingOnboarding', () => {
@@ -8,7 +8,7 @@ describe('PublishingOnboarding', () => {
     render(
       <MemoryRouter initialEntries={['/api-publishing']}>
         <PublishingOnboarding />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
   });
 

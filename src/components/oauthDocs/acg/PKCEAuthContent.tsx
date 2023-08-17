@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import * as React from 'react';
-import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 import { CodeBlock } from '../../index';
 import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 
@@ -129,8 +129,8 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
               <td>Optional</td>
               <td>
                 Will use your application&#39;s default scopes unless you specify a smaller subset
-                of scopes separated by a space. Review the{' '}
-                <HashLink to="#scopes">Scopes section</HashLink> for more information.
+                of scopes separated by a space. Review the <Link to="#scopes">Scopes section</Link>{' '}
+                for more information.
               </td>
             </tr>
             <tr>
@@ -215,10 +215,9 @@ grant_type=authorization_code
       />
       <p>
         The authorization server will send a 200 response with an{' '}
-        <HashLink to="#id-token">access token</HashLink>. If you requested the{' '}
-        <code>offline_access</code> scope, you will also receive a <code>refresh_token</code>. The
-        response body will look like this, where <code>expires_in</code> is the time in seconds
-        before the token expires:
+        <Link to="#id-token">access token</Link>. If you requested the <code>offline_access</code>{' '}
+        scope, you will also receive a <code>refresh_token</code>. The response body will look like
+        this, where <code>expires_in</code> is the time in seconds before the token expires:
       </p>
       <CodeBlock
         withCopyButton
@@ -253,8 +252,8 @@ Pragma: no-cache
         <code>Authorization: Bearer &#123;access_token&#125;</code>.
       </p>
       <p>
-        <strong>NOTE: </strong>the <HashLink to="#id-token">access token </HashLink> will only work
-        for the API and scopes for which you have previously initiated authorization.
+        <strong>NOTE: </strong>the <Link to="#id-token">access token </Link> will only work for the
+        API and scopes for which you have previously initiated authorization.
       </p>
       <p>
         Refresh tokens expire if they are not used for a period of 7 days in sandbox and 42 days in

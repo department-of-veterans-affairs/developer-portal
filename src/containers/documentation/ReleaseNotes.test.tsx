@@ -1,14 +1,13 @@
-/* eslint-disable max-lines -- exception for test suite */
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import 'jest';
 import * as React from 'react';
-import { MemoryRouter, Route } from 'react-router';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { fakeCategories } from '../../__mocks__/fakeCategories';
 import store from '../../store';
 import { FlagsProvider, getFlags } from '../../flags';
 import * as apiDefs from '../../apiDefs/query';
 import { ReleaseNotes } from './ReleaseNotes';
+import 'jest';
 
 describe('ReleaseNotes', () => {
   const lotrRingsApi = fakeCategories.lotr.apis[0];
@@ -26,7 +25,9 @@ describe('ReleaseNotes', () => {
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={['/explore/api/rings/release-notes']}>
-            <Route path="/explore/api/:urlSlug/release-notes" component={ReleaseNotes} />
+            <Routes>
+              <Route path="/explore/api/:urlSlug/release-notes" element={<ReleaseNotes />} />
+            </Routes>
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,

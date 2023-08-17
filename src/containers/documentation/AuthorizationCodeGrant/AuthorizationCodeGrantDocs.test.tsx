@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { cleanup } from 'axe-core';
 import { FlagsProvider, getFlags } from '../../../flags';
 import store from '../../../store';
@@ -27,10 +27,12 @@ describe('Authorization Docs', () => {
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
-            <Route
-              path="/explore/api/:urlSlug/authorization-code"
-              component={AuthorizationCodeGrantDocs}
-            />
+            <Routes>
+              <Route
+                path="/explore/api/:urlSlug/authorization-code"
+                element={<AuthorizationCodeGrantDocs />}
+              />
+            </Routes>
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,

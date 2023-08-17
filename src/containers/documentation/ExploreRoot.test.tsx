@@ -1,7 +1,7 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { fakeCategories } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';

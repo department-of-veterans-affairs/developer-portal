@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { APICategory } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
@@ -38,10 +38,12 @@ const renderApiPage = async (
     <Provider store={store}>
       <FlagsProvider flags={flags}>
         <MemoryRouter initialEntries={[initialRoute]}>
-          <Route
-            path={componentPath ? componentPath : '/explore/api/:urlSlug/docs'}
-            component={ApiPage}
-          />
+          <Routes>
+            <Route
+              path={componentPath ? componentPath : '/explore/api/:urlSlug/docs'}
+              element={<ApiPage />}
+            />
+          </Routes>
         </MemoryRouter>
       </FlagsProvider>
     </Provider>,

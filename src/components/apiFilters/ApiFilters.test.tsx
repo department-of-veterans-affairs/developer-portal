@@ -1,7 +1,6 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { BrowserRouter as Router, Router as HistoryRouter } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
+import { createMemoryRouter, MemoryRouter, Route, Routes, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
 import { fakeCategories } from '../../__mocks__/fakeCategories';
@@ -29,37 +28,54 @@ describe('ApiFilters', () => {
   it('should render', () => {
     const { container } = render(
       <Provider store={store}>
-        <Router>
-          <ApiFilters apis={apis} setApis={setApis} />
-        </Router>
+        <MemoryRouter>
+          <Routes>
+            <Route path="/" element={<ApiFilters apis={apis} setApis={setApis} />} />
+          </Routes>
+        </MemoryRouter>
       </Provider>,
     );
     expect(container.querySelector('.filters-toggle-button')).toBeInTheDocument();
   });
 
   it('displays a filter pill for given search', () => {
-    const history = createMemoryHistory();
-    history.push('/explore?q=georgia');
+    const router = createMemoryRouter(
+      [
+        {
+          element: <ApiFilters apis={apis} setApis={setApis} />,
+          path: '/explore',
+        },
+      ],
+      {
+        initialEntries: ['/explore?q=georgia'],
+      },
+    );
     render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
-          <ApiFilters apis={apis} setApis={setApis} />
-        </HistoryRouter>
+        <RouterProvider router={router} />
       </Provider>,
     );
     const element: HTMLElement = screen.getByText("'georgia'");
     fireEvent.click(element);
-    expect(history.location.search).toBe('');
+    expect(router.state.location.search).toBe('');
   });
 
   it('clears all filters when "Clear all" button is clicked', () => {
-    const history = createMemoryHistory();
-    history.push('/explore?auth=ccg');
+    const router = createMemoryRouter(
+      [
+        {
+          element: <ApiFilters apis={apis} setApis={setApis} />,
+          path: '/explore',
+        },
+      ],
+      {
+        initialEntries: ['/explore?auth=ccg'],
+      },
+    );
+
     const { container } = render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
-          <ApiFilters apis={apis} setApis={setApis} />
-        </HistoryRouter>
+        <RouterProvider router={router} />
       </Provider>,
     );
     expect(container.querySelectorAll('.va-api-filter-pill')).toHaveLength(1);
@@ -69,33 +85,49 @@ describe('ApiFilters', () => {
   });
 
   it('removes auth filter when clicked on the auth Pill', () => {
-    const history = createMemoryHistory();
-    history.push('/explore?auth=ccg');
+    const router = createMemoryRouter(
+      [
+        {
+          element: <ApiFilters apis={apis} setApis={setApis} />,
+          path: '/explore',
+        },
+      ],
+      {
+        initialEntries: ['/explore?auth=ccg'],
+      },
+    );
+
     render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
-          <ApiFilters apis={apis} setApis={setApis} />
-        </HistoryRouter>
+        <RouterProvider router={router} />
       </Provider>,
     );
     const ccgPill = screen.getByRole('button', { name: 'Client Credentials Grant' });
     expect(ccgPill).toBeInTheDocument();
     fireEvent.click(ccgPill);
-    expect(history.location.pathname).toBe('/explore');
+    expect(router.state.location.pathname).toBe('/explore');
   });
 
   it('sets localStorage exploreApisPath on location change', async () => {
-    const history = createMemoryHistory();
-    history.push('/explore/va-benefits');
+    const router = createMemoryRouter(
+      [
+        {
+          element: <ApiFilters apis={apis} setApis={setApis} />,
+          path: '/explore/:categoryUrlSlugs',
+        },
+      ],
+      {
+        initialEntries: ['/explore/va-benefits'],
+      },
+    );
+
     render(
       <Provider store={store}>
-        <HistoryRouter history={history}>
-          <ApiFilters apis={apis} setApis={setApis} />
-        </HistoryRouter>
+        <RouterProvider router={router} />
       </Provider>,
     );
     expect(localStorage.getItem('exploreApisPath')).toBe('/explore/va-benefits');
-    history.push('/explore/va-benefits?auth=ccg');
+    await router.navigate('/explore/va-benefits?auth=ccg');
 
     await waitFor(() => {
       expect(localStorage.getItem('exploreApisPath')).toBe('/explore/va-benefits?auth=ccg');

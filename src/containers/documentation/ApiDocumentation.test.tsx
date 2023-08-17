@@ -1,12 +1,13 @@
-import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
-import { MockedRequest, MockedResponse, ResponseComposition, rest, restContext } from 'msw';
-import { setupServer } from 'msw/node';
 import * as React from 'react';
+import { findByRole, fireEvent, getByText, render, screen } from '@testing-library/react';
+import { MockedRequest, MockedResponse, ResponseComposition, rest, RestContext } from 'msw';
+import { setupServer } from 'msw/node';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import * as openAPIData from '../../__mocks__/openAPIData/openAPIData.test.json';
 import { APIDescription, ProdAccessFormSteps } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
-import store, { history } from '../../store';
+import store from '../../store';
 import ApiDocumentation from './ApiDocumentation';
 
 const ReleaseNotes: string = 'My API&apos;s release notes';
@@ -40,27 +41,11 @@ const server = setupServer(
     (
       req: MockedRequest,
       res: ResponseComposition,
-      context: typeof restContext,
+      context: RestContext,
     ): MockedResponse | Promise<MockedResponse> =>
       res(context.status(200), context.json(openAPIData)),
   ),
 );
-
-jest.mock('react-router-dom', () => ({
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
-  useHistory: jest.fn().mockReturnValue({
-    location: { pathname: '/another-route' },
-    push: jest.fn(),
-  }),
-  useLocation: jest.fn().mockReturnValue({
-    hash: '',
-    key: '5nvxpbdafa',
-    pathname: '/another-route',
-    search: '',
-    state: null,
-  }),
-}));
 
 describe('ApiDocumentation', () => {
   const defaultFlags: AppFlags = {
@@ -73,7 +58,9 @@ describe('ApiDocumentation', () => {
     render(
       <Provider store={store}>
         <FlagsProvider flags={defaultFlags}>
-          <ApiDocumentation apiDefinition={api} location={history.location} />
+          <MemoryRouter>
+            <ApiDocumentation apiDefinition={api} />
+          </MemoryRouter>
         </FlagsProvider>
       </Provider>,
     );

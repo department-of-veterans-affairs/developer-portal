@@ -2,7 +2,7 @@
 /* eslint-disable complexity */
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { Redirect, useLocation, useParams } from 'react-router-dom';
+import { Navigate, useLocation, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import ReactMarkdown from 'react-markdown';
 import { isApiDeactivated, isApiDeprecated } from '../../apiDefs/deprecated';
@@ -12,7 +12,6 @@ import { APIDescription, VeteranRedirectMessage } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
 import { useFlag } from '../../flags';
 
-import { APIUrlSlug } from '../../types';
 import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import ErrorPage404 from '../ErrorPage404';
@@ -70,7 +69,7 @@ const VeteranRedirectAlertMessage = ({
 
 const ApiPage = (): JSX.Element => {
   const location = useLocation();
-  const params = useParams<APIUrlSlug>();
+  const params = useParams();
   const enabledApisFlags = useFlag([FLAG_API_ENABLED_PROPERTY]);
 
   const api = getApi(params.urlSlug);
@@ -98,7 +97,7 @@ const ApiPage = (): JSX.Element => {
         break;
     }
 
-    return <Redirect to={`/explore/health/docs/fhir?version=${apiVersion}`} />;
+    return <Navigate replace to={`/explore/health/docs/fhir?version=${apiVersion}`} />;
   }
 
   // if (api === null || !category?.apis.includes(api) || !enabledApisFlags[api.urlSlug]) {
@@ -122,7 +121,7 @@ const ApiPage = (): JSX.Element => {
       <DeactivationMessage api={api} />
       {!isApiDeactivated(api) && (
         <div className="sans-serif-headers">
-          <ApiDocumentation apiDefinition={api} location={location} />
+          <ApiDocumentation apiDefinition={api} />
         </div>
       )}
     </>

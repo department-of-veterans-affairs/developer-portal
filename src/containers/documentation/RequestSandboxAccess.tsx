@@ -2,20 +2,18 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { SandboxAccessForm } from '@department-of-veterans-affairs/sandbox-access-form';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { LPB_APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult } from '../../types/forms/apply';
 import { SUPPORT_CONTACT_PATH, TERMS_OF_SERVICE_PATH } from '../../types/constants/paths';
-import { APIUrlSlug } from '../../types';
 import ErrorPage404 from '../ErrorPage404';
 import { getApi } from './DocumentationRoot';
 import { SandboxAccessSuccess } from './components/sandbox';
 import './RequestSandboxAccess.scss';
 
-const RequestSandboxAccess: React.FunctionComponent = () => {
-  const { urlSlug } = useParams<APIUrlSlug>();
+const RequestSandboxAccess = (): JSX.Element => {
+  const { urlSlug } = useParams();
   const api = getApi(urlSlug);
   const [successResults, setSuccessResults] = useState<ApplySuccessResult | false>(false);
 
@@ -38,8 +36,8 @@ const RequestSandboxAccess: React.FunctionComponent = () => {
     authTypes.push('ccg');
   }
 
-  const acgPkceAuthUrl = `/explore/api/${urlSlug}/authorization-code`;
-  const ccgPublicKeyUrl = `/explore/api/${urlSlug}/client-credentials`;
+  const acgPkceAuthUrl = `/explore/api/${urlSlug as string}/authorization-code`;
+  const ccgPublicKeyUrl = `/explore/api/${urlSlug as string}/client-credentials`;
 
   return (
     <>
