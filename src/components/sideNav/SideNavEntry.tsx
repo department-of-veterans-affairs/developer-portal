@@ -7,25 +7,12 @@ export interface SideNavEntryProps {
   name: string | JSX.Element;
   className?: string;
   subNavLevel?: number;
-  sharedAnchors?: string[];
-  forceAriaCurrent?: boolean;
-  if?: boolean;
   to: To;
   end?: boolean;
 }
 
 const SideNavEntry: React.FC<SideNavEntryProps> = (props): JSX.Element => {
-  // Omit unneeded parent props from NavLink
-  /* eslint-disable @typescript-eslint/no-unused-vars -- omit sharedAnchors from navLinkProps */
-  const {
-    children,
-    className,
-    forceAriaCurrent,
-    name,
-    subNavLevel,
-    sharedAnchors,
-    ...navLinkProps
-  } = props;
+  const { children, className, name, subNavLevel, ...navLinkProps } = props;
 
   const location = useLocation();
   const { hash } = location;
@@ -43,16 +30,16 @@ const SideNavEntry: React.FC<SideNavEntryProps> = (props): JSX.Element => {
         className={
           ({ isActive }): string => {
             let hashIsActive = false;
-            const hashExists = typeof hash === 'string' && hash.length > 0;
+            const locationHashExists = typeof hash === 'string' && hash.length > 0;
             const toIncludesHash = (hashString: string): boolean => {
               if (typeof props.to === 'string') {
                 return props.to.includes(hashString);
               }
 
-              return props.to.hash === hashString;
+              return props.to.hash?.includes(hashString) ?? false;
             };
 
-            if (hashExists && toIncludesHash(hash)) {
+            if (isActive && locationHashExists && toIncludesHash(hash)) {
               hashIsActive = true;
             }
 
@@ -86,7 +73,6 @@ const SideNavEntry: React.FC<SideNavEntryProps> = (props): JSX.Element => {
 };
 
 SideNavEntry.defaultProps = {
-  sharedAnchors: ['#main', '#page-header'],
   subNavLevel: 0,
 };
 

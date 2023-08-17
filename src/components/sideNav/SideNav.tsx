@@ -1,11 +1,8 @@
 import React from 'react';
-
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import * as Stickyfill from 'stickyfilljs';
-
 import './SideNav.scss';
-import { useLocation } from 'react-router-dom';
 
 interface SideNavProps {
   className?: string;

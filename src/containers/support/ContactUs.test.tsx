@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { useLocation, MemoryRouter } from 'react-router-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import ContactUs from './ContactUs';
 
 jest.mock('react-router-dom', () => ({
@@ -27,9 +26,9 @@ describe('ContactUs', () => {
 
   it('Page renders as expected', () => {
     render(
-      <Router>
+      <MemoryRouter>
         <ContactUs />
-      </Router>,
+      </MemoryRouter>,
     );
     const heading = screen.getByRole('heading', { level: 1 });
     expect(heading).toHaveTextContent('Developer portal support');
