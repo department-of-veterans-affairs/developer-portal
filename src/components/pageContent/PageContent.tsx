@@ -58,20 +58,6 @@ const PageContent = (): JSX.Element => {
     setVaNetworkAvailable({ status: 'unknown' });
   };
 
-  const testVaNetworkAccess = (): void => {
-    fetch('https://hub.lighthouse.va.gov', { mode: 'no-cors' })
-      .then(() => {
-        setVaNetworkAvailable({ status: 'connected' });
-        navigate(PUBLISHING_REQUIREMENTS_URL);
-        return true;
-      })
-      .catch(() => {
-        setTimeout(() => {
-          setVaNetworkAvailable({ status: 'unavailable' });
-        }, 1500);
-      });
-  };
-
   React.useEffect(() => {
     if (vaNetworkStore.vaNetworkModal) {
       setVaNetworkModalVisible(true);
@@ -82,11 +68,25 @@ const PageContent = (): JSX.Element => {
   }, [vaNetworkStore, setVaNetworkModalVisible, setVaNetworkAvailable, vaNetworkAvailable]);
 
   React.useEffect(() => {
+    const testVaNetworkAccess = (): void => {
+      fetch('https://hub.lighthouse.va.gov', { mode: 'no-cors' })
+        .then(() => {
+          setVaNetworkAvailable({ status: 'connected' });
+          navigate(PUBLISHING_REQUIREMENTS_URL);
+          return true;
+        })
+        .catch(() => {
+          setTimeout(() => {
+            setVaNetworkAvailable({ status: 'unavailable' });
+          }, 1500);
+        });
+    };
+
     if (['start-test'].includes(vaNetworkAvailable.status)) {
       setVaNetworkAvailable({ status: 'testing' });
       testVaNetworkAccess();
     }
-  }, [vaNetworkAvailable]);
+  }, [navigate, vaNetworkAvailable]);
 
   let modalTitle =
     vaNetworkAvailable.status === 'unavailable'
