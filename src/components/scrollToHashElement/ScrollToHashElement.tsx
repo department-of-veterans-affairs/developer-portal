@@ -25,11 +25,20 @@ const ScrollToHashElement = (): JSX.Element | null => {
 
   useEffect(() => {
     if (hashElement) {
+      /**
+       * scrollIntoView options documentation:
+       * https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+       */
       hashElement.scrollIntoView({
         behavior: 'smooth',
-        // block: "end",
         inline: 'nearest',
       });
+      /**
+       * Manually setting focus on hash element.
+       * Focus management was previously handled through https://github.com/rafgraph/react-router-hash-link
+       * but that package is not compatible with React Router 6.
+       */
+      hashElement.focus();
     }
   }, [hashElement]);
 
