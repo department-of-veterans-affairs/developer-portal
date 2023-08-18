@@ -12,14 +12,19 @@ const GettingStarted = (props: ApiRequiredProps): JSX.Element => (
         <span className="vads-u-font-weight--bold">Generate the private key:</span> Use the
         following command to generate a private key in PEM format.
         <div className="vads-u-margin-top--1">
-          <code>openssl genrsa -out private.pem 2048</code>
+          <pre className="vads-u-background-color--gray-lightest">
+            <code>openssl genrsa -out private.pem 2048</code>
+          </pre>
         </div>
       </li>
       <li>
         <span className="vads-u-font-weight--bold">Generate the public key:</span> Once you have the
         private key, you can extract the corresponding public key using the following command.
         <div className="vads-u-margin-top--1">
-          <code>openssl rsa -in private.pem -outform PEM -pubout -out public.pem</code>
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+          <pre className="vads-u-background-color--gray-lightest" tabIndex={0}>
+            <code>openssl rsa -in private.pem -outform PEM -pubout -out public.pem</code>
+          </pre>
         </div>
       </li>
       <li>
@@ -31,7 +36,9 @@ const GettingStarted = (props: ApiRequiredProps): JSX.Element => (
         </a>
         , use the following command.
         <div className="vads-u-margin-top--1">
-          <code>pem-jwk public.pem &gt; public.jwk</code>
+          <pre className="vads-u-background-color--gray-lightest">
+            <code>pem-jwk public.pem &gt; public.jwk</code>
+          </pre>
         </div>
       </li>
     </ol>
