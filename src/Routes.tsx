@@ -88,11 +88,11 @@ export const SiteRoutes = (): JSX.Element => (
 
     <Route path="/onboarding" element={<ConsumerOnboardingRoot />}>
       <Route index element={<OnboardingOverview />} />
-      <Route path="production-access-application" element={<ProductionAccess />} />
       <Route path="request-prod-access" element={<RequestProductionAccess />} />
       <Route path="prepare-for-and-complete-a-demo" element={<DemoPrep />} />
       <Route path="working-with-lighthouse-apis" element={<WorkingWithOurAPIs />} />
     </Route>
+    <Route path="onboarding/production-access-application" element={<ProductionAccess />} />
 
     <Route path="/apply" element={<Navigate to="/explore" replace />} />
     <Route path={CONSUMER_SANDBOX_PATH} element={<Navigate to="/explore" replace />} />
