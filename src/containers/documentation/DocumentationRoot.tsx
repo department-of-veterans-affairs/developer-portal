@@ -29,7 +29,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
   const { api } = props;
   return (
     <>
-      <SideNavEntry name={api.name} to="." />
+      <SideNavEntry end name={api.name} to="." />
       <SideNavEntry end name="Docs" subNavLevel={1} to="docs" />
       {!!api.oAuthTypes?.includes('AuthorizationCodeGrant') && (
         <SideNavEntry end name="Authorization Code Grant" subNavLevel={1} to="authorization-code" />
