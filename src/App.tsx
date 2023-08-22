@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import classNames from 'classnames';
 import { Route, Router } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
