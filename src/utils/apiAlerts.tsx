@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 export const apiAlerts = [
   {
@@ -9,9 +8,8 @@ export const apiAlerts = [
   {
     content: (
       <>
-        Version 1 of the VA Facilities API is launching soon. We will add{' '}
-        <Link to="/explore/api/va-facilities/release-notes">release notes</Link> when it&apos;s
-        live.
+        Version 0 of the VA Facilities API is deprecated and scheduled for deactivation on February
+        29, 2024. Version 1 of the VA Facilities API is now active.
       </>
     ),
     path: '/explore/api/va-facilities',

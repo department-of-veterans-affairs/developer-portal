@@ -1,5 +1,6 @@
 /// <reference types="cypress" />
 const fetch = require('node-fetch');
+const { VaInternalOnly } = require('../../src/apiDefs/schema.ts');
 
 export const getRequiredApiSignups = async () => {
   const options = {
@@ -27,6 +28,7 @@ export const getRequiredApiSignups = async () => {
       });
       apis
         .filter(api => api.altID)
+        .filter(api => api.vaInternalOnly !== VaInternalOnly.StrictlyInternal)
         .forEach(api => {
           if (api.oAuth) {
             if (api.oAuthTypes.includes('AuthorizationCodeGrant')) {

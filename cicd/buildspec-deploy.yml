@@ -201,6 +201,10 @@ phases:
         echo 'oauth|/explore' >> ./redirects.txt
         echo 'explore/authorization/docs/authorization-code|/explore?auth=acg' >> ./redirects.txt
         echo 'explore/authorization/docs/client-credentials|/explore?auth=ccg' >> ./redirects.txt
+        echo 'explore/api/appeals-status/sandbox-access|/explore/api/appeals-status' >> ./redirects.txt
+        echo 'explore/api/clinical-health/sandbox-access|/explore/api/clinical-health' >> ./redirects.txt
+        echo 'explore/api/decision-reviews/sandbox-access|/explore/api/decision-reviews' >> ./redirects.txt
+        echo 'explore/api/loan-guaranty/sandbox-access|/explore/api/loan-guaranty' >> ./redirects.txt
         for env in ${ENVIRONMENTS}; do
           u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
           echo $u_env
