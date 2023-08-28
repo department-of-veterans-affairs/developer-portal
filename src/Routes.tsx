@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Navigate, Route, Routes, useParams } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
+import { ErrorBoundary } from 'react-error-boundary';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import Home from './containers/Home';
 
@@ -35,20 +36,9 @@ import Support, { sections as supportSections, SupportSection } from './containe
 import { CONSUMER_PROD_PATH, CONSUMER_SANDBOX_PATH } from './types/constants/paths';
 import ErrorPage404 from './containers/ErrorPage404';
 import TermsOfService from './containers/TermsOfService';
-import { lookupApiBySlug } from './apiDefs/query';
 
-export const SiteRoutes = (): JSX.Element => {
-  const params = useParams();
-  const api = lookupApiBySlug(params.urlSlug as string);
-  let hasACG: boolean = false;
-  let hasCCG: boolean = false;
-
-  if (api) {
-    hasACG = api.oAuthTypes?.includes('AuthorizationCodeGrant') ?? false;
-    hasCCG = api.oAuthTypes?.includes('ClientCredentialsGrant') ?? false;
-  }
-
-  return (
+export const SiteRoutes = (): JSX.Element => (
+  <ErrorBoundary FallbackComponent={ErrorPage404}>
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/index.html" element={<Home />} />
@@ -70,8 +60,8 @@ export const SiteRoutes = (): JSX.Element => {
       <Route path="/explore/api/:urlSlug" element={<DocumentationRoot />}>
         <Route index element={<ApiOverviewPage />} />
         <Route path="docs" element={<ApiPage />} />
-        {hasACG && <Route path="authorization-code" element={<AuthorizationCodeGrantDocs />} />}
-        {hasCCG && <Route path="client-credentials" element={<ClientCredentialsGrantDocs />} />}
+        <Route path="authorization-code" element={<AuthorizationCodeGrantDocs />} />
+        <Route path="client-credentials" element={<ClientCredentialsGrantDocs />} />
         <Route path="release-notes" element={<ReleaseNotes />} />
         <Route path="sandbox-access" element={<RequestSandboxAccess />} />
       </Route>
@@ -116,5 +106,5 @@ export const SiteRoutes = (): JSX.Element => {
       {/* Catch the rest with the 404 */}
       <Route path="*" element={<ErrorPage404 />} />
     </Routes>
-  );
-};
+  </ErrorBoundary>
+);

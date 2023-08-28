@@ -12,13 +12,12 @@ import { GettingStarted } from '../../../components/oauthDocs/acg/GettingStarted
 
 import './AuthorizationCodeGrantDocs.scss';
 import { getApi } from '../DocumentationRoot';
-import ErrorPage404 from '../../ErrorPage404';
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
   const params = useParams();
   const api = getApi(params.urlSlug);
-  if (!api) {
-    return <ErrorPage404 />;
+  if (!api?.oAuthTypes?.includes('AuthorizationCodeGrant')) {
+    throw new Error('API does not include this auth type');
   }
 
   return (
