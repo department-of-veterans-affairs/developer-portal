@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useParams } from 'react-router-dom';
 
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
 import Home from './containers/Home';
@@ -35,70 +35,86 @@ import Support, { sections as supportSections, SupportSection } from './containe
 import { CONSUMER_PROD_PATH, CONSUMER_SANDBOX_PATH } from './types/constants/paths';
 import ErrorPage404 from './containers/ErrorPage404';
 import TermsOfService from './containers/TermsOfService';
+import { lookupApiBySlug } from './apiDefs/query';
 
-export const SiteRoutes = (): JSX.Element => (
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/index.html" element={<Home />} />
+export const SiteRoutes = (): JSX.Element => {
+  const params = useParams();
+  const api = lookupApiBySlug(params.urlSlug as string);
+  let hasACG: boolean = false;
+  let hasCCG: boolean = false;
 
-    {/* Legacy routes that we want to maintain: */}
-    <Route path="/explore/terms-of-service" element={<Navigate to="/terms-of-service" replace />} />
-    <Route path="/whats-new" element={<Navigate to="/about/news" replace />} />
-    <Route path="/news" element={<Navigate to="/about/news" replace />} />
+  if (api) {
+    hasACG = api.oAuthTypes?.includes('AuthorizationCodeGrant') ?? false;
+    hasCCG = api.oAuthTypes?.includes('ClientCredentialsGrant') ?? false;
+  }
 
-    {/* CURRENT ROUTES: */}
-    <Route path="/terms-of-service" element={<TermsOfService />} />
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/index.html" element={<Home />} />
 
-    {/* API Documentation */}
-    <Route path="/explore" element={<ExploreRoot />} />
-    <Route path="/explore/:categoryUrlSlugs" element={<ExploreRoot />} />
-    <Route path="/explore/api/:urlSlug" element={<DocumentationRoot />}>
-      <Route index element={<ApiOverviewPage />} />
-      <Route path="docs" element={<ApiPage />} />
-      <Route path="authorization-code" element={<AuthorizationCodeGrantDocs />} />
-      <Route path="client-credentials" element={<ClientCredentialsGrantDocs />} />
-      <Route path="release-notes" element={<ReleaseNotes />} />
-      <Route path="sandbox-access" element={<RequestSandboxAccess />} />
-    </Route>
-    <Route path="/explore/api" element={<Navigate to="/explore" replace />} />
+      {/* Legacy routes that we want to maintain: */}
+      <Route
+        path="/explore/terms-of-service"
+        element={<Navigate to="/terms-of-service" replace />}
+      />
+      <Route path="/whats-new" element={<Navigate to="/about/news" replace />} />
+      <Route path="/news" element={<Navigate to="/about/news" replace />} />
 
-    {/* About */}
-    <Route path="/about" element={<About />}>
-      <Route index element={<AboutOverview />} />
-      <Route path="news" element={<News />} />
-    </Route>
+      {/* CURRENT ROUTES: */}
+      <Route path="/terms-of-service" element={<TermsOfService />} />
 
-    {/* Support */}
-    <Route path="/support" element={<Support />}>
-      <Route index element={<SupportOverview sections={supportSections} />} />
-      {supportSections.map((section: SupportSection) => (
-        <Route path={section.id} key={`${section.id}-support`} element={<section.component />} />
-      ))}
-    </Route>
+      {/* API Documentation */}
+      <Route path="/explore" element={<ExploreRoot />} />
+      <Route path="/explore/:categoryUrlSlugs" element={<ExploreRoot />} />
+      <Route path="/explore/api/:urlSlug" element={<DocumentationRoot />}>
+        <Route index element={<ApiOverviewPage />} />
+        <Route path="docs" element={<ApiPage />} />
+        {hasACG && <Route path="authorization-code" element={<AuthorizationCodeGrantDocs />} />}
+        {hasCCG && <Route path="client-credentials" element={<ClientCredentialsGrantDocs />} />}
+        <Route path="release-notes" element={<ReleaseNotes />} />
+        <Route path="sandbox-access" element={<RequestSandboxAccess />} />
+      </Route>
+      <Route path="/explore/api" element={<Navigate to="/explore" replace />} />
 
-    {/* Integration Guide */}
-    <Route path="/providers/integration-guide" element={<IntegrationGuide />} />
+      {/* About */}
+      <Route path="/about" element={<About />}>
+        <Route index element={<AboutOverview />} />
+        <Route path="news" element={<News />} />
+      </Route>
 
-    {/* API Publishing */}
-    <Route path="/api-publishing" element={<Publishing />}>
-      <Route index element={<PublishingIntroduction />} />
-      <Route path="process" element={<PublishingOnboarding />} />
-    </Route>
-    {/* Consumer Docs */}
+      {/* Support */}
+      <Route path="/support" element={<Support />}>
+        <Route index element={<SupportOverview sections={supportSections} />} />
+        {supportSections.map((section: SupportSection) => (
+          <Route path={section.id} key={`${section.id}-support`} element={<section.component />} />
+        ))}
+      </Route>
 
-    <Route path="/onboarding" element={<ConsumerOnboardingRoot />}>
-      <Route index element={<OnboardingOverview />} />
-      <Route path="request-prod-access" element={<RequestProductionAccess />} />
-      <Route path="prepare-for-and-complete-a-demo" element={<DemoPrep />} />
-      <Route path="working-with-lighthouse-apis" element={<WorkingWithOurAPIs />} />
-    </Route>
-    <Route path="onboarding/production-access-application" element={<ProductionAccess />} />
+      {/* Integration Guide */}
+      <Route path="/providers/integration-guide" element={<IntegrationGuide />} />
 
-    <Route path="/apply" element={<Navigate to="/explore" replace />} />
-    <Route path={CONSUMER_SANDBOX_PATH} element={<Navigate to="/explore" replace />} />
-    <Route path="/go-live" element={<Navigate to={CONSUMER_PROD_PATH} />} />
+      {/* API Publishing */}
+      <Route path="/api-publishing" element={<Publishing />}>
+        <Route index element={<PublishingIntroduction />} />
+        <Route path="process" element={<PublishingOnboarding />} />
+      </Route>
+      {/* Consumer Docs */}
 
-    {/* Catch the rest with the 404 */}
-    <Route path="*" element={<ErrorPage404 />} />
-  </Routes>
-);
+      <Route path="/onboarding" element={<ConsumerOnboardingRoot />}>
+        <Route index element={<OnboardingOverview />} />
+        <Route path="request-prod-access" element={<RequestProductionAccess />} />
+        <Route path="prepare-for-and-complete-a-demo" element={<DemoPrep />} />
+        <Route path="working-with-lighthouse-apis" element={<WorkingWithOurAPIs />} />
+      </Route>
+      <Route path="onboarding/production-access-application" element={<ProductionAccess />} />
+
+      <Route path="/apply" element={<Navigate to="/explore" replace />} />
+      <Route path={CONSUMER_SANDBOX_PATH} element={<Navigate to="/explore" replace />} />
+      <Route path="/go-live" element={<Navigate to={CONSUMER_PROD_PATH} />} />
+
+      {/* Catch the rest with the 404 */}
+      <Route path="*" element={<ErrorPage404 />} />
+    </Routes>
+  );
+};

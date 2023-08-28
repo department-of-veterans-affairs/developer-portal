@@ -27,29 +27,26 @@ const SideNavEntry: React.FC<SideNavEntryProps> = (props): JSX.Element => {
       )}
     >
       <NavLink
-        className={
-          ({ isActive }): string => {
-            let hashIsActive = false;
-            const locationHashExists = typeof hash === 'string' && hash.length > 0;
-            const toIncludesHash = (hashString: string): boolean => {
-              if (typeof props.to === 'string') {
-                return props.to.includes(hashString);
-              }
-
-              return props.to.hash?.includes(hashString) ?? false;
-            };
-
-            if (isActive && locationHashExists && toIncludesHash(hash)) {
-              hashIsActive = true;
+        className={({ isActive }): string => {
+          let hashIsActive = false;
+          const locationHashExists = typeof hash === 'string' && hash.length > 0;
+          const toIncludesHash = (hashString: string): boolean => {
+            if (typeof props.to === 'string') {
+              return props.to.includes(hashString);
             }
 
-            return classNames(`va-api-nav-level-${subNavLevel ?? 0}`, className, {
-              'va-api-active-sidenav-link': toIncludesHash('#') ? hashIsActive : isActive,
-              'vads-u-font-weight--bold': toIncludesHash('#') ? hashIsActive : isActive,
-            });
+            return props.to.hash?.includes(hashString) ?? false;
+          };
+
+          if (isActive && locationHashExists && toIncludesHash(hash)) {
+            hashIsActive = true;
           }
-          // eslint-disable-next-line react/jsx-curly-newline
-        }
+
+          return classNames(`va-api-nav-level-${subNavLevel ?? 0}`, className, {
+            'va-api-active-sidenav-link': toIncludesHash('#') ? hashIsActive : isActive,
+            'vads-u-font-weight--bold': toIncludesHash('#') ? hashIsActive : isActive,
+          });
+        }}
         {...navLinkProps}
       >
         <>

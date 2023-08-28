@@ -30,9 +30,8 @@ const SubNavEntry: FC<SubNavEntryProps> = ({ children, onClick, to, id }) => (
     <NavLink
       onClick={onClick}
       to={to}
-      className={
-        ({ isActive }): string => classNames(linkStyles, { 'va-api-active-sub-nav': isActive })
-        // eslint-disable-next-line react/jsx-curly-newline
+      className={({ isActive }): string =>
+        classNames(linkStyles, { 'va-api-active-sub-nav': isActive })
       }
     >
       {children}

@@ -6,7 +6,6 @@ import { SideNav } from '../sideNav/SideNav';
 
 interface ContentWithNavProps {
   nav: React.ReactNode;
-  // content: React.ReactNode;
   navAriaLabel: string;
   contentAriaLabelledBy?: string;
   className?: string;
@@ -15,7 +14,6 @@ interface ContentWithNavProps {
 
 const ContentWithNav: FC<ContentWithNavProps> = ({
   nav,
-  // content,
   navAriaLabel,
   contentAriaLabelledBy,
   className,

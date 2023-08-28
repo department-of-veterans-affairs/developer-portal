@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { ApiAlerts, ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../components';
@@ -45,7 +45,6 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
 
 const DocumentationRoot = (): JSX.Element => {
   const params = useParams();
-  const location = useLocation();
   const api = lookupApiBySlug(params.urlSlug as string);
 
   if (
@@ -57,18 +56,7 @@ const DocumentationRoot = (): JSX.Element => {
   if (!api) {
     return <ErrorPage404 />;
   }
-  if (
-    location.pathname.endsWith('authorization-code') &&
-    !api.oAuthTypes?.includes('AuthorizationCodeGrant')
-  ) {
-    return <ErrorPage404 />;
-  }
-  if (
-    location.pathname.endsWith('client-credentials') &&
-    !api.oAuthTypes?.includes('ClientCredentialsGrant')
-  ) {
-    return <ErrorPage404 />;
-  }
+
   return (
     <>
       <ApiBreadcrumbs api={api} />

@@ -7,7 +7,7 @@ import { LPB_PROVIDERS_URL } from './types/constants';
 import { setApiLoadingError, SetAPIs, setApis } from './actions';
 import { APICategories } from './apiDefs/schema';
 import { Footer, Header, PageContent } from './components';
-import ScrollToHashElement from './components/scrollToHashElement/ScrollToHashElement';
+import { ScrollToHashElement } from './components/scrollToHashElement/ScrollToHashElement';
 import { FlagsProvider, getFlags } from './flags';
 import { RootState } from './types';
 

@@ -28,13 +28,11 @@ const MainNavItem: FC<MainNavItemProps> = (props): JSX.Element => {
       {!excludeLargeScreen && (
         <div className={desktopOnly()}>
           <NavLink
-            className={
-              ({ isActive }): string =>
-                classNames('va-api-nav-link', className, {
-                  [activeClassName]: isActive,
-                  'va-api-active-nav': isActive,
-                })
-              // eslint-disable-next-line react/jsx-curly-newline
+            className={({ isActive }): string =>
+              classNames('va-api-nav-link', className, {
+                [activeClassName]: isActive,
+                'va-api-active-nav': isActive,
+              })
             }
             to={targetUrl}
           >
@@ -46,13 +44,11 @@ const MainNavItem: FC<MainNavItemProps> = (props): JSX.Element => {
         <div className={mobileOnly()}>
           <NavLink
             onClick={onClick}
-            className={
-              ({ isActive }): string =>
-                classNames('va-api-nav-link', className, {
-                  [activeClassName]: isActive,
-                  'va-api-active-nav': isActive,
-                })
-              // eslint-disable-next-line react/jsx-curly-newline
+            className={({ isActive }): string =>
+              classNames('va-api-nav-link', className, {
+                [activeClassName]: isActive,
+                'va-api-active-nav': isActive,
+              })
             }
             to={targetUrl}
           >

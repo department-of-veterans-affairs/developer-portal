@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 /*
   Sourced from: https://github.com/ncoughlin/scroll-to-hash-element
 */
-const ScrollToHashElement = (): JSX.Element | null => {
+export const ScrollToHashElement = (): JSX.Element | null => {
   const location = useLocation();
 
   const hashElement = useMemo(() => {
@@ -44,5 +44,3 @@ const ScrollToHashElement = (): JSX.Element | null => {
 
   return null;
 };
-
-export default ScrollToHashElement;
