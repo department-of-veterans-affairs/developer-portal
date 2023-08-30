@@ -40,6 +40,15 @@ export interface SetGeneralStore extends Action {
   vaNetworkModal: boolean;
 }
 
+export interface SetScrollPosition extends Action {
+  position: number;
+  type: constants.SET_SCROLL_POSITION;
+}
+
+export interface ResetScrollPosition extends Action {
+  type: constants.RESET_SCROLL_POSITION;
+}
+
 export const resetVersioning: ActionCreator<ResetVersioning> = () => ({
   type: constants.RESET_VERSIONING_VALUE,
 });
@@ -109,4 +118,13 @@ export const setGeneralStore: ActionCreator<SetGeneralStore> = (
   type: constants.SET_GENERAL_STORE_VALUE,
   vaNetworkConnected,
   vaNetworkModal,
+});
+
+export const setScrollPosition: ActionCreator<SetScrollPosition> = (position: number) => ({
+  position,
+  type: constants.SET_SCROLL_POSITION_VALUE,
+});
+
+export const resetScrollPosition: ActionCreator<ResetScrollPosition> = () => ({
+  type: constants.RESET_SCROLL_POSITION_VALUE,
 });
