@@ -46,11 +46,6 @@ jobs:
           name: cypress-videos
           path: cypress/videos
 
-      - id: cypress_run_failure_test
-        continue-on-error: true
-        name: Fail on purpose
-        run: exit 1;
-
       - name: Setup ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -82,7 +77,7 @@ jobs:
 
       - name: Send Slack notification for a failed signup
         uses: slackapi/slack-github-action@v1.23.0
-        if: steps.cypress_run_failure_test.outcome != 'success'
+        if: steps.cypress_run.outcome != 'success'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         with:
@@ -109,5 +104,5 @@ jobs:
               ]
             }
       - name: Fail the job on failure of cypress_run
-        if: steps.cypress_run_failure_test.outcome != 'success'
+        if: steps.cypress_run.outcome != 'success'
         run: exit 1;
