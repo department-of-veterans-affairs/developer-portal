@@ -68,6 +68,17 @@ process.env.NODE_PATH = (process.env.NODE_PATH || '')
 // injected into the application via DefinePlugin in Webpack configuration.
 const REACT_APP = /^REACT_APP_/i;
 
+const gtmEnvironmentSuffix = () => {
+  switch (process.argv[2] || 'dev') {
+    case 'dev':
+      return '&gtm_auth=8za7ZBmPNgdQY0eQK6NxxA&gtm_preview=env-9&gtm_cookies_win=x';
+    case 'staging':
+      return '&gtm_auth=iwbn38RwHI2gYo7oSgJZzg&gtm_preview=env-10&gtm_cookies_win=x';
+    default:
+      return '';
+  }
+}
+
 // `publicUrl` can be a URL or a path because it is used as a string prefix in
 // the public/index.html template. Either way it should not have a trailing
 // slash in order to align with the assumptions of the templates.
@@ -88,6 +99,9 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
+        // To support multiple Google Tag Manager environments we need to supply
+        // a suffix to the script's URL for those lower environment tags to load
+        GTM_ENVIRONMENT_SUFFIX: gtmEnvironmentSuffix(),
       }
     );
   // Stringify all values so we can feed into Webpack DefinePlugin

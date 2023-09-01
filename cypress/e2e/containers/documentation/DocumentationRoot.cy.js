@@ -26,4 +26,14 @@ describe('Documentation Root', () => {
       expect($el[0].offsetTop).to.be.greaterThan(0);
     });
   });
+
+  it('Side nav links to Sandbox Access form on non-internal APIs', () => {
+    cy.visit('/explore/api/va-forms');
+    cy.get('[href="/explore/api/va-forms/sandbox-access').should('exist');
+  });
+
+  it('Side nav does not link to Sandbox Access form on internal APIs', () => {
+    cy.visit('/explore/api/appeals-status');
+    cy.get('[href="/explore/api/appeals-status/sandbox-access').should('not.exist');
+  });
 });

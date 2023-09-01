@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
-import { APIDescription } from '../../apiDefs/schema';
+import { APIDescription, VaInternalOnly } from '../../apiDefs/schema';
 import { ApiAlerts, ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../components';
 import { apiLoadingState } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
@@ -38,7 +38,9 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
         <SideNavEntry end name="Client Credentials Grant" subNavLevel={1} to="client-credentials" />
       )}
       <SideNavEntry end name="Release notes" subNavLevel={1} to="release-notes" />
-      <SideNavEntry end name="Sandbox access" subNavLevel={1} to="sandbox-access" />
+      {api.vaInternalOnly !== VaInternalOnly.StrictlyInternal && (
+        <SideNavEntry end name="Sandbox access" subNavLevel={1} to="sandbox-access" />
+      )}
     </>
   );
 };
