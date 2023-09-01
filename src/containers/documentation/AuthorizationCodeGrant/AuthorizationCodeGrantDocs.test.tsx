@@ -10,7 +10,7 @@ import * as apiDefs from '../../../apiDefs/query';
 import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrantDocs';
 
 describe('Authorization Docs', () => {
-  const lotrRingsApi = fakeCategories.lotr.apis[0];
+  const armageddonMovie = fakeCategories.movies.apis[1];
 
   const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
@@ -20,13 +20,13 @@ describe('Authorization Docs', () => {
   });
 
   beforeEach(async () => {
-    lookupApiBySlugMock.mockReturnValue(lotrRingsApi);
-    lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
+    lookupApiBySlugMock.mockReturnValue(armageddonMovie);
+    lookupApiCategoryMock.mockReturnValue(fakeCategories.movies);
     await waitFor(() => cleanup());
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
+          <MemoryRouter initialEntries={['/explore/api/armageddon/authorization-code']}>
             <Routes>
               <Route
                 path="/explore/api/:urlSlug/authorization-code"

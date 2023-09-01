@@ -9,24 +9,23 @@ import { fakeCategories } from '../../../__mocks__/fakeCategories';
 import * as apiDefs from '../../../apiDefs/query';
 import { ClientCredentialsGrantDocs } from './ClientCredentialsGrantDocs';
 
-const lotrRingsApi = fakeCategories.lotr.apis[0];
+const apollo13Api = fakeCategories.movies.apis[0];
 
 describe('Authorization Docs', () => {
   const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
-
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   beforeEach(async () => {
-    lookupApiBySlugMock.mockReturnValue(lotrRingsApi);
-    lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
+    lookupApiBySlugMock.mockReturnValue(apollo13Api);
+    lookupApiCategoryMock.mockReturnValue(fakeCategories.movies);
     await waitFor(() => cleanup());
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/lotr/client-credentials']}>
+          <MemoryRouter initialEntries={['/explore/api/apollo-13/client-credentials']}>
             <Routes>
               <Route
                 path="/explore/api/:urlSlug/client-credentials"
@@ -38,18 +37,6 @@ describe('Authorization Docs', () => {
       </Provider>,
     );
   });
-
-  // beforeEach(() => {
-  //   render(
-  //     <Provider store={store}>
-  //       <FlagsProvider flags={getFlags()}>
-  //         <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
-  //           <ClientCredentialsGrantDocs />
-  //         </MemoryRouter>
-  //       </FlagsProvider>
-  //     </Provider>,
-  //   );
-  // });
 
   it('renders successfully', () => {
     const authHeading = screen.getByRole('heading', { name: 'Client Credentials Grant' });
