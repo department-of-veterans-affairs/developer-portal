@@ -41,7 +41,7 @@ export const TopicFilters = ({
 
   const initialTopics: TopicFilterValues = { topics: topicFilter };
 
-  const topicClassNames = classNames('filter-topic-container', {
+  const topicClassNames = classNames('filter-container--topic', {
     'vads-u-display--block': isTopicOpen,
     'vads-u-display--none': !isTopicOpen,
   });

@@ -104,7 +104,8 @@ button.filters-clear-all-button {
   }
 }
 
-.filter-topic-container {
+.filter-container--auth,
+.filter-container--topic {
   padding: 1.6rem;
 
   [type='checkbox'] + label {
