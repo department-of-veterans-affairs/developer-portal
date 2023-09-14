@@ -8,7 +8,7 @@ import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import { fakeCategories, unmetDeactivationInfo } from '../../__mocks__/fakeCategories';
 import * as apiDefs from '../../apiDefs/query';
 import store from '../../store';
-import { apiLoadingState } from '../../types/constants';
+// import { apiLoadingState } from '../../types/constants';
 import ApiPage from './ApiPage';
 
 // Convenience variables to try and keep the index values out of the test
@@ -59,9 +59,9 @@ describe('ApiPage', () => {
 
   const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
-  const apisLoadedSpy = jest
-    .spyOn(apiDefs, 'getApisLoadedState')
-    .mockReturnValue(apiLoadingState.LOADED);
+  // const apisLoadedSpy = jest
+  //   .spyOn(apiDefs, 'getApisLoadedState')
+  //   .mockReturnValue(apiLoadingState.LOADED);
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -134,25 +134,23 @@ describe('ApiPage', () => {
   });
 
   describe('given url with api that does not exist', () => {
-    beforeEach(async () => {
+    it("ApiPage throws an error that'll get caught by the ErrorBoundary", () => {
       lookupApiBySlugMock.mockReturnValue(null);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      await renderApiPage(defaultFlags, '/explore/api/nonexistentapi/docs');
-    });
-
-    it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiBySlugMock).toHaveBeenCalledWith('nonexistentapi');
-      expect(lookupApiCategoryMock).toHaveBeenCalledTimes(0);
-    });
-
-    it('renders the api not found page', async () => {
-      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
-      await renderApiPage(
-        defaultFlags,
-        '/explore/api/nonexistantapi/docs',
-        '/explore/api/:urlSlug/docs',
-      );
-      expect(screen.findByText('Try using these links')).not.toBeNull();
+      spyOn(console, 'error');
+      expect(() => {
+        render(
+          <Provider store={store}>
+            <FlagsProvider flags={defaultFlags}>
+              <MemoryRouter initialEntries={['/explore/api/nonexistantapi/docs']}>
+                <Routes>
+                  <Route path="/explore/api/:urlSlug/docs" element={<ApiPage />} />
+                </Routes>
+              </MemoryRouter>
+            </FlagsProvider>
+          </Provider>,
+        );
+      }).toThrow(Error);
     });
   });
 
