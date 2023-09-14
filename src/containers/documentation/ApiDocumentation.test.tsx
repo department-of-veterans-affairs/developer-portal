@@ -13,6 +13,7 @@ import ApiDocumentation from './ApiDocumentation';
 const ReleaseNotes: string = 'My API&apos;s release notes';
 const api: APIDescription = {
   altID: null,
+  blockSandboxForm: false,
   categoryUrlFragment: 'nothing-of-importance',
   categoryUrlSlug: 'nothing-of-importance',
   description: "it's a great API!",

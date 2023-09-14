@@ -2,7 +2,6 @@ import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import ErrorPage404 from '../ErrorPage404';
 import { PageHeader } from '../../components';
 import { getApi } from './DocumentationRoot';
 import './ReleaseNotes.scss';
@@ -11,7 +10,7 @@ export const ReleaseNotes = (): JSX.Element => {
   const params = useParams();
   const api = getApi(params.urlSlug);
   if (!api) {
-    return <ErrorPage404 />;
+    throw new Error('API not found');
   }
 
   return (

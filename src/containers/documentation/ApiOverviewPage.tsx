@@ -6,7 +6,6 @@ import ReactMarkdown from 'react-markdown';
 import { PageHeader } from '../../components';
 import { ExploreApiTags } from '../../components/exploreApiCard/ExploreApiTags';
 import { APIDescription } from '../../apiDefs/schema';
-import ErrorPage404 from '../ErrorPage404';
 
 import { getApi } from './DocumentationRoot';
 import './ApiOverviewPage.scss';
@@ -25,7 +24,7 @@ const ApiOverviewPage = (): JSX.Element => {
   const api = getApi(params.urlSlug);
 
   if (!api) {
-    return <ErrorPage404 />;
+    throw new Error('API not found');
   }
 
   return (

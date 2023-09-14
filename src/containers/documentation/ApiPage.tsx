@@ -14,7 +14,6 @@ import { useFlag } from '../../flags';
 
 import { FLAG_API_ENABLED_PROPERTY } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
-import ErrorPage404 from '../ErrorPage404';
 import ApiDocumentation from './ApiDocumentation';
 import ApiNotFoundPage from './ApiNotFoundPage';
 import { getApi } from './DocumentationRoot';
@@ -74,7 +73,7 @@ const ApiPage = (): JSX.Element => {
 
   const api = getApi(params.urlSlug);
   if (!api) {
-    return <ErrorPage404 />;
+    throw new Error('API not found');
   }
   const category = lookupApiCategory(api.categoryUrlFragment ?? '');
   const veteranRedirect = api.veteranRedirect ?? category?.content.veteranRedirect;

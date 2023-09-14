@@ -7,7 +7,6 @@ import { PageHeader } from '../../components';
 import { LPB_APPLY_URL } from '../../types/constants';
 import { ApplySuccessResult } from '../../types/forms/apply';
 import { SUPPORT_CONTACT_PATH, TERMS_OF_SERVICE_PATH } from '../../types/constants/paths';
-import ErrorPage404 from '../ErrorPage404';
 import { getApi } from './DocumentationRoot';
 import { SandboxAccessSuccess } from './components/sandbox';
 import './RequestSandboxAccess.scss';
@@ -17,8 +16,8 @@ const RequestSandboxAccess = (): JSX.Element => {
   const api = getApi(urlSlug);
   const [successResults, setSuccessResults] = useState<ApplySuccessResult | false>(false);
 
-  if (!api) {
-    return <ErrorPage404 />;
+  if (!api || api.blockSandboxForm) {
+    throw new Error('API does not allow sandbox signups via the public portal');
   }
 
   const onFormFailure = (data: unknown): void => {

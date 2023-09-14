@@ -37,6 +37,7 @@ import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 
 const rings: APIDescription = {
   altID: null,
+  blockSandboxForm: false,
   categoryUrlFragment: 'lotr',
   categoryUrlSlug: 'lord-of-the-rings',
   description: 'One Ring to rule them all',
@@ -68,6 +69,7 @@ const rings: APIDescription = {
 
 const apollo13: APIDescription = {
   altID: 'apollo13',
+  blockSandboxForm: false,
   categoryUrlFragment: 'movies',
   categoryUrlSlug: 'movies',
   description: "When a trip to the moon doesn't go according to plan",
@@ -96,6 +98,7 @@ const apollo13: APIDescription = {
 
 const theMartian: APIDescription = {
   altID: 'the_martian',
+  blockSandboxForm: false,
   categoryUrlFragment: 'movies',
   categoryUrlSlug: 'movies',
   description:
@@ -119,6 +122,7 @@ const theMartian: APIDescription = {
 
 const basketball: APIDescription = {
   altID: null,
+  blockSandboxForm: false,
   categoryUrlFragment: 'sports',
   categoryUrlSlug: 'sports',
   description: 'stuff about hoops or whatever',
