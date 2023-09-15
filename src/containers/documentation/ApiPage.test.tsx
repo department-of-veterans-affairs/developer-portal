@@ -8,7 +8,6 @@ import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import { fakeCategories, unmetDeactivationInfo } from '../../__mocks__/fakeCategories';
 import * as apiDefs from '../../apiDefs/query';
 import store from '../../store';
-// import { apiLoadingState } from '../../types/constants';
 import ApiPage from './ApiPage';
 
 // Convenience variables to try and keep the index values out of the test
@@ -59,9 +58,6 @@ describe('ApiPage', () => {
 
   const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
-  // const apisLoadedSpy = jest
-  //   .spyOn(apiDefs, 'getApisLoadedState')
-  //   .mockReturnValue(apiLoadingState.LOADED);
 
   afterEach(() => {
     jest.resetAllMocks();
