@@ -1,8 +1,7 @@
 import * as Sentry from '@sentry/browser';
-import { History } from 'history';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import SwaggerUI from 'swagger-ui';
 import { usePrevious } from '../../hooks';
@@ -55,14 +54,6 @@ const handleVersionChange =
     dispatch(setRequestedApiVersion(requestedVersion));
   };
 
-const setSearchParam = (history: History, queryString: string, version: string): void => {
-  const params = new URLSearchParams(queryString);
-  if (params.get('version') !== version) {
-    params.set('version', version);
-    history.push(`${history.location.pathname}?${params.toString()}`);
-  }
-};
-
 const renderSwaggerUI = (
   defaultUrl: string,
   dispatch: React.Dispatch<SetRequestedAPIVersion>,
@@ -87,8 +78,8 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
 
   const defaultUrlSelector = (state: RootState): string => getDocURL(state.apiVersioning);
   const defaultUrl = useSelector(defaultUrlSelector);
-  const history = useHistory();
   const location = useLocation();
+  const navigate = useNavigate();
   const versionNumberSelector = (state: RootState): string => getVersionNumber(state.apiVersioning);
   const versionNumber = useSelector(versionNumberSelector);
   const versionsSelector = (state: RootState): VersionMetadata[] | null =>
@@ -144,10 +135,18 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const prevVersion = usePrevious(version);
 
   React.useEffect(() => {
+    const setSearchParam = (queryString: string, apiVersion: string): void => {
+      const params = new URLSearchParams(queryString);
+      if (params.get('version') !== apiVersion) {
+        params.set('version', apiVersion);
+        navigate(`${location.pathname}?${params.toString()}`);
+      }
+    };
+
     if (prevVersion !== version) {
-      setSearchParam(history, location.search, version);
+      setSearchParam(location.search, version);
     }
-  }, [history, location.search, prevVersion, version]);
+  }, [location.pathname, location.search, navigate, prevVersion, version]);
 
   /**
    * TRIGGERS RENDER OF SWAGGER UI

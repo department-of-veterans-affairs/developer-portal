@@ -1,7 +1,7 @@
 import { cleanup, render, waitFor, screen } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { fakeCategories } from '../../__mocks__/fakeCategories';
 import { FlagsProvider, getFlags } from '../../flags';
 import store from '../../store';
@@ -20,7 +20,9 @@ describe('ApiOverviewPage', () => {
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
           <MemoryRouter initialEntries={['/explore/api/rings/release-notes']}>
-            <Route path="/explore/api/:urlSlug" component={ApiOverviewPage} />
+            <Routes>
+              <Route path="/explore/api/:urlSlug/release-notes" element={<ApiOverviewPage />} />
+            </Routes>
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,

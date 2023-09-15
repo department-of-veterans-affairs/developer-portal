@@ -56,8 +56,13 @@ export interface GeneralStore {
   vaNetworkConnected: boolean;
 }
 
+export interface ScrollPosition {
+  position: number;
+}
+
 export interface RootState {
   apiVersioning: APIVersioning;
   apiList: ApiList;
   generalStore: GeneralStore;
+  scrollPosition: ScrollPosition;
 }

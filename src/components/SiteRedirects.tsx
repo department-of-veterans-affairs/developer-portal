@@ -1,13 +1,10 @@
 /* eslint-disable max-lines */
-import { useLocation } from 'react-router';
-
 interface RedirectData {
   new: string;
   old: string;
 }
 
 const SiteRedirects = (): null => {
-  const location = useLocation();
   const redirects: RedirectData[] = [
     {
       new: '/explore/api/appealable-issues/docs',
@@ -339,8 +336,8 @@ const SiteRedirects = (): null => {
     },
   ];
   redirects.some((item: RedirectData): boolean => {
-    const testFullPath = location.pathname + location.search;
-    if (location.pathname === item.old || testFullPath === item.old) {
+    const testFullPath = window.location.pathname + window.location.search;
+    if (window.location.pathname === item.old || testFullPath === item.old) {
       window.location.href = item.new;
       return true;
     }

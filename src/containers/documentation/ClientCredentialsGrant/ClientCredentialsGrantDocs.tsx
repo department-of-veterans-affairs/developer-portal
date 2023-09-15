@@ -1,22 +1,20 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import GoodToKnow from '../../../components/oauthDocs/ccg/GoodToKnow';
 import { PageHeader } from '../../../components';
 import { GettingStarted } from '../../../components/oauthDocs/ccg/GettingStarted';
 import { AuthCodeFlowContent } from '../../../components/oauthDocs/ccg/AuthCodeFlowContent';
 import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
-import { APIUrlSlug } from '../../../types';
 
 import ApisLoader from '../../../components/apisLoader/ApisLoader';
 import { getApi } from '../DocumentationRoot';
-import ErrorPage404 from '../../ErrorPage404';
 
 const ClientCredentialsGrantDocs = (): JSX.Element => {
-  const params = useParams<APIUrlSlug>();
+  const params = useParams();
   const api = getApi(params.urlSlug);
-  if (!api) {
-    return <ErrorPage404 />;
+  if (!api?.oAuthTypes?.includes('ClientCredentialsGrant')) {
+    throw new Error('API does not include this auth type');
   }
 
   return (

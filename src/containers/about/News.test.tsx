@@ -2,10 +2,11 @@
 import { getAllByRole, getByRole, getByText, render, screen } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import * as NewsData from '../../__mocks__/news.test.yml';
 import toHtmlId from '../../toHtmlId';
 import About from './About';
+import News from './News';
 import { DataSection } from './types/data-section';
 import { NewsItemData } from './types/news-item-data';
 
@@ -15,11 +16,22 @@ const data = NewsData as {
 
 describe('News', () => {
   beforeEach(() => {
-    render(
-      <MemoryRouter initialEntries={['/about/news']}>
-        <About />
-      </MemoryRouter>,
+    const router = createMemoryRouter(
+      [
+        {
+          children: [
+            {
+              element: <News />,
+              path: 'news',
+            },
+          ],
+          element: <About />,
+          path: '/about',
+        },
+      ],
+      { initialEntries: ['/about/news'] },
     );
+    render(<RouterProvider router={router} />);
   });
 
   it('renders successfully', () => {

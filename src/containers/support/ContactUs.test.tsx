@@ -1,12 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { useLocation, MemoryRouter } from 'react-router';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import ContactUs from './ContactUs';
 
-jest.mock('react-router', () => ({
+jest.mock('react-router-dom', () => ({
   // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-  ...(jest.requireActual('react-router') as Record<string, unknown>),
+  ...(jest.requireActual('react-router-dom') as Record<string, unknown>),
   useLocation: jest.fn(() => ({})),
 }));
 
@@ -27,9 +26,9 @@ describe('ContactUs', () => {
 
   it('Page renders as expected', () => {
     render(
-      <Router>
+      <MemoryRouter>
         <ContactUs />
-      </Router>,
+      </MemoryRouter>,
     );
     const heading = screen.getByRole('heading', { level: 1 });
     expect(heading).toHaveTextContent('Developer portal support');

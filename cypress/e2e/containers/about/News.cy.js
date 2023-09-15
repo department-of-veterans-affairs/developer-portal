@@ -8,10 +8,14 @@ describe('News page', () => {
   });
 
   newsSections.forEach(item => {
-    it(`Check ${item} receives focus from sidebar and card links`, () => {
+    it(`Check ${item} receives focus from sidebar links`, () => {
       let hash = item.replace(' ', '-');
       cy.get('nav a[href="/about/news#' + hash).click();
       cy.focused().should('have.id', hash);
+    });
+
+    it(`Check ${item} receives focus from card links`, () => {
+      let hash = item.replace(' ', '-');
       cy.get('.card-content a[href="/about/news#' + hash).click();
       cy.focused().should('have.id', hash);
     });

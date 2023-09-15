@@ -1,12 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
 import { ApiFilters, ExploreApiCard, PageHeader } from '../../components';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import { APIDescription } from '../../apiDefs/schema';
+import { getScrollPosition } from '../../reducers/scrollPosition';
+import { ResetScrollPosition, SetScrollPosition, setScrollPosition } from '../../actions';
+import { getApisLoaded } from '../../apiDefs/query';
+import { RootState } from '../../types';
 import './ExploreRoot.scss';
 
 export const ExploreRoot = (): JSX.Element => {
   const [apis, setApis] = useState<APIDescription[]>([]);
+  const dispatch: React.Dispatch<SetScrollPosition | ResetScrollPosition> = useDispatch();
+  const scrollPositionSelector = (state: RootState): number =>
+    getScrollPosition(state.scrollPosition);
+  const scrollPosition = useSelector(scrollPositionSelector);
+
+  const [scrollPos, setScrollPos] = useState(scrollPosition);
+  const apisLoaded = getApisLoaded();
+
+  useEffect(() => {
+    if (apisLoaded && scrollPos) {
+      setTimeout(() => window.scrollTo(0, scrollPos), 0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apisLoaded]);
+
+  useEffect(() => {
+    const getScrollPositionValue = (): void => {
+      const currentPosition = window.scrollY;
+      setScrollPos(currentPosition);
+    };
+
+    window.addEventListener('scroll', getScrollPositionValue);
+
+    return () => {
+      window.removeEventListener('scroll', getScrollPositionValue);
+      dispatch(setScrollPosition(scrollPos));
+    };
+  }, [dispatch, scrollPos]);
 
   return (
     <div className="explore-root-container">

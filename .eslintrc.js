@@ -154,8 +154,8 @@ const typescriptESLintRules = {
   '@typescript-eslint/no-misused-promises': [
     'error',
     {
-      'checksVoidReturn': {
-        'attributes': false,
+      checksVoidReturn: {
+        attributes: false,
       },
     },
   ],
@@ -357,7 +357,7 @@ module.exports = {
     'promise',
     'react',
     'react-hooks',
-    'react-redux'
+    'react-redux',
   ],
   extends: [
     'plugin:@typescript-eslint/recommended',
@@ -375,6 +375,7 @@ module.exports = {
     ...reactRules,
     // https://github.com/TristonJ/eslint-plugin-prefer-arrow
     'prefer-arrow/prefer-arrow-functions': 'error',
+    'react/jsx-curly-newline': 0,
   },
   settings: {
     react: {

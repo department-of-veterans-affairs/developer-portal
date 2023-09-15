@@ -1,6 +1,6 @@
 /* eslint-disable max-lines */
 import * as React from 'react';
-import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 import { CodeBlock } from '../../index';
 import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 
@@ -111,8 +111,8 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
               </td>
               <td>
                 Will use your application&#39;s default scopes unless you specify a smaller subset
-                of scopes separated by a space. Review the{' '}
-                <HashLink to="#scopes">Scopes section</HashLink> for more information.
+                of scopes separated by a space. Review the <Link to="#scopes">Scopes section</Link>{' '}
+                for more information.
               </td>
             </tr>
             <tr>
@@ -129,9 +129,9 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
                 <p>
                   A nonce should be generated on a per-session basis and stored on the user&#39;s
                   client. If the user requested an id_token (by including the openid scope in the
-                  authorization request) then the{' '}
-                  <HashLink to="#payload">payload of the id_token</HashLink> will contain a nonce
-                  value that should match the nonce value included in the authorization request.
+                  authorization request) then the <Link to="#payload">payload of the id_token</Link>{' '}
+                  will contain a nonce value that should match the nonce value included in the
+                  authorization request.
                 </p>
                 <p>
                   The{' '}
@@ -209,7 +209,7 @@ https://sandbox-api.va.gov${baseAuthPath}/authorization?
                   </p>
                   <p>
                     For more information about scopes, see&nbsp;
-                    <HashLink to="#scopes">Scopes</HashLink>.
+                    <Link to="#scopes">Scopes</Link>.
                   </p>
                 </td>
               </tr>
@@ -271,10 +271,9 @@ grant_type=authorization_code
 &redirect_uri=<yourRedirectURL>`}
       />
       <p>
-        The authorization server will respond with an{' '}
-        <HashLink to="#id-token">access token</HashLink>. If you requested the{' '}
-        <code>offline_access</code> scope, you will also receive a <code>refresh_token</code>. The
-        response will look like this:
+        The authorization server will respond with an <Link to="#id-token">access token</Link>. If
+        you requested the <code>offline_access</code> scope, you will also receive a{' '}
+        <code>refresh_token</code>. The response will look like this:
       </p>
       <CodeBlock
         withCopyButton
@@ -315,10 +314,10 @@ Pragma: no-cache
         <code>{'Authorization: Bearer {access_token}'}</code>.
       </p>
       <p>
-        <strong>Note:</strong> the <HashLink to="#id-token">access token</HashLink> will only work
-        for the API and scopes for which you have previously initiated authorization. If you need
-        additional scopes in the future, you will need to build a new authorization URL with the
-        additional scopes and have the Veteran grant consent again.
+        <strong>Note:</strong> the <Link to="#id-token">access token</Link> will only work for the
+        API and scopes for which you have previously initiated authorization. If you need additional
+        scopes in the future, you will need to build a new authorization URL with the additional
+        scopes and have the Veteran grant consent again.
       </p>
       <p>
         Refresh tokens expire if they are not used for a period of 7 days in sandbox and 42 days in

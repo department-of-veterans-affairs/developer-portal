@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { cleanup } from 'axe-core';
 import { FlagsProvider, getFlags } from '../../../flags';
 import store from '../../../store';
@@ -9,40 +9,29 @@ import { fakeCategories } from '../../../__mocks__/fakeCategories';
 import * as apiDefs from '../../../apiDefs/query';
 import { ClientCredentialsGrantDocs } from './ClientCredentialsGrantDocs';
 
-const lotrRingsApi = fakeCategories.lotr.apis[0];
+const apollo13Api = fakeCategories.movies.apis[0];
 
 describe('Authorization Docs', () => {
   const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
-
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   beforeEach(async () => {
-    lookupApiBySlugMock.mockReturnValue(lotrRingsApi);
-    lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
+    lookupApiBySlugMock.mockReturnValue(apollo13Api);
+    lookupApiCategoryMock.mockReturnValue(fakeCategories.movies);
     await waitFor(() => cleanup());
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/lotr/client-credentials']}>
-            <Route
-              path="/explore/api/:urlSlug/client-credentials"
-              component={ClientCredentialsGrantDocs}
-            />
-          </MemoryRouter>
-        </FlagsProvider>
-      </Provider>,
-    );
-  });
-
-  beforeEach(() => {
-    render(
-      <Provider store={store}>
-        <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
-            <ClientCredentialsGrantDocs />
+          <MemoryRouter initialEntries={['/explore/api/apollo-13/client-credentials']}>
+            <Routes>
+              <Route
+                path="/explore/api/:urlSlug/client-credentials"
+                element={<ClientCredentialsGrantDocs />}
+              />
+            </Routes>
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,

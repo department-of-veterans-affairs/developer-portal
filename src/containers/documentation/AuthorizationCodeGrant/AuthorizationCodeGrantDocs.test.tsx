@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { cleanup } from 'axe-core';
 import { FlagsProvider, getFlags } from '../../../flags';
 import store from '../../../store';
@@ -10,7 +10,7 @@ import * as apiDefs from '../../../apiDefs/query';
 import { AuthorizationCodeGrantDocs } from './AuthorizationCodeGrantDocs';
 
 describe('Authorization Docs', () => {
-  const lotrRingsApi = fakeCategories.lotr.apis[0];
+  const armageddonMovie = fakeCategories.movies.apis[1];
 
   const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
@@ -20,17 +20,19 @@ describe('Authorization Docs', () => {
   });
 
   beforeEach(async () => {
-    lookupApiBySlugMock.mockReturnValue(lotrRingsApi);
-    lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
+    lookupApiBySlugMock.mockReturnValue(armageddonMovie);
+    lookupApiCategoryMock.mockReturnValue(fakeCategories.movies);
     await waitFor(() => cleanup());
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/lotr/authorization-code']}>
-            <Route
-              path="/explore/api/:urlSlug/authorization-code"
-              component={AuthorizationCodeGrantDocs}
-            />
+          <MemoryRouter initialEntries={['/explore/api/armageddon/authorization-code']}>
+            <Routes>
+              <Route
+                path="/explore/api/:urlSlug/authorization-code"
+                element={<AuthorizationCodeGrantDocs />}
+              />
+            </Routes>
           </MemoryRouter>
         </FlagsProvider>
       </Provider>,

@@ -1,6 +1,6 @@
-import classNames from 'classnames';
 import * as React from 'react';
-import { NavHashLink } from 'react-router-hash-link';
+import classNames from 'classnames';
+import { Link } from 'react-router-dom';
 import { AppVersion } from '../../components';
 
 import './Footer.scss';
@@ -22,7 +22,7 @@ const vaLinkStyles = classNames(
   'vads-u-margin-y--1p5',
   'vads-u-flex--auto',
   'medium-screen:vads-u-margin-y--2p5',
-  'va-api-footer-logo'
+  'va-api-footer-logo',
 );
 const footerListStyles = classNames(
   'va-api-footer-link-list',
@@ -50,9 +50,9 @@ const Footer: React.FunctionComponent = (): JSX.Element => (
   <footer role="contentinfo" className={footerStyles}>
     <ul className={footerListStyles}>
       <li id="footer-publishing-link" className={listItemStyles}>
-        <NavHashLink to={PUBLISHING_PATH} className={footerLinkStyles}>
+        <Link to={PUBLISHING_PATH} className={footerLinkStyles}>
           API Publishing
-        </NavHashLink>
+        </Link>
       </li>
       <li id="footer-accessibility-link" className={listItemStyles}>
         <a href="https://www.section508.va.gov/" className={footerLinkStyles}>
@@ -60,9 +60,9 @@ const Footer: React.FunctionComponent = (): JSX.Element => (
         </a>
       </li>
       <li id="footer-support-link" className={listItemStyles}>
-        <NavHashLink to={SUPPORT_PATH} className={footerLinkStyles}>
+        <Link to={SUPPORT_PATH} className={footerLinkStyles}>
           Support
-        </NavHashLink>
+        </Link>
       </li>
       <li id="footer-web-policies-link" className={listItemStyles}>
         <a href="https://www.va.gov/webpolicylinks.asp" className={footerLinkStyles}>
@@ -70,9 +70,9 @@ const Footer: React.FunctionComponent = (): JSX.Element => (
         </a>
       </li>
       <li id="footer-tos-link" className={listItemStyles}>
-        <NavHashLink to={TERMS_OF_SERVICE_PATH} className={footerLinkStyles}>
+        <Link to={TERMS_OF_SERVICE_PATH} className={footerLinkStyles}>
           Terms of Service
-        </NavHashLink>
+        </Link>
       </li>
       <li id="footer-privacy-link" className={listItemStyles}>
         <a href="https://www.va.gov/privacy/" className={footerLinkStyles}>

@@ -83,7 +83,7 @@ const Overview = (): JSX.Element => (
       </li>
       <li>
         Access to our sandbox environment is automatic when you{' '}
-        <Link to="/apply">request an API key</Link>.
+        <Link to="/explore">request an API key</Link>.
       </li>
     </ul>
   </div>

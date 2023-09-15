@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { createMemoryRouter, MemoryRouter, RouterProvider } from 'react-router-dom';
 import SupportOverview from './Overview';
 import Support, { sections } from './Support';
 
@@ -18,11 +18,22 @@ describe('SupportFAQ', () => {
   });
 
   it('Side nav items are populated', () => {
-    render(
-      <MemoryRouter initialEntries={['/support']}>
-        <Support />
-      </MemoryRouter>,
+    const router = createMemoryRouter(
+      [
+        {
+          children: [
+            {
+              element: <SupportOverview sections={sections} />,
+              index: true,
+            },
+          ],
+          element: <Support />,
+          path: '/support',
+        },
+      ],
+      { initialEntries: ['/support'] },
     );
+    render(<RouterProvider router={router} />);
 
     const linkFAQs = screen.getAllByRole('link', { name: 'FAQs' });
     const linkContactUs = screen.getAllByRole('link', { name: 'Developer portal support form' });

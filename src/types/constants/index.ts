@@ -3,6 +3,7 @@ export * from './actions/oauthApiSelection';
 export * from './actions/version';
 export * from './actions/apiList';
 export * from './actions/generalStore';
+export * from './actions/scrollPosition';
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';
 export const DEFAULT_OAUTH_API_SELECTION = 'claims';

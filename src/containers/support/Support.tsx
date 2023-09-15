@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router';
-
 import { ContentWithNav, SideNavEntry } from '../../components';
 import ContactUs from './ContactUs';
 import FAQ from './FAQ';
-import Overview from './Overview';
 
 export interface SupportSection {
   readonly component: React.ComponentType;
@@ -35,28 +32,11 @@ const Support: React.FunctionComponent = (): JSX.Element => (
   <ContentWithNav
     nav={
       <>
-        <SideNavEntry key="all" exact to="/support" name="Overview" />
+        <SideNavEntry end key="all" to="." name="Overview" />
         {sections.map(section => (
-          <SideNavEntry key={section.id} to={`/support/${section.id}`} name={section.name} />
+          <SideNavEntry end key={section.id} to={section.id} name={section.name} />
         ))}
       </>
-    }
-    content={
-      <Switch>
-        <Route
-          exact
-          path="/support/"
-          render={(): JSX.Element => <Overview sections={sections} />}
-        />
-        {sections.map(section => (
-          <Route
-            key={section.id}
-            exact
-            path={`/support/${section.id}`}
-            component={section.component}
-          />
-        ))}
-      </Switch>
     }
     navAriaLabel="Support page side nav"
   />

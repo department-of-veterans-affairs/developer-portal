@@ -1,83 +1,21 @@
 import * as React from 'react';
-
 import classNames from 'classnames';
-import { Location, LocationDescriptor } from 'history';
-import { match as Match } from 'react-router';
-import { NavHashLink, NavHashLinkProps } from 'react-router-hash-link';
+import { NavLink, To, useLocation } from 'react-router-dom';
 import './SideNav.scss';
-import { isHashLinkExact } from '../../utils/isNavHashLinkExact';
 
-export interface SideNavEntryProps extends NavHashLinkProps {
+export interface SideNavEntryProps {
   name: string | JSX.Element;
   className?: string;
   subNavLevel?: number;
-  sharedAnchors?: string[];
-  forceAriaCurrent?: boolean;
-  if?: boolean;
+  to: To;
+  end?: boolean;
 }
 
-/**
- * Constructs a NavHashLink in the sidebar that also takes into account the
- * hash when determining if it's active
- */
-const SideNavEntry = (props: SideNavEntryProps): JSX.Element | null => {
-  /**
-   * The isActive prop receives two arguments: a `match` object representing
-   * the original determination, and the current location. The match algorithm
-   * used by react-router only takes into account the path, and by default will
-   * include partial matches according to the https://github.com/pillarjs/path-to-regexp
-   * implementation.
-   */
-  if (props.if === false) {
-    return null;
-  }
-  const navHashLinkIsActive = (pathMatch: Match | null, location: Location): boolean => {
-    const withoutTrailingSlash = (path: string): string => path.replace(/\/$/, '');
+const SideNavEntry: React.FC<SideNavEntryProps> = (props): JSX.Element => {
+  const { children, className, name, subNavLevel, ...navLinkProps } = props;
 
-    let pathname: string;
-    let hash: string;
-    let to: LocationDescriptor = typeof props.to === 'function' ? props.to(location) : props.to;
-
-    if (typeof to === 'string') {
-      const url = new URL(to, 'http://example.com');
-      ({ hash, pathname } = url);
-    } else {
-      // object
-      pathname = to.pathname ?? '';
-      hash = to.hash ?? '';
-    }
-
-    to = withoutTrailingSlash(pathname) + hash;
-    if (to.startsWith('#')) {
-      // for an in-page anchor link, check that the link's destination is the same as the current hash
-      return to === location.hash;
-    } else if (hash) {
-      /**
-       * exact path match + exact hash match = exact match overall. nav links with a hash require
-       * both regardless of props.exact because partial path matches aren't applicable.
-       */
-      return !!pathMatch?.isExact && hash === location.hash;
-    } else if (props.exact) {
-      /**
-       * allow "exact" matches for some anchors that are shared across the site if the nav link
-       * does not include a hash.
-       */
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- sharedAnchors is always defined
-      const hashMatch: boolean = !location.hash || !!props.sharedAnchors?.includes(location.hash);
-      return !!pathMatch && hashMatch;
-    } else {
-      /**
-       * default partial matching. since the nav link doesn't have a hash, partial matching
-       * works whether or not the location has a hash.
-       */
-      return !!pathMatch;
-    }
-  };
-
-  // Omit unneeded parent props from NavLink
-  /* eslint-disable @typescript-eslint/no-unused-vars -- omit sharedAnchors from navLinkProps */
-  const { name, className, subNavLevel, sharedAnchors, forceAriaCurrent, ...navLinkProps } = props;
-  /* eslint-enable @typescript-eslint/no-unused-vars */
+  const location = useLocation();
+  const { hash } = location;
 
   return (
     <li
@@ -88,19 +26,35 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element | null => {
         'vads-u-margin-y--0',
       )}
     >
-      <NavHashLink
-        className={classNames(`va-api-nav-level-${subNavLevel ?? 0}`, className)}
-        activeClassName={classNames('va-api-active-sidenav-link', 'vads-u-font-weight--bold')}
-        isActive={navHashLinkIsActive}
-        aria-current={props.forceAriaCurrent || isHashLinkExact(props.to) ? 'page' : 'false'}
+      <NavLink
+        className={({ isActive }): string => {
+          let hashIsActive = false;
+          const locationHashExists = typeof hash === 'string' && hash.length > 0;
+          const toIncludesHash = (hashString: string): boolean => {
+            if (typeof props.to === 'string') {
+              return props.to.includes(hashString);
+            }
+
+            return props.to.hash?.includes(hashString) ?? false;
+          };
+
+          if (isActive && locationHashExists && toIncludesHash(hash)) {
+            hashIsActive = true;
+          }
+
+          return classNames(`va-api-nav-level-${subNavLevel ?? 0}`, className, {
+            'va-api-active-sidenav-link': toIncludesHash('#') ? hashIsActive : isActive,
+            'vads-u-font-weight--bold': toIncludesHash('#') ? hashIsActive : isActive,
+          });
+        }}
         {...navLinkProps}
       >
         <>
           {name}
           <i className="fas fa-star" />
         </>
-      </NavHashLink>
-      {props.children && (
+      </NavLink>
+      {children && (
         <ul
           className={classNames(
             'va-api-sidenav-sub-list',
@@ -108,7 +62,7 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element | null => {
             'vads-u-padding-left--0',
           )}
         >
-          {props.children}
+          {children}
         </ul>
       )}
     </li>
@@ -116,7 +70,6 @@ const SideNavEntry = (props: SideNavEntryProps): JSX.Element | null => {
 };
 
 SideNavEntry.defaultProps = {
-  sharedAnchors: ['#main', '#page-header'],
   subNavLevel: 0,
 };
 

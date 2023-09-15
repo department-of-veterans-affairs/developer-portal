@@ -1,7 +1,6 @@
-import { Location } from 'history';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType } from '../../apiDefs/schema';
 import { Flag } from '../../flags';
@@ -14,24 +13,23 @@ import './ApiDocumentation.scss';
 
 interface ApiDocumentationProps {
   apiDefinition: APIDescription;
-  location: Location;
 }
 
 const ApiDocumentationPropTypes = {
   apiDefinition: ApiDescriptionPropType.isRequired,
-  // Leave as any for now until we can use the location react hooks
-  location: PropTypes.any.isRequired,
 };
 
 const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
-  const { apiDefinition, location } = props;
+  const { apiDefinition } = props;
+  const { docSources, urlFragment } = apiDefinition;
+  const location = useLocation();
 
   /*
    * API Version
    */
   const dispatch = useDispatch();
-  const queryParams = new URLSearchParams(location.search || undefined);
-  const apiVersion = queryParams.get('version');
+  const [searchParams] = useSearchParams();
+  const apiVersion = searchParams.get('version');
 
   React.useEffect((): void => {
     dispatch(actions.setRequestedApiVersion(apiVersion));
@@ -41,8 +39,8 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
    * RENDER
    */
   return (
-    <Flag name={[FLAG_HOSTED_APIS, apiDefinition.urlFragment]}>
-      <SwaggerDocs docSource={apiDefinition.docSources[0]} apiName={apiDefinition.urlFragment} />
+    <Flag name={[FLAG_HOSTED_APIS, urlFragment]}>
+      <SwaggerDocs docSource={docSources[0]} apiName={urlFragment} />
     </Flag>
   );
 };

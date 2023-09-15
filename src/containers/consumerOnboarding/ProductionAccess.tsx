@@ -8,9 +8,8 @@ import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'component-library-legacy/Modal';
 import { VaSegmentedProgressBar } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 // import Icon508 from '../../assets/508-compliant.svg';
-import { NavHashLink } from 'react-router-hash-link';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
@@ -178,7 +177,7 @@ const ProductionAccess: FC = () => {
   const { modalVisible: modal1Visible, setModalVisible: setModal1Visible } = useModalController();
   const { modalVisible: modal2Visible, setModalVisible: setModal2Visible } = useModalController();
   const { modalVisible: modal4Visible, setModalVisible: setModal4Visible } = useModalController();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const calculateSteps = (values: Values): void => {
     const { apis } = values;
@@ -456,7 +455,7 @@ const ProductionAccess: FC = () => {
             visible={modal1Visible}
             onClose={(): void => setModal1Visible(false)}
             primaryButton={{
-              action: (): void => history.push(CONSUMER_PROD_PATH),
+              action: (): void => navigate(CONSUMER_PROD_PATH),
               text: 'Yes, leave',
             }}
             secondaryButton={{
@@ -472,7 +471,7 @@ const ProductionAccess: FC = () => {
             visible={modal2Visible}
             onClose={(): void => setModal2Visible(false)}
             primaryButton={{
-              action: (): void => history.goBack(),
+              action: (): void => navigate(-1),
               text: 'Close form',
             }}
             classNames={['vads-u-text-align--center']}
@@ -485,8 +484,7 @@ const ProductionAccess: FC = () => {
             />
             <p>
               We currently only grant access to US-based companies. You may{' '}
-              <NavHashLink to={SUPPORT_CONTACT_PATH}>contact us</NavHashLink> if you have any
-              questions.
+              <NavLink to={SUPPORT_CONTACT_PATH}>contact us</NavLink> if you have any questions.
             </p>
           </Modal>
           {/* <Modal508Compliant /> */}
@@ -496,10 +494,10 @@ const ProductionAccess: FC = () => {
             visible={modal4Visible}
             onClose={(): void => {
               setModal4Visible(false);
-              history.goBack();
+              navigate(-1);
             }}
             primaryButton={{
-              action: (): void => history.goBack(),
+              action: (): void => navigate(-1),
               text: 'Close',
             }}
           >

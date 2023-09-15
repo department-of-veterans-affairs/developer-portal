@@ -14,6 +14,7 @@ export const fakeCategories: APICategories = {
     apis: [
       {
         altID: null,
+        blockSandboxForm: false,
         categoryUrlFragment: 'lotr',
         categoryUrlSlug: 'lord-of-the-rings',
         description: 'One Ring to rule them all',
@@ -44,6 +45,7 @@ export const fakeCategories: APICategories = {
       },
       {
         altID: null,
+        blockSandboxForm: false,
         categoryUrlFragment: 'lotr',
         categoryUrlSlug: 'lord-of-the-rings',
         deactivationInfo: {
@@ -70,6 +72,7 @@ export const fakeCategories: APICategories = {
       },
       {
         altID: null,
+        blockSandboxForm: false,
         categoryUrlFragment: 'lotr',
         categoryUrlSlug: 'lord-of-the-rings',
         description: 'Hobbits of the Shire',
@@ -102,6 +105,7 @@ export const fakeCategories: APICategories = {
     apis: [
       {
         altID: 'apollo13',
+        blockSandboxForm: false,
         categoryUrlFragment: 'nothing-of-importance',
         categoryUrlSlug: 'importance',
         description: "When a trip to the moon doesn't go according to plan",
@@ -129,6 +133,7 @@ export const fakeCategories: APICategories = {
       },
       {
         altID: 'armageddon',
+        blockSandboxForm: false,
         categoryUrlFragment: 'nothing-of-importance',
         categoryUrlSlug: 'importance',
         description: 'Asteroid Dotty has earth directly in her path, time to call Bruce Willis.',
@@ -157,6 +162,7 @@ export const fakeCategories: APICategories = {
       },
       {
         altID: 'the_martian',
+        blockSandboxForm: false,
         categoryUrlFragment: 'nothing-of-importance',
         categoryUrlSlug: 'importance',
         description:
@@ -192,6 +198,7 @@ export const fakeCategories: APICategories = {
     apis: [
       {
         altID: null,
+        blockSandboxForm: false,
         categoryUrlFragment: 'nothing-of-importance',
         categoryUrlSlug: 'importance',
         description: 'stuff about hoops or whatever',
@@ -212,6 +219,7 @@ export const fakeCategories: APICategories = {
       },
       {
         altID: null,
+        blockSandboxForm: false,
         categoryUrlFragment: 'nothing-of-importance',
         categoryUrlSlug: 'importance',
         description: 'a slow summer game',
@@ -248,6 +256,7 @@ export const fakeAPIs: APIDescription[] = Object.values(fakeCategories).flatMap(
 
 export const extraAPI: APIDescription = {
   altID: null,
+  blockSandboxForm: false,
   categoryUrlFragment: 'nothing-of-importance',
   categoryUrlSlug: 'importance',
   description: 'the beautiful game',

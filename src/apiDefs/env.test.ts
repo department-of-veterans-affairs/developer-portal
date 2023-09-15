@@ -37,6 +37,7 @@ describe('env module', () => {
     const disabledApiId = 'fake_api';
     const sharedApiValues = {
       altID: null,
+      blockSandboxForm: false,
       categoryUrlFragment: 'nothing-of-importance',
       categoryUrlSlug: 'nothing-of-importance',
       description: "it's a fabulous API, you really must try it sometime",

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { Route, Router } from 'react-router-dom';
+import { ScrollRestoration } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
 import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
 import { LPB_PROVIDERS_URL } from './types/constants';
 import { setApiLoadingError, SetAPIs, setApis } from './actions';
 import { APICategories } from './apiDefs/schema';
 import { Footer, Header, PageContent } from './components';
+import { ScrollToHashElement } from './components/scrollToHashElement/ScrollToHashElement';
 import { FlagsProvider, getFlags } from './flags';
-import { history } from './store';
 import { RootState } from './types';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
@@ -40,23 +40,23 @@ const App = (): JSX.Element => {
 
   return (
     <FlagsProvider flags={getFlags()}>
-      <Router history={history}>
-        <SiteRedirects />
-        <div className="vads-u-display--flex">
-          <div
-            className={classNames(
-              'vads-u-display--flex',
-              'vads-u-flex-direction--column',
-              'vads-u-min-height--viewport',
-              'vads-u-width--full',
-            )}
-          >
-            <Header />
-            <Route path="/" component={PageContent} />
-            <Footer />
-          </div>
+      <SiteRedirects />
+      <div className="vads-u-display--flex">
+        <div
+          className={classNames(
+            'vads-u-display--flex',
+            'vads-u-flex-direction--column',
+            'vads-u-min-height--viewport',
+            'vads-u-width--full',
+          )}
+        >
+          <Header />
+          <PageContent />
+          <Footer />
         </div>
-      </Router>
+        <ScrollRestoration />
+        <ScrollToHashElement />
+      </div>
     </FlagsProvider>
   );
 };

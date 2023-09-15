@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { PageHeader } from '../../../components';
 import { Https } from '../../../components/oauthDocs/acg/Https';
 import { TestUsers } from '../../../components/oauthDocs/acg/TestUsers';
@@ -9,17 +9,15 @@ import { PageLinks } from '../../../components/oauthDocs/acg/PageLinks';
 import { ScopesContent } from '../../../components/oauthDocs/acg/ScopesContent';
 import { BuildingOIDCContent } from '../../../components/oauthDocs/acg/BuildingOIDCContent';
 import { GettingStarted } from '../../../components/oauthDocs/acg/GettingStarted';
-import { APIUrlSlug } from '../../../types';
 
 import './AuthorizationCodeGrantDocs.scss';
 import { getApi } from '../DocumentationRoot';
-import ErrorPage404 from '../../ErrorPage404';
 
 const AuthorizationCodeGrantDocs = (): JSX.Element => {
-  const params = useParams<APIUrlSlug>();
+  const params = useParams();
   const api = getApi(params.urlSlug);
-  if (!api) {
-    return <ErrorPage404 />;
+  if (!api?.oAuthTypes?.includes('AuthorizationCodeGrant')) {
+    throw new Error('API does not include this auth type');
   }
 
   return (

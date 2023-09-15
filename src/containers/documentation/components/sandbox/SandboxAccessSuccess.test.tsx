@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { setApis } from '../../../../actions';
 import store from '../../../../store';
 import { fakeCategories } from '../../../../__mocks__/fakeCategories';

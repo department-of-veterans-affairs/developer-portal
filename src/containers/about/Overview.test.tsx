@@ -1,11 +1,12 @@
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
+import * as React from 'react';
 import { getAllByRole, getByRole, render, screen } from '@testing-library/react';
 import 'jest';
-import * as React from 'react';
-import { MemoryRouter } from 'react-router';
+import { createMemoryRouter, RouterProvider } from 'react-router-dom';
 import * as NewsData from '../../__mocks__/news.test.yml';
 import { CONSUMER_APIS_PATH, CONSUMER_PATH } from '../../types/constants/paths';
 import About from './About';
+import Overview from './Overview';
 import { DataSection } from './types/data-section';
 
 const data = NewsData as {
@@ -14,11 +15,22 @@ const data = NewsData as {
 
 describe('About Overview', () => {
   beforeEach(() => {
-    render(
-      <MemoryRouter initialEntries={['/about']}>
-        <About />
-      </MemoryRouter>,
+    const router = createMemoryRouter(
+      [
+        {
+          children: [
+            {
+              element: <Overview />,
+              index: true,
+            },
+          ],
+          element: <About />,
+          path: '/about',
+        },
+      ],
+      { initialEntries: ['/about'] },
     );
+    render(<RouterProvider router={router} />);
   });
 
   it('renders successfully', () => {
@@ -57,7 +69,6 @@ describe('About Overview', () => {
         'https://www.va.gov/resources/find-apps-you-can-use/',
         CONSUMER_APIS_PATH,
         CONSUMER_PATH,
-        '/apply',
       ];
 
       linkUrls.forEach((url: string) => {

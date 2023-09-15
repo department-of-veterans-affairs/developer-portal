@@ -1,6 +1,6 @@
-import React, { ComponentPropsWithoutRef, FC } from 'react';
+import React, { FC } from 'react';
 import classNames from 'classnames';
-import { NavLink } from 'react-router-dom';
+import { NavLink, To } from 'react-router-dom';
 
 const itemStyles = classNames(
   'vads-u-border-top--1px',
@@ -21,7 +21,7 @@ const linkStyles = classNames(
 interface SubNavEntryProps {
   // the onClick prop is used to close the mobile nav, not for anything related to the native link behavior
   onClick: () => void;
-  to: ComponentPropsWithoutRef<NavLink>['to'];
+  to: To;
   id: string;
 }
 
@@ -29,10 +29,10 @@ const SubNavEntry: FC<SubNavEntryProps> = ({ children, onClick, to, id }) => (
   <li className={itemStyles} key={id}>
     <NavLink
       onClick={onClick}
-      exact
       to={to}
-      className={linkStyles}
-      activeClassName="va-api-active-sub-nav"
+      className={({ isActive }): string =>
+        classNames(linkStyles, { 'va-api-active-sub-nav': isActive })
+      }
     >
       {children}
     </NavLink>

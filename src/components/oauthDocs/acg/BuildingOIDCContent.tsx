@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { HashLink } from 'react-router-hash-link';
+import { Link } from 'react-router-dom';
 import { SectionHeaderWrapper } from '../../index';
 import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 import { AuthCodeGrantContent } from './AuthCodeGrantContent';
@@ -19,13 +19,13 @@ const BuildingOIDCContent = (props: ApiRequiredProps): JSX.Element => {
         <li>
           If you are building a <strong>server-based application</strong>, you’ll also receive a
           client secret and will use the{' '}
-          <HashLink to="#authorization-code-grant">authorization code grant</HashLink> to complete
+          <Link to="#authorization-code-grant">authorization code grant</Link> to complete
           authentication.
         </li>
         <li>
           If you are unable to <strong>safely store a client secret</strong>, such as within a
-          native mobile app, you will <HashLink to="#pkce-authorization">use PKCE</HashLink> to
-          complete authentication.
+          native mobile app, you will <Link to="#pkce-authorization">use PKCE</Link> to complete
+          authentication.
         </li>
       </ul>
 

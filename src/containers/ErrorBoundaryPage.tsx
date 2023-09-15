@@ -1,17 +1,18 @@
+import React, { useEffect } from 'react';
 import * as Sentry from '@sentry/browser';
-import * as React from 'react';
 import { FallbackProps } from 'react-error-boundary';
-import { useHistory } from 'react-router';
+import { useLocation } from 'react-router-dom';
 import ErrorPage from './ErrorPage';
 
 const ErrorBoundaryPage: React.FunctionComponent<FallbackProps> = ({
   error,
   resetErrorBoundary,
 }: FallbackProps) => {
-  const history = useHistory();
-  history.listen(() => {
+  const location = useLocation();
+
+  useEffect(() => {
     resetErrorBoundary();
-  });
+  }, [location, resetErrorBoundary]);
 
   const { REACT_APP_SENTRY_DSN, REACT_APP_SENTRY_ENV } = process.env;
   if (REACT_APP_SENTRY_DSN) {

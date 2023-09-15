@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
+import { Outlet } from 'react-router-dom';
 import { PAGE_HEADER_ID } from '../../types/constants';
 import { SideNav } from '../sideNav/SideNav';
 
 interface ContentWithNavProps {
   nav: React.ReactNode;
-  content: React.ReactNode;
   navAriaLabel: string;
   contentAriaLabelledBy?: string;
   className?: string;
@@ -14,7 +14,6 @@ interface ContentWithNavProps {
 
 const ContentWithNav: FC<ContentWithNavProps> = ({
   nav,
-  content,
   navAriaLabel,
   contentAriaLabelledBy,
   className,
@@ -48,7 +47,7 @@ const ContentWithNav: FC<ContentWithNavProps> = ({
             'medium-screen:vads-u-padding-left--5',
           )}
         >
-          {content}
+          <Outlet />
         </section>
       </div>
     </div>

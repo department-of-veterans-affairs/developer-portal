@@ -1,14 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import { MemoryRouter, Route } from 'react-router';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { APICategory } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import { fakeCategories, unmetDeactivationInfo } from '../../__mocks__/fakeCategories';
 import * as apiDefs from '../../apiDefs/query';
 import store from '../../store';
-import { apiLoadingState } from '../../types/constants';
 import ApiPage from './ApiPage';
 
 // Convenience variables to try and keep the index values out of the test
@@ -38,10 +37,12 @@ const renderApiPage = async (
     <Provider store={store}>
       <FlagsProvider flags={flags}>
         <MemoryRouter initialEntries={[initialRoute]}>
-          <Route
-            path={componentPath ? componentPath : '/explore/api/:urlSlug/docs'}
-            component={ApiPage}
-          />
+          <Routes>
+            <Route
+              path={componentPath ? componentPath : '/explore/api/:urlSlug/docs'}
+              element={<ApiPage />}
+            />
+          </Routes>
         </MemoryRouter>
       </FlagsProvider>
     </Provider>,
@@ -57,9 +58,6 @@ describe('ApiPage', () => {
 
   const lookupApiBySlugMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
   const lookupApiCategoryMock = jest.spyOn(apiDefs, 'lookupApiCategory');
-  const apisLoadedSpy = jest
-    .spyOn(apiDefs, 'getApisLoadedState')
-    .mockReturnValue(apiLoadingState.LOADED);
 
   afterEach(() => {
     jest.resetAllMocks();
@@ -132,25 +130,23 @@ describe('ApiPage', () => {
   });
 
   describe('given url with api that does not exist', () => {
-    beforeEach(async () => {
+    it("ApiPage throws an error that'll get caught by the ErrorBoundary", () => {
       lookupApiBySlugMock.mockReturnValue(null);
       lookupApiCategoryMock.mockReturnValue(fakeCategories.lotr);
-      await renderApiPage(defaultFlags, '/explore/api/nonexistentapi/docs');
-    });
-
-    it('calls lookupApi methods with correct parameters', () => {
-      expect(lookupApiBySlugMock).toHaveBeenCalledWith('nonexistentapi');
-      expect(lookupApiCategoryMock).toHaveBeenCalledTimes(0);
-    });
-
-    it('renders the api not found page', async () => {
-      apisLoadedSpy.mockReturnValue(apiLoadingState.LOADED);
-      await renderApiPage(
-        defaultFlags,
-        '/explore/api/nonexistantapi/docs',
-        '/explore/api/:urlSlug/docs',
-      );
-      expect(screen.findByText('Try using these links')).not.toBeNull();
+      spyOn(console, 'error');
+      expect(() => {
+        render(
+          <Provider store={store}>
+            <FlagsProvider flags={defaultFlags}>
+              <MemoryRouter initialEntries={['/explore/api/nonexistantapi/docs']}>
+                <Routes>
+                  <Route path="/explore/api/:urlSlug/docs" element={<ApiPage />} />
+                </Routes>
+              </MemoryRouter>
+            </FlagsProvider>
+          </Provider>,
+        );
+      }).toThrow(Error);
     });
   });
 

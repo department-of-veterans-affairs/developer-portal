@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -12,9 +12,6 @@ import { generateFilterPills } from '../../utils/generateFilterPills';
 import './ApiFilters.scss';
 import ApisLoader from '../apisLoader/ApisLoader';
 
-interface ExploreRootParams {
-  categoryUrlSlugs?: string;
-}
 export interface TopicFilterValues {
   topics: string[];
 }
@@ -36,9 +33,9 @@ interface ApiFiltersProps {
 export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
   const filterButtonRef = useRef(null);
   const filterContainerRef = useRef(null);
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
-  const params = useParams<ExploreRootParams>();
+  const params = useParams();
   const [isMobileMenuVisible, setIsMobileMenuVisible] = useState<boolean>(false);
   const toggleMobileMenu = (): void => setIsMobileMenuVisible(prevState => !prevState);
   const [topicFilter, setTopicFilter] = useState<string[]>(
@@ -64,15 +61,21 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
   const handleTopicFilterSubmit = (values: TopicFilterValues): void => {
     setTopicFilter(values.topics);
     if (values.topics.length > 0) {
-      history.replace({
-        ...location,
-        pathname: `/explore/${values.topics.join('+')}`,
-      });
+      navigate(
+        {
+          ...location,
+          pathname: `/explore/${values.topics.join('+')}`,
+        },
+        { replace: true },
+      );
     } else {
-      history.replace({
-        ...location,
-        pathname: '/explore',
-      });
+      navigate(
+        {
+          ...location,
+          pathname: '/explore',
+        },
+        { replace: true },
+      );
     }
     window.scrollTo(0, 0);
     if (isMobileMenuVisible) {
@@ -85,11 +88,14 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
       .map(key => `${key}=${data[key]}`)
       .join('&');
     const pathname = pathOverride ?? location.pathname;
-    history.replace({
-      ...location,
-      pathname,
-      search: queryString,
-    });
+    navigate(
+      {
+        ...location,
+        pathname,
+        search: queryString,
+      },
+      { replace: true },
+    );
   };
 
   const handleAuthTypeFilterSubmit = (values: AuthFilterValues): void => {

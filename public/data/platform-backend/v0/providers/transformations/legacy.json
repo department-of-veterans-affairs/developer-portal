@@ -5,6 +5,7 @@
     "apis": [
       {
         "altID": "appeals",
+        "blockSandboxForm": true,
         "description": "Allows retrieval of all decision review request statuses (both legacy and AMA). Statuses are read only.",
         "docSources": [
           {
@@ -27,6 +28,7 @@
       },
       {
         "altID": "decision_reviews",
+        "blockSandboxForm": true,
         "description": "Allows submission, management, and retrieval of decision review requests and details such as statuses in accordance with the AMA.",
         "docSources": [
           {
@@ -62,6 +64,7 @@
     "apis": [
       {
         "altID": "claims",
+        "blockSandboxForm": false,
         "description": "Submit and track claims",
         "docSources": [
           {
@@ -98,6 +101,7 @@
       },
       {
         "altID": "benefits",
+        "blockSandboxForm": false,
         "description": "Submit PDF claims",
         "docSources": [
           {
@@ -123,6 +127,7 @@
       },
       {
         "altID": "benefitsReferenceData",
+        "blockSandboxForm": false,
         "description": "Look up data and codes for VA benefits claims",
         "docSources": [
           {
@@ -165,6 +170,7 @@
     "apis": [
       {
         "altID": "facilities",
+        "blockSandboxForm": false,
         "description": "VA Facilities",
         "docSources": [
           {
@@ -207,6 +213,7 @@
     "apis": [
       {
         "altID": "vaForms",
+        "blockSandboxForm": false,
         "description": "Look up VA forms and check for new versions.",
         "docSources": [
           {
@@ -249,6 +256,7 @@
     "apis": [
       {
         "altID": "clinicalHealth",
+        "blockSandboxForm": true,
         "description": "Use to develop clinical-facing applications that improve access to and management of patient health data.",
         "docSources": [
           {
@@ -286,6 +294,7 @@
       },
       {
         "altID": "communityCare",
+        "blockSandboxForm": false,
         "description": "VA's Community Care Eligibility API utilizes VA's Facility API, VA's Enrollment \u0026 Eligibility system and others to satisfy requirements found in the VA's MISSION Act of 2018.",
         "docSources": [
           {
@@ -318,6 +327,7 @@
       },
       {
         "altID": "health",
+        "blockSandboxForm": false,
         "description": "Use the OpenID Connect and SMART on FHIR standards to allow Veterans to authorize third-party applications to access data on their behalf.",
         "docSources": [
           {
@@ -387,6 +397,7 @@
       },
       {
         "altID": "providerDirectory",
+        "blockSandboxForm": false,
         "description": "Use this API to return lists of VA providers and their information, such as locations, specialties, office hours, and more.",
         "docSources": [
           {
@@ -408,6 +419,7 @@
       },
       {
         "altID": null,
+        "blockSandboxForm": false,
         "description": "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
         "docSources": [],
         "enabledByDefault": true,
@@ -444,6 +456,7 @@
     "apis": [
       {
         "altID": "lgyGuarantyRemittance",
+        "blockSandboxForm": false,
         "description": "Lets lenders automate parts of the mortgage post-closing process.",
         "docSources": [
           {
@@ -476,6 +489,7 @@
       },
       {
         "altID": "loan_guaranty",
+        "blockSandboxForm": true,
         "description": "Use the Loan Guaranty API to Manage VA Home Loans.",
         "docSources": [
           {
@@ -511,6 +525,7 @@
     "apis": [
       {
         "altID": "addressValidation",
+        "blockSandboxForm": false,
         "description": "Provides methods to standardize and validate addresses.",
         "docSources": [
           {
@@ -533,6 +548,7 @@
       },
       {
         "altID": "vaLetterGenerator",
+        "blockSandboxForm": false,
         "description": "Generate documents and letters for proof of existing VA benefits and status.",
         "docSources": [
           {
@@ -562,6 +578,7 @@
       },
       {
         "altID": "confirmation",
+        "blockSandboxForm": false,
         "description": "Confirm Veteran status for a given person with an API key.",
         "docSources": [
           {
@@ -583,6 +600,7 @@
       },
       {
         "altID": "verification",
+        "blockSandboxForm": false,
         "description": "Confirm Veteran status for a given person, or get a Veteran’s service history or disability rating.",
         "docSources": [
           {

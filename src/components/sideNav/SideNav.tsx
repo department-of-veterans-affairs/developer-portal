@@ -1,11 +1,8 @@
 import React from 'react';
-
 import classNames from 'classnames';
-import { HashLink } from 'react-router-hash-link';
+import { Link, useLocation } from 'react-router-dom';
 import * as Stickyfill from 'stickyfilljs';
-
 import './SideNav.scss';
-import { useLocation } from 'react-router';
 
 interface SideNavProps {
   className?: string;
@@ -52,7 +49,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
         props.containerClassName,
       )}
     >
-      <HashLink
+      <Link
         className={classNames(
           'va-api-secondary-skip-nav',
           'vads-u-padding--1p5',
@@ -65,7 +62,7 @@ const SideNav = (props: SideNavProps): JSX.Element => {
         to="#page-header"
       >
         Skip Page Navigation
-      </HashLink>
+      </Link>
       <nav
         className={classNames('va-api-side-nav', props.className)}
         aria-label={props.ariaLabel}

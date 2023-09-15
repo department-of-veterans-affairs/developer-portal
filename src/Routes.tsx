@@ -1,80 +1,110 @@
 import * as React from 'react';
-import { Switch } from 'react-router';
-import { Redirect, Route } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
+import { ErrorBoundary } from 'react-error-boundary';
 import ConsumerOnboardingRoot from './containers/consumerOnboarding/ConsumerOnboardingRoot';
-import DocumentationRoot from './containers/documentation/DocumentationRoot';
 import Home from './containers/Home';
+
 import About from './containers/about/About';
 import News from './containers/about/News';
-import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
-import { Publishing } from './containers/publishing';
-import {
-  CONSUMER_APPLICATION_PATH,
-  CONSUMER_PROD_PATH,
-  CONSUMER_ROUTER_PATHS,
-  CONSUMER_SANDBOX_PATH,
-  PUBLISHING_ROUTER_PATHS,
-} from './types/constants/paths';
+import AboutOverview from './containers/about/Overview';
+
+import DemoPrep from './containers/consumerOnboarding/DemoPrep';
+import OnboardingOverview from './containers/consumerOnboarding/OnboardingOverview';
 import ProductionAccess from './containers/consumerOnboarding/ProductionAccess';
-import ErrorPage404 from './containers/ErrorPage404';
-import TermsOfService from './containers/TermsOfService';
+import RequestProductionAccess from './containers/consumerOnboarding/RequestProductionAccess';
+import WorkingWithOurAPIs from './containers/consumerOnboarding/WorkingWithOurAPIs';
+
+import ApiPage from './containers/documentation/ApiPage';
+import ApiOverviewPage from './containers/documentation/ApiOverviewPage';
+import { AuthorizationCodeGrantDocs } from './containers/documentation/AuthorizationCodeGrant/AuthorizationCodeGrantDocs';
+import { ClientCredentialsGrantDocs } from './containers/documentation/ClientCredentialsGrant/ClientCredentialsGrantDocs';
+import DocumentationRoot from './containers/documentation/DocumentationRoot';
+import { ExploreRoot } from './containers/documentation/ExploreRoot';
+import { ReleaseNotes } from './containers/documentation/ReleaseNotes';
+import RequestSandboxAccess from './containers/documentation/RequestSandboxAccess';
+
 import IntegrationGuide from './containers/providers/IntegrationGuide';
 
-export const SiteRoutes: React.FunctionComponent = (): JSX.Element => (
-  <Switch>
-    <Route exact path="/" component={Home} />
-    <Route exact path="/index.html" component={Home} />
+import { Publishing } from './containers/publishing';
+import { PublishingIntroduction } from './containers/publishing/components/publishingIntroduction';
+import { PublishingOnboarding } from './containers/publishing/components/publishingOnboarding';
 
-    {/* Legacy routes that we want to maintain: */}
-    <Route
-      path="/explore/terms-of-service"
-      render={(): JSX.Element => <Redirect to="/terms-of-service" />}
-    />
-    <Route path="/whats-new" render={(): JSX.Element => <Redirect to="/about/news" />} />
-    <Route path="/news" render={(): JSX.Element => <Redirect to="/about/news" />} />
+import SupportOverview from './containers/support/Overview';
+import Support, { sections as supportSections, SupportSection } from './containers/support/Support';
 
-    {/* Current routes: */}
-    <Route path="/terms-of-service" component={TermsOfService} />
+import { CONSUMER_PROD_PATH, CONSUMER_SANDBOX_PATH } from './types/constants/paths';
+import ErrorPage404 from './containers/ErrorPage404';
+import TermsOfService from './containers/TermsOfService';
 
-    {/* API Documentation */}
-    <Redirect from="/explore/api" to="/explore" exact />
-    <Route path="/explore/api/:urlSlug" component={DocumentationRoot} />
-    <Route path="/explore/:categoryUrlSlugs" component={DocumentationRoot} />
-    <Route path="/explore" component={DocumentationRoot} />
+export const SiteRoutes = (): JSX.Element => (
+  <ErrorBoundary FallbackComponent={ErrorPage404}>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/index.html" element={<Home />} />
 
-    {/* About */}
-    <Route path="/about" component={About} />
-    <Route path="/about/news" component={News} />
+      {/* Legacy routes that we want to maintain: */}
+      <Route
+        path="/explore/terms-of-service"
+        element={<Navigate to="/terms-of-service" replace />}
+      />
+      <Route path="/whats-new" element={<Navigate to="/about/news" replace />} />
+      <Route path="/news" element={<Navigate to="/about/news" replace />} />
 
-    {/* Support */}
-    <Route exact path="/support" component={Support} />
-    {supportSections.map((section: SupportSection) => (
-      <Route path={`/support/${section.id}`} key={`${section.id}-support`} component={Support} />
-    ))}
+      {/* CURRENT ROUTES: */}
+      <Route path="/terms-of-service" element={<TermsOfService />} />
 
-    {/* Integration Guide */}
-    <Route path="/providers/integration-guide" component={IntegrationGuide} />
+      {/* API Documentation */}
+      <Route path="/explore" element={<ExploreRoot />} />
+      <Route path="/explore/:categoryUrlSlugs" element={<ExploreRoot />} />
+      <Route path="/explore/api/:urlSlug" element={<DocumentationRoot />}>
+        <Route index element={<ApiOverviewPage />} />
+        <Route path="docs" element={<ApiPage />} />
+        <Route path="authorization-code" element={<AuthorizationCodeGrantDocs />} />
+        <Route path="client-credentials" element={<ClientCredentialsGrantDocs />} />
+        <Route path="release-notes" element={<ReleaseNotes />} />
+        <Route path="sandbox-access" element={<RequestSandboxAccess />} />
+      </Route>
+      <Route path="/explore/api" element={<Navigate to="/explore" replace />} />
 
-    {/* API Publishing */}
-    {PUBLISHING_ROUTER_PATHS.map((path: string) => (
-      <Route exact path={path} component={Publishing} key={path} />
-    ))}
+      {/* About */}
+      <Route path="/about" element={<About />}>
+        <Route index element={<AboutOverview />} />
+        <Route path="news" element={<News />} />
+      </Route>
 
-    {/* Consumer Docs */}
+      {/* Support */}
+      <Route path="/support" element={<Support />}>
+        <Route index element={<SupportOverview sections={supportSections} />} />
+        {supportSections.map((section: SupportSection) => (
+          <Route path={section.id} key={`${section.id}-support`} element={<section.component />} />
+        ))}
+      </Route>
 
-    <Route path={CONSUMER_APPLICATION_PATH} component={ProductionAccess} />
+      {/* Integration Guide */}
+      <Route path="/providers/integration-guide" element={<IntegrationGuide />} />
 
-    {CONSUMER_ROUTER_PATHS.map((path: string) => (
-      <Route exact path={path} component={ConsumerOnboardingRoot} key={path} />
-    ))}
+      {/* API Publishing */}
+      <Route path="/api-publishing" element={<Publishing />}>
+        <Route index element={<PublishingIntroduction />} />
+        <Route path="process" element={<PublishingOnboarding />} />
+      </Route>
+      {/* Consumer Docs */}
 
-    <Redirect from="/apply" to="/explore" />
-    <Redirect from={CONSUMER_SANDBOX_PATH} to="/explore" />
+      <Route path="/onboarding" element={<ConsumerOnboardingRoot />}>
+        <Route index element={<OnboardingOverview />} />
+        <Route path="request-prod-access" element={<RequestProductionAccess />} />
+        <Route path="prepare-for-and-complete-a-demo" element={<DemoPrep />} />
+        <Route path="working-with-lighthouse-apis" element={<WorkingWithOurAPIs />} />
+      </Route>
+      <Route path="onboarding/production-access-application" element={<ProductionAccess />} />
 
-    <Redirect from="/go-live" to={CONSUMER_PROD_PATH} />
+      <Route path="/apply" element={<Navigate to="/explore" replace />} />
+      <Route path={CONSUMER_SANDBOX_PATH} element={<Navigate to="/explore" replace />} />
+      <Route path="/go-live" element={<Navigate to={CONSUMER_PROD_PATH} />} />
 
-    {/* Catch the rest with the 404 */}
-    <Route component={ErrorPage404} />
-  </Switch>
+      {/* Catch the rest with the 404 */}
+      <Route path="*" element={<ErrorPage404 />} />
+    </Routes>
+  </ErrorBoundary>
 );

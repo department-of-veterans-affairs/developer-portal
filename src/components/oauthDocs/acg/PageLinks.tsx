@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { HashLink } from 'react-router-hash-link';
 import { CONSUMER_PROD_PATH } from '../../../types/constants/paths';
 
 const PageLinks = (): JSX.Element => (
@@ -10,63 +9,59 @@ const PageLinks = (): JSX.Element => (
     </h2>
     <ul>
       <li>
-        <HashLink to="#getting-started">Getting Started</HashLink>
+        <Link to="#getting-started">Getting Started</Link>
       </li>
       <li>
-        <HashLink to="#building-oidc-apps">Building OpenID Connect Applications</HashLink>
+        <Link to="#building-oidc-apps">Building OpenID Connect Applications</Link>
         <ul>
           <li>
-            <HashLink to="#authorization-code-grant">
-              Initiating the Authorization Code Grant
-            </HashLink>
+            <Link to="#authorization-code-grant">Initiating the Authorization Code Grant</Link>
             <ul>
               <li>
-                <HashLink to="#requesting-authorization">Requesting Authorization</HashLink>
+                <Link to="#requesting-authorization">Requesting Authorization</Link>
               </li>
               <li>
-                <HashLink to="#requesting-a-token">
+                <Link to="#requesting-a-token">
                   Requesting a Token with an Authorization Code Grant
-                </HashLink>
+                </Link>
               </li>
               <li>
-                <HashLink to="#manage-account">Manage Account</HashLink>
+                <Link to="#manage-account">Manage Account</Link>
               </li>
               <li>
-                <HashLink to="#revoking-tokens">Revoking Tokens</HashLink>
+                <Link to="#revoking-tokens">Revoking Tokens</Link>
               </li>
               <li>
-                <HashLink to="#revoking-grants">Revoking Grants</HashLink>
+                <Link to="#revoking-grants">Revoking Grants</Link>
               </li>
             </ul>
           </li>
           <li>
-            <HashLink to="#pkce-authorization">
-              PKCE (Proof Key for Code Exchange) Authorization
-            </HashLink>
+            <Link to="#pkce-authorization">PKCE (Proof Key for Code Exchange) Authorization</Link>
             <ul>
               <li>
-                <HashLink to="#pkce-requesting-authorization">Requesting Authorization</HashLink>
+                <Link to="#pkce-requesting-authorization">Requesting Authorization</Link>
               </li>
               <li>
-                <HashLink to="#pkce-requesting-a-token">
+                <Link to="#pkce-requesting-a-token">
                   Requesting a Token with an Authorization Code Grant
-                </HashLink>
+                </Link>
               </li>
             </ul>
           </li>
         </ul>
       </li>
       <li>
-        <HashLink to="#scopes">Scopes</HashLink>
+        <Link to="#scopes">Scopes</Link>
       </li>
       <li>
-        <HashLink to="#id-token">ID Token</HashLink>
+        <Link to="#id-token">ID Token</Link>
       </li>
       <li>
-        <HashLink to="#test-users">Test Users</HashLink>
+        <Link to="#test-users">Test Users</Link>
       </li>
       <li>
-        <HashLink to="#https">HTTPS</HashLink>
+        <Link to="#https">HTTPS</Link>
       </li>
     </ul>
     <h3>It&apos;s good to know that:</h3>

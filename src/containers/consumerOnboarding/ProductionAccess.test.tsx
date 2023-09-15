@@ -1,6 +1,7 @@
-import { render, screen } from '@testing-library/react';
 import React from 'react';
+import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../flags';
 import store from '../../store';
 import ProductionAccess from './ProductionAccess';
@@ -10,7 +11,9 @@ describe('ProductionAccess', () => {
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
-          <ProductionAccess />
+          <MemoryRouter>
+            <ProductionAccess />
+          </MemoryRouter>
         </FlagsProvider>
       </Provider>,
     );
