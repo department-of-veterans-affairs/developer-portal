@@ -28,7 +28,7 @@ export const getRequiredApiSignups = async () => {
       });
       apis
         .filter(api => api.altID)
-        .filter(api => api.vaInternalOnly !== VaInternalOnly.StrictlyInternal)
+        .filter(api => !api.blockSandboxForm)
         .forEach(api => {
           if (api.oAuth) {
             if (api.oAuthTypes.includes('AuthorizationCodeGrant')) {
