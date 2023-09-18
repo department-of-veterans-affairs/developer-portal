@@ -36,7 +36,7 @@ export const AuthFilters = ({
 
   const initialAuthTypes: AuthFilterValues = { authTypes: authFilter };
 
-  const authClassNames = classNames('filter-topic-container', {
+  const authClassNames = classNames('filter-container--auth', {
     'vads-u-display--block': isAuthOpen,
     'vads-u-display--none': !isAuthOpen,
   });

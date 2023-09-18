@@ -28,7 +28,11 @@ interface PillProps {
   type?: PillIconType | undefined;
 }
 export const Pill = ({ name, onClick, type }: PillProps): JSX.Element => (
-  <button className="va-api-filter-pill" type="button" onClick={onClick}>
+  <button
+    className={`va-api-filter-pill ${type as string}-filter-pill`}
+    type="button"
+    onClick={onClick}
+  >
     <PillIcon type={type} />
     <span>{name}</span>
     <FontAwesomeIcon className="vads-u-font-size--lg" icon={faTimesCircle} />

@@ -41,6 +41,10 @@ const GettingStarted = (props: ApiRequiredProps): JSX.Element => (
           </pre>
         </div>
       </li>
+      <li>
+        <span className="vads-u-font-weight--bold">Add &quot;kid&quot; (key ID) to JWK:</span>{' '}
+        An additional field &quot;kid&quot; is optional, but encouraged to allow for graceful key rotations in the future.
+      </li>
     </ol>
     <p>What you generate will look similar to this:</p>
     <CodeBlock
@@ -52,13 +56,14 @@ const GettingStarted = (props: ApiRequiredProps): JSX.Element => (
   "n": "mYi1wUpwkJ1QB8...",
   "e": "AQAB",
   "alg": "RS256",
-  "use": "sig"
+  "use": "sig",
+  "kid": "your-key-id-here"
 }`}
     />
     <p>
       Next, get sandbox access. On the{' '}
       <Link to={`/explore/api/${props.api.urlSlug}/sandbox-access`}>access form</Link>, provide your
-      RSA public key. After you submit the form, we will send your client ID in an email.
+      public RSA key in JWK format. After you submit the form, we will send your client ID in an email.
     </p>
   </>
 );
