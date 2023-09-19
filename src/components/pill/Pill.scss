@@ -5,15 +5,20 @@
   border-radius: 12px !important;
   display: inline-flex !important;
   padding: 4px 4px 4px 8px !important;
-  > span {
+
+  >span {
     margin: 0 24px 0 6px;
   }
+
   width: unset !important;
 }
 
 .filter-pills-container {
+  align-items: center;
   background-color: $color-white;
   border-bottom: 1px solid $color-gray-light;
+  display: flex;
+  flex-wrap: wrap;
   padding: 2rem 1rem;
   position: sticky;
   top: 40px;
