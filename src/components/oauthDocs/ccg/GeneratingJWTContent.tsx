@@ -47,6 +47,9 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
       </a>
       .
     </p>
+    <p>
+      Note: Ensure that your CCG assertion includes the optional, but recommended &quot;kid&quot; in the headers section.
+    </p>
     <CodeBlock
       withCopyButton
       language="javascript"
@@ -56,6 +59,7 @@ const GeneratingJWTContent: FC<GeneratingJWTProps> = ({ apiName, productionAud, 
   let secret = fs.readFileSync(key, "utf8");
   const token = jwt.create(claims, secret, algorithm); 
   token.setExpiration(new Date() - getTime() + 60 * 1000);
+  token.setHeader('kid', 'your-key-id-here'); // Recommended
   return token.compact();
 }`}
     />
