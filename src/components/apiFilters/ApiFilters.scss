@@ -53,7 +53,7 @@ button.filters-clear-all-button {
   background-color: $color-white;
   box-shadow: inset 0 0 0 2px $color-primary;
   color: $color-primary !important;
-  margin: 1.6rem 0 0 auto;
+  margin: 0;
 
   &:active,
   &:hover {
@@ -99,10 +99,6 @@ button.filters-clear-all-button {
   .caption-container {
     margin: 0;
     padding: 0;
-  }
-
-  button.filters-clear-all-button {
-    margin: 0 0 0 auto;
   }
 }
 
