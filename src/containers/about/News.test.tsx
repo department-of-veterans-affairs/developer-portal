@@ -40,7 +40,7 @@ describe('News', () => {
 
   describe('side nav', () => {
     it('has the expected side nav entries', () => {
-      const sideNav = screen.getByRole('navigation', { name: 'About Side Nav' });
+      const sideNav = screen.getByRole('navigation', { name: 'About Side' });
       const navLinks = getAllByRole(sideNav, 'link');
       // Increment by 2 to account for additional "News" link
       expect(navLinks).toHaveLength(data.sections.length + 2);

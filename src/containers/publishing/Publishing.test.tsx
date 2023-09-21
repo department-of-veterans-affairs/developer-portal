@@ -42,7 +42,7 @@ describe('Publishing', () => {
   });
 
   it('side nav contains expected entries', () => {
-    const sideNav = screen.getByRole('navigation', { name: 'API Publishing Side Nav' });
+    const sideNav = screen.getByRole('navigation', { name: 'API Publishing Side' });
     const navLinks = getAllByRole(sideNav, 'link');
     expect(navLinks.length).toEqual(3);
 
