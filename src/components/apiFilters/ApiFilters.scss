@@ -50,20 +50,22 @@
 }
 
 button.filters-clear-all-button {
-  color: #005ea2;
-  text-decoration: underline;
   background-color: $color-white;
-  border: 0;
-  border-radius: 0;
-  box-shadow: none;
-  font-weight: 400;
-  margin: 1.6rem 0 0 0;
-  padding: 0.8rem 0;
-  text-align: left;
+  box-shadow: inset 0 0 0 2px $color-primary;
+  color: $color-primary !important;
+  margin: 0;
 
+  &:active,
   &:hover {
-    background-color: $color-white;
-    color: $color-primary-darkest !important;
+    background-color: $color-gray-cool-light;
+    box-shadow: inset 0 0 0 2px $color-primary-darker;
+    color: $color-primary-darker !important;
+  }
+
+  &:focus {
+    background-color: $color-gray-cool-light;
+    box-shadow: inset 0 0 0 2px $color-primary;
+    color: $color-primary !important;
   }
 }
 
@@ -98,22 +100,18 @@ button.filters-clear-all-button {
     margin: 0;
     padding: 0;
   }
-
-  button.filters-clear-all-button {
-    margin: 0 0 0 1.6rem;
-  }
 }
 
 .filter-container--auth,
 .filter-container--topic {
   padding: 1.6rem;
 
-  [type='checkbox'] + label {
+  [type='checkbox']+label {
     display: flex;
     margin-top: 1.6rem;
   }
 
-  [type='checkbox'] + label::before {
+  [type='checkbox']+label::before {
     flex-shrink: 0;
     margin-top: 0.2rem;
   }
