@@ -100,6 +100,13 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
     }
   };
 
+  const handleSubmit = (): void => {
+    const errorElements = document.querySelectorAll<HTMLElement>('[aria-invalid=true]');
+    if (errorElements.length > 0) {
+      errorElements[0].focus();
+    }
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -132,7 +139,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
           </fieldset>
           {values.type === FormType.CONSUMER && <ConsumerFormFields />}
           {values.type === FormType.PUBLISHING && <PublishingFormFields />}
-          <button type="submit" className="vads-u-width--auto">
+          <button type="submit" className="vads-u-width--auto" onClick={handleSubmit}>
             {isSubmitting ? 'Sending...' : 'Send to developer support'}
           </button>
           {submissionError && (
