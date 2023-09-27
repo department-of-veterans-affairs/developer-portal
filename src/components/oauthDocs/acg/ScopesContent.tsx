@@ -217,8 +217,14 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
                       <code>veteran/appeals.read</code>
                     </td>
                     <td>
-                      Lets the app see your: Board Appeals Supplemental Claims Higher-Level Reviews
-                      Legacy appeals Appealable issues
+                      Lets the app see your:
+                      <ul>
+                        <li>Board Appeals</li>
+                        <li>Supplemental Claims</li>
+                        <li>Higher-Level Reviews</li>
+                        <li>Legacy appeals</li>
+                        <li>Appealable issues</li>
+                      </ul>
                     </td>
                   </tr>
                 )}
@@ -228,8 +234,12 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
                       <code>veteran/appeals.write</code>
                     </td>
                     <td>
-                      Lets the app submit the following for you: Board Appeals Supplemental Claims
-                      Higher-Level Reviews
+                      Lets the app submit the following for you:
+                      <ul>
+                        <li>Board Appeals</li>
+                        <li>Supplemental Claims</li>
+                        <li>Higher-Level Reviews</li>
+                      </ul>
                     </td>
                   </tr>
                 )}
@@ -239,8 +249,14 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
                       <code>representative/appeals.read</code>
                     </td>
                     <td>
-                      Lets the program or app see a Veteran&apos;s: Board Appeals Supplemental
-                      Claims Higher-Level Reviews Legacy appeals Appealable issues
+                      Lets the program or app see a Veteran&apos;s:
+                      <ul>
+                        <li>Board Appeals</li>
+                        <li>Supplemental Claims</li>
+                        <li>Higher-Level Reviews</li>
+                        <li>Legacy appeals</li>
+                        <li>Appealable issues</li>
+                      </ul>
                     </td>
                   </tr>
                 )}
@@ -250,8 +266,12 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
                       <code>representative/appeals.write</code>
                     </td>
                     <td>
-                      Lets the program or app submit the following for a Veteran: Board Appeals
-                      Supplemental Claims HIgher-Level Reviews
+                      Lets the program or app submit the following for a Veteran:
+                      <ul>
+                        <li>Board Appeals</li>
+                        <li>Supplemental Claims</li>
+                        <li>Higher-Level Reviews</li>
+                      </ul>
                     </td>
                   </tr>
                 )}
