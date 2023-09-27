@@ -2,18 +2,6 @@
 import * as yup from 'yup';
 import { StringSchema } from 'yup';
 
-yup.addMethod<StringSchema>(yup.string, 'isNotATestString', function () {
-  return this.test('isNotATestString', function (value) {
-    const { path, createError } = this;
-
-    if (value?.match(/\btest\b|\bsample\b|\bfake\b|\bemail\b/i)) {
-      return createError({ message: 'Please enter a real value.', path });
-    }
-
-    return true;
-  });
-});
-
 yup.addMethod<StringSchema>(yup.string, 'isValidRSAJWK', function () {
   return this.test('isValidRSAJWK', function (value: string) {
     const { path, createError } = this;
@@ -42,7 +30,6 @@ yup.addMethod<StringSchema>(yup.string, 'isValidRSAJWK', function () {
 
 declare module 'yup' {
   interface StringSchema {
-    isNotATestString: () => StringSchema;
     isValidRSAJWK: () => StringSchema;
   }
 }
