@@ -1,6 +1,6 @@
 import React from 'react';
 import { cleanup, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter } from 'react-router-dom';
 
 import { ApiRequiredProps } from '../../../containers/documentation/DocumentationRoot';
 import { ScopesContent } from './ScopesContent';
