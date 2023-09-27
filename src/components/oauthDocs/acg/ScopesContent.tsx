@@ -320,42 +320,6 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
                     </td>
                   </tr>
                 )}
-                {scopes.includes('representative/HigherLevelReviews.read') && (
-                  <tr>
-                    <td>
-                      <code>representative/HigherLevelReviews.read</code>
-                    </td>
-                    <td>
-                      Lets the program or app see info about a Veteran’s Higher-Level Reviews, which
-                      can be submitted when a Veteran disagrees with a VA decision and wants a
-                      senior reviewer to look at the case.
-                    </td>
-                  </tr>
-                )}
-                {scopes.includes('representative/HigherLevelReviews.read') && (
-                  <tr>
-                    <td>
-                      <code>representative/HigherLevelReviews.read</code>
-                    </td>
-                    <td>
-                      Lets the program or app see info about a Veteran’s Higher-Level Reviews, which
-                      can be submitted when a Veteran disagrees with a VA decision and wants a
-                      senior reviewer to look at the case.
-                    </td>
-                  </tr>
-                )}
-                {scopes.includes('representative/HigherLevelReviews.read') && (
-                  <tr>
-                    <td>
-                      <code>representative/HigherLevelReviews.read</code>
-                    </td>
-                    <td>
-                      Lets the program or app see info about a Veteran’s Higher-Level Reviews, which
-                      can be submitted when a Veteran disagrees with a VA decision and wants a
-                      senior reviewer to look at the case.
-                    </td>
-                  </tr>
-                )}
                 {scopes.includes('veteran/HigherLevelReviews.write') && (
                   <tr>
                     <td>
