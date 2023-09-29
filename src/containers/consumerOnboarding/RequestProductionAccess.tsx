@@ -18,9 +18,9 @@ const RequestProductionAccess = (): JSX.Element => (
     <PageHeader header="Request production access" className="vads-u-margin-bottom--1" />
     <va-alert background-only show-icon status="info" visible>
       <p className="vads-u-margin-y--0">
-        In July 2023, we added steps to the production approval process, which has significantly
-        increased the time to approval. We appreciate your understanding and cooperation as we
-        ensure we meet the needs of Veterans safety and securely. For questions or concerns,{' '}
+        In July 2023, we added steps to the production approval process which has significantly
+        increased approval time. We appreciate your understanding and cooperation as we prioritize
+        the safe and secure delivery of services to Veterans. For questions or concerns,{' '}
         <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
       </p>
     </va-alert>
