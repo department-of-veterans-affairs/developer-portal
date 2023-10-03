@@ -70,6 +70,7 @@ export const TopicFilters = ({
         render={(): JSX.Element => (
           <Form className="explore-filter-form medium-screen:vads-u-margin-right--2" noValidate>
             <button
+              aria-expanded={isTopicOpen}
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
               type="button"
               onClick={toggleTopicOpen}
@@ -83,6 +84,7 @@ export const TopicFilters = ({
               />
             </button>
             <button
+              aria-expanded={isTopicOpen}
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"
               type="button"
               onClick={toggleTopicOpen}

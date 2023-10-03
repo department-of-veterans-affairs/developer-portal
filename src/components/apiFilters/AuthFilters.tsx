@@ -61,6 +61,7 @@ export const AuthFilters = ({
         render={(): JSX.Element => (
           <Form className="explore-filter-form" noValidate>
             <button
+              aria-expanded={isAuthOpen}
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
               type="button"
               onClick={toggleAuthOpen}
@@ -74,6 +75,7 @@ export const AuthFilters = ({
               />
             </button>
             <button
+              aria-expanded={isAuthOpen}
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"
               type="button"
               onClick={toggleAuthOpen}
