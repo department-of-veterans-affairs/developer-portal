@@ -20,14 +20,14 @@ export const newsSectionData = data.sections.map((section: DataSection) => ({
 }));
 
 const ItemDescription = ({ item }: { item: NewsItemData }): JSX.Element => (
-  <li>
+  <>
     <a href={item.url}>{item.title}</a>
     <br />
     <strong>
       {item.date}
       {item.source ? ` | ${item.source}` : null}
     </strong>
-  </li>
+  </>
 );
 
 const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
@@ -35,22 +35,22 @@ const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
   const url = new URL(item.url);
   if (url.host === 'www.youtube.com') {
     return (
-      <li className="vads-u-margin-y--5">
+      <div className="vads-u-margin-y--5">
         {description}
         <EmbeddedYoutubeVideo title={item.title} url={item.url} />
-      </li>
+      </div>
     );
   }
 
   return (
-    <li className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
+    <div className="vads-u-display--flex vads-u-flex-direction--row vads-u-margin-y--5">
       <div aria-hidden>
         <a href={item.url} tabIndex={-1}>
           <div className="hover-image-videoplayer" />
         </a>
       </div>
       <div className="vads-u-margin-left--2p5 va-api-media-row-description">{description}</div>
-    </li>
+    </div>
   );
 };
 
@@ -86,7 +86,9 @@ const News = (): JSX.Element => (
         </h2>
         <ul className="news-list">
           {section.items.map((item: NewsItemData) => (
-            <NewsItem key={item.url} item={item} media={section.media} />
+            <li key={item.url}>
+              <NewsItem key={item.url} item={item} media={section.media} />
+            </li>
           ))}
         </ul>
       </section>
