@@ -35,10 +35,8 @@ describe('ReleaseNotes', () => {
   });
 
   it('renders the heading', () => {
-    const heading1 = screen.getByRole('heading', { name: 'Release notes' });
+    const heading1 = screen.getByRole('heading', { name: 'Release notes - Rings API' });
     expect(heading1).toBeInTheDocument();
-    const heading2 = screen.getByRole('heading', { name: 'Rings API' });
-    expect(heading2).toHaveTextContent('Rings API');
   });
 
   it('renders the existing notes', () => {

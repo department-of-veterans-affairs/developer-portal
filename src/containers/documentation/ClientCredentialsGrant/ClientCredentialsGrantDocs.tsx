@@ -22,7 +22,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
       <Helmet>
         <title>{api.name} Client Credentials Grant</title>
       </Helmet>
-      <PageHeader header="Client Credentials Grant" subText={api.name} />
+      <PageHeader header={`Client Credentials Grant - ${api.name}`} />
       <div className="va-api-authorization-docs vads-u-margin-top--3">
         <p>The authentication model for the {api.name} uses OAuth2.0/OpenID Connect. </p>
         <p>

@@ -113,7 +113,7 @@ const ApiPage = (): JSX.Element => {
       <Helmet>
         <title>{api.name} Documentation</title>
       </Helmet>
-      <PageHeader header="Docs" subText={api.name} />
+      <PageHeader header={`Docs - ${api.name}`} />
       {veteranRedirect && (
         <VeteranRedirectAlertMessage api={api} veteranRedirect={veteranRedirect} />
       )}
