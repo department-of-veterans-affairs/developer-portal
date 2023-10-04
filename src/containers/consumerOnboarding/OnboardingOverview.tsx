@@ -32,8 +32,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       <li className="process-step list-two" aria-labelledby="request-prod-access">
         <strong id="request-prod-access">Request production access</strong>
         <p>
-          Getting production access can take less than a week to more than a month, depending on the
-          API.
+          Timeline for getting production access varies.
         </p>
         <p>
           <Link to={CONSUMER_PROD_PATH}>
