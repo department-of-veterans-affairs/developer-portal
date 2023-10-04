@@ -15,7 +15,12 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
     <Helmet>
       <title>Consumer Onboarding</title>
     </Helmet>
-    <PageHeader header="API Consumer Onboarding" className="vads-u-margin-bottom--1" />
+    <PageHeader header="API Consumer Onboarding" />
+    <p>
+      Our API consumer onboarding process ensures the quality and security of applications
+      integrating with our APIs and data. It may seem complex, but don&apos;t worry—we&apos;re in
+      this together and are here to answer your questions each step of the way.
+    </p>
     <va-alert background-only show-icon status="info" visible>
       <p className="vads-u-margin-y--0">
         In July 2023, we added steps to the production approval process which has significantly
@@ -24,11 +29,6 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
         <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
       </p>
     </va-alert>
-    <p>
-      Our API consumer onboarding process ensures the quality and security of applications
-      integrating with our APIs and data. It may seem complex, but don&apos;t worry—we&apos;re in
-      this together and are here to answer your questions each step of the way.
-    </p>
     <h2 id="onboarding-steps">Onboarding steps</h2>
     <ol className="process" aria-labelledby="onboarding-steps">
       <li className="process-step list-one" aria-labelledby="start-developing">
