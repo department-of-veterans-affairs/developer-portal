@@ -6,6 +6,7 @@ import {
   CONSUMER_APIS_PATH,
   CONSUMER_DEMO_PATH,
   CONSUMER_PROD_PATH,
+  SUPPORT_CONTACT_PATH,
 } from '../../types/constants/paths';
 import './OnboardingOverview.scss';
 
@@ -14,7 +15,15 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
     <Helmet>
       <title>Consumer Onboarding</title>
     </Helmet>
-    <PageHeader header="API Consumer Onboarding" />
+    <PageHeader header="API Consumer Onboarding" className="vads-u-margin-bottom--1" />
+    <va-alert background-only show-icon status="info" visible>
+      <p className="vads-u-margin-y--0">
+        In July 2023, we added steps to the production approval process which has significantly
+        increased approval time. We appreciate your understanding and cooperation as we prioritize
+        the safe and secure delivery of services to Veterans. For questions or concerns,{' '}
+        <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
+      </p>
+    </va-alert>
     <p>
       Our API consumer onboarding process ensures the quality and security of applications
       integrating with our APIs and data. It may seem complex, but don&apos;t worry—we&apos;re in
