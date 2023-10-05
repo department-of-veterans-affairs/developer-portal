@@ -6,6 +6,7 @@ import {
   CONSUMER_APIS_PATH,
   CONSUMER_DEMO_PATH,
   CONSUMER_PROD_PATH,
+  SUPPORT_CONTACT_PATH,
 } from '../../types/constants/paths';
 import './OnboardingOverview.scss';
 
@@ -20,6 +21,14 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       integrating with our APIs and data. It may seem complex, but don&apos;t worry—we&apos;re in
       this together and are here to answer your questions each step of the way.
     </p>
+    <va-alert background-only show-icon status="info" visible>
+      <p className="vads-u-margin-y--0">
+        In July 2023, we added steps to the production approval process which has significantly
+        increased approval time. We appreciate your understanding and cooperation as we prioritize
+        the safe and secure delivery of services to Veterans. For questions or concerns,{' '}
+        <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
+      </p>
+    </va-alert>
     <h2 id="onboarding-steps">Onboarding steps</h2>
     <ol className="process" aria-labelledby="onboarding-steps">
       <li className="process-step list-one" aria-labelledby="start-developing">
@@ -32,8 +41,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       <li className="process-step list-two" aria-labelledby="request-prod-access">
         <strong id="request-prod-access">Request production access</strong>
         <p>
-          Getting production access can take less than a week to more than a month, depending on the
-          API.
+          Timeline for getting production access varies.
         </p>
         <p>
           <Link to={CONSUMER_PROD_PATH}>
