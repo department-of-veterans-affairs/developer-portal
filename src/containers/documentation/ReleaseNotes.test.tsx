@@ -40,7 +40,7 @@ describe('ReleaseNotes', () => {
   });
 
   it('renders the existing notes', () => {
-    const dateHeadings = screen.getAllByRole('heading', { level: 3 });
+    const dateHeadings = screen.getAllByRole('heading', { level: 2 });
     expect(dateHeadings.length).toBe(2);
   });
 });
