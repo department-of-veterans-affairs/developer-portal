@@ -16,7 +16,7 @@ export const VeteranResources = (): JSX.Element => {
         type="button"
         onClick={(): void => setModalVisible(true)}
       >
-        Veterans, find helpful resources and contact info.
+        Veteran resources
       </button>
       <Modal
         aria-describedby="veteran-resources-description"
