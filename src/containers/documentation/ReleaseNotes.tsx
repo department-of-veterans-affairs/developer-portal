@@ -22,7 +22,7 @@ export const ReleaseNotes = (): JSX.Element => {
       <div className="release-notes-wrapper">
         <ReactMarkdown
           components={{
-            // eslint-disable-next-line jsx-a11y/heading-has-content
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars, jsx-a11y/heading-has-content
             h3: ({ node, ...props }) => <h2 {...props} />,
           }}
         >
