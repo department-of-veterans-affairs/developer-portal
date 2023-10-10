@@ -65,7 +65,7 @@ const DocumentationRoot = (): JSX.Element => {
       <ContentWithNav
         fullWidth
         nav={<ExploreSideNav api={api} />}
-        navAriaLabel="API Docs Side Nav"
+        navAriaLabel="API Docs Side"
         className="documentation"
       />
     </>

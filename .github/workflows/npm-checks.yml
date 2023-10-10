@@ -2,7 +2,7 @@ name: NPM Checks
 
 on:
   pull_request:
-    branches: [master, api-11566/information-architecture]
+    branches: [master, shutdown-master]
     types: [opened, synchronize, reopened, ready_for_review]
 
 concurrency:

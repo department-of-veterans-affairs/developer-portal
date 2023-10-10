@@ -35,7 +35,7 @@ const About = (): JSX.Element => (
         </SideNavEntry>
       </>
     }
-    navAriaLabel="About Side Nav"
+    navAriaLabel="About Side"
     contentAriaLabelledBy={PAGE_HEADER_ID}
   />
 );
