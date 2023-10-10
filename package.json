@@ -164,7 +164,7 @@
     "lodash.noop": "^3.0.1",
     "mini-css-extract-plugin": "^2.7.6",
     "msw": "^1.2.3",
-    "postcss": "^8.4.27",
+    "postcss": "^8.4.31",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-loader": "^6.2.1",
     "postcss-normalize": "^10.0.1",
