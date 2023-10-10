@@ -26,7 +26,7 @@ describe('ConsumerOnboardingRoot', () => {
 
   describe('side nav', () => {
     it('renders the side nav', () => {
-      const nav = screen.getByRole('navigation', { name: 'Consumer Onboarding Page Nav' });
+      const nav = screen.getByRole('navigation', { name: 'Consumer Onboarding Page' });
       expect(nav).toBeInTheDocument();
     });
 
@@ -36,7 +36,7 @@ describe('ConsumerOnboardingRoot', () => {
       ['Prepare for the demo', CONSUMER_DEMO_PATH],
       ['Working with our APIs', CONSUMER_APIS_PATH],
     ])('links to the "%s" page', (linkText: string, path: string) => {
-      const nav = screen.getByRole('navigation', { name: 'Consumer Onboarding Page Nav' });
+      const nav = screen.getByRole('navigation', { name: 'Consumer Onboarding Page' });
       const link = getByRole(nav, 'link', { name: linkText });
       expect(link).toBeInTheDocument();
       expect(link.getAttribute('href')).toBe(path);

@@ -12,7 +12,7 @@ const ConsumerOnboardingRoot = (): JSX.Element => (
         <SideNavEntry name="Working with our APIs" to="working-with-lighthouse-apis" />
       </>
     }
-    navAriaLabel="Consumer Onboarding Page Nav"
+    navAriaLabel="Consumer Onboarding Page"
     contentAriaLabelledBy={PAGE_HEADER_ID}
   />
 );

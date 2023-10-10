@@ -51,20 +51,20 @@ const GettingStarted = (): JSX.Element => (
         <div className="vads-l-col--12 medium-screen:vads-l-col--7">
           <h2 className="vads-u-margin-bottom--0">Get started</h2>
           <p>Follow these steps to start developing with our APIs.</p>
-          <ol className="process vads-u-margin-top--3" aria-labelledby="Getting started">
-            <li className="process-step list-one" aria-labelledby="explore-our-apis">
+          <ol className="process vads-u-margin-top--3">
+            <li className="process-step list-one">
               <strong id="explore-our-apis">
                 <Link to="/explore">Explore our APIs</Link>
               </strong>
               <p>Find the right API and start developing right away.</p>
             </li>
-            <li className="process-step list-two" aria-labelledby="request-production-access">
+            <li className="process-step list-two">
               <strong id="request-production-access">
                 <Link to="/onboarding/request-prod-access">Request production access</Link>
               </strong>
               <p>After testing your app in sandbox, start the path to production.</p>
             </li>
-            <li className="process-step list-three" aria-labelledby="complete-a-demo">
+            <li className="process-step list-three">
               <strong id="complete-a-demo">
                 <Link to="/onboarding/prepare-for-and-complete-a-demo">Complete a demo</Link>
               </strong>

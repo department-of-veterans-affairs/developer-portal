@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -208,6 +209,273 @@ const ScopesContent = (props: ApiRequiredProps): JSX.Element => {
                       <code>veteran_status.read</code>
                     </td>
                     <td>Confirm the Veteran status of an individual</td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/appeals.read') && (
+                  <tr>
+                    <td>
+                      <code>veteran/appeals.read</code>
+                    </td>
+                    <td>
+                      Lets the app see your:
+                      <ul>
+                        <li>Board Appeals</li>
+                        <li>Supplemental Claims</li>
+                        <li>Higher-Level Reviews</li>
+                        <li>Legacy appeals</li>
+                        <li>Appealable issues</li>
+                      </ul>
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/appeals.write') && (
+                  <tr>
+                    <td>
+                      <code>veteran/appeals.write</code>
+                    </td>
+                    <td>
+                      Lets the app submit the following for you:
+                      <ul>
+                        <li>Board Appeals</li>
+                        <li>Supplemental Claims</li>
+                        <li>Higher-Level Reviews</li>
+                      </ul>
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/appeals.read') && (
+                  <tr>
+                    <td>
+                      <code>representative/appeals.read</code>
+                    </td>
+                    <td>
+                      Lets the program or app see a Veteran&apos;s:
+                      <ul>
+                        <li>Board Appeals</li>
+                        <li>Supplemental Claims</li>
+                        <li>Higher-Level Reviews</li>
+                        <li>Legacy appeals</li>
+                        <li>Appealable issues</li>
+                      </ul>
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/appeals.write') && (
+                  <tr>
+                    <td>
+                      <code>representative/appeals.write</code>
+                    </td>
+                    <td>
+                      Lets the program or app submit the following for a Veteran:
+                      <ul>
+                        <li>Board Appeals</li>
+                        <li>Supplemental Claims</li>
+                        <li>Higher-Level Reviews</li>
+                      </ul>
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/AppealableIssues.read') && (
+                  <tr>
+                    <td>
+                      <code>veteran/AppealableIssues.read</code>
+                    </td>
+                    <td>
+                      Lets the app see info from your appealable issues, which are issues from your
+                      claims that may be eligible for appeal.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/AppealableIssues.read') && (
+                  <tr>
+                    <td>
+                      <code>representative/AppealableIssues.read</code>
+                    </td>
+                    <td>
+                      Lets the program or app see info about a Veteran’s Appealable issues, which
+                      are issues from a Veteran’s claims that may be eligible for appeal.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/AppealsStatus.read') && (
+                  <tr>
+                    <td>
+                      <code>veteran/AppealsStatus.read</code>
+                    </td>
+                    <td>Lets the app see the status of your VA decision reviews and appeals.</td>
+                  </tr>
+                )}
+                {scopes.includes('representative/AppealsStatus.read') && (
+                  <tr>
+                    <td>
+                      <code>representative/AppealsStatus.read</code>
+                    </td>
+                    <td>
+                      Lets the program or app see the status of a Veteran’s decision reviews and
+                      appeals, including both AMA and legacy benefit appeals.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/HigherLevelReviews.read') && (
+                  <tr>
+                    <td>
+                      <code>veteran/HigherLevelReviews.read</code>
+                    </td>
+                    <td>
+                      Lets the app see info from your Higher-Level Reviews, which are appeals used
+                      when you disagree with a VA decision and want a senior reviewer to look at
+                      your case.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/HigherLevelReviews.read') && (
+                  <tr>
+                    <td>
+                      <code>representative/HigherLevelReviews.read</code>
+                    </td>
+                    <td>
+                      Lets the program or app see info about a Veteran’s Higher-Level Reviews, which
+                      can be submitted when a Veteran disagrees with a VA decision and wants a
+                      senior reviewer to look at the case.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/HigherLevelReviews.write') && (
+                  <tr>
+                    <td>
+                      <code>veteran/HigherLevelReviews.write</code>
+                    </td>
+                    <td>
+                      Lets the app submit Higher-Level Reviews for you. Higher-Level Reviews are
+                      appeals used when you disagree with a VA decision and want a senior reviewer
+                      to look at your case.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/HigherLevelReviews.write') && (
+                  <tr>
+                    <td>
+                      <code>representative/HigherLevelReviews.write</code>
+                    </td>
+                    <td>
+                      Lets the program or app submit Higher-Level reviews for a Veteran on your
+                      behalf. Higher-Level Reviews are used when a Veteran disagrees with a VA
+                      decision and wants a senior reviewer to look at their case.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/LegacyAppeals.read') && (
+                  <tr>
+                    <td>
+                      <code>veteran/LegacyAppeals.read</code>
+                    </td>
+                    <td>
+                      Lets the app see info from your legacy appeals, which are appeals submitted
+                      before February 19, 2019.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/LegacyAppeals.read') && (
+                  <tr>
+                    <td>
+                      <code>representative/LegacyAppeals.read</code>
+                    </td>
+                    <td>
+                      Lets the program or app see info about a Veteran’s legacy appeals, which are
+                      appeals submitted before February 19, 2019.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/NoticeOfDisagreements.read') && (
+                  <tr>
+                    <td>
+                      <code>veteran/NoticeOfDisagreements.read</code>
+                    </td>
+                    <td>
+                      Lets the app see info from your Board Appeals, which are used when you appeal
+                      a VA decision to a Veterans Law Judge at the Board of Veterans’ Appeals.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/NoticeOfDisagreements.read') && (
+                  <tr>
+                    <td>
+                      <code>representative/NoticeOfDisagreements.read</code>
+                    </td>
+                    <td>
+                      Lets the program or app see info from a Veteran’s Board Appeals, which are
+                      used to appeal a VA decision to a Veterans Law Judge at the Board of Veterans’
+                      Appeals.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/NoticeOfDisagreements.write') && (
+                  <tr>
+                    <td>
+                      <code>veteran/NoticeOfDisagreements.write</code>
+                    </td>
+                    <td>
+                      Lets the app submit Board Appeals for you. Board Appeals are used when you
+                      appeal a VA decision to a Veterans Law Judge at the Board of Veterans’
+                      Appeals.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/NoticeOfDisagreements.write') && (
+                  <tr>
+                    <td>
+                      <code>representative/NoticeOfDisagreements.write</code>
+                    </td>
+                    <td>
+                      Lets the program or app submit Board Appeals for a Veteran on your behalf.
+                      Board Appeals are used to appeal a VA decision to a Veterans Law Judge at the
+                      Board of Veterans’ Appeals.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/SupplementalClaims.read') && (
+                  <tr>
+                    <td>
+                      <code>veteran/SupplementalClaims.read</code>
+                    </td>
+                    <td>
+                      Lets the app see info from your Supplemental Claims, which are used to add or
+                      identify new evidence to support your claim.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/SupplementalClaims.read') && (
+                  <tr>
+                    <td>
+                      <code>representative/SupplementalClaims.read</code>
+                    </td>
+                    <td>
+                      Lets the program or app see info from a Veteran’s Supplemental Claims, which
+                      are used to add or identify new evidence to support a Veteran’s claim.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('veteran/SupplementalClaims.write') && (
+                  <tr>
+                    <td>
+                      <code>veteran/SupplementalClaims.write</code>
+                    </td>
+                    <td>
+                      Lets the app submit Supplemental Claims for you. Supplemental Claims are used
+                      to add or identify new evidence to support your claim.
+                    </td>
+                  </tr>
+                )}
+                {scopes.includes('representative/SupplementalClaims.write') && (
+                  <tr>
+                    <td>
+                      <code>representative/SupplementalClaims.write</code>
+                    </td>
+                    <td>
+                      Lets the program or app submit Supplemental Claims for a Veteran on your
+                      behalf. Supplemental Claims are used to add or identify new evidence to
+                      support a Veteran’s claim.
+                    </td>
                   </tr>
                 )}
               </tbody>

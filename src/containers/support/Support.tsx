@@ -38,7 +38,7 @@ const Support: React.FunctionComponent = (): JSX.Element => (
         ))}
       </>
     }
-    navAriaLabel="Support page side nav"
+    navAriaLabel="Support page side"
   />
 );
 

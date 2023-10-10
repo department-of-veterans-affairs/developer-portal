@@ -11,14 +11,13 @@ export const VeteranResources = (): JSX.Element => {
 
   return (
     <>
-      <a
-        className="vads-c-action-link--green"
-        href="#Veteran"
+      <button
+        className="usa-button usa-button-secondary"
+        type="button"
         onClick={(): void => setModalVisible(true)}
-        role="button"
       >
-        Veterans, find helpful resources and contact info.
-      </a>
+        Veteran resources
+      </button>
       <Modal
         aria-describedby="veteran-resources-description"
         aria-labelledby="veteran-resources-header"

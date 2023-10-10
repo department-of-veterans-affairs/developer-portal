@@ -15,15 +15,20 @@ const RequestProductionAccess = (): JSX.Element => (
     <Helmet>
       <title>Request production access</title>
     </Helmet>
-    <PageHeader header="Request production access" />
+    <PageHeader header="Request production access" className="vads-u-margin-bottom--1" />
+    <va-alert background-only show-icon status="info" visible>
+      <p className="vads-u-margin-y--0">
+        In July 2023, we added steps to the production approval process which has significantly
+        increased approval time. We appreciate your understanding and cooperation as we prioritize
+        the safe and secure delivery of services to Veterans. For questions or concerns,{' '}
+        <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
+      </p>
+    </va-alert>
     <p>Before you start onboarding, it’s good to know that:</p>
     <ul className="vads-u-margin-top--0">
       <li>All consumers must be US-based.</li>
       <li>We do not allow monetizing or selling Veteran data.</li>
-      <li>
-        Getting production access can take less than a week to more than a month, depending on the
-        API.
-      </li>
+      <li>Timeline for getting production access varies.</li>
       <li>
         We encourage all apps and websites to comply with{' '}
         <a href="https://section508.gov/" target="_blank" rel="noreferrer">
