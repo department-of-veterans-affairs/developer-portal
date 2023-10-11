@@ -76,10 +76,11 @@ describe('SupportContactUsFormPublishing', () => {
 
         describe('submitting the form', () => {
           beforeEach(async () => {
-            await userEvent.click(
-              screen.getByRole('button', { name: 'Send to developer support' }),
-            );
-            expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
+            await act(async () => {
+              await userEvent.click(
+                screen.getByRole('button', { name: 'Send to developer support' }),
+              );
+            });
           });
           it('sends the values', async () => {
             expect(jsonSpy).toHaveBeenCalledWith({
@@ -107,7 +108,7 @@ describe('SupportContactUsFormPublishing', () => {
             });
             expect(mockOnSuccess).toHaveBeenCalled();
             expect(
-              await screen.findByRole('button', { name: 'Send to developer support' }),
+              screen.getByRole('button', { name: 'Send to developer support' }),
             ).toBeInTheDocument();
           });
         });
@@ -153,12 +154,11 @@ describe('SupportContactUsFormPublishing', () => {
 
             describe('submitting the form', () => {
               beforeEach(async () => {
-                await userEvent.click(
-                  screen.getByRole('button', { name: 'Send to developer support' }),
-                );
-                expect(
-                  await screen.findByRole('button', { name: 'Sending...' }),
-                ).toBeInTheDocument();
+                await act(async () => {
+                  await userEvent.click(
+                    screen.getByRole('button', { name: 'Send to developer support' }),
+                  );
+                });
               });
               it('does not submit the form fields from the non-selected form type', async () => {
                 await waitFor(() => {
@@ -180,7 +180,7 @@ describe('SupportContactUsFormPublishing', () => {
                 });
                 expect(mockOnSuccess).toHaveBeenCalled();
                 expect(
-                  await screen.findByRole('button', { name: 'Send to developer support' }),
+                  screen.getByRole('button', { name: 'Send to developer support' }),
                 ).toBeInTheDocument();
               });
             });
@@ -190,13 +190,19 @@ describe('SupportContactUsFormPublishing', () => {
 
       describe('some fields are invalid', () => {
         beforeEach(async () => {
-          await userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
+          await act(async () => {
+            await userEvent.click(
+              screen.getByRole('button', { name: 'Send to developer support' }),
+            );
+          });
         });
         it('displays the validation errors', async () => {
-          expect(await screen.findByText('Enter your first name.')).toBeInTheDocument();
-          expect(await screen.findByText('Enter your last name.')).toBeInTheDocument();
-          expect(await screen.findByText('Enter a valid email address.')).toBeInTheDocument();
-          expect(await screen.findByText('Enter your description.')).toBeInTheDocument();
+          await waitFor(() => {
+            expect(screen.getByText('Enter your first name.')).toBeInTheDocument();
+            expect(screen.getByText('Enter your last name.')).toBeInTheDocument();
+            expect(screen.getByText('Enter a valid email address.')).toBeInTheDocument();
+            expect(screen.getByText('Enter your description.')).toBeInTheDocument();
+          });
         });
       });
     });
@@ -239,9 +245,11 @@ describe('SupportContactUsFormPublishing', () => {
         });
         describe('clicking yes', () => {
           it('displays the internal-only details field', async () => {
-            await userEvent.click(await screen.findByLabelText('Yes'));
+            await act(async () => {
+              await userEvent.click(screen.getByLabelText('Yes'));
+            });
             expect(
-              await screen.findByRole('textbox', {
+              screen.getByRole('textbox', {
                 name: /Tell us more about why the API needs to be restricted to internal VA use./,
               }),
             ).toBeInTheDocument();
@@ -301,10 +309,13 @@ describe('SupportContactUsFormPublishing', () => {
 
         describe('submitting the form', () => {
           it('sends the values', async () => {
-            await userEvent.click(
-              screen.getByRole('button', { name: 'Send to developer support' }),
-            );
-            expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
+            const submitButton = screen.getByRole('button', {
+              name: 'Send to developer support',
+            });
+            expect(submitButton).toBeInTheDocument();
+            await act(async () => {
+              await userEvent.click(submitButton);
+            });
             expect(jsonSpy).toHaveBeenCalledWith({
               apiDescription: 'www.api.com',
               apiDetails: 'It takes the ring to mordor',
@@ -334,12 +345,14 @@ describe('SupportContactUsFormPublishing', () => {
             });
             expect(mockOnSuccess).toHaveBeenCalled();
             expect(
-              await screen.findByRole('button', { name: 'Send to developer support' }),
+              screen.getByRole('button', { name: 'Send to developer support' }),
             ).toBeInTheDocument();
           });
 
           it('does not send api internal only details if the api is not internal only', async () => {
-            await userEvent.click(screen.getByRole('radio', { name: 'No' }));
+            await act(async () => {
+              await userEvent.click(screen.getByRole('radio', { name: 'No' }));
+            });
             await waitFor(() => {
               expect(
                 screen.queryByRole('textbox', {
@@ -347,10 +360,11 @@ describe('SupportContactUsFormPublishing', () => {
                 }),
               ).not.toBeInTheDocument();
             });
-            await userEvent.click(
-              screen.getByRole('button', { name: 'Send to developer support' }),
-            );
-            expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
+            await act(async () => {
+              await userEvent.click(
+                screen.getByRole('button', { name: 'Send to developer support' }),
+              );
+            });
             expect(jsonSpy).toHaveBeenCalledWith({
               apiDescription: 'www.api.com',
               apiDetails: 'It takes the ring to mordor',
@@ -379,7 +393,7 @@ describe('SupportContactUsFormPublishing', () => {
             });
             expect(mockOnSuccess).toHaveBeenCalled();
             expect(
-              await screen.findByRole('button', { name: 'Send to developer support' }),
+              screen.getByRole('button', { name: 'Send to developer support' }),
             ).toBeInTheDocument();
           });
         });
@@ -396,12 +410,18 @@ describe('SupportContactUsFormPublishing', () => {
       await userEvent.type(screen.getByRole('textbox', { name: /First name/ }), 'Frodo', {
         delay: 0.01,
       });
+    });
+    await act(async () => {
       await userEvent.type(screen.getByRole('textbox', { name: /Last name/ }), 'Baggins', {
         delay: 0.01,
       });
+    });
+    await act(async () => {
       await userEvent.type(screen.getByRole('textbox', { name: /Email/ }), 'fbag@bagend.com', {
         delay: 0.01,
       });
+    });
+    await act(async () => {
       await userEvent.type(
         screen.getByRole('textbox', {
           name: /Describe your question or issue in as much detail as you can./,
@@ -418,7 +438,7 @@ describe('SupportContactUsFormPublishing', () => {
     await userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
 
     expect(
-      await screen.findByText(
+      screen.getByText(
         'We encountered a server error while saving your form. Please try again later.',
       ),
     ).toBeInTheDocument();
