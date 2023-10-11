@@ -61,8 +61,8 @@ export const TopicFilters = ({
 
   const topicFilterAriaLabel =
     topicFilter.length > 0
-      ? `Auth Type, ${topicFilter.length} filter${topicFilter.length > 1 ? 's' : ''} applied`
-      : 'Auth Type';
+      ? `Topics, ${topicFilter.length} filter${topicFilter.length > 1 ? 's' : ''} applied`
+      : 'Topics';
 
   return (
     <Formik
