@@ -23,7 +23,7 @@ describe('TopicFilters', () => {
     render(
       <TopicFilters handleTopicFilterSubmit={handleTopicFilterSubmit} topicFilter={['health']} />,
     );
-    const topicsButton = screen.getAllByRole('button', { name: 'Topics (1)' })[0];
+    const topicsButton = screen.getAllByRole('button', { name: 'Topics, 1 filter applied' })[0];
     fireEvent.click(topicsButton);
     await waitFor(() => expect(topicsButton).toHaveAttribute('aria-expanded', 'true'));
     fireEvent.click(topicsButton);

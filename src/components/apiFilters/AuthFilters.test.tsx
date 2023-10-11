@@ -23,7 +23,9 @@ describe('AuthFilters', () => {
     render(
       <AuthFilters authFilter={['acg']} handleAuthTypeFilterSubmit={handleAuthTypeFilterSubmit} />,
     );
-    const authTypeButton = screen.getAllByRole('button', { name: 'Auth Type (1)' })[0];
+    const authTypeButton = screen.getAllByRole('button', {
+      name: 'Auth Type, 1 filter applied',
+    })[0];
     fireEvent.click(authTypeButton);
     await waitFor(() => expect(authTypeButton).toHaveAttribute('aria-expanded', 'true'));
     fireEvent.click(authTypeButton);
