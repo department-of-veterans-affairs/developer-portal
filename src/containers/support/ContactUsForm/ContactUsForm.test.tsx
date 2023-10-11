@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import React from 'react';
 import { act, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { makeRequest } from '../../../utils/makeRequest';
 import { FormType } from '../../../types/forms/contactUsForm';
 import ContactUsForm from './ContactUsForm';
@@ -76,7 +76,9 @@ describe('SupportContactUsFormPublishing', () => {
 
         describe('submitting the form', () => {
           beforeEach(async () => {
-            userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
+            await userEvent.click(
+              screen.getByRole('button', { name: 'Send to developer support' }),
+            );
             expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
           });
           it('sends the values', async () => {
@@ -112,7 +114,7 @@ describe('SupportContactUsFormPublishing', () => {
 
         describe('switching to publishing', () => {
           beforeEach(async () => {
-            userEvent.click(
+            await userEvent.click(
               screen.getByRole('radio', {
                 name: 'Publish your API to Lighthouse - Internal VA use only',
               }),
@@ -135,7 +137,7 @@ describe('SupportContactUsFormPublishing', () => {
                   { delay: 0.001 },
                 );
               });
-              userEvent.click(screen.getByLabelText('Report a problem or ask a question'));
+              await userEvent.click(screen.getByLabelText('Report a problem or ask a question'));
               await waitFor(() => {
                 screen.getByRole('textbox', {
                   name: /Describe your question or issue in as much detail as you can./,
@@ -151,7 +153,9 @@ describe('SupportContactUsFormPublishing', () => {
 
             describe('submitting the form', () => {
               beforeEach(async () => {
-                userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
+                await userEvent.click(
+                  screen.getByRole('button', { name: 'Send to developer support' }),
+                );
                 expect(
                   await screen.findByRole('button', { name: 'Sending...' }),
                 ).toBeInTheDocument();
@@ -185,8 +189,8 @@ describe('SupportContactUsFormPublishing', () => {
       });
 
       describe('some fields are invalid', () => {
-        beforeEach(() => {
-          userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
+        beforeEach(async () => {
+          await userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
         });
         it('displays the validation errors', async () => {
           expect(await screen.findByText('Enter your first name.')).toBeInTheDocument();
@@ -235,7 +239,7 @@ describe('SupportContactUsFormPublishing', () => {
         });
         describe('clicking yes', () => {
           it('displays the internal-only details field', async () => {
-            userEvent.click(await screen.findByLabelText('Yes'));
+            await userEvent.click(await screen.findByLabelText('Yes'));
             expect(
               await screen.findByRole('textbox', {
                 name: /Tell us more about why the API needs to be restricted to internal VA use./,
@@ -273,7 +277,7 @@ describe('SupportContactUsFormPublishing', () => {
               'www.api.com',
               { delay: 0.01 },
             );
-            userEvent.click(screen.getByRole('radio', { name: 'Yes' }));
+            await userEvent.click(screen.getByRole('radio', { name: 'Yes' }));
             await userEvent.type(
               screen.getByRole('textbox', {
                 name: /Tell us more about why the API needs to be restricted to internal VA use./,
@@ -297,7 +301,9 @@ describe('SupportContactUsFormPublishing', () => {
 
         describe('submitting the form', () => {
           it('sends the values', async () => {
-            userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
+            await userEvent.click(
+              screen.getByRole('button', { name: 'Send to developer support' }),
+            );
             expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
             expect(jsonSpy).toHaveBeenCalledWith({
               apiDescription: 'www.api.com',
@@ -333,7 +339,7 @@ describe('SupportContactUsFormPublishing', () => {
           });
 
           it('does not send api internal only details if the api is not internal only', async () => {
-            userEvent.click(screen.getByRole('radio', { name: 'No' }));
+            await userEvent.click(screen.getByRole('radio', { name: 'No' }));
             await waitFor(() => {
               expect(
                 screen.queryByRole('textbox', {
@@ -341,7 +347,9 @@ describe('SupportContactUsFormPublishing', () => {
                 }),
               ).not.toBeInTheDocument();
             });
-            userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
+            await userEvent.click(
+              screen.getByRole('button', { name: 'Send to developer support' }),
+            );
             expect(await screen.findByRole('button', { name: 'Sending...' })).toBeInTheDocument();
             expect(jsonSpy).toHaveBeenCalledWith({
               apiDescription: 'www.api.com',
@@ -407,7 +415,7 @@ describe('SupportContactUsFormPublishing', () => {
       expect(screen.getByRole('button', { name: 'Send to developer support' })).toBeEnabled();
     });
 
-    userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
+    await userEvent.click(screen.getByRole('button', { name: 'Send to developer support' }));
 
     expect(
       await screen.findByText(
