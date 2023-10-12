@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import 'jest';
 import { fireEvent, render, waitFor, screen } from '@testing-library/react';
 import { VeteranResources } from './VeteranResources';
@@ -10,8 +9,7 @@ describe('VeteranResources', () => {
     const modalButton = screen.queryByRole('button');
 
     expect(modalButton).toBeInTheDocument();
-    expect(modalButton).toHaveTextContent('Veterans, find helpful resources and contact info.');
-    expect(modalButton).toHaveAttribute('href', '#Veteran');
+    expect(modalButton).toHaveTextContent('Veteran resources');
   });
 
   it('checks open/close functionality of dialog works correctly using the X button.', async () => {

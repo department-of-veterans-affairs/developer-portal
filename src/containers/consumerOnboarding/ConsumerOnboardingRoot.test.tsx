@@ -1,5 +1,5 @@
 import { getByRole, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import {
@@ -46,7 +46,7 @@ describe('ConsumerOnboardingRoot', () => {
   describe('pages', () => {
     it('renders the overview page', async () => {
       const link = screen.getByRole('link', { name: 'API Consumer onboarding' });
-      userEvent.click(link);
+      await userEvent.click(link);
 
       const heading = await screen.findByRole('heading', { name: 'API Consumer Onboarding' });
       expect(heading).toBeInTheDocument();

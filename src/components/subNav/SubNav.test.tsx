@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { SubNav } from './SubNav';
@@ -34,13 +34,13 @@ describe('SubNav', () => {
     expect(img).toBeInTheDocument();
   });
 
-  it('expands and hides the SubNavEntries', () => {
+  it('expands and hides the SubNavEntries', async () => {
     expect(screen.queryByRole('link', { name: 'Legolas' })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Elrond' })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Galadriel' })).not.toBeInTheDocument();
 
     const button = screen.getByRole('button', { name: 'Elves' });
-    userEvent.click(button);
+    await userEvent.click(button);
 
     const legolasLink = screen.getByRole('link', { name: 'Legolas' });
     expect(legolasLink).toBeInTheDocument();
@@ -49,7 +49,7 @@ describe('SubNav', () => {
     const galadrielLink = screen.getByRole('link', { name: 'Galadriel' });
     expect(galadrielLink).toBeInTheDocument();
 
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(screen.queryByRole('link', { name: 'Legolas' })).not.toBeInTheDocument();
     expect(screen.queryByRole('link', { name: 'Elrond' })).not.toBeInTheDocument();
