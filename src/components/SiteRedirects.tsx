@@ -334,6 +334,10 @@ const SiteRedirects = (): null => {
       new: '/explore/api/appeals-status',
       old: '/explore/api/appeals-status/sandbox-access',
     },
+    {
+      new: '/platform-backend/sitemap.xml',
+      old: '/sitemap.xml',
+    },
   ];
   redirects.some((item: RedirectData): boolean => {
     const testFullPath = window.location.pathname + window.location.search;

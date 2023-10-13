@@ -205,6 +205,7 @@ phases:
         echo 'explore/api/clinical-health/sandbox-access|/explore/api/clinical-health' >> ./redirects.txt
         echo 'explore/api/decision-reviews/sandbox-access|/explore/api/decision-reviews' >> ./redirects.txt
         echo 'explore/api/loan-guaranty/sandbox-access|/explore/api/loan-guaranty' >> ./redirects.txt
+        echo 'sitemap.xml|/platform-backend/sitemap.xml' >> ./redirects.txt
         for env in ${ENVIRONMENTS}; do
           u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
           echo $u_env

@@ -1,5 +1,5 @@
 import { getByText, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import * as React from 'react';
 import 'jest';
 import { Banner } from './Banner';
@@ -31,12 +31,12 @@ describe('Banner', () => {
     expect(guidanceRegion).toBeNull();
   });
 
-  it('should toggle the site guidance accordion when the guidance accordion toggle is clicked', () => {
+  it('should toggle the site guidance accordion when the guidance accordion toggle is clicked', async () => {
     const toggleButton = screen.getByRole('button', {
       name: "Here's how you know this is an official website",
     });
 
-    userEvent.click(toggleButton);
+    await userEvent.click(toggleButton);
     const guidanceRegion = screen.queryByRole('region', {
       name: "Here's how you know this is an official website",
     });
@@ -44,7 +44,7 @@ describe('Banner', () => {
     expect(guidanceRegion).toBeInTheDocument();
     expect(toggleButton.getAttribute('aria-expanded')).toBe('true');
 
-    userEvent.click(toggleButton);
+    await userEvent.click(toggleButton);
     expect(
       screen.queryByRole('region', {
         name: "Here's how you know this is an official website",
@@ -55,12 +55,12 @@ describe('Banner', () => {
 
   describe('site guidance content', () => {
     let guidanceRegion: HTMLElement;
-    beforeEach(() => {
+    beforeEach(async () => {
       const toggleButton = screen.getByRole('button', {
         name: "Here's how you know this is an official website",
       });
 
-      userEvent.click(toggleButton);
+      await userEvent.click(toggleButton);
       guidanceRegion = screen.getByRole('region', {
         name: "Here's how you know this is an official website",
       });
