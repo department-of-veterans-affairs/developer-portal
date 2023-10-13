@@ -48,9 +48,8 @@ const RequestSandboxAccess = (): JSX.Element => {
         )}
       </Helmet>
       <PageHeader
-        header={
-          successResults ? 'Success, happy developing!' : `Request Sandbox Access - ${api.name}`
-        }
+        header={successResults ? 'Success, happy developing!' : 'Request Sandbox Access'}
+        subText={successResults ? '' : api.name}
       />
       {successResults ? (
         <SandboxAccessSuccess result={successResults} api={api} />
