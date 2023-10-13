@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { SubNavEntry } from './SubNavEntry';
@@ -23,9 +23,9 @@ describe('SubNavEntry', () => {
     expect(navLink).toHaveAttribute('href', '/mordor');
   });
 
-  it('calls onClick', () => {
+  it('calls onClick', async () => {
     const navLink = screen.getByRole('link', { name: 'Walk into Mordor' });
-    userEvent.click(navLink);
+    await userEvent.click(navLink);
     expect(onClick).toHaveBeenCalled();
   });
 });

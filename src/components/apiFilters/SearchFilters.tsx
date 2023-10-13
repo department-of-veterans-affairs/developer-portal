@@ -30,6 +30,7 @@ export const SearchFilters = ({ handleSearchSubmit, search }: SearchFiltersProps
           aria-invalid={false}
           type="text"
           placeholder="Search APIs by keyword"
+          aria-label="Search APIs by keyword"
         />
         <button type="submit" className="display-inline" aria-label="Submit Search">
           <FontAwesomeIcon icon={faSearch} />

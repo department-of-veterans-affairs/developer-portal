@@ -30,15 +30,15 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       </p>
     </va-alert>
     <h2 id="onboarding-steps">Onboarding steps</h2>
-    <ol className="process" aria-labelledby="onboarding-steps">
-      <li className="process-step list-one" aria-labelledby="start-developing">
+    <ol className="process">
+      <li className="process-step list-one">
         <strong id="start-developing">Start developing</strong>
         <p>
           Access to our sandbox environment is automatic when you request sandbox access{' '}
           <Link to="/explore">from an API&apos;s overview page</Link>.
         </p>
       </li>
-      <li className="process-step list-two" aria-labelledby="request-prod-access">
+      <li className="process-step list-two">
         <strong id="request-prod-access">Request production access</strong>
         <p>
           Timeline for getting production access varies.
@@ -49,7 +49,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
           </Link>
         </p>
       </li>
-      <li className="process-step list-three" aria-labelledby="demo">
+      <li className="process-step list-three">
         <strong id="demo">Prepare for and complete a demo</strong>
         <p>
           We&apos;ll review your production access request. Any changes we require must be made
@@ -57,7 +57,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
           <Link to={CONSUMER_DEMO_PATH}>your demo</Link>. Open data APIs don&apos;t require a demo.
         </p>
       </li>
-      <li className="process-step list-four" aria-labelledby="receive-prod-access">
+      <li className="process-step list-four">
         <strong id="receive-prod-access">Receive production access</strong>
         <p>
           After a successful demo, you&apos;ll get production access. Learn more about&nbsp;

@@ -25,7 +25,7 @@ module.exports = {
     '<rootDir>/config/polyfills.js',
     '<rootDir>/config/jest/testEnv.js', // only necessary when running Jest directly
   ],
-  setupFilesAfterEnv: ['<rootDir>/config/jest/setupJestPostEnv.js'],
+  setupFilesAfterEnv: ['<rootDir>/config/jest/setupJestPostEnv.ts'],
   testMatch: [
     '<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)',
     '<rootDir>/src/**/?(*.)(spec|test).(j|t)s?(x)',
