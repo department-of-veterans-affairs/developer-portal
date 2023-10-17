@@ -43,6 +43,7 @@ const rings: APIDescription = {
   description: 'One Ring to rule them all',
   docSources: [], // doesn't matter yet
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'Rings API',
   oAuth: false,
@@ -75,6 +76,7 @@ const apollo13: APIDescription = {
   description: "When a trip to the moon doesn't go according to plan",
   docSources: [],
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'Apollo 13 API',
   oAuth: true,
@@ -105,6 +107,7 @@ const theMartian: APIDescription = {
     'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
   docSources: [], // doesn't matter here
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'The Martian API',
   oAuth: false,
@@ -128,6 +131,7 @@ const basketball: APIDescription = {
   description: 'stuff about hoops or whatever',
   docSources: [], // doesn't matter here
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'Basketball API',
   oAuth: false,

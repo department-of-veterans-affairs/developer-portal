@@ -68,10 +68,11 @@ const getApiCategoryOrder = (): string[] => {
   });
 };
 
-const getAllApis = (): APIDescription[] =>
+const getAllApis = (includeStealth: boolean = false): APIDescription[] =>
   Object.values(rootGetApiDefinitions.getApiDefinitions())
     .flatMap((category: APICategory) => category.apis)
-    .sort((a, b) => (a.name > b.name ? 1 : -1));
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
+    .filter((api: APIDescription) => !api.isStealthLaunched || includeStealth);
 const getActiveApis = (): APIDescription[] =>
   getAllApis().filter(
     (api: APIDescription) =>
@@ -113,13 +114,13 @@ const getAllQuickstartCategorySlugs = (): string[] =>
 
 const lookupApiBySlug = (urlSlug: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean => apiDesc.urlSlug === urlSlug;
-  const apiResult = getAllApis().find(hasMatchingIdentifier);
+  const apiResult = getAllApis(true).find(hasMatchingIdentifier);
   return apiResult ?? null;
 };
 const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean =>
     apiDesc.urlFragment === apiKey;
-  const apiResult = getAllApis().find(hasMatchingIdentifier);
+  const apiResult = getAllApis(true).find(hasMatchingIdentifier);
   return apiResult ?? null;
 };
 

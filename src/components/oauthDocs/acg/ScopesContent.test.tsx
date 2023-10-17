@@ -19,6 +19,7 @@ const renderComponentWithScopes = (scopes: string[]): void => {
         },
       ],
       enabledByDefault: true,
+      isStealthLaunched: false,
       lastProdAccessStep: 4,
       name: 'Default API',
       oAuth: true,
