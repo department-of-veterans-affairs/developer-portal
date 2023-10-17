@@ -90,9 +90,9 @@ describe('News', () => {
       const testSectionItems = (section: DataSection): void => {
         const newsSection = screen.getByRole('region', { name: section.title });
         expect(newsSection).toBeInTheDocument();
-        // header plus paragraph per news item
-        expect(newsSection.children).toHaveLength(1 + section.items.length);
-        const items: HTMLElement[] = Array.from(newsSection.children).slice(1) as HTMLElement[];
+        // header plus unordered list
+        expect(newsSection.children).toHaveLength(2);
+        const items = newsSection.children[1].children as unknown as HTMLElement[];
         expect(items.length).toBe(section.items.length);
 
         section.items.forEach((expected: NewsItemData, index: number) => {

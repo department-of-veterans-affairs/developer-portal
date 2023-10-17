@@ -2,6 +2,7 @@ $circle-radius: 30px;
 $arrow-size: $circle-radius * 0.5;
 $circle-radius-large: 60px;
 $arrow-size-large: $circle-radius-large * 0.5;
+
 .hover-image-videoplayer {
   background-color: #122f51;
   background-position: center;
@@ -64,4 +65,10 @@ $arrow-size-large: $circle-radius-large * 0.5;
       top: calc(50% - $arrow-size-large);
     }
   }
+}
+
+.news-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
