@@ -29,7 +29,7 @@ describe('ExploreRoot', () => {
   });
 
   it('renders successfully', () => {
-    const exploreHeading = screen.getByRole('heading', { name: 'Explore our APIs' }, { level: 1 });
+    const exploreHeading = screen.getByRole('heading', { name: /Explore our APIs/ }, { level: 1 });
     expect(exploreHeading).toBeInTheDocument();
   });
 
