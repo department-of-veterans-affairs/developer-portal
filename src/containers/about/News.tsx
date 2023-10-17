@@ -20,14 +20,14 @@ export const newsSectionData = data.sections.map((section: DataSection) => ({
 }));
 
 const ItemDescription = ({ item }: { item: NewsItemData }): JSX.Element => (
-  <p>
+  <>
     <a href={item.url}>{item.title}</a>
     <br />
     <strong>
       {item.date}
       {item.source ? ` | ${item.source}` : null}
     </strong>
-  </p>
+  </>
 );
 
 const MediaItem = ({ item }: { item: NewsItemData }): JSX.Element => {
@@ -84,9 +84,13 @@ const News = (): JSX.Element => (
         <h2 id={section.id} tabIndex={-1}>
           {section.title}
         </h2>
-        {section.items.map((item: NewsItemData) => (
-          <NewsItem key={item.url} item={item} media={section.media} />
-        ))}
+        <ul className="news-list">
+          {section.items.map((item: NewsItemData) => (
+            <li key={item.url}>
+              <NewsItem key={item.url} item={item} media={section.media} />
+            </li>
+          ))}
+        </ul>
       </section>
     ))}
   </>
