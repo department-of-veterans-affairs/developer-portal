@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAllByRole, getByRole, render, screen } from '@testing-library/react';
 import { createMemoryRouter, RouterProvider } from 'react-router-dom';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import store from '../../store';
 import { Publishing } from './Publishing';
@@ -42,7 +42,7 @@ describe('Publishing', () => {
   });
 
   it('side nav contains expected entries', () => {
-    const sideNav = screen.getByRole('navigation', { name: 'API Publishing Side Nav' });
+    const sideNav = screen.getByRole('navigation', { name: 'API Publishing Side' });
     const navLinks = getAllByRole(sideNav, 'link');
     expect(navLinks.length).toEqual(3);
 
@@ -66,7 +66,7 @@ describe('Publishing', () => {
           screen.queryByRole('heading', { name: 'How publishing works' }),
         ).not.toBeInTheDocument();
         const navLink = screen.getByRole('link', { name: 'How publishing works' });
-        userEvent.click(navLink);
+        await userEvent.click(navLink);
 
         const newHeader = await screen.findByRole('heading', { name: 'How publishing works' });
         expect(newHeader).toBeInTheDocument();

@@ -1,5 +1,5 @@
 import { getByRole, render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import {
@@ -26,7 +26,7 @@ describe('ConsumerOnboardingRoot', () => {
 
   describe('side nav', () => {
     it('renders the side nav', () => {
-      const nav = screen.getByRole('navigation', { name: 'Consumer Onboarding Page Nav' });
+      const nav = screen.getByRole('navigation', { name: 'Consumer Onboarding Page' });
       expect(nav).toBeInTheDocument();
     });
 
@@ -36,7 +36,7 @@ describe('ConsumerOnboardingRoot', () => {
       ['Prepare for the demo', CONSUMER_DEMO_PATH],
       ['Working with our APIs', CONSUMER_APIS_PATH],
     ])('links to the "%s" page', (linkText: string, path: string) => {
-      const nav = screen.getByRole('navigation', { name: 'Consumer Onboarding Page Nav' });
+      const nav = screen.getByRole('navigation', { name: 'Consumer Onboarding Page' });
       const link = getByRole(nav, 'link', { name: linkText });
       expect(link).toBeInTheDocument();
       expect(link.getAttribute('href')).toBe(path);
@@ -46,7 +46,7 @@ describe('ConsumerOnboardingRoot', () => {
   describe('pages', () => {
     it('renders the overview page', async () => {
       const link = screen.getByRole('link', { name: 'API Consumer onboarding' });
-      userEvent.click(link);
+      await userEvent.click(link);
 
       const heading = await screen.findByRole('heading', { name: 'API Consumer Onboarding' });
       expect(heading).toBeInTheDocument();

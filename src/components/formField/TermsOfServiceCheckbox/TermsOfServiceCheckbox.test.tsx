@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import { Form, Formik } from 'formik';
 import React from 'react';
 import * as yup from 'yup';
@@ -56,8 +56,8 @@ describe('TermsOfServiceCheckbox', () => {
         </Formik>,
       );
 
-      userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
-      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+      await userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
       // don't want test to pass without running assertion, so we run this check to fail the test
       // if it didn't run
@@ -90,8 +90,8 @@ describe('TermsOfServiceCheckbox', () => {
         </Formik>,
       );
 
-      userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
-      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+      await userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
       await waitFor(() => expect(submitMock).toHaveBeenCalledTimes(1));
       expect(screen.queryByText('Accept the terms or else.')).toBeNull();
@@ -114,7 +114,7 @@ describe('TermsOfServiceCheckbox', () => {
         </Formik>,
       );
 
-      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
+      await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
       await waitFor(async () => {
         expect(await screen.findByText('Accept the terms or else.')).toBeInTheDocument();
       });

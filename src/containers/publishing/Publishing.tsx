@@ -35,7 +35,7 @@ const Publishing = (): JSX.Element => {
           />
         </>
       }
-      navAriaLabel="API Publishing Side Nav"
+      navAriaLabel="API Publishing Side"
     />
   );
 };

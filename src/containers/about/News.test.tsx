@@ -40,7 +40,7 @@ describe('News', () => {
 
   describe('side nav', () => {
     it('has the expected side nav entries', () => {
-      const sideNav = screen.getByRole('navigation', { name: 'About Side Nav' });
+      const sideNav = screen.getByRole('navigation', { name: 'About Side' });
       const navLinks = getAllByRole(sideNav, 'link');
       // Increment by 2 to account for additional "News" link
       expect(navLinks).toHaveLength(data.sections.length + 2);
@@ -90,9 +90,9 @@ describe('News', () => {
       const testSectionItems = (section: DataSection): void => {
         const newsSection = screen.getByRole('region', { name: section.title });
         expect(newsSection).toBeInTheDocument();
-        // header plus paragraph per news item
-        expect(newsSection.children).toHaveLength(1 + section.items.length);
-        const items: HTMLElement[] = Array.from(newsSection.children).slice(1) as HTMLElement[];
+        // header plus unordered list
+        expect(newsSection.children).toHaveLength(2);
+        const items = newsSection.children[1].children as unknown as HTMLElement[];
         expect(items.length).toBe(section.items.length);
 
         section.items.forEach((expected: NewsItemData, index: number) => {

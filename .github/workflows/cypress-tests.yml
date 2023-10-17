@@ -2,7 +2,7 @@ name: Cypress e2e and Accessibility tests
 
 on:
   pull_request:
-    branches: [master]
+    branches: [master, shutdown-master]
     types: [opened, synchronize, reopened, ready_for_review]
 
 env:

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { FlagsProvider, getFlags } from '../../flags';
@@ -29,12 +29,12 @@ describe('Header', () => {
   });
 
   describe('when the menu button is clicked', () => {
-    it('displays the menu on mobile', () => {
+    it('displays the menu on mobile', async () => {
       const navigation = screen.getByRole('navigation');
 
       expect(navigation.classList.contains('va-api-mobile-nav-visible')).toBeFalsy();
 
-      userEvent.click(screen.getByText('Menu'));
+      await userEvent.click(screen.getByText('Menu'));
 
       expect(navigation.classList.contains('va-api-mobile-nav-visible')).toBeTruthy();
     });

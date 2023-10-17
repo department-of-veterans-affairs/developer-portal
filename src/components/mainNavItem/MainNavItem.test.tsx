@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import 'jest';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -22,7 +22,7 @@ describe('MainNavItem', () => {
     render(
       <Router>
         <MainNavItem {...mockProps}>Mock</MainNavItem>
-      </Router>
+      </Router>,
     );
     const links = screen.getAllByRole('link', { name: 'Mock' });
 
@@ -33,19 +33,19 @@ describe('MainNavItem', () => {
     });
   });
 
-  it('if mobile, should call the onClick prop when its NavLink child has been been clicked', () => {
+  it('if mobile, should call the onClick prop when its NavLink child has been been clicked', async () => {
     // this test is applicable only to mobile
     render(
       <Router>
         <MainNavItem excludeLargeScreen {...mockProps}>
           Mock
         </MainNavItem>
-      </Router>
+      </Router>,
     );
 
     // only one link since we excluded the desktop link
     const link = screen.getByRole('link', { name: 'Mock' });
-    userEvent.click(link);
+    await userEvent.click(link);
     expect(mockProps.onClick).toHaveBeenCalled();
   });
 });

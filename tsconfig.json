@@ -26,6 +26,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "cypress.config.ts"],
+  "include": ["src/**/*", "cypress.config.ts", "config/jest/setupJestPostEnv.ts"],
   "exclude": ["src/testHelpers.ts"]
 }

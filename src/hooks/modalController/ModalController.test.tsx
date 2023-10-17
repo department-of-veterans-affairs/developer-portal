@@ -1,5 +1,5 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import 'jest';
 import * as React from 'react';
 import { useModalController } from './ModalController';
@@ -48,18 +48,18 @@ describe('useModalController', () => {
   });
 
   it('turns visible when modal visible is set to true', async () => {
-    userEvent.click(toggleVisibleButton);
+    await userEvent.click(toggleVisibleButton);
     await waitFor(() => expect(screen.findByText('Modal Visible: true')).toBeDefined());
   });
 
   describe('when visible', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       // The component initialized as invisible, so we toggle it before these tests
-      userEvent.click(toggleVisibleButton);
+      await userEvent.click(toggleVisibleButton);
     });
 
     it('goes invisible when the [Escape] key is pressed', async () => {
-      await waitFor(() => userEvent.type(container, '{esc}'));
+      await userEvent.type(container, '{esc}');
       await waitFor(() => expect(screen.findByText('Modal Visible: false')).toBeDefined());
     });
 
@@ -69,7 +69,7 @@ describe('useModalController', () => {
     });
 
     it('goes invisible when modal visible is set to false', async () => {
-      userEvent.click(toggleVisibleButton);
+      await userEvent.click(toggleVisibleButton);
       await waitFor(() => expect(screen.findByText('Modal Visible: false')).toBeDefined());
     });
   });
