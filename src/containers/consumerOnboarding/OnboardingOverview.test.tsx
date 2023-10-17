@@ -32,14 +32,24 @@ describe('OnboardingOverview', () => {
 
   describe('subway map/process list', () => {
     it('renders the subway map', () => {
-      const list = screen.getByRole('list', { name: 'Onboarding steps' });
+      const { container } = render(
+        <Router>
+          <OnboardingOverview />
+        </Router>,
+      );
+      const list = container.querySelector('ol.process');
       expect(list).toBeInTheDocument();
     });
 
     describe('steps', () => {
       let steps: HTMLElement[];
       beforeEach(() => {
-        const list = screen.getByRole('list', { name: 'Onboarding steps' });
+        const { container } = render(
+          <Router>
+            <OnboardingOverview />
+          </Router>,
+        );
+        const list = container.querySelector('ol.process') as HTMLElement;
         steps = getAllByRole(list, 'listitem');
       });
 

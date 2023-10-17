@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { userEvent } from '@testing-library/user-event';
 import 'jest';
 import React from 'react';
 import { VersionMetadata } from '../../../types';
@@ -58,23 +58,23 @@ describe('VersionSelect', () => {
     expect(options[1].value).toBe('0.0.1');
   });
 
-  it('changes value to the selected option', () => {
+  it('changes value to the selected option', async () => {
     const select = screen.getByLabelText('Select a version') as HTMLSelectElement;
     expect(select.value).toBe('1.0.0');
-    userEvent.selectOptions(select, '0.0.1');
+    await userEvent.selectOptions(select, '0.0.1');
     expect(select.value).toBe('0.0.1');
   });
 
-  it('does not fire handleVersionChange action if the button is not clicked', () => {
-    userEvent.selectOptions(screen.getByLabelText('Select a version'), '0.0.1');
+  it('does not fire handleVersionChange action if the button is not clicked', async () => {
+    await userEvent.selectOptions(screen.getByLabelText('Select a version'), '0.0.1');
     expect(handleVersionChange).toHaveBeenCalledTimes(0);
   });
 
   /* eslint-disable max-nested-callbacks */
-  it('fires handleVersionChange action on button click', (): void => {
+  it('fires handleVersionChange action on button click', async () => {
     const select = screen.getByLabelText('Select a version');
-    userEvent.selectOptions(select, '0.0.1');
-    userEvent.click(screen.getByRole('button'));
+    await userEvent.selectOptions(select, '0.0.1');
+    await userEvent.click(screen.getByRole('button'));
     expect(handleVersionChange).toHaveBeenCalledTimes(1);
   });
   /* eslint-enable max-nested-callbacks */

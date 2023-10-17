@@ -85,6 +85,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           )}
         >
           <button
+            aria-expanded={isSearchBarVisible}
             className={classNames(
               'va-api-mobile-nav-close',
               'vads-u-display--block',
@@ -176,6 +177,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
 
           <li className={classNames(navItemStyles, desktopOnly(), 'va-api-separator')}>
             <button
+              aria-expanded={isSearchBarVisible}
               className={classNames(
                 'va-api-navbar-search-button',
                 'vads-u-background-color--primary-darkest',
@@ -189,6 +191,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               onClick={toggleSearchBar}
               type="button"
               ref={searchButtonRef}
+              data-testid="search-button"
             >
               <FontAwesomeIcon className={classNames('vads-u-margin-right--1')} icon={faSearch} />
               Search

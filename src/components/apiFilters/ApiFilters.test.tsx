@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMemoryRouter, MemoryRouter, Route, Routes, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { APICategory, APIDescription } from '../../apiDefs/schema';
@@ -127,7 +127,9 @@ describe('ApiFilters', () => {
       </Provider>,
     );
     expect(localStorage.getItem('exploreApisPath')).toBe('/explore/va-benefits');
-    await router.navigate('/explore/va-benefits?auth=ccg');
+    await act(async () => {
+      await router.navigate('/explore/va-benefits?auth=ccg');
+    });
 
     await waitFor(() => {
       expect(localStorage.getItem('exploreApisPath')).toBe('/explore/va-benefits?auth=ccg');
