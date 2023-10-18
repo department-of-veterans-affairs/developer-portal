@@ -423,7 +423,9 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
             'vads-u-padding-top--2',
           )}
         >
-          <h2 className="vads-u-margin-y--0">Example Curl</h2>
+          <h5 className="vads-u-margin-y--0 vads-u-font-family--sans vads-u-font-size--xl">
+            Example Curl
+          </h5>
           <div
             className={classNames(
               'va-api-curl-form',
@@ -437,7 +439,7 @@ export class CurlForm extends React.Component<CurlFormProps, CurlFormState> {
               {this.parameterContainer()}
               {this.requestBodyContainer()}
               <br />
-              <h3>Generated Curl</h3>
+              <h6 className="vads-u-font-size--lg">Generated Curl</h6>
               <div className="opblock-body">
                 <CodeBlock withCopyButton code={this.buildCurl()} />
               </div>

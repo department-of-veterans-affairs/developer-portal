@@ -140,7 +140,7 @@ export default class VersionSelect extends React.PureComponent<
           </div>
         </div>
         {!!apiStatus && (
-          <h2
+          <p
             ref={this.versionHeadingElement}
             tabIndex={-1}
             className={classNames(
@@ -156,7 +156,7 @@ export default class VersionSelect extends React.PureComponent<
                 Showing documentation for <b>{apiStatus}</b>.
               </>
             )}
-          </h2>
+          </p>
         )}
       </>
     );

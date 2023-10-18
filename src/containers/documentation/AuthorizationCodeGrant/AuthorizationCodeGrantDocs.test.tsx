@@ -40,7 +40,7 @@ describe('Authorization Docs', () => {
   });
 
   it('renders successfully', () => {
-    const authHeading = screen.getByRole('heading', { name: 'Authorization Code Grant' });
+    const authHeading = screen.getByRole('heading', { level: 1, name: /Authorization Code Grant/ });
     expect(authHeading).toBeInTheDocument();
   });
 

@@ -20,7 +20,14 @@ export const ReleaseNotes = (): JSX.Element => {
       </Helmet>
       <PageHeader header="Release notes" subText={api.name} />
       <div className="release-notes-wrapper">
-        <ReactMarkdown>{api.releaseNotes}</ReactMarkdown>
+        <ReactMarkdown
+          components={{
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars, jsx-a11y/heading-has-content
+            h3: ({ node, ...props }) => <h2 {...props} />,
+          }}
+        >
+          {api.releaseNotes}
+        </ReactMarkdown>
       </div>
     </>
   );

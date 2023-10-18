@@ -76,8 +76,7 @@ describe('ApiPage', () => {
     });
 
     it('renders api page heading', () => {
-      expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Docs');
-      expect(screen.getByText('Rings API')).not.toBeNull();
+      expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Docs Rings API');
     });
 
     it('renders api documentation', () => {
