@@ -19,12 +19,13 @@ const PageHeader = (props: PageHeaderProps): JSX.Element => {
       <h1
         data-cy="page-header"
         id={PAGE_HEADER_ID}
-        className="vads-u-margin-top--0 vads-u-margin-bottom--0"
+        className="page-header vads-u-margin-top--0 vads-u-margin-bottom--0"
         tabIndex={-1}
       >
-        {header}
+        {/* Add space between header and subtext for screen readers */}
+        {subText ? `${header} ` : header}
+        {subText && <span className="header-sub-text vads-u-color--gray">{subText}</span>}
       </h1>
-      {subText && <h2 className="header-sub-text vads-u-color--gray">{subText}</h2>}
     </div>
   );
 };

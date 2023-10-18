@@ -35,14 +35,12 @@ describe('ReleaseNotes', () => {
   });
 
   it('renders the heading', () => {
-    const heading1 = screen.getByRole('heading', { name: 'Release notes' });
+    const heading1 = screen.getByRole('heading', { level: 1, name: /Release notes/ });
     expect(heading1).toBeInTheDocument();
-    const heading2 = screen.getByRole('heading', { name: 'Rings API' });
-    expect(heading2).toHaveTextContent('Rings API');
   });
 
   it('renders the existing notes', () => {
-    const dateHeadings = screen.getAllByRole('heading', { level: 3 });
+    const dateHeadings = screen.getAllByRole('heading', { level: 2 });
     expect(dateHeadings.length).toBe(2);
   });
 });

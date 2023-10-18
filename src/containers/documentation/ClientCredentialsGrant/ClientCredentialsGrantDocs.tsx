@@ -10,6 +10,8 @@ import { TestUsers } from '../../../components/oauthDocs/ccg/TestUsers';
 import ApisLoader from '../../../components/apisLoader/ApisLoader';
 import { getApi } from '../DocumentationRoot';
 
+const EXCLUDE_ICN_FRAGMENTS = ['lgy_guaranty_remittance', 'loan-review'];
+
 const ClientCredentialsGrantDocs = (): JSX.Element => {
   const params = useParams();
   const api = getApi(params.urlSlug);
@@ -39,7 +41,7 @@ const ClientCredentialsGrantDocs = (): JSX.Element => {
         <GoodToKnow />
         <GettingStarted api={api} />
         <AuthCodeFlowContent api={api} />
-        <TestUsers />
+        {!EXCLUDE_ICN_FRAGMENTS.includes(api.urlFragment) && <TestUsers />}
       </div>
     </>
   );

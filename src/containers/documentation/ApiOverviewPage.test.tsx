@@ -35,7 +35,7 @@ describe('ApiOverviewPage', () => {
 
   describe('Static Content', () => {
     it('renders the page header', () => {
-      const heading = screen.getByRole('heading', { name: 'Rings API' });
+      const heading = screen.getByRole('heading', { level: 1, name: 'Rings API' });
       expect(heading).toBeInTheDocument();
     });
 
