@@ -107,11 +107,6 @@ const getActiveCCGApis = (): APIDescription[] =>
 const getAllKeyAuthApis = (): APIDescription[] =>
   getAllApis().filter((item: APIDescription) => !item.oAuth);
 
-const getAllQuickstartCategorySlugs = (): string[] =>
-  Object.entries(rootGetApiDefinitions.getApiDefinitions())
-    .filter((item: [string, APICategory]) => !!item[1].content.quickstart)
-    .map((item: [string, APICategory]) => item[0]);
-
 const lookupApiBySlug = (urlSlug: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean => apiDesc.urlSlug === urlSlug;
   const apiResult = getAllApis(true).find(hasMatchingIdentifier);
@@ -185,7 +180,6 @@ export {
   getActiveAuthCodeApis,
   getAllCCGApis,
   getActiveCCGApis,
-  getAllQuickstartCategorySlugs,
   getApiCategoryOrder,
   getApiDefinitions,
   lookupApiByFragment,
