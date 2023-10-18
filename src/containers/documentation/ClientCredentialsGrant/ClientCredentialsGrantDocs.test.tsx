@@ -38,7 +38,7 @@ describe('Client Credentials Docs', () => {
   });
 
   it('renders successfully', () => {
-    const authHeading = screen.getByRole('heading', { name: 'Client Credentials Grant' });
+    const authHeading = screen.getByRole('heading', { level: 1, name: /Client Credentials Grant/ });
     expect(authHeading).toBeInTheDocument();
   });
 

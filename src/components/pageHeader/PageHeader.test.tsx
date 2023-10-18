@@ -8,7 +8,7 @@ describe('PageHeader', () => {
   it('renders the header', () => {
     render(<PageHeader halo="Context" header="Big Idea" subText="A great idea" />);
 
-    const heading = screen.getByRole('heading', { level: 1, name: 'Big Idea' });
+    const heading = screen.getByRole('heading', { level: 1, name: /Big Idea/ });
     expect(heading).toBeInTheDocument();
   });
 
@@ -23,7 +23,7 @@ describe('PageHeader', () => {
     render(<PageHeader header="Big Idea" subText="A great idea" />);
 
     // find the heading, make sure it doesn't have a previous sibling
-    const heading = screen.getByRole('heading', { level: 1, name: 'Big Idea' });
+    const heading = screen.getByRole('heading', { level: 1, name: /Big Idea/ });
     expect(heading.previousElementSibling).toBeNull();
   });
 

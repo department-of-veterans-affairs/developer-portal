@@ -10,7 +10,10 @@ describe('Explore Root', () => {
   });
 
   it('has core page elements', () => {
-    cy.get('[data-cy="page-header"]').should('have.text', 'Explore our APIs');
+    cy.get('[data-cy="page-header"]').should(
+      'have.text',
+      'Explore our APIs View and sort our APIs to find the best one for your needs.',
+    );
     cy.get('[data-cy="explore-filters"]').should('be.visible');
     cy.get('[data-cy="api-list"]').should('be.visible');
   });
