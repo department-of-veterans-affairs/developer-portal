@@ -102,7 +102,7 @@ describe('ApiFilters', () => {
         <RouterProvider router={router} />
       </Provider>,
     );
-    const ccgPill = screen.getByRole('button', { name: 'Client Credentials Grant' });
+    const ccgPill = screen.getByRole('button', { name: /Client Credentials Grant/ });
     expect(ccgPill).toBeInTheDocument();
     fireEvent.click(ccgPill);
     expect(router.state.location.pathname).toBe('/explore');
