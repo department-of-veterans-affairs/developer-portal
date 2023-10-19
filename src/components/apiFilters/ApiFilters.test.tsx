@@ -79,7 +79,7 @@ describe('ApiFilters', () => {
       </Provider>,
     );
     expect(container.querySelectorAll('.va-api-filter-pill')).toHaveLength(1);
-    const clearAllButton = screen.getByRole('button', { name: 'Clear all' });
+    const clearAllButton = screen.getByRole('button', { name: 'Clear all filters' });
     fireEvent.click(clearAllButton);
     expect(container.querySelectorAll('.va-api-filter-pill')).toHaveLength(0);
   });
