@@ -11,7 +11,7 @@ export const isHostedApiEnabled = (apiIdentifier: string, defaultValue: boolean)
 };
 
 export const getEnvFlags = (): { [apiId: string]: boolean } => {
-  const allApis: APIDescription[] = getAllApis();
+  const allApis: APIDescription[] = getAllApis(true);
   const envFlags = allApis.reduce((result: { [key: string]: boolean }, api: APIDescription) => {
     result[api.urlFragment] = isHostedApiEnabled(api.urlFragment, api.enabledByDefault);
     return result;

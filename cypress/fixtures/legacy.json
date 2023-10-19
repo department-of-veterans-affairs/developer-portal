@@ -13,6 +13,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 3,
         "name": "Appeals Status API",
         "openData": false,
@@ -36,6 +37,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 3,
         "name": "Decision Reviews API",
         "openData": false,
@@ -72,6 +74,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 4,
         "name": "Benefits Claims API",
         "openData": false,
@@ -109,6 +112,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 4,
         "name": "Benefits Intake API",
         "openData": false,
@@ -135,6 +139,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 2,
         "name": "Benefits Reference Data API",
         "openData": true,
@@ -178,6 +183,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 2,
         "name": "VA Facilities API",
         "openData": true,
@@ -221,6 +227,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 2,
         "name": "VA Forms API",
         "openData": true,
@@ -264,6 +271,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 3,
         "name": "Clinical Health API (FHIR)",
         "openData": false,
@@ -302,6 +310,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 4,
         "name": "Community Care Eligibility API",
         "openData": false,
@@ -335,6 +344,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 4,
         "name": "Patient Health API (FHIR)",
         "openData": false,
@@ -405,6 +415,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 2,
         "name": "Provider Directory API",
         "openData": true,
@@ -423,6 +434,7 @@
         "description": "The VA's Health Urgent Care Eligibility API supports industry standards (e.g., Fast Healthcare Interoperability Resources [FHIR]) and provides access to a Veteran's urgent care eligibility status.",
         "docSources": [],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 4,
         "name": "Urgent Care Eligibility API (FHIR)",
         "openData": false,
@@ -464,6 +476,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 4,
         "name": "Guaranty Remittance API",
         "openData": false,
@@ -497,6 +510,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 3,
         "name": "Loan Guaranty API",
         "openData": false,
@@ -533,6 +547,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 3,
         "name": "Address Validation API",
         "openData": false,
@@ -556,6 +571,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 3,
         "name": "VA Letter Generator API",
         "openData": false,
@@ -586,6 +602,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 4,
         "name": "Veteran Confirmation API",
         "openData": false,
@@ -608,6 +625,7 @@
           }
         ],
         "enabledByDefault": true,
+        "isStealthLaunched": false,
         "lastProdAccessStep": 4,
         "name": "Veteran Verification API",
         "openData": false,
