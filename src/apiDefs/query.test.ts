@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 /**
  * This file contains unit tests for the query.ts module in this directory. Because query.ts
  * is the only module that accesses data from the Typescript definition files in data/ directly,
@@ -22,7 +23,6 @@ import { fakeCategories } from '../__mocks__/fakeCategories';
 import {
   apisFor,
   countActiveApisByCategory,
-  getAllQuickstartCategorySlugs,
   getApiCategoryOrder,
   includesOAuthAPI,
   lookupApiByFragment,
@@ -32,6 +32,7 @@ import {
   includesInternalOnlyAPI,
   onlyOpenDataAPIs,
   includesOpenDataAPI,
+  getAllApis,
 } from './query';
 import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 
@@ -43,6 +44,7 @@ const rings: APIDescription = {
   description: 'One Ring to rule them all',
   docSources: [], // doesn't matter yet
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'Rings API',
   oAuth: false,
@@ -75,6 +77,7 @@ const apollo13: APIDescription = {
   description: "When a trip to the moon doesn't go according to plan",
   docSources: [],
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'Apollo 13 API',
   oAuth: true,
@@ -105,6 +108,7 @@ const theMartian: APIDescription = {
     'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
   docSources: [], // doesn't matter here
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'The Martian API',
   oAuth: false,
@@ -128,6 +132,7 @@ const basketball: APIDescription = {
   description: 'stuff about hoops or whatever',
   docSources: [], // doesn't matter here
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'Basketball API',
   oAuth: false,
@@ -143,7 +148,9 @@ const basketball: APIDescription = {
 };
 
 describe('query module', () => {
-  store.dispatch(setApis(fakeCategories));
+  beforeEach(() => {
+    store.dispatch(setApis(fakeCategories));
+  });
 
   describe('lookupApiByFragment', () => {
     it('finds the API if it is defined', () => {
@@ -243,12 +250,6 @@ describe('query module', () => {
     });
   });
 
-  describe('getAllQuickstartCategorySlugs', () => {
-    it('returns the list of all API category slugs that have a quickstart page', () => {
-      expect(getAllQuickstartCategorySlugs()).toStrictEqual(['movies']);
-    });
-  });
-
   describe('apisFor', () => {
     it('retrieves the requested APIs', () => {
       const apis = apisFor(['the_martian', 'basketball']);
@@ -285,6 +286,39 @@ describe('query module', () => {
   describe('countActiveApisByCategory', () => {
     it('returns number of active apis for a given category', () => {
       expect(countActiveApisByCategory('lotr')).toEqual(2);
+    });
+  });
+});
+describe('cover conditions that interact with stealth launched APIs', () => {
+  beforeEach(() => {
+    const tempCategories = fakeCategories;
+    tempCategories.sports.apis[0] = {
+      ...tempCategories.sports.apis[0],
+      isStealthLaunched: true,
+    };
+    store.dispatch(setApis(tempCategories));
+  });
+  describe('getAllApis with stealth launched APIs', () => {
+    it('getAllApis skips APIs that are stealth launched by default', () => {
+      const apis = getAllApis();
+      expect(apis).toHaveLength(7);
+    });
+
+    it('getAllApis includes APIs that are stealth launched when requested', () => {
+      const apis = getAllApis(true);
+      expect(apis).toHaveLength(8);
+    });
+  });
+  describe('lookupApiBySlug with isStealthLaunched true', () => {
+    it('finds the API by its slug even while stealth launched', () => {
+      const api = lookupApiBySlug('basketball');
+      expect(api).toEqual({ ...basketball, isStealthLaunched: true });
+    });
+  });
+  describe('lookupApiByFragment with isStealthLaunched true', () => {
+    it('finds the API by its fragment even while stealth launched', () => {
+      const api = lookupApiByFragment('basketball');
+      expect(api).toEqual({ ...basketball, isStealthLaunched: true });
     });
   });
 });

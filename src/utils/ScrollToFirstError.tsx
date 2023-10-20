@@ -17,6 +17,11 @@ export const ScrollToFirstError = (): null => {
       (firstErrorElement.parentElement ?? firstErrorElement).scrollIntoView({
         behavior: 'smooth',
       });
+
+      // Wait for the scroll to finish before focusing on the element
+      setTimeout(() => {
+        (firstErrorElement as HTMLElement).focus();
+      }, 0);
     }
   }, [errors, isSubmitting]);
 
