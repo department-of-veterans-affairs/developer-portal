@@ -3,8 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import * as actions from '../../actions';
 import { APIDescription, ApiDescriptionPropType } from '../../apiDefs/schema';
-import { Flag } from '../../flags';
-import { FLAG_HOSTED_APIS } from '../../types/constants';
 import { SwaggerDocs } from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
@@ -38,11 +36,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   /*
    * RENDER
    */
-  return (
-    <Flag name={[FLAG_HOSTED_APIS, urlFragment]}>
-      <SwaggerDocs docSource={docSources[0]} apiName={urlFragment} />
-    </Flag>
-  );
+  return <SwaggerDocs docSource={docSources[0]} apiName={urlFragment} />;
 };
 
 ApiDocumentation.propTypes = ApiDocumentationPropTypes;
