@@ -1,57 +1,16 @@
 import React, { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { CodeBlock } from '../../../components';
+import { getLaunchDescription } from '../../../utils/ccgLaunchContextHelper';
 
 interface RetrievingTokenProps {
   scopes: string[];
   baseAuthPath: string;
 }
 
-const getLaunchDescription = (urlSlug: string): JSX.Element => {
-  switch (urlSlug) {
-    case 'guaranty-remittance':
-    case 'loan-review':
-      return (
-        <td>
-          <p>
-            The launch scope and parameter limit the scope of an access token by indicating the
-            token is for a specific lender ID.
-          </p>
-          <p>
-            It must be a base64-encoded JSON object, the value of which is the lender portal ID that
-            is associated to the specific lender ID. The format of the object will be:{' '}
-            <code>{'{ "portal_id": "TEST1234567890SERVICE"}'}</code>
-          </p>
-          <p>
-            When encoded using base64, the object will look like this:{' '}
-            <code>LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo==</code>
-          </p>
-        </td>
-      );
-    default:
-      return (
-        <td>
-          <p>
-            The launch scope and parameter limit the scope of an access token by indicating the
-            token is for a specific patient or encounter.
-          </p>
-          <p>
-            It must be a base64-encoded JSON object, the value of which is the patient&apos;s ICN.
-            The format of the object will be: <code>{'{ "patient": "1000720100V271387"}'}</code>
-          </p>
-          <p>
-            When encoded using base64, the object will look like this:{' '}
-            <code>LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo==</code>
-          </p>
-        </td>
-      );
-  }
-};
-
 const RetrievingTokenContent: FC<RetrievingTokenProps> = ({ scopes, baseAuthPath }) => {
   const hasLaunchScope = scopes.includes('launch');
   const { urlSlug } = useParams();
-
   const launchDescription = getLaunchDescription(urlSlug as string);
 
   return (
