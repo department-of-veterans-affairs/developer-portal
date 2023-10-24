@@ -118,7 +118,7 @@ mV4cCI6MTYyOTMxOTU0OH0`}
                   <code>launch</code>
                 </td>
                 <td>True</td>
-                {launchDescription}
+                <td>{launchDescription}</td>
               </tr>
             )}
           </tbody>

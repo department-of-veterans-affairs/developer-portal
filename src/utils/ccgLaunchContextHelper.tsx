@@ -7,48 +7,34 @@ export const createContextData = (obj: { [key: string]: string }): string[] => {
 };
 
 export const getLaunchDescription = (urlSlug: string): JSX.Element => {
-  switch (urlSlug) {
-    case 'guaranty-remittance':
-    case 'loan-review':
-      const portalData = { portal_id: 'TEST1234567890SERVICE' };
-      const [portalStringData, portalEncodedData] = createContextData(portalData);
+  const hasLenderID = ['guaranty-remittance', 'loan-review'].includes(urlSlug);
 
-      return (
-        <td>
-          <p>
-            The launch scope and parameter limit the scope of an access token by indicating the
-            token is for a specific lender ID.
-          </p>
-          <p>
-            It must be a base64-encoded JSON object, the value of which is the lender portal ID that
-            is associated to the specific lender ID. The format of the object will be:{' '}
-            <code>{portalStringData}</code>
-          </p>
-          <p>
-            When encoded using base64, the object will look like this:{' '}
-            <code>{portalEncodedData}</code>
-          </p>
-        </td>
-      );
-    default:
-      const patientData = { patient: '1000720100V271387' };
-      const [patientStringData, patientEncodedData] = createContextData(patientData);
+  // Data for GR and LR APIs
+  const lenderData = { portal_id: 'TEST1234567890SERVICE' };
+  const [lenderStringData, lenderEncodedData] = createContextData(lenderData);
 
-      return (
-        <td>
-          <p>
-            The launch scope and parameter limit the scope of an access token by indicating the
-            token is for a specific patient or encounter.
-          </p>
-          <p>
-            It must be a base64-encoded JSON object, the value of which is the patient&apos;s ICN.
-            The format of the object will be: <code>{patientStringData}</code>
-          </p>
-          <p>
-            When encoded using base64, the object will look like this:{' '}
-            <code>{patientEncodedData}</code>
-          </p>
-        </td>
-      );
-  }
+  // Default data for now
+  const patientData = { patient: '1000720100V271387' };
+  const [patientStringData, patientEncodedData] = createContextData(patientData);
+
+  return (
+    <>
+      <p>
+        The launch scope and parameter limit the scope of an access token by indicating the token is
+        for a specific {hasLenderID ? 'lender ID.' : 'patient or encounter.'}
+      </p>
+      <p>
+        It must be a base64-encoded JSON object, the value of which is the{' '}
+        {hasLenderID
+          ? 'lender portal ID that is associated to the specific lender ID.'
+          : "patient's ICN."}{' '}
+        The format of the object will be:{' '}
+        <code>{hasLenderID ? lenderStringData : patientStringData}</code>
+      </p>
+      <p>
+        When encoded using base64, the object will look like this:{' '}
+        <code>{hasLenderID ? lenderEncodedData : patientEncodedData}</code>
+      </p>
+    </>
+  );
 };
