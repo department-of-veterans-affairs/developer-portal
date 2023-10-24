@@ -59,7 +59,7 @@ export const AuthFilters = ({
       <FieldArray
         name="authTypes"
         render={(): JSX.Element => (
-          <Form className="explore-filter-form" noValidate>
+          <Form className="explore-filter-form" noValidate name="explore-auth-filter">
             <button
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
               type="button"

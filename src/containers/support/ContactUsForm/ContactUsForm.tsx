@@ -109,7 +109,11 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
       validateOnChange={false}
     >
       {({ values, isSubmitting }): ReactNode => (
-        <Form className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')} noValidate>
+        <Form
+          className={classNames('va-api-contact-us-form', 'vads-u-margin-top--6')}
+          noValidate
+          name="contact-us"
+        >
           <ContactDetailsFormFields />
           <fieldset className="vads-u-margin-top--6">
             <legend className="vads-u-margin-bottom--2p5">

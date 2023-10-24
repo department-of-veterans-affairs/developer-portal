@@ -68,7 +68,11 @@ export const TopicFilters = ({
       <FieldArray
         name="topics"
         render={(): JSX.Element => (
-          <Form className="explore-filter-form medium-screen:vads-u-margin-right--2" noValidate>
+          <Form
+            className="explore-filter-form medium-screen:vads-u-margin-right--2"
+            noValidate
+            name="explore-topic-filter"
+          >
             <button
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
               type="button"
