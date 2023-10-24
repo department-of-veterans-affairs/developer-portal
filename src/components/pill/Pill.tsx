@@ -29,7 +29,9 @@ interface PillProps {
 }
 export const Pill = ({ name, onClick, type }: PillProps): JSX.Element => (
   <button
+    aria-label={`${name} filter - Remove`}
     className={`va-api-filter-pill ${type as string}-filter-pill`}
+    title={`${name} filter - Remove`}
     type="button"
     onClick={onClick}
   >

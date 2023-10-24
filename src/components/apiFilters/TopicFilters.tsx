@@ -59,6 +59,11 @@ export const TopicFilters = ({
     handleTopicFilterSubmit(values);
   };
 
+  const topicFilterAriaLabel =
+    topicFilter.length > 0
+      ? `Topics, ${topicFilter.length} filter${topicFilter.length > 1 ? 's' : ''} applied`
+      : 'Topics';
+
   return (
     <Formik
       className="explore-formik-container"
@@ -70,6 +75,8 @@ export const TopicFilters = ({
         render={(): JSX.Element => (
           <Form className="explore-filter-form medium-screen:vads-u-margin-right--2" noValidate>
             <button
+              aria-expanded={isTopicOpen}
+              aria-label={topicFilterAriaLabel}
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
               type="button"
               onClick={toggleTopicOpen}
@@ -83,6 +90,8 @@ export const TopicFilters = ({
               />
             </button>
             <button
+              aria-expanded={isTopicOpen}
+              aria-label={topicFilterAriaLabel}
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"
               type="button"
               onClick={toggleTopicOpen}
