@@ -23,6 +23,7 @@ const api: APIDescription = {
     },
   ],
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Three,
   name: 'My API',
   oAuth: false,

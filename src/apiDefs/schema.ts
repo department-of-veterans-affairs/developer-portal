@@ -70,6 +70,7 @@ export enum ProdAccessFormSteps {
 
 export interface APIDescription {
   readonly blockSandboxForm: boolean;
+  readonly isStealthLaunched: boolean;
   readonly name: string;
   readonly docSources: APIDocSource[];
   readonly urlFragment: string;

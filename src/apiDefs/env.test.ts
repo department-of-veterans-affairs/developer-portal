@@ -42,6 +42,7 @@ describe('env module', () => {
       categoryUrlSlug: 'nothing-of-importance',
       description: "it's a fabulous API, you really must try it sometime",
       docSources: [],
+      isStealthLaunched: false,
       lastProdAccessStep: ProdAccessFormSteps.Four,
       name: 'My API',
       oAuth: false,

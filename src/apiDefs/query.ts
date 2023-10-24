@@ -68,10 +68,11 @@ const getApiCategoryOrder = (): string[] => {
   });
 };
 
-const getAllApis = (): APIDescription[] =>
+const getAllApis = (includeStealth: boolean = false): APIDescription[] =>
   Object.values(rootGetApiDefinitions.getApiDefinitions())
     .flatMap((category: APICategory) => category.apis)
-    .sort((a, b) => (a.name > b.name ? 1 : -1));
+    .sort((a, b) => (a.name > b.name ? 1 : -1))
+    .filter((api: APIDescription) => !api.isStealthLaunched || includeStealth);
 const getActiveApis = (): APIDescription[] =>
   getAllApis().filter(
     (api: APIDescription) =>
@@ -106,20 +107,15 @@ const getActiveCCGApis = (): APIDescription[] =>
 const getAllKeyAuthApis = (): APIDescription[] =>
   getAllApis().filter((item: APIDescription) => !item.oAuth);
 
-const getAllQuickstartCategorySlugs = (): string[] =>
-  Object.entries(rootGetApiDefinitions.getApiDefinitions())
-    .filter((item: [string, APICategory]) => !!item[1].content.quickstart)
-    .map((item: [string, APICategory]) => item[0]);
-
 const lookupApiBySlug = (urlSlug: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean => apiDesc.urlSlug === urlSlug;
-  const apiResult = getAllApis().find(hasMatchingIdentifier);
+  const apiResult = getAllApis(true).find(hasMatchingIdentifier);
   return apiResult ?? null;
 };
 const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   const hasMatchingIdentifier = (apiDesc: APIDescription): boolean =>
     apiDesc.urlFragment === apiKey;
-  const apiResult = getAllApis().find(hasMatchingIdentifier);
+  const apiResult = getAllApis(true).find(hasMatchingIdentifier);
   return apiResult ?? null;
 };
 
@@ -184,7 +180,6 @@ export {
   getActiveAuthCodeApis,
   getAllCCGApis,
   getActiveCCGApis,
-  getAllQuickstartCategorySlugs,
   getApiCategoryOrder,
   getApiDefinitions,
   lookupApiByFragment,

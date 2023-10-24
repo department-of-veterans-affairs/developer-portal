@@ -16,6 +16,7 @@ describe('deprecated API module', () => {
     description: "it's a fabulous API, you really must try it sometime",
     docSources: [],
     enabledByDefault: true,
+    isStealthLaunched: false,
     lastProdAccessStep: ProdAccessFormSteps.Three,
     name: 'My API',
     oAuth: false,

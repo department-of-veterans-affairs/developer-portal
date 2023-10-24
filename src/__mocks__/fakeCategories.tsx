@@ -20,6 +20,7 @@ export const fakeCategories: APICategories = {
         description: 'One Ring to rule them all',
         docSources: [], // doesn't matter yet
         enabledByDefault: true,
+        isStealthLaunched: false,
         lastProdAccessStep: ProdAccessFormSteps.Four,
         name: 'Rings API',
         oAuth: false,
@@ -57,6 +58,7 @@ export const fakeCategories: APICategories = {
         description: 'Three pretty gems',
         docSources: [],
         enabledByDefault: true,
+        isStealthLaunched: false,
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Silmarils API',
         oAuth: false,
@@ -78,6 +80,7 @@ export const fakeCategories: APICategories = {
         description: 'Hobbits of the Shire',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        isStealthLaunched: false,
         lastProdAccessStep: ProdAccessFormSteps.Two,
         name: 'Hobbits API',
         oAuth: false,
@@ -111,6 +114,7 @@ export const fakeCategories: APICategories = {
         description: "When a trip to the moon doesn't go according to plan",
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        isStealthLaunched: false,
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Apollo 13 API',
         oAuth: true,
@@ -139,6 +143,7 @@ export const fakeCategories: APICategories = {
         description: 'Asteroid Dotty has earth directly in her path, time to call Bruce Willis.',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        isStealthLaunched: false,
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Armageddon API',
         oAuth: true,
@@ -169,6 +174,7 @@ export const fakeCategories: APICategories = {
           'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        isStealthLaunched: false,
         lastProdAccessStep: ProdAccessFormSteps.Four,
         name: 'The Martian API',
         oAuth: false,
@@ -204,6 +210,7 @@ export const fakeCategories: APICategories = {
         description: 'stuff about hoops or whatever',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
+        isStealthLaunched: false,
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Basketball API',
         oAuth: false,
@@ -225,6 +232,7 @@ export const fakeCategories: APICategories = {
         description: 'a slow summer game',
         docSources: [], // doesn't matter here
         enabledByDefault: false,
+        isStealthLaunched: false,
         lastProdAccessStep: ProdAccessFormSteps.Three,
         name: 'Baseball API',
         oAuth: false,
@@ -262,6 +270,7 @@ export const extraAPI: APIDescription = {
   description: 'the beautiful game',
   docSources: [],
   enabledByDefault: true,
+  isStealthLaunched: false,
   lastProdAccessStep: ProdAccessFormSteps.Four,
   name: 'Soccer API',
   oAuth: false,
