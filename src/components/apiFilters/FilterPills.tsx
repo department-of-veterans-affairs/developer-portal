@@ -8,7 +8,13 @@ export interface FilterPillsProps {
 export const FilterPills = ({ children, clearAllFilters }: FilterPillsProps): JSX.Element => (
   <div data-testid="filter-pills" className="filter-pills-container">
     {children}
-    <button className="filters-clear-all-button" onClick={clearAllFilters} type="button">
+    <button
+      aria-label="Clear all filters"
+      className="filters-clear-all-button"
+      onClick={clearAllFilters}
+      title="Clear all filters"
+      type="button"
+    >
       Clear all
     </button>
   </div>
