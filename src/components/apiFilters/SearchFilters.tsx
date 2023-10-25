@@ -21,7 +21,7 @@ export const SearchFilters = ({ handleSearchSubmit, search }: SearchFiltersProps
       validateOnBlur={false}
       validateOnChange={false}
     >
-      <Form noValidate id="explore-page-fuzzy-search">
+      <Form noValidate id="explore-page-fuzzy-search" name="explore-fuzzy-search">
         <Field
           id="fuzzy-search"
           className="va-api-text-field"

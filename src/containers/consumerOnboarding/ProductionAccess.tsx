@@ -366,7 +366,7 @@ const ProductionAccess: FC = () => {
             validateOnBlur={false}
             validateOnChange={false}
           >
-            <Form noValidate>
+            <Form noValidate name="production-access">
               {activeStep === 0 ? (
                 <>
                   <VaSegmentedProgressBar

@@ -73,7 +73,11 @@ export const TopicFilters = ({
       <FieldArray
         name="topics"
         render={(): JSX.Element => (
-          <Form className="explore-filter-form medium-screen:vads-u-margin-right--2" noValidate>
+          <Form
+            className="explore-filter-form medium-screen:vads-u-margin-right--2"
+            noValidate
+            name="explore-topic-filter"
+          >
             <button
               aria-expanded={isTopicOpen}
               aria-label={topicFilterAriaLabel}

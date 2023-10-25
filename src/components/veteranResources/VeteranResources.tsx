@@ -14,6 +14,7 @@ export const VeteranResources = (): JSX.Element => {
       <button
         className="usa-button usa-button-secondary"
         type="button"
+        id="veteran-resources-modal-button"
         onClick={(): void => setModalVisible(true)}
       >
         Veteran resources
