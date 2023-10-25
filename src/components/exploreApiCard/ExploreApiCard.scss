@@ -3,4 +3,19 @@
 .explore-api-card-container {
   border-bottom: 1px solid $color-gray-light;
   padding: 1rem 1rem 2rem;
+  position: relative;
+
+  &:focus-within {
+    outline: 2px solid $color-gold;
+    outline-offset: 2px;
+  }
+}
+
+.explore-api-link::after {
+  bottom: 0;
+  content: '';
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
 }
