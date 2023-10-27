@@ -105,6 +105,9 @@ export const makeRequest = <T>(
             httpResponse.body = (await response.blob()) as T;
           }
 
+          const ajaxCompleteEvent = new CustomEvent('ajaxComplete', { detail: httpResponse.body });
+          window.dispatchEvent(ajaxCompleteEvent);
+
           return resolve(httpResponse as HttpResponse<T>);
         } else {
           const errorResponse = await handleNonNetworkError(
