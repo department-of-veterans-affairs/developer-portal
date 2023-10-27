@@ -281,6 +281,11 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
           </div>
         </div>
       </div>
+      <span aria-live="polite" className="sr-only">
+        {topicFilter.length || authFilter.length
+          ? `${topicFilter.length + authFilter.length} filters applied and API list updated`
+          : ''}
+      </span>
       {hasFilterPill && (
         <ApisLoader hideSpinner>
           <FilterPills clearAllFilters={clearAllFilters}>{pills}</FilterPills>

@@ -34,4 +34,16 @@ describe('Pill', () => {
     expect(container.querySelector('.fa-key')).toBeFalsy();
     expect(container.querySelector('.fa-i-cursor')).toBeFalsy();
   });
+
+  it('should have a title attribute', () => {
+    const { getByRole } = render(<Pill name="Benefits" onClick={onClick} type="topic" />);
+    const pill = getByRole('button');
+    expect(pill.getAttribute('title')).toBe('Benefits filter - Remove');
+  });
+
+  it('should have an aria-label attribute', () => {
+    const { getByRole } = render(<Pill name="Benefits" onClick={onClick} type="topic" />);
+    const pill = getByRole('button');
+    expect(pill.getAttribute('aria-label')).toBe('Benefits filter - Remove');
+  });
 });
