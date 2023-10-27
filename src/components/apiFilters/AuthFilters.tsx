@@ -64,7 +64,7 @@ export const AuthFilters = ({
       <FieldArray
         name="authTypes"
         render={(): JSX.Element => (
-          <Form className="explore-filter-form" noValidate>
+          <Form className="explore-filter-form" noValidate name="explore-auth-filter">
             <button
               aria-expanded={isAuthOpen}
               aria-label={authFilterAriaLabel}

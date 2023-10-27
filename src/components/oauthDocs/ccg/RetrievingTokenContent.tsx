@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
+import { useParams } from 'react-router-dom';
 import { CodeBlock } from '../../../components';
+import { getLaunchDescription } from '../../../utils/ccgLaunchContextHelper';
 
 interface RetrievingTokenProps {
   scopes: string[];
@@ -8,6 +10,8 @@ interface RetrievingTokenProps {
 
 const RetrievingTokenContent: FC<RetrievingTokenProps> = ({ scopes, baseAuthPath }) => {
   const hasLaunchScope = scopes.includes('launch');
+  const { urlSlug } = useParams();
+  const launchDescription = getLaunchDescription(urlSlug as string);
 
   return (
     <>
@@ -114,21 +118,7 @@ mV4cCI6MTYyOTMxOTU0OH0`}
                   <code>launch</code>
                 </td>
                 <td>True</td>
-                <td>
-                  <p>
-                    The launch scope and parameter limit the scope of an access token by indicating
-                    the token is for a specific patient or encounter.
-                  </p>
-                  <p>
-                    It must be a base64-encoded JSON object, the value of which is the
-                    patient&apos;s ICN. The format of the object will be:{' '}
-                    <code>{'{ "patient": "1000720100V271387"}'}</code>
-                  </p>
-                  <p>
-                    When encoded using base64, the object will look like this:{' '}
-                    <code>LWIgeyJwYXRpZW50IjoiMTAwMDcyMDEwMFYyNzEzODcifQo==</code>
-                  </p>
-                </td>
+                <td>{launchDescription}</td>
               </tr>
             )}
           </tbody>
