@@ -63,7 +63,7 @@ describe('NavBar', () => {
       ['Explore APIs', '/explore'],
       ['Onboarding', '/onboarding'],
       ['About', '/about'],
-      ['API Status', 'https://valighthouse.statuspage.io'],
+      ['API Status, opens in a new tab', 'https://valighthouse.statuspage.io'],
       ['Support', '/support'],
     ])(
       'contains the %s link with the correct URL (%s) and the corresponding button for the mobile nav',
