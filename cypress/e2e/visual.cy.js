@@ -65,7 +65,7 @@ function testVisualRegressions(path, size, offset) {
     });
 }
 
-function testVisualRegressions(path, size) {
+function testVisualRegressions(path, size, offset) {
   cy.wait(1000);
   cy.get('html').invoke('css', 'height', 'initial');
   cy.get('body').invoke('css', 'height', 'initial');
