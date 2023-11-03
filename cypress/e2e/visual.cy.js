@@ -53,7 +53,7 @@ function testVisualRegressions(path, size, offset) {
   if (offset) {
     cy.scrollTo(0, offset);
     cy.wait(1000);
-    cy.matchImageSnapshot(`${formattedPath}-${size.count}`, {
+    cy.matchImageSnapshot(`${formattedPath}-${size.count}-${offset}`, {
       ...snapshotOptions,
       capture: 'viewport',
     });
