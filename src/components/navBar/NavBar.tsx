@@ -160,6 +160,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
 
           <li className={navItemStyles}>
             <a
+              aria-label="API Status, opens in a new tab"
               className={classNames(navLinkStyles)}
               href="https://valighthouse.statuspage.io"
               target="_blank"
