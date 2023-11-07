@@ -13,9 +13,9 @@ const GettingStarted = (): JSX.Element => (
       third party being authorized depends on the API.
     </p>
     <p>
-      The first step toward authorization is to <Link to="/explore">fill out our application</Link>{' '}
-      and make sure to select the right OAuth API for your needs. To complete the form, you will
-      need:
+      The first step toward authorization is to{' '}
+      <Link to="../sandbox-access">fill out our application</Link> and make sure to select the right
+      OAuth API for your needs. To complete the form, you will need:
     </p>
     <ul>
       <li>Your organization name</li>
