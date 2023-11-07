@@ -14,6 +14,7 @@ const OAUTHTYPES = {
 const ACG_RESTRICTED_APIS = ['Clinical Health API (FHIR)'];
 const NON_OAUTH_RESTRICTED_APIS = [
   'Address Validation API',
+  'Appeals Status API',
   'Decision Reviews API',
   'Loan Guaranty API',
 ];
