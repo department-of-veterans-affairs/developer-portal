@@ -39,7 +39,7 @@ const snapshotOptions = {
   failureThresholdType: 'percent',
 };
 
-function testVisualRegressions(path, size) {
+function testVisualRegressions(path, size, offset) {
   cy.wait(1000);
   cy.get('html').invoke('css', 'height', 'initial');
   cy.get('body').invoke('css', 'height', 'initial');
@@ -50,6 +50,15 @@ function testVisualRegressions(path, size) {
   cy.get('html').invoke('css', 'height', 'initial');
   cy.get('body').invoke('css', 'height', 'initial');
   cy.wait(1000);
+  if (offset) {
+    cy.scrollTo(0, offset);
+    cy.wait(1000);
+    cy.matchImageSnapshot(`${formattedPath}-${size.count}-${offset}`, {
+      ...snapshotOptions,
+      capture: 'viewport',
+    });
+    return;
+  }
   cy.matchImageSnapshot(`${formattedPath}-${size.count}`, snapshotOptions);
 }
 
@@ -81,6 +90,14 @@ describe('Visual Regression tests', () => {
       cy.visit(path);
       cy.wait(5000); // Gives Swagger UI plenty of time to load
       testVisualRegressions(path, size);
+    });
+
+    it(`Check Explore APIs page for visual regression at ${size.width}px width and 400px scroll offset `, () => {
+      const path = `/explore?auth=acg+ccg`;
+      const offset = 400;
+      cy.viewport(size.width, size.height);
+      cy.visit(path);
+      testVisualRegressions(path, size, offset);
     });
   });
 });

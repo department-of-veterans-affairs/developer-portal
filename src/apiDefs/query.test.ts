@@ -64,6 +64,8 @@ const rings: APIDescription = {
 `,
   releaseNotes:
     '### March 25, 2020\n\nOne Ring destroyed\n\n\n---\n\n### June 10, 2019\n\nOne Ring discovered by Bilbo in Misty Mountains\n',
+  restrictedAccessDetails: null,
+  restrictedAccessToggle: false,
   urlFragment: 'rings',
   urlSlug: 'rings',
   veteranRedirect: null,
@@ -94,6 +96,8 @@ const apollo13: APIDescription = {
   overviewPageContent: '## Default overview page content',
   releaseNotes:
     '### April 11, 1970\n\nLaunch!\n\n\n---\n\n### April 14, 1970\n\nOxygen tank #2 is unhappy.\n\n\n---\n\n### April 17, 1970\n\nSplashdown. The crew arrives home safely.\n',
+  restrictedAccessDetails: null,
+  restrictedAccessToggle: false,
   urlFragment: 'apollo_13',
   urlSlug: 'apollo-13',
   veteranRedirect: null,
@@ -118,6 +122,8 @@ const theMartian: APIDescription = {
   overviewPageContent: '## Default overview page content',
   releaseNotes:
     '### November 25, 2035\n\nA powerful storm hits the Ares III landing site forcing an evacuation during which Mark Watney is struck by debris and assumed to be dead.\n\n\n---\n\n### November 26, 2035\n\nMark Watney is not dead, just very sleepy and injured.\n\n\n---\n\n### February 2037\n\nMark Watney leaves Mars in a convertable space ship and rejoins his crew on the Hermes.\nYay!\n',
+  restrictedAccessDetails: null,
+  restrictedAccessToggle: false,
   urlFragment: 'the_martian',
   urlSlug: 'the-martian',
   vaInternalOnly: VaInternalOnly.AdditionalDetails,
@@ -142,6 +148,8 @@ const basketball: APIDescription = {
   overviewPageContent: '## Default overview page content',
   releaseNotes:
     '### September 21, 2019\n\nMoved exiled Numenoreans to Middle-earth\n\n\n---\n\n### June 12, 2019\n\nReleased our API\n',
+  restrictedAccessDetails: null,
+  restrictedAccessToggle: false,
   urlFragment: 'basketball',
   urlSlug: 'basketball',
   veteranRedirect: null,

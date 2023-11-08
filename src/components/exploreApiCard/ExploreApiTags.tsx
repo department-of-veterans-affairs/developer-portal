@@ -5,8 +5,8 @@ import { ApiTag } from '../../components';
 import './ExploreApiTags.scss';
 
 export const ExploreApiTags = ({ api }: { api: APIDescription }): JSX.Element => {
-  const { categoryUrlFragment, name, oAuthTypes, openData, urlSlug } = api;
-  const filterTags = generateFilterTags(categoryUrlFragment, name, oAuthTypes, openData);
+  const { urlSlug } = api;
+  const filterTags = generateFilterTags(api);
 
   return (
     <div className="explore-filter-tags">
