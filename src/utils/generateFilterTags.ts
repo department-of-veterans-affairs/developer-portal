@@ -1,3 +1,5 @@
+import { APIDescription } from '../apiDefs/schema';
+
 export interface TagDataProps {
   showLock?: boolean;
   tagName: string;
@@ -14,6 +16,7 @@ const OAUTHTYPES = {
 const ACG_RESTRICTED_APIS = ['Clinical Health API (FHIR)'];
 const NON_OAUTH_RESTRICTED_APIS = [
   'Address Validation API',
+  'Appeals Status API',
   'Decision Reviews API',
   'Loan Guaranty API',
 ];
@@ -35,15 +38,11 @@ const hasRestrictedAccess = (name: string, oAuthTypes: string[] | null): boolean
   return false;
 };
 
-export const generateFilterTags = (
-  categoryUrlFragment: string,
-  name: string,
-  oAuthTypes: string[] | null,
-  openData: boolean,
-): TagDataProps[] => {
+export const generateFilterTags = (api: APIDescription): TagDataProps[] => {
+  const { categoryUrlFragment, name, oAuthTypes, openData } = api;
   let tags: TagDataProps[] = [];
 
-  if (hasRestrictedAccess(name, oAuthTypes)) {
+  if (api.restrictedAccessToggle || hasRestrictedAccess(name, oAuthTypes)) {
     tags = [{ showLock: true, tagName: 'RESTRICTED ACCESS' }];
   }
 

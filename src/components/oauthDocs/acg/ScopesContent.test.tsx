@@ -41,6 +41,8 @@ const renderComponentWithScopes = (scopes: string[]): void => {
       openData: false,
       overviewPageContent: '## With this API you can do default stuff',
       releaseNotes: '',
+      restrictedAccessDetails: null,
+      restrictedAccessToggle: false,
       urlFragment: 'default-api',
       urlSlug: 'default',
       veteranRedirect: null,

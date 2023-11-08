@@ -5,7 +5,6 @@ import { Banner, NavBar, TestingNotice } from '../../components';
 import { Flag } from '../../flags';
 import { mobileOnly } from '../../styles/vadsUtils';
 import { FLAG_SHOW_TESTING_NOTICE } from '../../types/constants';
-import { deprecationBannerTargets } from '../../utils/deprecationBannerHelper';
 import './Header.scss';
 
 export const Header = (): JSX.Element => {
@@ -90,13 +89,6 @@ export const Header = (): JSX.Element => {
             </button>
           </div>
         </div>
-        {deprecationBannerTargets
-          .filter(target => target.path === location.pathname)
-          .map(target => (
-            <va-alert key={target.path} background-only show-icon status="info" visible>
-              <p className="vads-u-margin-y--0">{target.content}</p>
-            </va-alert>
-          ))}
       </header>
     </>
   );
