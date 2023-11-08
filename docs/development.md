@@ -115,10 +115,10 @@ We have simplified the steps to add a deprecation banner to an API page. You wil
 - `path` to designate where the banner should render
 
 ```
-/explore/<api-category>/docs/<api-name>
+/explore/api/<url-slug>
 ```
 
-1. Navigate to `src/utils/deprecationBannerHelper.tsx`, and add a new object with the `content` and `path` attributes described above.
+1. Navigate to `src/utils/apiAlerts.tsx`, and add a new object with the `content` and `path` attributes described above.
 1. Verify your changes in development.
 
 ## Testing Your Changes
