@@ -1,3 +1,5 @@
+import { APIDescription } from '../apiDefs/schema';
+
 export interface TagDataProps {
   showLock?: boolean;
   tagName: string;
@@ -36,15 +38,11 @@ const hasRestrictedAccess = (name: string, oAuthTypes: string[] | null): boolean
   return false;
 };
 
-export const generateFilterTags = (
-  categoryUrlFragment: string,
-  name: string,
-  oAuthTypes: string[] | null,
-  openData: boolean,
-): TagDataProps[] => {
+export const generateFilterTags = (api: APIDescription): TagDataProps[] => {
+  const { categoryUrlFragment, name, oAuthTypes, openData } = api;
   let tags: TagDataProps[] = [];
 
-  if (hasRestrictedAccess(name, oAuthTypes)) {
+  if (api.restrictedAccessToggle || hasRestrictedAccess(name, oAuthTypes)) {
     tags = [{ showLock: true, tagName: 'RESTRICTED ACCESS' }];
   }
 

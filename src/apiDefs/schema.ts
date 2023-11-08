@@ -80,6 +80,8 @@ export interface APIDescription {
   readonly description: string;
   readonly enabledByDefault: boolean;
   readonly vaInternalOnly?: VaInternalOnly;
+  readonly restrictedAccessDetails: string | null;
+  readonly restrictedAccessToggle: boolean;
   readonly openData: boolean;
   readonly oAuth: boolean;
   readonly oAuthTypes: string[] | null;
