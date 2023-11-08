@@ -50,6 +50,8 @@ describe('env module', () => {
       oAuthTypes: null,
       openData: false,
       releaseNotes: 'Dummy release notes.',
+      restrictedAccessDetails: null,
+      restrictedAccessToggle: false,
       urlSlug: 'my-api',
       veteranRedirect: null,
     };

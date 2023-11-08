@@ -32,6 +32,8 @@ const api: APIDescription = {
   openData: false,
   overviewPageContent: '## Default overview page content',
   releaseNotes: ReleaseNotes,
+  restrictedAccessDetails: null,
+  restrictedAccessToggle: false,
   urlFragment: 'my_api',
   urlSlug: 'my-api',
   veteranRedirect: null,
