@@ -26,9 +26,7 @@ export const apiAlerts = [
   {
     content: (
       <>
-        Veteran Service History and Eligibility Version 0 is deprecated and scheduled for
-        deactivation on November 15, 2023. Version 1 is deprecated and scheduled for deactivation on
-        May 30, 2024. Version 2 is active.
+        Veteran Service History and Eligibility Version 1 is deprecated and scheduled for deactivation on May 30, 2024. Version 2 is active.
       </>
     ),
     path: '/explore/api/veteran-service-history-and-eligibility',
