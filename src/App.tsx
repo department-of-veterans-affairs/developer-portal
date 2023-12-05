@@ -39,6 +39,41 @@ const App = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Keep the Touchpoint survey button from overlapping page footer
+  React.useEffect(() => {
+    const handleScroll = (): void => {
+      const element = document.querySelector('#fba-button');
+      const floatingElement = element instanceof HTMLElement ? element : null;
+      const footer = document.querySelector('footer');
+
+      if (!floatingElement || !footer) {
+        // eslint-disable-next-line no-useless-return
+        return;
+      }
+
+      // Get the distance from the top of the document to the top of the footer
+      const footerTop = footer.offsetTop;
+
+      // Calculate the distance from the top of the document to the bottom of the viewport
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const viewportBottom = scrollTop + window.innerHeight;
+
+      // If the viewport bottom is near the footer top, adjust the floating element position
+      if (viewportBottom >= footerTop) {
+        const overlap = viewportBottom - footerTop;
+        floatingElement.style.bottom = `${overlap}px`;
+      } else {
+        floatingElement.style.bottom = '0px'; // Reset to default position
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <FlagsProvider flags={getFlags()}>
       <SiteRedirects />
