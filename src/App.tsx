@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { ScrollRestoration } from 'react-router-dom';
+import { ScrollRestoration, useLocation } from 'react-router-dom';
 import { useDispatch, connect } from 'react-redux';
 import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
 import { LPB_PROVIDERS_URL } from './types/constants';
@@ -50,43 +50,50 @@ const App = (): JSX.Element => {
     };
   };
 
-  // Keep the Touchpoint survey button from overlapping page footer
+  // Adjust vertical positioning of Touchpoint survey button
+  const adjustSurveyPosition = (): void => {
+    const touchpointButton = document.querySelector('#fba-button');
+    const touchpointElement = touchpointButton instanceof HTMLElement ? touchpointButton : null;
+    const footer = document.querySelector('footer');
+
+    if (!touchpointElement || !footer) {
+      return;
+    }
+
+    const footerHeight = footer.offsetHeight;
+    const footerTop = footer.offsetTop;
+    const documentHeight = document.body.scrollHeight;
+    const viewportHeight = window.innerHeight;
+
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const viewportBottom = scrollTop + viewportHeight;
+
+    if (viewportBottom >= footerTop) {
+      const overlap = viewportBottom - footerTop;
+      touchpointElement.style.bottom = `${overlap}px`;
+    } else if (documentHeight <= viewportHeight) {
+      touchpointElement.style.bottom = `${footerHeight}px`;
+    } else {
+      touchpointElement.style.bottom = '0px';
+    }
+  };
+
+  const location = useLocation();
   React.useEffect(() => {
-    const handleScroll = (): void => {
-      const element = document.querySelector('#fba-button');
-      const floatingElement = element instanceof HTMLElement ? element : null;
-      const footer = document.querySelector('footer');
-
-      if (!floatingElement || !footer) {
-        // eslint-disable-next-line no-useless-return
-        return;
-      }
-
-      // Get the distance from the top of the document to the top of the footer
-      const footerTop = footer.offsetTop;
-
-      // Calculate the distance from the top of the document to the bottom of the viewport
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const viewportBottom = scrollTop + window.innerHeight;
-
-      // If the viewport bottom is near the footer top, adjust the floating element position
-      if (viewportBottom >= footerTop) {
-        const overlap = viewportBottom - footerTop;
-        floatingElement.style.bottom = `${overlap}px`;
-      } else {
-        floatingElement.style.bottom = '0px'; // Reset to default position
-      }
-    };
+    // Adjust on component mount
+    adjustSurveyPosition();
 
     // Use the "debounce" function to help regulate the "handleScroll" function
-    const debouncedHandleScroll = debounce(handleScroll, 100);
+    const debouncedHandleScroll = debounce(() => {
+      adjustSurveyPosition(); // Adjust on scroll
+    }, 100);
 
     window.addEventListener('scroll', debouncedHandleScroll);
 
     return () => {
       window.removeEventListener('scroll', debouncedHandleScroll);
     };
-  }, []);
+  }, [location]);
 
   return (
     <FlagsProvider flags={getFlags()}>
