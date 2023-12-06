@@ -85,7 +85,7 @@ const App = (): JSX.Element => {
 
     // Use the "debounce" function to help regulate the "handleScroll" function
     const debouncedHandleScroll = debounce(() => {
-      adjustSurveyPosition(); // Adjust on scroll
+      adjustSurveyPosition();
     }, 100);
 
     window.addEventListener('scroll', debouncedHandleScroll);
