@@ -39,6 +39,17 @@ const App = (): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Debounce function to help limit the firing of another function
+  const debounce = (func: () => void, delay: number): () => void => {
+    let inDebounce: ReturnType<typeof setTimeout> | null;
+    return (): void => {
+      if (inDebounce !== null) {
+        clearTimeout(inDebounce);
+      }
+      inDebounce = setTimeout(func, delay);
+    };
+  };
+
   // Keep the Touchpoint survey button from overlapping page footer
   React.useEffect(() => {
     const handleScroll = (): void => {
@@ -67,10 +78,13 @@ const App = (): JSX.Element => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    // Use the "debounce" function to help regulate the "handleScroll" function
+    const debouncedHandleScroll = debounce(handleScroll, 100);
+
+    window.addEventListener('scroll', debouncedHandleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', debouncedHandleScroll);
     };
   }, []);
 
