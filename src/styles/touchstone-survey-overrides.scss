@@ -2,6 +2,16 @@ body #fba-button.usa-button,
 body .fba-modal-dialog .usa-legend,
 body .fba-modal-dialog .usa-fieldset,
 body .fba-modal-dialog .usa-label,
+body .fba-modal-dialog .questions textarea,
 body .fba-modal-dialog .usa-button {
   font-size: 16px;
+}
+
+body .fba-modal-dialog {
+  max-width: fit-content;
+  text-wrap: nowrap;
+}
+
+.fba-modal-dialog .usa-radio__input--tile + [class*=__label]::before {
+  margin-top: 3px;
 }
