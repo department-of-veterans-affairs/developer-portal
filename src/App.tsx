@@ -80,12 +80,6 @@ const App = (): JSX.Element => {
 
   const location = useLocation();
   React.useEffect(() => {
-    // Remove the hidden "Skip to feedback" element so it doesn't interfere with existing tab navigation
-    const skipToFeedbackElement = document.querySelector('.usa-skipnav.touchpoints-skipnav');
-    if (skipToFeedbackElement) {
-      skipToFeedbackElement.remove();
-    }
-
     // Adjust on component mount
     adjustSurveyPosition();
 
