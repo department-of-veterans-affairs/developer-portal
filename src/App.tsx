@@ -80,6 +80,25 @@ const App = (): JSX.Element => {
 
   const location = useLocation();
   React.useEffect(() => {
+    // Move the hidden "Skip to feedback" element so it doesn't interfere with tab navigation
+    const skipToFeedbackElement = document.querySelector('.usa-skipnav.touchpoints-skipnav');
+    const newParent = document.querySelector('body #root');
+    if (skipToFeedbackElement && newParent) {
+      newParent.appendChild(skipToFeedbackElement);
+    }
+
+    // Move the Touchpoints feedback modal element so it doesn't interfere with accessibility
+    const feedbackModalElement = document.querySelector('.fba-modal');
+    if (feedbackModalElement && newParent) {
+      newParent.appendChild(feedbackModalElement);
+    }
+
+    // Move the Touchpoints feedback button element so it doesn't interfere with accessibility
+    const feedbackButtonElement = document.querySelector('#fba-button');
+    if (feedbackButtonElement && newParent) {
+      newParent.appendChild(feedbackButtonElement);
+    }
+
     // Adjust on component mount
     adjustSurveyPosition();
 
