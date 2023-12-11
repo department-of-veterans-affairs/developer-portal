@@ -50,6 +50,38 @@ const App = (): JSX.Element => {
     };
   };
 
+  // Move Touchpoints content into an <aside> to aid accessibility
+  const moveTouchpointsToAsideElement = (): void => {
+    const newParent = document.querySelector('body #root');
+
+    // Create the Touchpoints <aside> element if it doesn't already exist
+    let feedbackAsideElement = document.getElementById('feedback-aside');
+    if (!feedbackAsideElement && newParent) {
+      feedbackAsideElement = document.createElement('aside');
+      feedbackAsideElement.setAttribute('id', 'feedback-aside');
+      feedbackAsideElement.setAttribute('aria-label', 'Feedback Section');
+      newParent.appendChild(feedbackAsideElement);
+    }
+
+    // Move the hidden "Skip to feedback" element into the <aside>
+    const skipToFeedbackElement = document.querySelector('.usa-skipnav.touchpoints-skipnav');
+    if (skipToFeedbackElement && feedbackAsideElement) {
+      feedbackAsideElement.appendChild(skipToFeedbackElement);
+    }
+
+    // Move the Touchpoints feedback modal into the <aside>
+    const feedbackModalElement = document.querySelector('.fba-modal');
+    if (feedbackModalElement && feedbackAsideElement) {
+      feedbackAsideElement.appendChild(feedbackModalElement);
+    }
+
+    // Move the Touchpoints feedback button into the <aside>
+    const feedbackButtonElement = document.querySelector('#fba-button');
+    if (feedbackButtonElement && feedbackAsideElement) {
+      feedbackAsideElement.appendChild(feedbackButtonElement);
+    }
+  };
+
   // Adjust vertical positioning of Touchpoint survey button
   const adjustSurveyPosition = (): void => {
     const touchpointButton = document.querySelector('#fba-button');
@@ -80,26 +112,7 @@ const App = (): JSX.Element => {
 
   const location = useLocation();
   React.useEffect(() => {
-    // Move the hidden "Skip to feedback" element so it doesn't interfere with tab navigation
-    const skipToFeedbackElement = document.querySelector('.usa-skipnav.touchpoints-skipnav');
-    const newParent = document.querySelector('body #root');
-    if (skipToFeedbackElement && newParent) {
-      newParent.appendChild(skipToFeedbackElement);
-    }
-
-    // Move the Touchpoints feedback modal element so it doesn't interfere with accessibility
-    const feedbackModalElement = document.querySelector('.fba-modal');
-    if (feedbackModalElement && newParent) {
-      newParent.appendChild(feedbackModalElement);
-    }
-
-    // Move the Touchpoints feedback button element so it doesn't interfere with accessibility
-    const feedbackButtonElement = document.querySelector('#fba-button');
-    if (feedbackButtonElement && newParent) {
-      newParent.appendChild(feedbackButtonElement);
-    }
-
-    // Adjust on component mount
+    moveTouchpointsToAsideElement();
     adjustSurveyPosition();
 
     // Use the "debounce" function to help regulate the "handleScroll" function
