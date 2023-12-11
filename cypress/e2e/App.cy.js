@@ -29,9 +29,9 @@ describe('App wide tests', () => {
     }).as('LPB datastore');
   });
 
-  it('Skip navigation should receive focus on second tab after homepage load', () => {
+  it('Skip navigation should receive focus on first tab after homepage load', () => {
     cy.visit('/');
-    cy.get('body').tab().tab();
+    cy.get('body').tab();
     cy.focused().realHover().should('contain.text', 'Skip to main content').click();
     cy.focused().should('have.id', 'main');
   });
