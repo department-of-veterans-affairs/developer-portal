@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { PageHeader } from '../components';
 
 const TermsOfService = (): JSX.Element => (
-  <section className="vads-u-padding-y--5">
+  <section className="vads-u-padding-y--5" aria-labelledby="page-header">
     <div className="vads-l-grid-container">
       <div>
         <Helmet>
