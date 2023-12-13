@@ -40,7 +40,7 @@ const App = (): JSX.Element => {
   }, []);
 
   // Debounce function to help limit the firing of another function
-  const debounce = (func: () => void, delay: number): () => void => {
+  const debounce = (func: () => void, delay: number): (() => void) => {
     let inDebounce: ReturnType<typeof setTimeout> | null;
     return (): void => {
       if (inDebounce !== null) {
@@ -110,9 +110,12 @@ const App = (): JSX.Element => {
     }
   };
 
+  setTimeout(() => {
+    moveTouchpointsToAsideElement();
+    adjustSurveyPosition();
+  }, 0);
   const location = useLocation();
   React.useEffect(() => {
-    moveTouchpointsToAsideElement();
     adjustSurveyPosition();
 
     // Use the "debounce" function to help regulate the "handleScroll" function
