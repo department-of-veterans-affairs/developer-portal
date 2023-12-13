@@ -25,6 +25,27 @@ interface VaNetworkAvailableState {
   status: 'unknown' | 'start-test' | 'testing' | 'connected' | 'unavailable';
 }
 
+const CustomButtonForSurveyModal = (): JSX.Element => {
+  React.useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://touchpoints.app.cloud.gov/touchpoints/e2f23ac3.js';
+    script.defer = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  return (
+    <aside>
+      <button id="touchpoints-survey" className="fixed-tab-button usa-button" type="button">
+        Help improve this site
+      </button>
+    </aside>
+  );
+};
+
 const PageContent = (): JSX.Element => {
   const mainRef = React.useRef<HTMLElement>(null);
   const prevPathRef = React.useRef<string | null>(null);
@@ -49,6 +70,60 @@ const PageContent = (): JSX.Element => {
       }
       prevPathRef.current = location.pathname;
     }
+
+    // Debounce function to help limit the firing of another function
+    const debounce = (func: () => void, delay: number): (() => void) => {
+      let inDebounce: ReturnType<typeof setTimeout> | null;
+      return (): void => {
+        if (inDebounce !== null) {
+          clearTimeout(inDebounce);
+        }
+        inDebounce = setTimeout(func, delay);
+      };
+    };
+
+    // Adjust vertical positioning of Touchpoint survey button
+    const adjustSurveyPosition = (): void => {
+      const touchpointButton = document.querySelector('#touchpoints-survey');
+      const touchpointElement = touchpointButton instanceof HTMLElement ? touchpointButton : null;
+      const footer = document.querySelector('footer');
+
+      if (!touchpointElement || !footer) {
+        return;
+      }
+
+      const footerHeight = footer.offsetHeight;
+      const footerTop = footer.offsetTop;
+      const documentHeight = document.body.scrollHeight;
+      const viewportHeight = window.innerHeight;
+
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const viewportBottom = scrollTop + viewportHeight;
+
+      if (viewportBottom >= footerTop) {
+        const overlap = viewportBottom - footerTop;
+        touchpointElement.style.bottom = `${overlap}px`;
+      } else if (documentHeight <= viewportHeight) {
+        touchpointElement.style.bottom = `${footerHeight}px`;
+      } else {
+        touchpointElement.style.bottom = '0px';
+      }
+    };
+
+    setTimeout(() => {
+      adjustSurveyPosition();
+    }, 0);
+
+    // Use the "debounce" function to help regulate the "handleScroll" function
+    const debouncedHandleScroll = debounce(() => {
+      adjustSurveyPosition();
+    }, 100);
+
+    window.addEventListener('scroll', debouncedHandleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', debouncedHandleScroll);
+    };
   }, [location]);
 
   const closeVaNetworkModal = (): void => {
@@ -128,6 +203,7 @@ const PageContent = (): JSX.Element => {
           )}
         </VaModal>
       </ErrorBoundary>
+      <CustomButtonForSurveyModal />
     </main>
   );
 };

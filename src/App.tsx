@@ -13,6 +13,7 @@ import { RootState } from './types';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/atom-one-dark-reasonable-overrides.scss';
+import './styles/touchstone-survey-overrides.scss';
 import './styles/base.scss';
 import { SiteRedirects } from './components/SiteRedirects';
 
