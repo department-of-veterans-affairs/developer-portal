@@ -41,14 +41,18 @@ const snapshotOptions = {
 
 function testVisualRegressions(path, size, offset) {
   cy.wait(1000);
+  cy.get('html').invoke('css', 'height', 'initial');
+  cy.get('body').invoke('css', 'height', 'initial');
+  cy.wait(1000);
   const strippedUrlPath = path.replace(/\//g, '-').substring(1);
   const formattedPath = strippedUrlPath ? strippedUrlPath : 'homepage';
-  cy.get('div[id=main]').invoke('css', 'position', 'absolute').invoke('css', 'width', '100%')
+  cy.get('#main');
+  cy.get('html').invoke('css', 'height', 'initial');
+  cy.get('body').invoke('css', 'height', 'initial');
   cy.wait(1000);
   if (offset) {
     cy.scrollTo(0, offset);
     cy.wait(1000);
-    cy.get('div[id=main]').invoke('css', 'position', 'absolute').invoke('css', 'width', '100%')
     cy.matchImageSnapshot(`${formattedPath}-${size.count}-${offset}`, {
       ...snapshotOptions,
       capture: 'viewport',
