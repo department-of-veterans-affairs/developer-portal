@@ -33,7 +33,6 @@ const testPaths = [
 
 const imageSnapshotsDir = path.resolve(__dirname, '../../test/image_snapshots');
 const snapshotOptions = {
-  blackout: ['#touchpoints-survey'],
   capture: 'fullPage',
   customSnapshotsDir: imageSnapshotsDir,
   failureThreshold: 0.01,
