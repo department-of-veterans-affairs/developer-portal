@@ -71,14 +71,24 @@ const PageContent = (): JSX.Element => {
       prevPathRef.current = location.pathname;
     }
 
-    // Debounce function to help limit the firing of another function
-    const debounce = (func: () => void, delay: number): (() => void) => {
-      let inDebounce: ReturnType<typeof setTimeout> | null;
+    // Throttle function to help limit the firing of another function
+    const throttle = (func: () => void, limit: number): (() => void) => {
+      let lastFunc: ReturnType<typeof setTimeout>;
+      let lastRan: number | null = null;
+
       return (): void => {
-        if (inDebounce !== null) {
-          clearTimeout(inDebounce);
+        if (lastRan === null) {
+          func();
+          lastRan = Date.now();
+        } else {
+          clearTimeout(lastFunc);
+          lastFunc = setTimeout(() => {
+            if (lastRan !== null && (Date.now() - lastRan) >= limit) {
+              func();
+              lastRan = Date.now();
+            }
+          }, limit - (Date.now() - lastRan));
         }
-        inDebounce = setTimeout(func, delay);
       };
     };
 
@@ -114,15 +124,15 @@ const PageContent = (): JSX.Element => {
       adjustSurveyPosition();
     }, 0);
 
-    // Use the "debounce" function to help regulate the "handleScroll" function
-    const debouncedHandleScroll = debounce(() => {
+    // Use the "throttle" function to help regulate the "adjustSurveyPosition" function
+    const throttleHandleScroll = throttle(() => {
       adjustSurveyPosition();
     }, 100);
 
-    window.addEventListener('scroll', debouncedHandleScroll);
+    window.addEventListener('scroll', throttleHandleScroll);
 
     return () => {
-      window.removeEventListener('scroll', debouncedHandleScroll);
+      window.removeEventListener('scroll', throttleHandleScroll);
     };
   }, [location]);
 
