@@ -33,7 +33,7 @@ describe('Documentation Root', () => {
   });
 
   it('Side nav does not link to Sandbox Access form on internal APIs', () => {
-    cy.visit('/explore/api/appeals');
-    cy.get('[href="/explore/api/appeals/sandbox-access').should('not.exist');
+    cy.visit('/explore/api/appeals-status');
+    cy.get('[href="/explore/api/appeals-status/sandbox-access').should('not.exist');
   });
 });
