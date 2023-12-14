@@ -92,12 +92,12 @@ const PageContent = (): JSX.Element => {
       };
     };
 
+    const touchpointButton = document.querySelector('#touchpoints-survey');
+    const touchpointElement = touchpointButton instanceof HTMLElement ? touchpointButton : null;
+    const footer = document.querySelector('footer');
+
     // Adjust vertical positioning of Touchpoint survey button
     const adjustSurveyPosition = (): void => {
-      const touchpointButton = document.querySelector('#touchpoints-survey');
-      const touchpointElement = touchpointButton instanceof HTMLElement ? touchpointButton : null;
-      const footer = document.querySelector('footer');
-
       if (!touchpointElement || !footer) {
         return;
       }
