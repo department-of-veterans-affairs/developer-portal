@@ -40,6 +40,8 @@ const snapshotOptions = {
 };
 
 function testVisualRegressions(path, size, offset) {
+  // Don't allow the Touchpoints survey button to clutter visual regressions
+  cy.get('#touchpoints-survey').invoke('remove');
   cy.wait(1000);
   cy.get('html').invoke('css', 'height', 'initial');
   cy.get('body').invoke('css', 'height', 'initial');
