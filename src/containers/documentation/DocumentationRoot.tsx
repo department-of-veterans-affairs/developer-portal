@@ -25,13 +25,29 @@ const getApi = (apiName?: string): APIDescription | null => {
 export { getApi };
 
 const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
+  const { userId, hash } = useParams();
   const { api } = props;
   return (
     <>
       <SideNavEntry end name={api.name} to="." />
       <SideNavEntry end name="Docs" subNavLevel={1} to="docs" />
       {!!api.oAuthTypes?.includes('AuthorizationCodeGrant') && (
-        <SideNavEntry end name="Authorization Code Grant" subNavLevel={1} to="authorization-code" />
+        <>
+          <SideNavEntry
+            end
+            name="Authorization Code Grant"
+            subNavLevel={1}
+            to="authorization-code"
+          />
+          {userId && hash && (
+            <SideNavEntry
+              end
+              name="Test Users"
+              subNavLevel={2}
+              to={`test-users-data/${userId}/${hash}`}
+            />
+          )}
+        </>
       )}
       {!!api.oAuthTypes?.includes('ClientCredentialsGrant') && (
         <SideNavEntry end name="Client Credentials Grant" subNavLevel={1} to="client-credentials" />
