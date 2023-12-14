@@ -43,7 +43,7 @@ export const AuthFilters = ({
 
   const toggleAuthOpen = (): void => setIsAuthOpen(prevState => !prevState);
 
-  useOutsideGroupClick([authButtonRef, authContainerRef], () => {
+  useOutsideGroupClick([authButtonRef, authButtonRef2, authContainerRef], () => {
     if (isAuthOpen) {
       toggleAuthOpen();
     }
@@ -52,10 +52,14 @@ export const AuthFilters = ({
   const handleFormSubmit = (values: AuthFilterValues): void => {
     toggleAuthOpen();
     handleAuthTypeFilterSubmit(values);
-    if (authButtonRef.current && authButtonRef.current.style.display !== 'none') {
-      authButtonRef.current.focus();
-    } else if (authButtonRef2.current && authButtonRef2.current.style.display !== 'none') {
-      authButtonRef2.current.focus();
+    const isDesktopButtonVisible =
+      authButtonRef.current && window.getComputedStyle(authButtonRef.current).display !== 'none';
+    const isMobileButtonVisible =
+      authButtonRef2.current && window.getComputedStyle(authButtonRef2.current).display !== 'none';
+    if (isDesktopButtonVisible) {
+      authButtonRef.current?.focus();
+    } else if (isMobileButtonVisible) {
+      authButtonRef2.current?.focus();
     }
   };
 

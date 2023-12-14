@@ -57,10 +57,15 @@ export const TopicFilters = ({
   const handleFormSubmit = (values: TopicFilterValues): void => {
     toggleTopicOpen();
     handleTopicFilterSubmit(values);
-    if (topicButtonRef.current && topicButtonRef.current.style.display !== 'none') {
-      topicButtonRef.current.focus();
-    } else if (topicButtonRef2.current && topicButtonRef2.current.style.display !== 'none') {
-      topicButtonRef2.current.focus();
+    const isDesktopButtonVisible =
+      topicButtonRef.current && window.getComputedStyle(topicButtonRef.current).display !== 'none';
+    const isMobileButtonVisible =
+      topicButtonRef2.current &&
+      window.getComputedStyle(topicButtonRef2.current).display !== 'none';
+    if (isDesktopButtonVisible) {
+      topicButtonRef.current?.focus();
+    } else if (isMobileButtonVisible) {
+      topicButtonRef2.current?.focus();
     }
   };
 

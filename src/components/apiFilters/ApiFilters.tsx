@@ -160,6 +160,8 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     if (isMobileMenuVisible) {
       toggleMobileMenu();
     }
+    const searchInput = document.getElementById('fuzzy-search') as HTMLInputElement;
+    searchInput.focus();
   };
 
   const clearTopicFilter = (urlFragment: string): void => {
@@ -182,6 +184,8 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setSearch('');
     updateApis([], [], '');
     applyQueryStringFilters({}, '/explore');
+    const header = document.querySelector('#page-header') as HTMLElement;
+    header.focus();
   };
 
   useOutsideGroupClick([filterButtonRef, filterContainerRef], () => {
