@@ -14,3 +14,7 @@ body .fba-modal-dialog {
 .fba-modal-dialog .usa-radio__input--tile + [class*=__label]::before {
   margin-top: 3px;
 }
+
+.usa-legend, .usa-label {
+  text-wrap: nowrap;
+}
