@@ -89,7 +89,6 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
 
   const handleTopicFilterSubmit = (values: TopicFilterValues): void => {
     updateApis(values.topics, authFilter, search);
-    setTopicFilter(values.topics);
     if (values.topics.length > 0) {
       navigate(
         {
@@ -110,6 +109,22 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     window.scrollTo(0, 0);
     if (isMobileMenuVisible) {
       toggleMobileMenu();
+    }
+    setTopicFilter(values.topics);
+    const desktopTopicButton = document.getElementById(
+      'topic-filter-button-desktop',
+    ) as HTMLButtonElement;
+    const mobileTopicButton = document.getElementById(
+      'topic-filter-button-mobile',
+    ) as HTMLButtonElement;
+    const isDesktopTopicButtonVisible =
+      window.getComputedStyle(desktopTopicButton).display !== 'none';
+    const isMobileTopicButtonVisible =
+      window.getComputedStyle(mobileTopicButton).display !== 'none';
+    if (isDesktopTopicButtonVisible) {
+      desktopTopicButton.focus();
+    } else if (isMobileTopicButtonVisible) {
+      mobileTopicButton.focus();
     }
   };
 
@@ -142,6 +157,20 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     window.scrollTo(0, 0);
     if (isMobileMenuVisible) {
       toggleMobileMenu();
+    }
+    const desktopAuthButton = document.getElementById(
+      'auth-filter-button-desktop',
+    ) as HTMLButtonElement;
+    const mobileAuthButton = document.getElementById(
+      'auth-filter-button-mobile',
+    ) as HTMLButtonElement;
+    const isDesktopAuthButtonVisible =
+      window.getComputedStyle(desktopAuthButton).display !== 'none';
+    const isMobileAuthButtonVisible = window.getComputedStyle(mobileAuthButton).display !== 'none';
+    if (isDesktopAuthButtonVisible) {
+      desktopAuthButton.focus();
+    } else if (isMobileAuthButtonVisible) {
+      mobileAuthButton.focus();
     }
   };
 
@@ -302,19 +331,13 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
           <div className={filterControlsClasses}>
             <TopicFilters
               handleTopicFilterSubmit={handleTopicFilterSubmit}
-              key={`topic-${topicFilter.join('')}`}
               topicFilter={topicFilter}
             />
             <AuthFilters
               authFilter={authFilter}
               handleAuthTypeFilterSubmit={handleAuthTypeFilterSubmit}
-              key={`authType-${topicFilter.join('')}`}
             />
-            <SearchFilters
-              handleSearchSubmit={handleSearchSubmit}
-              search={search}
-              key={`search-${search}`}
-            />
+            <SearchFilters handleSearchSubmit={handleSearchSubmit} search={search} />
           </div>
           <div className="caption-container vads-u-display--none medium-screen:vads-u-display--flex">
             <p className="vads-u-margin-y--0 vads-u-font-family--serif">

@@ -57,16 +57,6 @@ export const TopicFilters = ({
   const handleFormSubmit = (values: TopicFilterValues): void => {
     toggleTopicOpen();
     handleTopicFilterSubmit(values);
-    const isDesktopButtonVisible =
-      topicButtonRef.current && window.getComputedStyle(topicButtonRef.current).display !== 'none';
-    const isMobileButtonVisible =
-      topicButtonRef2.current &&
-      window.getComputedStyle(topicButtonRef2.current).display !== 'none';
-    if (isDesktopButtonVisible) {
-      topicButtonRef.current?.focus();
-    } else if (isMobileButtonVisible) {
-      topicButtonRef2.current?.focus();
-    }
   };
 
   const topicFilterAriaLabel =
@@ -89,6 +79,7 @@ export const TopicFilters = ({
             name="explore-topic-filter"
           >
             <button
+              id="topic-filter-button-desktop"
               aria-expanded={isTopicOpen}
               aria-label={topicFilterAriaLabel}
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
@@ -104,6 +95,7 @@ export const TopicFilters = ({
               />
             </button>
             <button
+              id="topic-filter-button-mobile"
               aria-expanded={isTopicOpen}
               aria-label={topicFilterAriaLabel}
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"

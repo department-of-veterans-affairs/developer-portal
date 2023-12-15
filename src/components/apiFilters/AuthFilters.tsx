@@ -52,15 +52,6 @@ export const AuthFilters = ({
   const handleFormSubmit = (values: AuthFilterValues): void => {
     toggleAuthOpen();
     handleAuthTypeFilterSubmit(values);
-    const isDesktopButtonVisible =
-      authButtonRef.current && window.getComputedStyle(authButtonRef.current).display !== 'none';
-    const isMobileButtonVisible =
-      authButtonRef2.current && window.getComputedStyle(authButtonRef2.current).display !== 'none';
-    if (isDesktopButtonVisible) {
-      authButtonRef.current?.focus();
-    } else if (isMobileButtonVisible) {
-      authButtonRef2.current?.focus();
-    }
   };
 
   const authFilterAriaLabel =
@@ -75,6 +66,7 @@ export const AuthFilters = ({
         render={(): JSX.Element => (
           <Form className="explore-filter-form" noValidate name="explore-auth-filter">
             <button
+              id="auth-filter-button-desktop"
               aria-expanded={isAuthOpen}
               aria-label={authFilterAriaLabel}
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
@@ -90,6 +82,7 @@ export const AuthFilters = ({
               />
             </button>
             <button
+              id="auth-filter-button-mobile"
               aria-expanded={isAuthOpen}
               aria-label={authFilterAriaLabel}
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"
