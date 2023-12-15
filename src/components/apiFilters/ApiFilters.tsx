@@ -213,8 +213,8 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setSearch('');
     updateApis([], [], '');
     applyQueryStringFilters({}, '/explore');
-    const header = document.querySelector('#page-header') as HTMLElement;
-    header.focus();
+    const header = document.querySelector('#page-header');
+    (header as HTMLElement | null)?.focus();
   };
 
   useOutsideGroupClick([filterButtonRef, filterContainerRef], () => {
