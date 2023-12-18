@@ -85,6 +85,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           )}
         >
           <button
+            aria-label="Close"
             aria-expanded={isSearchBarVisible}
             className={classNames(
               'va-api-mobile-nav-close',
