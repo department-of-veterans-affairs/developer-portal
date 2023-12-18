@@ -13,12 +13,12 @@ import { PageHeader } from '../../components';
 
 import './TestUsersPage.scss';
 import { ResponseType, makeRequest } from '../../utils/makeRequest';
-import { testUsersGitHubUrl } from '../../utils/testUsersHelper';
+import { TestUser, isPasswordUniform, testUsersGitHubUrl } from '../../utils/testUsersHelper';
 import { getApi } from './DocumentationRoot';
 
 const TestUsersPage = (): JSX.Element => {
   const [testUserAccess, setTestUserAccess] = React.useState(testUserAccessState.IN_PROGRESS);
-  const [testUsers, setTestUsers] = React.useState<unknown[]>([]);
+  const [testUsers, setTestUsers] = React.useState<TestUser[]>([]);
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
   const { urlSlug, userId, hash } = useParams();
   const api = getApi(urlSlug);
@@ -57,7 +57,7 @@ const TestUsersPage = (): JSX.Element => {
           const responseData = data as {
             ok: boolean;
             status: number;
-            body: unknown[];
+            body: TestUser[];
           };
           // eslint-disable-next-line no-console
           console.log(responseData.body);
@@ -118,8 +118,10 @@ const TestUsersPage = (): JSX.Element => {
               <li>Choose an account that meets the use case for your needs and API. </li>
               <li>Select ID.me to sign in to the sandbox environment.</li>
               <li>
-                Enter the ID.me username and password. The password for all ID.me test accounts is:
-                Password1234!
+                Enter the ID.me username and password.{' '}
+                {isPasswordUniform('idme', testUsers) && (
+                  <>The password for all ID.me test accounts is: Password1234!</>
+                )}
               </li>
               <li>
                 Don&apos;t change any preselected answers when asked about receiving an
@@ -132,8 +134,10 @@ const TestUsersPage = (): JSX.Element => {
               <li>Choose an account that meets the use case for your needs and API. </li>
               <li>Select Login.gov to sign in to the sandbox environment.</li>
               <li>
-                Enter the Login.gov username and password. The password for all Login.gov test
-                accounts is: Password12345!!!
+                Enter the Login.gov username and password.{' '}
+                {isPasswordUniform('logingov', testUsers) && (
+                  <>The password for all Login.gov test accounts is: Password12345!!!</>
+                )}
               </li>
               <li>
                 Use the Login.gov MFA seed to generate a 2FA code with an app such as Google
@@ -141,18 +145,51 @@ const TestUsersPage = (): JSX.Element => {
               </li>
             </ol>
 
-            <p>Password for all ID.me accounts: Password1234!</p>
-            <p>Password for all Login.gov accounts: Password12345!!!</p>
+            {isPasswordUniform('idme', testUsers) && (
+              <p>Password for all ID.me accounts: Password1234!</p>
+            )}
+            {isPasswordUniform('logingov', testUsers) && (
+              <p>Password for all Login.gov accounts: Password12345!!!</p>
+            )}
 
             <h2>Test user credentials for the {api.name}</h2>
 
-            <ul>
-              {testUsers.map((user: { icn: number; name_given: string; name_family: string }) => (
-                <li key={user.icn}>
-                  {user.name_given} {user.name_family}
-                </li>
-              ))}
-            </ul>
+            <table>
+              <thead>
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>ID</th>
+                  <th>ICN</th>
+                  <th>SSN</th>
+                  <th>Login.gov</th>
+                  <th>ID.me</th>
+                </tr>
+              </thead>
+              <tbody>
+                {testUsers.map((user: TestUser) => (
+                  <tr key={user.icn}>
+                    <td>{user.name_given}</td>
+                    <td>{user.name_family}</td>
+                    <td>{user.id}</td>
+                    <td>{user.icn}</td>
+                    <td>{user.ssn}</td>
+                    <td>
+                      Email: {user.credentials.logingov.username}
+                      <br />
+                      Password: {user.credentials.logingov.password}
+                      <br />
+                      2-Factor Seed: {user.credentials.logingov.seed}
+                    </td>
+                    <td>
+                      Email: {user.credentials.idme.username}
+                      <br />
+                      Password: {user.credentials.idme.password}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </>
         )}
       </div>

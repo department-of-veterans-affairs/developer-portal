@@ -1,3 +1,29 @@
+/* eslint-disable no-console */
+export interface TestUser {
+  credentials: TestUserCredentials;
+  icn: string;
+  id: string;
+  name_family: string;
+  name_given: string;
+  ssn: string;
+}
+interface TestUserCredentials {
+  [key: string]: TestUserCredential;
+  idme: TestUserCredential;
+  logingov: TestUserCredential;
+}
+interface TestUserCredential {
+  username: string;
+  password: string;
+  seed?: string;
+}
+
+export const isPasswordUniform = (key: string, data: TestUser[]): boolean => {
+  const firstPassword = data[0].credentials[key].password;
+  // some returns true if there is a non-uniform password, return the reverse of that
+  return !data.some((user: TestUser): boolean => firstPassword !== user.credentials[key].password);
+};
+
 export const testUsersGitHubUrl = (urlSlug: string | undefined): string => {
   let filename = 'https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/';
   switch (urlSlug) {
