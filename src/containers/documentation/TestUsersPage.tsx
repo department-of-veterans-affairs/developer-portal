@@ -2,7 +2,7 @@ import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { Helmet } from 'react-helmet';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import {
   LPB_TEST_USER_ACCESS_URL,
@@ -13,6 +13,7 @@ import { PageHeader } from '../../components';
 
 import './TestUsersPage.scss';
 import { ResponseType, makeRequest } from '../../utils/makeRequest';
+import { testUsersGitHubUrl } from '../../utils/testUsersHelper';
 import { getApi } from './DocumentationRoot';
 
 const TestUsersPage = (): JSX.Element => {
@@ -79,24 +80,82 @@ const TestUsersPage = (): JSX.Element => {
         <title>{api.name} Test Users</title>
       </Helmet>
       <PageHeader header="Test Users" subText={api.name} />
-      {testUserAccess === testUserAccessState.ACCESS_BLOCKED && (
-        <p>
-          There was an error requesting access for the test user data. Please recheck your link in
-          your sandbox access signup email or request access by signing up for Sandbox Access.
-        </p>
-      )}
-      {testUserAccess === testUserAccessState.ACCESS_PERMITTED && (
-        <>
-          <p>Here&apos;s some test user data:</p>
-          <ul>
-            {testUsers.map((user: { icn: number; name_given: string; name_family: string }) => (
-              <li key={user.icn}>
-                {user.name_given} {user.name_family}
+      <div className="va-api-authorization-docs">
+        {testUserAccess === testUserAccessState.ACCESS_BLOCKED && (
+          <p>
+            There was an error requesting access for the test user data. Please recheck your link in
+            your sandbox access signup email or request access by signing up for Sandbox Access.
+          </p>
+        )}
+        {testUserAccess === testUserAccessState.ACCESS_PERMITTED && (
+          <>
+            <p>
+              This page contains login instructions for ID.me and Login.gov and account credentials
+              for test users for the <Link to={`/explore/api/${api.urlSlug}`}>{api.name}</Link>.
+            </p>
+            <h2>How to use this page</h2>
+            <p>
+              Find the test users on the corresponding{' '}
+              <a href={testUsersGitHubUrl(api.urlSlug)} target="blank">
+                test accounts GitHub page
+              </a>{' '}
+              that will meet your use case. Then, locate those test users on this page to get the
+              credentials you need. Follow the instructions for using either ID.me or Login.gov and
+              instructions for{' '}
+              <Link to={`/explore/api/${api.urlSlug}/authorization-code`}>
+                authorization code grant
+              </Link>
+              .
+            </p>
+            <p>
+              We suggest bookmarking both this page and the test accounts GitHub page so you can
+              return to them if you need other test accounts. The links to these pages do not
+              expire.
+            </p>
+            <h3>Logging in with ID.me</h3>
+            <p>To log in to the sandbox environment using ID.me, make sure you:</p>
+            <ol>
+              <li>Choose an account that meets the use case for your needs and API. </li>
+              <li>Select ID.me to sign in to the sandbox environment.</li>
+              <li>
+                Enter the ID.me username and password. The password for all ID.me test accounts is:
+                Password1234!
               </li>
-            ))}
-          </ul>
-        </>
-      )}
+              <li>
+                Don&apos;t change any preselected answers when asked about receiving an
+                authentication code. Just click “Continue” to go to the next step.
+              </li>
+            </ol>
+            <h3>Logging in with Login.gov</h3>
+            <p>To log in to the sandbox environment using Login.gov, make sure you:</p>
+            <ol>
+              <li>Choose an account that meets the use case for your needs and API. </li>
+              <li>Select Login.gov to sign in to the sandbox environment.</li>
+              <li>
+                Enter the Login.gov username and password. The password for all Login.gov test
+                accounts is: Password12345!!!
+              </li>
+              <li>
+                Use the Login.gov MFA seed to generate a 2FA code with an app such as Google
+                Authenticator or Authy.
+              </li>
+            </ol>
+
+            <p>Password for all ID.me accounts: Password1234!</p>
+            <p>Password for all Login.gov accounts: Password12345!!!</p>
+
+            <h2>Test user credentials for the {api.name}</h2>
+
+            <ul>
+              {testUsers.map((user: { icn: number; name_given: string; name_family: string }) => (
+                <li key={user.icn}>
+                  {user.name_given} {user.name_family}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
     </>
   );
 };
