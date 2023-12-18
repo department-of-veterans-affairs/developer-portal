@@ -111,6 +111,7 @@ jobs:
           mkdir -p build/$BUILD_ENV/platform-backend/v0/support/contact-us
           mv legacy.json build/$BUILD_ENV/platform-backend/v0/providers/transformations/
           cp cypress/fixtures/applications-post.json build/$BUILD_ENV/platform-backend/v0/consumers/applications
+          cp cypress/fixtures/test-user-data.json build/$BUILD_ENV/platform-backend/v0/consumers/test-user-data
           touch build/$BUILD_ENV/platform-backend/v0/support/contact-us/requests
           touch build/$BUILD_ENV/platform-backend/v0/consumers/production-requests
 
