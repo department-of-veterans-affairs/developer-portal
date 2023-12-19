@@ -17,7 +17,7 @@ import { TestUser, isPasswordUniform, testUsersGitHubUrl } from '../../utils/tes
 import { getApi } from './DocumentationRoot';
 
 const TestUsersPage = (): JSX.Element => {
-  const [testUserAccess, setTestUserAccess] = React.useState(testUserAccessState.IN_PROGRESS);
+  const [testUserAccess, setTestUserAccess] = React.useState(testUserAccessState.INIT);
   const [testUsers, setTestUsers] = React.useState<TestUser[]>([]);
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
   const { urlSlug, userId, hash } = useParams();
@@ -27,14 +27,14 @@ const TestUsersPage = (): JSX.Element => {
     throw new Error('API not found');
   }
 
-  if (testUserAccess === testUserAccessState.IN_PROGRESS) {
+  if (testUserAccess === testUserAccessState.INIT) {
     try {
       setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
         path: LPB_TEST_USER_ACCESS_URL,
         sameSite: 'strict',
         secure: true,
       });
-
+      setTestUserAccess(testUserAccessState.IN_PROGRESS);
       makeRequest(
         LPB_TEST_USER_ACCESS_URL,
         {
@@ -82,10 +82,13 @@ const TestUsersPage = (): JSX.Element => {
       <PageHeader header="Test Users" subText={api.name} />
       <div className="va-api-authorization-docs">
         {testUserAccess === testUserAccessState.ACCESS_BLOCKED && (
-          <p>
-            There was an error requesting access for the test user data. Please recheck your link in
-            your sandbox access signup email or request access by signing up for Sandbox Access.
-          </p>
+          <va-alert background-only show-icon status="error" visible>
+            <p className="vads-u-margin-y--0">
+              There was an error requesting access to the test user data. Please recheck the link in
+              your sandbox access signup email or request access by signing up{' '}
+              <Link to={`/explore/api/${api.urlSlug}/sandbox-access`}>here</Link>.
+            </p>
+          </va-alert>
         )}
         {testUserAccess === testUserAccessState.ACCESS_PERMITTED && (
           <>

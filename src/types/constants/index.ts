@@ -39,6 +39,7 @@ export enum apiLoadingState {
   ERROR = 'error',
 }
 export enum testUserAccessState {
+  INIT = 'init',
   IN_PROGRESS = 'in_progress',
   ACCESS_PERMITTED = 'access_permitted',
   ACCESS_BLOCKED = 'access_blocked',
