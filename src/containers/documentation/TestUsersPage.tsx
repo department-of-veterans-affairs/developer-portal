@@ -59,8 +59,6 @@ const TestUsersPage = (): JSX.Element => {
             status: number;
             body: TestUser[];
           };
-          // eslint-disable-next-line no-console
-          console.log(responseData.body);
           setTestUsers(responseData.body);
           setTestUserAccess(testUserAccessState.ACCESS_PERMITTED);
         })

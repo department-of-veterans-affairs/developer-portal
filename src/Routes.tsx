@@ -62,7 +62,7 @@ export const SiteRoutes = (): JSX.Element => (
         <Route index element={<ApiOverviewPage />} />
         <Route path="docs" element={<ApiPage />} />
         <Route path="authorization-code" element={<AuthorizationCodeGrantDocs />} />
-        <Route path="test-users-data/:userId/:hash" element={<TestUsersPage />} />
+        <Route path="test-users/:userId/:hash" element={<TestUsersPage />} />
         <Route path="client-credentials" element={<ClientCredentialsGrantDocs />} />
         <Route path="release-notes" element={<ReleaseNotes />} />
         <Route path="sandbox-access" element={<RequestSandboxAccess />} />

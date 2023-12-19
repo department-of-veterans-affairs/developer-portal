@@ -44,7 +44,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
               end
               name="Test Users"
               subNavLevel={2}
-              to={`test-users-data/${userId}/${hash}`}
+              to={`test-users/${userId}/${hash}`}
             />
           )}
         </>
