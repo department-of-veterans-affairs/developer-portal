@@ -87,7 +87,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     setApis(activeApis);
   };
 
-  const handleTopicFilterSubmit = (values: TopicFilterValues): void => {
+  const handleTopicFilterSubmit = (values: TopicFilterValues, skipFocus?: boolean): void => {
     updateApis(values.topics, authFilter, search);
     if (values.topics.length > 0) {
       navigate(
@@ -111,6 +111,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
       toggleMobileMenu();
     }
     setTopicFilter(values.topics);
+    if (skipFocus) {
+      return;
+    }
     const desktopTopicButton = document.getElementById(
       'topic-filter-button-desktop',
     ) as HTMLButtonElement;
@@ -143,7 +146,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     );
   };
 
-  const handleAuthTypeFilterSubmit = (values: AuthFilterValues): void => {
+  const handleAuthTypeFilterSubmit = (values: AuthFilterValues, skipFocus?: boolean): void => {
     const data: FilterDataObject = {};
     if (values.authTypes.length > 0) {
       data.auth = values.authTypes.join('+');
@@ -157,6 +160,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     window.scrollTo(0, 0);
     if (isMobileMenuVisible) {
       toggleMobileMenu();
+    }
+    if (skipFocus) {
+      return;
     }
     const desktopAuthButton = document.getElementById(
       'auth-filter-button-desktop',
@@ -195,12 +201,12 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
 
   const clearTopicFilter = (urlFragment: string): void => {
     const newTopics = topicFilter.filter(e => e !== urlFragment);
-    handleTopicFilterSubmit({ topics: newTopics });
+    handleTopicFilterSubmit({ topics: newTopics }, true);
   };
 
   const clearAuthFilter = (urlSlug: string): void => {
     const newAuthTypes = authFilter.filter(e => e !== urlSlug);
-    handleAuthTypeFilterSubmit({ authTypes: newAuthTypes });
+    handleAuthTypeFilterSubmit({ authTypes: newAuthTypes }, true);
   };
 
   const clearSearchFilter = (): void => {
