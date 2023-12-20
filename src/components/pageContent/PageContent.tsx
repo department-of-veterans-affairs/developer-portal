@@ -32,6 +32,26 @@ const CustomButtonForSurveyModal = (): JSX.Element => {
     script.defer = true;
     document.body.appendChild(script);
 
+    // prevent the survey's "close" icon from scrolling back to the top of the page
+    const attachCloseIconListener = (closeIcon: HTMLElement): void => {
+      closeIcon.addEventListener('click', event => {
+        event.stopPropagation();
+      });
+    };
+
+    const initiateSurveyCloseIconCheck = (): void => {
+      const surveyCloseIcon = document.querySelector('.fba-modal-close');
+      if (surveyCloseIcon instanceof HTMLElement) {
+        attachCloseIconListener(surveyCloseIcon);
+      } else {
+        setTimeout(initiateSurveyCloseIconCheck, 500);
+      }
+    };
+
+    script.onload = (): void => {
+      initiateSurveyCloseIconCheck();
+    };
+
     return () => {
       document.body.removeChild(script);
     };
