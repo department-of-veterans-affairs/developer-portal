@@ -2,6 +2,7 @@ import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { Helmet } from 'react-helmet';
+import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import {
@@ -14,13 +15,21 @@ import { PageHeader } from '../../components';
 import './TestUsersPage.scss';
 import { ResponseType, makeRequest } from '../../utils/makeRequest';
 import { TestUser, isPasswordUniform, testUsersGitHubUrl } from '../../utils/testUsersHelper';
+import { SetUserStore, setUserStore } from '../../actions';
 import { getApi } from './DocumentationRoot';
 
+interface TestUsersPageParams {
+  urlSlug: string;
+  userId: string;
+  hash: string;
+}
+
 const TestUsersPage = (): JSX.Element => {
+  const dispatch: React.Dispatch<SetUserStore> = useDispatch();
   const [testUserAccess, setTestUserAccess] = React.useState(testUserAccessState.INIT);
   const [testUsers, setTestUsers] = React.useState<TestUser[]>([]);
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
-  const { urlSlug, userId, hash } = useParams();
+  const { urlSlug, userId, hash } = useParams() as unknown as TestUsersPageParams;
   const api = getApi(urlSlug);
 
   if (!api) {
@@ -60,6 +69,7 @@ const TestUsersPage = (): JSX.Element => {
             body: TestUser[];
           };
           setTestUsers(responseData.body);
+          dispatch(setUserStore(parseInt(userId, 10), hash));
           setTestUserAccess(testUserAccessState.ACCESS_PERMITTED);
         })
         .catch(() => {

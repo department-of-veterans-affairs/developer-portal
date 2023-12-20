@@ -4,6 +4,7 @@ import thunk, { ThunkMiddleware } from 'redux-thunk';
 import { apiVersioning } from './reducers/apiVersioning';
 import { apiList } from './reducers/apiList';
 import { generalStore } from './reducers/generalStore';
+import { userStore } from './reducers/userStore';
 import { scrollPosition } from './reducers/scrollPosition';
 import { RootState } from './types';
 
@@ -16,6 +17,7 @@ const store = createStore(
     apiVersioning,
     generalStore,
     scrollPosition,
+    userStore,
   }),
   composeEnhancers(applyMiddleware(thunk as ThunkMiddleware<RootState>)),
 );

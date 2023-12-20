@@ -13,6 +13,7 @@ import { apiVersioning } from '../reducers/apiVersioning';
 import { apiList } from '../reducers/apiList';
 import { generalStore } from '../reducers/generalStore';
 import { scrollPosition } from '../reducers/scrollPosition';
+import { userStore } from '../reducers/userStore';
 import {
   resetVersioning,
   setApis,
@@ -32,6 +33,7 @@ const store = mockStore(
     apiVersioning,
     generalStore,
     scrollPosition,
+    userStore,
   }),
 );
 
