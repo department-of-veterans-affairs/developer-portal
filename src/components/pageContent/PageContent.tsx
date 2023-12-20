@@ -109,12 +109,13 @@ const PageContent = (): JSX.Element => {
 
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const viewportBottom = scrollTop + viewportHeight;
+      const buttonFooterOffset = 7;
 
       if (viewportBottom >= footerTop) {
         const overlap = viewportBottom - footerTop;
-        touchpointElement.style.bottom = `${overlap}px`;
+        touchpointElement.style.bottom = `${overlap - buttonFooterOffset}px`;
       } else if (documentHeight <= viewportHeight) {
-        touchpointElement.style.bottom = `${footerHeight}px`;
+        touchpointElement.style.bottom = `${footerHeight - buttonFooterOffset}px`;
       } else {
         touchpointElement.style.bottom = '0px';
       }
