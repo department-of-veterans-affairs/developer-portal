@@ -3,20 +3,19 @@ import classNames from 'classnames';
 import { ScrollRestoration } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
-import { LPB_PROVIDERS_URL } from './types/constants';
-// import { setApiLoadingError, SetAPIs, setApis } from './actions';
 import { APICategories } from './apiDefs/schema';
 import { Footer, Header, PageContent } from './components';
 import { ScrollToHashElement } from './components/scrollToHashElement/ScrollToHashElement';
 import { FlagsProvider, getFlags } from './flags';
-import { RootState } from './types';
 
 import 'highlight.js/styles/atom-one-dark-reasonable.css';
 import './styles/atom-one-dark-reasonable-overrides.scss';
 import './styles/base.scss';
 import { SiteRedirects } from './components/SiteRedirects';
 import { useAppDispatch } from './hooks';
-import { setApiLoadingError, setApis } from './features/apis/apisSlice';
+import { setApiLoadingError } from './features/apis/apisSlice';
+import { UseGetApisQuery, useGetApisQuery } from './services/api';
+import { RootState } from './store';
 
 void defineCustomElements();
 
@@ -27,18 +26,12 @@ void defineCustomElements();
  */
 const App = (): JSX.Element => {
   const dispatch = useAppDispatch();
-  const apisRequest = (): Promise<unknown> =>
-    fetch(LPB_PROVIDERS_URL)
-      .then(res => res.json())
-      .then(res => res as APICategories)
-      .then(apis => dispatch(setApis(apis)))
-      .catch(() => dispatch(setApiLoadingError()));
-
+  const { error } = useGetApisQuery<UseGetApisQuery>('sandbox');
   React.useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    apisRequest();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (error) {
+      dispatch(setApiLoadingError());
+    }
+  }, [dispatch, error]);
 
   return (
     <FlagsProvider flags={getFlags()}>
