@@ -23,7 +23,7 @@ const apisSlice = createSlice({
       state.loaded = false;
     },
     setApis: (state, action: PayloadAction<APICategories>) => {
-      state.apis = action.payload.apis;
+      state.apis = action.payload;
       state.error = false;
       state.loaded = true;
     },
