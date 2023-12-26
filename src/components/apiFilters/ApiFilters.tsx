@@ -180,7 +180,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     }
   };
 
-  const handleSearchSubmit = (values: SearchFilterValues): void => {
+  const handleSearchSubmit = (values: SearchFilterValues, skipFocus?: boolean): void => {
     const data: FilterDataObject = {};
     if (authFilter.length > 0) {
       data.auth = authFilter.join('+');
@@ -194,6 +194,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
     window.scrollTo(0, 0);
     if (isMobileMenuVisible) {
       toggleMobileMenu();
+    }
+    if (skipFocus) {
+      return;
     }
     const searchInput = document.getElementById('fuzzy-search') as HTMLInputElement;
     searchInput.focus();
@@ -210,7 +213,7 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
   };
 
   const clearSearchFilter = (): void => {
-    handleSearchSubmit({ search: '' });
+    handleSearchSubmit({ search: '' }, true);
   };
 
   const clearAllFilters = (): void => {
