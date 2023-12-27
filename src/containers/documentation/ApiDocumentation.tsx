@@ -1,7 +1,8 @@
+/* eslint-disable no-console */
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import * as actions from '../../actions';
+import { setRequestedApiVersion } from '../../features/apis/apiVersioningSlice';
 import { APIDescription, ApiDescriptionPropType } from '../../apiDefs/schema';
 import { SwaggerDocs } from './SwaggerDocs';
 
@@ -19,7 +20,7 @@ const ApiDocumentationPropTypes = {
 
 const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const { apiDefinition } = props;
-  const { docSources, urlFragment } = apiDefinition;
+  const { docSources, urlSlug } = apiDefinition;
   const location = useLocation();
 
   /*
@@ -30,13 +31,14 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const apiVersion = searchParams.get('version');
 
   React.useEffect((): void => {
-    dispatch(actions.setRequestedApiVersion(apiVersion));
+    dispatch(setRequestedApiVersion(apiVersion));
   }, [dispatch, apiVersion, location.pathname]);
 
   /*
    * RENDER
    */
-  return <SwaggerDocs docSource={docSources[0]} apiName={urlFragment} />;
+  console.log('render SwaggerDocs', docSources[0], urlSlug);
+  return <SwaggerDocs docSource={docSources[0]} apiName={urlSlug} />;
 };
 
 ApiDocumentation.propTypes = ApiDocumentationPropTypes;

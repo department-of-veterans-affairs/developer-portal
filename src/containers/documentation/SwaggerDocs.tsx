@@ -1,22 +1,22 @@
+/* eslint-disable no-console */
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import SwaggerUI from 'swagger-ui';
-import { usePrevious } from '../../hooks';
+import { useAppDispatch, usePrevious } from '../../hooks';
 import {
   resetVersioning,
   ResetVersioning,
-  setVersioning,
-  SetVersioning,
   setRequestedApiVersion,
   SetRequestedAPIVersion,
 } from '../../actions';
 import { APIDocSource } from '../../apiDefs/schema';
-import { getDocURL, getVersion, getVersionNumber } from '../../reducers/apiVersioning';
-import { APIMetadata, RootState, VersionMetadata } from '../../types';
-import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
+import { getVersionNumber, setVersioning } from '../../features/apis/apiVersioningSlice';
+import { getDocURL, getVersion } from '../../reducers/apiVersioning';
+import { APIMetadata, APIVersioning, RootState, VersionMetadata } from '../../types';
+import { CURRENT_VERSION_IDENTIFIER, OPEN_API_SPEC_HOST } from '../../types/constants';
 import { SwaggerPlugins, System } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
@@ -73,8 +73,8 @@ const renderSwaggerUI = (
 };
 
 const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
-  const dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning> =
-    useDispatch();
+  const appDispatch = useAppDispatch();
+  const dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion> = useDispatch();
 
   const defaultUrlSelector = (state: RootState): string => getDocURL(state.apiVersioning);
   const defaultUrl = useSelector(defaultUrlSelector);
@@ -82,9 +82,11 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const navigate = useNavigate();
   const versionNumberSelector = (state: RootState): string => getVersionNumber(state.apiVersioning);
   const versionNumber = useSelector(versionNumberSelector);
+  console.log('versionNumber', versionNumber);
   const versionsSelector = (state: RootState): VersionMetadata[] | null =>
     state.apiVersioning.versions;
   const versions = useSelector(versionsSelector);
+  console.log('versions', versions);
 
   // Retrieve an initial version from the params so we can compare it under our effects down below
   const initializing = React.useRef(true);
@@ -100,18 +102,38 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
    * UPDATE DOCS WHEN API NAME CHANGES
    */
   const { apiName } = props;
-  const { openApiUrl, metadataUrl } = props.docSource;
+  const { metadataUrl } = props.docSource;
   const prevApiName = usePrevious(apiName);
 
   const setMetadataAndDocUrl = React.useCallback(() => {
+    console.log('run setMetadataAndDocUrl');
     const doSet = async (): Promise<void> => {
       const metadataVersions = await getVersionsFromMetadata(metadataUrl);
+      console.log('metadataVersions', metadataVersions);
       const paramsVersion = getVersionFromParams(location.search);
-
-      dispatch(setVersioning(openApiUrl, metadataVersions, paramsVersion));
+      console.log('paramsVersion', paramsVersion);
+      const docsUrl = metadataVersions?.find((search: VersionMetadata): boolean => {
+        if (paramsVersion === search.version) {
+          return true;
+        } else if (
+          paramsVersion === CURRENT_VERSION_IDENTIFIER &&
+          search.status === 'Current Version'
+        ) {
+          return true;
+        }
+        return false;
+      });
+      if (docsUrl) {
+        const payload: APIVersioning = {
+          defaultUrl: `${OPEN_API_SPEC_HOST}${docsUrl.sf_path}`,
+          requestedApiVersion: paramsVersion,
+          versions: null,
+        };
+        appDispatch(setVersioning(payload));
+      }
     };
     void doSet();
-  }, [dispatch, location.search, metadataUrl, openApiUrl]);
+  }, [appDispatch, location.search, metadataUrl]);
 
   React.useEffect(() => {
     if (prevApiName !== apiName) {
