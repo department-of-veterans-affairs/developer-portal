@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import classNames from 'classnames';
 import React, { useRef } from 'react';
-import { faChevronDown, faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   CONSUMER_APIS_PATH,
@@ -95,7 +95,11 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             onClick={onMobileNavClose}
             type="button"
           >
-            Close
+            Close{' '}
+            <FontAwesomeIcon
+              className="vads-u-margin-left--0p5 vads-u-margin-bottom--neg1px"
+              icon={faTimes}
+            />
           </button>
           <Search
             inMenu
