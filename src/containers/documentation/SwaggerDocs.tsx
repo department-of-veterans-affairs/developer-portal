@@ -16,7 +16,11 @@ import { APIDocSource } from '../../apiDefs/schema';
 import { getVersionNumber, setVersioning } from '../../features/apis/apiVersioningSlice';
 import { getDocURL, getVersion } from '../../reducers/apiVersioning';
 import { APIMetadata, APIVersioning, RootState, VersionMetadata } from '../../types';
-import { CURRENT_VERSION_IDENTIFIER, OPEN_API_SPEC_HOST } from '../../types/constants';
+import {
+  CURRENT_VERSION_DISPLAY_NAME,
+  CURRENT_VERSION_IDENTIFIER,
+  OPEN_API_SPEC_HOST,
+} from '../../types/constants';
 import { SwaggerPlugins, System } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
@@ -117,15 +121,15 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
           return true;
         } else if (
           paramsVersion === CURRENT_VERSION_IDENTIFIER &&
-          search.status === 'Current Version'
+          search.status === CURRENT_VERSION_DISPLAY_NAME
         ) {
           return true;
         }
         return false;
-      });
+      })?.sf_path;
       if (docsUrl) {
         const payload: APIVersioning = {
-          defaultUrl: `${OPEN_API_SPEC_HOST}${docsUrl.sf_path}`,
+          defaultUrl: `${OPEN_API_SPEC_HOST}${docsUrl}`,
           requestedApiVersion: paramsVersion,
           versions: null,
         };

@@ -1,8 +1,11 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { APIVersioning, VersionMetadata } from '../../types';
-import { CURRENT_VERSION_IDENTIFIER, OPEN_API_SPEC_HOST } from '../../types/constants';
+import {
+  CURRENT_VERSION_DISPLAY_NAME,
+  CURRENT_VERSION_IDENTIFIER,
+  OPEN_API_SPEC_HOST,
+} from '../../types/constants';
 
-const currentVersionStatus = 'Current Version';
 const getRequestedApiVersion = (state: APIVersioning): string => state.requestedApiVersion;
 const getAPIVersions = (state: APIVersioning): VersionMetadata[] | null => state.versions;
 const getInitialDocURL = (state: APIVersioning): string => state.defaultUrl;
@@ -17,7 +20,7 @@ const getVersionInfo = createSelector(
 
     if (!requestedVersion || requestedVersion === CURRENT_VERSION_IDENTIFIER) {
       const selectCurrentVersion = (versionInfo: VersionMetadata): boolean =>
-        versionInfo.status === currentVersionStatus;
+        versionInfo.status === CURRENT_VERSION_DISPLAY_NAME;
       return versionMetadata.find(selectCurrentVersion);
     } else {
       const selectSpecificVersion = (versionInfo: VersionMetadata): boolean =>
@@ -42,7 +45,7 @@ export const getVersion = createSelector(getVersionInfo, (versionInfo: VersionMe
   if (!versionInfo) {
     return CURRENT_VERSION_IDENTIFIER;
   }
-  return versionInfo.status === currentVersionStatus
+  return versionInfo.status === CURRENT_VERSION_DISPLAY_NAME
     ? CURRENT_VERSION_IDENTIFIER
     : versionInfo.version;
 });

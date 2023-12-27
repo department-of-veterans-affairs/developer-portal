@@ -6,6 +6,7 @@ export * from './actions/generalStore';
 export * from './actions/scrollPosition';
 
 export const CURRENT_VERSION_IDENTIFIER = 'current';
+export const CURRENT_VERSION_DISPLAY_NAME = 'Current Version';
 export const DEFAULT_OAUTH_API_SELECTION = 'claims';
 export const DEFAULT_OAUTH_CCG_API_SELECTION = 'claims';
 export const OPEN_API_SPEC_HOST: string = process.env.REACT_APP_VETSGOV_SWAGGER_API ?? '';
