@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import classNames from 'classnames';
 import React, { useRef } from 'react';
-import { faChevronDown, faChevronUp, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronUp, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   CONSUMER_APIS_PATH,
@@ -85,7 +85,6 @@ const NavBar = (props: NavBarProps): JSX.Element => {
           )}
         >
           <button
-            aria-label="Close"
             aria-expanded={isSearchBarVisible}
             className={classNames(
               'va-api-mobile-nav-close',
@@ -96,7 +95,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             onClick={onMobileNavClose}
             type="button"
           >
-            <FontAwesomeIcon icon={faTimes} />
+            Close
           </button>
           <Search
             inMenu
