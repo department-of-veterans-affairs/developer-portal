@@ -60,10 +60,15 @@ const apisSlice = createSlice({
       state.error = true;
       state.loaded = false;
     },
+    setApis: (state, action: PayloadAction<APICategories>) => {
+      state.loaded = true;
+      state.error = false;
+      state.apis = action.payload;
+    },
   },
 });
 
-export const { setApiLoading, setApiLoadingError } = apisSlice.actions;
+export const { setApiLoading, setApiLoadingError, setApis } = apisSlice.actions;
 
 export const getApis = (state: RootState): APICategories => state.apiList.apis;
 
