@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { ResetVersioning, SetRequestedAPIVersion, SetVersioning } from '../../../actions';
 import { VersionMetadata } from '../../../types';
 import './VersionSelect.scss';
+import { CURRENT_VERSION_DISPLAY_NAME } from '../../../types/constants';
 
 export interface VersionSelectProps {
   dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning>;
@@ -41,12 +42,12 @@ export default class VersionSelect extends React.PureComponent<
     const { versions: propVersions } = this.props;
     const versions = propVersions;
     const selectCurrentVersion = (versionInfo: VersionMetadata): boolean =>
-      versionInfo.status === 'Current Version';
+      versionInfo.status === CURRENT_VERSION_DISPLAY_NAME;
 
     /**
      * if this component is rendered, there should (a) be versions present in metadata and (b)
      * be a version with the status "Current Version". as a fallback, though, we set it to the
-     * empty string as in getVersionNumber() in src/reducers/api-versioning.ts.
+     * empty string as in getVersionNumber() in src/features/apis/apiVersioningSelector.ts.
      */
     return versions?.find(selectCurrentVersion)?.version ?? '';
   }

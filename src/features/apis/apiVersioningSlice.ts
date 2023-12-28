@@ -13,6 +13,11 @@ const apiVersioningSlice = createSlice({
   initialState,
   name: 'apiVersioning',
   reducers: {
+    resetVersioning: state => {
+      state.defaultUrl = initialState.defaultUrl;
+      state.requestedApiVersion = initialState.requestedApiVersion;
+      state.versions = initialState.versions;
+    },
     setRequestedApiVersion: (state, action: PayloadAction<string | null>) => {
       console.log('setRequestedApiVersion', action.payload);
       state.requestedApiVersion = action.payload ?? '';
@@ -26,15 +31,6 @@ const apiVersioningSlice = createSlice({
   },
 });
 
-export const getDocURL = (state: APIVersioning): string => {
-  console.log('state', state);
-  return 'https://dev-api.va.gov/internal/docs/veteran-confirmation/v1/openapi.json';
-};
-
-export const getVersionNumber = (state: APIVersioning): string => {
-  console.log('getVersionNumber', state);
-  return state.requestedApiVersion;
-};
-
-export const { setRequestedApiVersion, setVersioning } = apiVersioningSlice.actions;
+export const { resetVersioning, setRequestedApiVersion, setVersioning } =
+  apiVersioningSlice.actions;
 export default apiVersioningSlice.reducer;
