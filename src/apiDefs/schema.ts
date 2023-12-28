@@ -31,7 +31,6 @@ export const ApiCategoryContentPropType = PropTypes.shape({
 
 export interface APIDocSource {
   readonly metadataUrl?: string;
-  readonly openApiUrl?: string;
   readonly key?: string;
   readonly label?: string;
   readonly apiIntro?: string;
