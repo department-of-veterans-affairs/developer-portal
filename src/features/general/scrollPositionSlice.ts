@@ -19,9 +19,8 @@ const scrollPositionSlice = createSlice({
         ...initialState,
       };
     },
-    setScrollPosition: (state, action: PayloadAction<ScrollPosition>) => {
-      const { position } = action.payload;
-      state.position = position;
+    setScrollPosition: (state, action: PayloadAction<number>) => {
+      state.position = action.payload;
     },
   },
 });
