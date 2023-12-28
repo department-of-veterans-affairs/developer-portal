@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { setApis } from '../../../../actions';
+import { setApis } from '../../../../features/apis/apisSlice';
 import store from '../../../../store';
 import { fakeCategories } from '../../../../__mocks__/fakeCategories';
 import * as apiQueries from '../../../../apiDefs/query';
@@ -9,9 +9,9 @@ import { APICategory, APIDescription } from '../../../../apiDefs/schema';
 import { SandboxAccessSuccess } from './SandboxAccessSuccess';
 
 describe('SandboxAccessSuccess with results', () => {
-  store.dispatch(setApis(fakeCategories));
-
-  // let allKayAuthAPIsSpy: jest.SpyInstance<APIDescription[]>;
+  beforeAll(() => {
+    store.dispatch(setApis(fakeCategories));
+  });
   describe('standard apis', () => {
     beforeEach(() => {
       const allKeyAuthApis: APIDescription[] = Object.values(fakeCategories)
@@ -19,10 +19,14 @@ describe('SandboxAccessSuccess with results', () => {
         .sort((a, b) => (a.name > b.name ? 1 : -1));
 
       jest.spyOn(apiQueries, 'getAllKeyAuthApis').mockReturnValue(allKeyAuthApis);
+      const api = apiQueries.lookupApiBySlug('rings');
+      if (!api) {
+        return;
+      }
       render(
         <MemoryRouter>
           <SandboxAccessSuccess
-            api={store.getState().apiList.apis.lotr.apis[0]}
+            api={api}
             result={{
               apis: ['apikey/rings'],
               clientID: 'gimli',
@@ -63,10 +67,14 @@ describe('SandboxAccessSuccess with results', () => {
         .sort((a, b) => (a.name > b.name ? 1 : -1));
 
       jest.spyOn(apiQueries, 'getAllAuthCodeApis').mockReturnValue(allAuthCodeApis);
+      const api = apiQueries.lookupApiBySlug('armageddon');
+      if (!api) {
+        return;
+      }
       render(
         <MemoryRouter>
           <SandboxAccessSuccess
-            api={store.getState().apiList.apis.movies.apis[1]}
+            api={api}
             result={{
               apis: ['acg/armageddon'],
               clientID: 'gimli',
@@ -111,10 +119,14 @@ describe('SandboxAccessSuccess with results', () => {
 
   describe('oauth ccg apis', () => {
     beforeEach(() => {
+      const api = apiQueries.lookupApiBySlug('apollo-13');
+      if (!api) {
+        return;
+      }
       render(
         <MemoryRouter>
           <SandboxAccessSuccess
-            api={store.getState().apiList.apis.movies.apis[0]}
+            api={api}
             result={{
               apis: ['ccg/apollo13'],
               ccgClientId: 'gimli',
