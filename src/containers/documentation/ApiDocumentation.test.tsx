@@ -5,6 +5,7 @@ import { setupServer } from 'msw/node';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
 import * as openAPIData from '../../__mocks__/openAPIData/openAPIData.test.json';
+import * as metadata from '../../__mocks__/openAPIData/metadata.test.json';
 import { APIDescription, ProdAccessFormSteps } from '../../apiDefs/schema';
 import { AppFlags, FlagsProvider, getFlags } from '../../flags';
 import store from '../../store';
@@ -19,7 +20,7 @@ const api: APIDescription = {
   description: "it's a great API!",
   docSources: [
     {
-      openApiUrl: 'http://localhost/my/openapi/spec',
+      metadataUrl: 'http://localhost/my/openapi/metadata',
     },
   ],
   enabledByDefault: true,
@@ -41,7 +42,15 @@ const api: APIDescription = {
 
 const server = setupServer(
   rest.get(
-    'http://localhost/my/openapi/spec',
+    'http://localhost/my/openapi/metadata',
+    (
+      req: MockedRequest,
+      res: ResponseComposition,
+      context: RestContext,
+    ): MockedResponse | Promise<MockedResponse> => res(context.status(200), context.json(metadata)),
+  ),
+  rest.get(
+    'http://localhost:4444/my/openapi/spec',
     (
       req: MockedRequest,
       res: ResponseComposition,
@@ -75,7 +84,7 @@ describe('ApiDocumentation', () => {
 
   it('renders the OpenAPI URI', async () => {
     expect(true).toBeTruthy();
-    expect(await screen.findByText('http://localhost/my/openapi/spec')).toBeInTheDocument();
+    expect(await screen.findByText('http://localhost:4444/my/openapi/spec')).toBeInTheDocument();
   });
 
   it('has a section for each tag', async () => {

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
 import { APIVersioning } from '../../types';
@@ -19,7 +18,6 @@ const apiVersioningSlice = createSlice({
       state.versions = initialState.versions;
     },
     setRequestedApiVersion: (state, action: PayloadAction<string | null>) => {
-      console.log('setRequestedApiVersion', action.payload);
       state.requestedApiVersion = action.payload ?? '';
     },
     setVersioning: (state, action: PayloadAction<APIVersioning>) => {

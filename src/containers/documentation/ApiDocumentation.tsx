@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { setRequestedApiVersion } from '../../features/apis/apiVersioningSlice';
 import { APIDescription, ApiDescriptionPropType } from '../../apiDefs/schema';
+import { useAppDispatch } from '../../hooks';
 import { SwaggerDocs } from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
@@ -26,7 +25,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   /*
    * API Version
    */
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const apiVersion = searchParams.get('version');
 
@@ -37,7 +36,6 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   /*
    * RENDER
    */
-  console.log('render SwaggerDocs', docSources[0], urlSlug);
   return <SwaggerDocs docSource={docSources[0]} apiName={urlSlug} />;
 };
 
