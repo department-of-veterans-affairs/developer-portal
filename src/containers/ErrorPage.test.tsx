@@ -6,7 +6,7 @@ import { FlagsProvider, getFlags } from '../flags';
 import store from '../store';
 import * as apiQueries from '../apiDefs/query';
 import { fakeCategories, fakeCategoryOrder } from '../__mocks__/fakeCategories';
-import { setApis } from '../actions';
+import { setApis } from '../features/apis/apisSlice';
 import ErrorPage from './ErrorPage';
 
 interface ErrorPageProps {
