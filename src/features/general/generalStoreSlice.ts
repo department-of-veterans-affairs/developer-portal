@@ -11,10 +11,8 @@ const generalStoreSlice = createSlice({
   name: 'generalStore',
   reducers: {
     resetGeneralStore: state => {
-      // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-unused-vars
-      state = {
-        ...initialState,
-      };
+      state.vaNetworkConnected = initialState.vaNetworkConnected;
+      state.vaNetworkModal = initialState.vaNetworkModal;
     },
     setGeneralStore: (state, action: PayloadAction<GeneralStore>) => {
       const { vaNetworkConnected, vaNetworkModal } = action.payload;

@@ -14,10 +14,7 @@ const scrollPositionSlice = createSlice({
   name: 'scrollPosition',
   reducers: {
     resetScrollPosition: state => {
-      // eslint-disable-next-line no-param-reassign, @typescript-eslint/no-unused-vars
-      state = {
-        ...initialState,
-      };
+      state.position = initialState.position;
     },
     setScrollPosition: (state, action: PayloadAction<number>) => {
       state.position = action.payload;
