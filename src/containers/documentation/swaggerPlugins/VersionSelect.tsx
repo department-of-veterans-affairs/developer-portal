@@ -1,15 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { ResetVersioning, SetRequestedAPIVersion, SetVersioning } from '../../../actions';
 import { VersionMetadata } from '../../../types';
 import './VersionSelect.scss';
 import { CURRENT_VERSION_DISPLAY_NAME } from '../../../types/constants';
+import { AppDispatch } from '../../../store';
 
 export interface VersionSelectProps {
-  dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning>;
-  handleVersionChange: (
-    dispatch: React.Dispatch<SetRequestedAPIVersion>,
-  ) => (requestedVersion: string) => void;
+  dispatch: AppDispatch;
+  handleVersionChange: (dispatch: AppDispatch) => (requestedVersion: string) => void;
   version: string;
   versions: VersionMetadata[] | null;
 }

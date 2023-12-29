@@ -22,7 +22,6 @@
     },
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
-    "types": ["@testing-library/jest-dom/jest-globals"],
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "esModuleInterop": true
