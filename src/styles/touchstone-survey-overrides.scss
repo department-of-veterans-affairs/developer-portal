@@ -9,13 +9,34 @@ body .fba-modal-dialog .usa-button {
 
 body .fba-modal-dialog {
   max-width: fit-content;
+
+  small {
+    font-size: 1.6rem;
+  }
+
+  .fba-modal-title {
+    margin-top: 0;
+  }
+
+  .form-header-logo {
+    display: none;
+  }
+
+  .usa-banner__header-text {
+    font-size: 1.2rem;
+  }
+
+  .usa-radio__label {
+    max-width: unset;
+  }
 }
 
-.fba-modal-dialog .usa-radio__input--tile + [class*=__label]::before {
+.fba-modal-dialog .usa-radio__input--tile+[class*=__label]::before {
   margin-top: 3px;
 }
 
-.usa-legend, .usa-label {
+.usa-legend,
+.usa-label {
   text-wrap: nowrap;
 }
 
