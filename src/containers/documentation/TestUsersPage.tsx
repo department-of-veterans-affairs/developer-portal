@@ -2,7 +2,6 @@ import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { Helmet } from 'react-helmet';
-import { useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import {
@@ -15,7 +14,8 @@ import { PageHeader } from '../../components';
 import './TestUsersPage.scss';
 import { ResponseType, makeRequest } from '../../utils/makeRequest';
 import { TestUser, isPasswordUniform, testUsersGitHubUrl } from '../../utils/testUsersHelper';
-import { SetUserStore, setUserStore } from '../../actions';
+import { useAppDispatch } from '../../hooks';
+import { setUserStore } from '../../features/user/userSlice';
 import { getApi } from './DocumentationRoot';
 
 interface TestUsersPageParams {
@@ -25,7 +25,7 @@ interface TestUsersPageParams {
 }
 
 const TestUsersPage = (): JSX.Element => {
-  const dispatch: React.Dispatch<SetUserStore> = useDispatch();
+  const dispatch = useAppDispatch();
   const [testUserAccess, setTestUserAccess] = React.useState(testUserAccessState.INIT);
   const [testUsers, setTestUsers] = React.useState<TestUser[]>([]);
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
@@ -69,7 +69,12 @@ const TestUsersPage = (): JSX.Element => {
             body: TestUser[];
           };
           setTestUsers(responseData.body);
-          dispatch(setUserStore(parseInt(userId, 10), hash));
+          dispatch(
+            setUserStore({
+              id: parseInt(userId, 10),
+              testUserHash: hash,
+            }),
+          );
           setTestUserAccess(testUserAccessState.ACCESS_PERMITTED);
         })
         .catch(() => {
