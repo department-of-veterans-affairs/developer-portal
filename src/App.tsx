@@ -1,9 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { ScrollRestoration } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
-import { APICategories } from './apiDefs/schema';
 import { Footer, Header, PageContent } from './components';
 import { ScrollToHashElement } from './components/scrollToHashElement/ScrollToHashElement';
 import { FlagsProvider, getFlags } from './flags';
@@ -15,7 +13,6 @@ import { SiteRedirects } from './components/SiteRedirects';
 import { useAppDispatch } from './hooks';
 import { setApiLoadingError } from './features/apis/apisSlice';
 import { UseGetApisQuery, useGetApisQuery } from './services/api';
-import { RootState } from './store';
 
 void defineCustomElements();
 
@@ -56,6 +53,4 @@ const App = (): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state: RootState): APICategories => state.apiList.apis;
-
-export default connect(mapStateToProps)(App);
+export default App;
