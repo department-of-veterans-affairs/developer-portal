@@ -68,6 +68,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-tabs": "^3.2.3",
     "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "regenerator-runtime": "^0.14.0",
     "reselect": "^4.1.8",
