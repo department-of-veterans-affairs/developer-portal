@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
-import thunk from 'redux-thunk';
 import apisReducer from './features/apis/apisSlice';
 import apiVersioningReducer from './features/apis/apiVersioningSlice';
 import generalStoreReducer from './features/general/generalStoreSlice';
@@ -16,7 +15,10 @@ const persistConfig = {
 const persistedUserReducer = persistReducer(persistConfig, userReducer);
 
 const store = configureStore({
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat([thunk, listApi.middleware]),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(listApi.middleware),
   reducer: {
     apiList: apisReducer,
     apiVersioning: apiVersioningReducer,
