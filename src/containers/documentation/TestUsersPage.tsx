@@ -13,7 +13,7 @@ import { PageHeader } from '../../components';
 
 import './TestUsersPage.scss';
 import { ResponseType, makeRequest } from '../../utils/makeRequest';
-import { TestUser, isPasswordUniform, testUsersGitHubUrl } from '../../utils/testUsersHelper';
+import { TestUser, isPasswordUniform } from '../../utils/testUsersHelper';
 import { useAppDispatch } from '../../hooks';
 import { setUserStore } from '../../features/user/userSlice';
 import { getApi } from './DocumentationRoot';
@@ -112,7 +112,7 @@ const TestUsersPage = (): JSX.Element => {
             <h2>How to use this page</h2>
             <p>
               Find the test users on the corresponding{' '}
-              <a href={testUsersGitHubUrl(api.urlSlug)} target="blank">
+              <a href={api.oAuthInfo?.acgInfo?.gitHubTestUsers} target="blank">
                 test accounts GitHub page
               </a>{' '}
               that will meet your use case. Then, locate those test users on this page to get the
