@@ -6,7 +6,7 @@ import apiVersioningReducer from './features/apis/apiVersioningSlice';
 import generalStoreReducer from './features/general/generalStoreSlice';
 import scrollPositionReducer from './features/general/scrollPositionSlice';
 import userReducer from './features/user/userSlice';
-import { listApi } from './services/api';
+import { lpbService } from './services/lpb';
 
 const persistConfig = {
   key: 'root',
@@ -18,12 +18,12 @@ const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(listApi.middleware),
+    }).concat(lpbService.middleware),
   reducer: {
     apiList: apisReducer,
     apiVersioning: apiVersioningReducer,
     generalStore: generalStoreReducer,
-    [listApi.reducerPath]: listApi.reducer,
+    [lpbService.reducerPath]: lpbService.reducer,
     scrollPosition: scrollPositionReducer,
     userStore: persistedUserReducer,
   },

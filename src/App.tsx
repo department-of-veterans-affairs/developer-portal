@@ -12,7 +12,7 @@ import './styles/base.scss';
 import { SiteRedirects } from './components/SiteRedirects';
 import { useAppDispatch } from './hooks';
 import { setApiLoadingError } from './features/apis/apisSlice';
-import { UseGetApisQuery, useGetApisQuery } from './services/api';
+import { UseGetApisQuery, useGetApisQuery } from './services/lpb';
 
 void defineCustomElements();
 
