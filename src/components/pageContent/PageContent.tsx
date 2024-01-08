@@ -58,7 +58,7 @@ const CustomButtonForSurveyModal = (): JSX.Element => {
   }, []);
 
   return (
-    <aside>
+    <aside id="touchpoints-aside">
       <button id="touchpoints-survey" className="fixed-tab-button usa-button" type="button">
         Help improve this site
       </button>

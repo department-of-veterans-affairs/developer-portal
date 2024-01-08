@@ -41,9 +41,14 @@ body .fba-modal-dialog {
 }
 
 #touchpoints-survey {
-  display: block;
-  margin-left: auto;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  position: unset;
+  position: absolute;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  height: 44px;
+  width: 200px;
+}
+
+aside#touchpoints-aside {
+  margin-top: 100px;
 }
