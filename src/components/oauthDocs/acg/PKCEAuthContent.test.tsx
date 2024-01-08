@@ -7,7 +7,7 @@ import { FlagsProvider, getFlags } from '../../../flags';
 import { lookupApiBySlug } from '../../../apiDefs/query';
 import store from '../../../store';
 import { fakeCategories } from '../../../__mocks__/fakeCategories';
-import { setApis } from '../../../actions';
+import { setApis } from '../../../features/apis/apisSlice';
 import { PKCEAuthContent } from './PKCEAuthContent';
 
 describe('Auth Flow Content', () => {

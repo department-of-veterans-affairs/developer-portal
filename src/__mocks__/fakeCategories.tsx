@@ -116,8 +116,8 @@ export const fakeCategories: APICategories = {
       {
         altID: 'apollo13',
         blockSandboxForm: false,
-        categoryUrlFragment: 'nothing-of-importance',
-        categoryUrlSlug: 'importance',
+        categoryUrlFragment: 'movies',
+        categoryUrlSlug: 'movies',
         description: "When a trip to the moon doesn't go according to plan",
         docSources: [], // doesn't matter here
         enabledByDefault: true,
@@ -147,8 +147,8 @@ export const fakeCategories: APICategories = {
       {
         altID: 'armageddon',
         blockSandboxForm: false,
-        categoryUrlFragment: 'nothing-of-importance',
-        categoryUrlSlug: 'importance',
+        categoryUrlFragment: 'movies',
+        categoryUrlSlug: 'movies',
         description: 'Asteroid Dotty has earth directly in her path, time to call Bruce Willis.',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
@@ -179,8 +179,8 @@ export const fakeCategories: APICategories = {
       {
         altID: 'the_martian',
         blockSandboxForm: false,
-        categoryUrlFragment: 'nothing-of-importance',
-        categoryUrlSlug: 'importance',
+        categoryUrlFragment: 'movies',
+        categoryUrlSlug: 'movies',
         description:
           'Mark Watney (played by Matt Damon) is stranded on Mars forced to survive alone for over a year.',
         docSources: [], // doesn't matter here
@@ -218,8 +218,8 @@ export const fakeCategories: APICategories = {
       {
         altID: null,
         blockSandboxForm: false,
-        categoryUrlFragment: 'nothing-of-importance',
-        categoryUrlSlug: 'importance',
+        categoryUrlFragment: 'sports',
+        categoryUrlSlug: 'sports',
         description: 'stuff about hoops or whatever',
         docSources: [], // doesn't matter here
         enabledByDefault: true,
@@ -242,8 +242,8 @@ export const fakeCategories: APICategories = {
       {
         altID: null,
         blockSandboxForm: false,
-        categoryUrlFragment: 'nothing-of-importance',
-        categoryUrlSlug: 'importance',
+        categoryUrlFragment: 'sports',
+        categoryUrlSlug: 'sports',
         description: 'a slow summer game',
         docSources: [], // doesn't matter here
         enabledByDefault: false,

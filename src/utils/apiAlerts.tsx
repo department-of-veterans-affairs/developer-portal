@@ -8,8 +8,8 @@ export const apiAlerts = [
   {
     content: (
       <>
-        Version 0 of the VA Facilities API is deprecated and scheduled for deactivation on February
-        29, 2024. Version 1 of the VA Facilities API is now active.
+        Version 0 of the VA Facilities API is deprecated and scheduled for deactivation on June 1,
+        2024. Version 1 of the VA Facilities API is now active.
       </>
     ),
     path: '/explore/api/va-facilities',
@@ -26,7 +26,8 @@ export const apiAlerts = [
   {
     content: (
       <>
-        Veteran Service History and Eligibility Version 1 is deprecated and scheduled for deactivation on May 30, 2024. Version 2 is active.
+        Veteran Service History and Eligibility Version 1 is deprecated and scheduled for
+        deactivation on May 30, 2024. Version 2 is active.
       </>
     ),
     path: '/explore/api/veteran-service-history-and-eligibility',
