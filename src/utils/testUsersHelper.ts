@@ -1,4 +1,18 @@
 /* eslint-disable no-console */
+export interface TestUserResponse {
+  ok: boolean;
+  status: number;
+  body: TestUser[];
+}
+export interface TestUsersRequest {
+  body?: TestUser[];
+  ok?: boolean;
+  hash: string;
+  status?: number;
+  urlSlug: string;
+  userId: string;
+}
+
 export interface TestUser {
   credentials: TestUserCredentials;
   icn: string;

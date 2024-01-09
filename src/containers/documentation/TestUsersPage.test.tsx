@@ -1,27 +1,45 @@
-import { cleanup, render, waitFor, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { setupServer } from 'msw/lib/node';
+import { MockedRequest, MockedResponse, ResponseComposition, RestContext, rest } from 'msw';
 import { fakeCategories } from '../../__mocks__/fakeCategories';
 import { FlagsProvider, getFlags } from '../../flags';
 import store from '../../store';
 import * as apiDefs from '../../apiDefs/query';
+import testUserData from '../../../cypress/fixtures/test-user-data.json';
 import TestUsersPage from './TestUsersPage';
 
+const server = setupServer(
+  rest.post(
+    'http://localhost:4444/platform-backend/v0/consumers/test-user-data',
+    (
+      req: MockedRequest,
+      res: ResponseComposition,
+      context: RestContext,
+    ): MockedResponse | Promise<MockedResponse> =>
+      res(context.status(200), context.json(testUserData)),
+  ),
+);
 describe('TestUsersPage', () => {
-  const lotrRingsApi = fakeCategories.lotr.apis[0];
-
+  const armageddonApi = fakeCategories.movies.apis[1];
   const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
 
+  beforeAll(() => server.listen());
+
   beforeEach(async () => {
-    lookupApiByFragmentMock.mockReturnValue(lotrRingsApi);
+    lookupApiByFragmentMock.mockReturnValue(armageddonApi);
     await waitFor(() => cleanup());
     render(
       <Provider store={store}>
         <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/rings/release-notes']}>
+          <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
             <Routes>
-              <Route path="/explore/api/:urlSlug/release-notes" element={<TestUsersPage />} />
+              <Route
+                path="/explore/api/:urlSlug/test-users/:userId/:hash"
+                element={<TestUsersPage />}
+              />
             </Routes>
           </MemoryRouter>
         </FlagsProvider>
@@ -29,39 +47,12 @@ describe('TestUsersPage', () => {
     );
   });
 
-  afterEach(() => {
-    jest.resetAllMocks();
-  });
-
   describe('Static Content', () => {
-    it('renders the page header', () => {
-      const heading = screen.getByRole('heading', { level: 1, name: 'Rings API' });
-      expect(heading).toBeInTheDocument();
-    });
-
-    it('renders a link to the docs', () => {
-      const link = screen.getByRole('link', { name: 'Read the docs' });
-      expect(link).toHaveAttribute('href', '/explore/api/rings/docs');
-    });
-  });
-
-  describe('API Overview Page Dynamic Content', () => {
-    it('renders the heading', () => {
-      const heading = screen.getByRole('heading', { level: 3, name: 'With this API you can' });
-      expect(heading).toBeInTheDocument();
-    });
-
-    it('renders the lists', () => {
-      const list = screen.getByRole('list');
-      expect(list).toHaveTextContent('Rule them all');
-      expect(list).toHaveTextContent('Find them');
-      expect(list).toHaveTextContent('Bring them all');
-      expect(list).toHaveTextContent('And in the darkness bind them');
-    });
-
-    it('renders links', () => {
-      const link = screen.getByRole('link', { name: 'Start developing' });
-      expect(link).toHaveAttribute('href', '/explore/api/rings/sandbox-access');
+    it('renders the page header', async () => {
+      await waitFor(() => {
+        const heading = screen.getByRole('heading', { level: 1, name: /Armageddon API/ });
+        expect(heading).toBeInTheDocument();
+      });
     });
   });
 });

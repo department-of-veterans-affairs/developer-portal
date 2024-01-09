@@ -12,10 +12,10 @@ import {
 import { PageHeader } from '../../components';
 
 import './TestUsersPage.scss';
-import { ResponseType, makeRequest } from '../../utils/makeRequest';
 import { TestUser, isPasswordUniform } from '../../utils/testUsersHelper';
 import { useAppDispatch } from '../../hooks';
 import { setUserStore } from '../../features/user/userSlice';
+import { useGetTestUserDataQuery } from '../../services/lpb';
 import { getApi } from './DocumentationRoot';
 
 interface TestUsersPageParams {
@@ -31,59 +31,38 @@ const TestUsersPage = (): JSX.Element => {
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
   const { urlSlug, userId, hash } = useParams() as unknown as TestUsersPageParams;
   const api = getApi(urlSlug);
+  setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
+    path: LPB_TEST_USER_ACCESS_URL,
+    sameSite: 'strict',
+    secure: true,
+  });
+  const { data, status } = useGetTestUserDataQuery({
+    hash,
+    urlSlug,
+    userId,
+  });
+
+  React.useEffect(() => {
+    if (status === 'fulfilled') {
+      setTestUsers(data as TestUser[]);
+      dispatch(
+        setUserStore({
+          id: parseInt(userId, 10),
+          testUserHash: hash,
+        }),
+      );
+      setTestUserAccess(testUserAccessState.ACCESS_PERMITTED);
+    }
+    if (status === 'rejected') {
+      setTestUserAccess(testUserAccessState.ACCESS_BLOCKED);
+    }
+  }, [data, dispatch, hash, status, userId, setTestUserAccess]);
 
   if (!api) {
     throw new Error('API not found');
   }
 
   if (testUserAccess === testUserAccessState.INIT) {
-    try {
-      setCookie('CSRF-TOKEN', LPB_FORGERY_TOKEN, {
-        path: LPB_TEST_USER_ACCESS_URL,
-        sameSite: 'strict',
-        secure: true,
-      });
-      setTestUserAccess(testUserAccessState.IN_PROGRESS);
-      makeRequest(
-        LPB_TEST_USER_ACCESS_URL,
-        {
-          body: JSON.stringify({
-            hash,
-            urlSlug,
-            userId,
-          }),
-          headers: {
-            'X-Csrf-Token': LPB_FORGERY_TOKEN,
-            accept: 'application/json',
-            'content-type': 'application/json',
-          },
-          method: 'POST',
-        },
-        { responseType: ResponseType.JSON },
-      )
-        // eslint-disable-next-line promise/always-return
-        .then((data: unknown): void => {
-          const responseData = data as {
-            ok: boolean;
-            status: number;
-            body: TestUser[];
-          };
-          setTestUsers(responseData.body);
-          dispatch(
-            setUserStore({
-              id: parseInt(userId, 10),
-              testUserHash: hash,
-            }),
-          );
-          setTestUserAccess(testUserAccessState.ACCESS_PERMITTED);
-        })
-        .catch(() => {
-          setTestUserAccess(testUserAccessState.ACCESS_BLOCKED);
-        });
-    } catch {
-      setTestUserAccess(testUserAccessState.ACCESS_BLOCKED);
-    }
-
     return <LoadingIndicator label="Loading" message="Validating access to Test User Data." />;
   }
 
