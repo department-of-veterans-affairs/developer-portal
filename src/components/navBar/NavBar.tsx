@@ -96,10 +96,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             onClick={onMobileNavClose}
             type="button"
           >
-            <FontAwesomeIcon
-              className="vads-u-margin-left--0p5 vads-u-margin-bottom--neg1px"
-              icon={faTimes}
-            />
+            <FontAwesomeIcon icon={faTimes} />
           </button>
           <Search
             inMenu
