@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { useDispatch } from 'react-redux';
 import { useLocation, useSearchParams } from 'react-router-dom';
-import * as actions from '../../actions';
+import { setRequestedApiVersion } from '../../features/apis/apiVersioningSlice';
 import { APIDescription, ApiDescriptionPropType } from '../../apiDefs/schema';
+import { useAppDispatch } from '../../hooks';
 import { SwaggerDocs } from './SwaggerDocs';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
@@ -19,24 +19,24 @@ const ApiDocumentationPropTypes = {
 
 const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const { apiDefinition } = props;
-  const { docSources, urlFragment } = apiDefinition;
+  const { docSources, urlSlug } = apiDefinition;
   const location = useLocation();
 
   /*
    * API Version
    */
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const apiVersion = searchParams.get('version');
 
   React.useEffect((): void => {
-    dispatch(actions.setRequestedApiVersion(apiVersion));
+    dispatch(setRequestedApiVersion(apiVersion));
   }, [dispatch, apiVersion, location.pathname]);
 
   /*
    * RENDER
    */
-  return <SwaggerDocs docSource={docSources[0]} apiName={urlFragment} />;
+  return <SwaggerDocs docSource={docSources[0]} apiName={urlSlug} />;
 };
 
 ApiDocumentation.propTypes = ApiDocumentationPropTypes;

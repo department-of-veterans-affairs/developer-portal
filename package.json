@@ -34,6 +34,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@reduxjs/toolkit": "^2.0.1",
     "@sentry/browser": "^6.19.7",
     "classnames": "^2.3.2",
     "component-library-legacy": "npm:@department-of-veterans-affairs/component-library@3.2.1",

@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { VaModal } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
+import { useSelector } from 'react-redux';
 import ErrorBoundaryPage from '../../containers/ErrorBoundaryPage';
 import { SiteRoutes } from '../../Routes';
 
-import { useModalController } from '../../hooks';
+import { useAppDispatch, useModalController } from '../../hooks';
 import { GeneralStore, RootState } from '../../types';
-import { SetGeneralStore, setGeneralStore } from '../../actions';
+import { setGeneralStore } from '../../features/general/generalStoreSlice';
 import { PUBLISHING_REQUIREMENTS_URL } from '../../types/constants/paths';
 
 const focusAndScroll = (elementToFocus: HTMLElement | null): void => {
@@ -30,7 +30,7 @@ const PageContent = (): JSX.Element => {
   const prevPathRef = React.useRef<string | null>(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch: React.Dispatch<SetGeneralStore> = useDispatch();
+  const dispatch = useAppDispatch();
   const selector = (state: RootState): GeneralStore => state.generalStore;
   const vaNetworkStore = useSelector(selector);
   const { modalVisible: vaNetworkModalVisible, setModalVisible: setVaNetworkModalVisible } =
@@ -52,7 +52,12 @@ const PageContent = (): JSX.Element => {
   }, [location]);
 
   const closeVaNetworkModal = (): void => {
-    dispatch(setGeneralStore(false, false));
+    dispatch(
+      setGeneralStore({
+        vaNetworkConnected: false,
+        vaNetworkModal: false,
+      }),
+    );
     setVaNetworkModalVisible(false);
     setVaNetworkAvailable({ status: 'unknown' });
   };

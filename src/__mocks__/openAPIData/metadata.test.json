@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "display_name": "My API",
+    "display_description": "Unit testing API",
+    "signup_id": "my-api",
+    "versions": [
+      {
+        "version": "v0",
+        "internal_only": false,
+        "status": "Current Version",
+        "path": "/my/openapi/spec",
+        "sf_path": "/my/openapi/spec",
+        "healthcheck": "https://dev-api.va.gov/services/address_validation/healthcheck",
+        "intended_use": "internal-restricted",
+        "security": ["apikey"],
+        "security_api_key": "internal-va:address_validation",
+        "security_oauth": [],
+        "public_apply_page": true
+      }
+    ]
+  }
+}
