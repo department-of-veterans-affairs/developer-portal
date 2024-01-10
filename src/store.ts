@@ -1,23 +1,22 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import apisReducer from './features/apis/apisSlice';
+import apiVersioningReducer from './features/apis/apiVersioningSlice';
+import generalStoreReducer from './features/general/generalStoreSlice';
+import scrollPositionReducer from './features/general/scrollPositionSlice';
+import { listApi } from './services/api';
 
-import { apiVersioning } from './reducers/apiVersioning';
-import { apiList } from './reducers/apiList';
-import { generalStore } from './reducers/generalStore';
-import { scrollPosition } from './reducers/scrollPosition';
-import { RootState } from './types';
+const store = configureStore({
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(listApi.middleware),
+  reducer: {
+    apiList: apisReducer,
+    apiVersioning: apiVersioningReducer,
+    generalStore: generalStoreReducer,
+    [listApi.reducerPath]: listApi.reducer,
+    scrollPosition: scrollPositionReducer,
+  },
+});
 
-// eslint-disable-next-line no-underscore-dangle
-const composeEnhancers: typeof compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?? compose;
-
-const store = createStore(
-  combineReducers<RootState>({
-    apiList,
-    apiVersioning,
-    generalStore,
-    scrollPosition,
-  }),
-  composeEnhancers(applyMiddleware(thunk as ThunkMiddleware<RootState>)),
-);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

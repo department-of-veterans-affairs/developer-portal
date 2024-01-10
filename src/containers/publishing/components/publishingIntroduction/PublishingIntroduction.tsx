@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import classNames from 'classnames';
 import { Helmet } from 'react-helmet';
-import { useDispatch } from 'react-redux';
 import {
   SUPPORT_CONTACT_PATH,
   PUBLISHING_ONBOARDING_PATH,
@@ -16,12 +15,18 @@ import costImage from '../../../../assets/cost.svg';
 import lockImage from '../../../../assets/lock.svg';
 import supportImage from '../../../../assets/support.svg';
 import adoptionImage from '../../../../assets/adoption.svg';
-import { setGeneralStore, SetGeneralStore } from '../../../../actions';
+import { setGeneralStore } from '../../../../features/general/generalStoreSlice';
+import { useAppDispatch } from '../../../../hooks';
 
 const PublishingIntroduction: FC = () => {
-  const dispatch: React.Dispatch<SetGeneralStore> = useDispatch();
+  const dispatch = useAppDispatch();
   const openModal = (): void => {
-    dispatch(setGeneralStore(true, true));
+    dispatch(
+      setGeneralStore({
+        vaNetworkConnected: true,
+        vaNetworkModal: true,
+      }),
+    );
   };
   return (
     <>

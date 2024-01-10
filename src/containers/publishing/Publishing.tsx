@@ -1,13 +1,18 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import { SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
 import { ContentWithNav, SideNavEntry } from '../../components';
-import { setGeneralStore, SetGeneralStore } from '../../actions';
+import { setGeneralStore } from '../../features/general/generalStoreSlice';
+import { useAppDispatch } from '../../hooks';
 
 const Publishing = (): JSX.Element => {
-  const dispatch: React.Dispatch<SetGeneralStore> = useDispatch();
+  const dispatch = useAppDispatch();
   const openModal = (): void => {
-    dispatch(setGeneralStore(true, true));
+    dispatch(
+      setGeneralStore({
+        vaNetworkConnected: true,
+        vaNetworkModal: true,
+      }),
+    );
   };
   return (
     <ContentWithNav
