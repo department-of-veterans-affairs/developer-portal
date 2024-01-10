@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ApiFilters, ExploreApiCard, PageHeader } from '../../components';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import { APIDescription } from '../../apiDefs/schema';
-import { getScrollPosition } from '../../reducers/scrollPosition';
-import { ResetScrollPosition, SetScrollPosition, setScrollPosition } from '../../actions';
+import { getScrollPosition, setScrollPosition } from '../../features/general/scrollPositionSlice';
 import { getApisLoaded } from '../../apiDefs/query';
 import { RootState } from '../../types';
 import './ExploreRoot.scss';
+import { useAppDispatch } from '../../hooks';
 
 export const ExploreRoot = (): JSX.Element => {
   const [apis, setApis] = useState<APIDescription[]>([]);
-  const dispatch: React.Dispatch<SetScrollPosition | ResetScrollPosition> = useDispatch();
+  const dispatch = useAppDispatch();
   const scrollPositionSelector = (state: RootState): number =>
     getScrollPosition(state.scrollPosition);
   const scrollPosition = useSelector(scrollPositionSelector);

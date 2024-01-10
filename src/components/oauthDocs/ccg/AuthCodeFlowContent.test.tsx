@@ -6,7 +6,7 @@ import { FlagsProvider, getFlags } from '../../../flags';
 
 import { lookupApiBySlug } from '../../../apiDefs/query';
 import store from '../../../store';
-import { setApis } from '../../../actions';
+import { setApis } from '../../../features/apis/apisSlice';
 import { fakeCategories } from '../../../__mocks__/fakeCategories';
 import { AuthCodeFlowContent } from './AuthCodeFlowContent';
 
