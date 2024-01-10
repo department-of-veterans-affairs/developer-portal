@@ -86,6 +86,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
         >
           <button
             aria-expanded={isSearchBarVisible}
+            aria-label="Close"
             className={classNames(
               'va-api-mobile-nav-close',
               'vads-u-display--block',
@@ -95,7 +96,6 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             onClick={onMobileNavClose}
             type="button"
           >
-            Close{' '}
             <FontAwesomeIcon
               className="vads-u-margin-left--0p5 vads-u-margin-bottom--neg1px"
               icon={faTimes}
