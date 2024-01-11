@@ -149,42 +149,44 @@ const TestUsersPage = (): JSX.Element => {
 
             <h2>Test user credentials for the {api.name}</h2>
 
-            <table>
-              <thead>
-                <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>ID</th>
-                  <th>ICN</th>
-                  <th>SSN</th>
-                  <th>Login.gov</th>
-                  <th>ID.me</th>
-                </tr>
-              </thead>
-              <tbody>
-                {testUserData.map((user: TestUser) => (
-                  <tr key={user.icn}>
-                    <td>{user.name_given}</td>
-                    <td>{user.name_family}</td>
-                    <td>{user.id}</td>
-                    <td>{user.icn}</td>
-                    <td>{user.ssn}</td>
-                    <td>
-                      Email: {user.credentials.logingov.username}
-                      <br />
-                      Password: {user.credentials.logingov.password}
-                      <br />
-                      2-Factor Seed: {user.credentials.logingov.seed}
-                    </td>
-                    <td>
-                      Email: {user.credentials.idme.username}
-                      <br />
-                      Password: {user.credentials.idme.password}
-                    </td>
+            <div className="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>ID</th>
+                    <th>ICN</th>
+                    <th>SSN</th>
+                    <th>Login.gov</th>
+                    <th>ID.me</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {testUserData.map((user: TestUser) => (
+                    <tr key={user.icn}>
+                      <td>{user.name_given}</td>
+                      <td>{user.name_family}</td>
+                      <td>{user.id}</td>
+                      <td>{user.icn}</td>
+                      <td>{user.ssn}</td>
+                      <td>
+                        Email: {user.credentials.logingov.username}
+                        <br />
+                        Password: {user.credentials.logingov.password}
+                        <br />
+                        2-Factor Seed: {user.credentials.logingov.seed}
+                      </td>
+                      <td>
+                        Email: {user.credentials.idme.username}
+                        <br />
+                        Password: {user.credentials.idme.password}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </>
         )}
       </div>
