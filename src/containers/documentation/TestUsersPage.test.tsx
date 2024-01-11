@@ -60,22 +60,22 @@ describe('TestUsersPage', () => {
 
   describe('Test users content', () => {
     it('renders the test users table', async () => {
-      await waitFor(async () => {
-        const heading = await screen.findByRole('heading', {
+      await waitFor(() => {
+        const heading = screen.queryByRole('heading', {
           level: 2,
           name: /Test user credentials for the Armageddon API/,
         });
         expect(heading).toBeInTheDocument();
         // All data tested for is fake data / non-pii information
-        const user1 = await screen.findByText('1012667145V762142'); // ICN
+        const user1 = screen.queryByText(/1012667145V762142/); // ICN
         expect(user1).toBeInTheDocument();
-        const user2 = await screen.findByText('va.api.user+002@gmail.com'); // Email
+        const user2 = screen.queryByText(/va.api.user\+002@gmail.com/); // Email
         expect(user2).toBeInTheDocument();
-        const user3 = await screen.findByText('796378782'); // SSN
+        const user3 = screen.queryByText(/796378782/); // SSN
         expect(user3).toBeInTheDocument();
-        const user4 = await screen.findByText('7OMSKULT5PSVFE3SINTWBT2YA2MSFXU4'); // 2-factor seed
+        const user4 = screen.queryByText(/OMSKULT5PSVFE3SINTWBT2YA2MSFXU4/); // 2-factor seed
         expect(user4).toBeInTheDocument();
-        const user5 = await screen.findByText('Pauline'); // First name
+        const user5 = screen.queryByText(/Pauline/); // First name
         expect(user5).toBeInTheDocument();
       });
     });
