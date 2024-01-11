@@ -19,7 +19,7 @@ const server = setupServer(
       res: ResponseComposition,
       context: RestContext,
     ): MockedResponse | Promise<MockedResponse> =>
-      res(context.status(200), context.json(testUserData)),
+      res(context.delay(750), context.status(200), context.json(testUserData)),
   ),
 );
 describe('TestUsersPage', () => {
@@ -48,10 +48,35 @@ describe('TestUsersPage', () => {
   });
 
   describe('Static Content', () => {
-    it('renders the page header', async () => {
-      await waitFor(() => {
-        const heading = screen.getByRole('heading', { level: 1, name: /Armageddon API/ });
+    it('renders the page header after the progress bar completes', async () => {
+      const loadingBar = screen.getByRole('progressbar');
+      expect(loadingBar).toBeInTheDocument();
+      await waitFor(async () => {
+        const heading = await screen.findByRole('heading', { level: 1, name: /Armageddon API/ });
         expect(heading).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Test users content', () => {
+    it('renders the test users table', async () => {
+      await waitFor(async () => {
+        const heading = await screen.findByRole('heading', {
+          level: 2,
+          name: /Test user credentials for the Armageddon API/,
+        });
+        expect(heading).toBeInTheDocument();
+        // All data tested for is fake data / non-pii information
+        const user1 = await screen.findByText('1012667145V762142'); // ICN
+        expect(user1).toBeInTheDocument();
+        const user2 = await screen.findByText('va.api.user+002@gmail.com'); // Email
+        expect(user2).toBeInTheDocument();
+        const user3 = await screen.findByText('796378782'); // SSN
+        expect(user3).toBeInTheDocument();
+        const user4 = await screen.findByText('7OMSKULT5PSVFE3SINTWBT2YA2MSFXU4'); // 2-factor seed
+        expect(user4).toBeInTheDocument();
+        const user5 = await screen.findByText('Pauline'); // First name
+        expect(user5).toBeInTheDocument();
       });
     });
   });
