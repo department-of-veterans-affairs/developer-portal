@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import { ScrollRestoration } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
+import { defineCustomElements } from '@department-of-veterans-affairs/component-library';
 import { APICategories } from './apiDefs/schema';
 import { Footer, Header, PageContent } from './components';
 import { ScrollToHashElement } from './components/scrollToHashElement/ScrollToHashElement';
