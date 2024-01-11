@@ -1,22 +1,24 @@
 import * as Sentry from '@sentry/browser';
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import SwaggerUI from 'swagger-ui';
-import { usePrevious } from '../../hooks';
+import { useAppDispatch, usePrevious } from '../../hooks';
+import { APIDocSource } from '../../apiDefs/schema';
+import { getDocURL, getVersion, getVersionNumber } from '../../features/apis/apiVersioningSelector';
 import {
   resetVersioning,
-  ResetVersioning,
-  setVersioning,
-  SetVersioning,
   setRequestedApiVersion,
-  SetRequestedAPIVersion,
-} from '../../actions';
-import { APIDocSource } from '../../apiDefs/schema';
-import { getDocURL, getVersion, getVersionNumber } from '../../reducers/apiVersioning';
-import { APIMetadata, RootState, VersionMetadata } from '../../types';
-import { CURRENT_VERSION_IDENTIFIER } from '../../types/constants';
+  setVersioning,
+} from '../../features/apis/apiVersioningSlice';
+import { AppDispatch } from '../../store';
+import { APIMetadata, APIVersioning, RootState, VersionMetadata } from '../../types';
+import {
+  CURRENT_VERSION_DISPLAY_NAME,
+  CURRENT_VERSION_IDENTIFIER,
+  OPEN_API_SPEC_HOST,
+} from '../../types/constants';
 import { SwaggerPlugins, System } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
@@ -49,14 +51,14 @@ const getVersionFromParams = (searchQuery: string): string => {
 };
 
 const handleVersionChange =
-  (dispatch: React.Dispatch<SetRequestedAPIVersion>): ((requestedVersion: string) => void) =>
+  (dispatch: AppDispatch): ((requestedVersion: string) => void) =>
   (requestedVersion: string): void => {
     dispatch(setRequestedApiVersion(requestedVersion));
   };
 
 const renderSwaggerUI = (
   defaultUrl: string,
-  dispatch: React.Dispatch<SetRequestedAPIVersion>,
+  dispatch: AppDispatch,
   versionNumber: string,
   versions: VersionMetadata[] | null,
 ): void => {
@@ -73,9 +75,7 @@ const renderSwaggerUI = (
 };
 
 const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
-  const dispatch: React.Dispatch<ResetVersioning | SetRequestedAPIVersion | SetVersioning> =
-    useDispatch();
-
+  const appDispatch = useAppDispatch();
   const defaultUrlSelector = (state: RootState): string => getDocURL(state.apiVersioning);
   const defaultUrl = useSelector(defaultUrlSelector);
   const location = useLocation();
@@ -100,18 +100,35 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
    * UPDATE DOCS WHEN API NAME CHANGES
    */
   const { apiName } = props;
-  const { openApiUrl, metadataUrl } = props.docSource;
+  const { metadataUrl } = props.docSource;
   const prevApiName = usePrevious(apiName);
 
   const setMetadataAndDocUrl = React.useCallback(() => {
     const doSet = async (): Promise<void> => {
       const metadataVersions = await getVersionsFromMetadata(metadataUrl);
       const paramsVersion = getVersionFromParams(location.search);
-
-      dispatch(setVersioning(openApiUrl, metadataVersions, paramsVersion));
+      const docsUrl = metadataVersions?.find((search: VersionMetadata): boolean => {
+        if (paramsVersion === search.version) {
+          return true;
+        } else if (
+          paramsVersion === CURRENT_VERSION_IDENTIFIER &&
+          search.status === CURRENT_VERSION_DISPLAY_NAME
+        ) {
+          return true;
+        }
+        return false;
+      })?.sf_path;
+      if (docsUrl) {
+        const payload: APIVersioning = {
+          defaultUrl: `${OPEN_API_SPEC_HOST}${docsUrl}`,
+          requestedApiVersion: paramsVersion,
+          versions: metadataVersions,
+        };
+        appDispatch(setVersioning(payload));
+      }
     };
     void doSet();
-  }, [dispatch, location.search, metadataUrl, openApiUrl]);
+  }, [appDispatch, location.search, metadataUrl]);
 
   React.useEffect(() => {
     if (prevApiName !== apiName) {
@@ -124,7 +141,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
    */
   React.useEffect(
     () => (): void => {
-      dispatch(resetVersioning());
+      appDispatch(resetVersioning());
     },
     [], // eslint-disable-line react-hooks/exhaustive-deps
   );
@@ -153,9 +170,9 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
    */
   React.useEffect(() => {
     if (document.getElementById('swagger-ui') && defaultUrl) {
-      renderSwaggerUI(defaultUrl, dispatch, versionNumber, versions);
+      renderSwaggerUI(defaultUrl, appDispatch, versionNumber, versions);
     }
-  }, [defaultUrl, dispatch, versions, versionNumber]);
+  }, [defaultUrl, appDispatch, versions, versionNumber]);
 
   /**
    * RENDER
@@ -167,7 +184,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
       {apiIntro !== undefined && <ReactMarkdown>{apiIntro}</ReactMarkdown>}
       {versions && versions.length > 1 && (
         <VersionSelect
-          dispatch={dispatch}
+          dispatch={appDispatch}
           version={version}
           versions={versions}
           handleVersionChange={handleVersionChange}

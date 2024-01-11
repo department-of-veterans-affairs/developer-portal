@@ -6,8 +6,8 @@ import { FlagsProvider, getFlags } from '../../../flags';
 
 import { lookupApiBySlug } from '../../../apiDefs/query';
 import store from '../../../store';
-import { setApis } from '../../../actions';
 import { fakeCategories } from '../../../__mocks__/fakeCategories';
+import { setApis } from '../../../features/apis/apisSlice';
 import { AuthCodeGrantContent } from './AuthCodeGrantContent';
 
 describe('Auth Grant Content', () => {

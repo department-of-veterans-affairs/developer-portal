@@ -17,9 +17,9 @@
 
 /* eslint-disable max-nested-callbacks -- Jest callbacks */
 import 'jest';
-import { setApis } from '../actions';
 import store from '../store';
 import { fakeCategories } from '../__mocks__/fakeCategories';
+import { setApis } from '../features/apis/apisSlice';
 import {
   apisFor,
   countActiveApisByCategory,
@@ -34,7 +34,7 @@ import {
   includesOpenDataAPI,
   getAllApis,
 } from './query';
-import { APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
+import { APICategories, APIDescription, ProdAccessFormSteps, VaInternalOnly } from './schema';
 
 const rings: APIDescription = {
   altID: null,
@@ -299,12 +299,19 @@ describe('query module', () => {
 });
 describe('cover conditions that interact with stealth launched APIs', () => {
   beforeEach(() => {
-    const tempCategories = fakeCategories;
-    tempCategories.sports.apis[0] = {
-      ...tempCategories.sports.apis[0],
+    const jsonCategories = JSON.stringify(fakeCategories);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const untypedCategories = JSON.parse(jsonCategories);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    const apis = untypedCategories.sports.apis as APIDescription[];
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+    apis[0] = {
+      ...apis[0],
       isStealthLaunched: true,
     };
-    store.dispatch(setApis(tempCategories));
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    untypedCategories.sports.apis = apis;
+    store.dispatch(setApis(untypedCategories as APICategories));
   });
   describe('getAllApis with stealth launched APIs', () => {
     it('getAllApis skips APIs that are stealth launched by default', () => {

@@ -57,13 +57,13 @@ describe('Production Access Form', () => {
     cy.get('#is508CompliantFormFieldyes').click();
     cy.get('#apisFormFieldapikeyappeals').click();
     cy.get('#termsOfServiceFormField').click();
-    cy.get('button.usa-button[type=submit]').click();
+    cy.get('button.usa-button[type=submit]:contains("Continue")').click();
     cy.get('#non-us-based-modal-title').should('be.visible');
 
     cy.get('.va-modal-close').click();
     cy.get('#non-us-based-modal-title').should('not.exist');
 
-    cy.get('button.usa-button[type=submit]').click();
+    cy.get('button.usa-button[type=submit]:contains("Continue")').click();
     cy.get('#non-us-based-modal-title').should('be.visible');
 
     cy.get('#non-us-based-modal .usa-button').click();

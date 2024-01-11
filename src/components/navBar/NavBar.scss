@@ -95,6 +95,7 @@
   .va-api-external-link {
     @include media($medium-screen) {
       color: $color-white !important;
+
       &:hover {
         color: $color-gold !important;
         font-weight: 400;
@@ -108,6 +109,7 @@
     content: '|';
     font-weight: 300;
     margin: 0 0.8rem;
+
     @include media($medium-screen) {
       font-size: 2.4rem;
     }
