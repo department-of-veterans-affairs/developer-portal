@@ -21,7 +21,7 @@
         "restrictedAccessDetails": null,
         "restrictedAccessToggle": false,
         "urlFragment": "appeals",
-        "urlSlug": "appeals",
+        "urlSlug": "appeals-status",
         "vaInternalOnly": "StrictlyInternal",
         "oAuth": false,
         "oAuthInfo": null,
