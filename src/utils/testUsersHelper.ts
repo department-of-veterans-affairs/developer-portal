@@ -4,7 +4,7 @@ export interface TestUserResponse {
   status: number;
   body: TestUser[];
 }
-export interface TestUsersRequest {
+export interface TestUserRequest {
   body?: TestUser[];
   ok?: boolean;
   hash: string;
@@ -38,7 +38,7 @@ export const isPasswordUniform = (key: string, data: TestUser[]): boolean => {
   return !data.some((user: TestUser): boolean => firstPassword !== user.credentials[key].password);
 };
 
-export const testUsersGitHubUrl = (urlSlug: string | undefined): string => {
+export const testUserGitHubUrl = (urlSlug: string | undefined): string => {
   let filename = 'https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/';
   switch (urlSlug) {
     case 'benefits-claims':

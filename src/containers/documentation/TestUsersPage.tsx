@@ -15,7 +15,7 @@ import './TestUsersPage.scss';
 import { TestUser, isPasswordUniform } from '../../utils/testUsersHelper';
 import { useAppDispatch } from '../../hooks';
 import { setUserStore } from '../../features/user/userSlice';
-import { useGetTestUserDataQuery } from '../../services/lpb';
+import { useGetTestUsersDataQuery } from '../../services/lpb';
 import { getApi } from './DocumentationRoot';
 
 interface TestUsersPageParams {
@@ -27,7 +27,7 @@ interface TestUsersPageParams {
 const TestUsersPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const [testUserAccess, setTestUserAccess] = React.useState(testUserAccessState.INIT);
-  const [testUsers, setTestUsers] = React.useState<TestUser[]>([]);
+  const [testUserData, setTestUserData] = React.useState<TestUser[]>([]);
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
   const { urlSlug, userId, hash } = useParams() as unknown as TestUsersPageParams;
   const api = getApi(urlSlug);
@@ -36,7 +36,7 @@ const TestUsersPage = (): JSX.Element => {
     sameSite: 'strict',
     secure: true,
   });
-  const { data, status } = useGetTestUserDataQuery({
+  const { data, status } = useGetTestUsersDataQuery({
     hash,
     urlSlug,
     userId,
@@ -44,7 +44,7 @@ const TestUsersPage = (): JSX.Element => {
 
   React.useEffect(() => {
     if (status === 'fulfilled') {
-      setTestUsers(data as TestUser[]);
+      setTestUserData(data as TestUser[]);
       dispatch(
         setUserStore({
           id: parseInt(userId, 10),
@@ -114,7 +114,7 @@ const TestUsersPage = (): JSX.Element => {
               <li>Select ID.me to sign in to the sandbox environment.</li>
               <li>
                 Enter the ID.me username and password.{' '}
-                {isPasswordUniform('idme', testUsers) && (
+                {isPasswordUniform('idme', testUserData) && (
                   <>The password for all ID.me test accounts is: Password1234!</>
                 )}
               </li>
@@ -130,7 +130,7 @@ const TestUsersPage = (): JSX.Element => {
               <li>Select Login.gov to sign in to the sandbox environment.</li>
               <li>
                 Enter the Login.gov username and password.{' '}
-                {isPasswordUniform('logingov', testUsers) && (
+                {isPasswordUniform('logingov', testUserData) && (
                   <>The password for all Login.gov test accounts is: Password12345!!!</>
                 )}
               </li>
@@ -140,10 +140,10 @@ const TestUsersPage = (): JSX.Element => {
               </li>
             </ol>
 
-            {isPasswordUniform('idme', testUsers) && (
+            {isPasswordUniform('idme', testUserData) && (
               <p>Password for all ID.me accounts: Password1234!</p>
             )}
-            {isPasswordUniform('logingov', testUsers) && (
+            {isPasswordUniform('logingov', testUserData) && (
               <p>Password for all Login.gov accounts: Password12345!!!</p>
             )}
 
@@ -162,7 +162,7 @@ const TestUsersPage = (): JSX.Element => {
                 </tr>
               </thead>
               <tbody>
-                {testUsers.map((user: TestUser) => (
+                {testUserData.map((user: TestUser) => (
                   <tr key={user.icn}>
                     <td>{user.name_given}</td>
                     <td>{user.name_family}</td>

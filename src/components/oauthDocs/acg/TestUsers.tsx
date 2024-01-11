@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useParams } from 'react-router-dom';
 import { SectionHeaderWrapper } from '../../sectionHeaderWrapper/SectionHeaderWrapper';
-import { testUsersGitHubUrl } from '../../../utils/testUsersHelper';
+import { testUserGitHubUrl } from '../../../utils/testUsersHelper';
 
 const TestUsers = (): JSX.Element => {
   const { urlSlug } = useParams();
@@ -17,7 +17,7 @@ const TestUsers = (): JSX.Element => {
       </p>
       <p>
         To access test data, go to the{' '}
-        <a href={testUsersGitHubUrl(urlSlug)}>test accounts GitHub page</a> and find test users that
+        <a href={testUserGitHubUrl(urlSlug)}>test accounts GitHub page</a> and find test users that
         meet your use case. Then, get test account credentials by using the link in the email that
         was sent to you when you signed up for sandbox access.
       </p>

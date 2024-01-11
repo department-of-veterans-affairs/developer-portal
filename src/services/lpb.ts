@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { LPB_BASE_URL, LPB_PROVIDERS_PATH, LPB_TEST_USER_ACCESS_PATH } from '../types/constants';
 import { APICategories } from '../apiDefs/schema';
-import { TestUserResponse, TestUsersRequest } from '../utils/testUsersHelper';
+import { TestUserResponse, TestUserRequest } from '../utils/testUsersHelper';
 
 export interface UseGetApisQuery {
   data: APICategories;
@@ -18,9 +18,9 @@ export const lpbService = createApi({
         validateStatus: (response): boolean => response.status === 200,
       }),
     }),
-    getTestUserData: builder.query<
+    getTestUsersData: builder.query<
       unknown,
-      Partial<TestUsersRequest | TestUserResponse> & Pick<TestUsersRequest | TestUserResponse, 'ok'>
+      Partial<TestUserRequest | TestUserResponse> & Pick<TestUserRequest | TestUserResponse, 'ok'>
     >({
       query: body => ({
         body: JSON.stringify(body),
@@ -35,4 +35,4 @@ export const lpbService = createApi({
   reducerPath: 'lpb',
 });
 
-export const { useGetApisQuery, useGetTestUserDataQuery } = lpbService;
+export const { useGetApisQuery, useGetTestUsersDataQuery } = lpbService;
