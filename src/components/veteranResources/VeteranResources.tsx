@@ -24,8 +24,6 @@ export const VeteranResources = (): JSX.Element => {
         large
         modalTitle="Veteran resources"
         onCloseEvent={handleModalClose}
-        onPrimaryButtonClick={handleModalClose}
-        primaryButtonText="Close"
         visible={modalVisible}
       >
         <VeteranResourcesContent />
