@@ -11,7 +11,6 @@ import {
 } from '../../types/constants';
 import { PageHeader } from '../../components';
 
-import './TestUsersPage.scss';
 import { TestUser, isPasswordUniform } from '../../utils/testUsersHelper';
 import { useAppDispatch } from '../../hooks';
 import { setUserStore } from '../../features/user/userSlice';
