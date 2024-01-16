@@ -17,7 +17,6 @@ const TestUsers = (): JSX.Element => (
     </p>
   </>
 );
-
 TestUsers.propTypes = {};
 
 export { TestUsers };

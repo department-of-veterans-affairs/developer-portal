@@ -25,6 +25,47 @@ interface VaNetworkAvailableState {
   status: 'unknown' | 'start-test' | 'testing' | 'connected' | 'unavailable';
 }
 
+const CustomButtonForSurveyModal = (): JSX.Element => {
+  React.useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://touchpoints.app.cloud.gov/touchpoints/e2f23ac3.js';
+    script.defer = true;
+    document.body.appendChild(script);
+
+    // prevent the survey's "close" icon from scrolling back to the top of the page
+    const attachCloseIconListener = (closeIcon: HTMLElement): void => {
+      closeIcon.addEventListener('click', event => {
+        event.stopPropagation();
+      });
+    };
+
+    const initiateSurveyCloseIconCheck = (): void => {
+      const surveyCloseIcon = document.querySelector('.fba-modal-close');
+      if (surveyCloseIcon instanceof HTMLElement) {
+        attachCloseIconListener(surveyCloseIcon);
+      } else {
+        setTimeout(initiateSurveyCloseIconCheck, 500);
+      }
+    };
+
+    script.onload = (): void => {
+      initiateSurveyCloseIconCheck();
+    };
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  return (
+    <aside id="touchpoints-aside">
+      <button id="touchpoints-survey" className="fixed-tab-button usa-button" type="button">
+        Help improve this site
+      </button>
+    </aside>
+  );
+};
+
 const PageContent = (): JSX.Element => {
   const mainRef = React.useRef<HTMLElement>(null);
   const prevPathRef = React.useRef<string | null>(null);
@@ -133,6 +174,7 @@ const PageContent = (): JSX.Element => {
           )}
         </VaModal>
       </ErrorBoundary>
+      <CustomButtonForSurveyModal />
     </main>
   );
 };
