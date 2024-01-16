@@ -151,7 +151,7 @@
     "expect-puppeteer": "^4.4.0",
     "file-loader": "^6.2.0",
     "fs-extra": "^10.1.0",
-    "html-loader": "^3.1.2",
+    "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.3",
     "husky": "^8.0.3",
     "jest": "^26.6.3",
