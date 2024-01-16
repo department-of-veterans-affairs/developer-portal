@@ -1,5 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { LPB_BASE_URL, LPB_PROVIDERS_PATH, LPB_TEST_USER_ACCESS_PATH } from '../types/constants';
+import {
+  LPB_BASE_URL,
+  LPB_FORGERY_TOKEN,
+  LPB_PROVIDERS_PATH,
+  LPB_TEST_USER_ACCESS_PATH,
+} from '../types/constants';
 import { APICategories } from '../apiDefs/schema';
 import { TestUserResponse, TestUserRequest } from '../utils/testUsersHelper';
 import { isPrReviewBuild } from '../utils/prHelper';
@@ -12,7 +17,10 @@ export interface UseGetApisQuery {
 
 interface TestUserRequestObject {
   body?: string;
-  headers: { 'Content-Type': string };
+  headers: {
+    'Content-Type': string;
+    'X-Csrf-Token': string;
+  };
   method: 'GET' | 'POST';
   url: string;
 }
@@ -35,6 +43,7 @@ export const lpbService = createApi({
           body: JSON.stringify(body),
           headers: {
             'Content-Type': 'application/json',
+            'X-Csrf-Token': LPB_FORGERY_TOKEN,
           },
           method: 'POST',
           url: LPB_TEST_USER_ACCESS_PATH,
