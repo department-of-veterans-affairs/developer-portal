@@ -15,8 +15,7 @@ import './styles/base.scss';
 import { SiteRedirects } from './components/SiteRedirects';
 import { useAppDispatch } from './hooks';
 import { setApiLoadingError } from './features/apis/apisSlice';
-import { UseGetApisQuery, useGetApisQuery } from './services/api';
-import { RootState } from './store';
+import { UseGetApisQuery, useGetApisQuery } from './services/lpb';
 
 void defineCustomElements();
 
@@ -57,6 +56,4 @@ const App = (): JSX.Element => {
   );
 };
 
-const mapStateToProps = (state: RootState): APICategories => state.apiList.apis;
-
-export default connect(mapStateToProps)(App);
+export default App;

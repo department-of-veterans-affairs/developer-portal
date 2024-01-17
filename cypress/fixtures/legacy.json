@@ -91,6 +91,7 @@
         "oAuthInfo": {
           "acgInfo": {
             "baseAuthPath": "/oauth2/claims/v1",
+            "gitHubTestUsers": "https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts/benefits_test_accounts.md",
             "scopes": ["profile", "openid", "offline_access", "claim.read", "claim.write"]
           },
           "ccgInfo": {
@@ -299,6 +300,7 @@
         "oAuthInfo": {
           "acgInfo": {
             "baseAuthPath": "/oauth2/clinical-health/v1",
+            "gitHubTestUsers": "https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts/clinical_health_test_accounts.md",
             "scopes": [
               "profile",
               "openid",
@@ -339,6 +341,7 @@
         "oAuthInfo": {
           "acgInfo": {
             "baseAuthPath": "/oauth2/community-care/v1",
+            "gitHubTestUsers": "https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts/community_care_test_accounts.md",
             "scopes": [
               "profile",
               "openid",
@@ -375,6 +378,7 @@
         "oAuthInfo": {
           "acgInfo": {
             "baseAuthPath": "/oauth2/health/v1",
+            "gitHubTestUsers": "https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts/health_test_accounts.md",
             "scopes": [
               "profile",
               "openid",
@@ -672,6 +676,7 @@
         "oAuthInfo": {
           "acgInfo": {
             "baseAuthPath": "/oauth2/veteran-verification/v1",
+            "gitHubTestUsers": "https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts/verification_test_accounts.md",
             "scopes": [
               "profile",
               "openid",

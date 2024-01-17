@@ -74,6 +74,7 @@ jobs:
           aws s3 sync --no-progress --acl public-read build/ s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/
           for env in 'dev' 'staging' 'production' ; do
             aws s3 cp --acl public-read --content-type="application/json" s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/platform-backend/v0/consumers/applications s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/platform-backend/v0/consumers/applications
+            aws s3 cp --acl public-read --content-type="application/json" s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/platform-backend/v0/consumers/test-user-data s3://$S3_REVIEW_BUCKET/gha-$COMMIT_HASH/$env/platform-backend/v0/consumers/test-user-data
           done
 
       - name: Add PR builds comment

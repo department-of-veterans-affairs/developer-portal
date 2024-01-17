@@ -105,6 +105,7 @@ export interface ACGInfo {
   readonly sandboxAud: string;
   readonly productionAud: string;
   readonly scopes: string[];
+  readonly gitHubTestUsers?: string;
 }
 
 export interface CCGInfo {

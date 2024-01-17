@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { APICategories, APICategory, APIDescription } from '../../apiDefs/schema';
 import { RootState } from '../../store';
-import { listApi } from '../../services/api';
+import { lpbService } from '../../services/lpb';
 
 const initialState = {
   apis: {},
@@ -12,7 +12,7 @@ const initialState = {
 const apisSlice = createSlice({
   extraReducers: builder => {
     builder.addMatcher(
-      listApi.endpoints.getApis.matchFulfilled,
+      lpbService.endpoints.getApis.matchFulfilled,
       (state, action: PayloadAction<APICategories>) => {
         const apis: APICategories = action.payload;
         // This is necessary because the typing doesn't allow for conditions to check

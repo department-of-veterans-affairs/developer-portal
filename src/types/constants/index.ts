@@ -12,6 +12,8 @@ export const LPB_PRODUCTION_ACCESS_URL = `${LPB_BASE_URL}/v0/consumers/productio
 export const LPB_PROVIDERS_PATH = '/v0/providers/transformations/legacy.json?environment=sandbox';
 export const LPB_PROVIDERS_URL = `${LPB_BASE_URL}${LPB_PROVIDERS_PATH}`;
 export const LPB_CONTACT_US_URL = `${LPB_BASE_URL}/v0/support/contact-us/requests`;
+export const LPB_TEST_USER_ACCESS_PATH = '/v0/consumers/test-user-data';
+export const LPB_TEST_USER_ACCESS_URL = `${LPB_BASE_URL}${LPB_TEST_USER_ACCESS_PATH}`;
 
 export const APPLY_ACG_APIS = ['claims', 'communityCare', 'health', 'verification'];
 export const APPLY_CCG_APIS = ['claims', 'health', 'lgyGuarantyRemittance'];
@@ -31,4 +33,9 @@ export enum apiLoadingState {
   IN_PROGRESS = 'in_progress',
   LOADED = 'loaded',
   ERROR = 'error',
+}
+export enum testUserAccessState {
+  INIT = 'init',
+  ACCESS_PERMITTED = 'access_permitted',
+  ACCESS_BLOCKED = 'access_blocked',
 }

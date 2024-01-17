@@ -159,6 +159,8 @@ export const fakeCategories: APICategories = {
         oAuthInfo: {
           acgInfo: {
             baseAuthPath: '/oauth2/armageddon/v1',
+            gitHubTestUsers:
+              'https://github.com/department-of-veterans-affairs/vets-api-clients/blob/master/test_accounts/health_test_accounts.md',
             productionAud: 'sample-productionAud',
             sandboxAud: 'sample-sandboxAud',
             scopes: [],
