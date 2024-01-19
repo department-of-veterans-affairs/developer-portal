@@ -90,21 +90,9 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
   const handleTopicFilterSubmit = (values: TopicFilterValues, skipFocus?: boolean): void => {
     updateApis(values.topics, authFilter, search);
     if (values.topics.length > 0) {
-      navigate(
-        {
-          ...location,
-          pathname: `/explore/${values.topics.join('+')}`,
-        },
-        { replace: true },
-      );
+      history.replaceState({}, '', `/explore/${values.topics.join('+')}`);
     } else {
-      navigate(
-        {
-          ...location,
-          pathname: '/explore',
-        },
-        { replace: true },
-      );
+      history.replaceState({}, '', '/explore');
     }
     window.scrollTo(0, 0);
     if (isMobileMenuVisible) {
