@@ -60,9 +60,15 @@ export interface ScrollPosition {
   position: number;
 }
 
+export interface UserStore {
+  id: number;
+  testUserHash: string;
+}
+
 export interface RootState {
   apiVersioning: APIVersioning;
   apiList: ApiList;
   generalStore: GeneralStore;
   scrollPosition: ScrollPosition;
+  userStore: UserStore;
 }

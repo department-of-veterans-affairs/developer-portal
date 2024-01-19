@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getApisLoadedState, lookupApiBySlug } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
@@ -6,6 +7,7 @@ import { ApiAlerts, ApiBreadcrumbs, ContentWithNav, SideNavEntry } from '../../c
 import { apiLoadingState } from '../../types/constants';
 import ApisLoader from '../../components/apisLoader/ApisLoader';
 import './Documentation.scss';
+import { RootState, UserStore } from '../../types';
 
 interface ExploreSideNavProps {
   api: APIDescription;
@@ -25,13 +27,30 @@ const getApi = (apiName?: string): APIDescription | null => {
 export { getApi };
 
 const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
+  const selector = (state: RootState): UserStore => state.userStore;
+  const { id: userId, testUserHash } = useSelector(selector);
   const { api } = props;
   return (
     <>
       <SideNavEntry end name={api.name} to="." />
       <SideNavEntry end name="Docs" subNavLevel={1} to="docs" />
       {!!api.oAuthTypes?.includes('AuthorizationCodeGrant') && (
-        <SideNavEntry end name="Authorization Code Grant" subNavLevel={1} to="authorization-code" />
+        <>
+          <SideNavEntry
+            end
+            name="Authorization Code Grant"
+            subNavLevel={1}
+            to="authorization-code"
+          />
+          {!!userId && testUserHash && (
+            <SideNavEntry
+              end
+              name="Test Users"
+              subNavLevel={2}
+              to={`test-users/${userId}/${testUserHash}`}
+            />
+          )}
+        </>
       )}
       {!!api.oAuthTypes?.includes('ClientCredentialsGrant') && (
         <SideNavEntry end name="Client Credentials Grant" subNavLevel={1} to="client-credentials" />
