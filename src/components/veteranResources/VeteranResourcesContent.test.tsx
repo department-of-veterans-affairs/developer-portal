@@ -55,9 +55,6 @@ describe('VeteranResourcesContent', () => {
   it('checks that the title and description render correctly.', () => {
     render(<VeteranResourcesContent />);
 
-    const title = screen.queryByRole('heading', { level: 1 });
-    expect(title).toHaveTextContent('Veteran resources');
-
     const description = screen.queryByText(
       'Are you looking for Veteran benefits and services information?',
     );

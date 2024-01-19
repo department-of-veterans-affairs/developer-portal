@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { ScrollRestoration } from 'react-router-dom';
-import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
+import { defineCustomElements } from '@department-of-veterans-affairs/component-library';
 import { Footer, Header, PageContent } from './components';
 import { ScrollToHashElement } from './components/scrollToHashElement/ScrollToHashElement';
 import { FlagsProvider, getFlags } from './flags';
