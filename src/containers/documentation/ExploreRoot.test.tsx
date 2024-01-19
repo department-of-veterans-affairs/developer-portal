@@ -7,7 +7,7 @@ import { fakeCategories } from '../../__mocks__/fakeCategories';
 import * as apiQueries from '../../apiDefs/query';
 import { FlagsProvider, getFlags } from '../../flags';
 import store from '../../store';
-import { setApis } from '../../actions';
+import { setApis } from '../../features/apis/apisSlice';
 import { ExploreRoot } from './ExploreRoot';
 
 describe('ExploreRoot', () => {

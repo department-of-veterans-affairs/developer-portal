@@ -1,4 +1,4 @@
-import { defineCustomElements } from '@department-of-veterans-affairs/web-components/loader';
+import { defineCustomElements } from '@department-of-veterans-affairs/component-library';
 import { render, screen } from '@testing-library/react';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';

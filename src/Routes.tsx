@@ -36,6 +36,7 @@ import Support, { sections as supportSections, SupportSection } from './containe
 import { CONSUMER_PROD_PATH, CONSUMER_SANDBOX_PATH } from './types/constants/paths';
 import ErrorPage404 from './containers/ErrorPage404';
 import TermsOfService from './containers/TermsOfService';
+import TestUsersPage from './containers/documentation/TestUsersPage';
 
 export const SiteRoutes = (): JSX.Element => (
   <ErrorBoundary FallbackComponent={ErrorPage404}>
@@ -61,6 +62,7 @@ export const SiteRoutes = (): JSX.Element => (
         <Route index element={<ApiOverviewPage />} />
         <Route path="docs" element={<ApiPage />} />
         <Route path="authorization-code" element={<AuthorizationCodeGrantDocs />} />
+        <Route path="test-users/:userId/:hash" element={<TestUsersPage />} />
         <Route path="client-credentials" element={<ClientCredentialsGrantDocs />} />
         <Route path="release-notes" element={<ReleaseNotes />} />
         <Route path="sandbox-access" element={<RequestSandboxAccess />} />

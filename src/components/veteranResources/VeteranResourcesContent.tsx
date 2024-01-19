@@ -3,7 +3,6 @@ import classNames from 'classnames';
 
 export const VeteranResourcesContent = (): JSX.Element => (
   <>
-    <h1 id="veteran-resources-header">Veteran resources</h1>
     <p id="veteran-resources-description">
       Are you looking for Veteran benefits and services information?
     </p>
@@ -17,7 +16,7 @@ export const VeteranResourcesContent = (): JSX.Element => (
         'vads-u-margin-bottom--2',
       )}
     >
-      <h2 className="vads-u-font-size--h3">
+      <h2 className="vads-u-font-size--lg vads-u-margin-top--0">
         While we don&apos;t handle Veteran inquiries, you can:
       </h2>
       <ul>

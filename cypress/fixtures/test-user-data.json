@@ -1,0 +1,92 @@
+[
+  {
+    "id": "001",
+    "name_given": "Tamara",
+    "name_family": "Ellis",
+    "ssn": "796130115",
+    "icn": "1012667145V762142",
+    "credentials": {
+      "idme": {
+        "username": "va.api.user+idme.001@gmail.com",
+        "password": "Password1234!"
+      },
+      "logingov": {
+        "username": "va.api.user+001@gmail.com",
+        "password": "Password12345!!!",
+        "seed": "LKI7FZ7ZEVRLGQRW"
+      }
+    }
+  },
+  {
+    "id": "002",
+    "name_given": "Janet",
+    "name_family": "Moore",
+    "ssn": "796127677",
+    "icn": "1012861229V078999",
+    "credentials": {
+      "idme": {
+        "username": "va.api.user+idme.002@gmail.com",
+        "password": "Password1234!"
+      },
+      "logingov": {
+        "username": "va.api.user+002@gmail.com",
+        "password": "Password12345!!!",
+        "seed": "B5C3L42PLUWO3U5T"
+      }
+    }
+  },
+  {
+    "id": "003",
+    "name_given": "Ralph",
+    "name_family": "Lee",
+    "ssn": "796378782",
+    "icn": "1012667169V030190",
+    "credentials": {
+      "idme": {
+        "username": "va.api.user+idme.003@gmail.com",
+        "password": "Password1234!"
+      },
+      "logingov": {
+        "username": "va.api.user+003@gmail.com",
+        "password": "Password12345!!!",
+        "seed": "DIN72VD3MUOWJEENIS2FTJZEAROTGBAC"
+      }
+    }
+  },
+  {
+    "id": "004",
+    "name_given": "Jesse",
+    "name_family": "Gray",
+    "ssn": "796378881",
+    "icn": "1012666073V986297",
+    "credentials": {
+      "idme": {
+        "username": "va.api.user+idme.004@gmail.com",
+        "password": "Password1234!"
+      },
+      "logingov": {
+        "username": "va.api.user+004@gmail.com",
+        "password": "Password12345!!!",
+        "seed": "7OMSKULT5PSVFE3SINTWBT2YA2MSFXU4"
+      }
+    }
+  },
+  {
+    "id": "005",
+    "name_given": "Pauline",
+    "name_family": "Foster",
+    "ssn": "796330625",
+    "icn": "1012845630V900607",
+    "credentials": {
+      "idme": {
+        "username": "va.api.user+idme.005@gmail.com",
+        "password": "Password1234!"
+      },
+      "logingov": {
+        "username": "va.api.user+005@gmail.com",
+        "password": "Password12345!!!",
+        "seed": "RJIZ4BAI6OIYVKKGYYNHTR7F62IERCDT"
+      }
+    }
+  }
+]

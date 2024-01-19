@@ -1,23 +1,37 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
+import { configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
+import apisReducer from './features/apis/apisSlice';
+import apiVersioningReducer from './features/apis/apiVersioningSlice';
+import generalStoreReducer from './features/general/generalStoreSlice';
+import scrollPositionReducer from './features/general/scrollPositionSlice';
+import userReducer from './features/user/userSlice';
+import { lpbService } from './services/lpb';
 
-import { apiVersioning } from './reducers/apiVersioning';
-import { apiList } from './reducers/apiList';
-import { generalStore } from './reducers/generalStore';
-import { scrollPosition } from './reducers/scrollPosition';
-import { RootState } from './types';
+const persistConfig = {
+  key: 'root',
+  storage,
+};
+const persistedUserReducer = persistReducer(persistConfig, userReducer);
 
-// eslint-disable-next-line no-underscore-dangle
-const composeEnhancers: typeof compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?? compose;
+const store = configureStore({
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(lpbService.middleware),
+  reducer: {
+    apiList: apisReducer,
+    apiVersioning: apiVersioningReducer,
+    generalStore: generalStoreReducer,
+    [lpbService.reducerPath]: lpbService.reducer,
+    scrollPosition: scrollPositionReducer,
+    userStore: persistedUserReducer,
+  },
+});
 
-const store = createStore(
-  combineReducers<RootState>({
-    apiList,
-    apiVersioning,
-    generalStore,
-    scrollPosition,
-  }),
-  composeEnhancers(applyMiddleware(thunk as ThunkMiddleware<RootState>)),
-);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export const persistor = persistStore(store);
 
 export default store;

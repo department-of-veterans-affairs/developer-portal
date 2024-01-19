@@ -1,0 +1,59 @@
+body #fba-button.usa-button,
+body .fba-modal-dialog .usa-legend,
+body .fba-modal-dialog .usa-fieldset,
+body .fba-modal-dialog .usa-label,
+body .fba-modal-dialog .questions textarea,
+body .fba-modal-dialog .usa-button {
+  font-size: 16px;
+}
+
+body .fba-modal-dialog {
+  max-width: fit-content;
+
+  small {
+    font-size: 1.6rem;
+  }
+
+  .fba-modal-close {
+    height: 24px;
+    width: 24px;
+  }
+
+  .fba-modal-title {
+    margin-top: 0;
+  }
+
+  .form-header-logo {
+    display: none;
+  }
+
+  .usa-banner__header-text {
+    font-size: 1.2rem;
+  }
+
+  .usa-radio__label {
+    max-width: unset;
+  }
+}
+
+.fba-modal-dialog .usa-radio__input--tile+[class*=__label]::before {
+  margin-top: 3px;
+}
+
+.usa-legend,
+.usa-label {
+  text-wrap: nowrap;
+}
+
+#touchpoints-survey {
+  position: absolute;
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1;
+  height: 44px;
+  width: 200px;
+}
+
+aside#touchpoints-aside {
+  margin-top: 100px;
+}
