@@ -14,7 +14,6 @@ import {
   onlyOpenDataAPIs,
   includesOpenDataAPI,
 } from '../../../../apiDefs/query';
-import { countryCode, countryName } from '../../../../utils/countries';
 
 const BasicInformation: FC = () => {
   const {
@@ -92,31 +91,24 @@ const BasicInformation: FC = () => {
           required
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
-        <va-select label="Country" name="country" value="" required>
-          <>
-            <option value="" />
-            {countryName.map((country: string, index: number) => (
-              <option key={country} value={countryCode[index]}>
-                {country}
-              </option>
-            ))}
-          </>
+        <va-select label="Country" name="country" value="USA" required>
+          <option value="USA">United States</option>
         </va-select>
         <TextField
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
           label="Street address"
-          name="streetAddress"
+          name="addressLine1"
           required
         />
         <TextField
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
           label="Street address line 2"
-          name="streetAddress2"
+          name="addressLine2"
         />
         <TextField
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
           label="Street address line 3"
-          name="streetAddress3"
+          name="addressLine3"
         />
         <TextField
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
@@ -126,13 +118,14 @@ const BasicInformation: FC = () => {
         />
         <TextField
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
-          label="State/Province/Region"
-          name="stateProvinceRegion"
+          label="State"
+          name="state"
+          required
         />
         <TextField
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
           label="Postal code"
-          name="postalCode"
+          name="zipCode5"
           required
         />
         <TextField

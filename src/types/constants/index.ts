@@ -15,10 +15,6 @@ export const LPB_CONTACT_US_URL = `${LPB_BASE_URL}/v0/support/contact-us/request
 export const LPB_TEST_USER_ACCESS_PATH = '/v0/consumers/test-user-data';
 export const LPB_TEST_USER_ACCESS_URL = `${LPB_BASE_URL}${LPB_TEST_USER_ACCESS_PATH}`;
 
-export const ADDRESS_VALIDATION_API = `${
-  process.env.REACT_APP_API_URL as string
-}/services/address_validation`;
-
 export const APPLY_ACG_APIS = ['claims', 'communityCare', 'health', 'verification'];
 export const APPLY_CCG_APIS = ['claims', 'health', 'lgyGuarantyRemittance'];
 export const PAGE_HEADER_ID = 'page-header';

@@ -18,15 +18,9 @@ import { ProductionAccessRequest } from '../../types/forms/productionAccess';
 import { makeRequest, ResponseType } from '../../utils/makeRequest';
 import vaLogo from '../../assets/VaSeal.png';
 import hiFive from '../../assets/high-five.svg';
-import {
-  ADDRESS_VALIDATION_API,
-  LPB_FORGERY_TOKEN,
-  LPB_PRODUCTION_ACCESS_URL,
-  yesOrNoValues,
-} from '../../types/constants';
+import { LPB_FORGERY_TOKEN, LPB_PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
 import {
-  AddressValidation,
   BasicInformation,
   PolicyGovernance,
   TechnicalInformation,
@@ -95,15 +89,18 @@ export interface Values {
   privacyPolicyURL?: string;
   termsOfServiceURL?: string;
   country: string;
-  streetAddress: string;
-  streetAddress2?: string;
-  streetAddress3?: string;
+  addressLine1: string;
+  addressLine2?: string;
+  addressLine3?: string;
   city: string;
-  stateProvinceRegion?: string;
-  postalCode: string;
+  state: string;
+  zipCode5: string;
 }
 
 const initialValues: Values = {
+  addressLine1: '',
+  addressLine2: '',
+  addressLine3: '',
   apis: [],
   appDescription: '',
   appName: '',
@@ -128,7 +125,6 @@ const initialValues: Values = {
   phoneNumber: '',
   piiStorageMethod: '',
   platforms: '',
-  postalCode: '',
   primaryContact: {
     email: '',
     firstName: '',
@@ -144,12 +140,9 @@ const initialValues: Values = {
     lastName: '',
   },
   signUpLink: '',
-  stateProvinceRegion: '',
+  state: '',
   statusUpdateEmails: [''],
   storePIIOrPHI: '',
-  streetAddress: '',
-  streetAddress2: '',
-  streetAddress3: '',
   supportLink: '',
   termsOfService: false,
   termsOfServiceURL: '',
@@ -159,14 +152,15 @@ const initialValues: Values = {
   veteranFacing: '',
   vulnerabilityManagement: '',
   website: '',
+  zipCode5: '',
 };
 
-const renderStepContent = (step: number, showAddressValidation: boolean): JSX.Element => {
+const renderStepContent = (step: number): JSX.Element => {
   switch (step) {
     case 0:
       return <Verification />;
     case 1:
-      return showAddressValidation ? <AddressValidation /> : <BasicInformation />;
+      return <BasicInformation />;
     case 2:
       return <TechnicalInformation />;
     case 3:
@@ -190,8 +184,6 @@ const ProductionAccess: FC = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [steps, setSteps] = useState(possibleSteps);
-  const [addressValidated, setAddressValidated] = useState(false);
-  const [showAddressValidation, setShowAddressValidation] = useState(false);
   const currentValidationSchema = validationSchema[activeStep];
   const isLastStep = activeStep === steps.length - 1;
   const setCookie = useCookies(['CSRF-TOKEN'])[1];
@@ -346,38 +338,6 @@ const ProductionAccess: FC = () => {
         setSubmissionError(true);
       }
     } else {
-      if (activeStep === 1) {
-        try {
-          const validate = await makeRequest(`${ADDRESS_VALIDATION_API}/v1/validate`, {
-            body: JSON.stringify({
-              requestAddress: {
-                addressLine1: values.streetAddress,
-                addressLine2: values.streetAddress2,
-                addressLine3: values.streetAddress3,
-                addressPOU: 'RESIDENCE/CHOICE',
-                city: values.city,
-                internationalPostalCode: '', // TODO
-                requestCountry: {
-                  countryCode: values.country,
-                  countryName: '', // TODO
-                },
-                stateProvince: {
-                  code: values.stateProvinceRegion,
-                  name: '', // TODO
-                },
-                zipCode4: '', // TODO
-                zipCode5: values.postalCode,
-              },
-            }),
-          });
-          setAddressValidated(true);
-        } catch (error: unknown) {
-          setAddressValidated(false);
-          setShowAddressValidation(true);
-          return;
-        }
-      }
-
       if (values.isUSBasedCompany === yesOrNoValues.No) {
         setModal2Visible(true);
         return;
@@ -456,7 +416,7 @@ const ProductionAccess: FC = () => {
                   </h2>
                 </>
               )}
-              {renderStepContent(activeStep, showAddressValidation)}
+              {renderStepContent(activeStep)}
               <div className="vads-u-margin-y--5">
                 <button
                   className={classNames(
