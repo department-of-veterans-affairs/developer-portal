@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
+import { VaFileInput } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { LPB_LOGO_UPLOAD_POLICY_URL } from '../../../types/constants';
 import { Values } from '../../../containers/consumerOnboarding/ProductionAccess';
 import './LogoUploadField.scss';
@@ -26,11 +27,22 @@ export interface LogoUploadProps {
   className?: string;
 }
 
+type CustomFileChangeEvent = {
+  detail: {
+    files: FileList;
+  };
+};
+
+interface XMLHttpRequestWithSignal extends XMLHttpRequest {
+  signal?: AbortSignal;
+}
+
 export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => {
-  const [uploadStatus, setUploadStatus] = useState<string | null>(null);
+  const [error, setError] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0)
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoData, setLogoData] = useState<string | null>(null);
-  const fileInput = useRef<HTMLInputElement>(null);
   const formik = useFormikContext<Values>();
 
   useEffect(() => {
@@ -76,31 +88,63 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
     formData.append('X-Amz-Signature', uploadEntity.xAmzSignature);
     formData.append('file', file);
 
-    try {
-      const response = await fetch(
-        `https://${uploadEntity.bucketName}.${uploadEntity.s3RegionEndpoint}`,
-        {
-          body: formData,
-          method: 'POST',
-        },
-      );
+    return new Promise((resolve, reject) => {
+      const controller = new AbortController();
+      const signal = controller.signal;
+      const request: XMLHttpRequestWithSignal = new XMLHttpRequest();
 
-      if (!response.ok) {
-        throw new Error('Upload to S3 failed');
-      }
+      request.upload.addEventListener('progress', (e) => {
+        if (e.lengthComputable) {
+          const percentCompleted = Math.round((e.loaded / e.total) * 100);
+          setUploadProgress(percentCompleted)
+        }
+      });
 
-      setUploadStatus('Upload successful');
-    } catch (error: unknown) {
-      setUploadStatus('Upload failed');
-    }
+      setError('');
+      setIsUploading(true);
+      setLogoFile(file);
+
+      request.open('POST', `https://${uploadEntity.bucketName}.${uploadEntity.s3RegionEndpoint}`, true);
+      request.signal = signal;
+
+      const cancelUploadButton = document.getElementById('cancelUpload');
+      cancelUploadButton?.addEventListener('click', () => {
+        controller.abort();
+        setIsUploading(false);
+        setUploadProgress(0);
+        setLogoFile(null);
+        setLogoData(null);
+        setError('');
+      });
+
+      request.onload = () => {
+        if (request.status === 200) {
+          setIsUploading(false);
+          resolve(request.response);
+        } else {
+          setIsUploading(false);
+          setLogoData(null);
+          setLogoFile(null);
+          setError(`We couldn't upload your file`)
+          reject(request.statusText);
+        }
+      };
+
+      request.onerror = () => {
+        setIsUploading(false);
+        setLogoData(null);
+        setLogoFile(null);
+        setError(`We couldn't upload your file`)
+        reject('Network Error');
+      };
+
+      request.send(formData);
+    });
   };
 
-  const handleFileChange = async (): Promise<void> => {
-    if (fileInput.current?.files?.length) {
-      const file = fileInput.current.files[0];
-
-      setUploadStatus('Uploading...');
-
+  const handleFileChange = async (event: CustomFileChangeEvent): Promise<void> => {
+    const file = event?.detail?.files[0]
+    if (file) {
       try {
         const uploadEntity = await getUploadEntity(file.name, file.type);
         await uploadToS3(file, uploadEntity);
@@ -109,44 +153,56 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
       } catch (error: unknown) {
         await formik.setFieldValue('logoIcon', '');
         await formik.setFieldValue('logoLarge', '');
-        setUploadStatus('Upload failed');
       }
-
-      // Set the logo file so we can preview it
-      setLogoFile(file);
     }
   };
+
+  const handleDeleteFile = () => {
+    setIsUploading(false);
+    setUploadProgress(0);
+    setLogoFile(null);
+    setLogoData(null);
+    setError('');
+  }
 
   return (
     <div
       className={classNames(
-        'vads-u-background-color--gray-lightest vads-u-padding--2 vads-u-margin-top--4 medium-screen:vads-l-col--10',
+        'vads-u-margin-top--4 medium-screen:vads-l-col--10',
         { 'vads-u-margin-bottom--9': !logoData },
         className,
       )}
     >
-      <div>
-        <label className="vads-u-margin--0 upload-button" htmlFor="logo_upload">
-          Upload logo
-        </label>
-
-        <input
-          className="vads-u-display--none"
-          type="file"
-          id="logo_upload"
-          name="logo_upload"
+      <div>Upload your company logo</div>
+      <p className="vads-u-color--gray vads-u-margin--0 vads-u-margin-bottom--2">
+        Supported file types: PNG, JPEG; 10 MB max
+      </p>
+      <div className={classNames({ 'vads-u-background-color--gray-lightest': isUploading || uploadProgress === 100 })}>
+        {/* default */}
+        {!isUploading && !logoFile && !logoData && <VaFileInput
           accept="image/png, image/jpeg"
-          ref={fileInput}
-          onChange={handleFileChange}
-        />
-
-        <p className="vads-u-color--gray vads-u-margin--0 vads-u-margin-bottom--2">
-          Supported file types: PNG, JPEG; 10 MB max
-        </p>
+          buttonText="Upload file"
+          error={error}
+          onVaChange={(e: CustomFileChangeEvent) => handleFileChange(e)}
+        />}
+        {/* loading */}
+        {isUploading && (
+          <div className="vads-u-padding--2">
+            <span>{logoFile?.name}.{logoFile?.type}</span>
+            <va-progress-bar percent={uploadProgress} />
+            <button id="cancelUpload" className="usa-button usa-button-secondary" type="button">Cancel</button>
+          </div>
+        )}
+        {/* review & delete */}
+        {!isUploading && logoFile && logoData && uploadProgress === 100 && (
+          <div className="vads-u-padding--2">
+            <div className="vads-u-font-weight--bold">{logoFile?.name}.{logoFile?.type}</div>
+            <span>{logoFile?.size}</span>
+            <img src={logoData} alt="Logo preview" className="vads-u-display--block" />
+            <button className="usa-button usa-button-secondary" onClick={handleDeleteFile} type="button">Delete file</button>
+          </div>
+        )}
       </div>
-
-      {logoData ? <img src={logoData} alt="Logo preview" /> : null}
-      {uploadStatus ? <span>{uploadStatus}</span> : null}
     </div>
   );
 };

@@ -14,6 +14,11 @@ interface VaAccordionItemProps {
   subheader?: string;
 }
 
+interface VaProgressBarProps {
+  label?: string;
+  percent: number;
+}
+
 declare module '@department-of-veterans-affairs/component-library/dist/react-bindings';
 declare module '@department-of-veterans-affairs/react-components';
 declare module '@department-of-veterans-affairs/component-library' {
@@ -37,6 +42,7 @@ declare namespace JSX {
     'va-accordion': VaAccordionProps;
     'va-accordion-item': unknown;
     'va-alert': VaAlertProps;
+    'va-progress-bar': VaProgressBarProps;
     defaultLoadingSpinner: unknown;
   }
 }
