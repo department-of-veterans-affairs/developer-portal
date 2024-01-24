@@ -40,7 +40,7 @@ interface XMLHttpRequestWithSignal extends XMLHttpRequest {
 export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => {
   const [error, setError] = useState('');
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0)
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoData, setLogoData] = useState<string | null>(null);
   const formik = useFormikContext<Values>();
@@ -68,7 +68,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
     });
 
     if (!response.ok) {
-      throw new Error('Network response was not ok');
+      setError(`We couldn't upload your file`);
     }
 
     return (await response.json()) as Promise<AwsSigv4UploadEntity>;
@@ -93,18 +93,21 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
       const signal = controller.signal;
       const request: XMLHttpRequestWithSignal = new XMLHttpRequest();
 
-      request.upload.addEventListener('progress', (e) => {
+      request.upload.addEventListener('progress', e => {
         if (e.lengthComputable) {
           const percentCompleted = Math.round((e.loaded / e.total) * 100);
-          setUploadProgress(percentCompleted)
+          setUploadProgress(percentCompleted);
         }
       });
 
-      setError('');
       setIsUploading(true);
       setLogoFile(file);
 
-      request.open('POST', `https://${uploadEntity.bucketName}.${uploadEntity.s3RegionEndpoint}`, true);
+      request.open(
+        'POST',
+        `https://${uploadEntity.bucketName}.${uploadEntity.s3RegionEndpoint}`,
+        true,
+      );
       request.signal = signal;
 
       const cancelUploadButton = document.getElementById('cancelUpload');
@@ -125,7 +128,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
           setIsUploading(false);
           setLogoData(null);
           setLogoFile(null);
-          setError(`We couldn't upload your file`)
+          setError(`We couldn't upload your file`);
           reject(request.statusText);
         }
       };
@@ -134,7 +137,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
         setIsUploading(false);
         setLogoData(null);
         setLogoFile(null);
-        setError(`We couldn't upload your file`)
+        setError(`We couldn't upload your file`);
         reject('Network Error');
       };
 
@@ -143,7 +146,18 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
   };
 
   const handleFileChange = async (event: CustomFileChangeEvent): Promise<void> => {
-    const file = event?.detail?.files[0]
+    setError('');
+    const file = event?.detail?.files[0];
+    const maxSizeInBytes = 10 * 1024 * 1024;
+    const mimeType = file.type;
+    if (mimeType !== 'image/jpeg' && mimeType !== 'image/png') {
+      setError(`We couldn’t upload your file. Files should be in PNG or JPEG format.`);
+      return;
+    }
+    if (file.size > maxSizeInBytes) {
+      setError(`We couldn’t upload your file. Files should be less than 10 MB.`);
+      return;
+    }
     if (file) {
       try {
         const uploadEntity = await getUploadEntity(file.name, file.type);
@@ -163,7 +177,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
     setLogoFile(null);
     setLogoData(null);
     setError('');
-  }
+  };
 
   return (
     <div
@@ -177,29 +191,47 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
       <p className="vads-u-color--gray vads-u-margin--0 vads-u-margin-bottom--2">
         Supported file types: PNG, JPEG; 10 MB max
       </p>
-      <div className={classNames({ 'vads-u-background-color--gray-lightest': isUploading || uploadProgress === 100 })}>
+      <div
+        className={classNames({
+          'vads-u-background-color--gray-lightest': isUploading || uploadProgress === 100,
+        })}
+      >
         {/* default */}
-        {!isUploading && !logoFile && !logoData && <VaFileInput
-          accept="image/png, image/jpeg"
-          buttonText="Upload file"
-          error={error}
-          onVaChange={(e: CustomFileChangeEvent) => handleFileChange(e)}
-        />}
+        {!isUploading && !logoFile && !logoData && (
+          <VaFileInput
+            accept="image/png,image/jpeg"
+            buttonText="Upload file"
+            error={error}
+            onVaChange={(e: CustomFileChangeEvent) => handleFileChange(e)}
+          />
+        )}
         {/* loading */}
         {isUploading && (
           <div className="vads-u-padding--2">
-            <span>{logoFile?.name}.{logoFile?.type}</span>
+            <span>
+              {logoFile?.name}.{logoFile?.type}
+            </span>
             <va-progress-bar percent={uploadProgress} />
-            <button id="cancelUpload" className="usa-button usa-button-secondary" type="button">Cancel</button>
+            <button id="cancelUpload" className="usa-button usa-button-secondary" type="button">
+              Cancel
+            </button>
           </div>
         )}
         {/* review & delete */}
         {!isUploading && logoFile && logoData && uploadProgress === 100 && (
           <div className="vads-u-padding--2">
-            <div className="vads-u-font-weight--bold">{logoFile?.name}.{logoFile?.type}</div>
+            <div className="vads-u-font-weight--bold">
+              {logoFile?.name}.{logoFile?.type}
+            </div>
             <span>{logoFile?.size}</span>
             <img src={logoData} alt="Logo preview" className="vads-u-display--block" />
-            <button className="usa-button usa-button-secondary" onClick={handleDeleteFile} type="button">Delete file</button>
+            <button
+              className="usa-button usa-button-secondary"
+              onClick={handleDeleteFile}
+              type="button"
+            >
+              Delete file
+            </button>
           </div>
         )}
       </div>
