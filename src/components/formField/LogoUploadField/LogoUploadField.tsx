@@ -199,6 +199,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
         {/* default */}
         {!isUploading && !logoFile && !logoData && (
           <VaFileInput
+            data-testid="file-upload-input"
             accept="image/png,image/jpeg"
             buttonText="Upload file"
             error={error}
