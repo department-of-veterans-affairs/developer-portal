@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@braintree/sanitize-url": "^6.0.4",
-    "@department-of-veterans-affairs/component-library": "^18.0.1",
+    "@department-of-veterans-affairs/component-library": "^34.0.0",
     "@department-of-veterans-affairs/formation": "^7.0.8",
     "@department-of-veterans-affairs/sandbox-access-form": "github:department-of-veterans-affairs/va-api-sandbox-access-form#1c981e84d7f21c5fdd58272cf0251dfbece79a56",
     "@department-of-veterans-affairs/web-components": "^2.14.0",
