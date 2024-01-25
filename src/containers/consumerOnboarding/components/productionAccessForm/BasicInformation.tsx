@@ -92,6 +92,43 @@ const BasicInformation: FC = () => {
           required
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
+        <va-select label="Country" name="country" value="USA" required>
+          <option value="USA">United States</option>
+        </va-select>
+        <TextField
+          className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          label="Street address"
+          name="addressLine1"
+          required
+        />
+        <TextField
+          className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          label="Street address line 2"
+          name="addressLine2"
+        />
+        <TextField
+          className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          label="Street address line 3"
+          name="addressLine3"
+        />
+        <TextField
+          className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          label="City"
+          name="city"
+          required
+        />
+        <TextField
+          className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          label="State"
+          name="state"
+          required
+        />
+        <TextField
+          className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+          label="Postal code"
+          name="zipCode5"
+          required
+        />
         <TextField
           label="Phone number"
           name="phoneNumber"

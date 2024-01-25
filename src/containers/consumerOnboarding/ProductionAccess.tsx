@@ -9,7 +9,6 @@ import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-s
 import Modal from 'component-library-legacy/Modal';
 import { VaSegmentedProgressBar } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-// import Icon508 from '../../assets/508-compliant.svg';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
@@ -90,15 +89,27 @@ export interface Values {
   termsOfServiceURL?: string;
   logoIcon?: string;
   logoLarge?: string;
+  country: string;
+  addressLine1: string;
+  addressLine2?: string;
+  addressLine3?: string;
+  city: string;
+  state: string;
+  zipCode5: string;
 }
 
 const initialValues: Values = {
+  addressLine1: '',
+  addressLine2: '',
+  addressLine3: '',
   apis: [],
   appDescription: '',
   appName: '',
   breachManagementProcess: '',
   businessModel: '',
   centralizedBackendLog: '',
+  city: '',
+  country: '',
   distributingAPIKeysToCustomers: '',
   exposeVeteranInformationToThirdParties: '',
   is508Compliant: '',
@@ -132,6 +143,7 @@ const initialValues: Values = {
     lastName: '',
   },
   signUpLink: '',
+  state: '',
   statusUpdateEmails: [''],
   storePIIOrPHI: '',
   supportLink: '',
@@ -143,6 +155,7 @@ const initialValues: Values = {
   veteranFacing: '',
   vulnerabilityManagement: '',
   website: '',
+  zipCode5: '',
 };
 
 const renderStepContent = (step: number): JSX.Element => {
