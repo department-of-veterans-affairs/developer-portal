@@ -27,11 +27,11 @@ export interface LogoUploadProps {
   className?: string;
 }
 
-type CustomFileChangeEvent = {
+interface CustomFileChangeEvent {
   detail: {
     files: FileList;
   };
-};
+}
 
 interface XMLHttpRequestWithSignal extends XMLHttpRequest {
   signal?: AbortSignal;
@@ -68,7 +68,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
     });
 
     if (!response.ok) {
-      setError(`We couldn't upload your file`);
+      setError("We couldn't upload your file");
     }
 
     return (await response.json()) as Promise<AwsSigv4UploadEntity>;
@@ -90,7 +90,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
 
     return new Promise((resolve, reject) => {
       const controller = new AbortController();
-      const signal = controller.signal;
+      const { signal } = controller;
       const request: XMLHttpRequestWithSignal = new XMLHttpRequest();
 
       setIsUploading(true);
@@ -119,24 +119,24 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
         setError('');
       });
 
-      request.onload = () => {
+      request.onload = (): void => {
         if (request.status === 200) {
           setIsUploading(false);
-          resolve(request.response);
+          resolve(request.response as void | PromiseLike<void>);
         } else {
           setIsUploading(false);
           setLogoData(null);
           setLogoFile(null);
-          setError(`We couldn't upload your file`);
+          setError("We couldn't upload your file");
           reject(request.statusText);
         }
       };
 
-      request.onerror = () => {
+      request.onerror = (): void => {
         setIsUploading(false);
         setLogoData(null);
         setLogoFile(null);
-        setError(`We couldn't upload your file`);
+        setError("We couldn't upload your file");
         reject('Network Error');
       };
 
@@ -146,31 +146,29 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
 
   const handleFileChange = async (event: CustomFileChangeEvent): Promise<void> => {
     setError('');
-    const file = event?.detail?.files[0];
+    const file = event.detail.files[0];
     const maxSizeInBytes = 10 * 1024 * 1024;
     const mimeType = file.type;
     if (mimeType !== 'image/jpeg' && mimeType !== 'image/png') {
-      setError(`We couldn’t upload your file. Files should be in PNG or JPEG format.`);
+      setError("We couldn't upload your file. Files should be in PNG or JPEG format.");
       return;
     }
     if (file.size > maxSizeInBytes) {
-      setError(`We couldn’t upload your file. Files should be less than 10 MB.`);
+      setError("We couldn't upload your file. Files should be less than 10 MB.");
       return;
     }
-    if (file) {
-      try {
-        const uploadEntity = await getUploadEntity(file.name, file.type);
-        await uploadToS3(file, uploadEntity);
-        await formik.setFieldValue('logoIcon', uploadEntity.logoUrls[0]);
-        await formik.setFieldValue('logoLarge', uploadEntity.logoUrls[1]);
-      } catch (error: unknown) {
-        await formik.setFieldValue('logoIcon', '');
-        await formik.setFieldValue('logoLarge', '');
-      }
+    try {
+      const uploadEntity = await getUploadEntity(file.name, file.type);
+      await uploadToS3(file, uploadEntity);
+      await formik.setFieldValue('logoIcon', uploadEntity.logoUrls[0]);
+      await formik.setFieldValue('logoLarge', uploadEntity.logoUrls[1]);
+    } catch (err: unknown) {
+      await formik.setFieldValue('logoIcon', '');
+      await formik.setFieldValue('logoLarge', '');
     }
   };
 
-  const handleDeleteFile = () => {
+  const handleDeleteFile = (): void => {
     setIsUploading(false);
     setUploadProgress(0);
     setLogoFile(null);
@@ -202,7 +200,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
             accept="image/png,image/jpeg"
             buttonText="Upload file"
             error={error}
-            onVaChange={(e: CustomFileChangeEvent) => handleFileChange(e)}
+            onVaChange={(e: CustomFileChangeEvent): Promise<void> => handleFileChange(e)}
           />
         )}
         {/* loading */}
@@ -221,9 +219,9 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
         {!isUploading && logoFile && logoData && uploadProgress === 100 && (
           <div className="vads-u-padding--2">
             <div className="vads-u-font-weight--bold">
-              {logoFile?.name}.{logoFile?.type}
+              {logoFile.name}.{logoFile.type}
             </div>
-            <span>{logoFile?.size}</span>
+            <span>{logoFile.size}</span>
             <img src={logoData} alt="Logo preview" className="vads-u-display--block" />
             <button
               className="usa-button usa-button-secondary"

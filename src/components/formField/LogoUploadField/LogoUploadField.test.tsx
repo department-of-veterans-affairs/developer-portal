@@ -3,21 +3,21 @@ import { Formik } from 'formik';
 import { act, render, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { LogoUploadField } from './LogoUploadField';
 import { LPB_LOGO_UPLOAD_POLICY_URL } from '../../../types/constants';
+import { LogoUploadField } from './LogoUploadField';
 
 describe('LogoUploadField', () => {
   const server = setupServer(
-    rest.post(`${LPB_LOGO_UPLOAD_POLICY_URL}`, (req, res, ctx) => {
-      return res(
+    rest.post(`${LPB_LOGO_UPLOAD_POLICY_URL}`, (req, res, ctx) =>
+      res(
         ctx.status(200),
         ctx.json({
           acl: 'public-read',
           bucketName: 'your-bucket-name',
           s3RegionEndpoint: 'east.com',
         }),
-      );
-    }),
+      ),
+    ),
   );
 
   beforeAll(() => {
@@ -42,7 +42,7 @@ describe('LogoUploadField', () => {
     expect(getByText(/Upload your company logo/i)).toBeInTheDocument();
   });
 
-  it('rejects file size over 10mb', async () => {
+  it('rejects file size over 10mb', () => {
     const size = 11 * 1024 * 1024;
     const content = new Array(size).fill('a').join('');
     const blob = new Blob([content], { type: 'image/png' });
@@ -66,11 +66,11 @@ describe('LogoUploadField', () => {
     });
 
     expect(webComponent.getAttribute('error')).toBe(
-      'We couldn’t upload your file. Files should be less than 10 MB.',
+      "We couldn't upload your file. Files should be less than 10 MB.",
     );
   });
 
-  it('rejects wrong file mime type', async () => {
+  it('rejects wrong file mime type', () => {
     const size = 5 * 1024 * 1024;
     const content = new Array(size).fill('a').join('');
     const blob = new Blob([content], { type: 'application/pdf' });
@@ -94,7 +94,7 @@ describe('LogoUploadField', () => {
     });
 
     expect(webComponent.getAttribute('error')).toBe(
-      'We couldn’t upload your file. Files should be in PNG or JPEG format.',
+      "We couldn't upload your file. Files should be in PNG or JPEG format.",
     );
   });
 
