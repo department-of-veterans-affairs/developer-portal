@@ -93,6 +93,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
       const signal = controller.signal;
       const request: XMLHttpRequestWithSignal = new XMLHttpRequest();
 
+      setIsUploading(true);
       request.upload.addEventListener('progress', e => {
         if (e.lengthComputable) {
           const percentCompleted = Math.round((e.loaded / e.total) * 100);
@@ -100,9 +101,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
         }
       });
 
-      setIsUploading(true);
       setLogoFile(file);
-
       request.open(
         'POST',
         `https://${uploadEntity.bucketName}.${uploadEntity.s3RegionEndpoint}`,
