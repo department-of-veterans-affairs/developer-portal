@@ -103,7 +103,10 @@ const developmentQuestions: SupportQuestion[] = [
         >
           api@va.gov
         </a>{' '}
-        and requests will be decided on a case-by-case basis.
+        and requests will be decided on a case-by-case basis.{' '}
+        <Link to="/onboarding/working-with-lighthouse-apis#rate-limiting">
+          Learn more about rate limiting.
+        </Link>
       </p>
     ),
     question: 'Are there any rate limits on the APIs?',
