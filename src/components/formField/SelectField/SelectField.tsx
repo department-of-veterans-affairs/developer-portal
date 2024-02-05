@@ -16,7 +16,6 @@ export interface SelectFieldProps {
   innerRef?: React.RefObject<HTMLElement>;
   customFieldClass?: string;
   children?: ReactNode;
-  maxLength?: number;
 }
 
 const SelectField: FC<SelectFieldProps> = ({
@@ -32,7 +31,6 @@ const SelectField: FC<SelectFieldProps> = ({
   customFieldClass,
   children,
   innerRef,
-  maxLength,
   ...props
 }) => {
   const { errors, touched } = useFormikContext();
@@ -87,7 +85,6 @@ const SelectField: FC<SelectFieldProps> = ({
         disabled={disabled}
         onKeyDown={onKeyDown}
         innerRef={innerRef}
-        maxLength={maxLength}
         {...props}
       >
         {children}
