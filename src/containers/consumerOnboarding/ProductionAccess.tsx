@@ -88,15 +88,27 @@ export interface Values {
   productionOrOAuthKeyCredentialStorage: string;
   privacyPolicyURL?: string;
   termsOfServiceURL?: string;
+  country: string;
+  addressLine1: string;
+  addressLine2?: string;
+  addressLine3?: string;
+  city: string;
+  state: string;
+  zipCode5: string;
 }
 
 const initialValues: Values = {
+  addressLine1: '',
+  addressLine2: '',
+  addressLine3: '',
   apis: [],
   appDescription: '',
   appName: '',
   breachManagementProcess: '',
   businessModel: '',
   centralizedBackendLog: '',
+  city: '',
+  country: '',
   distributingAPIKeysToCustomers: '',
   exposeVeteranInformationToThirdParties: '',
   is508Compliant: '',
@@ -128,6 +140,7 @@ const initialValues: Values = {
     lastName: '',
   },
   signUpLink: '',
+  state: '',
   statusUpdateEmails: [''],
   storePIIOrPHI: '',
   supportLink: '',
@@ -139,6 +152,7 @@ const initialValues: Values = {
   veteranFacing: '',
   vulnerabilityManagement: '',
   website: '',
+  zipCode5: '',
 };
 
 const renderStepContent = (step: number): JSX.Element => {
