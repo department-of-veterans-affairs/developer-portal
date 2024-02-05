@@ -14,6 +14,15 @@ interface VaAccordionItemProps {
   subheader?: string;
 }
 
+interface VaSelectProps {
+  children: JSX.Element | JSX.Element[];
+  error?: string;
+  label: string;
+  name: string;
+  value?: string;
+  required?: boolean;
+}
+
 declare module '@department-of-veterans-affairs/component-library/dist/react-bindings';
 declare module '@department-of-veterans-affairs/react-components';
 declare module '@department-of-veterans-affairs/component-library' {
@@ -37,6 +46,7 @@ declare namespace JSX {
     'va-accordion': VaAccordionProps;
     'va-accordion-item': unknown;
     'va-alert': VaAlertProps;
+    'va-select': VaSelectProps;
     defaultLoadingSpinner: unknown;
   }
 }
