@@ -122,7 +122,7 @@ describe('Production Access Form', () => {
 
     cy.get('#main button[type="submit"]').click();
 
-    cy.get('.usa-input-error').should('have.length', '17');
+    cy.get('.usa-input-error').should('have.length', '18');
 
     basicInformationFields(cy);
 
