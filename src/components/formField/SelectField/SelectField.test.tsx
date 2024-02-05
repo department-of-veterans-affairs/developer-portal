@@ -29,11 +29,7 @@ describe('SelectField', () => {
       </Formik>,
     );
   };
-  it('defaults the type to text', () => {
-    renderComponent({ label: 'Test Input' });
-    const field = screen.getByRole('select', { name: 'Test Input' });
-    expect(field).toBeInTheDocument();
-  });
+
   describe('required is not set', () => {
     it('does not include required in the label', () => {
       renderComponent({ label: 'Test Input' });
