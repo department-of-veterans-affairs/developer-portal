@@ -17,7 +17,7 @@ function basicInformationFields(cy) {
   cy.get('#addressLine1FormField').type('1180 Seven Seas Drive');
   cy.get('#cityFormField').type('Lake Buena Vista');
   cy.get('#stateFormField').type('FL');
-  cy.get('#countryFormField').select('United States');
+  cy.contains('Country').select('United States');
   cy.get('#zipCode5FormField').type('32830');
   cy.get('#phoneNumberFormField').type('8005551212');
   cy.get('#appNameFormField').type('AppName');
