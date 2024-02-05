@@ -8,6 +8,7 @@ interface RenderProps {
   required?: boolean;
   as?: string;
   description?: ReactNode;
+  children?: ReactNode;
 }
 
 jest.mock('formik', () => ({
@@ -22,13 +23,30 @@ describe('SelectField', () => {
       touched: {},
     }));
   });
-  const renderComponent = ({ label, required, description }: RenderProps): void => {
+  const renderComponent = ({ label, required, description, children }: RenderProps): void => {
     render(
       <Formik initialValues={{}} onSubmit={jest.fn()}>
-        <SelectField name="test" label={label} required={required} description={description} />
+        <SelectField name="test" label={label} required={required} description={description}>
+          {children}
+        </SelectField>
       </Formik>,
     );
   };
+
+  it('renders a select component', () => {
+    render(
+      <Formik initialValues={{}} onSubmit={jest.fn()}>
+        <SelectField name="country" label="country" required>
+          <option value="" />
+          <option value="USA">United States</option>
+        </SelectField>
+      </Formik>,
+    );
+    const field = screen.getByRole('select');
+    const option = screen.getByRole('option', { name: 'United States' });
+    expect(field).toBeInTheDocument();
+    expect(option).toBeInTheDocument();
+  });
 
   describe('required is not set', () => {
     it('does not include required in the label', () => {
