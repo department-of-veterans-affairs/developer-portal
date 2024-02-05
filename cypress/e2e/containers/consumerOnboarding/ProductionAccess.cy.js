@@ -14,7 +14,7 @@ function basicInformationFields(cy) {
   cy.get('#secondaryContactlastNameFormField').type('SecondaryLastName');
   cy.get('#secondaryContactemailFormField').type('SecondaryEmailAddress@va.gov');
   cy.get('#organizationFormField').type('CompanyName');
-  // cy.get('va-select').shadow().find('#select').select('United States');
+  cy.get('#countryFormField').select('United States');
   cy.get('#addressLine1FormField').type('1180 Seven Seas Drive');
   cy.get('#cityFormField').type('Lake Buena Vista');
   cy.get('#stateFormField').type('FL');
