@@ -92,7 +92,12 @@ const BasicInformation: FC = () => {
           required
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
-        <SelectField label="Country" name="country" required>
+        <SelectField
+          label="Country"
+          name="country"
+          required
+          className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+        >
           <option value="" />
           <option value="USA">United States</option>
         </SelectField>
