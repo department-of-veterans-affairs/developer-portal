@@ -42,7 +42,7 @@ describe('SelectField', () => {
         </SelectField>
       </Formik>,
     );
-    const field = screen.getByRole('select');
+    const field = screen.getByRole('combobox', { name: /country/ });
     const option = screen.getByRole('option', { name: 'United States' });
     expect(field).toBeInTheDocument();
     expect(option).toBeInTheDocument();
