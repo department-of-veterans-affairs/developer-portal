@@ -15,9 +15,6 @@ const phoneRegex =
   /^(?:\([2-9]\d{2}\)\ ?|[2-9]\d{2}(?:\-?|\ ?|\.?))[2-9]\d{2}[- .]?\d{4}((\ )?(\()?(ext|x|extension)([- .:])?\d{1,6}(\))?)?$/;
 const isListAndLoopEnabled = process.env.REACT_APP_LIST_AND_LOOP_ENABLED === 'true';
 
-const emailRegex =
-  /^[a-zA-Z0-9._-]+@(?!((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.[a-zA-Z]{2,6}))([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/;
-
 const validationSchema = [
   yup.object().shape({
     apis: yup
@@ -80,7 +77,7 @@ const validationSchema = [
       .shape({
         email: yup
           .string()
-          .matches(emailRegex, { message: 'Enter a valid email address.' })
+          .email('Enter a valid email address.')
           .required('Enter a valid email address.'),
         firstName: yup.string().required('Enter a first name.'),
         lastName: yup.string().required('Enter a last name.'),
@@ -97,7 +94,7 @@ const validationSchema = [
       .shape({
         email: yup
           .string()
-          .matches(emailRegex, { message: 'Enter a valid email address.' })
+          .email('Enter a valid email address.')
           .required('Enter a valid email address.'),
         firstName: yup.string().required('Enter a first name.'),
         lastName: yup.string().required('Enter a last name.'),
@@ -121,10 +118,7 @@ const validationSchema = [
     statusUpdateEmails: yup
       .array()
       .of(
-        yup
-          .string()
-          .matches(emailRegex, { message: 'Enter a valid email address.' })
-          .required('Enter a valid email address.'),
+        yup.string().email('Enter a valid email address.').required('Enter a valid email address.'),
       )
       .min(1)
       .required('Enter a valid email address.'),
