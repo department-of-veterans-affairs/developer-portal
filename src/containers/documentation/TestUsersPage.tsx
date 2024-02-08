@@ -68,9 +68,9 @@ const TestUsersPage = (): JSX.Element => {
   return (
     <>
       <Helmet>
-        <title>{api.name} Test Users</title>
+        <title>{api.name} Test users</title>
       </Helmet>
-      <PageHeader header="Test Users" subText={api.name} />
+      <PageHeader header="Test users" subText={api.name} />
       <div className="va-api-authorization-docs">
         {testUserAccess === testUserAccessState.ACCESS_BLOCKED && (
           <va-alert background-only show-icon status="error" visible>
@@ -114,7 +114,10 @@ const TestUsersPage = (): JSX.Element => {
               <li>
                 Enter the ID.me username and password.{' '}
                 {isPasswordUniform('idme', testUserData) && (
-                  <>The password for all ID.me test accounts is: Password1234!</>
+                  <>
+                    The password for all ID.me test accounts is:{' '}
+                    <code>{testUserData[0].credentials.idme.password}</code>
+                  </>
                 )}
               </li>
               <li>
@@ -130,7 +133,10 @@ const TestUsersPage = (): JSX.Element => {
               <li>
                 Enter the Login.gov username and password.{' '}
                 {isPasswordUniform('logingov', testUserData) && (
-                  <>The password for all Login.gov test accounts is: Password12345!!!</>
+                  <>
+                    The password for all Login.gov test accounts is:{' '}
+                    <code>{testUserData[0].credentials.logingov.password}</code>
+                  </>
                 )}
               </li>
               <li>
@@ -138,13 +144,6 @@ const TestUsersPage = (): JSX.Element => {
                 Authenticator or Authy.
               </li>
             </ol>
-
-            {isPasswordUniform('idme', testUserData) && (
-              <p>Password for all ID.me accounts: Password1234!</p>
-            )}
-            {isPasswordUniform('logingov', testUserData) && (
-              <p>Password for all Login.gov accounts: Password12345!!!</p>
-            )}
 
             <h2>Test user credentials for the {api.name}</h2>
 
@@ -157,8 +156,8 @@ const TestUsersPage = (): JSX.Element => {
                     <th>ID</th>
                     <th>ICN</th>
                     <th>SSN</th>
-                    <th>Login.gov</th>
                     <th>ID.me</th>
+                    <th>Login.gov</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -169,17 +168,11 @@ const TestUsersPage = (): JSX.Element => {
                       <td>{user.id}</td>
                       <td>{user.icn}</td>
                       <td>{user.ssn}</td>
+                      <td>Email: {user.credentials.idme.username}</td>
                       <td>
                         Email: {user.credentials.logingov.username}
                         <br />
-                        Password: {user.credentials.logingov.password}
-                        <br />
                         2-Factor Seed: {user.credentials.logingov.seed}
-                      </td>
-                      <td>
-                        Email: {user.credentials.idme.username}
-                        <br />
-                        Password: {user.credentials.idme.password}
                       </td>
                     </tr>
                   ))}

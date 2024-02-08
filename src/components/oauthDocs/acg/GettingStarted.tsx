@@ -24,11 +24,11 @@ const GettingStarted = (): JSX.Element => (
       <li>Your OAuth redirect URI</li>
     </ul>
     <p>
-      After you submit the form, we send you a client ID and secret, depending on whether you can
-      safely store a client secret. If you cannot safely store a client secret, we will send you a
-      client ID and you will use the{' '}
-      <Link to="#pkce-authorization">Proof Key for Code Exchange</Link> (PKCE) flow (
-      <a href="https://tools.ietf.org/html/rfc7636">RFC 7636</a>) for authorization.{' '}
+      After you submit the form, we&apos;ll send you an email containing access information for test
+      data and the sandbox environment, including a client ID and secret if you can safely store a
+      client secret. If you cannot safely store a client secret, we will send you a client ID and
+      you will use the <Link to="#pkce-authorization">Proof Key for Code Exchange</Link> (PKCE) flow
+      (<a href="https://tools.ietf.org/html/rfc7636">RFC 7636</a>) for authorization.
     </p>
     <h3>Support</h3>
     <p>
