@@ -117,7 +117,7 @@ const PageContent = (): JSX.Element => {
       fetch('https://hub.lighthouse.va.gov', { mode: 'no-cors' })
         .then(() => {
           setVaNetworkAvailable({ status: 'connected' });
-          navigate(PUBLISHING_REQUIREMENTS_URL);
+          window.location.replace(PUBLISHING_REQUIREMENTS_URL);
           return true;
         })
         .catch(() => {
