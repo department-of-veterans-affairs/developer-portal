@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import {
+  SelectField,
   TextField,
   CheckboxRadioField,
   FieldSet,
@@ -91,9 +92,15 @@ const BasicInformation: FC = () => {
           required
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
         />
-        <va-select label="Country" name="country" value="USA" required>
+        <SelectField
+          label="Country"
+          name="country"
+          required
+          className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
+        >
+          <option value="" />
           <option value="USA">United States</option>
-        </va-select>
+        </SelectField>
         <TextField
           className="vads-u-margin-top--4 medium-screen:vads-l-col--10"
           label="Street address"
