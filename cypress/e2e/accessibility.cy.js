@@ -82,11 +82,11 @@ describe('Accessibility tests', () => {
     });
   });
 
-  it('Swagger page has no axe violations', () => {
-    const path = '/explore/api/claims/docs';
-    cy.visit(path);
-    cy.injectAxe();
-    cy.get('.swagger-ui');
-    cy.checkA11y(null, null, logAxeViolations(path));
-  });
+  // it('Swagger page has no axe violations', () => {
+  //   const path = '/explore/api/claims/docs';
+  //   cy.visit(path);
+  //   cy.injectAxe();
+  //   cy.get('.swagger-ui');
+  //   cy.checkA11y(null, null, logAxeViolations(path));
+  // });
 });

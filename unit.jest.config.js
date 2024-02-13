@@ -40,7 +40,7 @@ module.exports = {
     '^.+\\.ya?ml$': '<rootDir>/config/jest/yamlTransform.js',
     '^(?!.*\\.(js|jsx|mjs|css|json|cjs)$)': '<rootDir>/config/jest/fileTransform.js',
   },
-  transformIgnorePatterns: ['/node_modules/(?!(react-syntax-highlighter|swagger-ui|swagger-client)/).+\\.(js|jsx|mjs|ts|tsx)$'],
+  transformIgnorePatterns: ['/node_modules/(?!(react-syntax-highlighter)/).+\\.(js|jsx|mjs|ts|tsx)$'],
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
     'content/news.yml': '<rootDir>/src/__mocks__/news.test.yml',
