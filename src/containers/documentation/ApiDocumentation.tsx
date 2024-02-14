@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import SwaggerUI from 'swagger-ui-react';
 import { setRequestedApiVersion } from '../../features/apis/apiVersioningSlice';
 import { APIDescription, ApiDescriptionPropType } from '../../apiDefs/schema';
 import { useAppDispatch } from '../../hooks';
-import { SwaggerDocs } from './SwaggerDocs';
+import 'swagger-ui-react/swagger-ui.css';
 
 import '../../../node_modules/react-tabs/style/react-tabs.scss';
 
@@ -20,6 +21,7 @@ const ApiDocumentationPropTypes = {
 const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   const { apiDefinition } = props;
   const { docSources, urlSlug } = apiDefinition;
+  console.log(docSources, urlSlug);
   const location = useLocation();
 
   /*
@@ -36,7 +38,7 @@ const ApiDocumentation = (props: ApiDocumentationProps): JSX.Element => {
   /*
    * RENDER
    */
-  return <SwaggerDocs docSource={docSources[0]} apiName={urlSlug} />;
+  return <SwaggerUI url="https://petstore.swagger.io/v2/swagger.json" />;
 };
 
 ApiDocumentation.propTypes = ApiDocumentationPropTypes;
