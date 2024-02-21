@@ -1,8 +1,6 @@
 import * as React from 'react';
-import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
 import { connect } from 'react-redux';
 import { getApisLoadedState } from '../../apiDefs/query';
-import { defaultLoadingProps } from '../../utils/loadingHelper';
 import { ApiList, RootState } from '../../types';
 import { apiLoadingState } from '../../types/constants';
 
@@ -10,6 +8,7 @@ interface ApisLoaderProps {
   children?: JSX.Element;
   hideError?: boolean;
   hideSpinner?: boolean;
+  // eslint-disable-next-line react/no-unused-prop-types, react-redux/no-unused-prop-types
   state?: ApiList;
 }
 
@@ -18,7 +17,11 @@ const ApisLoader: React.FunctionComponent<ApisLoaderProps> = (props): JSX.Elemen
     case apiLoadingState.LOADED:
       return props.children ?? <div />;
     case apiLoadingState.IN_PROGRESS:
-      return props.hideSpinner ? <div /> : <LoadingIndicator {...defaultLoadingProps()} />;
+      return props.hideSpinner ? (
+        <div />
+      ) : (
+        <va-loading-indicator label="Loading" message="Loading APIs" />
+      );
     case apiLoadingState.ERROR:
       return props.hideError ? (
         <div />

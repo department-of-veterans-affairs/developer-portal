@@ -1,4 +1,3 @@
-import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { Helmet } from 'react-helmet';
@@ -62,7 +61,7 @@ const TestUsersPage = (): JSX.Element => {
   }
 
   if (testUserAccess === testUserAccessState.INIT) {
-    return <LoadingIndicator label="Loading" message="Validating access to Test User Data." />;
+    return <va-loading-indicator label="Loading" message="Validating access to Test User Data." />;
   }
 
   return (

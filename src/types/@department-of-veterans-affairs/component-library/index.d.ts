@@ -1,5 +1,4 @@
 declare module 'component-library-legacy/Modal';
-declare module 'component-library-legacy/LoadingIndicator';
 
 interface VaAccordionProps {
   bordered?: boolean;
@@ -41,11 +40,17 @@ interface VaAlertProps {
   visible: boolean;
   key?: string;
 }
+interface VaLoadingIndicatorProps {
+  label: string;
+  message: string;
+}
+
 declare namespace JSX {
   interface IntrinsicElements {
     'va-accordion': VaAccordionProps;
     'va-accordion-item': unknown;
     'va-alert': VaAlertProps;
+    'va-loading-indicator': VaLoadingIndicatorProps;
     'va-select': VaSelectProps;
     defaultLoadingSpinner: unknown;
   }

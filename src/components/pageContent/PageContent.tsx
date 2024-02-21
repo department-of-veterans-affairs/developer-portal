@@ -2,7 +2,6 @@ import * as React from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { VaModal } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
-import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
 import { useSelector } from 'react-redux';
 import ErrorBoundaryPage from '../../containers/ErrorBoundaryPage';
 import { SiteRoutes } from '../../Routes';
@@ -155,15 +154,9 @@ const PageContent = (): JSX.Element => {
           modalTitle={modalTitle}
         >
           {vaNetworkAvailable.status === 'testing' && (
-            <LoadingIndicator
+            <va-loading-indicator
               label="testing connection"
-              message={
-                <p>
-                  Validating VA network access...
-                  <br />
-                  Login may be required.
-                </p>
-              }
+              message="Validating VA network access... Login may be required."
             />
           )}
           {vaNetworkAvailable.status === 'unavailable' && (
