@@ -6,8 +6,10 @@ import { useCookies } from 'react-cookie';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
-import Modal from 'component-library-legacy/Modal';
-import { VaSegmentedProgressBar } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
+import {
+  VaModal,
+  VaSegmentedProgressBar,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 // import Icon508 from '../../assets/508-compliant.svg';
 import { apisFor } from '../../apiDefs/query';
@@ -216,22 +218,20 @@ const ProductionAccess: FC = () => {
   // // const [acknowledge508, setAcknowledge508] = useState(false);
 
   // const Modal508Compliant = (): JSX.Element => (
-  //   <Modal
+  //   <VaModal
   //     id="warning-508-complicance-modal"
   //     title="Must be Section 508 Compliant!"
   //     visible={modal508Visible}
   //     clickToClose
   //     onClose={(): void => setModal508Visible(false)}
-  //     primaryButton={{
-  //       action: (): void => {
-  //         setModal508Visible(false);
-  //         setAcknowledge508(true);
-  //       },
-  //       text: 'I acknowledge',
+  //     onPrimaryButtonClick={(): void => {
+  //       setModal508Visible(false);
+  //       setAcknowledge508(true);
   //     }}
+  //     primary-button-text="I acknowledge"
   //   >
   //     <>
-  //       <img src={Icon508} aria-hidden="true" alt="" className={classNames('va-modal-icon')} />
+  //       <img src={Icon508} aria-hidden="true" alt="" className={classNames('VaModal-icon')} />
   //       <p>
   //         Consumer websites and applications must be Section 508 compliant to get production access.
   //       </p>
@@ -243,7 +243,7 @@ const ProductionAccess: FC = () => {
   //         or contact us with questions.
   //       </p>
   //     </>
-  //   </Modal>
+  //   </VaModal>
   // );
 
   /**
@@ -463,31 +463,25 @@ const ProductionAccess: FC = () => {
               </div>
             </Form>
           </Formik>
-          <Modal
+          <VaModal
             id="cancellation-modal"
             title="Are you sure you want to leave?"
             visible={modal1Visible}
-            onClose={(): void => setModal1Visible(false)}
-            primaryButton={{
-              action: (): void => navigate(CONSUMER_PROD_PATH),
-              text: 'Yes, leave',
-            }}
-            secondaryButton={{
-              action: (): void => setModal1Visible(false),
-              text: 'No, stay on form',
-            }}
+            onCloseEvent={(): void => setModal1Visible(false)}
+            onPrimaryButtonClick={(): void => navigate(CONSUMER_PROD_PATH)}
+            primary-button-text="Yes, leave"
+            onSecondaryButtonClick={(): void => setModal1Visible(false)}
+            secondary-button-text="No, stay on form"
           >
             The information you entered will not be saved.
-          </Modal>
-          <Modal
+          </VaModal>
+          <VaModal
             id="non-us-based-modal"
-            title="Thank you for your interest!"
+            modal-title="Thank you for your interest!"
             visible={modal2Visible}
-            onClose={(): void => setModal2Visible(false)}
-            primaryButton={{
-              action: (): void => navigate(-1),
-              text: 'Close form',
-            }}
+            onCloseEventEvent={(): void => setModal2Visible(false)}
+            primary-button-text="Close form"
+            onPrimaryButtonClick={(): void => navigate(-1)}
             classNames={['vads-u-text-align--center']}
           >
             <img
@@ -500,20 +494,18 @@ const ProductionAccess: FC = () => {
               We currently only grant access to US-based companies. You may{' '}
               <NavLink to={SUPPORT_CONTACT_PATH}>contact us</NavLink> if you have any questions.
             </p>
-          </Modal>
-          {/* <Modal508Compliant /> */}
-          <Modal
+          </VaModal>
+          {/* <VaModal508Compliant /> */}
+          <VaModal
             id="submission-complete-modal"
             title="Thanks for submitting!"
             visible={modal4Visible}
-            onClose={(): void => {
+            onCloseEvent={(): void => {
               setModal4Visible(false);
               navigate(-1);
             }}
-            primaryButton={{
-              action: (): void => navigate(-1),
-              text: 'Close',
-            }}
+            onPrimaryButtonClick={(): void => navigate(-1)}
+            primary-button-text="Close"
           >
             <img
               src={hiFive}
@@ -529,7 +521,7 @@ const ProductionAccess: FC = () => {
               <br />
               We’ll be in touch with the next steps or required changes.
             </p>
-          </Modal>
+          </VaModal>
           {submissionError && (
             <va-alert background-only show-icon status="error" visible>
               <p className="vads-u-margin-y--0">

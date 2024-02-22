@@ -1,5 +1,3 @@
-declare module 'component-library-legacy/Modal';
-
 interface VaAccordionProps {
   bordered?: boolean;
   children: JSX.Element | JSX.Element[];
