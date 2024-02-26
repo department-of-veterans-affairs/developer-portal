@@ -8,7 +8,7 @@ describe('RequestProductionAccess', () => {
     render(
       <Router>
         <RequestProductionAccess />
-      </Router>
+      </Router>,
     );
   });
 
@@ -23,7 +23,7 @@ describe('RequestProductionAccess', () => {
   it('renders the h2 subheading', () => {
     const heading = screen.getByRole('heading', {
       level: 2,
-      name: 'Learn what’s needed on the form',
+      name: "Learn what's needed on the form",
     });
     expect(heading).toBeInTheDocument();
   });

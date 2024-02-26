@@ -1,3 +1,7 @@
+import {
+  VaAlert,
+  VaLoadingIndicator,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { Helmet } from 'react-helmet';
@@ -61,7 +65,7 @@ const TestUsersPage = (): JSX.Element => {
   }
 
   if (testUserAccess === testUserAccessState.INIT) {
-    return <va-loading-indicator label="Loading" message="Validating access to Test User Data." />;
+    return <VaLoadingIndicator label="Loading" message="Validating access to Test User Data." />;
   }
 
   return (
@@ -72,13 +76,13 @@ const TestUsersPage = (): JSX.Element => {
       <PageHeader header="Test users" subText={api.name} />
       <div className="va-api-authorization-docs">
         {testUserAccess === testUserAccessState.ACCESS_BLOCKED && (
-          <va-alert background-only show-icon status="error" visible>
+          <VaAlert background-only show-icon status="error" visible>
             <p className="vads-u-margin-y--0">
               There was an error requesting access to the test user data. Please recheck the link in
               your sandbox access signup email or request access by signing up{' '}
               <Link to={`/explore/api/${api.urlSlug}/sandbox-access`}>here</Link>.
             </p>
-          </va-alert>
+          </VaAlert>
         )}
         {testUserAccess === testUserAccessState.ACCESS_PERMITTED && (
           <>

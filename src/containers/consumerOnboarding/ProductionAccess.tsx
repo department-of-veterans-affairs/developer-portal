@@ -7,6 +7,7 @@ import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import {
+  VaAlert,
   VaModal,
   VaSegmentedProgressBar,
 } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
@@ -523,7 +524,7 @@ const ProductionAccess: FC = () => {
             </p>
           </VaModal>
           {submissionError && (
-            <va-alert background-only show-icon status="error" visible>
+            <VaAlert background-only show-icon status="error" visible>
               <p className="vads-u-margin-y--0">
                 We encountered a server error while saving your form. Please try again later.
               </p>
@@ -531,7 +532,7 @@ const ProductionAccess: FC = () => {
                 Need assistance? Create an issue through our <Link to="/support">Support page</Link>
                 .
               </p>
-            </va-alert>
+            </VaAlert>
           )}
         </div>
       </div>

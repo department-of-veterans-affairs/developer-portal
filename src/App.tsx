@@ -1,7 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import { ScrollRestoration } from 'react-router-dom';
-import { defineCustomElements } from '@department-of-veterans-affairs/component-library';
 import { Footer, Header, PageContent } from './components';
 import { ScrollToHashElement } from './components/scrollToHashElement/ScrollToHashElement';
 import { FlagsProvider, getFlags } from './flags';
@@ -14,8 +13,6 @@ import { SiteRedirects } from './components/SiteRedirects';
 import { useAppDispatch } from './hooks';
 import { setApiLoadingError } from './features/apis/apisSlice';
 import { UseGetApisQuery, useGetApisQuery } from './services/lpb';
-
-void defineCustomElements();
 
 /**
  * the double flex container only exists and is flexed to
