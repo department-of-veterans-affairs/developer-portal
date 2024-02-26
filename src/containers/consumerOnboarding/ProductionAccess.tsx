@@ -385,6 +385,7 @@ const ProductionAccess: FC = () => {
               {activeStep === 0 ? (
                 <>
                   <VaSegmentedProgressBar
+                    uswds
                     current={1}
                     total={4}
                     ariaLabel="Step 1. There will be 1 to 3 more steps depending on the APIs you select."
@@ -403,7 +404,7 @@ const ProductionAccess: FC = () => {
                 </>
               ) : (
                 <>
-                  <VaSegmentedProgressBar current={activeStep + 1} total={steps.length} />
+                  <VaSegmentedProgressBar uswds current={activeStep + 1} total={steps.length} />
                   <h2
                     id={STEP_HEADING_ID}
                     className={classNames(
