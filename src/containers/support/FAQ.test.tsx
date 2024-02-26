@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { defineCustomElements } from '@department-of-veterans-affairs/component-library';
 import SupportFAQ from './FAQ';
+
+void defineCustomElements();
 
 describe('SupportFAQ', () => {
   it('Page renders as expected', () => {
