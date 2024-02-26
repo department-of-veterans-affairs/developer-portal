@@ -181,9 +181,9 @@ export const SupportQuestions = (props: SupportQuestionsProps): JSX.Element => {
           {props.title}
         </h2>
       </div>
-      <VaAccordion>
+      <VaAccordion uswds>
         {content.map((c: AccordionPanelContent) => (
-          <VaAccordionItem header={c.title} key={c.title}>
+          <VaAccordionItem uswds header={c.title} key={c.title}>
             {c.body}
           </VaAccordionItem>
         ))}

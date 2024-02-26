@@ -58,8 +58,8 @@ const RequestProductionAccess = (): JSX.Element => (
       </p>
     </div>
     <h2 id="form-requirements-production-access">Learn what&apos;s needed on the form</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Basic information" level={3}>
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="Basic information" level={3}>
         <ul className="checklist">
           <li>Company contacts and information</li>
           <li>Notification email address for API status updates</li>
@@ -102,7 +102,7 @@ const RequestProductionAccess = (): JSX.Element => (
           .
         </p>
       </VaAccordionItem>
-      <VaAccordionItem header="Technical information" level={3}>
+      <VaAccordionItem uswds header="Technical information" level={3}>
         <ul className="checklist">
           <li>
             Description of how and where you will provide secure storage of your access credentials,
@@ -164,7 +164,7 @@ const RequestProductionAccess = (): JSX.Element => (
           </li>
         </ul>
       </VaAccordionItem>
-      <VaAccordionItem header="Privacy policy and terms of service" level={3}>
+      <VaAccordionItem uswds header="Privacy policy and terms of service" level={3}>
         <ul className="checklist">
           <li>URL for your application&apos;s terms of service</li>
           <li>URL for your application&apos;s privacy policy</li>

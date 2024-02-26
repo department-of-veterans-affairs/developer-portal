@@ -21,8 +21,11 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       and more.
     </p>
     <h2 id="versioning">Versioning</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Thoughtful, consistent versioning to reduce the impact of changes.">
+    <VaAccordion uswds>
+      <VaAccordionItem
+        uswds
+        header="Thoughtful, consistent versioning to reduce the impact of changes."
+      >
         <p>
           Breaking changes to published API versions can be disruptive to using APIs, so our policy
           is to ensure breaking changes aren’t published without a major version change. We will
@@ -39,8 +42,11 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="deprecation-and-deactivation">Deprecation and deactivation</h2>
-    <VaAccordion>
-      <VaAccordionItem header="The right notifications at the right time about deprecated functionality.">
+    <VaAccordion uswds>
+      <VaAccordionItem
+        uswds
+        header="The right notifications at the right time about deprecated functionality."
+      >
         <p>
           We occasionally deactivate features and versions of APIs based on updates and new
           technology. Before any functionality is deactivated, we will announce the change through
@@ -50,8 +56,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="rate-limiting">Rate limiting</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Consistent rate limiting at 60 requests per minute.">
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="Consistent rate limiting at 60 requests per minute.">
         <p>
           Rate limiting is enforced at 60 requests per minute per consumer. Requests to APIs that
           don’t require authentication, like health checks, are rate limited per IP address.
@@ -125,8 +131,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="environments">Environments</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Testing and production environments with robust uptime SLAs.">
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="Testing and production environments with robust uptime SLAs.">
         <h3 id="sandbox">Sandbox</h3>
         <p>
           Our <a href="https://sandbox-api.va.gov">sandbox environment</a> is deployed in the VA
@@ -153,8 +159,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="status-alerts">Status alerts, uptime, and issue reporting</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Alerts and notifications when you need them most.">
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="Alerts and notifications when you need them most.">
         <p>
           We post status updates about scheduled maintenance, unscheduled downtime, and more on our{' '}
           <a href="https://valighthouse.statuspage.io/">status page</a>.
@@ -185,8 +191,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="support">Support</h2>
-    <VaAccordion>
-      <VaAccordionItem header="We’re here for you whenever you have questions.">
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="We’re here for you whenever you have questions.">
         <p>
           If you find an issue that may impact an API’s status, let us know through our{' '}
           <Link to="/support/contact-us">support page </Link>
@@ -209,8 +215,11 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="managing-feature-requests">Managing feature requests</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Improving your experience and getting you the functionality you need.">
+    <VaAccordion uswds>
+      <VaAccordionItem
+        uswds
+        header="Improving your experience and getting you the functionality you need."
+      >
         <p>
           We look to our consumers for feature requests, such as suggestions for improvements to
           functionality or ideas for new features. Improving your experience, and through that, the
@@ -224,8 +233,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="auditing-process">Auditing process and guidelines</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Robust and secure auditing to protect you and VA data.">
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="Robust and secure auditing to protect you and VA data.">
         <p>
           We periodically perform auditing to remove inactive API keys and OAuth credentials, and to
           ensure the security and integrity of Veteran data. Our audits confirm that:
@@ -244,8 +253,11 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="security">Security</h2>
-    <VaAccordion>
-      <VaAccordionItem header="The highest security standards based on industry best practices.">
+    <VaAccordion uswds>
+      <VaAccordionItem
+        uswds
+        header="The highest security standards based on industry best practices."
+      >
         <p>
           Lighthouse has full authorization to operate (ATO) at the FISMA Moderate level. We also
           complete a privacy impact assessment and privacy threshold analysis whenever the API
@@ -289,8 +301,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="api-documentation-standards">API Documentation Standards</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Consistent and thorough API documentation.">
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="Consistent and thorough API documentation.">
         <p>
           To be added to Lighthouse, an API needs reference material in the form of{' '}
           <a href="https://swagger.io/docs/specification/about/">OpenAPI specification</a>. This
@@ -302,8 +314,11 @@ const WorkingWithOurAPIs = (): JSX.Element => (
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="authentication-and-authorization">Authentication and authorization</h2>
-    <VaAccordion>
-      <VaAccordionItem header="Methods of authentication and authorization for all your consumers’ needs.">
+    <VaAccordion uswds>
+      <VaAccordionItem
+        uswds
+        header="Methods of authentication and authorization for all your consumers’ needs."
+      >
         <p>
           Unifying API access through the API Gateway benefits our API providers and those who
           consume their APIs, like you. We support multiple authentication types for many common
