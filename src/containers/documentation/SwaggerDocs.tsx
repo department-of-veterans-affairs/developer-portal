@@ -3,10 +3,10 @@ import * as React from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
-import SwaggerUI from 'swagger-ui';
+import SwaggerUI from 'swagger-ui-react';
 import { useAppDispatch, usePrevious } from '../../hooks';
 import { APIDocSource } from '../../apiDefs/schema';
-import { getDocURL, getVersion, getVersionNumber } from '../../features/apis/apiVersioningSelector';
+import { getDocURL, getVersion } from '../../features/apis/apiVersioningSelector';
 import {
   resetVersioning,
   setRequestedApiVersion,
@@ -19,7 +19,7 @@ import {
   CURRENT_VERSION_IDENTIFIER,
   OPEN_API_SPEC_HOST,
 } from '../../types/constants';
-import { SwaggerPlugins, System } from './swaggerPlugins';
+import { SwaggerPlugins } from './swaggerPlugins';
 
 import 'swagger-ui-themes/themes/3.x/theme-muted.css';
 import VersionSelect from './swaggerPlugins/VersionSelect';
@@ -56,23 +56,23 @@ const handleVersionChange =
     dispatch(setRequestedApiVersion(requestedVersion));
   };
 
-const renderSwaggerUI = (
-  defaultUrl: string,
-  dispatch: AppDispatch,
-  versionNumber: string,
-  versions: VersionMetadata[] | null,
-): void => {
-  const plugins = SwaggerPlugins(handleVersionChange(dispatch));
-  const ui: System = SwaggerUI({
-    defaultModelExpandDepth: 99,
-    dom_id: '#swagger-ui',
-    layout: 'ExtendedLayout',
-    plugins: [plugins],
-    url: defaultUrl,
-  }) as System;
-  ui.versionActions.setApiVersion(versionNumber);
-  ui.versionActions.setVersionMetadata(versions);
-};
+// const renderSwaggerUI = (
+//   defaultUrl: string,
+//   dispatch: AppDispatch,
+//   versionNumber: string,
+//   versions: VersionMetadata[] | null,
+// ): void => {
+//   const plugins = SwaggerPlugins(handleVersionChange(dispatch));
+//   const ui: System = SwaggerUI({
+//     defaultModelExpandDepth: 99,
+//     dom_id: '#swagger-ui',
+//     layout: 'ExtendedLayout',
+//     plugins: [plugins],
+//     url: defaultUrl,
+//   }) as System;
+//   ui.versionActions.setApiVersion(versionNumber);
+//   ui.versionActions.setVersionMetadata(versions);
+// };
 
 const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const appDispatch = useAppDispatch();
@@ -80,11 +80,12 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   const defaultUrl = useSelector(defaultUrlSelector);
   const location = useLocation();
   const navigate = useNavigate();
-  const versionNumberSelector = (state: RootState): string => getVersionNumber(state.apiVersioning);
-  const versionNumber = useSelector(versionNumberSelector);
+  // const versionNumberSelector = (state: RootState): string => getVersionNumber(state.apiVersioning);
+  // const versionNumber = useSelector(versionNumberSelector);
   const versionsSelector = (state: RootState): VersionMetadata[] | null =>
     state.apiVersioning.versions;
   const versions = useSelector(versionsSelector);
+  const plugins = SwaggerPlugins(handleVersionChange(appDispatch));
 
   // Retrieve an initial version from the params so we can compare it under our effects down below
   const initializing = React.useRef(true);
@@ -168,11 +169,11 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
   /**
    * TRIGGERS RENDER OF SWAGGER UI
    */
-  React.useEffect(() => {
-    if (document.getElementById('swagger-ui') && defaultUrl) {
-      renderSwaggerUI(defaultUrl, appDispatch, versionNumber, versions);
-    }
-  }, [defaultUrl, appDispatch, versions, versionNumber]);
+  // React.useEffect(() => {
+  //   if (document.getElementById('swagger-ui') && defaultUrl) {
+  //     renderSwaggerUI(defaultUrl, appDispatch, versionNumber, versions);
+  //   }
+  // }, [defaultUrl, appDispatch, versions, versionNumber]);
 
   /**
    * RENDER
@@ -191,6 +192,7 @@ const SwaggerDocs = (props: SwaggerDocsProps): JSX.Element => {
         />
       )}
       <div id="swagger-ui" />
+      <SwaggerUI defaultModelExpandDepth={99} layout="ExtendedLayout" plugins={[plugins]} url={defaultUrl} />
     </React.Fragment>
   );
 };
