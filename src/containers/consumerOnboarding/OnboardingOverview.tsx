@@ -22,7 +22,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       integrating with our APIs and data. It may seem complex, but don&apos;t worry—we&apos;re in
       this together and are here to answer your questions each step of the way.
     </p>
-    <VaAlert background-only show-icon status="info" visible>
+    <VaAlert status="info" visible uswds>
       <p className="vads-u-margin-y--0">
         In July 2023, we added steps to the production approval process which has significantly
         increased approval time. We appreciate your understanding and cooperation as we prioritize

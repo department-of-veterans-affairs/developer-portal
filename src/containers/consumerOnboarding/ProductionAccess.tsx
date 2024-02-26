@@ -524,7 +524,7 @@ const ProductionAccess: FC = () => {
             </p>
           </VaModal>
           {submissionError && (
-            <VaAlert background-only show-icon status="error" visible>
+            <VaAlert status="error" visible uswds>
               <p className="vads-u-margin-y--0">
                 We encountered a server error while saving your form. Please try again later.
               </p>

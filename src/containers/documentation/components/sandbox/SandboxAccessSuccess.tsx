@@ -37,7 +37,7 @@ const OAuthACGCredentialsNotice: React.FunctionComponent<OAuthACGCredentialsNoti
 }: OAuthACGCredentialsNoticeProps) => (
   <>
     <h3>Sandbox credentials for the {api.name}.</h3>
-    <VaAlert background-only status="success" visible>
+    <VaAlert status="success" visible uswds>
       <>
         <p>
           <strong>Your VA API OAuth Client ID: </strong> {clientID}
@@ -61,7 +61,7 @@ const OAuthCCGCredentialsNotice: React.FunctionComponent<OAuthCCGCredentialsNoti
 }: OAuthCCGCredentialsNoticeProps) => (
   <>
     <h3>Sandbox credentials for the {api.name}.</h3>
-    <VaAlert background-only status="success" visible>
+    <VaAlert status="success" visible uswds>
       <p>
         <strong>Your VA API OAuth Client ID: </strong> {ccgClientId}
       </p>
@@ -76,7 +76,7 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
 }: APIKeyNoticeProps) => (
   <>
     <h3>Key for the {api.name}.</h3>
-    <VaAlert background-only status="success" visible>
+    <VaAlert status="success" visible uswds>
       <>
         <p>
           <strong>Sandbox key:</strong> {token}

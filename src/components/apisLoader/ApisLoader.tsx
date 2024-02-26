@@ -30,7 +30,7 @@ const ApisLoader: React.FunctionComponent<ApisLoaderProps> = (props): JSX.Elemen
       return props.hideError ? (
         <div />
       ) : (
-        <VaAlert background-only show-icon status="error" visible>
+        <VaAlert status="error" visible uswds>
           <p className="vads-u-margin-y--0">Loading Error:</p>
           <p className="vads-u-margin-top--1">
             API details failed to load. Please reload or try again later if the issue persists.

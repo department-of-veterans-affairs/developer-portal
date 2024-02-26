@@ -76,7 +76,7 @@ const TestUsersPage = (): JSX.Element => {
       <PageHeader header="Test users" subText={api.name} />
       <div className="va-api-authorization-docs">
         {testUserAccess === testUserAccessState.ACCESS_BLOCKED && (
-          <VaAlert background-only show-icon status="error" visible>
+          <VaAlert status="error" visible uswds>
             <p className="vads-u-margin-y--0">
               There was an error requesting access to the test user data. Please recheck the link in
               your sandbox access signup email or request access by signing up{' '}

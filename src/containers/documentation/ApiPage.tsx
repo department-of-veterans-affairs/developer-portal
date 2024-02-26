@@ -59,7 +59,7 @@ const VeteranRedirectAlertMessage = ({
   api: APIDescription;
   veteranRedirect: VeteranRedirectMessage;
 }): JSX.Element => (
-  <VaAlert background-only show-icon status="info" key={api.urlSlug} visible>
+  <VaAlert status="info" key={api.urlSlug} visible uswds>
     <p className="vads-u-margin-y--0">
       {veteranRedirect.message}&nbsp;
       <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.

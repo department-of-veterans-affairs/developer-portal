@@ -74,7 +74,7 @@ const RequestSandboxAccess = (): JSX.Element => {
               key={api.urlFragment}
             />
           ) : (
-            <VaAlert status="error" visible>
+            <VaAlert status="error" visible uswds>
               <p>
                 There is an error with this Sandbox Access Form. Please{' '}
                 <Link to={SUPPORT_CONTACT_PATH}>contact support</Link> for additional assistance.

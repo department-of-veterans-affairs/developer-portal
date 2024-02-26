@@ -21,7 +21,7 @@ const RequestProductionAccess = (): JSX.Element => (
       <title>Request production access</title>
     </Helmet>
     <PageHeader header="Request production access" className="vads-u-margin-bottom--1" />
-    <VaAlert background-only show-icon status="info" visible>
+    <VaAlert status="info" visible uswds>
       <p className="vads-u-margin-y--0">
         In July 2023, we added steps to the production approval process which has significantly
         increased approval time. We appreciate your understanding and cooperation as we prioritize
