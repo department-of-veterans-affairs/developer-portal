@@ -229,7 +229,7 @@ const ProductionAccess: FC = () => {
   //       setModal508Visible(false);
   //       setAcknowledge508(true);
   //     }}
-  //     primary-button-text="I acknowledge"
+  //     primaryButtonText="I acknowledge"
   //   >
   //     <>
   //       <img src={Icon508} aria-hidden="true" alt="" className={classNames('VaModal-icon')} />
@@ -465,23 +465,25 @@ const ProductionAccess: FC = () => {
             </Form>
           </Formik>
           <VaModal
+            uswds
             id="cancellation-modal"
-            title="Are you sure you want to leave?"
+            modalTitle="Are you sure you want to leave?"
             visible={modal1Visible}
             onCloseEvent={(): void => setModal1Visible(false)}
             onPrimaryButtonClick={(): void => navigate(CONSUMER_PROD_PATH)}
-            primary-button-text="Yes, leave"
+            primaryButtonText="Yes, leave"
             onSecondaryButtonClick={(): void => setModal1Visible(false)}
-            secondary-button-text="No, stay on form"
+            secondaryButtonText="No, stay on form"
           >
             The information you entered will not be saved.
           </VaModal>
           <VaModal
+            uswds
             id="non-us-based-modal"
-            modal-title="Thank you for your interest!"
+            modalTitle="Thank you for your interest!"
             visible={modal2Visible}
             onCloseEventEvent={(): void => setModal2Visible(false)}
-            primary-button-text="Close form"
+            primaryButtonText="Close form"
             onPrimaryButtonClick={(): void => navigate(-1)}
             classNames={['vads-u-text-align--center']}
           >
@@ -499,14 +501,14 @@ const ProductionAccess: FC = () => {
           {/* <VaModal508Compliant /> */}
           <VaModal
             id="submission-complete-modal"
-            title="Thanks for submitting!"
+            modalTitle="Thanks for submitting!"
             visible={modal4Visible}
             onCloseEvent={(): void => {
               setModal4Visible(false);
               navigate(-1);
             }}
             onPrimaryButtonClick={(): void => navigate(-1)}
-            primary-button-text="Close"
+            primaryButtonText="Close"
           >
             <img
               src={hiFive}

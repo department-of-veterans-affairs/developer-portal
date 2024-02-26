@@ -153,7 +153,7 @@ const PageContent = (): JSX.Element => {
           visible={vaNetworkModalVisible}
           onCloseEvent={closeVaNetworkModal}
           onPrimaryButtonClick={closeVaNetworkModal}
-          primary-button-text="Close"
+          primaryButtonText="Close"
           status={vaNetworkAvailable.status === 'testing' ? null : 'info'}
           modalTitle={modalTitle}
         >
