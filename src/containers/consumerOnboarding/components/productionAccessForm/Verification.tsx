@@ -29,14 +29,6 @@ const Verification: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors.benefitsIntakeApiAttestation, isSubmitting]);
 
-  // opens modal every time selected apis change
-  useEffect(() => {
-    if (apis.includes('apikey/benefits')) {
-      setBenefitsIntakeModalVisible(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apis]);
-
   return (
     <fieldset>
       <legend>
