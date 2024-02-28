@@ -22,6 +22,7 @@ const Verification: FC = () => {
       apis.includes('apikey/benefits') &&
       errors.benefitsIntakeApiAttestation &&
       !values.benefitsIntakeApiAttestation &&
+      values.termsOfService &&
       isSubmitting
     ) {
       setBenefitsIntakeModalVisible(true);
