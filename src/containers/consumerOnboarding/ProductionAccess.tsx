@@ -483,7 +483,7 @@ const ProductionAccess: FC = () => {
             id="non-us-based-modal"
             modalTitle="Thank you for your interest!"
             visible={modal2Visible}
-            onCloseEventEvent={(): void => setModal2Visible(false)}
+            onCloseEvent={(): void => setModal2Visible(false)}
             primaryButtonText="Close form"
             onPrimaryButtonClick={(): void => navigate(-1)}
             classNames={['vads-u-text-align--center']}
@@ -501,6 +501,7 @@ const ProductionAccess: FC = () => {
           </VaModal>
           {/* <VaModal508Compliant /> */}
           <VaModal
+            uswds
             id="submission-complete-modal"
             modalTitle="Thanks for submitting!"
             visible={modal4Visible}

@@ -63,29 +63,41 @@ describe('Production Access Form', () => {
     cy.get('#apisFormFieldapikeyappeals').click();
     cy.get('#termsOfServiceFormField').click();
     cy.get('button.usa-button[type=submit]:contains("Continue")').click();
-    cy.get('#non-us-based-modal-title').should('be.visible');
+    cy.get('#non-us-based-modal').should('be.visible');
 
-    cy.get('.va-modal-close').click();
-    cy.get('#non-us-based-modal-title').should('not.exist');
+    cy.get('#non-us-based-modal').shadow().find('.va-modal-close').click();
+
+    cy.get('#non-us-based-modal').should('not.be.visible');
 
     cy.get('button.usa-button[type=submit]:contains("Continue")').click();
-    cy.get('#non-us-based-modal-title').should('be.visible');
+    cy.get('#non-us-based-modal').should('be.visible');
 
-    cy.get('#non-us-based-modal .usa-button').click();
+    cy.get('#non-us-based-modal').shadow().find('va-button').shadow().find('button').click();
     cy.get('.vads-c-action-link--green').should('be.visible');
   });
 
   it('Form cancellation modal works', () => {
     cy.get('#main .va-api-button-default').click();
-    cy.get('#cancellation-modal').should('be.be.visible');
+    cy.get('#cancellation-modal').should('be.visible');
 
-    cy.get('#cancellation-modal .usa-button-secondary').click();
-    cy.get('#cancellation-modal').should('not.exist');
+    cy.get('#cancellation-modal')
+      .shadow()
+      .find('va-button[secondary]')
+      .shadow()
+      .find('button')
+      .click();
+    cy.get('#cancellation-modal').should('not.be.visible');
 
     cy.get('#main .va-api-button-default').click();
-    cy.get('#cancellation-modal').should('be.be.visible');
+    cy.get('#cancellation-modal').should('be.visible');
+    cy.get('#cancellation-modal')
+      .shadow()
+      .find('va-button')
+      .first()
+      .shadow()
+      .find('button')
+      .click();
 
-    cy.get('#cancellation-modal .usa-button').click();
     cy.get('.vads-c-action-link--green').should('be.visible');
   });
 
@@ -133,7 +145,7 @@ describe('Production Access Form', () => {
     cy.get('#main button[type="submit"]').click();
 
     cy.get('#submission-complete-modal').should('be.visible');
-    cy.get('#submission-complete-modal .usa-button').click();
+    cy.get('#submission-complete-modal').shadow().find('va-button').shadow().find('button').click();
     cy.get('#submission-complete-modal').should('not.exist');
     cy.get('.vads-c-action-link--green').should('be.visible');
   });
@@ -161,7 +173,7 @@ describe('Production Access Form', () => {
     cy.get('#main button[type="submit"]').click();
 
     cy.get('#submission-complete-modal').should('be.visible');
-    cy.get('#submission-complete-modal .usa-button').click();
+    cy.get('#submission-complete-modal').shadow().find('va-button').shadow().find('button').click();
     cy.get('#submission-complete-modal').should('not.exist');
     cy.get('.vads-c-action-link--green').should('be.visible');
   });
@@ -196,7 +208,7 @@ describe('Production Access Form', () => {
     cy.get('#main button[type="submit"]').click();
 
     cy.get('#submission-complete-modal').should('be.visible');
-    cy.get('#submission-complete-modal .usa-button').click();
+    cy.get('#submission-complete-modal').shadow().find('va-button').shadow().find('button').click();
     cy.get('#submission-complete-modal').should('not.exist');
     cy.get('.vads-c-action-link--green').should('be.visible');
   });
@@ -239,7 +251,7 @@ describe('Production Access Form', () => {
     cy.get('#main button[type="submit"]').click();
 
     cy.get('#submission-complete-modal').should('be.visible');
-    cy.get('#submission-complete-modal .usa-button').click();
+    cy.get('#submission-complete-modal').shadow().find('va-button').shadow().find('button').click();
     cy.get('#submission-complete-modal').should('not.exist');
     cy.get('.vads-c-action-link--green').should('be.visible');
   });
