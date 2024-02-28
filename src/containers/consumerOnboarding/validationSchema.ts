@@ -22,6 +22,15 @@ const validationSchema = [
       .of(yup.string())
       .min(1, 'Choose at least one API.')
       .required('Choose at least one API.'),
+    benefitsIntakeApiAttestation: yup.boolean().when('apis', {
+      is: (value: string[]) => value.includes('apikey/benefits'),
+      otherwise: () => yup.boolean(),
+      then: () =>
+        yup
+          .boolean()
+          .oneOf([true], 'You must attest to request production access for this API.')
+          .required(),
+    }),
     is508Compliant: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     isUSBasedCompany: yup.string().oneOf(['yes', 'no']).required('Select yes or no.'),
     oAuthApplicationType: yup.string().when('apis', {
