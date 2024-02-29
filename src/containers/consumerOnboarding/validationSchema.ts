@@ -46,6 +46,9 @@ const validationSchema = [
       .required(),
   }),
   yup.object().shape({
+    addressLine1: yup.string().required('Enter the company street address.'),
+    addressLine2: yup.string(),
+    addressLine3: yup.string(),
     appDescription: yup.string().when('veteranFacing', {
       is: (value: string) => value === 'yes',
       otherwise: () => yup.string(),
@@ -57,6 +60,8 @@ const validationSchema = [
       otherwise: () => yup.string(),
       then: () => yup.string().required('Describe your business model.'),
     }),
+    city: yup.string().required('Enter a city.'),
+    country: yup.string().required('Select a country.'),
     monitizationExplanation: yup.string().when('monitizedVeteranInformation', {
       is: (value: string) => value === 'yes',
       otherwise: () => yup.string(),
@@ -115,6 +120,7 @@ const validationSchema = [
           otherwise: () => yup.string(),
           then: () => yup.string().url('Add a valid link.').required('Add a link.'),
         }),
+    state: yup.string().required('Enter a state.'),
     statusUpdateEmails: yup
       .array()
       .of(
@@ -149,6 +155,7 @@ const validationSchema = [
       otherwise: () => yup.string(),
       then: () => yup.string().url('Add a valid link.').required('Add a link.'),
     }),
+    zipCode5: yup.string().required('Enter a postal code.'),
   }),
   yup.object().shape({
     breachManagementProcess: yup.string().when('storePIIOrPHI', {

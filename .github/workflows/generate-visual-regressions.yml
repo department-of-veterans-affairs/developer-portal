@@ -15,7 +15,7 @@ concurrency:
 jobs:
   update_visual_regressions:
     runs-on: ubuntu-latest
-    container: cypress/included:12.8.1
+    container: cypress/included:13.3.1
     env:
       CYPRESS_SINGLE_SPEC: true
       failOnSnapshotDiff: false

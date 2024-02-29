@@ -127,6 +127,7 @@ const SandboxAccessSuccess = (props: {
         <p>
           We sent this sandbox access information to your email address: <strong>{email}</strong>
         </p>
+        <p>To access test data, follow the instructions in the email we sent to you.</p>
         {hasInternalAPI && <InternalApiNotice />}
       </div>
     </div>

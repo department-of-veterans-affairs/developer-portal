@@ -14,6 +14,11 @@ function basicInformationFields(cy) {
   cy.get('#secondaryContactlastNameFormField').type('SecondaryLastName');
   cy.get('#secondaryContactemailFormField').type('SecondaryEmailAddress@va.gov');
   cy.get('#organizationFormField').type('CompanyName');
+  cy.get('#countryFormField').select('United States');
+  cy.get('#addressLine1FormField').type('1180 Seven Seas Drive');
+  cy.get('#cityFormField').type('Lake Buena Vista');
+  cy.get('#stateFormField').type('FL');
+  cy.get('#zipCode5FormField').type('32830');
   cy.get('#phoneNumberFormField').type('8005551212');
   cy.get('#appNameFormField').type('AppName');
   cy.get('#statusUpdateEmails\\.0').type('NotificationEmailAddress@va.gov');
@@ -117,7 +122,7 @@ describe('Production Access Form', () => {
 
     cy.get('#main button[type="submit"]').click();
 
-    cy.get('.usa-input-error').should('have.length', '13');
+    cy.get('.usa-input-error').should('have.length', '18');
 
     basicInformationFields(cy);
 

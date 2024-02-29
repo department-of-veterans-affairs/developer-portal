@@ -15,7 +15,7 @@ concurrency:
 jobs:
   end-to-end:
     runs-on: ubuntu-latest
-    container: cypress/included:12.8.1
+    container: cypress/included:13.3.1
     outputs:
       node_version: ${{ steps.node_version.outputs.node_version }}
     steps:
@@ -65,7 +65,7 @@ jobs:
 
   accessibility:
     runs-on: ubuntu-latest
-    container: cypress/included:12.8.1
+    container: cypress/included:13.3.1
     env:
       CYPRESS_SINGLE_SPEC: true
     outputs:
