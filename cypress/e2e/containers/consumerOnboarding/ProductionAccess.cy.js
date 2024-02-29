@@ -57,6 +57,19 @@ describe('Production Access Form', () => {
     cy.get('a[href="/onboarding/production-access-application"]').click();
   });
 
+  it('Test Benefits Intake API Attestation modal', () => {
+    cy.get('#isUSBasedCompanyFormFieldyes').click();
+    cy.get('#is508CompliantFormFieldyes').click();
+    cy.get('#apisFormFieldapikeybenefits').click();
+    cy.get('#termsOfServiceFormField').click();
+    cy.get('button.usa-button[type=submit]:contains("Continue")').click();
+    cy.get('#benefits-intake-attestation-modal-title').should('be.visible');
+    cy.get('.va-modal-close').click();
+    cy.get('#benefits-intake-attestation-modal-title').should('not.exist');
+    cy.get('button.usa-button[type=submit]:contains("Continue")').click();
+    cy.get('#benefits-intake-attestation-modal-title').should('be.visible');
+  });
+
   it('Test US-based companies only modal', () => {
     cy.get('#isUSBasedCompanyFormFieldno').click();
     cy.get('#is508CompliantFormFieldyes').click();

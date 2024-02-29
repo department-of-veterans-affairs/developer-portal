@@ -67,6 +67,7 @@ const Verification: FC = () => {
       <SelectedAPIs selectedApis={apis} />
       <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
       <Modal
+        id="benefits-intake-attestation-modal"
         title="Requirements for the Benefits Intake API"
         onClose={(): void => setBenefitsIntakeModalVisible(false)}
         visible={benefitsIntakeModalVisible}
