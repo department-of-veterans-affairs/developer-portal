@@ -198,7 +198,6 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
           <VaFileInput
             data-testid="file-upload-input"
             accept="image/png,image/jpeg"
-            buttonText="Upload file"
             error={error}
             onVaChange={(e: CustomFileChangeEvent): Promise<void> => handleFileChange(e)}
             uswds
