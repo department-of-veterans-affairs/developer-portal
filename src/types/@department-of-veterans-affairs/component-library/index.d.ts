@@ -14,6 +14,11 @@ interface VaAccordionItemProps {
   subheader?: string;
 }
 
+interface VaProgressBarProps {
+  label?: string;
+  percent: number;
+}
+
 interface VaSelectProps {
   children: JSX.Element | JSX.Element[];
   error?: string;
@@ -46,6 +51,7 @@ declare namespace JSX {
     'va-accordion': VaAccordionProps;
     'va-accordion-item': unknown;
     'va-alert': VaAlertProps;
+    'va-progress-bar': VaProgressBarProps;
     'va-select': VaSelectProps;
     defaultLoadingSpinner: unknown;
   }

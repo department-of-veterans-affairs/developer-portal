@@ -7,6 +7,7 @@ import {
   TextField,
   CheckboxRadioField,
   FieldSet,
+  LogoUploadField,
   MultiEntryEmailField,
 } from '../../../../components';
 import { Values } from '../../ProductionAccess';
@@ -321,6 +322,7 @@ const BasicInformation: FC = () => {
             required
           />
         )}
+        <LogoUploadField />
       </fieldset>
     </>
   );

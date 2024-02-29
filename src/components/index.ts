@@ -44,3 +44,4 @@ export * from './testingNotice/TestingNotice';
 export * from './apiTag/ApiTag';
 export * from './maintenanceBanner/MaintenanceBanner';
 export * from './scrollToHashElement/ScrollToHashElement';
+export * from './formField/LogoUploadField';

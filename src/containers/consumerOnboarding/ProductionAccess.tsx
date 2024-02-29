@@ -9,7 +9,6 @@ import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-s
 import Modal from 'component-library-legacy/Modal';
 import { VaSegmentedProgressBar } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-// import Icon508 from '../../assets/508-compliant.svg';
 import { apisFor } from '../../apiDefs/query';
 import { ProdAccessFormSteps } from '../../apiDefs/schema';
 import { PageHeader } from '../../components';
@@ -88,6 +87,8 @@ export interface Values {
   productionOrOAuthKeyCredentialStorage: string;
   privacyPolicyURL?: string;
   termsOfServiceURL?: string;
+  logoIcon?: string;
+  logoLarge?: string;
   country: string;
   addressLine1: string;
   addressLine2?: string;
@@ -114,6 +115,8 @@ const initialValues: Values = {
   is508Compliant: '',
   isUSBasedCompany: '',
   listedOnMyHealthApplication: '',
+  logoIcon: '',
+  logoLarge: '',
   monitizationExplanation: '',
   monitizedVeteranInformation: '',
   multipleReqSafeguards: '',

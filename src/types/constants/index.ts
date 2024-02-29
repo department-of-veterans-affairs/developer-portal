@@ -9,6 +9,7 @@ export const LPB_BASE_URL = `${LPB_PREFIX}/platform-backend`;
 export const LPB_FORGERY_TOKEN = 'CsrfBlocker';
 export const LPB_APPLY_URL = `${LPB_BASE_URL}/v0/consumers/applications`;
 export const LPB_PRODUCTION_ACCESS_URL = `${LPB_BASE_URL}/v0/consumers/production-requests`;
+export const LPB_LOGO_UPLOAD_POLICY_URL = `${LPB_BASE_URL}/v0/consumers/logo-upload`;
 export const LPB_PROVIDERS_PATH = '/v0/providers/transformations/legacy.json?environment=sandbox';
 export const LPB_PROVIDERS_URL = `${LPB_BASE_URL}${LPB_PROVIDERS_PATH}`;
 export const LPB_CONTACT_US_URL = `${LPB_BASE_URL}/v0/support/contact-us/requests`;
