@@ -201,6 +201,7 @@ export const LogoUploadField = ({ className }: LogoUploadProps): JSX.Element => 
             buttonText="Upload file"
             error={error}
             onVaChange={(e: CustomFileChangeEvent): Promise<void> => handleFileChange(e)}
+            uswds
           />
         )}
         {/* loading */}
