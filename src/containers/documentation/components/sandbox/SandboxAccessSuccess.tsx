@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import { isAcgApi, isApiKeyApi, isCcgApi } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
 import { ApplySuccessResult } from '../../../../types/forms/apply';
-import { isVaEmail } from '../../../../utils/validators';
 import './SandboxAccessSuccess.scss';
 import { SUPPORT_CONTACT_PATH } from '../../../../types/constants/paths';
 
@@ -81,7 +80,7 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
           <strong>Sandbox key:</strong> {token}
         </p>
         <p>
-          <strong>Kong Username:</strong> {kongUsername}
+          <strong>Sandbox Request ID:</strong> {kongUsername}
         </p>
       </>
     </va-alert>
@@ -103,7 +102,6 @@ const SandboxAccessSuccess = (props: {
   const { email, token, ccgClientId, clientID, clientSecret, kongUsername, redirectURI } =
     props.result;
   const { api } = props;
-  const hasInternalAPI = isVaEmail(email);
 
   return (
     <div className="signup-success-wrapper vads-u-margin-top--5">
@@ -128,7 +126,7 @@ const SandboxAccessSuccess = (props: {
           We sent this sandbox access information to your email address: <strong>{email}</strong>
         </p>
         <p>To access test data, follow the instructions in the email we sent to you.</p>
-        {hasInternalAPI && <InternalApiNotice />}
+        {(isCcgApi(api) || api.name.includes('Address Validation')) && <InternalApiNotice />}
       </div>
     </div>
   );
