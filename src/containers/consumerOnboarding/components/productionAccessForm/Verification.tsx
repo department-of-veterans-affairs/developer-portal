@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useFormikContext } from 'formik';
-import Modal from 'component-library-legacy/Modal';
+import { VaModal } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { TERMS_OF_SERVICE_PATH } from '../../../../types/constants/paths';
@@ -66,19 +66,16 @@ const Verification: FC = () => {
       <div className="verification-divider vads-u-margin-top--4 vads-u-margin-bottom--1p5" />
       <SelectedAPIs selectedApis={apis} />
       <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
-      <Modal
+      <VaModal
         id="benefits-intake-attestation-modal"
-        title="Requirements for the Benefits Intake API"
-        onClose={(): void => setBenefitsIntakeModalVisible(false)}
+        large
+        modalTitle="Requirements for the Benefits Intake API"
+        onCloseEvent={(): void => setBenefitsIntakeModalVisible(false)}
         visible={benefitsIntakeModalVisible}
-        primaryButton={{
-          action: () => setBenefitsIntakeModalVisible(false),
-          text: 'Confirm',
-        }}
-        secondaryButton={{
-          action: () => setBenefitsIntakeModalVisible(false),
-          text: 'Cancel',
-        }}
+        primaryButtonText="Confirm"
+        onPrimaryButtonClick={(): void => setBenefitsIntakeModalVisible(false)}
+        secondaryButtonText="Cancel"
+        onSecondaryButtonClick={(): void => setBenefitsIntakeModalVisible(false)}
       >
         <p>
           By accessing or using the{' '}
@@ -118,7 +115,7 @@ const Verification: FC = () => {
           required
           showError
         />
-      </Modal>
+      </VaModal>
     </fieldset>
   );
 };
