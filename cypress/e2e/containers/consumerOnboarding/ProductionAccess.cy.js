@@ -58,13 +58,28 @@ describe('Production Access Form', () => {
   });
 
   it('Test Benefits Intake API Attestation modal', () => {
-    cy.get('#benefits-intake-attestation-modal').should('have.attr', 'visible', 'false');
     cy.get('#isUSBasedCompanyFormFieldyes').click();
     cy.get('#is508CompliantFormFieldyes').click();
     cy.get('#apisFormFieldapikeybenefits').click();
     cy.get('#termsOfServiceFormField').click();
-    cy.get('button.usa-button[type=submit]:contains("Continue")').click();
-    cy.get('#benefits-intake-attestation-modal').should('have.attr', 'visible', 'true');
+    cy.get('#benefits-intake-attestation-modal').should('not.be.visible');
+    cy.get('#main button[type="submit"]').click();
+    cy.get('#benefits-intake-attestation-modal').should('be.visible');
+    cy.get('#benefits-intake-attestation-modal')
+      .shadow()
+      .find('h2')
+      .should('have.text', 'Requirements for the Benefits Intake API');
+    cy.get('.usa-input-error').should('have.length', '1');
+    cy.get('#benefitsIntakeApiAttestationFormField').click();
+    cy.get('#benefits-intake-attestation-modal')
+      .shadow()
+      .find('va-button')
+      .shadow()
+      .find('button:contains("Confirm")')
+      .click();
+    cy.get('#benefits-intake-attestation-modal').should('not.be.visible');
+    cy.get('#main button[type="submit"]:contains("Continue")').click();
+    cy.get('.usa-input-error').should('have.length', '0');
   });
 
   it('Test US-based companies only modal', () => {
