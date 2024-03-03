@@ -77,6 +77,7 @@ const Verification: FC = () => {
         onPrimaryButtonClick={(): void => setBenefitsIntakeModalVisible(false)}
         secondaryButtonText="Cancel"
         onSecondaryButtonClick={(): void => setBenefitsIntakeModalVisible(false)}
+        uswds
       >
         <p>
           By accessing or using the{' '}
@@ -110,6 +111,7 @@ const Verification: FC = () => {
           punishable by law. See 18 U.S.C. § 1001.
         </p>
         <CheckboxRadioField
+          className="vads-u-margin-x--2p5"
           type="checkbox"
           label="I attest that I have read, understood, and agree to the terms above."
           name="benefitsIntakeApiAttestation"
