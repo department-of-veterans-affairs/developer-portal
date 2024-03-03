@@ -36,7 +36,7 @@ body .fba-modal-dialog {
   }
 }
 
-.fba-modal-dialog .usa-radio__input--tile+[class*=__label]::before {
+.fba-modal-dialog .usa-radio__input--tile + [class*='__label']::before {
   margin-top: 3px;
 }
 
@@ -52,6 +52,7 @@ body .fba-modal-dialog {
   line-height: 1;
   height: 44px;
   width: 200px;
+  z-index: 9000;
 }
 
 aside#touchpoints-aside {
