@@ -24,7 +24,7 @@ const RequestProductionAccess = (): JSX.Element => (
         <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
       </p>
     </va-alert>
-    <p>Before you start onboarding, it&apos;s good to know that:</p>
+    <p>Before you start onboarding, it’s good to know that:</p>
     <ul className="vads-u-margin-top--0">
       <li>All consumers must be US-based.</li>
       <li>We do not allow monetizing or selling Veteran data.</li>
@@ -42,7 +42,7 @@ const RequestProductionAccess = (): JSX.Element => (
     </ul>
     <strong>
       We use the data you submit to determine whether to schedule a demo or request technical or
-      policy-related changes. If we need changes, we&apos;ll send you an email.
+      policy-related changes. If we need changes, we’ll send you an email.
     </strong>
     <div className="vads-l-grid-container">
       <Link className="vads-c-action-link--green" to={CONSUMER_APPLICATION_PATH}>
@@ -52,7 +52,7 @@ const RequestProductionAccess = (): JSX.Element => (
         <em>The form progress cannot be saved once you begin.</em>
       </p>
     </div>
-    <h2 id="form-requirements-production-access">Learn what&apos;s needed on the form</h2>
+    <h2 id="form-requirements-production-access">Learn what’s needed on the form</h2>
     <va-accordion>
       <va-accordion-item header="Basic information" level={3}>
         <ul className="checklist">
@@ -120,8 +120,7 @@ const RequestProductionAccess = (): JSX.Element => (
             For the Benefits Intake API:
             <ul>
               <li>
-                Information about customer&apos;s naming conventions for the source field, if
-                applicable
+                Information about customer’s naming conventions for the source field, if applicable
               </li>
               <li>
                 Information about whether you maintain a centralized back-end log for submissions
@@ -161,8 +160,8 @@ const RequestProductionAccess = (): JSX.Element => (
       </va-accordion-item>
       <va-accordion-item header="Privacy policy and terms of service" level={3}>
         <ul className="checklist">
-          <li>URL for your application&apos;s terms of service</li>
-          <li>URL for your application&apos;s privacy policy</li>
+          <li>URL for your application’s terms of service</li>
+          <li>URL for your application’s privacy policy</li>
         </ul>
         <p>
           If your application <strong>uses OAuth</strong>, we will review your terms of service and
@@ -174,7 +173,7 @@ const RequestProductionAccess = (): JSX.Element => (
             <tr>
               <td>Desktop readability</td>
               <td>
-                <p>Your company&apos;s policies must have the following:</p>
+                <p>Your company’s policies must have the following:</p>
                 <ul className="vads-u-margin-y--0">
                   <li>A grade reading level of 12 or below.</li>
                   <li>No obvious typos.</li>
@@ -206,8 +205,8 @@ const RequestProductionAccess = (): JSX.Element => (
               <td>Mobile readability</td>
               <td>
                 <p className="vads-u-margin-top--0">
-                  Your company&apos;s text formatting must meet all of the following requirements
-                  for mobile readability:
+                  Your company’s text formatting must meet all of the following requirements for
+                  mobile readability:
                 </p>
                 <ul className="vads-u-margin-bottom--0">
                   <li>Font size is 14px or larger.</li>
@@ -222,25 +221,25 @@ const RequestProductionAccess = (): JSX.Element => (
               <td>Data retention and deletion</td>
               <td>
                 <p className="vads-u-margin-top--0">
-                  Your company&apos;s terms of service and/or privacy policies must:
+                  Your company’s terms of service and/or privacy policies must:
                 </p>
                 <ul className="vads-u-margin-bottom--0">
                   <li>
-                    Specify your company&apos;s data retention policy, including how long your
-                    company will hold onto a user&apos;s data (including non-VA data shared) if the
-                    account is dormant.
+                    Specify your company’s data retention policy, including how long your company
+                    will hold onto a user’s data (including non-VA data shared) if the account is
+                    dormant.
                   </li>
                   <li>
                     Give users an easy way to request permanent deletion of their data. Your company
                     needs to include instructions on how to do this.
                   </li>
                   <li>
-                    State that your company will permanently delete 100% of a user&apos;s data,
-                    including non-VA data, at the user&apos;s request.
+                    State that your company will permanently delete 100% of a user’s data, including
+                    non-VA data, at the user’s request.
                   </li>
                   <li>
                     State how soon data deletion will happen after the user makes the request. VA
-                    requires data deletion to happen within 45 days of the user&apos;s request.
+                    requires data deletion to happen within 45 days of the user’s request.
                   </li>
                 </ul>
               </td>
@@ -249,12 +248,12 @@ const RequestProductionAccess = (): JSX.Element => (
               <td>Privacy and data practices</td>
               <td>
                 <p className="vads-u-margin-top--0">
-                  Your company&apos;s terms of service and/or privacy policies must:
+                  Your company’s terms of service and/or privacy policies must:
                 </p>
                 <ul className="vads-u-margin-bottom--0">
                   <li>
                     Define the specific types of data collected, such as geolocation data, financial
-                    information, medical information, a user&apos;s contacts, and any other personal
+                    information, medical information, a user’s contacts, and any other personal
                     information.
                   </li>
                   <li>
@@ -302,15 +301,14 @@ const RequestProductionAccess = (): JSX.Element => (
                     with your app/company.
                   </li>
                   <li>
-                    Specify what will happen to a user&apos;s data if there is a transfer of
-                    ownership or if your company ends or sells its business. Your company must
-                    clearly indicate that the user has at least one of these options if such an
-                    event occurs:
+                    Specify what will happen to a user’s data if there is a transfer of ownership or
+                    if your company ends or sells its business. Your company must clearly indicate
+                    that the user has at least one of these options if such an event occurs:
                     <ul>
                       <li>Securely dispose of, transmit, or download their health information.</li>
                       <li>
-                        Ensure the new owner or entity&apos;s policies are consistent with the
-                        previous company&apos;s policies.
+                        Ensure the new owner or entity’s policies are consistent with the previous
+                        company’s policies.
                       </li>
                       <li>Close their account.</li>
                     </ul>
