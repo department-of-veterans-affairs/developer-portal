@@ -18,3 +18,31 @@ jobs:
       run: chmod +x ./scripts/check_API_oAuth_values.sh
     - name: Run script
       run: ./scripts/check_API_oAuth_values.sh
+    - name: Handle failure
+      if: failure()  
+      uses: slackapi/slack-github-action@v1.23.0
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      with:
+        # This ID is for #team-okapi-alerts in Lighthouse Slack       
+        channel-id: C05HL4MTAFR
+        payload: |
+            {
+              "text": "Developer Portal API oAuth Values Check",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "A change has been detected in an API's oAuth values."
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "@teamokapi please investigate."
+                  }
+                }
+              ]
+            }
