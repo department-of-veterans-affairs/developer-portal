@@ -302,14 +302,15 @@ const RequestProductionAccess = (): JSX.Element => (
                     with your app/company.
                   </li>
                   <li>
-                    Specify what will happen to a user’s data if there is a transfer of ownership or
-                    if your company ends or sells its business. Your company must clearly indicate
-                    that the user has at least one of these options if such an event occurs:
+                    Specify what will happen to a user&apos;s data if there is a transfer of
+                    ownership or if your company ends or sells its business. Your company must
+                    clearly indicate that the user has at least one of these options if such an
+                    event occurs:
                     <ul>
                       <li>Securely dispose of, transmit, or download their health information.</li>
                       <li>
-                        Ensure the new owner or entity’s policies are consistent with the previous
-                        company’s policies.
+                        Ensure the new owner or entity&apos;s policies are consistent with the
+                        previous company&apos;s policies.
                       </li>
                       <li>Close their account.</li>
                     </ul>
