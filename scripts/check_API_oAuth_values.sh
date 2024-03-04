@@ -2,7 +2,7 @@
 
 ENVIRONMENTS=("dev-" "staging-" "")
 
-BASE_URL="${LEGACY_API_TRANSFORMATIONS_BASE_URL}"
+BASE_URL="${API_BASE_URL}"
 
 for ENVIRONMENT in "${ENVIRONMENTS[@]}"; do
     if [ -z "$ENVIRONMENT" ]; then
