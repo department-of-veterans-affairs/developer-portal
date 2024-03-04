@@ -1,0 +1,18 @@
+name: Check API oAuth Values
+
+on:
+  schedule:
+    # Run every day at 18:00 UTC, which is noon CST (not accounting for daylight saving time)
+    - cron: '0 18 * * *'
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: ${{ secrets.LEGACY_API_TRANSFORMATIONS_BASE_URL }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Run script
+      run: ./scripts/check_API_oAuth_values.sh
