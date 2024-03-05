@@ -86,7 +86,7 @@ const Verification: FC = () => {
           application is:
         </p>
         <ol>
-          <li> A VA benefits claimant;</li>
+          <li>A VA benefits claimant;</li>
           <li>
             An individual accredited by VA to prepare, present, and prosecute VA benefits claims;
           </li>
@@ -98,7 +98,7 @@ const Verification: FC = () => {
             A person authorized by the VA secretary to prepare, present, and prosecute a VA benefits
             claim pursuant to 38 C.F.R. § 14.630.
           </li>
-        </ol>{' '}
+        </ol>
         <p>
           You must agree that this API will not be accessed by individuals or entities who do not
           meet the specified criteria above, and to limit your application&apos;s scope as
