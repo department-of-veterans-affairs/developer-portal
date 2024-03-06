@@ -67,6 +67,7 @@ const Verification: FC = () => {
       <SelectedAPIs selectedApis={apis} />
       <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
       <VaModal
+        large
         clickToClose
         id="benefits-intake-attestation-modal"
         forcedModal
