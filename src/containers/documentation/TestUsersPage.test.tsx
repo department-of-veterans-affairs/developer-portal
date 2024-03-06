@@ -100,8 +100,6 @@ describe('TestUsersPage disabled', () => {
   describe('Static Content', () => {
     it('renders the page header after the progress bar completes', () => {
       lookupApiByFragmentMock.mockReturnValue(armageddonApi);
-      // await waitFor(() => cleanup());
-      // try {
       spyOn(console, 'error');
       expect(() => {
         render(
