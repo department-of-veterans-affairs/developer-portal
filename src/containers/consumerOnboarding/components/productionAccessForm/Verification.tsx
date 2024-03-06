@@ -69,7 +69,7 @@ const Verification: FC = () => {
       <VaModal
         clickToClose
         id="benefits-intake-attestation-modal"
-        large
+        forcedModal
         modalTitle="Requirements for the Benefits Intake API"
         onCloseEvent={(): void => setBenefitsIntakeModalVisible(false)}
         visible={benefitsIntakeModalVisible}
