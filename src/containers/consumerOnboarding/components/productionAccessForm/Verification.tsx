@@ -68,7 +68,6 @@ const Verification: FC = () => {
       <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
       <VaModal
         large
-        clickToClose
         id="benefits-intake-attestation-modal"
         forcedModal
         modalTitle="Requirements for the Benefits Intake API"
