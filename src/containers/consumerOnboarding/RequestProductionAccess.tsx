@@ -189,7 +189,7 @@ const RequestProductionAccess = (): JSX.Element => (
                     </ul>
                   </li>
                   <li>
-                    Text and background colors that meet minimum
+                    Text and background colors that meet minimum{' '}
                     <a
                       href="https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=143#contrast-minimum"
                       target="_blank"
