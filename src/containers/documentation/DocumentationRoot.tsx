@@ -42,10 +42,10 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
             subNavLevel={1}
             to="authorization-code"
           />
-          {!!userId && testUserHash && (
+          {!api.oAuthInfo?.acgInfo?.disableTestUsersPage && !!userId && testUserHash && (
             <SideNavEntry
               end
-              name="Test Users"
+              name="Test users"
               subNavLevel={2}
               to={`test-users/${userId}/${testUserHash}`}
             />

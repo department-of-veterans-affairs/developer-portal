@@ -49,23 +49,75 @@ const WorkingWithOurAPIs = (): JSX.Element => (
     <va-accordion>
       <va-accordion-item header="Consistent rate limiting at 60 requests per minute.">
         <p>
-          We enforce rate limiting per consumer so that there is a limit across all APIs we provide.
-          When authentication fails, or for the few unauthenticated APIs like health checks, rate
-          limiting is by IP address. Our default rate limit is 60 requests per minute. If you exceed
-          this quota, your request will return a 429 status code. You may petition for increased
-          rate limits by emailing us at <a href="mailto:api@va.gov">api@va.gov</a> with the
-          following:
+          Rate limiting is enforced at 60 requests per minute per consumer. Requests to APIs that
+          don’t require authentication, like health checks, are rate limited per IP address.
+        </p>
+        <h3 id="rate-limit-headers">Understanding rate limit response headers</h3>
+        <p>
+          Real-time rate limit information is returned in the response headers for each request.
+          Each response will contain at least 5 response headers.
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th>Header</th>
+              <th>What it means</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ratelimit-limit</td>
+              <td>The total number of requests allowed for a rate limit for a specific request.</td>
+            </tr>
+            <tr>
+              <td>ratelimit-remaining</td>
+              <td>The number of requests remaining for a specific rate limit.</td>
+            </tr>
+            <tr>
+              <td>ratelimit-reset</td>
+              <td>The seconds remaining until the rate limit balance resets.</td>
+            </tr>
+            <tr>
+              <td>X-ratelimit-minute</td>
+              <td>
+                Rate limit that applies to the service or route. Most times, this will match what is
+                returned in the ratelimit-limit header.
+              </td>
+            </tr>
+            <tr>
+              <td>X-ratelimit-remaining-minute</td>
+              <td>
+                Number of requests remaining for the rate limit that applies to the service or
+                route. Most times, this will match what is returned in the ratelimit-remaining
+                header.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>
+          More than one rate limit can apply to some requests. In these cases, additional headers
+          are returned to take those rate limits into account. For example, a request with an
+          additional rate limit for seconds would return the five headers listed above as well as
+          the following two:
+        </p>
+        <ul>
+          <li>X-ratelimit-second</li>
+          <li>X-ratelimit-remaining-second</li>
+        </ul>
+        <h3 id="increasing-rate-limit">Increasing your rate limit</h3>
+        <p>
+          If you exceed the rate limiting quota, your request will return a 429 status code. You may
+          petition for increased rate limits by emailing us at{' '}
+          <a href="mailto:api@va.gov">api@va.gov</a> with the following:
         </p>
         <ul>
           <li>Documentation of 429 errors in your logs</li>
           <li>Explanation of why you need to make more than 60 requests/min</li>
         </ul>
-        <p>Rate limit increases are decided on a case by case basis.</p>
         <p>
-          <strong>NOTE:</strong> some APIs may have different rate limits. If this applies to you,
-          we will let you know during the onboarding process.
+          Rate limit increases are decided on a case-by-case basis and we do not alter the rate
+          limit for sandbox.
         </p>
-        <p>Rate limiting that doesn&apos;t have a consumer is tracked by IP address.</p>
       </va-accordion-item>
     </va-accordion>
     <h2 id="environments">Environments</h2>

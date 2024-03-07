@@ -13,7 +13,7 @@ concurrency:
 jobs:
   visual:
     runs-on: ubuntu-latest
-    container: cypress/included:12.8.1
+    container: cypress/included:13.3.1
     env:
       CYPRESS_SINGLE_SPEC: true
       REACT_APP_VETSGOV_SWAGGER_API: http://localhost:3001
@@ -64,7 +64,7 @@ jobs:
       - name: Install python and openssh-client env
         run: |
           apt update && apt install python3 openssh-client -y && ln -s /usr/bin/python3 /usr/bin/python
-  
+
       - name: Start Fake LPB Server
         run: ./scripts/fake_lpb.sh
 

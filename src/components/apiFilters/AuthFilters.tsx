@@ -29,8 +29,8 @@ export const AuthFilters = ({
   authFilter,
   handleAuthTypeFilterSubmit,
 }: AuthFiltersProps): JSX.Element => {
-  const authButtonRef = useRef(null);
-  const authButtonRef2 = useRef(null);
+  const authButtonRef = useRef<HTMLButtonElement | null>(null);
+  const authButtonRef2 = useRef<HTMLButtonElement | null>(null);
   const authContainerRef = useRef(null);
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
 
@@ -43,7 +43,7 @@ export const AuthFilters = ({
 
   const toggleAuthOpen = (): void => setIsAuthOpen(prevState => !prevState);
 
-  useOutsideGroupClick([authButtonRef, authContainerRef], () => {
+  useOutsideGroupClick([authButtonRef, authButtonRef2, authContainerRef], () => {
     if (isAuthOpen) {
       toggleAuthOpen();
     }
@@ -66,6 +66,7 @@ export const AuthFilters = ({
         render={(): JSX.Element => (
           <Form className="explore-filter-form" noValidate name="explore-auth-filter">
             <button
+              id="auth-filter-button-desktop"
               aria-expanded={isAuthOpen}
               aria-label={authFilterAriaLabel}
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
@@ -81,6 +82,7 @@ export const AuthFilters = ({
               />
             </button>
             <button
+              id="auth-filter-button-mobile"
               aria-expanded={isAuthOpen}
               aria-label={authFilterAriaLabel}
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"

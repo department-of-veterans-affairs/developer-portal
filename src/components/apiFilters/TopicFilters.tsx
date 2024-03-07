@@ -13,7 +13,7 @@ import {
 import { useOutsideGroupClick } from '../../hooks';
 import { TopicFilterValues } from './ApiFilters';
 
-const TOPIC_FILTER_NAMES = {
+export const TOPIC_FILTER_NAMES = {
   'Facilities API': 'Facilities',
   'Facilities APIs': 'Facilities',
   'Forms API': 'Forms',
@@ -34,8 +34,8 @@ export const TopicFilters = ({
   topicFilter,
 }: TopicFiltersProps): JSX.Element => {
   const [isTopicOpen, setIsTopicOpen] = useState<boolean>(false);
-  const topicButtonRef = useRef(null);
-  const topicButtonRef2 = useRef(null);
+  const topicButtonRef = useRef<HTMLButtonElement | null>(null);
+  const topicButtonRef2 = useRef<HTMLButtonElement | null>(null);
   const topicContainerRef = useRef(null);
   const topics = getApiCategoryOrder();
 
@@ -79,6 +79,7 @@ export const TopicFilters = ({
             name="explore-topic-filter"
           >
             <button
+              id="topic-filter-button-desktop"
               aria-expanded={isTopicOpen}
               aria-label={topicFilterAriaLabel}
               className="explore-filter-button vads-u-display--none medium-screen:vads-u-display--flex"
@@ -94,6 +95,7 @@ export const TopicFilters = ({
               />
             </button>
             <button
+              id="topic-filter-button-mobile"
               aria-expanded={isTopicOpen}
               aria-label={topicFilterAriaLabel}
               className="explore-filter-button vads-u-display--flex medium-screen:vads-u-display--none"

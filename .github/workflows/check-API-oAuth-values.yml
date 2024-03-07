@@ -1,0 +1,46 @@
+name: Check API oAuth Values
+
+on:
+  schedule:
+    # Run every day at 18:00 UTC, which is noon CST (not accounting for daylight saving time)
+    - cron: '0 18 * * *'
+  workflow_dispatch: # Allows manual triggering of the workflow
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    env:
+      API_BASE_URL: ${{ secrets.LEGACY_API_TRANSFORMATIONS_BASE_URL }}
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    - name: Run script
+      run: ./scripts/check_API_oAuth_values.sh
+    - name: Handle failure
+      if: failure()  
+      uses: slackapi/slack-github-action@v1.23.0
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      with:
+        # This ID is for #team-okapi-alerts in Lighthouse Slack       
+        channel-id: C05HL4MTAFR
+        payload: |
+            {
+              "text": "Developer Portal API oAuth Values Check",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "A change has been detected in an API's oAuth values."
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "@teamokapi please investigate."
+                  }
+                }
+              ]
+            }
