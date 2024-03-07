@@ -8,7 +8,8 @@ export const PublicKeySteps = (): JSX.Element => (
         <span className="vads-u-font-weight--bold">Generate the private key:</span> Use the
         following command to generate a private key in PEM format.
         <div className="vads-u-margin-top--1">
-          <pre className="vads-u-background-color--gray-lightest">
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+          <pre className="vads-u-background-color--gray-lightest" tabIndex={0}>
             <code>openssl genrsa -out private.pem 2048</code>
           </pre>
         </div>
@@ -32,7 +33,8 @@ export const PublicKeySteps = (): JSX.Element => (
         </a>
         , use the following command.
         <div className="vads-u-margin-top--1">
-          <pre className="vads-u-background-color--gray-lightest">
+          {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
+          <pre className="vads-u-background-color--gray-lightest" tabIndex={0}>
             <code>pem-jwk public.pem &gt; public.jwk</code>
           </pre>
         </div>
