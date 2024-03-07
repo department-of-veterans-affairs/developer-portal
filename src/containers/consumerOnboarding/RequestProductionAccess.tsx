@@ -266,7 +266,7 @@ const RequestProductionAccess = (): JSX.Element => (
                     partners.
                   </li>
                   <li>
-                    Name the entities with which data is shared, including third parties, marketers,
+                    Name the entities with which data is shared, including third-parties, marketers,
                     and partners, and clearly indicate how these entities use this data.
                   </li>
                   <li>
@@ -286,20 +286,12 @@ const RequestProductionAccess = (): JSX.Element => (
                     without consent from the user.
                   </li>
                   <li>
-                    Indicate that third party vendors and contractors are bound to the same
+                    Indicate that third-party vendors and contractors are bound to the same
                     commitments to users regarding use or disclosure of user data.
                   </li>
                   <li>
                     Specify that if there is a data breach, your company will notify the user and
                     provide instructions for further actions they may take, if any.
-                  </li>
-                  <li>
-                    Specify your data retention policy, including how long you will hold onto data
-                    (including non-VA data) if the account is dormant.
-                  </li>
-                  <li>
-                    Include instructions for how the user can permanently delete their data stored
-                    with your app/company.
                   </li>
                   <li>
                     Specify what will happen to a user’s data if there is a transfer of ownership or
