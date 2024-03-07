@@ -9,6 +9,7 @@ import { FlagsProvider, getFlags } from '../../flags';
 import store from '../../store';
 import * as apiDefs from '../../apiDefs/query';
 import testUserData from '../../../cypress/fixtures/test-user-data.json';
+import { ACGInfo, APIDescription } from '../../apiDefs/schema';
 import TestUsersPage from './TestUsersPage';
 
 const server = setupServer(
@@ -78,6 +79,44 @@ describe('TestUsersPage', () => {
         const user5 = screen.queryByText(/Pauline/); // First name
         expect(user5).toBeInTheDocument();
       });
+    });
+  });
+});
+describe('TestUsersPage disabled', () => {
+  const armageddonApi: APIDescription = {
+    ...fakeCategories.movies.apis[1],
+    oAuthInfo: {
+      ...fakeCategories.movies.apis[1].oAuthInfo,
+      acgInfo: {
+        ...fakeCategories.movies.apis[1].oAuthInfo?.acgInfo,
+        disableTestUsersPage: true,
+      } as ACGInfo,
+    },
+  };
+  const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
+
+  beforeAll(() => server.listen());
+
+  describe('Static Content', () => {
+    it('renders the page header after the progress bar completes', () => {
+      lookupApiByFragmentMock.mockReturnValue(armageddonApi);
+      spyOn(console, 'error');
+      expect(() => {
+        render(
+          <Provider store={store}>
+            <FlagsProvider flags={getFlags()}>
+              <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
+                <Routes>
+                  <Route
+                    path="/explore/api/:urlSlug/test-users/:userId/:hash"
+                    element={<TestUsersPage />}
+                  />
+                </Routes>
+              </MemoryRouter>
+            </FlagsProvider>
+          </Provider>,
+        );
+      }).toThrow();
     });
   });
 });
