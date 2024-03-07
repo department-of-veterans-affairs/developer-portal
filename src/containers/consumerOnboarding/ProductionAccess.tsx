@@ -2,6 +2,7 @@
 import React, { FC, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { useCookies } from 'react-cookie';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
@@ -429,7 +430,7 @@ const ProductionAccess: FC = () => {
                   type="button"
                   onClick={handleBack}
                 >
-                  <FontAwesomeIcon icon={faAngleDoubleLeft} /> Back
+                  <FontAwesomeIcon icon={faAngleDoubleLeft as IconProp} /> Back
                 </button>
                 {isLastStep ? (
                   <button
@@ -445,7 +446,7 @@ const ProductionAccess: FC = () => {
                     className="usa-button vads-u-width--auto"
                     onClick={handleSubmitButtonClick}
                   >
-                    Continue <FontAwesomeIcon icon={faAngleDoubleRight} />
+                    Continue <FontAwesomeIcon icon={faAngleDoubleRight as IconProp} />
                   </button>
                 )}
               </div>

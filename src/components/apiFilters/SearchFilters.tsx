@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface SearchFilterValues {
   search: string;
@@ -33,7 +34,7 @@ export const SearchFilters = ({ handleSearchSubmit, search }: SearchFiltersProps
           aria-label="Search APIs by keyword"
         />
         <button type="submit" className="display-inline" aria-label="Submit Search">
-          <FontAwesomeIcon icon={faSearch} />
+          <FontAwesomeIcon icon={faSearch as IconProp} />
         </button>
       </Form>
     </Formik>
