@@ -28,7 +28,6 @@ const OAuthCcgAppInfo = (): JSX.Element => {
         onCloseEvent={(): void => setModalVisible(false)}
         onPrimaryButtonClick={(): void => setModalVisible(false)}
         primaryButtonText="Close"
-        status="info"
         modalTitle="Generating Public RSA Key and Converting to JWK Format"
         uswds
       >
