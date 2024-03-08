@@ -80,7 +80,9 @@ const DocumentationRoot = (): JSX.Element => {
   return (
     <>
       <ApiBreadcrumbs api={api} />
-      <ApiAlerts />
+      <div className="vads-l-grid-container vads-u-margin-x--auto">
+        <ApiAlerts />
+      </div>
       <ContentWithNav
         fullWidth
         nav={<ExploreSideNav api={api} />}

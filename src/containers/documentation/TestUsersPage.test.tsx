@@ -22,6 +22,15 @@ const server = setupServer(
     ): MockedResponse | Promise<MockedResponse> =>
       res(context.delay(750), context.status(200), context.json(testUserData)),
   ),
+  rest.post(
+    'http://localhost/platform-backend/v0/consumers/test-user-data',
+    (
+      req: MockedRequest,
+      res: ResponseComposition,
+      context: RestContext,
+    ): MockedResponse | Promise<MockedResponse> =>
+      res(context.delay(750), context.status(200), context.json(testUserData)),
+  ),
 );
 describe('TestUsersPage', () => {
   const armageddonApi = fakeCategories.movies.apis[1];
@@ -32,26 +41,26 @@ describe('TestUsersPage', () => {
   beforeEach(async () => {
     lookupApiByFragmentMock.mockReturnValue(armageddonApi);
     await waitFor(() => cleanup());
-    render(
-      <Provider store={store}>
-        <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
-            <Routes>
-              <Route
-                path="/explore/api/:urlSlug/test-users/:userId/:hash"
-                element={<TestUsersPage />}
-              />
-            </Routes>
-          </MemoryRouter>
-        </FlagsProvider>
-      </Provider>,
-    );
   });
 
   describe('Static Content', () => {
     it('renders the page header after the progress bar completes', async () => {
-      const loadingBar = screen.getByRole('progressbar');
-      expect(loadingBar).toBeInTheDocument();
+      const { container } = render(
+        <Provider store={store}>
+          <FlagsProvider flags={getFlags()}>
+            <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
+              <Routes>
+                <Route
+                  path="/explore/api/:urlSlug/test-users/:userId/:hash"
+                  element={<TestUsersPage />}
+                />
+              </Routes>
+            </MemoryRouter>
+          </FlagsProvider>
+        </Provider>,
+      );
+      const loadingIndicator = container.querySelector('va-loading-indicator');
+      expect(loadingIndicator).toBeInTheDocument();
       await waitFor(async () => {
         const heading = await screen.findByRole('heading', { level: 1, name: /Armageddon API/ });
         expect(heading).toBeInTheDocument();
@@ -61,6 +70,20 @@ describe('TestUsersPage', () => {
 
   describe('Test users content', () => {
     it('renders the test users table', async () => {
+      render(
+        <Provider store={store}>
+          <FlagsProvider flags={getFlags()}>
+            <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
+              <Routes>
+                <Route
+                  path="/explore/api/:urlSlug/test-users/:userId/:hash"
+                  element={<TestUsersPage />}
+                />
+              </Routes>
+            </MemoryRouter>
+          </FlagsProvider>
+        </Provider>,
+      );
       await waitFor(() => {
         const heading = screen.queryByRole('heading', {
           level: 2,

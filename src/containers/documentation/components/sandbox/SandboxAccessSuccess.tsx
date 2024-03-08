@@ -1,4 +1,6 @@
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -35,7 +37,7 @@ const OAuthACGCredentialsNotice: React.FunctionComponent<OAuthACGCredentialsNoti
 }: OAuthACGCredentialsNoticeProps) => (
   <>
     <h3>Sandbox credentials for the {api.name}.</h3>
-    <va-alert background-only status="success" visible>
+    <VaAlert status="success" visible uswds>
       <>
         <p>
           <strong>Your VA API OAuth Client ID: </strong> {clientID}
@@ -49,7 +51,7 @@ const OAuthACGCredentialsNotice: React.FunctionComponent<OAuthACGCredentialsNoti
           <strong>Your Redirect URI is: </strong> {redirectURI}
         </p>
       </>
-    </va-alert>
+    </VaAlert>
   </>
 );
 
@@ -59,11 +61,11 @@ const OAuthCCGCredentialsNotice: React.FunctionComponent<OAuthCCGCredentialsNoti
 }: OAuthCCGCredentialsNoticeProps) => (
   <>
     <h3>Sandbox credentials for the {api.name}.</h3>
-    <va-alert background-only status="success" visible>
+    <VaAlert status="success" visible uswds>
       <p>
         <strong>Your VA API OAuth Client ID: </strong> {ccgClientId}
       </p>
-    </va-alert>
+    </VaAlert>
   </>
 );
 
@@ -74,7 +76,7 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
 }: APIKeyNoticeProps) => (
   <>
     <h3>Key for the {api.name}.</h3>
-    <va-alert background-only status="success" visible>
+    <VaAlert status="success" visible uswds>
       <>
         <p>
           <strong>Sandbox key:</strong> {token}
@@ -83,7 +85,7 @@ const ApiKeyNotice: React.FunctionComponent<APIKeyNoticeProps> = ({
           <strong>Sandbox Request ID:</strong> {kongUsername}
         </p>
       </>
-    </va-alert>
+    </VaAlert>
   </>
 );
 
@@ -105,7 +107,7 @@ const SandboxAccessSuccess = (props: {
 
   return (
     <div className="signup-success-wrapper vads-u-margin-top--5">
-      <FontAwesomeIcon icon={faCheckCircle} />
+      <FontAwesomeIcon icon={faCheckCircle as IconProp} />
       <h2 className="vads-u-margin--0 vads-u-padding--0 vads-u-margin-left--5">Explore our APIs</h2>
       <div className="medium-screen:vads-u-margin-left--5">
         {isApiKeyApi(api) && token && kongUsername && (
