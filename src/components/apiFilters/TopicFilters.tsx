@@ -3,6 +3,7 @@ import { FieldArray, Form, Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp, faMinus, faPlus, faTag } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { CheckboxRadioField } from '../formField';
 import {
   countActiveApisByCategory,
@@ -87,11 +88,11 @@ export const TopicFilters = ({
               onClick={toggleTopicOpen}
               ref={topicButtonRef}
             >
-              <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag} />
+              <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag as IconProp} />
               Topics{topicFilter.length > 0 && ` (${topicFilter.length})`}
               <FontAwesomeIcon
                 className="filter-button-caret"
-                icon={isTopicOpen ? faCaretUp : faCaretDown}
+                icon={(isTopicOpen ? faCaretUp : faCaretDown) as IconProp}
               />
             </button>
             <button
@@ -103,11 +104,11 @@ export const TopicFilters = ({
               onClick={toggleTopicOpen}
               ref={topicButtonRef2}
             >
-              <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag} />
+              <FontAwesomeIcon className="vads-u-margin-right--1" icon={faTag as IconProp} />
               Topics{topicFilter.length > 0 && ` (${topicFilter.length})`}
               <FontAwesomeIcon
                 className="filter-button-caret"
-                icon={isTopicOpen ? faMinus : faPlus}
+                icon={(isTopicOpen ? faMinus : faPlus) as IconProp}
               />
             </button>
             <div className={topicClassNames} ref={topicContainerRef}>

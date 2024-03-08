@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import React, { useRef } from 'react';
 import { faChevronDown, faChevronUp, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   CONSUMER_APIS_PATH,
   CONSUMER_DEMO_PATH,
@@ -96,7 +97,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             onClick={onMobileNavClose}
             type="button"
           >
-            <FontAwesomeIcon icon={faTimes} />
+            <FontAwesomeIcon icon={faTimes as IconProp} />
           </button>
           <Search
             inMenu
@@ -195,11 +196,14 @@ const NavBar = (props: NavBarProps): JSX.Element => {
               ref={searchButtonRef}
               data-testid="search-button"
             >
-              <FontAwesomeIcon className={classNames('vads-u-margin-right--1')} icon={faSearch} />
+              <FontAwesomeIcon
+                className={classNames('vads-u-margin-right--1')}
+                icon={faSearch as IconProp}
+              />
               Search
               <FontAwesomeIcon
                 className={classNames('vads-u-margin-left--1')}
-                icon={isSearchBarVisible ? faChevronUp : faChevronDown}
+                icon={(isSearchBarVisible ? faChevronUp : faChevronDown) as IconProp}
               />
             </button>
           </li>

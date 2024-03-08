@@ -1,6 +1,7 @@
 import { faComments, faDeaf, faMobileAlt, faPhone } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import * as React from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import vclLogo from '../../assets/vcl-logo.png';
 import CrisisPanelInfo from './CrisisPanelInfo';
 
@@ -39,19 +40,19 @@ const VeteransCrisisLinePanel = (): JSX.Element => (
           'vads-u-text-align--left',
         )}
       >
-        <CrisisPanelInfo target="tel:18002738255" icon={faPhone} id="first-panel-info">
+        <CrisisPanelInfo target="tel:18002738255" icon={faPhone as IconProp} id="first-panel-info">
           Call <strong>1-800-273-8255 and press 1</strong>
         </CrisisPanelInfo>
-        <CrisisPanelInfo target="sms:838255" icon={faMobileAlt}>
+        <CrisisPanelInfo target="sms:838255" icon={faMobileAlt as IconProp}>
           Text <strong>838255</strong>
         </CrisisPanelInfo>
         <CrisisPanelInfo
-          icon={faComments}
+          icon={faComments as IconProp}
           target="https://www.veteranscrisisline.net/ChatTermsOfService.aspx?account=Veterans%20Chat"
         >
           Start a confidential chat
         </CrisisPanelInfo>
-        <CrisisPanelInfo target="tel:18007994889" icon={faDeaf}>
+        <CrisisPanelInfo target="tel:18007994889" icon={faDeaf as IconProp}>
           Call TTY if you have hearing loss <strong>1-800-799-4889</strong>
         </CrisisPanelInfo>
       </ul>
