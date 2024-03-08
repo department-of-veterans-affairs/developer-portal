@@ -63,6 +63,9 @@ const TestUsersPage = (): JSX.Element => {
   if (!api) {
     throw new Error('API not found');
   }
+  if (api.oAuthInfo?.acgInfo?.disableTestUsersPage) {
+    throw new Error('Test users page disabled for this API');
+  }
 
   if (testUserAccess === testUserAccessState.INIT) {
     return <VaLoadingIndicator label="Loading" message="Validating access to Test User Data." />;
