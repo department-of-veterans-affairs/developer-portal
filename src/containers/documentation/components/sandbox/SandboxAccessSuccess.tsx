@@ -1,5 +1,6 @@
 import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -106,7 +107,7 @@ const SandboxAccessSuccess = (props: {
 
   return (
     <div className="signup-success-wrapper vads-u-margin-top--5">
-      <FontAwesomeIcon icon={faCheckCircle} />
+      <FontAwesomeIcon icon={faCheckCircle as IconProp} />
       <h2 className="vads-u-margin--0 vads-u-padding--0 vads-u-margin-left--5">Explore our APIs</h2>
       <div className="medium-screen:vads-u-margin-left--5">
         {isApiKeyApi(api) && token && kongUsername && (
