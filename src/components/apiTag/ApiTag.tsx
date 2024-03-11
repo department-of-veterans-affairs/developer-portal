@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import './ApiTag.scss';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export interface ApiTagProps {
   showLock?: boolean;
@@ -20,7 +21,7 @@ export const ApiTag = ({ showLock, tagName }: ApiTagProps): JSX.Element => (
     {showLock && (
       <FontAwesomeIcon
         className={classNames('api-tag-fa-lock', 'vads-u-color--gray-medium')}
-        icon={faLock}
+        icon={faLock as IconProp}
       />
     )}
     <span>{tagName.replace(/-/g, ' ')}</span>

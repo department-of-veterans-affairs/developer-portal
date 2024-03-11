@@ -102,6 +102,7 @@ export interface OAuthInfo {
 
 export interface ACGInfo {
   readonly baseAuthPath: string;
+  readonly disableTestUsersPage?: boolean;
   readonly sandboxAud: string;
   readonly productionAud: string;
   readonly scopes: string[];

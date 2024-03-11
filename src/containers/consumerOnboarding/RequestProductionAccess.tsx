@@ -1,4 +1,9 @@
 /* eslint-disable max-lines */
+import {
+  VaAccordion,
+  VaAccordionItem,
+  VaAlert,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -16,15 +21,15 @@ const RequestProductionAccess = (): JSX.Element => (
       <title>Request production access</title>
     </Helmet>
     <PageHeader header="Request production access" className="vads-u-margin-bottom--1" />
-    <va-alert background-only show-icon status="info" visible>
+    <VaAlert status="info" visible uswds>
       <p className="vads-u-margin-y--0">
         In July 2023, we added steps to the production approval process which has significantly
         increased approval time. We appreciate your understanding and cooperation as we prioritize
         the safe and secure delivery of services to Veterans. For questions or concerns,{' '}
         <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
       </p>
-    </va-alert>
-    <p>Before you start onboarding, it’s good to know that:</p>
+    </VaAlert>
+    <p>Before you start onboarding, it&apos;s good to know that:</p>
     <ul className="vads-u-margin-top--0">
       <li>All consumers must be US-based.</li>
       <li>We do not allow monetizing or selling Veteran data.</li>
@@ -42,7 +47,7 @@ const RequestProductionAccess = (): JSX.Element => (
     </ul>
     <strong>
       We use the data you submit to determine whether to schedule a demo or request technical or
-      policy-related changes. If we need changes, we’ll send you an email.
+      policy-related changes. If we need changes, we&apos;ll send you an email.
     </strong>
     <div className="vads-l-grid-container">
       <Link className="vads-c-action-link--green" to={CONSUMER_APPLICATION_PATH}>
@@ -52,9 +57,9 @@ const RequestProductionAccess = (): JSX.Element => (
         <em>The form progress cannot be saved once you begin.</em>
       </p>
     </div>
-    <h2 id="form-requirements-production-access">Learn what’s needed on the form</h2>
-    <va-accordion>
-      <va-accordion-item header="Basic information" level={3}>
+    <h2 id="form-requirements-production-access">Learn what&apos;s needed on the form</h2>
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="Basic information" level={3}>
         <ul className="checklist">
           <li>Company contacts and information</li>
           <li>Notification email address for API status updates</li>
@@ -96,8 +101,8 @@ const RequestProductionAccess = (): JSX.Element => (
           </a>
           .
         </p>
-      </va-accordion-item>
-      <va-accordion-item header="Technical information" level={3}>
+      </VaAccordionItem>
+      <VaAccordionItem uswds header="Technical information" level={3}>
         <ul className="checklist">
           <li>
             Description of how and where you will provide secure storage of your access credentials,
@@ -120,7 +125,8 @@ const RequestProductionAccess = (): JSX.Element => (
             For the Benefits Intake API:
             <ul>
               <li>
-                Information about customer’s naming conventions for the source field, if applicable
+                Information about customer&apos;s naming conventions for the source field, if
+                applicable
               </li>
               <li>
                 Information about whether you maintain a centralized back-end log for submissions
@@ -157,42 +163,39 @@ const RequestProductionAccess = (): JSX.Element => (
             </ul>
           </li>
         </ul>
-      </va-accordion-item>
-      <va-accordion-item header="Privacy policy and terms of service" level={3}>
+      </VaAccordionItem>
+      <VaAccordionItem uswds header="Privacy policy and terms of service" level={3}>
         <ul className="checklist">
-          <li>URL for your application’s terms of service</li>
-          <li>URL for your application’s privacy policy</li>
+          <li>URL for your application&apos;s terms of service</li>
+          <li>URL for your application&apos;s privacy policy</li>
         </ul>
         <p>
-          If your application <strong>uses OAuth</strong>, we will review your terms of service and
-          privacy policies to make sure they meet our quality, plain language, and content
-          standards. We may require you to make changes to your policies before your demo.
-        </p>
-        <p>
-          Our requirements for privacy policies and terms of service are listed below. We strongly
-          suggest you review your policies to make sure they meet these requirements before you
-          upload them.
+          If your application <strong>uses Authorization Code Grant (ACG)</strong>, we will review
+          your terms of service and privacy policies to make sure they meet our quality, plain
+          language, and content standards. We may require you to make changes to your policies
+          before your demo.
         </p>
         <table>
           <tbody>
             <tr>
               <td>Desktop readability</td>
               <td>
+                <p>Your company’s policies must have the following:</p>
                 <ul className="vads-u-margin-y--0">
-                  <li>Do the policies have a grade reading level of 12 or below?</li>
-                  <li>Are the policies free of obvious typos?</li>
+                  <li>A grade reading level of 12 or below.</li>
+                  <li>No obvious typos.</li>
                   <li>
-                    Does the text formatting meet the following requirements?
+                    Text formatting that meets the following requirements:
                     <ul>
-                      <li>Font size is 14px or larger</li>
-                      <li>No long, unbroken paragraphs</li>
-                      <li>No ALL-CAPS paragraphs (a sentence or two is OK)</li>
-                      <li>No run-on sentences</li>
-                      <li>No narrow column widths</li>
+                      <li>Font size is 14px or larger.</li>
+                      <li>No long, unbroken paragraphs.</li>
+                      <li>No ALL-CAPS paragraphs (a sentence or two is OK).</li>
+                      <li>No run-on sentences.</li>
+                      <li>No narrow column widths.</li>
                     </ul>
                   </li>
                   <li>
-                    Do text and background colors meet minimum{' '}
+                    Text and background colors that meet minimum{' '}
                     <a
                       href="https://www.w3.org/WAI/WCAG21/quickref/?showtechniques=143#contrast-minimum"
                       target="_blank"
@@ -200,7 +203,7 @@ const RequestProductionAccess = (): JSX.Element => (
                     >
                       WCAG contrast requirements
                     </a>{' '}
-                    of at least 4.5:1?
+                    of at least 4.5:1.
                   </li>
                 </ul>
               </td>
@@ -209,15 +212,15 @@ const RequestProductionAccess = (): JSX.Element => (
               <td>Mobile readability</td>
               <td>
                 <p className="vads-u-margin-top--0">
-                  Does the text formatting meet all of the following requirements for mobile
-                  readability?
+                  Your company’s text formatting must meet all of the following requirements for
+                  mobile readability:
                 </p>
                 <ul className="vads-u-margin-bottom--0">
-                  <li>Font size is 14px or larger</li>
-                  <li>No long, unbroken paragraphs</li>
-                  <li>No ALL-CAPS paragraphs (a sentence or two is OK)</li>
-                  <li>No run-on sentences</li>
-                  <li>No narrow column widths</li>
+                  <li>Font size is 14px or larger.</li>
+                  <li>No long, unbroken paragraphs.</li>
+                  <li>No ALL-CAPS paragraphs (a sentence or two is OK).</li>
+                  <li>No run-on sentences.</li>
+                  <li>No narrow column widths.</li>
                 </ul>
               </td>
             </tr>
@@ -225,17 +228,25 @@ const RequestProductionAccess = (): JSX.Element => (
               <td>Data retention and deletion</td>
               <td>
                 <p className="vads-u-margin-top--0">
-                  Do your terms of service and/or privacy policies:
+                  Your company’s terms of service and/or privacy policies must:
                 </p>
                 <ul className="vads-u-margin-bottom--0">
-                  <li>Give users an easy way to request permanent deletion of their data.</li>
                   <li>
-                    State that your company will permanently delete 100% of a Veteran’s data,
-                    including non-VA data, at the user’s request.
+                    Specify your company’s data retention policy, including how long your company
+                    will hold onto a user’s data (including non-VA data shared) if the account is
+                    dormant.
                   </li>
                   <li>
-                    State how soon data deletion will happen after the user makes the request. Note:
-                    VA requires data deletion to happen within 45 days of the user’s request.
+                    Give users an easy way to request permanent deletion of their data. Your company
+                    needs to include instructions on how to do this.
+                  </li>
+                  <li>
+                    State that your company will permanently delete 100% of a user’s data, including
+                    non-VA data, at the user’s request.
+                  </li>
+                  <li>
+                    State how soon data deletion will happen after the user makes the request. VA
+                    requires data deletion to happen within 45 days of the user’s request.
                   </li>
                 </ul>
               </td>
@@ -244,29 +255,32 @@ const RequestProductionAccess = (): JSX.Element => (
               <td>Privacy and data practices</td>
               <td>
                 <p className="vads-u-margin-top--0">
-                  Do your terms of service and/or privacy policies:
+                  Your company’s terms of service and/or privacy policies must:
                 </p>
                 <ul className="vads-u-margin-bottom--0">
                   <li>
                     Define the specific types of data collected, such as geolocation data, financial
-                    information, medical information, a user’s contacts, etc.
+                    information, medical information, a user’s contacts, and any other personal
+                    information.
                   </li>
                   <li>
                     Clearly describe how data will be used, including the sharing of de-identified,
                     anonymized, or pseudonymized data.
                   </li>
                   <li>
-                    Name the entities with which data is shared, including third parties, marketers,
-                    partners, etc., and clearly indicate how these entities use this data.
+                    State whether or not data is shared with third-parties, such as marketers and
+                    partners.
                   </li>
-                  <li>State that no data is sold, for profit or other monetary transactions.</li>
+                  <li>
+                    Name the entities with which data is shared, including third-parties, marketers,
+                    and partners, and clearly indicate how these entities use this data.
+                  </li>
+                  <li>
+                    State that no user data is sold for profit or other monetary transactions.
+                  </li>
                   <li>
                     Clearly indicate if data is used for transactions that do not, but could,
                     involve money, such as targeted advertising.
-                  </li>
-                  <li>
-                    Inform users about their data-sharing choices and the risks, benefits, and
-                    limitations of data sharing.
                   </li>
                   <li>
                     Address how data sharing could have an impact on others, such as the impact of
@@ -275,50 +289,41 @@ const RequestProductionAccess = (): JSX.Element => (
                   <li>
                     Clearly state that third-party use or disclosure of user information (including
                     de-identified, anonymized, or pseudonymized data) is prohibited for any reason
-                    without active consent from the user.
+                    without consent from the user.
                   </li>
                   <li>
-                    Indicate that third parties are bound to the terms and conditions in your
-                    privacy policy.
+                    Indicate that third-party vendors and contractors are bound to the same
+                    commitments to users regarding use or disclosure of user data.
                   </li>
                   <li>
-                    Specify that if there is a data breach, you will notify the user and provide
-                    instructions for further actions they may take, if any.
-                  </li>
-                  <li>
-                    Specify your data retention policy, including how long you will hold onto data
-                    (including non-VA data) if the account is dormant.
-                  </li>
-                  <li>
-                    Include instructions for how the user can permanently delete their data stored
-                    with your app/company.
+                    Specify that if there is a data breach, your company will notify the user and
+                    provide instructions for further actions they may take, if any.
                   </li>
                   <li>
                     Specify what will happen to a user’s data if there is a transfer of ownership or
-                    if your company ends or sells its business. You must clearly indicate in your
-                    policy that the new company’s policies will align with yours, or provide the
-                    user one of these options:
+                    if your company ends or sells its business. Your company must clearly indicate
+                    that the user has at least one of these options if such an event occurs:
                     <ul>
                       <li>Securely dispose of, transmit, or download their health information.</li>
+                      <li>
+                        Ensure the new owner or entity’s policies are consistent with the previous
+                        company’s policies.
+                      </li>
                       <li>Close their account.</li>
                     </ul>
                   </li>
-                  <li>Indicate that you will notify your users of changes in ownership.</li>
+                  <li>Indicate that your company will notify its users of changes in ownership.</li>
                   <li>
-                    Specify that you will get active consent from users when changes are made to
-                    privacy policies and terms of service.
-                  </li>
-                  <li>
-                    Clearly state how you will get active consent for policy changes and provide
-                    users with plain-language summaries of what has changed.
+                    Clearly state that your company will notify users of changes made to the privacy
+                    policy and terms of service.
                   </li>
                 </ul>
               </td>
             </tr>
           </tbody>
         </table>
-      </va-accordion-item>
-    </va-accordion>
+      </VaAccordionItem>
+    </VaAccordion>
     <p className="vads-u-padding-top--3">
       If you have questions for us, let us know by contacting us through our{' '}
       <Link to={SUPPORT_CONTACT_PATH}>support page</Link>.

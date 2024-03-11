@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { SandboxAccessForm } from '@department-of-veterans-affairs/sandbox-access-form';
@@ -73,12 +74,12 @@ const RequestSandboxAccess = (): JSX.Element => {
               key={api.urlFragment}
             />
           ) : (
-            <va-alert status="error" visible>
+            <VaAlert status="error" visible uswds>
               <p>
                 There is an error with this Sandbox Access Form. Please{' '}
                 <Link to={SUPPORT_CONTACT_PATH}>contact support</Link> for additional assistance.
               </p>
-            </va-alert>
+            </VaAlert>
           )}
         </>
       )}

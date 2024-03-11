@@ -1,3 +1,4 @@
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { apiAlerts } from '../../utils/apiAlerts';
@@ -10,9 +11,9 @@ export const ApiAlerts = (): JSX.Element => {
       {apiAlerts
         .filter(target => location.pathname.includes(target.path))
         .map(target => (
-          <va-alert key={target.path} background-only show-icon status="info" visible>
+          <VaAlert key={target.path} status="info" visible uswds>
             <p className="vads-u-margin-y--0">{target.content}</p>
-          </va-alert>
+          </VaAlert>
         ))}
     </>
   );

@@ -9,11 +9,21 @@ import { FlagsProvider, getFlags } from '../../flags';
 import store from '../../store';
 import * as apiDefs from '../../apiDefs/query';
 import testUserData from '../../../cypress/fixtures/test-user-data.json';
+import { ACGInfo, APIDescription } from '../../apiDefs/schema';
 import TestUsersPage from './TestUsersPage';
 
 const server = setupServer(
   rest.post(
     'http://localhost:4444/platform-backend/v0/consumers/test-user-data',
+    (
+      req: MockedRequest,
+      res: ResponseComposition,
+      context: RestContext,
+    ): MockedResponse | Promise<MockedResponse> =>
+      res(context.delay(750), context.status(200), context.json(testUserData)),
+  ),
+  rest.post(
+    'http://localhost/platform-backend/v0/consumers/test-user-data',
     (
       req: MockedRequest,
       res: ResponseComposition,
@@ -31,26 +41,26 @@ describe('TestUsersPage', () => {
   beforeEach(async () => {
     lookupApiByFragmentMock.mockReturnValue(armageddonApi);
     await waitFor(() => cleanup());
-    render(
-      <Provider store={store}>
-        <FlagsProvider flags={getFlags()}>
-          <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
-            <Routes>
-              <Route
-                path="/explore/api/:urlSlug/test-users/:userId/:hash"
-                element={<TestUsersPage />}
-              />
-            </Routes>
-          </MemoryRouter>
-        </FlagsProvider>
-      </Provider>,
-    );
   });
 
   describe('Static Content', () => {
     it('renders the page header after the progress bar completes', async () => {
-      const loadingBar = screen.getByRole('progressbar');
-      expect(loadingBar).toBeInTheDocument();
+      const { container } = render(
+        <Provider store={store}>
+          <FlagsProvider flags={getFlags()}>
+            <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
+              <Routes>
+                <Route
+                  path="/explore/api/:urlSlug/test-users/:userId/:hash"
+                  element={<TestUsersPage />}
+                />
+              </Routes>
+            </MemoryRouter>
+          </FlagsProvider>
+        </Provider>,
+      );
+      const loadingIndicator = container.querySelector('va-loading-indicator');
+      expect(loadingIndicator).toBeInTheDocument();
       await waitFor(async () => {
         const heading = await screen.findByRole('heading', { level: 1, name: /Armageddon API/ });
         expect(heading).toBeInTheDocument();
@@ -60,6 +70,20 @@ describe('TestUsersPage', () => {
 
   describe('Test users content', () => {
     it('renders the test users table', async () => {
+      render(
+        <Provider store={store}>
+          <FlagsProvider flags={getFlags()}>
+            <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
+              <Routes>
+                <Route
+                  path="/explore/api/:urlSlug/test-users/:userId/:hash"
+                  element={<TestUsersPage />}
+                />
+              </Routes>
+            </MemoryRouter>
+          </FlagsProvider>
+        </Provider>,
+      );
       await waitFor(() => {
         const heading = screen.queryByRole('heading', {
           level: 2,
@@ -78,6 +102,44 @@ describe('TestUsersPage', () => {
         const user5 = screen.queryByText(/Pauline/); // First name
         expect(user5).toBeInTheDocument();
       });
+    });
+  });
+});
+describe('TestUsersPage disabled', () => {
+  const armageddonApi: APIDescription = {
+    ...fakeCategories.movies.apis[1],
+    oAuthInfo: {
+      ...fakeCategories.movies.apis[1].oAuthInfo,
+      acgInfo: {
+        ...fakeCategories.movies.apis[1].oAuthInfo?.acgInfo,
+        disableTestUsersPage: true,
+      } as ACGInfo,
+    },
+  };
+  const lookupApiByFragmentMock = jest.spyOn(apiDefs, 'lookupApiBySlug');
+
+  beforeAll(() => server.listen());
+
+  describe('Static Content', () => {
+    it('renders the page header after the progress bar completes', () => {
+      lookupApiByFragmentMock.mockReturnValue(armageddonApi);
+      spyOn(console, 'error');
+      expect(() => {
+        render(
+          <Provider store={store}>
+            <FlagsProvider flags={getFlags()}>
+              <MemoryRouter initialEntries={['/explore/api/armageddon/test-users/123/good-hash']}>
+                <Routes>
+                  <Route
+                    path="/explore/api/:urlSlug/test-users/:userId/:hash"
+                    element={<TestUsersPage />}
+                  />
+                </Routes>
+              </MemoryRouter>
+            </FlagsProvider>
+          </Provider>,
+        );
+      }).toThrow();
     });
   });
 });

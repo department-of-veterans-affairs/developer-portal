@@ -1,4 +1,7 @@
-import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
+import {
+  VaAlert,
+  VaLoadingIndicator,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import * as React from 'react';
 import { useCookies } from 'react-cookie';
 import { Helmet } from 'react-helmet';
@@ -60,9 +63,12 @@ const TestUsersPage = (): JSX.Element => {
   if (!api) {
     throw new Error('API not found');
   }
+  if (api.oAuthInfo?.acgInfo?.disableTestUsersPage) {
+    throw new Error('Test users page disabled for this API');
+  }
 
   if (testUserAccess === testUserAccessState.INIT) {
-    return <LoadingIndicator label="Loading" message="Validating access to Test User Data." />;
+    return <VaLoadingIndicator label="Loading" message="Validating access to Test User Data." />;
   }
 
   return (
@@ -73,13 +79,13 @@ const TestUsersPage = (): JSX.Element => {
       <PageHeader header="Test users" subText={api.name} />
       <div className="va-api-authorization-docs">
         {testUserAccess === testUserAccessState.ACCESS_BLOCKED && (
-          <va-alert background-only show-icon status="error" visible>
+          <VaAlert status="error" visible uswds>
             <p className="vads-u-margin-y--0">
               There was an error requesting access to the test user data. Please recheck the link in
               your sandbox access signup email or request access by signing up{' '}
               <Link to={`/explore/api/${api.urlSlug}/sandbox-access`}>here</Link>.
             </p>
-          </va-alert>
+          </VaAlert>
         )}
         {testUserAccess === testUserAccessState.ACCESS_PERMITTED && (
           <>

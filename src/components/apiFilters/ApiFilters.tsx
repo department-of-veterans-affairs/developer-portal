@@ -5,6 +5,7 @@ import Fuse from 'fuse.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { AuthFilters, FilterPills, SearchFilters, TopicFilters } from '../../components';
 import { getActiveApis, getApisLoaded, isAcgApi, isCcgApi } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
@@ -317,11 +318,11 @@ export const ApiFilters = ({ apis, setApis }: ApiFiltersProps): JSX.Element => {
           type="button"
           ref={filterButtonRef}
         >
-          <FontAwesomeIcon icon={faFilter} />
+          <FontAwesomeIcon icon={faFilter as IconProp} />
           <span className="vads-u-margin-left--1">Filters</span>
           <FontAwesomeIcon
             className="filters-toggle-icon"
-            icon={isMobileMenuVisible ? faMinus : faPlus}
+            icon={(isMobileMenuVisible ? faMinus : faPlus) as IconProp}
           />
         </button>
         <div className="filters-container" data-cy="explore-filters" ref={filterContainerRef}>

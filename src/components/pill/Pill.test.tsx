@@ -25,7 +25,7 @@ describe('Pill', () => {
 
   it('should render the search icon', () => {
     const { container } = render(<Pill name="'claims'" onClick={onClick} type="search" />);
-    expect(container.querySelector('.fa-search')).toBeTruthy();
+    expect(container.querySelector('.fa-magnifying-glass')).toBeTruthy();
   });
 
   it('should render without an icon preceding the name', () => {

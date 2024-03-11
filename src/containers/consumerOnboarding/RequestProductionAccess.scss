@@ -2,12 +2,4 @@
   tbody {
     vertical-align: top;
   }
-
-  ul.checklist {
-    list-style: url('../../assets/checklist-checkbox.svg');
-
-    li > ul {
-      list-style: url('../../assets/checklist-checkbox.svg');
-    }
-  }
 }

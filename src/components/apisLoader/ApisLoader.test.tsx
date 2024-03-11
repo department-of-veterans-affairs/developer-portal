@@ -1,4 +1,4 @@
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor, RenderResult } from '@testing-library/react';
 import 'jest';
 import * as React from 'react';
 import { Provider } from 'react-redux';
@@ -7,9 +7,9 @@ import { apiLoadingState } from '../../types/constants';
 import * as apiDefs from '../../apiDefs/query';
 import ApisLoader from './ApisLoader';
 
-const renderComponent = async (): Promise<void> => {
+const renderComponent = async (): Promise<RenderResult> => {
   await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
-  render(
+  return render(
     <Provider store={store}>
       <ApisLoader>
         <h1>Child element</h1>
@@ -21,7 +21,7 @@ const renderComponent = async (): Promise<void> => {
 const renderConditionalComponent = async (
   hideError: boolean,
   hideSpinner: boolean,
-): Promise<void> => {
+): Promise<RenderResult> => {
   const props = {
     hideError: false,
     hideSpinner: false,
@@ -33,7 +33,7 @@ const renderConditionalComponent = async (
     props.hideSpinner = true;
   }
   await waitFor(() => cleanup()); // clean up beforeEach render if we're testing a different page
-  render(
+  return render(
     <Provider store={store}>
       <ApisLoader {...props} />
     </Provider>,
@@ -51,9 +51,9 @@ describe('ApisLoader', () => {
   it('Loading in progress state properly observed', async () => {
     apisLoadedSpy.mockReturnValue(apiLoadingState.IN_PROGRESS);
 
-    await renderComponent();
-
-    expect(screen.getByRole('progressbar')).toBeInTheDocument();
+    const { container } = await renderComponent();
+    const loadingIndicator = container.querySelector('va-loading-indicator');
+    expect(loadingIndicator).toBeInTheDocument();
   });
 
   it('Loaded state properly observed', async () => {
@@ -76,9 +76,9 @@ describe('ApisLoader', () => {
   it('hideSpinner works as expected', async () => {
     apisLoadedSpy.mockReturnValue(apiLoadingState.IN_PROGRESS);
 
-    await renderConditionalComponent(false, true);
-
-    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+    const { container } = await renderConditionalComponent(false, true);
+    const loadingIndicator = container.querySelector('va-loading-indicator');
+    expect(loadingIndicator).toBeNull();
   });
 
   it('Loaded state with empty children properly observed', async () => {
