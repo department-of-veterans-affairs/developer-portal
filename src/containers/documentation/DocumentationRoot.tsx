@@ -42,7 +42,7 @@ const ExploreSideNav = (props: ExploreSideNavProps): JSX.Element => {
             subNavLevel={1}
             to="authorization-code"
           />
-          {!!userId && testUserHash && (
+          {!api.oAuthInfo?.acgInfo?.disableTestUsersPage && !!userId && testUserHash && (
             <SideNavEntry
               end
               name="Test users"
@@ -80,7 +80,9 @@ const DocumentationRoot = (): JSX.Element => {
   return (
     <>
       <ApiBreadcrumbs api={api} />
-      <ApiAlerts />
+      <div className="vads-l-grid-container vads-u-margin-x--auto">
+        <ApiAlerts />
+      </div>
       <ContentWithNav
         fullWidth
         nav={<ExploreSideNav api={api} />}

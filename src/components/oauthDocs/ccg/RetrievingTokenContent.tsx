@@ -32,8 +32,8 @@ curl --location --request POST 'https://sandbox-api.va.gov${baseAuthPath}/token'
   --data-urlencode 'grant_type=client_credentials' \\
   --data-urlencode 'client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer' \\
   --data-urlencode 'client_assertion={{signed-assertion-here}}' \\
-  --data-urlencode 'scope=${scopes.join(' ')}' \\
-  ${hasLaunchScope ? "--data-urlencode 'launch=eyJwYXRpZW50IjoiMTIzNDUifQ==' \\" : ''}`}
+  --data-urlencode 'scope=${scopes.join(' ')}' ${hasLaunchScope ? '\\' : ''}
+  ${hasLaunchScope ? "--data-urlencode 'launch=eyJwYXRpZW50IjoiMTIzNDUifQ=='" : ''}`}
       />
       <div className="table-wrapper">
         <table>
@@ -141,7 +141,7 @@ scope=${scopes.join(' ')}
   "access_token": "eyJraWQiOi...",
   "token_type": "Bearer",
   "scope": "${scopes.join(' ')}",
-  "expires_in": 900
+  "expires_in": 300
 }`}
       />
       <p>

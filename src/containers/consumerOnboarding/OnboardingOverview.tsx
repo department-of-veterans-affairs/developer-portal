@@ -1,3 +1,4 @@
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -21,14 +22,14 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       integrating with our APIs and data. It may seem complex, but don&apos;t worry—we&apos;re in
       this together and are here to answer your questions each step of the way.
     </p>
-    <va-alert background-only show-icon status="info" visible>
+    <VaAlert status="info" visible uswds>
       <p className="vads-u-margin-y--0">
         In July 2023, we added steps to the production approval process which has significantly
         increased approval time. We appreciate your understanding and cooperation as we prioritize
         the safe and secure delivery of services to Veterans. For questions or concerns,{' '}
         <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
       </p>
-    </va-alert>
+    </VaAlert>
     <h2 id="onboarding-steps">Onboarding steps</h2>
     <ol className="process">
       <li className="process-step list-one">
@@ -40,9 +41,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
       </li>
       <li className="process-step list-two">
         <strong id="request-prod-access">Request production access</strong>
-        <p>
-          Timeline for getting production access varies.
-        </p>
+        <p>Timeline for getting production access varies.</p>
         <p>
           <Link to={CONSUMER_PROD_PATH}>
             Learn what&apos;s needed on the production access form.

@@ -5,6 +5,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import './Search.scss';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface SearchTypes {
   inMenu?: boolean;
@@ -59,7 +60,7 @@ const Search = (props: SearchTypes): JSX.Element => {
           value="Search"
           aria-label="Search"
         >
-          <FontAwesomeIcon className="va-api-search-icon" icon={faSearch} />
+          <FontAwesomeIcon className="va-api-search-icon" icon={faSearch as IconProp} />
         </button>
       </form>
     </div>

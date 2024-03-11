@@ -1,8 +1,10 @@
+import {
+  VaAlert,
+  VaLoadingIndicator,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import * as React from 'react';
-import LoadingIndicator from 'component-library-legacy/LoadingIndicator';
 import { connect } from 'react-redux';
 import { getApisLoadedState } from '../../apiDefs/query';
-import { defaultLoadingProps } from '../../utils/loadingHelper';
 import { ApiList, RootState } from '../../types';
 import { apiLoadingState } from '../../types/constants';
 
@@ -10,6 +12,7 @@ interface ApisLoaderProps {
   children?: JSX.Element;
   hideError?: boolean;
   hideSpinner?: boolean;
+  // eslint-disable-next-line react/no-unused-prop-types, react-redux/no-unused-prop-types
   state?: ApiList;
 }
 
@@ -18,17 +21,21 @@ const ApisLoader: React.FunctionComponent<ApisLoaderProps> = (props): JSX.Elemen
     case apiLoadingState.LOADED:
       return props.children ?? <div />;
     case apiLoadingState.IN_PROGRESS:
-      return props.hideSpinner ? <div /> : <LoadingIndicator {...defaultLoadingProps()} />;
+      return props.hideSpinner ? (
+        <div />
+      ) : (
+        <VaLoadingIndicator label="Loading" message="Loading APIs" />
+      );
     case apiLoadingState.ERROR:
       return props.hideError ? (
         <div />
       ) : (
-        <va-alert background-only show-icon status="error" visible>
+        <VaAlert status="error" visible uswds>
           <p className="vads-u-margin-y--0">Loading Error:</p>
           <p className="vads-u-margin-top--1">
             API details failed to load. Please reload or try again later if the issue persists.
           </p>
-        </va-alert>
+        </VaAlert>
       );
     default:
       return <div />;
