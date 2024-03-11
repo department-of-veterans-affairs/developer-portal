@@ -45,9 +45,8 @@ export const PublicKeySteps = (): JSX.Element => (
         rotations in the future.
       </li>
     </ol>
-    <p>What you generate will look similar to this:</p>
+    <p className="vads-u-margin-top--4">What you generate will look similar to this:</p>
     <CodeBlock
-      withCopyButton
       language="json"
       code={`\
 {
