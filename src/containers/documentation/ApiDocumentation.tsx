@@ -5,8 +5,6 @@ import { APIDescription, ApiDescriptionPropType } from '../../apiDefs/schema';
 import { useAppDispatch } from '../../hooks';
 import { SwaggerDocs } from './SwaggerDocs';
 
-import '../../../node_modules/react-tabs/style/react-tabs.scss';
-
 import './ApiDocumentation.scss';
 
 interface ApiDocumentationProps {
