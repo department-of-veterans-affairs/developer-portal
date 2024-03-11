@@ -3,6 +3,7 @@ import { FieldArray, Form, Formik } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp, faKey, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { CheckboxRadioField } from '../formField';
 import { useOutsideGroupClick } from '../../hooks';
 import { AuthFilterValues } from './ApiFilters';
@@ -74,11 +75,14 @@ export const AuthFilters = ({
               onClick={toggleAuthOpen}
               ref={authButtonRef}
             >
-              <FontAwesomeIcon className="fa-rotate-270 vads-u-margin-right--1" icon={faKey} />
+              <FontAwesomeIcon
+                className="fa-rotate-270 vads-u-margin-right--1"
+                icon={faKey as IconProp}
+              />
               Auth Type{authFilter.length > 0 && ` (${authFilter.length})`}
               <FontAwesomeIcon
                 className="filter-button-caret"
-                icon={isAuthOpen ? faCaretUp : faCaretDown}
+                icon={(isAuthOpen ? faCaretUp : faCaretDown) as IconProp}
               />
             </button>
             <button
@@ -90,11 +94,14 @@ export const AuthFilters = ({
               onClick={toggleAuthOpen}
               ref={authButtonRef2}
             >
-              <FontAwesomeIcon className="fa-rotate-270 vads-u-margin-right--1" icon={faKey} />
+              <FontAwesomeIcon
+                className="fa-rotate-270 vads-u-margin-right--1"
+                icon={faKey as IconProp}
+              />
               Auth Type{authFilter.length > 0 && ` (${authFilter.length})`}
               <FontAwesomeIcon
                 className="filter-button-caret"
-                icon={isAuthOpen ? faMinus : faPlus}
+                icon={(isAuthOpen ? faMinus : faPlus) as IconProp}
               />
             </button>
             <div className={authClassNames} ref={authContainerRef}>

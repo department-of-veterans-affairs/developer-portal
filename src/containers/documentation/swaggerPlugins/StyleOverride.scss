@@ -42,9 +42,8 @@
 
 .opblock {
   .opblock-body {
-    background-color: white;
     pre span.linenumber {
-      color: #AEB0B5 !important;
+      color: #aeb0b5 !important;
     }
     .opblock-section-header {
       padding: 0 !important;
@@ -96,30 +95,36 @@
     }
   }
 }
-.swagger-ui .renderedMarkdown {
-  @import '~uswds/src/stylesheets/elements/table';
+.swagger-ui {
+  .renderedMarkdown {
+    @import '~uswds/src/stylesheets/elements/table';
 
-  table {
-    thead tr {
-      th {
-        background-color: $color-gray-lightest;
-        color: $color-gray-dark;
-        font-family: $font-sans;
-        font-size: $base-font-size;
-        font-weight: $font-bold;
-      }
+    table {
+      thead tr {
+        th {
+          background-color: $color-gray-lightest;
+          color: $color-gray-dark;
+          font-family: $font-sans;
+          font-size: $base-font-size;
+          font-weight: $font-bold;
+        }
 
-      td {
-        background-color: $color-gray-lightest;
+        td {
+          background-color: $color-gray-lightest;
+        }
       }
-    }
-    tbody tr td:first-of-type {
-      padding: 1rem 1.5rem;
-      width: auto;
+      tbody tr td:first-of-type {
+        padding: 1rem 1.5rem;
+        width: auto;
+      }
     }
   }
-}
 
-.swagger-ui table.model tbody tr td:first-of-type {
-  word-break: break-all;
+  table.model tbody tr td:first-of-type {
+    word-break: break-all;
+  }
+
+  .opblock.opblock-deprecated {
+    opacity: 1 !important;
+  }
 }

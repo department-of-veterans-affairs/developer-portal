@@ -1,4 +1,9 @@
 /* eslint-disable max-lines */
+import {
+  VaAccordion,
+  VaAccordionItem,
+  VaAlert,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
@@ -16,15 +21,15 @@ const RequestProductionAccess = (): JSX.Element => (
       <title>Request production access</title>
     </Helmet>
     <PageHeader header="Request production access" className="vads-u-margin-bottom--1" />
-    <va-alert background-only show-icon status="info" visible>
+    <VaAlert status="info" visible uswds>
       <p className="vads-u-margin-y--0">
         In July 2023, we added steps to the production approval process which has significantly
         increased approval time. We appreciate your understanding and cooperation as we prioritize
         the safe and secure delivery of services to Veterans. For questions or concerns,{' '}
         <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
       </p>
-    </va-alert>
-    <p>Before you start onboarding, it’s good to know that:</p>
+    </VaAlert>
+    <p>Before you start onboarding, it&apos;s good to know that:</p>
     <ul className="vads-u-margin-top--0">
       <li>All consumers must be US-based.</li>
       <li>We do not allow monetizing or selling Veteran data.</li>
@@ -42,7 +47,7 @@ const RequestProductionAccess = (): JSX.Element => (
     </ul>
     <strong>
       We use the data you submit to determine whether to schedule a demo or request technical or
-      policy-related changes. If we need changes, we’ll send you an email.
+      policy-related changes. If we need changes, we&apos;ll send you an email.
     </strong>
     <div className="vads-l-grid-container">
       <Link className="vads-c-action-link--green" to={CONSUMER_APPLICATION_PATH}>
@@ -52,9 +57,9 @@ const RequestProductionAccess = (): JSX.Element => (
         <em>The form progress cannot be saved once you begin.</em>
       </p>
     </div>
-    <h2 id="form-requirements-production-access">Learn what’s needed on the form</h2>
-    <va-accordion>
-      <va-accordion-item header="Basic information" level={3}>
+    <h2 id="form-requirements-production-access">Learn what&apos;s needed on the form</h2>
+    <VaAccordion uswds>
+      <VaAccordionItem uswds header="Basic information" level={3}>
         <ul className="checklist">
           <li>Company contacts and information</li>
           <li>Notification email address for API status updates</li>
@@ -96,8 +101,8 @@ const RequestProductionAccess = (): JSX.Element => (
           </a>
           .
         </p>
-      </va-accordion-item>
-      <va-accordion-item header="Technical information" level={3}>
+      </VaAccordionItem>
+      <VaAccordionItem uswds header="Technical information" level={3}>
         <ul className="checklist">
           <li>
             Description of how and where you will provide secure storage of your access credentials,
@@ -120,7 +125,8 @@ const RequestProductionAccess = (): JSX.Element => (
             For the Benefits Intake API:
             <ul>
               <li>
-                Information about customer’s naming conventions for the source field, if applicable
+                Information about customer&apos;s naming conventions for the source field, if
+                applicable
               </li>
               <li>
                 Information about whether you maintain a centralized back-end log for submissions
@@ -157,11 +163,11 @@ const RequestProductionAccess = (): JSX.Element => (
             </ul>
           </li>
         </ul>
-      </va-accordion-item>
-      <va-accordion-item header="Privacy policy and terms of service" level={3}>
+      </VaAccordionItem>
+      <VaAccordionItem uswds header="Privacy policy and terms of service" level={3}>
         <ul className="checklist">
-          <li>URL for your application’s terms of service</li>
-          <li>URL for your application’s privacy policy</li>
+          <li>URL for your application&apos;s terms of service</li>
+          <li>URL for your application&apos;s privacy policy</li>
         </ul>
         <p>
           If your application <strong>uses OAuth</strong>, we will review your terms of service and
@@ -230,12 +236,12 @@ const RequestProductionAccess = (): JSX.Element => (
                 <ul className="vads-u-margin-bottom--0">
                   <li>Give users an easy way to request permanent deletion of their data.</li>
                   <li>
-                    State that your company will permanently delete 100% of a Veteran’s data,
-                    including non-VA data, at the user’s request.
+                    State that your company will permanently delete 100% of a Veteran&apos;s data,
+                    including non-VA data, at the user&apos;s request.
                   </li>
                   <li>
                     State how soon data deletion will happen after the user makes the request. Note:
-                    VA requires data deletion to happen within 45 days of the user’s request.
+                    VA requires data deletion to happen within 45 days of the user&apos;s request.
                   </li>
                 </ul>
               </td>
@@ -249,7 +255,7 @@ const RequestProductionAccess = (): JSX.Element => (
                 <ul className="vads-u-margin-bottom--0">
                   <li>
                     Define the specific types of data collected, such as geolocation data, financial
-                    information, medical information, a user’s contacts, etc.
+                    information, medical information, a user&apos;s contacts, etc.
                   </li>
                   <li>
                     Clearly describe how data will be used, including the sharing of de-identified,
@@ -294,10 +300,10 @@ const RequestProductionAccess = (): JSX.Element => (
                     with your app/company.
                   </li>
                   <li>
-                    Specify what will happen to a user’s data if there is a transfer of ownership or
-                    if your company ends or sells its business. You must clearly indicate in your
-                    policy that the new company’s policies will align with yours, or provide the
-                    user one of these options:
+                    Specify what will happen to a user&apos;s data if there is a transfer of
+                    ownership or if your company ends or sells its business. You must clearly
+                    indicate in your policy that the new company&apos;s policies will align with
+                    yours, or provide the user one of these options:
                     <ul>
                       <li>Securely dispose of, transmit, or download their health information.</li>
                       <li>Close their account.</li>
@@ -317,8 +323,8 @@ const RequestProductionAccess = (): JSX.Element => (
             </tr>
           </tbody>
         </table>
-      </va-accordion-item>
-    </va-accordion>
+      </VaAccordionItem>
+    </VaAccordion>
     <p className="vads-u-padding-top--3">
       If you have questions for us, let us know by contacting us through our{' '}
       <Link to={SUPPORT_CONTACT_PATH}>support page</Link>.
