@@ -31,7 +31,9 @@ const OAuthCcgAppInfo = (): JSX.Element => {
         modalTitle="Generating Public RSA Key and Converting to JWK Format"
         uswds
       >
-        <PublicKeySteps />
+        <div className="va-api-authorization-docs">
+          <PublicKeySteps />
+        </div>
       </VaModal>
       <TextField
         as="textarea"
