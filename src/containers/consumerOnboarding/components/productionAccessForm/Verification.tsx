@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useFormikContext } from 'formik';
 import { VaModal } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../../components';
@@ -9,14 +9,25 @@ import { SelectedAPIs } from './SelectedApis';
 import './Verification.scss';
 
 const Verification: FC = () => {
-  const { errors, isSubmitting, values } = useFormikContext<Values>();
+  const { errors, isSubmitting, values, setFieldError } = useFormikContext<Values>();
   const { apis } = values;
   const {
     modalVisible: benefitsIntakeModalVisible,
     setModalVisible: setBenefitsIntakeModalVisible,
   } = useModalController();
+  const [isAttestationFirstOpen, setIsAttestationFirstOpen] = useState(true);
 
-  // opens modal when submitting form and errors.benefitsIntakeApiAttestation is present
+  const handleConfirmClick = (): void => {
+    if (!values.benefitsIntakeApiAttestation) {
+      setFieldError(
+        'benefitsIntakeApiAttestation',
+        'You must attest to request production access for this API.',
+      );
+      return;
+    }
+    setBenefitsIntakeModalVisible(false);
+  };
+
   useEffect(() => {
     if (
       apis.includes('apikey/benefits') &&
@@ -25,6 +36,9 @@ const Verification: FC = () => {
       values.termsOfService &&
       isSubmitting
     ) {
+      if (isAttestationFirstOpen) {
+        setFieldError('benefitsIntakeApiAttestation', undefined);
+      }
       setBenefitsIntakeModalVisible(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -74,9 +88,12 @@ const Verification: FC = () => {
         onCloseEvent={(): void => setBenefitsIntakeModalVisible(false)}
         visible={benefitsIntakeModalVisible}
         primaryButtonText="Confirm"
-        onPrimaryButtonClick={(): void => setBenefitsIntakeModalVisible(false)}
+        onPrimaryButtonClick={handleConfirmClick}
         secondaryButtonText="Cancel"
-        onSecondaryButtonClick={(): void => setBenefitsIntakeModalVisible(false)}
+        onSecondaryButtonClick={(): void => {
+          setBenefitsIntakeModalVisible(false);
+          setIsAttestationFirstOpen(false);
+        }}
         uswds
       >
         <p>
@@ -111,7 +128,6 @@ const Verification: FC = () => {
           punishable by law. See 18 U.S.C. § 1001.
         </p>
         <CheckboxRadioField
-          className="vads-u-margin-x--2p5"
           type="checkbox"
           label="I attest that I have read, understood, and agree to the terms above."
           name="benefitsIntakeApiAttestation"
