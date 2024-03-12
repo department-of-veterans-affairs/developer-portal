@@ -1,3 +1,7 @@
+import {
+  VaAccordion,
+  VaAccordionItem,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import classNames from 'classnames';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
@@ -177,13 +181,13 @@ export const SupportQuestions = (props: SupportQuestionsProps): JSX.Element => {
           {props.title}
         </h2>
       </div>
-      <va-accordion>
+      <VaAccordion uswds>
         {content.map((c: AccordionPanelContent) => (
-          <va-accordion-item header={c.title} key={c.title}>
+          <VaAccordionItem uswds header={c.title} key={c.title}>
             {c.body}
-          </va-accordion-item>
+          </VaAccordionItem>
         ))}
-      </va-accordion>
+      </VaAccordion>
     </section>
   );
 };

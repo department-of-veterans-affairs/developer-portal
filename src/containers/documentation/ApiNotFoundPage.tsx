@@ -1,3 +1,4 @@
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import * as React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { isApiDeactivated } from '../../apiDefs/deprecated';
@@ -14,12 +15,12 @@ const ApiNotFoundPage = (): JSX.Element => {
 
   return (
     <div role="region" aria-labelledby={PAGE_HEADER_ID}>
-      <va-alert background-only show-icon status="warning" visible>
+      <VaAlert status="warning" visible uswds>
         <p className="vads-u-margin-y--0">Page not found.</p>
         <p className="vads-u-margin-top--1">
           Try using the links below or the search bar to find your way forward.
         </p>
-      </va-alert>
+      </VaAlert>
       {category.name && <PageHeader header={category.name} />}
       <ul>
         {category.apis

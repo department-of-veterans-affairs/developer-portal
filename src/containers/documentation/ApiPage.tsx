@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unnecessary-condition */
 /* eslint-disable complexity */
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Navigate, useLocation, useParams } from 'react-router-dom';
@@ -58,12 +59,12 @@ const VeteranRedirectAlertMessage = ({
   api: APIDescription;
   veteranRedirect: VeteranRedirectMessage;
 }): JSX.Element => (
-  <va-alert background-only show-icon status="info" key={api.urlSlug} visible>
+  <VaAlert status="info" key={api.urlSlug} visible uswds>
     <p className="vads-u-margin-y--0">
       {veteranRedirect.message}&nbsp;
       <a href={veteranRedirect.linkUrl}>{veteranRedirect.linkText}</a>.
     </p>
-  </va-alert>
+  </VaAlert>
 );
 
 const ApiPage = (): JSX.Element => {
