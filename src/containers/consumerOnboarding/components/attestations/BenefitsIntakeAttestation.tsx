@@ -25,6 +25,13 @@ export const BenefitsIntakeAttestation = (): JSX.Element => {
     setBenefitsIntakeModalVisible(false);
   };
 
+  const handleCancelClick = (): void => {
+    setBenefitsIntakeModalVisible(false);
+    setIsAttestationFirstOpen(false);
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    setFieldValue('benefitsIntakeApiAttestation', false, false);
+  };
+
   useEffect(() => {
     if (
       apis.includes('apikey/benefits') &&
@@ -62,10 +69,7 @@ export const BenefitsIntakeAttestation = (): JSX.Element => {
       primaryButtonText="Confirm"
       onPrimaryButtonClick={handleConfirmClick}
       secondaryButtonText="Cancel"
-      onSecondaryButtonClick={(): void => {
-        setBenefitsIntakeModalVisible(false);
-        setIsAttestationFirstOpen(false);
-      }}
+      onSecondaryButtonClick={handleCancelClick}
       uswds
     >
       <p>
