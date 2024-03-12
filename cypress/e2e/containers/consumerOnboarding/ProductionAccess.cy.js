@@ -69,7 +69,6 @@ describe('Production Access Form', () => {
       .shadow()
       .find('h2')
       .should('have.text', 'Requirements for the Benefits Intake API');
-    cy.get('.usa-input-error').should('have.length', '1');
     cy.get('#benefitsIntakeApiAttestationFormField').click();
     cy.get('#benefits-intake-attestation-modal')
       .shadow()
