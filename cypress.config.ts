@@ -26,6 +26,7 @@ export default defineConfig({
     REACT_APP_VETSGOV_SWAGGER_API: 'http://localhost:3001',
   },
   experimentalInteractiveRunEvents: true,
+  experimentalMemoryManagement: true,
   trashAssetsBeforeRuns: false,
   video: false,
 });

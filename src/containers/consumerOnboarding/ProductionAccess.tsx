@@ -7,8 +7,11 @@ import { useCookies } from 'react-cookie';
 import { Formik, Form, FormikHelpers } from 'formik';
 import classNames from 'classnames';
 import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
-import Modal from 'component-library-legacy/Modal';
-import { VaSegmentedProgressBar } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
+import {
+  VaAlert,
+  VaModal,
+  VaSegmentedProgressBar,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 // import Icon508 from '../../assets/508-compliant.svg';
 import { apisFor } from '../../apiDefs/query';
@@ -219,22 +222,20 @@ const ProductionAccess: FC = () => {
   // // const [acknowledge508, setAcknowledge508] = useState(false);
 
   // const Modal508Compliant = (): JSX.Element => (
-  //   <Modal
+  //   <VaModal
   //     id="warning-508-complicance-modal"
   //     title="Must be Section 508 Compliant!"
   //     visible={modal508Visible}
   //     clickToClose
   //     onClose={(): void => setModal508Visible(false)}
-  //     primaryButton={{
-  //       action: (): void => {
-  //         setModal508Visible(false);
-  //         setAcknowledge508(true);
-  //       },
-  //       text: 'I acknowledge',
+  //     onPrimaryButtonClick={(): void => {
+  //       setModal508Visible(false);
+  //       setAcknowledge508(true);
   //     }}
+  //     primaryButtonText="I acknowledge"
   //   >
   //     <>
-  //       <img src={Icon508} aria-hidden="true" alt="" className={classNames('va-modal-icon')} />
+  //       <img src={Icon508} aria-hidden="true" alt="" className={classNames('VaModal-icon')} />
   //       <p>
   //         Consumer websites and applications must be Section 508 compliant to get production access.
   //       </p>
@@ -246,7 +247,7 @@ const ProductionAccess: FC = () => {
   //         or contact us with questions.
   //       </p>
   //     </>
-  //   </Modal>
+  //   </VaModal>
   // );
 
   /**
@@ -387,9 +388,11 @@ const ProductionAccess: FC = () => {
               {activeStep === 0 ? (
                 <>
                   <VaSegmentedProgressBar
+                    uswds
                     current={1}
                     total={4}
                     ariaLabel="Step 1. There will be 1 to 3 more steps depending on the APIs you select."
+                    headerLevel={2}
                   />
                   <h2
                     id={STEP_HEADING_ID}
@@ -405,7 +408,12 @@ const ProductionAccess: FC = () => {
                 </>
               ) : (
                 <>
-                  <VaSegmentedProgressBar current={activeStep + 1} total={steps.length} />
+                  <VaSegmentedProgressBar
+                    uswds
+                    current={activeStep + 1}
+                    total={steps.length}
+                    headerLevel={2}
+                  />
                   <h2
                     id={STEP_HEADING_ID}
                     className={classNames(
@@ -466,31 +474,27 @@ const ProductionAccess: FC = () => {
               </div>
             </Form>
           </Formik>
-          <Modal
+          <VaModal
+            uswds
             id="cancellation-modal"
-            title="Are you sure you want to leave?"
+            modalTitle="Are you sure you want to leave?"
             visible={modal1Visible}
-            onClose={(): void => setModal1Visible(false)}
-            primaryButton={{
-              action: (): void => navigate(CONSUMER_PROD_PATH),
-              text: 'Yes, leave',
-            }}
-            secondaryButton={{
-              action: (): void => setModal1Visible(false),
-              text: 'No, stay on form',
-            }}
+            onCloseEvent={(): void => setModal1Visible(false)}
+            onPrimaryButtonClick={(): void => navigate(CONSUMER_PROD_PATH)}
+            primaryButtonText="Yes, leave"
+            onSecondaryButtonClick={(): void => setModal1Visible(false)}
+            secondaryButtonText="No, stay on form"
           >
             The information you entered will not be saved.
-          </Modal>
-          <Modal
+          </VaModal>
+          <VaModal
+            uswds
             id="non-us-based-modal"
-            title="Thank you for your interest!"
+            modalTitle="Thank you for your interest!"
             visible={modal2Visible}
-            onClose={(): void => setModal2Visible(false)}
-            primaryButton={{
-              action: (): void => navigate(-1),
-              text: 'Close form',
-            }}
+            onCloseEvent={(): void => setModal2Visible(false)}
+            primaryButtonText="Close form"
+            onPrimaryButtonClick={(): void => navigate(-1)}
             classNames={['vads-u-text-align--center']}
           >
             <img
@@ -503,20 +507,19 @@ const ProductionAccess: FC = () => {
               We currently only grant access to US-based companies. You may{' '}
               <NavLink to={SUPPORT_CONTACT_PATH}>contact us</NavLink> if you have any questions.
             </p>
-          </Modal>
-          {/* <Modal508Compliant /> */}
-          <Modal
+          </VaModal>
+          {/* <VaModal508Compliant /> */}
+          <VaModal
+            uswds
             id="submission-complete-modal"
-            title="Thanks for submitting!"
+            modalTitle="Thanks for submitting!"
             visible={modal4Visible}
-            onClose={(): void => {
+            onCloseEvent={(): void => {
               setModal4Visible(false);
               navigate(-1);
             }}
-            primaryButton={{
-              action: (): void => navigate(-1),
-              text: 'Close',
-            }}
+            onPrimaryButtonClick={(): void => navigate(-1)}
+            primaryButtonText="Close"
           >
             <img
               src={hiFive}
@@ -532,9 +535,9 @@ const ProductionAccess: FC = () => {
               <br />
               We’ll be in touch with the next steps or required changes.
             </p>
-          </Modal>
+          </VaModal>
           {submissionError && (
-            <va-alert background-only show-icon status="error" visible>
+            <VaAlert status="error" visible uswds>
               <p className="vads-u-margin-y--0">
                 We encountered a server error while saving your form. Please try again later.
               </p>
@@ -542,7 +545,7 @@ const ProductionAccess: FC = () => {
                 Need assistance? Create an issue through our <Link to="/support">Support page</Link>
                 .
               </p>
-            </va-alert>
+            </VaAlert>
           )}
         </div>
       </div>
