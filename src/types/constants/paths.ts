@@ -30,6 +30,8 @@ export const PUBLISHING_ROUTER_PATHS: string[] = [
   PUBLISHING_ONBOARDING_PATH,
   PUBLISHING_REQUIREMENTS_URL,
 ];
+export const PUBLISHING_STANDARDS_URL =
+  'https://department-of-veterans-affairs.github.io/va-api-standards/';
 // For legacy links
 export const PUBLISHING_EXPECTATIONS_PATH = `${PUBLISHING_PATH}/expectations`;
 
