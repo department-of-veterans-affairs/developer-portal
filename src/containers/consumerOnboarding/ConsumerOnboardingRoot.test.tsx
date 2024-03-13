@@ -31,7 +31,7 @@ describe('ConsumerOnboardingRoot', () => {
     });
 
     it.each([
-      ['API Consumer onboarding', CONSUMER_PATH],
+      ['API consumer onboarding', CONSUMER_PATH],
       ['Request production access', CONSUMER_PROD_PATH],
       ['Prepare for the demo', CONSUMER_DEMO_PATH],
       ['Working with our APIs', CONSUMER_APIS_PATH],
