@@ -56,7 +56,6 @@ h4 {
 }
 
 .sans-serif-headers {
-
   h1,
   h2,
   h3,
@@ -101,7 +100,7 @@ a {
 *:focus,
 a:focus,
 .usa-focus,
-[type='checkbox']:focus+label::before {
+[type='checkbox']:focus + label::before {
   @include focus-outline;
 }
 
@@ -144,4 +143,17 @@ input:focus::placeholder {
 
 .va-modal {
   z-index: 1001 !important;
+}
+
+.usa-button.usa-button-unstyled,
+.usa-button.usa-button--unstyled {
+  // Used for when a button should look like a link (supporting uswds v1 and v3)
+  background: transparent;
+  box-shadow: none;
+  text-decoration: underline;
+
+  &:hover {
+    background: transparent;
+    box-shadow: none;
+  }
 }
