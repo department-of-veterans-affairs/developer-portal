@@ -30,7 +30,7 @@ yup.addMethod<StringSchema>(yup.string, 'isValidRSAJWK', function () {
 
 // Override Yup's email validator
 const emailRegex =
-  /^[\w!#$%&'*+-/=?^_`{|}~]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$/;
+  /^[\w!#$%&'*+-/=?^_`{|}~]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,63}$/;
 yup.addMethod(yup.string, 'email', function (message: string) {
   return this.matches(emailRegex, {
     excludeEmptyString: true,
