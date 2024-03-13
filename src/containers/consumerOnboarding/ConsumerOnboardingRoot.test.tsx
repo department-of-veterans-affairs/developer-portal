@@ -45,7 +45,7 @@ describe('ConsumerOnboardingRoot', () => {
 
   describe('pages', () => {
     it('renders the overview page', async () => {
-      const link = screen.getByRole('link', { name: 'API Consumer onboarding' });
+      const link = screen.getByRole('link', { name: 'API consumer onboarding' });
       await userEvent.click(link);
 
       const heading = await screen.findByRole('heading', { name: 'API Consumer Onboarding' });
