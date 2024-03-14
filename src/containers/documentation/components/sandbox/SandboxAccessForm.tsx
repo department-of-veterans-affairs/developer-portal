@@ -9,9 +9,9 @@ import {
   CheckboxRadioField,
   TermsOfServiceCheckbox,
 } from '../../../../components';
+import { OAuthAcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthAcgAppInfo';
+import { OAuthCcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthCcgAppInfo';
 import { validateForm } from './validateForm';
-import { OAuthAcgAppInfo } from './components/OAuthAcgAppInfo';
-import { OAuthCcgAppInfo } from './components/OAuthCcgAppInfo';
 
 export interface Values {
   description: string;
