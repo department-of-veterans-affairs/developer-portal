@@ -16,7 +16,7 @@ jest.mock('formik', () => ({
 describe('Attestation', () => {
   store.dispatch(setApis(fakeCategories));
 
-  it('should render', () => {
+  it('should be visible when API requires attestation', () => {
     (useFormikContext as jest.Mock).mockReset().mockImplementation(() => ({
       errors: { attestationChecked: 'You must attest to request production access for this API.' },
       isSubmitting: true,
