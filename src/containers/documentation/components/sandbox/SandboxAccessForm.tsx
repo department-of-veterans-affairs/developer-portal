@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Form, Formik } from 'formik';
+import { VaOmbInfo } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { DevApplicationRequest, DevApplicationResponse } from '../../../../types/forms/apply';
 import { HttpErrorResponse, ResponseType, makeRequest } from '../../../../utils/makeRequest';
 import {
@@ -247,6 +248,8 @@ export const SandboxAccessForm = ({
             <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
               {isSubmitting ? 'Sending...' : 'Submit'}
             </button>
+            <hr />
+            <VaOmbInfo exp-date="11/30/2026" omb-number="2900-0770" res-burden={9} />
           </Form>
         );
       }}
