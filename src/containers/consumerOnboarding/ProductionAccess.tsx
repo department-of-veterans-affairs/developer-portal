@@ -10,6 +10,7 @@ import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-s
 import {
   VaAlert,
   VaModal,
+  VaOmbInfo,
   VaSegmentedProgressBar,
 } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -470,6 +471,8 @@ const ProductionAccess: FC = () => {
                   </button>
                 )}
               </div>
+              <hr />
+              <VaOmbInfo exp-date="11/30/2026" omb-number="2900-0770" res-burden={30} />
             </Form>
           </Formik>
           <VaModal
