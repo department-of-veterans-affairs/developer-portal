@@ -57,7 +57,7 @@ describe('Production Access Form', () => {
     cy.get('a[href="/onboarding/production-access-application"]').click();
   });
 
-  it('Test Benefits Intake API Attestation modal', () => {
+  it('Test Attestation for Benefits Intake API', () => {
     cy.get('#isUSBasedCompanyFormFieldyes').click();
     cy.get('#is508CompliantFormFieldyes').click();
     cy.get('#apisFormFieldapikeybenefits').click();
@@ -69,7 +69,7 @@ describe('Production Access Form', () => {
       .shadow()
       .find('h2')
       .should('have.text', 'Requirements for the Benefits Intake API');
-    cy.get('#benefitsIntakeApiAttestationFormField').click();
+    cy.get('#attestationCheckedFormField').click();
     cy.get('#benefits-intake-attestation-modal')
       .shadow()
       .find('va-button')

@@ -22,7 +22,7 @@ const validationSchema = [
       .of(yup.string())
       .min(1, 'Choose at least one API.')
       .required('Choose at least one API.'),
-    benefitsIntakeApiAttestation: yup.boolean().when('apis', {
+    attestationChecked: yup.boolean().when('apis', {
       is: (value: string[]) => value.includes('apikey/benefits'),
       otherwise: () => yup.boolean(),
       then: () =>

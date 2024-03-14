@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik';
 import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { TERMS_OF_SERVICE_PATH } from '../../../../types/constants/paths';
-import { BenefitsIntakeAttestation } from '../attestations/BenefitsIntakeAttestation';
+import { Attestation } from '../../Attestation';
 import { SelectedAPIs } from './SelectedApis';
 import './Verification.scss';
 
@@ -48,7 +48,7 @@ const Verification: FC = () => {
       <div className="verification-divider vads-u-margin-top--4 vads-u-margin-bottom--1p5" />
       <SelectedAPIs selectedApis={apis} />
       <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
-      <BenefitsIntakeAttestation />
+      <Attestation api="apikey/benefits" /> {/* // Benefits Intake API */}
     </fieldset>
   );
 };
