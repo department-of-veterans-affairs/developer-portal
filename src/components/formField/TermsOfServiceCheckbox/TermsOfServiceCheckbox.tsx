@@ -22,7 +22,7 @@ const TermsOfServiceCheckbox: React.FC<TermsOfServiceCheckboxProps> = <
   const hasTermsOfServiceError = !!errors.termsOfService && !!touched.termsOfService;
   return (
     <CheckboxRadioField
-      label="I agree to the terms"
+      label="I agree to the terms of service."
       name="termsOfService"
       required
       type="checkbox"
