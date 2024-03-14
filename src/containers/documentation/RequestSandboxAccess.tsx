@@ -2,7 +2,6 @@
 import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { SandboxAccessForm } from '@department-of-veterans-affairs/sandbox-access-form';
 import { Link, useParams } from 'react-router-dom';
 import { PageHeader } from '../../components';
 import { LPB_APPLY_URL } from '../../types/constants';
@@ -11,6 +10,7 @@ import { SUPPORT_CONTACT_PATH, TERMS_OF_SERVICE_PATH } from '../../types/constan
 import { getApi } from './DocumentationRoot';
 import { SandboxAccessSuccess } from './components/sandbox';
 import './RequestSandboxAccess.scss';
+import { SandboxAccessForm } from './components/sandbox/SandboxAccessForm';
 
 const RequestSandboxAccess = (): JSX.Element => {
   const { urlSlug } = useParams();

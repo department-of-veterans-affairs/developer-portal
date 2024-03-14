@@ -45,3 +45,19 @@ export const validateOAuthRedirectURI = (value: string): string | undefined => {
 };
 
 export const isVaEmail = (value: string): boolean => VA_EMAIL_PATTERN.test(value);
+
+export const validateOAuthPublicKey = (value: string): string | undefined => {
+  try {
+    const jwk = JSON.parse(value) as {
+      [key: string]: string;
+    };
+
+    if (!jwk.kty || !jwk.n || !jwk.e || jwk.kty !== 'RSA') {
+      return 'Please enter a valid RSA-generated key in JSON Web Key format.';
+    }
+
+    return undefined;
+  } catch (e: unknown) {
+    return 'Please enter a valid RSA-generated key in JSON Web Key format.';
+  }
+};
