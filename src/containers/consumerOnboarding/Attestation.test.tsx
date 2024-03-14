@@ -51,4 +51,24 @@ describe('Attestation', () => {
     const modal = container.querySelector('va-modal') as HTMLElement;
     expect(modal).toHaveAttribute('visible', 'false');
   });
+
+  it('should be display children', () => {
+    (useFormikContext as jest.Mock).mockReset().mockImplementation(() => ({
+      errors: { attestationChecked: 'You must attest to request production access for this API.' },
+      isSubmitting: true,
+      setFieldError: jest.fn(),
+      values: { apis: ['somevalue/rings'], termsOfService: true },
+    }));
+
+    render(
+      <Provider store={store}>
+        <Formik initialValues={{}} onSubmit={jest.fn()}>
+          <Attestation api="somevalue/rings">
+            <p>Child text</p>
+          </Attestation>
+        </Formik>
+      </Provider>,
+    );
+    expect(screen.getByText(/Child text/)).toBeInTheDocument();
+  });
 });
