@@ -1,4 +1,7 @@
-import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
+import {
+  VaAlert,
+  VaOmbInfo,
+} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactNode, useState } from 'react';
@@ -140,6 +143,8 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
           <button type="submit" className="vads-u-width--auto">
             {isSubmitting ? 'Sending...' : 'Send to developer support'}
           </button>
+          <hr />
+          <VaOmbInfo exp-date="11/30/2026" omb-number="2900-0770" res-burden={6} />
           {submissionError && (
             <VaAlert status="error" visible uswds>
               <p className="vads-u-margin-y--0">
