@@ -369,7 +369,7 @@ const ProductionAccess: FC = () => {
    * COMPONENT
    */
   return (
-    <div className={classNames('vads-l-grid-container', 'vads-u-padding--4', 'prod-access-form')}>
+    <div className={classNames('vads-u-padding--4', 'prod-access-form')}>
       <Helmet>
         <title>Production access form</title>
       </Helmet>
@@ -427,7 +427,7 @@ const ProductionAccess: FC = () => {
                 </>
               )}
               {renderStepContent(activeStep)}
-              <div className="vads-u-margin-y--5">
+              <div className="vads-u-margin-y--4">
                 <button
                   className={classNames(
                     'usa-button',
@@ -459,7 +459,7 @@ const ProductionAccess: FC = () => {
                   </button>
                 )}
               </div>
-              <div>
+              <div className="vads-u-margin-y--4">
                 {activeStep > 0 && (
                   <button
                     className="vads-u-display--block"
