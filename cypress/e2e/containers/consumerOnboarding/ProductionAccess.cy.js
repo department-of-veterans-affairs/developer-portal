@@ -62,21 +62,21 @@ describe('Production Access Form', () => {
     cy.get('#is508CompliantFormFieldyes').click();
     cy.get('#apisFormFieldapikeybenefits').click();
     cy.get('#termsOfServiceFormField').click();
-    cy.get('#benefits-intake-attestation-modal').should('not.be.visible');
+    cy.get('#attestation-modal').should('not.be.visible');
     cy.get('#main button[type="submit"]').click();
-    cy.get('#benefits-intake-attestation-modal').should('be.visible');
-    cy.get('#benefits-intake-attestation-modal')
+    cy.get('#attestation-modal').should('be.visible');
+    cy.get('#attestation-modal')
       .shadow()
       .find('h2')
       .should('have.text', 'Requirements for the Benefits Intake API');
     cy.get('#attestationCheckedFormField').click();
-    cy.get('#benefits-intake-attestation-modal')
+    cy.get('#attestation-modal')
       .shadow()
       .find('va-button')
       .shadow()
       .find('button:contains("Confirm")')
       .click();
-    cy.get('#benefits-intake-attestation-modal').should('not.be.visible');
+    cy.get('#attestation-modal').should('not.be.visible');
     cy.get('#main button[type="submit"]:contains("Continue")').click();
     cy.get('.usa-input-error').should('have.length', '0');
   });
