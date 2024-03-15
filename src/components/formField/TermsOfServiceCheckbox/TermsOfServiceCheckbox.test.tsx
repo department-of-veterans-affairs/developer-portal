@@ -17,7 +17,7 @@ describe('TermsOfServiceCheckbox', () => {
         </Formik>,
       );
 
-      const checkbox = screen.getByRole('checkbox', { name: 'I agree to the terms' });
+      const checkbox = screen.getByRole('checkbox', { name: 'I agree to the terms of service.' });
       expect(checkbox).toBeInTheDocument();
     });
 
@@ -56,7 +56,9 @@ describe('TermsOfServiceCheckbox', () => {
         </Formik>,
       );
 
-      await userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
+      await userEvent.click(
+        screen.getByRole('checkbox', { name: 'I agree to the terms of service.' }),
+      );
       await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
       // don't want test to pass without running assertion, so we run this check to fail the test
@@ -90,7 +92,9 @@ describe('TermsOfServiceCheckbox', () => {
         </Formik>,
       );
 
-      await userEvent.click(screen.getByRole('checkbox', { name: 'I agree to the terms' }));
+      await userEvent.click(
+        screen.getByRole('checkbox', { name: 'I agree to the terms of service.' }),
+      );
       await userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
       await waitFor(() => expect(submitMock).toHaveBeenCalledTimes(1));
