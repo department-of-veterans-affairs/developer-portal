@@ -29,7 +29,6 @@ export const OmbInfo = ({ expDate, ombNumber, resBurden }: OmbInfoProps): JSX.El
         text="View Privacy Act Statement"
         onClick={(): void => setModalVisible(true)}
         secondary
-        role="button"
       />
       <VaModal
         large

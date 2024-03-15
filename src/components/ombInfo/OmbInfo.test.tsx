@@ -1,23 +1,24 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
+import { screen } from 'shadow-dom-testing-library';
 import { OmbInfo } from './OmbInfo';
 
 describe('OmbIndo', () => {
   it('should render', () => {
-    const { getByText, getByTitle } = render(
+    const { container } = render(
       <OmbInfo expDate="11/30/2026" ombNumber="2900-0770" resBurden={8675309} />,
     );
-    const expDate = getByText('11/30/2026');
+    const expDate = screen.getByText('11/30/2026');
     expect(expDate).toBeInTheDocument();
-    const ombNumber = getByText('2900-0770');
+    const ombNumber = screen.getByText('2900-0770');
     expect(ombNumber).toBeInTheDocument();
-    const resBurden = getByText('8675309 minutes');
+    const resBurden = screen.getByText('8675309 minutes');
     expect(resBurden).toBeInTheDocument();
-    const button = screen.getByRole('button');
-    expect(button).toBeInTheDocument();
-    const modal = getByTitle('Privacy Act Statement');
+    const vaButton = container.querySelector('va-button');
+    expect(vaButton).toBeInTheDocument();
+    const modal = screen.getByTitle('Privacy Act Statement');
     expect(modal).toHaveAttribute('visible', 'false');
-    button.click();
+    (vaButton as HTMLElement).click();
     expect(modal).toHaveAttribute('visible', 'true');
   });
 });
