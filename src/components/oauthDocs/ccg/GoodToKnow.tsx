@@ -15,8 +15,8 @@ const GoodToKnow: FC = () => (
         place. If you have questions, <Link to={SUPPORT_CONTACT_PATH}>contact us</Link>.
       </li>
       <li>
-        This page provides examples that show authorization server URLs in the sandbox environment,
-        unless otherwise indicated, you can get production auth server URLs from the API
+        This page provides examples that show authorization server URLs in the sandbox environment.
+        Unless otherwise indicated, you can get production auth server URLs from the API
         documentation.
       </li>
       <li>

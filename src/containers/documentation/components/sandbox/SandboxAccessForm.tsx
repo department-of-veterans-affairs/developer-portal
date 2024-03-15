@@ -11,6 +11,7 @@ import {
 } from '../../../../components';
 import { OAuthAcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthCcgAppInfo';
+import { OmbInfo } from '../../../../components/ombInfo/OmbInfo';
 import { validateForm } from './validateForm';
 
 export interface Values {
@@ -247,6 +248,8 @@ export const SandboxAccessForm = ({
             <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
               {isSubmitting ? 'Sending...' : 'Submit'}
             </button>
+            <hr />
+            <OmbInfo expDate="11/30/2026" ombNumber="2900-0770" resBurden={9} />
           </Form>
         );
       }}
