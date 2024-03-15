@@ -34,7 +34,7 @@ export const OmbInfo = ({ expDate, ombNumber, resBurden }: OmbInfoProps): JSX.El
         uswds
         onCloseEvent={(): void => setModalVisible(false)}
         visible={modalVisible}
-        title="Privacy Act Statement"
+        modalTitle="Privacy Act Statement"
       >
         <p>
           This information is being collected in accordance with section 3507 of the Paperwork

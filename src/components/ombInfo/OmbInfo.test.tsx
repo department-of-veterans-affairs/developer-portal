@@ -16,7 +16,7 @@ describe('OmbIndo', () => {
     expect(resBurden).toBeInTheDocument();
     const vaButton = container.querySelector('va-button');
     expect(vaButton).toBeInTheDocument();
-    const modal = screen.getByTitle('Privacy Act Statement');
+    const modal = container.querySelector('va-modal');
     expect(modal).toHaveAttribute('visible', 'false');
     (vaButton as HTMLElement).click();
     expect(modal).toHaveAttribute('visible', 'true');
