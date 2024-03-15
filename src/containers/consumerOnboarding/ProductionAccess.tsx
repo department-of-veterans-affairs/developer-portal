@@ -10,7 +10,6 @@ import { faAngleDoubleLeft, faAngleDoubleRight } from '@fortawesome/free-solid-s
 import {
   VaAlert,
   VaModal,
-  VaOmbInfo,
   VaSegmentedProgressBar,
 } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
@@ -25,6 +24,7 @@ import vaLogo from '../../assets/VaSeal.png';
 import hiFive from '../../assets/high-five.svg';
 import { LPB_FORGERY_TOKEN, LPB_PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
+import { OmbInfo } from '../../components/ombInfo/OmbInfo';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -472,7 +472,7 @@ const ProductionAccess: FC = () => {
                 )}
               </div>
               <hr />
-              <VaOmbInfo exp-date="11/30/2026" omb-number="2900-0770" res-burden={30} />
+              <OmbInfo expDate="11/30/2026" ombNumber="2900-0770" resBurden={30} />
             </Form>
           </Formik>
           <VaModal

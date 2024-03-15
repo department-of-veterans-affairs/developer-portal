@@ -1,7 +1,4 @@
-import {
-  VaAlert,
-  VaOmbInfo,
-} from '@department-of-veterans-affairs/component-library/dist/react-bindings';
+import { VaAlert } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React, { ReactNode, useState } from 'react';
@@ -13,6 +10,7 @@ import { makeRequest, ResponseType } from '../../../utils/makeRequest';
 import './ContactUsForm.scss';
 import { ContactUsFormState, FormType, SubmissionData } from '../../../types/forms/contactUsForm';
 import { ScrollToFirstError } from '../../../utils/ScrollToFirstError';
+import { OmbInfo } from '../../../components/ombInfo/OmbInfo';
 import ConsumerFormFields from './components/ConsumerFormFields';
 import ContactDetailsFormFields from './components/ContactDetailsFormFields';
 import PublishingFormFields from './components/PublishingFormFields';
@@ -144,7 +142,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
             {isSubmitting ? 'Sending...' : 'Send to developer support'}
           </button>
           <hr />
-          <VaOmbInfo exp-date="11/30/2026" omb-number="2900-0770" res-burden={6} />
+          <OmbInfo expDate="11/30/2026" ombNumber="2900-0770" resBurden={6} />
           {submissionError && (
             <VaAlert status="error" visible uswds>
               <p className="vads-u-margin-y--0">

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { Form, Formik } from 'formik';
-import { VaOmbInfo } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
 import { DevApplicationRequest, DevApplicationResponse } from '../../../../types/forms/apply';
 import { HttpErrorResponse, ResponseType, makeRequest } from '../../../../utils/makeRequest';
 import {
@@ -12,6 +11,7 @@ import {
 } from '../../../../components';
 import { OAuthAcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthCcgAppInfo';
+import { OmbInfo } from '../../../../components/ombInfo/OmbInfo';
 import { validateForm } from './validateForm';
 
 export interface Values {
@@ -249,7 +249,7 @@ export const SandboxAccessForm = ({
               {isSubmitting ? 'Sending...' : 'Submit'}
             </button>
             <hr />
-            <VaOmbInfo exp-date="11/30/2026" omb-number="2900-0770" res-burden={9} />
+            <OmbInfo expDate="11/30/2026" ombNumber="2900-0770" resBurden={9} />
           </Form>
         );
       }}
