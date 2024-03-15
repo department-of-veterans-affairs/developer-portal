@@ -31,7 +31,6 @@ export const OmbInfo = ({ expDate, ombNumber, resBurden }: OmbInfoProps): JSX.El
         secondary
       />
       <VaModal
-        large
         uswds
         onCloseEvent={(): void => setModalVisible(false)}
         visible={modalVisible}
