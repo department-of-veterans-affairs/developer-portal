@@ -44,7 +44,7 @@ export const Attestation = ({ api, children }: AttestationProps): JSX.Element =>
       isSubmitting &&
       errors.attestationChecked &&
       !values.attestationChecked &&
-      values.termsOfService
+      Object.keys(errors).length === 1
     ) {
       if (isAttestationFirstOpen) {
         setFieldError('attestationChecked', undefined);
@@ -52,16 +52,9 @@ export const Attestation = ({ api, children }: AttestationProps): JSX.Element =>
       setAttestationModalVisible(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [errors.attestationChecked, isSubmitting]);
+  }, [errors, isSubmitting, values]);
 
-  let formattedApi: string;
-  if (api.includes('/')) {
-    // production form uses the format 'oauth/apiname'
-    formattedApi = api.split('/')[1];
-  } else {
-    // sandbox form uses the altID
-    formattedApi = api;
-  }
+  const formattedApi = api.split('/')[1];
   const apiName =
     getAllApis().find((a: APIDescription) => a.altID === formattedApi || a.urlSlug === formattedApi)
       ?.name ?? '';
