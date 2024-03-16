@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useFormikContext } from 'formik';
 import { VaModal } from '@department-of-veterans-affairs/component-library/dist/react-bindings';
+import { useFormikContext } from 'formik';
 import { CheckboxRadioField } from '../../components';
 import { useModalController } from '../../hooks';
 import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
+import { Values as SandboxValues } from '../documentation/components/sandbox';
 import { Values } from './ProductionAccess';
 
 interface AttestationProps {
@@ -13,15 +14,12 @@ interface AttestationProps {
 }
 
 export const Attestation = ({ api, children }: AttestationProps): JSX.Element => {
-  const { errors, isSubmitting, values, setFieldError, setFieldValue } = useFormikContext<Values>();
-  const { apis } = values;
+  const { errors, isSubmitting, values, setFieldError, setFieldValue } = useFormikContext<
+    Values | SandboxValues
+  >();
   const { modalVisible: attestationModalVisible, setModalVisible: setAttestationModalVisible } =
     useModalController();
   const [isAttestationFirstOpen, setIsAttestationFirstOpen] = useState(true);
-  const formattedApi = api.split('/')[1];
-  const apiName =
-    getAllApis().find((a: APIDescription) => a.altID === formattedApi || a.urlSlug === formattedApi)
-      ?.name ?? '';
 
   const handleConfirmClick = (): void => {
     if (!values.attestationChecked) {
@@ -44,7 +42,6 @@ export const Attestation = ({ api, children }: AttestationProps): JSX.Element =>
   useEffect(() => {
     if (
       isSubmitting &&
-      apis.includes(api) &&
       errors.attestationChecked &&
       !values.attestationChecked &&
       values.termsOfService
@@ -57,15 +54,17 @@ export const Attestation = ({ api, children }: AttestationProps): JSX.Element =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors.attestationChecked, isSubmitting]);
 
-  // Resets the attestation checkbox if the user removes the Benefits Intake API from their selection
-  useEffect(() => {
-    if (!apis.includes(api) && values.attestationChecked) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      setFieldValue('attestationChecked', false, false);
-      setIsAttestationFirstOpen(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apis]);
+  let formattedApi: string;
+  if (api.includes('/')) {
+    // production form uses the format 'oauth/apiname'
+    formattedApi = api.split('/')[1];
+  } else {
+    // sandbox form uses the altID
+    formattedApi = api;
+  }
+  const apiName =
+    getAllApis().find((a: APIDescription) => a.altID === formattedApi || a.urlSlug === formattedApi)
+      ?.name ?? '';
 
   return (
     <VaModal

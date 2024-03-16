@@ -11,9 +11,11 @@ import {
 } from '../../../../components';
 import { OAuthAcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthCcgAppInfo';
+import { Attestation } from '../../../../containers/consumerOnboarding/Attestation';
 import { validateForm } from './validateForm';
 
 export interface Values {
+  attestationChecked?: boolean;
   description: string;
   email: string;
   firstName: string;
@@ -27,6 +29,7 @@ export interface Values {
 }
 
 const initialValues = {
+  attestationChecked: false,
   description: '',
   email: '',
   firstName: '',
@@ -192,7 +195,6 @@ export const SandboxAccessForm = ({
               name="description"
               className="vads-u-margin-top--4"
             />
-
             {authTypes.length > 1 && (
               <FieldSet
                 className="vads-u-margin-top--4"
@@ -229,7 +231,6 @@ export const SandboxAccessForm = ({
                 )}
               </FieldSet>
             )}
-
             {authType === 'acg' && (
               <OAuthAcgAppInfo
                 acgPkceAuthUrl={acgPkceAuthUrl}
@@ -242,8 +243,8 @@ export const SandboxAccessForm = ({
                 multipleTypes={authTypes.length > 1}
               />
             )}
-
             <TermsOfServiceCheckbox termsOfServiceUrl={termsOfServiceUrl} />
+            <Attestation api="benefits" /> {/* // Benefits Intake API */}
             <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
               {isSubmitting ? 'Sending...' : 'Submit'}
             </button>

@@ -31,6 +31,10 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.oAuthPublicKey = validateOAuthPublicKey(values.oAuthPublicKey);
   }
 
+  if (values.typeAndApi.split('/')[1] === 'benefits' && !values.attestationChecked) {
+    errors.attestationChecked = 'You must attest to request production access for this API.';
+  }
+
   /*
    * This removes any fields that have an 'undefined' error (as returned by validatePresence)
    * This is needed, otherwise formik thinks there is still an error
