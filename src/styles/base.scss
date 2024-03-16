@@ -157,3 +157,11 @@ input:focus::placeholder {
     box-shadow: none;
   }
 }
+hr:has(+ va-omb-info),
+hr:has(+ .dev-portal-omb-info) {
+  border-bottom: 0;
+}
+va-omb-info,
+.dev-portal-omb-info {
+  margin-top: 32px;
+}
