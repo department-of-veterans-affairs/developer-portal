@@ -1,16 +1,27 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useFormikContext } from 'formik';
 import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../../components';
 import { Values } from '../../ProductionAccess';
 import { TERMS_OF_SERVICE_PATH } from '../../../../types/constants/paths';
 import { Attestation } from '../../Attestation';
+import { productionAttestationApis } from '../../validationSchema';
 import { SelectedAPIs } from './SelectedApis';
 import './Verification.scss';
 
 const Verification: FC = () => {
   const {
     values: { apis },
+    setFieldValue,
   } = useFormikContext<Values>();
+
+  // Resets attestationChecked value if user unselects all APIs that require attestation
+  useEffect(() => {
+    if (!productionAttestationApis.some(api => apis.includes(api))) {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      setFieldValue('attestationChecked', false, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apis]);
 
   return (
     <fieldset>
