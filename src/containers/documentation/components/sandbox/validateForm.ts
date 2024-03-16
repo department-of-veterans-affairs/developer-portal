@@ -9,6 +9,8 @@ import {
 } from '../../../../utils/validators';
 import { Values } from './SandboxAccessForm';
 
+export const sandboxAttestationApis = ['apikey/benefits'];
+
 export const validateForm = (values: Values): FormikErrors<Values> => {
   const errors: FormikErrors<Values> = {
     email: validateEmail(values.email),
@@ -31,7 +33,7 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.oAuthPublicKey = validateOAuthPublicKey(values.oAuthPublicKey);
   }
 
-  if (values.typeAndApi.split('/')[1] === 'benefits' && !values.attestationChecked) {
+  if (sandboxAttestationApis.some(api => values.typeAndApi === api) && !values.attestationChecked) {
     errors.attestationChecked = 'You must attest to request production access for this API.';
   }
 
