@@ -244,7 +244,7 @@ export const SandboxAccessForm = ({
               />
             )}
             <TermsOfServiceCheckbox termsOfServiceUrl={termsOfServiceUrl} />
-            <Attestation api="benefits" /> {/* // Benefits Intake API */}
+            <Attestation api="apikey/benefits" /> {/* // Benefits Intake API */}
             <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
               {isSubmitting ? 'Sending...' : 'Submit'}
             </button>
