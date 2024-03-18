@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from '../../../../store';
-import { PUBLISHING_STANDARDS_URL } from '../../../../types/constants/paths';
+import { PUBLISHING_REQUIREMENTS_URL } from '../../../../types/constants/paths';
 import { PublishingIntroduction } from './PublishingIntroduction';
 
 describe('PublishingIntroduction', () => {
@@ -26,7 +26,7 @@ describe('PublishingIntroduction', () => {
     it.each([
       ['How onboarding works', '/api-publishing/process'],
       ['Contact us', '/support/contact-us'],
-      ['Requirements for APIs', PUBLISHING_STANDARDS_URL],
+      ['Requirements for APIs', PUBLISHING_REQUIREMENTS_URL],
     ])('has the "%s" card link', (title: string, url: string) => {
       const cardLink = screen.getByRole('link', { name: title });
       expect(cardLink).toBeInTheDocument();
