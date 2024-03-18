@@ -128,7 +128,7 @@ const NavBar = (props: NavBarProps): JSX.Element => {
             </MainNavItem>
             <SubNav name="Onboarding">
               <SubNavEntry onClick={onMobileNavClose} to={CONSUMER_PATH} id="onboarding-overview">
-                API Consumer onboarding
+                API consumer onboarding
               </SubNavEntry>
               <SubNavEntry onClick={onMobileNavClose} to={CONSUMER_PROD_PATH} id="prod-access">
                 Request production access
