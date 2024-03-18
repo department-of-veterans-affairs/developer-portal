@@ -27,7 +27,7 @@ describe('Attestation', () => {
     const { container } = render(
       <Provider store={store}>
         <Formik initialValues={{}} onSubmit={jest.fn()}>
-          <Attestation api="somevalue/rings" />
+          <Attestation api={fakeCategories.lotr.apis[1]} />
         </Formik>
       </Provider>,
     );
@@ -44,7 +44,7 @@ describe('Attestation', () => {
     const { container } = render(
       <Provider store={store}>
         <Formik initialValues={{}} onSubmit={jest.fn()}>
-          <Attestation api="somevalue/rings" />
+          <Attestation api={fakeCategories.lotr.apis[1]} />
         </Formik>
       </Provider>,
     );
@@ -63,7 +63,7 @@ describe('Attestation', () => {
     render(
       <Provider store={store}>
         <Formik initialValues={{}} onSubmit={jest.fn()}>
-          <Attestation api="somevalue/rings">
+          <Attestation api={fakeCategories.lotr.apis[1]}>
             <p>Child text</p>
           </Attestation>
         </Formik>

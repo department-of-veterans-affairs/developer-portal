@@ -3,13 +3,12 @@ import { VaModal } from '@department-of-veterans-affairs/component-library/dist/
 import { useFormikContext } from 'formik';
 import { CheckboxRadioField } from '../../components';
 import { useModalController } from '../../hooks';
-import { getAllApis } from '../../apiDefs/query';
 import { APIDescription } from '../../apiDefs/schema';
 import { Values as SandboxValues } from '../documentation/components/sandbox';
 import { Values } from './ProductionAccess';
 
 interface AttestationProps {
-  api: string;
+  api: APIDescription;
   children?: React.ReactNode;
 }
 
@@ -54,17 +53,12 @@ export const Attestation = ({ api, children }: AttestationProps): JSX.Element =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [errors, isSubmitting, values]);
 
-  const formattedApi = api.split('/')[1];
-  const apiName =
-    getAllApis().find((a: APIDescription) => a.altID === formattedApi || a.urlSlug === formattedApi)
-      ?.name ?? '';
-
   return (
     <VaModal
       large
       id="attestation-modal"
       forcedModal
-      modalTitle={`Requirements for the ${apiName}`}
+      modalTitle={`Requirements for the ${api.name}`}
       onCloseEvent={(): void => setAttestationModalVisible(false)}
       visible={attestationModalVisible}
       primaryButtonText="Confirm"
@@ -76,9 +70,9 @@ export const Attestation = ({ api, children }: AttestationProps): JSX.Element =>
       {children ?? (
         <>
           <p>
-            By accessing or using the <span className="vads-u-font-weight--bold">{apiName}</span> in
-            the production environment provided by VA, you must affirm and attest that the end user
-            of your application is:
+            By accessing or using the <span className="vads-u-font-weight--bold">{api.name}</span>{' '}
+            in the production environment provided by VA, you must affirm and attest that the end
+            user of your application is:
           </p>
           <ol>
             <li>A VA benefits claimant;</li>

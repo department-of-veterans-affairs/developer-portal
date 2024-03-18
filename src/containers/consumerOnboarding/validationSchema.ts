@@ -14,7 +14,7 @@ import yup from '../../utils/yup-extended';
 const phoneRegex =
   /^(?:\([2-9]\d{2}\)\ ?|[2-9]\d{2}(?:\-?|\ ?|\.?))[2-9]\d{2}[- .]?\d{4}((\ )?(\()?(ext|x|extension)([- .:])?\d{1,6}(\))?)?$/;
 const isListAndLoopEnabled = process.env.REACT_APP_LIST_AND_LOOP_ENABLED === 'true';
-export const productionAttestationApis = ['apikey/benefits'];
+export const attestationApis = ['benefits'];
 
 const validationSchema = [
   yup.object().shape({
@@ -24,7 +24,10 @@ const validationSchema = [
       .min(1, 'Choose at least one API.')
       .required('Choose at least one API.'),
     attestationChecked: yup.boolean().when('apis', {
-      is: (value: string[]) => productionAttestationApis.some(api => value.includes(api)),
+      is: (value: string[]) => {
+        const formattedApis = value.map(val => val.split('/')[1]);
+        return attestationApis.some(api => formattedApis.includes(api));
+      },
       otherwise: () => yup.boolean(),
       then: () =>
         yup

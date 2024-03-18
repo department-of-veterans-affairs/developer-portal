@@ -4,7 +4,9 @@ import { CheckboxRadioField, FieldSet, TermsOfServiceCheckbox } from '../../../.
 import { Values } from '../../ProductionAccess';
 import { TERMS_OF_SERVICE_PATH } from '../../../../types/constants/paths';
 import { Attestation } from '../../Attestation';
-import { productionAttestationApis } from '../../validationSchema';
+import { attestationApis } from '../../validationSchema';
+import { getAllApis } from '../../../../apiDefs/query';
+import { APIDescription } from '../../../../apiDefs/schema';
 import { SelectedAPIs } from './SelectedApis';
 import './Verification.scss';
 
@@ -16,12 +18,21 @@ const Verification: FC = () => {
 
   // Resets attestationChecked value if user unselects all APIs that require attestation
   useEffect(() => {
-    if (!productionAttestationApis.some(api => apis.includes(api))) {
+    if (!attestationApis.some(api => apis.includes(api))) {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
       setFieldValue('attestationChecked', false, false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apis]);
+
+  const formattedApisValues = apis.map(apiValue => apiValue.split('/')[1]);
+  const includesAttestationApi = attestationApis.find(attApi =>
+    formattedApisValues.includes(attApi),
+  );
+  const attestationApi = getAllApis().find(
+    (a: APIDescription) =>
+      a.altID === includesAttestationApi || a.urlSlug === includesAttestationApi,
+  );
 
   return (
     <fieldset>
@@ -59,7 +70,7 @@ const Verification: FC = () => {
       <div className="verification-divider vads-u-margin-top--4 vads-u-margin-bottom--1p5" />
       <SelectedAPIs selectedApis={apis} />
       <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
-      <Attestation api="apikey/benefits" /> {/* // Benefits Intake API */}
+      {!!includesAttestationApi && attestationApi && <Attestation api={attestationApi} />}
     </fieldset>
   );
 };
