@@ -11,9 +11,12 @@ import {
 } from '../../../../components';
 import { OAuthAcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthCcgAppInfo';
-import { Attestation } from '../../../../containers/consumerOnboarding/Attestation';
 import { OmbInfo } from '../../../../components/ombInfo/OmbInfo';
+import { getAllApis } from '../../../../apiDefs/query';
+import { APIDescription } from '../../../../apiDefs/schema';
+import { attestationApis } from '../../../../containers/consumerOnboarding/validationSchema';
 import { validateForm } from './validateForm';
+import { SandboxAttestation } from './SandboxAttestation';
 
 export interface Values {
   attestationChecked?: boolean;
@@ -144,6 +147,13 @@ export const SandboxAccessForm = ({
     initialValues.typeAndApi = `${authTypes[0]}/${apiIdentifier}`;
   }
 
+  const includesAttestationApi = attestationApis.some(
+    attestationApi => attestationApi === apiIdentifier,
+  );
+  const api = getAllApis().find(
+    (a: APIDescription) => a.altID === apiIdentifier || a.urlSlug === apiIdentifier,
+  );
+
   return (
     <Formik
       initialValues={initialValues}
@@ -245,7 +255,7 @@ export const SandboxAccessForm = ({
               />
             )}
             <TermsOfServiceCheckbox termsOfServiceUrl={termsOfServiceUrl} />
-            <Attestation api="apikey/benefits" /> {/* // Benefits Intake API */}
+            {includesAttestationApi && api && <SandboxAttestation api={api} />}
             <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
               {isSubmitting ? 'Sending...' : 'Submit'}
             </button>

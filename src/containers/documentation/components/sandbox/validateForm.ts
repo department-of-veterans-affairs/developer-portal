@@ -7,9 +7,8 @@ import {
   validateOAuthApplicationType,
   validateOAuthPublicKey,
 } from '../../../../utils/validators';
+import { attestationApis } from '../../../../containers/consumerOnboarding/validationSchema';
 import { Values } from './SandboxAccessForm';
-
-export const sandboxAttestationApis = ['apikey/benefits'];
 
 export const validateForm = (values: Values): FormikErrors<Values> => {
   const errors: FormikErrors<Values> = {
@@ -33,8 +32,11 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
     errors.oAuthPublicKey = validateOAuthPublicKey(values.oAuthPublicKey);
   }
 
-  if (sandboxAttestationApis.some(api => values.typeAndApi === api) && !values.attestationChecked) {
-    errors.attestationChecked = 'You must attest to request production access for this API.';
+  if (
+    attestationApis.some(api => values.typeAndApi.split('/')[1] === api) &&
+    !values.attestationChecked
+  ) {
+    errors.attestationChecked = 'You must acknowledge the above to get sandbox access to this API.';
   }
 
   /*
