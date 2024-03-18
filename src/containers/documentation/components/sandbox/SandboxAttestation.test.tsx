@@ -6,7 +6,7 @@ import { SandboxAttestation } from './SandboxAttestation';
 
 describe('SandboxAttestation', () => {
   it('renders', () => {
-    render(<SandboxAttestation api={fakeCategories.lotr.apis[1]} />);
+    render(<SandboxAttestation api={fakeCategories.lotr.apis[0]} />);
     expect(screen.getByText(/Rings API/)).toBeInTheDocument();
   });
 });
