@@ -254,8 +254,8 @@ export const SandboxAccessForm = ({
                 multipleTypes={authTypes.length > 1}
               />
             )}
-            <TermsOfServiceCheckbox termsOfServiceUrl={termsOfServiceUrl} />
             {includesAttestationApi && api && <SandboxAttestation api={api} />}
+            <TermsOfServiceCheckbox termsOfServiceUrl={termsOfServiceUrl} />
             <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
               {isSubmitting ? 'Sending...' : 'Submit'}
             </button>
