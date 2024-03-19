@@ -5,7 +5,7 @@ import { Values } from '../../ProductionAccess';
 import { TERMS_OF_SERVICE_PATH } from '../../../../types/constants/paths';
 import { Attestation } from '../../Attestation';
 import { attestationApis } from '../../validationSchema';
-import { getAllApis } from '../../../../apiDefs/query';
+import { lookupAttestationApi, lookupAttestationIdentifier } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
 import { SelectedAPIs } from './SelectedApis';
 import './Verification.scss';
@@ -25,14 +25,12 @@ const Verification: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apis]);
 
+  let attestationApi: APIDescription | undefined;
   const formattedApisValues = apis.map(apiValue => apiValue.split('/')[1]);
-  const includesAttestationApi = attestationApis.find(attApi =>
-    formattedApisValues.includes(attApi),
-  );
-  const attestationApi = getAllApis().find(
-    (a: APIDescription) =>
-      a.altID === includesAttestationApi || a.urlSlug === includesAttestationApi,
-  );
+  const attestationIdentifier = lookupAttestationIdentifier(formattedApisValues);
+  if (attestationIdentifier) {
+    attestationApi = lookupAttestationApi(attestationIdentifier);
+  }
 
   return (
     <fieldset>
@@ -70,7 +68,7 @@ const Verification: FC = () => {
       <div className="verification-divider vads-u-margin-top--4 vads-u-margin-bottom--1p5" />
       <SelectedAPIs selectedApis={apis} />
       <TermsOfServiceCheckbox termsOfServiceUrl={TERMS_OF_SERVICE_PATH} />
-      {!!includesAttestationApi && attestationApi && <Attestation api={attestationApi} />}
+      {attestationApi && <Attestation api={attestationApi} />}
     </fieldset>
   );
 };

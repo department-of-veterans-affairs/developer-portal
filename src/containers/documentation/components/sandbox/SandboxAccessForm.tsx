@@ -12,9 +12,8 @@ import {
 import { OAuthAcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthCcgAppInfo';
 import { OmbInfo } from '../../../../components/ombInfo/OmbInfo';
-import { getAllApis } from '../../../../apiDefs/query';
+import { lookupAttestationApi, lookupAttestationIdentifier } from '../../../../apiDefs/query';
 import { APIDescription } from '../../../../apiDefs/schema';
-import { attestationApis } from '../../../../containers/consumerOnboarding/validationSchema';
 import { validateForm } from './validateForm';
 import { SandboxAttestation } from './SandboxAttestation';
 
@@ -147,12 +146,11 @@ export const SandboxAccessForm = ({
     initialValues.typeAndApi = `${authTypes[0]}/${apiIdentifier}`;
   }
 
-  const includesAttestationApi = attestationApis.some(
-    attestationApi => attestationApi === apiIdentifier,
-  );
-  const api = getAllApis().find(
-    (a: APIDescription) => a.altID === apiIdentifier || a.urlSlug === apiIdentifier,
-  );
+  let attestationApi: APIDescription | undefined;
+  const attestationIdentifier = lookupAttestationIdentifier([apiIdentifier]);
+  if (attestationIdentifier) {
+    attestationApi = lookupAttestationApi(attestationIdentifier);
+  }
 
   return (
     <Formik
@@ -254,7 +252,7 @@ export const SandboxAccessForm = ({
                 multipleTypes={authTypes.length > 1}
               />
             )}
-            {includesAttestationApi && api && <SandboxAttestation api={api} />}
+            {attestationApi && <SandboxAttestation api={attestationApi} />}
             <TermsOfServiceCheckbox termsOfServiceUrl={termsOfServiceUrl} />
             <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
               {isSubmitting ? 'Sending...' : 'Submit'}
