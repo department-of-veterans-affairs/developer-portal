@@ -8,7 +8,7 @@ interface SandboxAttestationProps {
 }
 
 export const SandboxAttestation = ({ api }: SandboxAttestationProps): JSX.Element => (
-  <div className="vads-u-margin-top--7 vads-u-padding--1 vads-u-background-color--gray-lightest">
+  <div className="sandbox-attestation-wrapper vads-u-margin-top--7 vads-u-padding--2 vads-u-background-color--gray-lightest">
     <span className="vads-u-margin-top--0 vads-u-font-weight--bold">
       Requirements for the {api.name}
     </span>
