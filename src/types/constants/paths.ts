@@ -24,7 +24,7 @@ export const CONSUMER_ROUTER_PATHS: string[] = [
 export const PUBLISHING_PATH = '/api-publishing';
 export const PUBLISHING_ONBOARDING_PATH = `${PUBLISHING_PATH}/process`;
 export const PUBLISHING_REQUIREMENTS_URL =
-  'https://code.va.gov/docs/default/component/lighthouse-api-standards/';
+  'https://code.va.gov/docs/default/component/va-api-standards/';
 export const PUBLISHING_ROUTER_PATHS: string[] = [
   PUBLISHING_PATH,
   PUBLISHING_ONBOARDING_PATH,
