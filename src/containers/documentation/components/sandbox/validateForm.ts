@@ -7,6 +7,7 @@ import {
   validateOAuthApplicationType,
   validateOAuthPublicKey,
 } from '../../../../utils/validators';
+import { attestationApis } from '../../../../containers/consumerOnboarding/validationSchema';
 import { Values } from './SandboxAccessForm';
 
 export const validateForm = (values: Values): FormikErrors<Values> => {
@@ -29,6 +30,13 @@ export const validateForm = (values: Values): FormikErrors<Values> => {
 
   if (values.typeAndApi.startsWith('ccg')) {
     errors.oAuthPublicKey = validateOAuthPublicKey(values.oAuthPublicKey);
+  }
+
+  if (
+    attestationApis.some(api => values.typeAndApi.split('/')[1] === api) &&
+    !values.attestationChecked
+  ) {
+    errors.attestationChecked = 'You must acknowledge the above to get sandbox access to this API.';
   }
 
   /*

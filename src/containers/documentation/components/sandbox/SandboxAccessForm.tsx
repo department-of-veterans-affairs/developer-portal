@@ -12,9 +12,13 @@ import {
 import { OAuthAcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthAcgAppInfo';
 import { OAuthCcgAppInfo } from '../../../consumerOnboarding/components/sandbox/OAuthCcgAppInfo';
 import { OmbInfo } from '../../../../components/ombInfo/OmbInfo';
+import { lookupAttestationApi, lookupAttestationIdentifier } from '../../../../apiDefs/query';
+import { APIDescription } from '../../../../apiDefs/schema';
 import { validateForm } from './validateForm';
+import { SandboxAttestation } from './SandboxAttestation';
 
 export interface Values {
+  attestationChecked?: boolean;
   description: string;
   email: string;
   firstName: string;
@@ -28,6 +32,7 @@ export interface Values {
 }
 
 const initialValues = {
+  attestationChecked: false,
   description: '',
   email: '',
   firstName: '',
@@ -141,6 +146,12 @@ export const SandboxAccessForm = ({
     initialValues.typeAndApi = `${authTypes[0]}/${apiIdentifier}`;
   }
 
+  let attestationApi: APIDescription | undefined;
+  const attestationIdentifier = lookupAttestationIdentifier([apiIdentifier]);
+  if (attestationIdentifier) {
+    attestationApi = lookupAttestationApi(attestationIdentifier);
+  }
+
   return (
     <Formik
       initialValues={initialValues}
@@ -193,7 +204,6 @@ export const SandboxAccessForm = ({
               name="description"
               className="vads-u-margin-top--4"
             />
-
             {authTypes.length > 1 && (
               <FieldSet
                 className="vads-u-margin-top--4"
@@ -230,7 +240,6 @@ export const SandboxAccessForm = ({
                 )}
               </FieldSet>
             )}
-
             {authType === 'acg' && (
               <OAuthAcgAppInfo
                 acgPkceAuthUrl={acgPkceAuthUrl}
@@ -243,7 +252,7 @@ export const SandboxAccessForm = ({
                 multipleTypes={authTypes.length > 1}
               />
             )}
-
+            {attestationApi && <SandboxAttestation api={attestationApi} />}
             <TermsOfServiceCheckbox termsOfServiceUrl={termsOfServiceUrl} />
             <button onClick={handleSubmitButtonClick} type="submit" className="vads-u-width--auto">
               {isSubmitting ? 'Sending...' : 'Submit'}

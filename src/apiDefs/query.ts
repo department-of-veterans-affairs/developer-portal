@@ -15,6 +15,7 @@
 
 import store from '../store';
 import { apiLoadingState } from '../types/constants';
+import { attestationApis } from '../containers/consumerOnboarding/validationSchema';
 import { isHostedApiEnabled } from './env';
 import { isApiDeactivated } from './deprecated';
 import { APICategories, APICategory, APIDescription, VaInternalOnly } from './schema';
@@ -119,6 +120,12 @@ const lookupApiByFragment = (apiKey: string): APIDescription | null => {
   return apiResult ?? null;
 };
 
+const lookupAttestationApi = (api: string): APIDescription | undefined =>
+  getAllApis().find((a: APIDescription) => a.altID === api || a.urlSlug === api);
+
+const lookupAttestationIdentifier = (apis: string[]): string | undefined =>
+  attestationApis.find(api => apis.includes(api));
+
 const apisFor = (
   selectedApiList: string[],
   authRegex: RegExp = /^(acg|apikey|ccg)\/[a-z]{1}/,
@@ -197,4 +204,6 @@ export {
   includesInternalSponsorshipAPI,
   onlyOpenDataAPIs,
   includesOpenDataAPI,
+  lookupAttestationApi,
+  lookupAttestationIdentifier,
 };

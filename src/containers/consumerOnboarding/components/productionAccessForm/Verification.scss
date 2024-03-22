@@ -1,8 +1,12 @@
 @import '../../../../styles/variables';
 
 .verification-divider {
-    background-color: $color-gray-light;
-    height: .1rem;
-    max-width: 300px;
-    width: 100%;
+  background-color: $color-gray-light;
+  height: 0.1rem;
+  max-width: 300px;
+  width: 100%;
+}
+
+label[for='attestationCheckedFormField'] {
+  max-width: unset;
 }

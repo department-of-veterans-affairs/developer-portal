@@ -57,6 +57,30 @@ describe('Production Access Form', () => {
     cy.get('a[href="/onboarding/production-access-application"]').click();
   });
 
+  it('Test Attestation for Benefits Intake API', () => {
+    cy.get('#isUSBasedCompanyFormFieldyes').click();
+    cy.get('#is508CompliantFormFieldyes').click();
+    cy.get('#apisFormFieldapikeybenefits').click();
+    cy.get('#termsOfServiceFormField').click();
+    cy.get('#attestation-modal').should('not.be.visible');
+    cy.get('#main button[type="submit"]').click();
+    cy.get('#attestation-modal').should('be.visible');
+    cy.get('#attestation-modal')
+      .shadow()
+      .find('h2')
+      .should('have.text', 'Requirements for the Benefits Intake API');
+    cy.get('#attestationCheckedFormField').click();
+    cy.get('#attestation-modal')
+      .shadow()
+      .find('va-button')
+      .shadow()
+      .find('button:contains("Confirm")')
+      .click();
+    cy.get('#attestation-modal').should('not.be.visible');
+    cy.get('#main button[type="submit"]:contains("Continue")').click();
+    cy.get('.usa-input-error').should('have.length', '0');
+  });
+
   it('Test US-based companies only modal', () => {
     cy.get('#isUSBasedCompanyFormFieldno').click();
     cy.get('#is508CompliantFormFieldyes').click();

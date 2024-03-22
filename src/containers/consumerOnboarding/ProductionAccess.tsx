@@ -100,6 +100,7 @@ export interface Values {
   city: string;
   state: string;
   zipCode5: string;
+  attestationChecked?: boolean;
 }
 
 const initialValues: Values = {
@@ -109,6 +110,7 @@ const initialValues: Values = {
   apis: [],
   appDescription: '',
   appName: '',
+  attestationChecked: false,
   breachManagementProcess: '',
   businessModel: '',
   centralizedBackendLog: '',
