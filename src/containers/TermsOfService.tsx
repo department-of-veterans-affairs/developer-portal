@@ -11,7 +11,7 @@ const TermsOfService = (): JSX.Element => (
           <title>Terms of Service</title>
         </Helmet>
         <PageHeader header="VA API Terms of Service" />
-        <p>Last Updated: May 21, 2021</p>
+        <p>Last Updated: March 14, 2024</p>
         <p>
           Thank you for using U.S. Department of Veterans Affairs (VA) APIs. By accessing or using
           our APIs, you are agreeing to the terms below.
@@ -148,10 +148,44 @@ const TermsOfService = (): JSX.Element => (
           You further acknowledge that when records regarding an individual are obtained through a
           VA API, you may not expose that content to other individuals or third parties without
           specific, explicit consent from the individual or his or her authorized representative, or
-          as permitted by applicable law. The terms “individual” and “record” have the meanings
-          given in the Privacy Act at 5 U.S.C. § 552a(a). If you would like more information about
-          the application of the Privacy Policy at VA,{' '}
+          as permitted by applicable law. The terms &quot;individual&quot; and &quot;record&quot;
+          have the meanings given in the Privacy Act at 5 U.S.C. § 552a(a). If you would like more
+          information about the application of the Privacy Policy at VA,{' '}
           <a href="https://www.va.gov/privacy/">click here</a>.
+        </p>
+        <h2 id="authorization-for-ngos">Authorization for VA API Access for NGOs</h2>
+        <p>
+          By accessing a VA API, you, a non-governmental organization (NGO), are entering into a
+          public-private partnership (P3) with VA. VA&apos;s policies relating to entry into a P3
+          are explained in{' '}
+          <a href="https://www.va.gov/vapubs/viewPublication.asp?Pub_ID=803&FType=2">
+            VA Directive 0008
+          </a>
+          .
+        </p>
+        <p>
+          VA&apos;s participation in, or continuation of, a P3 is voluntary. The decision to grant,
+          deny, or discontinue your NGO API access rests solely at VA&apos;s discretion. Upon your
+          request for access, VA initiates a thorough due diligence process, reviewing public
+          information, evaluating details provided by your NGO, and consulting with various VA
+          stakeholders.
+        </p>
+        <p>
+          Following this comprehensive review and consideration of program goals as detailed in
+          Directive 0008 and other factors, VA determines whether to authorize API access. If access
+          is granted, VA conducts ongoing reviews to ensure your NGO continues to operate within the
+          agreed scope of the initial approval.
+        </p>
+        <p>
+          The availability of API access through this process does not establish a right to
+          electronically access VA data through an API. It does not create, and may not be relied
+          upon to create, any right or benefit, substantive or procedural, enforceable at law
+          against the United States or VA.
+        </p>
+        <p>
+          If your NGO&apos;s API access is declined or removed, you typically have an opportunity to
+          submit requests for reconsideration. This process occurs within a specified time period
+          following notice that VA has declined or removed your access.
         </p>
       </div>
     </div>

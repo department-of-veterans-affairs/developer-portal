@@ -15,8 +15,8 @@ import costImage from '../../../../assets/cost.svg';
 import lockImage from '../../../../assets/lock.svg';
 import supportImage from '../../../../assets/support.svg';
 import adoptionImage from '../../../../assets/adoption.svg';
-import { setGeneralStore } from '../../../../features/general/generalStoreSlice';
 import { useAppDispatch } from '../../../../hooks';
+import { setGeneralStore } from '../../../../features/general/generalStoreSlice';
 
 const PublishingIntroduction: FC = () => {
   const dispatch = useAppDispatch();

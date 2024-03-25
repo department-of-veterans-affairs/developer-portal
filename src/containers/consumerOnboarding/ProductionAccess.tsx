@@ -24,6 +24,7 @@ import vaLogo from '../../assets/VaSeal.png';
 import hiFive from '../../assets/high-five.svg';
 import { LPB_FORGERY_TOKEN, LPB_PRODUCTION_ACCESS_URL, yesOrNoValues } from '../../types/constants';
 import { CONSUMER_PROD_PATH, SUPPORT_CONTACT_PATH } from '../../types/constants/paths';
+import { OmbInfo } from '../../components/ombInfo/OmbInfo';
 import {
   BasicInformation,
   PolicyGovernance,
@@ -99,6 +100,7 @@ export interface Values {
   city: string;
   state: string;
   zipCode5: string;
+  attestationChecked?: boolean;
 }
 
 const initialValues: Values = {
@@ -108,6 +110,7 @@ const initialValues: Values = {
   apis: [],
   appDescription: '',
   appName: '',
+  attestationChecked: false,
   breachManagementProcess: '',
   businessModel: '',
   centralizedBackendLog: '',
@@ -368,7 +371,7 @@ const ProductionAccess: FC = () => {
    * COMPONENT
    */
   return (
-    <div className={classNames('vads-l-grid-container', 'vads-u-padding--4', 'prod-access-form')}>
+    <div className={classNames('vads-u-padding--4', 'prod-access-form')}>
       <Helmet>
         <title>Production access form</title>
       </Helmet>
@@ -426,7 +429,7 @@ const ProductionAccess: FC = () => {
                 </>
               )}
               {renderStepContent(activeStep)}
-              <div className="vads-u-margin-y--5">
+              <div className="vads-u-margin-y--4">
                 <button
                   className={classNames(
                     'usa-button',
@@ -458,7 +461,7 @@ const ProductionAccess: FC = () => {
                   </button>
                 )}
               </div>
-              <div>
+              <div className="vads-u-margin-y--4">
                 {activeStep > 0 && (
                   <button
                     className="vads-u-display--block"
@@ -470,6 +473,8 @@ const ProductionAccess: FC = () => {
                   </button>
                 )}
               </div>
+              <hr />
+              <OmbInfo expDate="11/30/2026" ombNumber="2900-0770" resBurden={30} />
             </Form>
           </Formik>
           <VaModal

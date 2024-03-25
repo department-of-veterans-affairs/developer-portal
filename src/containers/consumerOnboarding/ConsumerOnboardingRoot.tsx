@@ -6,7 +6,7 @@ const ConsumerOnboardingRoot = (): JSX.Element => (
   <ContentWithNav
     nav={
       <>
-        <SideNavEntry end name="API Consumer onboarding" to="." />
+        <SideNavEntry end name="API consumer onboarding" to="." />
         <SideNavEntry name="Request production access" to="request-prod-access" />
         <SideNavEntry name="Prepare for the demo" to="prepare-for-and-complete-a-demo" />
         <SideNavEntry name="Working with our APIs" to="working-with-lighthouse-apis" />
