@@ -131,7 +131,7 @@ const ContactUsFormPublishing = ({ onSuccess, defaultType }: ContactUsFormProps)
             />
             <CheckboxRadioField
               type="radio"
-              label="Publish your API to Lighthouse - Internal VA use only"
+              label="Publish your API to VA Developer - Internal VA use only"
               name="type"
               value={FormType.PUBLISHING}
             />
