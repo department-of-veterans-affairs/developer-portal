@@ -21,6 +21,6 @@ export const TestingNotice = (): JSX.Element => (
     <a className="vads-u-color--white" href="https://developer.va.gov">
       developer.va.gov
     </a>{' '}
-    to visit VA Lighthouse.
+    to visit VA API Platform.
   </div>
 );
