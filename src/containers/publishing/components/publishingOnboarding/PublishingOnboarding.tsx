@@ -11,7 +11,7 @@ export const PublishingOnboarding: FC = () => (
     </Helmet>
     <PageHeader header="How publishing works" />
     <p>
-      The process of publishing your API with Lighthouse can seem daunting, but don’t worry. Our
+      The process of publishing your API on VA Developer can seem daunting, but don’t worry. Our
       process is designed to ensure your questions are answered and we are both prepared for your
       API’s go-live day and beyond. Here’s what you can expect during the publishing process.
       Remember, we’re here for you each step of the way.
@@ -28,7 +28,7 @@ export const PublishingOnboarding: FC = () => (
       <li className="process-step list-two">
         <strong>Kickoff meeting</strong>
         <p>
-          We’ll answer many of your questions about API publishing with Lighthouse as part of the
+          We’ll answer many of your questions about API publishing as part of the
           kickoff meeting.
         </p>
       </li>
@@ -71,7 +71,7 @@ export const PublishingOnboarding: FC = () => (
       <thead>
         <tr>
           <th>Your team</th>
-          <th>Lighthouse</th>
+          <th>Our team</th>
           <th>Both teams</th>
         </tr>
       </thead>
@@ -80,7 +80,7 @@ export const PublishingOnboarding: FC = () => (
           <td>
             <ul>
               <li>API background and vision</li>
-              <li>Questions for Lighthouse</li>
+              <li>Questions for us</li>
               <li>Agreements to and questions about our policies and procedures</li>
             </ul>
           </td>
@@ -109,13 +109,13 @@ export const PublishingOnboarding: FC = () => (
     <p>
       We’re here to make sure nothing gets overlooked as we publish your API in the sandbox
       environment and then production. After kickoff, we’ll be with you every step of the way as we
-      both complete tasks to expose your API on Lighthouse. Here’s some of what you can expect.
+      both complete tasks to expose your API on VA Developer. Here’s some of what you can expect.
     </p>
     <table>
       <thead>
         <tr>
           <th>Your team</th>
-          <th>Lighthouse</th>
+          <th>Our team</th>
           <th>Together, we’ll...</th>
         </tr>
       </thead>
@@ -123,7 +123,7 @@ export const PublishingOnboarding: FC = () => (
         <tr>
           <td>
             <ul>
-              <li>Propose mapping between your environments and Lighthouse</li>
+              <li>Propose mapping between your environments and ours.</li>
               <li>Send us any governance and consumer requirements</li>
               <li>Ensure mock data is ready for testing</li>
               <li>Provide a health check endpoint for your API</li>
