@@ -63,7 +63,7 @@ phases:
       # If deploying from release: download and prepare release assets from Github.
       # If deploying from commit hash: download and prepare S3 assets.
       - |
-        if [[ ${RELEASE} ]]; then 
+        if [[ ${RELEASE} ]]; then
           echo "Downloading assets for release ${RELEASE}"
           gh release download ${RELEASE} -p "*.bz2" || exit 1
           # strip release string from asset name
@@ -71,7 +71,7 @@ phases:
           for f in *.bz2; do
             mv ${f} "${f%-${VERSION}.tar.bz2}.tar.bz2"
           done
-        elif [[ ${COMMIT_HASH} ]]; then 
+        elif [[ ${COMMIT_HASH} ]]; then
           # confirm that commit has an archived build
           aws s3 ls s3://${S3_ARCHIVE_BUCKET}/${COMMIT_HASH:0:7}/ || exit 1
           echo "Downloading assets for commit ${COMMIT_HASH}"
@@ -85,13 +85,13 @@ phases:
           if [[ "${env}" == "production" ]] && [[ ! ${MR} ]]; then
             echo "production deployments need a maintenance request prior to deployment!"
             slackpost.sh -t failure "Production deploy aborted. Maintenance Request number was not provided."
-            exit 1 
+            exit 1
           fi
           echo "Deploying to ${env}"
           slackpost.sh -t started "Starting to Deploy ${RELEASE}${COMMIT_HASH} to ${env}."
           # transforming given lower case environment string to uppercase to match the S3 bucket name.
           u_env=$(echo ${env} | tr '[:lower:]' '[:upper:]')
-          S3_BUCKET=S3_${u_env}_BUCKET 
+          S3_BUCKET=S3_${u_env}_BUCKET
           mkdir -p ${env}
           tar xf developer-portal-${env}.tar.bz2 -C ${env} || exit 1
           # add deploy.json file with deployment data
@@ -142,6 +142,7 @@ phases:
         echo 'explore/health/docs/community_care|/explore/api/community-care-eligibility/docs' >> ./redirects.txt
         echo 'explore/health/docs/fhir|/explore/api/patient-health/docs' >> ./redirects.txt
         echo 'explore/health/docs/provider_directory|/explore/api/provider-directory/docs' >> ./redirects.txt
+        echo 'explore/api/patient-health/docs?version=v0-argonaut'|/explore/api/patient-health/docs?version=current' >> ./redirects.txt
         echo 'explore/health/docs/urgent_care|/explore/api/urgent-care-eligibility/docs' >> ./redirects.txt
         echo 'explore/loanGuaranty/docs/lgy_guaranty_remittance|/explore/api/guaranty-remittance/docs' >> ./redirects.txt
         echo 'explore/loanGuaranty/docs/loan_guaranty|/explore/api/loan-guaranty/docs' >> ./redirects.txt

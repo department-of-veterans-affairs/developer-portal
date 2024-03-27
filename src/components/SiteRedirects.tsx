@@ -79,6 +79,10 @@ const SiteRedirects = (): null => {
       old: '/explore/health/docs/fhir',
     },
     {
+      new: '/explore/api/patient-health/docs?version=current',
+      old: '/explore/api/patient-health/docs?version=v0-argonaut',
+    },
+    {
       new: '/explore/api/provider-directory/docs',
       old: '/explore/health/docs/provider_directory',
     },

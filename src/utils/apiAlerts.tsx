@@ -32,13 +32,4 @@ export const apiAlerts = [
     ),
     path: '/explore/api/veteran-service-history-and-eligibility',
   },
-  {
-    content: (
-      <>
-        The Argonaut Revision of the Patient Health API is deprecated and scheduled for deactivation
-        on March 28, 2024. DSTU2 and R4 revisions of the Patient Health API are active.
-      </>
-    ),
-    path: '/explore/api/patient-health',
-  },
 ];
