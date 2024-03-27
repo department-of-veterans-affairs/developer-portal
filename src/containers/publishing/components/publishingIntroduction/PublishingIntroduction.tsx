@@ -36,12 +36,12 @@ const PublishingIntroduction: FC = () => {
       <PageHeader header="Publishing your API" />
       <p>
         <strong>
-          VA Lighthouse Developer Experience works with internal VA teams to publish the APIs they&apos;ve created
-          onto VA Developer.
+          VA Lighthouse Developer Experience works with internal VA teams to publish the APIs
+          they&apos;ve created onto VA Developer.
         </strong>{' '}
-        We are driving innovation to help Veterans control their data and
-        access the benefits they&apos;ve earned. If you are an internal VA team and want to publish
-        your API to help further the goals of the Office of Information and Technology{' '}
+        We are driving innovation to help Veterans control their data and access the benefits
+        they&apos;ve earned. If you are an internal VA team and want to publish your API to help
+        further the goals of the Office of Information and Technology{' '}
         <a href="https://www.oit.va.gov/reports/year-in-review/2020/">
           digital transformation strategy
         </a>
@@ -61,8 +61,8 @@ const PublishingIntroduction: FC = () => {
       </p>
       <h2>VA Developer is your solution</h2>
       <p>
-        Publishing your API on VA Developer shifts the administrative and maintenance burden
-        from your team to ours. We act as your API partner and consultant and are invested in your
+        Publishing your API on VA Developer shifts the administrative and maintenance burden from
+        your team to ours. We act as your API partner and consultant and are invested in your
         team&apos;s success. The benefits of working with us are far-reaching for both you and your
         consumers, including:
       </p>
@@ -74,8 +74,8 @@ const PublishingIntroduction: FC = () => {
         >
           <p>
             Be part of the secure, reliable VA Developer platform with easy integration for your
-            users. Skip the weeks-long, paperwork-intensive processes needed to connect with
-            legacy application interfaces.
+            users. Skip the weeks-long, paperwork-intensive processes needed to connect with legacy
+            application interfaces.
           </p>
         </SectionWithIcon>
         <SectionWithIcon
@@ -103,9 +103,9 @@ const PublishingIntroduction: FC = () => {
         </SectionWithIcon>
         <SectionWithIcon header="Reduced overhead" imageFile={costImage} headerId="overhead">
           <p>
-            Publishing with VA Developer shifts the burden of access control, authentication, consent,
-            rate limiting, and more. You&apos;ll spend your time and effort on tasks that matter
-            most, freeing your resources and reducing overhead.
+            Publishing with VA Developer shifts the burden of access control, authentication,
+            consent, rate limiting, and more. You&apos;ll spend your time and effort on tasks that
+            matter most, freeing your resources and reducing overhead.
           </p>
         </SectionWithIcon>
         <SectionWithIcon header="Security" imageFile={lockImage} headerId="security">
@@ -137,8 +137,8 @@ const PublishingIntroduction: FC = () => {
           url={PUBLISHING_ONBOARDING_PATH}
           callToAction="Learn about API publishing"
         >
-          Curious about our publishing process? Learn more about the steps for publishing on
-          VA Developer.
+          Curious about our publishing process? Learn more about the steps for publishing on VA
+          Developer.
         </CardLink>
         <CardLink
           name="Requirements for APIs"
@@ -147,7 +147,7 @@ const PublishingIntroduction: FC = () => {
           }}
           callToAction="View the API standards"
         >
-          All public-facing APIs must adhere to VA Developer's API Standards.
+          All public-facing APIs must adhere to VA Developer&apos;s API Standards.
         </CardLink>
         <CardLink
           name="Contact us"
