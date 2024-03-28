@@ -2,7 +2,7 @@ name: Pull Request Labels
 on:
   pull_request:
     branches: [master, shutdown-master]
-    types: [opened, labeled, unlabeled, synchronize]
+    types: [opened, labeled, unlabeled, synchronize, reopened, ready_for_review]
   workflow_run:
     workflows: ['Automatically label PRs with content changes']
     types:

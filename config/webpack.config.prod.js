@@ -243,7 +243,6 @@ module.exports = envName => {
                 {
                   loader: require.resolve('@svgr/webpack'),
                   options: {
-                    prettier: false,
                     svgo: false,
                     svgoConfig: {
                       plugins: [{ removeViewBox: false }],

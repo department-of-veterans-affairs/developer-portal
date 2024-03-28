@@ -18,8 +18,8 @@ module.exports = {
       branches: 65,
       functions: 74,
       lines: 85,
-      statements: 85
-    }
+      statements: 85,
+    },
   },
   setupFiles: [
     '<rootDir>/config/polyfills.js',
@@ -32,6 +32,9 @@ module.exports = {
   ],
   testPathIgnorePatterns: [],
   testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    pretendToBeVisual: true,
+  },
   testURL: process.env.TEST_HOST || 'http://localhost:4444',
   transform: {
     '^.+\\.(js|jsx|mjs)$': ['babel-jest', { configFile: './.babelrc' }],
@@ -40,7 +43,9 @@ module.exports = {
     '^.+\\.ya?ml$': '<rootDir>/config/jest/yamlTransform.js',
     '^(?!.*\\.(js|jsx|mjs|css|json|cjs)$)': '<rootDir>/config/jest/fileTransform.js',
   },
-  transformIgnorePatterns: ['/node_modules/(?!(react-syntax-highlighter|swagger-ui|swagger-client)/).+\\.(js|jsx|mjs|ts|tsx)$'],
+  transformIgnorePatterns: [
+    '/node_modules/(?!(react-syntax-highlighter|swagger-ui|swagger-client)/).+\\.(js|jsx|mjs|ts|tsx)$',
+  ],
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
     'content/news.yml': '<rootDir>/src/__mocks__/news.test.yml',
