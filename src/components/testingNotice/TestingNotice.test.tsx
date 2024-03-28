@@ -9,7 +9,7 @@ describe('TestingNotice', () => {
 
   it('should display notice text', () => {
     const { getByText } = render(<TestingNotice />);
-    expect(getByText('VA Lighthouse', { exact: false })).toBeInTheDocument();
+    expect(getByText('VA API', { exact: false })).toBeInTheDocument();
   });
 
   it('should display a link to visit the developer portal', () => {

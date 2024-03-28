@@ -13,12 +13,11 @@ const WorkingWithOurAPIs = (): JSX.Element => (
     <Helmet>
       <title>Working with Lighthouse APIs</title>
     </Helmet>
-    <PageHeader header="Working with Lighthouse APIs" />
+    <PageHeader header="Working with VA APIs" />
     <p>
-      Integrating with Lighthouse APIs can help your app’s users get faster, more reliable access to
-      the data they need. This page tells you more about what you can expect while working with
-      Lighthouse APIs, including information about rate limiting, feature requests, status updates,
-      and more.
+      Integrating with VA APIs can help your app&apos;s users get faster, more reliable access to VA
+      data. Discover what it&apos;s like to work with VA APIs, including information about rate
+      limiting, feature requests, status updates, and more.
     </p>
     <h2 id="versioning">Versioning</h2>
     <VaAccordion uswds>
@@ -208,10 +207,7 @@ const WorkingWithOurAPIs = (): JSX.Element => (
           <li>Reachability or connection issues</li>
           <li>Triage and escalation</li>
         </ul>
-        <p>
-          Lighthouse acts as your first level of support, but we will triage and escalate issues
-          directly to the API provider as needed.
-        </p>
+        <p>We will triage and escalate issues directly to the API owner as needed.</p>
       </VaAccordionItem>
     </VaAccordion>
     <h2 id="managing-feature-requests">Managing feature requests</h2>
@@ -259,9 +255,9 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         header="The highest security standards based on industry best practices."
       >
         <p>
-          Lighthouse has full authorization to operate (ATO) at the FISMA Moderate level. We also
-          complete a privacy impact assessment and privacy threshold analysis whenever the API
-          gateway sends new kinds of data to new systems.
+          We have full authorization to operate (ATO) at the FISMA Moderate level. We also complete
+          a privacy impact assessment and privacy threshold analysis whenever the API gateway sends
+          new kinds of data to new systems.
         </p>
         <p>
           We rely on mature software that is used in other security-sensitive environments: Kong
@@ -304,12 +300,12 @@ const WorkingWithOurAPIs = (): JSX.Element => (
     <VaAccordion uswds>
       <VaAccordionItem uswds header="Consistent and thorough API documentation.">
         <p>
-          To be added to Lighthouse, an API needs reference material in the form of{' '}
-          <a href="https://swagger.io/docs/specification/about/">OpenAPI specification</a>. This
-          documentation should also include a description of the API’s purpose, helpful context
-          specific to that API, and examples that demonstrate the use of the API. With Lighthouse,
-          no additional documentation is needed outside of what is published on the Lighthouse
-          development portal, making it easier for you to integrate with our APIs.
+          To be added to VA Developer, an API needs
+          <a href="https://swagger.io/docs/specification/about/">OpenAPI specification</a>{' '}
+          documentation. This documentation should also include a description of the API’s purpose,
+          helpful context specific to that API, and examples that demonstrate the use of the API. No
+          additional documentation is needed outside of what is published on the platform, making it
+          easier for you to integrate with our APIs.
         </p>
       </VaAccordionItem>
     </VaAccordion>
@@ -345,8 +341,8 @@ const WorkingWithOurAPIs = (): JSX.Element => (
           <li>A Veteran authorizing a discount program to confirm their Veteran status</li>
         </ul>
         <p>
-          Through OAuth, Lighthouse ensures that API interactions are secure and seamless. We
-          generate and send an OAuth token that securely retrieves, sends, and updates data.{' '}
+          Through OAuth, we ensure that API interactions are secure and seamless. We generate and
+          send an OAuth token that securely retrieves, sends, and updates data.{' '}
         </p>
         <p>
           Consumers whose application cannot securely hide a client secret will use our{' '}
@@ -360,10 +356,10 @@ const WorkingWithOurAPIs = (): JSX.Element => (
         </p>
         <p>
           API keys are maintained within Kong. There is no default expiration date. If a key needs
-          to be rotated on a recurring basis, Lighthouse can either update the key immediately or
-          update it on a rolling basis, where both keys work for a short period of time and the
-          consumer facilitates the update on their end with no downtime. The information passed to
-          the API provider does not change when the key is updated for the consumer.
+          to be rotated on a recurring basis, VA can either update the key immediately or update it
+          on a rolling basis, where both keys work for a short period of time and the user
+          facilitates the update on their end with no downtime. The information passed to the API
+          provider does not change when the key is updated for the consumer.
         </p>
         <h3 id="sso">SSO</h3>
         <p>

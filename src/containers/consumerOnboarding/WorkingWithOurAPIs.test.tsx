@@ -12,7 +12,7 @@ describe('WorkingWithOurAPIs', () => {
     );
   });
   it('renders the main heading', () => {
-    const heading = screen.getByRole('heading', { level: 1, name: 'Working with Lighthouse APIs' });
+    const heading = screen.getByRole('heading', { level: 1, name: 'Working with VA APIs' });
     expect(heading).toBeInTheDocument();
   });
 

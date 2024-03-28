@@ -66,8 +66,7 @@ const ConsumerOnboardingOverview = (): JSX.Element => (
     </ol>
     <h2>Onboarding timeline</h2>
     <p>
-      Getting Lighthouse production access can take a week or less for open data APIs or over a
-      month for APIs requiring a demo.
+      Production access can be granted within a week for open data APIs or within a month for APIs needing a demo.
     </p>
     <p>
       The speed of onboarding depends on many factors, including how fast we receive information
