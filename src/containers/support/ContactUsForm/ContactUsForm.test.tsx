@@ -117,7 +117,7 @@ describe('SupportContactUsFormPublishing', () => {
           beforeEach(async () => {
             await userEvent.click(
               screen.getByRole('radio', {
-                name: 'Publish your API to Lighthouse - Internal VA use only',
+                name: 'Publish your API to VA Developer - Internal VA use only',
               }),
             );
             await waitFor(() => {

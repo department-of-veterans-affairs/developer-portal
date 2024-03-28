@@ -17,7 +17,7 @@ describe('PublishingIntroduction', () => {
   });
 
   it('renders successfully', () => {
-    const header = screen.getByRole('heading', { name: 'Publishing your API on Lighthouse' });
+    const header = screen.getByRole('heading', { name: 'Publishing your API' });
     expect(header).toBeInTheDocument();
   });
 
